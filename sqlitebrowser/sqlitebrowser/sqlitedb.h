@@ -19,20 +19,12 @@
 #include <qvaluelist.h>
 #include "sqlite_source/sqlite.h"
 
-//#define ARCABUILD
-
-#ifdef ARCABUILD
-static QString binarySignature = QString("<BINARY DATA>");
-static QString binaryPattern = QString("BINARYENCODED");
-static QString applicationName = QString("Arca Database Browser");
-static QString aboutText = QString("Version 1.0\n\nArca Database Browser is a visual tool used to create, design and edit Arca database files.\n\nFor more information on Arca Database Xtra please visit our site at: http://xtras.tabuleiro.com\n\nArca Database Browser Copyright Tabuleiro Producoes Ltda 2003\nXtra is a trademark of Macromedia, Inc.");
-#else
 static QString applicationName = QString("SQLite Database Browser");
-static QString aboutText = QString("Version 1.0\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes, as the Arca Database Browser. The original code is used with the Arca Database Xtra, a commercial product that uses SQLite databases with some additional extensions for handling of compressed and binary data. \n\n A generic version of the code was also produced to be compatible with standard SQLite 2.1 databases, and was released into Public Domain by the original author. \n\n You can find the latest versions of the source code of SQLite Database browser at http://sqlitebrowser.sourceforge.net. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code. Enjoy!");
-#endif
+static QString applicationIconName = QString("icone16.png");
+static QString aboutText = QString("Version 1.01\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes, as the Arca Database Browser. The original code is used with the Arca Database Xtra, a commercial product that uses SQLite databases with some additional extensions for handling of compressed and binary data. \n\n A generic version of the code was also produced to be compatible with standard SQLite 2.1 databases, and was released into Public Domain by the original author. \n\n You can find the latest versions of the source code of SQLite Database browser at http://sqlitebrowser.sourceforge.net. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
 
 
-typedef QMap<QString, class DBBrowserField> fieldMap;
+typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMap<QString, class DBBrowserTable> tableMap;
 typedef QMap<QString, class DBBrowserIndex> indexMap;
 typedef QMap<int, int> rowIdMap;

@@ -18,7 +18,7 @@
 ** file simultaneously, or one process from reading the database while
 ** another is writing.
 **
-** @(#) $Id: pager.c,v 1.1.1.1 2003-08-21 02:24:12 tabuleiro Exp $
+** @(#) $Id: pager.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "os.h"         /* Must be first to enable large file support */
 #include "sqliteInt.h"
@@ -129,6 +129,7 @@ struct PgHdr {
 struct Pager {
   char *zFilename;            /* Name of the database file */
   char *zJournal;             /* Name of the journal file */
+  char *zDirectory;           /* Directory hold database and journal files */
   OsFile fd, jfd;             /* File descriptors for database and journal */
   OsFile cpfd;                /* File descriptor for the checkpoint journal */
   int dbSize;                 /* Number of pages in the file */
@@ -315,7 +316,7 @@ static int write32bits(OsFile *fd, u32 val){
 */
 static void store32bits(u32 val, PgHdr *p, int offset){
   unsigned char *ac;
-  ac =  (unsigned char *)&((char*)PGHDR_TO_DATA(p))[offset];
+  ac = &((char*)PGHDR_TO_DATA(p))[offset];
   if( journal_format<=1 ){
     memcpy(ac, &val, 4);
   }else{
@@ -595,7 +596,7 @@ static int pager_playback(Pager *pPager, int useJournalSize){
     goto end_playback;
   }
   if( format>=JOURNAL_FORMAT_3 ){
-    rc = read32bits(format, &pPager->jfd, (unsigned int *)&nRec);
+    rc = read32bits(format, &pPager->jfd, &nRec);
     if( rc ) goto end_playback;
     rc = read32bits(format, &pPager->jfd, &pPager->cksumInit);
     if( rc ) goto end_playback;
@@ -828,7 +829,7 @@ int sqlitepager_open(
   char *zFullPathname;
   int nameLen;
   OsFile fd;
-  int rc;
+  int rc, i;
   int tempFile;
   int readOnly = 0;
   char zTemp[SQLITE_TEMPNAME_SIZE];
@@ -855,7 +856,7 @@ int sqlitepager_open(
     return SQLITE_CANTOPEN;
   }
   nameLen = strlen(zFullPathname);
-  pPager = sqliteMalloc( sizeof(*pPager) + nameLen*2 + 30 );
+  pPager = sqliteMalloc( sizeof(*pPager) + nameLen*3 + 30 );
   if( pPager==0 ){
     sqliteOsClose(&fd);
     sqliteFree(zFullPathname);
@@ -863,8 +864,12 @@ int sqlitepager_open(
   }
   SET_PAGER(pPager);
   pPager->zFilename = (char*)&pPager[1];
-  pPager->zJournal = &pPager->zFilename[nameLen+1];
+  pPager->zDirectory = &pPager->zFilename[nameLen+1];
+  pPager->zJournal = &pPager->zDirectory[nameLen+1];
   strcpy(pPager->zFilename, zFullPathname);
+  strcpy(pPager->zDirectory, zFullPathname);
+  for(i=nameLen; i>0 && pPager->zDirectory[i-1]!='/'; i--){}
+  if( i>0 ) pPager->zDirectory[i-1] = 0;
   strcpy(pPager->zJournal, zFullPathname);
   sqliteFree(zFullPathname);
   strcpy(&pPager->zJournal[nameLen], "-journal");
@@ -995,8 +1000,10 @@ int sqlitepager_close(Pager *pPager){
   */
   CLR_PAGER(pPager);
   if( pPager->zFilename!=(char*)&pPager[1] ){
+    assert( 0 );  /* Cannot happen */
     sqliteFree(pPager->zFilename);
     sqliteFree(pPager->zJournal);
+    sqliteFree(pPager->zDirectory);
   }
   sqliteFree(pPager);
   return SQLITE_OK;
@@ -1535,6 +1542,7 @@ static int pager_open_journal(Pager *pPager){
     pPager->state = SQLITE_READLOCK;
     return SQLITE_CANTOPEN;
   }
+  sqliteOsOpenDirectory(pPager->zDirectory, &pPager->jfd);
   pPager->journalOpen = 1;
   pPager->journalStarted = 0;
   pPager->needSync = 0;

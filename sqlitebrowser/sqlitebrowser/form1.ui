@@ -15,9 +15,6 @@
     <property name="caption">
         <string>Browser</string>
     </property>
-    <property name="icon">
-        <pixmap>icone16.png</pixmap>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -322,7 +319,10 @@
                             <cstring>dataTable</cstring>
                         </property>
                         <property name="resizePolicy">
-                            <enum>AutoOneFit</enum>
+                            <enum>Default</enum>
+                        </property>
+                        <property name="vScrollBarMode">
+                            <enum>Auto</enum>
                         </property>
                         <property name="numRows">
                             <number>0</number>
@@ -886,6 +886,7 @@
     <slot>recordEdited( int wrow, int wcol )</slot>
     <slot>deleteRecord()</slot>
     <slot>updateTableView( int lineToSelect )</slot>
+    <slot>selectTableLine( int lineToSelect )</slot>
     <slot>navigatePrevious()</slot>
     <slot>navigateNext()</slot>
     <slot>navigateGoto()</slot>

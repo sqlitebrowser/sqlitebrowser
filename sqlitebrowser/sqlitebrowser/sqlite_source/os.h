@@ -95,7 +95,9 @@ extern "C" {
 # endif
 #else
 # define OS_MAC 0
-# define OS_WIN 0
+# ifndef OS_WIN
+#  define OS_WIN 0
+# endif
 #endif
 
 /*
@@ -111,6 +113,7 @@ extern "C" {
     struct lockInfo *pLock;  /* Information about locks on this inode */
     int fd;                  /* The file descriptor */
     int locked;              /* True if this user holds the lock */
+    int dirfd;               /* File descriptor for the directory */
   };
 # define SQLITE_TEMPNAME_SIZE 200
 # if defined(HAVE_USLEEP) && HAVE_USLEEP
@@ -121,6 +124,9 @@ extern "C" {
 #endif
 
 #if OS_WIN
+# if defined(__CYGWIN__)
+#  define __CYGWIN_USE_BIG_TYPES__
+# endif
 #include <windows.h>
 #include <winbase.h>
   typedef struct OsFile OsFile;
@@ -133,7 +139,9 @@ extern "C" {
 # if defined(_MSC_VER) || defined(__BORLANDC__)
     typedef __int64 off_t;
 # else
-    typedef long long off_t;
+#  if !defined(_CYGWIN_TYPES_H)
+     typedef long long off_t;
+#  endif
 # endif
 #endif
 # define SQLITE_TEMPNAME_SIZE (MAX_PATH+50)
@@ -166,6 +174,7 @@ int sqliteOsFileRename(const char*, const char*);
 int sqliteOsOpenReadWrite(const char*, OsFile*, int*);
 int sqliteOsOpenExclusive(const char*, OsFile*, int);
 int sqliteOsOpenReadOnly(const char*, OsFile*);
+int sqliteOsOpenDirectory(const char*, OsFile*);
 int sqliteOsTempFileName(char*);
 int sqliteOsClose(OsFile*);
 int sqliteOsRead(OsFile*, void*, int amt);

@@ -12,7 +12,7 @@
 ** This file contains C code routines that are called by the parser
 ** to handle INSERT statements in SQLite.
 **
-** $Id: insert.c,v 1.1.1.1 2003-08-21 02:24:09 tabuleiro Exp $
+** $Id: insert.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -817,8 +817,30 @@ void sqliteGenerateConstraintChecks(
       case OE_Rollback:
       case OE_Abort:
       case OE_Fail: {
+        int j, n1, n2;
+        char zErrMsg[200];
+        strcpy(zErrMsg, pIdx->nColumn>1 ? "columns " : "column ");
+        n1 = strlen(zErrMsg);
+        for(j=0; j<pIdx->nColumn && n1<sizeof(zErrMsg)-30; j++){
+          char *zCol = pTab->aCol[pIdx->aiColumn[j]].zName;
+          n2 = strlen(zCol);
+          if( j>0 ){
+            strcpy(&zErrMsg[n1], ", ");
+            n1 += 2;
+          }
+          if( n1+n2>sizeof(zErrMsg)-30 ){
+            strcpy(&zErrMsg[n1], "...");
+            n1 += 3;
+            break;
+          }else{
+            strcpy(&zErrMsg[n1], zCol);
+            n1 += n2;
+          }
+        }
+        strcpy(&zErrMsg[n1], 
+            pIdx->nColumn>1 ? " are not unique" : " is not unique");
         sqliteVdbeAddOp(v, OP_Halt, SQLITE_CONSTRAINT, onError);
-        sqliteVdbeChangeP3(v, -1, "uniqueness constraint failed", P3_STATIC);
+        sqliteVdbeChangeP3(v, -1, sqliteStrDup(zErrMsg), P3_DYNAMIC);
         break;
       }
       case OE_Ignore: {

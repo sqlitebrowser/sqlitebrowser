@@ -15,9 +15,6 @@
     <property name="caption">
         <string>Delete Table</string>
     </property>
-    <property name="icon">
-        <pixmap>icone16.png</pixmap>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>

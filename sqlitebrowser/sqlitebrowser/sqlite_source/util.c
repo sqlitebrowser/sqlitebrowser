@@ -14,7 +14,7 @@
 ** This file contains functions for allocating memory, comparing
 ** strings, and stuff like that.
 **
-** $Id: util.c,v 1.1.1.1 2003-08-21 02:24:23 tabuleiro Exp $
+** $Id: util.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include <stdarg.h>
@@ -43,6 +43,10 @@ int sqlite_iMallocFail;     /* Fail sqliteMalloc() after this many calls */
 static int memcnt = 0;
 #endif
 
+/*
+** Number of 32-bit guard words
+*/
+#define N_GUARD 1
 
 /*
 ** Allocate new memory and set it to zero.  Return NULL if
@@ -51,7 +55,7 @@ static int memcnt = 0;
 void *sqliteMalloc_(int n, int bZero, char *zFile, int line){
   void *p;
   int *pi;
-  int k;
+  int i, k;
   if( sqlite_iMallocFail>=0 ){
     sqlite_iMallocFail--;
     if( sqlite_iMallocFail==0 ){
@@ -66,16 +70,16 @@ void *sqliteMalloc_(int n, int bZero, char *zFile, int line){
   }
   if( n==0 ) return 0;
   k = (n+sizeof(int)-1)/sizeof(int);
-  pi = malloc( (3+k)*sizeof(int));
+  pi = malloc( (N_GUARD*2+1+k)*sizeof(int));
   if( pi==0 ){
     sqlite_malloc_failed++;
     return 0;
   }
   sqlite_nMalloc++;
-  pi[0] = 0xdead1122;
-  pi[1] = n;
-  pi[k+2] = 0xdead3344;
-  p = &pi[2];
+  for(i=0; i<N_GUARD; i++) pi[i] = 0xdead1122;
+  pi[N_GUARD] = n;
+  for(i=0; i<N_GUARD; i++) pi[k+1+N_GUARD+i] = 0xdead3344;
+  p = &pi[N_GUARD+1];
   memset(p, bZero==0, n);
 #if MEMORY_DEBUG>1
   fprintf(stderr,"%06d malloc %d bytes at 0x%x from %s:%d\n",
@@ -93,13 +97,17 @@ void *sqliteMalloc_(int n, int bZero, char *zFile, int line){
 */
 void sqliteCheckMemory(void *p, int N){
   int *pi = p;
-  int n, k;
-  pi -= 2;
-  assert( pi[0]==0xdead1122 );
-  n = pi[1];
+  int n, i, k;
+  pi -= N_GUARD+1;
+  for(i=0; i<N_GUARD; i++){
+    assert( pi[i]==0xdead1122 );
+  }
+  n = pi[N_GUARD];
   assert( N>=0 && N<n );
   k = (n+sizeof(int)-1)/sizeof(int);
-  assert( pi[k+2]==0xdead3344 );
+  for(i=0; i<N_GUARD; i++){
+    assert( pi[k+N_GUARD+1+i]==0xdead3344 );
+  }
 }
 
 /*
@@ -107,21 +115,25 @@ void sqliteCheckMemory(void *p, int N){
 */
 void sqliteFree_(void *p, char *zFile, int line){
   if( p ){
-    int *pi, k, n;
+    int *pi, i, k, n;
     pi = p;
-    pi -= 2;
+    pi -= N_GUARD+1;
     sqlite_nFree++;
-    if( pi[0]!=0xdead1122 ){
-      fprintf(stderr,"Low-end memory corruption at 0x%x\n", (int)p);
-      return;
+    for(i=0; i<N_GUARD; i++){
+      if( pi[i]!=0xdead1122 ){
+        fprintf(stderr,"Low-end memory corruption at 0x%x\n", (int)p);
+        return;
+      }
     }
-    n = pi[1];
+    n = pi[N_GUARD];
     k = (n+sizeof(int)-1)/sizeof(int);
-    if( pi[k+2]!=0xdead3344 ){
-      fprintf(stderr,"High-end memory corruption at 0x%x\n", (int)p);
-      return;
+    for(i=0; i<N_GUARD; i++){
+      if( pi[k+N_GUARD+1+i]!=0xdead3344 ){
+        fprintf(stderr,"High-end memory corruption at 0x%x\n", (int)p);
+        return;
+      }
     }
-    memset(pi, 0xff, (k+3)*sizeof(int));
+    memset(pi, 0xff, (k+N_GUARD*2+1)*sizeof(int));
 #if MEMORY_DEBUG>1
     fprintf(stderr,"%06d free %d bytes at 0x%x from %s:%d\n",
          ++memcnt, n, (int)p, zFile,line);
@@ -136,7 +148,7 @@ void sqliteFree_(void *p, char *zFile, int line){
 ** works just like sqliteFree().
 */
 void *sqliteRealloc_(void *oldP, int n, char *zFile, int line){
-  int *oldPi, *pi, k, oldN, oldK;
+  int *oldPi, *pi, i, k, oldN, oldK;
   void *p;
   if( oldP==0 ){
     return sqliteMalloc_(n,1,zFile,line);
@@ -146,32 +158,34 @@ void *sqliteRealloc_(void *oldP, int n, char *zFile, int line){
     return 0;
   }
   oldPi = oldP;
-  oldPi -= 2;
+  oldPi -= N_GUARD+1;
   if( oldPi[0]!=0xdead1122 ){
     fprintf(stderr,"Low-end memory corruption in realloc at 0x%x\n", (int)p);
     return 0;
   }
-  oldN = oldPi[1];
+  oldN = oldPi[N_GUARD];
   oldK = (oldN+sizeof(int)-1)/sizeof(int);
-  if( oldPi[oldK+2]!=0xdead3344 ){
-    fprintf(stderr,"High-end memory corruption in realloc at 0x%x\n", (int)p);
-    return 0;
+  for(i=0; i<N_GUARD; i++){
+    if( oldPi[oldK+N_GUARD+1+i]!=0xdead3344 ){
+      fprintf(stderr,"High-end memory corruption in realloc at 0x%x\n", (int)p);
+      return 0;
+    }
   }
   k = (n + sizeof(int) - 1)/sizeof(int);
-  pi = malloc( (k+3)*sizeof(int) );
+  pi = malloc( (k+N_GUARD*2+1)*sizeof(int) );
   if( pi==0 ){
     sqlite_malloc_failed++;
     return 0;
   }
-  pi[0] = 0xdead1122;
-  pi[1] = n;
-  pi[k+2] = 0xdead3344;
-  p = &pi[2];
+  for(i=0; i<N_GUARD; i++) pi[i] = 0xdead1122;
+  pi[N_GUARD] = n;
+  for(i=0; i<N_GUARD; i++) pi[k+N_GUARD+1+i] = 0xdead3344;
+  p = &pi[N_GUARD+1];
   memcpy(p, oldP, n>oldN ? oldN : n);
   if( n>oldN ){
     memset(&((char*)p)[oldN], 0, n-oldN);
   }
-  memset(oldPi, 0xab, (oldK+3)*sizeof(int));
+  memset(oldPi, 0xab, (oldK+N_GUARD+2)*sizeof(int));
   free(oldPi);
 #if MEMORY_DEBUG>1
   fprintf(stderr,"%06d realloc %d to %d bytes at 0x%x to 0x%x at %s:%d\n",

@@ -11,7 +11,7 @@
 *************************************************************************
 ** Internal interface definitions for SQLite.
 **
-** @(#) $Id: sqliteInt.h,v 1.1.1.1 2003-08-21 02:24:21 tabuleiro Exp $
+** @(#) $Id: sqliteInt.h,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "config.h"
 #include "sqlite.h"
@@ -657,6 +657,7 @@ struct Expr {
 */
 struct ExprList {
   int nExpr;             /* Number of expressions on the list */
+  int nAlloc;            /* Number of entries allocated below */
   struct ExprList_item {
     Expr *pExpr;           /* The list of expressions */
     char *zName;           /* Token associated with this expression */
@@ -683,6 +684,7 @@ struct ExprList {
 */
 struct IdList {
   int nId;         /* Number of identifiers on the list */
+  int nAlloc;      /* Number of entries allocated for a[] below */
   struct IdList_item {
     char *zName;      /* Name of the identifier */
     int idx;          /* Index in some Table.aCol[] of a column named zName */
@@ -701,7 +703,8 @@ struct IdList {
 ** now be identified by a database name, a dot, then the table name: ID.ID.
 */
 struct SrcList {
-  int nSrc;        /* Number of tables or subqueries in the FROM clause */
+  u16 nSrc;        /* Number of tables or subqueries in the FROM clause */
+  u16 nAlloc;      /* Number of entries allocated in a[] below */
   struct SrcList_item {
     char *zDatabase;  /* Name of database holding this table */
     char *zName;      /* Name of the table */

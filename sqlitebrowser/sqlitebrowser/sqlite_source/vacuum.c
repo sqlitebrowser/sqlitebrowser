@@ -14,7 +14,7 @@
 ** Most of the code in this file may be omitted by defining the
 ** SQLITE_OMIT_VACUUM macro.
 **
-** $Id: vacuum.c,v 1.1.1.1 2003-08-21 02:24:23 tabuleiro Exp $
+** $Id: vacuum.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -111,6 +111,7 @@ static int vacuumCallback2(void *pArg, int argc, char **argv, char **NotUsed){
   const char *zSep = "(";
   int i;
 
+  if( argv==0 ) return 0;
   p->s2.nUsed = 0;
   appendText(&p->s2, "INSERT INTO ", -1);
   appendQuoted(&p->s2, p->zTable);
@@ -141,6 +142,7 @@ static int vacuumCallback1(void *pArg, int argc, char **argv, char **NotUsed){
   vacuumStruct *p = (vacuumStruct*)pArg;
   int rc = 0;
   assert( argc==3 );
+  if( argv==0 ) return 0;
   assert( argv[0]!=0 );
   assert( argv[1]!=0 );
   assert( argv[2]!=0 );
@@ -169,6 +171,7 @@ static int vacuumCallback3(void *pArg, int argc, char **argv, char **NotUsed){
   int rc = 0;
   char zBuf[200];
   assert( argc==1 );
+  if( argv==0 ) return 0;
   assert( argv[0]!=0 );
   assert( strlen(p->zPragma)<100 );
   assert( strlen(argv[0])<30 );

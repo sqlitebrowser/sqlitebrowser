@@ -450,14 +450,15 @@ void sqliteDropTriggerPtr(Parse *pParse, Trigger *pTrigger, int nested){
   if( pTable!=0 && !nested && (v = sqliteGetVdbe(pParse))!=0 ){
     int base;
     static VdbeOp dropTrigger[] = {
-      { OP_Rewind,     0, ADDR(8),  0},
+      { OP_Rewind,     0, ADDR(9),  0},
       { OP_String,     0, 0,        0}, /* 1 */
-      { OP_MemStore,   1, 1,        0},
-      { OP_MemLoad,    1, 0,        0}, /* 3 */
       { OP_Column,     0, 1,        0},
-      { OP_Ne,         0, ADDR(7),  0},
+      { OP_Ne,         0, ADDR(8),  0},
+      { OP_String,     0, 0,        "trigger"},
+      { OP_Column,     0, 0,        0},
+      { OP_Ne,         0, ADDR(8),  0},
       { OP_Delete,     0, 0,        0},
-      { OP_Next,       0, ADDR(3),  0}, /* 7 */
+      { OP_Next,       0, ADDR(1),  0}, /* 8 */
     };
 
     sqliteBeginWriteOperation(pParse, 0, 0);

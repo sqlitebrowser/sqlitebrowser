@@ -15,9 +15,6 @@
     <property name="caption">
         <string>Find</string>
     </property>
-    <property name="icon">
-        <pixmap>icone16.png</pixmap>
-    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>

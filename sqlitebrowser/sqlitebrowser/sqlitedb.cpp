@@ -16,9 +16,7 @@
 
 void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
 {
-    QString num;
-    num.setNum(order);
-    fldmap[num] = DBBrowserField(wfield,wtype);
+    fldmap[order] = DBBrowserField(wfield,wtype);
 }
 
 bool DBBrowserDB::open ( const QString & db)

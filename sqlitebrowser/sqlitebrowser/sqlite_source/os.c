@@ -326,6 +326,7 @@ int sqliteOsOpenReadWrite(
   int *pReadonly
 ){
 #if OS_UNIX
+  id->dirfd = -1;
   id->fd = open(zFilename, O_RDWR|O_CREAT|O_LARGEFILE|O_BINARY, 0644);
   if( id->fd<0 ){
     id->fd = open(zFilename, O_RDONLY|O_LARGEFILE|O_BINARY);
@@ -450,6 +451,7 @@ int sqliteOsOpenExclusive(const char *zFilename, OsFile *id, int delFlag){
   if( access(zFilename, 0)==0 ){
     return SQLITE_CANTOPEN;
   }
+  id->dirfd = -1;
   id->fd = open(zFilename,
                 O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_LARGEFILE|O_BINARY, 0600);
   if( id->fd<0 ){
@@ -536,6 +538,7 @@ int sqliteOsOpenExclusive(const char *zFilename, OsFile *id, int delFlag){
 */
 int sqliteOsOpenReadOnly(const char *zFilename, OsFile *id){
 #if OS_UNIX
+  id->dirfd = -1;
   id->fd = open(zFilename, O_RDONLY|O_LARGEFILE|O_BINARY);
   if( id->fd<0 ){
     return SQLITE_CANTOPEN;
@@ -595,6 +598,42 @@ int sqliteOsOpenReadOnly(const char *zFilename, OsFile *id){
   OpenCounter(+1);
   return SQLITE_OK;
 #endif
+}
+
+/*
+** Attempt to open a file descriptor for the directory that contains a
+** file.  This file descriptor can be used to fsync() the directory
+** in order to make sure the creation of a new file is actually written
+** to disk.
+**
+** This routine is only meaningful for Unix.  It is a no-op under
+** windows since windows does not support hard links.
+**
+** On success, a handle for a previously open file is at *id is
+** updated with the new directory file descriptor and SQLITE_OK is
+** returned.
+**
+** On failure, the function returns SQLITE_CANTOPEN and leaves
+** *id unchanged.
+*/
+int sqliteOsOpenDirectory(
+  const char *zDirname,
+  OsFile *id
+){
+#if OS_UNIX
+  if( id->fd<0 ){
+    /* Do not open the directory if the corresponding file is not already
+    ** open. */
+    return SQLITE_CANTOPEN;
+  }
+  assert( id->dirfd<0 );
+  id->dirfd = open(zDirname, O_RDONLY|O_BINARY, 0644);
+  if( id->dirfd<0 ){
+    return SQLITE_CANTOPEN; 
+  }
+  TRACE3("OPENDIR %-3d %s\n", id->dirfd, zDirname);
+#endif
+  return SQLITE_OK;
 }
 
 /*
@@ -706,6 +745,8 @@ int sqliteOsTempFileName(char *zBuf){
 int sqliteOsClose(OsFile *id){
 #if OS_UNIX
   close(id->fd);
+  if( id->dirfd>=0 ) close(id->dirfd);
+  id->dirfd = -1;
   sqliteOsEnterMutex();
   releaseLockInfo(id->pLock);
   sqliteOsLeaveMutex();
@@ -892,6 +933,14 @@ int sqliteOsSeek(OsFile *id, off_t offset){
 
 /*
 ** Make sure all writes to a particular file are committed to disk.
+**
+** Under Unix, also make sure that the directory entry for the file
+** has been created by fsync-ing the directory that contains the file.
+** If we do not do this and we encounter a power failure, the directory
+** entry for the journal might not exist after we reboot.  The next
+** SQLite to access the file will not know that the journal exists (because
+** the directory entry for the journal was never created) and the transaction
+** will not roll back - possibly leading to database corruption.
 */
 int sqliteOsSync(OsFile *id){
 #if OS_UNIX
@@ -900,6 +949,12 @@ int sqliteOsSync(OsFile *id){
   if( fsync(id->fd) ){
     return SQLITE_IOERR;
   }else{
+    if( id->dirfd>=0 ){
+      TRACE2("DIRSYNC %-3d\n", id->dirfd);
+      fsync(id->dirfd);
+      close(id->dirfd);  /* Only need to sync once, so close the directory */
+      id->dirfd = -1;    /* when we are done. */
+    }
     return SQLITE_OK;
   }
 #endif

@@ -9,7 +9,7 @@
 **    May you share freely, never taking more than you give.
 **
 *************************************************************************
-** $Id: btree.c,v 1.1.1.1 2003-08-21 02:24:05 tabuleiro Exp $
+** $Id: btree.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 **
 ** This file implements a external (disk-based) database using BTrees.
 ** For a detailed discussion of BTrees, refer to
@@ -3503,7 +3503,7 @@ static int fileBtreeCopyFile(Btree *pBtTo, Btree *pBtFrom){
   Pgno i, nPage, nToPage;
 
   if( !pBtTo->inTrans || !pBtFrom->inTrans ) return SQLITE_ERROR;
- /*MAU if( pBtTo->needSwab!=pBtFrom->needSwab ) return SQLITE_ERROR;*/
+  if( pBtTo->needSwab!=pBtFrom->needSwab ) return SQLITE_ERROR;
   if( pBtTo->pCursor ) return SQLITE_BUSY;
   memcpy(pBtTo->page1, pBtFrom->page1, SQLITE_PAGE_SIZE);
   rc = sqlitepager_overwrite(pBtTo->pPager, 1, pBtFrom->page1);

@@ -21,7 +21,9 @@ void mainForm::init()
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
     this->setCaption(applicationName);
-
+    this->setIcon( QPixmap::fromMimeSource( applicationIconName ) );
+    buttonNext->setEnabled(FALSE);
+    buttonPrevious->setEnabled(FALSE);
 }
 
 void mainForm::destroy()
@@ -209,14 +211,24 @@ void mainForm::recordEdited( int wrow, int wcol )
 	dataTable->setText( wrow, wcol, *cv  );
 	QMessageBox::information( this, applicationName, "Data can not be edited" );
     }
+    dataTable->setVScrollBarMode(QScrollView::AlwaysOff);
+    dataTable->setVScrollBarMode(QScrollView::Auto);
 }
 
 
 void mainForm::deleteRecord()
 {
     if (dataTable->currentRow()!=-1){
+	int lastselected = dataTable->currentRow();
 	db.deleteRecord(dataTable->currentRow()+recAtTop);
 	populateTable(db.curBrowseTableName);
+	int nextselected = lastselected ;
+	if (nextselected > db.getRecordCount()){
+	    nextselected = db.getRecordCount();
+	}
+	if (nextselected>0){
+	    selectTableLine(nextselected);
+	}
     } else {
 	QMessageBox::information( this, applicationName, "Please select a record first" );    }
 }
@@ -269,13 +281,18 @@ void mainForm::updateTableView(int lineToSelect)
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
 	//qDebug("inside selection");
-	dataTable->clearSelection(true);
-	dataTable->selectRow(lineToSelect);
-	dataTable->setCurrentCell(lineToSelect, 0);
-	dataTable->ensureCellVisible (lineToSelect, 0 ) ;
-    }
+	selectTableLine(lineToSelect);
+    } 
     setRecordsetLabel();
     QApplication::restoreOverrideCursor();
+}
+
+void mainForm::selectTableLine(int lineToSelect)
+{
+    dataTable->clearSelection(true);
+   dataTable->selectRow(lineToSelect);
+   dataTable->setCurrentCell(lineToSelect, 0);
+   dataTable->ensureCellVisible (lineToSelect, 0 ) ; 
 }
 
 void mainForm::navigatePrevious()
@@ -326,6 +343,23 @@ void mainForm::setRecordsetLabel()
 	label.append(" of ");
 	label.append(QString::number(db.getRecordCount(),10));
 	labelRecordset->setText(label);
+    }
+    gotoValidator->setRange ( 0, db.getRecordCount());
+    
+    if (db.getRecordCount()>1000){
+	if (recAtTop>=1000) {
+	    buttonPrevious->setEnabled(TRUE);
+	} else {
+	     buttonPrevious->setEnabled(FALSE);
+	}
+	if (db.getRecordCount()>=(recAtTop+1000)) {
+	    buttonNext->setEnabled(TRUE);
+	} else {
+	    buttonNext->setEnabled(FALSE);
+	}
+    } else {
+	buttonNext->setEnabled(FALSE);
+	buttonPrevious->setEnabled(FALSE);
     }
 }
 

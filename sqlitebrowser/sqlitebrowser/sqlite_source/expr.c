@@ -12,7 +12,7 @@
 ** This file contains routines used for analyzing expressions and
 ** for generating VDBE code that evaluates expressions in SQLite.
 **
-** $Id: expr.c,v 1.1.1.1 2003-08-21 02:24:08 tabuleiro Exp $
+** $Id: expr.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include <ctype.h>
@@ -160,7 +160,7 @@ ExprList *sqliteExprListDup(ExprList *p){
   if( p==0 ) return 0;
   pNew = sqliteMalloc( sizeof(*pNew) );
   if( pNew==0 ) return 0;
-  pNew->nExpr = p->nExpr;
+  pNew->nExpr = pNew->nAlloc = p->nExpr;
   pNew->a = sqliteMalloc( p->nExpr*sizeof(p->a[0]) );
   if( pNew->a==0 ) return 0;
   for(i=0; i<p->nExpr; i++){
@@ -189,7 +189,7 @@ SrcList *sqliteSrcListDup(SrcList *p){
   nByte = sizeof(*p) + (p->nSrc>0 ? sizeof(p->a[0]) * (p->nSrc-1) : 0);
   pNew = sqliteMalloc( nByte );
   if( pNew==0 ) return 0;
-  pNew->nSrc = p->nSrc;
+  pNew->nSrc = pNew->nAlloc = p->nSrc;
   for(i=0; i<p->nSrc; i++){
     pNew->a[i].zDatabase = sqliteStrDup(p->a[i].zDatabase);
     pNew->a[i].zName = sqliteStrDup(p->a[i].zName);
@@ -209,7 +209,7 @@ IdList *sqliteIdListDup(IdList *p){
   if( p==0 ) return 0;
   pNew = sqliteMalloc( sizeof(*pNew) );
   if( pNew==0 ) return 0;
-  pNew->nId = p->nId;
+  pNew->nId = pNew->nAlloc = p->nId;
   pNew->a = sqliteMalloc( p->nId*sizeof(p->a[0]) );
   if( pNew->a==0 ) return 0;
   for(i=0; i<p->nId; i++){
@@ -253,11 +253,12 @@ ExprList *sqliteExprListAppend(ExprList *pList, Expr *pExpr, Token *pName){
       sqliteExprDelete(pExpr);
       return 0;
     }
+    pList->nAlloc = 0;
   }
-  if( (pList->nExpr & 7)==0 ){
-    int n = pList->nExpr + 8;
+  if( pList->nAlloc<=pList->nExpr ){
     struct ExprList_item *a;
-    a = sqliteRealloc(pList->a, n*sizeof(pList->a[0]));
+    pList->nAlloc = pList->nAlloc*2 + 4;
+    a = sqliteRealloc(pList->a, pList->nAlloc*sizeof(pList->a[0]));
     if( a==0 ){
       sqliteExprDelete(pExpr);
       return pList;

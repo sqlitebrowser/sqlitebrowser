@@ -23,7 +23,7 @@
 **     ROLLBACK
 **     PRAGMA
 **
-** $Id: build.c,v 1.1.1.1 2003-08-21 02:24:07 tabuleiro Exp $
+** $Id: build.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include <ctype.h>
@@ -1911,10 +1911,12 @@ IdList *sqliteIdListAppend(IdList *pList, Token *pToken){
   if( pList==0 ){
     pList = sqliteMalloc( sizeof(IdList) );
     if( pList==0 ) return 0;
+    pList->nAlloc = 0;
   }
-  if( (pList->nId & 7)==0 ){
+  if( pList->nId>=pList->nAlloc ){
     struct IdList_item *a;
-    a = sqliteRealloc(pList->a, (pList->nId+8)*sizeof(pList->a[0]) );
+    pList->nAlloc = pList->nAlloc*2 + 5;
+    a = sqliteRealloc(pList->a, pList->nAlloc*sizeof(pList->a[0]) );
     if( a==0 ){
       sqliteIdListDelete(pList);
       return 0;
@@ -1965,11 +1967,13 @@ SrcList *sqliteSrcListAppend(SrcList *pList, Token *pTable, Token *pDatabase){
   if( pList==0 ){
     pList = sqliteMalloc( sizeof(SrcList) );
     if( pList==0 ) return 0;
+    pList->nAlloc = 1;
   }
-  if( (pList->nSrc & 7)==1 ){
+  if( pList->nSrc>=pList->nAlloc ){
     SrcList *pNew;
+    pList->nAlloc *= 2;
     pNew = sqliteRealloc(pList,
-               sizeof(*pList) + (pList->nSrc+8)*sizeof(pList->a[0]) );
+               sizeof(*pList) + (pList->nAlloc-1)*sizeof(pList->a[0]) );
     if( pNew==0 ){
       sqliteSrcListDelete(pList);
       return 0;

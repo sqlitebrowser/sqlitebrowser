@@ -12,7 +12,7 @@
 ** This header file defines the interface that the SQLite library
 ** presents to client programs.
 **
-** @(#) $Id: sqlite.h,v 1.1.1.1 2003-08-21 02:24:20 tabuleiro Exp $
+** @(#) $Id: sqlite.h,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #ifndef _SQLITE_H_
 #define _SQLITE_H_
@@ -28,7 +28,7 @@ extern "C" {
 /*
 ** The version of the SQLite library.
 */
-#define SQLITE_VERSION         "2.8.5"
+#define SQLITE_VERSION         "2.8.5b"
 
 /*
 ** The version string is also compiled into the library so that a program

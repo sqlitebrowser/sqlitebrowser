@@ -14,7 +14,7 @@
 ** other files are for internal use by SQLite and should not be
 ** accessed by users of the library.
 **
-** $Id: main.c,v 1.1.1.1 2003-08-21 02:24:10 tabuleiro Exp $
+** $Id: main.c,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -58,10 +58,7 @@ int sqliteInitCallback(void *pInit, int argc, char **argv, char **azColName){
   int nErr = 0;
 
   assert( argc==5 );
-  if( argv == 0 ){
-    corruptSchema(pData);
-    return 1;
-  }
+  if( argv==0 ) return 0;   /* Might happen if EMPTY_RESULT_CALLBACKS are on */
   if( argv[0]==0 ){
     corruptSchema(pData);
     return 1;
