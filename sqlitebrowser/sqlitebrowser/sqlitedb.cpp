@@ -7,23 +7,22 @@
 #include <qfiledialog.h>
 #include <qmessagebox.h>
 
-namespace {
-	uint utf16len(const ushort* utf16)
-	{
-		uint	len=0;
-		if ( utf16 )
-			while ( *utf16++ ) ++len;
-		return len;
-	}
-
-	QString StringFromUTF16(const void* utf16)
-	{
-		QString	result;
-		result.setUnicodeCodes(static_cast<const ushort*>(utf16), utf16len(static_cast<const ushort*>(utf16)));
-		return result;
-	}
-
+//utility functions
+uint utf16len(const ushort* utf16)
+{
+  uint	len=0;
+  if ( utf16 )
+    while ( *utf16++ ) ++len;
+  return len;
 }
+
+QString StringFromUTF16(const void* utf16)
+{
+  QString	result;
+  result.setUnicodeCodes(static_cast<const ushort*>(utf16), utf16len(static_cast<const ushort*>(utf16)));
+  return result;
+}
+
 
 void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
 {

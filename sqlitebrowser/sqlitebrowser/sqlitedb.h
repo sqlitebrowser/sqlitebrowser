@@ -34,6 +34,10 @@ typedef QMap<int, int> rowIdMap;
 typedef QValueList<QStringList> rowList;
 typedef QMap<int, QString> resultMap;
 
+//utility functions
+uint utf16len(const ushort* utf16);
+QString StringFromUTF16(const void* utf16);
+
 class DBBrowserField
     {    
     public:
