@@ -1,6 +1,70 @@
+TEMPLATE	= app
+LANGUAGE	= C++
+
+CONFIG	+= qt warn_on release
+
+
+HEADERS	+= sqlitebrowsertypes.h \
+	sqlitedb.h \
+	sqlbrowser_util.h
 SOURCES	+= browsermain.cpp \
-	sqlitedb.cpp
-HEADERS	+= sqlitedb.h
+	sqlitedb.cpp \
+	sqlbrowser_util.c
+FORMS	= aboutform.ui \
+	addfieldform.ui \
+	addfieldtypeform.ui \
+	choosetableform.ui \
+	createindexform.ui \
+	createtableform.ui \
+	deleteindexform.ui \
+	deletetableform.ui \
+	editfieldform.ui \
+	editform.ui \
+	edittableform.ui \
+	exporttablecsvform.ui \
+	findform.ui \
+	form1.ui \
+	importcsvform.ui \
+	renametableform.ui \
+	sqllogform.ui
+IMAGES	= images/create_index.png \
+	images/create_table.png \
+	images/delete_index.png \
+	images/delete_table.png \
+	images/icone16.png \
+	images/log.png \
+	images/modify_table.png \
+	images/new.png \
+	images/open.png \
+	images/revert.png \
+	images/save.png \
+	images/searchfind.png \
+	images/whatis.png
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 unix {
   UI_DIR = .ui
   MOC_DIR = .moc
@@ -13,25 +77,117 @@ win32 {
 }
 mac {
   RC_FILE = macapp.icns
-  LIBS	+= -framework Carbon -framework Quicktime -lz ./sqlite_source/libsqlite_source.a
+  LIBS	+= -framework Carbon ./sqlite_source/libsqlite_source.a
 }
 
-	
-FORMS	= form1.ui \
-	findform.ui \
-	createtableform.ui \
-	createindexform.ui \
-	deletetableform.ui \
-	deleteindexform.ui \
-	aboutform.ui
-IMAGES	= images/whatsthis.png \
-	images/filenew.png \
-	images/editpaste.png \
-	images/fileopen.png \
-	images/icone16.png \
-	images/searchfind.png \
-	images/editcopy.png
-	
-TEMPLATE	=app
-CONFIG	+= qt warn_on release
-LANGUAGE	= C++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+unix {
+  UI_DIR = .ui
+  MOC_DIR = .moc
+  OBJECTS_DIR = .obj
+}
+
+

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>mainForm</class>
 <widget class="QMainWindow">
     <property name="name">
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>668</width>
-            <height>476</height>
+            <width>702</width>
+            <height>552</height>
         </rect>
     </property>
     <property name="caption">
@@ -28,7 +28,7 @@
             </property>
             <widget class="QWidget">
                 <property name="name">
-                    <cstring>tab</cstring>
+                    <cstring>structure</cstring>
                 </property>
                 <attribute name="title">
                     <string>Database Structure</string>
@@ -37,281 +37,75 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QLayoutWidget">
-                        <property name="name">
-                            <cstring>layout14</cstring>
-                        </property>
-                        <vbox>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
+                    <widget class="QListView">
+                        <column>
+                            <property name="text">
+                                <string>Name</string>
                             </property>
-                            <widget class="QListView">
-                                <column>
-                                    <property name="text">
-                                        <string>Name</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Object</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Type</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Schema</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <property name="name">
-                                    <cstring>dblistView</cstring>
-                                </property>
-                                <property name="resizePolicy">
-                                    <enum>Manual</enum>
-                                </property>
-                                <property name="selectionMode">
-                                    <enum>NoSelection</enum>
-                                </property>
-                                <property name="rootIsDecorated">
-                                    <bool>true</bool>
-                                </property>
-                                <property name="whatsThis" stdset="0">
-                                    <string>This area shows the structure of your database, including all tables and indexes. It is not possible to modify an existing table or index directly.</string>
-                                </property>
-                            </widget>
-                            <widget class="QLayoutWidget">
-                                <property name="name">
-                                    <cstring>layout13</cstring>
-                                </property>
-                                <hbox>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <widget class="QPushButton">
-                                        <property name="name">
-                                            <cstring>buttonCreateTable</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Create Table</string>
-                                        </property>
-                                        <property name="toolTip" stdset="0">
-                                            <string>Open the Create Table wizard</string>
-                                        </property>
-                                        <property name="whatsThis" stdset="0">
-                                            <string>This button is used to open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="QPushButton">
-                                        <property name="name">
-                                            <cstring>buttonDeleteTable</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Delete Table</string>
-                                        </property>
-                                        <property name="toolTip" stdset="0">
-                                            <string>Open the Delete Table wizard</string>
-                                        </property>
-                                        <property name="whatsThis" stdset="0">
-                                            <string>This button opens the Delete Table wizard, where you can choose a table to be dropped from the database</string>
-                                        </property>
-                                    </widget>
-                                    <spacer>
-                                        <property name="name">
-                                            <cstring>spacer7</cstring>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Horizontal</enum>
-                                        </property>
-                                        <property name="sizeType">
-                                            <enum>Expanding</enum>
-                                        </property>
-                                        <property name="sizeHint">
-                                            <size>
-                                                <width>21</width>
-                                                <height>20</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                    <widget class="QPushButton">
-                                        <property name="name">
-                                            <cstring>buttonCreateIndex</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Create Index</string>
-                                        </property>
-                                        <property name="toolTip" stdset="0">
-                                            <string>Open the Create Index wizard</string>
-                                        </property>
-                                        <property name="whatsThis" stdset="0">
-                                            <string>This button opens the Create Index wizard, where it is possible to define the characteristics and create a new index in the database</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="QPushButton">
-                                        <property name="name">
-                                            <cstring>buttonDeleteIndex</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Delete Index</string>
-                                        </property>
-                                        <property name="toolTip" stdset="0">
-                                            <string>Open the Delete Index wizard</string>
-                                        </property>
-                                        <property name="whatsThis" stdset="0">
-                                            <string>This button opens the Delete Index wizard, where it is possible to select an index to be removed from the database. Removing an index does not affect the data stored in the tables.</string>
-                                        </property>
-                                    </widget>
-                                </hbox>
-                            </widget>
-                        </vbox>
+                            <property name="clickable">
+                                <bool>false</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Object</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>false</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Type</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>false</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Schema</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>false</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property name="name">
+                            <cstring>dblistView</cstring>
+                        </property>
+                        <property name="resizePolicy">
+                            <enum>Manual</enum>
+                        </property>
+                        <property name="selectionMode">
+                            <enum>NoSelection</enum>
+                        </property>
+                        <property name="rootIsDecorated">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizeMode">
+                            <enum>LastColumn</enum>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>This area shows the structure of your database, including all tables and indexes.</string>
+                        </property>
                     </widget>
                 </vbox>
             </widget>
             <widget class="QWidget">
                 <property name="name">
-                    <cstring>tab</cstring>
-                </property>
-                <attribute name="title">
-                    <string>Database Parameters</string>
-                </attribute>
-                <vbox>
-                    <property name="name">
-                        <cstring>unnamed</cstring>
-                    </property>
-                    <widget class="QLayoutWidget">
-                        <property name="name">
-                            <cstring>layout37</cstring>
-                        </property>
-                        <vbox>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
-                            </property>
-                            <widget class="QTable">
-                                <column>
-                                    <property name="text">
-                                        <string>Parameter</string>
-                                    </property>
-                                    <property name="pixmap">
-                                        <pixmap></pixmap>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Value</string>
-                                    </property>
-                                    <property name="pixmap">
-                                        <pixmap></pixmap>
-                                    </property>
-                                </column>
-                                <property name="name">
-                                    <cstring>paramTable</cstring>
-                                </property>
-                                <property name="enabled">
-                                    <bool>true</bool>
-                                </property>
-                                <property name="numRows">
-                                    <number>0</number>
-                                </property>
-                                <property name="numCols">
-                                    <number>2</number>
-                                </property>
-                                <property name="showGrid">
-                                    <bool>true</bool>
-                                </property>
-                                <property name="readOnly">
-                                    <bool>true</bool>
-                                </property>
-                            </widget>
-                            <widget class="QLayoutWidget">
-                                <property name="name">
-                                    <cstring>layout21</cstring>
-                                </property>
-                                <hbox>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <widget class="QComboBox">
-                                        <property name="name">
-                                            <cstring>comboParamTable</cstring>
-                                        </property>
-                                        <property name="minimumSize">
-                                            <size>
-                                                <width>160</width>
-                                                <height>0</height>
-                                            </size>
-                                        </property>
-                                    </widget>
-                                    <widget class="QLineEdit">
-                                        <property name="name">
-                                            <cstring>paramValueEdit</cstring>
-                                        </property>
-                                        <property name="minimumSize">
-                                            <size>
-                                                <width>240</width>
-                                                <height>0</height>
-                                            </size>
-                                        </property>
-                                    </widget>
-                                    <spacer>
-                                        <property name="name">
-                                            <cstring>spacer15</cstring>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Horizontal</enum>
-                                        </property>
-                                        <property name="sizeType">
-                                            <enum>Expanding</enum>
-                                        </property>
-                                        <property name="sizeHint">
-                                            <size>
-                                                <width>21</width>
-                                                <height>21</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                    <widget class="QPushButton">
-                                        <property name="name">
-                                            <cstring>setParamButton</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Set Param</string>
-                                        </property>
-                                    </widget>
-                                </hbox>
-                            </widget>
-                        </vbox>
-                    </widget>
-                </vbox>
-            </widget>
-            <widget class="QWidget">
-                <property name="name">
-                    <cstring>tab</cstring>
+                    <cstring>browser</cstring>
                 </property>
                 <attribute name="title">
                     <string>Browse Data</string>
@@ -434,9 +228,12 @@
                         <property name="name">
                             <cstring>dataTable</cstring>
                         </property>
+                        <property name="acceptDrops">
+                            <bool>true</bool>
+                        </property>
                         <property name="resizePolicy">
                             <enum>Default</enum>
-                        </property> 
+                        </property>
                         <property name="vScrollBarMode">
                             <enum>Auto</enum>
                         </property>
@@ -447,19 +244,19 @@
                             <number>0</number>
                         </property>
                         <property name="readOnly">
-                            <bool>false</bool>
+                            <bool>true</bool>
                         </property>
                         <property name="selectionMode">
-                            <enum>SingleRow</enum>
+                            <enum>Single</enum>
                         </property>
                         <property name="focusStyle">
-                            <enum>SpreadSheet</enum>
+                            <enum>FollowStyle</enum>
                         </property>
                         <property name="toolTip" stdset="0">
                             <string></string>
                         </property>
                         <property name="whatsThis" stdset="0">
-                            <string>This is the database view. You can double-click any record to edit its contents. All changes are commited to the database when you press ENTER or deselect the record. To undo changes press ESC while editing the record</string>
+                            <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
                         </property>
                     </widget>
                     <widget class="QLayoutWidget">
@@ -585,6 +382,137 @@
                     </widget>
                 </vbox>
             </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>query</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Execute SQL</string>
+                </attribute>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>SQL string:</string>
+                        </property>
+                    </widget>
+                    <widget class="QTextEdit">
+                        <property name="name">
+                            <cstring>sqlTextEdit</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>7</hsizetype>
+                                <vsizetype>5</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Type SQL string here</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Type the SQL query in this area, and press the button below to execute it. Results and error messages will be shown in the fields at the bottom of this form.</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout5</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>executeQueryButton</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Execute query</string>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Execute SQL query</string>
+                                </property>
+                                <property name="whatsThis" stdset="0">
+                                    <string>This button is used to execute the SQL query entered in the text area above.</string>
+                                </property>
+                            </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacer4_2</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>325</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </hbox>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Error message from database engine:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit">
+                        <property name="name">
+                            <cstring>queryErrorLineEdit</cstring>
+                        </property>
+                        <property name="readOnly">
+                            <bool>true</bool>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Error messages</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Messages returned from the database engine when the SQL query is executed are displayed in this area.</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Data returned:</string>
+                        </property>
+                    </widget>
+                    <widget class="QListView">
+                        <property name="name">
+                            <cstring>queryResultListView</cstring>
+                        </property>
+                        <property name="resizePolicy">
+                            <enum>Default</enum>
+                        </property>
+                        <property name="selectionMode">
+                            <enum>NoSelection</enum>
+                        </property>
+                        <property name="resizeMode">
+                            <enum>AllColumns</enum>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Query generated data</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.</string>
+                        </property>
+                    </widget>
+                </vbox>
+            </widget>
         </widget>
     </vbox>
 </widget>
@@ -595,14 +523,35 @@
     <item text="&amp;File" name="fileMenu">
         <action name="fileNewAction"/>
         <action name="fileOpenAction"/>
-        <action name="compactAction"/>
         <action name="fileCloseAction"/>
+        <separator/>
+        <action name="fileSaveAction"/>
+        <action name="fileRevertAction"/>
+        <action name="fileCompactAction"/>
+        <separator/>
+        <action name="fileImportAction"/>
+        <item text="Import" name="PopupMenuEditor_9" accel="">
+            <action name="fileImportSQLAction"/>
+            <action name="fileImportCSVAction"/>
+        </item>
+        <action name="fileExportAction"/>
+        <item text="Export" name="PopupMenuEditor_12" accel="">
+            <action name="fileExportSQLAction"/>
+            <action name="fileExportCSVAction"/>
+        </item>
         <separator/>
         <action name="fileExitAction"/>
     </item>
-    <item text="&amp;Edit" name="editMenu">
-        <action name="editCopyAction"/>
-        <action name="editPasteAction"/>
+    <item text="Edit" name="EditMenu">
+        <action name="editCreateTableAction"/>
+        <action name="editDeleteTableAction"/>
+        <action name="editModifyTableAction"/>
+        <separator/>
+        <action name="editCreateIndexAction"/>
+        <action name="editDeleteIndexAction"/>
+    </item>
+    <item text="View" name="ViewMenu">
+        <action name="sqlLogAction"/>
     </item>
     <item text="Help" name="PopupMenu">
         <action name="helpWhatsThisAction"/>
@@ -619,9 +568,16 @@
         </property>
         <action name="fileNewAction"/>
         <action name="fileOpenAction"/>
+        <action name="fileSaveAction"/>
+        <action name="fileRevertAction"/>
         <separator/>
-        <action name="editCopyAction"/>
-        <action name="editPasteAction"/>
+        <action name="editCreateTableAction"/>
+        <action name="editDeleteTableAction"/>
+        <action name="editModifyTableAction"/>
+        <action name="editCreateIndexAction"/>
+        <action name="editDeleteIndexAction"/>
+        <separator/>
+        <action name="sqlLogAction"/>
         <separator/>
         <action name="helpWhatsThisAction"/>
     </toolbar>
@@ -632,7 +588,7 @@
             <cstring>fileNewAction</cstring>
         </property>
         <property name="iconSet">
-            <iconset>filenew.png</iconset>
+            <iconset>new.png</iconset>
         </property>
         <property name="text">
             <string>New Database</string>
@@ -643,6 +599,9 @@
         <property name="toolTip">
             <string>Create a new database file</string>
         </property>
+        <property name="whatsThis">
+            <string>This option is used to create a new database file.</string>
+        </property>
         <property name="accel">
             <string>Ctrl+N</string>
         </property>
@@ -652,7 +611,7 @@
             <cstring>fileOpenAction</cstring>
         </property>
         <property name="iconSet">
-            <iconset>fileopen.png</iconset>
+            <iconset>open.png</iconset>
         </property>
         <property name="text">
             <string>Open Database</string>
@@ -662,6 +621,9 @@
         </property>
         <property name="toolTip">
             <string>Open an existing database file</string>
+        </property>
+        <property name="whatsThis">
+            <string>This option is used to open an existing database file.</string>
         </property>
         <property name="accel">
             <string>Ctrl+O</string>
@@ -685,9 +647,6 @@
         <property name="name">
             <cstring>editCopyAction</cstring>
         </property>
-        <property name="iconSet">
-            <iconset>editcopy.png</iconset>
-        </property>
         <property name="text">
             <string>Copy</string>
         </property>
@@ -704,9 +663,6 @@
     <action>
         <property name="name">
             <cstring>editPasteAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>editpaste.png</iconset>
         </property>
         <property name="text">
             <string>Paste</string>
@@ -726,7 +682,7 @@
             <cstring>editFindAction</cstring>
         </property>
         <property name="iconSet">
-            <iconset></iconset>
+            <iconset>searchfind.png</iconset>
         </property>
         <property name="text">
             <string>Find</string>
@@ -790,6 +746,9 @@
         <property name="text">
             <string>Close Database</string>
         </property>
+        <property name="menuText">
+            <string>Close Database</string>
+        </property>
     </action>
     <action>
         <property name="name">
@@ -798,15 +757,21 @@
         <property name="text">
             <string>New Record</string>
         </property>
+        <property name="menuText">
+            <string>New Record</string>
+        </property>
     </action>
     <action>
         <property name="name">
-            <cstring>compactAction</cstring>
+            <cstring>fileCompactAction</cstring>
         </property>
         <property name="enabled">
             <bool>false</bool>
         </property>
         <property name="text">
+            <string>Compact Database</string>
+        </property>
+        <property name="menuText">
             <string>Compact Database</string>
         </property>
         <property name="statusTip">
@@ -821,13 +786,272 @@
             <cstring>helpWhatsThisAction</cstring>
         </property>
         <property name="iconSet">
-            <iconset>whatsthis.png</iconset>
+            <iconset>whatis.png</iconset>
         </property>
         <property name="text">
             <string>What's This?</string>
         </property>
+        <property name="menuText">
+            <string>What's This?</string>
+        </property>
         <property name="accel">
             <string>Shift+F1</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>sqlLogAction</cstring>
+        </property>
+        <property name="toggleAction">
+            <bool>true</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>log.png</iconset>
+        </property>
+        <property name="text">
+            <string>SQL Log</string>
+        </property>
+        <property name="menuText">
+            <string>SQL Log</string>
+        </property>
+        <property name="whatsThis">
+            <string>Display or hide the SQL log window, which stores all SQL commands issued by the user or the application.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileImportCSVAction</cstring>
+        </property>
+        <property name="text">
+            <string>Table from CSV file</string>
+        </property>
+        <property name="menuText">
+            <string>Table from CSV file</string>
+        </property>
+        <property name="toolTip">
+            <string>Open a wizard that lets you import data from a comma separated text file into a database table.</string>
+        </property>
+        <property name="whatsThis">
+            <string>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileExportCSVAction</cstring>
+        </property>
+        <property name="text">
+            <string>Table as CSV file</string>
+        </property>
+        <property name="menuText">
+            <string>Table as CSV file</string>
+        </property>
+        <property name="toolTip">
+            <string>Export a database table as a comma separated text file.</string>
+        </property>
+        <property name="whatsThis">
+            <string>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileSaveAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>save.png</iconset>
+        </property>
+        <property name="text">
+            <string>Save Database</string>
+        </property>
+        <property name="menuText">
+            <string>Save Database</string>
+        </property>
+        <property name="toolTip">
+            <string>Save changes to the database file</string>
+        </property>
+        <property name="whatsThis">
+            <string>This option is used to save changes to the database file.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileRevertAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>revert.png</iconset>
+        </property>
+        <property name="text">
+            <string>Revert Database</string>
+        </property>
+        <property name="menuText">
+            <string>Revert Database</string>
+        </property>
+        <property name="toolTip">
+            <string>Revert database to last saved state</string>
+        </property>
+        <property name="whatsThis">
+            <string>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileImportAction</cstring>
+        </property>
+        <property name="text">
+            <string>Import</string>
+        </property>
+        <property name="menuText">
+            <string>Import</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileExportAction</cstring>
+        </property>
+        <property name="text">
+            <string>Export</string>
+        </property>
+        <property name="menuText">
+            <string>Export</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>editCreateTableAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>create_table.png</iconset>
+        </property>
+        <property name="text">
+            <string>Create Table</string>
+        </property>
+        <property name="menuText">
+            <string>Create Table</string>
+        </property>
+        <property name="whatsThis">
+            <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>editDeleteTableAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>delete_table.png</iconset>
+        </property>
+        <property name="text">
+            <string>Delete Table</string>
+        </property>
+        <property name="menuText">
+            <string>Delete Table</string>
+        </property>
+        <property name="whatsThis">
+            <string>Open the Delete Table wizard, where you can select a database table to be dropped.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>editModifyTableAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>modify_table.png</iconset>
+        </property>
+        <property name="text">
+            <string>Modify Table</string>
+        </property>
+        <property name="menuText">
+            <string>Modify Table</string>
+        </property>
+        <property name="whatsThis">
+            <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>editCreateIndexAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>delete_index.png</iconset>
+        </property>
+        <property name="text">
+            <string>Create Index</string>
+        </property>
+        <property name="menuText">
+            <string>Create Index</string>
+        </property>
+        <property name="whatsThis">
+            <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>editDeleteIndexAction</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="iconSet">
+            <iconset>delete_index.png</iconset>
+        </property>
+        <property name="text">
+            <string>Delete Index</string>
+        </property>
+        <property name="menuText">
+            <string>Delete Index</string>
+        </property>
+        <property name="whatsThis">
+            <string>Open the Delete Index wizard, where you can select a database index to be dropped.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileImportSQLAction</cstring>
+        </property>
+        <property name="text">
+            <string>Database from SQL file</string>
+        </property>
+        <property name="menuText">
+            <string>Database from SQL file</string>
+        </property>
+        <property name="toolTip">
+            <string>Import data from an .sql dump text file into a new or existing database.</string>
+        </property>
+        <property name="whatsThis">
+            <string>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileExportSQLAction</cstring>
+        </property>
+        <property name="text">
+            <string>Database to SQL file</string>
+        </property>
+        <property name="menuText">
+            <string>Database to SQL file</string>
+        </property>
+        <property name="toolTip">
+            <string>Export a database to a .sql dump text file.</string>
+        </property>
+        <property name="whatsThis">
+            <string>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</string>
         </property>
     </action>
 </actions>
@@ -905,34 +1129,10 @@
         <slot>browseFind(bool)</slot>
     </connection>
     <connection>
-        <sender>buttonCreateTable</sender>
-        <signal>clicked()</signal>
-        <receiver>mainForm</receiver>
-        <slot>createTable()</slot>
-    </connection>
-    <connection>
-        <sender>buttonCreateIndex</sender>
-        <signal>clicked()</signal>
-        <receiver>mainForm</receiver>
-        <slot>createIndex()</slot>
-    </connection>
-    <connection>
-        <sender>compactAction</sender>
+        <sender>fileCompactAction</sender>
         <signal>activated()</signal>
         <receiver>mainForm</receiver>
         <slot>compact()</slot>
-    </connection>
-    <connection>
-        <sender>buttonDeleteTable</sender>
-        <signal>clicked()</signal>
-        <receiver>mainForm</receiver>
-        <slot>deleteTable()</slot>
-    </connection>
-    <connection>
-        <sender>buttonDeleteIndex</sender>
-        <signal>clicked()</signal>
-        <receiver>mainForm</receiver>
-        <slot>deleteIndex()</slot>
     </connection>
     <connection>
         <sender>editCopyAction</sender>
@@ -947,12 +1147,6 @@
         <slot>paste()</slot>
     </connection>
     <connection>
-        <sender>dataTable</sender>
-        <signal>valueChanged(int,int)</signal>
-        <receiver>mainForm</receiver>
-        <slot>recordEdited(int,int)</slot>
-    </connection>
-    <connection>
         <sender>helpWhatsThisAction</sender>
         <signal>activated()</signal>
         <receiver>mainForm</receiver>
@@ -965,16 +1159,94 @@
         <slot>helpAbout()</slot>
     </connection>
     <connection>
-        <sender>comboParamTable</sender>
-        <signal>activated(const QString&amp;)</signal>
+        <sender>dataTable</sender>
+        <signal>doubleClicked(int,int,int,const QPoint&amp;)</signal>
         <receiver>mainForm</receiver>
-        <slot>getActualParamValue(const QString&amp;)</slot>
+        <slot>doubleClickTable(int,int,int,const QPoint&amp;)</slot>
     </connection>
     <connection>
-        <sender>setParamButton</sender>
+        <sender>mainTab</sender>
+        <signal>selected(const QString&amp;)</signal>
+        <receiver>mainForm</receiver>
+        <slot>mainTabSelected(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>sqlLogAction</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>mainForm</receiver>
+        <slot>toggleLogWindow(bool)</slot>
+    </connection>
+    <connection>
+        <sender>executeQueryButton</sender>
         <signal>clicked()</signal>
         <receiver>mainForm</receiver>
-        <slot>setParamValue()</slot>
+        <slot>executeQuery()</slot>
+    </connection>
+    <connection>
+        <sender>fileImportCSVAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>importTableFromCSV()</slot>
+    </connection>
+    <connection>
+        <sender>fileExportCSVAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>exportTableToCSV()</slot>
+    </connection>
+    <connection>
+        <sender>fileRevertAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>fileRevert()</slot>
+    </connection>
+    <connection>
+        <sender>fileSaveAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>fileSave()</slot>
+    </connection>
+    <connection>
+        <sender>editDeleteIndexAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>deleteIndex()</slot>
+    </connection>
+    <connection>
+        <sender>editCreateIndexAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>createIndex()</slot>
+    </connection>
+    <connection>
+        <sender>editCreateTableAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>createTable()</slot>
+    </connection>
+    <connection>
+        <sender>editDeleteTableAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>deleteTable()</slot>
+    </connection>
+    <connection>
+        <sender>editModifyTableAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>editTable()</slot>
+    </connection>
+    <connection>
+        <sender>fileExportSQLAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>exportDatabaseToSQL()</slot>
+    </connection>
+    <connection>
+        <sender>fileImportSQLAction</sender>
+        <signal>activated()</signal>
+        <receiver>mainForm</receiver>
+        <slot>importDatabaseFromSQL()</slot>
     </connection>
 </connections>
 <includes>
@@ -982,6 +1254,8 @@
     <include location="local" impldecl="in declaration">findform.h</include>
     <include location="local" impldecl="in declaration">qclipboard.h</include>
     <include location="local" impldecl="in declaration">sqlitedb.h</include>
+    <include location="local" impldecl="in declaration">editform.h</include>
+    <include location="local" impldecl="in declaration">sqllogform.h</include>
     <include location="local" impldecl="in implementation">qmessagebox.h</include>
     <include location="local" impldecl="in implementation">qfiledialog.h</include>
     <include location="local" impldecl="in implementation">qfile.h</include>
@@ -991,30 +1265,33 @@
     <include location="local" impldecl="in implementation">deletetableform.h</include>
     <include location="local" impldecl="in implementation">deleteindexform.h</include>
     <include location="local" impldecl="in implementation">aboutform.h</include>
+    <include location="local" impldecl="in implementation">choosetableform.h</include>
+    <include location="local" impldecl="in implementation">edittableform.h</include>
+    <include location="local" impldecl="in implementation">importcsvform.h</include>
+    <include location="local" impldecl="in implementation">exporttablecsvform.h</include>
     <include location="local" impldecl="in implementation">form1.ui.h</include>
 </includes>
 <variables>
-    <variable access="public">QIntValidator * gotoValidator;</variable>
-    <variable>DBBrowserDB db;</variable>
-    <variable access="public">int recsPerView;</variable>
-    <variable access="public">int recAtTop;</variable>
-    <variable access="public">findForm * findWin;</variable>
+    <variable access="public">sqlLogForm * logWin;</variable>
+    <variable access="public">editForm * editWin;</variable>
     <variable access="public">QClipboard * clipboard;</variable>
+    <variable access="public">findForm * findWin;</variable>
+    <variable access="public">int recAtTop;</variable>
+    <variable access="public">int recsPerView;</variable>
+    <variable>DBBrowserDB db;</variable>
+    <variable access="public">QIntValidator * gotoValidator;</variable>
 </variables>
 <slots>
+    <slot>fileOpen( const QString &amp; fileName )</slot>
     <slot>fileOpen()</slot>
     <slot>fileNew()</slot>
     <slot>populateStructure()</slot>
-    <slot>populateParameter()</slot>
     <slot>populateTable( const QString &amp; tablename )</slot>
-    <slot>getActualParamValue( const QString &amp; paramName )</slot>
     <slot>resetBrowser()</slot>
-    <slot>resetParamBrowser()</slot>
     <slot>fileClose()</slot>
     <slot>fileExit()</slot>
     <slot>closeEvent( QCloseEvent * )</slot>
     <slot>addRecord()</slot>
-    <slot>recordEdited( int wrow, int wcol )</slot>
     <slot>deleteRecord()</slot>
     <slot>updateTableView( int lineToSelect )</slot>
     <slot>selectTableLine( int lineToSelect )</slot>
@@ -1030,12 +1307,27 @@
     <slot>createIndex()</slot>
     <slot>compact()</slot>
     <slot>deleteTable()</slot>
+    <slot>editTable()</slot>
     <slot>deleteIndex()</slot>
     <slot>copy()</slot>
     <slot>paste()</slot>
     <slot>helpWhatsThis()</slot>
     <slot>helpAbout()</slot>
-    <slot>setParamValue()</slot>
+    <slot>updateRecordText( int row, int col, QString newtext )</slot>
+    <slot>logWinAway()</slot>
+    <slot>editWinAway()</slot>
+    <slot>editText( int row, int col )</slot>
+    <slot>doubleClickTable( int row, int col, int button, const QPoint &amp; mousepoint )</slot>
+    <slot>executeQuery()</slot>
+    <slot>mainTabSelected( const QString &amp; tabname )</slot>
+    <slot>toggleLogWindow( bool enable )</slot>
+    <slot>importTableFromCSV()</slot>
+    <slot>exportTableToCSV()</slot>
+    <slot>dbState( bool dirty )</slot>
+    <slot>fileSave()</slot>
+    <slot>fileRevert()</slot>
+    <slot>exportDatabaseToSQL()</slot>
+    <slot>importDatabaseFromSQL()</slot>
 </slots>
 <functions>
     <function access="private" specifier="non virtual">init()</function>

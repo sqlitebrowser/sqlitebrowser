@@ -8,8 +8,7 @@
 *****************************************************************************/
 void createTableForm::init()
 {
-    fieldsTable->setNumRows(0);
-   // fieldsTable->setNumCols(0);
+   fieldListView->clear();
 }
 
 void createTableForm::confirmCreate()
@@ -27,14 +26,15 @@ void createTableForm::confirmCreate()
 	return;
     }
     
-    if (fieldsTable->numRows()==0) {
+    if (fieldListView->firstChild()==0) {
 	ok = false;
 	QMessageBox::information( this, applicationName, "No fields defined" );
 	return;
     }
     
-    /*check field names for empty or illegal names*/
-    
+    /*check field names for empty or illegal names
+   TODO: move to add
+      
     for (int r=0; r<fieldsTable->numRows();r++){
 	QString rowname = fieldsTable->text(r, 0);
 	if (rowname.isEmpty()) {
@@ -47,7 +47,7 @@ void createTableForm::confirmCreate()
 	    QMessageBox::warning( this, applicationName, "Spaces are not allowed in the field names" );
 	    break;
 	}
-    }
+    }*/
     
     if (!ok){
 	return;
@@ -57,13 +57,26 @@ void createTableForm::confirmCreate()
 	createStatement = "CREATE TABLE ";
 	createStatement.append(tabname);
 	createStatement.append(" (");
-	for (int r=0; r<fieldsTable->numRows();r++){
+	QListViewItemIterator it( fieldListView );
+	QListViewItem * item;
+	while ( it.current() ) {
+	    item = it.current();
+	  createStatement.append(item->text(0));
+	  createStatement.append(" ");
+	  createStatement.append(item->text(1));
+	    if (item->nextSibling() != 0)
+	   {
+		createStatement.append(", ");
+	    }
+	    ++it;
+	}
+	/*for (int r=0; r<fieldsTable->numRows();r++){
 	    createStatement.append(fieldsTable->text(r, 0));
 	    createStatement.append(" ");
 	    createStatement.append(fieldsTable->text(r, 1));
 	    if (r<(fieldsTable->numRows() - 1))
 		createStatement.append(", ");
-	}
+	}*/
 	createStatement.append(");");
 	accept();
     }
@@ -72,13 +85,38 @@ void createTableForm::confirmCreate()
 
 void createTableForm::addField()
 {
-    fieldsTable->insertRows(fieldsTable->numRows());
+   addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
+   addForm->setInitialValues(QString(""),QString(""));
+    if (addForm->exec())
+   {
+       //qDebug(addForm->fname + addForm->ftype);
+       QListViewItem * tbitem = new QListViewItem( fieldListView);
+       tbitem->setText( 0, addForm->fname  );
+       tbitem->setText( 1, addForm->ftype );
+   }
 }
 
 
 void createTableForm::deleteField()
 {
-    if (fieldsTable->currentRow()!=-1){
-	fieldsTable->removeRow(fieldsTable->currentRow());
+    QListViewItem * item = fieldListView->selectedItem();
+    if (item==0) {
+	//should never happen, the button would not be active, but...
+	return;
+    } else {
+	delete item;
+	}
+}
+
+
+
+void createTableForm::fieldSelectionChanged()
+{
+     QListViewItem * item = fieldListView->selectedItem();
+    if (item==0) {
+	buttonDeleteField->setEnabled(false);
+    } else {
+	buttonDeleteField->setEnabled(true);
     }
+
 }

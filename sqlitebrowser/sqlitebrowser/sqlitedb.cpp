@@ -1,29 +1,54 @@
-/*
-** This file is part of SQLite Database Browser
-** http://sqlitebrowser.sourceforge.net
-**
-** Originally developed by Mauricio Piacentini, Tabuleiro
-**
-** The author disclaims copyright to this source code.  
-** Consult the LICENSING file for known restrictions
-**
-*/
-
 #include "sqlitedb.h"
+#include "sqlbrowser_util.h"
 #include <stdlib.h>
 #include <qregexp.h>
-
+#include <qimage.h>
+#include <qfile.h>
+#include <qfiledialog.h>
+#include <qmessagebox.h>
 
 void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
 {
     fldmap[order] = DBBrowserField(wfield,wtype);
 }
 
+bool DBBrowserDB::isOpen ( )
+{
+    return _db!=0; 
+}
+
+void DBBrowserDB::setDirty(bool dirtyval)
+{
+    if ((dirty==false)&&(dirtyval==true))
+    {
+	setRestorePoint();
+    }
+    dirty = dirtyval;
+    if (logWin)
+    {	
+	logWin->msgDBDirtyState(dirty);
+    }
+}
+
+void DBBrowserDB::setDirtyDirect(bool dirtyval)
+{
+    dirty = dirtyval;
+    if (logWin)
+    {	
+	logWin->msgDBDirtyState(dirty);
+    }
+}
+	
+bool DBBrowserDB::getDirty()
+{
+    return dirty;
+}
+
 bool DBBrowserDB::open ( const QString & db)
 {
   char *errmsg;
   bool ok=false;
-    
+
   if (isOpen()) close();
   
   lastErrorMessage = QString("no error");
@@ -45,11 +70,48 @@ bool DBBrowserDB::open ( const QString & db)
 	if (SQLITE_OK==sqlite_exec(_db,"PRAGMA show_datatypes = ON;",
                                NULL,NULL,NULL)){
 	    ok=true;
+	    setDirty(false);
 	}
 	curDBFilename = db;
     }
   }
   return ok;
+}
+
+bool DBBrowserDB::setRestorePoint()
+{
+    if (!isOpen()) return false;
+
+  if (_db){
+    sqlite_exec(_db,"BEGIN TRANSACTION RESTOREPOINT;",
+                               NULL,NULL,NULL);
+    setDirty(false);
+}
+  return true;
+}
+
+bool DBBrowserDB::save()
+{
+    if (!isOpen()) return false;
+
+  if (_db){
+    sqlite_exec(_db,"COMMIT TRANSACTION RESTOREPOINT;",
+                               NULL,NULL,NULL);
+    setDirty(false);
+    }   
+  return true;
+}
+
+bool DBBrowserDB::revert()
+{
+    if (!isOpen()) return false;
+
+  if (_db){
+    sqlite_exec(_db,"ROLLBACK TRANSACTION RESTOREPOINT;",
+                               NULL,NULL,NULL);
+    setDirty(false);
+    }
+  return true;
 }
 
 bool DBBrowserDB::create ( const QString & db)
@@ -75,9 +137,11 @@ bool DBBrowserDB::create ( const QString & db)
 	if (SQLITE_OK==sqlite_exec(_db,"PRAGMA show_datatypes = ON;",
                                NULL,NULL,NULL)){
 	    ok=true;
+	    setDirty(false);
 	}
 	curDBFilename = db;
     }
+	
 }
 
   return ok;
@@ -85,7 +149,22 @@ bool DBBrowserDB::create ( const QString & db)
 
 void DBBrowserDB::close (){
     if (_db)
+    {
+	if (getDirty())
+	{
+	    QString msg = "Do you want to save the changes made to the database file ";
+	msg.append(curDBFilename);
+	msg.append(" ?");
+	    if (QMessageBox::question( 0, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+	    {
+		save();
+	    } else {
+		//not really necessary, I think... but will not hurt.
+		revert();
+	    }
+	}
 	sqlite_close(_db);
+    }
    _db = 0;
    idxmap.clear();
    tbmap.clear();
@@ -103,7 +182,61 @@ bool DBBrowserDB::compact ( )
   if (!isOpen()) return false;
 
   if (_db){
+      save();
+      logSQL(QString("VACUUM;"), kLogMsg_App);
     if (SQLITE_OK==sqlite_exec(_db,"VACUUM;",
+                               NULL,NULL,&errmsg)){
+	    ok=true;
+	    setDirty(false);
+	}
+    }
+
+  if (!ok){
+    lastErrorMessage = QString(errmsg);
+    return false;
+  }else{
+    return true;
+  }
+}
+
+bool DBBrowserDB::reload( const QString & filename, int * lineErr)
+{
+    /*to avoid a nested transaction error*/
+    sqlite_exec(_db,"COMMIT;", NULL,NULL,NULL);
+    FILE * cfile = fopen((const char *) filename, (const char *) "r");
+    load_database(_db, cfile, lineErr);
+    fclose(cfile);
+    setDirty(false);
+    if ((*lineErr)!=0)
+    {
+	return false;
+    }
+    return true;
+}
+
+bool DBBrowserDB::dump( const QString & filename)
+{
+    FILE * cfile = fopen((const char *) filename, (const char *) "w");
+    if (!cfile)
+    {
+	return false;
+    }
+    dump_database(_db, cfile);
+    fclose(cfile);
+    return true;
+}
+
+bool DBBrowserDB::executeSQL ( const QString & statement)
+{
+  char *errmsg;
+  bool ok=false;
+    
+  if (!isOpen()) return false;
+
+  if (_db){
+      logSQL(statement, kLogMsg_App);
+      setDirty(true);
+    if (SQLITE_OK==sqlite_exec(_db,statement.latin1(),
                                NULL,NULL,&errmsg)){
 	    ok=true;
 	}
@@ -117,15 +250,16 @@ bool DBBrowserDB::compact ( )
   }
 }
 
-
-bool DBBrowserDB::executeSQL ( const QString & statement)
+bool DBBrowserDB::executeSQLDirect ( const QString & statement)
 {
+    //no transaction support
   char *errmsg;
   bool ok=false;
     
   if (!isOpen()) return false;
 
   if (_db){
+      logSQL(statement, kLogMsg_App);
     if (SQLITE_OK==sqlite_exec(_db,statement.latin1(),
                                NULL,NULL,&errmsg)){
 	    ok=true;
@@ -154,6 +288,8 @@ bool DBBrowserDB::addRecord ( )
     statement.append(") VALUES(NULL);");
     lastErrorMessage = QString("no error");
     if (_db){
+	logSQL(statement, kLogMsg_App);
+	setDirty(true);
 	if (SQLITE_OK==sqlite_exec(_db,statement.latin1(),NULL,NULL, &errmsg)){
 	ok=true;
 	int newrowid = sqlite_last_insert_rowid(_db);
@@ -194,6 +330,8 @@ bool DBBrowserDB::deleteRecord( int wrow)
     statement.append(";");
 
     if (_db){
+	logSQL(statement, kLogMsg_App);
+	setDirty(true);
 	if (SQLITE_OK==sqlite_exec(_db,statement.latin1(),
                                NULL,NULL,&errmsg)){
 	ok=true;
@@ -216,11 +354,6 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     rowList::iterator rt = browseRecs.at(wrow);
     QString rowid = (*rt).first();
     QStringList::Iterator cv = (*rt).at(wcol+1);//must account for rowid
-    //qDebug(*cv);
-#ifdef ARCABUILD
-    if((*cv).compare(binarySignature)==0)
-	return false;
-#endif
     
     QStringList::Iterator ct = browseFields.at(wcol);
     
@@ -239,6 +372,8 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     statement.append(";");
 
     if (_db){
+	logSQL(statement, kLogMsg_App);
+	setDirty(true);
 	if (SQLITE_OK==sqlite_exec(_db,statement.latin1(),
                                NULL,NULL,&errmsg)){
 	ok=true;
@@ -254,6 +389,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     return ok;
     
 }
+
 
 bool DBBrowserDB::browseTable( const QString & tablename )
 {
@@ -294,6 +430,7 @@ void DBBrowserDB::getTableRecords( const QString & tablename )
 	statement.append( tablename.latin1());
 	statement.append(" ORDER BY rowid; ");
 	//qDebug(statement);
+	logSQL(statement, kLogMsg_App);
 	err=sqlite_compile(_db,statement.latin1(),
                               &tail, &vm, NULL);
 	if (err == SQLITE_OK){
@@ -301,15 +438,8 @@ void DBBrowserDB::getTableRecords( const QString & tablename )
 	  while ( sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW ){
 	      r.clear();
 	      for (int e=0; e<ncol; e++){
-#ifdef ARCABUILD
-		  if (QString(vals[e]).startsWith(binaryPattern)){
-		      r<< binarySignature;
-		  } else {
-		      r << vals[e];
-		  }
-#else
-		  r << vals[e];
-#endif
+		QString rv = vals[e];
+    		r << rv;
 		  if (e==0){
 		      idmap.insert(QString(vals[e]).toInt(),rownum);
 		      rownum++;
@@ -338,6 +468,7 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
   resultMap res;
   lastErrorMessage = QString("no error");
    
+  logSQL(wstatement, kLogMsg_App);
 	err=sqlite_compile(_db,wstatement.latin1(),
                               &tail, &vm, &errmsg);
 	if (err == SQLITE_OK){
@@ -346,15 +477,7 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
 	    QString r;
 	  while ( sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW ){
 	      for (int e=0; e<ncol; e++){
-#ifdef ARCABUILD
-		  if (QString(vals[e]).startsWith(binaryPattern)){
-		      r = binarySignature;
-		  } else {
-		      r = vals[e];
-		  }
-#else
-		  r = vals[e];
-#endif
+	      	  r = vals[e];
 		  if (e==0){
 		      rownum = QString(vals[e]).toInt();
 		      rowIdMap::iterator mit = idmap.find(rownum);
@@ -417,10 +540,46 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename)
     return res;
 }
 
+QStringList DBBrowserDB::getTableTypes(const QString & tablename)
+{
+    tableMap::Iterator it;
+    tableMap tmap = tbmap;
+    QStringList res;
+
+        for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+	    if (tablename.compare(it.data().getname())==0 ){
+	    fieldMap::Iterator fit;
+	    fieldMap fmap = it.data().fldmap;
+
+	    for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+		 res.append( fit.data().gettype() );
+	    }
+	}
+	}
+    return res;
+}
+
 int DBBrowserDB::getRecordCount()
 {
     return browseRecs.count();
 }
+
+void DBBrowserDB::logSQL(QString statement, int msgtype)
+{
+    if (logWin)
+    {	
+	/*limit log message to a sensible size, this will truncate some binary messages*/
+	uint loglimit = 300;
+	if ((statement.length() > loglimit)&&(msgtype==kLogMsg_App))
+	{
+	    statement.truncate(32);
+	    statement.append("... <string too wide to log, probably contains binary data> ...");
+	} 
+	logWin->log(statement, msgtype);
+    }
+}
+
+
 void DBBrowserDB::updateSchema( )
 {
   // qDebug ("Getting list of tables");
@@ -441,14 +600,15 @@ void DBBrowserDB::updateSchema( )
    tbmap.clear();
    
    lastErrorMessage = QString("no error");
-
-   err=sqlite_compile(_db,"SELECT name, sql "
+   QString statement = "SELECT name, sql "
                               "FROM sqlite_master "
-                              "WHERE type='table' ;"
+                              "WHERE type='table' ;";
+
+   err=sqlite_compile(_db,statement.latin1()
                               /*"ORDER BY name;"*/ ,
                               &tail, &vm, &errmsg);
         if (err == SQLITE_OK){
-	    
+	    logSQL(statement, kLogMsg_App);
           while ( sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW ){
 	      num.setNum(tabnum);
 	      tbmap[num] = DBBrowserTable(vals[0],vals[1]);
@@ -462,9 +622,10 @@ void DBBrowserDB::updateSchema( )
 	//now get the field list for each table in tbmap
        tableMap::Iterator it;
         for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-	QString statement = "SELECT *  FROM ";
+	statement = "SELECT *  FROM ";
 	statement.append( (const char *) it.data().getname().latin1());
 	statement.append(" LIMIT 1;");
+	logSQL(statement, kLogMsg_App);
 	err=sqlite_compile(_db,statement.latin1(),
                               &tail, &vm, NULL);
         if (err == SQLITE_OK){
@@ -480,13 +641,14 @@ void DBBrowserDB::updateSchema( )
           lastErrorMessage = QString ("could not get types");
         }
     }
-	
-	//finally get indices
-	err=sqlite_compile(_db,"SELECT name, sql "
+	statement = "SELECT name, sql "
                               "FROM sqlite_master "
-                              "WHERE type='index' "
-                              /*"ORDER BY name;"*/,
+                              "WHERE type='index' ";
+	 /*"ORDER BY name;"*/
+	//finally get indices
+	err=sqlite_compile(_db,statement.latin1(),
                               &tail, &vm, &errmsg);
+	logSQL(statement, kLogMsg_App);
 	if (err == SQLITE_OK){
 	    while ( sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW ){
 		num.setNum(idxnum);
@@ -499,77 +661,82 @@ void DBBrowserDB::updateSchema( )
         }
 }
 
-void DBBrowserDB::updateParameter( )
+QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char quote, int maxrecords, int * numfields)
 {
-  // qDebug ("Getting list of parameters");
-   sqlite_vm *vm;
-   const char *tail;
-   const char **vals;
-   const char **names;
-
-   int ncol;
-   QStringList r;
-   char *errmsg;
-   int err=0;
-   QString num;
-          
-   paramMap::Iterator it;
-   
-      for ( it = parammap.begin(); it != parammap.end(); ++it ) {
-          lastErrorMessage = QString("no error");
-          err=sqlite_compile(_db,"PRAGMA " + it.data().getname() + ';',
-                            &tail, &vm, &errmsg);
-          if (err == SQLITE_OK) {
-              if (sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW )
-	          //parammap.remove(it);
-	          parammap[it.key()] = DBBrowserParam(it.data().getname(),vals[0]);         
-              sqlite_finalize(vm, NULL);
-          }else{
-          qDebug ("could not get list of parameters: %d, %s",err,errmsg);
-          }
-      }
+	QFile file(csvfilename);
+	QStringList result;
+	QString current = "";
+	bool inquotemode = false;
+	bool inescapemode = false;
+	int recs = 0;
+	*numfields = 0;
+    if ( file.open( IO_ReadWrite ) ) {
+		char c=0;
+        while ( c!=-1) {
+            c = file.getch();
+			if (c==quote){
+				if (inquotemode){
+					if (inescapemode){
+				 	inescapemode = false;
+				 	//add the escaped char here
+					current.append(c);
+				 	} else {
+					//are we escaping, or just finishing the quote?
+						char d = file.getch();
+						if (d==quote) {
+							inescapemode = true;
+						} else {
+							inquotemode = false;
+						}
+						file.ungetch(d);
+					}
+				} else {
+					inquotemode = true;
+				}
+        	} else if (c==sep) {
+				if (inquotemode){
+				   //add the sep here
+				   current.append(c);
+				} else {
+				  //not quoting, start new record
+				  result << current;
+				  current = "";
+				}
+			} else if (c==10) {
+				if (inquotemode){
+				   //add the newline
+				   current.append(c);
+				} else {
+				  //not quoting, start new record
+				  result << current;
+				  current = "";
+				  //for the first line, store the field count
+				  if (*numfields == 0){
+				      *numfields = result.count();
+				  }
+				  recs++;
+				  if ((recs>maxrecords)&&(maxrecords!=-1))					    {
+				      break;
+				  }   
+				}
+			} else if (c==13) {
+				if (inquotemode){
+				   //add the carrier return if in quote mode only
+				   current.append(c);
+				}
+			} else {//another character type
+				current.append(c);
+			}
+		}
+        file.close();
+		//do we still have a last result, not appended?
+	                //proper csv files should end with a linefeed , so this is not necessary
+		//if (current.length()>0) result << current;
+    }
+	return result;
 }
 
-void DBBrowserDB::buildParameterMap( )
-{
 
-   parammap.clear();
-   
-   parammap["cache size"] = DBBrowserParam("CACHE_SIZE", "2000");
-   parammap["default cache size"] = DBBrowserParam("DEFAULT_CACHE_SIZE", "2000");
-   parammap["temp store"] = DBBrowserParam("TEMP_STORE", "OFF");
-   parammap["default temp store"] = DBBrowserParam("DEFAULT_TEMP_STORE", "DEFAULT");
-   parammap["count changes"] = DBBrowserParam("COUNT_CHANGES", "");
-   parammap["synchronous"] = DBBrowserParam("SYNCHRONOUS", "DEFAULT");
-   parammap["default synchronous"] = DBBrowserParam("DEFAULT_SYNCHRONOUS", "DEFAULT");
-   parammap["empty result callbacks"] = DBBrowserParam("EMPTY_RESULT_CALLBACKS", "OFF");
-   parammap["full column names"] = DBBrowserParam("FULL_COLUMN_NAMES", "OFF");
-   parammap["parser trace"] = DBBrowserParam("PARSER_TRACE", "OFF");
-   parammap["show datatype"] = DBBrowserParam("SHOW_DATATYPES", "OFF");
-   parammap["vdbe trace"] = DBBrowserParam("VDBE_TRACE", "OFF");
-   
-}
 
-void DBBrowserDB::setParameter(const QString & paramName, const QString & paramValue )
-{
-  // qDebug ("Getting list of parameters");
-   sqlite_vm *vm;
-   const char *tail;
-   const char **vals;
-   const char **names;
-   int ncol;
-   
-   char *errmsg;
-   int err=0;
-          
-   lastErrorMessage = QString("no error");
-   err=sqlite_compile(_db,"PRAGMA " + paramName + "=" + paramValue + ';',
-                            &tail, &vm, &errmsg);
-          if (err == SQLITE_OK) {
-              if (sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW )      
-              sqlite_finalize(vm, NULL);
-          }else{
-          qDebug ("could not get list of parameters: %d, %s",err,errmsg);
-          }
-            
-}
+
+

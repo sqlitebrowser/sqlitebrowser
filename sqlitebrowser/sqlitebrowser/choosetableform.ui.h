@@ -6,9 +6,16 @@
 ** init() function in place of a constructor, and a destroy() function in
 ** place of a destructor.
 *****************************************************************************/
-
-void aboutForm::init()
+void chooseTableForm::editPressed()
 {
-    this->setCaption(applicationName);
-    //aboutBrowser->setText(aboutText);
+	option = comboOptions->currentText();
+	accept();
+}
+
+void chooseTableForm::populateOptions(QStringList entries)
+{
+    comboOptions->clear();
+    for ( QStringList::Iterator ct = entries.begin(); ct != entries.end(); ++ct ) {
+	comboOptions->insertItem(*ct,-1);
+    }
 }

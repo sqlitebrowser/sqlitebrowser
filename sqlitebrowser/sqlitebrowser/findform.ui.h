@@ -17,7 +17,13 @@ void findForm::showResults(resultMap rmap)
 	    QListViewItem * tbitem = new QListViewItem( findListView, lasttbitem );
 	    //tbitem->setOpen( TRUE );
 	    tbitem->setText( 0, QString::number(it.key() + 1,10) ); //increase from index 0
-	     tbitem->setText( 1, it.data() );
+	    QString firstline = it.data().section( '\n', 0,0 );
+		  if (firstline.length()>MAX_DISPLAY_LENGTH)
+		{
+		    firstline.truncate(MAX_DISPLAY_LENGTH);
+		   firstline.append("...");
+		}
+	     tbitem->setText( 1, firstline );
 	    lasttbitem = tbitem;
         }
 	QString results = "Found: ";

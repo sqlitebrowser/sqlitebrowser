@@ -1,15 +1,3 @@
-/*
-** This file is part of SQLite Database Browser
-** http://sqlitebrowser.sourceforge.net
-**
-** Originally developed by Mauricio Piacentini, Tabuleiro
-**
-** The author disclaims copyright to this source code.  
-** Consult the LICENSING file for known restrictions
-**
-*/
-
-
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
@@ -17,25 +5,37 @@
 #include <qstringlist.h>
 #include <qmap.h>
 #include <qvaluelist.h>
+#include <qobject.h>
+#include "sqllogform.h"
 #include "sqlite_source/sqlite.h"
+#include "sqlitebrowsertypes.h"
+/*#include "sqlite_source/sqlxtra_util.h"
+#include "sqlite_source/encode.h"
+#include "sqlite_source/swap.h"*/
+
+#define MAX_DISPLAY_LENGTH 14
+
+enum
+{
+	kLogMsg_User,
+	kLogMsg_App
+};
 
 static QString applicationName = QString("SQLite Database Browser");
 static QString applicationIconName = QString("icone16.png");
-static QString aboutText = QString("Version 1.01\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\n You can find the latest versions of the source code of SQLite Database browser at http://sqlitebrowser.sourceforge.net. \n\nIn the spirit of the original SQLite source code, the authors disclaims copyright to this source code.");
+static QString aboutText = QString("Version 1.1\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
 
 
 typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMap<QString, class DBBrowserTable> tableMap;
 typedef QMap<QString, class DBBrowserIndex> indexMap;
-typedef QMap<QString, class DBBrowserParam> paramMap;
-
 typedef QMap<int, int> rowIdMap;
 
 typedef QValueList<QStringList> rowList;
 typedef QMap<int, QString> resultMap;
 
 class DBBrowserField
-    {
+    {    
     public:
         DBBrowserField() : name( 0 ) { }
         DBBrowserField( const QString& wname,const QString& wtype )
@@ -49,7 +49,7 @@ class DBBrowserField
  };
 
 class DBBrowserIndex
-    {
+    {    
     public:
         DBBrowserIndex() : name( 0 ) { }
        DBBrowserIndex( const QString& wname,const QString& wsql )
@@ -64,7 +64,7 @@ private:
 
 
 class DBBrowserTable
-    {
+    {    
     public:
         DBBrowserTable() : name( 0 ) { }
         DBBrowserTable( const QString& wname,const QString& wsql )
@@ -81,19 +81,6 @@ private:
         QString sql;
  };
 
-class DBBrowserParam
-    {
-    public:
-        DBBrowserParam() : name( 0 ) { }
-        DBBrowserParam( const QString& wname,const QString& wvalue )
-            : name( wname), value( wvalue )
-        { }
-        QString getname() const { return name; }
-        QString getvalue() const { return value; }
-	private:
-        QString name;
-        QString value;
- };
 
 class DBBrowserDB
 {
@@ -104,27 +91,37 @@ public:
 	bool create ( const QString & db);
 	void close ();
 	bool compact ();
+	bool setRestorePoint();
+	bool save ();
+	bool revert ();
+	bool dump( const QString & filename);
+	bool reload( const QString & filename, int * lineErr);
 	bool executeSQL ( const QString & statement);
+	bool executeSQLDirect ( const QString & statement);
 	void updateSchema() ;
-	void updateParameter();
-	void buildParameterMap();
-	void setParameter(const QString & paramname, const QString & paramvalue);
 	bool addRecord();
 	bool deleteRecord(int wrow);
 	bool updateRecord(int wrow, int wcol, const QString & wtext);
 	bool browseTable( const QString & tablename );
 	QStringList getTableFields(const QString & tablename);
+	QStringList getTableTypes(const QString & tablename);
 	QStringList getTableNames();
 	QStringList getIndexNames();
 	resultMap getFindResults( const QString & wstatement);
 	int getRecordCount();
-	bool isOpen() const { return _db!=0; }
+	bool isOpen();
+	void setDirty(bool dirtyval);
+	void setDirtyDirect(bool dirtyval);
+	bool getDirty();
+	void logSQL(QString statement, int msgtype);
 	sqlite * _db;
-	
+
+
+	QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);
+
 	tableMap tbmap;
 	indexMap idxmap;
 	rowIdMap idmap;
-	paramMap parammap;
 	
 	rowList browseRecs;
 	QStringList browseFields;
@@ -132,8 +129,15 @@ public:
 	QString curBrowseTableName;
 	QString lastErrorMessage;
 	QString curDBFilename;
+	
+	sqlLogForm * logWin;
+	
+
 	private:
+	    bool dirty;
 	void getTableRecords( const QString & tablename );
+	
+	
 };
 
 #endif

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>createTableForm</class>
 <widget class="QDialog">
     <property name="name">
@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>309</width>
-            <height>312</height>
+            <height>320</height>
         </rect>
     </property>
     <property name="caption">
@@ -68,43 +68,51 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QTable">
+                <widget class="QListView">
                     <column>
                         <property name="text">
-                            <string>Field Name</string>
+                            <string>Field name</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
                         </property>
                     </column>
                     <column>
                         <property name="text">
-                            <string>Field Type</string>
+                            <string>Field type</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
                         </property>
                     </column>
-                    <property name="name">
-                        <cstring>fieldsTable</cstring>
+                <item>
+                    <property name="text">
+                        <string>New Item</string>
                     </property>
-                    <property name="acceptDrops">
-                        <bool>true</bool>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </item>
+                    <property name="name">
+                        <cstring>fieldListView</cstring>
                     </property>
                     <property name="resizePolicy">
-                        <enum>Default</enum>
+                        <enum>Manual</enum>
                     </property>
-                    <property name="numRows">
-                        <number>0</number>
-                    </property>
-                    <property name="numCols">
-                        <number>2</number>
-                    </property>
-                    <property name="rowMovingEnabled">
-                        <bool>true</bool>
-                    </property>
-                    <property name="selectionMode">
-                        <enum>SingleRow</enum>
-                    </property>
-                    <property name="focusStyle">
-                        <enum>FollowStyle</enum>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>This area contains the definitions for the fields in your new table. Add a new field using the ADD button. You can type the name of the field and the field type directly. Suggested field types are text, numeric or blob (for images and binary data)</string>
+                    <property name="resizeMode">
+                        <enum>AllColumns</enum>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -149,6 +157,9 @@
                         <widget class="QPushButton">
                             <property name="name">
                                 <cstring>buttonDeleteField</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
                             </property>
                             <property name="text">
                                 <string>Delete</string>
@@ -243,10 +254,17 @@
         <receiver>createTableForm</receiver>
         <slot>deleteField()</slot>
     </connection>
+    <connection>
+        <sender>fieldListView</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>createTableForm</receiver>
+        <slot>fieldSelectionChanged()</slot>
+    </connection>
 </connections>
 <includes>
-    <include location="local" impldecl="in implementation">qmessagebox.h</include>
     <include location="local" impldecl="in declaration">sqlitedb.h</include>
+    <include location="local" impldecl="in implementation">qmessagebox.h</include>
+    <include location="local" impldecl="in implementation">addfieldform.h</include>
     <include location="local" impldecl="in implementation">createtableform.ui.h</include>
 </includes>
 <variables>
@@ -256,6 +274,7 @@
     <slot>confirmCreate()</slot>
     <slot>addField()</slot>
     <slot>deleteField()</slot>
+    <slot>fieldSelectionChanged()</slot>
 </slots>
 <functions>
     <function access="private" specifier="non virtual">init()</function>

@@ -14,45 +14,83 @@ void mainForm::init()
 	clipboard->setSelectionMode( TRUE );
     
     findWin = 0;
+     editWin = 0;
+     logWin = 0;
     recsPerView = 1000;
     recAtTop = 0;
     gotoValidator = new QIntValidator(0,0,this);
     editGoto->setValidator(gotoValidator);
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
-    this->setCaption(applicationName);    
+    this->setCaption(applicationName);
     this->setIcon( QPixmap::fromMimeSource( applicationIconName ) );
     buttonNext->setEnabled(FALSE);
     buttonPrevious->setEnabled(FALSE);
-
+    
+    
+       if (!editWin)
+    {
+       editWin = new editForm(this);
+       connect( editWin, SIGNAL( goingAway() ),this, SLOT( editWinAway() ) );
+       connect( editWin, SIGNAL( updateRecordText(int, int , QString) ),
+                     this, SLOT( updateRecordText(int, int , QString) ) );
+   }
+       
+        if (!logWin)
+    {
+       logWin = new sqlLogForm(this);
+       connect( logWin, SIGNAL( goingAway() ),this, SLOT( logWinAway() ) );
+       connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
+   }
+	
+	//connect db and log
+    db.logWin = logWin;
+	
 }
 
 void mainForm::destroy()
 {
     if (gotoValidator)
 	delete gotoValidator;
+
 }
 
-void mainForm::fileOpen()
+void mainForm::fileOpen(const QString & fileName)
 {
-    QString fileName = QFileDialog::getOpenFileName(
+    QString wFile = fileName;
+    if (!QFile::exists(wFile))
+    {
+    	wFile = QFileDialog::getOpenFileName(
                     "",
                     "",
                     this,
                     "open file dialog"
                     "Choose a database file" );
-    if (QFile::exists(fileName) )
+    }
+    if (QFile::exists(wFile) )
     {
-	db.open(fileName);
-        db.buildParameterMap();
-	populateStructure();
-	populateParameter();
-        resetParamBrowser();
-	resetBrowser();
+	if (db.open(wFile))
+	{
+	this->setCaption(applicationName+" - "+wFile);
 	fileCloseAction->setEnabled(true);
-	compactAction->setEnabled(true);
+	fileCompactAction->setEnabled(true);
+	editCreateTableAction->setEnabled(true);
+	editDeleteTableAction->setEnabled(true);
+	editModifyTableAction->setEnabled(true);
+	editCreateIndexAction->setEnabled(true);
+	editDeleteIndexAction->setEnabled(true);
+	}
+	populateStructure();
+	resetBrowser();
     }
 }
+
+
+void mainForm::fileOpen()
+{
+	fileOpen(QString());
+}
+
 
 
 void mainForm::fileNew()
@@ -74,14 +112,17 @@ void mainForm::fileNew()
     if (!fileName.isNull())
     {
 	db.create(fileName);
-              db.buildParameterMap();
+	this->setCaption(applicationName+" - "+fileName);
 	populateStructure();
-	populateParameter();
-	resetParamBrowser();
-        resetBrowser();
+	resetBrowser();
 	createTable();
 	fileCloseAction->setEnabled(true);
-	compactAction->setEnabled(true);
+	fileCompactAction->setEnabled(true);
+	editCreateTableAction->setEnabled(true);
+	editDeleteTableAction->setEnabled(true);
+	editModifyTableAction->setEnabled(true);
+	editCreateIndexAction->setEnabled(true);
+	editDeleteIndexAction->setEnabled(true);
     }
 }
 
@@ -125,31 +166,6 @@ void mainForm::populateStructure()
         }
 }	
 
-void mainForm::populateParameter()
-{
-    if (!db.isOpen()){ 
-	paramTable->setNumRows( 0 ); 
-	return;
-    }
-    
-   db.buildParameterMap();
-   db.updateParameter();
-   paramMap::Iterator it;
-   paramMap tmap = db.parammap;
-   
-   paramTable->setNumRows( tmap.count() );
-   paramTable->setNumCols( 2 );
-   
-   //QListViewItem * lasttbitem = 0;
-   int rowNum = 0;
-        for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-	    paramTable->setText( rowNum, 0, it.data().getname()  );
-	    paramTable->setText( rowNum, 1, it.data().getvalue()  );
-            ++rowNum;
-	}
-   
-}
-
 void mainForm::populateTable( const QString & tablename)
 {
     bool mustreset = false;
@@ -179,14 +195,11 @@ void mainForm::populateTable( const QString & tablename)
     if (findWin){
 	findWin->resetResults();
     }
+    if (editWin)
+    {
+	editWin->reset();
+    }
 }
-
-void mainForm::getActualParamValue( const QString & paramName)
-{
-    paramMap pmap = db.parammap;
-    paramValueEdit->setText(pmap[paramName].getvalue());
-}
-
 
 void mainForm::resetBrowser()
 {
@@ -205,39 +218,41 @@ void mainForm::resetBrowser()
     populateTable(comboBrowseTable->currentText());
 }
 
-void mainForm::resetParamBrowser()
-{
-    comboParamTable->clear();
-    paramValueEdit->clear();
-    if (!db.isOpen()) {
-	comboParamTable->insertItem("",-1);
-	return;
-    }
-    paramMap::Iterator it;
-    paramMap pmap = db.parammap;
-    for ( it = pmap.begin(); it != pmap.end(); ++it ) {
-	comboParamTable->insertItem(it.key(),-1);
-    } 
-    comboParamTable->setCurrentItem(0);
-    getActualParamValue(comboParamTable->currentText());
-}
-
-
 void mainForm::fileClose()
 {
     db.close();
+    this->setCaption(applicationName);
     resetBrowser();
-    resetParamBrowser();
     populateStructure();
-    populateParameter();
     fileCloseAction->setEnabled(false);
-    compactAction->setEnabled(false);
+    fileCompactAction->setEnabled(false);
+    editCreateTableAction->setEnabled(false);
+    editDeleteTableAction->setEnabled(false);
+    editModifyTableAction->setEnabled(false);
+    editCreateIndexAction->setEnabled(false);
+    editDeleteIndexAction->setEnabled(false);
 }
 
 
 void mainForm::fileExit()
 {
-   db.close();
+    if (db.isOpen())
+    {
+	if (db.getDirty())
+	{
+	    QString msg = "Do you want to save the changes made to the database file ";
+	msg.append(db.curDBFilename);
+	msg.append("?");
+	    if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+	    {
+		db.save();
+	    } else {
+		//not really necessary, I think... but will not hurt.
+		db.revert();
+	    }
+	}
+	db.close();
+    }
    QApplication::exit( 0 );
 }
 
@@ -259,26 +274,10 @@ void mainForm::addRecord()
 }
 
 
-void mainForm::recordEdited( int wrow, int wcol )
-{
-    if (!db.updateRecord(wrow+recAtTop, wcol, dataTable->text(wrow, wcol))){
-	//could not update
-	rowList tab = db.browseRecs;
-	rowList::iterator rt = tab.at(wrow+recAtTop);
-	QString rowid = (*rt).first();
-	QStringList::Iterator cv = (*rt).at(wcol+1);//must account for rowid
-	dataTable->setText( wrow, wcol, *cv  );
-	QMessageBox::information( this, applicationName, "Data can not be edited" );
-    }
-    dataTable->setVScrollBarMode(QScrollView::AlwaysOff);
-    dataTable->setVScrollBarMode(QScrollView::Auto);
-}
-
-
 void mainForm::deleteRecord()
 {
     if (dataTable->currentRow()!=-1){
-        int lastselected = dataTable->currentRow();
+	int lastselected = dataTable->currentRow();
 	db.deleteRecord(dataTable->currentRow()+recAtTop);
 	populateTable(db.curBrowseTableName);
 	int nextselected = lastselected ;
@@ -287,7 +286,7 @@ void mainForm::deleteRecord()
 	}
 	if (nextselected>0){
 	    selectTableLine(nextselected);
-	}        
+	}
     } else {
 	QMessageBox::information( this, applicationName, "Please select a record first" );    }
 }
@@ -298,7 +297,7 @@ void mainForm::updateTableView(int lineToSelect)
     QApplication::setOverrideCursor( waitCursor, TRUE );
     QStringList fields = db.browseFields;
     
-    dataTable->setNumRows(0);	
+     dataTable->setNumRows(0);	
     dataTable->setNumCols( fields.count() );
     int cheadnum = 0;
     for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
@@ -329,7 +328,14 @@ void mainForm::updateTableView(int lineToSelect)
 	for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it ) {
 	    //skip first one (the rowid)
 	    if (it!=(*rt).begin()){
-		dataTable->setText( rowNum, colNum, *it  );
+		QString content = *it;
+		QString firstline = content.section( '\n', 0,0 );
+		if (content.length()>MAX_DISPLAY_LENGTH)
+		{
+		    firstline.truncate(MAX_DISPLAY_LENGTH);
+		    firstline.append("...");
+		}
+		dataTable->setText( rowNum, colNum, firstline);
 		colNum++;
 	    }
 	}
@@ -339,14 +345,9 @@ void mainForm::updateTableView(int lineToSelect)
     
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
-	//qDebug("inside selection");	
-        selectTableLine(lineToSelect);
+	//qDebug("inside selection");
+	selectTableLine(lineToSelect);
     } 
-//	dataTable->clearSelection(true);
-//	dataTable->selectRow(lineToSelect);
-//	dataTable->setCurrentCell(lineToSelect, 0);
-//	dataTable->ensureCellVisible (lineToSelect, 0 ) ;
-//    }
     setRecordsetLabel();
     QApplication::restoreOverrideCursor();
 }
@@ -407,7 +408,7 @@ void mainForm::setRecordsetLabel()
 	label.append(" of ");
 	label.append(QString::number(db.getRecordCount(),10));
 	labelRecordset->setText(label);
-    }    
+    }
     gotoValidator->setRange ( 0, db.getRecordCount());
     
     if (db.getRecordCount()>1000){
@@ -562,7 +563,7 @@ void mainForm::compact()
     populateStructure();
     resetBrowser();
     fileCloseAction->setEnabled(true);
-    compactAction->setEnabled(true);
+    fileCompactAction->setEnabled(true);
     QApplication::restoreOverrideCursor( );
 }
 
@@ -584,6 +585,34 @@ void mainForm::deleteTable()
 	    error.append(db.lastErrorMessage);
 	    QMessageBox::warning( this, applicationName, error );
 	} else {
+	    populateStructure();
+	    resetBrowser();
+	}
+    }
+}
+
+void mainForm::editTable()
+{
+    if (!db.isOpen()){
+	QMessageBox::information( this, applicationName, "There is no database opened." );
+	return;
+    }
+    chooseTableForm * tableForm = new chooseTableForm( this, "choosetable", TRUE );
+    QStringList tablelist = db.getTableNames();
+    if (tablelist.empty()){
+	QMessageBox::information( this, applicationName, "There are no tables to edit in this database." );
+	return;
+    }
+    tableForm->populateOptions( tablelist );
+    if ( tableForm->exec() ) {
+	//statement.append(tableForm->option);
+	editTableForm * edTableForm = new editTableForm( this, "edittable", TRUE );
+	//send table name ? or handle it all from here?
+	edTableForm->setActiveTable(&db, tableForm->option);
+	edTableForm->exec();
+	//check modified status
+	if (edTableForm->modified)
+	{
 	    populateStructure();
 	    resetBrowser();
 	}
@@ -666,19 +695,381 @@ void mainForm::helpAbout()
 }
 
 
-
-void mainForm::setParamValue()
+void mainForm::updateRecordText(int row, int col, QString newtext)
 {
-    
-    if(!db.isOpen()) { 
-	QMessageBox::information( this, applicationName,
-                      "Please open a database first" );
+    if (!db.updateRecord(row, col, newtext)){
+	QMessageBox::information( this, applicationName, "Data could not be updated" );
+    }
+    /*dataTable->setVScrollBarMode(QScrollView::AlwaysOff);
+    dataTable->setVScrollBarMode(QScrollView::Auto);
+    dataTable->setReadOnly(true);*/
+    	rowList tab = db.browseRecs;
+	rowList::iterator rt = tab.at(row);
+	QString rowid = (*rt).first();
+	QStringList::Iterator cv = (*rt).at(col+1);//must account for rowid
+	
+	QString content = *cv ;
+	QString firstline = content.section( '\n', 0,0 );
+	if (content.length()>14)
+	{
+	   firstline.truncate(14);
+	   firstline.append("...");
+	}
+	dataTable->setText( row - recAtTop, col, firstline);
+}
+
+void mainForm::logWinAway()
+{
+    sqlLogAction->toggle();
+}
+
+void mainForm::editWinAway()
+{
+    editWin->hide();
+    setActiveWindow();
+    dataTable->selectCells ( editWin->curRow - recAtTop, editWin->curCol, editWin->curRow- recAtTop, editWin->curCol);
+}
+
+
+
+void mainForm::editText(int row, int col)
+{
+    rowList tab = db.browseRecs;
+    rowList::iterator rt = tab.at(row);
+    QString rowid = (*rt).first();
+    QStringList::Iterator cv = (*rt).at(col+1);//must account for rowid
+     //dataTable->setText( row - recAtTop, col, *cv  );
+	
+    editWin->loadText(*cv , row, col);
+    editWin ->show();
+}
+
+
+
+void mainForm::doubleClickTable( int row, int col, int button, const QPoint & mousepoint )
+{
+    if ((row==-1) || (col==-1)){
+	qDebug("no cell selected");
 	return;
     }
     
-     const QString newValue = paramValueEdit->text();
-     const QString paramName = comboParamTable->currentText();
-     paramMap pmap = db.parammap;
-     db.setParameter(pmap[paramName].getname(), newValue);
-     populateParameter( );
+    int realRow = row + recAtTop;
+   
+    editText(realRow , col);
+}
+
+
+void mainForm::executeQuery()
+{
+    QString query = sqlTextEdit->text();
+    if (query.isEmpty())
+    {
+	QMessageBox::information( this, applicationName, "Query string is empty" );
+	return;
+    }
+    //log the query
+    db.logSQL(query, kLogMsg_User);
+    sqlite_vm *vm;
+   const char *tail;
+   const char **vals;
+   const char **names;
+
+   int ncol;
+   char *errmsg;
+   int err=0;
+   QString lastErrorMessage = QString("No error");
+   queryResultListView->clear();
+   queryResultListView->setSorting (-1, FALSE);
+   while (queryResultListView->columns()>0)
+   {
+       queryResultListView->removeColumn(0);
+   }
+   
+	err=sqlite_compile(db._db,query,
+                              &tail, &vm, &errmsg);
+	if (err == SQLITE_OK){
+	    db.setDirty(true);
+	    int rownum = 0;
+	  QListViewItem * lasttbitem = 0;
+	  bool mustCreateColumns = true;
+	  while ( sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW ){
+	      //r.clear()
+	          QListViewItem * tbitem = new QListViewItem( queryResultListView, lasttbitem);
+	      //setup num of cols here for display grid
+	      if (mustCreateColumns)
+		  {
+		for (int e=0; e<ncol; e++)
+		  queryResultListView->addColumn("");
+		
+		mustCreateColumns = false;
+	      }
+	      for (int e=0; e<ncol; e++){
+		  QString rv = vals[e];
+    		//show it here
+		  QString firstline = rv.section( '\n', 0,0 );
+		  if (firstline.length()>MAX_DISPLAY_LENGTH)
+		{
+		    firstline.truncate(MAX_DISPLAY_LENGTH);
+		   firstline.append("...");
+		}
+		  tbitem->setText( e, firstline);
+		  lasttbitem = tbitem;
+		rownum++;
+	      }
+	  }
+
+          sqlite_finalize(vm, NULL);
+        }else{
+          lastErrorMessage = QString (errmsg);
+        }
+       queryErrorLineEdit->setText(lastErrorMessage);
+}
+
+
+void mainForm::mainTabSelected(const QString & tabname)
+{
+    if ((mainTab->currentPageIndex ()==0)||(mainTab->currentPageIndex ()==1))
+    {
+	populateStructure();
+	resetBrowser();
+    }
+}
+
+
+void mainForm::toggleLogWindow( bool enable )
+{
+    if (enable){
+	logWin->show();
+    } else {
+	logWin->hide();
+    }
+}
+
+
+void mainForm::importTableFromCSV()
+{
+     if (!db.isOpen()){
+	QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
+	return;
+    }
+     
+     if (db.getDirty())
+     {
+     QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
+	if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+	{
+	    db.save();
+	} else {
+	    return;
+	}
+    }
+    
+    QString wFile = QFileDialog::getOpenFileName(
+                    "",
+                    "Text files (*.csv *.txt)",
+                    this,
+                    "import csv data"
+                    "Choose a text file" );
+    
+    if (QFile::exists(wFile) )
+    {
+	importCSVForm * csvForm = new importCSVForm( this, "importcsv", TRUE );
+	csvForm->initialize(wFile, &db);
+	if ( csvForm->exec() ) {
+	    populateStructure();
+	    resetBrowser();
+	    QMessageBox::information( this, applicationName, "Import completed" );
+	}
+    }
+}
+
+void mainForm::exportTableToCSV()
+{
+     if (!db.isOpen()){
+	QMessageBox::information( this, applicationName, "There is no database opened to export" );
+	return;
+    }
+     exportTableCSVForm * exportForm = new exportTableCSVForm( this, "export table", TRUE );
+    exportForm->populateOptions( db.getTableNames());
+    if ( exportForm->exec() ) {
+	//qDebug(exportForm->option);
+	//load our table
+	db.browseTable(exportForm->option);
+	
+	QString fileName = QFileDialog::getSaveFileName(
+                    "",
+                    "Text files (*.csv *txt)",
+                    this,
+                    "save file dialog"
+                    "Choose a filename to export data" );
+    
+	if (fileName)
+	{
+	    QFile file(fileName);
+	    if ( file.open( IO_WriteOnly ) ) 
+	    {
+		char quote = '"';
+		char sep = ',';
+		char feed = 10;
+		int colNum = 0;
+		int colCount = 0;
+		QTextStream stream( &file );
+		//fieldnames on first row
+		 QStringList fields = db.browseFields;
+		 colCount = fields.count();
+		 for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
+		     stream << quote;
+		     stream << *ct;
+		     stream << quote;
+		     colNum++;
+		     if (colNum<colCount)
+		{
+			 stream << sep;
+		} else {
+			stream << feed;
+			colNum = 0;
+		}
+		 }
+		
+		//now export data
+		rowList tab = db.browseRecs;
+		rowList::iterator rt;
+		
+		//int dcols =0;
+		QString rowLabel;
+		for ( rt = tab.at(0); rt !=tab.end(); ++rt )
+		{
+		    for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it ) {
+			//skip first one (the rowid)
+		if (it!=(*rt).begin()){
+			    QString content = *it;
+			    stream<< quote;
+			    QChar qquote = quote;
+			    content.replace(quote, QString(qquote).append(qquote));
+			    stream<< content;
+			    stream<< quote;
+			    colNum++;
+			    if (colNum<colCount)
+			    {
+				stream << sep;
+			    } else {
+				stream << feed;
+				colNum = 0;
+			    }
+			}
+	    }
+		}
+    
+		file.close();
+		QMessageBox::information( this, applicationName, "Export completed" );
+	    }	
+	}
+	populateStructure();
+	resetBrowser();
+    }
+}
+
+
+void mainForm::dbState( bool dirty )
+{
+    fileSaveAction->setEnabled(dirty);
+    fileRevertAction->setEnabled(dirty);
+}
+
+
+void mainForm::fileSave()
+{
+    if (db.isOpen()){
+	db.save();
+    }
+}
+
+
+void mainForm::fileRevert()
+{
+    if (db.isOpen()){
+	QString msg = "Are you sure you want to undo all changes made to the database file \n ";
+	msg.append(db.curDBFilename);
+	msg.append(" since the last save?");
+	if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+	    {
+		db.revert();
+		populateStructure();
+		resetBrowser();
+	    }
+    }
+}
+
+
+void mainForm::exportDatabaseToSQL()
+{
+        if (!db.isOpen()){
+	QMessageBox::information( this, applicationName, "There is no database opened to export" );
+	return;
+    }
+
+    QString fileName = QFileDialog::getSaveFileName(
+                    "",
+                    "Text files (*.sql *txt)",
+                    0,
+                    "save file dialog"
+                    "Choose a filename to export" );
+    
+	if (fileName)
+	{
+	    if (!db.dump(fileName))
+	    {
+		QMessageBox::information( this, applicationName, "Could not create export file" );
+	    } else {
+		QMessageBox::information( this, applicationName, "Export completed" );
+	    }
+	}
+}
+
+
+void mainForm::importDatabaseFromSQL()
+{
+    QString fileName = QFileDialog::getOpenFileName(
+                    "",
+                    "Text files (*.sql *txt)",
+                    0,
+                    "import file dialog"
+                    "Choose a file to import" );
+    
+    if (fileName)
+	{
+	QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
+	if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+	{
+	QString newDBfile = QFileDialog::getSaveFileName(
+		"",
+		"",
+		this,
+		"create file dialog"
+		"Choose a filename to save under" );
+	if (QFile::exists(newDBfile) )
+	{
+	    QString err = "File ";
+	    err.append(newDBfile);
+	    err.append(" already exists. Please choose a different name");
+	    QMessageBox::information( this, applicationName ,err);
+	    return;
+	}
+	if (!fileName.isNull())
+	{
+	    db.create(newDBfile);
+	}
+    }
+	    int lineErr;
+	    if (!db.reload(fileName, &lineErr))
+	    {
+		QMessageBox::information( this, applicationName, QString("Error importing data at line %1").arg(lineErr) );
+	    }
+	    else
+	    {
+		QMessageBox::information( this, applicationName, "Import completed" );
+	    }
+	    populateStructure();
+	    resetBrowser();
+	}	
 }

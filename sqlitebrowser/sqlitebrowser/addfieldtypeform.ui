@@ -1,50 +1,32 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>aboutForm</class>
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>addFieldTypeForm</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>aboutForm</cstring>
+        <cstring>addFieldTypeForm</cstring>
     </property>
     <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>510</width>
-            <height>177</height>
+            <width>294</width>
+            <height>98</height>
         </rect>
     </property>
     <property name="caption">
-        <string>About</string>
+        <string>Enter field type</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel">
+        <widget class="QLineEdit" row="0" column="0">
             <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>7</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Version 1.1
-
-SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite 2.x database files.
-
-More information at http://sqlitebrowser.sourceforge.net.</string>
-            </property>
-            <property name="alignment">
-                <set>WordBreak|AlignVCenter</set>
+                <cstring>typeNameEdit</cstring>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="1" column="0">
             <property name="name">
-                <cstring>layout55</cstring>
+                <cstring>layout11</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -62,17 +44,25 @@ More information at http://sqlitebrowser.sourceforge.net.</string>
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>141</width>
+                            <width>31</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
                 <widget class="QPushButton">
                     <property name="name">
+                        <cstring>cancelButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
                         <cstring>okButton</cstring>
                     </property>
                     <property name="text">
-                        <string>Close</string>
+                        <string>OK</string>
                     </property>
                     <property name="default">
                         <bool>true</bool>
@@ -80,23 +70,26 @@ More information at http://sqlitebrowser.sourceforge.net.</string>
                 </widget>
             </hbox>
         </widget>
-    </vbox>
+    </grid>
 </widget>
 <connections>
     <connection>
         <sender>okButton</sender>
         <signal>clicked()</signal>
-        <receiver>aboutForm</receiver>
-        <slot>close()</slot>
+        <receiver>addFieldTypeForm</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>addFieldTypeForm</receiver>
+        <slot>reject()</slot>
     </connection>
 </connections>
 <includes>
+    <include location="global" impldecl="in implementation">qmessagebox.h</include>
     <include location="local" impldecl="in implementation">sqlitedb.h</include>
-    <include location="local" impldecl="in implementation">aboutform.ui.h</include>
 </includes>
-<functions>
-    <function access="private" specifier="non virtual">init()</function>
-</functions>
 <pixmapinproject/>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

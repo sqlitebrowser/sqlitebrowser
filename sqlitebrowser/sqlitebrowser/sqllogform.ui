@@ -1,0 +1,165 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>sqlLogForm</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>sqlLogForm</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>547</width>
+            <height>203</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>SQL Log</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout6</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show SQL submitted by:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox">
+                    <item>
+                        <property name="text">
+                            <string>User</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Application</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>comboBox3</cstring>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer10</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>150</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>clearButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Clear</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QWidgetStack">
+            <property name="name">
+                <cstring>logStack</cstring>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>WStackPage</cstring>
+                </property>
+                <attribute name="id">
+                    <number>0</number>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QTextEdit" row="0" column="0">
+                        <property name="name">
+                            <cstring>userLogText</cstring>
+                        </property>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
+                        </property>
+                        <property name="readOnly">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>WStackPage</cstring>
+                </property>
+                <attribute name="id">
+                    <number>1</number>
+                </attribute>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QTextEdit">
+                        <property name="name">
+                            <cstring>appLogText</cstring>
+                        </property>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
+                        </property>
+                        <property name="readOnly">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </vbox>
+            </widget>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>clicked()</signal>
+        <receiver>sqlLogForm</receiver>
+        <slot>clearLog()</slot>
+    </connection>
+    <connection>
+        <sender>comboBox3</sender>
+        <signal>activated(int)</signal>
+        <receiver>logStack</receiver>
+        <slot>raiseWidget(int)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in implementation">sqlitedb.h</include>
+    <include location="local" impldecl="in implementation">sqllogform.ui.h</include>
+</includes>
+<signals>
+    <signal>goingAway();</signal>
+    <signal>dbState(bool dirty);</signal>
+</signals>
+<slots>
+    <slot>closeEvent( QCloseEvent * )</slot>
+    <slot>log( QString &amp; statement, int msgtype )</slot>
+    <slot>msgDBDirtyState( bool dirty )</slot>
+    <slot>clearLog()</slot>
+</slots>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
