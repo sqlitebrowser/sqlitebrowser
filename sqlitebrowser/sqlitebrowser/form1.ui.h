@@ -822,9 +822,11 @@ void mainForm::executeQuery()
 			  const ushort* utf16data = static_cast<const ushort*>(sqlite3_column_text16(vm, e));
 			  QString rv;
 			  uint	utf16len=0;
-			  if ( utf16data )
-				  while ( *utf16data++ ) ++utf16len;
-			  rv.setUnicodeCodes(utf16data, utf16len);
+			  if ( utf16data ) {
+				  for ( const ushort* p = utf16data; *p; ++p )
+					  ++utf16len;
+				rv.setUnicodeCodes(utf16data, utf16len);
+			  }
     		//show it here
 		  QString firstline = rv.section( '\n', 0,0 );
 		  if (firstline.length()>MAX_DISPLAY_LENGTH)
