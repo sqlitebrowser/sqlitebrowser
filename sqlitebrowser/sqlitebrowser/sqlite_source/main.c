@@ -14,7 +14,7 @@
 ** other files are for internal use by SQLite and should not be
 ** accessed by users of the library.
 **
-** $Id: main.c,v 1.3 2005-03-23 14:56:42 jmiltner Exp $
+** $Id: main.c,v 1.4 2005-04-05 04:14:53 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -133,7 +133,7 @@ static int sqlite3InitOne(sqlite3 *db, int iDb, char **pzErrMsg){
   int meta[10];
   InitData initData;
   char const *zMasterSchema;
-  char const *zMasterName;
+  char const *zMasterName = SCHEMA_TABLE(iDb);
 
   /*
   ** The master database table has a structure like this
@@ -147,6 +147,7 @@ static int sqlite3InitOne(sqlite3 *db, int iDb, char **pzErrMsg){
      "  sql text\n"
      ")"
   ;
+#ifndef SQLITE_OMIT_TEMPDB
   static const char temp_master_schema[] = 
      "CREATE TEMP TABLE sqlite_temp_master(\n"
      "  type text,\n"
@@ -156,6 +157,9 @@ static int sqlite3InitOne(sqlite3 *db, int iDb, char **pzErrMsg){
      "  sql text\n"
      ")"
   ;
+#else
+  #define temp_master_schema 0
+#endif
 
   assert( iDb>=0 && iDb<db->nDb );
 
@@ -163,13 +167,12 @@ static int sqlite3InitOne(sqlite3 *db, int iDb, char **pzErrMsg){
   ** and initialisation script appropriate for the database being
   ** initialised. zMasterName is the name of the master table.
   */
-  if( iDb==1 ){
+  if( !OMIT_TEMPDB && iDb==1 ){
     zMasterSchema = temp_master_schema;
-    zMasterName = TEMP_MASTER_NAME;
   }else{
     zMasterSchema = master_schema;
-    zMasterName = MASTER_NAME;
   }
+  zMasterName = SCHEMA_TABLE(iDb);
 
   /* Construct the schema tables.  */
   sqlite3SafetyOff(db);
@@ -195,7 +198,7 @@ static int sqlite3InitOne(sqlite3 *db, int iDb, char **pzErrMsg){
   /* Create a cursor to hold the database open
   */
   if( db->aDb[iDb].pBt==0 ){
-    if( iDb==1 ) DbSetProperty(db, 1, DB_SchemaLoaded);
+    if( !OMIT_TEMPDB && iDb==1 ) DbSetProperty(db, 1, DB_SchemaLoaded);
     return SQLITE_OK;
   }
   rc = sqlite3BtreeCursor(db->aDb[iDb].pBt, MASTER_ROOT, 0, 0, 0, &curMain);
@@ -351,12 +354,14 @@ int sqlite3Init(sqlite3 *db, char **pzErrMsg){
   ** for the TEMP database. This is loaded last, as the TEMP database
   ** schema may contain references to objects in other databases.
   */
+#ifndef SQLITE_OMIT_TEMPDB
   if( rc==SQLITE_OK && db->nDb>1 && !DbHasProperty(db, 1, DB_SchemaLoaded) ){
     rc = sqlite3InitOne(db, 1, pzErrMsg);
     if( rc ){
       sqlite3ResetInternalSchema(db, 1);
     }
   }
+#endif
 
   db->init.busy = 0;
   if( rc==SQLITE_OK ){
@@ -1205,13 +1210,17 @@ static int openDatabase(
     db->magic = SQLITE_MAGIC_CLOSED;
     goto opendb_out;
   }
-  db->aDb[0].zName = "main";
-  db->aDb[1].zName = "temp";
 
-  /* The default safety_level for the main database is 'full' for the temp
-  ** database it is 'NONE'. This matches the pager layer defaults.  */
+  /* The default safety_level for the main database is 'full'; for the temp
+  ** database it is 'NONE'. This matches the pager layer defaults.  
+  */
+  db->aDb[0].zName = "main";
   db->aDb[0].safety_level = 3;
+#ifndef SQLITE_OMIT_TEMPDB
+  db->aDb[1].zName = "temp";
   db->aDb[1].safety_level = 1;
+#endif
+
 
   /* Register all built-in functions, but do not attempt to read the
   ** database schema yet. This is delayed until the first time the database

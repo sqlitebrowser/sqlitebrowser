@@ -3,13 +3,14 @@ LANGUAGE	= C++
 
 CONFIG	+= qt warn_on release
 
-
 HEADERS	+= sqlitebrowsertypes.h \
 	sqlitedb.h \
 	sqlbrowser_util.h
+
 SOURCES	+= browsermain.cpp \
 	sqlitedb.cpp \
 	sqlbrowser_util.c
+
 FORMS	= aboutform.ui \
 	addfieldform.ui \
 	addfieldtypeform.ui \
@@ -27,6 +28,7 @@ FORMS	= aboutform.ui \
 	importcsvform.ui \
 	renametableform.ui \
 	sqllogform.ui
+
 IMAGES	= images/create_index.png \
 	images/create_table.png \
 	images/delete_index.png \
@@ -40,30 +42,6 @@ IMAGES	= images/create_index.png \
 	images/save.png \
 	images/searchfind.png \
 	images/whatis.png
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 unix {
   UI_DIR = .ui

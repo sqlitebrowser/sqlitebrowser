@@ -11,7 +11,7 @@
 *************************************************************************
 ** Internal interface definitions for SQLite.
 **
-** @(#) $Id: sqliteInt.h,v 1.3 2005-03-23 14:56:45 jmiltner Exp $
+** @(#) $Id: sqliteInt.h,v 1.4 2005-04-05 04:15:01 tabuleiro Exp $
 */
 #ifndef _SQLITEINT_H_
 #define _SQLITEINT_H_
@@ -65,6 +65,17 @@
 # define TEMP_PAGES SQLITE_DEFAULT_TEMP_CACHE_SIZE
 #else
 # define TEMP_PAGES   500
+#endif
+
+/*
+** OMIT_TEMPDB is set to 1 if SQLITE_OMIT_TEMPDB is defined, or 0
+** afterward. Having this macro allows us to cause the C compiler 
+** to omit code used by TEMP tables without messy #ifndef statements.
+*/
+#ifdef SQLITE_OMIT_TEMPDB
+#define OMIT_TEMPDB 1
+#else
+#define OMIT_TEMPDB 0
 #endif
 
 /*
@@ -292,7 +303,7 @@ extern int sqlite3_iMallocReset; /* Set iMallocFail to this when it reaches 0 */
 /*
 ** The name of the schema table.
 */
-#define SCHEMA_TABLE(x)  (x==1?TEMP_MASTER_NAME:MASTER_NAME)
+#define SCHEMA_TABLE(x)  ((!OMIT_TEMPDB)&&(x==1)?TEMP_MASTER_NAME:MASTER_NAME)
 
 /*
 ** A convenience macro that returns the number of elements in

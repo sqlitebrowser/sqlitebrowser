@@ -18,7 +18,7 @@
 ** file simultaneously, or one process from reading the database while
 ** another is writing.
 **
-** @(#) $Id: pager.c,v 1.3 2005-03-23 14:56:42 jmiltner Exp $
+** @(#) $Id: pager.c,v 1.4 2005-04-05 04:14:53 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -213,9 +213,16 @@ struct PgHistory {
 
 /*
 ** How big to make the hash table used for locating in-memory pages
-** by page number.
+** by page number. This macro looks a little silly, but is evaluated
+** at compile-time, not run-time (at least for gcc this is true).
 */
-#define N_PG_HASH 2048
+#define N_PG_HASH (\
+  (MAX_PAGES>1024)?2048: \
+  (MAX_PAGES>512)?1024: \
+  (MAX_PAGES>256)?512: \
+  (MAX_PAGES>128)?256: \
+  (MAX_PAGES>64)?128:64 \
+)
 
 /*
 ** Hash a page number
@@ -906,6 +913,7 @@ static int pager_unwritelock(Pager *pPager){
     pPager->dirtyCache = 0;
     pPager->nRec = 0;
   }else{
+    assert( pPager->aInJournal==0 );
     assert( pPager->dirtyCache==0 || pPager->useJournal==0 );
   }
   rc = sqlite3OsUnlock(&pPager->fd, SHARED_LOCK);
@@ -1978,6 +1986,7 @@ int sqlite3pager_close(Pager *pPager){
   if( pPager->journalOpen ){
     sqlite3OsClose(&pPager->jfd);
   }
+  sqliteFree(pPager->aInJournal);
   if( pPager->stmtOpen ){
     sqlite3OsClose(&pPager->stfd);
   }
@@ -2611,6 +2620,7 @@ static int pager_open_journal(Pager *pPager){
   assert( pPager->state>=PAGER_RESERVED );
   assert( pPager->journalOpen==0 );
   assert( pPager->useJournal );
+  assert( pPager->aInJournal==0 );
   sqlite3pager_pagecount(pPager);
   pPager->aInJournal = sqliteMalloc( pPager->dbSize/8 + 1 );
   if( pPager->aInJournal==0 ){
@@ -2634,7 +2644,7 @@ static int pager_open_journal(Pager *pPager){
   pPager->nRec = 0;
   if( pPager->errMask!=0 ){
     rc = pager_errcode(pPager);
-    return rc;
+    goto failed_to_open_journal;
   }
   pPager->origDbSize = pPager->dbSize;
 

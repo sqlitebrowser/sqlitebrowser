@@ -197,9 +197,9 @@ void sqlite3FinishTrigger(
   sqlite3 *db = pParse->db;  /* The database */
   DbFixer sFix;
 
-  if( pParse->nErr || pParse->pNewTrigger==0 ) goto triggerfinish_cleanup;
   pTrig = pParse->pNewTrigger;
   pParse->pNewTrigger = 0;
+  if( pParse->nErr || pTrig==0 ) goto triggerfinish_cleanup;
   pTrig->step_list = pStepList;
   while( pStepList ){
     pStepList->pTrig = pTrig;
@@ -439,7 +439,7 @@ void sqlite3DropTrigger(Parse *pParse, SrcList *pName){
   zDb = pName->a[0].zDatabase;
   zName = pName->a[0].zName;
   nName = strlen(zName);
-  for(i=0; i<db->nDb; i++){
+  for(i=OMIT_TEMPDB; i<db->nDb; i++){
     int j = (i<2) ? i^1 : i;  /* Search TEMP before MAIN */
     if( zDb && sqlite3StrICmp(db->aDb[j].zName, zDb) ) continue;
     pTrigger = sqlite3HashFind(&(db->aDb[j].trigHash), zName, nName+1);

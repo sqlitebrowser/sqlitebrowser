@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>510</width>
-            <height>177</height>
+            <width>514</width>
+            <height>191</height>
         </rect>
     </property>
     <property name="caption">
@@ -32,9 +32,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Version 1.2b1
+                <string>Version 1.2
 
 SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite 3.x database files.
+This program was built with version 3.2.1 of the SQLite engine.
 
 More information at http://sqlitebrowser.sourceforge.net.</string>
             </property>

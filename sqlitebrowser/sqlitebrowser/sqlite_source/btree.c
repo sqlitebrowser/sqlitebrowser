@@ -9,7 +9,7 @@
 **    May you share freely, never taking more than you give.
 **
 *************************************************************************
-** $Id: btree.c,v 1.3 2005-03-23 14:56:40 jmiltner Exp $
+** $Id: btree.c,v 1.4 2005-04-05 04:14:52 tabuleiro Exp $
 **
 ** This file implements a external (disk-based) database using BTrees.
 ** For a detailed discussion of BTrees, refer to
@@ -3757,7 +3757,8 @@ static int balance_quick(MemPage *pPage, MemPage *pParent){
 static int balance_nonroot(MemPage *pPage){
   MemPage *pParent;            /* The parent of pPage */
   Btree *pBt;                  /* The whole database */
-  int nCell = 0;               /* Number of cells in aCell[] */
+  int nCell = 0;               /* Number of cells in apCell[] */
+  int nMaxCells = 0;           /* Allocated size of apCell, szCell, aFrom. */
   int nOld;                    /* Number of pages in apOld[] */
   int nNew;                    /* Number of pages in apNew[] */
   int nDiv;                    /* Number of cells in apDiv[] */
@@ -3771,7 +3772,6 @@ static int balance_nonroot(MemPage *pPage){
   int pageFlags;               /* Value of pPage->aData[0] */
   int subtotal;                /* Subtotal of bytes in cells on one page */
   int iSpace = 0;              /* First unused byte of aSpace[] */
-  int mxCellPerPage;           /* Maximum number of cells in one page */
   MemPage *apOld[NB];          /* pPage and up to two siblings */
   Pgno pgnoOld[NB];            /* Page numbers for each page in apOld[] */
   MemPage *apCopy[NB];         /* Private copies of apOld[] pages */
@@ -3781,7 +3781,7 @@ static int balance_nonroot(MemPage *pPage){
   u8 *apDiv[NB];               /* Divider cells in pParent */
   int cntNew[NB+2];            /* Index in aCell[] of cell after i-th page */
   int szNew[NB+2];             /* Combined size of cells place on i-th page */
-  u8 **apCell;                 /* All cells begin balanced */
+  u8 **apCell = 0;             /* All cells begin balanced */
   int *szCell;                 /* Local size of all cells in apCell[] */
   u8 *aCopy[NB];               /* Space for holding data of apCopy[] */
   u8 *aSpace;                  /* Space to hold copies of dividers cells */
@@ -3825,31 +3825,6 @@ static int balance_nonroot(MemPage *pPage){
   }
 #endif
 
-  /*
-  ** Allocate space for memory structures
-  */
-  mxCellPerPage = MX_CELL(pBt);
-  apCell = sqliteMallocRaw( 
-       (mxCellPerPage+2)*NB*(sizeof(u8*)+sizeof(int))
-     + sizeof(MemPage)*NB
-     + pBt->psAligned*(5+NB)
-     + (ISAUTOVACUUM ? (mxCellPerPage+2)*NN*2 : 0)
-  );
-  if( apCell==0 ){
-    return SQLITE_NOMEM;
-  }
-  szCell = (int*)&apCell[(mxCellPerPage+2)*NB];
-  aCopy[0] = (u8*)&szCell[(mxCellPerPage+2)*NB];
-  for(i=1; i<NB; i++){
-    aCopy[i] = &aCopy[i-1][pBt->psAligned+sizeof(MemPage)];
-  }
-  aSpace = &aCopy[NB-1][pBt->psAligned+sizeof(MemPage)];
-#ifndef SQLITE_OMIT_AUTOVACUUM
-  if( pBt->autoVacuum ){
-    aFrom = &aSpace[5*pBt->psAligned];
-  }
-#endif
-  
   /*
   ** Find the cell in the parent page whose left child points back
   ** to pPage.  The "idx" variable is the index of that cell.  If pPage
@@ -3910,8 +3885,35 @@ static int balance_nonroot(MemPage *pPage){
     apCopy[i] = 0;
     assert( i==nOld );
     nOld++;
+    nMaxCells += 1+apOld[i]->nCell+apOld[i]->nOverflow;
   }
 
+  /*
+  ** Allocate space for memory structures
+  */
+  apCell = sqliteMallocRaw( 
+       nMaxCells*sizeof(u8*)                           /* apCell */
+     + nMaxCells*sizeof(int)                           /* szCell */
+     + sizeof(MemPage)*NB                              /* aCopy */
+     + pBt->psAligned*(5+NB)                           /* aSpace */
+     + (ISAUTOVACUUM ? nMaxCells : 0)     /* aFrom */
+  );
+  if( apCell==0 ){
+    rc = SQLITE_NOMEM;
+    goto balance_cleanup;
+  }
+  szCell = (int*)&apCell[nMaxCells];
+  aCopy[0] = (u8*)&szCell[nMaxCells];
+  for(i=1; i<NB; i++){
+    aCopy[i] = &aCopy[i-1][pBt->psAligned+sizeof(MemPage)];
+  }
+  aSpace = &aCopy[NB-1][pBt->psAligned+sizeof(MemPage)];
+#ifndef SQLITE_OMIT_AUTOVACUUM
+  if( pBt->autoVacuum ){
+    aFrom = &aSpace[5*pBt->psAligned];
+  }
+#endif
+  
   /*
   ** Make copies of the content of pPage and its siblings into aOld[].
   ** The rest of this function will use data from the copies rather
@@ -3948,6 +3950,7 @@ static int balance_nonroot(MemPage *pPage){
     MemPage *pOld = apCopy[i];
     int limit = pOld->nCell+pOld->nOverflow;
     for(j=0; j<limit; j++){
+      assert( nCell<nMaxCells );
       apCell[nCell] = findOverflowCell(pOld, j);
       szCell[nCell] = cellSizePtr(pOld, apCell[nCell]);
 #ifndef SQLITE_OMIT_AUTOVACUUM
@@ -3975,6 +3978,7 @@ static int balance_nonroot(MemPage *pPage){
         dropCell(pParent, nxDiv, sz);
       }else{
         u8 *pTemp;
+        assert( nCell<nMaxCells );
         szCell[nCell] = sz;
         pTemp = &aSpace[iSpace];
         iSpace += sz;
@@ -4020,6 +4024,7 @@ static int balance_nonroot(MemPage *pPage){
   */
   usableSpace = pBt->usableSize - 12 + leafCorrection;
   for(subtotal=k=i=0; i<nCell; i++){
+    assert( i<nMaxCells );
     subtotal += szCell[i] + 2;
     if( subtotal > usableSpace ){
       szNew[k] = subtotal - szCell[i];
@@ -4051,6 +4056,8 @@ static int balance_nonroot(MemPage *pPage){
 
     r = cntNew[i-1] - 1;
     d = r + 1 - leafData;
+    assert( d<nMaxCells );
+    assert( r<nMaxCells );
     while( szRight==0 || szRight+szCell[d]+2<=szLeft-(szCell[r]+2) ){
       szRight += szCell[d] + 2;
       szLeft -= szCell[r] + 2;
@@ -4147,6 +4154,7 @@ static int balance_nonroot(MemPage *pPage){
   for(i=0; i<nNew; i++){
     /* Assemble the new sibling page. */
     MemPage *pNew = apNew[i];
+    assert( j<nMaxCells );
     assert( pNew->pgno==pgnoNew[i] );
     assemblePage(pNew, cntNew[i]-j, &apCell[j], &szCell[j]);
     assert( pNew->nCell>0 );
@@ -4160,6 +4168,7 @@ static int balance_nonroot(MemPage *pPage){
     */
     if( pBt->autoVacuum ){
       for(k=j; k<cntNew[i]; k++){
+        assert( k<nMaxCells );
         if( aFrom[k]==0xFF || apCopy[aFrom[k]]->pgno!=pNew->pgno ){
           rc = ptrmapPutOvfl(pNew, k-j);
           if( rc!=SQLITE_OK ){
@@ -4179,6 +4188,8 @@ static int balance_nonroot(MemPage *pPage){
       u8 *pCell;
       u8 *pTemp;
       int sz;
+
+      assert( j<nMaxCells );
       pCell = apCell[j];
       sz = szCell[j] + leafCorrection;
       if( !pNew->leaf ){

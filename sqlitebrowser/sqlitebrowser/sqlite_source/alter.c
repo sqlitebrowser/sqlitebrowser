@@ -12,7 +12,7 @@
 ** This file contains C code routines that used to generate VDBE code
 ** that implements the ALTER TABLE command.
 **
-** $Id: alter.c,v 1.1 2005-03-23 14:56:39 jmiltner Exp $
+** $Id: alter.c,v 1.2 2005-04-05 04:14:52 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include <ctype.h>
@@ -449,7 +449,7 @@ void sqlite3AlterFinishAddColumn(Parse *pParse, Token *pColDef){
     }
     sqlite3NestedParse(pParse, 
         "UPDATE %Q.%s SET "
-          "sql = substr(sql,0,%d) || ', ' || %Q || substr(sql,%d,length(sql)) "
+          "sql = substr(sql,1,%d) || ', ' || %Q || substr(sql,%d,length(sql)) "
         "WHERE type = 'table' AND name = %Q", 
       zDb, SCHEMA_TABLE(iDb), pNew->addColOffset, zCol, pNew->addColOffset+1,
       zTab
@@ -521,7 +521,9 @@ void sqlite3AlterBeginAddColumn(Parse *pParse, SrcList *pSrc){
   if( !pNew ) goto exit_begin_add_column;
   pParse->pNewTable = pNew;
   pNew->nCol = pTab->nCol;
-  nAlloc = ((pNew->nCol)/8)+8;
+  assert( pNew->nCol>0 );
+  nAlloc = (((pNew->nCol-1)/8)*8)+8;
+  assert( nAlloc>=pNew->nCol && nAlloc%8==0 && nAlloc-pNew->nCol<8 );
   pNew->aCol = (Column *)sqliteMalloc(sizeof(Column)*nAlloc);
   pNew->zName = sqliteStrDup(pTab->zName);
   if( !pNew->aCol || !pNew->zName ){

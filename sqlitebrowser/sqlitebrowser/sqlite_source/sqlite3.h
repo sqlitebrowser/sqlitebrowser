@@ -12,7 +12,7 @@
 ** This header file defines the interface that the SQLite library
 ** presents to client programs.
 **
-** @(#) $Id: sqlite3.h,v 1.1 2005-03-23 14:56:45 jmiltner Exp $
+** @(#) $Id: sqlite3.h,v 1.2 2005-04-05 04:15:01 tabuleiro Exp $
 */
 #ifndef _SQLITE3_H_
 #define _SQLITE3_H_
@@ -31,7 +31,7 @@ extern "C" {
 #ifdef SQLITE_VERSION
 # undef SQLITE_VERSION
 #endif
-#define SQLITE_VERSION         "3.2.0"
+#define SQLITE_VERSION         "3.2.1"
 
 /*
 ** The format of the version string is "X.Y.Z<trailing string>", where
@@ -48,7 +48,7 @@ extern "C" {
 #ifdef SQLITE_VERSION_NUMBER
 # undef SQLITE_VERSION_NUMBER
 #endif
-#define SQLITE_VERSION_NUMBER 3002000
+#define SQLITE_VERSION_NUMBER 3002001
 
 /*
 ** The version string is also compiled into the library so that a program
