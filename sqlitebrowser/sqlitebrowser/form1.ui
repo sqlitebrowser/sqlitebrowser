@@ -988,7 +988,7 @@
             <bool>false</bool>
         </property>
         <property name="iconSet">
-            <iconset>delete_index.png</iconset>
+            <iconset>create_index.png</iconset>
         </property>
         <property name="text">
             <string>Create Index</string>
