@@ -20,10 +20,11 @@ void mainForm::init()
     editGoto->setValidator(gotoValidator);
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
-    this->setCaption(applicationName);
+    this->setCaption(applicationName);    
     this->setIcon( QPixmap::fromMimeSource( applicationIconName ) );
     buttonNext->setEnabled(FALSE);
     buttonPrevious->setEnabled(FALSE);
+
 }
 
 void mainForm::destroy()
@@ -43,7 +44,10 @@ void mainForm::fileOpen()
     if (QFile::exists(fileName) )
     {
 	db.open(fileName);
+        db.buildParameterMap();
 	populateStructure();
+	populateParameter();
+        resetParamBrowser();
 	resetBrowser();
 	fileCloseAction->setEnabled(true);
 	compactAction->setEnabled(true);
@@ -70,8 +74,11 @@ void mainForm::fileNew()
     if (!fileName.isNull())
     {
 	db.create(fileName);
+              db.buildParameterMap();
 	populateStructure();
-	resetBrowser();
+	populateParameter();
+	resetParamBrowser();
+        resetBrowser();
 	createTable();
 	fileCloseAction->setEnabled(true);
 	compactAction->setEnabled(true);
@@ -118,6 +125,31 @@ void mainForm::populateStructure()
         }
 }	
 
+void mainForm::populateParameter()
+{
+    if (!db.isOpen()){ 
+	paramTable->setNumRows( 0 ); 
+	return;
+    }
+    
+   db.buildParameterMap();
+   db.updateParameter();
+   paramMap::Iterator it;
+   paramMap tmap = db.parammap;
+   
+   paramTable->setNumRows( tmap.count() );
+   paramTable->setNumCols( 2 );
+   
+   //QListViewItem * lasttbitem = 0;
+   int rowNum = 0;
+        for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+	    paramTable->setText( rowNum, 0, it.data().getname()  );
+	    paramTable->setText( rowNum, 1, it.data().getvalue()  );
+            ++rowNum;
+	}
+   
+}
+
 void mainForm::populateTable( const QString & tablename)
 {
     bool mustreset = false;
@@ -149,6 +181,13 @@ void mainForm::populateTable( const QString & tablename)
     }
 }
 
+void mainForm::getActualParamValue( const QString & paramName)
+{
+    paramMap pmap = db.parammap;
+    paramValueEdit->setText(pmap[paramName].getvalue());
+}
+
+
 void mainForm::resetBrowser()
 {
     recAtTop = 0;
@@ -166,11 +205,31 @@ void mainForm::resetBrowser()
     populateTable(comboBrowseTable->currentText());
 }
 
+void mainForm::resetParamBrowser()
+{
+    comboParamTable->clear();
+    paramValueEdit->clear();
+    if (!db.isOpen()) {
+	comboParamTable->insertItem("",-1);
+	return;
+    }
+    paramMap::Iterator it;
+    paramMap pmap = db.parammap;
+    for ( it = pmap.begin(); it != pmap.end(); ++it ) {
+	comboParamTable->insertItem(it.key(),-1);
+    } 
+    comboParamTable->setCurrentItem(0);
+    getActualParamValue(comboParamTable->currentText());
+}
+
+
 void mainForm::fileClose()
 {
     db.close();
     resetBrowser();
+    resetParamBrowser();
     populateStructure();
+    populateParameter();
     fileCloseAction->setEnabled(false);
     compactAction->setEnabled(false);
 }
@@ -219,7 +278,7 @@ void mainForm::recordEdited( int wrow, int wcol )
 void mainForm::deleteRecord()
 {
     if (dataTable->currentRow()!=-1){
-	int lastselected = dataTable->currentRow();
+        int lastselected = dataTable->currentRow();
 	db.deleteRecord(dataTable->currentRow()+recAtTop);
 	populateTable(db.curBrowseTableName);
 	int nextselected = lastselected ;
@@ -228,7 +287,7 @@ void mainForm::deleteRecord()
 	}
 	if (nextselected>0){
 	    selectTableLine(nextselected);
-	}
+	}        
     } else {
 	QMessageBox::information( this, applicationName, "Please select a record first" );    }
 }
@@ -239,7 +298,7 @@ void mainForm::updateTableView(int lineToSelect)
     QApplication::setOverrideCursor( waitCursor, TRUE );
     QStringList fields = db.browseFields;
     
-     dataTable->setNumRows(0);	
+    dataTable->setNumRows(0);	
     dataTable->setNumCols( fields.count() );
     int cheadnum = 0;
     for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
@@ -280,9 +339,14 @@ void mainForm::updateTableView(int lineToSelect)
     
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
-	//qDebug("inside selection");
-	selectTableLine(lineToSelect);
+	//qDebug("inside selection");	
+        selectTableLine(lineToSelect);
     } 
+//	dataTable->clearSelection(true);
+//	dataTable->selectRow(lineToSelect);
+//	dataTable->setCurrentCell(lineToSelect, 0);
+//	dataTable->ensureCellVisible (lineToSelect, 0 ) ;
+//    }
     setRecordsetLabel();
     QApplication::restoreOverrideCursor();
 }
@@ -343,7 +407,7 @@ void mainForm::setRecordsetLabel()
 	label.append(" of ");
 	label.append(QString::number(db.getRecordCount(),10));
 	labelRecordset->setText(label);
-    }
+    }    
     gotoValidator->setRange ( 0, db.getRecordCount());
     
     if (db.getRecordCount()>1000){
@@ -599,4 +663,22 @@ void mainForm::helpAbout()
     QMessageBox::about ( this, wcaption, wtext);*/
     aboutForm * aForm = new aboutForm( this, "about", TRUE );
     aForm ->exec() ;
+}
+
+
+
+void mainForm::setParamValue()
+{
+    
+    if(!db.isOpen()) { 
+	QMessageBox::information( this, applicationName,
+                      "Please open a database first" );
+	return;
+    }
+    
+     const QString newValue = paramValueEdit->text();
+     const QString paramName = comboParamTable->currentText();
+     paramMap pmap = db.parammap;
+     db.setParameter(pmap[paramName].getname(), newValue);
+     populateParameter( );
 }

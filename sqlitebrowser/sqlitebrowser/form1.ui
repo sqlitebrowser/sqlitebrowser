@@ -198,6 +198,122 @@
                     <cstring>tab</cstring>
                 </property>
                 <attribute name="title">
+                    <string>Database Parameters</string>
+                </attribute>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout37</cstring>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QTable">
+                                <column>
+                                    <property name="text">
+                                        <string>Parameter</string>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap></pixmap>
+                                    </property>
+                                </column>
+                                <column>
+                                    <property name="text">
+                                        <string>Value</string>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap></pixmap>
+                                    </property>
+                                </column>
+                                <property name="name">
+                                    <cstring>paramTable</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="numRows">
+                                    <number>0</number>
+                                </property>
+                                <property name="numCols">
+                                    <number>2</number>
+                                </property>
+                                <property name="showGrid">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="readOnly">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout21</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QComboBox">
+                                        <property name="name">
+                                            <cstring>comboParamTable</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>160</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLineEdit">
+                                        <property name="name">
+                                            <cstring>paramValueEdit</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>240</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer15</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>21</width>
+                                                <height>21</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QPushButton">
+                                        <property name="name">
+                                            <cstring>setParamButton</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Set Param</string>
+                                        </property>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                        </vbox>
+                    </widget>
+                </vbox>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
                     <string>Browse Data</string>
                 </attribute>
                 <vbox>
@@ -320,7 +436,7 @@
                         </property>
                         <property name="resizePolicy">
                             <enum>Default</enum>
-                        </property>
+                        </property> 
                         <property name="vScrollBarMode">
                             <enum>Auto</enum>
                         </property>
@@ -848,6 +964,18 @@
         <receiver>mainForm</receiver>
         <slot>helpAbout()</slot>
     </connection>
+    <connection>
+        <sender>comboParamTable</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>mainForm</receiver>
+        <slot>getActualParamValue(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>setParamButton</sender>
+        <signal>clicked()</signal>
+        <receiver>mainForm</receiver>
+        <slot>setParamValue()</slot>
+    </connection>
 </connections>
 <includes>
     <include location="local" impldecl="in declaration">qvalidator.h</include>
@@ -877,8 +1005,11 @@
     <slot>fileOpen()</slot>
     <slot>fileNew()</slot>
     <slot>populateStructure()</slot>
+    <slot>populateParameter()</slot>
     <slot>populateTable( const QString &amp; tablename )</slot>
+    <slot>getActualParamValue( const QString &amp; paramName )</slot>
     <slot>resetBrowser()</slot>
+    <slot>resetParamBrowser()</slot>
     <slot>fileClose()</slot>
     <slot>fileExit()</slot>
     <slot>closeEvent( QCloseEvent * )</slot>
@@ -904,6 +1035,7 @@
     <slot>paste()</slot>
     <slot>helpWhatsThis()</slot>
     <slot>helpAbout()</slot>
+    <slot>setParamValue()</slot>
 </slots>
 <functions>
     <function access="private" specifier="non virtual">init()</function>

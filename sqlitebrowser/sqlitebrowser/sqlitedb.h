@@ -27,6 +27,8 @@ static QString aboutText = QString("Version 1.01\n\nSQLite Database Browser is a
 typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMap<QString, class DBBrowserTable> tableMap;
 typedef QMap<QString, class DBBrowserIndex> indexMap;
+typedef QMap<QString, class DBBrowserParam> paramMap;
+
 typedef QMap<int, int> rowIdMap;
 
 typedef QValueList<QStringList> rowList;
@@ -79,6 +81,19 @@ private:
         QString sql;
  };
 
+class DBBrowserParam
+    {
+    public:
+        DBBrowserParam() : name( 0 ) { }
+        DBBrowserParam( const QString& wname,const QString& wvalue )
+            : name( wname), value( wvalue )
+        { }
+        QString getname() const { return name; }
+        QString getvalue() const { return value; }
+	private:
+        QString name;
+        QString value;
+ };
 
 class DBBrowserDB
 {
@@ -91,6 +106,9 @@ public:
 	bool compact ();
 	bool executeSQL ( const QString & statement);
 	void updateSchema() ;
+	void updateParameter();
+	void buildParameterMap();
+	void setParameter(const QString & paramname, const QString & paramvalue);
 	bool addRecord();
 	bool deleteRecord(int wrow);
 	bool updateRecord(int wrow, int wcol, const QString & wtext);
@@ -106,6 +124,7 @@ public:
 	tableMap tbmap;
 	indexMap idxmap;
 	rowIdMap idmap;
+	paramMap parammap;
 	
 	rowList browseRecs;
 	QStringList browseFields;

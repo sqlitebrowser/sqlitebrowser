@@ -499,4 +499,77 @@ void DBBrowserDB::updateSchema( )
         }
 }
 
+void DBBrowserDB::updateParameter( )
+{
+  // qDebug ("Getting list of parameters");
+   sqlite_vm *vm;
+   const char *tail;
+   const char **vals;
+   const char **names;
 
+   int ncol;
+   QStringList r;
+   char *errmsg;
+   int err=0;
+   QString num;
+          
+   paramMap::Iterator it;
+   
+      for ( it = parammap.begin(); it != parammap.end(); ++it ) {
+          lastErrorMessage = QString("no error");
+          err=sqlite_compile(_db,"PRAGMA " + it.data().getname() + ';',
+                            &tail, &vm, &errmsg);
+          if (err == SQLITE_OK) {
+              if (sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW )
+	          //parammap.remove(it);
+	          parammap[it.key()] = DBBrowserParam(it.data().getname(),vals[0]);         
+              sqlite_finalize(vm, NULL);
+          }else{
+          qDebug ("could not get list of parameters: %d, %s",err,errmsg);
+          }
+      }
+}
+
+void DBBrowserDB::buildParameterMap( )
+{
+
+   parammap.clear();
+   
+   parammap["cache size"] = DBBrowserParam("CACHE_SIZE", "2000");
+   parammap["default cache size"] = DBBrowserParam("DEFAULT_CACHE_SIZE", "2000");
+   parammap["temp store"] = DBBrowserParam("TEMP_STORE", "OFF");
+   parammap["default temp store"] = DBBrowserParam("DEFAULT_TEMP_STORE", "DEFAULT");
+   parammap["count changes"] = DBBrowserParam("COUNT_CHANGES", "");
+   parammap["synchronous"] = DBBrowserParam("SYNCHRONOUS", "DEFAULT");
+   parammap["default synchronous"] = DBBrowserParam("DEFAULT_SYNCHRONOUS", "DEFAULT");
+   parammap["empty result callbacks"] = DBBrowserParam("EMPTY_RESULT_CALLBACK", "OFF");
+   parammap["full column names"] = DBBrowserParam("FULL_COLUMN_NAME", "OFF");
+   parammap["parser trace"] = DBBrowserParam("PARSER_TRACE", "OFF");
+   parammap["show datatype"] = DBBrowserParam("SHOW_DATATYPE", "OFF");
+   parammap["vdbe trace"] = DBBrowserParam("VDBE_TRACE", "OFF");
+   
+}
+
+void DBBrowserDB::setParameter(const QString & paramName, const QString & paramValue )
+{
+  // qDebug ("Getting list of parameters");
+   sqlite_vm *vm;
+   const char *tail;
+   const char **vals;
+   const char **names;
+   int ncol;
+   
+   char *errmsg;
+   int err=0;
+          
+   lastErrorMessage = QString("no error");
+   err=sqlite_compile(_db,"PRAGMA " + paramName + "=" + paramValue + ';',
+                            &tail, &vm, &errmsg);
+          if (err == SQLITE_OK) {
+              if (sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW )      
+              sqlite_finalize(vm, NULL);
+          }else{
+          qDebug ("could not get list of parameters: %d, %s",err,errmsg);
+          }
+            
+}
