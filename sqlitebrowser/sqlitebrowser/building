@@ -26,17 +26,13 @@ make
 
 in the main directory. This will generate the
 
-browser (or browser.exe, or browser.app)
+sqlitebrowser (or sqlitebrowser .exe, or sqlitebrowser .app)
 
 application in the browser subdirectory.
 
 The same process works for building the code
 in any platform supported by QT (including other Unix systems with
 X11.) 
-
-You may want to rename the final executable or .app bundle from
-"browser" to "SQLite Database Browser", to match the official binaries 
-released at http://sqlitebrowser.sourceforge.net. 
 
 Please check the LICENSING file for additional information.
 
