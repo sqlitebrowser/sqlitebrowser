@@ -12,7 +12,7 @@
 ** This is the header file for the generic hash-table implemenation
 ** used in SQLite.
 **
-** $Id: hash.h,v 1.2 2003-09-09 22:46:52 tabuleiro Exp $
+** $Id: hash.h,v 1.3 2005-03-23 14:56:42 jmiltner Exp $
 */
 #ifndef _SQLITE_HASH_H_
 #define _SQLITE_HASH_H_
@@ -70,18 +70,18 @@ struct HashElem {
 ** A copy of the key is made for SQLITE_HASH_STRING and SQLITE_HASH_BINARY
 ** if the copyKey parameter to HashInit is 1.  
 */
-#define SQLITE_HASH_INT       1
-#define SQLITE_HASH_POINTER   2
+/* #define SQLITE_HASH_INT       1 // NOT USED */
+/* #define SQLITE_HASH_POINTER   2 // NOT USED */
 #define SQLITE_HASH_STRING    3
 #define SQLITE_HASH_BINARY    4
 
 /*
 ** Access routines.  To delete, insert a NULL pointer.
 */
-void sqliteHashInit(Hash*, int keytype, int copyKey);
-void *sqliteHashInsert(Hash*, const void *pKey, int nKey, void *pData);
-void *sqliteHashFind(const Hash*, const void *pKey, int nKey);
-void sqliteHashClear(Hash*);
+void sqlite3HashInit(Hash*, int keytype, int copyKey);
+void *sqlite3HashInsert(Hash*, const void *pKey, int nKey, void *pData);
+void *sqlite3HashFind(const Hash*, const void *pKey, int nKey);
+void sqlite3HashClear(Hash*);
 
 /*
 ** Macros for looping over all elements of a hash table.  The idiom is

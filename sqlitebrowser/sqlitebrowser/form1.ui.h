@@ -238,22 +238,40 @@ void mainForm::fileExit()
 {
     if (db.isOpen())
     {
-	if (db.getDirty())
-	{
-	    QString msg = "Do you want to save the changes made to the database file ";
-	msg.append(db.curDBFilename);
-	msg.append("?");
-	    if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-	    {
-		db.save();
-	    } else {
-		//not really necessary, I think... but will not hurt.
-		db.revert();
-	    }
-	}
-	db.close();
+		if (db.getDirty())
+		{
+			QString msg = "Do you want to save the changes made to the database file ";
+			msg.append(db.curDBFilename);
+			msg.append("?");
+			if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+			{
+				bool	done(false);
+				do {
+					if ( db.save() ) 
+						done = true;
+					else {
+						QString error = "Error: could not save the database.\nMessage from database engine:  ";
+						error.append(db.lastErrorMessage);
+						switch ( QMessageBox::warning( this, applicationName, error, QMessageBox::Retry|QMessageBox::Default, QMessageBox::Cancel|QMessageBox::Escape, QMessageBox::Ignore) ) {
+							case QMessageBox::Retry:
+								break;
+							case QMessageBox::Ignore:
+								db.revert();
+								done = true;
+								break;
+							case QMessageBox::Cancel:
+								return;
+						}
+					}
+				} while ( !done );
+			} else {
+				//not really necessary, I think... but will not hurt.
+				db.revert();
+			}
+		}
+		db.close();
     }
-   QApplication::exit( 0 );
+	QApplication::exit( 0 );
 }
 
 void mainForm::closeEvent( QCloseEvent * )
@@ -486,9 +504,9 @@ void mainForm::lookfor( const QString & wfield, const QString & woperator, const
     wsearchterm.toDouble(&ok);
     if (!ok) wsearchterm.toInt(&ok, 10);
     if (!ok) {//not a number, quote it
-	char * formSQL = sqlite_mprintf("%Q",(*finalsearchterm).latin1());
+	char * formSQL = sqlite3_mprintf("%Q",static_cast<const char*>((*finalsearchterm).utf8()));
 	statement.append(formSQL);
-	 if (formSQL) sqlite_freemem(formSQL);
+	 if (formSQL) sqlite3_free(formSQL);
      } else {//append the number, unquoted
 	 statement.append(*finalsearchterm);
      }
@@ -769,13 +787,10 @@ void mainForm::executeQuery()
     }
     //log the query
     db.logSQL(query, kLogMsg_User);
-    sqlite_vm *vm;
-   const char *tail;
-   const char **vals;
-   const char **names;
+    sqlite3_stmt *vm;
+    const void *tail;
+	int ncol;
 
-   int ncol;
-   char *errmsg;
    int err=0;
    QString lastErrorMessage = QString("No error");
    queryResultListView->clear();
@@ -785,26 +800,31 @@ void mainForm::executeQuery()
        queryResultListView->removeColumn(0);
    }
    
-	err=sqlite_compile(db._db,query,
-                              &tail, &vm, &errmsg);
+	err=sqlite3_prepare16(db._db,query.ucs2(),query.length(),&vm,&tail);
 	if (err == SQLITE_OK){
 	    db.setDirty(true);
 	    int rownum = 0;
 	  QListViewItem * lasttbitem = 0;
 	  bool mustCreateColumns = true;
-	  while ( sqlite_step(vm,&ncol,&vals, &names) == SQLITE_ROW ){
+	  while ( sqlite3_step(vm) == SQLITE_ROW ){
 	      //r.clear()
 	          QListViewItem * tbitem = new QListViewItem( queryResultListView, lasttbitem);
 	      //setup num of cols here for display grid
 	      if (mustCreateColumns)
 		  {
-		for (int e=0; e<ncol; e++)
-		  queryResultListView->addColumn("");
+			ncol = sqlite3_data_count(vm);
+			for (int e=0; e<ncol; e++)
+				queryResultListView->addColumn("");
 		
-		mustCreateColumns = false;
+			mustCreateColumns = false;
 	      }
 	      for (int e=0; e<ncol; e++){
-		  QString rv = vals[e];
+			  const ushort* utf16data = static_cast<const ushort*>(sqlite3_column_text16(vm, e));
+			  QString rv;
+			  uint	utf16len=0;
+			  if ( utf16data )
+				  while ( *utf16data++ ) ++utf16len;
+			  rv.setUnicodeCodes(utf16data, utf16len);
     		//show it here
 		  QString firstline = rv.section( '\n', 0,0 );
 		  if (firstline.length()>MAX_DISPLAY_LENGTH)
@@ -818,9 +838,9 @@ void mainForm::executeQuery()
 	      }
 	  }
 
-          sqlite_finalize(vm, NULL);
+          sqlite3_finalize(vm);
         }else{
-          lastErrorMessage = QString (errmsg);
+          lastErrorMessage = QString (sqlite3_errmsg(db._db));
         }
        queryErrorLineEdit->setText(lastErrorMessage);
 }
@@ -848,20 +868,38 @@ void mainForm::toggleLogWindow( bool enable )
 
 void mainForm::importTableFromCSV()
 {
-     if (!db.isOpen()){
-	QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
-	return;
+    if (!db.isOpen()){
+		QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
+		return;
     }
      
      if (db.getDirty())
      {
-     QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
-	if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-	{
-	    db.save();
-	} else {
-	    return;
-	}
+		QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
+		if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+		{
+			bool	done(false);
+			do {
+				if ( db.save() ) 
+					done = true;
+				else {
+					QString error = "Error: could not save the database.\nMessage from database engine:  ";
+					error.append(db.lastErrorMessage);
+					switch ( QMessageBox::warning( this, applicationName, error, QMessageBox::Retry|QMessageBox::Default, QMessageBox::Cancel|QMessageBox::Escape, QMessageBox::Ignore) ) {
+						case QMessageBox::Retry:
+							break;
+						case QMessageBox::Ignore:
+							db.revert();
+							done = true;
+							break;
+						case QMessageBox::Cancel:
+							return;
+					}
+				}
+			} while ( !done );
+		} else {
+			return;
+		}
     }
     
     QString wFile = QFileDialog::getOpenFileName(
@@ -873,13 +911,13 @@ void mainForm::importTableFromCSV()
     
     if (QFile::exists(wFile) )
     {
-	importCSVForm * csvForm = new importCSVForm( this, "importcsv", TRUE );
-	csvForm->initialize(wFile, &db);
-	if ( csvForm->exec() ) {
-	    populateStructure();
-	    resetBrowser();
-	    QMessageBox::information( this, applicationName, "Import completed" );
-	}
+		importCSVForm * csvForm = new importCSVForm( this, "importcsv", TRUE );
+		csvForm->initialize(wFile, &db);
+		if ( csvForm->exec() ) {
+			populateStructure();
+			resetBrowser();
+			QMessageBox::information( this, applicationName, "Import completed" );
+		}
     }
 }
 
@@ -980,7 +1018,14 @@ void mainForm::dbState( bool dirty )
 void mainForm::fileSave()
 {
     if (db.isOpen()){
-	db.save();
+		do {
+			if ( !db.save() ) {
+				QString error = "Error: could not save the database.\nMessage from database engine:  ";
+				error.append(db.lastErrorMessage);
+				if ( QMessageBox::warning( this, applicationName, error, QMessageBox::Ok, QMessageBox::Retry|QMessageBox::Default) != QMessageBox::Retry )
+					break;
+			}
+		} while ( db.getDirty() );
     }
 }
 

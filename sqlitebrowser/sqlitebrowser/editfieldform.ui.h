@@ -19,6 +19,8 @@ void editFieldForm::setInitialValues(QString name, QString type)
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
     tString = "blob";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    tString = "integer primary key";
+    if (type.compare(tString)!=0) typeBox->insertItem(tString);
 }
 
 void editFieldForm::confirmEdit()

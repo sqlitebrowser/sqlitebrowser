@@ -1,19 +1,21 @@
 SOURCES	+= where.c \
+	alter.c \
 	attach.c \
 	auth.c \
 	btree.c \
-	btree_rb.c \
 	build.c \
-	copy.c \
+	date.c \
 	delete.c \
-	encode.c \
+	experimental.c \
 	expr.c \
 	func.c \
 	hash.c \
 	insert.c \
+	legacy.c \
 	main.c \
 	opcodes.c \
-	os.c \
+	os_unix.c \
+	os_win.c \
 	pager.c \
 	parse.c \
 	pragma.c \
@@ -24,27 +26,41 @@ SOURCES	+= where.c \
 	tokenize.c \
 	trigger.c \
 	update.c \
+	utf.c \
 	util.c \
 	vacuum.c \
-	vdbe.c
+	vdbe.c \
+	vdbeapi.c \
+	vdbeaux.c \
+	vdbemem.c
 HEADERS	+= btree.h \
 	config.h \
-	encode.h \
 	hash.h \
+	keywordhash.h \
 	opcodes.h \
 	os.h \
+	os_common.h \
+	os_unix.h \
+	os_win.h \
 	pager.h \
 	parse.h \
-	sqlite.h \
+	sqlite3.h \
 	sqliteInt.h \
-	vdbe.h
+	vdbe.h \
+	vdbeInt.h
 unix {
   UI_DIR = .ui
   MOC_DIR = .moc
   OBJECTS_DIR = .obj
 }
+mac {
+  UI_DIR = .ui
+  MOC_DIR = .moc
+  OBJECTS_DIR = .obj
+  DEFINES += HAVE_USLEEP=1
+}
 TEMPLATE	=lib
 CONFIG	+= qt warn_on release staticlib
 LANGUAGE	= C
-DEFINES -= UNICODE
-DEFINES += NDEBUG
+#DEFINES -= UNICODE
+DEFINES += NDEBUG THREAD_SAFE=1 TEMP_STORE=2

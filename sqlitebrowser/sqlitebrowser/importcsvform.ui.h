@@ -111,9 +111,9 @@ void importCSVForm::createButtonPressed()
 	}
 	//need to mprintf here
 	//sql.append(*ct);
-	char * formSQL = sqlite_mprintf("%Q",(*ct).latin1());	
+	char * formSQL = sqlite3_mprintf("%Q",(*ct).latin1());	
 	sql.append(formSQL);
-	if (formSQL) sqlite_freemem(formSQL);
+	if (formSQL) sqlite3_free(formSQL);
 	
 	colNum++;
 	if (colNum<numfields)

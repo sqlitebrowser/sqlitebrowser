@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <ctype.h>
-#include "sqlite_source/sqlite.h"
+#include "sqlite_source/sqlite3.h"
 #include <stdio.h>
 
 
@@ -22,7 +22,7 @@ struct previous_mode_data {
 ** state and mode information.
 */
 struct callback_data {
-  sqlite *db;            /* The database */
+  sqlite3 *db;            /* The database */
   int echoOn;            /* True to echo input commands */
   int cnt;               /* Number of records displayed so far */
   FILE *out;             /* Write results here */
@@ -52,9 +52,9 @@ struct callback_data {
 #define MODE_Insert   5  /* Generate SQL "insert" statements */
 #define MODE_NUM_OF   6  /* The number of modes (not a mode itself) */
 
-int dump_database(sqlite * db, FILE * outfile);
-int load_database(sqlite * db, FILE * infile, int * lineErr);
-void process_input(sqlite * db, FILE *in, int * lineErr);
+int dump_database(sqlite3 * db, FILE * outfile);
+int load_database(sqlite3 * db, FILE * infile, int * lineErr);
+void process_input(sqlite3 * db, FILE *in, int * lineErr);
 char *sqlbrowser_getline(FILE *in);
 
 #ifdef __cplusplus

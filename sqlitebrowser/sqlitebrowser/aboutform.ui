@@ -32,9 +32,9 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Version 1.1
+                <string>Version 1.2b1
 
-SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite 2.x database files.
+SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite 3.x database files.
 
 More information at http://sqlitebrowser.sourceforge.net.</string>
             </property>

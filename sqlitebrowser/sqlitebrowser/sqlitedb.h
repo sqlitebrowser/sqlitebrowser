@@ -7,13 +7,13 @@
 #include <qvaluelist.h>
 #include <qobject.h>
 #include "sqllogform.h"
-#include "sqlite_source/sqlite.h"
+#include "sqlite_source/sqlite3.h"
 #include "sqlitebrowsertypes.h"
 /*#include "sqlite_source/sqlxtra_util.h"
 #include "sqlite_source/encode.h"
 #include "sqlite_source/swap.h"*/
 
-#define MAX_DISPLAY_LENGTH 14
+#define MAX_DISPLAY_LENGTH 256
 
 enum
 {
@@ -23,7 +23,7 @@ enum
 
 static QString applicationName = QString("SQLite Database Browser");
 static QString applicationIconName = QString("icone16.png");
-static QString aboutText = QString("Version 1.1\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
+static QString aboutText = QString("Version 1.2b1\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 3.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
 
 
 typedef QMap<int, class DBBrowserField> fieldMap;
@@ -114,7 +114,7 @@ public:
 	void setDirtyDirect(bool dirtyval);
 	bool getDirty();
 	void logSQL(QString statement, int msgtype);
-	sqlite * _db;
+	sqlite3 * _db;
 
 
 	QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);

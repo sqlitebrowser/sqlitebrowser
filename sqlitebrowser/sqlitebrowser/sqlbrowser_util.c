@@ -1,5 +1,5 @@
 #include "sqlbrowser_util.h"
-#include "sqlite_source/sqlite.h"
+#include "sqlite_source/sqlite3.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -193,7 +193,7 @@ static int callback(void *pArg, int nArg, char **azArg, char **azCol){
         char *zSep = i>0 ? ",": "";
         if( azArg[i]==0 ){
           fprintf(p->out,"%sNULL",zSep);
-        }else if( sqliteIsNumber(azArg[i]) ){
+        }else if( sqlite3IsNumber(azArg[i], NULL, SQLITE_UTF8) ){
           fprintf(p->out,"%s%s",zSep, azArg[i]);
         }else{
           if( zSep[0] ) fprintf(p->out,"%s",zSep);
@@ -257,14 +257,14 @@ static int dump_callback(void *pArg, int nArg, char **azArg, char **azCol){
   fprintf(p->out, "%s;\n", azArg[2]);
   if( strcmp(azArg[1],"table")==0 ){
     struct callback_data d2;
+    char*   stmt;
     d2 = *p;
     d2.mode = MODE_Insert;
     d2.zDestTable = 0;
     set_table_name(&d2, azArg[0]);
-    sqlite_exec_printf(p->db,
-       "SELECT * FROM '%q'",
-       callback, &d2, 0, azArg[0]
-    );
+    stmt = sqlite3_mprintf("SELECT * FROM '%q'", azArg[0]);
+    sqlite3_exec(p->db,stmt, callback, &d2, 0);
+    sqlite3_free(stmt);
     set_table_name(&d2, 0);
   }
   return 0;
@@ -273,7 +273,7 @@ static int dump_callback(void *pArg, int nArg, char **azArg, char **azCol){
 /*
 /Dump database to a file
 */
-int dump_database(sqlite * db, FILE * outfile){
+int dump_database(sqlite3 * db, FILE * outfile){
   int rc = 0;
   char *zErrMsg = 0;
   struct callback_data p;
@@ -285,7 +285,7 @@ int dump_database(sqlite * db, FILE * outfile){
   p.out = outfile;
     //open_db(p);
   fprintf(p.out, "BEGIN TRANSACTION;\n");
-  sqlite_exec(p.db,
+  sqlite3_exec(p.db,
         "SELECT name, type, sql FROM sqlite_master "
         "WHERE type!='meta' AND sql NOT NULL "
         "ORDER BY substr(type,2,1), name",
@@ -303,7 +303,7 @@ int dump_database(sqlite * db, FILE * outfile){
 /*
 /Dump database to a file
 */
-int load_database(sqlite * db, FILE * infile, int * lineErr){
+int load_database(sqlite3 * db, FILE * infile, int * lineErr){
   int rc = 0;
   process_input(db, infile, lineErr);
 
@@ -349,10 +349,9 @@ static int _all_whitespace(const char *z){
 ** as is the Oracle "/".
 */
 static int _is_command_terminator(const char *zLine){
-  extern int sqliteStrNICmp(const char*,const char*,int);
   while( isspace(*zLine) ){ zLine++; };
   if( zLine[0]=='/' && _all_whitespace(&zLine[1]) ) return 1;  /* Oracle */
-  if( sqliteStrNICmp(zLine,"go",2)==0 && _all_whitespace(&zLine[2]) ){
+  if( sqlite3StrNICmp(zLine,"go",2)==0 && _all_whitespace(&zLine[2]) ){
     return 1;  /* SQL Server */
   }
   return 0;
@@ -397,7 +396,7 @@ char *getline(FILE *in){
   return zLine;
 }
 
-void process_input(sqlite * db, FILE *in, int * lineErr){
+void process_input(sqlite3 * db, FILE *in, int * lineErr){
   char *zLine;
   char *zSql = 0;
   char * zErrMsg = 0;
@@ -426,8 +425,8 @@ void process_input(sqlite * db, FILE *in, int * lineErr){
       nSql += len;
     }
     free(zLine);
-    if( zSql && _ends_with_semicolon(zSql, nSql) && sqlite_complete(zSql) ){
-      rc = sqlite_exec(db, zSql, NULL, NULL, &zErrMsg);//&zErrMsg
+    if( zSql && _ends_with_semicolon(zSql, nSql) && sqlite3_complete(zSql) ){
+      rc = sqlite3_exec(db, zSql, NULL, NULL, &zErrMsg);//&zErrMsg
       if( rc || zErrMsg ){
         //if( in!=0 && !p->echoOn ) printf("%s\n",zSql);
         if( zErrMsg!=0 ){
@@ -439,7 +438,7 @@ void process_input(sqlite * db, FILE *in, int * lineErr){
   		   }
 		   return;
         }/*else{
-		  printf("SQL error: %s\n", sqlite_error_string(rc));
+		  printf("SQL error: %s\n", sqlite3_error_string(rc));
         }*/
       }
       free(zSql);
