@@ -1,5 +1,1 @@
-TEMPLATE    =	subdirs
-
-SUBDIRS	=	sqlitebrowser/sqlite_source \
-		sqlitebrowser
-
+TEMPLATE    =	subdirsSUBDIRS	=	sqlitebrowser/sqlite_source \		sqlitebrowser
