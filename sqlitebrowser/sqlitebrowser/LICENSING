@@ -1,0 +1,37 @@
+LICENSING
+
+This code is in Public Domain. You may do whatever you want with it.
+
+However, the same is not true for the QT libraries needed to build
+this software, and this places restrictions on how you can develop
+and license derivative works.
+
+The original code was developed and built with licensed, commercial
+versions of QT on Windows, MacOSX and Linux. Developers that wish to
+produce derivative work and use it in commercial projects need to hold
+a commercial QT license as well. 
+
+If you are however working on a project licensed with the GPL you may 
+use the GPL version of QT. You may release derivative works of this 
+software with any license you want as long as we are concerned, including
+GPL, Public Domain or Commercial, provided you abide to the licensing
+terms of the version of QT you have installed on your machine. 
+
+There are GPL versions of QT available at www.trolltech.com for X11 
+and MacOSX, and QT/GPL is included in almost all Linux distributions 
+since it is required by KDE. Windows users however need to purchase
+a commercial version of QT (there is no GPL version for QT 3.x for 
+Windows at this time.) Please consult www.trolltech.com/licensing
+if you have any questions about QT licensing.
+
+
+REDISTRIBUTION OF BINARIES
+
+The binaries available at sqlitebrowser.sourceforge.net were built with 
+fully licensed commercial versions of QT, and can be redistributed freely. 
+The Windows and MacOSX versions are standalone applications (QT has been 
+statically linked), while the Linux packages used a shared QT 3 library
+for better compatibility.
+
+
+

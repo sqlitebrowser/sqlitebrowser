@@ -1,0 +1,155 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>deleteIndexForm</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>deleteIndexForm</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>236</width>
+            <height>137</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Delete Index</string>
+    </property>
+    <property name="icon">
+        <pixmap>icone16.png</pixmap>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout21</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Index name:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox">
+                    <property name="name">
+                        <cstring>comboOptions</cstring>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Choose the index to delete</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Use this control to select the name of the index to be deleted</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer13</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>41</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout19</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer11</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>31</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>buttonDelete</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Delete</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Delete the selected index</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>buttonCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Cancel and close dialog box</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>buttonDelete</sender>
+        <signal>clicked()</signal>
+        <receiver>deleteIndexForm</receiver>
+        <slot>confirmDelete()</slot>
+    </connection>
+    <connection>
+        <sender>buttonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>deleteIndexForm</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in implementation">qmessagebox.h</include>
+    <include location="local" impldecl="in declaration">qstring.h</include>
+    <include location="local" impldecl="in declaration">qstringlist.h</include>
+    <include location="local" impldecl="in declaration">sqlitedb.h</include>
+    <include location="local" impldecl="in implementation">deleteindexform.ui.h</include>
+</includes>
+<variables>
+    <variable access="public">QString option;</variable>
+</variables>
+<slots>
+    <slot>confirmDelete()</slot>
+    <slot>populateOptions( QStringList entries )</slot>
+</slots>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
