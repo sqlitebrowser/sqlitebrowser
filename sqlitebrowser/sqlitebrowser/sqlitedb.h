@@ -21,7 +21,7 @@
 
 static QString applicationName = QString("SQLite Database Browser");
 static QString applicationIconName = QString("icone16.png");
-static QString aboutText = QString("Version 1.01\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes, as the Arca Database Browser. The original code is used with the Arca Database Xtra, a commercial product that uses SQLite databases with some additional extensions for handling of compressed and binary data. \n\n A generic version of the code was also produced to be compatible with standard SQLite 2.1 databases, and was released into Public Domain by the original author. \n\n You can find the latest versions of the source code of SQLite Database browser at http://sqlitebrowser.sourceforge.net. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
+static QString aboutText = QString("Version 1.01\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 2.x.\n\n You can find the latest versions of the source code of SQLite Database browser at http://sqlitebrowser.sourceforge.net. \n\nIn the spirit of the original SQLite source code, the authors disclaims copyright to this source code.");
 
 
 typedef QMap<int, class DBBrowserField> fieldMap;

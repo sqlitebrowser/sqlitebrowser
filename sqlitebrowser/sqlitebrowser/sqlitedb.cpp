@@ -542,10 +542,10 @@ void DBBrowserDB::buildParameterMap( )
    parammap["count changes"] = DBBrowserParam("COUNT_CHANGES", "");
    parammap["synchronous"] = DBBrowserParam("SYNCHRONOUS", "DEFAULT");
    parammap["default synchronous"] = DBBrowserParam("DEFAULT_SYNCHRONOUS", "DEFAULT");
-   parammap["empty result callbacks"] = DBBrowserParam("EMPTY_RESULT_CALLBACK", "OFF");
-   parammap["full column names"] = DBBrowserParam("FULL_COLUMN_NAME", "OFF");
+   parammap["empty result callbacks"] = DBBrowserParam("EMPTY_RESULT_CALLBACKS", "OFF");
+   parammap["full column names"] = DBBrowserParam("FULL_COLUMN_NAMES", "OFF");
    parammap["parser trace"] = DBBrowserParam("PARSER_TRACE", "OFF");
-   parammap["show datatype"] = DBBrowserParam("SHOW_DATATYPE", "OFF");
+   parammap["show datatype"] = DBBrowserParam("SHOW_DATATYPES", "OFF");
    parammap["vdbe trace"] = DBBrowserParam("VDBE_TRACE", "OFF");
    
 }
