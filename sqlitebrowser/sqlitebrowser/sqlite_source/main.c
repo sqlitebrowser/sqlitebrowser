@@ -14,7 +14,7 @@
 ** other files are for internal use by SQLite and should not be
 ** accessed by users of the library.
 **
-** $Id: main.c,v 1.4 2005-04-05 04:14:53 tabuleiro Exp $
+** $Id: main.c,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -531,8 +531,9 @@ int sqlite3_close(sqlite3 *db){
 
 #ifndef SQLITE_OMIT_GLOBALRECOVER
   {
-    sqlite3 *pPrev = pDbList;
+    sqlite3 *pPrev;
     sqlite3OsEnterMutex();
+    pPrev = pDbList;
     while( pPrev && pPrev->pNext!=db ){
       pPrev = pPrev->pNext;
     }

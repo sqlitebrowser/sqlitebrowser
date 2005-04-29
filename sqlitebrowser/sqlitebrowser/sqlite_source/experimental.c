@@ -12,7 +12,7 @@
 ** This file contains C code routines that are not a part of the official
 ** SQLite API.  These routines are unsupported.
 **
-** $Id: experimental.c,v 1.1 2005-03-23 14:56:41 jmiltner Exp $
+** $Id: experimental.c,v 1.2 2005-04-29 04:26:02 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 

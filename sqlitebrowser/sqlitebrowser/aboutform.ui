@@ -32,7 +32,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Version 1.2
+                <string>Version 1.2.1
 
 SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite 3.x database files.
 This program was built with version 3.2.1 of the SQLite engine.

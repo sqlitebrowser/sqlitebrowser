@@ -12,7 +12,7 @@
 ** This file contains C code routines that are called by the parser
 ** to handle UPDATE statements.
 **
-** $Id: update.c,v 1.4 2005-04-05 04:15:01 tabuleiro Exp $
+** $Id: update.c,v 1.5 2005-04-29 04:26:03 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -267,7 +267,7 @@ void sqlite3Update(
 
   /* Begin the database scan
   */
-  pWInfo = sqlite3WhereBegin(pParse, pTabList, pWhere, 0, 0);
+  pWInfo = sqlite3WhereBegin(pParse, pTabList, pWhere, 0);
   if( pWInfo==0 ) goto update_cleanup;
 
   /* Remember the index of every item to be updated.
@@ -297,13 +297,13 @@ void sqlite3Update(
     */
     sqlite3VdbeAddOp(v, OP_ListRewind, 0, 0);
     addr = sqlite3VdbeAddOp(v, OP_ListRead, 0, 0);
-    sqlite3VdbeAddOp(v, OP_Dup, 0, 0);
 
-    /* Open a cursor and make it point to the record that is
-    ** being updated.
-    */
-    sqlite3VdbeAddOp(v, OP_Dup, 0, 0);
     if( !isView ){
+      sqlite3VdbeAddOp(v, OP_Dup, 0, 0);
+      sqlite3VdbeAddOp(v, OP_Dup, 0, 0);
+      /* Open a cursor and make it point to the record that is
+      ** being updated.
+      */
       sqlite3OpenTableForReading(v, iCur, pTab);
     }
     sqlite3VdbeAddOp(v, OP_MoveGe, iCur, 0);

@@ -12,7 +12,7 @@
 ** This file contains routines used to translate between UTF-8, 
 ** UTF-16, UTF-16BE, and UTF-16LE.
 **
-** $Id: utf.c,v 1.2 2005-04-05 04:15:01 tabuleiro Exp $
+** $Id: utf.c,v 1.3 2005-04-29 04:26:03 tabuleiro Exp $
 **
 ** Notes on UTF-8:
 **

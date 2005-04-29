@@ -13,13 +13,13 @@ void editFieldForm::setInitialValues(QString name, QString type)
     typeBox->insertItem(type);
     QString tString = "";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "text";
+    tString = "TEXT";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "numeric";
+    tString = "NUMERIC";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "blob";
+    tString = "BLOB";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "integer primary key";
+    tString = "INTEGER PRIMARY KEY";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
 }
 
@@ -27,7 +27,7 @@ void editFieldForm::confirmEdit()
 {
     QString fieldname = nameLineEdit->text();
     if (fieldname.isEmpty()) {
-	QMessageBox::information( this, applicationName, "Field name can not be empty" );
+ QMessageBox::information( this, applicationName, "Field name can not be empty" );
 	return;
     }
     if (fieldname.contains(" ")>0) {

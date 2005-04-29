@@ -622,3 +622,26 @@ int sqlite3_bind_parameter_index(sqlite3_stmt *pStmt, const char *zName){
   }
   return 0;
 }
+
+/* EXPERIMENTAL
+** 
+** Transfer all bindings from the first statement over to the second.
+** If the two statements contain a different number of bindings, then
+** an SQLITE_ERROR is returned.
+*/
+int sqlite3_transfer_bindings(sqlite3_stmt *pFromStmt, sqlite3_stmt *pToStmt){
+  Vdbe *pFrom = (Vdbe*)pFromStmt;
+  Vdbe *pTo = (Vdbe*)pToStmt;
+  int i, rc = SQLITE_OK;
+  if( (pFrom->magic!=VDBE_MAGIC_RUN && pFrom->magic!=VDBE_MAGIC_HALT)
+    || (pTo->magic!=VDBE_MAGIC_RUN && pTo->magic!=VDBE_MAGIC_HALT) ){
+    return SQLITE_MISUSE;
+  }
+  if( pFrom->nVar!=pTo->nVar ){
+    return SQLITE_ERROR;
+  }
+  for(i=0; rc==SQLITE_OK && i<pFrom->nVar; i++){
+    rc = sqlite3VdbeMemMove(&pTo->aVar[i], &pFrom->aVar[i]);
+  }
+  return rc;
+}

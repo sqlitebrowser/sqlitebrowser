@@ -286,12 +286,13 @@ void mainForm::closeEvent( QCloseEvent * )
 void mainForm::addRecord()
 {
     if (db.addRecord()){
+  populateTable(db.curBrowseTableName);
  //added record will be the last one in view 
  recAtTop = ((db.getRecordCount()-1)/recsPerView)*recsPerView;
  updateTableView(db.getRecordCount()-recAtTop-1);
     }else{
  QMessageBox::information( this, applicationName,
-    "Please select a table first" );
+    "Error adding record, make sure a table is selected" );
     }
 }
 
@@ -353,7 +354,7 @@ void mainForm::updateTableView(int lineToSelect)
   QString content = *it;
   QString firstline = content.section( '\n', 0,0 );
   if (content.length()>MAX_DISPLAY_LENGTH)
-		{
+  {
       firstline.truncate(MAX_DISPLAY_LENGTH);
       firstline.append("...");
   }
@@ -459,63 +460,29 @@ void mainForm::browseFind(bool open)
                      this, SLOT( lookfor(const QString&, const QString&, const QString&) ) );
      connect( findWin, SIGNAL( showrecord(int) ),this, SLOT( showrecord(int) ) );
      connect( findWin, SIGNAL( goingAway() ),this, SLOT( browseFindAway() ) );
-	}
-	findWin->resetFields(db.getTableFields(db.curBrowseTableName));
-	findWin->show();
+ }
+ findWin->resetFields(db.getTableFields(db.curBrowseTableName));
+ findWin->show();
     } else {
-	if (findWin){
-	    findWin->hide();
-	}
+ if (findWin){
+     findWin->hide();
+ }
     }
 }
 
 void mainForm::browseFindAway()
 {
-	buttonFind->toggle();
+ buttonFind->toggle();
 }
 
 void mainForm::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
 {
     if (!db.isOpen()){
-	QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
-	return;
-    }
-    
-    //we may need to modify woperator and wsearchterm, so use copies
-    QString * finaloperator = new QString(woperator);
-    QString * finalsearchterm = new QString(wsearchterm);
-    
-    //special case for CONTAINS operator: use LIKE and surround the search word with % characters
-    if (woperator.compare("contains")==0){
-	finaloperator = new QString("LIKE");
-	QString newsearchterm = "%";
-	newsearchterm.append(wsearchterm);
-	newsearchterm.append("%");
-	finalsearchterm = new QString( newsearchterm);
+ QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
+ return;
     }
     QApplication::setOverrideCursor( waitCursor, TRUE );
-    QString statement = "SELECT rowid, ";
-    statement.append(wfield);
-    statement.append("  FROM ");
-    statement.append( db.curBrowseTableName);
-    statement.append(" WHERE ");
-    statement.append(wfield);
-    statement.append(" ");
-    statement.append(*finaloperator);
-    statement.append(" ");
-    //searchterm needs to be quoted if it is not a number
-    bool ok = false;
-    wsearchterm.toDouble(&ok);
-    if (!ok) wsearchterm.toInt(&ok, 10);
-    if (!ok) {//not a number, quote it
-	char * formSQL = sqlite3_mprintf("%Q",static_cast<const char*>((*finalsearchterm).utf8()));
-	statement.append(formSQL);
-	 if (formSQL) sqlite3_free(formSQL);
-     } else {//append the number, unquoted
-	 statement.append(*finalsearchterm);
-     }
-    statement.append(" ORDER BY rowid; ");
-    resultMap res = db.getFindResults(statement);
+    resultMap res = db.getFindResults(wfield, woperator, wsearchterm);
     findWin->showResults(res);
     QApplication::restoreOverrideCursor();
 }
@@ -537,8 +504,8 @@ void mainForm::createTable()
     if ( tableForm->exec() ) {
  if (!db.executeSQL(tableForm->createStatement)){
      QString error = "Error: could not create the table. Message from database engine:  ";
-	    error.append(db.lastErrorMessage);
-	    QMessageBox::warning( this, applicationName, error );
+     error.append(db.lastErrorMessage);
+     QMessageBox::warning( this, applicationName, error );
  } else {
      populateStructure();
      resetBrowser();
@@ -559,12 +526,12 @@ void mainForm::createIndex()
     if ( indexForm->exec() ) {
  if (!db.executeSQL(indexForm->createStatement)){
      QString error = "Error: could not create the index. Message from database engine:  ";
-	    error.append(db.lastErrorMessage);
-	    QMessageBox::warning( this, applicationName, error );
-	} else {
-	    populateStructure();
-	    resetBrowser();
-	}
+     error.append(db.lastErrorMessage);
+     QMessageBox::warning( this, applicationName, error );
+ } else {
+     populateStructure();
+     resetBrowser();
+ }
     }
 }
 
@@ -573,13 +540,13 @@ void mainForm::compact()
 {
     QApplication::setOverrideCursor( waitCursor, TRUE );
     if (db.isOpen()){
-	if (!db.compact()){
-	    QString error = "Error: could not compact the database file. Message from database engine:  ";
-	    error.append(db.lastErrorMessage);
-	    QMessageBox::warning( this, applicationName, error );
-	} else {
-	    QMessageBox::warning( this, applicationName, "Database compacted" );
-	}
+ if (!db.compact()){
+     QString error = "Error: could not compact the database file. Message from database engine:  ";
+     error.append(db.lastErrorMessage);
+     QMessageBox::warning( this, applicationName, error );
+ } else {
+     QMessageBox::warning( this, applicationName, "Database compacted" );
+ }
     }
     db.open(db.curDBFilename);
     populateStructure();
@@ -732,9 +699,9 @@ void mainForm::updateRecordText(int row, int col, QString newtext)
  
  QString content = *cv ;
  QString firstline = content.section( '\n', 0,0 );
- if (content.length()>14)
+ if (content.length()>MAX_DISPLAY_LENGTH )
  {
-    firstline.truncate(14);
+    firstline.truncate(MAX_DISPLAY_LENGTH );
     firstline.append("...");
  }
  dataTable->setText( row - recAtTop, col, firstline);
@@ -796,7 +763,7 @@ void mainForm::executeQuery()
     //log the query
     db.logSQL(query, kLogMsg_User);
     sqlite3_stmt *vm;
-    const void *tail;
+    const char *tail;
  int ncol;
 
    int err=0;
@@ -808,44 +775,45 @@ void mainForm::executeQuery()
        queryResultListView->removeColumn(0);
    }
    
-	err=sqlite3_prepare16(db._db,query.ucs2(),query.length(),&vm,&tail);
-	if (err == SQLITE_OK){
-	    db.setDirty(true);
-	    int rownum = 0;
-	  QListViewItem * lasttbitem = 0;
-	  bool mustCreateColumns = true;
-	  while ( sqlite3_step(vm) == SQLITE_ROW ){
-	      //r.clear()
-	          QListViewItem * tbitem = new QListViewItem( queryResultListView, lasttbitem);
-	      //setup num of cols here for display grid
-	      if (mustCreateColumns)
-		  {
-			ncol = sqlite3_data_count(vm);
-			for (int e=0; e<ncol; e++)
-				queryResultListView->addColumn("");
-		
-			mustCreateColumns = false;
-	      }
-	      for (int e=0; e<ncol; e++){
-      QString rv(StringFromUTF16(sqlite3_column_text16(vm, e)));
-    		//show it here
-		  QString firstline = rv.section( '\n', 0,0 );
-		  if (firstline.length()>MAX_DISPLAY_LENGTH)
-		{
-		    firstline.truncate(MAX_DISPLAY_LENGTH);
-		   firstline.append("...");
-		}
-		  tbitem->setText( e, firstline);
-		  lasttbitem = tbitem;
-		rownum++;
-	      }
-	  }
+ err=sqlite3_prepare(db._db,query.utf8(),-1,&vm,&tail);
+ if (err == SQLITE_OK){
+     db.setDirty(true);
+     int rownum = 0;
+   QListViewItem * lasttbitem = 0;
+   bool mustCreateColumns = true;
+   while ( sqlite3_step(vm) == SQLITE_ROW ){
+       //r.clear()
+           QListViewItem * tbitem = new QListViewItem( queryResultListView, lasttbitem);
+       //setup num of cols here for display grid
+       if (mustCreateColumns)
+    {
+   ncol = sqlite3_data_count(vm);
+   for (int e=0; e<ncol; e++)
+    queryResultListView->addColumn("");
+  
+   mustCreateColumns = false;
+       }
+       for (int e=0; e<ncol; e++){
+      QString rv(QString::fromUtf8((const char *) sqlite3_column_text(vm, e)));
+      //show it here
+    QString firstline = rv.section( '\n', 0,0 );
+    if (firstline.length()>MAX_DISPLAY_LENGTH)
+  {
+      firstline.truncate(MAX_DISPLAY_LENGTH);
+     firstline.append("...");
+  }
+    tbitem->setText( e, firstline);
+    lasttbitem = tbitem;
+  rownum++;
+       }
+   }
 
           sqlite3_finalize(vm);
         }else{
           lastErrorMessage = QString (sqlite3_errmsg(db._db));
         }
        queryErrorLineEdit->setText(lastErrorMessage);
+       queryResultListView->setResizeMode(QListView::AllColumns);
 }
 
 
@@ -853,8 +821,8 @@ void mainForm::mainTabSelected(const QString & tabname)
 {
     if ((mainTab->currentPageIndex ()==0)||(mainTab->currentPageIndex ()==1))
     {
-	populateStructure();
-	resetBrowser();
+ populateStructure();
+ resetBrowser();
     }
 }
 
@@ -862,9 +830,9 @@ void mainForm::mainTabSelected(const QString & tabname)
 void mainForm::toggleLogWindow( bool enable )
 {
     if (enable){
-	logWin->show();
+ logWin->show();
     } else {
-	logWin->hide();
+ logWin->hide();
     }
 }
 
@@ -872,37 +840,37 @@ void mainForm::toggleLogWindow( bool enable )
 void mainForm::importTableFromCSV()
 {
     if (!db.isOpen()){
-		QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
-		return;
+  QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
+  return;
     }
      
      if (db.getDirty())
      {
-		QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
-		if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-		{
-			bool	done(false);
-			do {
-				if ( db.save() ) 
-					done = true;
-				else {
-					QString error = "Error: could not save the database.\nMessage from database engine:  ";
-					error.append(db.lastErrorMessage);
-					switch ( QMessageBox::warning( this, applicationName, error, QMessageBox::Retry|QMessageBox::Default, QMessageBox::Cancel|QMessageBox::Escape, QMessageBox::Ignore) ) {
-						case QMessageBox::Retry:
-							break;
-						case QMessageBox::Ignore:
-							db.revert();
-							done = true;
-							break;
-						case QMessageBox::Cancel:
-							return;
-					}
-				}
-			} while ( !done );
-		} else {
-			return;
-		}
+  QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
+  if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+  {
+   bool done(false);
+   do {
+    if ( db.save() ) 
+     done = true;
+    else {
+     QString error = "Error: could not save the database.\nMessage from database engine:  ";
+     error.append(db.lastErrorMessage);
+     switch ( QMessageBox::warning( this, applicationName, error, QMessageBox::Retry|QMessageBox::Default, QMessageBox::Cancel|QMessageBox::Escape, QMessageBox::Ignore) ) {
+      case QMessageBox::Retry:
+       break;
+      case QMessageBox::Ignore:
+       db.revert();
+       done = true;
+       break;
+      case QMessageBox::Cancel:
+       return;
+     }
+    }
+   } while ( !done );
+  } else {
+   return;
+  }
     }
     
     QString wFile = QFileDialog::getOpenFileName(
@@ -914,99 +882,99 @@ void mainForm::importTableFromCSV()
     
     if (QFile::exists(wFile) )
     {
-		importCSVForm * csvForm = new importCSVForm( this, "importcsv", TRUE );
-		csvForm->initialize(wFile, &db);
-		if ( csvForm->exec() ) {
-			populateStructure();
-			resetBrowser();
-			QMessageBox::information( this, applicationName, "Import completed" );
-		}
+  importCSVForm * csvForm = new importCSVForm( this, "importcsv", TRUE );
+  csvForm->initialize(wFile, &db);
+  if ( csvForm->exec() ) {
+   populateStructure();
+   resetBrowser();
+   QMessageBox::information( this, applicationName, "Import completed" );
+  }
     }
 }
 
 void mainForm::exportTableToCSV()
 {
      if (!db.isOpen()){
-	QMessageBox::information( this, applicationName, "There is no database opened to export" );
-	return;
+ QMessageBox::information( this, applicationName, "There is no database opened to export" );
+ return;
     }
      exportTableCSVForm * exportForm = new exportTableCSVForm( this, "export table", TRUE );
     exportForm->populateOptions( db.getTableNames());
     if ( exportForm->exec() ) {
-	//qDebug(exportForm->option);
-	//load our table
-	db.browseTable(exportForm->option);
-	
-	QString fileName = QFileDialog::getSaveFileName(
+ //qDebug(exportForm->option);
+ //load our table
+ db.browseTable(exportForm->option);
+ 
+ QString fileName = QFileDialog::getSaveFileName(
                     "",
                     "Text files (*.csv *txt)",
                     this,
                     "save file dialog"
                     "Choose a filename to export data" );
     
-	if (fileName)
-	{
-	    QFile file(fileName);
-	    if ( file.open( IO_WriteOnly ) ) 
-	    {
-		char quote = '"';
-		char sep = ',';
-		char feed = 10;
-		int colNum = 0;
-		int colCount = 0;
-		QTextStream stream( &file );
-		//fieldnames on first row
-		 QStringList fields = db.browseFields;
-		 colCount = fields.count();
-		 for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
-		     stream << quote;
-		     stream << *ct;
-		     stream << quote;
-		     colNum++;
-		     if (colNum<colCount)
-		{
-			 stream << sep;
-		} else {
-			stream << feed;
-			colNum = 0;
-		}
-		 }
-		
-		//now export data
-		rowList tab = db.browseRecs;
-		rowList::iterator rt;
-		
-		//int dcols =0;
-		QString rowLabel;
-		for ( rt = tab.at(0); rt !=tab.end(); ++rt )
-		{
-		    for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it ) {
-			//skip first one (the rowid)
-		if (it!=(*rt).begin()){
-			    QString content = *it;
-			    stream<< quote;
-			    QChar qquote = quote;
-			    content.replace(quote, QString(qquote).append(qquote));
-			    stream<< content;
-			    stream<< quote;
-			    colNum++;
-			    if (colNum<colCount)
-			    {
-				stream << sep;
-			    } else {
-				stream << feed;
-				colNum = 0;
-			    }
-			}
-	    }
-		}
+ if (fileName)
+ {
+     QFile file(fileName);
+     if ( file.open( IO_WriteOnly ) ) 
+     {
+  char quote = '"';
+  char sep = ',';
+  char feed = 10;
+  int colNum = 0;
+  int colCount = 0;
+  QTextStream stream( &file );
+  //fieldnames on first row
+   QStringList fields = db.browseFields;
+   colCount = fields.count();
+   for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
+       stream << quote;
+       stream << *ct;
+       stream << quote;
+       colNum++;
+       if (colNum<colCount)
+  {
+    stream << sep;
+  } else {
+   stream << feed;
+   colNum = 0;
+  }
+   }
+  
+  //now export data
+  rowList tab = db.browseRecs;
+  rowList::iterator rt;
+  
+  //int dcols =0;
+  QString rowLabel;
+  for ( rt = tab.at(0); rt !=tab.end(); ++rt )
+  {
+      for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it ) {
+   //skip first one (the rowid)
+  if (it!=(*rt).begin()){
+       QString content = *it;
+       stream<< quote;
+       QChar qquote = quote;
+       content.replace(quote, QString(qquote).append(qquote));
+       stream<< content;
+       stream<< quote;
+       colNum++;
+       if (colNum<colCount)
+       {
+    stream << sep;
+       } else {
+    stream << feed;
+    colNum = 0;
+       }
+   }
+     }
+  }
     
-		file.close();
-		QMessageBox::information( this, applicationName, "Export completed" );
-	    }	
-	}
-	populateStructure();
-	resetBrowser();
+  file.close();
+  QMessageBox::information( this, applicationName, "Export completed" );
+     } 
+ }
+ populateStructure();
+ resetBrowser();
     }
 }
 
@@ -1021,14 +989,14 @@ void mainForm::dbState( bool dirty )
 void mainForm::fileSave()
 {
     if (db.isOpen()){
-		do {
-			if ( !db.save() ) {
-				QString error = "Error: could not save the database.\nMessage from database engine:  ";
-				error.append(db.lastErrorMessage);
-				if ( QMessageBox::warning( this, applicationName, error, QMessageBox::Ok, QMessageBox::Retry|QMessageBox::Default) != QMessageBox::Retry )
-					break;
-			}
-		} while ( db.getDirty() );
+  do {
+   if ( !db.save() ) {
+    QString error = "Error: could not save the database.\nMessage from database engine:  ";
+    error.append(db.lastErrorMessage);
+    if ( QMessageBox::warning( this, applicationName, error, QMessageBox::Ok, QMessageBox::Retry|QMessageBox::Default) != QMessageBox::Retry )
+     break;
+   }
+  } while ( db.getDirty() );
     }
 }
 
@@ -1036,15 +1004,15 @@ void mainForm::fileSave()
 void mainForm::fileRevert()
 {
     if (db.isOpen()){
-	QString msg = "Are you sure you want to undo all changes made to the database file \n ";
-	msg.append(db.curDBFilename);
-	msg.append(" since the last save?");
-	if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-	    {
-		db.revert();
-		populateStructure();
-		resetBrowser();
-	    }
+ QString msg = "Are you sure you want to undo all changes made to the database file \n ";
+ msg.append(db.curDBFilename);
+ msg.append(" since the last save?");
+ if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+     {
+  db.revert();
+  populateStructure();
+  resetBrowser();
+     }
     }
 }
 
@@ -1052,8 +1020,8 @@ void mainForm::fileRevert()
 void mainForm::exportDatabaseToSQL()
 {
         if (!db.isOpen()){
-	QMessageBox::information( this, applicationName, "There is no database opened to export" );
-	return;
+ QMessageBox::information( this, applicationName, "There is no database opened to export" );
+ return;
     }
 
     QString fileName = QFileDialog::getSaveFileName(
@@ -1063,15 +1031,15 @@ void mainForm::exportDatabaseToSQL()
                     "save file dialog"
                     "Choose a filename to export" );
     
-	if (fileName)
-	{
-	    if (!db.dump(fileName))
-	    {
-		QMessageBox::information( this, applicationName, "Could not create export file" );
-	    } else {
-		QMessageBox::information( this, applicationName, "Export completed" );
-	    }
-	}
+ if (fileName)
+ {
+     if (!db.dump(fileName))
+     {
+  QMessageBox::information( this, applicationName, "Could not create export file" );
+     } else {
+  QMessageBox::information( this, applicationName, "Export completed" );
+     }
+ }
 }
 
 
@@ -1085,39 +1053,39 @@ void mainForm::importDatabaseFromSQL()
                     "Choose a file to import" );
     
     if (fileName)
-	{
-	QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
-	if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-	{
-	QString newDBfile = QFileDialog::getSaveFileName(
-		"",
-		"",
-		this,
-		"create file dialog"
-		"Choose a filename to save under" );
-	if (QFile::exists(newDBfile) )
-	{
-	    QString err = "File ";
-	    err.append(newDBfile);
-	    err.append(" already exists. Please choose a different name");
-	    QMessageBox::information( this, applicationName ,err);
-	    return;
-	}
-	if (!fileName.isNull())
-	{
-	    db.create(newDBfile);
-	}
+ {
+ QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
+ if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+ {
+ QString newDBfile = QFileDialog::getSaveFileName(
+  "",
+  "",
+  this,
+  "create file dialog"
+  "Choose a filename to save under" );
+ if (QFile::exists(newDBfile) )
+ {
+     QString err = "File ";
+     err.append(newDBfile);
+     err.append(" already exists. Please choose a different name");
+     QMessageBox::information( this, applicationName ,err);
+     return;
+ }
+ if (!fileName.isNull())
+ {
+     db.create(newDBfile);
+ }
     }
-	    int lineErr;
-	    if (!db.reload(fileName, &lineErr))
-	    {
-		QMessageBox::information( this, applicationName, QString("Error importing data at line %1").arg(lineErr) );
-	    }
-	    else
-	    {
-		QMessageBox::information( this, applicationName, "Import completed" );
-	    }
-	    populateStructure();
-	    resetBrowser();
-	}	
+     int lineErr;
+     if (!db.reload(fileName, &lineErr))
+     {
+  QMessageBox::information( this, applicationName, QString("Error importing data at line %1").arg(lineErr) );
+     }
+     else
+     {
+  QMessageBox::information( this, applicationName, "Import completed" );
+     }
+     populateStructure();
+     resetBrowser();
+ } 
 }

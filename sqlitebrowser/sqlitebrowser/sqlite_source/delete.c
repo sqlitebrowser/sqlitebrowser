@@ -12,7 +12,7 @@
 ** This file contains C code routines that are called by the parser
 ** in order to generate code for DELETE FROM statements.
 **
-** $Id: delete.c,v 1.4 2005-04-05 04:14:52 tabuleiro Exp $
+** $Id: delete.c,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -230,7 +230,7 @@ void sqlite3DeleteFrom(
 
     /* Begin the database scan
     */
-    pWInfo = sqlite3WhereBegin(pParse, pTabList, pWhere, 0, 0);
+    pWInfo = sqlite3WhereBegin(pParse, pTabList, pWhere, 0);
     if( pWInfo==0 ) goto delete_from_cleanup;
 
     /* Remember the rowid of every item to be deleted.
@@ -264,8 +264,8 @@ void sqlite3DeleteFrom(
     */
     if( triggers_exist ){
       addr = sqlite3VdbeAddOp(v, OP_ListRead, 0, end);
-      sqlite3VdbeAddOp(v, OP_Dup, 0, 0);
       if( !isView ){
+        sqlite3VdbeAddOp(v, OP_Dup, 0, 0);
         sqlite3OpenTableForReading(v, iCur, pTab);
       }
       sqlite3VdbeAddOp(v, OP_MoveGe, iCur, 0);
@@ -278,7 +278,7 @@ void sqlite3DeleteFrom(
 
       (void)sqlite3CodeRowTrigger(pParse, TK_DELETE, 0, TRIGGER_BEFORE, pTab,
           -1, oldIdx, (pParse->trigStack)?pParse->trigStack->orconf:OE_Default,
-	  addr);
+          addr);
     }
 
     if( !isView ){
@@ -312,7 +312,7 @@ void sqlite3DeleteFrom(
       }
       (void)sqlite3CodeRowTrigger(pParse, TK_DELETE, 0, TRIGGER_AFTER, pTab, -1,
           oldIdx, (pParse->trigStack)?pParse->trigStack->orconf:OE_Default,
-	  addr);
+          addr);
     }
 
     /* End of the delete loop */

@@ -16,7 +16,7 @@
 ** so is applicable.  Because this module is responsible for selecting
 ** indices, you might also think of this module as the "query optimizer".
 **
-** $Id: where.c,v 1.4 2005-04-05 04:15:01 tabuleiro Exp $
+** $Id: where.c,v 1.5 2005-04-29 04:26:04 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -599,8 +599,7 @@ WhereInfo *sqlite3WhereBegin(
   Parse *pParse,        /* The parser context */
   SrcList *pTabList,    /* A list of all tables to be scanned */
   Expr *pWhere,         /* The WHERE clause */
-  ExprList **ppOrderBy, /* An ORDER BY clause, or NULL */
-  Fetch *pFetch         /* Initial location of cursors.  NULL otherwise */
+  ExprList **ppOrderBy  /* An ORDER BY clause, or NULL */
 ){
   int i;                     /* Loop counter */
   WhereInfo *pWInfo;         /* Will become the return value of this function */

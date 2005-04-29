@@ -43,7 +43,7 @@
 ** in this file for details.  If in doubt, do not deviate from existing
 ** commenting and indentation practices when changing or adding code.
 **
-** $Id: vdbe.c,v 1.4 2005-04-05 04:15:01 tabuleiro Exp $
+** $Id: vdbe.c,v 1.5 2005-04-29 04:26:03 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -1316,7 +1316,7 @@ case OP_AddImm: {            /* no-push */
 ** greater than its current value if P1==1.
 */
 case OP_ForceInt: {            /* no-push */
-  int v;
+  i64 v;
   assert( pTos>=p->aStack );
   applyAffinity(pTos, SQLITE_AFF_INTEGER, db->enc);
   if( (pTos->flags & (MEM_Int|MEM_Real))==0 ){
@@ -4117,8 +4117,13 @@ case OP_SortPut: {        /* no-push */
   if( Dynamicify(pTos, db->enc) ) goto no_mem;
   pSorter = sqliteMallocRaw( sizeof(Sorter) );
   if( pSorter==0 ) goto no_mem;
-  pSorter->pNext = p->pSort;
-  p->pSort = pSorter;
+  pSorter->pNext = 0;
+  if( p->pSortTail ){
+    p->pSortTail->pNext = pSorter;
+  }else{
+    p->pSort = pSorter;
+  }
+  p->pSortTail = pSorter;
   assert( pTos->flags & MEM_Dyn );
   pSorter->nKey = pTos->n;
   pSorter->zKey = pTos->z;

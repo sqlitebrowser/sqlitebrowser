@@ -314,6 +314,7 @@ struct Vdbe {
   int nCursor;        /* Number of slots in apCsr[] */
   Cursor **apCsr;     /* One element of this array for each open cursor */
   Sorter *pSort;      /* A linked list of objects to be sorted */
+  Sorter *pSortTail;  /* Last element on the pSort list */
   int nVar;           /* Number of entries in aVar[] */
   Mem *aVar;          /* Values for the OP_Variable opcode. */
   char **azVar;       /* Name of variables */

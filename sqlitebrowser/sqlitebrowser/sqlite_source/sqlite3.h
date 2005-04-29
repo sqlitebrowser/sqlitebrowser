@@ -12,7 +12,7 @@
 ** This header file defines the interface that the SQLite library
 ** presents to client programs.
 **
-** @(#) $Id: sqlite3.h,v 1.2 2005-04-05 04:15:01 tabuleiro Exp $
+** @(#) $Id: sqlite3.h,v 1.3 2005-04-29 04:26:02 tabuleiro Exp $
 */
 #ifndef _SQLITE3_H_
 #define _SQLITE3_H_
@@ -1209,6 +1209,17 @@ int sqlite3_sleep(int);
 int sqlite3_expired(sqlite3_stmt*);
 
 /*
+** Move all bindings from the first prepared statement over to the second.
+** This routine is useful, for example, if the first prepared statement
+** fails with an SQLITE_SCHEMA error.  The same SQL can be prepared into
+** the second prepared statement then all of the bindings transfered over
+** to the second statement before the first statement is finalized.
+**
+******* THIS IS AN EXPERIMENTAL API AND IS SUBJECT TO CHANGE ******
+*/
+int sqlite3_transfer_bindings(sqlite3_stmt*, sqlite3_stmt*);
+
+/*
 ** If the following global variable is made to point to a
 ** string which is the name of a directory, then all temporary files
 ** created by SQLite will be placed in that directory.  If this variable
@@ -1224,7 +1235,7 @@ extern char *sqlite3_temp_directory;
 ** This function is called to recover from a malloc() failure that occured
 ** within the SQLite library. Normally, after a single malloc() fails the 
 ** library refuses to function (all major calls return SQLITE_NOMEM).
-** This function library state so that it can be used again.
+** This function restores the library state so that it can be used again.
 **
 ** All existing statements (sqlite3_stmt pointers) must be finalized or
 ** reset before this call is made. Otherwise, SQLITE_BUSY is returned.

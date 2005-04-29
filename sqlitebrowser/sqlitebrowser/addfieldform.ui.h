@@ -13,13 +13,13 @@ void addFieldForm::setInitialValues(QString name, QString type)
     typeBox->insertItem(type);
     QString tString = "";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "text";
+    tString = "TEXT";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "numeric";
+    tString = "NUMERIC";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "blob";
+    tString = "BLOB";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "integer primary key";
+    tString = "INTEGER PRIMARY KEY";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
 }
 
@@ -27,12 +27,12 @@ void addFieldForm::confirmAddField()
 {
     QString fieldname = nameLineEdit->text();
     if (fieldname.isEmpty()) {
-	QMessageBox::information( this, applicationName, "Field name can not be empty" );
-	return;
+ QMessageBox::information( this, applicationName, "Field name can not be empty" );
+ return;
     }
     if (fieldname.contains(" ")>0) {
-	QMessageBox::warning( this, applicationName, "Spaces are not allowed in the field name" );
-	return;
+ QMessageBox::warning( this, applicationName, "Spaces are not allowed in the field name" );
+ return;
     }
     fname = fieldname;
     ftype = typeBox->currentText();
@@ -44,7 +44,7 @@ void addFieldForm::getCustomType()
     addFieldTypeForm * addForm = new addFieldTypeForm( this, "addfieldtype", TRUE );
     if (addForm->exec())
    {
-	QString nospaces = addForm->typeNameEdit->text().remove(" ");
-	setInitialValues(nameLineEdit->text(),nospaces );
+ QString nospaces = addForm->typeNameEdit->text().remove(" ");
+ setInitialValues(nameLineEdit->text(),nospaces );
    }
 }

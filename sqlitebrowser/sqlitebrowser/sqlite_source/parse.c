@@ -2528,7 +2528,7 @@ static void yy_reduce(
 #line 2530 "parse.c"
         break;
       case 158:
-#line 552 "parse.y"
+#line 549 "parse.y"
 {sqlite3Update(pParse,yymsp[-3].minor.yy439,yymsp[-1].minor.yy322,yymsp[0].minor.yy418,yymsp[-4].minor.yy328);}
 #line 2535 "parse.c"
         break;

@@ -191,7 +191,7 @@ static int opcodeNoPush(u8 op){
   ** error if someone builds with an awk that uses (for example) 32-bit 
   ** IEEE floats.
   */ 
-  static u32 masks[5] = {
+  static const u32 masks[5] = {
     NOPUSH_MASK_0 + (NOPUSH_MASK_1<<16),
     NOPUSH_MASK_2 + (NOPUSH_MASK_3<<16),
     NOPUSH_MASK_4 + (NOPUSH_MASK_5<<16),
@@ -779,6 +779,7 @@ void sqlite3VdbeSorterReset(Vdbe *p){
     sqlite3VdbeMemRelease(&pSorter->data);
     sqliteFree(pSorter);
   }
+  p->pSortTail = 0;
 }
 
 /*
@@ -1604,7 +1605,7 @@ u32 sqlite3VdbeSerialType(Mem *pMem){
   }
   if( flags&MEM_Int ){
     /* Figure out whether to use 1, 2, 4, 6 or 8 bytes. */
-#   define MAX_6BYTE ((((i64)0x00010000)<<32)-1)
+#   define MAX_6BYTE ((((i64)0x00001000)<<32)-1)
     i64 i = pMem->i;
     u64 u = i<0 ? -i : i;
     if( u<=127 ) return 1;

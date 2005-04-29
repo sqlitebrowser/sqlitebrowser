@@ -11,7 +11,7 @@
 *************************************************************************
 ** Internal interface definitions for SQLite.
 **
-** @(#) $Id: sqliteInt.h,v 1.4 2005-04-05 04:15:01 tabuleiro Exp $
+** @(#) $Id: sqliteInt.h,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
 */
 #ifndef _SQLITEINT_H_
 #define _SQLITEINT_H_
@@ -317,7 +317,6 @@ extern int sqlite3_iMallocReset; /* Set iMallocFail to this when it reaches 0 */
 typedef struct Column Column;
 typedef struct Table Table;
 typedef struct Index Index;
-typedef struct Instruction Instruction;
 typedef struct Expr Expr;
 typedef struct ExprList ExprList;
 typedef struct Parse Parse;
@@ -339,7 +338,6 @@ typedef struct KeyClass KeyClass;
 typedef struct CollSeq CollSeq;
 typedef struct KeyInfo KeyInfo;
 typedef struct NameContext NameContext;
-typedef struct Fetch Fetch;
 
 /*
 ** Each database file to be accessed by the system is an instance
@@ -1049,7 +1047,6 @@ struct Select {
   Expr *pOffset;         /* OFFSET expression. NULL means not used. */
   int iLimit, iOffset;   /* Memory registers holding LIMIT & OFFSET counters */
   IdList **ppOpenTemp;   /* OP_OpenTemp addresses used by multi-selects */
-  Fetch *pFetch;         /* If this stmt is part of a FETCH command */
   u8 isResolved;         /* True once sqlite3SelectResolve() has run. */
   u8 isAgg;              /* True if this is an aggregate query */
 };
@@ -1419,7 +1416,7 @@ void sqlite3OpenTableForReading(Vdbe*, int iCur, Table*);
 void sqlite3OpenTable(Vdbe*, int iCur, Table*, int);
 void sqlite3DeleteFrom(Parse*, SrcList*, Expr*);
 void sqlite3Update(Parse*, SrcList*, ExprList*, Expr*, int);
-WhereInfo *sqlite3WhereBegin(Parse*, SrcList*, Expr*, ExprList**, Fetch*);
+WhereInfo *sqlite3WhereBegin(Parse*, SrcList*, Expr*, ExprList**);
 void sqlite3WhereEnd(WhereInfo*);
 void sqlite3ExprCode(Parse*, Expr*);
 void sqlite3ExprCodeAndCache(Parse*, Expr*);

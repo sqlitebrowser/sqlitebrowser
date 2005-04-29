@@ -13,7 +13,7 @@
 ** subsystem.  The page cache subsystem reads and writes a file a page
 ** at a time and provides a journal for rollback.
 **
-** @(#) $Id: pager.h,v 1.4 2005-04-05 04:14:53 tabuleiro Exp $
+** @(#) $Id: pager.h,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
 */
 
 /*
@@ -23,12 +23,15 @@
 # define SQLITE_DEFAULT_PAGE_SIZE 1024
 #endif
 
-/* Maximum page size.  The upper bound on this value is 65536 (a limit
-** imposed by the 2-byte size of cell array pointers.)  The
-** maximum page size determines the amount of stack space allocated
-** by many of the routines in pager.c and btree.c  On embedded architectures
-** or any machine where memory and especially stack memory is limited,
-** one may wish to chose a smaller value for the maximum page size.
+/* Maximum page size.  The upper bound on this value is 32768.  This a limit
+** imposed by necessity of storing the value in a 2-byte unsigned integer
+** and the fact that the page size must be a power of 2.
+**
+** This value is used to initialize certain arrays on the stack at
+** various places in the code.  On embedded machines where stack space
+** is limited and the flexibility of having large pages is not needed,
+** it makes good sense to reduce the maximum page size to something more
+** reasonable, like 1024.
 */
 #ifndef SQLITE_MAX_PAGE_SIZE
 # define SQLITE_MAX_PAGE_SIZE 8192
