@@ -27,8 +27,8 @@ static QString aboutText = QString("Version 1.2b1\n\nSQLite Database Browser is 
 
 
 typedef QMap<int, class DBBrowserField> fieldMap;
-typedef QMap<QString, class DBBrowserTable> tableMap;
-typedef QMap<QString, class DBBrowserIndex> indexMap;
+typedef QMap<int, class DBBrowserTable> tableMap;
+typedef QMap<int, class DBBrowserIndex> indexMap;
 typedef QMap<int, int> rowIdMap;
 
 typedef QValueList<QStringList> rowList;

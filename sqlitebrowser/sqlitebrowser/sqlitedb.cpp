@@ -654,92 +654,91 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
 void DBBrowserDB::updateSchema( )
 {
   // qDebug ("Getting list of tables");
-   sqlite3_stmt *vm;
-   const char *tail;
-   int ncol;
-   QStringList r;
-   int err=0;
-   QString num;
-   int idxnum =0;
-   int tabnum = 0;
-   
-   idxmap.clear();
-   tbmap.clear();
-   
-   lastErrorMessage = QString("no error");
-   QString statement = "SELECT name, sql "
-                              "FROM sqlite_master "
-                              "WHERE type='table' ;";
-
-   err=sqlite3_prepare(_db, (const char *) statement.latin1(),-1,
-                             &vm, &tail);
-        if (err == SQLITE_OK){
-     logSQL(statement, kLogMsg_App);
-          while ( sqlite3_step(vm) == SQLITE_ROW ){
-       num.setNum(tabnum);
-       QString  val1, val2;
-       val1 = QString((const char *) sqlite3_column_text(vm, 0));
-       val2 = QString((const char *) sqlite3_column_text(vm, 1));
-       tbmap[num] = DBBrowserTable(val1, val2);
-       tabnum++;
-          }
-          sqlite3_finalize(vm);
-        }else{
-          qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
-        }
- 
- //now get the field list for each table in tbmap
-       tableMap::Iterator it;
-        for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-  statement = "PRAGMA TABLE_INFO(";
- statement.append( (const char *) it.data().getname().latin1());
- statement.append(");");
- logSQL(statement, kLogMsg_App);
- err=sqlite3_prepare(_db,statement.utf8(),-1,
-                              &vm, &tail);
-        if (err == SQLITE_OK){
- it.data(). fldmap.clear();
- int e = 0;
-     while ( sqlite3_step(vm) == SQLITE_ROW ){
-       if (sqlite3_column_count(vm)==6) {
-         QString  val1, val2;
-         int ispk= 0;
-         val1 = QString((const char *) sqlite3_column_text(vm, 1));
-         val2 = QString((const char *) sqlite3_column_text(vm, 2));
-         ispk = sqlite3_column_int(vm, 5);
-  if (ispk==1){
-    val2.append(QString(" PRIMARY KEY"));
-  }
-         it.data().addField(e,val1,val2);
-  e++;
-  }
+	sqlite3_stmt *vm;
+	const char *tail;
+	int ncol;
+	QStringList r;
+	int err=0;
+	int idxnum =0;
+	int tabnum = 0;
+	
+	idxmap.clear();
+	tbmap.clear();
+	
+	lastErrorMessage = QString("no error");
+	QString statement = "SELECT name, sql "
+		"FROM sqlite_master "
+		"WHERE type='table' "
+		"ORDER BY name;";
+	
+	err=sqlite3_prepare(_db, (const char *) statement.latin1(),-1,
+											&vm, &tail);
+	if (err == SQLITE_OK){
+		logSQL(statement, kLogMsg_App);
+		while ( sqlite3_step(vm) == SQLITE_ROW ){
+						QString  val1, val2;
+						val1 = QString((const char *) sqlite3_column_text(vm, 0));
+						val2 = QString((const char *) sqlite3_column_text(vm, 1));
+						tbmap[tabnum] = DBBrowserTable(val1, val2);
+						tabnum++;
+		}
+		sqlite3_finalize(vm);
+	}else{
+		qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
+	}
+	
+	//now get the field list for each table in tbmap
+	tableMap::Iterator it;
+	for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
+		statement = "PRAGMA TABLE_INFO(";
+		statement.append( (const char *) it.data().getname().latin1());
+		statement.append(");");
+		logSQL(statement, kLogMsg_App);
+		err=sqlite3_prepare(_db,statement.utf8(),-1,
+												&vm, &tail);
+		if (err == SQLITE_OK){
+			it.data(). fldmap.clear();
+			int e = 0;
+			while ( sqlite3_step(vm) == SQLITE_ROW ){
+				if (sqlite3_column_count(vm)==6) {
+					QString  val1, val2;
+					int ispk= 0;
+					val1 = QString((const char *) sqlite3_column_text(vm, 1));
+					val2 = QString((const char *) sqlite3_column_text(vm, 2));
+					ispk = sqlite3_column_int(vm, 5);
+					if (ispk==1){
+						val2.append(QString(" PRIMARY KEY"));
+					}
+					it.data().addField(e,val1,val2);
+					e++;
+				}
       }
       sqlite3_finalize(vm);
-   } else{
-          lastErrorMessage = QString ("could not get types");
-        }
-    }
- statement = "SELECT name, sql "
-                              "FROM sqlite_master "
-                              "WHERE type='index' ";
+		} else{
+			lastErrorMessage = QString ("could not get types");
+		}
+	}
+	statement = "SELECT name, sql "
+		"FROM sqlite_master "
+		"WHERE type='index' "
+		"ORDER BY name;";
   /*"ORDER BY name;"*/
- //finally get indices
- err=sqlite3_prepare(_db,statement.utf8(),-1,
-                              &vm, &tail);
- logSQL(statement, kLogMsg_App);
- if (err == SQLITE_OK){
-     while ( sqlite3_step(vm) == SQLITE_ROW ){
-       QString  val1, val2;
-       val1 = QString((const char *) sqlite3_column_text(vm, 0));
-       val2 = QString((const char *) sqlite3_column_text(vm, 1));
-      num.setNum(idxnum);
-      idxmap[num] = DBBrowserIndex(val1,val2);
+	//finally get indices
+	err=sqlite3_prepare(_db,statement.utf8(),-1,
+											&vm, &tail);
+	logSQL(statement, kLogMsg_App);
+	if (err == SQLITE_OK){
+		while ( sqlite3_step(vm) == SQLITE_ROW ){
+			QString  val1, val2;
+			val1 = QString((const char *) sqlite3_column_text(vm, 0));
+			val2 = QString((const char *) sqlite3_column_text(vm, 1));
+      idxmap[idxnum] = DBBrowserIndex(val1,val2);
       idxnum ++;
-      }
-      sqlite3_finalize(vm);
-   }else{
-      lastErrorMessage = QString ("could not get list of indices");
-   }
+		}
+		sqlite3_finalize(vm);
+	}else{
+		lastErrorMessage = QString ("could not get list of indices");
+	}
 }
 
 QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char quote, int maxrecords, int * numfields)
