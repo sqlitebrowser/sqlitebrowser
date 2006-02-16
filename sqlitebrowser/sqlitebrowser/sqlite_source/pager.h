@@ -13,8 +13,11 @@
 ** subsystem.  The page cache subsystem reads and writes a file a page
 ** at a time and provides a journal for rollback.
 **
-** @(#) $Id: pager.h,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
+** @(#) $Id: pager.h,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
 */
+
+#ifndef _PAGER_H_
+#define _PAGER_H_
 
 /*
 ** The default size of a database page.
@@ -34,7 +37,7 @@
 ** reasonable, like 1024.
 */
 #ifndef SQLITE_MAX_PAGE_SIZE
-# define SQLITE_MAX_PAGE_SIZE 8192
+# define SQLITE_MAX_PAGE_SIZE 32768
 #endif
 
 /*
@@ -71,7 +74,7 @@ int sqlite3pager_open(Pager **ppPager, const char *zFilename,
 void sqlite3pager_set_busyhandler(Pager*, BusyHandler *pBusyHandler);
 void sqlite3pager_set_destructor(Pager*, void(*)(void*,int));
 void sqlite3pager_set_reiniter(Pager*, void(*)(void*,int));
-void sqlite3pager_set_pagesize(Pager*, int);
+int sqlite3pager_set_pagesize(Pager*, int);
 void sqlite3pager_read_fileheader(Pager*, int, unsigned char*);
 void sqlite3pager_set_cachesize(Pager*, int);
 int sqlite3pager_close(Pager *pPager);
@@ -96,14 +99,16 @@ int sqlite3pager_stmt_rollback(Pager*);
 void sqlite3pager_dont_rollback(void*);
 void sqlite3pager_dont_write(Pager*, Pgno);
 int *sqlite3pager_stats(Pager*);
-void sqlite3pager_set_safety_level(Pager*,int);
+void sqlite3pager_set_safety_level(Pager*,int,int);
 const char *sqlite3pager_filename(Pager*);
 const char *sqlite3pager_dirname(Pager*);
 const char *sqlite3pager_journalname(Pager*);
+int sqlite3pager_nosync(Pager*);
 int sqlite3pager_rename(Pager*, const char *zNewName);
 void sqlite3pager_set_codec(Pager*,void(*)(void*,void*,Pgno,int),void*);
 int sqlite3pager_movepage(Pager*,void*,Pgno);
 int sqlite3pager_reset(Pager*);
+int sqlite3pager_release_memory(int);
 
 #if defined(SQLITE_DEBUG) || defined(SQLITE_TEST)
 int sqlite3pager_lockstate(Pager*);
@@ -113,3 +118,5 @@ int sqlite3pager_lockstate(Pager*);
 void sqlite3pager_refdump(Pager*);
 int pager3_refinfo_enable;
 #endif
+
+#endif /* _PAGER_H_ */

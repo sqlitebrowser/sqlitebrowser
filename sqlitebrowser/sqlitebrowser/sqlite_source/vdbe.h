@@ -15,7 +15,7 @@
 ** or VDBE.  The VDBE implements an abstract machine that runs a
 ** simple program to access and modify the underlying database.
 **
-** $Id: vdbe.h,v 1.5 2005-04-29 04:26:04 tabuleiro Exp $
+** $Id: vdbe.h,v 1.6 2006-02-16 10:11:47 jmiltner Exp $
 */
 #ifndef _SQLITE_VDBE_H_
 #define _SQLITE_VDBE_H_
@@ -38,7 +38,7 @@ struct VdbeOp {
   int p1;             /* First operand */
   int p2;             /* Second parameter (often the jump destination) */
   char *p3;           /* Third parameter */
-  int p3type;         /* P3_STATIC, P3_DYNAMIC or P3_POINTER */
+  int p3type;         /* One of the P3_xxx constants defined below */
 #ifdef VDBE_PROFILE
   int cnt;            /* Number of times this instruction was executed */
   long long cycles;   /* Total time spend executing this instruction */
@@ -64,12 +64,12 @@ typedef struct VdbeOpList VdbeOpList;
 #define P3_NOTUSED    0   /* The P3 parameter is not used */
 #define P3_DYNAMIC  (-1)  /* Pointer to a string obtained from sqliteMalloc() */
 #define P3_STATIC   (-2)  /* Pointer to a static string */
-#define P3_POINTER  (-3)  /* P3 is a pointer to some structure or object */
 #define P3_COLLSEQ  (-4)  /* P3 is a pointer to a CollSeq structure */
 #define P3_FUNCDEF  (-5)  /* P3 is a pointer to a FuncDef structure */
 #define P3_KEYINFO  (-6)  /* P3 is a pointer to a KeyInfo structure */
 #define P3_VDBEFUNC (-7)  /* P3 is a pointer to a VdbeFunc structure */
 #define P3_MEM      (-8)  /* P3 is a pointer to a Mem*    structure */
+#define P3_TRANSIENT (-9)  /* P3 is a pointer to a transient string */
 
 /* When adding a P3 argument using P3_KEYINFO, a copy of the KeyInfo structure
 ** is made.  That copy is freed when the Vdbe is finalized.  But if the
@@ -79,6 +79,17 @@ typedef struct VdbeOpList VdbeOpList;
 ** function should *not* try to free the KeyInfo.
 */
 #define P3_KEYINFO_HANDOFF (-9)
+
+/*
+** The Vdbe.aColName array contains 5n Mem structures, where n is the 
+** number of columns of data returned by the statement.
+*/
+#define COLNAME_NAME     0
+#define COLNAME_DECLTYPE 1
+#define COLNAME_DATABASE 2
+#define COLNAME_TABLE    3
+#define COLNAME_COLUMN   4
+#define COLNAME_N        5      /* Number of COLNAME_xxx symbols */
 
 /*
 ** The following macro converts a relative address in the p2 field
@@ -105,13 +116,12 @@ int sqlite3VdbeOp3(Vdbe*,int,int,int,const char *zP3,int);
 int sqlite3VdbeAddOpList(Vdbe*, int nOp, VdbeOpList const *aOp);
 void sqlite3VdbeChangeP1(Vdbe*, int addr, int P1);
 void sqlite3VdbeChangeP2(Vdbe*, int addr, int P2);
+void sqlite3VdbeJumpHere(Vdbe*, int addr);
 void sqlite3VdbeChangeP3(Vdbe*, int addr, const char *zP1, int N);
-void sqlite3VdbeDequoteP3(Vdbe*, int addr);
-int sqlite3VdbeFindOp(Vdbe*, int, int, int);
 VdbeOp *sqlite3VdbeGetOp(Vdbe*, int);
 int sqlite3VdbeMakeLabel(Vdbe*);
 void sqlite3VdbeDelete(Vdbe*);
-void sqlite3VdbeMakeReady(Vdbe*,int,int,int,int,int);
+void sqlite3VdbeMakeReady(Vdbe*,int,int,int,int);
 int sqlite3VdbeFinalize(Vdbe*);
 void sqlite3VdbeResolveLabel(Vdbe*, int);
 int sqlite3VdbeCurrentAddr(Vdbe*);
@@ -119,7 +129,7 @@ void sqlite3VdbeTrace(Vdbe*,FILE*);
 int sqlite3VdbeReset(Vdbe*);
 int sqliteVdbeSetVariables(Vdbe*,int,const char**);
 void sqlite3VdbeSetNumCols(Vdbe*,int);
-int sqlite3VdbeSetColName(Vdbe*, int, const char *, int);
+int sqlite3VdbeSetColName(Vdbe*, int, int, const char *, int);
 void sqlite3VdbeCountChanges(Vdbe*);
 sqlite3 *sqlite3VdbeDb(Vdbe*);
 

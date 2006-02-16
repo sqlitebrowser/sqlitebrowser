@@ -14,7 +14,7 @@
 ** other files are for internal use by SQLite and should not be
 ** accessed by users of the library.
 **
-** $Id: legacy.c,v 1.3 2005-04-29 04:26:02 tabuleiro Exp $
+** $Id: legacy.c,v 1.4 2006-02-16 10:11:46 jmiltner Exp $
 */
 
 #include "sqliteInt.h"
@@ -68,9 +68,8 @@ int sqlite3_exec(
     nCallback = 0;
 
     nCol = sqlite3_column_count(pStmt);
-    azCols = sqliteMalloc(2*nCol*sizeof(const char *));
-    if( nCol && !azCols ){
-      rc = SQLITE_NOMEM;
+    azCols = sqliteMalloc(2*nCol*sizeof(const char *) + 1);
+    if( azCols==0 ){
       goto exec_out;
     }
 
@@ -122,9 +121,7 @@ exec_out:
   if( pStmt ) sqlite3_finalize(pStmt);
   if( azCols ) sqliteFree(azCols);
 
-  if( sqlite3_malloc_failed ){
-    rc = SQLITE_NOMEM;
-  }
+  rc = sqlite3ApiExit(0, rc);
   if( rc!=SQLITE_OK && rc==sqlite3_errcode(db) && pzErrMsg ){
     *pzErrMsg = malloc(1+strlen(sqlite3_errmsg(db)));
     if( *pzErrMsg ){

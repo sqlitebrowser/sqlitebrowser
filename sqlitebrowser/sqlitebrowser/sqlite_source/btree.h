@@ -13,7 +13,7 @@
 ** subsystem.  See comments in the source code for a detailed description
 ** of what each interface routine does.
 **
-** @(#) $Id: btree.h,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
+** @(#) $Id: btree.h,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
 */
 #ifndef _BTREE_H_
 #define _BTREE_H_
@@ -36,10 +36,12 @@
 */
 typedef struct Btree Btree;
 typedef struct BtCursor BtCursor;
+typedef struct BtShared BtShared;
 
 
 int sqlite3BtreeOpen(
   const char *zFilename,   /* Name of database file to open */
+  sqlite3 *db,             /* Associated database connection */
   Btree **,                /* Return open Btree* here */
   int flags                /* Flags */
 );
@@ -57,7 +59,8 @@ int sqlite3BtreeOpen(
 int sqlite3BtreeClose(Btree*);
 int sqlite3BtreeSetBusyHandler(Btree*,BusyHandler*);
 int sqlite3BtreeSetCacheSize(Btree*,int);
-int sqlite3BtreeSetSafetyLevel(Btree*,int);
+int sqlite3BtreeSetSafetyLevel(Btree*,int,int);
+int sqlite3BtreeSyncDisabled(Btree*);
 int sqlite3BtreeSetPageSize(Btree*,int,int);
 int sqlite3BtreeGetPageSize(Btree*);
 int sqlite3BtreeGetReserve(Btree*);
@@ -73,7 +76,9 @@ int sqlite3BtreeCreateTable(Btree*, int*, int flags);
 int sqlite3BtreeIsInTrans(Btree*);
 int sqlite3BtreeIsInStmt(Btree*);
 int sqlite3BtreeSync(Btree*, const char *zMaster);
-int sqlite3BtreeReset(Btree *);
+void *sqlite3BtreeSchema(Btree *, int, void(*)(void *));
+int sqlite3BtreeSchemaLocked(Btree *);
+int sqlite3BtreeLockTable(Btree *, int, u8);
 
 const char *sqlite3BtreeGetFilename(Btree *);
 const char *sqlite3BtreeGetDirname(Btree *);

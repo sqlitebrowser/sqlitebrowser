@@ -16,10 +16,108 @@
 #include "os.h"
 #if OS_UNIX              /* This file is used on unix only */
 
+/*
+** These #defines should enable >2GB file support on Posix if the
+** underlying operating system supports it.  If the OS lacks
+** large file support, these should be no-ops.
+**
+** Large file support can be disabled using the -DSQLITE_DISABLE_LFS switch
+** on the compiler command line.  This is necessary if you are compiling
+** on a recent machine (ex: RedHat 7.2) but you want your code to work
+** on an older machine (ex: RedHat 6.0).  If you compile on RedHat 7.2
+** without this option, LFS is enable.  But LFS does not exist in the kernel
+** in RedHat 6.0, so the code won't work.  Hence, for maximum binary
+** portability you should omit LFS.
+*/
+#ifndef SQLITE_DISABLE_LFS
+# define _LARGE_FILE       1
+# ifndef _FILE_OFFSET_BITS
+#   define _FILE_OFFSET_BITS 64
+# endif
+# define _LARGEFILE_SOURCE 1
+#endif
 
-#include <time.h>
-#include <errno.h>
+/*
+** standard include files.
+*/
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
+#include <sys/time.h>
+#include <errno.h>
+
+/*
+** If we are to be thread-safe, include the pthreads header and define
+** the SQLITE_UNIX_THREADS macro.
+*/
+#if defined(THREADSAFE) && THREADSAFE
+# include <pthread.h>
+# define SQLITE_UNIX_THREADS 1
+#endif
+
+/*
+** Default permissions when creating a new file
+*/
+#ifndef SQLITE_DEFAULT_FILE_PERMISSIONS
+# define SQLITE_DEFAULT_FILE_PERMISSIONS 0644
+#endif
+
+
+
+/*
+** The unixFile structure is subclass of OsFile specific for the unix
+** protability layer.
+*/
+typedef struct unixFile unixFile;
+struct unixFile {
+  IoMethod const *pMethod;  /* Always the first entry */
+  struct openCnt *pOpen;    /* Info about all open fd's on this inode */
+  struct lockInfo *pLock;   /* Info about locks on this inode */
+  int h;                    /* The file descriptor */
+  unsigned char locktype;   /* The type of lock held on this fd */
+  unsigned char isOpen;     /* True if needs to be closed */
+  unsigned char fullSync;   /* Use F_FULLSYNC if available */
+  int dirfd;                /* File descriptor for the directory */
+#ifdef SQLITE_UNIX_THREADS
+  pthread_t tid;            /* The thread that "owns" this OsFile */
+#endif
+};
+
+/*
+** Provide the ability to override some OS-layer functions during
+** testing.  This is used to simulate OS crashes to verify that 
+** commits are atomic even in the event of an OS crash.
+*/
+#ifdef SQLITE_CRASH_TEST
+  extern int sqlite3CrashTestEnable;
+  extern int sqlite3CrashOpenReadWrite(const char*, OsFile**, int*);
+  extern int sqlite3CrashOpenExclusive(const char*, OsFile**, int);
+  extern int sqlite3CrashOpenReadOnly(const char*, OsFile**, int);
+# define CRASH_TEST_OVERRIDE(X,A,B,C) \
+    if(sqlite3CrashTestEnable){ return X(A,B,C); }
+#else
+# define CRASH_TEST_OVERRIDE(X,A,B,C)  /* no-op */
+#endif
+
+
+/*
+** Include code that is common to all os_*.c files
+*/
+#include "os_common.h"
+
+/*
+** Do not include any of the File I/O interface procedures if the
+** SQLITE_OMIT_DISKIO macro is defined (indicating that the database
+** will be in-memory only)
+*/
+#ifndef SQLITE_OMIT_DISKIO
+
+
+/*
+** Define various macros that are missing from some systems.
+*/
 #ifndef O_LARGEFILE
 # define O_LARGEFILE 0
 #endif
@@ -34,36 +132,49 @@
 # define O_BINARY 0
 #endif
 
-
 /*
 ** The DJGPP compiler environment looks mostly like Unix, but it
 ** lacks the fcntl() system call.  So redefine fcntl() to be something
 ** that always succeeds.  This means that locking does not occur under
-** DJGPP.  But its DOS - what did you expect?
+** DJGPP.  But it's DOS - what did you expect?
 */
 #ifdef __DJGPP__
 # define fcntl(A,B,C) 0
 #endif
 
 /*
-** Macros used to determine whether or not to use threads.  The
-** SQLITE_UNIX_THREADS macro is defined if we are synchronizing for
-** Posix threads and SQLITE_W32_THREADS is defined if we are
-** synchronizing using Win32 threads.
+** The threadid macro resolves to the thread-id or to 0.  Used for
+** testing and debugging only.
 */
-#if defined(THREADSAFE) && THREADSAFE
-# include <pthread.h>
-# define SQLITE_UNIX_THREADS 1
+#ifdef SQLITE_UNIX_THREADS
+#define threadid pthread_self()
+#else
+#define threadid 0
 #endif
 
-
 /*
-** Include code that is common to all os_*.c files
+** Set or check the OsFile.tid field.  This field is set when an OsFile
+** is first opened.  All subsequent uses of the OsFile verify that the
+** same thread is operating on the OsFile.  Some operating systems do
+** not allow locks to be overridden by other threads and that restriction
+** means that sqlite3* database handles cannot be moved from one thread
+** to another.  This logic makes sure a user does not try to do that
+** by mistake.
+**
+** Version 3.3.1 (2006-01-15):  OsFiles can be moved from one thread to
+** another as long as we are running on a system that supports threads
+** overriding each others locks (which now the most common behavior)
+** or if no locks are held.  But the OsFile.pLock field needs to be
+** recomputed because its key includes the thread-id.  See the 
+** transferOwnership() function below for additional information
 */
-#include "os_common.h"
-
-#if defined(THREADSAFE) && THREADSAFE && defined(__linux__)
-#define getpid pthread_self
+#if defined(SQLITE_UNIX_THREADS)
+# define SET_THREADID(X)   (X)->tid = pthread_self()
+# define CHECK_THREADID(X) (threadsOverrideEachOthersLocks==0 && \
+                            !pthread_equal((X)->tid, pthread_self()))
+#else
+# define SET_THREADID(X)
+# define CHECK_THREADID(X) 0
 #endif
 
 /*
@@ -172,14 +283,14 @@
 **
 ** If threads cannot override each others locks, then we set the
 ** lockKey.tid field to the thread ID.  If threads can override
-** each others locks then tid is always set to zero.  tid is also
-** set to zero if we compile without threading support.
+** each others locks then tid is always set to zero.  tid is omitted
+** if we compile without threading support.
 */
 struct lockKey {
   dev_t dev;       /* Device number */
   ino_t ino;       /* Inode number */
 #ifdef SQLITE_UNIX_THREADS
-  pthread_t tid;   /* Thread ID or zero if threads cannot override each other */
+  pthread_t tid;   /* Thread ID or zero if threads can override each other */
 #endif
 };
 
@@ -225,8 +336,9 @@ struct openCnt {
 };
 
 /* 
-** These hash table maps inodes and process IDs into lockInfo and openCnt
-** structures.  Access to these hash tables must be protected by a mutex.
+** These hash tables map inodes and file descriptors (really, lockKey and
+** openKey structures) into lockInfo and openCnt structures.  Access to 
+** these hash tables must be protected by a mutex.
 */
 static Hash lockHash = { SQLITE_HASH_BINARY, 0, 0, 0, 0, 0 };
 static Hash openHash = { SQLITE_HASH_BINARY, 0, 0, 0, 0, 0 };
@@ -240,8 +352,25 @@ static Hash openHash = { SQLITE_HASH_BINARY, 0, 0, 0, 0, 0 };
 **    0:  No.  Threads cannot override each others locks.
 **    1:  Yes.  Threads can override each others locks.
 **   -1:  We don't know yet.
+**
+** On some systems, we know at compile-time if threads can override each
+** others locks.  On those systems, the SQLITE_THREAD_OVERRIDE_LOCK macro
+** will be set appropriately.  On other systems, we have to check at
+** runtime.  On these latter systems, SQLTIE_THREAD_OVERRIDE_LOCK is
+** undefined.
+**
+** This variable normally has file scope only.  But during testing, we make
+** it a global so that the test code can change its value in order to verify
+** that the right stuff happens in either case.
 */
-static int threadsOverrideEachOthersLocks = -1;
+#ifndef SQLITE_THREAD_OVERRIDE_LOCK
+# define SQLITE_THREAD_OVERRIDE_LOCK -1
+#endif
+#ifdef SQLITE_TEST
+int threadsOverrideEachOthersLocks = SQLITE_THREAD_OVERRIDE_LOCK;
+#else
+static int threadsOverrideEachOthersLocks = SQLITE_THREAD_OVERRIDE_LOCK;
+#endif
 
 /*
 ** This structure holds information passed into individual test
@@ -252,6 +381,65 @@ struct threadTestData {
   struct flock lock;     /* The locking operation */
   int result;            /* Result of the locking operation */
 };
+
+#ifdef SQLITE_LOCK_TRACE
+/*
+** Print out information about all locking operations.
+**
+** This routine is used for troubleshooting locks on multithreaded
+** platforms.  Enable by compiling with the -DSQLITE_LOCK_TRACE
+** command-line option on the compiler.  This code is normally
+** turned off.
+*/
+static int lockTrace(int fd, int op, struct flock *p){
+  char *zOpName, *zType;
+  int s;
+  int savedErrno;
+  if( op==F_GETLK ){
+    zOpName = "GETLK";
+  }else if( op==F_SETLK ){
+    zOpName = "SETLK";
+  }else{
+    s = fcntl(fd, op, p);
+    sqlite3DebugPrintf("fcntl unknown %d %d %d\n", fd, op, s);
+    return s;
+  }
+  if( p->l_type==F_RDLCK ){
+    zType = "RDLCK";
+  }else if( p->l_type==F_WRLCK ){
+    zType = "WRLCK";
+  }else if( p->l_type==F_UNLCK ){
+    zType = "UNLCK";
+  }else{
+    assert( 0 );
+  }
+  assert( p->l_whence==SEEK_SET );
+  s = fcntl(fd, op, p);
+  savedErrno = errno;
+  sqlite3DebugPrintf("fcntl %d %d %s %s %d %d %d %d\n",
+     threadid, fd, zOpName, zType, (int)p->l_start, (int)p->l_len,
+     (int)p->l_pid, s);
+  if( s && op==F_SETLK && (p->l_type==F_RDLCK || p->l_type==F_WRLCK) ){
+    struct flock l2;
+    l2 = *p;
+    fcntl(fd, F_GETLK, &l2);
+    if( l2.l_type==F_RDLCK ){
+      zType = "RDLCK";
+    }else if( l2.l_type==F_WRLCK ){
+      zType = "WRLCK";
+    }else if( l2.l_type==F_UNLCK ){
+      zType = "UNLCK";
+    }else{
+      assert( 0 );
+    }
+    sqlite3DebugPrintf("fcntl-failure-reason: %s %d %d %d\n",
+       zType, (int)l2.l_start, (int)l2.l_len, (int)l2.l_pid);
+  }
+  errno = savedErrno;
+  return s;
+}
+#define fcntl lockTrace
+#endif /* SQLITE_LOCK_TRACE */
 
 /*
 ** The testThreadLockingBehavior() routine launches two separate
@@ -271,7 +459,7 @@ static void *threadLockingTest(void *pArg){
 ** can override each others locks then sets the 
 ** threadsOverrideEachOthersLocks variable appropriately.
 */
-static void testThreadLockingBehavior(fd_orig){
+static void testThreadLockingBehavior(int fd_orig){
   int fd;
   struct threadTestData d[2];
   pthread_t t[2];
@@ -299,6 +487,7 @@ static void testThreadLockingBehavior(fd_orig){
 ** Release a lockInfo structure previously allocated by findLockInfo().
 */
 static void releaseLockInfo(struct lockInfo *pLock){
+  assert( sqlite3OsInMutex(1) );
   pLock->nRef--;
   if( pLock->nRef==0 ){
     sqlite3HashInsert(&lockHash, &pLock->key, sizeof(pLock->key), 0);
@@ -310,18 +499,19 @@ static void releaseLockInfo(struct lockInfo *pLock){
 ** Release a openCnt structure previously allocated by findLockInfo().
 */
 static void releaseOpenCnt(struct openCnt *pOpen){
+  assert( sqlite3OsInMutex(1) );
   pOpen->nRef--;
   if( pOpen->nRef==0 ){
     sqlite3HashInsert(&openHash, &pOpen->key, sizeof(pOpen->key), 0);
-    sqliteFree(pOpen->aPending);
+    free(pOpen->aPending);
     sqliteFree(pOpen);
   }
 }
 
 /*
 ** Given a file descriptor, locate lockInfo and openCnt structures that
-** describes that file descriptor.  Create a new ones if necessary.  The
-** return values might be unset if an error occurs.
+** describes that file descriptor.  Create new ones if necessary.  The
+** return values might be uninitialized if an error occurs.
 **
 ** Return the number of errors.
 */
@@ -338,6 +528,8 @@ static int findLockInfo(
   struct openCnt *pOpen;
   rc = fstat(fd, &statbuf);
   if( rc!=0 ) return 1;
+
+  assert( sqlite3OsInMutex(1) );
   memset(&key1, 0, sizeof(key1));
   key1.dev = statbuf.st_dev;
   key1.ino = statbuf.st_ino;
@@ -354,7 +546,10 @@ static int findLockInfo(
   if( pLock==0 ){
     struct lockInfo *pOld;
     pLock = sqliteMallocRaw( sizeof(*pLock) );
-    if( pLock==0 ) return 1;
+    if( pLock==0 ){
+      rc = 1;
+      goto exit_findlockinfo;
+    }
     pLock->key = key1;
     pLock->nRef = 1;
     pLock->cnt = 0;
@@ -363,43 +558,113 @@ static int findLockInfo(
     if( pOld!=0 ){
       assert( pOld==pLock );
       sqliteFree(pLock);
-      return 1;
+      rc = 1;
+      goto exit_findlockinfo;
     }
   }else{
     pLock->nRef++;
   }
   *ppLock = pLock;
-  pOpen = (struct openCnt*)sqlite3HashFind(&openHash, &key2, sizeof(key2));
-  if( pOpen==0 ){
-    struct openCnt *pOld;
-    pOpen = sqliteMallocRaw( sizeof(*pOpen) );
+  if( ppOpen!=0 ){
+    pOpen = (struct openCnt*)sqlite3HashFind(&openHash, &key2, sizeof(key2));
     if( pOpen==0 ){
-      releaseLockInfo(pLock);
-      return 1;
+      struct openCnt *pOld;
+      pOpen = sqliteMallocRaw( sizeof(*pOpen) );
+      if( pOpen==0 ){
+        releaseLockInfo(pLock);
+        rc = 1;
+        goto exit_findlockinfo;
+      }
+      pOpen->key = key2;
+      pOpen->nRef = 1;
+      pOpen->nLock = 0;
+      pOpen->nPending = 0;
+      pOpen->aPending = 0;
+      pOld = sqlite3HashInsert(&openHash, &pOpen->key, sizeof(key2), pOpen);
+      if( pOld!=0 ){
+        assert( pOld==pOpen );
+        sqliteFree(pOpen);
+        releaseLockInfo(pLock);
+        rc = 1;
+        goto exit_findlockinfo;
+      }
+    }else{
+      pOpen->nRef++;
     }
-    pOpen->key = key2;
-    pOpen->nRef = 1;
-    pOpen->nLock = 0;
-    pOpen->nPending = 0;
-    pOpen->aPending = 0;
-    pOld = sqlite3HashInsert(&openHash, &pOpen->key, sizeof(key2), pOpen);
-    if( pOld!=0 ){
-      assert( pOld==pOpen );
-      sqliteFree(pOpen);
-      releaseLockInfo(pLock);
-      return 1;
-    }
-  }else{
-    pOpen->nRef++;
+    *ppOpen = pOpen;
   }
-  *ppOpen = pOpen;
-  return 0;
+
+exit_findlockinfo:
+  return rc;
 }
+
+#ifdef SQLITE_DEBUG
+/*
+** Helper function for printing out trace information from debugging
+** binaries. This returns the string represetation of the supplied
+** integer lock-type.
+*/
+static const char *locktypeName(int locktype){
+  switch( locktype ){
+  case NO_LOCK: return "NONE";
+  case SHARED_LOCK: return "SHARED";
+  case RESERVED_LOCK: return "RESERVED";
+  case PENDING_LOCK: return "PENDING";
+  case EXCLUSIVE_LOCK: return "EXCLUSIVE";
+  }
+  return "ERROR";
+}
+#endif
+
+/*
+** If we are currently in a different thread than the thread that the
+** unixFile argument belongs to, then transfer ownership of the unixFile
+** over to the current thread.
+**
+** A unixFile is only owned by a thread on systems where one thread is
+** unable to override locks created by a different thread.  RedHat9 is
+** an example of such a system.
+**
+** Ownership transfer is only allowed if the unixFile is currently unlocked.
+** If the unixFile is locked and an ownership is wrong, then return
+** SQLITE_MISUSE.  SQLITE_OK is returned if everything works.
+*/
+#ifdef SQLITE_UNIX_THREADS
+static int transferOwnership(unixFile *pFile){
+  int rc;
+  pthread_t hSelf;
+  if( threadsOverrideEachOthersLocks ){
+    /* Ownership transfers not needed on this system */
+    return SQLITE_OK;
+  }
+  hSelf = pthread_self();
+  if( pthread_equal(pFile->tid, hSelf) ){
+    /* We are still in the same thread */
+    TRACE1("No-transfer, same thread\n");
+    return SQLITE_OK;
+  }
+  if( pFile->locktype!=NO_LOCK ){
+    /* We cannot change ownership while we are holding a lock! */
+    return SQLITE_MISUSE;
+  }
+  TRACE4("Transfer ownership of %d from %d to %d\n", pFile->h,pFile->tid,hSelf);
+  pFile->tid = hSelf;
+  releaseLockInfo(pFile->pLock);
+  rc = findLockInfo(pFile->h, &pFile->pLock, 0);
+  TRACE5("LOCK    %d is now %s(%s,%d)\n", pFile->h,
+     locktypeName(pFile->locktype),
+     locktypeName(pFile->pLock->locktype), pFile->pLock->cnt);
+  return rc;
+}
+#else
+  /* On single-threaded builds, ownership transfer is a no-op */
+# define transferOwnership(X) SQLITE_OK
+#endif
 
 /*
 ** Delete the named file
 */
-int sqlite3OsDelete(const char *zFilename){
+int sqlite3UnixDelete(const char *zFilename){
   unlink(zFilename);
   return SQLITE_OK;
 }
@@ -407,9 +672,12 @@ int sqlite3OsDelete(const char *zFilename){
 /*
 ** Return TRUE if the named file exists.
 */
-int sqlite3OsFileExists(const char *zFilename){
+int sqlite3UnixFileExists(const char *zFilename){
   return access(zFilename, 0)==0;
 }
+
+/* Forward declaration */
+static int allocateUnixFile(unixFile *pInit, OsFile **pId);
 
 /*
 ** Attempt to open a file for both reading and writing.  If that
@@ -424,23 +692,26 @@ int sqlite3OsFileExists(const char *zFilename){
 ** On failure, the function returns SQLITE_CANTOPEN and leaves
 ** *id and *pReadonly unchanged.
 */
-int sqlite3OsOpenReadWrite(
+int sqlite3UnixOpenReadWrite(
   const char *zFilename,
-  OsFile *id,
+  OsFile **pId,
   int *pReadonly
 ){
   int rc;
-  assert( !id->isOpen );
-  id->dirfd = -1;
-  id->h = open(zFilename, O_RDWR|O_CREAT|O_LARGEFILE|O_BINARY, 0644);
-  if( id->h<0 ){
+  unixFile f;
+
+  CRASH_TEST_OVERRIDE(sqlite3CrashOpenReadWrite, zFilename, pId, pReadonly);
+  assert( 0==*pId );
+  f.h = open(zFilename, O_RDWR|O_CREAT|O_LARGEFILE|O_BINARY,
+                          SQLITE_DEFAULT_FILE_PERMISSIONS);
+  if( f.h<0 ){
 #ifdef EISDIR
     if( errno==EISDIR ){
       return SQLITE_CANTOPEN;
     }
 #endif
-    id->h = open(zFilename, O_RDONLY|O_LARGEFILE|O_BINARY);
-    if( id->h<0 ){
+    f.h = open(zFilename, O_RDONLY|O_LARGEFILE|O_BINARY);
+    if( f.h<0 ){
       return SQLITE_CANTOPEN; 
     }
     *pReadonly = 1;
@@ -448,17 +719,14 @@ int sqlite3OsOpenReadWrite(
     *pReadonly = 0;
   }
   sqlite3OsEnterMutex();
-  rc = findLockInfo(id->h, &id->pLock, &id->pOpen);
+  rc = findLockInfo(f.h, &f.pLock, &f.pOpen);
   sqlite3OsLeaveMutex();
   if( rc ){
-    close(id->h);
+    close(f.h);
     return SQLITE_NOMEM;
   }
-  id->locktype = 0;
-  id->isOpen = 1;
-  TRACE3("OPEN    %-3d %s\n", id->h, zFilename);
-  OpenCounter(+1);
-  return SQLITE_OK;
+  TRACE3("OPEN    %-3d %s\n", f.h, zFilename);
+  return allocateUnixFile(&f, pId);
 }
 
 
@@ -476,34 +744,34 @@ int sqlite3OsOpenReadWrite(
 **
 ** On failure, return SQLITE_CANTOPEN.
 */
-int sqlite3OsOpenExclusive(const char *zFilename, OsFile *id, int delFlag){
+int sqlite3UnixOpenExclusive(const char *zFilename, OsFile **pId, int delFlag){
   int rc;
-  assert( !id->isOpen );
+  unixFile f;
+
+  CRASH_TEST_OVERRIDE(sqlite3CrashOpenExclusive, zFilename, pId, delFlag);
+  assert( 0==*pId );
   if( access(zFilename, 0)==0 ){
     return SQLITE_CANTOPEN;
   }
-  id->dirfd = -1;
-  id->h = open(zFilename,
-                O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_LARGEFILE|O_BINARY, 0600);
-  if( id->h<0 ){
+  f.h = open(zFilename,
+                O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_LARGEFILE|O_BINARY,
+                SQLITE_DEFAULT_FILE_PERMISSIONS);
+  if( f.h<0 ){
     return SQLITE_CANTOPEN;
   }
   sqlite3OsEnterMutex();
-  rc = findLockInfo(id->h, &id->pLock, &id->pOpen);
+  rc = findLockInfo(f.h, &f.pLock, &f.pOpen);
   sqlite3OsLeaveMutex();
   if( rc ){
-    close(id->h);
+    close(f.h);
     unlink(zFilename);
     return SQLITE_NOMEM;
   }
-  id->locktype = 0;
-  id->isOpen = 1;
   if( delFlag ){
     unlink(zFilename);
   }
-  TRACE3("OPEN-EX %-3d %s\n", id->h, zFilename);
-  OpenCounter(+1);
-  return SQLITE_OK;
+  TRACE3("OPEN-EX %-3d %s\n", f.h, zFilename);
+  return allocateUnixFile(&f, pId);
 }
 
 /*
@@ -513,26 +781,25 @@ int sqlite3OsOpenExclusive(const char *zFilename, OsFile *id, int delFlag){
 **
 ** On failure, return SQLITE_CANTOPEN.
 */
-int sqlite3OsOpenReadOnly(const char *zFilename, OsFile *id){
+int sqlite3UnixOpenReadOnly(const char *zFilename, OsFile **pId){
   int rc;
-  assert( !id->isOpen );
-  id->dirfd = -1;
-  id->h = open(zFilename, O_RDONLY|O_LARGEFILE|O_BINARY);
-  if( id->h<0 ){
+  unixFile f;
+
+  CRASH_TEST_OVERRIDE(sqlite3CrashOpenReadOnly, zFilename, pId, 0);
+  assert( 0==*pId );
+  f.h = open(zFilename, O_RDONLY|O_LARGEFILE|O_BINARY);
+  if( f.h<0 ){
     return SQLITE_CANTOPEN;
   }
   sqlite3OsEnterMutex();
-  rc = findLockInfo(id->h, &id->pLock, &id->pOpen);
+  rc = findLockInfo(f.h, &f.pLock, &f.pOpen);
   sqlite3OsLeaveMutex();
   if( rc ){
-    close(id->h);
+    close(f.h);
     return SQLITE_NOMEM;
   }
-  id->locktype = 0;
-  id->isOpen = 1;
-  TRACE3("OPEN-RO %-3d %s\n", id->h, zFilename);
-  OpenCounter(+1);
-  return SQLITE_OK;
+  TRACE3("OPEN-RO %-3d %s\n", f.h, zFilename);
+  return allocateUnixFile(&f, pId);
 }
 
 /*
@@ -544,28 +811,30 @@ int sqlite3OsOpenReadOnly(const char *zFilename, OsFile *id){
 ** This routine is only meaningful for Unix.  It is a no-op under
 ** windows since windows does not support hard links.
 **
-** On success, a handle for a previously open file is at *id is
+** On success, a handle for a previously open file at *id is
 ** updated with the new directory file descriptor and SQLITE_OK is
 ** returned.
 **
 ** On failure, the function returns SQLITE_CANTOPEN and leaves
 ** *id unchanged.
 */
-int sqlite3OsOpenDirectory(
-  const char *zDirname,
-  OsFile *id
+static int unixOpenDirectory(
+  OsFile *id,
+  const char *zDirname
 ){
-  if( !id->isOpen ){
+  unixFile *pFile = (unixFile*)id;
+  if( pFile==0 ){
     /* Do not open the directory if the corresponding file is not already
     ** open. */
     return SQLITE_CANTOPEN;
   }
-  assert( id->dirfd<0 );
-  id->dirfd = open(zDirname, O_RDONLY|O_BINARY, 0644);
-  if( id->dirfd<0 ){
+  SET_THREADID(pFile);
+  assert( pFile->dirfd<0 );
+  pFile->dirfd = open(zDirname, O_RDONLY|O_BINARY, 0);
+  if( pFile->dirfd<0 ){
     return SQLITE_CANTOPEN; 
   }
-  TRACE3("OPENDIR %-3d %s\n", id->dirfd, zDirname);
+  TRACE3("OPENDIR %-3d %s\n", pFile->dirfd, zDirname);
   return SQLITE_OK;
 }
 
@@ -573,6 +842,8 @@ int sqlite3OsOpenDirectory(
 ** If the following global variable points to a string which is the
 ** name of a directory, then that directory will be used to store
 ** temporary files.
+**
+** See also the "PRAGMA temp_store_directory" SQL command.
 */
 char *sqlite3_temp_directory = 0;
 
@@ -580,7 +851,7 @@ char *sqlite3_temp_directory = 0;
 ** Create a temporary file name in zBuf.  zBuf must be big enough to
 ** hold at least SQLITE_TEMPNAME_SIZE characters.
 */
-int sqlite3OsTempFileName(char *zBuf){
+int sqlite3UnixTempFileName(char *zBuf){
   static const char *azDirs[] = {
      0,
      "/var/tmp",
@@ -616,35 +887,36 @@ int sqlite3OsTempFileName(char *zBuf){
   return SQLITE_OK; 
 }
 
-#ifndef SQLITE_OMIT_PAGER_PRAGMAS
 /*
 ** Check that a given pathname is a directory and is writable 
 **
 */
-int sqlite3OsIsDirWritable(char *zBuf){
+int sqlite3UnixIsDirWritable(char *zBuf){
+#ifndef SQLITE_OMIT_PAGER_PRAGMAS
   struct stat buf;
   if( zBuf==0 ) return 0;
   if( zBuf[0]==0 ) return 0;
   if( stat(zBuf, &buf) ) return 0;
   if( !S_ISDIR(buf.st_mode) ) return 0;
   if( access(zBuf, 07) ) return 0;
+#endif /* SQLITE_OMIT_PAGER_PRAGMAS */
   return 1;
 }
-#endif /* SQLITE_OMIT_PAGER_PRAGMAS */
 
 /*
 ** Read data from a file into a buffer.  Return SQLITE_OK if all
 ** bytes were read successfully and SQLITE_IOERR if anything goes
 ** wrong.
 */
-int sqlite3OsRead(OsFile *id, void *pBuf, int amt){
+static int unixRead(OsFile *id, void *pBuf, int amt){
   int got;
-  assert( id->isOpen );
+  assert( id );
   SimulateIOError(SQLITE_IOERR);
   TIMER_START;
-  got = read(id->h, pBuf, amt);
+  got = read(((unixFile*)id)->h, pBuf, amt);
   TIMER_END;
-  TRACE5("READ    %-3d %5d %7d %d\n", id->h, got, last_page, TIMER_ELAPSED);
+  TRACE5("READ    %-3d %5d %7d %d\n", ((unixFile*)id)->h, got,
+          last_page, TIMER_ELAPSED);
   SEEK(0);
   /* if( got<0 ) got = 0; */
   if( got==amt ){
@@ -658,19 +930,20 @@ int sqlite3OsRead(OsFile *id, void *pBuf, int amt){
 ** Write data from a buffer into a file.  Return SQLITE_OK on success
 ** or some other error code on failure.
 */
-int sqlite3OsWrite(OsFile *id, const void *pBuf, int amt){
+static int unixWrite(OsFile *id, const void *pBuf, int amt){
   int wrote = 0;
-  assert( id->isOpen );
+  assert( id );
   assert( amt>0 );
   SimulateIOError(SQLITE_IOERR);
   SimulateDiskfullError;
   TIMER_START;
-  while( amt>0 && (wrote = write(id->h, pBuf, amt))>0 ){
+  while( amt>0 && (wrote = write(((unixFile*)id)->h, pBuf, amt))>0 ){
     amt -= wrote;
     pBuf = &((char*)pBuf)[wrote];
   }
   TIMER_END;
-  TRACE5("WRITE   %-3d %5d %7d %d\n", id->h, wrote, last_page, TIMER_ELAPSED);
+  TRACE5("WRITE   %-3d %5d %7d %d\n", ((unixFile*)id)->h, wrote,
+          last_page, TIMER_ELAPSED);
   SEEK(0);
   if( amt>0 ){
     return SQLITE_FULL;
@@ -681,10 +954,13 @@ int sqlite3OsWrite(OsFile *id, const void *pBuf, int amt){
 /*
 ** Move the read/write pointer in a file.
 */
-int sqlite3OsSeek(OsFile *id, i64 offset){
-  assert( id->isOpen );
+static int unixSeek(OsFile *id, i64 offset){
+  assert( id );
   SEEK(offset/1024 + 1);
-  lseek(id->h, offset, SEEK_SET);
+#ifdef SQLITE_TEST
+  if( offset ) SimulateDiskfullError
+#endif
+  lseek(((unixFile*)id)->h, offset, SEEK_SET);
   return SQLITE_OK;
 }
 
@@ -695,6 +971,25 @@ int sqlite3OsSeek(OsFile *id, i64 offset){
 */
 int sqlite3_sync_count = 0;
 int sqlite3_fullsync_count = 0;
+#endif
+
+/*
+** Use the fdatasync() API only if the HAVE_FDATASYNC macro is defined.
+** Otherwise use fsync() in its place.
+*/
+#ifndef HAVE_FDATASYNC
+# define fdatasync fsync
+#endif
+
+/*
+** Define HAVE_FULLFSYNC to 0 or 1 depending on whether or not
+** the F_FULLFSYNC macro is defined.  F_FULLFSYNC is currently
+** only available on Mac OS X.  But that could change.
+*/
+#ifdef F_FULLFSYNC
+# define HAVE_FULLFSYNC 1
+#else
+# define HAVE_FULLFSYNC 0
 #endif
 
 
@@ -709,7 +1004,7 @@ int sqlite3_fullsync_count = 0;
 ** enabled, however, since with SQLITE_NO_SYNC enabled, an OS crash
 ** or power failure will likely corrupt the database file.
 */
-static int full_fsync(int fd, int fullSync){
+static int full_fsync(int fd, int fullSync, int dataOnly){
   int rc;
 
   /* Record the number of times that we do a normal fsync() and 
@@ -728,7 +1023,7 @@ static int full_fsync(int fd, int fullSync){
   rc = SQLITE_OK;
 #else
 
-#ifdef F_FULLFSYNC
+#if HAVE_FULLFSYNC
   if( fullSync ){
     rc = fcntl(fd, F_FULLFSYNC, 0);
   }else{
@@ -737,8 +1032,12 @@ static int full_fsync(int fd, int fullSync){
   /* If the FULLSYNC failed, try to do a normal fsync() */
   if( rc ) rc = fsync(fd);
 
-#else
-  rc = fsync(fd);
+#else /* if !defined(F_FULLSYNC) */
+  if( dataOnly ){
+    rc = fdatasync(fd);
+  }else{
+    rc = fsync(fd);
+  }
 #endif /* defined(F_FULLFSYNC) */
 #endif /* defined(SQLITE_NO_SYNC) */
 
@@ -748,6 +1047,10 @@ static int full_fsync(int fd, int fullSync){
 /*
 ** Make sure all writes to a particular file are committed to disk.
 **
+** If dataOnly==0 then both the file itself and its metadata (file
+** size, access time, etc) are synced.  If dataOnly!=0 then only the
+** file data is synced.
+**
 ** Under Unix, also make sure that the directory entry for the file
 ** has been created by fsync-ing the directory that contains the file.
 ** If we do not do this and we encounter a power failure, the directory
@@ -756,18 +1059,34 @@ static int full_fsync(int fd, int fullSync){
 ** the directory entry for the journal was never created) and the transaction
 ** will not roll back - possibly leading to database corruption.
 */
-int sqlite3OsSync(OsFile *id){
-  assert( id->isOpen );
+static int unixSync(OsFile *id, int dataOnly){
+  unixFile *pFile = (unixFile*)id;
+  assert( pFile );
   SimulateIOError(SQLITE_IOERR);
-  TRACE2("SYNC    %-3d\n", id->h);
-  if( full_fsync(id->h, id->fullSync) ){
+  TRACE2("SYNC    %-3d\n", pFile->h);
+  if( full_fsync(pFile->h, pFile->fullSync, dataOnly) ){
     return SQLITE_IOERR;
   }
-  if( id->dirfd>=0 ){
-    TRACE2("DIRSYNC %-3d\n", id->dirfd);
-    full_fsync(id->dirfd, id->fullSync);
-    close(id->dirfd);  /* Only need to sync once, so close the directory */
-    id->dirfd = -1;    /* when we are done. */
+  if( pFile->dirfd>=0 ){
+    TRACE4("DIRSYNC %-3d (have_fullfsync=%d fullsync=%d)\n", pFile->dirfd,
+            HAVE_FULLFSYNC, pFile->fullSync);
+#ifndef SQLITE_DISABLE_DIRSYNC
+    /* The directory sync is only attempted if full_fsync is
+    ** turned off or unavailable.  If a full_fsync occurred above,
+    ** then the directory sync is superfluous.
+    */
+    if( (!HAVE_FULLFSYNC || !pFile->fullSync) && full_fsync(pFile->dirfd,0,0) ){
+       /*
+       ** We have received multiple reports of fsync() returning
+       ** errors when applied to directories on certain file systems.
+       ** A failed directory sync is not a big deal.  So it seems
+       ** better to ignore the error.  Ticket #1657
+       */
+       /* return SQLITE_IOERR; */
+    }
+#endif
+    close(pFile->dirfd);  /* Only need to sync once, so close the directory */
+    pFile->dirfd = -1;    /* when we are done. */
   }
   return SQLITE_OK;
 }
@@ -780,11 +1099,14 @@ int sqlite3OsSync(OsFile *id){
 ** before making changes to individual journals on a multi-database commit.
 ** The F_FULLFSYNC option is not needed here.
 */
-int sqlite3OsSyncDirectory(const char *zDirname){
+int sqlite3UnixSyncDirectory(const char *zDirname){
+#ifdef SQLITE_DISABLE_DIRSYNC
+  return SQLITE_OK;
+#else
   int fd;
   int r;
   SimulateIOError(SQLITE_IOERR);
-  fd = open(zDirname, O_RDONLY|O_BINARY, 0644);
+  fd = open(zDirname, O_RDONLY|O_BINARY, 0);
   TRACE3("DIRSYNC %-3d (%s)\n", fd, zDirname);
   if( fd<0 ){
     return SQLITE_CANTOPEN; 
@@ -792,25 +1114,26 @@ int sqlite3OsSyncDirectory(const char *zDirname){
   r = fsync(fd);
   close(fd);
   return ((r==0)?SQLITE_OK:SQLITE_IOERR);
+#endif
 }
 
 /*
 ** Truncate an open file to a specified size
 */
-int sqlite3OsTruncate(OsFile *id, i64 nByte){
-  assert( id->isOpen );
+static int unixTruncate(OsFile *id, i64 nByte){
+  assert( id );
   SimulateIOError(SQLITE_IOERR);
-  return ftruncate(id->h, nByte)==0 ? SQLITE_OK : SQLITE_IOERR;
+  return ftruncate(((unixFile*)id)->h, nByte)==0 ? SQLITE_OK : SQLITE_IOERR;
 }
 
 /*
 ** Determine the current size of a file in bytes
 */
-int sqlite3OsFileSize(OsFile *id, i64 *pSize){
+static int unixFileSize(OsFile *id, i64 *pSize){
   struct stat buf;
-  assert( id->isOpen );
+  assert( id );
   SimulateIOError(SQLITE_IOERR);
-  if( fstat(id->h, &buf)!=0 ){
+  if( fstat(((unixFile*)id)->h, &buf)!=0 ){
     return SQLITE_IOERR;
   }
   *pSize = buf.st_size;
@@ -823,14 +1146,15 @@ int sqlite3OsFileSize(OsFile *id, i64 *pSize){
 ** non-zero.  If the file is unlocked or holds only SHARED locks, then
 ** return zero.
 */
-int sqlite3OsCheckReservedLock(OsFile *id){
+static int unixCheckReservedLock(OsFile *id){
   int r = 0;
+  unixFile *pFile = (unixFile*)id;
 
-  assert( id->isOpen );
-  sqlite3OsEnterMutex(); /* Needed because id->pLock is shared across threads */
+  assert( pFile );
+  sqlite3OsEnterMutex(); /* Because pFile->pLock is shared across threads */
 
   /* Check if a thread in this process holds such a lock */
-  if( id->pLock->locktype>SHARED_LOCK ){
+  if( pFile->pLock->locktype>SHARED_LOCK ){
     r = 1;
   }
 
@@ -842,35 +1166,17 @@ int sqlite3OsCheckReservedLock(OsFile *id){
     lock.l_start = RESERVED_BYTE;
     lock.l_len = 1;
     lock.l_type = F_WRLCK;
-    fcntl(id->h, F_GETLK, &lock);
+    fcntl(pFile->h, F_GETLK, &lock);
     if( lock.l_type!=F_UNLCK ){
       r = 1;
     }
   }
   
   sqlite3OsLeaveMutex();
-  TRACE3("TEST WR-LOCK %d %d\n", id->h, r);
+  TRACE3("TEST WR-LOCK %d %d\n", pFile->h, r);
 
   return r;
 }
-
-#ifdef SQLITE_DEBUG
-/*
-** Helper function for printing out trace information from debugging
-** binaries. This returns the string represetation of the supplied
-** integer lock-type.
-*/
-static const char * locktypeName(int locktype){
-  switch( locktype ){
-  case NO_LOCK: return "NONE";
-  case SHARED_LOCK: return "SHARED";
-  case RESERVED_LOCK: return "RESERVED";
-  case PENDING_LOCK: return "PENDING";
-  case EXCLUSIVE_LOCK: return "EXCLUSIVE";
-  }
-  return "ERROR";
-}
-#endif
 
 /*
 ** Lock the file with the lock specified by parameter locktype - one
@@ -896,7 +1202,7 @@ static const char * locktypeName(int locktype){
 ** This routine will only increase a lock.  Use the sqlite3OsUnlock()
 ** routine to lower a locking level.
 */
-int sqlite3OsLock(OsFile *id, int locktype){
+static int unixLock(OsFile *id, int locktype){
   /* The following describes the implementation of the various locks and
   ** lock transitions in terms of the POSIX advisory shared and exclusive
   ** lock primitives (called read-locks and write-locks below, to avoid
@@ -936,38 +1242,49 @@ int sqlite3OsLock(OsFile *id, int locktype){
   ** even if the locking primitive used is always a write-lock.
   */
   int rc = SQLITE_OK;
-  struct lockInfo *pLock = id->pLock;
+  unixFile *pFile = (unixFile*)id;
+  struct lockInfo *pLock = pFile->pLock;
   struct flock lock;
   int s;
 
-  assert( id->isOpen );
-  TRACE7("LOCK    %d %s was %s(%s,%d) pid=%d\n", id->h, locktypeName(locktype), 
-      locktypeName(id->locktype), locktypeName(pLock->locktype), pLock->cnt
-      ,getpid() );
+  assert( pFile );
+  TRACE7("LOCK    %d %s was %s(%s,%d) pid=%d\n", pFile->h,
+      locktypeName(locktype), locktypeName(pFile->locktype),
+      locktypeName(pLock->locktype), pLock->cnt , getpid());
 
   /* If there is already a lock of this type or more restrictive on the
   ** OsFile, do nothing. Don't use the end_lock: exit path, as
   ** sqlite3OsEnterMutex() hasn't been called yet.
   */
-  if( id->locktype>=locktype ){
-    TRACE3("LOCK    %d %s ok (already held)\n", id->h, locktypeName(locktype));
+  if( pFile->locktype>=locktype ){
+    TRACE3("LOCK    %d %s ok (already held)\n", pFile->h,
+            locktypeName(locktype));
     return SQLITE_OK;
   }
 
   /* Make sure the locking sequence is correct
   */
-  assert( id->locktype!=NO_LOCK || locktype==SHARED_LOCK );
+  assert( pFile->locktype!=NO_LOCK || locktype==SHARED_LOCK );
   assert( locktype!=PENDING_LOCK );
-  assert( locktype!=RESERVED_LOCK || id->locktype==SHARED_LOCK );
+  assert( locktype!=RESERVED_LOCK || pFile->locktype==SHARED_LOCK );
 
-  /* This mutex is needed because id->pLock is shared across threads
+  /* This mutex is needed because pFile->pLock is shared across threads
   */
   sqlite3OsEnterMutex();
+
+  /* Make sure the current thread owns the pFile.
+  */
+  rc = transferOwnership(pFile);
+  if( rc!=SQLITE_OK ){
+    sqlite3OsLeaveMutex();
+    return rc;
+  }
+  pLock = pFile->pLock;
 
   /* If some thread using this PID has a lock via a different OsFile*
   ** handle that precludes the requested lock, return BUSY.
   */
-  if( (id->locktype!=pLock->locktype && 
+  if( (pFile->locktype!=pLock->locktype && 
           (pLock->locktype>=PENDING_LOCK || locktype>SHARED_LOCK))
   ){
     rc = SQLITE_BUSY;
@@ -981,15 +1298,16 @@ int sqlite3OsLock(OsFile *id, int locktype){
   if( locktype==SHARED_LOCK && 
       (pLock->locktype==SHARED_LOCK || pLock->locktype==RESERVED_LOCK) ){
     assert( locktype==SHARED_LOCK );
-    assert( id->locktype==0 );
+    assert( pFile->locktype==0 );
     assert( pLock->cnt>0 );
-    id->locktype = SHARED_LOCK;
+    pFile->locktype = SHARED_LOCK;
     pLock->cnt++;
-    id->pOpen->nLock++;
+    pFile->pOpen->nLock++;
     goto end_lock;
   }
 
   lock.l_len = 1L;
+
   lock.l_whence = SEEK_SET;
 
   /* A PENDING lock is needed before acquiring a SHARED lock and before
@@ -997,11 +1315,11 @@ int sqlite3OsLock(OsFile *id, int locktype){
   ** be released.
   */
   if( locktype==SHARED_LOCK 
-      || (locktype==EXCLUSIVE_LOCK && id->locktype<PENDING_LOCK)
+      || (locktype==EXCLUSIVE_LOCK && pFile->locktype<PENDING_LOCK)
   ){
     lock.l_type = (locktype==SHARED_LOCK?F_RDLCK:F_WRLCK);
     lock.l_start = PENDING_BYTE;
-    s = fcntl(id->h, F_SETLK, &lock);
+    s = fcntl(pFile->h, F_SETLK, &lock);
     if( s ){
       rc = (errno==EINVAL) ? SQLITE_NOLFS : SQLITE_BUSY;
       goto end_lock;
@@ -1019,18 +1337,21 @@ int sqlite3OsLock(OsFile *id, int locktype){
     /* Now get the read-lock */
     lock.l_start = SHARED_FIRST;
     lock.l_len = SHARED_SIZE;
-    s = fcntl(id->h, F_SETLK, &lock);
+    s = fcntl(pFile->h, F_SETLK, &lock);
 
     /* Drop the temporary PENDING lock */
     lock.l_start = PENDING_BYTE;
     lock.l_len = 1L;
     lock.l_type = F_UNLCK;
-    fcntl(id->h, F_SETLK, &lock);
+    if( fcntl(pFile->h, F_SETLK, &lock)!=0 ){
+      rc = SQLITE_IOERR;  /* This should never happen */
+      goto end_lock;
+    }
     if( s ){
       rc = (errno==EINVAL) ? SQLITE_NOLFS : SQLITE_BUSY;
     }else{
-      id->locktype = SHARED_LOCK;
-      id->pOpen->nLock++;
+      pFile->locktype = SHARED_LOCK;
+      pFile->pOpen->nLock++;
       pLock->cnt = 1;
     }
   }else if( locktype==EXCLUSIVE_LOCK && pLock->cnt>1 ){
@@ -1042,7 +1363,7 @@ int sqlite3OsLock(OsFile *id, int locktype){
     ** assumed that there is a SHARED or greater lock on the file
     ** already.
     */
-    assert( 0!=id->locktype );
+    assert( 0!=pFile->locktype );
     lock.l_type = F_WRLCK;
     switch( locktype ){
       case RESERVED_LOCK:
@@ -1055,62 +1376,62 @@ int sqlite3OsLock(OsFile *id, int locktype){
       default:
         assert(0);
     }
-    s = fcntl(id->h, F_SETLK, &lock);
+    s = fcntl(pFile->h, F_SETLK, &lock);
     if( s ){
       rc = (errno==EINVAL) ? SQLITE_NOLFS : SQLITE_BUSY;
     }
   }
   
   if( rc==SQLITE_OK ){
-    id->locktype = locktype;
+    pFile->locktype = locktype;
     pLock->locktype = locktype;
   }else if( locktype==EXCLUSIVE_LOCK ){
-    id->locktype = PENDING_LOCK;
+    pFile->locktype = PENDING_LOCK;
     pLock->locktype = PENDING_LOCK;
   }
 
 end_lock:
   sqlite3OsLeaveMutex();
-  TRACE4("LOCK    %d %s %s\n", id->h, locktypeName(locktype), 
+  TRACE4("LOCK    %d %s %s\n", pFile->h, locktypeName(locktype), 
       rc==SQLITE_OK ? "ok" : "failed");
   return rc;
 }
 
 /*
-** Lower the locking level on file descriptor id to locktype.  locktype
+** Lower the locking level on file descriptor pFile to locktype.  locktype
 ** must be either NO_LOCK or SHARED_LOCK.
 **
 ** If the locking level of the file descriptor is already at or below
 ** the requested locking level, this routine is a no-op.
-**
-** It is not possible for this routine to fail if the second argument
-** is NO_LOCK.  If the second argument is SHARED_LOCK, this routine
-** might return SQLITE_IOERR instead of SQLITE_OK.
 */
-int sqlite3OsUnlock(OsFile *id, int locktype){
+static int unixUnlock(OsFile *id, int locktype){
   struct lockInfo *pLock;
   struct flock lock;
   int rc = SQLITE_OK;
+  unixFile *pFile = (unixFile*)id;
 
-  assert( id->isOpen );
-  TRACE7("UNLOCK  %d %d was %d(%d,%d) pid=%d\n", id->h, locktype, id->locktype, 
-      id->pLock->locktype, id->pLock->cnt, getpid());
+  assert( pFile );
+  TRACE7("UNLOCK  %d %d was %d(%d,%d) pid=%d\n", pFile->h, locktype,
+      pFile->locktype, pFile->pLock->locktype, pFile->pLock->cnt, getpid());
 
   assert( locktype<=SHARED_LOCK );
-  if( id->locktype<=locktype ){
+  if( pFile->locktype<=locktype ){
     return SQLITE_OK;
   }
+  if( CHECK_THREADID(pFile) ){
+    return SQLITE_MISUSE;
+  }
   sqlite3OsEnterMutex();
-  pLock = id->pLock;
+  pLock = pFile->pLock;
   assert( pLock->cnt!=0 );
-  if( id->locktype>SHARED_LOCK ){
-    assert( pLock->locktype==id->locktype );
+  if( pFile->locktype>SHARED_LOCK ){
+    assert( pLock->locktype==pFile->locktype );
     if( locktype==SHARED_LOCK ){
       lock.l_type = F_RDLCK;
       lock.l_whence = SEEK_SET;
       lock.l_start = SHARED_FIRST;
       lock.l_len = SHARED_SIZE;
-      if( fcntl(id->h, F_SETLK, &lock)!=0 ){
+      if( fcntl(pFile->h, F_SETLK, &lock)!=0 ){
         /* This should never happen */
         rc = SQLITE_IOERR;
       }
@@ -1119,8 +1440,11 @@ int sqlite3OsUnlock(OsFile *id, int locktype){
     lock.l_whence = SEEK_SET;
     lock.l_start = PENDING_BYTE;
     lock.l_len = 2L;  assert( PENDING_BYTE+1==RESERVED_BYTE );
-    fcntl(id->h, F_SETLK, &lock);
-    pLock->locktype = SHARED_LOCK;
+    if( fcntl(pFile->h, F_SETLK, &lock)==0 ){
+      pLock->locktype = SHARED_LOCK;
+    }else{
+      rc = SQLITE_IOERR;  /* This should never happen */
+    }
   }
   if( locktype==NO_LOCK ){
     struct openCnt *pOpen;
@@ -1134,15 +1458,18 @@ int sqlite3OsUnlock(OsFile *id, int locktype){
       lock.l_type = F_UNLCK;
       lock.l_whence = SEEK_SET;
       lock.l_start = lock.l_len = 0L;
-      fcntl(id->h, F_SETLK, &lock);
-      pLock->locktype = NO_LOCK;
+      if( fcntl(pFile->h, F_SETLK, &lock)==0 ){
+        pLock->locktype = NO_LOCK;
+      }else{
+        rc = SQLITE_IOERR;  /* This should never happen */
+      }
     }
 
     /* Decrement the count of locks against this same file.  When the
     ** count reaches zero, close any other file descriptors whose close
     ** was deferred because of outstanding locks.
     */
-    pOpen = id->pOpen;
+    pOpen = pFile->pOpen;
     pOpen->nLock--;
     assert( pOpen->nLock>=0 );
     if( pOpen->nLock==0 && pOpen->nPending>0 ){
@@ -1150,25 +1477,28 @@ int sqlite3OsUnlock(OsFile *id, int locktype){
       for(i=0; i<pOpen->nPending; i++){
         close(pOpen->aPending[i]);
       }
-      sqliteFree(pOpen->aPending);
+      free(pOpen->aPending);
       pOpen->nPending = 0;
       pOpen->aPending = 0;
     }
   }
   sqlite3OsLeaveMutex();
-  id->locktype = locktype;
+  pFile->locktype = locktype;
   return rc;
 }
 
 /*
 ** Close a file.
 */
-int sqlite3OsClose(OsFile *id){
-  if( !id->isOpen ) return SQLITE_OK;
-  sqlite3OsUnlock(id, NO_LOCK);
+static int unixClose(OsFile **pId){
+  unixFile *id = (unixFile*)*pId;
+
+  if( !id ) return SQLITE_OK;
+  unixUnlock(*pId, NO_LOCK);
   if( id->dirfd>=0 ) close(id->dirfd);
   id->dirfd = -1;
   sqlite3OsEnterMutex();
+
   if( id->pOpen->nLock ){
     /* If there are outstanding locks, do not actually close the file just
     ** yet because that would clear those locks.  Instead, add the file
@@ -1177,13 +1507,13 @@ int sqlite3OsClose(OsFile *id){
     */
     int *aNew;
     struct openCnt *pOpen = id->pOpen;
-    pOpen->nPending++;
-    aNew = sqliteRealloc( pOpen->aPending, pOpen->nPending*sizeof(int) );
+    aNew = realloc( pOpen->aPending, (pOpen->nPending+1)*sizeof(int) );
     if( aNew==0 ){
       /* If a malloc fails, just leak the file descriptor */
     }else{
       pOpen->aPending = aNew;
-      pOpen->aPending[pOpen->nPending-1] = id->h;
+      pOpen->aPending[pOpen->nPending] = id->h;
+      pOpen->nPending++;
     }
   }else{
     /* There are no outstanding locks so we can close the file immediately */
@@ -1191,19 +1521,125 @@ int sqlite3OsClose(OsFile *id){
   }
   releaseLockInfo(id->pLock);
   releaseOpenCnt(id->pOpen);
+
   sqlite3OsLeaveMutex();
   id->isOpen = 0;
   TRACE2("CLOSE   %-3d\n", id->h);
   OpenCounter(-1);
+  sqliteFree(id);
+  *pId = 0;
   return SQLITE_OK;
 }
+
+/*
+** Turn a relative pathname into a full pathname.  Return a pointer
+** to the full pathname stored in space obtained from sqliteMalloc().
+** The calling function is responsible for freeing this space once it
+** is no longer needed.
+*/
+char *sqlite3UnixFullPathname(const char *zRelative){
+  char *zFull = 0;
+  if( zRelative[0]=='/' ){
+    sqlite3SetString(&zFull, zRelative, (char*)0);
+  }else{
+    char *zBuf = sqliteMalloc(5000);
+    if( zBuf==0 ){
+      return 0;
+    }
+    zBuf[0] = 0;
+    sqlite3SetString(&zFull, getcwd(zBuf, 5000), "/", zRelative,
+                    (char*)0);
+    sqliteFree(zBuf);
+  }
+  return zFull;
+}
+
+/*
+** Change the value of the fullsync flag in the given file descriptor.
+*/
+static void unixSetFullSync(OsFile *id, int v){
+  ((unixFile*)id)->fullSync = v;
+}
+
+/*
+** Return the underlying file handle for an OsFile
+*/
+static int unixFileHandle(OsFile *id){
+  return ((unixFile*)id)->h;
+}
+
+/*
+** Return an integer that indices the type of lock currently held
+** by this handle.  (Used for testing and analysis only.)
+*/
+static int unixLockState(OsFile *id){
+  return ((unixFile*)id)->locktype;
+}
+
+/*
+** This vector defines all the methods that can operate on an OsFile
+** for unix.
+*/
+static const IoMethod sqlite3UnixIoMethod = {
+  unixClose,
+  unixOpenDirectory,
+  unixRead,
+  unixWrite,
+  unixSeek,
+  unixTruncate,
+  unixSync,
+  unixSetFullSync,
+  unixFileHandle,
+  unixFileSize,
+  unixLock,
+  unixUnlock,
+  unixLockState,
+  unixCheckReservedLock,
+};
+
+/*
+** Allocate memory for a unixFile.  Initialize the new unixFile
+** to the value given in pInit and return a pointer to the new
+** OsFile.  If we run out of memory, close the file and return NULL.
+*/
+static int allocateUnixFile(unixFile *pInit, OsFile **pId){
+  unixFile *pNew;
+  pInit->dirfd = -1;
+  pInit->fullSync = 0;
+  pInit->locktype = 0;
+  SET_THREADID(pInit);
+  pNew = sqliteMalloc( sizeof(unixFile) );
+  if( pNew==0 ){
+    close(pInit->h);
+    sqlite3OsEnterMutex();
+    releaseLockInfo(pInit->pLock);
+    releaseOpenCnt(pInit->pOpen);
+    sqlite3OsLeaveMutex();
+    *pId = 0;
+    return SQLITE_NOMEM;
+  }else{
+    *pNew = *pInit;
+    pNew->pMethod = &sqlite3UnixIoMethod;
+    *pId = (OsFile*)pNew;
+    OpenCounter(+1);
+    return SQLITE_OK;
+  }
+}
+
+
+#endif /* SQLITE_OMIT_DISKIO */
+/***************************************************************************
+** Everything above deals with file I/O.  Everything that follows deals
+** with other miscellanous aspects of the operating system interface
+****************************************************************************/
+
 
 /*
 ** Get information to seed the random number generator.  The seed
 ** is written into the buffer zBuf[256].  The calling function must
 ** supply a sufficiently large buffer.
 */
-int sqlite3OsRandomSeed(char *zBuf){
+int sqlite3UnixRandomSeed(char *zBuf){
   /* We have to initialize zBuf to prevent valgrind from reporting
   ** errors.  The reports issued by valgrind are incorrect - we would
   ** prefer that the randomness be increased by making use of the
@@ -1213,7 +1649,7 @@ int sqlite3OsRandomSeed(char *zBuf){
   ** in the random seed.
   **
   ** When testing, initializing zBuf[] to zero is all we do.  That means
-  ** that we always use the same random number sequence.* This makes the
+  ** that we always use the same random number sequence.  This makes the
   ** tests repeatable.
   */
   memset(zBuf, 0, 256);
@@ -1222,7 +1658,9 @@ int sqlite3OsRandomSeed(char *zBuf){
     int pid, fd;
     fd = open("/dev/urandom", O_RDONLY);
     if( fd<0 ){
-      time((time_t*)zBuf);
+      time_t t;
+      time(&t);
+      memcpy(zBuf, &t, sizeof(t));
       pid = getpid();
       memcpy(&zBuf[sizeof(time_t)], &pid, sizeof(pid));
     }else{
@@ -1236,8 +1674,9 @@ int sqlite3OsRandomSeed(char *zBuf){
 
 /*
 ** Sleep for a little while.  Return the amount of time slept.
+** The argument is the number of milliseconds we want to sleep.
 */
-int sqlite3OsSleep(int ms){
+int sqlite3UnixSleep(int ms){
 #if defined(HAVE_USLEEP) && HAVE_USLEEP
   usleep(ms*1000);
   return ms;
@@ -1248,11 +1687,42 @@ int sqlite3OsSleep(int ms){
 }
 
 /*
-** Static variables used for thread synchronization
+** Static variables used for thread synchronization.
+**
+** inMutex      the nesting depth of the recursive mutex.  The thread
+**              holding mutexMain can read this variable at any time.
+**              But is must hold mutexAux to change this variable.  Other
+**              threads must hold mutexAux to read the variable and can
+**              never write.
+**
+** mutexOwner   The thread id of the thread holding mutexMain.  Same
+**              access rules as for inMutex.
+**
+** mutexOwnerValid   True if the value in mutexOwner is valid.  The same
+**                   access rules apply as for inMutex.
+**
+** mutexMain    The main mutex.  Hold this mutex in order to get exclusive
+**              access to SQLite data structures.
+**
+** mutexAux     An auxiliary mutex needed to access variables defined above.
+**
+** Mutexes are always acquired in this order: mutexMain mutexAux.   It
+** is not necessary to acquire mutexMain in order to get mutexAux - just
+** do not attempt to acquire them in the reverse order: mutexAux mutexMain.
+** Either get the mutexes with mutexMain first or get mutexAux only.
+**
+** When running on a platform where the three variables inMutex, mutexOwner,
+** and mutexOwnerValid can be set atomically, the mutexAux is not required.
+** On many systems, all three are 32-bit integers and writing to a 32-bit
+** integer is atomic.  I think.  But there are no guarantees.  So it seems
+** safer to protect them using mutexAux.
 */
 static int inMutex = 0;
 #ifdef SQLITE_UNIX_THREADS
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_t mutexOwner;          /* Thread holding mutexMain */
+static int mutexOwnerValid = 0;       /* True if mutexOwner is valid */
+static pthread_mutex_t mutexMain = PTHREAD_MUTEX_INITIALIZER; /* The mutex */
+static pthread_mutex_t mutexAux = PTHREAD_MUTEX_INITIALIZER;  /* Aux mutex */
 #endif
 
 /*
@@ -1262,38 +1732,165 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 **
 ** SQLite uses only a single Mutex.  There is not much critical
 ** code and what little there is executes quickly and without blocking.
+**
+** As of version 3.3.2, this mutex must be recursive.
 */
-void sqlite3OsEnterMutex(){
+void sqlite3UnixEnterMutex(){
 #ifdef SQLITE_UNIX_THREADS
-  pthread_mutex_lock(&mutex);
+  pthread_mutex_lock(&mutexAux);
+  if( !mutexOwnerValid || !pthread_equal(mutexOwner, pthread_self()) ){
+    pthread_mutex_unlock(&mutexAux);
+    pthread_mutex_lock(&mutexMain);
+    assert( inMutex==0 );
+    assert( !mutexOwnerValid );
+    pthread_mutex_lock(&mutexAux);
+    mutexOwner = pthread_self();
+    mutexOwnerValid = 1;
+  }
+  inMutex++;
+  pthread_mutex_unlock(&mutexAux);
+#else
+  inMutex++;
 #endif
-  assert( !inMutex );
-  inMutex = 1;
 }
-void sqlite3OsLeaveMutex(){
-  assert( inMutex );
-  inMutex = 0;
+void sqlite3UnixLeaveMutex(){
+  assert( inMutex>0 );
 #ifdef SQLITE_UNIX_THREADS
-  pthread_mutex_unlock(&mutex);
+  pthread_mutex_lock(&mutexAux);
+  inMutex--;
+  assert( pthread_equal(mutexOwner, pthread_self()) );
+  if( inMutex==0 ){
+    assert( mutexOwnerValid );
+    mutexOwnerValid = 0;
+    pthread_mutex_unlock(&mutexMain);
+  }
+  pthread_mutex_unlock(&mutexAux);
+#else
+  inMutex--;
 #endif
 }
 
 /*
-** Turn a relative pathname into a full pathname.  Return a pointer
-** to the full pathname stored in space obtained from sqliteMalloc().
-** The calling function is responsible for freeing this space once it
-** is no longer needed.
+** Return TRUE if the mutex is currently held.
+**
+** If the thisThrd parameter is true, return true only if the
+** calling thread holds the mutex.  If the parameter is false, return
+** true if any thread holds the mutex.
 */
-char *sqlite3OsFullPathname(const char *zRelative){
-  char *zFull = 0;
-  if( zRelative[0]=='/' ){
-    sqlite3SetString(&zFull, zRelative, (char*)0);
-  }else{
-    char zBuf[5000];
-    sqlite3SetString(&zFull, getcwd(zBuf, sizeof(zBuf)), "/", zRelative,
-                    (char*)0);
+int sqlite3UnixInMutex(int thisThrd){
+#ifdef SQLITE_UNIX_THREADS
+  int rc;
+  pthread_mutex_lock(&mutexAux);
+  rc = inMutex>0 && (thisThrd==0 || pthread_equal(mutexOwner,pthread_self()));
+  pthread_mutex_unlock(&mutexAux);
+  return rc;
+#else
+  return inMutex>0;
+#endif
+}
+
+/*
+** Remember the number of thread-specific-data blocks allocated.
+** Use this to verify that we are not leaking thread-specific-data.
+** Ticket #1601
+*/
+#ifdef SQLITE_TEST
+int sqlite3_tsd_count = 0;
+# ifdef SQLITE_UNIX_THREADS
+    static pthread_mutex_t tsd_counter_mutex = PTHREAD_MUTEX_INITIALIZER;
+#   define TSD_COUNTER(N) \
+             pthread_mutex_lock(&tsd_counter_mutex); \
+             sqlite3_tsd_count += N; \
+             pthread_mutex_unlock(&tsd_counter_mutex);
+# else
+#   define TSD_COUNTER(N)  sqlite3_tsd_count += N
+# endif
+#else
+# define TSD_COUNTER(N)  /* no-op */
+#endif
+
+/*
+** If called with allocateFlag>0, then return a pointer to thread
+** specific data for the current thread.  Allocate and zero the
+** thread-specific data if it does not already exist.
+**
+** If called with allocateFlag==0, then check the current thread
+** specific data.  Return it if it exists.  If it does not exist,
+** then return NULL.
+**
+** If called with allocateFlag<0, check to see if the thread specific
+** data is allocated and is all zero.  If it is then deallocate it.
+** Return a pointer to the thread specific data or NULL if it is
+** unallocated or gets deallocated.
+*/
+ThreadData *sqlite3UnixThreadSpecificData(int allocateFlag){
+  static const ThreadData zeroData = {0};  /* Initializer to silence warnings
+                                           ** from broken compilers */
+#ifdef SQLITE_UNIX_THREADS
+  static pthread_key_t key;
+  static int keyInit = 0;
+  ThreadData *pTsd;
+
+  if( !keyInit ){
+    sqlite3OsEnterMutex();
+    if( !keyInit ){
+      int rc;
+      rc = pthread_key_create(&key, 0);
+      if( rc ){
+        sqlite3OsLeaveMutex();
+        return 0;
+      }
+      keyInit = 1;
+    }
+    sqlite3OsLeaveMutex();
   }
-  return zFull;
+
+  pTsd = pthread_getspecific(key);
+  if( allocateFlag>0 ){
+    if( pTsd==0 ){
+      if( !sqlite3TestMallocFail() ){
+        pTsd = sqlite3OsMalloc(sizeof(zeroData));
+      }
+#ifdef SQLITE_MEMDEBUG
+      sqlite3_isFail = 0;
+#endif
+      if( pTsd ){
+        *pTsd = zeroData;
+        pthread_setspecific(key, pTsd);
+        TSD_COUNTER(+1);
+      }
+    }
+  }else if( pTsd!=0 && allocateFlag<0 
+            && memcmp(pTsd, &zeroData, sizeof(ThreadData))==0 ){
+    sqlite3OsFree(pTsd);
+    pthread_setspecific(key, 0);
+    TSD_COUNTER(-1);
+    pTsd = 0;
+  }
+  return pTsd;
+#else
+  static ThreadData *pTsd = 0;
+  if( allocateFlag>0 ){
+    if( pTsd==0 ){
+      if( !sqlite3TestMallocFail() ){
+        pTsd = sqlite3OsMalloc( sizeof(zeroData) );
+      }
+#ifdef SQLITE_MEMDEBUG
+      sqlite3_isFail = 0;
+#endif
+      if( pTsd ){
+        *pTsd = zeroData;
+        TSD_COUNTER(+1);
+      }
+    }
+  }else if( pTsd!=0 && allocateFlag<0
+            && memcmp(pTsd, &zeroData, sizeof(ThreadData))==0 ){
+    sqlite3OsFree(pTsd);
+    TSD_COUNTER(-1);
+    pTsd = 0;
+  }
+  return pTsd;
+#endif
 }
 
 /*
@@ -1309,10 +1906,17 @@ int sqlite3_current_time = 0;
 ** current time and date as a Julian Day number into *prNow and
 ** return 0.  Return 1 if the time and date cannot be found.
 */
-int sqlite3OsCurrentTime(double *prNow){
+int sqlite3UnixCurrentTime(double *prNow){
+#ifdef NO_GETTOD
   time_t t;
   time(&t);
   *prNow = t/86400.0 + 2440587.5;
+#else
+  struct timeval sNow;
+  struct timezone sTz;  /* Not used */
+  gettimeofday(&sNow, &sTz);
+  *prNow = 2440587.5 + sNow.tv_sec/86400.0 + sNow.tv_usec/86400000000.0;
+#endif
 #ifdef SQLITE_TEST
   if( sqlite3_current_time ){
     *prNow = sqlite3_current_time/86400.0 + 2440587.5;
@@ -1320,25 +1924,5 @@ int sqlite3OsCurrentTime(double *prNow){
 #endif
   return 0;
 }
-
-#if 0 /* NOT USED */
-/*
-** Find the time that the file was last modified.  Write the
-** modification time and date as a Julian Day number into *prNow and
-** return SQLITE_OK.  Return SQLITE_ERROR if the modification
-** time cannot be found.
-*/
-int sqlite3OsFileModTime(OsFile *id, double *prNow){
-  int rc;
-  struct stat statbuf;
-  if( fstat(id->h, &statbuf)==0 ){
-    *prNow = statbuf.st_mtime/86400.0 + 2440587.5;
-    rc = SQLITE_OK;
-  }else{
-    rc = SQLITE_ERROR;
-  }
-  return rc;
-}
-#endif /* NOT USED */
 
 #endif /* OS_UNIX */

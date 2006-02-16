@@ -14,7 +14,7 @@
 ** systems that do not need this facility may omit it by recompiling
 ** the library with -DSQLITE_OMIT_AUTHORIZATION=1
 **
-** $Id: auth.c,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
+** $Id: auth.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
 */
 #include "sqliteInt.h"
 
@@ -112,9 +112,17 @@ void sqlite3AuthRead(
   int iSrc;             /* Index in pTabList->a[] of table being read */
   const char *zDBase;   /* Name of database being accessed */
   TriggerStack *pStack; /* The stack of current triggers */
+  int iDb;              /* The index of the database the expression refers to */
 
   if( db->xAuth==0 ) return;
+  if( pExpr->op==TK_AS ) return;
   assert( pExpr->op==TK_COLUMN );
+  iDb = sqlite3SchemaToIndex(pParse->db, pExpr->pSchema);
+  if( iDb<0 ){
+    /* An attempt to read a column out of a subquery or other
+    ** temporary table. */
+    return;
+  }
   for(iSrc=0; pTabList && iSrc<pTabList->nSrc; iSrc++){
     if( pExpr->iTable==pTabList->a[iSrc].iCursor ) break;
   }
@@ -139,14 +147,14 @@ void sqlite3AuthRead(
   }else{
     zCol = "ROWID";
   }
-  assert( pExpr->iDb<db->nDb );
-  zDBase = db->aDb[pExpr->iDb].zName;
+  assert( iDb>=0 && iDb<db->nDb );
+  zDBase = db->aDb[iDb].zName;
   rc = db->xAuth(db->pAuthArg, SQLITE_READ, pTab->zName, zCol, zDBase, 
                  pParse->zAuthContext);
   if( rc==SQLITE_IGNORE ){
     pExpr->op = TK_NULL;
   }else if( rc==SQLITE_DENY ){
-    if( db->nDb>2 || pExpr->iDb!=0 ){
+    if( db->nDb>2 || iDb!=0 ){
       sqlite3ErrorMsg(pParse, "access to %s.%s.%s is prohibited", 
          zDBase, pTab->zName, zCol);
     }else{

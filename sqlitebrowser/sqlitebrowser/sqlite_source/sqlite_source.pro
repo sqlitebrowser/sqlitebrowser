@@ -1,9 +1,11 @@
-SOURCES	+= where.c \
-	alter.c \
+SOURCES	+= alter.c \
+	analyze.c \
 	attach.c \
 	auth.c \
 	btree.c \
 	build.c \
+	callback.c \
+	complete.c \
 	date.c \
 	delete.c \
 	experimental.c \
@@ -16,9 +18,11 @@ SOURCES	+= where.c \
 	opcodes.c \
 	os_unix.c \
 	os_win.c \
+	os.c \
 	pager.c \
 	parse.c \
 	pragma.c \
+	prepare.c \
 	printf.c \
 	random.c \
 	select.c \
@@ -32,7 +36,9 @@ SOURCES	+= where.c \
 	vdbe.c \
 	vdbeapi.c \
 	vdbeaux.c \
-	vdbemem.c
+	vdbefifo.c \
+	vdbemem.c \
+	where.c
 HEADERS	+= btree.h \
 	config.h \
 	hash.h \
@@ -58,6 +64,9 @@ mac {
   MOC_DIR = .moc
   OBJECTS_DIR = .obj
   DEFINES += HAVE_USLEEP=1
+  QMAKE_CC = gcc-3.3
+  QMAKE_CXX = g++-3.3
+  QMAKE_LINK = $$QMAKE_CXX
 }
 TEMPLATE	=lib
 CONFIG	+= qt warn_on release staticlib

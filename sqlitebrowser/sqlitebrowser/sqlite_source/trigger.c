@@ -58,6 +58,7 @@ void sqlite3BeginTrigger(
   int iDb;                /* The database to store the trigger in */
   Token *pName;           /* The unqualified db name */
   DbFixer sFix;
+  int iTabDb;
 
   if( isTemp ){
     /* If TEMP was specified, then the trigger name may not be qualified. */
@@ -80,14 +81,16 @@ void sqlite3BeginTrigger(
   ** If sqlite3SrcListLookup() returns 0, indicating the table does not
   ** exist, the error is caught by the block below.
   */
-  if( !pTableName || sqlite3_malloc_failed ) goto trigger_cleanup;
+  if( !pTableName || sqlite3MallocFailed() ){
+    goto trigger_cleanup;
+  }
   pTab = sqlite3SrcListLookup(pParse, pTableName);
-  if( pName2->n==0 && pTab && pTab->iDb==1 ){
+  if( pName2->n==0 && pTab && pTab->pSchema==db->aDb[1].pSchema ){
     iDb = 1;
   }
 
   /* Ensure the table name matches database name and that the table exists */
-  if( sqlite3_malloc_failed ) goto trigger_cleanup;
+  if( sqlite3MallocFailed() ) goto trigger_cleanup;
   assert( pTableName->nSrc==1 );
   if( sqlite3FixInit(&sFix, pParse, iDb, "trigger", pName) && 
       sqlite3FixSrcList(&sFix, pTableName) ){
@@ -105,7 +108,7 @@ void sqlite3BeginTrigger(
   if( !zName || SQLITE_OK!=sqlite3CheckObjectName(pParse, zName) ){
     goto trigger_cleanup;
   }
-  if( sqlite3HashFind(&(db->aDb[iDb].trigHash), zName,pName->n+1) ){
+  if( sqlite3HashFind(&(db->aDb[iDb].pSchema->trigHash), zName,pName->n+1) ){
     sqlite3ErrorMsg(pParse, "trigger %T already exists", pName);
     goto trigger_cleanup;
   }
@@ -130,17 +133,18 @@ void sqlite3BeginTrigger(
         " trigger on table: %S", pTableName, 0);
     goto trigger_cleanup;
   }
+  iTabDb = sqlite3SchemaToIndex(db, pTab->pSchema);
 
 #ifndef SQLITE_OMIT_AUTHORIZATION
   {
     int code = SQLITE_CREATE_TRIGGER;
-    const char *zDb = db->aDb[pTab->iDb].zName;
+    const char *zDb = db->aDb[iTabDb].zName;
     const char *zDbTrig = isTemp ? db->aDb[1].zName : zDb;
-    if( pTab->iDb==1 || isTemp ) code = SQLITE_CREATE_TEMP_TRIGGER;
+    if( iTabDb==1 || isTemp ) code = SQLITE_CREATE_TEMP_TRIGGER;
     if( sqlite3AuthCheck(pParse, code, zName, pTab->zName, zDbTrig) ){
       goto trigger_cleanup;
     }
-    if( sqlite3AuthCheck(pParse, SQLITE_INSERT, SCHEMA_TABLE(pTab->iDb),0,zDb)){
+    if( sqlite3AuthCheck(pParse, SQLITE_INSERT, SCHEMA_TABLE(iTabDb),0,zDb)){
       goto trigger_cleanup;
     }
   }
@@ -161,8 +165,8 @@ void sqlite3BeginTrigger(
   pTrigger->name = zName;
   zName = 0;
   pTrigger->table = sqliteStrDup(pTableName->a[0].zName);
-  pTrigger->iDb = iDb;
-  pTrigger->iTabDb = pTab->iDb;
+  pTrigger->pSchema = db->aDb[iDb].pSchema;
+  pTrigger->pTabSchema = pTab->pSchema;
   pTrigger->op = op;
   pTrigger->tr_tm = tr_tm==TK_BEFORE ? TRIGGER_BEFORE : TRIGGER_AFTER;
   pTrigger->pWhen = sqlite3ExprDup(pWhen);
@@ -196,16 +200,18 @@ void sqlite3FinishTrigger(
   Trigger *pTrig = 0;     /* The trigger whose construction is finishing up */
   sqlite3 *db = pParse->db;  /* The database */
   DbFixer sFix;
+  int iDb;                   /* Database containing the trigger */
 
   pTrig = pParse->pNewTrigger;
   pParse->pNewTrigger = 0;
-  if( pParse->nErr || pTrig==0 ) goto triggerfinish_cleanup;
+  if( pParse->nErr || !pTrig ) goto triggerfinish_cleanup;
+  iDb = sqlite3SchemaToIndex(pParse->db, pTrig->pSchema);
   pTrig->step_list = pStepList;
   while( pStepList ){
     pStepList->pTrig = pTrig;
     pStepList = pStepList->pNext;
   }
-  if( sqlite3FixInit(&sFix, pParse, pTrig->iDb, "trigger", &pTrig->nameToken) 
+  if( sqlite3FixInit(&sFix, pParse, iDb, "trigger", &pTrig->nameToken) 
           && sqlite3FixTriggerStep(&sFix, pTrig->step_list) ){
     goto triggerfinish_cleanup;
   }
@@ -215,7 +221,7 @@ void sqlite3FinishTrigger(
   */
   if( !db->init.busy ){
     static const VdbeOpList insertTrig[] = {
-      { OP_NewRecno,   0, 0,  0          },
+      { OP_NewRowid,   0, 0,  0          },
       { OP_String8,    0, 0,  "trigger"  },
       { OP_String8,    0, 0,  0          },  /* 2: trigger name */
       { OP_String8,    0, 0,  0          },  /* 3: table name */
@@ -223,8 +229,8 @@ void sqlite3FinishTrigger(
       { OP_String8,    0, 0,  "CREATE TRIGGER "},
       { OP_String8,    0, 0,  0          },  /* 6: SQL */
       { OP_Concat,     0, 0,  0          }, 
-      { OP_MakeRecord, 5, 0,  "tttit"    },
-      { OP_PutIntKey,  0, 0,  0          },
+      { OP_MakeRecord, 5, 0,  "aaada"    },
+      { OP_Insert,     0, 0,  0          },
     };
     int addr;
     Vdbe *v;
@@ -232,28 +238,30 @@ void sqlite3FinishTrigger(
     /* Make an entry in the sqlite_master table */
     v = sqlite3GetVdbe(pParse);
     if( v==0 ) goto triggerfinish_cleanup;
-    sqlite3BeginWriteOperation(pParse, 0, pTrig->iDb);
-    sqlite3OpenMasterTable(v, pTrig->iDb);
+    sqlite3BeginWriteOperation(pParse, 0, iDb);
+    sqlite3OpenMasterTable(pParse, iDb);
     addr = sqlite3VdbeAddOpList(v, ArraySize(insertTrig), insertTrig);
     sqlite3VdbeChangeP3(v, addr+2, pTrig->name, 0); 
     sqlite3VdbeChangeP3(v, addr+3, pTrig->table, 0); 
-    sqlite3VdbeChangeP3(v, addr+6, pAll->z, pAll->n);
-    sqlite3ChangeCookie(db, v, pTrig->iDb);
+    sqlite3VdbeChangeP3(v, addr+6, (char*)pAll->z, pAll->n);
+    sqlite3ChangeCookie(db, v, iDb);
     sqlite3VdbeAddOp(v, OP_Close, 0, 0);
-    sqlite3VdbeOp3(v, OP_ParseSchema, pTrig->iDb, 0, 
+    sqlite3VdbeOp3(v, OP_ParseSchema, iDb, 0, 
        sqlite3MPrintf("type='trigger' AND name='%q'", pTrig->name), P3_DYNAMIC);
   }
 
   if( db->init.busy ){
+    int n;
     Table *pTab;
     Trigger *pDel;
-    pDel = sqlite3HashInsert(&db->aDb[pTrig->iDb].trigHash, 
+    pDel = sqlite3HashInsert(&db->aDb[iDb].pSchema->trigHash, 
                      pTrig->name, strlen(pTrig->name)+1, pTrig);
     if( pDel ){
-      assert( sqlite3_malloc_failed && pDel==pTrig );
+      assert( sqlite3MallocFailed() && pDel==pTrig );
       goto triggerfinish_cleanup;
     }
-    pTab = sqlite3LocateTable(pParse,pTrig->table,db->aDb[pTrig->iTabDb].zName);
+    n = strlen(pTrig->table) + 1;
+    pTab = sqlite3HashFind(&pTrig->pTabSchema->tblHash, pTrig->table, n);
     assert( pTab!=0 );
     pTrig->pNext = pTab->pTrigger;
     pTab->pTrigger = pTrig;
@@ -278,7 +286,7 @@ triggerfinish_cleanup:
 */
 static void sqlitePersistTriggerStep(TriggerStep *p){
   if( p->target.z ){
-    p->target.z = sqliteStrNDup(p->target.z, p->target.n);
+    p->target.z = (u8*)sqliteStrNDup((char*)p->target.z, p->target.n);
     p->target.dyn = 1;
   }
   if( p->pSelect ){
@@ -312,7 +320,10 @@ static void sqlitePersistTriggerStep(TriggerStep *p){
 */
 TriggerStep *sqlite3TriggerSelectStep(Select *pSelect){
   TriggerStep *pTriggerStep = sqliteMalloc(sizeof(TriggerStep));
-  if( pTriggerStep==0 ) return 0;
+  if( pTriggerStep==0 ) {
+    sqlite3SelectDelete(pSelect);
+    return 0;
+  }
 
   pTriggerStep->op = TK_SELECT;
   pTriggerStep->pSelect = pSelect;
@@ -430,7 +441,7 @@ void sqlite3DropTrigger(Parse *pParse, SrcList *pName){
   int nName;
   sqlite3 *db = pParse->db;
 
-  if( sqlite3_malloc_failed ) goto drop_trigger_cleanup;
+  if( sqlite3MallocFailed() ) goto drop_trigger_cleanup;
   if( SQLITE_OK!=sqlite3ReadSchema(pParse) ){
     goto drop_trigger_cleanup;
   }
@@ -442,7 +453,7 @@ void sqlite3DropTrigger(Parse *pParse, SrcList *pName){
   for(i=OMIT_TEMPDB; i<db->nDb; i++){
     int j = (i<2) ? i^1 : i;  /* Search TEMP before MAIN */
     if( zDb && sqlite3StrICmp(db->aDb[j].zName, zDb) ) continue;
-    pTrigger = sqlite3HashFind(&(db->aDb[j].trigHash), zName, nName+1);
+    pTrigger = sqlite3HashFind(&(db->aDb[j].pSchema->trigHash), zName, nName+1);
     if( pTrigger ) break;
   }
   if( !pTrigger ){
@@ -460,7 +471,8 @@ drop_trigger_cleanup:
 ** is set on.
 */
 static Table *tableOfTrigger(sqlite3 *db, Trigger *pTrigger){
-  return sqlite3FindTable(db,pTrigger->table,db->aDb[pTrigger->iTabDb].zName);
+  int n = strlen(pTrigger->table) + 1;
+  return sqlite3HashFind(&pTrigger->pTabSchema->tblHash, pTrigger->table, n);
 }
 
 
@@ -475,11 +487,11 @@ void sqlite3DropTriggerPtr(Parse *pParse, Trigger *pTrigger, int nested){
   sqlite3 *db = pParse->db;
   int iDb;
 
-  iDb = pTrigger->iDb;
+  iDb = sqlite3SchemaToIndex(pParse->db, pTrigger->pSchema);
   assert( iDb>=0 && iDb<db->nDb );
   pTable = tableOfTrigger(db, pTrigger);
   assert(pTable);
-  assert( pTable->iDb==iDb || iDb==1 );
+  assert( pTable->pSchema==pTrigger->pSchema || iDb==1 );
 #ifndef SQLITE_OMIT_AUTHORIZATION
   {
     int code = SQLITE_DROP_TRIGGER;
@@ -510,7 +522,7 @@ void sqlite3DropTriggerPtr(Parse *pParse, Trigger *pTrigger, int nested){
     };
 
     sqlite3BeginWriteOperation(pParse, 0, iDb);
-    sqlite3OpenMasterTable(v, iDb);
+    sqlite3OpenMasterTable(pParse, iDb);
     base = sqlite3VdbeAddOpList(v,  ArraySize(dropTrigger), dropTrigger);
     sqlite3VdbeChangeP3(v, base+1, pTrigger->name, 0);
     sqlite3ChangeCookie(db, v, iDb);
@@ -525,7 +537,7 @@ void sqlite3DropTriggerPtr(Parse *pParse, Trigger *pTrigger, int nested){
 void sqlite3UnlinkAndDeleteTrigger(sqlite3 *db, int iDb, const char *zName){
   Trigger *pTrigger;
   int nName = strlen(zName);
-  pTrigger = sqlite3HashInsert(&(db->aDb[iDb].trigHash), zName, nName+1, 0);
+  pTrigger = sqlite3HashInsert(&(db->aDb[iDb].pSchema->trigHash), zName, nName+1, 0);
   if( pTrigger ){
     Table *pTable = tableOfTrigger(db, pTrigger);
     assert( pTable!=0 );
@@ -617,11 +629,11 @@ static SrcList *targetSrcList(
   int iDb;             /* Index of the database to use */
   SrcList *pSrc;       /* SrcList to be returned */
 
-  iDb = pStep->pTrig->iDb;
+  iDb = sqlite3SchemaToIndex(pParse->db, pStep->pTrig->pSchema);
   if( iDb==0 || iDb>=2 ){
     assert( iDb<pParse->db->nDb );
-    sDb.z = pParse->db->aDb[iDb].zName;
-    sDb.n = strlen(sDb.z);
+    sDb.z = (u8*)pParse->db->aDb[iDb].zName;
+    sDb.n = strlen((char*)sDb.z);
     pSrc = sqlite3SrcListAppend(0, &sDb, &pStep->target);
   } else {
     pSrc = sqlite3SrcListAppend(0, &pStep->target, 0);
@@ -730,8 +742,7 @@ int sqlite3CodeRowTrigger(
   int orconf,          /* ON CONFLICT policy */
   int ignoreJump       /* Instruction to jump to for RAISE(IGNORE) */
 ){
-  Trigger *pTrigger;
-  TriggerStack *pStack;
+  Trigger *p;
   TriggerStack trigStackEntry;
 
   assert(op == TK_UPDATE || op == TK_INSERT || op == TK_DELETE);
@@ -739,21 +750,20 @@ int sqlite3CodeRowTrigger(
 
   assert(newIdx != -1 || oldIdx != -1);
 
-  pTrigger = pTab->pTrigger;
-  while( pTrigger ){
+  for(p=pTab->pTrigger; p; p=p->pNext){
     int fire_this = 0;
 
-    /* determine whether we should code this trigger */
-    if( pTrigger->op == op && pTrigger->tr_tm == tr_tm ){
-      fire_this = 1;
-      for(pStack=pParse->trigStack; pStack; pStack=pStack->pNext){
-        if( pStack->pTrigger==pTrigger ){
-	  fire_this = 0;
-	}
-      }
-      if( op == TK_UPDATE && pTrigger->pColumns &&
-          !checkColumnOverLap(pTrigger->pColumns, pChanges) ){
-        fire_this = 0;
+    /* Determine whether we should code this trigger */
+    if( 
+      p->op==op && 
+      p->tr_tm==tr_tm && 
+      (p->pSchema==p->pTabSchema || p->pSchema==pParse->db->aDb[1].pSchema) &&
+      (op!=TK_UPDATE||!p->pColumns||checkColumnOverLap(p->pColumns,pChanges))
+    ){
+      TriggerStack *pS;      /* Pointer to trigger-stack entry */
+      for(pS=pParse->trigStack; pS && p!=pS->pTrigger; pS=pS->pNext);
+      if( !pS ){
+        fire_this = 1;
       }
     }
  
@@ -767,18 +777,18 @@ int sqlite3CodeRowTrigger(
       sNC.pParse = pParse;
 
       /* Push an entry on to the trigger stack */
-      trigStackEntry.pTrigger = pTrigger;
+      trigStackEntry.pTrigger = p;
       trigStackEntry.newIdx = newIdx;
       trigStackEntry.oldIdx = oldIdx;
       trigStackEntry.pTab = pTab;
       trigStackEntry.pNext = pParse->trigStack;
       trigStackEntry.ignoreJump = ignoreJump;
       pParse->trigStack = &trigStackEntry;
-      sqlite3AuthContextPush(pParse, &sContext, pTrigger->name);
+      sqlite3AuthContextPush(pParse, &sContext, p->name);
 
       /* code the WHEN clause */
       endTrigger = sqlite3VdbeMakeLabel(pParse->pVdbe);
-      whenExpr = sqlite3ExprDup(pTrigger->pWhen);
+      whenExpr = sqlite3ExprDup(p->pWhen);
       if( sqlite3ExprResolveNames(&sNC, whenExpr) ){
         pParse->trigStack = trigStackEntry.pNext;
         sqlite3ExprDelete(whenExpr);
@@ -787,7 +797,7 @@ int sqlite3CodeRowTrigger(
       sqlite3ExprIfFalse(pParse, whenExpr, endTrigger, 1);
       sqlite3ExprDelete(whenExpr);
 
-      codeTriggerProgram(pParse, pTrigger->step_list, orconf); 
+      codeTriggerProgram(pParse, p->step_list, orconf); 
 
       /* Pop the entry off the trigger stack */
       pParse->trigStack = trigStackEntry.pNext;
@@ -795,7 +805,6 @@ int sqlite3CodeRowTrigger(
 
       sqlite3VdbeResolveLabel(pParse->pVdbe, endTrigger);
     }
-    pTrigger = pTrigger->pNext;
   }
   return 0;
 }

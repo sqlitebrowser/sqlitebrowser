@@ -12,7 +12,7 @@
 ** This file contains routines used for analyzing expressions and
 ** for generating VDBE code that evaluates expressions in SQLite.
 **
-** $Id: expr.c,v 1.5 2005-04-29 04:26:02 tabuleiro Exp $
+** $Id: expr.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
 */
 #include "sqliteInt.h"
 #include <ctype.h>
@@ -34,12 +34,18 @@
 ** SELECT * FROM t1 WHERE (select a from t1);
 */
 char sqlite3ExprAffinity(Expr *pExpr){
-  if( pExpr->op==TK_AS ){
+  int op = pExpr->op;
+  if( op==TK_AS ){
     return sqlite3ExprAffinity(pExpr->pLeft);
   }
-  if( pExpr->op==TK_SELECT ){
+  if( op==TK_SELECT ){
     return sqlite3ExprAffinity(pExpr->pSelect->pEList->a[0].pExpr);
   }
+#ifndef SQLITE_OMIT_CAST
+  if( op==TK_CAST ){
+    return sqlite3AffinityType(&pExpr->token);
+  }
+#endif
   return pExpr->affinity;
 }
 
@@ -51,7 +57,7 @@ CollSeq *sqlite3ExprCollSeq(Parse *pParse, Expr *pExpr){
   CollSeq *pColl = 0;
   if( pExpr ){
     pColl = pExpr->pColl;
-    if( pExpr->op==TK_AS && !pColl ){
+    if( (pExpr->op==TK_AS || pExpr->op==TK_CAST) && !pColl ){
       return sqlite3ExprCollSeq(pParse, pExpr->pLeft);
     }
   }
@@ -69,12 +75,10 @@ CollSeq *sqlite3ExprCollSeq(Parse *pParse, Expr *pExpr){
 char sqlite3CompareAffinity(Expr *pExpr, char aff2){
   char aff1 = sqlite3ExprAffinity(pExpr);
   if( aff1 && aff2 ){
-    /* Both sides of the comparison are columns. If one has numeric or
-    ** integer affinity, use that. Otherwise use no affinity.
+    /* Both sides of the comparison are columns. If one has numeric
+    ** affinity, use that. Otherwise use no affinity.
     */
-    if( aff1==SQLITE_AFF_INTEGER || aff2==SQLITE_AFF_INTEGER ){
-      return SQLITE_AFF_INTEGER;
-    }else if( aff1==SQLITE_AFF_NUMERIC || aff2==SQLITE_AFF_NUMERIC ){
+    if( sqlite3IsNumericAffinity(aff1) || sqlite3IsNumericAffinity(aff2) ){
       return SQLITE_AFF_NUMERIC;
     }else{
       return SQLITE_AFF_NONE;
@@ -83,10 +87,10 @@ char sqlite3CompareAffinity(Expr *pExpr, char aff2){
     /* Neither side of the comparison is a column.  Compare the
     ** results directly.
     */
-    /* return SQLITE_AFF_NUMERIC;  // Ticket #805 */
     return SQLITE_AFF_NONE;
   }else{
     /* One side is a column, the other is not. Use the columns affinity. */
+    assert( aff1==0 || aff2==0 );
     return (aff1 + aff2);
   }
 }
@@ -122,11 +126,14 @@ static char comparisonAffinity(Expr *pExpr){
 */
 int sqlite3IndexAffinityOk(Expr *pExpr, char idx_affinity){
   char aff = comparisonAffinity(pExpr);
-  return 
-    (aff==SQLITE_AFF_NONE) ||
-    (aff==SQLITE_AFF_NUMERIC && idx_affinity==SQLITE_AFF_INTEGER) ||
-    (aff==SQLITE_AFF_INTEGER && idx_affinity==SQLITE_AFF_NUMERIC) ||
-    (aff==idx_affinity);
+  switch( aff ){
+    case SQLITE_AFF_NONE:
+      return 1;
+    case SQLITE_AFF_TEXT:
+      return idx_affinity==SQLITE_AFF_TEXT;
+    default:
+      return sqlite3IsNumericAffinity(idx_affinity);
+  }
 }
 
 /*
@@ -138,7 +145,7 @@ int sqlite3IndexAffinityOk(Expr *pExpr, char idx_affinity){
 */
 static int binaryCompareP1(Expr *pExpr1, Expr *pExpr2, int jumpIfNull){
   char aff = sqlite3ExprAffinity(pExpr2);
-  return (((int)sqlite3CompareAffinity(pExpr1, aff))<<8)+(jumpIfNull?1:0);
+  return ((int)sqlite3CompareAffinity(pExpr1, aff))+(jumpIfNull?0x100:0);
 }
 
 /*
@@ -207,9 +214,8 @@ Expr *sqlite3Expr(int op, Expr *pLeft, Expr *pRight, const Token *pToken){
 /*
 ** When doing a nested parse, you can include terms in an expression
 ** that look like this:   #0 #1 #2 ...  These terms refer to elements
-** on the stack.  "#0" (or just "#") means the top of the stack.
-** "#1" means the next down on the stack.  And so forth.  #-1 means
-** memory location 0.  #-2 means memory location 1.  And so forth.
+** on the stack.  "#0" means the top of the stack.
+** "#1" means the next down on the stack.  And so forth.
 **
 ** This routine is called by the parser to deal with on of those terms.
 ** It immediately generates code to store the value in a memory location.
@@ -220,23 +226,19 @@ Expr *sqlite3RegisterExpr(Parse *pParse, Token *pToken){
   Vdbe *v = pParse->pVdbe;
   Expr *p;
   int depth;
-  if( v==0 ) return 0;
   if( pParse->nested==0 ){
     sqlite3ErrorMsg(pParse, "near \"%T\": syntax error", pToken);
     return 0;
   }
+  if( v==0 ) return 0;
   p = sqlite3Expr(TK_REGISTER, 0, 0, pToken);
   if( p==0 ){
     return 0;  /* Malloc failed */
   }
-  depth = atoi(&pToken->z[1]);
-  if( depth>=0 ){
-    p->iTable = pParse->nMem++;
-    sqlite3VdbeAddOp(v, OP_Dup, depth, 0);
-    sqlite3VdbeAddOp(v, OP_MemStore, p->iTable, 1);
-  }else{
-    p->iTable = -1-depth;
-  }
+  depth = atoi((char*)&pToken->z[1]);
+  p->iTable = pParse->nMem++;
+  sqlite3VdbeAddOp(v, OP_Dup, depth, 0);
+  sqlite3VdbeAddOp(v, OP_MemStore, p->iTable, 1);
   return p;
 }
 
@@ -261,11 +263,11 @@ Expr *sqlite3ExprAnd(Expr *pLeft, Expr *pRight){
 void sqlite3ExprSpan(Expr *pExpr, Token *pLeft, Token *pRight){
   assert( pRight!=0 );
   assert( pLeft!=0 );
-  if( !sqlite3_malloc_failed && pRight->z && pLeft->z ){
+  if( !sqlite3MallocFailed() && pRight->z && pLeft->z ){
     assert( pLeft->dyn==0 || pLeft->z[pLeft->n]==0 );
     if( pLeft->dyn==0 && pRight->dyn==0 ){
       pExpr->span.z = pLeft->z;
-      pExpr->span.n = pRight->n + Addr(pRight->z) - Addr(pLeft->z);
+      pExpr->span.n = pRight->n + (pRight->z - pLeft->z);
     }else{
       pExpr->span.z = 0;
     }
@@ -278,6 +280,7 @@ void sqlite3ExprSpan(Expr *pExpr, Token *pLeft, Token *pRight){
 */
 Expr *sqlite3ExprFunction(ExprList *pList, Token *pToken){
   Expr *pNew;
+  assert( pToken );
   pNew = sqliteMalloc( sizeof(Expr) );
   if( pNew==0 ){
     sqlite3ExprListDelete(pList); /* Avoid leaking memory when malloc fails */
@@ -285,12 +288,8 @@ Expr *sqlite3ExprFunction(ExprList *pList, Token *pToken){
   }
   pNew->op = TK_FUNCTION;
   pNew->pList = pList;
-  if( pToken ){
-    assert( pToken->dyn==0 );
-    pNew->token = *pToken;
-  }else{
-    pNew->token.z = 0;
-  }
+  assert( pToken->dyn==0 );
+  pNew->token = *pToken;
   pNew->span = pNew->token;
   return pNew;
 }
@@ -325,7 +324,7 @@ void sqlite3ExprAssignVarNumber(Parse *pParse, Expr *pExpr){
     /* Wildcard of the form "?nnn".  Convert "nnn" to an integer and
     ** use it as the variable number */
     int i;
-    pExpr->iTable = i = atoi(&pToken->z[1]);
+    pExpr->iTable = i = atoi((char*)&pToken->z[1]);
     if( i<1 || i>SQLITE_MAX_VARIABLE_NUMBER ){
       sqlite3ErrorMsg(pParse, "variable number must be between ?1 and ?%d",
           SQLITE_MAX_VARIABLE_NUMBER);
@@ -353,10 +352,10 @@ void sqlite3ExprAssignVarNumber(Parse *pParse, Expr *pExpr){
       pExpr->iTable = ++pParse->nVar;
       if( pParse->nVarExpr>=pParse->nVarExprAlloc-1 ){
         pParse->nVarExprAlloc += pParse->nVarExprAlloc + 10;
-        pParse->apVarExpr = sqliteRealloc(pParse->apVarExpr,
+        sqliteReallocOrFree((void**)&pParse->apVarExpr,
                        pParse->nVarExprAlloc*sizeof(pParse->apVarExpr[0]) );
       }
-      if( !sqlite3_malloc_failed ){
+      if( !sqlite3MallocFailed() ){
         assert( pParse->apVarExpr!=0 );
         pParse->apVarExpr[pParse->nVarExpr++] = pExpr;
       }
@@ -376,6 +375,21 @@ void sqlite3ExprDelete(Expr *p){
   sqlite3ExprListDelete(p->pList);
   sqlite3SelectDelete(p->pSelect);
   sqliteFree(p);
+}
+
+/*
+** The Expr.token field might be a string literal that is quoted.
+** If so, remove the quotation marks.
+*/
+void sqlite3DequoteExpr(Expr *p){
+  if( ExprHasAnyProperty(p, EP_Dequoted) ){
+    return;
+  }
+  ExprSetProperty(p, EP_Dequoted);
+  if( p->token.dyn==0 ){
+    sqlite3TokenCopy(&p->token, &p->token);
+  }
+  sqlite3Dequote((char*)p->token.z);
 }
 
 
@@ -398,7 +412,7 @@ Expr *sqlite3ExprDup(Expr *p){
   if( pNew==0 ) return 0;
   memcpy(pNew, p, sizeof(*pNew));
   if( p->token.z!=0 ){
-    pNew->token.z = sqliteStrNDup(p->token.z, p->token.n);
+    pNew->token.z = (u8*)sqliteStrNDup((char*)p->token.z, p->token.n);
     pNew->token.dyn = 1;
   }else{
     assert( pNew->token.z==0 );
@@ -415,7 +429,7 @@ void sqlite3TokenCopy(Token *pTo, Token *pFrom){
   if( pTo->dyn ) sqliteFree((char*)pTo->z);
   if( pFrom->z ){
     pTo->n = pFrom->n;
-    pTo->z = sqliteStrNDup(pFrom->z, pFrom->n);
+    pTo->z = (u8*)sqliteStrNDup((char*)pFrom->z, pFrom->n);
     pTo->dyn = 1;
   }else{
     pTo->z = 0;
@@ -445,7 +459,8 @@ ExprList *sqlite3ExprListDup(ExprList *p){
       sqlite3TokenCopy(&pNewExpr->span, &pOldExpr->span);
     }
     assert( pNewExpr==0 || pNewExpr->span.z!=0 
-            || pOldExpr->span.z==0 || sqlite3_malloc_failed );
+            || pOldExpr->span.z==0
+            || sqlite3MallocFailed() );
     pItem->zName = sqliteStrDup(pOldItem->zName);
     pItem->sortOrder = pOldItem->sortOrder;
     pItem->isAgg = pOldItem->isAgg;
@@ -474,14 +489,16 @@ SrcList *sqlite3SrcListDup(SrcList *p){
   for(i=0; i<p->nSrc; i++){
     struct SrcList_item *pNewItem = &pNew->a[i];
     struct SrcList_item *pOldItem = &p->a[i];
+    Table *pTab;
     pNewItem->zDatabase = sqliteStrDup(pOldItem->zDatabase);
     pNewItem->zName = sqliteStrDup(pOldItem->zName);
     pNewItem->zAlias = sqliteStrDup(pOldItem->zAlias);
     pNewItem->jointype = pOldItem->jointype;
     pNewItem->iCursor = pOldItem->iCursor;
-    pNewItem->pTab = pOldItem->pTab;
-    if( pNewItem->pTab ){
-      pNewItem->pTab->isTransient = 0;
+    pNewItem->isPopulated = pOldItem->isPopulated;
+    pTab = pNewItem->pTab = pOldItem->pTab;
+    if( pTab ){
+      pTab->nRef++;
     }
     pNewItem->pSelect = sqlite3SelectDup(pOldItem->pSelect);
     pNewItem->pOn = sqlite3ExprDup(pOldItem->pOn);
@@ -528,9 +545,14 @@ Select *sqlite3SelectDup(Select *p){
   pNew->pOffset = sqlite3ExprDup(p->pOffset);
   pNew->iLimit = -1;
   pNew->iOffset = -1;
-  pNew->ppOpenTemp = 0;
   pNew->isResolved = p->isResolved;
   pNew->isAgg = p->isAgg;
+  pNew->usesVirt = 0;
+  pNew->disallowOrderBy = 0;
+  pNew->pRightmost = 0;
+  pNew->addrOpenVirt[0] = -1;
+  pNew->addrOpenVirt[1] = -1;
+  pNew->addrOpenVirt[2] = -1;
   return pNew;
 }
 #else
@@ -606,6 +628,8 @@ void sqlite3ExprListDelete(ExprList *pList){
 **
 ** The return value from this routine is 1 to abandon the tree walk
 ** and 0 to continue.
+**
+** NOTICE:  This routine does *not* descend into subqueries.
 */
 static int walkExprList(ExprList *, int (*)(void *, Expr*), void *);
 static int walkExprTree(Expr *pExpr, int (*xFunc)(void*,Expr*), void *pArg){
@@ -663,17 +687,27 @@ static int walkSelectExpr(Select *p, int (*xFunc)(void *, Expr*), void *pArg){
 */
 static int exprNodeIsConstant(void *pArg, Expr *pExpr){
   switch( pExpr->op ){
+    /* Consider functions to be constant if all their arguments are constant
+    ** and *pArg==2 */
+    case TK_FUNCTION:
+      if( *((int*)pArg)==2 ) return 0;
+      /* Fall through */
     case TK_ID:
     case TK_COLUMN:
     case TK_DOT:
     case TK_AGG_FUNCTION:
-    case TK_FUNCTION:
+    case TK_AGG_COLUMN:
 #ifndef SQLITE_OMIT_SUBQUERY
     case TK_SELECT:
     case TK_EXISTS:
 #endif
       *((int*)pArg) = 0;
       return 2;
+    case TK_IN:
+      if( pExpr->pSelect ){
+        *((int*)pArg) = 0;
+        return 2;
+      }
     default:
       return 0;
   }
@@ -681,7 +715,7 @@ static int exprNodeIsConstant(void *pArg, Expr *pExpr){
 
 /*
 ** Walk an expression tree.  Return 1 if the expression is constant
-** and 0 if it involves variables.
+** and 0 if it involves variables or function calls.
 **
 ** For the purposes of this function, a double-quoted string (ex: "abc")
 ** is considered a variable but a single-quoted string (ex: 'abc') is
@@ -694,6 +728,21 @@ int sqlite3ExprIsConstant(Expr *p){
 }
 
 /*
+** Walk an expression tree.  Return 1 if the expression is constant
+** or a function call with constant arguments.  Return and 0 if there
+** are any variables.
+**
+** For the purposes of this function, a double-quoted string (ex: "abc")
+** is considered a variable but a single-quoted string (ex: 'abc') is
+** a constant.
+*/
+int sqlite3ExprIsConstantOrFunction(Expr *p){
+  int isConst = 2;
+  walkExprTree(p, exprNodeIsConstant, &isConst);
+  return isConst!=0;
+}
+
+/*
 ** If the expression p codes a constant integer that is small enough
 ** to fit in a 32-bit integer, return 1 and put the value of the integer
 ** in *pValue.  If the expression is not an integer or if it is too big
@@ -702,7 +751,7 @@ int sqlite3ExprIsConstant(Expr *p){
 int sqlite3ExprIsInteger(Expr *p, int *pValue){
   switch( p->op ){
     case TK_INTEGER: {
-      if( sqlite3GetInt32(p->token.z, pValue) ){
+      if( sqlite3GetInt32((char*)p->token.z, pValue) ){
         return 1;
       }
       break;
@@ -759,7 +808,7 @@ int sqlite3IsRowid(const char *z){
 ** in pParse and return non-zero.  Return zero on success.
 */
 static int lookupName(
-  Parse *pParse,      /* The parsing context */
+  Parse *pParse,       /* The parsing context */
   Token *pDbToken,     /* Name of the database containing table, or NULL */
   Token *pTableToken,  /* Name of table containing column, or NULL */
   Token *pColumnToken, /* Name of the column. */
@@ -781,20 +830,19 @@ static int lookupName(
   zDb = sqlite3NameFromToken(pDbToken);
   zTab = sqlite3NameFromToken(pTableToken);
   zCol = sqlite3NameFromToken(pColumnToken);
-  if( sqlite3_malloc_failed ){
+  if( sqlite3MallocFailed() ){
     goto lookupname_end;
   }
 
   pExpr->iTable = -1;
   while( pNC && cnt==0 ){
+    ExprList *pEList;
     SrcList *pSrcList = pNC->pSrcList;
-    ExprList *pEList = pNC->pEList;
 
-    pNC->nRef++;
-    /* assert( zTab==0 || pEList==0 ); */
     if( pSrcList ){
       for(i=0, pItem=pSrcList->a; i<pSrcList->nSrc; i++, pItem++){
         Table *pTab = pItem->pTab;
+        int iDb = sqlite3SchemaToIndex(db, pTab->pSchema);
         Column *pCol;
   
         if( pTab==0 ) continue;
@@ -806,26 +854,47 @@ static int lookupName(
           }else{
             char *zTabName = pTab->zName;
             if( zTabName==0 || sqlite3StrICmp(zTabName, zTab)!=0 ) continue;
-            if( zDb!=0 && sqlite3StrICmp(db->aDb[pTab->iDb].zName, zDb)!=0 ){
+            if( zDb!=0 && sqlite3StrICmp(db->aDb[iDb].zName, zDb)!=0 ){
               continue;
             }
           }
         }
         if( 0==(cntTab++) ){
           pExpr->iTable = pItem->iCursor;
-          pExpr->iDb = pTab->iDb;
+          pExpr->pSchema = pTab->pSchema;
           pMatch = pItem;
         }
         for(j=0, pCol=pTab->aCol; j<pTab->nCol; j++, pCol++){
           if( sqlite3StrICmp(pCol->zName, zCol)==0 ){
+            const char *zColl = pTab->aCol[j].zColl;
+            IdList *pUsing;
             cnt++;
             pExpr->iTable = pItem->iCursor;
             pMatch = pItem;
-            pExpr->iDb = pTab->iDb;
+            pExpr->pSchema = pTab->pSchema;
             /* Substitute the rowid (column -1) for the INTEGER PRIMARY KEY */
             pExpr->iColumn = j==pTab->iPKey ? -1 : j;
             pExpr->affinity = pTab->aCol[j].affinity;
-            pExpr->pColl = pTab->aCol[j].pColl;
+            pExpr->pColl = sqlite3FindCollSeq(db, ENC(db), zColl,-1, 0);
+            if( pItem->jointype & JT_NATURAL ){
+              /* If this match occurred in the left table of a natural join,
+              ** then skip the right table to avoid a duplicate match */
+              pItem++;
+              i++;
+            }
+            if( (pUsing = pItem->pUsing)!=0 ){
+              /* If this match occurs on a column that is in the USING clause
+              ** of a join, skip the search of the right table of the join
+              ** to avoid a duplicate match there. */
+              int k;
+              for(k=0; k<pUsing->nId; k++){
+                if( sqlite3StrICmp(pUsing->a[k].zName, zCol)==0 ){
+                  pItem++;
+                  i++;
+                  break;
+                }
+              }
+            }
             break;
           }
         }
@@ -850,17 +919,18 @@ static int lookupName(
       }
 
       if( pTab ){ 
-        int j;
+        int iCol;
         Column *pCol = pTab->aCol;
 
-        pExpr->iDb = pTab->iDb;
+        pExpr->pSchema = pTab->pSchema;
         cntTab++;
-        for(j=0; j < pTab->nCol; j++, pCol++) {
+        for(iCol=0; iCol < pTab->nCol; iCol++, pCol++) {
           if( sqlite3StrICmp(pCol->zName, zCol)==0 ){
+            const char *zColl = pTab->aCol[iCol].zColl;
             cnt++;
-            pExpr->iColumn = j==pTab->iPKey ? -1 : j;
-            pExpr->affinity = pTab->aCol[j].affinity;
-            pExpr->pColl = pTab->aCol[j].pColl;
+            pExpr->iColumn = iCol==pTab->iPKey ? -1 : iCol;
+            pExpr->affinity = pTab->aCol[iCol].affinity;
+            pExpr->pColl = sqlite3FindCollSeq(db, ENC(db), zColl,-1, 0);
             pExpr->pTab = pTab;
             break;
           }
@@ -890,7 +960,7 @@ static int lookupName(
     ** Note that the expression in the result set should have already been
     ** resolved by the time the WHERE clause is resolved.
     */
-    if( cnt==0 && pEList!=0 && zTab==0 ){
+    if( cnt==0 && (pEList = pNC->pEList)!=0 && zTab==0 ){
       for(j=0; j<pEList->nExpr; j++){
         char *zAs = pEList->a[j].zName;
         if( zAs!=0 && sqlite3StrICmp(zAs, zCol)==0 ){
@@ -898,9 +968,9 @@ static int lookupName(
           pExpr->op = TK_AS;
           pExpr->iColumn = j;
           pExpr->pLeft = sqlite3ExprDup(pEList->a[j].pExpr);
-          sqliteFree(zCol);
+          cnt = 1;
           assert( zTab==0 && zDb==0 );
-          return 0;
+          goto lookupname_end_2;
         }
       } 
     }
@@ -919,6 +989,9 @@ static int lookupName(
   ** Z is a string literal if it doesn't match any column names.  In that
   ** case, we need to return right away and not make any changes to
   ** pExpr.
+  **
+  ** Because no reference was made to outer contexts, the pNC->nRef
+  ** fields are not changed in any context.
   */
   if( cnt==0 && zTab==0 && pColumnToken->z[0]=='"' ){
     sqliteFree(zCol);
@@ -934,9 +1007,9 @@ static int lookupName(
     char *zErr;
     zErr = cnt==0 ? "no such column: %s" : "ambiguous column name: %s";
     if( zDb ){
-      sqlite3SetString(&z, zDb, ".", zTab, ".", zCol, 0);
+      sqlite3SetString(&z, zDb, ".", zTab, ".", zCol, (char*)0);
     }else if( zTab ){
-      sqlite3SetString(&z, zTab, ".", zCol, 0);
+      sqlite3SetString(&z, zTab, ".", zCol, (char*)0);
     }else{
       z = sqliteStrDup(zCol);
     }
@@ -965,62 +1038,30 @@ lookupname_end:
   */
   sqliteFree(zDb);
   sqliteFree(zTab);
-  sqliteFree(zCol);
   sqlite3ExprDelete(pExpr->pLeft);
   pExpr->pLeft = 0;
   sqlite3ExprDelete(pExpr->pRight);
   pExpr->pRight = 0;
   pExpr->op = TK_COLUMN;
+lookupname_end_2:
+  sqliteFree(zCol);
   if( cnt==1 ){
     assert( pNC!=0 );
     sqlite3AuthRead(pParse, pExpr, pNC->pSrcList);
     if( pMatch && !pMatch->pSelect ){
       pExpr->pTab = pMatch->pTab;
     }
-  }
-  return cnt!=1;
-}
-
-/*
-** pExpr is a node that defines a function of some kind.  It might
-** be a syntactic function like "count(x)" or it might be a function
-** that implements an operator, like "a LIKE b".  
-**
-** This routine makes *pzName point to the name of the function and 
-** *pnName hold the number of characters in the function name.
-*/
-static void getFunctionName(Expr *pExpr, const char **pzName, int *pnName){
-  switch( pExpr->op ){
-    case TK_FUNCTION: {
-      *pzName = pExpr->token.z;
-      *pnName = pExpr->token.n;
-      break;
+    /* Increment the nRef value on all name contexts from TopNC up to
+    ** the point where the name matched. */
+    for(;;){
+      assert( pTopNC!=0 );
+      pTopNC->nRef++;
+      if( pTopNC==pNC ) break;
+      pTopNC = pTopNC->pNext;
     }
-    case TK_LIKE: {
-      *pzName = "like";
-      *pnName = 4;
-      break;
-    }
-    case TK_GLOB: {
-      *pzName = "glob";
-      *pnName = 4;
-      break;
-    }
-    case TK_CTIME: {
-      *pzName = "current_time";
-      *pnName = 12;
-      break;
-    }
-    case TK_CDATE: {
-      *pzName = "current_date";
-      *pnName = 12;
-      break;
-    }
-    case TK_CTIMESTAMP: {
-      *pzName = "current_timestamp";
-      *pnName = 17;
-      break;
-    }
+    return 0;
+  } else {
+    return 1;
   }
 }
 
@@ -1037,20 +1078,19 @@ static void getFunctionName(Expr *pExpr, const char **pzName, int *pnName){
 */
 static int nameResolverStep(void *pArg, Expr *pExpr){
   NameContext *pNC = (NameContext*)pArg;
-  SrcList *pSrcList;
   Parse *pParse;
 
   if( pExpr==0 ) return 1;
   assert( pNC!=0 );
-  pSrcList = pNC->pSrcList;
   pParse = pNC->pParse;
 
   if( ExprHasAnyProperty(pExpr, EP_Resolved) ) return 1;
   ExprSetProperty(pExpr, EP_Resolved);
 #ifndef NDEBUG
-  if( pSrcList ){
+  if( pNC->pSrcList && pNC->pSrcList->nAlloc>0 ){
+    SrcList *pSrcList = pNC->pSrcList;
     int i;
-    for(i=0; i<pSrcList->nSrc; i++){
+    for(i=0; i<pNC->pSrcList->nSrc; i++){
       assert( pSrcList->a[i].iCursor>=0 && pSrcList->a[i].iCursor<pParse->nTab);
     }
   }
@@ -1098,11 +1138,7 @@ static int nameResolverStep(void *pArg, Expr *pExpr){
 
     /* Resolve function names
     */
-    case TK_CTIME:
-    case TK_CTIMESTAMP:
-    case TK_CDATE:
-    case TK_GLOB:
-    case TK_LIKE:
+    case TK_CONST_FUNC:
     case TK_FUNCTION: {
       ExprList *pList = pExpr->pList;    /* The argument list */
       int n = pList ? pList->nExpr : 0;  /* Number of arguments */
@@ -1113,9 +1149,10 @@ static int nameResolverStep(void *pArg, Expr *pExpr){
       int nId;                    /* Number of characters in function name */
       const char *zId;            /* The function name. */
       FuncDef *pDef;              /* Information about the function */
-      int enc = pParse->db->enc;  /* The database encoding */
+      int enc = ENC(pParse->db);  /* The database encoding */
 
-      getFunctionName(pExpr, &zId, &nId);
+      zId = (char*)pExpr->token.z;
+      nId = pExpr->token.n;
       pDef = sqlite3FindFunction(pParse->db, zId, nId, n, enc, 0);
       if( pDef==0 ){
         pDef = sqlite3FindFunction(pParse->db, zId, nId, -1, enc, 0);
@@ -1160,13 +1197,27 @@ static int nameResolverStep(void *pArg, Expr *pExpr){
     case TK_IN: {
       if( pExpr->pSelect ){
         int nRef = pNC->nRef;
+#ifndef SQLITE_OMIT_CHECK
+        if( pNC->isCheck ){
+          sqlite3ErrorMsg(pParse,"subqueries prohibited in CHECK constraints");
+        }
+#endif
         sqlite3SelectResolve(pParse, pExpr->pSelect, pNC);
         assert( pNC->nRef>=nRef );
         if( nRef!=pNC->nRef ){
           ExprSetProperty(pExpr, EP_VarSelect);
         }
       }
+      break;
     }
+#ifndef SQLITE_OMIT_CHECK
+    case TK_VARIABLE: {
+      if( pNC->isCheck ){
+        sqlite3ErrorMsg(pParse,"parameters prohibited in CHECK constraints");
+      }
+      break;
+    }
+#endif
   }
   return 0;
 }
@@ -1196,10 +1247,18 @@ int sqlite3ExprResolveNames(
   NameContext *pNC,       /* Namespace to resolve expressions in. */
   Expr *pExpr             /* The expression to be analyzed. */
 ){
+  int savedHasAgg;
   if( pExpr==0 ) return 0;
+  savedHasAgg = pNC->hasAgg;
+  pNC->hasAgg = 0;
   walkExprTree(pExpr, nameResolverStep, pNC);
   if( pNC->nErr>0 ){
     ExprSetProperty(pExpr, EP_Error);
+  }
+  if( pNC->hasAgg ){
+    ExprSetProperty(pExpr, EP_Agg);
+  }else if( savedHasAgg ){
+    pNC->hasAgg = 1;
   }
   return ExprHasProperty(pExpr, EP_Error);
 }
@@ -1216,51 +1275,51 @@ struct QueryCoder {
 
 
 /*
-** Generate code for subqueries and IN operators.
+** Generate code for scalar subqueries used as an expression
+** and IN operators.  Examples:
 **
-** IN operators comes in two forms:
+**     (SELECT a FROM b)          -- subquery
+**     EXISTS (SELECT a FROM b)   -- EXISTS subquery
+**     x IN (4,5,11)              -- IN operator with list on right-hand side
+**     x IN (SELECT a FROM b)     -- IN operator with subquery on the right
 **
-**           expr IN (exprlist)
-** and
-**           expr IN (SELECT ...)
-**
-** The first form is handled by creating a set holding the list
-** of allowed values.  The second form causes the SELECT to generate 
-** a temporary table.
+** The pExpr parameter describes the expression that contains the IN
+** operator or subquery.
 */
 #ifndef SQLITE_OMIT_SUBQUERY
 void sqlite3CodeSubselect(Parse *pParse, Expr *pExpr){
-  int label = 0;                         /* Address after sub-select code */
+  int testAddr = 0;                       /* One-time test address */
   Vdbe *v = sqlite3GetVdbe(pParse);
   if( v==0 ) return;
 
-  /* If this is not a variable (correlated) select, then execute
-  ** it only once. Unless this is part of a trigger program. In
-  ** that case re-execute every time (this could be optimized).
+  /* This code must be run in its entirety every time it is encountered
+  ** if any of the following is true:
+  **
+  **    *  The right-hand side is a correlated subquery
+  **    *  The right-hand side is an expression list containing variables
+  **    *  We are inside a trigger
+  **
+  ** If all of the above are false, then we can run this code just once
+  ** save the results, and reuse the same result on subsequent invocations.
   */
   if( !ExprHasAnyProperty(pExpr, EP_VarSelect) && !pParse->trigStack ){
     int mem = pParse->nMem++;
     sqlite3VdbeAddOp(v, OP_MemLoad, mem, 0);
-    label = sqlite3VdbeMakeLabel(v);
-    sqlite3VdbeAddOp(v, OP_If, 0, label);
-    sqlite3VdbeAddOp(v, OP_Integer, 1, 0);
-    sqlite3VdbeAddOp(v, OP_MemStore, mem, 1);
-  }
-
-  if( pExpr->pSelect ){
-    sqlite3VdbeAddOp(v, OP_AggContextPush, 0, 0);
+    testAddr = sqlite3VdbeAddOp(v, OP_If, 0, 0);
+    assert( testAddr>0 || sqlite3MallocFailed() );
+    sqlite3VdbeAddOp(v, OP_MemInt, 1, mem);
   }
 
   switch( pExpr->op ){
     case TK_IN: {
       char affinity;
       KeyInfo keyInfo;
-      int addr;        /* Address of OP_OpenTemp instruction */
+      int addr;        /* Address of OP_OpenVirtual instruction */
 
       affinity = sqlite3ExprAffinity(pExpr->pLeft);
 
       /* Whether this is an 'x IN(SELECT...)' or an 'x IN(<exprlist>)'
-      ** expression it is handled the same way. A temporary table is 
+      ** expression it is handled the same way. A virtual table is 
       ** filled with single-field index keys representing the results
       ** from the SELECT or the <exprlist>.
       **
@@ -1273,7 +1332,7 @@ void sqlite3CodeSubselect(Parse *pParse, Expr *pExpr){
       ** is used.
       */
       pExpr->iTable = pParse->nTab++;
-      addr = sqlite3VdbeAddOp(v, OP_OpenTemp, pExpr->iTable, 0);
+      addr = sqlite3VdbeAddOp(v, OP_OpenVirtual, pExpr->iTable, 0);
       memset(&keyInfo, 0, sizeof(keyInfo));
       keyInfo.nField = 1;
       sqlite3VdbeAddOp(v, OP_SetNumColumns, pExpr->iTable, 1);
@@ -1302,27 +1361,36 @@ void sqlite3CodeSubselect(Parse *pParse, Expr *pExpr){
         ** a column, use numeric affinity.
         */
         int i;
+        ExprList *pList = pExpr->pList;
+        struct ExprList_item *pItem;
+
         if( !affinity ){
           affinity = SQLITE_AFF_NUMERIC;
         }
         keyInfo.aColl[0] = pExpr->pLeft->pColl;
 
         /* Loop through each expression in <exprlist>. */
-        for(i=0; i<pExpr->pList->nExpr; i++){
-          Expr *pE2 = pExpr->pList->a[i].pExpr;
+        for(i=pList->nExpr, pItem=pList->a; i>0; i--, pItem++){
+          Expr *pE2 = pItem->pExpr;
 
-          /* Check that the expression is constant and valid. */
-          if( !sqlite3ExprIsConstant(pE2) ){
-            sqlite3ErrorMsg(pParse,
-              "right-hand side of IN operator must be constant");
-            return;
+          /* If the expression is not constant then we will need to
+          ** disable the test that was generated above that makes sure
+          ** this code only executes once.  Because for a non-constant
+          ** expression we need to rerun this code each time.
+          */
+          if( testAddr>0 && !sqlite3ExprIsConstant(pE2) ){
+            VdbeOp *aOp = sqlite3VdbeGetOp(v, testAddr-1);
+            int j;
+            for(j=0; j<3; j++){
+              aOp[j].opcode = OP_Noop;
+            }
+            testAddr = 0;
           }
 
           /* Evaluate the expression and insert it into the temp table */
           sqlite3ExprCode(pParse, pE2);
           sqlite3VdbeOp3(v, OP_MakeRecord, 1, 0, &affinity, 1);
-          sqlite3VdbeAddOp(v, OP_String8, 0, 0);
-          sqlite3VdbeAddOp(v, OP_PutStrKey, pExpr->iTable, 0);
+          sqlite3VdbeAddOp(v, OP_IdxInsert, pExpr->iTable, 0);
         }
       }
       sqlite3VdbeChangeP3(v, addr, (void *)&keyInfo, P3_KEYINFO);
@@ -1335,30 +1403,31 @@ void sqlite3CodeSubselect(Parse *pParse, Expr *pExpr){
       ** value of this select in a memory cell and record the number
       ** of the memory cell in iColumn.
       */
-      int sop;
+      static const Token one = { (u8*)"1", 0, 1 };
       Select *pSel;
+      int iMem;
+      int sop;
 
-      pExpr->iColumn = pParse->nMem++;
+      pExpr->iColumn = iMem = pParse->nMem++;
       pSel = pExpr->pSelect;
       if( pExpr->op==TK_SELECT ){
         sop = SRT_Mem;
+        sqlite3VdbeAddOp(v, OP_MemNull, iMem, 0);
+        VdbeComment((v, "# Init subquery result"));
       }else{
-        static const Token one = { "1", 0, 1 };
         sop = SRT_Exists;
-        sqlite3ExprListDelete(pSel->pEList);
-        pSel->pEList = sqlite3ExprListAppend(0, 
-                          sqlite3Expr(TK_INTEGER, 0, 0, &one), 0);
+        sqlite3VdbeAddOp(v, OP_MemInt, 0, iMem);
+        VdbeComment((v, "# Init EXISTS result"));
       }
-      sqlite3Select(pParse, pSel, sop, pExpr->iColumn, 0, 0, 0, 0);
+      sqlite3ExprDelete(pSel->pLimit);
+      pSel->pLimit = sqlite3Expr(TK_INTEGER, 0, 0, &one);
+      sqlite3Select(pParse, pSel, sop, iMem, 0, 0, 0, 0);
       break;
     }
   }
 
-  if( pExpr->pSelect ){
-    sqlite3VdbeAddOp(v, OP_AggContextPop, 0, 0);
-  }
-  if( label<0 ){
-    sqlite3VdbeResolveLabel(v, label);
+  if( testAddr ){
+    sqlite3VdbeJumpHere(v, testAddr);
   }
   return;
 }
@@ -1373,7 +1442,7 @@ static void codeInteger(Vdbe *v, const char *z, int n){
   if( sqlite3GetInt32(z, &i) ){
     sqlite3VdbeAddOp(v, OP_Integer, i, 0);
   }else if( sqlite3FitsIn64Bits(z) ){
-    sqlite3VdbeOp3(v, OP_Integer, 0, 0, z, n);
+    sqlite3VdbeOp3(v, OP_Int64, 0, 0, z, n);
   }else{
     sqlite3VdbeOp3(v, OP_Real, 0, 0, z, n);
   }
@@ -1392,52 +1461,83 @@ static void codeInteger(Vdbe *v, const char *z, int n){
 void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
   Vdbe *v = pParse->pVdbe;
   int op;
+  int stackChng = 1;    /* Amount of change to stack depth */
+
   if( v==0 ) return;
   if( pExpr==0 ){
-    sqlite3VdbeAddOp(v, OP_String8, 0, 0);  /* Empty expression evals to NULL */
+    sqlite3VdbeAddOp(v, OP_Null, 0, 0);
     return;
   }
   op = pExpr->op;
   switch( op ){
+    case TK_AGG_COLUMN: {
+      AggInfo *pAggInfo = pExpr->pAggInfo;
+      struct AggInfo_col *pCol = &pAggInfo->aCol[pExpr->iAgg];
+      if( !pAggInfo->directMode ){
+        sqlite3VdbeAddOp(v, OP_MemLoad, pCol->iMem, 0);
+        break;
+      }else if( pAggInfo->useSortingIdx ){
+        sqlite3VdbeAddOp(v, OP_Column, pAggInfo->sortingIdx,
+                              pCol->iSorterColumn);
+        break;
+      }
+      /* Otherwise, fall thru into the TK_COLUMN case */
+    }
     case TK_COLUMN: {
-      if( !pParse->fillAgg && pExpr->iAgg>=0 ){
-        sqlite3VdbeAddOp(v, OP_AggGet, pExpr->iAggCtx, pExpr->iAgg);
+      if( pExpr->iTable<0 ){
+        /* This only happens when coding check constraints */
+        assert( pParse->ckOffset>0 );
+        sqlite3VdbeAddOp(v, OP_Dup, pParse->ckOffset-pExpr->iColumn-1, 1);
       }else if( pExpr->iColumn>=0 ){
-        sqlite3VdbeAddOp(v, OP_Column, pExpr->iTable, pExpr->iColumn);
-        sqlite3ColumnDefault(v, pExpr->pTab, pExpr->iColumn);
+        Table *pTab = pExpr->pTab;
+        int iCol = pExpr->iColumn;
+        sqlite3VdbeAddOp(v, OP_Column, pExpr->iTable, iCol);
+        sqlite3ColumnDefault(v, pTab, iCol);
+#ifndef SQLITE_OMIT_FLOATING_POINT
+        if( pTab && pTab->aCol[iCol].affinity==SQLITE_AFF_REAL ){
+          sqlite3VdbeAddOp(v, OP_RealAffinity, 0, 0);
+        }
+#endif
       }else{
-        sqlite3VdbeAddOp(v, OP_Recno, pExpr->iTable, 0);
+        sqlite3VdbeAddOp(v, OP_Rowid, pExpr->iTable, 0);
       }
       break;
     }
     case TK_INTEGER: {
-      codeInteger(v, pExpr->token.z, pExpr->token.n);
+      codeInteger(v, (char*)pExpr->token.z, pExpr->token.n);
       break;
     }
     case TK_FLOAT:
     case TK_STRING: {
       assert( TK_FLOAT==OP_Real );
       assert( TK_STRING==OP_String8 );
-      sqlite3VdbeOp3(v, op, 0, 0, pExpr->token.z, pExpr->token.n);
-      sqlite3VdbeDequoteP3(v, -1);
+      sqlite3DequoteExpr(pExpr);
+      sqlite3VdbeOp3(v, op, 0, 0, (char*)pExpr->token.z, pExpr->token.n);
+      break;
+    }
+    case TK_NULL: {
+      sqlite3VdbeAddOp(v, OP_Null, 0, 0);
       break;
     }
 #ifndef SQLITE_OMIT_BLOB_LITERAL
     case TK_BLOB: {
+      int n;
+      const char *z;
       assert( TK_BLOB==OP_HexBlob );
-      sqlite3VdbeOp3(v, op, 0, 0, pExpr->token.z+1, pExpr->token.n-1);
-      sqlite3VdbeDequoteP3(v, -1);
+      n = pExpr->token.n - 3;
+      z = (char*)pExpr->token.z + 2;
+      assert( n>=0 );
+      if( n==0 ){
+        z = "";
+      }
+      sqlite3VdbeOp3(v, op, 0, 0, z, n);
       break;
     }
 #endif
-    case TK_NULL: {
-      sqlite3VdbeAddOp(v, OP_String8, 0, 0);
-      break;
-    }
     case TK_VARIABLE: {
       sqlite3VdbeAddOp(v, OP_Variable, pExpr->iTable, 0);
       if( pExpr->token.n>1 ){
-        sqlite3VdbeChangeP3(v, -1, pExpr->token.z, pExpr->token.n);
+        sqlite3VdbeChangeP3(v, -1, (char*)pExpr->token.z, pExpr->token.n);
       }
       break;
     }
@@ -1445,6 +1545,23 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       sqlite3VdbeAddOp(v, OP_MemLoad, pExpr->iTable, 0);
       break;
     }
+#ifndef SQLITE_OMIT_CAST
+    case TK_CAST: {
+      /* Expressions of the form:   CAST(pLeft AS token) */
+      int aff, to_op;
+      sqlite3ExprCode(pParse, pExpr->pLeft);
+      aff = sqlite3AffinityType(&pExpr->token);
+      to_op = aff - SQLITE_AFF_TEXT + OP_ToText;
+      assert( to_op==OP_ToText    || aff!=SQLITE_AFF_TEXT    );
+      assert( to_op==OP_ToBlob    || aff!=SQLITE_AFF_NONE    );
+      assert( to_op==OP_ToNumeric || aff!=SQLITE_AFF_NUMERIC );
+      assert( to_op==OP_ToInt     || aff!=SQLITE_AFF_INTEGER );
+      assert( to_op==OP_ToReal    || aff!=SQLITE_AFF_REAL    );
+      sqlite3VdbeAddOp(v, to_op, 0, 0);
+      stackChng = 0;
+      break;
+    }
+#endif /* SQLITE_OMIT_CAST */
     case TK_LT:
     case TK_LE:
     case TK_GT:
@@ -1460,6 +1577,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       sqlite3ExprCode(pParse, pExpr->pLeft);
       sqlite3ExprCode(pParse, pExpr->pRight);
       codeCompare(pParse, pExpr->pLeft, pExpr->pRight, op, 0, 0);
+      stackChng = -1;
       break;
     }
     case TK_AND:
@@ -1488,6 +1606,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       sqlite3ExprCode(pParse, pExpr->pLeft);
       sqlite3ExprCode(pParse, pExpr->pRight);
       sqlite3VdbeAddOp(v, op, 0, 0);
+      stackChng = -1;
       break;
     }
     case TK_UMINUS: {
@@ -1495,8 +1614,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       assert( pLeft );
       if( pLeft->op==TK_FLOAT || pLeft->op==TK_INTEGER ){
         Token *p = &pLeft->token;
-        char *z = sqliteMalloc( p->n + 2 );
-        sprintf(z, "-%.*s", p->n, p->z);
+        char *z = sqlite3MPrintf("-%.*s", p->n, p->z);
         if( pLeft->op==TK_FLOAT ){
           sqlite3VdbeOp3(v, OP_Real, 0, 0, z, p->n+1);
         }else{
@@ -1513,6 +1631,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       assert( TK_NOT==OP_Not );
       sqlite3ExprCode(pParse, pExpr->pLeft);
       sqlite3VdbeAddOp(v, op, 0, 0);
+      stackChng = 0;
       break;
     }
     case TK_ISNULL:
@@ -1525,34 +1644,38 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       dest = sqlite3VdbeCurrentAddr(v) + 2;
       sqlite3VdbeAddOp(v, op, 1, dest);
       sqlite3VdbeAddOp(v, OP_AddImm, -1, 0);
+      stackChng = 0;
       break;
     }
     case TK_AGG_FUNCTION: {
-      sqlite3VdbeAddOp(v, OP_AggGet, 0, pExpr->iAgg);
+      AggInfo *pInfo = pExpr->pAggInfo;
+      if( pInfo==0 ){
+        sqlite3ErrorMsg(pParse, "misuse of aggregate: %T",
+            &pExpr->span);
+      }else{
+        sqlite3VdbeAddOp(v, OP_MemLoad, pInfo->aFunc[pExpr->iAgg].iMem, 0);
+      }
       break;
     }
-    case TK_CDATE:
-    case TK_CTIME:
-    case TK_CTIMESTAMP:
-    case TK_GLOB:
-    case TK_LIKE:
+    case TK_CONST_FUNC:
     case TK_FUNCTION: {
       ExprList *pList = pExpr->pList;
       int nExpr = pList ? pList->nExpr : 0;
       FuncDef *pDef;
       int nId;
       const char *zId;
-      int p2 = 0;
+      int constMask = 0;
       int i;
-      u8 enc = pParse->db->enc;
+      u8 enc = ENC(pParse->db);
       CollSeq *pColl = 0;
-      getFunctionName(pExpr, &zId, &nId);
+      zId = (char*)pExpr->token.z;
+      nId = pExpr->token.n;
       pDef = sqlite3FindFunction(pParse->db, zId, nId, nExpr, enc, 0);
       assert( pDef!=0 );
       nExpr = sqlite3ExprCodeExprList(pParse, pList);
       for(i=0; i<nExpr && i<32; i++){
         if( sqlite3ExprIsConstant(pList->a[i].pExpr) ){
-          p2 |= (1<<i);
+          constMask |= (1<<i);
         }
         if( pDef->needCollSeq && !pColl ){
           pColl = sqlite3ExprCollSeq(pParse, pList->a[i].pExpr);
@@ -1562,7 +1685,8 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
         if( !pColl ) pColl = pParse->db->pDfltColl; 
         sqlite3VdbeOp3(v, OP_CollSeq, 0, 0, (char *)pColl, P3_COLLSEQ);
       }
-      sqlite3VdbeOp3(v, OP_Function, nExpr, p2, (char*)pDef, P3_FUNCDEF);
+      sqlite3VdbeOp3(v, OP_Function, constMask, nExpr, (char*)pDef, P3_FUNCDEF);
+      stackChng = 1-nExpr;
       break;
     }
 #ifndef SQLITE_OMIT_SUBQUERY
@@ -1576,6 +1700,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
     case TK_IN: {
       int addr;
       char affinity;
+      int ckOffset = pParse->ckOffset;
       sqlite3CodeSubselect(pParse, pExpr);
 
       /* Figure out the affinity to use to create a key from the results
@@ -1585,6 +1710,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       affinity = comparisonAffinity(pExpr);
 
       sqlite3VdbeAddOp(v, OP_Integer, 1, 0);
+      pParse->ckOffset = ckOffset+1;
 
       /* Code the <expr> from "<expr> IN (...)". The temporary table
       ** pExpr->iTable contains the values that make up the (...) set.
@@ -1593,7 +1719,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       addr = sqlite3VdbeCurrentAddr(v);
       sqlite3VdbeAddOp(v, OP_NotNull, -1, addr+4);            /* addr + 0 */
       sqlite3VdbeAddOp(v, OP_Pop, 2, 0);
-      sqlite3VdbeAddOp(v, OP_String8, 0, 0);
+      sqlite3VdbeAddOp(v, OP_Null, 0, 0);
       sqlite3VdbeAddOp(v, OP_Goto, 0, addr+7);
       sqlite3VdbeOp3(v, OP_MakeRecord, 1, 0, &affinity, 1);   /* addr + 4 */
       sqlite3VdbeAddOp(v, OP_Found, pExpr->iTable, addr+7);
@@ -1621,12 +1747,12 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
     case TK_UPLUS:
     case TK_AS: {
       sqlite3ExprCode(pParse, pExpr->pLeft);
+      stackChng = 0;
       break;
     }
     case TK_CASE: {
       int expr_end_label;
       int jumpInst;
-      int addr;
       int nExpr;
       int i;
       ExprList *pEList;
@@ -1654,8 +1780,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
         }
         sqlite3ExprCode(pParse, aListelem[i+1].pExpr);
         sqlite3VdbeAddOp(v, OP_Goto, 0, expr_end_label);
-        addr = sqlite3VdbeCurrentAddr(v);
-        sqlite3VdbeChangeP2(v, jumpInst, addr);
+        sqlite3VdbeJumpHere(v, jumpInst);
       }
       if( pExpr->pLeft ){
         sqlite3VdbeAddOp(v, OP_Pop, 1, 0);
@@ -1663,7 +1788,7 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
       if( pExpr->pRight ){
         sqlite3ExprCode(pParse, pExpr->pRight);
       }else{
-        sqlite3VdbeAddOp(v, OP_String8, 0, 0);
+        sqlite3VdbeAddOp(v, OP_Null, 0, 0);
       }
       sqlite3VdbeResolveLabel(v, expr_end_label);
       break;
@@ -1679,18 +1804,24 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
          assert( pExpr->iColumn==OE_Rollback ||
                  pExpr->iColumn == OE_Abort ||
                  pExpr->iColumn == OE_Fail );
+         sqlite3DequoteExpr(pExpr);
          sqlite3VdbeOp3(v, OP_Halt, SQLITE_CONSTRAINT, pExpr->iColumn,
-                        pExpr->token.z, pExpr->token.n);
-         sqlite3VdbeDequoteP3(v, -1);
+                        (char*)pExpr->token.z, pExpr->token.n);
       } else {
          assert( pExpr->iColumn == OE_Ignore );
          sqlite3VdbeAddOp(v, OP_ContextPop, 0, 0);
          sqlite3VdbeAddOp(v, OP_Goto, 0, pParse->trigStack->ignoreJump);
          VdbeComment((v, "# raise(IGNORE)"));
       }
+      stackChng = 0;
+      break;
     }
 #endif
-    break;
+  }
+
+  if( pParse->ckOffset ){
+    pParse->ckOffset += stackChng;
+    assert( pParse->ckOffset );
   }
 }
 
@@ -1733,11 +1864,9 @@ int sqlite3ExprCodeExprList(
 ){
   struct ExprList_item *pItem;
   int i, n;
-  Vdbe *v;
   if( pList==0 ) return 0;
-  v = sqlite3GetVdbe(pParse);
   n = pList->nExpr;
-  for(pItem=pList->a, i=0; i<n; i++, pItem++){
+  for(pItem=pList->a, i=n; i>0; i--, pItem++){
     sqlite3ExprCode(pParse, pItem->pExpr);
   }
   return n;
@@ -1760,6 +1889,7 @@ int sqlite3ExprCodeExprList(
 void sqlite3ExprIfTrue(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
   Vdbe *v = pParse->pVdbe;
   int op = 0;
+  int ckOffset = pParse->ckOffset;
   if( v==0 || pExpr==0 ) return;
   op = pExpr->op;
   switch( op ){
@@ -1824,7 +1954,7 @@ void sqlite3ExprIfTrue(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
       codeCompare(pParse, pLeft, pRight, OP_Le, dest, jumpIfNull);
 
       sqlite3VdbeAddOp(v, OP_Integer, 0, 0);
-      sqlite3VdbeChangeP2(v, addr, sqlite3VdbeCurrentAddr(v));
+      sqlite3VdbeJumpHere(v, addr);
       sqlite3VdbeAddOp(v, OP_Pop, 1, 0);
       break;
     }
@@ -1834,6 +1964,7 @@ void sqlite3ExprIfTrue(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
       break;
     }
   }
+  pParse->ckOffset = ckOffset;
 }
 
 /*
@@ -1847,6 +1978,7 @@ void sqlite3ExprIfTrue(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
 void sqlite3ExprIfFalse(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
   Vdbe *v = pParse->pVdbe;
   int op = 0;
+  int ckOffset = pParse->ckOffset;
   if( v==0 || pExpr==0 ) return;
 
   /* The value of pExpr->op and op are related as follows:
@@ -1943,6 +2075,7 @@ void sqlite3ExprIfFalse(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
       break;
     }
   }
+  pParse->ckOffset = ckOffset;
 }
 
 /*
@@ -1951,12 +2084,11 @@ void sqlite3ExprIfFalse(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
 */
 int sqlite3ExprCompare(Expr *pA, Expr *pB){
   int i;
-  if( pA==0 ){
-    return pB==0;
-  }else if( pB==0 ){
-    return 0;
+  if( pA==0||pB==0 ){
+    return pB==pA;
   }
   if( pA->op!=pB->op ) return 0;
+  if( (pA->flags & EP_Distinct)!=(pB->flags & EP_Distinct) ) return 0;
   if( !sqlite3ExprCompare(pA->pLeft, pB->pLeft) ) return 0;
   if( !sqlite3ExprCompare(pA->pRight, pB->pRight) ) return 0;
   if( pA->pList ){
@@ -1975,28 +2107,39 @@ int sqlite3ExprCompare(Expr *pA, Expr *pB){
   if( pA->token.z ){
     if( pB->token.z==0 ) return 0;
     if( pB->token.n!=pA->token.n ) return 0;
-    if( sqlite3StrNICmp(pA->token.z, pB->token.z, pB->token.n)!=0 ) return 0;
+    if( sqlite3StrNICmp((char*)pA->token.z,(char*)pB->token.z,pB->token.n)!=0 ){
+      return 0;
+    }
   }
   return 1;
 }
 
+
 /*
-** Add a new element to the pParse->aAgg[] array and return its index.
-** The new element is initialized to zero.  The calling function is
-** expected to fill it in.
+** Add a new element to the pAggInfo->aCol[] array.  Return the index of
+** the new element.  Return a negative number if malloc fails.
 */
-static int appendAggInfo(Parse *pParse){
-  if( (pParse->nAgg & 0x7)==0 ){
-    int amt = pParse->nAgg + 8;
-    AggExpr *aAgg = sqliteRealloc(pParse->aAgg, amt*sizeof(pParse->aAgg[0]));
-    if( aAgg==0 ){
-      return -1;
-    }
-    pParse->aAgg = aAgg;
+static int addAggInfoColumn(AggInfo *pInfo){
+  int i;
+  i = sqlite3ArrayAllocate((void**)&pInfo->aCol, sizeof(pInfo->aCol[0]), 3);
+  if( i<0 ){
+    return -1;
   }
-  memset(&pParse->aAgg[pParse->nAgg], 0, sizeof(pParse->aAgg[0]));
-  return pParse->nAgg++;
-}
+  return i;
+}    
+
+/*
+** Add a new element to the pAggInfo->aFunc[] array.  Return the index of
+** the new element.  Return a negative number if malloc fails.
+*/
+static int addAggInfoFunc(AggInfo *pInfo){
+  int i;
+  i = sqlite3ArrayAllocate((void**)&pInfo->aFunc, sizeof(pInfo->aFunc[0]), 2);
+  if( i<0 ){
+    return -1;
+  }
+  return i;
+}    
 
 /*
 ** This is an xFunc for walkExprTree() used to implement 
@@ -2007,60 +2150,118 @@ static int appendAggInfo(Parse *pParse){
 */
 static int analyzeAggregate(void *pArg, Expr *pExpr){
   int i;
-  AggExpr *aAgg;
   NameContext *pNC = (NameContext *)pArg;
   Parse *pParse = pNC->pParse;
   SrcList *pSrcList = pNC->pSrcList;
+  AggInfo *pAggInfo = pNC->pAggInfo;
+  
 
   switch( pExpr->op ){
     case TK_COLUMN: {
-      for(i=0; pSrcList && i<pSrcList->nSrc; i++){
-        if( pExpr->iTable==pSrcList->a[i].iCursor ){
-          aAgg = pParse->aAgg;
-          for(i=0; i<pParse->nAgg; i++){
-            if( aAgg[i].isAgg ) continue;
-            if( aAgg[i].pExpr->iTable==pExpr->iTable
-             && aAgg[i].pExpr->iColumn==pExpr->iColumn ){
-              break;
+      /* Check to see if the column is in one of the tables in the FROM
+      ** clause of the aggregate query */
+      if( pSrcList ){
+        struct SrcList_item *pItem = pSrcList->a;
+        for(i=0; i<pSrcList->nSrc; i++, pItem++){
+          struct AggInfo_col *pCol;
+          if( pExpr->iTable==pItem->iCursor ){
+            /* If we reach this point, it means that pExpr refers to a table
+            ** that is in the FROM clause of the aggregate query.  
+            **
+            ** Make an entry for the column in pAggInfo->aCol[] if there
+            ** is not an entry there already.
+            */
+            pCol = pAggInfo->aCol;
+            for(i=0; i<pAggInfo->nColumn; i++, pCol++){
+              if( pCol->iTable==pExpr->iTable &&
+                  pCol->iColumn==pExpr->iColumn ){
+                break;
+              }
             }
-          }
-          if( i>=pParse->nAgg ){
-            i = appendAggInfo(pParse);
-            if( i<0 ) return 1;
-            pParse->aAgg[i].isAgg = 0;
-            pParse->aAgg[i].pExpr = pExpr;
-          }
-          pExpr->iAgg = i;
-          pExpr->iAggCtx = pNC->nDepth;
-          return 1;
-        }
+            if( i>=pAggInfo->nColumn && (i = addAggInfoColumn(pAggInfo))>=0 ){
+              pCol = &pAggInfo->aCol[i];
+              pCol->iTable = pExpr->iTable;
+              pCol->iColumn = pExpr->iColumn;
+              pCol->iMem = pParse->nMem++;
+              pCol->iSorterColumn = -1;
+              pCol->pExpr = pExpr;
+              if( pAggInfo->pGroupBy ){
+                int j, n;
+                ExprList *pGB = pAggInfo->pGroupBy;
+                struct ExprList_item *pTerm = pGB->a;
+                n = pGB->nExpr;
+                for(j=0; j<n; j++, pTerm++){
+                  Expr *pE = pTerm->pExpr;
+                  if( pE->op==TK_COLUMN && pE->iTable==pExpr->iTable &&
+                      pE->iColumn==pExpr->iColumn ){
+                    pCol->iSorterColumn = j;
+                    break;
+                  }
+                }
+              }
+              if( pCol->iSorterColumn<0 ){
+                pCol->iSorterColumn = pAggInfo->nSortingColumn++;
+              }
+            }
+            /* There is now an entry for pExpr in pAggInfo->aCol[] (either
+            ** because it was there before or because we just created it).
+            ** Convert the pExpr to be a TK_AGG_COLUMN referring to that
+            ** pAggInfo->aCol[] entry.
+            */
+            pExpr->pAggInfo = pAggInfo;
+            pExpr->op = TK_AGG_COLUMN;
+            pExpr->iAgg = i;
+            break;
+          } /* endif pExpr->iTable==pItem->iCursor */
+        } /* end loop over pSrcList */
       }
       return 1;
     }
     case TK_AGG_FUNCTION: {
+      /* The pNC->nDepth==0 test causes aggregate functions in subqueries
+      ** to be ignored */
       if( pNC->nDepth==0 ){
-        aAgg = pParse->aAgg;
-        for(i=0; i<pParse->nAgg; i++){
-          if( !aAgg[i].isAgg ) continue;
-          if( sqlite3ExprCompare(aAgg[i].pExpr, pExpr) ){
+        /* Check to see if pExpr is a duplicate of another aggregate 
+        ** function that is already in the pAggInfo structure
+        */
+        struct AggInfo_func *pItem = pAggInfo->aFunc;
+        for(i=0; i<pAggInfo->nFunc; i++, pItem++){
+          if( sqlite3ExprCompare(pItem->pExpr, pExpr) ){
             break;
           }
         }
-        if( i>=pParse->nAgg ){
-          u8 enc = pParse->db->enc;
-          i = appendAggInfo(pParse);
-          if( i<0 ) return 1;
-          pParse->aAgg[i].isAgg = 1;
-          pParse->aAgg[i].pExpr = pExpr;
-          pParse->aAgg[i].pFunc = sqlite3FindFunction(pParse->db,
-               pExpr->token.z, pExpr->token.n,
-               pExpr->pList ? pExpr->pList->nExpr : 0, enc, 0);
+        if( i>=pAggInfo->nFunc ){
+          /* pExpr is original.  Make a new entry in pAggInfo->aFunc[]
+          */
+          u8 enc = ENC(pParse->db);
+          i = addAggInfoFunc(pAggInfo);
+          if( i>=0 ){
+            pItem = &pAggInfo->aFunc[i];
+            pItem->pExpr = pExpr;
+            pItem->iMem = pParse->nMem++;
+            pItem->pFunc = sqlite3FindFunction(pParse->db,
+                   (char*)pExpr->token.z, pExpr->token.n,
+                   pExpr->pList ? pExpr->pList->nExpr : 0, enc, 0);
+            if( pExpr->flags & EP_Distinct ){
+              pItem->iDistinct = pParse->nTab++;
+            }else{
+              pItem->iDistinct = -1;
+            }
+          }
         }
+        /* Make pExpr point to the appropriate pAggInfo->aFunc[] entry
+        */
         pExpr->iAgg = i;
+        pExpr->pAggInfo = pAggInfo;
         return 1;
       }
     }
   }
+
+  /* Recursively walk subqueries looking for TK_COLUMN nodes that need
+  ** to be changed to TK_AGG_COLUMN.  But increment nDepth so that
+  ** TK_AGG_FUNCTION nodes in subqueries will be unchanged.
+  */
   if( pExpr->pSelect ){
     pNC->nDepth++;
     walkSelectExpr(pExpr->pSelect, analyzeAggregate, pNC);
@@ -2087,102 +2288,19 @@ int sqlite3ExprAnalyzeAggregates(NameContext *pNC, Expr *pExpr){
 }
 
 /*
-** Locate a user function given a name, a number of arguments and a flag
-** indicating whether the function prefers UTF-16 over UTF-8.  Return a
-** pointer to the FuncDef structure that defines that function, or return
-** NULL if the function does not exist.
+** Call sqlite3ExprAnalyzeAggregates() for every expression in an
+** expression list.  Return the number of errors.
 **
-** If the createFlag argument is true, then a new (blank) FuncDef
-** structure is created and liked into the "db" structure if a
-** no matching function previously existed.  When createFlag is true
-** and the nArg parameter is -1, then only a function that accepts
-** any number of arguments will be returned.
-**
-** If createFlag is false and nArg is -1, then the first valid
-** function found is returned.  A function is valid if either xFunc
-** or xStep is non-zero.
-**
-** If createFlag is false, then a function with the required name and
-** number of arguments may be returned even if the eTextRep flag does not
-** match that requested.
+** If an error is found, the analysis is cut short.
 */
-FuncDef *sqlite3FindFunction(
-  sqlite3 *db,       /* An open database */
-  const char *zName, /* Name of the function.  Not null-terminated */
-  int nName,         /* Number of characters in the name */
-  int nArg,          /* Number of arguments.  -1 means any number */
-  u8 enc,            /* Preferred text encoding */
-  int createFlag     /* Create new entry if true and does not otherwise exist */
-){
-  FuncDef *p;         /* Iterator variable */
-  FuncDef *pFirst;    /* First function with this name */
-  FuncDef *pBest = 0; /* Best match found so far */
-  int bestmatch = 0;  
-
-
-  assert( enc==SQLITE_UTF8 || enc==SQLITE_UTF16LE || enc==SQLITE_UTF16BE );
-  if( nArg<-1 ) nArg = -1;
-
-  pFirst = (FuncDef*)sqlite3HashFind(&db->aFunc, zName, nName);
-  for(p=pFirst; p; p=p->pNext){
-    /* During the search for the best function definition, bestmatch is set
-    ** as follows to indicate the quality of the match with the definition
-    ** pointed to by pBest:
-    **
-    ** 0: pBest is NULL. No match has been found.
-    ** 1: A variable arguments function that prefers UTF-8 when a UTF-16
-    **    encoding is requested, or vice versa.
-    ** 2: A variable arguments function that uses UTF-16BE when UTF-16LE is
-    **    requested, or vice versa.
-    ** 3: A variable arguments function using the same text encoding.
-    ** 4: A function with the exact number of arguments requested that
-    **    prefers UTF-8 when a UTF-16 encoding is requested, or vice versa.
-    ** 5: A function with the exact number of arguments requested that
-    **    prefers UTF-16LE when UTF-16BE is requested, or vice versa.
-    ** 6: An exact match.
-    **
-    ** A larger value of 'matchqual' indicates a more desirable match.
-    */
-    if( p->nArg==-1 || p->nArg==nArg || nArg==-1 ){
-      int match = 1;          /* Quality of this match */
-      if( p->nArg==nArg || nArg==-1 ){
-        match = 4;
-      }
-      if( enc==p->iPrefEnc ){
-        match += 2;
-      }
-      else if( (enc==SQLITE_UTF16LE && p->iPrefEnc==SQLITE_UTF16BE) ||
-               (enc==SQLITE_UTF16BE && p->iPrefEnc==SQLITE_UTF16LE) ){
-        match += 1;
-      }
-
-      if( match>bestmatch ){
-        pBest = p;
-        bestmatch = match;
-      }
+int sqlite3ExprAnalyzeAggList(NameContext *pNC, ExprList *pList){
+  struct ExprList_item *pItem;
+  int i;
+  int nErr = 0;
+  if( pList ){
+    for(pItem=pList->a, i=0; nErr==0 && i<pList->nExpr; i++, pItem++){
+      nErr += sqlite3ExprAnalyzeAggregates(pNC, pItem->pExpr);
     }
   }
-
-  /* If the createFlag parameter is true, and the seach did not reveal an
-  ** exact match for the name, number of arguments and encoding, then add a
-  ** new entry to the hash table and return it.
-  */
-  if( createFlag && bestmatch<6 && 
-      (pBest = sqliteMalloc(sizeof(*pBest)+nName+1)) ){
-    pBest->nArg = nArg;
-    pBest->pNext = pFirst;
-    pBest->zName = (char*)&pBest[1];
-    pBest->iPrefEnc = enc;
-    memcpy(pBest->zName, zName, nName);
-    pBest->zName[nName] = 0;
-    if( pBest==sqlite3HashInsert(&db->aFunc,pBest->zName,nName,(void*)pBest) ){
-      sqliteFree(pBest);
-      return 0;
-    }
-  }
-
-  if( pBest && (pBest->xStep || pBest->xFunc || createFlag) ){
-    return pBest;
-  }
-  return 0;
+  return nErr;
 }
