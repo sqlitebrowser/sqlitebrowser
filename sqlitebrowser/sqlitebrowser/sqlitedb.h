@@ -23,7 +23,7 @@ enum
 
 static QString applicationName = QString("SQLite Database Browser");
 static QString applicationIconName = QString("icone16.png");
-static QString aboutText = QString("Version 1.2b1\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 3.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
+static QString aboutText = QString("Version 1.3\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 3.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
 
 
 typedef QMap<int, class DBBrowserField> fieldMap;
