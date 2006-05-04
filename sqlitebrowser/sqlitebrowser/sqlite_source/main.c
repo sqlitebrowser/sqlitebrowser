@@ -14,7 +14,7 @@
 ** other files are for internal use by SQLite and should not be
 ** accessed by users of the library.
 **
-** $Id: main.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: main.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -109,7 +109,10 @@ int sqlite3_close(sqlite3 *db){
   }
 
 #ifdef SQLITE_SSE
-  sqlite3_finalize(db->pFetch);
+  {
+    extern void sqlite3SseCleanup(sqlite3*);
+    sqlite3SseCleanup(db);
+  }
 #endif 
 
   /* If there are any outstanding VMs, return SQLITE_BUSY. */
@@ -250,7 +253,7 @@ static int sqliteDefaultBusyCallback(
  void *ptr,               /* Database connection */
  int count                /* Number of times table has been busy */
 ){
-#if SQLITE_MIN_SLEEP_MS==1
+#if OS_WIN || (defined(HAVE_USLEEP) && HAVE_USLEEP)
   static const u8 delays[] =
      { 1, 2, 5, 10, 15, 20, 25, 25,  25,  50,  50, 100 };
   static const u8 totals[] =
@@ -743,6 +746,7 @@ static int createCollation(
   int(*xCompare)(void*,int,const void*,int,const void*)
 ){
   CollSeq *pColl;
+  int enc2;
   
   if( sqlite3SafetyCheck(db) ){
     return SQLITE_MISUSE;
@@ -752,15 +756,13 @@ static int createCollation(
   ** to one of SQLITE_UTF16LE or SQLITE_UTF16BE using the
   ** SQLITE_UTF16NATIVE macro. SQLITE_UTF16 is not used internally.
   */
-  if( enc==SQLITE_UTF16 ){
-    enc = SQLITE_UTF16NATIVE;
+  enc2 = enc & ~SQLITE_UTF16_ALIGNED;
+  if( enc2==SQLITE_UTF16 ){
+    enc2 = SQLITE_UTF16NATIVE;
   }
 
-  if( enc!=SQLITE_UTF8 && enc!=SQLITE_UTF16LE && enc!=SQLITE_UTF16BE ){
-    sqlite3Error(db, SQLITE_ERROR, 
-        "Param 3 to sqlite3_create_collation() must be one of "
-        "SQLITE_UTF8, SQLITE_UTF16, SQLITE_UTF16LE or SQLITE_UTF16BE"
-    );
+  if( (enc2&~3)!=0 ){
+    sqlite3Error(db, SQLITE_ERROR, "unknown encoding");
     return SQLITE_ERROR;
   }
 
@@ -768,7 +770,7 @@ static int createCollation(
   ** sequence. If so, and there are active VMs, return busy. If there
   ** are no active VMs, invalidate any pre-compiled statements.
   */
-  pColl = sqlite3FindCollSeq(db, (u8)enc, zName, strlen(zName), 0);
+  pColl = sqlite3FindCollSeq(db, (u8)enc2, zName, strlen(zName), 0);
   if( pColl && pColl->xCmp ){
     if( db->activeVdbeCnt ){
       sqlite3Error(db, SQLITE_BUSY, 
@@ -778,11 +780,11 @@ static int createCollation(
     sqlite3ExpirePreparedStatements(db);
   }
 
-  pColl = sqlite3FindCollSeq(db, (u8)enc, zName, strlen(zName), 1);
+  pColl = sqlite3FindCollSeq(db, (u8)enc2, zName, strlen(zName), 1);
   if( pColl ){
     pColl->xCmp = xCompare;
     pColl->pUser = pCtx;
-    pColl->enc = enc;
+    pColl->enc = enc2 | (enc & SQLITE_UTF16_ALIGNED);
   }
   sqlite3Error(db, SQLITE_OK, 0);
   return SQLITE_OK;
@@ -847,14 +849,12 @@ static int openDatabase(
     db->magic = SQLITE_MAGIC_CLOSED;
     goto opendb_out;
   }
-#ifndef SQLITE_OMIT_PARSER
   db->aDb[0].pSchema = sqlite3SchemaGet(db->aDb[0].pBt);
   db->aDb[1].pSchema = sqlite3SchemaGet(0);
-#endif
-
   if( db->aDb[0].pSchema ){
     ENC(db) = SQLITE_UTF8;
   }
+
 
   /* The default safety_level for the main database is 'full'; for the temp
   ** database it is 'NONE'. This matches the pager layer defaults.  
@@ -1230,4 +1230,3 @@ error_out:
   return sqlite3ApiExit(db, rc);
 }
 #endif
-

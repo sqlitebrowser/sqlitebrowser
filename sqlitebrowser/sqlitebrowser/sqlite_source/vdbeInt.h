@@ -317,6 +317,10 @@ struct Vdbe {
   u8 minWriteFileFormat;  /* Minimum file format for writable database files */
   int nChange;            /* Number of db changes made since last reset */
   i64 startTime;          /* Time when query started - used for profiling */
+#ifdef SQLITE_SSE
+  int fetchId;          /* Statement number used by sqlite3_fetch_statement */
+  int lru;              /* Counter used for LRU cache replacement */
+#endif
 };
 
 /*
@@ -350,7 +354,7 @@ int sqlite3VdbeIdxKeyCompare(Cursor*, int , const unsigned char*, int*);
 int sqlite3VdbeIdxRowid(BtCursor *, i64 *);
 int sqlite3MemCompare(const Mem*, const Mem*, const CollSeq*);
 int sqlite3VdbeRecordCompare(void*,int,const void*,int, const void*);
-int sqlite3VdbeIdxRowidLen(int,const u8*);
+int sqlite3VdbeIdxRowidLen(const u8*);
 int sqlite3VdbeExec(Vdbe*);
 int sqlite3VdbeList(Vdbe*);
 int sqlite3VdbeHalt(Vdbe*);
@@ -376,11 +380,11 @@ int sqlite3VdbeMemFromBtree(BtCursor*,int,int,int,Mem*);
 void sqlite3VdbeMemRelease(Mem *p);
 int sqlite3VdbeMemFinalize(Mem*, FuncDef*);
 #ifndef NDEBUG
-void sqlite3VdbeMemSanity(Mem*, u8);
+void sqlite3VdbeMemSanity(Mem*);
 int sqlite3VdbeOpcodeNoPush(u8);
 #endif
 int sqlite3VdbeMemTranslate(Mem*, u8);
-void sqlite3VdbeMemPrettyPrint(Mem *pMem, char *zBuf, int nBuf);
+void sqlite3VdbeMemPrettyPrint(Mem *pMem, char *zBuf);
 int sqlite3VdbeMemHandleBom(Mem *pMem);
 void sqlite3VdbeFifoInit(Fifo*);
 int sqlite3VdbeFifoPush(Fifo*, i64);

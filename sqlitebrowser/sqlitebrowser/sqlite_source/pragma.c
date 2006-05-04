@@ -11,7 +11,7 @@
 *************************************************************************
 ** This file contains code used to implement the PRAGMA command.
 **
-** $Id: pragma.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: pragma.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -226,6 +226,13 @@ void sqlite3Pragma(
   iDb = sqlite3TwoPartName(pParse, pId1, pId2, &pId);
   if( iDb<0 ) return;
   pDb = &db->aDb[iDb];
+
+  /* If the temp database has been explicitly named as part of the 
+  ** pragma, make sure it is open. 
+  */
+  if( iDb==1 && sqlite3OpenTempDatabase(pParse) ){
+    return;
+  }
 
   zLeft = sqlite3NameFromToken(pId);
   if( !zLeft ) return;
@@ -478,7 +485,7 @@ void sqlite3Pragma(
         sqlite3VdbeAddOp(v, OP_Integer, i, 0);
         sqlite3VdbeOp3(v, OP_String8, 0, 0, pCol->zName, 0);
         sqlite3VdbeOp3(v, OP_String8, 0, 0,
-           pCol->zType ? pCol->zType : "numeric", 0);
+           pCol->zType ? pCol->zType : "", 0);
         sqlite3VdbeAddOp(v, OP_Integer, pCol->notNull, 0);
         sqlite3ExprCode(pParse, pCol->pDflt);
         sqlite3VdbeAddOp(v, OP_Integer, pCol->isPrimKey, 0);
@@ -948,10 +955,12 @@ void sqlite3Pragma(
     ** Reset the safety level, in case the fullfsync flag or synchronous
     ** setting changed.
     */
+#ifndef SQLITE_OMIT_PAGER_PRAGMAS
     if( db->autoCommit ){
       sqlite3BtreeSetSafetyLevel(pDb->pBt, pDb->safety_level,
                  (db->flags&SQLITE_FullFSync)!=0);
     }
+#endif
   }
 pragma_out:
   sqliteFree(zLeft);

@@ -15,12 +15,45 @@
 ** individual tokens and sends those tokens one-by-one over to the
 ** parser for analysis.
 **
-** $Id: tokenize.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: tokenize.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
 #include <ctype.h>
 #include <stdlib.h>
+
+/*
+** The charMap() macro maps alphabetic characters into their
+** lower-case ASCII equivalent.  On ASCII machines, this is just
+** an upper-to-lower case map.  On EBCDIC machines we also need
+** to adjust the encoding.  Only alphabetic characters and underscores
+** need to be translated.
+*/
+#ifdef SQLITE_ASCII
+# define charMap(X) sqlite3UpperToLower[(unsigned char)X]
+#endif
+#ifdef SQLITE_EBCDIC
+# define charMap(X) ebcdicToAscii[(unsigned char)X]
+const unsigned char ebcdicToAscii[] = {
+/* 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 0x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 1x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 2x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 3x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 4x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 5x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 95,  0,  0,  /* 6x */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* 7x */
+   0, 97, 98, 99,100,101,102,103,104,105,  0,  0,  0,  0,  0,  0,  /* 8x */
+   0,106,107,108,109,110,111,112,113,114,  0,  0,  0,  0,  0,  0,  /* 9x */
+   0,  0,115,116,117,118,119,120,121,122,  0,  0,  0,  0,  0,  0,  /* Ax */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* Bx */
+   0, 97, 98, 99,100,101,102,103,104,105,  0,  0,  0,  0,  0,  0,  /* Cx */
+   0,106,107,108,109,110,111,112,113,114,  0,  0,  0,  0,  0,  0,  /* Dx */
+   0,  0,115,116,117,118,119,120,121,122,  0,  0,  0,  0,  0,  0,  /* Ex */
+   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  /* Fx */
+};
+#endif
 
 /*
 ** The sqlite3KeywordCode function looks up an identifier to determine if
@@ -37,24 +70,22 @@
 
 
 /*
-** If X is a character that can be used in an identifier and
-** X&0x80==0 then sqlite3IsIdChar[X] will be 1.  If X&0x80==0x80 then
-** X is always an identifier character.  (Hence all UTF-8
-** characters can be part of an identifier).  sqlite3IsIdChar[X] will
-** be 0 for every character in the lower 128 ASCII characters
-** that cannot be used as part of an identifier.
+** If X is a character that can be used in an identifier then
+** IdChar(X) will be true.  Otherwise it is false.
 **
-** In this implementation, an identifier can be a string of
-** alphabetic characters, digits, and "_" plus any character
-** with the high-order bit set.  The latter rule means that
-** any sequence of UTF-8 characters or characters taken from
-** an extended ISO8859 character set can form an identifier.
+** For ASCII, any character with the high-order bit set is
+** allowed in an identifier.  For 7-bit characters, 
+** sqlite3IsIdChar[X] must be 1.
+**
+** For EBCDIC, the rules are more complex but have the same
+** end result.
 **
 ** Ticket #1066.  the SQL standard does not allow '$' in the
 ** middle of identfiers.  But many SQL implementations do. 
 ** SQLite will allow '$' in identifiers for compatibility.
 ** But the feature is undocumented.
 */
+#ifdef SQLITE_ASCII
 const char sqlite3IsIdChar[] = {
 /* x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF */
     0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  /* 2x */
@@ -64,8 +95,27 @@ const char sqlite3IsIdChar[] = {
     0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  /* 6x */
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,  /* 7x */
 };
-
 #define IdChar(C)  (((c=C)&0x80)!=0 || (c>0x1f && sqlite3IsIdChar[c-0x20]))
+#endif
+#ifdef SQLITE_EBCDIC
+const char sqlite3IsIdChar[] = {
+/* x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF */
+    0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,  /* 4x */
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0,  /* 5x */
+    0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,  /* 6x */
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,  /* 7x */
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0,  /* 8x */
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0,  /* 9x */
+    1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,  /* Ax */
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  /* Bx */
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,  /* Cx */
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,  /* Dx */
+    0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,  /* Ex */
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0,  /* Fx */
+};
+#define IdChar(C)  (((c=C)>=0x42 && sqlite3IsIdChar[c-0x40]))
+#endif
+
 
 /*
 ** Return the length of the token that begins at z[0]. 

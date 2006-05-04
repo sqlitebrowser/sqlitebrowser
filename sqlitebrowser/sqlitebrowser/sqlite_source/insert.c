@@ -12,7 +12,7 @@
 ** This file contains C code routines that are called by the parser
 ** to handle INSERT statements in SQLite.
 **
-** $Id: insert.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: insert.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -269,7 +269,7 @@ void sqlite3Insert(
   if( sqlite3IsReadOnly(pParse, pTab, triggers_exist) ){
     goto insert_cleanup;
   }
-  if( pTab==0 ) goto insert_cleanup;
+  assert( pTab!=0 );
 
   /* If pTab is really a view, make sure it has been initialized.
   */
@@ -874,7 +874,13 @@ void sqlite3GenerateConstraintChecks(
     sqlite3ExprIfTrue(pParse, pTab->pCheck, allOk, 1);
     assert( pParse->ckOffset==nCol );
     pParse->ckOffset = 0;
-    sqlite3VdbeAddOp(v, OP_Halt, SQLITE_CONSTRAINT, OE_Abort);
+    onError = overrideError!=OE_Default ? overrideError : OE_Abort;
+    if( onError==OE_Ignore || onError==OE_Replace ){
+      sqlite3VdbeAddOp(v, OP_Pop, nCol+1+hasTwoRowids, 0);
+      sqlite3VdbeAddOp(v, OP_Goto, 0, ignoreDest);
+    }else{
+      sqlite3VdbeAddOp(v, OP_Halt, SQLITE_CONSTRAINT, onError);
+    }
     sqlite3VdbeResolveLabel(v, allOk);
   }
 #endif /* !defined(SQLITE_OMIT_CHECK) */
@@ -911,7 +917,7 @@ void sqlite3GenerateConstraintChecks(
         break;
       }
       case OE_Replace: {
-        sqlite3GenerateRowIndexDelete(pParse->db, v, pTab, base, 0);
+        sqlite3GenerateRowIndexDelete(v, pTab, base, 0);
         if( isUpdate ){
           sqlite3VdbeAddOp(v, OP_Dup, nCol+hasTwoRowids, 1);
           sqlite3VdbeAddOp(v, OP_MoveGe, base, 0);

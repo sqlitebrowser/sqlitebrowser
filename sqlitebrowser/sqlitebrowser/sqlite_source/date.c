@@ -16,7 +16,7 @@
 ** sqlite3RegisterDateTimeFunctions() found at the bottom of the file.
 ** All other code has file scope.
 **
-** $Id: date.c,v 1.4 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: date.c,v 1.5 2006-05-04 13:48:36 tabuleiro Exp $
 **
 ** NOTES:
 **

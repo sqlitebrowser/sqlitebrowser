@@ -42,6 +42,7 @@ int sqlite3VdbeChangeEncoding(Mem *pMem, int desiredEnc){
   return SQLITE_ERROR;
 #else
 
+
   /* MemTranslate() may return SQLITE_OK or SQLITE_NOMEM. If NOMEM is returned,
   ** then the encoding of the value may not have changed.
   */
@@ -118,6 +119,7 @@ int sqlite3VdbeMemMakeWriteable(Mem *pMem){
   z[n+1] = 0;
   pMem->z = (char*)z;
   pMem->flags &= ~(MEM_Ephem|MEM_Static);
+  assert(0==(1&(int)pMem->z));
   return SQLITE_OK;
 }
 
@@ -596,19 +598,25 @@ int sqlite3MemCompare(const Mem *pMem1, const Mem *pMem2, const CollSeq *pColl){
 
     if( pColl ){
       if( pMem1->enc==pColl->enc ){
+        /* The strings are already in the correct encoding.  Call the
+        ** comparison function directly */
         return pColl->xCmp(pColl->pUser,pMem1->n,pMem1->z,pMem2->n,pMem2->z);
       }else{
         u8 origEnc = pMem1->enc;
-        rc = pColl->xCmp(
-          pColl->pUser,
-          sqlite3ValueBytes((sqlite3_value*)pMem1, pColl->enc),
-          sqlite3ValueText((sqlite3_value*)pMem1, pColl->enc),
-          sqlite3ValueBytes((sqlite3_value*)pMem2, pColl->enc),
-          sqlite3ValueText((sqlite3_value*)pMem2, pColl->enc)
-        );
-        sqlite3ValueBytes((sqlite3_value*)pMem1, origEnc);
+        const void *v1, *v2;
+        int n1, n2;
+        /* Convert the strings into the encoding that the comparison
+        ** function expects */
+        v1 = sqlite3ValueText((sqlite3_value*)pMem1, pColl->enc);
+        n1 = v1==0 ? 0 : pMem1->n;
+        assert( n1==sqlite3ValueBytes((sqlite3_value*)pMem1, pColl->enc) );
+        v2 = sqlite3ValueText((sqlite3_value*)pMem2, pColl->enc);
+        n2 = v2==0 ? 0 : pMem2->n;
+        assert( n2==sqlite3ValueBytes((sqlite3_value*)pMem2, pColl->enc) );
+        /* Do the comparison */
+        rc = pColl->xCmp(pColl->pUser, n1, v1, n2, v2);
+        /* Convert the strings back into the database encoding */
         sqlite3ValueText((sqlite3_value*)pMem1, origEnc);
-        sqlite3ValueBytes((sqlite3_value*)pMem2, origEnc);
         sqlite3ValueText((sqlite3_value*)pMem2, origEnc);
         return rc;
       }
@@ -703,7 +711,7 @@ int sqlite3VdbeMemFromBtree(
 ** Perform various checks on the memory cell pMem. An assert() will
 ** fail if pMem is internally inconsistent.
 */
-void sqlite3VdbeMemSanity(Mem *pMem, u8 db_enc){
+void sqlite3VdbeMemSanity(Mem *pMem){
   int flags = pMem->flags;
   assert( flags!=0 );  /* Must define some type */
   if( pMem->flags & (MEM_Str|MEM_Blob) ){
@@ -752,10 +760,14 @@ void sqlite3VdbeMemSanity(Mem *pMem, u8 db_enc){
 ** except the data returned is in the encoding specified by the second
 ** parameter, which must be one of SQLITE_UTF16BE, SQLITE_UTF16LE or
 ** SQLITE_UTF8.
+**
+** (2006-02-16:)  The enc value can be or-ed with SQLITE_UTF16_ALIGNED.
+** If that is the case, then the result must be aligned on an even byte
+** boundary.
 */
 const void *sqlite3ValueText(sqlite3_value* pVal, u8 enc){
   if( !pVal ) return 0;
-  assert( enc==SQLITE_UTF16LE || enc==SQLITE_UTF16BE || enc==SQLITE_UTF8);
+  assert( (enc&3)==(enc&~SQLITE_UTF16_ALIGNED) );
 
   if( pVal->flags&MEM_Null ){
     return 0;
@@ -763,12 +775,23 @@ const void *sqlite3ValueText(sqlite3_value* pVal, u8 enc){
   assert( (MEM_Blob>>3) == MEM_Str );
   pVal->flags |= (pVal->flags & MEM_Blob)>>3;
   if( pVal->flags&MEM_Str ){
-    sqlite3VdbeChangeEncoding(pVal, enc);
+    sqlite3VdbeChangeEncoding(pVal, enc & ~SQLITE_UTF16_ALIGNED);
+    if( (enc & SQLITE_UTF16_ALIGNED)!=0 && 1==(1&(int)pVal->z) ){
+      assert( (pVal->flags & (MEM_Ephem|MEM_Static))!=0 );
+      if( sqlite3VdbeMemMakeWriteable(pVal)!=SQLITE_OK ){
+        return 0;
+      }
+    }
   }else if( !(pVal->flags&MEM_Blob) ){
     sqlite3VdbeMemStringify(pVal, enc);
+    assert( 0==(1&(int)pVal->z) );
   }
-  assert(pVal->enc==enc || sqlite3MallocFailed() );
-  return (const void *)(pVal->enc==enc ? (pVal->z) : 0);
+  assert(pVal->enc==(enc & ~SQLITE_UTF16_ALIGNED) || sqlite3MallocFailed() );
+  if( pVal->enc==(enc & ~SQLITE_UTF16_ALIGNED) ){
+    return pVal->z;
+  }else{
+    return 0;
+  }
 }
 
 /*

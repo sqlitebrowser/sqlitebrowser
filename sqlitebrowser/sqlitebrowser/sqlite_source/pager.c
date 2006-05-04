@@ -18,7 +18,7 @@
 ** file simultaneously, or one process from reading the database while
 ** another is writing.
 **
-** @(#) $Id: pager.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** @(#) $Id: pager.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #ifndef SQLITE_OMIT_DISKIO
 #include "sqliteInt.h"
@@ -52,8 +52,8 @@
 ** associated file-descriptor is returned. FILEHANDLEID() takes an OsFile
 ** struct as it's argument.
 */
-#define PAGERID(p) FILEHANDLEID(&(p)->fd)
-#define FILEHANDLEID(fd) (sqlite3OsFileHandle(&fd))
+#define PAGERID(p) ((int)(p->fd))
+#define FILEHANDLEID(fd) ((int)fd)
 
 /*
 ** The page cache as a whole is always in one of the following
@@ -190,9 +190,11 @@ struct PgHistory {
 ** A macro used for invoking the codec if there is one
 */
 #ifdef SQLITE_HAS_CODEC
-# define CODEC(P,D,N,X) if( P->xCodec ){ P->xCodec(P->pCodecArg,D,N,X); }
+# define CODEC1(P,D,N,X) if( P->xCodec!=0 ){ P->xCodec(P->pCodecArg,D,N,X); }
+# define CODEC2(P,D,N,X) ((char*)(P->xCodec!=0?P->xCodec(P->pCodecArg,D,N,X):D))
 #else
-# define CODEC(P,D,N,X)
+# define CODEC1(P,D,N,X) /* NO-OP */
+# define CODEC2(P,D,N,X) ((char*)D)
 #endif
 
 /*
@@ -290,7 +292,7 @@ struct Pager {
 #endif
   void (*xDestructor)(void*,int); /* Call this routine when freeing pages */
   void (*xReiniter)(void*,int);   /* Call this routine when reloading pages */
-  void (*xCodec)(void*,void*,Pgno,int); /* Routine for en/decoding data */
+  void *(*xCodec)(void*,void*,Pgno,int); /* Routine for en/decoding data */
   void *pCodecArg;            /* First argument to xCodec() */
   PgHdr *aHash[N_PG_HASH];    /* Hash table to map page number to PgHdr */
 #ifdef SQLITE_ENABLE_MEMORY_MANAGEMENT
@@ -433,16 +435,6 @@ static int write32bits(OsFile *fd, u32 val){
   char ac[4];
   put32bits(ac, val);
   return sqlite3OsWrite(fd, ac, 4);
-}
-
-/*
-** Write the 32-bit integer 'val' into the page identified by page header
-** 'p' at offset 'offset'.
-*/
-static void store32bits(u32 val, PgHdr *p, int offset){
-  char *ac;
-  ac = &((char*)PGHDR_TO_DATA(p))[offset];
-  put32bits(ac, val);
 }
 
 /*
@@ -935,7 +927,7 @@ static int pager_unwritelock(Pager *pPager){
 ** only the middle sector is corrupt, we will still have a reasonable
 ** chance of failing the checksum and thus detecting the problem.
 */
-static u32 pager_cksum(Pager *pPager, Pgno pgno, const u8 *aData){
+static u32 pager_cksum(Pager *pPager, const u8 *aData){
   u32 cksum = pPager->cksumInit;
   int i = pPager->pageSize-200;
   while( i>0 ){
@@ -987,7 +979,7 @@ static int pager_playback_one_page(Pager *pPager, OsFile *jfd, int useCksum){
     rc = read32bits(jfd, &cksum);
     if( rc ) return rc;
     pPager->journalOff += 4;
-    if( pager_cksum(pPager, pgno, aData)!=cksum ){
+    if( pager_cksum(pPager, aData)!=cksum ){
       return SQLITE_DONE;
     }
   }
@@ -1041,7 +1033,7 @@ static int pager_playback_one_page(Pager *pPager, OsFile *jfd, int useCksum){
 #ifdef SQLITE_CHECK_PAGES
     pPg->pageHash = pager_pagehash(pPg);
 #endif
-    CODEC(pPager, pData, pPg->pgno, 3);
+    CODEC1(pPager, pData, pPg->pgno, 3);
   }
   return rc;
 }
@@ -1154,7 +1146,7 @@ static int pager_reload_cache(Pager *pPager){
       }
       TRACE3("REFETCH %d page %d\n", PAGERID(pPager), pPg->pgno);
       if( rc ) break;
-      CODEC(pPager, zBuf, pPg->pgno, 2);
+      CODEC1(pPager, zBuf, pPg->pgno, 2);
     }else{
       memset(zBuf, 0, pPager->pageSize);
     }
@@ -1310,9 +1302,6 @@ static int pager_playback(Pager *pPager){
       pPager->dbSize = mxPg;
     }
 
-    /* rc = sqlite3OsSeek(pPager->jfd, JOURNAL_HDR_SZ(pPager)); */
-    if( rc!=SQLITE_OK ) goto end_playback;
-  
     /* Copy original pages out of the journal and back into the database file.
     */
     for(i=0; i<nRec; i++){
@@ -1328,13 +1317,8 @@ static int pager_playback(Pager *pPager){
       }
     }
   }
-
-  /* Pages that have been written to the journal but never synced
-  ** where not restored by the loop above.  We have to restore those
-  ** pages by reading them back from the original database.
-  */
-  assert( rc==SQLITE_OK );
-  pager_reload_cache(pPager);
+  /*NOTREACHED*/
+  assert( 0 );
 
 end_playback:
   if( rc==SQLITE_OK ){
@@ -1825,6 +1809,7 @@ int sqlite3pager_pagecount(Pager *pPager){
 ** Forward declaration
 */
 static int syncJournal(Pager*);
+static void clearHistory(PgHistory*);
 
 
 /*
@@ -1849,7 +1834,9 @@ static void unlinkHashChain(Pager *pPager, PgHdr *pPg){
     assert( pPager->aHash[h]==pPg );
     pPager->aHash[h] = pPg->pNextHash;
   }
-
+  if( MEMDB ){
+    clearHistory(PGHDR_TO_HIST(pPg, pPager));
+  }
   pPg->pgno = 0;
   pPg->pNextHash = pPg->pPrevHash = 0;
 }
@@ -2070,7 +2057,7 @@ int sqlite3pager_close(Pager *pPager){
     pTsd->pPager = pPager->pNext;
   }else{
     Pager *pTmp;
-    for(pTmp = pTsd->pPager; pTmp->pNext!=pPager; pTmp=pTmp->pNext);
+    for(pTmp = pTsd->pPager; pTmp->pNext!=pPager; pTmp=pTmp->pNext){}
     pTmp->pNext = pPager->pNext;
   }
 #endif
@@ -2279,11 +2266,9 @@ static int pager_write_pagelist(PgHdr *pList){
     ** any such pages to the file.
     */
     if( pList->pgno<=pPager->dbSize ){
-      CODEC(pPager, PGHDR_TO_DATA(pList), pList->pgno, 6);
+      char *pData = CODEC2(pPager, PGHDR_TO_DATA(pList), pList->pgno, 6);
       TRACE3("STORE %d page %d\n", PAGERID(pPager), pList->pgno);
-      rc = sqlite3OsWrite(pPager->fd, PGHDR_TO_DATA(pList),
-                             pPager->pageSize);
-      CODEC(pPager, PGHDR_TO_DATA(pList), pList->pgno, 0);
+      rc = sqlite3OsWrite(pPager->fd, pData, pPager->pageSize);
       TEST_INCR(pPager->nWrite);
     }
 #ifndef NDEBUG
@@ -2477,7 +2462,7 @@ int sqlite3pager_release_memory(int nReq){
         if( pPg==p->pAll ){
            p->pAll = pPg->pNextAll;
         }else{
-          for( pTmp=p->pAll; pTmp->pNextAll!=pPg; pTmp=pTmp->pNextAll );
+          for( pTmp=p->pAll; pTmp->pNextAll!=pPg; pTmp=pTmp->pNextAll ){}
           pTmp->pNextAll = pPg->pNextAll;
         }
         nReleased += sqliteAllocSize(pPg);
@@ -2688,7 +2673,7 @@ int sqlite3pager_get(Pager *pPager, Pgno pgno, void **ppPage){
                               pPager->pageSize);
       }
       TRACE3("FETCH %d page %d\n", PAGERID(pPager), pPg->pgno);
-      CODEC(pPager, PGHDR_TO_DATA(pPg), pPg->pgno, 3);
+      CODEC1(pPager, PGHDR_TO_DATA(pPg), pPg->pgno, 3);
       if( rc!=SQLITE_OK ){
         i64 fileSize;
         int rc2 = sqlite3OsFileSize(pPager->fd, &fileSize);
@@ -3007,7 +2992,6 @@ int sqlite3pager_write(void *pData){
     if( !pPg->inJournal && (pPager->useJournal || MEMDB) ){
       if( (int)pPg->pgno <= pPager->origDbSize ){
         int szPg;
-        u32 saved;
         if( MEMDB ){
           PgHistory *pHist = PGHDR_TO_HIST(pPg, pPager);
           TRACE3("JOURNAL %d page %d\n", PAGERID(pPager), pPg->pgno);
@@ -3017,24 +3001,25 @@ int sqlite3pager_write(void *pData){
             memcpy(pHist->pOrig, PGHDR_TO_DATA(pPg), pPager->pageSize);
           }
         }else{
-          u32 cksum;
+          u32 cksum, saved;
+          char *pData2, *pEnd;
           /* We should never write to the journal file the page that
           ** contains the database locks.  The following assert verifies
           ** that we do not. */
           assert( pPg->pgno!=PAGER_MJ_PGNO(pPager) );
-          CODEC(pPager, pData, pPg->pgno, 7);
-          cksum = pager_cksum(pPager, pPg->pgno, pData);
-          saved = *(u32*)PGHDR_TO_EXTRA(pPg, pPager);
-          store32bits(cksum, pPg, pPager->pageSize);
+          pData2 = CODEC2(pPager, pData, pPg->pgno, 7);
+          cksum = pager_cksum(pPager, (u8*)pData2);
+          pEnd = pData2 + pPager->pageSize;
+          pData2 -= 4;
+          saved = *(u32*)pEnd;
+          put32bits(pEnd, cksum);
           szPg = pPager->pageSize+8;
-          store32bits(pPg->pgno, pPg, -4);
-
-          rc = sqlite3OsWrite(pPager->jfd, &((char*)pData)[-4], szPg);
+          put32bits(pData2, pPg->pgno);
+          rc = sqlite3OsWrite(pPager->jfd, pData2, szPg);
           pPager->journalOff += szPg;
           TRACE4("JOURNAL %d page %d needSync=%d\n",
                   PAGERID(pPager), pPg->pgno, pPg->needSync);
-          CODEC(pPager, pData, pPg->pgno, 0);
-          *(u32*)PGHDR_TO_EXTRA(pPg, pPager) = saved;
+          *(u32*)pEnd = saved;
 
 	  /* An error has occured writing to the journal file. The 
           ** transaction will be rolled back by the layer above.
@@ -3079,12 +3064,10 @@ int sqlite3pager_write(void *pData){
         }
         TRACE3("STMT-JOURNAL %d page %d\n", PAGERID(pPager), pPg->pgno);
       }else{
-        store32bits(pPg->pgno, pPg, -4);
-        CODEC(pPager, pData, pPg->pgno, 7);
-        rc = sqlite3OsWrite(pPager->stfd,((char*)pData)-4,
-                               pPager->pageSize+4);
+        char *pData2 = CODEC2(pPager, pData, pPg->pgno, 7)-4;
+        put32bits(pData2, pPg->pgno);
+        rc = sqlite3OsWrite(pPager->stfd, pData2, pPager->pageSize+4);
         TRACE3("STMT-JOURNAL %d page %d\n", PAGERID(pPager), pPg->pgno);
-        CODEC(pPager, pData, pPg->pgno, 0);
         if( rc!=SQLITE_OK ){
           return rc;
         }
@@ -3170,8 +3153,9 @@ void sqlite3pager_dont_write(Pager *pPager, Pgno pgno){
   if( MEMDB ) return;
 
   pPg = pager_lookup(pPager, pgno);
+  assert( pPg!=0 );  /* We never call _dont_write unless the page is in mem */
   pPg->alwaysRollback = 1;
-  if( pPg && pPg->dirty && !pPager->stmtInUse ){
+  if( pPg->dirty && !pPager->stmtInUse ){
     if( pPager->dbSize==(int)pPg->pgno && pPager->origDbSize<pPager->dbSize ){
       /* If this pages is the last page in the file and the file has grown
       ** during the current transaction, then do NOT mark the page as clean.
@@ -3261,6 +3245,7 @@ int sqlite3pager_commit(Pager *pPager){
       pPg->dirty = 0;
       pPg->inJournal = 0;
       pPg->inStmt = 0;
+      pPg->needSync = 0;
       pPg->pPrevStmt = pPg->pNextStmt = 0;
       pPg = pPg->pDirty;
     }
@@ -3556,7 +3541,7 @@ int sqlite3pager_nosync(Pager *pPager){
 */
 void sqlite3pager_set_codec(
   Pager *pPager,
-  void (*xCodec)(void*,void*,Pgno,int),
+  void *(*xCodec)(void*,void*,Pgno,int),
   void *pCodecArg
 ){
   pPager->xCodec = xCodec;
@@ -3585,7 +3570,7 @@ static int pager_incr_changecounter(Pager *pPager){
 
   /* Increment the value just read and write it back to byte 24. */
   change_counter++;
-  store32bits(change_counter, pPgHdr, 24);
+  put32bits(((char*)PGHDR_TO_DATA(pPgHdr))+24, change_counter);
 
   /* Release the page reference. */
   sqlite3pager_unref(pPage);
@@ -3675,6 +3660,8 @@ int sqlite3pager_sync(Pager *pPager, const char *zMaster, Pgno nTrunc){
     }
 
     pPager->state = PAGER_SYNCED;
+  }else if( MEMDB && nTrunc!=0 ){
+    rc = sqlite3pager_truncate(pPager, nTrunc);
   }
 
 sync_exit:

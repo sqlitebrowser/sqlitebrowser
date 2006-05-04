@@ -16,7 +16,7 @@
 ** so is applicable.  Because this module is responsible for selecting
 ** indices, you might also think of this module as the "query optimizer".
 **
-** $Id: where.c,v 1.6 2006-02-16 10:11:47 jmiltner Exp $
+** $Id: where.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -771,8 +771,7 @@ or_not_possible:
 static int isSortingIndex(
   Parse *pParse,          /* Parsing context */
   Index *pIdx,            /* The index we are testing */
-  Table *pTab,            /* The table to be sorted */
-  int base,               /* Cursor number for pTab */
+  int base,               /* Cursor number for the table to be sorted */
   ExprList *pOrderBy,     /* The ORDER BY clause */
   int nEqCol,             /* Number of index columns with == constraints */
   int *pbRev              /* Set to 1 if ORDER BY is DESC */
@@ -927,6 +926,22 @@ static double bestIndex(
 
   TRACE(("bestIndex: tbl=%s notReady=%x\n", pSrc->pTab->zName, notReady));
   lowestCost = SQLITE_BIG_DBL;
+  pProbe = pSrc->pTab->pIndex;
+
+  /* If the table has no indices and there are no terms in the where
+  ** clause that refer to the ROWID, then we will never be able to do
+  ** anything other than a full table scan on this table.  We might as
+  ** well put it first in the join order.  That way, perhaps it can be
+  ** referenced by other tables in the join.
+  */
+  if( pProbe==0 &&
+     findTerm(pWC, iCur, -1, 0, WO_EQ|WO_IN|WO_LT|WO_LE|WO_GT|WO_GE,0)==0 &&
+     (pOrderBy==0 || !sortableByRowid(iCur, pOrderBy, &rev)) ){
+    *pFlags = 0;
+    *ppIndex = 0;
+    *pnEq = 0;
+    return 0.0;
+  }
 
   /* Check for a rowid=EXPR or rowid IN (...) constraints
   */
@@ -959,7 +974,6 @@ static double bestIndex(
   /* Estimate the cost of a table scan.  If we do not know how many
   ** entries are in the table, use 1 million as a guess.
   */
-  pProbe = pSrc->pTab->pIndex;
   cost = pProbe ? pProbe->aiRowEst[0] : 1000000;
   TRACE(("... table scan base cost: %.9g\n", cost));
   flags = WHERE_ROWID_RANGE;
@@ -1057,7 +1071,7 @@ static double bestIndex(
     */
     if( pOrderBy ){
       if( (flags & WHERE_COLUMN_IN)==0 &&
-           isSortingIndex(pParse,pProbe,pSrc->pTab,iCur,pOrderBy,nEq,&rev) ){
+           isSortingIndex(pParse,pProbe,iCur,pOrderBy,nEq,&rev) ){
         if( flags==0 ){
           flags = WHERE_COLUMN_RANGE;
         }
@@ -1591,7 +1605,7 @@ WhereInfo *sqlite3WhereBegin(
       if( pTab->nCol<(sizeof(Bitmask)*8) ){
         Bitmask b = pTabItem->colUsed;
         int n = 0;
-        for(; b; b=b>>1, n++);
+        for(; b; b=b>>1, n++){}
         sqlite3VdbeChangeP2(v, sqlite3VdbeCurrentAddr(v)-1, n);
         assert( n<=pTab->nCol );
       }

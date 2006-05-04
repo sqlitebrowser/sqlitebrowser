@@ -107,9 +107,11 @@ int sqlite3VdbeAddOp(Vdbe *p, int op, int p1, int p2){
   i = p->nOp;
   p->nOp++;
   assert( p->magic==VDBE_MAGIC_INIT );
-  resizeOpArray(p, i+1);
-  if( sqlite3MallocFailed() ){
-    return 0;
+  if( p->nOpAlloc<=i ){
+    resizeOpArray(p, i+1);
+    if( sqlite3MallocFailed() ){
+      return 0;
+    }
   }
   pOp = &p->aOp[i];
   pOp->opcode = op;
@@ -202,11 +204,11 @@ static int opcodeNoPush(u8 op){
   ** IEEE floats.
   */ 
   static const u32 masks[5] = {
-    NOPUSH_MASK_0 + (NOPUSH_MASK_1<<16),
-    NOPUSH_MASK_2 + (NOPUSH_MASK_3<<16),
-    NOPUSH_MASK_4 + (NOPUSH_MASK_5<<16),
-    NOPUSH_MASK_6 + (NOPUSH_MASK_7<<16),
-    NOPUSH_MASK_8 + (NOPUSH_MASK_9<<16)
+    NOPUSH_MASK_0 + (((unsigned)NOPUSH_MASK_1)<<16),
+    NOPUSH_MASK_2 + (((unsigned)NOPUSH_MASK_3)<<16),
+    NOPUSH_MASK_4 + (((unsigned)NOPUSH_MASK_5)<<16),
+    NOPUSH_MASK_6 + (((unsigned)NOPUSH_MASK_7)<<16),
+    NOPUSH_MASK_8 + (((unsigned)NOPUSH_MASK_9)<<16)
   };
   assert( op<32*5 );
   return (masks[op>>5] & (1<<(op&0x1F)));
@@ -340,7 +342,7 @@ int sqlite3VdbeAddOpList(Vdbe *p, int nOp, VdbeOpList const *aOp){
 ** few minor changes to the program.
 */
 void sqlite3VdbeChangeP1(Vdbe *p, int addr, int val){
-  assert( p->magic==VDBE_MAGIC_INIT );
+  assert( p==0 || p->magic==VDBE_MAGIC_INIT );
   if( p && addr>=0 && p->nOp>addr && p->aOp ){
     p->aOp[addr].p1 = val;
   }
@@ -352,14 +354,14 @@ void sqlite3VdbeChangeP1(Vdbe *p, int addr, int val){
 */
 void sqlite3VdbeChangeP2(Vdbe *p, int addr, int val){
   assert( val>=0 );
-  assert( p->magic==VDBE_MAGIC_INIT );
+  assert( p==0 || p->magic==VDBE_MAGIC_INIT );
   if( p && addr>=0 && p->nOp>addr && p->aOp ){
     p->aOp[addr].p2 = val;
   }
 }
 
 /*
-** Change teh P2 operand of instruction addr so that it points to
+** Change the P2 operand of instruction addr so that it points to
 ** the address of the next instruction to be coded.
 */
 void sqlite3VdbeJumpHere(Vdbe *p, int addr){
@@ -394,6 +396,19 @@ static void freeP3(int p3type, void *p3){
 
 
 /*
+** Change N opcodes starting at addr to No-ops.
+*/
+void sqlite3VdbeChangeToNoop(Vdbe *p, int addr, int N){
+  VdbeOp *pOp = &p->aOp[addr];
+  while( N-- ){
+    freeP3(pOp->p3type, pOp->p3);
+    memset(pOp, 0, sizeof(pOp[0]));
+    pOp->opcode = OP_Noop;
+    pOp++;
+  }
+}
+
+/*
 ** Change the value of the P3 operand for a specific instruction.
 ** This routine is useful when a large program is loaded from a
 ** static array using sqlite3VdbeAddOpList but we want to make a
@@ -420,7 +435,7 @@ static void freeP3(int p3type, void *p3){
 */
 void sqlite3VdbeChangeP3(Vdbe *p, int addr, const char *zP3, int n){
   Op *pOp;
-  assert( p->magic==VDBE_MAGIC_INIT );
+  assert( p==0 || p->magic==VDBE_MAGIC_INIT );
   if( p==0 || p->aOp==0 || sqlite3MallocFailed() ){
     if (n != P3_KEYINFO) {
       freeP3(n, (void*)*(char**)&zP3);
@@ -656,8 +671,9 @@ int sqlite3VdbeList(
     pMem->type = SQLITE_INTEGER;
     pMem++;
 
-    pMem->flags = MEM_Short|MEM_Str|MEM_Term;   /* P3 */
+    pMem->flags = MEM_Ephem|MEM_Str|MEM_Term;   /* P3 */
     pMem->z = displayP3(pOp, pMem->zShort, sizeof(pMem->zShort));
+    pMem->n = strlen(pMem->z);
     pMem->type = SQLITE_TEXT;
     pMem->enc = SQLITE_UTF8;
 
@@ -1841,7 +1857,7 @@ int sqlite3VdbeRecordCompare(
 ** an integer rowid).  This routine returns the number of bytes in
 ** that integer.
 */
-int sqlite3VdbeIdxRowidLen(int nKey, const u8 *aKey){
+int sqlite3VdbeIdxRowidLen(const u8 *aKey){
   u32 szHdr;        /* Size of the header */
   u32 typeRowid;    /* Serial type of the rowid */
 
@@ -1911,7 +1927,7 @@ int sqlite3VdbeIdxKeyCompare(
   if( rc ){
     return rc;
   }
-  lenRowid = sqlite3VdbeIdxRowidLen(m.n, (u8*)m.z);
+  lenRowid = sqlite3VdbeIdxRowidLen((u8*)m.z);
   *res = sqlite3VdbeRecordCompare(pC->pKeyInfo, m.n-lenRowid, m.z, nKey, pKey);
   sqlite3VdbeMemRelease(&m);
   return SQLITE_OK;

@@ -128,19 +128,19 @@ int sqlite3_os_type = 0;
 ** is obtained from sqliteMalloc.
 */
 static WCHAR *utf8ToUnicode(const char *zFilename){
-  int nByte;
+  int nChar;
   WCHAR *zWideFilename;
 
   if( !isNT() ){
     return 0;
   }
-  nByte = MultiByteToWideChar(CP_UTF8, 0, zFilename, -1, NULL, 0)*sizeof(WCHAR);
-  zWideFilename = sqliteMalloc( nByte*sizeof(zWideFilename[0]) );
+  nChar = MultiByteToWideChar(CP_UTF8, 0, zFilename, -1, NULL, 0);
+  zWideFilename = sqliteMalloc( nChar*sizeof(zWideFilename[0]) );
   if( zWideFilename==0 ){
     return 0;
   }
-  nByte = MultiByteToWideChar(CP_UTF8, 0, zFilename, -1, zWideFilename, nByte);
-  if( nByte==0 ){
+  nChar = MultiByteToWideChar(CP_UTF8, 0, zFilename, -1, zWideFilename, nChar);
+  if( nChar==0 ){
     sqliteFree(zWideFilename);
     zWideFilename = 0;
   }

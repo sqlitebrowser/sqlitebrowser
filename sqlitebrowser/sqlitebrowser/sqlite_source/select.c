@@ -12,7 +12,7 @@
 ** This file contains C code routines that are called by the parser
 ** to handle SELECT statements in SQLite.
 **
-** $Id: select.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: select.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 
@@ -411,22 +411,18 @@ static void codeOffset(
 ** seen combinations of the N values.  A new entry is made in iTab
 ** if the current N values are new.
 **
-** A jump to addrRepeat is made and the K values are popped from the
+** A jump to addrRepeat is made and the N+1 values are popped from the
 ** stack if the top N elements are not distinct.
 */
 static void codeDistinct(
   Vdbe *v,           /* Generate code into this VM */
   int iTab,          /* A sorting index used to test for distinctness */
   int addrRepeat,    /* Jump to here if not distinct */
-  int N,             /* The top N elements of the stack must be distinct */
-  int K              /* Pop K elements from the stack if indistinct */
+  int N              /* The top N elements of the stack must be distinct */
 ){
-#if NULL_ALWAYS_DISTINCT
-  sqlite3VdbeAddOp(v, OP_IsNull, -N, sqlite3VdbeCurrentAddr(v)+6);
-#endif
   sqlite3VdbeAddOp(v, OP_MakeRecord, -N, 0);
   sqlite3VdbeAddOp(v, OP_Distinct, iTab, sqlite3VdbeCurrentAddr(v)+3);
-  sqlite3VdbeAddOp(v, OP_Pop, K, 0);
+  sqlite3VdbeAddOp(v, OP_Pop, N+1, 0);
   sqlite3VdbeAddOp(v, OP_Goto, 0, addrRepeat);
   VdbeComment((v, "# skip indistinct records"));
   sqlite3VdbeAddOp(v, OP_IdxInsert, iTab, 0);
@@ -487,8 +483,9 @@ static int selectInnerLoop(
   ** part of the result.
   */
   if( hasDistinct ){
-    int n = pEList->nExpr;
-    codeDistinct(v, distinct, iContinue, n, n+1);
+    assert( pEList!=0 );
+    assert( pEList->nExpr==nColumn );
+    codeDistinct(v, distinct, iContinue, nColumn);
     if( pOrderBy==0 ){
       codeOffset(v, p, iContinue, nColumn);
     }
@@ -500,7 +497,7 @@ static int selectInnerLoop(
     */
 #ifndef SQLITE_OMIT_COMPOUND_SELECT
     case SRT_Union: {
-      sqlite3VdbeAddOp(v, OP_MakeRecord, nColumn, NULL_ALWAYS_DISTINCT);
+      sqlite3VdbeAddOp(v, OP_MakeRecord, nColumn, 0);
       if( aff ){
         sqlite3VdbeChangeP3(v, -1, aff, P3_STATIC);
       }
@@ -514,7 +511,7 @@ static int selectInnerLoop(
     */
     case SRT_Except: {
       int addr;
-      addr = sqlite3VdbeAddOp(v, OP_MakeRecord, nColumn, NULL_ALWAYS_DISTINCT);
+      addr = sqlite3VdbeAddOp(v, OP_MakeRecord, nColumn, 0);
       sqlite3VdbeChangeP3(v, -1, aff, P3_STATIC);
       sqlite3VdbeAddOp(v, OP_NotFound, iParm, addr+3);
       sqlite3VdbeAddOp(v, OP_Delete, iParm, 0);
@@ -680,7 +677,7 @@ static KeyInfo *keyInfoFromExprList(Parse *pParse, ExprList *pList){
 ** routine generates the code needed to do that.
 */
 static void generateSortTail(
-  Parse *pParse,   /* The parsing context */
+  Parse *pParse,   /* Parsing context */
   Select *p,       /* The SELECT statement */
   Vdbe *v,         /* Generate code into this VDBE */
   int nColumn,     /* Number of columns of data */
@@ -691,11 +688,20 @@ static void generateSortTail(
   int cont = sqlite3VdbeMakeLabel(v);
   int addr;
   int iTab;
+  int pseudoTab;
   ExprList *pOrderBy = p->pOrderBy;
 
   iTab = pOrderBy->iECursor;
+  if( eDest==SRT_Callback || eDest==SRT_Subroutine ){
+    pseudoTab = pParse->nTab++;
+    sqlite3VdbeAddOp(v, OP_OpenPseudo, pseudoTab, 0);
+    sqlite3VdbeAddOp(v, OP_SetNumColumns, pseudoTab, nColumn);
+  }
   addr = 1 + sqlite3VdbeAddOp(v, OP_Sort, iTab, brk);
   codeOffset(v, p, cont, 0);
+  if( eDest==SRT_Callback || eDest==SRT_Subroutine ){
+    sqlite3VdbeAddOp(v, OP_Integer, 1, 0);
+  }
   sqlite3VdbeAddOp(v, OP_Column, iTab, pOrderBy->nExpr + 1);
   switch( eDest ){
     case SRT_Table:
@@ -725,17 +731,15 @@ static void generateSortTail(
     case SRT_Callback:
     case SRT_Subroutine: {
       int i;
-      sqlite3VdbeAddOp(v, OP_Integer, p->pEList->nExpr, 0);
-      sqlite3VdbeAddOp(v, OP_Pull, 1, 0);
+      sqlite3VdbeAddOp(v, OP_Insert, pseudoTab, 0);
       for(i=0; i<nColumn; i++){
-        sqlite3VdbeAddOp(v, OP_Column, -1-i, i);
+        sqlite3VdbeAddOp(v, OP_Column, pseudoTab, i);
       }
       if( eDest==SRT_Callback ){
         sqlite3VdbeAddOp(v, OP_Callback, nColumn, 0);
       }else{
         sqlite3VdbeAddOp(v, OP_Gosub, 0, iParm);
       }
-      sqlite3VdbeAddOp(v, OP_Pop, 2, 0);
       break;
     }
     default: {
@@ -756,6 +760,10 @@ static void generateSortTail(
   sqlite3VdbeResolveLabel(v, cont);
   sqlite3VdbeAddOp(v, OP_Next, iTab, addr);
   sqlite3VdbeResolveLabel(v, brk);
+  if( eDest==SRT_Callback || eDest==SRT_Subroutine ){
+    sqlite3VdbeAddOp(v, OP_Close, pseudoTab, 0);
+  }
+
 }
 
 /*
@@ -1039,6 +1047,7 @@ Table *sqlite3ResultSetOfSelect(Parse *pParse, char *zTabName, Select *pSelect){
   ExprList *pEList;
   Column *aCol, *pCol;
 
+  while( pSelect->pPrior ) pSelect = pSelect->pPrior;
   if( prepSelectStmt(pParse, pSelect) ){
     return 0;
   }
@@ -1535,20 +1544,6 @@ static void createSortingIndex(Parse *pParse, Select *p, ExprList *pOrderBy){
   }
 }
 
-/*
-** The opcode at addr is an OP_OpenVirtual that created a sorting
-** index tha we ended up not needing.  This routine changes that
-** opcode to OP_Noop.
-*/
-static void uncreateSortingIndex(Parse *pParse, int addr){
-  Vdbe *v = pParse->pVdbe;
-  VdbeOp *pOp = sqlite3VdbeGetOp(v, addr);
-  sqlite3VdbeChangeP3(v, addr, 0, 0);
-  pOp->opcode = OP_Noop;
-  pOp->p1 = 0;
-  pOp->p2 = 0;
-}
-
 #ifndef SQLITE_OMIT_COMPOUND_SELECT
 /*
 ** Return the appropriate collating sequence for the iCol-th column of
@@ -1771,7 +1766,9 @@ static int multiSelect(
         int iCont, iBreak, iStart;
         assert( p->pEList );
         if( eDest==SRT_Callback ){
-          generateColumnNames(pParse, 0, p->pEList);
+          Select *pFirst = p;
+          while( pFirst->pPrior ) pFirst = pFirst->pPrior;
+          generateColumnNames(pParse, 0, pFirst->pEList);
         }
         iBreak = sqlite3VdbeMakeLabel(v);
         iCont = sqlite3VdbeMakeLabel(v);
@@ -1847,7 +1844,9 @@ static int multiSelect(
       */
       assert( p->pEList );
       if( eDest==SRT_Callback ){
-        generateColumnNames(pParse, 0, p->pEList);
+        Select *pFirst = p;
+        while( pFirst->pPrior ) pFirst = pFirst->pPrior;
+        generateColumnNames(pParse, 0, pFirst->pEList);
       }
       iBreak = sqlite3VdbeMakeLabel(v);
       iCont = sqlite3VdbeMakeLabel(v);
@@ -2117,7 +2116,6 @@ static void substSelect(Select *p, int iTable, ExprList *pEList){
 ** the subquery before this routine runs.
 */
 static int flattenSubquery(
-  Parse *pParse,       /* The parsing context */
   Select *p,           /* The parent or outer SELECT statement */
   int iFrom,           /* Index in p->pSrc->a[] of the inner subquery */
   int isAgg,           /* True if outer SELECT uses aggregate functions */
@@ -2245,7 +2243,6 @@ static int flattenSubquery(
   ** We look at every expression in the outer query and every place we see
   ** "a" we substitute "x*3" and every place we see "b" we substitute "y+10".
   */
-  substExprList(p->pEList, iParent, pSub->pEList);
   pList = p->pEList;
   for(i=0; i<pList->nExpr; i++){
     Expr *pExpr;
@@ -2253,6 +2250,7 @@ static int flattenSubquery(
       pList->a[i].zName = sqliteStrNDup((char*)pExpr->span.z, pExpr->span.n);
     }
   }
+  substExprList(p->pEList, iParent, pSub->pEList);
   if( isAgg ){
     substExprList(p->pGroupBy, iParent, pSub->pEList);
     substExpr(p->pHaving, iParent, pSub->pEList);
@@ -2683,13 +2681,14 @@ static void updateAccumulator(Parse *pParse, AggInfo *pAggInfo){
     if( pF->iDistinct>=0 ){
       addrNext = sqlite3VdbeMakeLabel(v);
       assert( nArg==1 );
-      codeDistinct(v, pF->iDistinct, addrNext, 1, 2);
+      codeDistinct(v, pF->iDistinct, addrNext, 1);
     }
     if( pF->pFunc->needCollSeq ){
       CollSeq *pColl = 0;
       struct ExprList_item *pItem;
       int j;
-      for(j=0, pItem=pList->a; !pColl && j<pList->nExpr; j++, pItem++){
+      assert( pList!=0 );  /* pList!=0 if pF->pFunc->needCollSeq is true */
+      for(j=0, pItem=pList->a; !pColl && j<nArg; j++, pItem++){
         pColl = sqlite3ExprCollSeq(pParse, pItem->pExpr);
       }
       if( !pColl ){
@@ -2902,7 +2901,7 @@ int sqlite3Select(
   */
 #ifndef SQLITE_OMIT_VIEW
   if( pParent && pParentAgg &&
-      flattenSubquery(pParse, pParent, parentTab, *pParentAgg, isAgg) ){
+      flattenSubquery(pParent, parentTab, *pParentAgg, isAgg) ){
     if( isAgg ) *pParentAgg = 1;
     goto select_end;
   }
@@ -2973,7 +2972,7 @@ int sqlite3Select(
     ** into an OP_Noop.
     */
     if( addrSortIndex>=0 && pOrderBy==0 ){
-      uncreateSortingIndex(pParse, addrSortIndex);
+      sqlite3VdbeChangeToNoop(v, addrSortIndex, 1);
       p->addrOpenVirt[2] = -1;
     }
 
@@ -3219,7 +3218,7 @@ int sqlite3Select(
         sqlite3VdbeAddOp(v, OP_Next, sAggInfo.sortingIdx, addrTopOfLoop);
       }else{
         sqlite3WhereEnd(pWInfo);
-        uncreateSortingIndex(pParse, addrSortingIdx);
+        sqlite3VdbeChangeToNoop(v, addrSortingIdx, 1);
       }
 
       /* Output the final row of result

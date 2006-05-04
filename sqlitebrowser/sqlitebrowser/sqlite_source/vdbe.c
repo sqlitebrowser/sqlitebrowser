@@ -43,7 +43,7 @@
 ** in this file for details.  If in doubt, do not deviate from existing
 ** commenting and indentation practices when changing or adding code.
 **
-** $Id: vdbe.c,v 1.6 2006-02-16 10:11:47 jmiltner Exp $
+** $Id: vdbe.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include "os.h"
@@ -280,7 +280,7 @@ void sqlite3ValueApplyAffinity(sqlite3_value *pVal, u8 affinity, u8 enc){
 ** Write a nice string representation of the contents of cell pMem
 ** into buffer zBuf, length nBuf.
 */
-void sqlite3VdbeMemPrettyPrint(Mem *pMem, char *zBuf, int nBuf){
+void sqlite3VdbeMemPrettyPrint(Mem *pMem, char *zBuf){
   char *zCsr = zBuf;
   int f = pMem->flags;
 
@@ -1871,13 +1871,6 @@ case OP_SetNumColumns: {       /* no-push */
 ** If the KeyAsData opcode has previously executed on this cursor, then the
 ** field might be extracted from the key rather than the data.
 **
-** If P1 is negative, then the record is stored on the stack rather than in
-** a table.  For P1==-1, the top of the stack is used.  For P1==-2, the
-** next on the stack is used.  And so forth.  The value pushed is always
-** just a pointer into the record which is stored further down on the
-** stack.  The column value is not copied. The number of columns in the
-** record is stored on the stack just above the record itself.
-**
 ** If the column contains fewer than P2 fields, then push a NULL.  Or
 ** if P3 is of type P3_MEM, then push the P3 value.  The P3 value will
 ** be default value for a column that has been added using the ALTER TABLE
@@ -1909,31 +1902,19 @@ case OP_Column: {
   ** bytes in the record.
   **
   ** zRec is set to be the complete text of the record if it is available.
-  ** The complete record text is always available for pseudo-tables and
-  ** when we are decoded a record from the stack.  If the record is stored
-  ** in a cursor, the complete record text might be available in the 
-  ** pC->aRow cache.  Or it might not be.  If the data is unavailable,
-  ** zRec is set to NULL.
+  ** The complete record text is always available for pseudo-tables
+  ** If the record is stored in a cursor, the complete record text
+  ** might be available in the  pC->aRow cache.  Or it might not be.
+  ** If the data is unavailable,  zRec is set to NULL.
   **
   ** We also compute the number of columns in the record.  For cursors,
   ** the number of columns is stored in the Cursor.nField element.  For
   ** records on the stack, the next entry down on the stack is an integer
   ** which is the number of records.
   */
-  assert( p1<0 || p->apCsr[p1]!=0 );
-  if( p1<0 ){
-    /* Take the record off of the stack */
-    Mem *pRec = &pTos[p1];
-    Mem *pCnt = &pRec[-1];
-    assert( pRec>=p->aStack );
-    assert( pRec->flags & MEM_Blob );
-    payloadSize = pRec->n;
-    zRec = pRec->z;
-    assert( pCnt>=p->aStack );
-    assert( pCnt->flags & MEM_Int );
-    nField = pCnt->i;
-    pCrsr = 0;
-  }else if( (pC = p->apCsr[p1])->pCursor!=0 ){
+  pC = p->apCsr[p1];
+  assert( pC!=0 );
+  if( pC->pCursor!=0 ){
     /* The record is stored in a B-Tree */
     rc = sqlite3VdbeCursorMoveto(pC);
     if( rc ) goto abort_due_to_error;
@@ -1952,7 +1933,6 @@ case OP_Column: {
       sqlite3BtreeDataSize(pCrsr, &payloadSize);
     }
     nField = pC->nField;
-#ifndef SQLITE_OMIT_TRIGGER
   }else if( pC->pseudoTable ){
     /* The record is the sole entry of a pseudo-table */
     payloadSize = pC->nData;
@@ -1961,7 +1941,6 @@ case OP_Column: {
     assert( payloadSize==0 || zRec!=0 );
     nField = pC->nField;
     pCrsr = 0;
-#endif
   }else{
     zRec = 0;
     payloadSize = 0;
@@ -1989,15 +1968,17 @@ case OP_Column: {
     u32 offset;      /* Offset into the data */
     int szHdrSz;     /* Size of the header size field at start of record */
     int avail;       /* Number of bytes of available data */
-    if( pC && pC->aType ){
-      aType = pC->aType;
-    }else{
-      aType = sqliteMallocRaw( 2*nField*sizeof(aType) );
+
+    aType = pC->aType;
+    if( aType==0 ){
+      pC->aType = aType = sqliteMallocRaw( 2*nField*sizeof(aType) );
     }
-    aOffset = &aType[nField];
     if( aType==0 ){
       goto no_mem;
     }
+    pC->aOffset = aOffset = &aType[nField];
+    pC->payloadSize = payloadSize;
+    pC->cacheStatus = p->cacheCtr;
 
     /* Figure out how many bytes are in the header */
     if( zRec ){
@@ -2070,15 +2051,6 @@ case OP_Column: {
       rc = SQLITE_CORRUPT_BKPT;
       goto op_column_out;
     }
-
-    /* Remember all aType and aColumn information if we have a cursor
-    ** to remember it in. */
-    if( pC ){
-      pC->payloadSize = payloadSize;
-      pC->aType = aType;
-      pC->aOffset = aOffset;
-      pC->cacheStatus = p->cacheCtr;
-    }
   }
 
   /* Get the column information. If aOffset[p2] is non-zero, then 
@@ -2111,7 +2083,7 @@ case OP_Column: {
 
   /* If we dynamically allocated space to hold the data (in the
   ** sqlite3VdbeMemFromBtree() call above) then transfer control of that
-  ** dynamically allocated space over to the pTos structure rather.
+  ** dynamically allocated space over to the pTos structure.
   ** This prevents a memory copy.
   */
   if( (sMem.flags & MEM_Dyn)!=0 ){
@@ -2128,10 +2100,6 @@ case OP_Column: {
   rc = sqlite3VdbeMemMakeWriteable(pTos);
 
 op_column_out:
-  /* Release the aType[] memory if we are not dealing with cursor */
-  if( !pC || !pC->aType ){
-    sqliteFree(aType);
-  }
   break;
 }
 
@@ -2722,7 +2690,6 @@ case OP_OpenVirtual: {       /* no-push */
   break;
 }
 
-#ifndef SQLITE_OMIT_TRIGGER
 /* Opcode: OpenPseudo P1 * *
 **
 ** Open a new cursor that points to a fake table that contains a single
@@ -2731,7 +2698,9 @@ case OP_OpenVirtual: {       /* no-push */
 ** closed.
 **
 ** A pseudo-table created by this opcode is useful for holding the
-** NEW or OLD tables in a trigger.
+** NEW or OLD tables in a trigger.  Also used to hold the a single
+** row output from the sorter so that the row can be decomposed into
+** individual columns using the OP_Column opcode.
 */
 case OP_OpenPseudo: {       /* no-push */
   int i = pOp->p1;
@@ -2746,7 +2715,6 @@ case OP_OpenPseudo: {       /* no-push */
   pCx->isIndex = 0;
   break;
 }
-#endif
 
 /* Opcode: Close P1 * *
 **
@@ -3013,7 +2981,7 @@ case OP_IsUnique: {        /* no-push */
     zKey = pNos->z;
     nKey = pNos->n;
 
-    szRowid = sqlite3VdbeIdxRowidLen(nKey, (u8*)zKey);
+    szRowid = sqlite3VdbeIdxRowidLen((u8*)zKey);
     len = nKey-szRowid;
 
     /* Search for an entry in P1 where all but the last four bytes match K.
@@ -3320,7 +3288,6 @@ case OP_Insert: {         /* no-push */
     }else{
       assert( pTos->flags & (MEM_Blob|MEM_Str) );
     }
-#ifndef SQLITE_OMIT_TRIGGER
     if( pC->pseudoTable ){
       sqliteFree(pC->pData);
       pC->iKey = iKey;
@@ -3337,11 +3304,8 @@ case OP_Insert: {         /* no-push */
       }
       pC->nullRow = 0;
     }else{
-#endif
       rc = sqlite3BtreeInsert(pC->pCursor, 0, iKey, pTos->z, pTos->n);
-#ifndef SQLITE_OMIT_TRIGGER
     }
-#endif
     
     pC->rowidIsValid = 0;
     pC->deferredMoveto = 0;
@@ -3498,12 +3462,10 @@ case OP_RowData: {
     }else{
       sqlite3BtreeData(pCrsr, 0, n, pTos->z);
     }
-#ifndef SQLITE_OMIT_TRIGGER
   }else if( pC->pseudoTable ){
     pTos->n = pC->nData;
     pTos->z = pC->pData;
     pTos->flags = MEM_Blob|MEM_Ephem;
-#endif
   }else{
     pTos->flags = MEM_Null;
   }
@@ -4071,7 +4033,7 @@ case OP_ParseSchema: {        /* no-push */
   break;  
 }
 
-#ifndef SQLITE_OMIT_ANALYZE
+#if !defined(SQLITE_OMIT_ANALYZE) && !defined(SQLITE_OMIT_PARSER)
 /* Opcode: LoadAnalysis P1 * *
 **
 ** Read the sqlite_stat1 table for database P1 and load the content
@@ -4084,7 +4046,7 @@ case OP_LoadAnalysis: {        /* no-push */
   sqlite3AnalysisLoad(db, iDb);
   break;  
 }
-#endif /* SQLITE_OMIT_ANALYZE */
+#endif /* !defined(SQLITE_OMIT_ANALYZE) && !defined(SQLITE_OMIT_PARSER)  */
 
 /* Opcode: DropTable P1 * P3
 **
@@ -4536,7 +4498,7 @@ case OP_Expire: {        /* no-push */
 ** Obtain a lock on a particular table. This instruction is only used when
 ** the shared-cache feature is enabled. 
 **
-** If P1 is not negative, then it is the index of the index of the database
+** If P1 is not negative, then it is the index of the database
 ** in sqlite3.aDb[] and a read-lock is required. If P1 is negative, a 
 ** write-lock is required. In this case the index of the database is the 
 ** absolute value of P1 minus one (iDb = abs(P1) - 1;) and a write-lock is
@@ -4600,7 +4562,7 @@ default: {
 #ifndef NDEBUG
     /* Sanity checking on the top element of the stack */
     if( pTos>=p->aStack ){
-      sqlite3VdbeMemSanity(pTos, encoding);
+      sqlite3VdbeMemSanity(pTos);
     }
     assert( pc>=-1 && pc<p->nOp );
 #ifdef SQLITE_DEBUG
@@ -4619,7 +4581,7 @@ default: {
           fprintf(p->trace, " r:%g", pTos[i].r);
         }else{
           char zBuf[100];
-          sqlite3VdbeMemPrettyPrint(&pTos[i], zBuf, 100);
+          sqlite3VdbeMemPrettyPrint(&pTos[i], zBuf);
           fprintf(p->trace, " ");
           fprintf(p->trace, "%s", zBuf);
         }

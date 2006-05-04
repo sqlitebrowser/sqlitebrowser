@@ -12,12 +12,12 @@ static int keywordCode(const char *z, int n){
     "UNIQUEUSINGVACUUMVALUESVIEWHERE";
   static const unsigned char aHash[127] = {
       92,  80, 107,  91,   0,   4,   0,   0, 114,   0,  83,   0,   0,
-      96,  44,  76,  93,   0, 106, 109,  97,  90,   0,  10,   0,   0,
+      95,  44,  76,  93,   0, 106, 109,  97,  90,   0,  10,   0,   0,
      113,   0, 110, 103,   0,  28,  48,   0,  41,   0,   0,  65,  71,
-       0,  63,  19,   0, 105,  36, 104,   0, 108,  75,   0,   0,  33,
+       0,  63,  19,   0, 105,  36, 104,   0, 108,  74,   0,   0,  33,
        0,  61,  37,   0,   8,   0, 115,  38,  12,   0,  77,  40,  25,
       66,   0,   0,  31,  81,  53,  30,  50,  20,  88,   0,  34,   0,
-      74,  26,   0,  72,   0,   0,   0,  64,  47,  67,  22,  87,  29,
+      75,  26,   0,  72,   0,   0,   0,  64,  47,  67,  22,  87,  29,
       69,  86,   0,   1,   0,   9, 101,  58,  18,   0, 112,  82,  99,
       54,   6,  85,   0,   0,  49,  94,   0, 102,   0,  70,   0,   0,
       15,   0, 116,  51,  56,   0,   2,  55,   0, 111,
@@ -28,9 +28,9 @@ static int keywordCode(const char *z, int n){
        0,  11,   0,   0,   0,   0,   5,  13,   0,   7,   0,   0,   0,
        0,   0,   0,   0,   0,   0,   0,  43,   0,   0,   0,   0,   0,
        0,   0,  16,   0,  23,  52,   0,   0,   0,   0,  45,   0,  59,
-       0,   0,   0,   0,   0,   0,   0,   0,  42,  73,   0,  24,  60,
+       0,   0,   0,   0,   0,   0,   0,   0,  73,  42,   0,  24,  60,
       21,   0,  79,   0,   0,  68,   0,   0,  84,  46,   0,   0,   0,
-       0,   0,   0,   0,   0,  39,  95,  98,   0,   0, 100,   0,  32,
+       0,   0,   0,   0,   0,  39,  96,  98,   0,   0, 100,   0,  32,
        0,  14,  27,  78,   0,  57,  89,   0,  35,   0,  62,   0,
   };
   static const unsigned char aLen[116] = {
@@ -39,9 +39,9 @@ static int keywordCode(const char *z, int n){
        7,   6,   7,   9,   3,   7,   9,   6,   9,   3,  10,   6,   6,
        4,   6,   3,   7,   6,   7,   5,  13,   2,   2,   5,   5,   6,
        7,   3,   7,   4,   4,   2,   7,   3,   8,   6,   4,   4,   7,
-       6,   6,   8,  10,   9,   6,   5,  12,  17,  12,   4,   4,   6,
+       6,   6,   8,  10,   9,   6,   5,  12,  12,  17,   4,   4,   6,
        8,   2,   4,   6,   5,   4,   5,   4,   4,   5,   6,   2,   9,
-       6,   7,   4,   6,   2,   3,   6,   4,   5,   7,   5,   8,   7,
+       6,   7,   4,   2,   6,   3,   6,   4,   5,   7,   5,   8,   7,
        5,   5,   8,   3,   4,   5,   6,   5,   6,   6,   4,   5,
   };
   static const unsigned short int aOffset[116] = {
@@ -74,8 +74,8 @@ static int keywordCode(const char *z, int n){
     TK_PLAN,       TK_DESC,       TK_DETACH,     TK_DISTINCT,   TK_IS,         
     TK_DROP,       TK_PRAGMA,     TK_MATCH,      TK_FAIL,       TK_LIMIT,      
     TK_FROM,       TK_JOIN_KW,    TK_GROUP,      TK_UPDATE,     TK_IF,         
-    TK_IMMEDIATE,  TK_INSERT,     TK_INSTEAD,    TK_INTO,       TK_OFFSET,     
-    TK_OF,         TK_SET,        TK_ISNULL,     TK_JOIN,       TK_ORDER,      
+    TK_IMMEDIATE,  TK_INSERT,     TK_INSTEAD,    TK_INTO,       TK_OF,         
+    TK_OFFSET,     TK_SET,        TK_ISNULL,     TK_JOIN,       TK_ORDER,      
     TK_REPLACE,    TK_JOIN_KW,    TK_RESTRICT,   TK_PRIMARY,    TK_QUERY,      
     TK_JOIN_KW,    TK_ROLLBACK,   TK_ROW,        TK_WHEN,       TK_UNION,      
     TK_UNIQUE,     TK_USING,      TK_VACUUM,     TK_VALUES,     TK_VIEW,       
@@ -83,8 +83,8 @@ static int keywordCode(const char *z, int n){
   };
   int h, i;
   if( n<2 ) return TK_ID;
-  h = ((sqlite3UpperToLower[((unsigned char*)z)[0]]*4) ^
-      (sqlite3UpperToLower[((unsigned char*)z)[n-1]]*3) ^
+  h = ((charMap(z[0])*4) ^
+      (charMap(z[n-1])*3) ^
       n) % 127;
   for(i=((int)aHash[h])-1; i>=0; i=((int)aNext[i])-1){
     if( aLen[i]==n && sqlite3StrNICmp(&zText[aOffset[i]],z,n)==0 ){

@@ -12,7 +12,7 @@
 ** This file contains routines used for analyzing expressions and
 ** for generating VDBE code that evaluates expressions in SQLite.
 **
-** $Id: expr.c,v 1.6 2006-02-16 10:11:46 jmiltner Exp $
+** $Id: expr.c,v 1.7 2006-05-04 13:48:36 tabuleiro Exp $
 */
 #include "sqliteInt.h"
 #include <ctype.h>
@@ -841,11 +841,13 @@ static int lookupName(
 
     if( pSrcList ){
       for(i=0, pItem=pSrcList->a; i<pSrcList->nSrc; i++, pItem++){
-        Table *pTab = pItem->pTab;
-        int iDb = sqlite3SchemaToIndex(db, pTab->pSchema);
+        Table *pTab;
+        int iDb;
         Column *pCol;
   
-        if( pTab==0 ) continue;
+        pTab = pItem->pTab;
+        assert( pTab!=0 );
+        iDb = sqlite3SchemaToIndex(db, pTab->pSchema);
         assert( pTab->nCol>0 );
         if( zTab ){
           if( pItem->zAlias ){
@@ -1379,11 +1381,7 @@ void sqlite3CodeSubselect(Parse *pParse, Expr *pExpr){
           ** expression we need to rerun this code each time.
           */
           if( testAddr>0 && !sqlite3ExprIsConstant(pE2) ){
-            VdbeOp *aOp = sqlite3VdbeGetOp(v, testAddr-1);
-            int j;
-            for(j=0; j<3; j++){
-              aOp[j].opcode = OP_Noop;
-            }
+            sqlite3VdbeChangeToNoop(v, testAddr-1, 3);
             testAddr = 0;
           }
 
@@ -1692,7 +1690,9 @@ void sqlite3ExprCode(Parse *pParse, Expr *pExpr){
 #ifndef SQLITE_OMIT_SUBQUERY
     case TK_EXISTS:
     case TK_SELECT: {
-      sqlite3CodeSubselect(pParse, pExpr);
+      if( pExpr->iColumn==0 ){
+        sqlite3CodeSubselect(pParse, pExpr);
+      }
       sqlite3VdbeAddOp(v, OP_MemLoad, pExpr->iColumn, 0);
       VdbeComment((v, "# load subquery result"));
       break;
