@@ -73,3 +73,5 @@ CONFIG	+= qt warn_on release staticlib
 LANGUAGE	= C
 #DEFINES -= UNICODE
 DEFINES += NDEBUG THREAD_SAFE=1 TEMP_STORE=2
+#The following line was inserted by qt3to4
+QT +=  qt3support 

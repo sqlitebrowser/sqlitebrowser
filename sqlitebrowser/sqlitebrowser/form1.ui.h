@@ -1,3 +1,8 @@
+//Added by qt3to4:
+#include <q3mimefactory.h>
+#include <QCloseEvent>
+#include <Q3TextStream>
+#include <Q3WhatsThis>
 /****************************************************************************
 ** ui.h extension file, included from the uic-generated form implementation.
 **
@@ -9,13 +14,13 @@
 
 void mainForm::init()
 {
-    clipboard = QApplication::clipboard();
-    if ( clipboard->supportsSelection() )
- clipboard->setSelectionMode( TRUE );
-    
-    findWin = 0;
+	 findWin = 0;
      editWin = 0;
      logWin = 0;
+
+    clipboard = QApplication::clipboard();
+    if ( clipboard->supportsSelection() )
+    
     recsPerView = 1000;
     recAtTop = 0;
     gotoValidator = new QIntValidator(0,0,this);
@@ -23,7 +28,7 @@ void mainForm::init()
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
     this->setCaption(applicationName);
-    this->setIcon( QPixmap::fromMimeSource( applicationIconName ) );
+    this->setIcon( qPixmapFromMimeSource( applicationIconName ) );
     buttonNext->setEnabled(FALSE);
     buttonPrevious->setEnabled(FALSE);
     
@@ -60,7 +65,7 @@ void mainForm::fileOpen(const QString & fileName)
     QString wFile = fileName;
     if (!QFile::exists(wFile))
     {
-     wFile = QFileDialog::getOpenFileName(
+     wFile = Q3FileDialog::getOpenFileName(
                     "",
                     "",
                     this,
@@ -99,7 +104,7 @@ void mainForm::fileOpen()
 
 void mainForm::fileNew()
 {
-    QString fileName = QFileDialog::getSaveFileName(
+    QString fileName = Q3FileDialog::getSaveFileName(
                     "",
                     "",
                     this,
@@ -140,18 +145,18 @@ void mainForm::populateStructure()
     db.updateSchema();
     tableMap::Iterator it;
     tableMap tmap = db.tbmap;
-    QListViewItem * lasttbitem = 0;
+    Q3ListViewItem * lasttbitem = 0;
         for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-     QListViewItem * tbitem = new QListViewItem( dblistView, lasttbitem );
+     Q3ListViewItem * tbitem = new Q3ListViewItem( dblistView, lasttbitem );
      //tbitem->setOpen( TRUE );
       tbitem->setText( 0, it.data().getname() );
       tbitem->setText( 1,  "table" );
       tbitem->setText( 3, it.data().getsql() );
      fieldMap::Iterator fit;
      fieldMap fmap = it.data().fldmap;
-     QListViewItem * lastflditem = 0;
+     Q3ListViewItem * lastflditem = 0;
      for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-   QListViewItem * fielditem = new QListViewItem(tbitem, lastflditem);
+   Q3ListViewItem * fielditem = new Q3ListViewItem(tbitem, lastflditem);
    fielditem->setText( 0, fit.data().getname() );
    fielditem->setText( 1, "field"  );
    fielditem->setText( 2, fit.data().gettype() );
@@ -162,7 +167,7 @@ void mainForm::populateStructure()
   indexMap::Iterator it2;
    indexMap imap = db.idxmap;
         for ( it2 = imap.begin(); it2 != imap.end(); ++it2 ) {
-     QListViewItem * item = new QListViewItem( dblistView, lasttbitem );
+     Q3ListViewItem * item = new Q3ListViewItem( dblistView, lasttbitem );
      item->setText( 0, it2.data().getname());
      item->setText( 1,  "index"  );
      item->setText( 3, it2.data().getsql() );
@@ -173,7 +178,7 @@ void mainForm::populateStructure()
 void mainForm::populateTable( const QString & tablename)
 {
     bool mustreset = false;
-    QApplication::setOverrideCursor( waitCursor, TRUE );
+    QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     if (tablename.compare(db.curBrowseTableName)!=0)
  mustreset = true;
     
@@ -317,7 +322,7 @@ void mainForm::deleteRecord()
 void mainForm::updateTableView(int lineToSelect)
 {
   //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
-    QApplication::setOverrideCursor( waitCursor, TRUE );
+    QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     QStringList fields = db.browseFields;
     
      dataTable->setNumRows(0); 
@@ -481,7 +486,7 @@ void mainForm::lookfor( const QString & wfield, const QString & woperator, const
  QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
  return;
     }
-    QApplication::setOverrideCursor( waitCursor, TRUE );
+    QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     resultMap res = db.getFindResults(wfield, woperator, wsearchterm);
     findWin->showResults(res);
     QApplication::restoreOverrideCursor();
@@ -538,7 +543,7 @@ void mainForm::createIndex()
 
 void mainForm::compact()
 {
-    QApplication::setOverrideCursor( waitCursor, TRUE );
+    QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     if (db.isOpen()){
  if (!db.compact()){
      QString error = "Error: could not compact the database file. Message from database engine:  ";
@@ -669,7 +674,7 @@ void mainForm::paste()
 
 void mainForm::helpWhatsThis()
 {
-    QWhatsThis::enterWhatsThisMode ();
+    Q3WhatsThis::enterWhatsThisMode ();
 }
 
 
@@ -695,9 +700,8 @@ void mainForm::updateRecordText(int row, int col, QString newtext)
      rowList tab = db.browseRecs;
  rowList::iterator rt = tab.at(row);
  QString rowid = (*rt).first();
- QStringList::Iterator cv = (*rt).at(col+1);//must account for rowid
+ QString content = (*rt).at(col+1);//must account for rowid
  
- QString content = *cv ;
  QString firstline = content.section( '\n', 0,0 );
  if (content.length()>MAX_DISPLAY_LENGTH )
  {
@@ -726,10 +730,10 @@ void mainForm::editText(int row, int col)
     rowList tab = db.browseRecs;
     rowList::iterator rt = tab.at(row);
     QString rowid = (*rt).first();
-    QStringList::Iterator cv = (*rt).at(col+1);//must account for rowid
+    QString cv = (*rt).at(col+1);//must account for rowid
      //dataTable->setText( row - recAtTop, col, *cv  );
  
-    editWin->loadText(*cv , row, col);
+    editWin->loadText(cv , row, col);
     editWin ->show();
 }
 
@@ -779,11 +783,11 @@ void mainForm::executeQuery()
  if (err == SQLITE_OK){
      db.setDirty(true);
      int rownum = 0;
-   QListViewItem * lasttbitem = 0;
+   Q3ListViewItem * lasttbitem = 0;
    bool mustCreateColumns = true;
    while ( sqlite3_step(vm) == SQLITE_ROW ){
        //r.clear()
-           QListViewItem * tbitem = new QListViewItem( queryResultListView, lasttbitem);
+           Q3ListViewItem * tbitem = new Q3ListViewItem( queryResultListView, lasttbitem);
        //setup num of cols here for display grid
        if (mustCreateColumns)
     {
@@ -813,7 +817,7 @@ void mainForm::executeQuery()
           lastErrorMessage = QString (sqlite3_errmsg(db._db));
         }
        queryErrorLineEdit->setText(lastErrorMessage);
-       queryResultListView->setResizeMode(QListView::AllColumns);
+       queryResultListView->setResizeMode(Q3ListView::AllColumns);
 }
 
 
@@ -873,7 +877,7 @@ void mainForm::importTableFromCSV()
   }
     }
     
-    QString wFile = QFileDialog::getOpenFileName(
+    QString wFile = Q3FileDialog::getOpenFileName(
                     "",
                     "Text files (*.csv *.txt)",
                     this,
@@ -905,24 +909,24 @@ void mainForm::exportTableToCSV()
  //load our table
  db.browseTable(exportForm->option);
  
- QString fileName = QFileDialog::getSaveFileName(
+ QString fileName = Q3FileDialog::getSaveFileName(
                     "",
                     "Text files (*.csv *txt)",
                     this,
                     "save file dialog"
                     "Choose a filename to export data" );
     
- if (fileName)
+ if (fileName.size() > 0)
  {
      QFile file(fileName);
-     if ( file.open( IO_WriteOnly ) ) 
+     if ( file.open( QIODevice::WriteOnly ) ) 
      {
   char quote = '"';
   char sep = ',';
   char feed = 10;
   int colNum = 0;
   int colCount = 0;
-  QTextStream stream( &file );
+  Q3TextStream stream( &file );
   //fieldnames on first row
    QStringList fields = db.browseFields;
    colCount = fields.count();
@@ -1024,14 +1028,14 @@ void mainForm::exportDatabaseToSQL()
  return;
     }
 
-    QString fileName = QFileDialog::getSaveFileName(
+    QString fileName = Q3FileDialog::getSaveFileName(
                     "",
                     "Text files (*.sql *txt)",
                     0,
                     "save file dialog"
                     "Choose a filename to export" );
     
- if (fileName)
+ if (fileName.size() > 0)
  {
      if (!db.dump(fileName))
      {
@@ -1045,19 +1049,19 @@ void mainForm::exportDatabaseToSQL()
 
 void mainForm::importDatabaseFromSQL()
 {
-    QString fileName = QFileDialog::getOpenFileName(
+    QString fileName = Q3FileDialog::getOpenFileName(
                     "",
                     "Text files (*.sql *txt)",
                     0,
                     "import file dialog"
                     "Choose a file to import" );
     
-    if (fileName)
+    if (fileName.size() > 0)
  {
  QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
  if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
  {
- QString newDBfile = QFileDialog::getSaveFileName(
+ QString newDBfile = Q3FileDialog::getSaveFileName(
   "",
   "",
   this,

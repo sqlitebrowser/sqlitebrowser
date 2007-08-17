@@ -1,3 +1,5 @@
+QT += qt3support
+
 TEMPLATE	= app
 LANGUAGE	= C++
 
@@ -11,7 +13,8 @@ SOURCES	+= browsermain.cpp \
 	sqlitedb.cpp \
 	sqlbrowser_util.c
 
-FORMS	= aboutform.ui \
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3	= aboutform.ui \
 	addfieldform.ui \
 	addfieldtypeform.ui \
 	choosetableform.ui \
@@ -51,7 +54,7 @@ unix {
 }
 win32 {
   RC_FILE = winapp.rc
-  LIBS	+= sqlite_source/sqlite_source.lib
+  LIBS	+= sqlite_source/release/libsqlite_source.a
 }
 mac {
   RC_FILE = macapp.icns
@@ -60,113 +63,8 @@ mac {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-unix {
-  UI_DIR = .ui
-  MOC_DIR = .moc
-  OBJECTS_DIR = .obj
-}
-
+#The following line was inserted by qt3to4
+QT +=  
+#The following line was inserted by qt3to4
+CONFIG += uic3
 

@@ -4,7 +4,7 @@
 #include <qregexp.h>
 #include <qimage.h>
 #include <qfile.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 #include <qmessagebox.h>
 
 //utility functions
@@ -71,9 +71,10 @@ bool DBBrowserDB::open ( const QString & db)
   
   //try to verify the SQLite version 3 file header
   QFile dbfile(db);
-   if ( dbfile.open( IO_ReadOnly ) ) {
-       QString contents = QString("");
-       dbfile.readLine(contents, 16);
+   if ( dbfile.open( QIODevice::ReadOnly ) ) {
+	   char buffer[16+1];
+       dbfile.readLine(buffer, 16);
+       QString contents = QString(buffer);
        dbfile.close();
        if (!contents.startsWith("SQLite format 3")) {
     lastErrorMessage = QString("File is not a SQLite 3 database");
@@ -378,8 +379,8 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     
     rowList::iterator rt = browseRecs.at(wrow);
     QString rowid = (*rt).first();
-    QStringList::Iterator cv = (*rt).at(wcol+1);//must account for rowid
-    QStringList::Iterator ct = browseFields.at(wcol);
+    QString cv = (*rt).at(wcol+1);//must account for rowid
+    QString ct = browseFields.at(wcol);
     
     sqlite3_stmt *vm;
    const char *tail;
@@ -389,7 +390,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     QString statement = "UPDATE ";
     statement.append(curBrowseTableName.latin1());
     statement.append(" SET ");
-    statement.append(*ct);
+    statement.append(ct);
     statement.append("=?");
     statement.append(" WHERE rowid=");
     statement.append(rowid.latin1());
@@ -416,7 +417,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
           lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
       } 
   
-   (*cv) = wtext;
+   cv = wtext;
 
     return ok;
 }
@@ -750,7 +751,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
  bool inescapemode = false;
  int recs = 0;
  *numfields = 0;
-    if ( file.open( IO_ReadWrite ) ) {
+    if ( file.open( QIODevice::ReadWrite ) ) {
   char c=0;
         while ( c!=-1) {
             c = file.getch();

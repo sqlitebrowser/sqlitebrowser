@@ -33,10 +33,10 @@ void editTableForm::populateFields()
     types= pdb->getTableTypes(curTable);
     fieldListView->clear();
     fieldListView->setSorting (-1, FALSE);
-    QListViewItem * lasttbitem = 0;
+    Q3ListViewItem * lasttbitem = 0;
     QStringList::Iterator tt = types.begin();
     for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
-	QListViewItem * tbitem = new QListViewItem( fieldListView, lasttbitem);
+	Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, lasttbitem);
 	tbitem->setText( 0, *ct  );
 	tbitem->setText( 1, *tt );
 	lasttbitem = tbitem;
@@ -50,7 +50,7 @@ void editTableForm::renameTable()
    renTableForm->setTableName(curTable);
    if (renTableForm->exec())
    {
-       QApplication::setOverrideCursor( waitCursor ); // this might take time
+       QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
        modified = true;
        QString newName = renTableForm->getTableName();
        qDebug(newName);
@@ -59,8 +59,8 @@ void editTableForm::renameTable()
        //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
        
        sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-       QListViewItemIterator it( fieldListView );
-       QListViewItem * item;
+       Q3ListViewItemIterator it( fieldListView );
+       Q3ListViewItem * item;
        while ( it.current() ) {
 	   item = it.current();
 	   sql.append(item->text(0));
@@ -76,7 +76,7 @@ void editTableForm::renameTable()
        if (!pdb->executeSQL(sql)) goto rollback;
        
        sql = "INSERT INTO TEMP_TABLE SELECT ";
-       it = QListViewItemIterator( fieldListView );
+       it = Q3ListViewItemIterator( fieldListView );
        while ( it.current() ) {
 	   item = it.current();
 	   sql.append(item->text(0));
@@ -99,7 +99,7 @@ void editTableForm::renameTable()
        sql = "CREATE TABLE ";
        sql.append(newName);
        sql.append(" (");
-       it = QListViewItemIterator( fieldListView );
+       it = Q3ListViewItemIterator( fieldListView );
        while ( it.current() ) {
 	   item = it.current();
 	   sql.append(item->text(0));
@@ -117,7 +117,7 @@ void editTableForm::renameTable()
        sql = "INSERT INTO ";
        sql.append(newName);
        sql.append(" SELECT ");
-       it = QListViewItemIterator( fieldListView );
+       it = Q3ListViewItemIterator( fieldListView );
        while ( it.current() ) {
 	   item = it.current();
 	   sql.append(item->text(0));
@@ -153,7 +153,7 @@ void editTableForm::renameTable()
 
 void editTableForm::editField()
 {
-    QListViewItem * item = fieldListView->selectedItem();
+    Q3ListViewItem * item = fieldListView->selectedItem();
     if (item==0) {
 	//should never happen, the button would not be active, but...
 	return;
@@ -172,8 +172,8 @@ void editTableForm::editField()
 	   //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
        
 	     QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-	     QListViewItemIterator it( fieldListView );
-	     QListViewItem * item;
+	     Q3ListViewItemIterator it( fieldListView );
+	     Q3ListViewItem * item;
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -210,7 +210,7 @@ void editTableForm::editField()
 	     sql = "CREATE TABLE ";
 	     sql.append(curTable);
 	     sql.append(" (");
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -228,7 +228,7 @@ void editTableForm::editField()
 	     sql = "INSERT INTO ";
 	     sql.append(curTable);
 	     sql.append(" SELECT ");
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -271,7 +271,7 @@ void editTableForm::addField()
    {
 	modified = true;
 
-	QListViewItem * tbitem = new QListViewItem( fieldListView);
+	Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView);
 	tbitem->setText( 0, addForm->fname);
 	tbitem->setText( 1, addForm->ftype);
        //do the sql creation here
@@ -279,8 +279,8 @@ void editTableForm::addField()
 	    //do the sql rename here
 	    //qDebug(fieldForm->name + fieldForm->type);
 	QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-	QListViewItemIterator it( fieldListView );
-	QListViewItem * item;
+	Q3ListViewItemIterator it( fieldListView );
+	Q3ListViewItem * item;
 	
 	//not until nested transaction are supported
 	     //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
@@ -319,7 +319,7 @@ void editTableForm::addField()
 	     sql = "CREATE TABLE ";
 	     sql.append(curTable);
 	     sql.append(" (");
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -385,7 +385,7 @@ void editTableForm::addField()
 
 void editTableForm::removeField()
 {
-    QListViewItem * remitem = fieldListView->selectedItem();
+    Q3ListViewItem * remitem = fieldListView->selectedItem();
     if (remitem==0) {
 	//should never happen, the button would not be active, but...
 	return;
@@ -405,13 +405,13 @@ void editTableForm::removeField()
 	    modified = true;
 	    delete remitem;
     	QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-	QListViewItemIterator it( fieldListView );
-	QListViewItem * item;
+	Q3ListViewItemIterator it( fieldListView );
+	Q3ListViewItem * item;
 	
 	//not until nested transaction are supported
 	//     if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
        
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -427,7 +427,7 @@ void editTableForm::removeField()
 	     if (!pdb->executeSQL(sql)) goto rollback;
 	     
 	     sql = "INSERT INTO TEMP_TABLE SELECT ";
-	    it = QListViewItemIterator( fieldListView );
+	    it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -451,7 +451,7 @@ void editTableForm::removeField()
 	     sql = "CREATE TABLE ";
 	     sql.append(curTable);
 	     sql.append(" (");
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -469,7 +469,7 @@ void editTableForm::removeField()
 	     sql = "INSERT INTO ";
 	     sql.append(curTable);
 	     sql.append("(");
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -480,7 +480,7 @@ void editTableForm::removeField()
 		 ++it;
 	     }
 	     sql.append(") SELECT ");
-	     it = QListViewItemIterator( fieldListView );
+	     it = Q3ListViewItemIterator( fieldListView );
 	     while ( it.current() ) {
 		 item = it.current();
 		 sql.append(item->text(0));
@@ -517,7 +517,7 @@ void editTableForm::removeField()
 
 void editTableForm::fieldSelectionChanged()
 {
-    QListViewItem * item = fieldListView->selectedItem();
+    Q3ListViewItem * item = fieldListView->selectedItem();
     if (item==0) {
 	renameFieldButton->setEnabled(false);
 	removeFieldButton->setEnabled(false);

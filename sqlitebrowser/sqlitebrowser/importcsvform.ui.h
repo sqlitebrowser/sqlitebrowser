@@ -196,7 +196,7 @@ void importCSVForm::fieldSeparatorChanged()
 	sep = 9;
     } else {
     QChar qsep = curText.at(0);
-    sep = (char) qsep;
+    sep = (char) qsep.ascii();
 }
     preview();
 }
@@ -206,7 +206,7 @@ void importCSVForm::textQuoteChanged()
 {
     QString curText = quoteBox->currentText();
     QChar qquote = curText.at(0);
-    quote = (char) qquote;
+	quote = (char) qquote.ascii();
     preview();
 }
 

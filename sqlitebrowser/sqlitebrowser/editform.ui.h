@@ -1,3 +1,6 @@
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <Q3TextStream>
 /****************************************************************************
 ** ui.h extension file, included from the uic-generated form implementation.
 **
@@ -91,7 +94,7 @@ void editForm::loadText(QString  text, int row, int col)
 void editForm::importData()
 {
     int type = kSQLiteMediaType_Void;
-        QString fileName = QFileDialog::getOpenFileName(
+        QString fileName = Q3FileDialog::getOpenFileName(
                     "",
                     QString( "Text files (*.txt);;"
 	  "All files (*.*);;"),
@@ -103,8 +106,8 @@ void editForm::importData()
 	type = kSQLiteMediaType_String;
 
 	QFile file( fileName );
-	if ( file.open( IO_ReadOnly ) ) {
-	    QTextStream stream( &file );
+	if ( file.open( QIODevice::ReadOnly ) ) {
+	    Q3TextStream stream( &file );
 	    textEditor->setText(stream.read());
 	    file.close();
 	}
@@ -128,22 +131,22 @@ void editForm::exportData()
     }
 
 	
-    QString fileName = QFileDialog::getSaveFileName(
+    QString fileName = Q3FileDialog::getSaveFileName(
                     "",
                     filter,
                     this,
                     "save file dialog"
                     "Choose a filename to export data" );
     
-    if (fileName)
+    if (fileName.size() > 0)
     {
 	    switch (dataType) 
 	    {
 	    case kSQLiteMediaType_String: 
 	   {
 		QFile file(fileName);
-		if ( file.open( IO_WriteOnly ) ) {
-		       QTextStream stream( &file );
+		if ( file.open( QIODevice::WriteOnly ) ) {
+		       Q3TextStream stream( &file );
 		       stream << textEditor->text();
 		       file.close();
 		   }

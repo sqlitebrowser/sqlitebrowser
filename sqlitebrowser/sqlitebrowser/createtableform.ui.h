@@ -57,8 +57,8 @@ void createTableForm::confirmCreate()
 	createStatement = "CREATE TABLE ";
 	createStatement.append(tabname);
 	createStatement.append(" (");
-	QListViewItemIterator it( fieldListView );
-	QListViewItem * item;
+	Q3ListViewItemIterator it( fieldListView );
+	Q3ListViewItem * item;
 	while ( it.current() ) {
 	    item = it.current();
 	  createStatement.append(item->text(0));
@@ -90,7 +90,7 @@ void createTableForm::addField()
     if (addForm->exec())
    {
        //qDebug(addForm->fname + addForm->ftype);
-       QListViewItem * tbitem = new QListViewItem( fieldListView);
+       Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView);
        tbitem->setText( 0, addForm->fname  );
        tbitem->setText( 1, addForm->ftype );
    }
@@ -99,7 +99,7 @@ void createTableForm::addField()
 
 void createTableForm::deleteField()
 {
-    QListViewItem * item = fieldListView->selectedItem();
+    Q3ListViewItem * item = fieldListView->selectedItem();
     if (item==0) {
 	//should never happen, the button would not be active, but...
 	return;
@@ -112,7 +112,7 @@ void createTableForm::deleteField()
 
 void createTableForm::fieldSelectionChanged()
 {
-     QListViewItem * item = fieldListView->selectedItem();
+     Q3ListViewItem * item = fieldListView->selectedItem();
     if (item==0) {
 	buttonDeleteField->setEnabled(false);
     } else {

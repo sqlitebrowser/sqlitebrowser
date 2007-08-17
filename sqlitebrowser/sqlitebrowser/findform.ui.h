@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <QCloseEvent>
 /****************************************************************************
 ** ui.h extension file, included from the uic-generated form implementation.
 **
@@ -12,9 +14,9 @@ void findForm::showResults(resultMap rmap)
     findListView->clear();
     findListView->setSorting(-1);
     resultMap::Iterator it;
-    QListViewItem * lasttbitem = 0;
+    Q3ListViewItem * lasttbitem = 0;
         for ( it = rmap.begin(); it != rmap.end(); ++it ) {
-	    QListViewItem * tbitem = new QListViewItem( findListView, lasttbitem );
+	    Q3ListViewItem * tbitem = new Q3ListViewItem( findListView, lasttbitem );
 	    //tbitem->setOpen( TRUE );
 	    tbitem->setText( 0, QString::number(it.key() + 1,10) ); //increase from index 0
 	    QString firstline = it.data().section( '\n', 0,0 );
@@ -52,7 +54,7 @@ void findForm::resetResults()
 }
 
 
-void findForm::recordSelected( QListViewItem * witem)
+void findForm::recordSelected( Q3ListViewItem * witem)
 {
     if (witem) {
     int recNum = (witem->text(0)).toInt() ;

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <qstringlist.h>
 #include <qmap.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qobject.h>
 #include "sqllogform.h"
 #include "sqlite_source/sqlite3.h"
@@ -31,7 +31,7 @@ typedef QMap<int, class DBBrowserTable> tableMap;
 typedef QMap<int, class DBBrowserIndex> indexMap;
 typedef QMap<int, int> rowIdMap;
 
-typedef QValueList<QStringList> rowList;
+typedef Q3ValueList<QStringList> rowList;
 typedef QMap<int, QString> resultMap;
 
 //utility functions
