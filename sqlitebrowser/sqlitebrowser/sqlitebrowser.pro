@@ -54,7 +54,10 @@ unix {
 }
 win32 {
   RC_FILE = winapp.rc
+  #For MingW
   LIBS	+= sqlite_source/release/libsqlite_source.a
+  #For MSVC
+  #LIBS	+= sqlite_source/release/sqlite_source.lib
 }
 mac {
   RC_FILE = macapp.icns
