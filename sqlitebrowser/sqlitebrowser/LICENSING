@@ -1,4 +1,4 @@
-LICENSING
+﻿LICENSING
 
 This code is in Public Domain. You may do whatever you want with it.
 
@@ -17,12 +17,8 @@ software with any license you want as long as we are concerned, including
 GPL, Public Domain or Commercial, provided you abide to the licensing
 terms of the version of QT you have installed on your machine. 
 
-There are GPL versions of QT available at www.trolltech.com for X11 
-and MacOSX, and QT/GPL is included in almost all Linux distributions 
-since it is required by KDE. Windows users however need to purchase
-a commercial version of QT (there is no GPL version for QT 3.x for 
-Windows at this time.) Please consult www.trolltech.com/licensing
-if you have any questions about QT licensing.
+Please consult www.trolltech.com/licensing if you have any questions 
+about QT licensing.
 
 
 REDISTRIBUTION OF BINARIES
