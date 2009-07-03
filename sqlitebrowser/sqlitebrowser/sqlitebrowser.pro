@@ -5,11 +5,13 @@ LANGUAGE	= C++
 
 CONFIG	+= qt warn_on release
 
-HEADERS	+= sqlitebrowsertypes.h \
+HEADERS	+= extendedmainform.h \ 
+	sqlitebrowsertypes.h \
 	sqlitedb.h \
 	sqlbrowser_util.h
 
-SOURCES	+= browsermain.cpp \
+SOURCES	+= extendedmainform.cpp \ 
+	browsermain.cpp \
 	sqlitedb.cpp \
 	sqlbrowser_util.c
 
