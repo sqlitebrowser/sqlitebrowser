@@ -20,7 +20,7 @@ void mainForm::init()
 
     clipboard = QApplication::clipboard();
     if ( clipboard->supportsSelection() )
-    
+
     recsPerView = 1000;
     recAtTop = 0;
     gotoValidator = new QIntValidator(0,0,this);
@@ -31,8 +31,8 @@ void mainForm::init()
     this->setIcon( qPixmapFromMimeSource( applicationIconName ) );
     buttonNext->setEnabled(FALSE);
     buttonPrevious->setEnabled(FALSE);
-    
-    
+
+
        if (!editWin)
     {
        editWin = new editForm(this);
@@ -40,17 +40,17 @@ void mainForm::init()
        connect( editWin, SIGNAL( updateRecordText(int, int , QString) ),
                      this, SLOT( updateRecordText(int, int , QString) ) );
    }
-       
+
         if (!logWin)
     {
        logWin = new sqlLogForm(this);
        connect( logWin, SIGNAL( goingAway() ),this, SLOT( logWinAway() ) );
        connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
    }
- 
+
  //connect db and log
     db.logWin = logWin;
- 
+
 }
 
 void mainForm::destroy()
@@ -173,7 +173,7 @@ void mainForm::populateStructure()
      item->setText( 3, it2.data().getsql() );
      lasttbitem = item ;
         }
-} 
+}
 
 void mainForm::populateTable( const QString & tablename)
 {
@@ -181,7 +181,7 @@ void mainForm::populateTable( const QString & tablename)
     QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     if (tablename.compare(db.curBrowseTableName)!=0)
  mustreset = true;
-    
+
     if (!db.browseTable(tablename)){
  dataTable->setNumRows( 0 );
  dataTable->setNumCols( 0 );
@@ -200,7 +200,7 @@ void mainForm::populateTable( const QString & tablename)
     } else {
  updateTableView(-1);
     }
-  //got to keep findWin in synch  
+  //got to keep findWin in synch
     if (findWin){
  findWin->resetResults();
     }
@@ -256,7 +256,7 @@ void mainForm::fileExit()
    {
     bool done(false);
     do {
-     if ( db.save() ) 
+     if ( db.save() )
       done = true;
      else {
       QString error = "Error: could not save the database.\nMessage from database engine:  ";
@@ -292,7 +292,7 @@ void mainForm::addRecord()
 {
     if (db.addRecord()){
   populateTable(db.curBrowseTableName);
- //added record will be the last one in view 
+ //added record will be the last one in view
  recAtTop = ((db.getRecordCount()-1)/recsPerView)*recsPerView;
  updateTableView(db.getRecordCount()-recAtTop-1);
     }else{
@@ -324,24 +324,24 @@ void mainForm::updateTableView(int lineToSelect)
   //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
     QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     QStringList fields = db.browseFields;
-    
-     dataTable->setNumRows(0); 
+
+     dataTable->setNumRows(0);
     dataTable->setNumCols( fields.count() );
     int cheadnum = 0;
     for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
  dataTable->horizontalHeader()->setLabel( cheadnum, *ct  );
  cheadnum++;
     }
-    
+
     rowList tab = db.browseRecs;
     int maxRecs = db.getRecordCount();
     int recsThisView = maxRecs - recAtTop;
-    
+
     if (recsThisView>recsPerView)
  recsThisView = recsPerView;
-    
+
    // qDebug("recsthisview= %d\n",recsThisView);
-    
+
     dataTable->setNumRows( recsThisView);
     rowList::iterator rt;
     int rowNum = 0;
@@ -370,12 +370,12 @@ void mainForm::updateTableView(int lineToSelect)
  rowNum++;
  if (rowNum==recsThisView) break;
     }
-    
+
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
  //qDebug("inside selection");
  selectTableLine(lineToSelect);
-    } 
+    }
     setRecordsetLabel();
     QApplication::restoreOverrideCursor();
 }
@@ -385,7 +385,7 @@ void mainForm::selectTableLine(int lineToSelect)
     dataTable->clearSelection(true);
    dataTable->selectRow(lineToSelect);
    dataTable->setCurrentCell(lineToSelect, 0);
-   dataTable->ensureCellVisible (lineToSelect, 0 ) ; 
+   dataTable->ensureCellVisible (lineToSelect, 0 ) ;
 }
 
 void mainForm::navigatePrevious()
@@ -400,7 +400,7 @@ void mainForm::navigatePrevious()
 
 void mainForm::navigateNext()
 {
-    int nextFirstRec = recAtTop + recsPerView; 
+    int nextFirstRec = recAtTop + recsPerView;
     //qDebug("called navigatenext, nextFirstRec=%d\n",nextFirstRec);
     if (nextFirstRec < db.getRecordCount() ) {
  recAtTop = nextFirstRec;
@@ -416,7 +416,7 @@ void mainForm::navigateGoto()
     int dec = typed.toInt( &ok);
     if (dec==0) dec=1;
     if (dec>db.getRecordCount()) dec = db.getRecordCount();
-    
+
     recAtTop = ((dec-1)/recsPerView)*recsPerView;
     updateTableView(dec-recAtTop-1);
     editGoto->setText(QString::number(dec,10));
@@ -426,7 +426,7 @@ void mainForm::setRecordsetLabel()
 {
     if (db.getRecordCount()==0){
  labelRecordset->setText("0 - 0 of 0");
-    } else { 
+    } else {
  QString label = QString::number(recAtTop+1,10);
  label.append(" - ");
  int lastrec = db.getRecordCount();
@@ -438,7 +438,7 @@ void mainForm::setRecordsetLabel()
  labelRecordset->setText(label);
     }
     gotoValidator->setRange ( 0, db.getRecordCount());
-    
+
     if (db.getRecordCount()>1000){
  if (recAtTop>=1000) {
      buttonPrevious->setEnabled(TRUE);
@@ -701,7 +701,7 @@ void mainForm::updateRecordText(int row, int col, QString newtext)
  rowList::iterator rt = tab.at(row);
  QString rowid = (*rt).first();
  QString content = (*rt).at(col+1);//must account for rowid
- 
+ content = newtext; //AKG
  QString firstline = content.section( '\n', 0,0 );
  if (content.length()>MAX_DISPLAY_LENGTH )
  {
@@ -732,7 +732,7 @@ void mainForm::editText(int row, int col)
     QString rowid = (*rt).first();
     QString cv = (*rt).at(col+1);//must account for rowid
      //dataTable->setText( row - recAtTop, col, *cv  );
- 
+
     editWin->loadText(cv , row, col);
     editWin ->show();
 }
@@ -745,9 +745,9 @@ void mainForm::doubleClickTable( int row, int col, int button, const QPoint & mo
  qDebug("no cell selected");
  return;
     }
-    
+
     int realRow = row + recAtTop;
-   
+
     editText(realRow , col);
 }
 
@@ -778,7 +778,7 @@ void mainForm::executeQuery()
    {
        queryResultListView->removeColumn(0);
    }
-   
+
  err=sqlite3_prepare(db._db,query.utf8(),-1,&vm,&tail);
  if (err == SQLITE_OK){
      db.setDirty(true);
@@ -794,7 +794,7 @@ void mainForm::executeQuery()
    ncol = sqlite3_data_count(vm);
    for (int e=0; e<ncol; e++)
     queryResultListView->addColumn("");
-  
+
    mustCreateColumns = false;
        }
        for (int e=0; e<ncol; e++){
@@ -847,7 +847,7 @@ void mainForm::importTableFromCSV()
   QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
   return;
     }
-     
+
      if (db.getDirty())
      {
   QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
@@ -855,7 +855,7 @@ void mainForm::importTableFromCSV()
   {
    bool done(false);
    do {
-    if ( db.save() ) 
+    if ( db.save() )
      done = true;
     else {
      QString error = "Error: could not save the database.\nMessage from database engine:  ";
@@ -876,14 +876,14 @@ void mainForm::importTableFromCSV()
    return;
   }
     }
-    
+
     QString wFile = Q3FileDialog::getOpenFileName(
                     "",
                     "Text files (*.csv *.txt)",
                     this,
                     "import csv data"
                     "Choose a text file" );
-    
+
     if (QFile::exists(wFile) )
     {
   importCSVForm * csvForm = new importCSVForm( this, "importcsv", TRUE );
@@ -908,18 +908,18 @@ void mainForm::exportTableToCSV()
  //qDebug(exportForm->option);
  //load our table
  db.browseTable(exportForm->option);
- 
+
  QString fileName = Q3FileDialog::getSaveFileName(
                     "",
                     "Text files (*.csv *txt)",
                     this,
                     "save file dialog"
                     "Choose a filename to export data" );
-    
+
  if (fileName.size() > 0)
  {
      QFile file(fileName);
-     if ( file.open( QIODevice::WriteOnly ) ) 
+     if ( file.open( QIODevice::WriteOnly ) )
      {
   char quote = '"';
   char sep = ',';
@@ -943,11 +943,11 @@ void mainForm::exportTableToCSV()
    colNum = 0;
   }
    }
-  
+
   //now export data
   rowList tab = db.browseRecs;
   rowList::iterator rt;
-  
+
   //int dcols =0;
   QString rowLabel;
   for ( rt = tab.at(0); rt !=tab.end(); ++rt )
@@ -972,10 +972,10 @@ void mainForm::exportTableToCSV()
    }
      }
   }
-    
+
   file.close();
   QMessageBox::information( this, applicationName, "Export completed" );
-     } 
+     }
  }
  populateStructure();
  resetBrowser();
@@ -1034,7 +1034,7 @@ void mainForm::exportDatabaseToSQL()
                     0,
                     "save file dialog"
                     "Choose a filename to export" );
-    
+
  if (fileName.size() > 0)
  {
      if (!db.dump(fileName))
@@ -1055,7 +1055,7 @@ void mainForm::importDatabaseFromSQL()
                     0,
                     "import file dialog"
                     "Choose a file to import" );
-    
+
     if (fileName.size() > 0)
  {
  QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
@@ -1091,5 +1091,5 @@ void mainForm::importDatabaseFromSQL()
      }
      populateStructure();
      resetBrowser();
- } 
+ }
 }
