@@ -64,9 +64,6 @@ mac {
   MOC_DIR = .moc
   OBJECTS_DIR = .obj
   DEFINES += HAVE_USLEEP=1
-  QMAKE_CC = gcc-3.3
-  QMAKE_CXX = g++-3.3
-  QMAKE_LINK = $$QMAKE_CXX
 }
 TEMPLATE	=lib
 CONFIG	+= qt warn_on release staticlib
