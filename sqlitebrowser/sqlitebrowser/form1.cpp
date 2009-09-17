@@ -1,20 +1,60 @@
-//Added by qt3to4:
-#include <q3mimefactory.h>
-#include <QCloseEvent>
+#include "form1.h"
+
+#include <qvariant.h>
+#include <qimage.h>
+#include <qpixmap.h>
+
 #include <Q3TextStream>
 #include <Q3WhatsThis>
-/****************************************************************************
-** ui.h extension file, included from the uic-generated form implementation.
-**
-** If you wish to add, delete or rename functions or slots use
-** Qt Designer which will update this file, preserving your code. Create an
-** init() function in place of a constructor, and a destroy() function in
-** place of a destructor.
-*****************************************************************************/
+
+#include "qmessagebox.h"
+#include "q3filedialog.h"
+#include "qfile.h"
+#include "qapplication.h"
+#include "createtableform.h"
+#include "createindexform.h"
+#include "deletetableform.h"
+#include "deleteindexform.h"
+#include "aboutform.h"
+#include "choosetableform.h"
+#include "edittableform.h"
+#include "importcsvform.h"
+#include "exporttablecsvform.h"
+/*
+ *  Constructs a mainForm as a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'.
+ *
+ */
+mainForm::mainForm(QWidget* parent, const char* name, Qt::WindowFlags fl)
+    : Q3MainWindow(parent, name, fl)
+{
+    setupUi(this);
+
+    (void)statusBar();
+    init();
+}
+
+/*
+ *  Destroys the object and frees any allocated resources
+ */
+mainForm::~mainForm()
+{
+    destroy();
+    // no need to delete child widgets, Qt does it all for us
+}
+
+/*
+ *  Sets the strings of the subwidgets using the current
+ *  language.
+ */
+void mainForm::languageChange()
+{
+    retranslateUi(this);
+}
 
 void mainForm::init()
 {
-	 findWin = 0;
+         findWin = 0;
      editWin = 0;
      logWin = 0;
 
@@ -1093,3 +1133,5 @@ void mainForm::importDatabaseFromSQL()
      resetBrowser();
  }
 }
+
+

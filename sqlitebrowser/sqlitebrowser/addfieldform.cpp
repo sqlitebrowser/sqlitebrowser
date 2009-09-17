@@ -1,11 +1,43 @@
-/****************************************************************************
-** ui.h extension file, included from the uic-generated form implementation.
-**
-** If you wish to add, delete or rename functions or slots use
-** Qt Designer which will update this file, preserving your code. Create an
-** init() function in place of a constructor, and a destroy() function in
-** place of a destructor.
-*****************************************************************************/
+#include "addfieldform.h"
+
+#include <qvariant.h>
+#include <qmessagebox.h>
+#include <qimage.h>
+#include <qpixmap.h>
+
+#include "sqlitedb.h"
+#include "addfieldtypeform.h"
+/*
+ *  Constructs a addFieldForm as a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'.
+ *
+ *  The dialog will by default be modeless, unless you set 'modal' to
+ *  true to construct a modal dialog.
+ */
+addFieldForm::addFieldForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, name, modal, fl)
+{
+    setupUi(this);
+
+}
+
+/*
+ *  Destroys the object and frees any allocated resources
+ */
+addFieldForm::~addFieldForm()
+{
+    // no need to delete child widgets, Qt does it all for us
+}
+
+/*
+ *  Sets the strings of the subwidgets using the current
+ *  language.
+ */
+void addFieldForm::languageChange()
+{
+    retranslateUi(this);
+}
+
 void addFieldForm::setInitialValues(QString name, QString type)
 {
     nameLineEdit->setText(name);
