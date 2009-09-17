@@ -4,9 +4,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sqlite_source/sqliteInt.h"
+#include "sqlite_source/sqlite3.h"
 
 /*following routines extracted from shell.c for dump support*/
+
+/*
+** Determines if a string is a number of not.
+*/
+static int isNumber(const char *z, int *realnum){
+  if( *z=='-' || *z=='+' ) z++;
+  if( !isdigit(*z) ){
+    return 0;
+  }
+  z++;
+  if( realnum ) *realnum = 0;
+  while( isdigit(*z) ){ z++; }
+  if( *z=='.' ){
+    z++;
+    if( !isdigit(*z) ) return 0;
+    while( isdigit(*z) ){ z++; }
+    if( realnum ) *realnum = 1;
+  }
+  if( *z=='e' || *z=='E' ){
+    z++;
+    if( *z=='+' || *z=='-' ) z++;
+    if( !isdigit(*z) ) return 0;
+    while( isdigit(*z) ){ z++; }
+    if( realnum ) *realnum = 1;
+  }
+  return *z==0;
+}
 
 
 char *modeDescr[MODE_NUM_OF] = {
@@ -193,7 +220,7 @@ static int callback(void *pArg, int nArg, char **azArg, char **azCol){
         char *zSep = i>0 ? ",": "";
         if( azArg[i]==0 ){
           fprintf(p->out,"%sNULL",zSep);
-        }else if( sqlite3IsNumber(azArg[i], NULL, SQLITE_UTF8) ){
+        }else if( isNumber(azArg[i], 0) ){
           fprintf(p->out,"%s%s",zSep, azArg[i]);
         }else{
           if( zSep[0] ) fprintf(p->out,"%s",zSep);
@@ -341,20 +368,6 @@ static int _all_whitespace(const char *z){
     return 0;
   }
   return 1;
-}
-
-/*
-** Return TRUE if the line typed in is an SQL command terminator other
-** than a semi-colon.  The SQL Server style "go" command is understood
-** as is the Oracle "/".
-*/
-static int _is_command_terminator(const char *zLine){
-  while( isspace(*zLine) ){ zLine++; };
-  if( zLine[0]=='/' && _all_whitespace(&zLine[1]) ) return 1;  /* Oracle */
-  if( sqlite3StrNICmp(zLine,"go",2)==0 && _all_whitespace(&zLine[2]) ){
-    return 1;  /* SQL Server */
-  }
-  return 0;
 }
 
 

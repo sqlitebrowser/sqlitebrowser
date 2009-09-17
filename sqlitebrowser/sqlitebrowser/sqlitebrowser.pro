@@ -8,12 +8,14 @@ CONFIG	+= qt warn_on release
 HEADERS	+= extendedmainform.h \ 
 	sqlitebrowsertypes.h \
 	sqlitedb.h \
-	sqlbrowser_util.h
+        sqlbrowser_util.h \
+        sqlite_source/sqlite3.h
 
 SOURCES	+= extendedmainform.cpp \ 
 	browsermain.cpp \
 	sqlitedb.cpp \
-	sqlbrowser_util.c
+        sqlbrowser_util.c \
+        sqlite_source/sqlite3.c
 
 #The following line was changed from FORMS to FORMS3 by qt3to4
 FORMS3	= aboutform.ui \
@@ -52,18 +54,13 @@ unix {
   UI_DIR = .ui
   MOC_DIR = .moc
   OBJECTS_DIR = .obj
-  LIBS += ./sqlite_source/libsqlite_source.a
 }
 win32 {
   RC_FILE = winapp.rc
-  #For MingW
-  LIBS	+= sqlite_source/release/libsqlite_source.a
-  #For MSVC
-  #LIBS	+= sqlite_source/release/sqlite_source.lib
 }
 mac {
   RC_FILE = macapp.icns
-  LIBS	+= -framework Carbon ./sqlite_source/libsqlite_source.a
+  LIBS	+= -framework Carbon
   QMAKE_INFO_PLIST = app.plist
 }
 
