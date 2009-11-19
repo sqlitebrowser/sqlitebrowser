@@ -383,6 +383,9 @@ void mainForm::updateTableView(int lineToSelect)
    // qDebug("recsthisview= %d\n",recsThisView);
 
     dataTable->setNumRows( recsThisView);
+
+    if ( recsThisView > 0 ) {
+
     rowList::iterator rt;
     int rowNum = 0;
     int colNum = 0;
@@ -411,6 +414,7 @@ void mainForm::updateTableView(int lineToSelect)
  if (rowNum==recsThisView) break;
     }
 
+}
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
  //qDebug("inside selection");
