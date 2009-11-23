@@ -57,8 +57,8 @@ public:
     QAction *fileExportCSVAction;
     QAction *fileSaveAction;
     QAction *fileRevertAction;
-    QAction *fileImportAction;
-    QAction *fileExportAction;
+    //QAction *fileImportAction;
+    //QAction *fileExportAction;
     QAction *editCreateTableAction;
     QAction *editDeleteTableAction;
     QAction *editModifyTableAction;
@@ -187,12 +187,12 @@ public:
         fileRevertAction->setEnabled(false);
         const QIcon icon6 = QIcon(qPixmapFromMimeSource("revert.png"));
         fileRevertAction->setIcon(icon6);
-        fileImportAction = new QAction(mainForm);
-        fileImportAction->setObjectName(QString::fromUtf8("fileImportAction"));
-        fileImportAction->setName("fileImportAction");
-        fileExportAction = new QAction(mainForm);
-        fileExportAction->setObjectName(QString::fromUtf8("fileExportAction"));
-        fileExportAction->setName("fileExportAction");
+        //fileImportAction = new QAction(mainForm);
+        //fileImportAction->setObjectName(QString::fromUtf8("fileImportAction"));
+        //fileImportAction->setName("fileImportAction");
+        //fileExportAction = new QAction(mainForm);
+        //fileExportAction->setObjectName(QString::fromUtf8("fileExportAction"));
+        //fileExportAction->setName("fileExportAction");
         editCreateTableAction = new QAction(mainForm);
         editCreateTableAction->setObjectName(QString::fromUtf8("editCreateTableAction"));
         editCreateTableAction->setName("editCreateTableAction");
@@ -481,9 +481,9 @@ public:
         fileMenu->addAction(fileRevertAction);
         fileMenu->addAction(fileCompactAction);
         fileMenu->addSeparator();
-        fileMenu->addAction(fileImportAction);
+        //fileMenu->addAction(fileImportAction);
         fileMenu->addAction(PopupMenuEditor_9->menuAction());
-        fileMenu->addAction(fileExportAction);
+        //fileMenu->addAction(fileExportAction);
         fileMenu->addAction(PopupMenuEditor_12->menuAction());
         fileMenu->addSeparator();
         fileMenu->addAction(fileExitAction);
@@ -638,10 +638,10 @@ public:
 #ifndef QT_NO_WHATSTHIS
         fileRevertAction->setWhatsThis(QApplication::translate("mainForm", "This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        fileImportAction->setIconText(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
-        fileImportAction->setText(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
-        fileExportAction->setIconText(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
-        fileExportAction->setText(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
+        //fileImportAction->setIconText(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
+        //fileImportAction->setText(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
+        //fileExportAction->setIconText(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
+        //fileExportAction->setText(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
         editCreateTableAction->setIconText(QApplication::translate("mainForm", "Create Table", 0, QApplication::UnicodeUTF8));
         editCreateTableAction->setText(QApplication::translate("mainForm", "Create Table", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
