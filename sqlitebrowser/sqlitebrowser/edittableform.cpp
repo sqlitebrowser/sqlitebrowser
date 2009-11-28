@@ -62,8 +62,6 @@ void editTableForm::populateFields()
     //make sure we are not using cached information
     pdb->updateSchema();
 
-
-
     fields= pdb->getTableFields(curTable);
     types= pdb->getTableTypes(curTable);
     fieldListView->clear();

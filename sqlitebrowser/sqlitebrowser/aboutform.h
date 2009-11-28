@@ -10,6 +10,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -23,36 +24,32 @@ class Ui_aboutForm
 {
 public:
     QVBoxLayout *vboxLayout;
-    QLabel *textLabel1;
+    QGridLayout *gridLayout;
     QHBoxLayout *hboxLayout;
     QSpacerItem *spacer5;
     QPushButton *okButton;
+    QSpacerItem *spacer13;
+    QVBoxLayout *vboxLayout1;
+    QLabel *pixmapLabel1;
+    QSpacerItem *spacer12;
+    QLabel *textLabel1;
 
     void setupUi(QDialog *aboutForm)
     {
         if (aboutForm->objectName().isEmpty())
             aboutForm->setObjectName(QString::fromUtf8("aboutForm"));
-        aboutForm->resize(514, 191);
+        aboutForm->resize(542, 257);
         vboxLayout = new QVBoxLayout(aboutForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-        textLabel1 = new QLabel(aboutForm);
-        textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
-        QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(7), static_cast<QSizePolicy::Policy>(7));
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(textLabel1->sizePolicy().hasHeightForWidth());
-        textLabel1->setSizePolicy(sizePolicy);
-        textLabel1->setAlignment(Qt::AlignVCenter);
-        textLabel1->setWordWrap(true);
-
-        vboxLayout->addWidget(textLabel1);
-
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
         hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
-        spacer5 = new QSpacerItem(141, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        spacer5 = new QSpacerItem(424, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         hboxLayout->addItem(spacer5);
 
@@ -63,7 +60,38 @@ public:
         hboxLayout->addWidget(okButton);
 
 
-        vboxLayout->addLayout(hboxLayout);
+        gridLayout->addLayout(hboxLayout, 1, 0, 1, 3);
+
+        spacer13 = new QSpacerItem(16, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(spacer13, 0, 1, 1, 1);
+
+        vboxLayout1 = new QVBoxLayout();
+        vboxLayout1->setSpacing(6);
+        vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+        pixmapLabel1 = new QLabel(aboutForm);
+        pixmapLabel1->setObjectName(QString::fromUtf8("pixmapLabel1"));
+        pixmapLabel1->setPixmap(QPixmap(qPixmapFromMimeSource("128.png")));
+        pixmapLabel1->setScaledContents(false);
+        pixmapLabel1->setWordWrap(false);
+
+        vboxLayout1->addWidget(pixmapLabel1);
+
+        spacer12 = new QSpacerItem(20, 31, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        vboxLayout1->addItem(spacer12);
+
+
+        gridLayout->addLayout(vboxLayout1, 0, 0, 1, 1);
+
+        textLabel1 = new QLabel(aboutForm);
+        textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
+        textLabel1->setWordWrap(false);
+
+        gridLayout->addWidget(textLabel1, 0, 2, 1, 1);
+
+
+        vboxLayout->addLayout(gridLayout);
 
 
         retranslateUi(aboutForm);
@@ -82,7 +110,6 @@ public:
 "\n"
 "More information at http://sqlitebrowser.sourceforge.net.", 0, QApplication::UnicodeUTF8));
         okButton->setText(QApplication::translate("aboutForm", "Close", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(aboutForm);
     } // retranslateUi
 
 };

@@ -50,7 +50,7 @@ public:
         createTableForm->resize(309, 320);
         vboxLayout = new QVBoxLayout(createTableForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -73,7 +73,7 @@ public:
         groupBox1->setObjectName(QString::fromUtf8("groupBox1"));
         groupBox1->setColumnLayout(0, Qt::Vertical);
         groupBox1->layout()->setSpacing(6);
-        groupBox1->layout()->setMargin(11);
+        groupBox1->layout()->setContentsMargins(11, 11, 11, 11);
         vboxLayout1 = new QVBoxLayout();
         QBoxLayout *boxlayout = qobject_cast<QBoxLayout *>(groupBox1->layout());
         if (boxlayout)
@@ -192,7 +192,6 @@ public:
 #ifndef QT_NO_TOOLTIP
         buttonCancel->setProperty("toolTip", QVariant(QApplication::translate("createTableForm", "Cancel and close dialog box", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_TOOLTIP
-        Q_UNUSED(createTableForm);
     } // retranslateUi
 
 };

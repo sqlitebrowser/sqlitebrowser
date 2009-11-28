@@ -47,7 +47,7 @@ public:
         editTableForm->resize(428, 266);
         gridLayout = new QGridLayout(editTableForm);
         gridLayout->setSpacing(6);
-        gridLayout->setMargin(11);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         vboxLayout = new QVBoxLayout();
         vboxLayout->setSpacing(6);
@@ -151,7 +151,6 @@ public:
         removeFieldButton->setText(QApplication::translate("editTableForm", "Remove field", 0, QApplication::UnicodeUTF8));
         addFieldButton->setText(QApplication::translate("editTableForm", "Add field", 0, QApplication::UnicodeUTF8));
         closeButton->setText(QApplication::translate("editTableForm", "Close", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(editTableForm);
     } // retranslateUi
 
 };

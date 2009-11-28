@@ -48,7 +48,7 @@ public:
         sqlLogForm->resize(547, 203);
         vboxLayout = new QVBoxLayout(sqlLogForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -82,7 +82,7 @@ public:
         WStackPage->setObjectName(QString::fromUtf8("WStackPage"));
         gridLayout = new QGridLayout(WStackPage);
         gridLayout->setSpacing(6);
-        gridLayout->setMargin(11);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
         userLogText = new Q3TextEdit(WStackPage);
@@ -97,7 +97,7 @@ public:
         WStackPage1->setObjectName(QString::fromUtf8("WStackPage1"));
         vboxLayout1 = new QVBoxLayout(WStackPage1);
         vboxLayout1->setSpacing(6);
-        vboxLayout1->setMargin(11);
+        vboxLayout1->setContentsMargins(11, 11, 11, 11);
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
         vboxLayout1->setContentsMargins(0, 0, 0, 0);
         appLogText = new Q3TextEdit(WStackPage1);
@@ -129,7 +129,6 @@ public:
          << QApplication::translate("sqlLogForm", "Application", 0, QApplication::UnicodeUTF8)
         );
         clearButton->setText(QApplication::translate("sqlLogForm", "Clear", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(sqlLogForm);
     } // retranslateUi
 
 };

@@ -46,7 +46,7 @@ public:
         findForm->resize(239, 319);
         vboxLayout = new QVBoxLayout(findForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
@@ -164,7 +164,6 @@ public:
         findListView->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "Results of the search will appear in this area. Click on a result to select the corresponding record in the database", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
         resultsLabel->setText(QApplication::translate("findForm", "Found:", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(findForm);
     } // retranslateUi
 
 };

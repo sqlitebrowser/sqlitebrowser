@@ -62,7 +62,7 @@ public:
         editForm->setModal(true);
         vboxLayout = new QVBoxLayout(editForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -104,11 +104,12 @@ public:
         WStackPage->setObjectName(QString::fromUtf8("WStackPage"));
         gridLayout = new QGridLayout(WStackPage);
         gridLayout->setSpacing(6);
-        gridLayout->setMargin(11);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
         textEditor = new Q3TextEdit(WStackPage);
         textEditor->setObjectName(QString::fromUtf8("textEditor"));
+        textEditor->setTextFormat(Qt::PlainText);
 
         gridLayout->addWidget(textEditor, 0, 0, 1, 1);
 
@@ -117,7 +118,7 @@ public:
         WStackPage1->setObjectName(QString::fromUtf8("WStackPage1"));
         gridLayout1 = new QGridLayout(WStackPage1);
         gridLayout1->setSpacing(6);
-        gridLayout1->setMargin(11);
+        gridLayout1->setContentsMargins(11, 11, 11, 11);
         gridLayout1->setObjectName(QString::fromUtf8("gridLayout1"));
         gridLayout1->setContentsMargins(0, 0, 0, 0);
         editPixmap = new QLabel(WStackPage1);
@@ -240,7 +241,6 @@ public:
 #ifndef QT_NO_WHATSTHIS
         saveChangesButton->setProperty("whatsThis", QVariant(QApplication::translate("editForm", "Close this window saving changes to the database", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
-        Q_UNUSED(editForm);
     } // retranslateUi
 
 };
@@ -261,12 +261,14 @@ public:
 
     int curCol;
     int curRow;
+    QString defaultlocation;
 
 public slots:
     virtual void reset();
     virtual void setModified( bool modifiedstate );
     virtual void enableExport( bool enabled );
     virtual void enableTextEditor( bool enabled );
+    virtual void setTextFormat( QString format );
     virtual void setDataType( int type, int size );
     virtual void closeEvent( QCloseEvent * );
     virtual void loadText( QString text, int row, int col );

@@ -122,7 +122,6 @@ void importCSVForm::createButtonPressed()
     sql.append(");");
 
     //declare local variables we will need before the rollback jump
-    int rowNum = 0;
     int colNum = 0;
 
     //begin a transaction, so we can rollback in case of any errors during importing
@@ -143,7 +142,7 @@ void importCSVForm::createButtonPressed()
         }
         //need to mprintf here
         //sql.append(*ct);
-        char * formSQL = sqlite3_mprintf("%Q",(*ct).latin1());
+	char * formSQL = sqlite3_mprintf("%Q",(const char *) (*ct));	
         sql.append(formSQL);
         if (formSQL) sqlite3_free(formSQL);
 

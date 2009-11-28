@@ -79,6 +79,16 @@ void editForm::enableTextEditor(bool enabled)
     textEditor->setReadOnly(!enabled);
 }
 
+void editForm::setTextFormat(QString format)
+{
+  if (format=="Auto")
+  {
+    textEditor->setTextFormat(Qt::AutoText);
+  } else {
+    textEditor->setTextFormat(Qt::PlainText);
+  }
+}
+
 void editForm::setDataType(int type, int size)
 {
     dataType = type;
@@ -164,7 +174,7 @@ void editForm::exportData()
 
 
     QString fileName = Q3FileDialog::getSaveFileName(
-                    "",
+                    defaultlocation,
                     filter,
                     this,
                     "save file dialog"

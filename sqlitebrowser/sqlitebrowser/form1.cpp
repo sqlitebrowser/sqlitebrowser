@@ -20,6 +20,7 @@
 #include "edittableform.h"
 #include "importcsvform.h"
 #include "exporttablecsvform.h"
+#include "preferencesform.h"
 /*
  *  Constructs a mainForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -54,12 +55,13 @@ void mainForm::languageChange()
 
 void mainForm::init()
 {
+    clipboard = QApplication::clipboard();
+    
          findWin = 0;
      editWin = 0;
      logWin = 0;
 
     clipboard = QApplication::clipboard();
-    if ( clipboard->supportsSelection() )
 
     recsPerView = 1000;
     recAtTop = 0;
@@ -88,6 +90,8 @@ void mainForm::init()
        connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
    }
 
+   updatePreferences();
+ 
  //connect db and log
     db.logWin = logWin;
 
@@ -106,7 +110,7 @@ void mainForm::fileOpen(const QString & fileName)
     if (!QFile::exists(wFile))
     {
      wFile = Q3FileDialog::getOpenFileName(
-                    "",
+                    defaultlocation,
                     "",
                     this,
                     "open file dialog"
@@ -145,7 +149,7 @@ void mainForm::fileOpen()
 void mainForm::fileNew()
 {
     QString fileName = Q3FileDialog::getSaveFileName(
-                    "",
+                    defaultlocation,
                     "",
                     this,
                     "create file dialog"
@@ -294,25 +298,7 @@ void mainForm::fileExit()
    msg.append("?");
    if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
    {
-    bool done(false);
-    do {
-     if ( db.save() )
-      done = true;
-     else {
-      QString error = "Error: could not save the database.\nMessage from database engine:  ";
-      error.append(db.lastErrorMessage);
-      switch ( QMessageBox::warning( this, applicationName, error, QMessageBox::Retry|QMessageBox::Default, QMessageBox::Cancel|QMessageBox::Escape, QMessageBox::Ignore) ) {
-       case QMessageBox::Retry:
-        break;
-       case QMessageBox::Ignore:
-        db.revert();
-        done = true;
-        break;
-       case QMessageBox::Cancel:
-        return;
-      }
-     }
-    } while ( !done );
+  db.save();
    } else {
     //not really necessary, I think... but will not hurt.
     db.revert();
@@ -337,7 +323,10 @@ void mainForm::addRecord()
  updateTableView(db.getRecordCount()-recAtTop-1);
     }else{
  QMessageBox::information( this, applicationName,
-    "Error adding record, make sure a table is selected" );
+    "Error adding record, make sure a table is selected.\n\n"
+    "If the table contain fields declared as NOT NULL\n"
+    "please select EDIT->PREFERENCES and adjust the\n"
+    "default value for new records to insert an empty string." );
     }
 }
 
@@ -530,8 +519,42 @@ void mainForm::lookfor( const QString & wfield, const QString & woperator, const
  QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
  return;
     }
+    
+    //we may need to modify woperator and wsearchterm, so use copies
+    QString finaloperator = QString(woperator);
+    QString finalsearchterm = QString(wsearchterm);
+    
+    //special case for CONTAINS operator: use LIKE and surround the search word with % characters
+    if (woperator.compare("contains")==0){
+ finaloperator = QString("LIKE");
+ QString newsearchterm = "%";
+ newsearchterm.append(wsearchterm);
+ newsearchterm.append("%");
+ finalsearchterm = QString(newsearchterm);
+    }
     QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
-    resultMap res = db.getFindResults(wfield, woperator, wsearchterm);
+    QString statement = "SELECT rowid, ";
+    statement.append(wfield);
+    statement.append("  FROM ");
+    statement.append(db.curBrowseTableName);
+    statement.append(" WHERE ");
+    statement.append(wfield);
+    statement.append(" ");
+    statement.append(finaloperator);
+    statement.append(" ");
+    //searchterm needs to be quoted if it is not a number
+    bool ok = false;
+    wsearchterm.toDouble(&ok);
+    if (!ok) wsearchterm.toInt(&ok, 10);
+    if (!ok) {//not a number, quote it
+ char * formSQL = sqlite3_mprintf("%Q",(const char *) finalsearchterm);
+ statement.append(formSQL);
+  if (formSQL) sqlite3_free(formSQL);
+     } else {//append the number, unquoted
+  statement.append(*finalsearchterm);
+     }
+    statement.append(" ORDER BY rowid; ");
+    resultMap res = db.getFindResults(statement);
     findWin->showResults(res);
     QApplication::restoreOverrideCursor();
 }
@@ -724,10 +747,6 @@ void mainForm::helpWhatsThis()
 
 void mainForm::helpAbout()
 {
-    /*QString wcaption = "About ";
-    wcaption.append(applicationName);
-    QString wtext = "This text, etc...";
-    QMessageBox::about ( this, wcaption, wtext);*/
     aboutForm * aForm = new aboutForm( this, "about", TRUE );
     aForm ->exec() ;
 }
@@ -738,18 +757,17 @@ void mainForm::updateRecordText(int row, int col, QString newtext)
     if (!db.updateRecord(row, col, newtext)){
  QMessageBox::information( this, applicationName, "Data could not be updated" );
     }
-    /*dataTable->setVScrollBarMode(QScrollView::AlwaysOff);
-    dataTable->setVScrollBarMode(QScrollView::Auto);
-    dataTable->setReadOnly(true);*/
+
      rowList tab = db.browseRecs;
  rowList::iterator rt = tab.at(row);
  QString rowid = (*rt).first();
- QString content = (*rt).at(col+1);//must account for rowid
- content = newtext; //AKG
+ QString cv = (*rt).at(col+1);//must account for rowid
+ 
+ QString content = cv ;
  QString firstline = content.section( '\n', 0,0 );
- if (content.length()>MAX_DISPLAY_LENGTH )
+ if (content.length()>14)
  {
-    firstline.truncate(MAX_DISPLAY_LENGTH );
+    firstline.truncate(14);
     firstline.append("...");
  }
  dataTable->setText( row - recAtTop, col, firstline);
@@ -798,11 +816,7 @@ void mainForm::doubleClickTable( int row, int col, int button, const QPoint & mo
 
 void mainForm::executeQuery()
 {
-    if (!db.isOpen()){
- QMessageBox::information( this, applicationName, "There is no database opened." );
- return;
-    }
-    QString query = sqlTextEdit->text();
+    QString query = db.GetEncodedQString(sqlTextEdit->text());
     if (query.isEmpty())
     {
  QMessageBox::information( this, applicationName, "Query string is empty" );
@@ -823,28 +837,31 @@ void mainForm::executeQuery()
        queryResultListView->removeColumn(0);
    }
 
- err=sqlite3_prepare(db._db,query.utf8(),-1,&vm,&tail);
+ err=sqlite3_prepare(db._db,query,query.length(),
+                              &vm, &tail);
  if (err == SQLITE_OK){
      db.setDirty(true);
      int rownum = 0;
    Q3ListViewItem * lasttbitem = 0;
    bool mustCreateColumns = true;
    while ( sqlite3_step(vm) == SQLITE_ROW ){
-       //r.clear()
+  ncol = sqlite3_data_count(vm);
            Q3ListViewItem * tbitem = new Q3ListViewItem( queryResultListView, lasttbitem);
        //setup num of cols here for display grid
        if (mustCreateColumns)
     {
-   ncol = sqlite3_data_count(vm);
    for (int e=0; e<ncol; e++)
-    queryResultListView->addColumn("");
-
+    queryResultListView->addColumn(sqlite3_column_name(vm, e));
    mustCreateColumns = false;
        }
        for (int e=0; e<ncol; e++){
-      QString rv(QString::fromUtf8((const char *) sqlite3_column_text(vm, e)));
+    char * strresult = 0;
+    QString rv;
+    strresult = (char *) sqlite3_column_text(vm, e);
+          rv = QString(strresult);
       //show it here
-    QString firstline = rv.section( '\n', 0,0 );
+    QString decoded = db.GetDecodedQString(rv);
+    QString firstline = decoded.section( '\n', 0,0 );
     if (firstline.length()>MAX_DISPLAY_LENGTH)
   {
       firstline.truncate(MAX_DISPLAY_LENGTH);
@@ -897,32 +914,14 @@ void mainForm::importTableFromCSV()
   QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
   if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
   {
-   bool done(false);
-   do {
-    if ( db.save() )
-     done = true;
-    else {
-     QString error = "Error: could not save the database.\nMessage from database engine:  ";
-     error.append(db.lastErrorMessage);
-     switch ( QMessageBox::warning( this, applicationName, error, QMessageBox::Retry|QMessageBox::Default, QMessageBox::Cancel|QMessageBox::Escape, QMessageBox::Ignore) ) {
-      case QMessageBox::Retry:
-       break;
-      case QMessageBox::Ignore:
-       db.revert();
-       done = true;
-       break;
-      case QMessageBox::Cancel:
-       return;
-     }
-    }
-   } while ( !done );
+     db.save();
   } else {
    return;
   }
     }
 
     QString wFile = Q3FileDialog::getOpenFileName(
-                    "",
+                    defaultlocation,
                     "Text files (*.csv *.txt)",
                     this,
                     "import csv data"
@@ -954,7 +953,7 @@ void mainForm::exportTableToCSV()
  db.browseTable(exportForm->option);
 
  QString fileName = Q3FileDialog::getSaveFileName(
-                    "",
+                    defaultlocation,
                     "Text files (*.csv *txt)",
                     this,
                     "save file dialog"
@@ -1037,14 +1036,7 @@ void mainForm::dbState( bool dirty )
 void mainForm::fileSave()
 {
     if (db.isOpen()){
-  do {
-   if ( !db.save() ) {
-    QString error = "Error: could not save the database.\nMessage from database engine:  ";
-    error.append(db.lastErrorMessage);
-    if ( QMessageBox::warning( this, applicationName, error, QMessageBox::Ok, QMessageBox::Retry|QMessageBox::Default) != QMessageBox::Retry )
-     break;
-   }
-  } while ( db.getDirty() );
+ db.save();
     }
 }
 
@@ -1073,7 +1065,7 @@ void mainForm::exportDatabaseToSQL()
     }
 
     QString fileName = Q3FileDialog::getSaveFileName(
-                    "",
+                    defaultlocation,
                     "Text files (*.sql *txt)",
                     0,
                     "save file dialog"
@@ -1094,7 +1086,7 @@ void mainForm::exportDatabaseToSQL()
 void mainForm::importDatabaseFromSQL()
 {
     QString fileName = Q3FileDialog::getOpenFileName(
-                    "",
+                    defaultlocation,
                     "Text files (*.sql *txt)",
                     0,
                     "import file dialog"
@@ -1106,7 +1098,7 @@ void mainForm::importDatabaseFromSQL()
  if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
  {
  QString newDBfile = Q3FileDialog::getSaveFileName(
-  "",
+  defaultlocation,
   "",
   this,
   "create file dialog"
@@ -1139,3 +1131,28 @@ void mainForm::importDatabaseFromSQL()
 }
 
 
+void mainForm::openPreferences()
+{
+  preferencesForm * prefForm = new preferencesForm( this, "preferences", TRUE );
+  if ( prefForm->exec() ) {
+    updatePreferences();
+    resetBrowser();
+  }
+}
+
+void mainForm::updatePreferences()
+{
+   preferencesForm * prefForm = new preferencesForm( this, "preferences", TRUE );
+   prefForm->loadSettings();
+   
+   if (prefForm->defaultencoding=="Latin1")
+   {
+       db.setEncoding(kEncodingLatin1);
+   } else {
+       db.setEncoding(kEncodingUTF8);
+   }
+   db.setDefaultNewData(prefForm->defaultnewdata);
+   defaultlocation= prefForm->defaultlocation;
+   editWin->defaultlocation = defaultlocation;
+   editWin->setTextFormat(prefForm->defaulttext);
+}

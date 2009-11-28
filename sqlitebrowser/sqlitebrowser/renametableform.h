@@ -37,7 +37,7 @@ public:
         renameTableForm->resize(313, 101);
         vboxLayout = new QVBoxLayout(renameTableForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         tablenameLineEdit = new QLineEdit(renameTableForm);
         tablenameLineEdit->setObjectName(QString::fromUtf8("tablenameLineEdit"));
@@ -82,7 +82,6 @@ public:
         renameTableForm->setWindowTitle(QApplication::translate("renameTableForm", "Rename table", 0, QApplication::UnicodeUTF8));
         closeButton->setText(QApplication::translate("renameTableForm", "Cancel", 0, QApplication::UnicodeUTF8));
         renameButton->setText(QApplication::translate("renameTableForm", "Rename", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(renameTableForm);
     } // retranslateUi
 
 };

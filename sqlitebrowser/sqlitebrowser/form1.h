@@ -66,6 +66,7 @@ public:
     QAction *editDeleteIndexAction;
     QAction *fileImportSQLAction;
     QAction *fileExportSQLAction;
+    QAction *editPreferencesAction;
     QWidget *widget;
     QVBoxLayout *vboxLayout;
     QTabWidget *mainTab;
@@ -229,11 +230,14 @@ public:
         fileExportSQLAction = new QAction(mainForm);
         fileExportSQLAction->setObjectName(QString::fromUtf8("fileExportSQLAction"));
         fileExportSQLAction->setName("fileExportSQLAction");
+        editPreferencesAction = new QAction(mainForm);
+        editPreferencesAction->setObjectName(QString::fromUtf8("editPreferencesAction"));
+        editPreferencesAction->setName("editPreferencesAction");
         widget = new QWidget(mainForm);
         widget->setObjectName(QString::fromUtf8("widget"));
         vboxLayout = new QVBoxLayout(widget);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         vboxLayout->setContentsMargins(0, 0, 0, 0);
         mainTab = new QTabWidget(widget);
@@ -242,7 +246,7 @@ public:
         structure->setObjectName(QString::fromUtf8("structure"));
         vboxLayout1 = new QVBoxLayout(structure);
         vboxLayout1->setSpacing(6);
-        vboxLayout1->setMargin(11);
+        vboxLayout1->setContentsMargins(11, 11, 11, 11);
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
         dblistView = new Q3ListView(structure);
         dblistView->addColumn(QApplication::translate("mainForm", "Name", 0, QApplication::UnicodeUTF8));
@@ -270,7 +274,7 @@ public:
         browser->setObjectName(QString::fromUtf8("browser"));
         vboxLayout2 = new QVBoxLayout(browser);
         vboxLayout2->setSpacing(6);
-        vboxLayout2->setMargin(11);
+        vboxLayout2->setContentsMargins(11, 11, 11, 11);
         vboxLayout2->setObjectName(QString::fromUtf8("vboxLayout2"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -374,7 +378,7 @@ public:
         query->setObjectName(QString::fromUtf8("query"));
         vboxLayout3 = new QVBoxLayout(query);
         vboxLayout3->setSpacing(6);
-        vboxLayout3->setMargin(11);
+        vboxLayout3->setContentsMargins(11, 11, 11, 11);
         vboxLayout3->setObjectName(QString::fromUtf8("vboxLayout3"));
         textLabel1_2 = new QLabel(query);
         textLabel1_2->setObjectName(QString::fromUtf8("textLabel1_2"));
@@ -427,7 +431,7 @@ public:
 
         queryResultListView = new Q3ListView(query);
         queryResultListView->setObjectName(QString::fromUtf8("queryResultListView"));
-        queryResultListView->setResizePolicy(Q3ScrollView::Default);
+        queryResultListView->setResizePolicy(Q3ScrollView::Manual);
         queryResultListView->setSelectionMode(Q3ListView::NoSelection);
         queryResultListView->setResizeMode(Q3ListView::AllColumns);
 
@@ -497,6 +501,8 @@ public:
         EditMenu->addSeparator();
         EditMenu->addAction(editCreateIndexAction);
         EditMenu->addAction(editDeleteIndexAction);
+        EditMenu->addSeparator();
+        EditMenu->addAction(editPreferencesAction);
         ViewMenu->addAction(sqlLogAction);
         PopupMenu->addAction(helpWhatsThisAction);
         PopupMenu->addAction(helpAboutAction);
@@ -534,6 +540,7 @@ public:
         QObject::connect(editModifyTableAction, SIGNAL(activated()), mainForm, SLOT(editTable()));
         QObject::connect(fileExportSQLAction, SIGNAL(activated()), mainForm, SLOT(exportDatabaseToSQL()));
         QObject::connect(fileImportSQLAction, SIGNAL(activated()), mainForm, SLOT(importDatabaseFromSQL()));
+        QObject::connect(editPreferencesAction, SIGNAL(activated()), mainForm, SLOT(openPreferences()));
 
         QMetaObject::connectSlotsByName(mainForm);
     } // setupUi
@@ -683,6 +690,13 @@ public:
 #ifndef QT_NO_WHATSTHIS
         fileExportSQLAction->setWhatsThis(QApplication::translate("mainForm", "This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
+        editPreferencesAction->setIconText(QApplication::translate("mainForm", "Preferences", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        editPreferencesAction->setToolTip(QApplication::translate("mainForm", "Open the preferences window..", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+        editPreferencesAction->setWhatsThis(QApplication::translate("mainForm", "Open the preferences window.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
 #ifndef QT_NO_TOOLTIP
         mainTab->setProperty("toolTip", QVariant(QString()));
 #endif // QT_NO_TOOLTIP
@@ -824,6 +838,7 @@ public:
     int recAtTop;
     int recsPerView;
     QIntValidator * gotoValidator;
+    QString defaultlocation;
 
 public slots:
     virtual void fileOpen( const QString & fileName );
@@ -872,6 +887,8 @@ public slots:
     virtual void fileRevert();
     virtual void exportDatabaseToSQL();
     virtual void importDatabaseFromSQL();
+    virtual void openPreferences();
+    virtual void updatePreferences();
 
 protected:
     DBBrowserDB db;

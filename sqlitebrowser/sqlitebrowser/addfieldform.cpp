@@ -76,7 +76,8 @@ void addFieldForm::getCustomType()
     addFieldTypeForm * addForm = new addFieldTypeForm( this, "addfieldtype", TRUE );
     if (addForm->exec())
    {
- QString nospaces = addForm->typeNameEdit->text().remove(" ");
+ //QString nospaces = addForm->typeNameEdit->text().remove(" ");
+ QString nospaces = addForm->typeNameEdit->text();
  setInitialValues(nameLineEdit->text(),nospaces );
    }
 }

@@ -26,7 +26,8 @@ HEADERS += extendedmainform.h \
     form1.h \
     importcsvform.h \
     renametableform.h \
-    sqllogform.h
+    sqllogform.h \
+    preferencesform.h
 SOURCES += extendedmainform.cpp \
     browsermain.cpp \
     sqlitedb.cpp \
@@ -49,8 +50,8 @@ SOURCES += extendedmainform.cpp \
     form1.cpp \
     importcsvform.cpp \
     renametableform.cpp \
-    sqllogform.cpp
-
+    sqllogform.cpp \
+    preferencesform.cpp
 IMAGES = images/create_index.png \
     images/create_table.png \
     images/delete_index.png \
@@ -63,7 +64,8 @@ IMAGES = images/create_index.png \
     images/revert.png \
     images/save.png \
     images/searchfind.png \
-    images/whatis.png
+    images/whatis.png \
+    images/128.png
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc
@@ -76,4 +78,3 @@ mac {
         Carbon
     QMAKE_INFO_PLIST = app.plist
 }
-

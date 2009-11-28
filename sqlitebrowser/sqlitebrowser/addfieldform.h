@@ -48,7 +48,7 @@ public:
         addFieldForm->resize(338, 136);
         gridLayout = new QGridLayout(addFieldForm);
         gridLayout->setSpacing(6);
-        gridLayout->setMargin(11);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         spacer17 = new QSpacerItem(20, 16, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -144,9 +144,10 @@ public:
         typeBox->clear();
         typeBox->insertItems(0, QStringList()
          << QString()
-         << QApplication::translate("addFieldForm", "text", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("addFieldForm", "integer", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("addFieldForm", "blob", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("addFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8)
         );
         typeButton->setText(QApplication::translate("addFieldForm", "...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
@@ -155,7 +156,6 @@ public:
 #ifndef QT_NO_WHATSTHIS
         typeButton->setProperty("whatsThis", QVariant(QApplication::translate("addFieldForm", "Click this button to enter a new type for the field", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
-        Q_UNUSED(addFieldForm);
     } // retranslateUi
 
 };

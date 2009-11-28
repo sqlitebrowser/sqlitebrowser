@@ -45,7 +45,6 @@ void editFieldForm::setInitialValues(QString name, QString type)
     typeBox->clear();
     typeBox->insertItem(type);
     QString tString = "";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
     tString = "TEXT";
     if (type.compare(tString)!=0) typeBox->insertItem(tString);
     tString = "NUMERIC";
@@ -82,7 +81,8 @@ void editFieldForm::getCustomType()
     addFieldTypeForm * addForm = new addFieldTypeForm( this, "addfieldtype", TRUE );
     if (addForm->exec())
    {
-        QString nospaces = addForm->typeNameEdit->text().remove(" ");
+ //QString nospaces = addForm->typeNameEdit->text().remove(" ");
+ QString nospaces = addForm->typeNameEdit->text();
         setInitialValues(nameLineEdit->text(),nospaces );
         enableSave();
    }

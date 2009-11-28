@@ -43,7 +43,7 @@ public:
         deleteTableForm->resize(236, 137);
         vboxLayout = new QVBoxLayout(deleteTableForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -113,7 +113,6 @@ public:
 #ifndef QT_NO_TOOLTIP
         buttonCancel->setProperty("toolTip", QVariant(QApplication::translate("deleteTableForm", "Cancel and close dialog box", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_TOOLTIP
-        Q_UNUSED(deleteTableForm);
     } // retranslateUi
 
 };

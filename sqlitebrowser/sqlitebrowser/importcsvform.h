@@ -59,7 +59,7 @@ public:
         importCSVForm->setModal(true);
         vboxLayout = new QVBoxLayout(importCSVForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
@@ -193,7 +193,6 @@ public:
         );
         cancelButton->setText(QApplication::translate("importCSVForm", "Cancel", 0, QApplication::UnicodeUTF8));
         createButton->setText(QApplication::translate("importCSVForm", "Create", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(importCSVForm);
     } // retranslateUi
 
 };

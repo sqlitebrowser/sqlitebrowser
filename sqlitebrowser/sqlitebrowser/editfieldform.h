@@ -48,7 +48,7 @@ public:
         editFieldForm->resize(352, 140);
         gridLayout = new QGridLayout(editFieldForm);
         gridLayout->setSpacing(6);
-        gridLayout->setMargin(11);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         vboxLayout = new QVBoxLayout();
         vboxLayout->setSpacing(6);
@@ -146,9 +146,10 @@ public:
         typeBox->clear();
         typeBox->insertItems(0, QStringList()
          << QString()
-         << QApplication::translate("editFieldForm", "text", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("editFieldForm", "integer", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("editFieldForm", "blob", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("editFieldForm", "TEXT", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("editFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("editFieldForm", "BLOB", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("editFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8)
         );
         typeButton->setText(QApplication::translate("editFieldForm", "...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
@@ -157,7 +158,6 @@ public:
 #ifndef QT_NO_WHATSTHIS
         typeButton->setProperty("whatsThis", QVariant(QApplication::translate("editFieldForm", "Click this button to enter a new type for the field", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
-        Q_UNUSED(editFieldForm);
     } // retranslateUi
 
 };

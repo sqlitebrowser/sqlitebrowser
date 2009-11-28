@@ -55,7 +55,7 @@ public:
         createIndexForm->resize(300, 258);
         vboxLayout = new QVBoxLayout(createIndexForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -78,7 +78,7 @@ public:
         groupBox2->setObjectName(QString::fromUtf8("groupBox2"));
         groupBox2->setColumnLayout(0, Qt::Vertical);
         groupBox2->layout()->setSpacing(6);
-        groupBox2->layout()->setMargin(11);
+        groupBox2->layout()->setContentsMargins(11, 11, 11, 11);
         gridLayout = new QGridLayout();
         QBoxLayout *boxlayout = qobject_cast<QBoxLayout *>(groupBox2->layout());
         if (boxlayout)
@@ -236,7 +236,6 @@ public:
 #ifndef QT_NO_TOOLTIP
         buttonCancel->setProperty("toolTip", QVariant(QApplication::translate("createIndexForm", "Cancel and close dialog box", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_TOOLTIP
-        Q_UNUSED(createIndexForm);
     } // retranslateUi
 
 };

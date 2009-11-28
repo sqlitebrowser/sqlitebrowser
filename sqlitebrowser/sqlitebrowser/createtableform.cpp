@@ -41,6 +41,7 @@ void createTableForm::languageChange()
 void createTableForm::init()
 {
    fieldListView->clear();
+   fieldListView->setSorting (-1, FALSE);
 }
 
 void createTableForm::confirmCreate()
@@ -122,7 +123,7 @@ void createTableForm::addField()
     if (addForm->exec())
    {
        //qDebug(addForm->fname + addForm->ftype);
-       Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView);
+       Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, fieldListView->lastItem() );
        tbitem->setText( 0, addForm->fname  );
        tbitem->setText( 1, addForm->ftype );
    }
@@ -152,4 +153,3 @@ void createTableForm::fieldSelectionChanged()
     }
 
 }
-

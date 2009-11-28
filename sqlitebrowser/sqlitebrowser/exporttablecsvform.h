@@ -40,7 +40,7 @@ public:
         exportTableCSVForm->resize(365, 150);
         vboxLayout = new QVBoxLayout(exportTableCSVForm);
         vboxLayout->setSpacing(6);
-        vboxLayout->setMargin(11);
+        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -110,7 +110,6 @@ public:
 #ifndef QT_NO_TOOLTIP
         buttonExport->setProperty("toolTip", QVariant(QApplication::translate("exportTableCSVForm", "Delete the selected table", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_TOOLTIP
-        Q_UNUSED(exportTableCSVForm);
     } // retranslateUi
 
 };

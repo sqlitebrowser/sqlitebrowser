@@ -36,7 +36,7 @@ public:
         addFieldTypeForm->resize(294, 98);
         gridLayout = new QGridLayout(addFieldTypeForm);
         gridLayout->setSpacing(6);
-        gridLayout->setMargin(11);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         typeNameEdit = new QLineEdit(addFieldTypeForm);
         typeNameEdit->setObjectName(QString::fromUtf8("typeNameEdit"));
@@ -77,7 +77,6 @@ public:
         addFieldTypeForm->setWindowTitle(QApplication::translate("addFieldTypeForm", "Enter field type", 0, QApplication::UnicodeUTF8));
         cancelButton->setText(QApplication::translate("addFieldTypeForm", "Cancel", 0, QApplication::UnicodeUTF8));
         okButton->setText(QApplication::translate("addFieldTypeForm", "OK", 0, QApplication::UnicodeUTF8));
-        Q_UNUSED(addFieldTypeForm);
     } // retranslateUi
 
 };
