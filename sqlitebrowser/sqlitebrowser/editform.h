@@ -25,6 +25,7 @@
 #include <QtGui/QApplication>
 #include <QtCore/QFile>
 #include <QtGui/QImage>
+#include <QtGui/QStackedWidget>
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
@@ -38,7 +39,7 @@ public:
     QToolButton *exportButton;
     QSpacerItem *spacer11_2;
     QToolButton *clearButton;
-    Q3WidgetStack *editWidgetStack;
+    QStackedWidget *editWidgetStack;
     QWidget *WStackPage;
     QGridLayout *gridLayout;
     Q3TextEdit *textEditor;
@@ -98,7 +99,7 @@ public:
 
         vboxLayout->addLayout(hboxLayout);
 
-        editWidgetStack = new Q3WidgetStack(editForm);
+        editWidgetStack = new QStackedWidget(editForm);
         editWidgetStack->setObjectName(QString::fromUtf8("editWidgetStack"));
         WStackPage = new QWidget(editWidgetStack);
         WStackPage->setObjectName(QString::fromUtf8("WStackPage"));
@@ -113,7 +114,7 @@ public:
 
         gridLayout->addWidget(textEditor, 0, 0, 1, 1);
 
-        editWidgetStack->addWidget(WStackPage, 0);
+        editWidgetStack->addWidget(WStackPage);
         WStackPage1 = new QWidget(editWidgetStack);
         WStackPage1->setObjectName(QString::fromUtf8("WStackPage1"));
         gridLayout1 = new QGridLayout(WStackPage1);
@@ -130,7 +131,7 @@ public:
 
         gridLayout1->addWidget(editPixmap, 0, 0, 1, 1);
 
-        editWidgetStack->addWidget(WStackPage1, 1);
+        editWidgetStack->addWidget(WStackPage1);
 
         vboxLayout->addWidget(editWidgetStack);
 

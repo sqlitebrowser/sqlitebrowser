@@ -99,14 +99,14 @@ void editForm::setDataType(int type, int size)
              currentTypeLabel->setText("Type of data currently in cell: Text / Numeric");
              if (textEditor->length()>1) charstr = QString("chars"); else charstr = QString("char");
              currentDataInfo->setText(QString("%1 %2").arg(textEditor->length()).arg(charstr));
-             editWidgetStack->raiseWidget(0);
+             editWidgetStack->setCurrentIndex(0);
              enableExport(true);
              enableTextEditor(true);
             break;
         case kSQLiteMediaType_Void:
             currentTypeLabel->setText("Type of data currently in cell: Empty");
              currentDataInfo->setText("");
-             editWidgetStack->raiseWidget(0);
+             editWidgetStack->setCurrentIndex(0);
              enableExport(false);
              enableTextEditor(true);
             break;
