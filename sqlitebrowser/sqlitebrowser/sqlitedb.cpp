@@ -6,6 +6,7 @@
 #include <qfile.h>
 #include <q3filedialog.h>
 #include <qmessagebox.h>
+#include <QProgressDialog>
 
 void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
 {
@@ -714,7 +715,10 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
  bool inescapemode = false;
  int recs = 0;
  *numfields = 0;
+
     if ( file.open( QIODevice::ReadWrite ) ) {
+        QProgressDialog progress("Decoding CSV file...", "Cancel", 0, file.size());
+        progress.setWindowModality(Qt::ApplicationModal);
   char c=0;
         while ( c!=-1) {
             c = file.getch();
@@ -759,6 +763,8 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
           *numfields = result.count();
       }
       recs++;
+      progress.setValue(file.pos());
+      if (progress.wasCanceled()) break;
       if ((recs>maxrecords)&&(maxrecords!=-1))         {
           break;
       }   

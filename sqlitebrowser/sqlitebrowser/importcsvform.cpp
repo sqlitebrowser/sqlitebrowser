@@ -5,6 +5,7 @@
 #include <qapplication.h>
 #include <qimage.h>
 #include <qpixmap.h>
+#include <QProgressDialog>
 
 /*
  *  Constructs a importCSVForm as a child of 'parent', with the
@@ -110,6 +111,9 @@ void importCSVForm::createButtonPressed()
         }
     }
 
+    QProgressDialog progress("Inserting data...", "Cancel", 0, curList.size());
+    progress.setWindowModality(Qt::ApplicationModal);
+    
     sql = "CREATE TABLE ";
     sql.append(tabname);
     sql.append(" (");
@@ -133,7 +137,7 @@ void importCSVForm::createButtonPressed()
 
         {//avoid error on MSVC due to rollback label
     //now lets import all data, one row at a time
-    for ( QStringList::Iterator ct = curList .begin(); ct != curList .end(); ++ct ) {
+    for ( int i=0; i < curList.size(); ++i ) {
         if (colNum==0)
         {
             sql = "INSERT INTO ";
@@ -142,7 +146,7 @@ void importCSVForm::createButtonPressed()
         }
         //need to mprintf here
         //sql.append(*ct);
-	char * formSQL = sqlite3_mprintf("%Q",(const char *) (*ct));	
+        char * formSQL = sqlite3_mprintf("%Q",(const char *) curList[i]);
         sql.append(formSQL);
         if (formSQL) sqlite3_free(formSQL);
 
@@ -155,6 +159,9 @@ void importCSVForm::createButtonPressed()
             sql.append(");");
             if (!pdb->executeSQLDirect(sql)) goto rollback;
         }
+        progress.setValue(i);
+        if (progress.wasCanceled()) goto rollback;
+
     }
         }
 
@@ -166,6 +173,7 @@ void importCSVForm::createButtonPressed()
    return;
 
    rollback:
+       progress.cancel();
        QApplication::restoreOverrideCursor();  // restore original cursor
        QString error = "Error importing data. Message from database engine:  ";
        error.append(pdb->lastErrorMessage);
