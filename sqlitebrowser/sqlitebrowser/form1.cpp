@@ -375,20 +375,23 @@ void mainForm::updateTableView(int lineToSelect)
 
     if ( recsThisView > 0 ) {
 
-    rowList::iterator rt;
     int rowNum = 0;
     int colNum = 0;
     //int dcols =0;
     QString rowLabel;
-    for ( rt = tab.at(recAtTop); rt !=tab.end(); ++rt )
+    for (int i = recAtTop; i < tab.size(); ++i)
+    //for ( int  = tab.at(recAtTop); rt !=tab.end(); ++rt )
     {
  rowLabel.setNum(recAtTop+rowNum+1);
  dataTable->verticalHeader()->setLabel( rowNum, rowLabel  );
  colNum = 0;
- for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it ) {
+     QStringList& rt = tab[i];
+ for (int e = 1; e < rt.size(); ++e)
+ //for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it )
+     {
      //skip first one (the rowid)
-     if (it!=(*rt).begin()){
-  QString content = *it;
+   //  if (it!=(*rt).begin()){
+  QString& content = rt[e];
   QString firstline = content.section( '\n', 0,0 );
   if (content.length()>MAX_DISPLAY_LENGTH)
   {
@@ -397,7 +400,7 @@ void mainForm::updateTableView(int lineToSelect)
   }
   dataTable->setText( rowNum, colNum, firstline);
   colNum++;
-     }
+     //}
  }
  rowNum++;
  if (rowNum==recsThisView) break;
@@ -759,9 +762,8 @@ void mainForm::updateRecordText(int row, int col, QString newtext)
     }
 
      rowList tab = db.browseRecs;
- rowList::iterator rt = tab.at(row);
- QString rowid = (*rt).first();
- QString cv = (*rt).at(col+1);//must account for rowid
+ QStringList& rt = tab[row];
+ QString& cv = rt[col+1];//must account for rowid
  
  QString content = cv ;
  QString firstline = content.section( '\n', 0,0 );
@@ -790,10 +792,8 @@ void mainForm::editWinAway()
 void mainForm::editText(int row, int col)
 {
     rowList tab = db.browseRecs;
-    rowList::iterator rt = tab.at(row);
-    QString rowid = (*rt).first();
-    QString cv = (*rt).at(col+1);//must account for rowid
-     //dataTable->setText( row - recAtTop, col, *cv  );
+    QStringList& rt = tab[row];
+    QString cv = rt[col+1];//must account for rowid
 
     editWin->loadText(cv , row, col);
     editWin ->show();
@@ -989,16 +989,14 @@ void mainForm::exportTableToCSV()
 
   //now export data
   rowList tab = db.browseRecs;
-  rowList::iterator rt;
 
   //int dcols =0;
   QString rowLabel;
-  for ( rt = tab.at(0); rt !=tab.end(); ++rt )
+  for ( int i=0; i<tab.size(); ++i )
   {
-      for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it ) {
-   //skip first one (the rowid)
-  if (it!=(*rt).begin()){
-       QString content = *it;
+      QStringList& rt = tab[i];
+      for ( int e=1; e<rt.size(); ++e ) {
+       QString content = rt[e];
        stream<< quote;
        QChar qquote = quote;
        content.replace(quote, QString(qquote).append(qquote));
@@ -1014,7 +1012,6 @@ void mainForm::exportTableToCSV()
        }
    }
      }
-  }
 
   file.close();
   QMessageBox::information( this, applicationName, "Export completed" );

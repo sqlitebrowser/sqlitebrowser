@@ -7,13 +7,10 @@
 #include <q3valuelist.h>
 #include <qobject.h>
 #include "sqllogform.h"
-#include "sqlite_source/sqlite3.h"
+#include "sqlite3.h"
 #include "sqlitebrowsertypes.h"
-/*#include "sqlite_source/sqlxtra_util.h"
-#include "sqlite_source/encode.h"
-#include "sqlite_source/swap.h"*/
 
-#define MAX_DISPLAY_LENGTH 256
+#define MAX_DISPLAY_LENGTH 255
 
 enum
 {
@@ -30,7 +27,7 @@ kEncodingNONE
 
 static QString applicationName = QString("SQLite Database Browser");
 static QString applicationIconName = QString("icone16.png");
-static QString aboutText = QString("Version 1.3\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 3.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
+static QString aboutText = QString("Version 2.0\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 3.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");
 
 
 typedef QMap<int, class DBBrowserField> fieldMap;
@@ -38,7 +35,7 @@ typedef QMap<QString, class DBBrowserTable> tableMap;
 typedef QMap<QString, class DBBrowserIndex> indexMap;
 typedef QMap<int, int> rowIdMap;
 
-typedef Q3ValueList<QStringList> rowList;
+typedef QList<QStringList> rowList;
 typedef QMap<int, QString> resultMap;
 
 class DBBrowserField

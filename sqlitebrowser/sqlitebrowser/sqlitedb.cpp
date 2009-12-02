@@ -352,8 +352,8 @@ bool DBBrowserDB::deleteRecord( int wrow)
     if (!isOpen()) return false;
     bool ok = false;    
     rowList tab = browseRecs;
-    rowList::iterator rt = tab.at(wrow);
-    QString rowid = (*rt).first();
+    QStringList& rt = tab[wrow];
+    QString& rowid = rt[0];
     lastErrorMessage = QString("no error");
     
     QString statement = "DELETE FROM ";
@@ -384,9 +384,9 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     
     lastErrorMessage = QString("no error");
     
-    rowList::iterator rt = browseRecs.at(wrow);
-    QString rowid = (*rt).first();
-    QString cv = (*rt).at(wcol+1);//must account for rowid
+    QStringList& rt = browseRecs[wrow];
+    QString& rowid = rt[0];
+    QString& cv = rt[wcol+1];//must account for rowid
     QString ct = browseFields.at(wcol);
     
     QString statement = "UPDATE ";
@@ -411,7 +411,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
                                NULL,NULL,&errmsg)){
  ok=true;
  /*update local copy*/
- (cv) = wtext;
+ cv = wtext;
     } else {
  lastErrorMessage = QString(errmsg);
     } 

@@ -114,7 +114,7 @@ void importCSVForm::createButtonPressed()
     sql.append(tabname);
     sql.append(" (");
     for (int r=0; r<numfields;r++){
-        sql.append(*fieldList.at(r));
+        sql.append(fieldList[r]);
         //createStatement.append(" text");
         if (r<(numfields - 1))
             sql.append(", ");
