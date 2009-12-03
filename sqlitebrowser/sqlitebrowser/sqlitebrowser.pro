@@ -1,6 +1,7 @@
 QT += qt3support
 TEMPLATE = app
 LANGUAGE = C++
+INCLUDEPATH += sqlite_source/
 CONFIG += qt \
     warn_on \
     release
