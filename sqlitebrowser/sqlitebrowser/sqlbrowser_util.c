@@ -371,7 +371,7 @@ static int _all_whitespace(const char *z){
 }
 
 
-char *getline(FILE *in){
+char *sqlbrowser_getline(FILE *in){
   char *zLine;
   int nLine;
   int n;
@@ -415,7 +415,7 @@ void process_input(sqlite3 * db, FILE *in, int * lineErr){
   char * zErrMsg = 0;
   int nSql = 0;
   int rc;
-  while((zLine = getline(in))!=0 ){
+  while((zLine = sqlbrowser_getline(in))!=0 ){
     if( (zSql==0 || zSql[0]==0) && _all_whitespace(zLine) ) continue;
 	(*lineErr)++;
     if( zSql==0 ){
