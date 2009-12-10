@@ -825,11 +825,15 @@ void mainForm::executeQuery()
     //log the query
     db.logSQL(query, kLogMsg_User);
     sqlite3_stmt *vm;
-    const char *tail;
- int ncol;
-
-   int err=0;
+    const char *tail=NULL;
+    int ncol;
+    int err=0;
    QString lastErrorMessage = QString("No error");
+   //Accept multi-line queries, by looping until the tail is empty
+   while (1) {
+       if (tail!=NULL) {
+           query = QString(tail);
+       }
    queryResultListView->clear();
    queryResultListView->setSorting (-1, FALSE);
    while (queryResultListView->columns()>0)
@@ -872,13 +876,15 @@ void mainForm::executeQuery()
   rownum++;
        }
    }
-
           sqlite3_finalize(vm);
         }else{
           lastErrorMessage = QString (sqlite3_errmsg(db._db));
         }
        queryErrorLineEdit->setText(lastErrorMessage);
        queryResultListView->setResizeMode(Q3ListView::AllColumns);
+
+       if(*tail==0) break;
+   }
 }
 
 
