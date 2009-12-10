@@ -3,8 +3,7 @@ TEMPLATE = app
 LANGUAGE = C++
 INCLUDEPATH += sqlite_source/
 CONFIG += qt \
-    warn_on \
-    release
+    warn_on
 HEADERS += extendedmainform.h \
     sqlitebrowsertypes.h \
     sqlitedb.h \
