@@ -77,4 +77,6 @@ mac {
     LIBS += -framework \
         Carbon
     QMAKE_INFO_PLIST = app.plist
+    CONFIG += x86 \
+        ppc
 }
