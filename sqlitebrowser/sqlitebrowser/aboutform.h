@@ -103,9 +103,9 @@ public:
     void retranslateUi(QDialog *aboutForm)
     {
         aboutForm->setWindowTitle(QApplication::translate("aboutForm", "About", 0, QApplication::UnicodeUTF8));
-        textLabel1->setText(QApplication::translate("aboutForm", "Version 2.0\n"
+        textLabel1->setText(QApplication::translate("aboutForm", "Version 2.0b1\n"
 "\n"
-"SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite 3.x database files.\n"
+"SQLite Database Browser is an open source, public domain, freeware visual tool\n used to create, design and edit SQLite 3.x database files.\n"
 "This program was built with version 3.6.18 of the SQLite engine.\n"
 "\n"
 "More information at http://sqlitebrowser.sourceforge.net.", 0, QApplication::UnicodeUTF8));
