@@ -19,7 +19,6 @@ HEADERS += extendedmainform.h \
     deletetableform.h \
     editfieldform.h \
     editform.h \
-    editformwindow.h \
     edittableform.h \
     exporttablecsvform.h \
     findform.h \
@@ -43,7 +42,6 @@ SOURCES += extendedmainform.cpp \
     deletetableform.cpp \
     editfieldform.cpp \
     editform.cpp \
-    editformwindow.cpp \
     edittableform.cpp \
     exporttablecsvform.cpp \
     findform.cpp \
