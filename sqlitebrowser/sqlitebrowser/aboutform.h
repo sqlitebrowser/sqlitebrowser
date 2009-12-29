@@ -103,9 +103,10 @@ public:
     void retranslateUi(QDialog *aboutForm)
     {
         aboutForm->setWindowTitle(QApplication::translate("aboutForm", "About", 0, QApplication::UnicodeUTF8));
-        textLabel1->setText(QApplication::translate("aboutForm", "<p>Version 3</font></p>\n"
+        textLabel1->setText(QApplication::translate("aboutForm", "<p>Version 2.0</font></p>\n"
 "<p></p>\n"
-"<p><font size=\"+1\">SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit Arca database files.</font></p>\n"
+"<p><font size=\"+1\">SQLite Database Browser is an open source, public domain, freeware visual tool used to\n"
+"<p><font size=\"+1\">create, design and edit SQLite database files.</font></p>\n"
 "<p></p>\n"
 "<p>For more information on this program please visit our site at: http://sqlitebrowser.sf.net</p>\n"
 "<p></p>\n"
