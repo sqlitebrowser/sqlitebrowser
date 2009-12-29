@@ -106,7 +106,7 @@ void preferencesForm::chooseLocation()
 void preferencesForm::loadSettings()
 {
     QSettings settings;
-    settings.setPath( "Tabuleiro.com", "Arca Database Browser 2", QSettings::UserScope );
+    settings.setPath( "sqlitebrowser.sf.net", "SQLite Database Browser 2", QSettings::UserScope );
 
    defaultencoding = settings.readEntry( "/db/defaultencoding", "UTF8" );
    defaultnewdata = settings.readEntry( "/db/defaultnewdata", "NULL" );
