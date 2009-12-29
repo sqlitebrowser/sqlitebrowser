@@ -103,12 +103,16 @@ public:
     void retranslateUi(QDialog *aboutForm)
     {
         aboutForm->setWindowTitle(QApplication::translate("aboutForm", "About", 0, QApplication::UnicodeUTF8));
-        textLabel1->setText(QApplication::translate("aboutForm", "Version 2.0b1\n"
-"\n"
-"SQLite Database Browser is an open source, public domain, freeware visual tool\n used to create, design and edit SQLite 3.x database files.\n"
-"This program was built with version 3.6.18 of the SQLite engine.\n"
-"\n"
-"More information at http://sqlitebrowser.sourceforge.net.", 0, QApplication::UnicodeUTF8));
+        textLabel1->setText(QApplication::translate("aboutForm", "<p>Version 3</font></p>\n"
+"<p></p>\n"
+"<p><font size=\"+1\">SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit Arca database files.</font></p>\n"
+"<p></p>\n"
+"<p>For more information on this program please visit our site at: http://sqlitebrowser.sf.net</p>\n"
+"<p></p>\n"
+"<p></p>\n"
+"<p><font size=\"-1\">This software uses the LGPL Qt Toolkit from http://www.qtsoftware.com</p>\n"
+"<p><font size=\"-1\">See LICENSING.txt and Qt_LICENSE_LGPL.txt for licensing terms and information.</p>"
+, 0, QApplication::UnicodeUTF8));
         okButton->setText(QApplication::translate("aboutForm", "Close", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
