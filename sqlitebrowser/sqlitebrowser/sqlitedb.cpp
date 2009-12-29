@@ -55,6 +55,14 @@ void DBBrowserDB::setDefaultNewData( const QString & data )
     curNewData = data;
 }
 
+char * DBBrowserDB::GetEncodedQStringAsPointer( const QString & input)
+{
+    if (curEncoding==kEncodingUTF8) return (char *) input.utf8().constData();
+    if (curEncoding==kEncodingLatin1) return (char *) input.latin1();
+
+    return (char *) input.constData();
+}
+
 QString DBBrowserDB::GetEncodedQString( const QString & input)
 {
  if (curEncoding==kEncodingUTF8) return input.utf8();
@@ -96,7 +104,7 @@ bool DBBrowserDB::open ( const QString & db)
    
   lastErrorMessage = QString("no error");
 
-  err = sqlite3_open(GetEncodedQString(db), &_db);
+  err = sqlite3_open_v2(GetEncodedQString(db), &_db, SQLITE_OPEN_READWRITE, NULL);
   if ( err ) {
     lastErrorMessage = sqlite3_errmsg(_db);
     sqlite3_close(_db);
@@ -123,7 +131,7 @@ bool DBBrowserDB::setRestorePoint()
   if (!isOpen()) return false;
 
   if (_db){
-    sqlite3_exec(_db,"BEGIN TRANSACTION RESTOREPOINT;",
+    sqlite3_exec(_db,"SAVEPOINT RESTOREPOINT;",
                                NULL,NULL,NULL);
     setDirty(false);
 }
@@ -135,7 +143,7 @@ bool DBBrowserDB::save()
   if (!isOpen()) return false;
 
   if (_db){
-    sqlite3_exec(_db,"COMMIT TRANSACTION RESTOREPOINT;",
+    sqlite3_exec(_db,"RELEASE RESTOREPOINT;",
                                NULL,NULL,NULL);
     setDirty(false);
   }   
@@ -147,7 +155,7 @@ bool DBBrowserDB::revert()
     if (!isOpen()) return false;
 
   if (_db){
-    sqlite3_exec(_db,"ROLLBACK TRANSACTION RESTOREPOINT;",
+    sqlite3_exec(_db,"ROLLBACK TO SAVEPOINT RESTOREPOINT;",
                                NULL,NULL,NULL);
  setDirty(false);
   }
@@ -265,7 +273,7 @@ bool DBBrowserDB::dump( const QString & filename)
     return true;
 }
 
-bool DBBrowserDB::executeSQL ( const QString & statement)
+bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool logsql)
 {
   char *errmsg;
   bool ok=false;
@@ -273,32 +281,8 @@ bool DBBrowserDB::executeSQL ( const QString & statement)
   if (!isOpen()) return false;
 
   if (_db){
-      logSQL(statement, kLogMsg_App);
-      setDirty(true);
-    if (SQLITE_OK==sqlite3_exec(_db,GetEncodedQString(statement),
-                               NULL,NULL,&errmsg)){
-     ok=true;
- }
-    }
-
-  if (!ok){
-    lastErrorMessage = QString(errmsg);
-    return false;
-  }else{
-    return true;
-  }
-}
-
-bool DBBrowserDB::executeSQLDirect ( const QString & statement)
-{
-    //no transaction support
-  char *errmsg;
-  bool ok=false;
-    
-  if (!isOpen()) return false;
-
-  if (_db){
-      logSQL(statement, kLogMsg_App);
+      if (logsql) logSQL(statement, kLogMsg_App);
+      if (dirtyDB) setDirty(true);
     if (SQLITE_OK==sqlite3_exec(_db,GetEncodedQString(statement),
                                NULL,NULL,&errmsg)){
      ok=true;

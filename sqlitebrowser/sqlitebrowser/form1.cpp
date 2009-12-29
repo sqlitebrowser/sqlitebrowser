@@ -884,6 +884,7 @@ void mainForm::executeQuery()
        queryResultListView->setResizeMode(Q3ListView::AllColumns);
 
        if(*tail==0) break;
+       if(err!=SQLITE_OK) break;
    }
 }
 
@@ -915,7 +916,8 @@ void mainForm::importTableFromCSV()
   return;
     }
 
-     if (db.getDirty())
+ // Not needed anymore due to nested savepoints
+/*     if (db.getDirty())
      {
   QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
   if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
@@ -924,7 +926,7 @@ void mainForm::importTableFromCSV()
   } else {
    return;
   }
-    }
+    }*/
 
     QString wFile = Q3FileDialog::getOpenFileName(
                     defaultlocation,

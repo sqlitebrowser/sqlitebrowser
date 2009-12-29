@@ -128,12 +128,12 @@ void importCSVForm::createButtonPressed()
     //declare local variables we will need before the rollback jump
     int colNum = 0;
 
-    //begin a transaction, so we can rollback in case of any errors during importing
+    //begin a savepoint, so we can rollback in case of any errors during importing
     //db needs to be saved or an error will occur
-    if (!pdb->executeSQLDirect(QString("BEGIN TRANSACTION RESTOREPOINT;"))) goto rollback;
+    if (!pdb->executeSQL(QString("SAVEPOINT CSVIMPORT;"), false, false)) goto rollback;
 
     //execute the create table statement
-    if (!pdb->executeSQLDirect(sql)) goto rollback;
+    if (!pdb->executeSQL(sql, false, false)) goto rollback;
 
         {//avoid error on MSVC due to rollback label
     //now lets import all data, one row at a time
@@ -157,7 +157,7 @@ void importCSVForm::createButtonPressed()
         } else {
             colNum = 0;
             sql.append(");");
-            if (!pdb->executeSQLDirect(sql)) goto rollback;
+            if (!pdb->executeSQL(sql, false, false)) goto rollback;
         }
         progress.setValue(i);
         if (progress.wasCanceled()) goto rollback;
@@ -166,7 +166,8 @@ void importCSVForm::createButtonPressed()
         }
 
     //everything ok, just return
-    //if (!pdb->executeSQL(QString("COMMIT TRANSACTION RESTOREPOINT;"))) goto rollback;
+    //Do not commit, it will be done automatically on save
+    if (!pdb->executeSQL(QString("RELEASE CSVIMPORT;"))) goto rollback;
     pdb->setDirtyDirect(true);
    QApplication::restoreOverrideCursor();  // restore original cursor
    accept();
@@ -179,7 +180,7 @@ void importCSVForm::createButtonPressed()
        error.append(pdb->lastErrorMessage);
        QMessageBox::warning( this, applicationName, error );
        //we will uncomment this when SQLite support nested transactions
-       pdb->executeSQLDirect(QString("ROLLBACK TRANSACTION  RESTOREPOINT;"));
+       pdb->executeSQL(QString("ROLLBACK TO SAVEPOINT CSVIMPORT;"), false, false);
 }
 
 void importCSVForm::preview()

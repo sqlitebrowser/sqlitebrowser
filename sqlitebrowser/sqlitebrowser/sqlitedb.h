@@ -100,8 +100,7 @@ public:
  bool revert ();
  bool dump( const QString & filename);
  bool reload( const QString & filename, int * lineErr);
- bool executeSQL ( const QString & statement);
- bool executeSQLDirect ( const QString & statement);
+ bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
  void updateSchema() ;
  bool addRecord();
  bool deleteRecord(int wrow);
@@ -120,6 +119,7 @@ public:
  void logSQL(QString statement, int msgtype);
                 void setEncoding( int encoding );
  void setDefaultNewData( const QString & data );
+ char * GetEncodedQStringAsPointer( const QString & input);
  QString GetEncodedQString( const QString & input);
  QString GetDecodedQString( const QString & input);
  sqlite3 * _db;
