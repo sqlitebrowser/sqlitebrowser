@@ -1,10 +1,8 @@
 BUILD INSTRUCTIONS AND REQUIREMENTS
 
-SQLite Database Browser requires Trolltech's QT. It has been tested 
-with versions 3.12 and 3.2 of QT. QT can be included as
-a static or shared library, depending on the current QT configuration
-in the building machine. For more information on QT please consult
-http://www.trolltech.com. The GPL version of QT is available in almost 
+SQLite Database Browser requires Trolltech's Qt, version 4.6. 
+For more information on QT please consult
+http://www.qtsoftware.com. The GPL version of Qt is available in almost 
 all Linux distributions as a default package.
 
 SQLite is not used as a shared library: it is built from source code
@@ -12,11 +10,11 @@ included in this package (sqlite_source directory), and linked as a
 static library into the executable. 
 
 SQLite is ideal for embedding, so the only requirement
-for building this code is the presence of QT. QT can be included as
-a static or shared library, depending on the current QT configuration
+for building this code is the presence of Qt. Qt can be included as
+a static or shared library, depending on the current Qt configuration
 in the building machine.
 
-Provided you have QT installed and configured, simply run
+Provided you have Qt installed and configured, simply run
 
 qmake 
 
@@ -31,8 +29,8 @@ sqlitebrowser (or sqlitebrowser .exe, or sqlitebrowser .app)
 application in the browser subdirectory.
 
 The same process works for building the code
-in any platform supported by QT (including other Unix systems with
+in any platform supported by Qt (including other Unix systems with
 X11.) 
 
-Please check the LICENSING file for additional information.
+Please check the LICENSING.txt file for additional information.
 
