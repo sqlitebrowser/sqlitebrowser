@@ -1,9 +1,17 @@
+//---------------------------------------------------------------
+// ExtendedMainForm: This class extends the mainForm class
+//                       to support drag and drop of sql file.
+//
+// Developer:        Arvind Kumar Gupta
+//                   arvind.your@gmail.com
+//---------------------------------------------------------------
+
 #include "extendedmainform.h"
 #include <QUrl>
 
 ExtendedMainForm::ExtendedMainForm(QWidget* parent, const char* name, Qt::WindowFlags fl) : mainForm( parent, name, fl )
 {
-	setAcceptDrops(true);
+	setAcceptDrops(true); // Enable the drop feature on this form
 }
 
 ExtendedMainForm::~ExtendedMainForm(void)
