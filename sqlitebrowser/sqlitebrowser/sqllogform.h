@@ -3,6 +3,15 @@
 
 #include <qvariant.h>
 
+/* QT_BEGIN_NAMESPACE and QT_END_NAMESPACE weren't introduced into QT right away... */
+#ifndef QT_BEGIN_NAMESPACE
+#define QT_BEGIN_NAMESPACE
+#endif
+
+#ifndef QT_END_NAMESPACE
+#define QT_END_NAMESPACE
+#endif
+
 
 #include <Qt3Support/Q3MimeSourceFactory>
 #include <Qt3Support/Q3TextEdit>
