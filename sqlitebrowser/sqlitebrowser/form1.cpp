@@ -883,7 +883,7 @@ void mainForm::executeQuery()
        queryErrorLineEdit->setText(lastErrorMessage);
        queryResultListView->setResizeMode(Q3ListView::AllColumns);
 
-       if(*tail==0) break;
+       if ((!tail)||(*tail==0)) break;
        if(err!=SQLITE_OK) break;
    }
 }
