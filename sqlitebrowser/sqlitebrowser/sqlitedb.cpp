@@ -589,7 +589,7 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
     if (logWin)
     { 
  /*limit log message to a sensible size, this will truncate some binary messages*/
- uint loglimit = 300;
+ int loglimit = 300;
  if ((statement.length() > loglimit)&&(msgtype==kLogMsg_App))
  {
      statement.truncate(32);
