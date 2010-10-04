@@ -14,11 +14,11 @@
 
 #include <Qt3Support/Q3Header>
 #include <Qt3Support/Q3ListView>
-#include <Qt3Support/Q3MainWindow>
+#include <QtGui/QMainWindow>
 #include <Qt3Support/Q3MimeSourceFactory>
 #include <Qt3Support/Q3Table>
 #include <Qt3Support/Q3TextEdit>
-#include <Qt3Support/Q3ToolBar>
+#include <QtGui/QToolBar>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -109,7 +109,7 @@ public:
     QLineEdit *queryErrorLineEdit;
     QLabel *textLabel3;
     Q3ListView *queryResultListView;
-    Q3ToolBar *Toolbar;
+    QToolBar *Toolbar;
     QMenuBar *menubar;
     QMenu *fileMenu;
     QMenu *PopupMenuEditor_9;
@@ -118,10 +118,12 @@ public:
     QMenu *ViewMenu;
     QMenu *PopupMenu;
 
-    void setupUi(Q3MainWindow *mainForm)
+    void setupUi(QMainWindow *mainForm)
     {
-        if (mainForm->objectName().isEmpty())
+        if (mainForm->objectName().isEmpty()){
             mainForm->setObjectName(QString::fromUtf8("mainForm"));
+        }
+        //TODO get from settings and save last position
         mainForm->resize(702, 552);
         fileNewAction = new QAction(mainForm);
         fileNewAction->setObjectName(QString::fromUtf8("fileNewAction"));
@@ -450,9 +452,14 @@ public:
         vboxLayout->addWidget(mainTab);
 
         mainForm->setCentralWidget(widget);
-        Toolbar = new Q3ToolBar(mainForm);
+
+        //*** Setup Toolbar
+        Toolbar = new QToolBar();
+        mainForm->addToolBar(Qt::TopToolBarArea, Toolbar);
         Toolbar->setObjectName(QString::fromUtf8("Toolbar"));
-        menubar = new QMenuBar(mainForm);
+
+        //*** Setup main Menu
+        menubar = mainForm->menuBar(); //new QMenuBar(mainForm);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
@@ -553,7 +560,7 @@ public:
         QMetaObject::connectSlotsByName(mainForm);
     } // setupUi
 
-    void retranslateUi(Q3MainWindow *mainForm)
+    void retranslateUi(QMainWindow *mainForm)
     {
         mainForm->setWindowTitle(QApplication::translate("mainForm", "Browser", 0, QApplication::UnicodeUTF8));
         fileNewAction->setIconText(QApplication::translate("mainForm", "New Database", 0, QApplication::UnicodeUTF8));
@@ -831,7 +838,7 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-class mainForm : public Q3MainWindow, public Ui::mainForm
+class mainForm : public QMainWindow, public Ui::mainForm
 {
     Q_OBJECT
 
