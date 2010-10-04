@@ -55,53 +55,51 @@ void mainForm::languageChange()
 
 void mainForm::init()
 {
-    clipboard = QApplication::clipboard();
     
-         findWin = 0;
-     editWin = 0;
-     logWin = 0;
+    findWin = 0;
+    editWin = 0;
+    logWin = 0;
 
     clipboard = QApplication::clipboard();
 
     recsPerView = 1000;
     recAtTop = 0;
-    gotoValidator = new QIntValidator(0,0,this);
+    gotoValidator = new QIntValidator(0, 0, this);
     editGoto->setValidator(gotoValidator);
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
     this->setCaption(applicationName);
     this->setIcon( qPixmapFromMimeSource( applicationIconName ) );
-    buttonNext->setEnabled(FALSE);
-    buttonPrevious->setEnabled(FALSE);
+    buttonNext->setEnabled(false);
+    buttonPrevious->setEnabled(false);
 
 
-       if (!editWin)
-    {
-       editWin = new editForm(this);
-       connect( editWin, SIGNAL( goingAway() ),this, SLOT( editWinAway() ) );
-       connect( editWin, SIGNAL( updateRecordText(int, int , QString) ),
-                     this, SLOT( updateRecordText(int, int , QString) ) );
-   }
+    if(!editWin){
+        editWin = new editForm(this);
+        connect( editWin, SIGNAL( goingAway() ),
+                 this,    SLOT( editWinAway() ) );
+        connect( editWin, SIGNAL( updateRecordText(int, int , QString) ),
+                 this,      SLOT( updateRecordText(int, int , QString) ) );
+    }
 
-        if (!logWin)
-    {
-       logWin = new sqlLogForm(this);
-       connect( logWin, SIGNAL( goingAway() ),this, SLOT( logWinAway() ) );
-       connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
-   }
+    if(!logWin){
+        logWin = new sqlLogForm(this);
+        connect( logWin, SIGNAL( goingAway() ),  this, SLOT( logWinAway() ) );
+        connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
+    }
 
-   updatePreferences();
+    updatePreferences();
  
- //connect db and log
+    //connect db and log
     db.logWin = logWin;
 
 }
 
 void mainForm::destroy()
 {
-    if (gotoValidator)
- delete gotoValidator;
-
+    if (gotoValidator){
+        delete gotoValidator;
+    }
 }
 
 void mainForm::fileOpen(const QString & fileName)

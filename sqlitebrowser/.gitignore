@@ -1,0 +1,6 @@
+sqlitebrowser
+Makefile
+.moc/
+.obj/
+sqlitedbbrowser.pro.user
+
