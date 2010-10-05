@@ -45,12 +45,18 @@ void editFieldForm::setDB(DBBrowserDB &db)
 
 void editFieldForm::setInitialValues(bool is_new, QString table, QString fld_name, QString fld_type)
 {
-    this->is_new = is_new;
-    saveButton->setText(is_new ? "Create Field" : "Change Field");
     original_field_name = QString(fld_name);
-
     table_name = table;
     nameLineEdit->setText(fld_name);
+
+    this->is_new = is_new;
+    saveButton->setText(is_new ? "Create Field" : "Change Field");
+    setWindowIcon(QIcon(is_new ? ":/icons/field_add" : ":/icons/field_edit"));
+    setWindowTitle(is_new
+                   ? QString( "New Field in '%1'").arg(table_name)
+                   : QString("Change Field in '%1'").arg(table_name)
+                );
+
     QList<QAbstractButton *> buttons =  groupRadioTypes->buttons();
     for(int i = 0; i < buttons.size(); ++i){
         if( buttons.at(i)->property("field_type").toString() == fld_type){
