@@ -1229,6 +1229,7 @@ void mainForm::on_tree_selection_changed(){
     if (!dbTreeWidget->selectionModel()->hasSelection()){
         editDeleteTableActionPopup->setEnabled(false);
         editModifyTableActionPopup->setEnabled(false);
+        editAddFieldActionPopup->setEnabled(false);
         editModifyFieldActionPopup->setEnabled(false);
         editDeleteFieldActionPopup->setEnabled(false);
         return;
@@ -1237,10 +1238,12 @@ void mainForm::on_tree_selection_changed(){
     if(dbTreeWidget->currentItem()->text(1) == "table"){
         editDeleteTableActionPopup->setEnabled(true);
         editModifyTableActionPopup->setEnabled(true);
+        editAddFieldActionPopup->setEnabled(true);
         editModifyFieldActionPopup->setEnabled(false);
         editDeleteFieldActionPopup->setEnabled(false);
 
     }else if(dbTreeWidget->currentItem()->text(1) == "field"){
+        editAddFieldActionPopup->setEnabled(false);
         editDeleteTableActionPopup->setEnabled(false);
         editModifyTableActionPopup->setEnabled(false);
         editModifyFieldActionPopup->setEnabled(true);
@@ -1249,8 +1252,25 @@ void mainForm::on_tree_selection_changed(){
 }
 
 
-
-
+void mainForm::on_add_field(){
+    qDebug("YES");
+    //if( !dbTreeWidget->currentItem() ){
+     //   return;
+    //}
+    //QTreeWidgetItem *item = dbTreeWidget->currentItem();
+    editFieldForm *fieldForm = new editFieldForm( this, "editfield", true );
+    //qDebug(item->text(2));
+    fieldForm->setInitialValues(true, "TABLE_NAME", "", "NUMERIC");
+    fieldForm->setDB(this->db);
+    if (fieldForm->exec())
+    {
+        //modified = true;
+        //do the sql rename here
+        qDebug(fieldForm->field_name + fieldForm->field_type);
+        //item->setText(0,fieldForm->field_name);
+        //item->setText(2,fieldForm->field_type);
+    }
+}
 void mainForm::on_edit_field(){
     qDebug("YES");
     if( !dbTreeWidget->currentItem() ){

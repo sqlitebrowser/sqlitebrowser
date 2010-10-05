@@ -275,26 +275,25 @@ bool DBBrowserDB::dump( const QString & filename)
 
 bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool logsql)
 {
-  char *errmsg;
-  bool ok=false;
+    char *errmsg;
+    bool ok = false;
     
-  if (!isOpen()) return false;
+    if (!isOpen()) return false;
 
-  if (_db){
-      if (logsql) logSQL(statement, kLogMsg_App);
-      if (dirtyDB) setDirty(true);
-    if (SQLITE_OK==sqlite3_exec(_db,GetEncodedQString(statement),
-                               NULL,NULL,&errmsg)){
-     ok=true;
- }
+    if (_db){
+        if (logsql) logSQL(statement, kLogMsg_App);
+        if (dirtyDB) setDirty(true);
+        if (SQLITE_OK==sqlite3_exec(_db,GetEncodedQString(statement),
+                                    NULL,NULL,&errmsg)){
+            ok=true;
+        }
     }
 
-  if (!ok){
-    lastErrorMessage = QString(errmsg);
-    return false;
-  }else{
+    if (!ok){
+        lastErrorMessage = QString(errmsg);
+        return false;
+    }
     return true;
-  }
 }
 
 
@@ -424,6 +423,18 @@ bool DBBrowserDB::browseTable( const QString & tablename )
  idmap.clear();
     }
     return hasValidBrowseSet;
+}
+
+bool DBBrowserDB::createColumn( QString tablename, QString fieldname, QString fieldtype ){
+    qDebug("create column");
+    QString sql = QString("ALTER TABLE `%1` ADD COLUMN `%2` %3").arg(tablename).arg(fieldname).arg(fieldtype);
+    qDebug(sql);
+    return executeSQL(sql);
+}
+
+bool DBBrowserDB::renameTable(QString from_table, QString to_table){
+    qDebug("renameTable column");
+    return true;
 }
 
 void DBBrowserDB::getTableRecords( const QString & tablename )

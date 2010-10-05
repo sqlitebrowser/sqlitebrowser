@@ -113,19 +113,19 @@ public:
         radioBLOB->setText(QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8));
         radioBLOB->setProperty("field_type", QVariant("BLOB"));
         radioLayout->addWidget(radioBLOB);
-        //groupRadioTypes->addButton(radioBLOB);
+        groupRadioTypes->addButton(radioBLOB);
 
         QRadioButton *radioINTPRIMARY = new QRadioButton();
         radioINTPRIMARY->setText(QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8));
         radioINTPRIMARY->setProperty("field_type", QVariant("INTEGER PRIMARY KEY"));
         radioLayout->addWidget(radioINTPRIMARY);
-        //groupRadioTypes->addButton(radioINTPRIMARY);
+        groupRadioTypes->addButton(radioINTPRIMARY);
 
         QRadioButton *radioCustom = new QRadioButton();
         radioCustom->setText(QApplication::translate("addFieldForm", "Custom", 0, QApplication::UnicodeUTF8));
         radioCustom->setProperty("field_type", QVariant("__custom__"));
         radioLayout->addWidget(radioCustom);
-        //groupRadioTypes->addButton(radioCustom);
+        groupRadioTypes->addButton(radioCustom);
 
         QLineEdit *txtCustomType = new QLineEdit();
         radioLayout->addWidget(txtCustomType);

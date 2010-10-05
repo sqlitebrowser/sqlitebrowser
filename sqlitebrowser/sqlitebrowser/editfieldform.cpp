@@ -57,18 +57,7 @@ void editFieldForm::setInitialValues(bool is_new, QString table, QString fld_nam
              return;
         }
     }
-    return;
-    typeBox->clear();
-    typeBox->insertItem(fld_type);
-//    QString tString = "";
-//    tString = "TEXT";
-//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
-//    tString = "NUMERIC";
-//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
-//    tString = "BLOB";
-//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
-//    tString = "INTEGER PRIMARY KEY";
-//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    //TODO enable custom
 }
 
 void editFieldForm::confirmEdit()
@@ -84,12 +73,16 @@ void editFieldForm::confirmEdit()
     }
     field_name = fieldname;
     field_type = typeBox->currentText();
-    QString sql = QString("ALTER TABLE `%1` ");
-    qDebug(sql);
-    if(!pdb.executeSQL(sql)){
+    bool ok = pdb.createColumn(table_name, field_name, field_type);
+    if(!ok){
         qDebug(pdb.lastErrorMessage);
         return;
     }
+    //qDebug("");
+   // if(!pdb.executeSQL(sql)){
+//        qDebug(pdb.lastErrorMessage);
+    //    return;
+   // }
     accept();
 }
 

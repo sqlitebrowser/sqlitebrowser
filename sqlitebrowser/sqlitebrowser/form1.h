@@ -270,18 +270,21 @@ public:
         editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
 
 
-        //** Modify Field
+        //** Add, Modify, Delete Field
 
         editAddFieldActionPopup = new QAction(mainForm);
         editAddFieldActionPopup->setText("Add Field");
+        editAddFieldActionPopup->setDisabled(true);
         editAddFieldActionPopup->setIcon(QIcon(":/icons/field_add"));
 
         editModifyFieldActionPopup = new QAction(mainForm);
-        editModifyFieldActionPopup->setText("Modify Field");      
+        editModifyFieldActionPopup->setText("Modify Field");
+        editModifyFieldActionPopup->setDisabled(true);
         editModifyFieldActionPopup->setIcon(QIcon(":/icons/field_edit"));
 
         editDeleteFieldActionPopup = new QAction(mainForm);
         editDeleteFieldActionPopup->setText("Delete Field");
+        editDeleteFieldActionPopup->setDisabled(true);
         editDeleteFieldActionPopup->setIcon(QIcon(":/icons/field_delete"));
 
         //** Create Index
@@ -317,9 +320,11 @@ public:
         mainTab->setObjectName(QString::fromUtf8("mainTab"));
         structure = new QWidget();
         structure->setObjectName(QString::fromUtf8("structure"));
+
+
         vboxLayout1 = new QVBoxLayout(structure);
-        vboxLayout1->setSpacing(6);
-        vboxLayout1->setContentsMargins(11, 11, 11, 11);
+        vboxLayout1->setSpacing(0);
+        vboxLayout1->setContentsMargins(0,0,0,0);
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
 
         //**** Structure ***********************************
@@ -643,8 +648,8 @@ public:
         QObject::connect(editModifyTableAction, SIGNAL(activated()), mainForm, SLOT(editTable()));
         QObject::connect(editDeleteTableActionPopup, SIGNAL(activated()), mainForm, SLOT(deleteTablePopup()));
         QObject::connect(editModifyTableActionPopup, SIGNAL(activated()), mainForm, SLOT(editTablePopup()));
+        QObject::connect(editAddFieldActionPopup, SIGNAL(activated()), mainForm, SLOT(on_add_field()));
         QObject::connect(editModifyFieldActionPopup, SIGNAL(activated()), mainForm, SLOT(on_edit_field()));
-
 
         QObject::connect(fileExportSQLAction, SIGNAL(activated()), mainForm, SLOT(exportDatabaseToSQL()));
         QObject::connect(fileImportSQLAction, SIGNAL(activated()), mainForm, SLOT(importDatabaseFromSQL()));
@@ -958,6 +963,7 @@ public:
 public slots:
     virtual void on_tree_context_menu(const QPoint & qPoint);
     virtual void on_tree_selection_changed();
+    virtual void on_add_field();
     virtual void on_edit_field();
 
     virtual void fileOpen( const QString & fileName );

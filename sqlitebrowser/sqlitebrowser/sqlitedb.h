@@ -106,6 +106,10 @@ public:
  bool deleteRecord(int wrow);
  bool updateRecord(int wrow, int wcol, const QString & wtext);
  bool browseTable( const QString & tablename );
+
+ bool renameTable(QString from_table, QString to_table);
+ bool createColumn(QString table, QString field, QString type);
+
  QStringList getTableFields(const QString & tablename);
  QStringList getTableTypes(const QString & tablename);
  QStringList getTableNames();
