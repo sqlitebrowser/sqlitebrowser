@@ -85,9 +85,9 @@ public:
         //**** Field Types Radios
         QVBoxLayout *radioLayout = new QVBoxLayout();
         mainVBoxLayout->addLayout(radioLayout);
-        radioLayout->setContentsMargins(20, 0 ,0 ,0);
+        radioLayout->setContentsMargins(20, 10 ,10 ,0);
 
-        groupRadioTypes = new QButtonGroup(editFieldForm);
+        groupRadioTypes = new QButtonGroup();
 
 
         QRadioButton *radioTEXT = new QRadioButton();
@@ -103,22 +103,22 @@ public:
         QRadioButton *radioBLOB = new QRadioButton();
         radioBLOB->setText(QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8));
         radioLayout->addWidget(radioBLOB);
-        groupRadioTypes->addButton(radioBLOB);
+        //groupRadioTypes->addButton(radioBLOB);
 
         QRadioButton *radioINTPRIMARY = new QRadioButton();
         radioINTPRIMARY->setText(QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8));
         radioLayout->addWidget(radioINTPRIMARY);
-        groupRadioTypes->addButton(radioINTPRIMARY);
+        //groupRadioTypes->addButton(radioINTPRIMARY);
 
         QRadioButton *radioCustom = new QRadioButton();
         radioCustom->setText(QApplication::translate("addFieldForm", "Custom", 0, QApplication::UnicodeUTF8));
         radioLayout->addWidget(radioCustom);
-        groupRadioTypes->addButton(radioCustom);
+        //groupRadioTypes->addButton(radioCustom);
 
         QLineEdit *txtCustomType = new QLineEdit();
         radioLayout->addWidget(txtCustomType);
         txtCustomType->setDisabled(true);
-
+        
         gridLayout = new QGridLayout();
         mainVBoxLayout->addLayout(gridLayout );
 
@@ -201,6 +201,8 @@ public:
         QObject::connect(nameLineEdit, SIGNAL(textChanged(QString)), editFieldForm, SLOT(enableSave()));
         QObject::connect(typeButton, SIGNAL(clicked()), editFieldForm, SLOT(getCustomType()));
 
+        QObject::connect(groupRadioTypes, SIGNAL(buttonClicked(QAbstractButton*)), editFieldForm, SLOT(on_radio_button_clicked(QAbstractButton*)));
+
         QMetaObject::connectSlotsByName(editFieldForm);
     } // setupUi
 
@@ -252,6 +254,8 @@ public slots:
     virtual void confirmEdit();
     virtual void enableSave();
     virtual void getCustomType();
+
+    virtual void on_radio_button_clicked(QAbstractButton*);
 
 protected slots:
     virtual void languageChange();

@@ -87,3 +87,8 @@ void editFieldForm::getCustomType()
         enableSave();
    }
 }
+
+
+void editFieldForm::on_radio_button_clicked(QAbstractButton *button){
+    qDebug("YES");
+}
