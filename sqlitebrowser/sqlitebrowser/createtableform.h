@@ -16,7 +16,7 @@
 
 #include <QtGui/QGroupBox>
 #include <Qt3Support/Q3Header>
-//#include <Qt3Support/Q3ListView>
+
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QHeaderView>
@@ -46,23 +46,17 @@ public:
 
     QHBoxLayout *topTableLayout;
 
-    QGroupBox *groupBox1;
+    QGroupBox *groupBoxFields;
     QVBoxLayout *groupBoxLayout;
     QLabel *textLabel1;
     QLineEdit *tablenameLineEdit;
 
-    QVBoxLayout *vboxLayout1;
-    //sQ3ListView *fieldListView;
     QTreeWidget *treeWidget;
-
-    QSpacerItem *spacer4;
 
     QHBoxLayout *fieldActionsButtonLayout;
     QPushButton *buttonAddField;
     QPushButton *buttonDeleteField;
 
-    QHBoxLayout *hboxLayout2;
-    QSpacerItem *spacer6;
     QHBoxLayout *bottomButtonLayout;
     QPushButton *buttonCreate;
     QPushButton *buttonCancel;
@@ -101,18 +95,10 @@ public:
         mainVBoxLayout->addLayout(topTableLayout);
 
         //**** Fields GroupBox
-        groupBox1 = new QGroupBox(createTableForm);
-        groupBox1->setObjectName(QString::fromUtf8("groupBox1"));
-        //groupBox1->setColumnLayout(0, Qt::Vertical);
-        //groupBox1->layout()->setSpacing(6);
-        //groupBox1->layout()->setContentsMargins(11, 11, 11, 11);
+        groupBoxFields = new QGroupBox(createTableForm);
+        groupBoxFields->setObjectName(QString::fromUtf8("groupBox1"));
         groupBoxLayout = new QVBoxLayout();
-        groupBox1->setLayout(groupBoxLayout);
-        //QBoxLayout *boxlayout = qobject_cast<QBoxLayout *>(groupBox1->layout());
-        //if (boxlayout)
-         //   boxlayout->addLayout(vboxLayout1);
-        //vboxLayout1->setAlignment(Qt::AlignTop);
-        //vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+        groupBoxFields->setLayout(groupBoxLayout);
 
         treeWidget = new QTreeWidget();
         groupBoxLayout->addWidget(treeWidget);
@@ -121,49 +107,28 @@ public:
         treeWidget->setRootIsDecorated(false);
         treeWidget->setAlternatingRowColors(true);
 
-        /*
-        fieldListView = new Q3ListView(groupBox1);
-        fieldListView->addColumn(QApplication::translate("createTableForm", "Field name", 0, QApplication::UnicodeUTF8));
-        fieldListView->header()->setClickEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->header()->setResizeEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->addColumn(QApplication::translate("createTableForm", "Field type", 0, QApplication::UnicodeUTF8));
-        fieldListView->header()->setClickEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->header()->setResizeEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->setObjectName(QString::fromUtf8("fieldListView"));
-        fieldListView->setResizePolicy(Q3ScrollView::Manual);
-        fieldListView->setResizeMode(Q3ListView::AllColumns);
-
-        groupBoxLayout->addWidget(fieldListView);
-        */
-
         //** Field Action Buttons Box
         fieldActionsButtonLayout = new QHBoxLayout();
         fieldActionsButtonLayout->setSpacing(6);
         fieldActionsButtonLayout->setObjectName(QString::fromUtf8("hboxLayout1"));
-        //spacer4 = new QSpacerItem(111, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
         fieldActionsButtonLayout->addStretch(10); // force right
-        //hboxLayout1->addItem(spacer4);
 
         //*** Delete Field Button
-        buttonDeleteField = new QPushButton(groupBox1);
+        buttonDeleteField = new QPushButton(groupBoxFields);
         buttonDeleteField->setObjectName(QString::fromUtf8("buttonDeleteField"));
         buttonDeleteField->setEnabled(false);
         buttonDeleteField->setIcon(QIcon(":/icons/field_delete"));
         fieldActionsButtonLayout->addWidget(buttonDeleteField);
 
         //*** Add Field Button
-        buttonAddField = new QPushButton(groupBox1);
+        buttonAddField = new QPushButton(groupBoxFields);
         buttonAddField->setObjectName(QString::fromUtf8("buttonAddField"));
         buttonAddField->setIcon(QIcon(":/icons/field_add"));
         fieldActionsButtonLayout->addWidget(buttonAddField);
 
-
-
-
         groupBoxLayout->addLayout(fieldActionsButtonLayout);
 
-
-        mainVBoxLayout->addWidget(groupBox1);
+        mainVBoxLayout->addWidget(groupBoxFields);
 
         //***************************************
         //*** Bottom Dialog action Buttons
@@ -183,19 +148,15 @@ public:
         //buttonCreate->setObjectName(QString::fromUtf8("buttonCreate"));
         buttonCreate->setIcon(QIcon(":/icons/save"));
         bottomButtonLayout->addWidget(buttonCreate);
-
-
-
-
         mainVBoxLayout->addLayout(bottomButtonLayout);
 
 
+        //** Setup
         retranslateUi(createTableForm);
         QObject::connect(buttonCancel, SIGNAL(clicked()), createTableForm, SLOT(reject()));
         QObject::connect(buttonCreate, SIGNAL(clicked()), createTableForm, SLOT(confirmCreate()));
         QObject::connect(buttonAddField, SIGNAL(clicked()), createTableForm, SLOT(addField()));
         QObject::connect(buttonDeleteField, SIGNAL(clicked()), createTableForm, SLOT(deleteField()));
-        //QObject::connect(fieldListView, SIGNAL(selectionChanged()), createTableForm, SLOT(fieldSelectionChanged()));
         QObject::connect(treeWidget, SIGNAL(itemSelectionChanged()), createTableForm, SLOT(fieldSelectionChanged()));
 
         QMetaObject::connectSlotsByName(createTableForm);
@@ -212,16 +173,8 @@ public:
 #ifndef QT_NO_WHATSTHIS
         tablenameLineEdit->setProperty("whatsThis", QVariant(QApplication::translate("createTableForm", "Use this control to enter the name of the table to be created.", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
-        groupBox1->setTitle(QApplication::translate("createTableForm", "Define fields:", 0, QApplication::UnicodeUTF8));
-        //fieldListView->header()->setLabel(0, QApplication::translate("createTableForm", "Field name", 0, QApplication::UnicodeUTF8));
-        //fieldListView->header()->setLabel(1, QApplication::translate("createTableForm", "Field type", 0, QApplication::UnicodeUTF8));
-        //fieldListView->clear();
+        groupBoxFields->setTitle(QApplication::translate("createTableForm", "Define fields:", 0, QApplication::UnicodeUTF8));
 
-        //Q3ListViewItem *__item = new Q3ListViewItem(fieldListView);
-        //__item->setText(0, QApplication::translate("createTableForm", "New Item", 0, QApplication::UnicodeUTF8));
-        //__item->setText(1, QString());
-        //__item->setPixmap(0, QPixmap());
-        //__item->setPixmap(1, QPixmap());
         buttonAddField->setText(QApplication::translate("createTableForm", "Add", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         buttonAddField->setProperty("toolTip", QVariant(QApplication::translate("createTableForm", "Add a new field definition", 0, QApplication::UnicodeUTF8)));

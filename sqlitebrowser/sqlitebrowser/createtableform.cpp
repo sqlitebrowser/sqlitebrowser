@@ -40,12 +40,12 @@ void createTableForm::languageChange()
 
 void createTableForm::init()
 {
-   //fieldListView->clear();
-   //fieldListView->setSorting (-1, FALSE);
 }
 
+//** Create The Table
 void createTableForm::confirmCreate()
 {
+    //TODO change these warnings to status bar message
     bool ok = true;
     QString tabname = tablenameLineEdit->text();
     if (tabname.isEmpty()) {
@@ -90,26 +90,15 @@ void createTableForm::confirmCreate()
         createStatement = "CREATE TABLE ";
         createStatement.append(tabname);
         createStatement.append(" (");
-        Q3ListViewItemIterator it( fieldListView );
-        Q3ListViewItem * item;
-        while ( it.current() ) {
-            item = it.current();
-          createStatement.append(item->text(0));
-          createStatement.append(" ");
-          createStatement.append(item->text(1));
-            if (item->nextSibling() != 0)
-           {
+        for(int i = 0; i < treeWidget->invisibleRootItem()->childCount(); i++){
+            QTreeWidgetItem *item = treeWidget->invisibleRootItem()->child(i);
+            createStatement.append(item->text(0));
+            createStatement.append(" ");
+            createStatement.append(item->text(1));
+            if(i < treeWidget->invisibleRootItem()->childCount() -1){
                 createStatement.append(", ");
             }
-            ++it;
         }
-        /*for (int r=0; r<fieldsTable->numRows();r++){
-            createStatement.append(fieldsTable->text(r, 0));
-            createStatement.append(" ");
-            createStatement.append(fieldsTable->text(r, 1));
-            if (r<(fieldsTable->numRows() - 1))
-                createStatement.append(", ");
-        }*/
         createStatement.append(");");
         accept();
     }
@@ -118,16 +107,11 @@ void createTableForm::confirmCreate()
 
 void createTableForm::addField()
 {
+    //TODO maybe embedd locally
     addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
     addForm->setInitialValues(QString(""),QString(""));
     if (addForm->exec())
     {
-        //qDebug(addForm->fname + addForm->ftype);
-        //TODO
-        Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, fieldListView->lastItem() );
-        tbitem->setText( 0, addForm->fname  );
-        tbitem->setText( 1, addForm->ftype );
-
         QTreeWidgetItem *newItem = new QTreeWidgetItem();
         newItem->setText(0, addForm->fname);
         newItem->setText(1, addForm->ftype);
@@ -139,31 +123,14 @@ void createTableForm::addField()
 
 void createTableForm::deleteField()
 {
-    if(!treeWidget->currentItem()  ){
+    if( !treeWidget->currentItem() ){
         return;
     }
     treeWidget->invisibleRootItem()->removeChild(treeWidget->currentItem());
-
-    Q3ListViewItem * item = fieldListView->selectedItem();
-    if (item==0) {
-        //should never happen, the button would not be active, but...
-        return;
-    } else {
-        delete item;
-        }
 }
-
 
 
 void createTableForm::fieldSelectionChanged()
 {
-    buttonDeleteField->setEnabled(treeWidget->selectionModel()->hasSelection());
-
-     Q3ListViewItem * item = fieldListView->selectedItem();
-    if (item==0) {
-        buttonDeleteField->setEnabled(false);
-    } else {
-        buttonDeleteField->setEnabled(true);
-    }
-
+    buttonDeleteField->setEnabled( treeWidget->selectionModel()->hasSelection() );
 }
