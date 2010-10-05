@@ -16,5 +16,7 @@
         <file alias="save">accept.png</file>
         <file alias="cancel">bullet_black.png</file>
         <file alias="field">page_green.png</file>
+        <file alias="table">table.png</file>
+        <file alias="index">tag_blue.png</file>
     </qresource>
 </RCC>

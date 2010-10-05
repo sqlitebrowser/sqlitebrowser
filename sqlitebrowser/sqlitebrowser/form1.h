@@ -14,6 +14,10 @@
 
 #include <Qt3Support/Q3Header>
 #include <Qt3Support/Q3ListView>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QTreeWidgetItem>
+#include <QtGui/QHeaderView>
+
 #include <QtGui/QMainWindow>
 #include <Qt3Support/Q3MimeSourceFactory>
 #include <Qt3Support/Q3Table>
@@ -80,7 +84,9 @@ public:
     QTabWidget *mainTab;
     QWidget *structure;
     QVBoxLayout *vboxLayout1;
-    Q3ListView *dblistView;
+
+    QTreeWidget *dbTreeWidget;
+
     QWidget *browser;
     QVBoxLayout *vboxLayout2;
     QHBoxLayout *hboxLayout;
@@ -225,7 +231,6 @@ public:
         editCreateTableAction->setObjectName(QString::fromUtf8("editCreateTableAction"));
         editCreateTableAction->setName("editCreateTableAction");
         editCreateTableAction->setEnabled(false);
-        //const QIcon icon7 = QIcon(qPixmapFromMimeSource("create_table.png"));
         editCreateTableAction->setIcon(QIcon(":/icons/table_create"));
 
         //** Delete table
@@ -233,7 +238,6 @@ public:
         editDeleteTableAction->setObjectName(QString::fromUtf8("editDeleteTableAction"));
         editDeleteTableAction->setName("editDeleteTableAction");
         editDeleteTableAction->setEnabled(false);
-        //const QIcon icon8 = QIcon(qPixmapFromMimeSource("delete_table.png"));
         editDeleteTableAction->setIcon(QIcon(":/icons/table_delete"));
 
         //** Modify Table
@@ -241,7 +245,6 @@ public:
         editModifyTableAction->setObjectName(QString::fromUtf8("editModifyTableAction"));
         editModifyTableAction->setName("editModifyTableAction");
         editModifyTableAction->setEnabled(false);
-       // const QIcon icon9 = QIcon(qPixmapFromMimeSource("modify_table.png"));
         editModifyTableAction->setIcon(QIcon(":/icons/table_modify"));
 
         //** Create Index
@@ -249,14 +252,12 @@ public:
         editCreateIndexAction->setObjectName(QString::fromUtf8("editCreateIndexAction"));
         editCreateIndexAction->setName("editCreateIndexAction");
         editCreateIndexAction->setEnabled(false);
-        //const QIcon icon10 = QIcon(qPixmapFromMimeSource("create_index.png"));
         editCreateIndexAction->setIcon(QIcon(":/icons/index_create"));
 
         editDeleteIndexAction = new QAction(mainForm);
         editDeleteIndexAction->setObjectName(QString::fromUtf8("editDeleteIndexAction"));
         editDeleteIndexAction->setName("editDeleteIndexAction");
         editDeleteIndexAction->setEnabled(false);
-        //const QIcon icon11 = QIcon(qPixmapFromMimeSource("delete_index.png"));
         editDeleteIndexAction->setIcon(QIcon(":/icons/index_delete"));
 
         fileImportSQLAction = new QAction(mainForm);
@@ -283,26 +284,19 @@ public:
         vboxLayout1->setSpacing(6);
         vboxLayout1->setContentsMargins(11, 11, 11, 11);
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
-        dblistView = new Q3ListView(structure);
-        dblistView->addColumn(QApplication::translate("mainForm", "Name", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setClickEnabled(false, dblistView->header()->count() - 1);
-        dblistView->header()->setResizeEnabled(true, dblistView->header()->count() - 1);
-        dblistView->addColumn(QApplication::translate("mainForm", "Object", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setClickEnabled(false, dblistView->header()->count() - 1);
-        dblistView->header()->setResizeEnabled(true, dblistView->header()->count() - 1);
-        dblistView->addColumn(QApplication::translate("mainForm", "Type", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setClickEnabled(false, dblistView->header()->count() - 1);
-        dblistView->header()->setResizeEnabled(true, dblistView->header()->count() - 1);
-        dblistView->addColumn(QApplication::translate("mainForm", "Schema", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setClickEnabled(false, dblistView->header()->count() - 1);
-        dblistView->header()->setResizeEnabled(true, dblistView->header()->count() - 1);
-        dblistView->setObjectName(QString::fromUtf8("dblistView"));
-        dblistView->setResizePolicy(Q3ScrollView::Manual);
-        dblistView->setSelectionMode(Q3ListView::NoSelection);
-        dblistView->setRootIsDecorated(true);
-        dblistView->setResizeMode(Q3ListView::LastColumn);
 
-        vboxLayout1->addWidget(dblistView);
+        //*** Tree Widget Setup
+        dbTreeWidget = new QTreeWidget();
+        vboxLayout1->addWidget(dbTreeWidget);
+        QTreeWidgetItem *headerItem = dbTreeWidget->headerItem();
+        headerItem->setText(0, QApplication::translate("mainForm", "Name", 0, QApplication::UnicodeUTF8));
+        headerItem->setText(1, QApplication::translate("mainForm", "Object", 0, QApplication::UnicodeUTF8));
+        headerItem->setText(2, QApplication::translate("mainForm", "Type", 0, QApplication::UnicodeUTF8));
+        headerItem->setText(3, QApplication::translate("mainForm", "Schema", 0, QApplication::UnicodeUTF8));
+        dbTreeWidget->setAlternatingRowColors(true);
+        dbTreeWidget->setRootIsDecorated(true);
+        dbTreeWidget->setAnimated(true);
+
 
         mainTab->addTab(structure, QString());
         browser = new QWidget();
@@ -740,12 +734,9 @@ public:
 #ifndef QT_NO_TOOLTIP
         mainTab->setProperty("toolTip", QVariant(QString()));
 #endif // QT_NO_TOOLTIP
-        dblistView->header()->setLabel(0, QApplication::translate("mainForm", "Name", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setLabel(1, QApplication::translate("mainForm", "Object", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setLabel(2, QApplication::translate("mainForm", "Type", 0, QApplication::UnicodeUTF8));
-        dblistView->header()->setLabel(3, QApplication::translate("mainForm", "Schema", 0, QApplication::UnicodeUTF8));
+
 #ifndef QT_NO_WHATSTHIS
-        dblistView->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This area shows the structure of your database, including all tables and indexes.", 0, QApplication::UnicodeUTF8)));
+
 #endif // QT_NO_WHATSTHIS
         mainTab->setTabText(mainTab->indexOf(structure), QApplication::translate("mainForm", "Database Structure", 0, QApplication::UnicodeUTF8));
         textLabel1->setText(QApplication::translate("mainForm", "Table:", 0, QApplication::UnicodeUTF8));

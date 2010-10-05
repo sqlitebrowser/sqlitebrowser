@@ -183,42 +183,45 @@ void mainForm::fileNew()
 
 void mainForm::populateStructure()
 {
-    dblistView->clear();
-    dblistView->setSorting(-1);
+    dbTreeWidget->model()->removeRows(0, dbTreeWidget->model()->rowCount());
     if (!db.isOpen()){
- return;
+        return;
     }
     db.updateSchema();
     tableMap::Iterator it;
     tableMap tmap = db.tbmap;
-    Q3ListViewItem * lasttbitem = 0;
-        for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-     Q3ListViewItem * tbitem = new Q3ListViewItem( dblistView, lasttbitem );
-     //tbitem->setOpen( TRUE );
-      tbitem->setText( 0, it.data().getname() );
-      tbitem->setText( 1,  "table" );
-      tbitem->setText( 3, it.data().getsql() );
-     fieldMap::Iterator fit;
-     fieldMap fmap = it.data().fldmap;
-     Q3ListViewItem * lastflditem = 0;
-     for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-   Q3ListViewItem * fielditem = new Q3ListViewItem(tbitem, lastflditem);
-   fielditem->setText( 0, fit.data().getname() );
-   fielditem->setText( 1, "field"  );
-   fielditem->setText( 2, fit.data().gettype() );
-   lastflditem = fielditem;
-     }
-     lasttbitem = tbitem;
+
+    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+
+        //* Table node
+        QTreeWidgetItem *tableItem = new QTreeWidgetItem();
+        tableItem->setText(0, it.data().getname());
+        tableItem->setText(1,  "table");
+        tableItem->setText(3, it.data().getsql());
+        tableItem->setIcon(0, QIcon(":/icons/table"));
+        dbTreeWidget->addTopLevelItem(tableItem);
+
+        //* Field Nodes
+        fieldMap::Iterator fit;
+        fieldMap fmap = it.data().fldmap;
+        for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+            QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
+            fldItem->setText( 0, fit.data().getname() );
+            fldItem->setText( 1, "field"  );
+            fldItem->setText( 2, fit.data().gettype() );
+            fldItem->setIcon(0, QIcon(":/icons/field"));
         }
-  indexMap::Iterator it2;
-   indexMap imap = db.idxmap;
-        for ( it2 = imap.begin(); it2 != imap.end(); ++it2 ) {
-     Q3ListViewItem * item = new Q3ListViewItem( dblistView, lasttbitem );
-     item->setText( 0, it2.data().getname());
-     item->setText( 1,  "index"  );
-     item->setText( 3, it2.data().getsql() );
-     lasttbitem = item ;
-        }
+    }
+    indexMap::Iterator it2;
+    indexMap imap = db.idxmap;
+    for ( it2 = imap.begin(); it2 != imap.end(); ++it2 ) {
+        QTreeWidgetItem *idxItem = new QTreeWidgetItem();
+        idxItem->setText( 0, it2.data().getname() );
+        idxItem->setText( 1, "index"  );
+        idxItem->setText( 3, it2.data().getsql() );
+        idxItem->setIcon(0, QIcon(":/icons/index"));
+        dbTreeWidget->addTopLevelItem(idxItem);
+    }
 }
 
 void mainForm::populateTable( const QString & tablename)
