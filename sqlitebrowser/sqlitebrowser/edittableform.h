@@ -14,13 +14,19 @@
 
 #include <Qt3Support/Q3Header>
 #include <Qt3Support/Q3ListView>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QTreeWidgetItem>
+#include <QtGui/QToolBar>
+#include <QtGui/QToolButton>
+#include <QtGui/QGroupBox>
+
 #include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
-#include <QtGui/QGridLayout>
+//#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
@@ -34,101 +40,112 @@ QT_BEGIN_NAMESPACE
 class Ui_editTableForm
 {
 public:
-    QGridLayout *gridLayout;
-    QVBoxLayout *vboxLayout;
-    QLineEdit *tableLine;
-    Q3ListView *fieldListView;
-    QVBoxLayout *vboxLayout1;
-    QPushButton *renameTableButton;
-    QSpacerItem *spacer31;
-    QPushButton *renameFieldButton;
-    QPushButton *removeFieldButton;
-    QPushButton *addFieldButton;
-    QHBoxLayout *hboxLayout;
-    QSpacerItem *spacer34;
+   // QGridLayout *gridLayout;
+    //QVBoxLayout *vboxLayout;
+
+
+    QLabel *tableLine;
+
+    QTreeWidget *treeWidget;
+
+    QToolButton *renameTableButton;
+
+    QToolButton *renameFieldButton;
+    QToolButton *removeFieldButton;
+    QToolButton *addFieldButton;
+
     QPushButton *closeButton;
 
     void setupUi(QDialog *editTableForm)
     {
-        if (editTableForm->objectName().isEmpty())
+        if (editTableForm->objectName().isEmpty()){
             editTableForm->setObjectName(QString::fromUtf8("editTableForm"));
-        editTableForm->resize(428, 266);
-        gridLayout = new QGridLayout(editTableForm);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        vboxLayout = new QVBoxLayout();
-        vboxLayout->setSpacing(6);
-        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-        tableLine = new QLineEdit(editTableForm);
+        }
+        editTableForm->setWindowIcon(QIcon(":/icons/table"));
+        //TODO remember sizes
+        editTableForm->resize(500, 500);
+
+        QVBoxLayout *mainVBoxLayout = new QVBoxLayout();
+        editTableForm->setLayout(mainVBoxLayout);
+        mainVBoxLayout->setSpacing(10);
+        int m = 10;
+        mainVBoxLayout->setContentsMargins(m,m,m,m);
+
+        //******************************************
+        //** Table Group Box
+        QGroupBox *grpTable = new QGroupBox();
+        mainVBoxLayout->addWidget(grpTable);
+        grpTable->setTitle("Table");
+        QHBoxLayout *grpTableLayout = new QHBoxLayout();
+        grpTable->setLayout(grpTableLayout);
+        grpTableLayout->setSpacing(0);
+
+        //** Table Text
+        tableLine = new QLabel(editTableForm);
         tableLine->setObjectName(QString::fromUtf8("tableLine"));
-        tableLine->setFocusPolicy(Qt::NoFocus);
-        tableLine->setReadOnly(true);
+        tableLine->setStyleSheet("font-weight: bold; border: 1px solid #dddddd; background-color: white;");
+        grpTableLayout->addWidget(tableLine);
 
-        vboxLayout->addWidget(tableLine);
-
-        fieldListView = new Q3ListView(editTableForm);
-        fieldListView->addColumn(QApplication::translate("editTableForm", "Field name", 0, QApplication::UnicodeUTF8));
-        fieldListView->header()->setClickEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->header()->setResizeEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->addColumn(QApplication::translate("editTableForm", "Field type", 0, QApplication::UnicodeUTF8));
-        fieldListView->header()->setClickEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->header()->setResizeEnabled(true, fieldListView->header()->count() - 1);
-        fieldListView->setObjectName(QString::fromUtf8("fieldListView"));
-        fieldListView->setResizePolicy(Q3ScrollView::Manual);
-        fieldListView->setResizeMode(Q3ListView::AllColumns);
-
-        vboxLayout->addWidget(fieldListView);
-
-
-        gridLayout->addLayout(vboxLayout, 0, 0, 1, 1);
-
-        vboxLayout1 = new QVBoxLayout();
-        vboxLayout1->setSpacing(6);
-        vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
-        renameTableButton = new QPushButton(editTableForm);
+        //** Rename Table
+        renameTableButton = new QToolButton(editTableForm);
         renameTableButton->setObjectName(QString::fromUtf8("renameTableButton"));
+        renameTableButton->setIcon(QIcon(":/icons/table_modify"));
+        renameTableButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        grpTableLayout->addWidget(renameTableButton);
 
-        vboxLayout1->addWidget(renameTableButton);
 
-        spacer31 = new QSpacerItem(20, 23, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        //******************************************
+        //** Fields Group Box
+        QGroupBox *grpFields = new QGroupBox();
+        mainVBoxLayout->addWidget(grpFields);
+        grpFields->setTitle("Fields");
+        QVBoxLayout *grpFieldsLayout = new QVBoxLayout();
+        grpFields->setLayout(grpFieldsLayout);
+        grpFieldsLayout->setSpacing(0);
 
-        vboxLayout1->addItem(spacer31);
+        //** Fields Toolbar **
+        QToolBar *toolBar = new QToolBar();
+        grpFieldsLayout->addWidget(toolBar);
 
-        renameFieldButton = new QPushButton(editTableForm);
+        //** Add Field
+        addFieldButton = new QToolButton(editTableForm);
+        addFieldButton->setObjectName(QString::fromUtf8("addFieldButton"));
+        addFieldButton->setIcon(QIcon(":/icons/field_add"));
+        addFieldButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        toolBar->addWidget(addFieldButton);
+
+        //** Rename Field
+        renameFieldButton = new QToolButton(editTableForm);
         renameFieldButton->setObjectName(QString::fromUtf8("renameFieldButton"));
         renameFieldButton->setEnabled(false);
+        renameFieldButton->setIcon(QIcon(":/icons/field_edit"));
+        renameFieldButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        toolBar->addWidget(renameFieldButton);
 
-        vboxLayout1->addWidget(renameFieldButton);
-
-        removeFieldButton = new QPushButton(editTableForm);
+        //** Remove Field
+        removeFieldButton = new QToolButton(editTableForm);
         removeFieldButton->setObjectName(QString::fromUtf8("removeFieldButton"));
         removeFieldButton->setEnabled(false);
+        removeFieldButton->setIcon(QIcon(":/icons/field_delete"));
+        removeFieldButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        toolBar->addWidget(removeFieldButton);
 
-        vboxLayout1->addWidget(removeFieldButton);
+        //**** Tree Widget
+        treeWidget = new QTreeWidget();
+        grpFieldsLayout->addWidget(treeWidget);
+        treeWidget->headerItem()->setText(0, QApplication::translate("createTableForm", "Field name", 0, QApplication::UnicodeUTF8));
+        treeWidget->headerItem()->setText(1, QApplication::translate("createTableForm", "Field type", 0, QApplication::UnicodeUTF8));
+        treeWidget->setRootIsDecorated(false);
+        treeWidget->setAlternatingRowColors(true);
 
-        addFieldButton = new QPushButton(editTableForm);
-        addFieldButton->setObjectName(QString::fromUtf8("addFieldButton"));
 
-        vboxLayout1->addWidget(addFieldButton);
-
-
-        gridLayout->addLayout(vboxLayout1, 0, 1, 1, 1);
-
-        hboxLayout = new QHBoxLayout();
-        hboxLayout->setSpacing(6);
-        hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
-        spacer34 = new QSpacerItem(161, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        hboxLayout->addItem(spacer34);
-
+        //*** Bottom button box
+        QHBoxLayout *bottomButtonBox = new QHBoxLayout();
+        mainVBoxLayout->addLayout(bottomButtonBox);
+        bottomButtonBox->addStretch(10);
         closeButton = new QPushButton(editTableForm);
         closeButton->setObjectName(QString::fromUtf8("closeButton"));
-
-        hboxLayout->addWidget(closeButton);
-
-
-        gridLayout->addLayout(hboxLayout, 1, 0, 1, 2);
+        bottomButtonBox->addWidget(closeButton);
 
 
         retranslateUi(editTableForm);
@@ -137,7 +154,7 @@ public:
         QObject::connect(removeFieldButton, SIGNAL(clicked()), editTableForm, SLOT(removeField()));
         QObject::connect(addFieldButton, SIGNAL(clicked()), editTableForm, SLOT(addField()));
         QObject::connect(renameFieldButton, SIGNAL(clicked()), editTableForm, SLOT(editField()));
-        QObject::connect(fieldListView, SIGNAL(selectionChanged()), editTableForm, SLOT(fieldSelectionChanged()));
+        QObject::connect(treeWidget, SIGNAL(itemSelectionChanged()), editTableForm, SLOT(fieldSelectionChanged()));
 
         QMetaObject::connectSlotsByName(editTableForm);
     } // setupUi
@@ -145,15 +162,9 @@ public:
     void retranslateUi(QDialog *editTableForm)
     {
         editTableForm->setWindowTitle(QApplication::translate("editTableForm", "Edit table definition", 0, QApplication::UnicodeUTF8));
-        fieldListView->header()->setLabel(0, QApplication::translate("editTableForm", "Field name", 0, QApplication::UnicodeUTF8));
-        fieldListView->header()->setLabel(1, QApplication::translate("editTableForm", "Field type", 0, QApplication::UnicodeUTF8));
-        fieldListView->clear();
+        treeWidget->headerItem()->setText(0, QApplication::translate("editTableForm", "Field name", 0, QApplication::UnicodeUTF8));
+        treeWidget->headerItem()->setText(1, QApplication::translate("editTableForm", "Field type", 0, QApplication::UnicodeUTF8));
 
-        Q3ListViewItem *__item = new Q3ListViewItem(fieldListView);
-        __item->setText(0, QApplication::translate("editTableForm", "New Item", 0, QApplication::UnicodeUTF8));
-        __item->setText(1, QString());
-        __item->setPixmap(0, QPixmap());
-        __item->setPixmap(1, QPixmap());
         renameTableButton->setText(QApplication::translate("editTableForm", "Rename table", 0, QApplication::UnicodeUTF8));
         renameFieldButton->setText(QApplication::translate("editTableForm", "Edit field", 0, QApplication::UnicodeUTF8));
         removeFieldButton->setText(QApplication::translate("editTableForm", "Remove field", 0, QApplication::UnicodeUTF8));

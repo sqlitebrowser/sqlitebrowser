@@ -64,135 +64,142 @@ void editTableForm::populateFields()
 
     fields= pdb->getTableFields(curTable);
     types= pdb->getTableTypes(curTable);
-    fieldListView->clear();
-    fieldListView->setSorting (-1, FALSE);
-    Q3ListViewItem * lasttbitem = 0;
+    treeWidget->model()->removeRows(0, treeWidget->model()->rowCount());
     QStringList::Iterator tt = types.begin();
     for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
-        Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, lasttbitem);
-        tbitem->setText( 0, *ct  );
-        tbitem->setText( 1, *tt );
-        lasttbitem = tbitem;
+        QTreeWidgetItem *fldItem = new QTreeWidgetItem();
+        //Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, lasttbitem);
+        fldItem->setText( 0, *ct  );
+        fldItem->setText( 1, *tt );
+        //lasttbitem = tbitem;
+        treeWidget->addTopLevelItem(fldItem);
         ++tt;
     }
 }
 
 void editTableForm::renameTable()
 {
-    renameTableForm * renTableForm = new renameTableForm( this, "renametable", TRUE );
+   renameTableForm * renTableForm = new renameTableForm( this, "renametable", TRUE );
    renTableForm->setTableName(curTable);
    if (renTableForm->exec())
    {
        QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
        modified = true;
        QString newName = renTableForm->getTableName();
-       qDebug(newName);
-       QString sql;
+       //qDebug(newName);
+       //QString sql;
        //do the sql rename here
        //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
-
-       sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-       Q3ListViewItemIterator it( fieldListView );
-       Q3ListViewItem * item;
-       while ( it.current() ) {
-           item = it.current();
-           sql.append(item->text(0));
-           sql.append(" ");
-           sql.append(item->text(1));
-           if (item->nextSibling() != 0)
-           {
-               sql.append(", ");
-            }
-            ++it;
-        }
-       sql.append(");");
-       if (!pdb->executeSQL(sql)) goto rollback;
-
-       sql = "INSERT INTO TEMP_TABLE SELECT ";
-       it = Q3ListViewItemIterator( fieldListView );
-       while ( it.current() ) {
-           item = it.current();
-           sql.append(item->text(0));
-           if (item->nextSibling() != 0)
-           {
-               sql.append(", ");
-            }
-            ++it;
-        }
-       sql.append(" FROM ");
-       sql.append(curTable);
-       sql.append(";");
-       if (!pdb->executeSQL(sql)) goto rollback;
-
-       sql = "DROP TABLE ";
-       sql.append(curTable);
-       sql.append(";");
-       if (!pdb->executeSQL(sql)) goto rollback;
-
-       sql = "CREATE TABLE ";
-       sql.append(newName);
-       sql.append(" (");
-       it = Q3ListViewItemIterator( fieldListView );
-       while ( it.current() ) {
-           item = it.current();
-           sql.append(item->text(0));
-           sql.append(" ");
-           sql.append(item->text(1));
-           if (item->nextSibling() != 0)
-           {
-               sql.append(", ");
-            }
-            ++it;
-        }
-       sql.append(");");
-       if (!pdb->executeSQL(sql)) goto rollback;
-
-       sql = "INSERT INTO ";
-       sql.append(newName);
-       sql.append(" SELECT ");
-       it = Q3ListViewItemIterator( fieldListView );
-       while ( it.current() ) {
-           item = it.current();
-           sql.append(item->text(0));
-           if (item->nextSibling() != 0)
-           {
-               sql.append(", ");
-            }
-            ++it;
-        }
-       sql.append(" FROM TEMP_TABLE;");
-       if (!pdb->executeSQL(sql)) goto rollback;
-
-       if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
-       //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
-
-       setActiveTable(pdb, newName);
-   }
-
-   //everything ok, just return
-   QApplication::restoreOverrideCursor();  // restore original cursor
-   return;
-
-   rollback:
-       QApplication::restoreOverrideCursor();  // restore original cursor
-       QString error = "Error renaming table. Message from database engine:  ";
-       error.append(pdb->lastErrorMessage);
-       QMessageBox::warning( this, applicationName, error );
-       pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"));
-       //pdb->executeSQL(QString("ROLLBACK;"));
-       setActiveTable(pdb, curTable);
+        QString sql = QString("ALTER TABLE %1 RENAME TO %2").arg(curTable, newName);
+        qDebug(sql);
+        return;
+    }
+//       sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
+//       Q3ListViewItemIterator it( fieldListView );
+//       Q3ListViewItem * item;
+//       while ( it.current() ) {
+//           item = it.current();
+//           sql.append(item->text(0));
+//           sql.append(" ");
+//           sql.append(item->text(1));
+//           if (item->nextSibling() != 0)
+//           {
+//               sql.append(", ");
+//            }
+//            ++it;
+//        }
+//       sql.append(");");
+//       if (!pdb->executeSQL(sql)) goto rollback;
+//
+//       sql = "INSERT INTO TEMP_TABLE SELECT ";
+//       it = Q3ListViewItemIterator( fieldListView );
+//       while ( it.current() ) {
+//           item = it.current();
+//           sql.append(item->text(0));
+//           if (item->nextSibling() != 0)
+//           {
+//               sql.append(", ");
+//            }
+//            ++it;
+//        }
+//       sql.append(" FROM ");
+//       sql.append(curTable);
+//       sql.append(";");
+//       if (!pdb->executeSQL(sql)) goto rollback;
+//
+//       sql = "DROP TABLE ";
+//       sql.append(curTable);
+//       sql.append(";");
+//       if (!pdb->executeSQL(sql)) goto rollback;
+//
+//       sql = "CREATE TABLE ";
+//       sql.append(newName);
+//       sql.append(" (");
+//       it = Q3ListViewItemIterator( fieldListView );
+//       while ( it.current() ) {
+//           item = it.current();
+//           sql.append(item->text(0));
+//           sql.append(" ");
+//           sql.append(item->text(1));
+//           if (item->nextSibling() != 0)
+//           {
+//               sql.append(", ");
+//            }
+//            ++it;
+//        }
+//       sql.append(");");
+//       if (!pdb->executeSQL(sql)) goto rollback;
+//
+//       sql = "INSERT INTO ";
+//       sql.append(newName);
+//       sql.append(" SELECT ");
+//       it = Q3ListViewItemIterator( fieldListView );
+//       while ( it.current() ) {
+//           item = it.current();
+//           sql.append(item->text(0));
+//           if (item->nextSibling() != 0)
+//           {
+//               sql.append(", ");
+//            }
+//            ++it;
+//        }
+//       sql.append(" FROM TEMP_TABLE;");
+//       if (!pdb->executeSQL(sql)) goto rollback;
+//
+//       if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
+//       //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
+//
+//       setActiveTable(pdb, newName);
+//   }
+//
+//   //everything ok, just return
+//   QApplication::restoreOverrideCursor();  // restore original cursor
+//   return;
+//
+//   rollback:
+//       QApplication::restoreOverrideCursor();  // restore original cursor
+//       QString error = "Error renaming table. Message from database engine:  ";
+//       error.append(pdb->lastErrorMessage);
+//       QMessageBox::warning( this, applicationName, error );
+//       pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"));
+//       //pdb->executeSQL(QString("ROLLBACK;"));
+//       setActiveTable(pdb, curTable);
 }
 
 
 void editTableForm::editField()
 {
-    Q3ListViewItem * item = fieldListView->selectedItem();
-    if (item==0) {
-        //should never happen, the button would not be active, but...
+    //Q3ListViewItem * item = fieldListView->selectedItem();
+    if( !treeWidget->currentItem()){
         return;
-    } else {
+    }
+    QTreeWidgetItem *item = treeWidget->currentItem();
+    //if (item==0) {
+        //should never happen, the button would not be active, but...
+       // return;
+   // } else {
         editFieldForm * fieldForm = new editFieldForm( this, "editfield", TRUE );
-        fieldForm->setInitialValues(item->text(0),item->text(1));
+        fieldForm->setInitialValues(item->text(0), item->text(1));
         if (fieldForm->exec())
         {
             modified = true;
@@ -200,111 +207,112 @@ void editTableForm::editField()
             //qDebug(fieldForm->name + fieldForm->type);
             item->setText(0,fieldForm->name);
             item->setText(1,fieldForm->type);
-
+        }
             //not until nested transaction are supported
            //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
 
-             QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-             Q3ListViewItemIterator it( fieldListView );
-             Q3ListViewItem * item;
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 sql.append(" ");
-                 sql.append(item->text(1));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(");");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "INSERT INTO TEMP_TABLE SELECT ";
-             for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct )		    {
-                 sql.append( *ct );
-                 if (*ct != fields.last())
-                 {
-                     sql.append(", ");
-                 }
-             }
-
-             sql.append(" FROM ");
-             sql.append(curTable);
-             sql.append(";");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "DROP TABLE ";
-             sql.append(curTable);
-             sql.append(";");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "CREATE TABLE ";
-             sql.append(curTable);
-             sql.append(" (");
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 sql.append(" ");
-                 sql.append(item->text(1));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(");");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "INSERT INTO ";
-             sql.append(curTable);
-             sql.append(" SELECT ");
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(" FROM TEMP_TABLE;");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
-             //not until nested transaction are supported
-             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
-
-             setActiveTable(pdb, curTable);
-        }
-        //everything ok, just return
-        QApplication::restoreOverrideCursor();  // restore original cursor
-        return;
-
-        rollback:
-            QApplication::restoreOverrideCursor();  // restore original cursor
-            QString error = "Error editing field. Message from database engine:  ";
-            error.append(pdb->lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
-            //not until nested transaction are supported
-            //pdb->executeSQL(QString("ROLLBACK;"));
-            setActiveTable(pdb, curTable);
-    }
+//             QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
+//             Q3ListViewItemIterator it( fieldListView );
+//             Q3ListViewItem * item;
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 sql.append(" ");
+//                 sql.append(item->text(1));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(");");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "INSERT INTO TEMP_TABLE SELECT ";
+//             for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct )		    {
+//                 sql.append( *ct );
+//                 if (*ct != fields.last())
+//                 {
+//                     sql.append(", ");
+//                 }
+//             }
+//
+//             sql.append(" FROM ");
+//             sql.append(curTable);
+//             sql.append(";");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "DROP TABLE ";
+//             sql.append(curTable);
+//             sql.append(";");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "CREATE TABLE ";
+//             sql.append(curTable);
+//             sql.append(" (");
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 sql.append(" ");
+//                 sql.append(item->text(1));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(");");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "INSERT INTO ";
+//             sql.append(curTable);
+//             sql.append(" SELECT ");
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(" FROM TEMP_TABLE;");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
+//             //not until nested transaction are supported
+//             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
+//
+//             setActiveTable(pdb, curTable);
+//        }
+//        //everything ok, just return
+//        QApplication::restoreOverrideCursor();  // restore original cursor
+//        return;
+//
+//        rollback:
+//            QApplication::restoreOverrideCursor();  // restore original cursor
+//            QString error = "Error editing field. Message from database engine:  ";
+//            error.append(pdb->lastErrorMessage);
+//            QMessageBox::warning( this, applicationName, error );
+//            //not until nested transaction are supported
+//            //pdb->executeSQL(QString("ROLLBACK;"));
+//            setActiveTable(pdb, curTable);
+    //}
 }
 
 
 void editTableForm::addField()
 {
-    addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
+   addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
    addForm->setInitialValues(QString(""),QString(""));
     if (addForm->exec())
    {
         modified = true;
 
-        Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView);
+        //Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView);
+        QTreeWidgetItem *tbitem = new QTreeWidgetItem();
         tbitem->setText( 0, addForm->fname);
         tbitem->setText( 1, addForm->ftype);
        //do the sql creation here
@@ -312,119 +320,216 @@ void editTableForm::addField()
             //do the sql rename here
             //qDebug(fieldForm->name + fieldForm->type);
         QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-        Q3ListViewItemIterator it( fieldListView );
-        Q3ListViewItem * item;
+
+    }
+       // Q3ListViewItemIterator it( fieldListView );
+       // Q3ListViewItem * item;
 
         //not until nested transaction are supported
              //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
 
-        {//nest for MSVC support
-             for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct )		    {
-                 sql.append( *ct );
-                 if (*ct != fields.last())
-                 {
-                     sql.append(", ");
-                 }
-             }
-             sql.append(");");
-             if (!pdb->executeSQL(sql)) goto rollback;
+       // {//nest for MSVC support
+//             for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct )		    {
+//                 sql.append( *ct );
+//                 if (*ct != fields.last())
+//                 {
+//                     sql.append(", ");
+//                 }
+//             }
+//             sql.append(");");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "INSERT INTO TEMP_TABLE SELECT ";
+//             for ( QStringList::Iterator ct1 = fields.begin(); ct1 != fields.end(); ++ct1 )		    {
+//                 sql.append( *ct1 );
+//                 if (*ct1 != fields.last())
+//                 {
+//                     sql.append(", ");
+//                 }
+//             }
+//        }
+//
+//             sql.append(" FROM ");
+//             sql.append(curTable);
+//             sql.append(";");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "DROP TABLE ";
+//             sql.append(curTable);
+//             sql.append(";");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "CREATE TABLE ";
+//             sql.append(curTable);
+//             sql.append(" (");
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 sql.append(" ");
+//                 sql.append(item->text(1));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(");");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//        {//nest for MSVC support
+//
+//             sql = "INSERT INTO ";
+//             sql.append(curT             for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct )		    {
+        //sql.append( *ct );
+        //if (*ct != fields.last())
+       // {
+        //    sql.append(", ");
+       // }
+    //}
+    //sql.append(");");
+   // if (!pdb->executeSQL(sql)) goto rollback;
 
-             sql = "INSERT INTO TEMP_TABLE SELECT ";
-             for ( QStringList::Iterator ct1 = fields.begin(); ct1 != fields.end(); ++ct1 )		    {
-                 sql.append( *ct1 );
-                 if (*ct1 != fields.last())
-                 {
-                     sql.append(", ");
-                 }
-             }
-        }
+   // sql = "INSERT INTO TEMP_TABLE SELECT ";
+   // for ( QStringList::Iterator ct1 = fields.begin(); ct1 != fields.end(); ++ct1 )		    {
+   //     sql.append( *ct1 );
+       // if (*ct1 != fields.last())
+      //  {
+        //    sql.append(", ");
+       // }
+   // }
+//}
 
-             sql.append(" FROM ");
-             sql.append(curTable);
-             sql.append(";");
-             if (!pdb->executeSQL(sql)) goto rollback;
+   // sql.append(" FROM ");
+   // sql.append(";");
+    //if (!pdb->executeSQL(sql)) goto rollback;
 
-             sql = "DROP TABLE ";
-             sql.append(curTable);
-             sql.append(";");
-             if (!pdb->executeSQL(sql)) goto rollback;
+   //// sql = "DROP TABLE ";
+   // sql.append(curTable);
+   // sql.append(";");
+   // if (!pdb->executeSQL(sql)) goto rollback;
 
-             sql = "CREATE TABLE ";
-             sql.append(curTable);
-             sql.append(" (");
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 sql.append(" ");
-                 sql.append(item->text(1));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(");");
-             if (!pdb->executeSQL(sql)) goto rollback;
-        {//nest for MSVC support
-
-             sql = "INSERT INTO ";
-             sql.append(curTable);
-             sql.append("(");
-             for ( QStringList::Iterator ct2 = fields.begin(); ct2 != fields.end(); ++ct2 )		    {
-                 sql.append( *ct2 );
-                 if (*ct2 != fields.last())
-                 {
-                     sql.append(", ");
-                 }
-             }
-        }
-        {//nest for MSVC support
-
-             sql.append(") SELECT ");
-             for ( QStringList::Iterator ct3 = fields.begin(); ct3 != fields.end(); ++ct3 )		    {
-                 sql.append( *ct3 );
-                 if (*ct3 != fields.last())
-                 {
-                     sql.append(", ");
-                 }
-             }
-        }
-
-             sql.append(" FROM TEMP_TABLE;");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
-             //not until nested transaction are supported
-             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
-
-             setActiveTable(pdb, curTable);
-
-             QApplication::restoreOverrideCursor();  // restore original cursor
-        return;
-
-        rollback:
-            QApplication::restoreOverrideCursor();  // restore original cursor
-            QString error = "Error adding field. Message from database engine:  ";
-            error.append(pdb->lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
-
-            //not until nested transaction are supported
-            //pdb->executeSQL(QString("ROLLBACK;"));
-            setActiveTable(pdb, curTable);
-   }
+   // sql = "CREATE TABLE ";
+   // sql.append(curTable);
+  //  sql.append(" (");
+  //  it = Q3ListViewItemIterator( fieldListView );
+  //  while ( it.current() ) {
+     //   item = it.current();
+     //   sql.append(item->text(0));
+    ///    sql.append(" ");
+     //   sql.append(item->text(1));
+    //    if (item->nextSibling() != 0)
+    //    {
+         //   sql.append(", ");
+    //    }
+     //   ++it;
+   // }
+    //sql.append(");");
+//    if (!pdb->executeSQL(sql)) goto rollback;
+//{//nest for MSVC support
+//
+//    sql = "INSERT INTO ";
+//    sql.append(curTable);
+//    sql.append("(");
+//    for ( QStringList::Iterator ct2 = fields.begin(); ct2 != fields.end(); ++ct2 )		    {
+//        sql.append( *ct2 );
+//        if (*ct2 != fields.last())
+//        {
+//            sql.append(", ");
+//        }
+//    }
+//}
+//{//nest for MSVC support
+//
+//    sql.append(") SELECT ");
+//    for ( QStringList::Iterator ct3 = fields.begin(); ct3 != fields.end(); ++ct3 )		    {
+//        sql.append( *ct3 );
+//        if (*ct3 != fields.last())
+//        {
+//            sql.append(", ");
+//        }
+//    }
+//}
+//
+//    sql.append(" FROM TEMP_TABLE;");
+//    if (!pdb->executeSQL(sql)) goto rollback;
+//
+//    if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
+//    //not until nested transaction are supported
+//    //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
+//
+//    setActiveTable(pdb, curTable);
+//
+//    QApplication::restoreOverrideCursor();  // restore original cursor
+//return;
+//
+//rollback:
+//   QApplication::restoreOverrideCursor();  // restore original cursor
+//   QString error = "Error adding field. Message from database engine:  ";
+//   error.append(pdb->lastErrorMessage);
+//   QMessageBox::warning( this, applicationName, error );
+//
+//   //not until nested transaction are supported
+//   //pdb->executeSQL(QString("ROLLBACK;"));
+//   setActiveTable(pdb, curTable);able);
+//             sql.append("(");
+//             for ( QStringList::Iterator ct2 = fields.begin(); ct2 != fields.end(); ++ct2 )		    {
+//                 sql.append( *ct2 );
+//                 if (*ct2 != fields.last())
+//                 {
+//                     sql.append(", ");
+//                 }
+//             }
+//        }
+//        {//nest for MSVC support
+//
+//             sql.append(") SELECT ");
+//             for ( QStringList::Iterator ct3 = fields.begin(); ct3 != fields.end(); ++ct3 )		    {
+//                 sql.append( *ct3 );
+//                 if (*ct3 != fields.last())
+//                 {
+//                     sql.append(", ");
+//                 }
+//             }
+//        }
+//
+//             sql.append(" FROM TEMP_TABLE;");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
+//             //not until nested transaction are supported
+//             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
+//
+//             setActiveTable(pdb, curTable);
+//
+//             QApplication::restoreOverrideCursor();  // restore original cursor
+//        return;
+//
+//        rollback:
+//            QApplication::restoreOverrideCursor();  // restore original cursor
+//            QString error = "Error adding field. Message from database engine:  ";
+//            error.append(pdb->lastErrorMessage);
+//            QMessageBox::warning( this, applicationName, error );
+//
+//            //not until nested transaction are supported
+//            //pdb->executeSQL(QString("ROLLBACK;"));
+//            setActiveTable(pdb, curTable);
+   //s}
 }
 
 
 void editTableForm::removeField()
 {
-    Q3ListViewItem * remitem = fieldListView->selectedItem();
-    if (remitem==0) {
-        //should never happen, the button would not be active, but...
+    if(!treeWidget->currentItem()){
         return;
-    } else {
+    }
+    //remItem =
+    //Q3ListViewItem * remitem = fieldListView->selectedItem();
+   // if (remitem==0) {
+        //should never happen, the button would not be active, but...
+       // return;
+    //} else {
         QString msg = "Are you sure you want to delete field ";
-        msg.append(remitem->text(0));
+        msg.append(treeWidget->currentItem()->text(0));
         msg.append("? \n All data currently stored in this field will be lost");
 
         if (QMessageBox::warning( this, applicationName,
@@ -433,131 +538,127 @@ void editTableForm::removeField()
                                   QMessageBox::No | QMessageBox::Escape )
             == QMessageBox::Yes ){
             //delete field here
+
+        }
             /*fields= pdb->getTableFields(curTable);
     types= pdb->getTableTypes(curTable);*/
-            modified = true;
-            delete remitem;
-        QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-        Q3ListViewItemIterator it( fieldListView );
-        Q3ListViewItem * item;
-
-        //not until nested transaction are supported
-        //     if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
-
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 sql.append(" ");
-                 sql.append(item->text(1));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(");");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "INSERT INTO TEMP_TABLE SELECT ";
-            it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-
-             sql.append(" FROM ");
-             sql.append(curTable);
-             sql.append(";");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "DROP TABLE ";
-             sql.append(curTable);
-             sql.append(";");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "CREATE TABLE ";
-             sql.append(curTable);
-             sql.append(" (");
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 sql.append(" ");
-                 sql.append(item->text(1));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(");");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             sql = "INSERT INTO ";
-             sql.append(curTable);
-             sql.append("(");
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(") SELECT ");
-             it = Q3ListViewItemIterator( fieldListView );
-             while ( it.current() ) {
-                 item = it.current();
-                 sql.append(item->text(0));
-                 if (item->nextSibling() != 0)
-                 {
-                     sql.append(", ");
-                 }
-                 ++it;
-             }
-             sql.append(" FROM TEMP_TABLE;");
-             if (!pdb->executeSQL(sql)) goto rollback;
-
-             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
-             //not until nested transaction are supported
-             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
-
-             setActiveTable(pdb, curTable);
-
-             QApplication::restoreOverrideCursor();  // restore original cursor
-        return;
-
-        rollback:
-            QApplication::restoreOverrideCursor();  // restore original cursor
-            QString error = "Error removing field. Message from database engine:  ";
-            error.append(pdb->lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
-
-            //not until nested transaction are supported
-            //pdb->executeSQL(QString("ROLLBACK;"));
-            setActiveTable(pdb, curTable);
-        }
-    }
+            //modified = true;
+           // delete remitem;
+//        QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
+//        Q3ListViewItemIterator it( fieldListView );
+//        Q3ListViewItem * item;
+//
+//        //not until nested transaction are supported
+//        //     if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
+//
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 sql.append(" ");
+//                 sql.append(item->text(1));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(");");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "INSERT INTO TEMP_TABLE SELECT ";
+//            it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//
+//             sql.append(" FROM ");
+//             sql.append(curTable);
+//             sql.append(";");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "DROP TABLE ";
+//             sql.append(curTable);
+//             sql.append(";");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "CREATE TABLE ";
+//             sql.append(curTable);
+//             sql.append(" (");
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 sql.append(" ");
+//                 sql.append(item->text(1));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(");");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             sql = "INSERT INTO ";
+//             sql.append(curTable);
+//             sql.append("(");
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(") SELECT ");
+//             it = Q3ListViewItemIterator( fieldListView );
+//             while ( it.current() ) {
+//                 item = it.current();
+//                 sql.append(item->text(0));
+//                 if (item->nextSibling() != 0)
+//                 {
+//                     sql.append(", ");
+//                 }
+//                 ++it;
+//             }
+//             sql.append(" FROM TEMP_TABLE;");
+//             if (!pdb->executeSQL(sql)) goto rollback;
+//
+//             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
+//             //not until nested transaction are supported
+//             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
+//
+//             setActiveTable(pdb, curTable);
+//
+//             QApplication::restoreOverrideCursor();  // restore original cursor
+//        return;
+//
+//        rollback:
+//            QApplication::restoreOverrideCursor();  // restore original cursor
+//            QString error = "Error removing field. Message from database engine:  ";
+//            error.append(pdb->lastErrorMessage);
+//            QMessageBox::warning( this, applicationName, error );
+//
+//            //not until nested transaction are supported
+//            //pdb->executeSQL(QString("ROLLBACK;"));
+//            setActiveTable(pdb, curTable);
+//        }
+//    //}
 }
 
 void editTableForm::fieldSelectionChanged()
 {
-    Q3ListViewItem * item = fieldListView->selectedItem();
-    if (item==0) {
-        renameFieldButton->setEnabled(false);
-        removeFieldButton->setEnabled(false);
-    } else {
-        renameFieldButton->setEnabled(true);
-        removeFieldButton->setEnabled(true);
-    }
+    renameFieldButton->setEnabled(treeWidget->selectionModel()->hasSelection());
+    removeFieldButton->setEnabled(treeWidget->selectionModel()->hasSelection());
 }
 
 
