@@ -12,7 +12,7 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3GroupBox>
+#include <QtGui/QGroupBox>
 #include <Qt3Support/Q3Header>
 #include <Qt3Support/Q3ListView>
 #include <Qt3Support/Q3MimeSourceFactory>
@@ -36,58 +36,76 @@ class Ui_createTableForm
 {
 public:
     QVBoxLayout *vboxLayout;
-    QHBoxLayout *hboxLayout;
+
+    QHBoxLayout *topTableLayout;
+
+    QGroupBox *groupBox1;
+    QVBoxLayout *groupBoxLayout;
     QLabel *textLabel1;
     QLineEdit *tablenameLineEdit;
-    Q3GroupBox *groupBox1;
+
     QVBoxLayout *vboxLayout1;
     Q3ListView *fieldListView;
-    QHBoxLayout *hboxLayout1;
+
     QSpacerItem *spacer4;
+
+    QHBoxLayout *fieldActionsButtonLayout;
     QPushButton *buttonAddField;
     QPushButton *buttonDeleteField;
+
     QHBoxLayout *hboxLayout2;
     QSpacerItem *spacer6;
+    QHBoxLayout *bottomButtonLayout;
     QPushButton *buttonCreate;
     QPushButton *buttonCancel;
 
     void setupUi(QDialog *createTableForm)
     {
-        if (createTableForm->objectName().isEmpty())
+        if (createTableForm->objectName().isEmpty()){
             createTableForm->setObjectName(QString::fromUtf8("createTableForm"));
+        }
+        createTableForm->setWindowIcon(QIcon(":/icons/db_new"));
+
         createTableForm->resize(309, 320);
+
+        //** Main Layout
         vboxLayout = new QVBoxLayout(createTableForm);
         vboxLayout->setSpacing(6);
         vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-        hboxLayout = new QHBoxLayout();
-        hboxLayout->setSpacing(6);
-        hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
+
+        //**** Top Table Box ****
+        topTableLayout = new QHBoxLayout();
+        topTableLayout->setSpacing(6);
+        //topTableLayout->setObjectName(QString::fromUtf8("hboxLayout"));
         textLabel1 = new QLabel(createTableForm);
-        textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
+        //textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
         textLabel1->setWordWrap(false);
 
-        hboxLayout->addWidget(textLabel1);
+        topTableLayout->addWidget(textLabel1);
 
         tablenameLineEdit = new QLineEdit(createTableForm);
-        tablenameLineEdit->setObjectName(QString::fromUtf8("tablenameLineEdit"));
+        //tablenameLineEdit->setObjectName(QString::fromUtf8("tablenameLineEdit"));
 
-        hboxLayout->addWidget(tablenameLineEdit);
+        topTableLayout->addWidget(tablenameLineEdit);
 
 
-        vboxLayout->addLayout(hboxLayout);
+        vboxLayout->addLayout(topTableLayout);
 
-        groupBox1 = new Q3GroupBox(createTableForm);
+        //**** Fields GroupBox
+        groupBox1 = new QGroupBox(createTableForm);
         groupBox1->setObjectName(QString::fromUtf8("groupBox1"));
-        groupBox1->setColumnLayout(0, Qt::Vertical);
-        groupBox1->layout()->setSpacing(6);
-        groupBox1->layout()->setContentsMargins(11, 11, 11, 11);
-        vboxLayout1 = new QVBoxLayout();
-        QBoxLayout *boxlayout = qobject_cast<QBoxLayout *>(groupBox1->layout());
-        if (boxlayout)
-            boxlayout->addLayout(vboxLayout1);
-        vboxLayout1->setAlignment(Qt::AlignTop);
-        vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+        //groupBox1->setColumnLayout(0, Qt::Vertical);
+        //groupBox1->layout()->setSpacing(6);
+        //groupBox1->layout()->setContentsMargins(11, 11, 11, 11);
+        groupBoxLayout = new QVBoxLayout();
+        groupBox1->setLayout(groupBoxLayout);
+        //QBoxLayout *boxlayout = qobject_cast<QBoxLayout *>(groupBox1->layout());
+        //if (boxlayout)
+         //   boxlayout->addLayout(vboxLayout1);
+        //vboxLayout1->setAlignment(Qt::AlignTop);
+        //vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+
         fieldListView = new Q3ListView(groupBox1);
         fieldListView->addColumn(QApplication::translate("createTableForm", "Field name", 0, QApplication::UnicodeUTF8));
         fieldListView->header()->setClickEnabled(true, fieldListView->header()->count() - 1);
@@ -99,52 +117,57 @@ public:
         fieldListView->setResizePolicy(Q3ScrollView::Manual);
         fieldListView->setResizeMode(Q3ListView::AllColumns);
 
-        vboxLayout1->addWidget(fieldListView);
+        groupBoxLayout->addWidget(fieldListView);
 
-        hboxLayout1 = new QHBoxLayout();
-        hboxLayout1->setSpacing(6);
-        hboxLayout1->setObjectName(QString::fromUtf8("hboxLayout1"));
-        spacer4 = new QSpacerItem(111, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout1->addItem(spacer4);
+        //** Field Action Buttons Box
+        fieldActionsButtonLayout = new QHBoxLayout();
+        fieldActionsButtonLayout->setSpacing(6);
+        fieldActionsButtonLayout->setObjectName(QString::fromUtf8("hboxLayout1"));
+        //spacer4 = new QSpacerItem(111, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        fieldActionsButtonLayout->addStretch(10); // force right
+        //hboxLayout1->addItem(spacer4);
 
         buttonAddField = new QPushButton(groupBox1);
         buttonAddField->setObjectName(QString::fromUtf8("buttonAddField"));
 
-        hboxLayout1->addWidget(buttonAddField);
+        fieldActionsButtonLayout->addWidget(buttonAddField);
 
         buttonDeleteField = new QPushButton(groupBox1);
         buttonDeleteField->setObjectName(QString::fromUtf8("buttonDeleteField"));
         buttonDeleteField->setEnabled(false);
 
-        hboxLayout1->addWidget(buttonDeleteField);
+        fieldActionsButtonLayout->addWidget(buttonDeleteField);
 
 
-        vboxLayout1->addLayout(hboxLayout1);
+        groupBoxLayout->addLayout(fieldActionsButtonLayout);
 
 
         vboxLayout->addWidget(groupBox1);
 
-        hboxLayout2 = new QHBoxLayout();
-        hboxLayout2->setSpacing(6);
-        hboxLayout2->setObjectName(QString::fromUtf8("hboxLayout2"));
-        spacer6 = new QSpacerItem(91, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        //***************************************
+        //*** Bottom Dialog action Buttons
+        bottomButtonLayout = new QHBoxLayout();
+        bottomButtonLayout->setSpacing(6);
+        //bottomButtonLayout->setObjectName(QString::fromUtf8("hboxLayout2"));
+        bottomButtonLayout->addStretch(10); // force right
 
-        hboxLayout2->addItem(spacer6);
-
-        buttonCreate = new QPushButton(createTableForm);
-        buttonCreate->setObjectName(QString::fromUtf8("buttonCreate"));
-
-        hboxLayout2->addWidget(buttonCreate);
-
+        //** Cancel Button
         buttonCancel = new QPushButton(createTableForm);
-        buttonCancel->setObjectName(QString::fromUtf8("buttonCancel"));
-        buttonCancel->setDefault(true);
+        //buttonCancel->setObjectName(QString::fromUtf8("buttonCancel"));
+        buttonCancel->setIcon(QIcon(":/icons/cancel"));
+        bottomButtonLayout->addWidget(buttonCancel);
 
-        hboxLayout2->addWidget(buttonCancel);
+        //** Create Button
+        buttonCreate = new QPushButton(createTableForm);
+        //buttonCreate->setObjectName(QString::fromUtf8("buttonCreate"));
+        buttonCreate->setIcon(QIcon(":/icons/save"));
+        bottomButtonLayout->addWidget(buttonCreate);
 
 
-        vboxLayout->addLayout(hboxLayout2);
+
+
+        vboxLayout->addLayout(bottomButtonLayout);
 
 
         retranslateUi(createTableForm);

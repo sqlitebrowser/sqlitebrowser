@@ -9,5 +9,11 @@
         <file alias="table_modify">table_edit.png</file>
         <file alias="index_create">tag_blue_add.png</file>
         <file alias="index_delete">tag_blue_delete.png</file>
+        <file alias="field_edit">page_edit.png</file>
+        <file alias="field_delete">page_delete.png</file>
+        <file alias="field_add">page_add.png</file>
+        <file alias="add">add.png</file>
+        <file alias="save">accept.png</file>
+        <file alias="cancel">bullet_black.png</file>
     </qresource>
 </RCC>
