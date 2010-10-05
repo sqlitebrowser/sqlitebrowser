@@ -45,7 +45,6 @@ void createTableForm::init()
 //** Create The Table
 void createTableForm::confirmCreate()
 {
-    //TODO change these warnings to status bar message
     bool ok = true;
     QString tabname = tablenameLineEdit->text();
     if (tabname.isEmpty()) {
