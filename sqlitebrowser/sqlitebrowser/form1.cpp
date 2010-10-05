@@ -1230,6 +1230,7 @@ void mainForm::on_tree_selection_changed(){
         editDeleteTableActionPopup->setEnabled(false);
         editModifyTableActionPopup->setEnabled(false);
         editModifyFieldActionPopup->setEnabled(false);
+        editDeleteFieldActionPopup->setEnabled(false);
         return;
     }
 
@@ -1237,13 +1238,17 @@ void mainForm::on_tree_selection_changed(){
         editDeleteTableActionPopup->setEnabled(true);
         editModifyTableActionPopup->setEnabled(true);
         editModifyFieldActionPopup->setEnabled(false);
+        editDeleteFieldActionPopup->setEnabled(false);
 
     }else if(dbTreeWidget->currentItem()->text(1) == "field"){
         editDeleteTableActionPopup->setEnabled(false);
         editModifyTableActionPopup->setEnabled(false);
         editModifyFieldActionPopup->setEnabled(true);
+        editDeleteFieldActionPopup->setEnabled(true);
     }
 }
+
+
 
 
 void mainForm::on_edit_field(){

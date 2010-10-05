@@ -95,7 +95,9 @@ public:
 
     QAction *editModifyTableActionPopup;
     QAction *editDeleteTableActionPopup;
+    QAction *editAddFieldActionPopup;
     QAction *editModifyFieldActionPopup;
+    QAction *editDeleteFieldActionPopup;
 
     QWidget *browser;
     QVBoxLayout *vboxLayout2;
@@ -140,7 +142,7 @@ public:
             mainForm->setObjectName(QString::fromUtf8("mainForm"));
         }
         //TODO get from settings and save last position
-        mainForm->resize(702, 552);
+        mainForm->resize(800, 552);
 
 
 
@@ -268,10 +270,19 @@ public:
         editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
 
 
-        //** Modufy Field
+        //** Modify Field
+
+        editAddFieldActionPopup = new QAction(mainForm);
+        editAddFieldActionPopup->setText("Add Field");
+        editAddFieldActionPopup->setIcon(QIcon(":/icons/field_add"));
+
         editModifyFieldActionPopup = new QAction(mainForm);
-        editModifyFieldActionPopup->setText("Modify Field");
+        editModifyFieldActionPopup->setText("Modify Field");      
         editModifyFieldActionPopup->setIcon(QIcon(":/icons/field_edit"));
+
+        editDeleteFieldActionPopup = new QAction(mainForm);
+        editDeleteFieldActionPopup->setText("Delete Field");
+        editDeleteFieldActionPopup->setIcon(QIcon(":/icons/field_delete"));
 
         //** Create Index
         editCreateIndexAction = new QAction(mainForm);
@@ -318,6 +329,10 @@ public:
         dbToolbar->addAction(editCreateTableAction);
         dbToolbar->addAction(editModifyTableActionPopup);
         dbToolbar->addAction(editDeleteTableActionPopup);
+        dbToolbar->addSeparator();
+        dbToolbar->addAction(editAddFieldActionPopup);
+        dbToolbar->addAction(editModifyFieldActionPopup);
+        dbToolbar->addAction(editDeleteFieldActionPopup);
 
         //*** Tree Widget Setup
         dbTreeWidget = new QTreeWidget();
@@ -583,11 +598,13 @@ public:
         //** Db Tree Popup Menus
         popupTableMenu = new QMenu(mainForm);
         popupTableMenu->addAction(editModifyTableActionPopup);
+        popupTableMenu->addAction(editAddFieldActionPopup);
         popupTableMenu->addSeparator();
         popupTableMenu->addAction(editDeleteTableActionPopup);
 
         popupFieldMenu = new QMenu(mainForm);
         popupFieldMenu->addAction(editModifyFieldActionPopup);
+        popupFieldMenu->addAction(editDeleteFieldActionPopup);
         //spopupFieldMenu->addSeparator();
         //popupFieldMenu->addAction(editDeleteTableActionPopup);
 
