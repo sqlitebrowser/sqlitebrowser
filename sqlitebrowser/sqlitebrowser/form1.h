@@ -319,6 +319,8 @@ public:
         headerItem->setText(1, QApplication::translate("mainForm", "Object", 0, QApplication::UnicodeUTF8));
         headerItem->setText(2, QApplication::translate("mainForm", "Type", 0, QApplication::UnicodeUTF8));
         headerItem->setText(3, QApplication::translate("mainForm", "Schema", 0, QApplication::UnicodeUTF8));
+        dbTreeWidget->setColumnHidden(1, true);
+        dbTreeWidget->setColumnWidth(0, 300);
         dbTreeWidget->setAlternatingRowColors(true);
         dbTreeWidget->setRootIsDecorated(true);
         dbTreeWidget->setAnimated(true);
@@ -623,7 +625,7 @@ public:
         QObject::connect(fileImportSQLAction, SIGNAL(activated()), mainForm, SLOT(importDatabaseFromSQL()));
         QObject::connect(editPreferencesAction, SIGNAL(activated()), mainForm, SLOT(openPreferences()));
 
-        QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(QPoint)), mainForm, SLOT(on_tree_context_menu(QPoint)));
+        QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), mainForm, SLOT(on_tree_context_menu(const QPoint &)));
 
         QMetaObject::connectSlotsByName(mainForm);
     } // setupUi

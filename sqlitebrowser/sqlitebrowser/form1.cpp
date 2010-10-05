@@ -181,6 +181,7 @@ void mainForm::fileNew()
     }
 }
 
+//** Populate DbTree Structure
 void mainForm::populateStructure()
 {
     dbTreeWidget->model()->removeRows(0, dbTreeWidget->model()->rowCount());
@@ -211,6 +212,8 @@ void mainForm::populateStructure()
             fldItem->setText( 2, fit.data().gettype() );
             fldItem->setIcon(0, QIcon(":/icons/field"));
         }
+        // TODO make an options/setting autoexpand
+        dbTreeWidget->setItemExpanded(tableItem, true);
     }
     indexMap::Iterator it2;
     indexMap imap = db.idxmap;
@@ -1200,13 +1203,13 @@ void mainForm::updatePreferences()
    editWin->setTextFormat(prefForm->defaulttext);
 }
 
-
+//** Db Tree Context Menu
 void mainForm::on_tree_context_menu(const QPoint &qPoint){
-    qDebug("CONTEXT");
     if( !dbTreeWidget->selectionModel()->hasSelection() ){
         return;
     }
     QTreeWidgetItem *cItem = dbTreeWidget->currentItem();
+
     if(cItem->text(1) == "table"){
         editDeleteTableActionPopup->setDisabled(false);
         editModifyTableActionPopup->setDisabled(false);
