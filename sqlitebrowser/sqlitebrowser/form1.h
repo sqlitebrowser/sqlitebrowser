@@ -126,21 +126,38 @@ public:
         //TODO get from settings and save last position
         mainForm->resize(702, 552);
 
-        //** New File
+        //** New DB File
         fileNewAction = new QAction(mainForm);
         fileNewAction->setObjectName(QString::fromUtf8("fileNewAction"));
         fileNewAction->setName("fileNewAction");
         fileNewAction->setIcon(QIcon(":/icons/db_new"));
 
-        //** Open File
+        //** Open DB File
         fileOpenAction = new QAction(mainForm);
         fileOpenAction->setObjectName(QString::fromUtf8("fileOpenAction"));
         fileOpenAction->setName("fileOpenAction");
         fileOpenAction->setIcon(QIcon(":/icons/db_open"));
 
+        //** Save DB Action
+        fileSaveAction = new QAction(mainForm);
+        fileSaveAction->setObjectName(QString::fromUtf8("fileSaveAction"));
+        fileSaveAction->setName("fileSaveAction");
+        fileSaveAction->setEnabled(false);
+        fileSaveAction->setIcon(QIcon(":/icons/db_save"));
+
+        //** Db Revert
+        fileRevertAction = new QAction(mainForm);
+        fileRevertAction->setObjectName(QString::fromUtf8("fileRevertAction"));
+        fileRevertAction->setName("fileRevertAction");
+        fileRevertAction->setEnabled(false);
+        fileRevertAction->setIcon(QIcon(":/icons/db_revert"));
+
+
+        //** Exit
         fileExitAction = new QAction(mainForm);
         fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
         fileExitAction->setName("fileExitAction");
+
         editCopyAction = new QAction(mainForm);
         editCopyAction->setObjectName(QString::fromUtf8("editCopyAction"));
         editCopyAction->setName("editCopyAction");
@@ -192,19 +209,10 @@ public:
         fileExportCSVAction = new QAction(mainForm);
         fileExportCSVAction->setObjectName(QString::fromUtf8("fileExportCSVAction"));
         fileExportCSVAction->setName("fileExportCSVAction");
-        fileSaveAction = new QAction(mainForm);
-        fileSaveAction->setObjectName(QString::fromUtf8("fileSaveAction"));
-        fileSaveAction->setName("fileSaveAction");
-        fileSaveAction->setEnabled(false);
-        const QIcon icon5 = QIcon(qPixmapFromMimeSource("save.png"));
-        fileSaveAction->setIcon(icon5);
 
-        //** Db Revert
-        fileRevertAction = new QAction(mainForm);
-        fileRevertAction->setObjectName(QString::fromUtf8("fileRevertAction"));
-        fileRevertAction->setName("fileRevertAction");
-        fileRevertAction->setEnabled(false);
-        fileRevertAction->setIcon(QIcon("icons/db_revert"));
+
+
+
         //fileImportAction = new QAction(mainForm);
         //fileImportAction->setObjectName(QString::fromUtf8("fileImportAction"));
         //fileImportAction->setName("fileImportAction");

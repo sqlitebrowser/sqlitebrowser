@@ -8,7 +8,9 @@
 #include <Q3WhatsThis>
 
 #include "qmessagebox.h"
-#include "q3filedialog.h"
+//#include "q3filedialog.h"
+#include <QtGui/QFileDialog>
+
 #include "qfile.h"
 #include "qapplication.h"
 #include "createtableform.h"
@@ -102,37 +104,39 @@ void mainForm::destroy()
     }
 }
 
+//***********************************************************
+//*** Open File
 void mainForm::fileOpen(const QString & fileName)
 {
     QString wFile = fileName;
     if (!QFile::exists(wFile))
     {
-     wFile = Q3FileDialog::getOpenFileName(
-                    defaultlocation,
-                    "",
-                    this,
-                    "open file dialog"
-                    "Choose a database file" );
+        wFile = QFileDialog::getOpenFileName(
+                defaultlocation,
+                "",
+                this,
+                "open file dialog"
+                "Choose a database file" );
     }
     if (QFile::exists(wFile) )
     {
- if (db.open(wFile))
- {
- this->setCaption(applicationName+" - "+wFile);
- fileCloseAction->setEnabled(true);
- fileCompactAction->setEnabled(true);
- editCreateTableAction->setEnabled(true);
- editDeleteTableAction->setEnabled(true);
- editModifyTableAction->setEnabled(true);
- editCreateIndexAction->setEnabled(true);
- editDeleteIndexAction->setEnabled(true);
-                } else {
- QString err = "An error occurred:  ";
-                err.append(db.lastErrorMessage);
-                 QMessageBox::information( this, applicationName ,err);
-                }
- populateStructure();
- resetBrowser();
+        if (db.open(wFile))
+        {
+            this->setCaption(applicationName+" - "+wFile);
+            fileCloseAction->setEnabled(true);
+            fileCompactAction->setEnabled(true);
+            editCreateTableAction->setEnabled(true);
+            editDeleteTableAction->setEnabled(true);
+            editModifyTableAction->setEnabled(true);
+            editCreateIndexAction->setEnabled(true);
+            editDeleteIndexAction->setEnabled(true);
+        } else {
+            QString err = "An error occurred:  ";
+            err.append(db.lastErrorMessage);
+            QMessageBox::information( this, applicationName ,err);
+        }
+        populateStructure();
+        resetBrowser();
     }
 }
 
@@ -146,7 +150,7 @@ void mainForm::fileOpen()
 
 void mainForm::fileNew()
 {
-    QString fileName = Q3FileDialog::getSaveFileName(
+    QString fileName = QFileDialog::getSaveFileName(
                     defaultlocation,
                     "",
                     this,
@@ -926,7 +930,7 @@ void mainForm::importTableFromCSV()
   }
     }*/
 
-    QString wFile = Q3FileDialog::getOpenFileName(
+    QString wFile = QFileDialog::getOpenFileName(
                     defaultlocation,
                     "Text files (*.csv *.txt)",
                     this,
@@ -958,7 +962,7 @@ void mainForm::exportTableToCSV()
  //load our table
  db.browseTable(exportForm->option);
 
- QString fileName = Q3FileDialog::getSaveFileName(
+ QString fileName = QFileDialog::getSaveFileName(
                     defaultlocation,
                     "Text files (*.csv *txt)",
                     this,
@@ -1067,7 +1071,7 @@ void mainForm::exportDatabaseToSQL()
  return;
     }
 
-    QString fileName = Q3FileDialog::getSaveFileName(
+    QString fileName = QFileDialog::getSaveFileName(
                     defaultlocation,
                     "Text files (*.sql *txt)",
                     0,
@@ -1088,7 +1092,7 @@ void mainForm::exportDatabaseToSQL()
 
 void mainForm::importDatabaseFromSQL()
 {
-    QString fileName = Q3FileDialog::getOpenFileName(
+    QString fileName = QFileDialog::getOpenFileName(
                     defaultlocation,
                     "Text files (*.sql *txt)",
                     0,
@@ -1100,7 +1104,7 @@ void mainForm::importDatabaseFromSQL()
  QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
  if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
  {
- QString newDBfile = Q3FileDialog::getSaveFileName(
+ QString newDBfile = QFileDialog::getSaveFileName(
   defaultlocation,
   "",
   this,
