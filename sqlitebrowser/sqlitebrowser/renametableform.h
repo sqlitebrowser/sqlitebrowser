@@ -40,8 +40,9 @@ public:
 
     void setupUi(QDialog *renameTableForm)
     {
-        if (renameTableForm->objectName().isEmpty())
+        if (renameTableForm->objectName().isEmpty()){
             renameTableForm->setObjectName(QString::fromUtf8("renameTableForm"));
+        }
         renameTableForm->resize(313, 101);
         vboxLayout = new QVBoxLayout(renameTableForm);
         vboxLayout->setSpacing(6);

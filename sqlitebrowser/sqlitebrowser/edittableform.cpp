@@ -89,9 +89,17 @@ void editTableForm::renameTable()
        //qDebug(newName);
        //QString sql;
        //do the sql rename here
-       //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
+       //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))){
+        //   goto rollback;
+       //}
         QString sql = QString("ALTER TABLE %1 RENAME TO %2").arg(curTable, newName);
         qDebug(sql);
+        if (!pdb->executeSQL(sql)){
+            qDebug("OOPS");
+             qDebug( pdb->lastErrorMessage);
+        }else{
+            qDebug("OK");
+        }
         return;
     }
 //       sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
@@ -176,11 +184,11 @@ void editTableForm::renameTable()
 //   QApplication::restoreOverrideCursor();  // restore original cursor
 //   return;
 //
-//   rollback:
-//       QApplication::restoreOverrideCursor();  // restore original cursor
-//       QString error = "Error renaming table. Message from database engine:  ";
-//       error.append(pdb->lastErrorMessage);
-//       QMessageBox::warning( this, applicationName, error );
+   rollback:
+       QApplication::restoreOverrideCursor();  // restore original cursor
+       QString error = "Error renaming table. Message from database engine:  ";
+       error.append(pdb->lastErrorMessage);
+       QMessageBox::warning( this, applicationName, error );
 //       pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"));
 //       //pdb->executeSQL(QString("ROLLBACK;"));
 //       setActiveTable(pdb, curTable);
