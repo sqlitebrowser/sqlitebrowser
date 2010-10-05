@@ -164,6 +164,9 @@ public:
         fileSaveAction->setName("fileSaveAction");
         fileSaveAction->setEnabled(false);
         fileSaveAction->setIcon(QIcon(":/icons/db_save"));
+        QFont fntS = fileSaveAction->font();
+        fntS.setBold(true);
+        fileSaveAction->setFont(fntS);
 
         //** Db Revert
         fileRevertAction = new QAction(mainForm);
@@ -171,6 +174,9 @@ public:
         fileRevertAction->setName("fileRevertAction");
         fileRevertAction->setEnabled(false);
         fileRevertAction->setIcon(QIcon(":/icons/db_revert"));
+        QFont fntR = fileRevertAction->font();
+        fntR.setBold(true);
+        fileRevertAction->setFont(fntR);
 
 
         //** Exit
@@ -537,6 +543,7 @@ public:
         Toolbar = new QToolBar();
         mainForm->addToolBar(Qt::TopToolBarArea, Toolbar);
         Toolbar->setObjectName(QString::fromUtf8("Toolbar"));
+        Toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
         //*** Setup main Menu
         menubar = mainForm->menuBar(); //new QMenuBar(mainForm);
@@ -562,6 +569,7 @@ public:
         Toolbar->addAction(fileRevertAction);
         Toolbar->addSeparator();
 
+        /*
         Toolbar->addAction(editCreateTableAction);
         Toolbar->addAction(editDeleteTableAction);
         Toolbar->addAction(editModifyTableAction);
@@ -574,6 +582,7 @@ public:
         Toolbar->addAction(sqlLogAction);
         Toolbar->addSeparator();
         Toolbar->addAction(helpWhatsThisAction);
+        */
 
         menubar->addAction(fileMenu->menuAction());
         menubar->addAction(EditMenu->menuAction());
@@ -756,16 +765,16 @@ public:
 #ifndef QT_NO_WHATSTHIS
         fileExportCSVAction->setWhatsThis(QApplication::translate("mainForm", "Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        fileSaveAction->setIconText(QApplication::translate("mainForm", "Save Database", 0, QApplication::UnicodeUTF8));
-        fileSaveAction->setText(QApplication::translate("mainForm", "Save Database", 0, QApplication::UnicodeUTF8));
+        fileSaveAction->setIconText(QApplication::translate("mainForm", "Write Changes", 0, QApplication::UnicodeUTF8));
+        fileSaveAction->setText(QApplication::translate("mainForm", "Revert Changes", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        fileSaveAction->setToolTip(QApplication::translate("mainForm", "Save changes to the database file", 0, QApplication::UnicodeUTF8));
+        fileSaveAction->setToolTip(QApplication::translate("mainForm", "Write changes to the database file", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_WHATSTHIS
         fileSaveAction->setWhatsThis(QApplication::translate("mainForm", "This option is used to save changes to the database file.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        fileRevertAction->setIconText(QApplication::translate("mainForm", "Revert Database", 0, QApplication::UnicodeUTF8));
-        fileRevertAction->setText(QApplication::translate("mainForm", "Revert Database", 0, QApplication::UnicodeUTF8));
+        fileRevertAction->setIconText(QApplication::translate("mainForm", "Revert Changes", 0, QApplication::UnicodeUTF8));
+        fileRevertAction->setText(QApplication::translate("mainForm", "Revert Changes", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         fileRevertAction->setToolTip(QApplication::translate("mainForm", "Revert database to last saved state", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP

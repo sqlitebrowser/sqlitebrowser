@@ -1083,7 +1083,8 @@ void mainForm::dbState( bool dirty )
 void mainForm::fileSave()
 {
     if (db.isOpen()){
- db.save();
+        db.save();
+        //dbStatusBar->showMessage("Date written to file", 4000)
     }
 }
 
@@ -1091,15 +1092,15 @@ void mainForm::fileSave()
 void mainForm::fileRevert()
 {
     if (db.isOpen()){
- QString msg = "Are you sure you want to undo all changes made to the database file \n ";
- msg.append(db.curDBFilename);
- msg.append(" since the last save?");
- if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-     {
-  db.revert();
-  populateStructure();
-  resetBrowser();
-     }
+        QString msg = "Are you sure you want to undo all changes made to the database file \n\n<b> ";
+        msg.append(db.curDBFilename);
+        msg.append("</b>\n since the last save?");
+        if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        {
+            db.revert();
+            populateStructure();
+            resetBrowser();
+        }
     }
 }
 
