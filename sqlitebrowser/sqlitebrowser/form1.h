@@ -223,6 +223,8 @@ public:
         sqlLogAction->setCheckable(true);
         const QIcon icon4 = QIcon(qPixmapFromMimeSource("log.png"));
         sqlLogAction->setIcon(icon4);
+
+
         fileImportCSVAction = new QAction(mainForm);
         fileImportCSVAction->setObjectName(QString::fromUtf8("fileImportCSVAction"));
         fileImportCSVAction->setName("fileImportCSVAction");
@@ -270,8 +272,8 @@ public:
         editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
 
 
+        //************************************************
         //** Add, Modify, Delete Field
-
         editAddFieldActionPopup = new QAction(mainForm);
         editAddFieldActionPopup->setText("Add Field");
         editAddFieldActionPopup->setDisabled(true);
@@ -287,7 +289,8 @@ public:
         editDeleteFieldActionPopup->setDisabled(true);
         editDeleteFieldActionPopup->setIcon(QIcon(":/icons/field_delete"));
 
-        //** Create Index
+        //************************************************
+        //** Create/Delete  Index
         editCreateIndexAction = new QAction(mainForm);
         editCreateIndexAction->setObjectName(QString::fromUtf8("editCreateIndexAction"));
         editCreateIndexAction->setName("editCreateIndexAction");
@@ -553,22 +556,30 @@ public:
 
         Toolbar->addAction(fileNewAction);
         Toolbar->addAction(fileOpenAction);
+        Toolbar->addSeparator();
+
         Toolbar->addAction(fileSaveAction);
         Toolbar->addAction(fileRevertAction);
         Toolbar->addSeparator();
+
         Toolbar->addAction(editCreateTableAction);
         Toolbar->addAction(editDeleteTableAction);
         Toolbar->addAction(editModifyTableAction);
+        Toolbar->addSeparator();
+
         Toolbar->addAction(editCreateIndexAction);
         Toolbar->addAction(editDeleteIndexAction);
         Toolbar->addSeparator();
+
         Toolbar->addAction(sqlLogAction);
         Toolbar->addSeparator();
         Toolbar->addAction(helpWhatsThisAction);
+
         menubar->addAction(fileMenu->menuAction());
         menubar->addAction(EditMenu->menuAction());
         menubar->addAction(ViewMenu->menuAction());
         menubar->addAction(PopupMenu->menuAction());
+
         fileMenu->addAction(fileNewAction);
         fileMenu->addAction(fileOpenAction);
         fileMenu->addAction(fileCloseAction);

@@ -41,22 +41,20 @@ public:
 
     DBBrowserDB pdb;
 
+
     QGridLayout *gridLayout;
     QVBoxLayout *vboxLayout;
     QLabel *lblFieldName;
-    QLabel *lblFieldType;
-    QSpacerItem *spacer17;
-    QHBoxLayout *hboxLayout;
-    QSpacerItem *spacer15;
-    QPushButton *cancelButton;
-    QPushButton *saveButton;
-    QGridLayout *gridLayout1;
-    QHBoxLayout *hboxLayout1;
-    QComboBox *typeBox;
-    QToolButton *typeButton;
     QLineEdit *nameLineEdit;
 
+    QLabel *lblFieldType;
     QButtonGroup *groupRadioTypes;
+    QPushButton *cancelButton;
+    QPushButton *saveButton;
+
+
+
+;
 
     void setupUi(QDialog *editFieldForm)
     {
@@ -131,25 +129,9 @@ public:
         radioLayout->addWidget(txtCustomType);
         txtCustomType->setDisabled(true);
         
-        gridLayout = new QGridLayout();
-        mainVBoxLayout->addLayout(gridLayout );
-
-
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        vboxLayout = new QVBoxLayout();
-        vboxLayout->setSpacing(6);
-        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
 
 
 
-
-        gridLayout->addLayout(vboxLayout, 0, 0, 1, 1);
-
-        spacer17 = new QSpacerItem(20, 14, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(spacer17, 1, 1, 1, 1);
 
         //*** Bottom Button Layout
         QHBoxLayout *bottomButtonBox = new QHBoxLayout();
@@ -171,52 +153,18 @@ public:
         bottomButtonBox->addWidget(saveButton);
 
 
-       // gridLayout->addLayout(hboxLayout, 2, 0, 1, 2);
-
-        gridLayout1 = new QGridLayout();
-        gridLayout1->setSpacing(6);
-        gridLayout1->setObjectName(QString::fromUtf8("gridLayout1"));
-        hboxLayout1 = new QHBoxLayout();
-        hboxLayout1->setSpacing(6);
-        hboxLayout1->setObjectName(QString::fromUtf8("hboxLayout1"));
-        typeBox = new QComboBox(editFieldForm);
-        typeBox->setObjectName(QString::fromUtf8("typeBox"));
-
-        hboxLayout1->addWidget(typeBox);
-
-        typeButton = new QToolButton(editFieldForm);
-        typeButton->setObjectName(QString::fromUtf8("typeButton"));
-        QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(0), static_cast<QSizePolicy::Policy>(0));
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(typeButton->sizePolicy().hasHeightForWidth());
-        typeButton->setSizePolicy(sizePolicy);
-
-        hboxLayout1->addWidget(typeButton);
-
-
-        gridLayout1->addLayout(hboxLayout1, 1, 0, 1, 1);
-
-        //nameLineEdit = new QLineEdit(editFieldForm);
-        //nameLineEdit->setObjectName(QString::fromUtf8("nameLineEdit"));
-        //mainVBoxLayout->addWidget(nameLineEdit);
-        //#gridLayout1->addWidget(nameLineEdit, 0, 0, 1, 1);
-
-
-        gridLayout->addLayout(gridLayout1, 0, 1, 1, 1);
-
         nameLineEdit->setFocus();
 
         retranslateUi(editFieldForm);
         QObject::connect(cancelButton, SIGNAL(clicked()), editFieldForm, SLOT(reject()));
         QObject::connect(saveButton, SIGNAL(clicked()), editFieldForm, SLOT(confirmEdit()));
         QObject::connect(nameLineEdit, SIGNAL(textChanged(QString)), editFieldForm, SLOT(enableSave()));
-        QObject::connect(typeButton, SIGNAL(clicked()), editFieldForm, SLOT(getCustomType()));
 
         QObject::connect(groupRadioTypes, SIGNAL(buttonClicked(QAbstractButton*)), editFieldForm, SLOT(on_radio_button_clicked(QAbstractButton*)));
 
         QMetaObject::connectSlotsByName(editFieldForm);
     } // setupUi
+
 
     void retranslateUi(QDialog *editFieldForm)
     {
@@ -225,21 +173,7 @@ public:
         lblFieldType->setText(QApplication::translate("editFieldForm", "Field type:", 0, QApplication::UnicodeUTF8));
         cancelButton->setText(QApplication::translate("editFieldForm", "Cancel", 0, QApplication::UnicodeUTF8));
         saveButton->setText(QApplication::translate("editFieldForm", "Apply Changes", 0, QApplication::UnicodeUTF8));
-        typeBox->clear();
-        typeBox->insertItems(0, QStringList()
-         << QString()
-         << QApplication::translate("editFieldForm", "TEXT", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("editFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("editFieldForm", "BLOB", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("editFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8)
-        );
-        typeButton->setText(QApplication::translate("editFieldForm", "...", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        typeButton->setProperty("toolTip", QVariant(QApplication::translate("editFieldForm", "Custom type", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_WHATSTHIS
-        typeButton->setProperty("whatsThis", QVariant(QApplication::translate("editFieldForm", "Click this button to enter a new type for the field", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_WHATSTHIS
+
     } // retranslateUi
 
 };
@@ -264,6 +198,7 @@ public:
     QString field_name;
     QString field_type;
     QString original_field_name;
+    bool is_new;
 
 public slots:
     virtual void setInitialValues( bool is_new, QString table, QString fld_name, QString fld_type );

@@ -45,7 +45,8 @@ void editFieldForm::setDB(DBBrowserDB &db)
 
 void editFieldForm::setInitialValues(bool is_new, QString table, QString fld_name, QString fld_type)
 {
-
+    this->is_new = is_new;
+    saveButton->setText(is_new ? "Create Field" : "Change Field");
     original_field_name = QString(fld_name);
 
     table_name = table;

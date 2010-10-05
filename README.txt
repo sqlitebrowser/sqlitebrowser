@@ -16,6 +16,7 @@ Hacking
 
 I'm progressing throught removing Qt3
 Adding icons and contect menu
+The icons are placeholders atmp
 Generally clearing up
 
 Problesm?
