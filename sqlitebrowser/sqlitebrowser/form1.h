@@ -298,8 +298,8 @@ public:
         widget = new QWidget(mainForm);
         widget->setObjectName(QString::fromUtf8("widget"));
         vboxLayout = new QVBoxLayout(widget);
-        vboxLayout->setSpacing(6);
-        vboxLayout->setContentsMargins(11, 11, 11, 11);
+        vboxLayout->setSpacing(0);
+        vboxLayout->setContentsMargins(0,0,0,0);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         vboxLayout->setContentsMargins(0, 0, 0, 0);
         mainTab = new QTabWidget(widget);
@@ -310,6 +310,14 @@ public:
         vboxLayout1->setSpacing(6);
         vboxLayout1->setContentsMargins(11, 11, 11, 11);
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+
+        //**** Structure ***********************************
+        QToolBar *dbToolbar = new QToolBar();
+        vboxLayout1->addWidget(dbToolbar);
+        dbToolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        dbToolbar->addAction(editCreateTableAction);
+        dbToolbar->addAction(editModifyTableActionPopup);
+        dbToolbar->addAction(editDeleteTableActionPopup);
 
         //*** Tree Widget Setup
         dbTreeWidget = new QTreeWidget();
@@ -626,6 +634,7 @@ public:
         QObject::connect(editPreferencesAction, SIGNAL(activated()), mainForm, SLOT(openPreferences()));
 
         QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), mainForm, SLOT(on_tree_context_menu(const QPoint &)));
+        QObject::connect(dbTreeWidget, SIGNAL(itemSelectionChanged()), mainForm, SLOT(on_tree_selection_changed()));
 
         QMetaObject::connectSlotsByName(mainForm);
     } // setupUi
@@ -931,6 +940,7 @@ public:
 
 public slots:
     virtual void on_tree_context_menu(const QPoint & qPoint);
+    virtual void on_tree_selection_changed();
     virtual void on_edit_field();
 
     virtual void fileOpen( const QString & fileName );

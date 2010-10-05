@@ -1204,6 +1204,10 @@ void mainForm::updatePreferences()
    editWin->setTextFormat(prefForm->defaulttext);
 }
 
+//******************************************************************
+//** Tree Events
+//******************************************************************
+
 //** Db Tree Context Menu
 void mainForm::on_tree_context_menu(const QPoint &qPoint){
     if( !dbTreeWidget->selectionModel()->hasSelection() ){
@@ -1218,6 +1222,26 @@ void mainForm::on_tree_context_menu(const QPoint &qPoint){
 
     }else if(cItem->text(1) == "field"){
          popupFieldMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+    }
+}
+//** Tree selection changed
+void mainForm::on_tree_selection_changed(){
+    if (!dbTreeWidget->selectionModel()->hasSelection()){
+        editDeleteTableActionPopup->setEnabled(false);
+        editModifyTableActionPopup->setEnabled(false);
+        editModifyFieldActionPopup->setEnabled(false);
+        return;
+    }
+
+    if(dbTreeWidget->currentItem()->text(1) == "table"){
+        editDeleteTableActionPopup->setEnabled(true);
+        editModifyTableActionPopup->setEnabled(true);
+        editModifyFieldActionPopup->setEnabled(false);
+
+    }else if(dbTreeWidget->currentItem()->text(1) == "field"){
+        editDeleteTableActionPopup->setEnabled(false);
+        editModifyTableActionPopup->setEnabled(false);
+        editModifyFieldActionPopup->setEnabled(true);
     }
 }
 
@@ -1241,3 +1265,5 @@ void mainForm::on_edit_field(){
         item->setText(2,fieldForm->field_type);
     }
 }
+
+
