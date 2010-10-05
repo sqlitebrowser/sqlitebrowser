@@ -69,17 +69,22 @@ void editFieldForm::setInitialValues(bool is_new, QString table, QString fld_nam
 
 void editFieldForm::confirmEdit()
 {
+
+    nameLineEdit->setText(nameLineEdit->text().trimmed());
     QString fieldname = nameLineEdit->text();
+
     if (fieldname.isEmpty()) {
- QMessageBox::information( this, applicationName, "Field name can not be empty" );
+        statusBar->showMessage("Field name can not be empty", 4000);
+        nameLineEdit->setFocus();
         return;
     }
-    if (fieldname.contains(" ")>0) {
-        QMessageBox::warning( this, applicationName, "Spaces are not allowed in the field name" );
+    if (fieldname.contains(" ") > 0) {
+        statusBar->showMessage("Spaces are not allowed in the field name", 4000);
+        nameLineEdit->setFocus();
         return;
     }
+
     field_name = fieldname;
-    //field_type = typeBox->currentText();
     field_type = groupRadioTypes->checkedButton()->property("field_type").toString();
     bool ok = pdb.createColumn(table_name, field_name, field_type);
     if(!ok){

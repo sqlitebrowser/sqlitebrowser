@@ -144,7 +144,7 @@ void mainForm::fileOpen(const QString & fileName)
 
 void mainForm::fileOpen()
 {
- fileOpen(QString());
+    fileOpen(QString());
 }
 
 
@@ -581,19 +581,19 @@ void mainForm::showrecord( int dec )
 void mainForm::createTable()
 {
     if (!db.isOpen()){
- QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
- return;
+        QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
+        return;
     }
-    createTableForm * tableForm = new createTableForm( this, "createtable", TRUE );
+    createTableForm * tableForm = new createTableForm( this, "createtable", true );
     if ( tableForm->exec() ) {
- if (!db.executeSQL(tableForm->createStatement)){
-     QString error = "Error: could not create the table. Message from database engine:  ";
-     error.append(db.lastErrorMessage);
-     QMessageBox::warning( this, applicationName, error );
- } else {
-     populateStructure();
-     resetBrowser();
- }
+        if (!db.executeSQL(tableForm->createStatement)){
+            QString error = "Error: could not create the table. Message from database engine:  ";
+            error.append(db.lastErrorMessage);
+            QMessageBox::warning( this, applicationName, error );
+        } else {
+            populateStructure();
+            resetBrowser();
+        }
     }
 }
 
@@ -1267,9 +1267,16 @@ void mainForm::on_add_field(){
     {
         //modified = true;
         //do the sql rename here
+        //populateStructure();
         qDebug(fieldForm->field_name + fieldForm->field_type);
-        //item->setText(0,fieldForm->field_name);
-        //item->setText(2,fieldForm->field_type);
+        //* find parent item
+        populateStructure();
+ //       QTreeWidgetItem *parentItem = dbTreeWidget->findItems()
+        return;
+        QTreeWidgetItem *newItem = new QTreeWidgetItem(dbTreeWidget->currentItem());
+        newItem->setText(0, fieldForm->field_name);
+        newItem->setText(1, "field");
+        newItem->setText(2, fieldForm->field_type);
     }
 }
 void mainForm::on_edit_field(){

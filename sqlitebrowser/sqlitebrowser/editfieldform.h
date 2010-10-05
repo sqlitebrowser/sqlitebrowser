@@ -30,6 +30,7 @@
 #include <QtGui/QSpacerItem>
 #include <QtGui/QToolButton>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QStatusBar>
 
 #include "sqlitedb.h"
 
@@ -52,9 +53,7 @@ public:
     QPushButton *cancelButton;
     QPushButton *saveButton;
 
-
-
-;
+    QStatusBar *statusBar;
 
     void setupUi(QDialog *editFieldForm)
     {
@@ -63,8 +62,13 @@ public:
         }
         editFieldForm->resize(352, 140);
 
+        QVBoxLayout *outerContainerLayout = new QVBoxLayout();
+        outerContainerLayout->setContentsMargins(0,0,0,0);
+        editFieldForm->setLayout(outerContainerLayout);
+
         QVBoxLayout *mainVBoxLayout = new QVBoxLayout();
-        editFieldForm->setLayout(mainVBoxLayout);
+        mainVBoxLayout->setContentsMargins(20,20,20,20);
+        outerContainerLayout->addLayout(mainVBoxLayout);
 
         //** Field Name lbl
         lblFieldName = new QLabel(editFieldForm);
@@ -90,7 +94,7 @@ public:
         //**** Field Types Radios
         QVBoxLayout *radioLayout = new QVBoxLayout();
         mainVBoxLayout->addLayout(radioLayout);
-        radioLayout->setContentsMargins(20, 10 ,10 ,0);
+        radioLayout->setContentsMargins(20, 0 ,10 ,0);
 
         groupRadioTypes = new QButtonGroup();
         groupRadioTypes->setExclusive(true);
@@ -132,6 +136,7 @@ public:
 
 
 
+        mainVBoxLayout->addSpacing(20);
 
         //*** Bottom Button Layout
         QHBoxLayout *bottomButtonBox = new QHBoxLayout();
@@ -151,6 +156,9 @@ public:
         saveButton->setEnabled(false);
         saveButton->setIcon(QIcon(":/icons/save"));
         bottomButtonBox->addWidget(saveButton);
+
+        statusBar = new QStatusBar();
+        outerContainerLayout->addWidget(statusBar);
 
 
         nameLineEdit->setFocus();
