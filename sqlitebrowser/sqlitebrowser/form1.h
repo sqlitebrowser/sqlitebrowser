@@ -125,16 +125,19 @@ public:
         }
         //TODO get from settings and save last position
         mainForm->resize(702, 552);
+
+        //** New File
         fileNewAction = new QAction(mainForm);
         fileNewAction->setObjectName(QString::fromUtf8("fileNewAction"));
         fileNewAction->setName("fileNewAction");
-        const QIcon icon = QIcon(qPixmapFromMimeSource("new.png"));
-        fileNewAction->setIcon(icon);
+        fileNewAction->setIcon(QIcon(":/icons/db_new"));
+
+        //** Open File
         fileOpenAction = new QAction(mainForm);
         fileOpenAction->setObjectName(QString::fromUtf8("fileOpenAction"));
         fileOpenAction->setName("fileOpenAction");
-        const QIcon icon1 = QIcon(qPixmapFromMimeSource("open.png"));
-        fileOpenAction->setIcon(icon1);
+        fileOpenAction->setIcon(QIcon(":/icons/db_open"));
+
         fileExitAction = new QAction(mainForm);
         fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
         fileExitAction->setName("fileExitAction");
@@ -158,10 +161,13 @@ public:
         helpAboutAction = new QAction(mainForm);
         helpAboutAction->setObjectName(QString::fromUtf8("helpAboutAction"));
         helpAboutAction->setName("helpAboutAction");
+
+        //** Close Database ??
         fileCloseAction = new QAction(mainForm);
         fileCloseAction->setObjectName(QString::fromUtf8("fileCloseAction"));
         fileCloseAction->setName("fileCloseAction");
         fileCloseAction->setEnabled(false);
+
         newRecordAction = new QAction(mainForm);
         newRecordAction->setObjectName(QString::fromUtf8("newRecordAction"));
         newRecordAction->setName("newRecordAction");
@@ -192,48 +198,59 @@ public:
         fileSaveAction->setEnabled(false);
         const QIcon icon5 = QIcon(qPixmapFromMimeSource("save.png"));
         fileSaveAction->setIcon(icon5);
+
+        //** Db Revert
         fileRevertAction = new QAction(mainForm);
         fileRevertAction->setObjectName(QString::fromUtf8("fileRevertAction"));
         fileRevertAction->setName("fileRevertAction");
         fileRevertAction->setEnabled(false);
-        const QIcon icon6 = QIcon(qPixmapFromMimeSource("revert.png"));
-        fileRevertAction->setIcon(icon6);
+        fileRevertAction->setIcon(QIcon("icons/db_revert"));
         //fileImportAction = new QAction(mainForm);
         //fileImportAction->setObjectName(QString::fromUtf8("fileImportAction"));
         //fileImportAction->setName("fileImportAction");
         //fileExportAction = new QAction(mainForm);
         //fileExportAction->setObjectName(QString::fromUtf8("fileExportAction"));
         //fileExportAction->setName("fileExportAction");
+
+        //** Create Table
         editCreateTableAction = new QAction(mainForm);
         editCreateTableAction->setObjectName(QString::fromUtf8("editCreateTableAction"));
         editCreateTableAction->setName("editCreateTableAction");
         editCreateTableAction->setEnabled(false);
-        const QIcon icon7 = QIcon(qPixmapFromMimeSource("create_table.png"));
-        editCreateTableAction->setIcon(icon7);
+        //const QIcon icon7 = QIcon(qPixmapFromMimeSource("create_table.png"));
+        editCreateTableAction->setIcon(QIcon(":/icons/table_create"));
+
+        //** Delete table
         editDeleteTableAction = new QAction(mainForm);
         editDeleteTableAction->setObjectName(QString::fromUtf8("editDeleteTableAction"));
         editDeleteTableAction->setName("editDeleteTableAction");
         editDeleteTableAction->setEnabled(false);
-        const QIcon icon8 = QIcon(qPixmapFromMimeSource("delete_table.png"));
-        editDeleteTableAction->setIcon(icon8);
+        //const QIcon icon8 = QIcon(qPixmapFromMimeSource("delete_table.png"));
+        editDeleteTableAction->setIcon(QIcon(":/icons/table_delete"));
+
+        //** Modify Table
         editModifyTableAction = new QAction(mainForm);
         editModifyTableAction->setObjectName(QString::fromUtf8("editModifyTableAction"));
         editModifyTableAction->setName("editModifyTableAction");
         editModifyTableAction->setEnabled(false);
-        const QIcon icon9 = QIcon(qPixmapFromMimeSource("modify_table.png"));
-        editModifyTableAction->setIcon(icon9);
+       // const QIcon icon9 = QIcon(qPixmapFromMimeSource("modify_table.png"));
+        editModifyTableAction->setIcon(QIcon(":/icons/table_modify"));
+
+        //** Create Index
         editCreateIndexAction = new QAction(mainForm);
         editCreateIndexAction->setObjectName(QString::fromUtf8("editCreateIndexAction"));
         editCreateIndexAction->setName("editCreateIndexAction");
         editCreateIndexAction->setEnabled(false);
-        const QIcon icon10 = QIcon(qPixmapFromMimeSource("create_index.png"));
-        editCreateIndexAction->setIcon(icon10);
+        //const QIcon icon10 = QIcon(qPixmapFromMimeSource("create_index.png"));
+        editCreateIndexAction->setIcon(QIcon(":/icons/index_create"));
+
         editDeleteIndexAction = new QAction(mainForm);
         editDeleteIndexAction->setObjectName(QString::fromUtf8("editDeleteIndexAction"));
         editDeleteIndexAction->setName("editDeleteIndexAction");
         editDeleteIndexAction->setEnabled(false);
-        const QIcon icon11 = QIcon(qPixmapFromMimeSource("delete_index.png"));
-        editDeleteIndexAction->setIcon(icon11);
+        //const QIcon icon11 = QIcon(qPixmapFromMimeSource("delete_index.png"));
+        editDeleteIndexAction->setIcon(QIcon(":/icons/index_delete"));
+
         fileImportSQLAction = new QAction(mainForm);
         fileImportSQLAction->setObjectName(QString::fromUtf8("fileImportSQLAction"));
         fileImportSQLAction->setName("fileImportSQLAction");

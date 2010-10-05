@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="db_new">database_add.png</file>
+        <file alias="db_open">database_go.png</file>
+        <file alias="db_revert">database_refresh.png</file>
+        <file>database_save.png</file>
+        <file alias="table_create">table_add.png</file>
+        <file alias="table_delete">table_delete.png</file>
+        <file alias="table_modify">table_edit.png</file>
+        <file alias="index_create">tag_blue_add.png</file>
+        <file alias="index_delete">tag_blue_delete.png</file>
+    </qresource>
+</RCC>

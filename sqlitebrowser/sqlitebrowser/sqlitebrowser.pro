@@ -78,3 +78,4 @@ mac {
     CONFIG += x86 \
         ppc
 }
+RESOURCES += icons/icons.qrc
