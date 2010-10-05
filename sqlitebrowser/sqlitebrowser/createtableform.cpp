@@ -40,8 +40,8 @@ void createTableForm::languageChange()
 
 void createTableForm::init()
 {
-   fieldListView->clear();
-   fieldListView->setSorting (-1, FALSE);
+   //fieldListView->clear();
+   //fieldListView->setSorting (-1, FALSE);
 }
 
 void createTableForm::confirmCreate()
@@ -59,7 +59,7 @@ void createTableForm::confirmCreate()
         return;
     }
 
-    if (fieldListView->firstChild()==0) {
+    if (treeWidget->invisibleRootItem()->childCount() == 0) {
         ok = false;
         QMessageBox::information( this, applicationName, "No fields defined" );
         return;
@@ -118,20 +118,32 @@ void createTableForm::confirmCreate()
 
 void createTableForm::addField()
 {
-   addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
-   addForm->setInitialValues(QString(""),QString(""));
+    addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
+    addForm->setInitialValues(QString(""),QString(""));
     if (addForm->exec())
-   {
-       //qDebug(addForm->fname + addForm->ftype);
-       Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, fieldListView->lastItem() );
-       tbitem->setText( 0, addForm->fname  );
-       tbitem->setText( 1, addForm->ftype );
-   }
+    {
+        //qDebug(addForm->fname + addForm->ftype);
+        //TODO
+        Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView, fieldListView->lastItem() );
+        tbitem->setText( 0, addForm->fname  );
+        tbitem->setText( 1, addForm->ftype );
+
+        QTreeWidgetItem *newItem = new QTreeWidgetItem();
+        newItem->setText(0, addForm->fname);
+        newItem->setText(1, addForm->ftype);
+        newItem->setIcon(0, QIcon(":/icons/field"));
+        treeWidget->addTopLevelItem(newItem);
+    }
 }
 
 
 void createTableForm::deleteField()
 {
+    if(!treeWidget->currentItem()  ){
+        return;
+    }
+    treeWidget->invisibleRootItem()->removeChild(treeWidget->currentItem());
+
     Q3ListViewItem * item = fieldListView->selectedItem();
     if (item==0) {
         //should never happen, the button would not be active, but...
@@ -145,6 +157,8 @@ void createTableForm::deleteField()
 
 void createTableForm::fieldSelectionChanged()
 {
+    buttonDeleteField->setEnabled(treeWidget->selectionModel()->hasSelection());
+
      Q3ListViewItem * item = fieldListView->selectedItem();
     if (item==0) {
         buttonDeleteField->setEnabled(false);
