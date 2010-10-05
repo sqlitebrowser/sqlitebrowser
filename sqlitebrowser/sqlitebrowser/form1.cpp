@@ -1210,7 +1210,27 @@ void mainForm::on_tree_context_menu(const QPoint &qPoint){
     if(cItem->text(1) == "table"){
         editDeleteTableActionPopup->setDisabled(false);
         editModifyTableActionPopup->setDisabled(false);
-        popupDbMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+        popupTableMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+
+    }else if(cItem->text(1) == "field"){
+         popupFieldMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
     }
 }
 
+
+//void mainForm::on_edit_field(){
+    //if( !dbTreeWidget->currentItem() ){
+    //    return;
+    //}
+//    QTreeWidgetItem *item = dbTreeWidget->currentItem();
+//    editFieldForm *fieldForm = new editFieldForm( this, "editfield", true );
+//    fieldForm->setInitialValues(item->text(0), item->text(1));
+//    if (fieldForm->exec())
+//    {
+//        //modified = true;
+//        //do the sql rename here
+//        //qDebug(fieldForm->name + fieldForm->type);
+//        item->setText(0,fieldForm->name);
+//        item->setText(1,fieldForm->type);
+//    }
+//}

@@ -90,9 +90,12 @@ public:
     QVBoxLayout *vboxLayout1;
 
     QTreeWidget *dbTreeWidget;
-    QMenu *popupDbMenu;
+    QMenu *popupTableMenu;
+    QMenu *popupFieldMenu;
+
     QAction *editModifyTableActionPopup;
     QAction *editDeleteTableActionPopup;
+    QAction *editModifyFieldActionPopup;
 
     QWidget *browser;
     QVBoxLayout *vboxLayout2;
@@ -263,6 +266,12 @@ public:
         editModifyTableActionPopup = new QAction(mainForm);
         editModifyTableActionPopup->setEnabled(false);
         editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
+
+
+        //** Modufy Field
+        editModifyFieldActionPopup = new QAction(mainForm);
+        editModifyFieldActionPopup->setText("Modify Field");
+        editModifyFieldActionPopup->setIcon(QIcon(":/icons/field_edit"));
 
         //** Create Index
         editCreateIndexAction = new QAction(mainForm);
@@ -561,11 +570,16 @@ public:
         PopupMenu->addAction(helpAboutAction);
 
         //***********************************************8
-        //** Db Tree Popup Menu
-        popupDbMenu = new QMenu(mainForm);
-        popupDbMenu->addAction(editModifyTableActionPopup);
-        popupDbMenu->addSeparator();
-        popupDbMenu->addAction(editDeleteTableActionPopup);
+        //** Db Tree Popup Menus
+        popupTableMenu = new QMenu(mainForm);
+        popupTableMenu->addAction(editModifyTableActionPopup);
+        popupTableMenu->addSeparator();
+        popupTableMenu->addAction(editDeleteTableActionPopup);
+
+        popupFieldMenu = new QMenu(mainForm);
+        popupFieldMenu->addAction(editModifyFieldActionPopup);
+        //spopupFieldMenu->addSeparator();
+        //popupFieldMenu->addAction(editDeleteTableActionPopup);
 
 
         retranslateUi(mainForm);

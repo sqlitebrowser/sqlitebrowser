@@ -12,8 +12,12 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
+#include <QtCore/QStringList>
+
+
+#include <Qt3Support/Q3MimeSourceFactory>
+
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
@@ -71,15 +75,17 @@ public:
 
         hboxLayout->addItem(spacer15);
 
+        //** Cancel Button
         cancelButton = new QPushButton(addFieldForm);
+        cancelButton->setIcon(QIcon(":/icons/cancel"));
         cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
-
         hboxLayout->addWidget(cancelButton);
 
+        //** Create Button
         createButton = new QPushButton(addFieldForm);
         createButton->setObjectName(QString::fromUtf8("createButton"));
         createButton->setDefault(true);
-
+        createButton->setIcon(QIcon(":/icons/save"));
         hboxLayout->addWidget(createButton);
 
 
@@ -119,6 +125,38 @@ public:
 
         hboxLayout1->addWidget(typeBox);
 
+        //**** Field Types Radios
+        QVBoxLayout *radioLayout = new QVBoxLayout();
+        vboxLayout1->addLayout(radioLayout);
+        QStringList radioItemLabels;
+        radioItemLabels.append(QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8));
+//        << QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8)
+//        << QApplication::translate("addFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8)
+//        << QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8)
+//        << QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8)
+//        ;
+        QRadioButton *radioTEXT = new QRadioButton();
+        radioTEXT->setText(QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioTEXT);
+
+        QRadioButton *radioNUMERIC = new QRadioButton();
+        radioNUMERIC->setText(QApplication::translate("addFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioNUMERIC);
+
+        QRadioButton *radioBLOB = new QRadioButton();
+        radioBLOB->setText(QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioBLOB);
+
+
+        QRadioButton *radioINTPRIMARY = new QRadioButton();
+        radioINTPRIMARY->setText(QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioINTPRIMARY);
+
+
+        QRadioButton *radioCustom = new QRadioButton();
+        radioCustom->setText(QApplication::translate("addFieldForm", "Custom", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioCustom);
+
         typeButton = new QToolButton(addFieldForm);
         typeButton->setObjectName(QString::fromUtf8("typeButton"));
         QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(0), static_cast<QSizePolicy::Policy>(0));
@@ -134,6 +172,7 @@ public:
 
 
         gridLayout->addLayout(vboxLayout1, 0, 1, 1, 1);
+
 
 
         retranslateUi(addFieldForm);
