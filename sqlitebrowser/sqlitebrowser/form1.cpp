@@ -1260,7 +1260,7 @@ void mainForm::on_add_field(){
     //QTreeWidgetItem *item = dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this, "editfield", true );
     //qDebug(item->text(2));
-    fieldForm->setInitialValues(true, "TABLE_NAME", "", "NUMERIC");
+    fieldForm->setInitialValues(true, dbTreeWidget->currentItem()->text(0), "", "TEXT");
     fieldForm->setDB(this->db);
     if (fieldForm->exec())
     {

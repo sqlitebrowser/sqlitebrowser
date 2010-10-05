@@ -72,7 +72,8 @@ void editFieldForm::confirmEdit()
         return;
     }
     field_name = fieldname;
-    field_type = typeBox->currentText();
+    //field_type = typeBox->currentText();
+    field_type = groupRadioTypes->checkedButton()->property("field_type").toString();
     bool ok = pdb.createColumn(table_name, field_name, field_type);
     if(!ok){
         qDebug(pdb.lastErrorMessage);
