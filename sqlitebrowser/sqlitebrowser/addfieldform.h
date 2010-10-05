@@ -128,13 +128,7 @@ public:
         //**** Field Types Radios
         QVBoxLayout *radioLayout = new QVBoxLayout();
         vboxLayout1->addLayout(radioLayout);
-        QStringList radioItemLabels;
-        radioItemLabels.append(QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8));
-//        << QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8)
-//        << QApplication::translate("addFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8)
-//        << QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8)
-//        << QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8)
-//        ;
+
         QRadioButton *radioTEXT = new QRadioButton();
         radioTEXT->setText(QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8));
         radioLayout->addWidget(radioTEXT);

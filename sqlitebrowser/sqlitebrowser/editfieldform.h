@@ -18,6 +18,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
+#include <QtGui/QRadioButton>
 #include <QtGui/QDialog>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
@@ -36,8 +37,8 @@ class Ui_editFieldForm
 public:
     QGridLayout *gridLayout;
     QVBoxLayout *vboxLayout;
-    QLabel *textLabel1;
-    QLabel *textLabel2;
+    QLabel *lblFieldName;
+    QLabel *lblFieldType;
     QSpacerItem *spacer17;
     QHBoxLayout *hboxLayout;
     QSpacerItem *spacer15;
@@ -49,29 +50,87 @@ public:
     QToolButton *typeButton;
     QLineEdit *nameLineEdit;
 
+    QButtonGroup *groupRadioTypes;
+
     void setupUi(QDialog *editFieldForm)
     {
         if (editFieldForm->objectName().isEmpty())
             editFieldForm->setObjectName(QString::fromUtf8("editFieldForm"));
         editFieldForm->resize(352, 140);
-        gridLayout = new QGridLayout(editFieldForm);
+
+        QVBoxLayout *mainVBoxLayout = new QVBoxLayout();
+        editFieldForm->setLayout(mainVBoxLayout);
+
+        //** Field Name lbl
+        lblFieldName = new QLabel(editFieldForm);
+        lblFieldName->setObjectName(QString::fromUtf8("textLabel1"));
+        lblFieldName->setWordWrap(false);
+        mainVBoxLayout->addWidget(lblFieldName);
+
+        //** Fiel Name EDIT
+        nameLineEdit = new QLineEdit(editFieldForm);
+        nameLineEdit->setObjectName(QString::fromUtf8("nameLineEdit"));
+        mainVBoxLayout->addWidget(nameLineEdit);
+
+        mainVBoxLayout->addSpacing(20);
+
+
+        //** Field Type lbl
+        lblFieldType = new QLabel(editFieldForm);
+        lblFieldType->setObjectName(QString::fromUtf8("textLabel2"));
+        lblFieldType->setWordWrap(false);
+        mainVBoxLayout->addWidget(lblFieldType);
+
+
+        //**** Field Types Radios
+        QVBoxLayout *radioLayout = new QVBoxLayout();
+        mainVBoxLayout->addLayout(radioLayout);
+        radioLayout->setContentsMargins(20, 0 ,0 ,0);
+
+        groupRadioTypes = new QButtonGroup(editFieldForm);
+
+
+        QRadioButton *radioTEXT = new QRadioButton();
+        radioTEXT->setText(QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioTEXT);
+        groupRadioTypes->addButton(radioTEXT);
+
+        QRadioButton *radioNUMERIC = new QRadioButton();
+        radioNUMERIC->setText(QApplication::translate("addFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioNUMERIC);
+        groupRadioTypes->addButton(radioNUMERIC);
+
+        QRadioButton *radioBLOB = new QRadioButton();
+        radioBLOB->setText(QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioBLOB);
+        groupRadioTypes->addButton(radioBLOB);
+
+        QRadioButton *radioINTPRIMARY = new QRadioButton();
+        radioINTPRIMARY->setText(QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioINTPRIMARY);
+        groupRadioTypes->addButton(radioINTPRIMARY);
+
+        QRadioButton *radioCustom = new QRadioButton();
+        radioCustom->setText(QApplication::translate("addFieldForm", "Custom", 0, QApplication::UnicodeUTF8));
+        radioLayout->addWidget(radioCustom);
+        groupRadioTypes->addButton(radioCustom);
+
+        QLineEdit *txtCustomType = new QLineEdit();
+        radioLayout->addWidget(txtCustomType);
+        txtCustomType->setDisabled(true);
+
+        gridLayout = new QGridLayout();
+        mainVBoxLayout->addLayout(gridLayout );
+
+
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         vboxLayout = new QVBoxLayout();
         vboxLayout->setSpacing(6);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-        textLabel1 = new QLabel(editFieldForm);
-        textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
-        textLabel1->setWordWrap(false);
 
-        vboxLayout->addWidget(textLabel1);
 
-        textLabel2 = new QLabel(editFieldForm);
-        textLabel2->setObjectName(QString::fromUtf8("textLabel2"));
-        textLabel2->setWordWrap(false);
-
-        vboxLayout->addWidget(textLabel2);
 
 
         gridLayout->addLayout(vboxLayout, 0, 0, 1, 1);
@@ -89,13 +148,13 @@ public:
 
         cancelButton = new QPushButton(editFieldForm);
         cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
-
+        cancelButton->setIcon(QIcon(":/icons/cancel"));
         hboxLayout->addWidget(cancelButton);
 
         saveButton = new QPushButton(editFieldForm);
         saveButton->setObjectName(QString::fromUtf8("saveButton"));
         saveButton->setEnabled(false);
-        saveButton->setDefault(true);
+        saveButton->setIcon(QIcon(":/icons/save"));
 
         hboxLayout->addWidget(saveButton);
 
@@ -126,14 +185,15 @@ public:
 
         gridLayout1->addLayout(hboxLayout1, 1, 0, 1, 1);
 
-        nameLineEdit = new QLineEdit(editFieldForm);
-        nameLineEdit->setObjectName(QString::fromUtf8("nameLineEdit"));
-
-        gridLayout1->addWidget(nameLineEdit, 0, 0, 1, 1);
+        //nameLineEdit = new QLineEdit(editFieldForm);
+        //nameLineEdit->setObjectName(QString::fromUtf8("nameLineEdit"));
+        //mainVBoxLayout->addWidget(nameLineEdit);
+        //#gridLayout1->addWidget(nameLineEdit, 0, 0, 1, 1);
 
 
         gridLayout->addLayout(gridLayout1, 0, 1, 1, 1);
 
+        nameLineEdit->setFocus();
 
         retranslateUi(editFieldForm);
         QObject::connect(cancelButton, SIGNAL(clicked()), editFieldForm, SLOT(reject()));
@@ -147,8 +207,8 @@ public:
     void retranslateUi(QDialog *editFieldForm)
     {
         editFieldForm->setWindowTitle(QApplication::translate("editFieldForm", "Edit field name and type", 0, QApplication::UnicodeUTF8));
-        textLabel1->setText(QApplication::translate("editFieldForm", "Field name:", 0, QApplication::UnicodeUTF8));
-        textLabel2->setText(QApplication::translate("editFieldForm", "Field type:", 0, QApplication::UnicodeUTF8));
+        lblFieldName->setText(QApplication::translate("editFieldForm", "Field name:", 0, QApplication::UnicodeUTF8));
+        lblFieldType->setText(QApplication::translate("editFieldForm", "Field type:", 0, QApplication::UnicodeUTF8));
         cancelButton->setText(QApplication::translate("editFieldForm", "Cancel", 0, QApplication::UnicodeUTF8));
         saveButton->setText(QApplication::translate("editFieldForm", "Apply Changes", 0, QApplication::UnicodeUTF8));
         typeBox->clear();

@@ -20,6 +20,7 @@
 #include "aboutform.h"
 #include "choosetableform.h"
 #include "edittableform.h"
+#include "editfieldform.h"
 #include "importcsvform.h"
 #include "exporttablecsvform.h"
 #include "preferencesform.h"
@@ -1223,18 +1224,18 @@ void mainForm::on_tree_context_menu(const QPoint &qPoint){
 
 void mainForm::on_edit_field(){
     qDebug("YES");
-    //if( !dbTreeWidget->currentItem() ){
-    //    return;
-    //}
-//    QTreeWidgetItem *item = dbTreeWidget->currentItem();
-//    editFieldForm *fieldForm = new editFieldForm( this, "editfield", true );
-//    fieldForm->setInitialValues(item->text(0), item->text(1));
-//    if (fieldForm->exec())
-//    {
-//        //modified = true;
-//        //do the sql rename here
-//        //qDebug(fieldForm->name + fieldForm->type);
-//        item->setText(0,fieldForm->name);
-//        item->setText(1,fieldForm->type);
-//    }
+    if( !dbTreeWidget->currentItem() ){
+        return;
+    }
+    QTreeWidgetItem *item = dbTreeWidget->currentItem();
+    editFieldForm *fieldForm = new editFieldForm( this, "editfield", true );
+    fieldForm->setInitialValues(item->text(0), item->text(1));
+    if (fieldForm->exec())
+    {
+        //modified = true;
+        //do the sql rename here
+        //qDebug(fieldForm->name + fieldForm->type);
+        item->setText(0,fieldForm->name);
+        item->setText(1,fieldForm->type);
+    }
 }
