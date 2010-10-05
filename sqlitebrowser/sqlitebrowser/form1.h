@@ -616,6 +616,8 @@ public:
         QObject::connect(editModifyTableAction, SIGNAL(activated()), mainForm, SLOT(editTable()));
         QObject::connect(editDeleteTableActionPopup, SIGNAL(activated()), mainForm, SLOT(deleteTablePopup()));
         QObject::connect(editModifyTableActionPopup, SIGNAL(activated()), mainForm, SLOT(editTablePopup()));
+        QObject::connect(editModifyFieldActionPopup, SIGNAL(activated()), mainForm, SLOT(on_edit_field()));
+
 
         QObject::connect(fileExportSQLAction, SIGNAL(activated()), mainForm, SLOT(exportDatabaseToSQL()));
         QObject::connect(fileImportSQLAction, SIGNAL(activated()), mainForm, SLOT(importDatabaseFromSQL()));
@@ -926,7 +928,8 @@ public:
     QString defaultlocation;
 
 public slots:
-    void on_tree_context_menu(const QPoint & sqPoint);
+    virtual void on_tree_context_menu(const QPoint & qPoint);
+    virtual void on_edit_field();
 
     virtual void fileOpen( const QString & fileName );
     virtual void fileOpen();

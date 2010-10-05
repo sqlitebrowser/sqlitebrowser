@@ -1218,7 +1218,8 @@ void mainForm::on_tree_context_menu(const QPoint &qPoint){
 }
 
 
-//void mainForm::on_edit_field(){
+void mainForm::on_edit_field(){
+    qDebug("YES");
     //if( !dbTreeWidget->currentItem() ){
     //    return;
     //}
@@ -1233,4 +1234,4 @@ void mainForm::on_tree_context_menu(const QPoint &qPoint){
 //        item->setText(0,fieldForm->name);
 //        item->setText(1,fieldForm->type);
 //    }
-//}
+}
