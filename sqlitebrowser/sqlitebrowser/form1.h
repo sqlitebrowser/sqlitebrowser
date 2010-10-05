@@ -91,6 +91,8 @@ public:
 
     QTreeWidget *dbTreeWidget;
     QMenu *popupDbMenu;
+    QAction *editModifyTableActionPopup;
+    QAction *editDeleteTableActionPopup;
 
     QWidget *browser;
     QVBoxLayout *vboxLayout2;
@@ -247,12 +249,20 @@ public:
         editDeleteTableAction->setEnabled(false);
         editDeleteTableAction->setIcon(QIcon(":/icons/table_delete"));
 
+        editDeleteTableActionPopup = new QAction(mainForm);
+        editDeleteTableActionPopup->setEnabled(false);
+        editDeleteTableActionPopup->setIcon(QIcon(":/icons/table_delete"));
+
         //** Modify Table
         editModifyTableAction = new QAction(mainForm);
         editModifyTableAction->setObjectName(QString::fromUtf8("editModifyTableAction"));
         editModifyTableAction->setName("editModifyTableAction");
         editModifyTableAction->setEnabled(false);
         editModifyTableAction->setIcon(QIcon(":/icons/table_modify"));
+
+        editModifyTableActionPopup = new QAction(mainForm);
+        editModifyTableActionPopup->setEnabled(false);
+        editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
 
         //** Create Index
         editCreateIndexAction = new QAction(mainForm);
@@ -553,9 +563,9 @@ public:
         //***********************************************8
         //** Db Tree Popup Menu
         popupDbMenu = new QMenu(mainForm);
-        popupDbMenu->addAction(editModifyTableAction);
+        popupDbMenu->addAction(editModifyTableActionPopup);
         popupDbMenu->addSeparator();
-        popupDbMenu->addAction(editDeleteTableAction);
+        popupDbMenu->addAction(editDeleteTableActionPopup);
 
 
         retranslateUi(mainForm);
@@ -587,8 +597,12 @@ public:
         QObject::connect(editDeleteIndexAction, SIGNAL(activated()), mainForm, SLOT(deleteIndex()));
         QObject::connect(editCreateIndexAction, SIGNAL(activated()), mainForm, SLOT(createIndex()));
         QObject::connect(editCreateTableAction, SIGNAL(activated()), mainForm, SLOT(createTable()));
+
         QObject::connect(editDeleteTableAction, SIGNAL(activated()), mainForm, SLOT(deleteTable()));
         QObject::connect(editModifyTableAction, SIGNAL(activated()), mainForm, SLOT(editTable()));
+        QObject::connect(editDeleteTableActionPopup, SIGNAL(activated()), mainForm, SLOT(deleteTablePopup()));
+        QObject::connect(editModifyTableActionPopup, SIGNAL(activated()), mainForm, SLOT(editTablePopup()));
+
         QObject::connect(fileExportSQLAction, SIGNAL(activated()), mainForm, SLOT(exportDatabaseToSQL()));
         QObject::connect(fileImportSQLAction, SIGNAL(activated()), mainForm, SLOT(importDatabaseFromSQL()));
         QObject::connect(editPreferencesAction, SIGNAL(activated()), mainForm, SLOT(openPreferences()));
@@ -709,11 +723,18 @@ public:
 #endif // QT_NO_WHATSTHIS
         editDeleteTableAction->setIconText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
         editDeleteTableAction->setText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+        editDeleteTableActionPopup->setIconText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+        editDeleteTableActionPopup->setText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+
 #ifndef QT_NO_WHATSTHIS
         editDeleteTableAction->setWhatsThis(QApplication::translate("mainForm", "Open the Delete Table wizard, where you can select a database table to be dropped.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
         editModifyTableAction->setIconText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
         editModifyTableAction->setText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+
+        editModifyTableActionPopup->setIconText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+        editModifyTableActionPopup->setText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+
 #ifndef QT_NO_WHATSTHIS
         editModifyTableAction->setWhatsThis(QApplication::translate("mainForm", "Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
@@ -919,6 +940,7 @@ public slots:
     virtual void compact();
     virtual void deleteTable();
     virtual void editTable();
+    virtual void editTablePopup();
     virtual void deleteIndex();
     virtual void copy();
     virtual void paste();

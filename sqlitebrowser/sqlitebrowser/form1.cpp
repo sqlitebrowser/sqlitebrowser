@@ -660,34 +660,67 @@ void mainForm::deleteTable()
     }
 }
 
+//*****************************************
+//** Edit Table
 void mainForm::editTable()
 {
     if (!db.isOpen()){
- QMessageBox::information( this, applicationName, "There is no database opened." );
- return;
+        QMessageBox::information( this, applicationName, "There is no database opened." );
+        return;
     }
     chooseTableForm * tableForm = new chooseTableForm( this, "choosetable", TRUE );
     QStringList tablelist = db.getTableNames();
     if (tablelist.empty()){
- QMessageBox::information( this, applicationName, "There are no tables to edit in this database." );
- return;
+        QMessageBox::information( this, applicationName, "There are no tables to edit in this database." );
+        return;
     }
     tableForm->populateOptions( tablelist );
     if ( tableForm->exec() ) {
- //statement.append(tableForm->option);
- editTableForm * edTableForm = new editTableForm( this, "edittable", TRUE );
- //send table name ? or handle it all from here?
- edTableForm->setActiveTable(&db, tableForm->option);
- edTableForm->exec();
- //check modified status
- if (edTableForm->modified)
- {
-     populateStructure();
-     resetBrowser();
- }
+        //statement.append(tableForm->option);
+        editTableForm * edTableForm = new editTableForm( this, "edittable", TRUE );
+        //send table name ? or handle it all from here?
+        edTableForm->setActiveTable(&db, tableForm->option);
+        edTableForm->exec();
+        //check modified status
+        if (edTableForm->modified)
+        {
+            populateStructure();
+            resetBrowser();
+        }
     }
 }
-
+void mainForm::editTablePopup()
+{
+    if (!db.isOpen()){
+        QMessageBox::information( this, applicationName, "There is no database opened." );
+        return;
+    }
+    if(!dbTreeWidget->selectionModel()->hasSelection()){
+        return;
+    }
+    QString tableToEdit =dbTreeWidget->currentItem()->text(0);
+    qDebug(tableToEdit);
+    //chooseTableForm * tableForm = new chooseTableForm( this, "choosetable", TRUE );
+    //QStringList tablelist = db.getTableNames();
+    //if (tablelist.empty()){
+    //    QMessageBox::information( this, applicationName, "There are no tables to edit in this database." );
+    //    return;
+    //}
+    //tableForm->populateOptions( tablelist );
+    //if ( tableForm->exec() ) {
+        //statement.append(tableForm->option);
+        editTableForm * edTableForm = new editTableForm( this, "edittable", TRUE );
+        //send table name ? or handle it all from here?
+        edTableForm->setActiveTable(&db, tableToEdit);
+        edTableForm->exec();
+        //check modified status
+        if (edTableForm->modified)
+        {
+            populateStructure();
+            resetBrowser();
+        }
+   // }
+}
 
 void mainForm::deleteIndex()
 {
@@ -1170,6 +1203,14 @@ void mainForm::updatePreferences()
 
 void mainForm::on_tree_context_menu(const QPoint &qPoint){
     qDebug("CONTEXT");
-    popupDbMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+    if( !dbTreeWidget->selectionModel()->hasSelection() ){
+        return;
+    }
+    QTreeWidgetItem *cItem = dbTreeWidget->currentItem();
+    if(cItem->text(1) == "table"){
+        editDeleteTableActionPopup->setDisabled(false);
+        editModifyTableActionPopup->setDisabled(false);
+        popupDbMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+    }
 }
 
