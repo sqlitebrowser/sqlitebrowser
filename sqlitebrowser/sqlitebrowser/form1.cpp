@@ -1229,13 +1229,15 @@ void mainForm::on_edit_field(){
     }
     QTreeWidgetItem *item = dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this, "editfield", true );
-    fieldForm->setInitialValues(item->text(0), item->text(1));
+    qDebug(item->text(2));
+    fieldForm->setInitialValues(false, "TABLE_NAME", item->text(0), item->text(2));
+    fieldForm->setDB(this->db);
     if (fieldForm->exec())
     {
         //modified = true;
         //do the sql rename here
         //qDebug(fieldForm->name + fieldForm->type);
-        item->setText(0,fieldForm->name);
-        item->setText(1,fieldForm->type);
+        item->setText(0,fieldForm->field_name);
+        item->setText(2,fieldForm->field_type);
     }
 }

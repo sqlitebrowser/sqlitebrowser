@@ -38,21 +38,37 @@ void editFieldForm::languageChange()
     retranslateUi(this);
 }
 
-
-void editFieldForm::setInitialValues(QString name, QString type)
+void editFieldForm::setDB(DBBrowserDB &db)
 {
-    nameLineEdit->setText(name);
+    this->pdb = db;
+}
+
+void editFieldForm::setInitialValues(bool is_new, QString table, QString fld_name, QString fld_type)
+{
+
+    original_field_name = QString(fld_name);
+
+    table_name = table;
+    nameLineEdit->setText(fld_name);
+    QList<QAbstractButton *> buttons =  groupRadioTypes->buttons();
+    for(int i = 0; i < buttons.size(); ++i){
+        if( buttons.at(i)->property("field_type").toString() == fld_type){
+             buttons.at(i)->setChecked(true);
+             return;
+        }
+    }
+    return;
     typeBox->clear();
-    typeBox->insertItem(type);
-    QString tString = "";
-    tString = "TEXT";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "NUMERIC";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "BLOB";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
-    tString = "INTEGER PRIMARY KEY";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    typeBox->insertItem(fld_type);
+//    QString tString = "";
+//    tString = "TEXT";
+//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+//    tString = "NUMERIC";
+//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+//    tString = "BLOB";
+//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+//    tString = "INTEGER PRIMARY KEY";
+//    if (type.compare(tString)!=0) typeBox->insertItem(tString);
 }
 
 void editFieldForm::confirmEdit()
@@ -66,8 +82,14 @@ void editFieldForm::confirmEdit()
         QMessageBox::warning( this, applicationName, "Spaces are not allowed in the field name" );
         return;
     }
-    name = fieldname;
-    type = typeBox->currentText();
+    field_name = fieldname;
+    field_type = typeBox->currentText();
+    QString sql = QString("ALTER TABLE `%1` ");
+    qDebug(sql);
+    if(!pdb.executeSQL(sql)){
+        qDebug(pdb.lastErrorMessage);
+        return;
+    }
     accept();
 }
 
@@ -83,7 +105,7 @@ void editFieldForm::getCustomType()
    {
  //QString nospaces = addForm->typeNameEdit->text().remove(" ");
  QString nospaces = addForm->typeNameEdit->text();
-        setInitialValues(nameLineEdit->text(),nospaces );
+        //setInitialValues( nameLineEdit->text(), nospaces );
         enableSave();
    }
 }
@@ -91,4 +113,5 @@ void editFieldForm::getCustomType()
 
 void editFieldForm::on_radio_button_clicked(QAbstractButton *button){
     qDebug("YES");
+    //qDebug(button->property("field_type").toString());
 }

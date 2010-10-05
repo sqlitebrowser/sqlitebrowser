@@ -227,14 +227,14 @@ void editTableForm::editField()
        // return;
    // } else {
         editFieldForm * fieldForm = new editFieldForm( this, "editfield", TRUE );
-        fieldForm->setInitialValues(item->text(0), item->text(1));
+        fieldForm->setInitialValues(false, "TABLE_NAME", item->text(0), item->text(1));
         if (fieldForm->exec())
         {
             modified = true;
             //do the sql rename here
             //qDebug(fieldForm->name + fieldForm->type);
-            item->setText(0,fieldForm->name);
-            item->setText(1,fieldForm->type);
+            item->setText(0,fieldForm->field_name);
+            item->setText(1,fieldForm->field_name);
         }
             //not until nested transaction are supported
            //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;

@@ -14,6 +14,7 @@
 
 #include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
+
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
@@ -30,11 +31,16 @@
 #include <QtGui/QToolButton>
 #include <QtGui/QVBoxLayout>
 
+#include "sqlitedb.h"
+
 QT_BEGIN_NAMESPACE
 
 class Ui_editFieldForm
 {
 public:
+
+    DBBrowserDB pdb;
+
     QGridLayout *gridLayout;
     QVBoxLayout *vboxLayout;
     QLabel *lblFieldName;
@@ -54,8 +60,9 @@ public:
 
     void setupUi(QDialog *editFieldForm)
     {
-        if (editFieldForm->objectName().isEmpty())
+        if (editFieldForm->objectName().isEmpty()){
             editFieldForm->setObjectName(QString::fromUtf8("editFieldForm"));
+        }
         editFieldForm->resize(352, 140);
 
         QVBoxLayout *mainVBoxLayout = new QVBoxLayout();
@@ -88,30 +95,35 @@ public:
         radioLayout->setContentsMargins(20, 10 ,10 ,0);
 
         groupRadioTypes = new QButtonGroup();
-
+        groupRadioTypes->setExclusive(true);
 
         QRadioButton *radioTEXT = new QRadioButton();
         radioTEXT->setText(QApplication::translate("addFieldForm", "TEXT", 0, QApplication::UnicodeUTF8));
+        radioTEXT->setProperty("field_type", QVariant("TEXT"));
         radioLayout->addWidget(radioTEXT);
         groupRadioTypes->addButton(radioTEXT);
 
         QRadioButton *radioNUMERIC = new QRadioButton();
         radioNUMERIC->setText(QApplication::translate("addFieldForm", "NUMERIC", 0, QApplication::UnicodeUTF8));
+        radioNUMERIC->setProperty("field_type", QVariant("NUMERIC"));
         radioLayout->addWidget(radioNUMERIC);
         groupRadioTypes->addButton(radioNUMERIC);
 
         QRadioButton *radioBLOB = new QRadioButton();
         radioBLOB->setText(QApplication::translate("addFieldForm", "BLOB", 0, QApplication::UnicodeUTF8));
+        radioBLOB->setProperty("field_type", QVariant("BLOB"));
         radioLayout->addWidget(radioBLOB);
         //groupRadioTypes->addButton(radioBLOB);
 
         QRadioButton *radioINTPRIMARY = new QRadioButton();
         radioINTPRIMARY->setText(QApplication::translate("addFieldForm", "INTEGER PRIMARY KEY", 0, QApplication::UnicodeUTF8));
+        radioINTPRIMARY->setProperty("field_type", QVariant("INTEGER PRIMARY KEY"));
         radioLayout->addWidget(radioINTPRIMARY);
         //groupRadioTypes->addButton(radioINTPRIMARY);
 
         QRadioButton *radioCustom = new QRadioButton();
         radioCustom->setText(QApplication::translate("addFieldForm", "Custom", 0, QApplication::UnicodeUTF8));
+        radioCustom->setProperty("field_type", QVariant("__custom__"));
         radioLayout->addWidget(radioCustom);
         //groupRadioTypes->addButton(radioCustom);
 
@@ -139,27 +151,27 @@ public:
 
         gridLayout->addItem(spacer17, 1, 1, 1, 1);
 
-        hboxLayout = new QHBoxLayout();
-        hboxLayout->setSpacing(6);
-        hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
-        spacer15 = new QSpacerItem(41, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        //*** Bottom Button Layout
+        QHBoxLayout *bottomButtonBox = new QHBoxLayout();
+        mainVBoxLayout->addLayout(bottomButtonBox);
+        bottomButtonBox->setSpacing(6);
+        bottomButtonBox->addStretch(10);
 
-        hboxLayout->addItem(spacer15);
-
+        //** Cancel Button
         cancelButton = new QPushButton(editFieldForm);
         cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
         cancelButton->setIcon(QIcon(":/icons/cancel"));
-        hboxLayout->addWidget(cancelButton);
+        bottomButtonBox->addWidget(cancelButton);
 
+        //** Save Button
         saveButton = new QPushButton(editFieldForm);
         saveButton->setObjectName(QString::fromUtf8("saveButton"));
         saveButton->setEnabled(false);
         saveButton->setIcon(QIcon(":/icons/save"));
+        bottomButtonBox->addWidget(saveButton);
 
-        hboxLayout->addWidget(saveButton);
 
-
-        gridLayout->addLayout(hboxLayout, 2, 0, 1, 2);
+       // gridLayout->addLayout(hboxLayout, 2, 0, 1, 2);
 
         gridLayout1 = new QGridLayout();
         gridLayout1->setSpacing(6);
@@ -246,11 +258,15 @@ public:
     editFieldForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~editFieldForm();
 
-    QString name;
-    QString type;
+    void setDB(DBBrowserDB &db);
+
+    QString table_name;
+    QString field_name;
+    QString field_type;
+    QString original_field_name;
 
 public slots:
-    virtual void setInitialValues( QString name, QString type );
+    virtual void setInitialValues( bool is_new, QString table, QString fld_name, QString fld_type );
     virtual void confirmEdit();
     virtual void enableSave();
     virtual void getCustomType();
