@@ -92,15 +92,35 @@ void editTableForm::renameTable()
        //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))){
         //   goto rollback;
        //}
-        QString sql = QString("ALTER TABLE %1 RENAME TO %2").arg(curTable, newName);
-        qDebug(sql);
+        QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(curTable, newName);
+        //qDebug(sql);
         if (!pdb->executeSQL(sql)){
-            qDebug("OOPS");
-             qDebug( pdb->lastErrorMessage);
-        }else{
-            qDebug("OK");
+            //qDebug("OOPS");
+            //qDebug( pdb->lastErrorMessage);
+            QApplication::restoreOverrideCursor();
+            statusBar->showMessage(pdb->lastErrorMessage, 5000);
+            QString error("Error renaming table. Message from database engine:\n");
+            error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
+            //error.append("").arg(pdb->lastErrorMessage).arg(sql);
+            //error.append(pdb->lastErrorMessage);
+            QMessageBox::warning( this, applicationName, error );
+            return;
         }
+
+        QApplication::restoreOverrideCursor();
+        statusBar->showMessage(QString("Renamed %1 to %2").arg(curTable, newName), 5000);
+        //}
+        //sQApplication::restoreOverrideCursor();  // restore original cursor
+        //QString error = "Error renaming table. Message from database engine:  ";
+        //error.append(pdb->lastErrorMessage);
+       // QMessageBox::warning( this, applicationName, error );
+ //       pdb->executeSQ(QString("DROP TABLE TEMP_TABLE;"));
+ //       //pdb->executeSQL(QString("ROLLBACK;"));
+        setActiveTable(pdb, curTable);
+        tableLine->setText(newName);
         return;
+
+        // WTF is below ???
     }
 //       sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
 //       Q3ListViewItemIterator it( fieldListView );
@@ -184,11 +204,11 @@ void editTableForm::renameTable()
 //   QApplication::restoreOverrideCursor();  // restore original cursor
 //   return;
 //
-   rollback:
-       QApplication::restoreOverrideCursor();  // restore original cursor
-       QString error = "Error renaming table. Message from database engine:  ";
-       error.append(pdb->lastErrorMessage);
-       QMessageBox::warning( this, applicationName, error );
+  // rollback:
+      // QApplication::restoreOverrideCursor();  // restore original cursor
+       //QString error = "Error renaming table. Message from database engine:  ";
+       //error.append(pdb->lastErrorMessage);
+      // QMessageBox::warning( this, applicationName, error );
 //       pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"));
 //       //pdb->executeSQL(QString("ROLLBACK;"));
 //       setActiveTable(pdb, curTable);

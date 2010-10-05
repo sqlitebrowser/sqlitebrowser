@@ -43,6 +43,7 @@ public:
         if (renameTableForm->objectName().isEmpty()){
             renameTableForm->setObjectName(QString::fromUtf8("renameTableForm"));
         }
+        renameTableForm->setWindowIcon(QIcon(":/icons/table_modify"));
         renameTableForm->resize(313, 101);
         vboxLayout = new QVBoxLayout(renameTableForm);
         vboxLayout->setSpacing(6);
@@ -66,13 +67,13 @@ public:
 
         closeButton = new QPushButton(renameTableForm);
         closeButton->setObjectName(QString::fromUtf8("closeButton"));
-
+        closeButton->setIcon(QIcon(":/icons/cancel"));
         hboxLayout->addWidget(closeButton);
 
         renameButton = new QPushButton(renameTableForm);
         renameButton->setObjectName(QString::fromUtf8("renameButton"));
         renameButton->setDefault(true);
-
+        renameButton->setIcon(QIcon(":/icons/save"));
         hboxLayout->addWidget(renameButton);
 
 

@@ -18,6 +18,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
+#include <QtGui/QRadioButton>
 #include <QtGui/QDialog>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
@@ -51,8 +52,9 @@ public:
 
     void setupUi(QDialog *addFieldForm)
     {
-        if (addFieldForm->objectName().isEmpty())
+        if (addFieldForm->objectName().isEmpty()){
             addFieldForm->setObjectName(QString::fromUtf8("addFieldForm"));
+        }
         addFieldForm->resize(338, 136);
         gridLayout = new QGridLayout(addFieldForm);
         gridLayout->setSpacing(6);

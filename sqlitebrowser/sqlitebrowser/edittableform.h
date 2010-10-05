@@ -26,7 +26,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
-//#include <QtGui/QGridLayout>
+#include <QtGui/QStatusBar>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
@@ -55,6 +55,8 @@ public:
     QToolButton *addFieldButton;
 
     QPushButton *closeButton;
+
+    QStatusBar *statusBar;
 
     void setupUi(QDialog *editTableForm)
     {
@@ -147,6 +149,8 @@ public:
         closeButton->setObjectName(QString::fromUtf8("closeButton"));
         bottomButtonBox->addWidget(closeButton);
 
+        statusBar = new QStatusBar();
+        mainVBoxLayout->addWidget(statusBar);
 
         retranslateUi(editTableForm);
         QObject::connect(closeButton, SIGNAL(clicked()), editTableForm, SLOT(accept()));
