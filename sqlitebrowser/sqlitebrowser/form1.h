@@ -23,7 +23,7 @@
 #include <Qt3Support/Q3Table>
 #include <Qt3Support/Q3TextEdit>
 #include <QtGui/QToolBar>
-#include <QtCore/QVariant>
+
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
@@ -39,6 +39,10 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
+
+#include <QtCore/QPoint>
+#include <QtCore/QVariant>
+
 #include "editform.h"
 #include "findform.h"
 #include "QtGui/QClipboard"
@@ -86,6 +90,7 @@ public:
     QVBoxLayout *vboxLayout1;
 
     QTreeWidget *dbTreeWidget;
+    QMenu *popupDbMenu;
 
     QWidget *browser;
     QVBoxLayout *vboxLayout2;
@@ -131,6 +136,8 @@ public:
         }
         //TODO get from settings and save last position
         mainForm->resize(702, 552);
+
+
 
         //** New DB File
         fileNewAction = new QAction(mainForm);
@@ -296,6 +303,8 @@ public:
         dbTreeWidget->setAlternatingRowColors(true);
         dbTreeWidget->setRootIsDecorated(true);
         dbTreeWidget->setAnimated(true);
+        dbTreeWidget->setContextMenuPolicy( Qt::CustomContextMenu );
+
 
 
         mainTab->addTab(structure, QString());
@@ -541,6 +550,14 @@ public:
         PopupMenu->addAction(helpWhatsThisAction);
         PopupMenu->addAction(helpAboutAction);
 
+        //***********************************************8
+        //** Db Tree Popup Menu
+        popupDbMenu = new QMenu(mainForm);
+        popupDbMenu->addAction(editModifyTableAction);
+        popupDbMenu->addSeparator();
+        popupDbMenu->addAction(editDeleteTableAction);
+
+
         retranslateUi(mainForm);
         QObject::connect(fileExitAction, SIGNAL(activated()), mainForm, SLOT(fileExit()));
         QObject::connect(fileOpenAction, SIGNAL(activated()), mainForm, SLOT(fileOpen()));
@@ -575,6 +592,8 @@ public:
         QObject::connect(fileExportSQLAction, SIGNAL(activated()), mainForm, SLOT(exportDatabaseToSQL()));
         QObject::connect(fileImportSQLAction, SIGNAL(activated()), mainForm, SLOT(importDatabaseFromSQL()));
         QObject::connect(editPreferencesAction, SIGNAL(activated()), mainForm, SLOT(openPreferences()));
+
+        QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(QPoint)), mainForm, SLOT(on_tree_context_menu(QPoint)));
 
         QMetaObject::connectSlotsByName(mainForm);
     } // setupUi
@@ -872,6 +891,8 @@ public:
     QString defaultlocation;
 
 public slots:
+    void on_tree_context_menu(const QPoint & sqPoint);
+
     virtual void fileOpen( const QString & fileName );
     virtual void fileOpen();
     virtual void fileNew();
@@ -926,6 +947,8 @@ protected:
 
 protected slots:
     virtual void languageChange();
+
+
 
 private:
     void init();

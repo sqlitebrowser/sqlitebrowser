@@ -1166,3 +1166,10 @@ void mainForm::updatePreferences()
    editWin->defaultlocation = defaultlocation;
    editWin->setTextFormat(prefForm->defaulttext);
 }
+
+
+void mainForm::on_tree_context_menu(const QPoint &qPoint){
+    qDebug("CONTEXT");
+    popupDbMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+}
+
