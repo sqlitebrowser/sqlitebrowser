@@ -15,7 +15,7 @@
 #include <QtCore/QVariant>
 
 #include <QtGui/QGroupBox>
-#include <Qt3Support/Q3Header>
+//#include <Qt3Support/Q3Header>
 
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
@@ -33,8 +33,10 @@
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
+//#include <QtGui/QSpacerItem>
+#include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
+
 #include "sqlitedb.h"
 
 QT_BEGIN_NAMESPACE
@@ -61,6 +63,8 @@ public:
     QPushButton *buttonCreate;
     QPushButton *buttonCancel;
 
+    QStatusBar *statusBar;
+
     void setupUi(QDialog *createTableForm)
     {
         if (createTableForm->objectName().isEmpty()){
@@ -72,13 +76,14 @@ public:
 
         //** Main Layout
         mainVBoxLayout = new QVBoxLayout(createTableForm);
-        mainVBoxLayout->setSpacing(6);
-        mainVBoxLayout->setContentsMargins(11, 11, 11, 11);
+        mainVBoxLayout->setSpacing(10);
+        mainVBoxLayout->setContentsMargins(0, 0, 0, 0);
         mainVBoxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
 
         //**** Top Table Box ****
         topTableLayout = new QHBoxLayout();
-        topTableLayout->setSpacing(6);
+        topTableLayout->setSpacing(10);
+        topTableLayout->setContentsMargins(10,10,10,10);
         //topTableLayout->setObjectName(QString::fromUtf8("hboxLayout"));
         textLabel1 = new QLabel(createTableForm);
         //textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
@@ -150,6 +155,8 @@ public:
         bottomButtonLayout->addWidget(buttonCreate);
         mainVBoxLayout->addLayout(bottomButtonLayout);
 
+        statusBar = new QStatusBar();
+        mainVBoxLayout->addWidget(statusBar);
 
         //** Setup
         retranslateUi(createTableForm);

@@ -50,18 +50,20 @@ void createTableForm::confirmCreate()
     QString tabname = tablenameLineEdit->text();
     if (tabname.isEmpty()) {
         ok = false;
-        QMessageBox::information( this, applicationName, "Please select a name for the table" );
+        statusBar->showMessage("Please enter a name for the table", 4000);
+        tablenameLineEdit->setFocus();
         return;
     }
     if (tabname.contains(" ")>0) {
         ok = false;
-        QMessageBox::warning( this, applicationName, "Spaces are not allowed in the table name" );
+        statusBar->showMessage("Spaces are not allowed in the table name", 4000);
+        tablenameLineEdit->setFocus();
         return;
     }
 
     if (treeWidget->invisibleRootItem()->childCount() == 0) {
         ok = false;
-        QMessageBox::information( this, applicationName, "No fields defined" );
+        statusBar->showMessage("No fields defined", 4000);
         return;
     }
 
@@ -87,12 +89,16 @@ void createTableForm::confirmCreate()
     }
 
     if (ok){
+        //QString esc("\"");
+        // #TODO The colnames need to be escaped eg create table 'group'
         createStatement = "CREATE TABLE ";
+        //createStatement.append(esc).append(tabname).append(esc);
         createStatement.append(tabname);
         createStatement.append(" (");
         for(int i = 0; i < treeWidget->invisibleRootItem()->childCount(); i++){
             QTreeWidgetItem *item = treeWidget->invisibleRootItem()->child(i);
-            createStatement.append(item->text(0));
+            //createStatement.append(esc).append(item->text(0)).append(esc);
+            createStatement.append( item->text(0) );
             createStatement.append(" ");
             createStatement.append(item->text(1));
             if(i < treeWidget->invisibleRootItem()->childCount() -1){
