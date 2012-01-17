@@ -68,6 +68,7 @@ unix {
     UI_DIR = .ui
     MOC_DIR = .moc
     OBJECTS_DIR = .obj
+	LIBS += -ldl
 }
 win32:RC_FILE = winapp.rc
 mac { 
