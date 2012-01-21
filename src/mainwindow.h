@@ -13,7 +13,8 @@
 #endif
 
 #include <Qt3Support/Q3Header>
-#include <Qt3Support/Q3ListView>
+#include <QTableView>
+#include <QStandardItemModel>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QHeaderView>
@@ -126,7 +127,8 @@ public:
     QLabel *textLabel2;
     QLineEdit *queryErrorLineEdit;
     QLabel *textLabel3;
-    Q3ListView *queryResultListView;
+    QTableView *queryResultTableView;
+    QStandardItemModel *queryResultListModel;
     QToolBar *Toolbar;
     QMenuBar *menubar;
     QMenu *fileMenu;
@@ -525,13 +527,14 @@ public:
 
         vboxLayout3->addWidget(textLabel3);
 
-        queryResultListView = new Q3ListView(query);
-        queryResultListView->setObjectName(QString::fromUtf8("queryResultListView"));
-        queryResultListView->setResizePolicy(Q3ScrollView::Manual);
-        queryResultListView->setSelectionMode(Q3ListView::NoSelection);
-        queryResultListView->setResizeMode(Q3ListView::AllColumns);
+        queryResultListModel = new QStandardItemModel(query);
 
-        vboxLayout3->addWidget(queryResultListView);
+        queryResultTableView = new QTableView(query);
+        queryResultTableView->setObjectName(QString::fromUtf8("queryResultTableView"));
+        queryResultTableView->setSelectionMode(QTreeView::NoSelection);
+        queryResultTableView->setModel(queryResultListModel);
+
+        vboxLayout3->addWidget(queryResultTableView);
 
         mainTab->addTab(query, QString());
 
@@ -940,10 +943,10 @@ public:
 #endif // QT_NO_WHATSTHIS
         textLabel3->setText(QApplication::translate("mainForm", "Data returned:", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        queryResultListView->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Query generated data", 0, QApplication::UnicodeUTF8)));
+        queryResultTableView->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Query generated data", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_WHATSTHIS
-        queryResultListView->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.", 0, QApplication::UnicodeUTF8)));
+        queryResultTableView->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
         mainTab->setTabText(mainTab->indexOf(query), QApplication::translate("mainForm", "Execute SQL", 0, QApplication::UnicodeUTF8));
         Toolbar->setLabel(QApplication::translate("mainForm", "Toolbar", 0, QApplication::UnicodeUTF8));

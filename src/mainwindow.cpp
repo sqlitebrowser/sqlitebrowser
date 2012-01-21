@@ -861,8 +861,8 @@ void mainForm::executeQuery()
     QString query = db.GetEncodedQString(sqlTextEdit->text());
     if (query.isEmpty())
     {
- QMessageBox::information( this, applicationName, "Query string is empty" );
- return;
+        QMessageBox::information( this, applicationName, "Query string is empty" );
+        return;
     }
     //log the query
     db.logSQL(query, kLogMsg_User);
@@ -870,64 +870,61 @@ void mainForm::executeQuery()
     const char *tail=NULL;
     int ncol;
     int err=0;
-   QString lastErrorMessage = QString("No error");
-   //Accept multi-line queries, by looping until the tail is empty
-   while (1) {
-       if (tail!=NULL) {
-           query = QString(tail);
-       }
-   queryResultListView->clear();
-   queryResultListView->setSorting (-1, FALSE);
-   while (queryResultListView->columns()>0)
-   {
-       queryResultListView->removeColumn(0);
-   }
-
- err=sqlite3_prepare(db._db,query,query.length(),
-                              &vm, &tail);
- if (err == SQLITE_OK){
-     db.setDirty(true);
-     int rownum = 0;
-   Q3ListViewItem * lasttbitem = 0;
-   bool mustCreateColumns = true;
-   while ( sqlite3_step(vm) == SQLITE_ROW ){
-  ncol = sqlite3_data_count(vm);
-           Q3ListViewItem * tbitem = new Q3ListViewItem( queryResultListView, lasttbitem);
-       //setup num of cols here for display grid
-       if (mustCreateColumns)
-    {
-   for (int e=0; e<ncol; e++)
-    queryResultListView->addColumn(sqlite3_column_name(vm, e));
-   mustCreateColumns = false;
-       }
-       for (int e=0; e<ncol; e++){
-    char * strresult = 0;
-    QString rv;
-    strresult = (char *) sqlite3_column_text(vm, e);
-          rv = QString(strresult);
-      //show it here
-    QString decoded = db.GetDecodedQString(rv);
-    QString firstline = decoded.section( '\n', 0,0 );
-    if (firstline.length()>MAX_DISPLAY_LENGTH)
-  {
-      firstline.truncate(MAX_DISPLAY_LENGTH);
-     firstline.append("...");
-  }
-    tbitem->setText( e, firstline);
-    lasttbitem = tbitem;
-  rownum++;
-       }
-   }
-          sqlite3_finalize(vm);
-        }else{
-          lastErrorMessage = QString (sqlite3_errmsg(db._db));
+    QString lastErrorMessage = QString("No error");
+    //Accept multi-line queries, by looping until the tail is empty
+    while (1) {
+        if (tail!=NULL) {
+            query = QString(tail);
         }
-       queryErrorLineEdit->setText(lastErrorMessage);
-       queryResultListView->setResizeMode(Q3ListView::AllColumns);
+        queryResultListModel->removeRows(0, queryResultListModel->rowCount());
+        queryResultListModel->setHorizontalHeaderLabels(QStringList());
+        queryResultListModel->setVerticalHeaderLabels(QStringList());
 
-       if ((!tail)||(*tail==0)) break;
-       if(err!=SQLITE_OK) break;
-   }
+        err=sqlite3_prepare(db._db,query,query.length(),
+                            &vm, &tail);
+        if (err == SQLITE_OK){
+            db.setDirty(true);
+            int rownum = 0;
+            bool mustCreateColumns = true;
+            while ( sqlite3_step(vm) == SQLITE_ROW ){
+                ncol = sqlite3_data_count(vm);
+                //setup num of cols here for display grid
+                if (mustCreateColumns)
+                {
+                    QStringList headerList;
+                    for (int e=0; e<ncol; e++)
+                        headerList = headerList << sqlite3_column_name(vm, e);
+                    queryResultListModel->setHorizontalHeaderLabels(headerList);
+                    mustCreateColumns = false;
+                }
+                for (int e=0; e<ncol; e++){
+                    char * strresult = 0;
+                    QString rv;
+                    strresult = (char *) sqlite3_column_text(vm, e);
+                    rv = QString(strresult);
+                    //show it here
+                    QString decoded = db.GetDecodedQString(rv);
+                    QString firstline = decoded.section( '\n', 0,0 );
+                    if (firstline.length()>MAX_DISPLAY_LENGTH)
+                    {
+                        firstline.truncate(MAX_DISPLAY_LENGTH);
+                        firstline.append("...");
+                    }
+                    queryResultListModel->setItem(rownum, e, new QStandardItem(QString(firstline)));
+                }
+                queryResultListModel->setVerticalHeaderItem(rownum, new QStandardItem(QString::number(rownum + 1)));
+                rownum++;
+            }
+            sqlite3_finalize(vm);
+        }else{
+            lastErrorMessage = QString (sqlite3_errmsg(db._db));
+        }
+        queryErrorLineEdit->setText(lastErrorMessage);
+        queryResultTableView->resizeColumnsToContents();
+
+        if ((!tail)||(*tail==0)) break;
+        if(err!=SQLITE_OK) break;
+    }
 }
 
 
