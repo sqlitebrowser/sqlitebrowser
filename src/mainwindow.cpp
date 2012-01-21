@@ -4,8 +4,8 @@
 #include <qimage.h>
 #include <qpixmap.h>
 
-#include <Q3TextStream>
-#include <Q3WhatsThis>
+#include <QTextStream>
+#include <QWhatsThis>
 
 #include "qmessagebox.h"
 //#include "q3filedialog.h"
@@ -786,7 +786,7 @@ void mainForm::paste()
 
 void mainForm::helpWhatsThis()
 {
-    Q3WhatsThis::enterWhatsThisMode ();
+    QWhatsThis::enterWhatsThisMode ();
 }
 
 
@@ -1016,7 +1016,7 @@ void mainForm::exportTableToCSV()
   char feed = 10;
   int colNum = 0;
   int colCount = 0;
-  Q3TextStream stream( &file );
+  QTextStream stream( &file );
   //fieldnames on first row
    QStringList fields = db.browseFields;
    colCount = fields.count();

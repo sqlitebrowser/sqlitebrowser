@@ -12,7 +12,6 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3Header>
 #include <QTableView>
 #include <QStandardItemModel>
 #include <QtGui/QTreeWidget>
@@ -20,9 +19,8 @@
 #include <QtGui/QHeaderView>
 
 #include <QtGui/QMainWindow>
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <Qt3Support/Q3Table>
-#include <Qt3Support/Q3TextEdit>
+#include <QTextEdit>
 #include <QtGui/QToolBar>
 
 #include <QtGui/QAction>
@@ -120,7 +118,7 @@ public:
     QWidget *query;
     QVBoxLayout *vboxLayout3;
     QLabel *textLabel1_2;
-    Q3TextEdit *sqlTextEdit;
+    QTextEdit *sqlTextEdit;
     QHBoxLayout *hboxLayout2;
     QPushButton *executeQueryButton;
     QSpacerItem *spacer4_2;
@@ -484,7 +482,7 @@ public:
 
         vboxLayout3->addWidget(textLabel1_2);
 
-        sqlTextEdit = new Q3TextEdit(query);
+        sqlTextEdit = new QTextEdit(query);
         sqlTextEdit->setObjectName(QString::fromUtf8("sqlTextEdit"));
         QSizePolicy sizePolicy1(static_cast<QSizePolicy::Policy>(7), static_cast<QSizePolicy::Policy>(5));
         sizePolicy1.setHorizontalStretch(0);
@@ -518,6 +516,7 @@ public:
         queryErrorLineEdit = new QLineEdit(query);
         queryErrorLineEdit->setObjectName(QString::fromUtf8("queryErrorLineEdit"));
         queryErrorLineEdit->setReadOnly(true);
+        queryErrorLineEdit->setDisabled(true);
 
         vboxLayout3->addWidget(queryErrorLineEdit);
 
