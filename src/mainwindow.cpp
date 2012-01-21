@@ -1,4 +1,4 @@
-#include "form1.h"
+#include "mainwindow.h"
 
 #include <qvariant.h>
 #include <qimage.h>

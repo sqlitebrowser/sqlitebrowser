@@ -9,7 +9,7 @@
 #ifndef __EXTENDEDMAINFORM__
 #define	__EXTENDEDMAINFORM__
 
-#include "form1.h"
+#include "mainwindow.h"
 #include <QDragEnterEvent>
 
 class ExtendedMainForm : public mainForm

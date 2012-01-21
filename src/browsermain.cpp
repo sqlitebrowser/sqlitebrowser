@@ -1,5 +1,5 @@
 #include <qapplication.h>
-#include "form1.h"
+#include "mainwindow.h"
 #include "extendedmainform.h"
 
 #if defined(Q_WS_MAC)

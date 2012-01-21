@@ -22,11 +22,11 @@ HEADERS += extendedmainform.h \
     edittableform.h \
     exporttablecsvform.h \
     findform.h \
-    form1.h \
     importcsvform.h \
     renametableform.h \
     sqllogform.h \
-    preferencesform.h
+    preferencesform.h \
+    mainwindow.h
 SOURCES += extendedmainform.cpp \
     browsermain.cpp \
     sqlitedb.cpp \
@@ -45,11 +45,11 @@ SOURCES += extendedmainform.cpp \
     edittableform.cpp \
     exporttablecsvform.cpp \
     findform.cpp \
-    form1.cpp \
     importcsvform.cpp \
     renametableform.cpp \
     sqllogform.cpp \
-    preferencesform.cpp
+    preferencesform.cpp \
+    mainwindow.cpp
 IMAGES = images/create_index.png \
     images/create_table.png \
     images/delete_index.png \
