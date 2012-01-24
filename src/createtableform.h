@@ -15,7 +15,6 @@
 #include <QtCore/QVariant>
 
 #include <QtGui/QGroupBox>
-//#include <Qt3Support/Q3Header>
 
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
