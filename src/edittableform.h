@@ -12,8 +12,6 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3Header>
-#include <Qt3Support/Q3ListView>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QToolBar>
