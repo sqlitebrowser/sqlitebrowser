@@ -97,8 +97,8 @@ void editForm::setDataType(int type, int size)
     switch (dataType ) {
         case kSQLiteMediaType_String:
              currentTypeLabel->setText("Type of data currently in cell: Text / Numeric");
-             if (textEditor->length()>1) charstr = QString("chars"); else charstr = QString("char");
-             currentDataInfo->setText(QString("%1 %2").arg(textEditor->length()).arg(charstr));
+             if (textEditor->toPlainText().length()>1) charstr = QString("chars"); else charstr = QString("char");
+             currentDataInfo->setText(QString("%1 %2").arg(textEditor->toPlainText().length()).arg(charstr));
              editWidgetStack->setCurrentIndex(0);
              enableExport(true);
              enableTextEditor(true);
@@ -123,7 +123,7 @@ void editForm::loadText(QString  text, int row, int col)
     textEditor->setText(text);
     curRow = row;
     curCol = col;
-    if (textEditor->length() > 0)
+    if (textEditor->toPlainText().length() > 0)
     {
     setDataType(kSQLiteMediaType_String, 0);
 } else {
@@ -227,7 +227,7 @@ void editForm::saveChanges()
 void editForm::editTextChanged()
 {
     int newtype = kSQLiteMediaType_String;
-    if (textEditor->length() == 0)
+    if (textEditor->toPlainText().length() == 0)
     {
     newtype = kSQLiteMediaType_Void;
    }

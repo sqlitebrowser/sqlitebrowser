@@ -12,10 +12,9 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3Frame>
+#include <QFrame>
 #include <Qt3Support/Q3MimeSourceFactory>
-#include <Qt3Support/Q3TextEdit>
-#include <Qt3Support/Q3WidgetStack>
+#include <QTextEdit>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -50,11 +49,11 @@ public:
     QStackedWidget *editWidgetStack;
     QWidget *WStackPage;
     QGridLayout *gridLayout;
-    Q3TextEdit *textEditor;
+    QTextEdit *textEditor;
     QWidget *WStackPage1;
     QGridLayout *gridLayout1;
     QLabel *editPixmap;
-    Q3Frame *frame9;
+    QFrame *frame9;
     QVBoxLayout *vboxLayout1;
     QLabel *currentTypeLabel;
     QLabel *currentDataInfo;
@@ -116,7 +115,7 @@ public:
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        textEditor = new Q3TextEdit(WStackPage);
+        textEditor = new QTextEdit(WStackPage);
         textEditor->setObjectName(QString::fromUtf8("textEditor"));
         textEditor->setTextFormat(Qt::PlainText);
 
@@ -143,7 +142,7 @@ public:
 
         vboxLayout->addWidget(editWidgetStack);
 
-        frame9 = new Q3Frame(editForm);
+        frame9 = new QFrame(editForm);
         frame9->setObjectName(QString::fromUtf8("frame9"));
         frame9->setFrameShape(QFrame::Box);
         frame9->setFrameShadow(QFrame::Sunken);
