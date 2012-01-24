@@ -12,7 +12,7 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3GroupBox>
+#include <QGroupBox>
 #include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -39,7 +39,7 @@ public:
     QHBoxLayout *hboxLayout;
     QLabel *textLabel2;
     QLineEdit *indexLineEdit;
-    Q3GroupBox *groupBox2;
+    QGroupBox *groupBox2;
     QGridLayout *gridLayout;
     QVBoxLayout *vboxLayout1;
     QComboBox *comboTables;
@@ -82,15 +82,14 @@ public:
 
         vboxLayout->addLayout(hboxLayout);
 
-        groupBox2 = new Q3GroupBox(createIndexForm);
+        groupBox2 = new QGroupBox(createIndexForm);
         groupBox2->setObjectName(QString::fromUtf8("groupBox2"));
-        groupBox2->setColumnLayout(0, Qt::Vertical);
+
+        gridLayout = new QGridLayout();
+        groupBox2->setLayout(gridLayout);
         groupBox2->layout()->setSpacing(6);
         groupBox2->layout()->setContentsMargins(11, 11, 11, 11);
-        gridLayout = new QGridLayout();
-        QBoxLayout *boxlayout = qobject_cast<QBoxLayout *>(groupBox2->layout());
-        if (boxlayout)
-            boxlayout->addLayout(gridLayout);
+
         gridLayout->setAlignment(Qt::AlignTop);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         vboxLayout1 = new QVBoxLayout();
