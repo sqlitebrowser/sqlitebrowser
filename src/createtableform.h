@@ -20,9 +20,6 @@
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QHeaderView>
 
-#include <Qt3Support/Q3MimeSourceFactory>
-
-
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>

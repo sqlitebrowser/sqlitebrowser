@@ -50,20 +50,6 @@ SOURCES += extendedmainform.cpp \
     sqllogform.cpp \
     preferencesform.cpp \
     mainwindow.cpp
-IMAGES = images/create_index.png \
-    images/create_table.png \
-    images/delete_index.png \
-    images/delete_table.png \
-    images/icone16.png \
-    images/log.png \
-    images/modify_table.png \
-    images/new.png \
-    images/open.png \
-    images/revert.png \
-    images/save.png \
-    images/searchfind.png \
-    images/whatis.png \
-    images/128.png
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc

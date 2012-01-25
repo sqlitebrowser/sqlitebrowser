@@ -13,7 +13,6 @@
 #endif
 
 
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <Qt3Support/Q3TextEdit>
 #include <Qt3Support/Q3WidgetStack>
 #include <QtCore/QVariant>

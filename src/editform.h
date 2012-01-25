@@ -13,7 +13,6 @@
 #endif
 
 #include <QFrame>
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <QTextEdit>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>

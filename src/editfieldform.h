@@ -12,7 +12,6 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 
 #include <QtGui/QAction>

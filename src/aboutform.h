@@ -12,7 +12,6 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -79,7 +78,7 @@ public:
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
         pixmapLabel1 = new QLabel(aboutForm);
         pixmapLabel1->setObjectName(QString::fromUtf8("pixmapLabel1"));
-        pixmapLabel1->setPixmap(QPixmap(qPixmapFromMimeSource("128.png")));
+        pixmapLabel1->setPixmap(QPixmap(":/oldimages/128"));
         pixmapLabel1->setScaledContents(false);
         pixmapLabel1->setWordWrap(false);
 

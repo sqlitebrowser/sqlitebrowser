@@ -18,7 +18,6 @@
 #include <QtGui/QToolButton>
 #include <QtGui/QGroupBox>
 
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>

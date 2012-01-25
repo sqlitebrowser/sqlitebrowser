@@ -72,7 +72,7 @@ void mainForm::init()
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
     this->setCaption(applicationName);
-    this->setIcon( qPixmapFromMimeSource( applicationIconName ) );
+    this->setIcon( QPixmap( applicationIconName ) );
     buttonNext->setEnabled(false);
     buttonPrevious->setEnabled(false);
 

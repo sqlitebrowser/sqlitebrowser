@@ -14,7 +14,6 @@
 
 #include <Qt3Support/Q3Header>
 #include <Qt3Support/Q3ListView>
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>

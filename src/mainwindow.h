@@ -193,8 +193,8 @@ public:
         editFindAction = new QAction(mainForm);
         editFindAction->setObjectName(QString::fromUtf8("editFindAction"));
         editFindAction->setName("editFindAction");
-        const QIcon icon2 = QIcon(qPixmapFromMimeSource("searchfind.png"));
-        editFindAction->setIcon(icon2);
+        editFindAction->setIcon(QIcon(":/oldimages/searchfind"));
+        editFindAction->setIconVisibleInMenu(true);
         helpContentsAction = new QAction(mainForm);
         helpContentsAction->setObjectName(QString::fromUtf8("helpContentsAction"));
         helpContentsAction->setName("helpContentsAction");
@@ -221,14 +221,14 @@ public:
         helpWhatsThisAction = new QAction(mainForm);
         helpWhatsThisAction->setObjectName(QString::fromUtf8("helpWhatsThisAction"));
         helpWhatsThisAction->setName("helpWhatsThisAction");
-        const QIcon icon3 = QIcon(qPixmapFromMimeSource("whatis.png"));
-        helpWhatsThisAction->setIcon(icon3);
+        helpWhatsThisAction->setIcon(QIcon(":/oldimages/whatis"));
+        helpWhatsThisAction->setIconVisibleInMenu(true);
         sqlLogAction = new QAction(mainForm);
         sqlLogAction->setObjectName(QString::fromUtf8("sqlLogAction"));
         sqlLogAction->setName("sqlLogAction");
         sqlLogAction->setCheckable(true);
-        const QIcon icon4 = QIcon(qPixmapFromMimeSource("log.png"));
-        sqlLogAction->setIcon(icon4);
+        sqlLogAction->setIcon(QIcon(":/oldimages/log"));
+        sqlLogAction->setIconVisibleInMenu(true);
 
 
         fileImportCSVAction = new QAction(mainForm);
@@ -389,7 +389,7 @@ public:
 
         buttonFind = new QPushButton(browser);
         buttonFind->setObjectName(QString::fromUtf8("buttonFind"));
-        buttonFind->setIcon(QPixmap(qPixmapFromMimeSource("searchfind.png")));
+        buttonFind->setIcon(QIcon(":/oldimages/searchfind"));
         buttonFind->setCheckable(true);
 
         hboxLayout->addWidget(buttonFind);

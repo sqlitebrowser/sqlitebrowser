@@ -13,7 +13,6 @@
 #endif
 
 #include <Qt3Support/Q3Header>
-#include <Qt3Support/Q3MimeSourceFactory>
 #include <Qt3Support/Q3Table>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>

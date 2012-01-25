@@ -15,9 +15,6 @@
 #include <QtCore/QVariant>
 #include <QtCore/QStringList>
 
-
-#include <Qt3Support/Q3MimeSourceFactory>
-
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
