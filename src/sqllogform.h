@@ -13,7 +13,7 @@
 #endif
 
 
-#include <Qt3Support/Q3TextEdit>
+#include <QTextEdit>
 #include <Qt3Support/Q3WidgetStack>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -44,10 +44,10 @@ public:
     Q3WidgetStack *logStack;
     QWidget *WStackPage;
     QGridLayout *gridLayout;
-    Q3TextEdit *userLogText;
+    QTextEdit *userLogText;
     QWidget *WStackPage1;
     QVBoxLayout *vboxLayout1;
-    Q3TextEdit *appLogText;
+    QTextEdit *appLogText;
 
     void setupUi(QDialog *sqlLogForm)
     {
@@ -93,7 +93,7 @@ public:
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        userLogText = new Q3TextEdit(WStackPage);
+        userLogText = new QTextEdit(WStackPage);
         userLogText->setObjectName(QString::fromUtf8("userLogText"));
         userLogText->setTextFormat(Qt::PlainText);
         userLogText->setReadOnly(true);
@@ -108,7 +108,7 @@ public:
         vboxLayout1->setContentsMargins(11, 11, 11, 11);
         vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
         vboxLayout1->setContentsMargins(0, 0, 0, 0);
-        appLogText = new Q3TextEdit(WStackPage1);
+        appLogText = new QTextEdit(WStackPage1);
         appLogText->setObjectName(QString::fromUtf8("appLogText"));
         appLogText->setTextFormat(Qt::PlainText);
         appLogText->setReadOnly(true);
