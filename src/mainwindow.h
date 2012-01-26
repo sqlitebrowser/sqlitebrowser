@@ -19,7 +19,7 @@
 #include <QtGui/QHeaderView>
 
 #include <QtGui/QMainWindow>
-#include <Qt3Support/Q3Table>
+#include <QTableWidget>
 #include <QTextEdit>
 #include <QtGui/QToolBar>
 
@@ -107,7 +107,7 @@ public:
     QSpacerItem *spacer1;
     QPushButton *buttonNewRecord;
     QPushButton *buttonDeleteRecord;
-    Q3Table *dataTable;
+    QTableWidget *dataTable;
     QHBoxLayout *hboxLayout1;
     QPushButton *buttonPrevious;
     QLabel *labelRecordset;
@@ -411,16 +411,12 @@ public:
 
         vboxLayout2->addLayout(hboxLayout);
 
-        dataTable = new Q3Table(browser);
+        dataTable = new QTableWidget(browser);
         dataTable->setObjectName(QString::fromUtf8("dataTable"));
         dataTable->setAcceptDrops(true);
-        dataTable->setResizePolicy(Q3Table::Default);
-        dataTable->setVScrollBarMode(Q3Table::Auto);
-        dataTable->setNumRows(0);
-        dataTable->setNumCols(0);
-        dataTable->setReadOnly(true);
-        dataTable->setSelectionMode(Q3Table::Single);
-        dataTable->setFocusStyle(Q3Table::FollowStyle);
+        dataTable->setRowCount(0);
+        dataTable->setColumnCount(0);
+        dataTable->setSelectionMode(QTableWidget::SingleSelection);
 
         vboxLayout2->addWidget(dataTable);
 

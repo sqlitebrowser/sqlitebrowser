@@ -233,33 +233,33 @@ void mainForm::populateTable( const QString & tablename)
     bool mustreset = false;
     QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
     if (tablename.compare(db.curBrowseTableName)!=0)
- mustreset = true;
+        mustreset = true;
 
     if (!db.browseTable(tablename)){
- dataTable->setNumRows( 0 );
- dataTable->setNumCols( 0 );
- QApplication::restoreOverrideCursor();
- if (findWin){
-     findWin->resetFields(db.getTableFields(""));
-     findWin->resetResults();
- }
- return;
+        dataTable->setRowCount( 0 );
+        dataTable->setColumnCount( 0 );
+        QApplication::restoreOverrideCursor();
+        if (findWin){
+            findWin->resetFields(db.getTableFields(""));
+            findWin->resetResults();
+        }
+        return;
     }
 
     if (mustreset){
- recAtTop = 0;
- updateTableView(0);
- if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
+        recAtTop = 0;
+        updateTableView(0);
+        if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
     } else {
- updateTableView(-1);
+        updateTableView(-1);
     }
-  //got to keep findWin in synch
+    //got to keep findWin in synch
     if (findWin){
- findWin->resetResults();
+        findWin->resetResults();
     }
     if (editWin)
     {
- editWin->reset();
+        editWin->reset();
     }
 }
 
@@ -359,67 +359,62 @@ void mainForm::deleteRecord()
 
 void mainForm::updateTableView(int lineToSelect)
 {
-  //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
+    //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
     QApplication::setOverrideCursor( Qt::waitCursor, TRUE );
-    QStringList fields = db.browseFields;
 
-     dataTable->setNumRows(0);
-    dataTable->setNumCols( fields.count() );
-    int cheadnum = 0;
-    for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
- dataTable->horizontalHeader()->setLabel( cheadnum, *ct  );
- cheadnum++;
-    }
+    dataTable->setRowCount(0);
+    dataTable->setColumnCount( db.browseFields.count() );
+    dataTable->setHorizontalHeaderLabels(db.browseFields);
 
     rowList tab = db.browseRecs;
     int maxRecs = db.getRecordCount();
     int recsThisView = maxRecs - recAtTop;
 
     if (recsThisView>recsPerView)
- recsThisView = recsPerView;
+        recsThisView = recsPerView;
 
-   // qDebug("recsthisview= %d\n",recsThisView);
+    // qDebug("recsthisview= %d\n",recsThisView);
 
-    dataTable->setNumRows( recsThisView);
+    dataTable->setRowCount(recsThisView);
 
     if ( recsThisView > 0 ) {
 
-    int rowNum = 0;
-    int colNum = 0;
-    //int dcols =0;
-    QString rowLabel;
-    for (int i = recAtTop; i < tab.size(); ++i)
-    //for ( int  = tab.at(recAtTop); rt !=tab.end(); ++rt )
-    {
- rowLabel.setNum(recAtTop+rowNum+1);
- dataTable->verticalHeader()->setLabel( rowNum, rowLabel  );
- colNum = 0;
-     QStringList& rt = tab[i];
- for (int e = 1; e < rt.size(); ++e)
- //for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it )
-     {
-     //skip first one (the rowid)
-   //  if (it!=(*rt).begin()){
-  QString& content = rt[e];
-  QString firstline = content.section( '\n', 0,0 );
-  if (content.length()>MAX_DISPLAY_LENGTH)
-  {
-      firstline.truncate(MAX_DISPLAY_LENGTH);
-      firstline.append("...");
-  }
-  dataTable->setText( rowNum, colNum, firstline);
-  colNum++;
-     //}
- }
- rowNum++;
- if (rowNum==recsThisView) break;
-    }
+        int rowNum = 0;
+        int colNum = 0;
+        //int dcols =0;
+        QString rowLabel;
+        for (int i = recAtTop; i < tab.size(); ++i)
+            //for ( int  = tab.at(recAtTop); rt !=tab.end(); ++rt )
+        {
+            rowLabel.setNum(recAtTop+rowNum+1);
+            dataTable->setVerticalHeaderItem(rowNum, new QTableWidgetItem( rowLabel ));
+            colNum = 0;
+            QStringList& rt = tab[i];
+            for (int e = 1; e < rt.size(); ++e)
+                //for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it )
+            {
+                //skip first one (the rowid)
+                //  if (it!=(*rt).begin()){
+                QString& content = rt[e];
+                QString firstline = content.section( '\n', 0,0 );
+                if (content.length()>MAX_DISPLAY_LENGTH)
+                {
+                    firstline.truncate(MAX_DISPLAY_LENGTH);
+                    firstline.append("...");
+                }
+                dataTable->setItem( rowNum, colNum, new QTableWidgetItem(firstline));
+                colNum++;
+                //}
+            }
+            rowNum++;
+            if (rowNum==recsThisView) break;
+        }
 
-}
+    }
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
- //qDebug("inside selection");
- selectTableLine(lineToSelect);
+        //qDebug("inside selection");
+        selectTableLine(lineToSelect);
     }
     setRecordsetLabel();
     QApplication::restoreOverrideCursor();
@@ -427,10 +422,10 @@ void mainForm::updateTableView(int lineToSelect)
 
 void mainForm::selectTableLine(int lineToSelect)
 {
-    dataTable->clearSelection(true);
+   dataTable->clearSelection();
    dataTable->selectRow(lineToSelect);
    dataTable->setCurrentCell(lineToSelect, 0);
-   dataTable->ensureCellVisible (lineToSelect, 0 ) ;
+   dataTable->scrollToItem(dataTable->itemAt(lineToSelect, 0));
 }
 
 void mainForm::navigatePrevious()
@@ -800,21 +795,21 @@ void mainForm::helpAbout()
 void mainForm::updateRecordText(int row, int col, QString newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
- QMessageBox::information( this, applicationName, "Data could not be updated" );
+        QMessageBox::information( this, applicationName, "Data could not be updated" );
     }
 
-     rowList tab = db.browseRecs;
- QStringList& rt = tab[row];
- QString& cv = rt[col+1];//must account for rowid
- 
- QString content = cv ;
- QString firstline = content.section( '\n', 0,0 );
- if (content.length()>14)
- {
-    firstline.truncate(14);
-    firstline.append("...");
- }
- dataTable->setText( row - recAtTop, col, firstline);
+    rowList tab = db.browseRecs;
+    QStringList& rt = tab[row];
+    QString& cv = rt[col+1];//must account for rowid
+
+    QString content = cv ;
+    QString firstline = content.section( '\n', 0,0 );
+    if (content.length()>14)
+    {
+        firstline.truncate(14);
+        firstline.append("...");
+    }
+    dataTable->setItem( row - recAtTop, col, new QTableWidgetItem(firstline));
 }
 
 void mainForm::logWinAway()
@@ -826,7 +821,7 @@ void mainForm::editWinAway()
 {
     editWin->hide();
     setActiveWindow();
-    dataTable->selectCells ( editWin->curRow - recAtTop, editWin->curCol, editWin->curRow- recAtTop, editWin->curCol);
+    dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow - recAtTop, editWin->curCol, editWin->curRow- recAtTop, editWin->curCol), true);
 }
 
 
