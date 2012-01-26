@@ -14,7 +14,7 @@
 
 
 #include <QTextEdit>
-#include <Qt3Support/Q3WidgetStack>
+#include <QStackedWidget>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -41,7 +41,7 @@ public:
     QComboBox *comboBox3;
     QSpacerItem *spacer10;
     QPushButton *clearButton;
-    Q3WidgetStack *logStack;
+    QStackedWidget *logStack;
     QWidget *WStackPage;
     QGridLayout *gridLayout;
     QTextEdit *userLogText;
@@ -84,7 +84,7 @@ public:
 
         vboxLayout->addLayout(hboxLayout);
 
-        logStack = new Q3WidgetStack(sqlLogForm);
+        logStack = new QStackedWidget(sqlLogForm);
         logStack->setObjectName(QString::fromUtf8("logStack"));
         WStackPage = new QWidget(logStack);
         WStackPage->setObjectName(QString::fromUtf8("WStackPage"));
@@ -100,7 +100,7 @@ public:
 
         gridLayout->addWidget(userLogText, 0, 0, 1, 1);
 
-        logStack->addWidget(WStackPage, 0);
+        logStack->insertWidget(0,  WStackPage);
         WStackPage1 = new QWidget(logStack);
         WStackPage1->setObjectName(QString::fromUtf8("WStackPage1"));
         vboxLayout1 = new QVBoxLayout(WStackPage1);
@@ -115,14 +115,14 @@ public:
 
         vboxLayout1->addWidget(appLogText);
 
-        logStack->addWidget(WStackPage1, 1);
+        logStack->insertWidget(1, WStackPage1);
 
         vboxLayout->addWidget(logStack);
 
 
         retranslateUi(sqlLogForm);
         QObject::connect(clearButton, SIGNAL(clicked()), sqlLogForm, SLOT(clearLog()));
-        QObject::connect(comboBox3, SIGNAL(activated(int)), logStack, SLOT(raiseWidget(int)));
+        QObject::connect(comboBox3, SIGNAL(activated(int)), logStack, SLOT(setCurrentIndex(int)));
 
         QMetaObject::connectSlotsByName(sqlLogForm);
     } // setupUi

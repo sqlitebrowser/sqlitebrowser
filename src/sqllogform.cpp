@@ -59,7 +59,7 @@ void sqlLogForm::msgDBDirtyState( bool dirty)
 
 void sqlLogForm::clearLog()
 {
-    if (logStack->id(logStack->visibleWidget())==kLogMsg_User)
+    if (logStack->currentIndex()==kLogMsg_User)
     {
         userLogText->clear();
     } else {
