@@ -37,26 +37,24 @@ void findForm::languageChange()
 
 void findForm::showResults(resultMap rmap)
 {
-    findListView->clear();
-    findListView->setSorting(-1);
+    findTableWidget->clearContents();
+    findTableWidget->setSortingEnabled(false);
     resultMap::Iterator it;
-    Q3ListViewItem * lasttbitem = 0;
-        for ( it = rmap.begin(); it != rmap.end(); ++it ) {
-            Q3ListViewItem * tbitem = new Q3ListViewItem( findListView, lasttbitem );
-            //tbitem->setOpen( TRUE );
-            tbitem->setText( 0, QString::number(it.key() + 1,10) ); //increase from index 0
-            QString firstline = it.data().section( '\n', 0,0 );
-                  if (firstline.length()>MAX_DISPLAY_LENGTH)
-                {
-                    firstline.truncate(MAX_DISPLAY_LENGTH);
-                   firstline.append("...");
-                }
-             tbitem->setText( 1, firstline );
-            lasttbitem = tbitem;
+    findTableWidget->setRowCount(rmap.size());
+    for ( it = rmap.begin(); it != rmap.end(); ++it ) {
+        QString firstline = it.data().section( '\n', 0,0 );
+        if (firstline.length()>MAX_DISPLAY_LENGTH)
+        {
+            firstline.truncate(MAX_DISPLAY_LENGTH);
+            firstline.append("...");
         }
-        QString results = "Found: ";
-        results.append(QString::number(findListView->childCount()));
-        resultsLabel->setText(results);
+        findTableWidget->setItem( it.key(), 0, new QTableWidgetItem( QString::number(it.key() + 1) ) );
+        findTableWidget->setItem( it.key(), 1, new QTableWidgetItem( firstline) );
+    }
+    QString results = "Found: ";
+    results.append(QString::number(findTableWidget->rowCount()));
+    resultsLabel->setText(results);
+    findTableWidget->setSortingEnabled(true);
 }
 
 
@@ -75,17 +73,17 @@ void findForm::resetFields(QStringList fieldlist)
 
 void findForm::resetResults()
 {
-    findListView->clear();
+    findTableWidget->clearContents();
     resultsLabel->setText("Found: 0");
 }
 
 
-void findForm::recordSelected( Q3ListViewItem * witem)
+void findForm::recordSelected( QTableWidgetItem * witem)
 {
     if (witem) {
-    int recNum = (witem->text(0)).toInt() ;
-    emit showrecord(recNum);
-}
+        int recNum = witem->text().toInt();
+        emit showrecord(recNum);
+    }
 }
 
 void findForm::closeEvent( QCloseEvent * )

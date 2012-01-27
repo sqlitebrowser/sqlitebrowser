@@ -12,8 +12,7 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3Header>
-#include <Qt3Support/Q3ListView>
+#include <QTableWidget>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -41,7 +40,7 @@ public:
     QComboBox *findFieldCombobox;
     QLineEdit *searchLine;
     QComboBox *findOperatorComboBox;
-    Q3ListView *findListView;
+    QTableWidget *findTableWidget;
     QHBoxLayout *hboxLayout;
     QLabel *resultsLabel;
     QSpacerItem *spacer10;
@@ -81,19 +80,16 @@ public:
 
         vboxLayout->addLayout(gridLayout);
 
-        findListView = new Q3ListView(findForm);
-        findListView->addColumn(QApplication::translate("findForm", "Record", 0, QApplication::UnicodeUTF8));
-        findListView->header()->setClickEnabled(true, findListView->header()->count() - 1);
-        findListView->header()->setResizeEnabled(true, findListView->header()->count() - 1);
-        findListView->addColumn(QApplication::translate("findForm", "Data", 0, QApplication::UnicodeUTF8));
-        findListView->header()->setClickEnabled(true, findListView->header()->count() - 1);
-        findListView->header()->setResizeEnabled(true, findListView->header()->count() - 1);
-        findListView->setObjectName(QString::fromUtf8("findListView"));
-        findListView->setMidLineWidth(30);
-        findListView->setResizePolicy(Q3ScrollView::Manual);
-        findListView->setResizeMode(Q3ListView::LastColumn);
+        findTableWidget = new QTableWidget(findForm);
+        findTableWidget->setColumnCount(2);
+        findTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem( QApplication::translate("findForm", "Record", 0, QApplication::UnicodeUTF8) ));
+        findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QApplication::translate("findForm", "Data", 0, QApplication::UnicodeUTF8) ));
+        findTableWidget->setObjectName(QString::fromUtf8("findListView"));
+        findTableWidget->setMidLineWidth(30);
+        //findTableWidget->setResizePolicy(Q3ScrollView::Manual);
+        //findTableWidget->setResizeMode(Q3ListView::LastColumn);
 
-        vboxLayout->addWidget(findListView);
+        vboxLayout->addWidget(findTableWidget);
 
         hboxLayout = new QHBoxLayout();
         hboxLayout->setSpacing(6);
@@ -119,7 +115,7 @@ public:
 
         retranslateUi(findForm);
         QObject::connect(searchButton, SIGNAL(clicked()), findForm, SLOT(find()));
-        QObject::connect(findListView, SIGNAL(clicked(Q3ListViewItem*)), findForm, SLOT(recordSelected(Q3ListViewItem*)));
+        QObject::connect(findTableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), findForm, SLOT(recordSelected(QTableWidgetItem*)));
 
         QMetaObject::connectSlotsByName(findForm);
     } // setupUi
@@ -165,10 +161,10 @@ public:
 #ifndef QT_NO_WHATSTHIS
         findOperatorComboBox->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "This control is used to select the search criteria used to look for the search term in the database. Use '=' or 'contains' to find words, and the comparison symbols to filter numeric data.", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
-        findListView->header()->setLabel(0, QApplication::translate("findForm", "Record", 0, QApplication::UnicodeUTF8));
-        findListView->header()->setLabel(1, QApplication::translate("findForm", "Data", 0, QApplication::UnicodeUTF8));
+        findTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem( QApplication::translate("findForm", "Record", 0, QApplication::UnicodeUTF8) ));
+        findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QApplication::translate("findForm", "Data", 0, QApplication::UnicodeUTF8) ));
 #ifndef QT_NO_WHATSTHIS
-        findListView->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "Results of the search will appear in this area. Click on a result to select the corresponding record in the database", 0, QApplication::UnicodeUTF8)));
+        findTableWidget->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "Results of the search will appear in this area. Click on a result to select the corresponding record in the database", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
         resultsLabel->setText(QApplication::translate("findForm", "Found:", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
@@ -194,7 +190,7 @@ public slots:
     virtual void find();
     virtual void resetFields( QStringList fieldlist );
     virtual void resetResults();
-    virtual void recordSelected( Q3ListViewItem * witem );
+    virtual void recordSelected( QTableWidgetItem * witem );
     virtual void closeEvent( QCloseEvent * );
 
 signals:
