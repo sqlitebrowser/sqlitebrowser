@@ -215,7 +215,7 @@ class createTableForm : public QDialog, public Ui::createTableForm
     Q_OBJECT
 
 public:
-    createTableForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    createTableForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~createTableForm();
 
     QString createStatement;

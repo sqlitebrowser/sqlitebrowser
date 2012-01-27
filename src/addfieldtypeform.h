@@ -99,7 +99,7 @@ class addFieldTypeForm : public QDialog, public Ui::addFieldTypeForm
     Q_OBJECT
 
 public:
-    addFieldTypeForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    addFieldTypeForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~addFieldTypeForm();
 
 protected slots:

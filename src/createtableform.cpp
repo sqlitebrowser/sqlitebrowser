@@ -13,8 +13,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-createTableForm::createTableForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+createTableForm::createTableForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -113,7 +113,8 @@ void createTableForm::confirmCreate()
 void createTableForm::addField()
 {
     //TODO maybe embedd locally
-    addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
+    addFieldForm * addForm = new addFieldForm( this );
+    addForm->setModal(true);
     addForm->setInitialValues(QString(""),QString(""));
     if (addForm->exec())
     {

@@ -202,22 +202,22 @@ public:
         textLabel1->setText(QApplication::translate("preferencesForm", "Database encoding:", 0, QApplication::UnicodeUTF8));
         encodingComboBox->clear();
         encodingComboBox->insertItems(0, QStringList()
-         << QApplication::translate("preferencesForm", "UTF8 (Unicode)", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("preferencesForm", "Latin1 (8bit)", 0, QApplication::UnicodeUTF8)
-        );
+                                      << QApplication::translate("preferencesForm", "UTF8 (Unicode)", 0, QApplication::UnicodeUTF8)
+                                      << QApplication::translate("preferencesForm", "Latin1 (8bit)", 0, QApplication::UnicodeUTF8)
+                                      );
         textLabel2->setText(QApplication::translate("preferencesForm", "Default data for new records:", 0, QApplication::UnicodeUTF8));
         defaultdataComboBox->clear();
         defaultdataComboBox->insertItems(0, QStringList()
-         << QApplication::translate("preferencesForm", "NULL", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("preferencesForm", "0", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("preferencesForm", "Empty string", 0, QApplication::UnicodeUTF8)
-        );
+                                         << QApplication::translate("preferencesForm", "NULL", 0, QApplication::UnicodeUTF8)
+                                         << QApplication::translate("preferencesForm", "0", 0, QApplication::UnicodeUTF8)
+                                         << QApplication::translate("preferencesForm", "Empty string", 0, QApplication::UnicodeUTF8)
+                                         );
         textLabel1_2->setText(QApplication::translate("preferencesForm", "Default text editor format:", 0, QApplication::UnicodeUTF8));
         defaultTextComboBox->clear();
         defaultTextComboBox->insertItems(0, QStringList()
-         << QApplication::translate("preferencesForm", "Plain", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("preferencesForm", "Auto", 0, QApplication::UnicodeUTF8)
-        );
+                                         << QApplication::translate("preferencesForm", "Plain", 0, QApplication::UnicodeUTF8)
+                                         << QApplication::translate("preferencesForm", "Auto", 0, QApplication::UnicodeUTF8)
+                                         );
         textLabel3->setText(QApplication::translate("preferencesForm", "Default location:", 0, QApplication::UnicodeUTF8));
         setLocationButton->setText(QApplication::translate("preferencesForm", "...", 0, QApplication::UnicodeUTF8));
         OKButton->setText(QApplication::translate("preferencesForm", "O&K", 0, QApplication::UnicodeUTF8));
@@ -227,7 +227,7 @@ public:
 };
 
 namespace Ui {
-    class preferencesForm: public Ui_preferencesForm {};
+class preferencesForm: public Ui_preferencesForm {};
 } // namespace Ui
 
 QT_END_NAMESPACE
@@ -237,7 +237,7 @@ class preferencesForm : public QDialog, public Ui::preferencesForm
     Q_OBJECT
 
 public:
-    preferencesForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    preferencesForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~preferencesForm();
 
     QString defaulttext;

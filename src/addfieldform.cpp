@@ -14,8 +14,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-addFieldForm::addFieldForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+addFieldForm::addFieldForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -42,17 +42,17 @@ void addFieldForm::setInitialValues(QString name, QString type)
 {
     nameLineEdit->setText(name);
     typeBox->clear();
-    typeBox->insertItem(type);
+    typeBox->addItem(type);
     QString tString = "";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    if (type.compare(tString)!=0) typeBox->addItem(tString);
     tString = "TEXT";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    if (type.compare(tString)!=0) typeBox->addItem(tString);
     tString = "NUMERIC";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    if (type.compare(tString)!=0) typeBox->addItem(tString);
     tString = "BLOB";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    if (type.compare(tString)!=0) typeBox->addItem(tString);
     tString = "INTEGER PRIMARY KEY";
-    if (type.compare(tString)!=0) typeBox->insertItem(tString);
+    if (type.compare(tString)!=0) typeBox->addItem(tString);
 }
 
 void addFieldForm::confirmAddField()
@@ -73,11 +73,12 @@ void addFieldForm::confirmAddField()
 
 void addFieldForm::getCustomType()
 {
-    addFieldTypeForm * addForm = new addFieldTypeForm( this, "addfieldtype", TRUE );
+    addFieldTypeForm * addForm = new addFieldTypeForm( this );
+    addForm->setModal(true);
     if (addForm->exec())
-   {
- //QString nospaces = addForm->typeNameEdit->text().remove(" ");
- QString nospaces = addForm->typeNameEdit->text();
- setInitialValues(nameLineEdit->text(),nospaces );
-   }
+    {
+        //QString nospaces = addForm->typeNameEdit->text().remove(" ");
+        QString nospaces = addForm->typeNameEdit->text();
+        setInitialValues(nameLineEdit->text(),nospaces );
+    }
 }

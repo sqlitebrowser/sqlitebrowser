@@ -196,7 +196,7 @@ class editFieldForm : public QDialog, public Ui::editFieldForm
     Q_OBJECT
 
 public:
-    editFieldForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    editFieldForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~editFieldForm();
 
     void setDB(DBBrowserDB &db);

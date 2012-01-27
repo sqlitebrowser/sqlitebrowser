@@ -12,8 +12,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-createIndexForm::createIndexForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+createIndexForm::createIndexForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -41,15 +41,15 @@ void createIndexForm::tableSelected( const QString & entry )
 {
         tableMap::Iterator it;
          for ( it = mtablemap.begin(); it != mtablemap.end(); ++it ) {
-             QString tname = it.data().getname() ;
+             QString tname = it.value().getname() ;
 
              //populate the fields with first table name
              if ((tname.compare(entry)==0)){
                  comboFields->clear();
                  fieldMap::Iterator fit;
-                 fieldMap fmap = it.data().fldmap;
+                 fieldMap fmap = it.value().fldmap;
                  for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-                     comboFields->insertItem( fit.data().getname(), -1 );
+                     comboFields->addItem( fit.value().getname() );
                  }
              }
         }
@@ -71,7 +71,7 @@ void createIndexForm::confirmCreate()
     }
     if (ok){
         createStatement = "CREATE ";
-        if (comboUnique->currentItem()==1){
+        if (comboUnique->currentIndex()==1){
             createStatement.append("UNIQUE ");
         }
         createStatement.append("INDEX ");
@@ -81,7 +81,7 @@ void createIndexForm::confirmCreate()
         createStatement.append("(");
         createStatement.append(comboFields->currentText());
         createStatement.append(" ");
-        if (comboOrder->currentItem()==0){
+        if (comboOrder->currentIndex()==0){
             createStatement.append("ASC");
         } else {
             createStatement.append("DESC");
@@ -96,14 +96,14 @@ void createIndexForm::populateTable(tableMap rmap)
     mtablemap = rmap;
     tableMap::Iterator it;
          for ( it = mtablemap.begin(); it != mtablemap.end(); ++it ) {
-             comboTables->insertItem( it.data().getname() , -1);
+             comboTables->addItem( it.value().getname() );
 
              //populate the fields with first table name
              if (it==mtablemap.begin()){
                  fieldMap::Iterator fit;
-                 fieldMap fmap = it.data().fldmap;
+                 fieldMap fmap = it.value().fldmap;
                  for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-                     comboFields->insertItem( fit.data().getname(), -1 );
+                     comboFields->addItem( fit.value().getname() );
                  }
              }
         }

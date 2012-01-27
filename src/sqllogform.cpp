@@ -12,8 +12,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-sqlLogForm::sqlLogForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+sqlLogForm::sqlLogForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -45,9 +45,9 @@ void sqlLogForm::log( QString & statement, int msgtype)
 {
     if (msgtype==kLogMsg_User)
     {
-        userLogText->setText(userLogText->text()+statement+"\n");
+        userLogText->setPlainText(userLogText->toPlainText()+statement+"\n");
     } else {
-        appLogText->setText(appLogText->text()+statement+"\n");
+        appLogText->setPlainText(appLogText->toPlainText()+statement+"\n");
     }
 }
 

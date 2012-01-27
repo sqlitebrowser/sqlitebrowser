@@ -11,8 +11,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-findForm::findForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+findForm::findForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -42,7 +42,7 @@ void findForm::showResults(resultMap rmap)
     resultMap::Iterator it;
     findTableWidget->setRowCount(rmap.size());
     for ( it = rmap.begin(); it != rmap.end(); ++it ) {
-        QString firstline = it.data().section( '\n', 0,0 );
+        QString firstline = it.value().section( '\n', 0,0 );
         if (firstline.length()>MAX_DISPLAY_LENGTH)
         {
             firstline.truncate(MAX_DISPLAY_LENGTH);
@@ -66,9 +66,7 @@ void findForm::find()
 void findForm::resetFields(QStringList fieldlist)
 {
     findFieldCombobox->clear();
-    for ( QStringList::Iterator ct = fieldlist.begin(); ct != fieldlist.end(); ++ct ) {
-        findFieldCombobox->insertItem(*ct,-1);
-    }
+    findFieldCombobox->addItems(fieldlist);
 }
 
 void findForm::resetResults()

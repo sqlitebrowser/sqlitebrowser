@@ -6,7 +6,9 @@
 
 #include "qdir.h"
 #include "qsettings.h"
-#include "q3filedialog.h"
+#include <QFileDialog>
+#include "sqlitedb.h"
+
 /*
  *  Constructs a preferencesForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -14,8 +16,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-preferencesForm::preferencesForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+preferencesForm::preferencesForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -53,27 +55,27 @@ void preferencesForm::languageChange()
 
 void preferencesForm::init()
 {
-   loadSettings();
+    loadSettings();
 }
 
 
 void preferencesForm::defaultDataChanged( int which )
 {
     if (which==2) {
- defaultnewdata = QString("\'\'");
-   } else if (which==1) {
- defaultnewdata = QString("0");
+        defaultnewdata = QString("\'\'");
+    } else if (which==1) {
+        defaultnewdata = QString("0");
     } else {
- defaultnewdata = QString("NULL");
+        defaultnewdata = QString("NULL");
     }
 }
 
 void preferencesForm::defaultTextChanged( int which )
 {
     if (which==1) {
- defaulttext = QString("Auto");
+        defaulttext = QString("Auto");
     } else {
- defaulttext = QString("Plain");
+        defaulttext = QString("Plain");
     }
 
 }
@@ -82,63 +84,65 @@ void preferencesForm::defaultTextChanged( int which )
 void preferencesForm::encodingChanged( int which )
 {
     if (which==1) {
- defaultencoding = QString("Latin1");
+        defaultencoding = QString("Latin1");
     } else {
- defaultencoding = QString("UTF8");
+        defaultencoding = QString("UTF8");
     }
 }
 
 
 void preferencesForm::chooseLocation()
 {
-   QString s = Q3FileDialog::getExistingDirectory(
-                    defaultlocation,
-                    this,
-                    "get existing directory",
-                    "Choose a directory",
-                    TRUE );
-		        
-     defaultlocation = s;
-     locationEdit->setText(defaultlocation);
+    QString s = QFileDialog::getExistingDirectory(
+                this,
+                tr("Choose a directory"),
+                defaultlocation,
+                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    if(!s.isEmpty())
+    {
+        defaultlocation = s;
+        locationEdit->setText(defaultlocation);
+    }
 }
 
 
 void preferencesForm::loadSettings()
 {
-    QSettings settings;
-    settings.setPath( "sqlitebrowser.sf.net", "SQLite Database Browser 2", QSettings::UserScope );
+    QSettings settings(sOrganisation, sApplicationNameShort);
+    settings.sync();
 
-   defaultencoding = settings.readEntry( "/db/defaultencoding", "UTF8" );
-   defaultnewdata = settings.readEntry( "/db/defaultnewdata", "NULL" );
-   defaultlocation = settings.readEntry( "/db/defaultlocation", QDir::homeDirPath () );
-   defaulttext = settings.readEntry( "/db/defaulttext", "Plain" );
-   
-   if (defaultencoding=="Latin1")
-   {
-   encodingComboBox->setCurrentItem(1) ;
+    defaultencoding = settings.value( "/db/defaultencoding", "UTF8" ).toString();
+    defaultnewdata = settings.value( "/db/defaultnewdata", "NULL" ).toString();
+    defaultlocation = settings.value( "/db/defaultlocation", QDir::homePath() ).toString();
+    defaulttext = settings.value( "/db/defaulttext", "Plain" ).toString();
+
+    if (defaultencoding=="Latin1")
+    {
+        encodingComboBox->setCurrentIndex(1);
     } else {
-    encodingComboBox->setCurrentItem(0) ;
-    defaultencoding = QString("UTF8");
-   }
+        encodingComboBox->setCurrentIndex(0) ;
+        defaultencoding = QString("UTF8");
+    }
     
     if (defaultnewdata=="\'\'")
-   {
-   defaultdataComboBox->setCurrentItem(2) ;
+    {
+        defaultdataComboBox->setCurrentIndex(2) ;
     } else if (defaultnewdata=="0")
-   {
-   defaultdataComboBox->setCurrentItem(1) ;
+    {
+        defaultdataComboBox->setCurrentIndex(1) ;
     } else {
-    defaultdataComboBox->setCurrentItem(0) ;
-    defaultnewdata = QString("NULL");
-   }
+        defaultdataComboBox->setCurrentIndex(0) ;
+        defaultnewdata = QString("NULL");
+    }
 
     if (defaulttext=="Auto")
-   {
-   defaultTextComboBox->setCurrentItem(1) ;
+    {
+        defaultTextComboBox->setCurrentIndex(1) ;
     } else {
-    defaultTextComboBox->setCurrentItem(0) ;
-    defaulttext = QString("Plain");
-   }
+        defaultTextComboBox->setCurrentIndex(0) ;
+        defaulttext = QString("Plain");
+    }
     
     locationEdit->setText(defaultlocation);
 }
@@ -146,14 +150,14 @@ void preferencesForm::loadSettings()
 
 void preferencesForm::saveSettings()
 {
-    QSettings settings;
-    settings.setPath( "sqlitebrowser.sf.net", "SQLite Database Browser 2", QSettings::UserScope );
+    QSettings settings(sOrganisation, sApplicationNameShort);
 
-   settings.writeEntry( "/db/defaultencoding", defaultencoding  );
-   settings.writeEntry( "/db/defaultnewdata", defaultnewdata );
-   settings.writeEntry( "/db/defaultlocation", defaultlocation  );
-   settings.writeEntry( "/db/defaulttext", defaulttext  );
-   accept();
+    settings.setValue( "/db/defaultencoding", defaultencoding  );
+    settings.setValue( "/db/defaultnewdata", defaultnewdata );
+    settings.setValue( "/db/defaultlocation", defaultlocation  );
+    settings.setValue( "/db/defaulttext", defaulttext  );
+    settings.sync();
+    accept();
 }
 
 

@@ -16,8 +16,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-editTableForm::editTableForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+editTableForm::editTableForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -79,11 +79,12 @@ void editTableForm::populateFields()
 
 void editTableForm::renameTable()
 {
-   renameTableForm * renTableForm = new renameTableForm( this, "renametable", TRUE );
+   renameTableForm * renTableForm = new renameTableForm( this );
+   renTableForm->setModal(true);
    renTableForm->setTableName(curTable);
    if (renTableForm->exec())
    {
-       QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
+       QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
        modified = true;
        QString newName = renTableForm->getTableName();
        //qDebug(newName);
@@ -226,7 +227,8 @@ void editTableForm::editField()
         //should never happen, the button would not be active, but...
        // return;
    // } else {
-        editFieldForm * fieldForm = new editFieldForm( this, "editfield", TRUE );
+        editFieldForm * fieldForm = new editFieldForm( this );
+        fieldForm->setModal(true);
         fieldForm->setInitialValues(false, "TABLE_NAME", item->text(0), item->text(1));
         if (fieldForm->exec())
         {
@@ -333,7 +335,8 @@ void editTableForm::editField()
 
 void editTableForm::addField()
 {
-   addFieldForm * addForm = new addFieldForm( this, "addfield", TRUE );
+   addFieldForm * addForm = new addFieldForm( this );
+   addForm->setModal(true);
    addForm->setInitialValues(QString(""),QString(""));
     if (addForm->exec())
    {

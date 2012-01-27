@@ -257,7 +257,7 @@ class createIndexForm : public QDialog, public Ui::createIndexForm
     Q_OBJECT
 
 public:
-    createIndexForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    createIndexForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~createIndexForm();
 
     tableMap mtablemap;

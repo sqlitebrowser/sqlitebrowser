@@ -12,8 +12,7 @@
 #define QT_END_NAMESPACE
 #endif
 
-#include <Qt3Support/Q3Header>
-#include <Qt3Support/Q3Table>
+#include <QTableWidget>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -52,7 +51,7 @@ public:
     QComboBox *fieldBox;
     QComboBox *quoteBox;
     QSpacerItem *spacer14;
-    Q3Table *previewTable;
+    QTableWidget *previewTable;
     QHBoxLayout *hboxLayout1;
     QSpacerItem *spacer13;
     QPushButton *cancelButton;
@@ -138,12 +137,11 @@ public:
 
         vboxLayout->addItem(spacer14);
 
-        previewTable = new Q3Table(importCSVForm);
+        previewTable = new QTableWidget(importCSVForm);
         previewTable->setObjectName(QString::fromUtf8("previewTable"));
-        previewTable->setNumRows(0);
-        previewTable->setNumCols(0);
-        previewTable->setReadOnly(true);
-        previewTable->setSelectionMode(Q3Table::NoSelection);
+        previewTable->setRowCount(0);
+        previewTable->setColumnCount(0);
+        previewTable->setSelectionMode(QTableWidget::NoSelection);
 
         vboxLayout->addWidget(previewTable);
 
@@ -215,7 +213,7 @@ class importCSVForm : public QDialog, public Ui::importCSVForm
     Q_OBJECT
 
 public:
-    importCSVForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    importCSVForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~importCSVForm();
 
 public slots:

@@ -95,7 +95,6 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         userLogText = new QTextEdit(WStackPage);
         userLogText->setObjectName(QString::fromUtf8("userLogText"));
-        userLogText->setTextFormat(Qt::PlainText);
         userLogText->setReadOnly(true);
 
         gridLayout->addWidget(userLogText, 0, 0, 1, 1);
@@ -110,7 +109,6 @@ public:
         vboxLayout1->setContentsMargins(0, 0, 0, 0);
         appLogText = new QTextEdit(WStackPage1);
         appLogText->setObjectName(QString::fromUtf8("appLogText"));
-        appLogText->setTextFormat(Qt::PlainText);
         appLogText->setReadOnly(true);
 
         vboxLayout1->addWidget(appLogText);
@@ -152,7 +150,7 @@ class sqlLogForm : public QDialog, public Ui::sqlLogForm
     Q_OBJECT
 
 public:
-    sqlLogForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    sqlLogForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~sqlLogForm();
 
 public slots:

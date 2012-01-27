@@ -182,7 +182,7 @@ class findForm : public QDialog, public Ui::findForm
     Q_OBJECT
 
 public:
-    findForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    findForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~findForm();
 
 public slots:

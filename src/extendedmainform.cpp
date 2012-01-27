@@ -9,7 +9,7 @@
 #include "extendedmainform.h"
 #include <QUrl>
 
-ExtendedMainForm::ExtendedMainForm(QWidget* parent, const char* name, Qt::WindowFlags fl) : mainForm( parent, name, fl )
+ExtendedMainForm::ExtendedMainForm(QWidget* parent) : mainForm( parent )
 {
 	setAcceptDrops(true); // Enable the drop feature on this form
 }

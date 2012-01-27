@@ -106,7 +106,7 @@ class renameTableForm : public QDialog, public Ui::renameTableForm
     Q_OBJECT
 
 public:
-    renameTableForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    renameTableForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~renameTableForm();
 
     virtual QString getTableName();

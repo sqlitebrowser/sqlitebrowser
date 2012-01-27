@@ -14,8 +14,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-importCSVForm::importCSVForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+importCSVForm::importCSVForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -146,7 +146,7 @@ void importCSVForm::createButtonPressed()
         }
         //need to mprintf here
         //sql.append(*ct);
-        char * formSQL = sqlite3_mprintf("%Q",(const char *) curList[i]);
+        char * formSQL = sqlite3_mprintf("%Q",(const char *) curList[i].toUtf8());
         sql.append(formSQL);
         if (formSQL) sqlite3_free(formSQL);
 
@@ -191,33 +191,27 @@ void importCSVForm::preview()
 
     //qDebug("count = %d, numfields = %d", curList .count(), numfields);
 
-    previewTable->setNumRows(0);
-    previewTable->setNumCols(0);
-    previewTable->setNumCols(numfields);
-    int cheadnum = 0;
+    previewTable->clear();
+    previewTable->setColumnCount(curList.size());
 
     //can not operate on an empty result
     if (numfields==0) return;
 
     if (extractFieldNamesCheckbox->isChecked())
     {
-        for ( QStringList::Iterator ct = curList.begin(); ct != curList.end(); ++ct ) {
-            previewTable->horizontalHeader()->setLabel( cheadnum, *ct  );
-            cheadnum++;
-            if (cheadnum==numfields) break;
-        }
+        previewTable->setHorizontalHeaderLabels(curList);
         //pop the fieldnames
         for (int e=0; e<numfields; e++)
         {
             curList.pop_front();
         }
     }
-    previewTable->setNumRows(curList.count()/numfields);
+    previewTable->setRowCount(curList.count()/numfields);
     int rowNum = 0;
     int colNum = 0;
     for ( QStringList::Iterator ct = curList .begin(); ct != curList .end(); ++ct ) {
-        if (colNum==0) previewTable->verticalHeader()->setLabel( rowNum, QString::number(rowNum,10) );
-        previewTable->setText( rowNum, colNum,*ct);
+        if (colNum==0) previewTable->setVerticalHeaderItem( rowNum, new QTableWidgetItem( QString::number(rowNum) ) );
+        previewTable->setItem(rowNum, colNum, new QTableWidgetItem( *ct ) );
         colNum++;
         if (colNum==numfields)
         {
@@ -236,7 +230,7 @@ void importCSVForm::fieldSeparatorChanged()
         sep = 9;
     } else {
     QChar qsep = curText.at(0);
-    sep = (char) qsep.ascii();
+    sep = (char) qsep.toAscii();
 }
     preview();
 }
@@ -245,8 +239,11 @@ void importCSVForm::fieldSeparatorChanged()
 void importCSVForm::textQuoteChanged()
 {
     QString curText = quoteBox->currentText();
-    QChar qquote = curText.at(0);
-        quote = (char) qquote.ascii();
+    if(curText.length() > 0)
+    {
+        QChar qquote = curText.at(0);
+        quote = (char) qquote.toAscii();
+    }
     preview();
 }
 

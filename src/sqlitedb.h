@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <qstringlist.h>
 #include <qmap.h>
-#include <q3valuelist.h>
 #include <qobject.h>
 #include "sqllogform.h"
 #include "sqlite3.h"
@@ -25,6 +24,8 @@ kEncodingLatin1,
 kEncodingNONE
 };
 
+static QString sOrganisation = QString("duckmansoftware");
+static QString sApplicationNameShort = QString("sqlitebrowser");
 static QString applicationName = QString("SQLite Database Browser");
 static QString applicationIconName = QString(":/oldimages/icon16");
 static QString aboutText = QString("Version 2.0\n\nSQLite Database Browser is a freeware, public domain, open source visual tool used to create, design and edit database files compatible with SQLite 3.x.\n\nIt has been developed originally by Mauricio Piacentini from Tabuleiro Producoes. \n\nIn the spirit of the original SQLite source code, the author disclaims copyright to this source code.");

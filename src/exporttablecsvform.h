@@ -132,7 +132,7 @@ class exportTableCSVForm : public QDialog, public Ui::exportTableCSVForm
     Q_OBJECT
 
 public:
-    exportTableCSVForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    exportTableCSVForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~exportTableCSVForm();
 
     QString option;

@@ -116,7 +116,6 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         textEditor = new QTextEdit(WStackPage);
         textEditor->setObjectName(QString::fromUtf8("textEditor"));
-        textEditor->setTextFormat(Qt::PlainText);
 
         gridLayout->addWidget(textEditor, 0, 0, 1, 1);
 
@@ -263,7 +262,7 @@ class editForm : public QDialog, public Ui::editForm
     Q_OBJECT
 
 public:
-    editForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    editForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~editForm();
 
     int curCol;

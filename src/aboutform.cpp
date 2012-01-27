@@ -12,8 +12,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-aboutForm::aboutForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+aboutForm::aboutForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -39,7 +39,6 @@ void aboutForm::languageChange()
 
 void aboutForm::init()
 {
-    this->setCaption(applicationName);
-    //aboutBrowser->setText(aboutText);
+    this->setWindowTitle(applicationName);
 }
 

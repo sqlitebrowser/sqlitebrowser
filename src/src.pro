@@ -1,4 +1,3 @@
-QT += qt3support
 TEMPLATE = app
 LANGUAGE = C++
 INCLUDEPATH += sqlite_source/

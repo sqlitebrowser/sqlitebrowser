@@ -211,7 +211,7 @@ class addFieldForm : public QDialog, public Ui::addFieldForm
     Q_OBJECT
 
 public:
-    addFieldForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    addFieldForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~addFieldForm();
 
     QString fname;

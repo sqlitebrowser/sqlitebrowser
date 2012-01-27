@@ -135,7 +135,7 @@ class deleteIndexForm : public QDialog, public Ui::deleteIndexForm
     Q_OBJECT
 
 public:
-    deleteIndexForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    deleteIndexForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~deleteIndexForm();
 
     QString option;

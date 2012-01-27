@@ -15,7 +15,7 @@
 class ExtendedMainForm : public mainForm
 {
 public:
-	ExtendedMainForm(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = Qt::WType_TopLevel);
+    ExtendedMainForm(QWidget* parent = 0);
 	~ExtendedMainForm(void);
 
 protected:

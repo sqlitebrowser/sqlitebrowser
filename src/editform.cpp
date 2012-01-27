@@ -1,11 +1,11 @@
 #include "editform.h"
 
+#include <QTextStream>
 #include <qvariant.h>
-#include <q3filedialog.h>
 #include <qmessagebox.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <Q3TextStream>
+#include <QFileDialog>
 
 #include "sqlitedb.h"
 /*
@@ -15,8 +15,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-editForm::editForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+editForm::editForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -49,7 +49,7 @@ void editForm::init()
     dataDepth = 0;
     curRow = -1;
     curCol = -1;
-    textEditor->setText("");
+    textEditor->setPlainText("");
     setDataType(kSQLiteMediaType_Void, 0);
 }
 
@@ -81,12 +81,12 @@ void editForm::enableTextEditor(bool enabled)
 
 void editForm::setTextFormat(QString format)
 {
-  if (format=="Auto")
-  {
-    textEditor->setTextFormat(Qt::AutoText);
-  } else {
-    textEditor->setTextFormat(Qt::PlainText);
-  }
+//  if (format=="Auto")
+//  {
+//    textEditor->setTextFormat(Qt::AutoText);
+//  } else {
+//    textEditor->setTextFormat(Qt::PlainText);
+//  }
 }
 
 void editForm::setDataType(int type, int size)
@@ -120,7 +120,7 @@ void editForm::closeEvent( QCloseEvent * )
 
 void editForm::loadText(QString  text, int row, int col)
 {
-    textEditor->setText(text);
+    textEditor->setPlainText(text);
     curRow = row;
     curCol = col;
     if (textEditor->toPlainText().length() > 0)
@@ -136,21 +136,19 @@ void editForm::loadText(QString  text, int row, int col)
 void editForm::importData()
 {
     int type = kSQLiteMediaType_Void;
-        QString fileName = Q3FileDialog::getOpenFileName(
-                    "",
-                    QString( "Text files (*.txt);;"
-          "All files (*.*);;"),
+        QString fileName = QFileDialog::getOpenFileName(
                     this,
-                    "open file dialog"
-                    "Choose an image file" );
+                    "Choose an image file",
+                    QString(),
+                    QString( "Text files (*.txt);;All files (*.*);;"));
     if (QFile::exists(fileName) )
     {
         type = kSQLiteMediaType_String;
 
         QFile file( fileName );
         if ( file.open( QIODevice::ReadOnly ) ) {
-            Q3TextStream stream( &file );
-            textEditor->setText(stream.read());
+            QTextStream stream( &file );
+            textEditor->setPlainText(stream.readAll());
             file.close();
         }
 
@@ -173,12 +171,11 @@ void editForm::exportData()
     }
 
 
-    QString fileName = Q3FileDialog::getSaveFileName(
-                    defaultlocation,
-                    filter,
-                    this,
-                    "save file dialog"
-                    "Choose a filename to export data" );
+    QString fileName = QFileDialog::getSaveFileName(
+                this,
+                "Choose a filename to export data",
+                defaultlocation,
+                filter);
 
     if (fileName.size() > 0)
     {
@@ -188,8 +185,8 @@ void editForm::exportData()
            {
                 QFile file(fileName);
                 if ( file.open( QIODevice::WriteOnly ) ) {
-                       Q3TextStream stream( &file );
-                       stream << textEditor->text();
+                       QTextStream stream( &file );
+                       stream << textEditor->toPlainText();
                        file.close();
                    }
             }
@@ -204,7 +201,7 @@ void editForm::exportData()
 
 void editForm::clearData()
 {
-    textEditor->setText("");
+    textEditor->setPlainText("");
     setDataType(kSQLiteMediaType_Void, 0);
     setModified(true);
 }
@@ -213,7 +210,7 @@ void editForm::clearData()
 void editForm::saveChanges()
 {
     if (dataType==kSQLiteMediaType_String)
-        emit updateRecordText(curRow, curCol, textEditor->text());
+        emit updateRecordText(curRow, curCol, textEditor->toPlainText());
 
     if (dataType==kSQLiteMediaType_Void)
         emit updateRecordText(curRow, curCol, QString(""));

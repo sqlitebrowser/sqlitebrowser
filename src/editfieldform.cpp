@@ -14,8 +14,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-editFieldForm::editFieldForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+editFieldForm::editFieldForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -88,7 +88,7 @@ void editFieldForm::confirmEdit()
     field_type = groupRadioTypes->checkedButton()->property("field_type").toString();
     bool ok = pdb.createColumn(table_name, field_name, field_type);
     if(!ok){
-        qDebug(pdb.lastErrorMessage);
+        qDebug(pdb.lastErrorMessage.toUtf8());
         return;
     }
     //qDebug("");
@@ -106,14 +106,14 @@ void editFieldForm::enableSave()
 
 void editFieldForm::getCustomType()
 {
-    addFieldTypeForm * addForm = new addFieldTypeForm( this, "addfieldtype", TRUE );
+    addFieldTypeForm * addForm = new addFieldTypeForm( this );
     if (addForm->exec())
-   {
- //QString nospaces = addForm->typeNameEdit->text().remove(" ");
- QString nospaces = addForm->typeNameEdit->text();
+    {
+        //QString nospaces = addForm->typeNameEdit->text().remove(" ");
+        QString nospaces = addForm->typeNameEdit->text();
         //setInitialValues( nameLineEdit->text(), nospaces );
         enableSave();
-   }
+    }
 }
 
 

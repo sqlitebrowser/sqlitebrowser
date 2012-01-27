@@ -149,19 +149,19 @@ public:
         //** New DB File
         fileNewAction = new QAction(mainForm);
         fileNewAction->setObjectName(QString::fromUtf8("fileNewAction"));
-        fileNewAction->setName("fileNewAction");
+        fileNewAction->setText("fileNewAction");
         fileNewAction->setIcon(QIcon(":/icons/db_new"));
 
         //** Open DB File
         fileOpenAction = new QAction(mainForm);
         fileOpenAction->setObjectName(QString::fromUtf8("fileOpenAction"));
-        fileOpenAction->setName("fileOpenAction");
+        fileOpenAction->setText("fileOpenAction");
         fileOpenAction->setIcon(QIcon(":/icons/db_open"));
 
         //** Save DB Action
         fileSaveAction = new QAction(mainForm);
         fileSaveAction->setObjectName(QString::fromUtf8("fileSaveAction"));
-        fileSaveAction->setName("fileSaveAction");
+        fileSaveAction->setText("fileSaveAction");
         fileSaveAction->setEnabled(false);
         fileSaveAction->setIcon(QIcon(":/icons/db_save"));
         QFont fntS = fileSaveAction->font();
@@ -171,7 +171,7 @@ public:
         //** Db Revert
         fileRevertAction = new QAction(mainForm);
         fileRevertAction->setObjectName(QString::fromUtf8("fileRevertAction"));
-        fileRevertAction->setName("fileRevertAction");
+        fileRevertAction->setText("fileRevertAction");
         fileRevertAction->setEnabled(false);
         fileRevertAction->setIcon(QIcon(":/icons/db_revert"));
         QFont fntR = fileRevertAction->font();
@@ -182,50 +182,50 @@ public:
         //** Exit
         fileExitAction = new QAction(mainForm);
         fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
-        fileExitAction->setName("fileExitAction");
+        fileExitAction->setText("fileExitAction");
 
         editCopyAction = new QAction(mainForm);
         editCopyAction->setObjectName(QString::fromUtf8("editCopyAction"));
-        editCopyAction->setName("editCopyAction");
+        editCopyAction->setText("editCopyAction");
         editPasteAction = new QAction(mainForm);
         editPasteAction->setObjectName(QString::fromUtf8("editPasteAction"));
-        editPasteAction->setName("editPasteAction");
+        editPasteAction->setText("editPasteAction");
         editFindAction = new QAction(mainForm);
         editFindAction->setObjectName(QString::fromUtf8("editFindAction"));
-        editFindAction->setName("editFindAction");
+        editFindAction->setText("editFindAction");
         editFindAction->setIcon(QIcon(":/oldimages/searchfind"));
         editFindAction->setIconVisibleInMenu(true);
         helpContentsAction = new QAction(mainForm);
         helpContentsAction->setObjectName(QString::fromUtf8("helpContentsAction"));
-        helpContentsAction->setName("helpContentsAction");
+        helpContentsAction->setText("helpContentsAction");
         helpIndexAction = new QAction(mainForm);
         helpIndexAction->setObjectName(QString::fromUtf8("helpIndexAction"));
-        helpIndexAction->setName("helpIndexAction");
+        helpIndexAction->setText("helpIndexAction");
         helpAboutAction = new QAction(mainForm);
         helpAboutAction->setObjectName(QString::fromUtf8("helpAboutAction"));
-        helpAboutAction->setName("helpAboutAction");
+        helpAboutAction->setText("helpAboutAction");
 
         //** Close Database ??
         fileCloseAction = new QAction(mainForm);
         fileCloseAction->setObjectName(QString::fromUtf8("fileCloseAction"));
-        fileCloseAction->setName("fileCloseAction");
+        fileCloseAction->setText("fileCloseAction");
         fileCloseAction->setEnabled(false);
 
         newRecordAction = new QAction(mainForm);
         newRecordAction->setObjectName(QString::fromUtf8("newRecordAction"));
-        newRecordAction->setName("newRecordAction");
+        newRecordAction->setText("newRecordAction");
         fileCompactAction = new QAction(mainForm);
         fileCompactAction->setObjectName(QString::fromUtf8("fileCompactAction"));
-        fileCompactAction->setName("fileCompactAction");
+        fileCompactAction->setText("fileCompactAction");
         fileCompactAction->setEnabled(false);
         helpWhatsThisAction = new QAction(mainForm);
         helpWhatsThisAction->setObjectName(QString::fromUtf8("helpWhatsThisAction"));
-        helpWhatsThisAction->setName("helpWhatsThisAction");
+        helpWhatsThisAction->setText("helpWhatsThisAction");
         helpWhatsThisAction->setIcon(QIcon(":/oldimages/whatis"));
         helpWhatsThisAction->setIconVisibleInMenu(true);
         sqlLogAction = new QAction(mainForm);
         sqlLogAction->setObjectName(QString::fromUtf8("sqlLogAction"));
-        sqlLogAction->setName("sqlLogAction");
+        sqlLogAction->setText("sqlLogAction");
         sqlLogAction->setCheckable(true);
         sqlLogAction->setIcon(QIcon(":/oldimages/log"));
         sqlLogAction->setIconVisibleInMenu(true);
@@ -233,10 +233,10 @@ public:
 
         fileImportCSVAction = new QAction(mainForm);
         fileImportCSVAction->setObjectName(QString::fromUtf8("fileImportCSVAction"));
-        fileImportCSVAction->setName("fileImportCSVAction");
+        fileImportCSVAction->setText("fileImportCSVAction");
         fileExportCSVAction = new QAction(mainForm);
         fileExportCSVAction->setObjectName(QString::fromUtf8("fileExportCSVAction"));
-        fileExportCSVAction->setName("fileExportCSVAction");
+        fileExportCSVAction->setText("fileExportCSVAction");
 
 
 
@@ -251,14 +251,14 @@ public:
         //** Create Table
         editCreateTableAction = new QAction(mainForm);
         editCreateTableAction->setObjectName(QString::fromUtf8("editCreateTableAction"));
-        editCreateTableAction->setName("editCreateTableAction");
+        editCreateTableAction->setText("editCreateTableAction");
         editCreateTableAction->setEnabled(false);
         editCreateTableAction->setIcon(QIcon(":/icons/table_create"));
 
         //** Delete table
         editDeleteTableAction = new QAction(mainForm);
         editDeleteTableAction->setObjectName(QString::fromUtf8("editDeleteTableAction"));
-        editDeleteTableAction->setName("editDeleteTableAction");
+        editDeleteTableAction->setText("editDeleteTableAction");
         editDeleteTableAction->setEnabled(false);
         editDeleteTableAction->setIcon(QIcon(":/icons/table_delete"));
 
@@ -269,7 +269,7 @@ public:
         //** Modify Table
         editModifyTableAction = new QAction(mainForm);
         editModifyTableAction->setObjectName(QString::fromUtf8("editModifyTableAction"));
-        editModifyTableAction->setName("editModifyTableAction");
+        editModifyTableAction->setText("editModifyTableAction");
         editModifyTableAction->setEnabled(false);
         editModifyTableAction->setIcon(QIcon(":/icons/table_modify"));
 
@@ -299,25 +299,25 @@ public:
         //** Create/Delete  Index
         editCreateIndexAction = new QAction(mainForm);
         editCreateIndexAction->setObjectName(QString::fromUtf8("editCreateIndexAction"));
-        editCreateIndexAction->setName("editCreateIndexAction");
+        editCreateIndexAction->setText("editCreateIndexAction");
         editCreateIndexAction->setEnabled(false);
         editCreateIndexAction->setIcon(QIcon(":/icons/index_create"));
 
         editDeleteIndexAction = new QAction(mainForm);
         editDeleteIndexAction->setObjectName(QString::fromUtf8("editDeleteIndexAction"));
-        editDeleteIndexAction->setName("editDeleteIndexAction");
+        editDeleteIndexAction->setText("editDeleteIndexAction");
         editDeleteIndexAction->setEnabled(false);
         editDeleteIndexAction->setIcon(QIcon(":/icons/index_delete"));
 
         fileImportSQLAction = new QAction(mainForm);
         fileImportSQLAction->setObjectName(QString::fromUtf8("fileImportSQLAction"));
-        fileImportSQLAction->setName("fileImportSQLAction");
+        fileImportSQLAction->setText("fileImportSQLAction");
         fileExportSQLAction = new QAction(mainForm);
         fileExportSQLAction->setObjectName(QString::fromUtf8("fileExportSQLAction"));
-        fileExportSQLAction->setName("fileExportSQLAction");
+        fileExportSQLAction->setText("fileExportSQLAction");
         editPreferencesAction = new QAction(mainForm);
         editPreferencesAction->setObjectName(QString::fromUtf8("editPreferencesAction"));
-        editPreferencesAction->setName("editPreferencesAction");
+        editPreferencesAction->setText("editPreferencesAction");
         widget = new QWidget(mainForm);
         widget->setObjectName(QString::fromUtf8("widget"));
         vboxLayout = new QVBoxLayout(widget);
@@ -650,7 +650,7 @@ public:
         QObject::connect(editPasteAction, SIGNAL(activated()), mainForm, SLOT(paste()));
         QObject::connect(helpWhatsThisAction, SIGNAL(activated()), mainForm, SLOT(helpWhatsThis()));
         QObject::connect(helpAboutAction, SIGNAL(activated()), mainForm, SLOT(helpAbout()));
-        QObject::connect(dataTable, SIGNAL(doubleClicked(int,int,int,QPoint)), mainForm, SLOT(doubleClickTable(int,int,int,QPoint)));
+        QObject::connect(dataTable, SIGNAL(cellDoubleClicked(int,int)), mainForm, SLOT(doubleClickTable(int,int)));
         QObject::connect(mainTab, SIGNAL(selected(QString)), mainForm, SLOT(mainTabSelected(QString)));
         QObject::connect(sqlLogAction, SIGNAL(toggled(bool)), mainForm, SLOT(toggleLogWindow(bool)));
         QObject::connect(executeQueryButton, SIGNAL(clicked()), mainForm, SLOT(executeQuery()));
@@ -832,6 +832,7 @@ public:
         fileExportSQLAction->setWhatsThis(QApplication::translate("mainForm", "This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
         editPreferencesAction->setIconText(QApplication::translate("mainForm", "Preferences", 0, QApplication::UnicodeUTF8));
+        editPreferencesAction->setText(QApplication::translate("mainForm", "Preferences", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         editPreferencesAction->setToolTip(QApplication::translate("mainForm", "Open the preferences window..", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
@@ -944,7 +945,7 @@ public:
         queryResultTableView->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
         mainTab->setTabText(mainTab->indexOf(query), QApplication::translate("mainForm", "Execute SQL", 0, QApplication::UnicodeUTF8));
-        Toolbar->setLabel(QApplication::translate("mainForm", "Toolbar", 0, QApplication::UnicodeUTF8));
+        //Toolbar->setLabel(QApplication::translate("mainForm", "Toolbar", 0, QApplication::UnicodeUTF8));
         fileMenu->setTitle(QApplication::translate("mainForm", "&File", 0, QApplication::UnicodeUTF8));
         PopupMenuEditor_9->setTitle(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
         PopupMenuEditor_12->setTitle(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
@@ -966,7 +967,7 @@ class mainForm : public QMainWindow, public Ui::mainForm
     Q_OBJECT
 
 public:
-    mainForm(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = Qt::WType_TopLevel);
+    mainForm(QWidget* parent = 0);
     ~mainForm();
 
     sqlLogForm * logWin;
@@ -1020,7 +1021,7 @@ public slots:
     virtual void logWinAway();
     virtual void editWinAway();
     virtual void editText( int row, int col );
-    virtual void doubleClickTable( int row, int col, int button, const QPoint & mousepoint );
+    virtual void doubleClickTable( int row, int col );
     virtual void executeQuery();
     virtual void mainTabSelected( const QString & tabname );
     virtual void toggleLogWindow( bool enable );

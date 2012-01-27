@@ -135,7 +135,7 @@ class deleteTableForm : public QDialog, public Ui::deleteTableForm
     Q_OBJECT
 
 public:
-    deleteTableForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    deleteTableForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~deleteTableForm();
 
     QString option;

@@ -12,8 +12,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-deleteTableForm::deleteTableForm(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+deleteTableForm::deleteTableForm(QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
     setupUi(this);
 
@@ -55,9 +55,7 @@ void deleteTableForm::confirmDelete()
 void deleteTableForm::populateOptions(QStringList entries)
 {
     comboOptions->clear();
-    for ( QStringList::Iterator ct = entries.begin(); ct != entries.end(); ++ct ) {
-        comboOptions->insertItem(*ct,-1);
-    }
+    comboOptions->addItems(entries);
 }
 
 

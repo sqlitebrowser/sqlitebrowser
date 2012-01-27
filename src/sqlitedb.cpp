@@ -4,7 +4,6 @@
 #include <qregexp.h>
 #include <qimage.h>
 #include <qfile.h>
-#include <q3filedialog.h>
 #include <qmessagebox.h>
 #include <QProgressDialog>
 
@@ -57,26 +56,26 @@ void DBBrowserDB::setDefaultNewData( const QString & data )
 
 char * DBBrowserDB::GetEncodedQStringAsPointer( const QString & input)
 {
-    if (curEncoding==kEncodingUTF8) return (char *) input.utf8().constData();
-    if (curEncoding==kEncodingLatin1) return (char *) input.latin1();
+    if (curEncoding==kEncodingUTF8) return (char *) input.toUtf8().constData();
+    if (curEncoding==kEncodingLatin1) return (char *) input.toLatin1().constData();
 
     return (char *) input.constData();
 }
 
 QString DBBrowserDB::GetEncodedQString( const QString & input)
 {
- if (curEncoding==kEncodingUTF8) return input.utf8();
- if (curEncoding==kEncodingLatin1) return input.latin1();
+ if (curEncoding==kEncodingUTF8) return input.toUtf8();
+ if (curEncoding==kEncodingLatin1) return input.toLatin1();
  
  return input;
 }
 
 QString DBBrowserDB::GetDecodedQString( const QString & input)
 {
- if (curEncoding==kEncodingUTF8) return QString::fromUtf8(input);
- if (curEncoding==kEncodingLatin1) return QString::fromLatin1(input);
- 
- return input;
+//    if (curEncoding==kEncodingUTF8) return QString::fromUtf8(input);
+//    if (curEncoding==kEncodingLatin1) return QString::fromLatin1(input);
+
+    return input;
 }
 
 bool DBBrowserDB::open ( const QString & db)
@@ -104,7 +103,7 @@ bool DBBrowserDB::open ( const QString & db)
    
   lastErrorMessage = QString("no error");
 
-  err = sqlite3_open_v2(GetEncodedQString(db), &_db, SQLITE_OPEN_READWRITE, NULL);
+  err = sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL);
   if ( err ) {
     lastErrorMessage = sqlite3_errmsg(_db);
     sqlite3_close(_db);
@@ -170,7 +169,7 @@ bool DBBrowserDB::create ( const QString & db)
   
   lastErrorMessage = QString("no error");
 
-    if( sqlite3_open(GetEncodedQString(db), &_db) != SQLITE_OK ){
+    if( sqlite3_open(db.toUtf8(), &_db) != SQLITE_OK ){
         lastErrorMessage = sqlite3_errmsg(_db);
         sqlite3_close(_db);
         _db = 0;
@@ -250,7 +249,7 @@ bool DBBrowserDB::reload( const QString & filename, int * lineErr)
 {
     /*to avoid a nested transaction error*/
     sqlite3_exec(_db,"COMMIT;", NULL,NULL,NULL);
-    FILE * cfile = fopen((const char *) filename, (const char *) "r");
+    FILE * cfile = fopen(filename.toUtf8(), (const char *) "r");
     load_database(_db, cfile, lineErr);
     fclose(cfile);
     setDirty(false);
@@ -263,7 +262,7 @@ bool DBBrowserDB::reload( const QString & filename, int * lineErr)
 
 bool DBBrowserDB::dump( const QString & filename)
 {
-    FILE * cfile = fopen((const char *) filename, (const char *) "w");
+    FILE * cfile = fopen(filename.toUtf8(), (const char *) "w");
     if (!cfile)
     {
  return false;
@@ -283,7 +282,7 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
     if (_db){
         if (logsql) logSQL(statement, kLogMsg_App);
         if (dirtyDB) setDirty(true);
-        if (SQLITE_OK==sqlite3_exec(_db,GetEncodedQString(statement),
+        if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
                                     NULL,NULL,&errmsg)){
             ok=true;
         }
@@ -318,7 +317,7 @@ bool DBBrowserDB::addRecord ( )
     if (_db){
  logSQL(statement, kLogMsg_App);
  setDirty(true);
- if (SQLITE_OK==sqlite3_exec(_db,statement,NULL,NULL, &errmsg)){
+ if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),NULL,NULL, &errmsg)){
  ok=true;
  //int newrowid = sqlite3_last_insert_rowid(_db);
     } else {
@@ -349,7 +348,7 @@ bool DBBrowserDB::deleteRecord( int wrow)
     if (_db){
  logSQL(statement, kLogMsg_App);
  setDirty(true);
- if (SQLITE_OK==sqlite3_exec(_db,GetEncodedQString(statement),
+ if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
                                NULL,NULL,&errmsg)){
  ok=true;
     } else {
@@ -380,7 +379,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     statement.append("=");
 
     QString wenc = GetEncodedQString(wtext);
-   char * formSQL = sqlite3_mprintf("%Q",(const char *) wenc);   
+    char * formSQL = sqlite3_mprintf("%Q", wenc.toUtf8().constData());
     statement.append(formSQL);
     if (formSQL) sqlite3_free(formSQL);
     
@@ -391,7 +390,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     if (_db){
      logSQL(statement, kLogMsg_App);
  setDirty(true);
- if (SQLITE_OK==sqlite3_exec(_db,statement,
+ if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
                                NULL,NULL,&errmsg)){
  ok=true;
  /*update local copy*/
@@ -428,7 +427,7 @@ bool DBBrowserDB::browseTable( const QString & tablename )
 bool DBBrowserDB::createColumn( QString tablename, QString fieldname, QString fieldtype ){
     qDebug("create column");
     QString sql = QString("ALTER TABLE `%1` ADD COLUMN `%2` %3").arg(tablename).arg(fieldname).arg(fieldtype);
-    qDebug(sql);
+    qDebug(sql.toUtf8());
     return executeSQL(sql);
 }
 
@@ -456,7 +455,7 @@ void DBBrowserDB::getTableRecords( const QString & tablename )
  statement.append(" ORDER BY rowid; ");
  //qDebug(statement);
  logSQL(statement, kLogMsg_App);
-  err=sqlite3_prepare(_db,statement,statement.length(),
+  err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
                               &vm, &tail);
  if (err == SQLITE_OK){
      int rownum = 0;
@@ -497,7 +496,7 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
    lastErrorMessage = QString("no error");
   QString encstatement = GetEncodedQString(wstatement);
   logSQL(encstatement, kLogMsg_App);
- err=sqlite3_prepare(_db,encstatement,encstatement.length(),
+ err=sqlite3_prepare(_db,encstatement.toUtf8(),encstatement.length(),
                               &vm, &tail);
  if (err == SQLITE_OK){
      int rownum = 0;
@@ -533,7 +532,7 @@ QStringList DBBrowserDB::getTableNames()
     QStringList res;
 
     for ( it = tmap.begin(); it != tmap.end(); ++it ) {
- res.append( it.data().getname() );
+        res.append( it.value().getname() );
     }
     
    return res;
@@ -546,10 +545,10 @@ QStringList DBBrowserDB::getIndexNames()
     QStringList res;
 
     for ( it = tmap.begin(); it != tmap.end(); ++it ) {
- res.append( it.data().getname() );
+        res.append( it.value().getname() );
     }
     
-   return res;
+    return res;
 }
 
 QStringList DBBrowserDB::getTableFields(const QString & tablename)
@@ -558,16 +557,16 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename)
     tableMap tmap = tbmap;
     QStringList res;
 
-        for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-     if (tablename.compare(it.data().getname())==0 ){
-     fieldMap::Iterator fit;
-     fieldMap fmap = it.data().fldmap;
+    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+        if (tablename.compare(it.value().getname())==0 ){
+            fieldMap::Iterator fit;
+            fieldMap fmap = it.value().fldmap;
 
-     for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-   res.append( fit.data().getname() );
-     }
- }
- }
+            for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+                res.append( fit.value().getname() );
+            }
+        }
+    }
     return res;
 }
 
@@ -578,12 +577,12 @@ QStringList DBBrowserDB::getTableTypes(const QString & tablename)
     QStringList res;
 
         for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-     if (tablename.compare(it.data().getname())==0 ){
+     if (tablename.compare(it.value().getname())==0 ){
      fieldMap::Iterator fit;
-     fieldMap fmap = it.data().fldmap;
+     fieldMap fmap = it.value().fldmap;
 
      for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-   res.append( fit.data().gettype() );
+   res.append( fit.value().gettype() );
      }
  }
  }
@@ -613,172 +612,173 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
 
 void DBBrowserDB::updateSchema( )
 {
-  // qDebug ("Getting list of tables");
-        sqlite3_stmt *vm;
-        const char *tail;
-        QStringList r;
-        int err=0;
-   QString num;
-        int idxnum =0;
-        int tabnum = 0;
+    // qDebug ("Getting list of tables");
+    sqlite3_stmt *vm;
+    const char *tail;
+    QStringList r;
+    int err=0;
+    QString num;
+    int idxnum =0;
+    int tabnum = 0;
 
-        idxmap.clear();
-        tbmap.clear();
+    idxmap.clear();
+    tbmap.clear();
 
-        lastErrorMessage = QString("no error");
-        QString statement = "SELECT name, sql "
-                "FROM sqlite_master "
-                              "WHERE type='table' ;";
+    lastErrorMessage = QString("no error");
+    QString statement = "SELECT name, sql "
+            "FROM sqlite_master "
+            "WHERE type='table' ;";
 
-   err=sqlite3_prepare(_db, (const char *) statement,statement.length(),
-                                                                                        &vm, &tail);
-        if (err == SQLITE_OK){
-                logSQL(statement, kLogMsg_App);
-                while ( sqlite3_step(vm) == SQLITE_ROW ){
-       num.setNum(tabnum);
-                                                QString  val1, val2;
-                                                val1 = QString((const char *) sqlite3_column_text(vm, 0));
-                                                val2 = QString((const char *) sqlite3_column_text(vm, 1));
-       tbmap[num] = DBBrowserTable(GetDecodedQString(val1), GetDecodedQString(val2));
-                                                tabnum++;
-                }
-                sqlite3_finalize(vm);
-        }else{
-                qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
-        }
-
-        //now get the field list for each table in tbmap
-        tableMap::Iterator it;
-        for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-                statement = "PRAGMA TABLE_INFO(";
- statement.append( (const char *) GetEncodedQString(it.data().getname()));
-                statement.append(");");
-                logSQL(statement, kLogMsg_App);
- err=sqlite3_prepare(_db,statement,statement.length(),
-                                                                                                &vm, &tail);
-                if (err == SQLITE_OK){
-                        it.data(). fldmap.clear();
-                        int e = 0;
-                        while ( sqlite3_step(vm) == SQLITE_ROW ){
-                                if (sqlite3_column_count(vm)==6) {
-                                        QString  val1, val2;
-                                        int ispk= 0;
-                                        val1 = QString((const char *) sqlite3_column_text(vm, 1));
-                                        val2 = QString((const char *) sqlite3_column_text(vm, 2));
-                                        ispk = sqlite3_column_int(vm, 5);
-                                        if (ispk==1){
-                                                val2.append(QString(" PRIMARY KEY"));
-                                        }
-         it.data().addField(e,GetDecodedQString(val1),GetDecodedQString(val2));
-                                        e++;
-                                }
-      }
-      sqlite3_finalize(vm);
-                } else{
-                        lastErrorMessage = QString ("could not get types");
-                }
-        }
-        statement = "SELECT name, sql "
-                "FROM sqlite_master "
-                              "WHERE type='index' ";
-  /*"ORDER BY name;"*/
-        //finally get indices
- err=sqlite3_prepare(_db,statement,statement.length(),
-                                                                                        &vm, &tail);
+    err=sqlite3_prepare(_db, (const char *) statement.toUtf8(),statement.length(),
+                        &vm, &tail);
+    if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
-        if (err == SQLITE_OK){
-                while ( sqlite3_step(vm) == SQLITE_ROW ){
-                        QString  val1, val2;
-                        val1 = QString((const char *) sqlite3_column_text(vm, 0));
-                        val2 = QString((const char *) sqlite3_column_text(vm, 1));
-      num.setNum(idxnum);
-      idxmap[num] = DBBrowserIndex(GetDecodedQString(val1),GetDecodedQString(val2));
-      idxnum ++;
-                }
-                sqlite3_finalize(vm);
-        }else{
-                lastErrorMessage = QString ("could not get list of indices");
+        while ( sqlite3_step(vm) == SQLITE_ROW ){
+            num.setNum(tabnum);
+            QString  val1, val2;
+            val1 = QString((const char *) sqlite3_column_text(vm, 0));
+            val2 = QString((const char *) sqlite3_column_text(vm, 1));
+            tbmap[num] = DBBrowserTable(GetDecodedQString(val1), GetDecodedQString(val2));
+            tabnum++;
         }
+        sqlite3_finalize(vm);
+    }else{
+        qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
+    }
+
+    //now get the field list for each table in tbmap
+    tableMap::Iterator it;
+    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
+        statement = "PRAGMA TABLE_INFO(";
+        statement.append( it.value().getname().toUtf8().constData());
+        statement.append(");");
+        logSQL(statement, kLogMsg_App);
+        err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
+                            &vm, &tail);
+        if (err == SQLITE_OK){
+            it.value(). fldmap.clear();
+            int e = 0;
+            while ( sqlite3_step(vm) == SQLITE_ROW ){
+                if (sqlite3_column_count(vm)==6) {
+                    QString  val1, val2;
+                    int ispk= 0;
+                    val1 = QString((const char *) sqlite3_column_text(vm, 1));
+                    val2 = QString((const char *) sqlite3_column_text(vm, 2));
+                    ispk = sqlite3_column_int(vm, 5);
+                    if (ispk==1){
+                        val2.append(QString(" PRIMARY KEY"));
+                    }
+                    it.value().addField(e,GetDecodedQString(val1),GetDecodedQString(val2));
+                    e++;
+                }
+            }
+            sqlite3_finalize(vm);
+        } else{
+            lastErrorMessage = QString ("could not get types");
+        }
+    }
+    statement = "SELECT name, sql "
+            "FROM sqlite_master "
+            "WHERE type='index' ";
+    /*"ORDER BY name;"*/
+    //finally get indices
+    err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
+                        &vm, &tail);
+    logSQL(statement, kLogMsg_App);
+    if (err == SQLITE_OK){
+        while ( sqlite3_step(vm) == SQLITE_ROW ){
+            QString  val1, val2;
+            val1 = QString((const char *) sqlite3_column_text(vm, 0));
+            val2 = QString((const char *) sqlite3_column_text(vm, 1));
+            num.setNum(idxnum);
+            idxmap[num] = DBBrowserIndex(GetDecodedQString(val1),GetDecodedQString(val2));
+            idxnum ++;
+        }
+        sqlite3_finalize(vm);
+    }else{
+        lastErrorMessage = QString ("could not get list of indices");
+    }
 }
 
 QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char quote, int maxrecords, int * numfields)
 {
- QFile file(csvfilename);
- QStringList result;
- QString current = "";
- bool inquotemode = false;
- bool inescapemode = false;
- int recs = 0;
- *numfields = 0;
+    QFile file(csvfilename);
+    QStringList result;
+    QString current = "";
+    bool inquotemode = false;
+    bool inescapemode = false;
+    int recs = 0;
+    *numfields = 0;
 
     if ( file.open( QIODevice::ReadWrite ) ) {
         QProgressDialog progress("Decoding CSV file...", "Cancel", 0, file.size());
         progress.setWindowModality(Qt::ApplicationModal);
-  char c=0;
+        char c=0;
         while ( c!=-1) {
-            c = file.getch();
-   if (c==quote){
-    if (inquotemode){
-     if (inescapemode){
-      inescapemode = false;
-      //add the escaped char here
-     current.append(c);
-      } else {
-     //are we escaping, or just finishing the quote?
-      char d = file.getch();
-      if (d==quote) {
-       inescapemode = true;
-      } else {
-       inquotemode = false;
-      }
-      file.ungetch(d);
-     }
-    } else {
-     inquotemode = true;
-    }
-         } else if (c==sep) {
-    if (inquotemode){
-       //add the sep here
-       current.append(c);
-    } else {
-      //not quoting, start new record
-      result << current;
-      current = "";
-    }
-   } else if (c==10) {
-    if (inquotemode){
-       //add the newline
-       current.append(c);
-    } else {
-      //not quoting, start new record
-      result << current;
-      current = "";
-      //for the first line, store the field count
-      if (*numfields == 0){
-          *numfields = result.count();
-      }
-      recs++;
-      progress.setValue(file.pos());
-      if (progress.wasCanceled()) break;
-      if ((recs>maxrecords)&&(maxrecords!=-1))         {
-          break;
-      }   
-    }
-   } else if (c==13) {
-    if (inquotemode){
-       //add the carrier return if in quote mode only
-       current.append(c);
-    }
-   } else {//another character type
-    current.append(c);
-   }
-  }
+            file.getChar(&c);
+            if (c==quote){
+                if (inquotemode){
+                    if (inescapemode){
+                        inescapemode = false;
+                        //add the escaped char here
+                        current.append(c);
+                    } else {
+                        //are we escaping, or just finishing the quote?
+                        char d;
+                        file.getChar(&d);
+                        if (d==quote) {
+                            inescapemode = true;
+                        } else {
+                            inquotemode = false;
+                        }
+                        file.ungetChar(d);
+                    }
+                } else {
+                    inquotemode = true;
+                }
+            } else if (c==sep) {
+                if (inquotemode){
+                    //add the sep here
+                    current.append(c);
+                } else {
+                    //not quoting, start new record
+                    result << current;
+                    current = "";
+                }
+            } else if (c==10) {
+                if (inquotemode){
+                    //add the newline
+                    current.append(c);
+                } else {
+                    //not quoting, start new record
+                    result << current;
+                    current = "";
+                    //for the first line, store the field count
+                    if (*numfields == 0){
+                        *numfields = result.count();
+                    }
+                    recs++;
+                    progress.setValue(file.pos());
+                    if (progress.wasCanceled()) break;
+                    if ((recs>maxrecords)&&(maxrecords!=-1))         {
+                        break;
+                    }
+                }
+            } else if (c==13) {
+                if (inquotemode){
+                    //add the carrier return if in quote mode only
+                    current.append(c);
+                }
+            } else {//another character type
+                current.append(c);
+            }
+        }
         file.close();
-  //do we still have a last result, not appended?
-                 //proper csv files should end with a linefeed , so this is not necessary
-  //if (current.length()>0) result << current;
+        //do we still have a last result, not appended?
+        //proper csv files should end with a linefeed , so this is not necessary
+        //if (current.length()>0) result << current;
     }
- return result;
+    return result;
 }
 
 

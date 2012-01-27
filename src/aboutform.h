@@ -137,7 +137,7 @@ class aboutForm : public QDialog, public Ui::aboutForm
     Q_OBJECT
 
 public:
-    aboutForm(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    aboutForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~aboutForm();
 
 protected slots:
