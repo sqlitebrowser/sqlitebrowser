@@ -25,7 +25,8 @@ HEADERS += extendedmainform.h \
     renametableform.h \
     sqllogform.h \
     preferencesform.h \
-    mainwindow.h
+    mainwindow.h \
+    createtabledialog.h
 SOURCES += extendedmainform.cpp \
     browsermain.cpp \
     sqlitedb.cpp \
@@ -48,7 +49,8 @@ SOURCES += extendedmainform.cpp \
     renametableform.cpp \
     sqllogform.cpp \
     preferencesform.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    createtabledialog.cpp
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc
@@ -65,3 +67,6 @@ mac {
         ppc
 }
 RESOURCES += icons/icons.qrc
+
+FORMS += \
+    createtabledialog.ui
