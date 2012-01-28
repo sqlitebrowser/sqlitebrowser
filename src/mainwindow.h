@@ -135,6 +135,11 @@ public:
     QMenu *EditMenu;
     QMenu *ViewMenu;
     QMenu *PopupMenu;
+    QMenu *recentFilesMenu;
+
+    enum { MaxRecentFiles = 5 };
+    QAction *recentFileActs[MaxRecentFiles];
+    QAction *recentSeparatorAct;
 
     void setupUi(QMainWindow *mainForm)
     {
@@ -177,6 +182,13 @@ public:
         QFont fntR = fileRevertAction->font();
         fntR.setBold(true);
         fileRevertAction->setFont(fntR);
+
+        // Recent dbs
+        for(int i = 0; i < MaxRecentFiles; ++i) {
+            recentFileActs[i] = new QAction(mainForm);
+            recentFileActs[i]->setVisible(false);
+            mainForm->connect(recentFileActs[i], SIGNAL(triggered()), mainForm, SLOT(openRecentFile()));
+        }
 
 
         //** Exit
@@ -599,6 +611,12 @@ public:
         fileMenu->addAction(importMenu->menuAction());
         //fileMenu->addAction(fileExportAction);
         fileMenu->addAction(exportMenu->menuAction());
+
+        recentSeparatorAct = fileMenu->addSeparator();
+        for(int i = 0; i < MaxRecentFiles; ++i)
+            fileMenu->addAction(recentFileActs[i]);
+
+
         fileMenu->addSeparator();
         fileMenu->addAction(fileExitAction);
         importMenu->addAction(fileImportSQLAction);
@@ -979,6 +997,10 @@ public:
     QIntValidator * gotoValidator;
     QString defaultlocation;
 
+private:
+    void updateRecentFileActions();
+    void setCurrentFile(const QString& fileName);
+
 public slots:
     virtual void on_tree_context_menu(const QPoint & qPoint);
     virtual void on_tree_selection_changed();
@@ -1034,6 +1056,7 @@ public slots:
     virtual void importDatabaseFromSQL();
     virtual void openPreferences();
     virtual void updatePreferences();
+    virtual void openRecentFile();
 
 protected:
     DBBrowserDB db;

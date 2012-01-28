@@ -8,8 +8,8 @@
 #include <QWhatsThis>
 
 #include "qmessagebox.h"
-//#include "q3filedialog.h"
 #include <QtGui/QFileDialog>
+#include <QSettings>
 
 #include "qfile.h"
 #include "qapplication.h"
@@ -75,6 +75,7 @@ void mainForm::init()
     this->setWindowIcon( QPixmap( applicationIconName ) );
     buttonNext->setEnabled(false);
     buttonPrevious->setEnabled(false);
+    updateRecentFileActions();
 
 
     if(!editWin){
@@ -129,6 +130,7 @@ void mainForm::fileOpen(const QString & fileName)
             editModifyTableAction->setEnabled(true);
             editCreateIndexAction->setEnabled(true);
             editDeleteIndexAction->setEnabled(true);
+            setCurrentFile(wFile);
         } else {
             QString err = "An error occurred:  ";
             err.append(db.lastErrorMessage);
@@ -175,6 +177,7 @@ void mainForm::fileNew()
         editModifyTableAction->setEnabled(true);
         editCreateIndexAction->setEnabled(true);
         editDeleteIndexAction->setEnabled(true);
+        setCurrentFile(fileName);
     }
 }
 
@@ -1288,4 +1291,49 @@ void mainForm::on_edit_field(){
     }
 }
 
+void mainForm::openRecentFile()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+        fileOpen(action->data().toString());
+}
 
+void mainForm::updateRecentFileActions()
+{
+    QSettings settings(sOrganisation, sApplicationNameShort);
+    QStringList files = settings.value("recentFileList").toStringList();
+
+
+    int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
+
+    for (int i = 0; i < numRecentFiles; ++i) {
+        QString text = tr("&%1 %2").arg(i + 1).arg(files[i]);
+        recentFileActs[i]->setText(text);
+        recentFileActs[i]->setData(files[i]);
+        recentFileActs[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
+        recentFileActs[j]->setVisible(false);
+
+    recentSeparatorAct->setVisible(numRecentFiles > 0);
+}
+
+void mainForm::setCurrentFile(const QString &fileName)
+{
+    setWindowFilePath(fileName);
+
+    QSettings settings(sOrganisation, sApplicationNameShort);
+    QStringList files = settings.value("recentFileList").toStringList();
+    files.removeAll(fileName);
+    files.prepend(fileName);
+    while (files.size() > MaxRecentFiles)
+        files.removeLast();
+
+    settings.setValue("recentFileList", files);
+
+    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+        mainForm *mainWin = qobject_cast<mainForm *>(widget);
+        if (mainWin)
+            mainWin->updateRecentFileActions();
+    }
+}
