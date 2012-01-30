@@ -681,7 +681,9 @@ void mainForm::updateTableView(int lineToSelect)
                     firstline.truncate(MAX_DISPLAY_LENGTH);
                     firstline.append("...");
                 }
-                dataTable->setItem( rowNum, colNum, new QTableWidgetItem(firstline));
+                QTableWidgetItem* item = new QTableWidgetItem(firstline);
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+                dataTable->setItem( rowNum, colNum, item);
                 colNum++;
                 //}
             }
