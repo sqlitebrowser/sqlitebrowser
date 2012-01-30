@@ -50,6 +50,7 @@ void editForm::init()
     curRow = -1;
     curCol = -1;
     textEditor->setPlainText("");
+    textEditor->setFocus();
     setDataType(kSQLiteMediaType_Void, 0);
 }
 
@@ -121,6 +122,8 @@ void editForm::closeEvent( QCloseEvent * )
 void editForm::loadText(QString  text, int row, int col)
 {
     textEditor->setPlainText(text);
+    textEditor->setFocus();
+    textEditor->selectAll();
     curRow = row;
     curCol = col;
     if (textEditor->toPlainText().length() > 0)
