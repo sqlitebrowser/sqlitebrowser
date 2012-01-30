@@ -42,12 +42,9 @@
 #include <QtCore/QPoint>
 #include <QtCore/QVariant>
 
-#include "editform.h"
-#include "findform.h"
 #include "QtGui/QClipboard"
 #include "QtGui/QRegExpValidator"
 #include "sqlitedb.h"
-#include "sqllogform.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -979,6 +976,10 @@ namespace Ui {
 } // namespace Ui
 
 QT_END_NAMESPACE
+
+class sqlLogForm;
+class editForm;
+class findForm;
 
 class mainForm : public QMainWindow, public Ui::mainForm
 {

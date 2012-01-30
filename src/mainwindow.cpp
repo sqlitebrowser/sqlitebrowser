@@ -1,18 +1,16 @@
 #include "mainwindow.h"
 
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
-#include <QTextStream>
-#include <QWhatsThis>
-
-#include "qmessagebox.h"
 #include <QtGui/QFileDialog>
 #include <QSettings>
+#include <QFile>
+#include <QApplication>
+#include <QVariant>
+#include <QImage>
+#include <QPixmap>
+#include <QTextStream>
+#include <QWhatsThis>
+#include <QMessageBox>
 
-#include "qfile.h"
-#include "qapplication.h"
 #include "createtableform.h"
 #include "createindexform.h"
 #include "deletetableform.h"
@@ -24,6 +22,10 @@
 #include "importcsvform.h"
 #include "exporttablecsvform.h"
 #include "preferencesform.h"
+#include "editform.h"
+#include "findform.h"
+#include "sqllogform.h"
+
 /*
  *  Constructs a mainForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
