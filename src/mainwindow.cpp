@@ -26,6 +26,281 @@
 #include "findform.h"
 #include "sqllogform.h"
 
+void Ui_mainForm::retranslateUi(QMainWindow *mainForm)
+{
+    mainForm->setWindowTitle(QApplication::translate("mainForm", "Browser", 0, QApplication::UnicodeUTF8));
+    fileNewAction->setIconText(QApplication::translate("mainForm", "New Database", 0, QApplication::UnicodeUTF8));
+    fileNewAction->setText(QApplication::translate("mainForm", "&New Database", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileNewAction->setToolTip(QApplication::translate("mainForm", "Create a new database file", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileNewAction->setWhatsThis(QApplication::translate("mainForm", "This option is used to create a new database file.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileNewAction->setShortcut(QApplication::translate("mainForm", "Ctrl+N", 0, QApplication::UnicodeUTF8));
+    fileOpenAction->setIconText(QApplication::translate("mainForm", "Open Database", 0, QApplication::UnicodeUTF8));
+    fileOpenAction->setText(QApplication::translate("mainForm", "&Open Database", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileOpenAction->setToolTip(QApplication::translate("mainForm", "Open an existing database file", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileOpenAction->setWhatsThis(QApplication::translate("mainForm", "This option is used to open an existing database file.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileOpenAction->setShortcut(QApplication::translate("mainForm", "Ctrl+O", 0, QApplication::UnicodeUTF8));
+    fileExitAction->setIconText(QApplication::translate("mainForm", "Exit", 0, QApplication::UnicodeUTF8));
+    fileExitAction->setText(QApplication::translate("mainForm", "E&xit", 0, QApplication::UnicodeUTF8));
+    fileExitAction->setShortcut(QString());
+    editCopyAction->setIconText(QApplication::translate("mainForm", "Copy", 0, QApplication::UnicodeUTF8));
+    editCopyAction->setText(QApplication::translate("mainForm", "&Copy", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+    editCopyAction->setWhatsThis(QApplication::translate("mainForm", "Copies the selected text to the clipboard", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editCopyAction->setShortcut(QApplication::translate("mainForm", "Ctrl+C", 0, QApplication::UnicodeUTF8));
+    editPasteAction->setIconText(QApplication::translate("mainForm", "Paste", 0, QApplication::UnicodeUTF8));
+    editPasteAction->setText(QApplication::translate("mainForm", "&Paste", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+    editPasteAction->setWhatsThis(QApplication::translate("mainForm", "Pastes text from the clipboard into the current text insertion point", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editPasteAction->setShortcut(QApplication::translate("mainForm", "Ctrl+V", 0, QApplication::UnicodeUTF8));
+    editFindAction->setIconText(QApplication::translate("mainForm", "Find", 0, QApplication::UnicodeUTF8));
+    editFindAction->setText(QApplication::translate("mainForm", "&Find...", 0, QApplication::UnicodeUTF8));
+    editFindAction->setShortcut(QApplication::translate("mainForm", "F", 0, QApplication::UnicodeUTF8));
+    helpContentsAction->setIconText(QApplication::translate("mainForm", "Contents", 0, QApplication::UnicodeUTF8));
+    helpContentsAction->setText(QApplication::translate("mainForm", "&Contents...", 0, QApplication::UnicodeUTF8));
+    helpContentsAction->setShortcut(QString());
+    helpIndexAction->setIconText(QApplication::translate("mainForm", "Index", 0, QApplication::UnicodeUTF8));
+    helpIndexAction->setText(QApplication::translate("mainForm", "&Index...", 0, QApplication::UnicodeUTF8));
+    helpIndexAction->setShortcut(QString());
+    helpAboutAction->setIconText(QApplication::translate("mainForm", "About", 0, QApplication::UnicodeUTF8));
+    helpAboutAction->setText(QApplication::translate("mainForm", "&About", 0, QApplication::UnicodeUTF8));
+    helpAboutAction->setShortcut(QString());
+    fileCloseAction->setIconText(QApplication::translate("mainForm", "Close Database", 0, QApplication::UnicodeUTF8));
+    fileCloseAction->setText(QApplication::translate("mainForm", "Close Database", 0, QApplication::UnicodeUTF8));
+    newRecordAction->setIconText(QApplication::translate("mainForm", "New Record", 0, QApplication::UnicodeUTF8));
+    newRecordAction->setText(QApplication::translate("mainForm", "New Record", 0, QApplication::UnicodeUTF8));
+    fileCompactAction->setIconText(QApplication::translate("mainForm", "Compact Database", 0, QApplication::UnicodeUTF8));
+    fileCompactAction->setText(QApplication::translate("mainForm", "Compact Database", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_STATUSTIP
+    fileCompactAction->setStatusTip(QApplication::translate("mainForm", "Compact the database file, removing space wasted by deleted records.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_STATUSTIP
+#ifndef QT_NO_WHATSTHIS
+    fileCompactAction->setWhatsThis(QApplication::translate("mainForm", "Compact the database file, removing space wasted by deleted records.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    helpWhatsThisAction->setIconText(QApplication::translate("mainForm", "What's This?", 0, QApplication::UnicodeUTF8));
+    helpWhatsThisAction->setText(QApplication::translate("mainForm", "What's This?", 0, QApplication::UnicodeUTF8));
+    helpWhatsThisAction->setShortcut(QApplication::translate("mainForm", "Shift+F1", 0, QApplication::UnicodeUTF8));
+    sqlLogAction->setIconText(QApplication::translate("mainForm", "SQL Log", 0, QApplication::UnicodeUTF8));
+    sqlLogAction->setText(QApplication::translate("mainForm", "SQL Log", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+    sqlLogAction->setWhatsThis(QApplication::translate("mainForm", "Display or hide the SQL log window, which stores all SQL commands issued by the user or the application.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileImportCSVAction->setIconText(QApplication::translate("mainForm", "Table from CSV file", 0, QApplication::UnicodeUTF8));
+    fileImportCSVAction->setText(QApplication::translate("mainForm", "Table from CSV file", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileImportCSVAction->setToolTip(QApplication::translate("mainForm", "Open a wizard that lets you import data from a comma separated text file into a database table.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileImportCSVAction->setWhatsThis(QApplication::translate("mainForm", "Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileExportCSVAction->setIconText(QApplication::translate("mainForm", "Table as CSV file", 0, QApplication::UnicodeUTF8));
+    fileExportCSVAction->setText(QApplication::translate("mainForm", "Table as CSV file", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileExportCSVAction->setToolTip(QApplication::translate("mainForm", "Export a database table as a comma separated text file.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileExportCSVAction->setWhatsThis(QApplication::translate("mainForm", "Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileSaveAction->setIconText(QApplication::translate("mainForm", "Write Changes", 0, QApplication::UnicodeUTF8));
+    fileSaveAction->setText(QApplication::translate("mainForm", "Revert Changes", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileSaveAction->setToolTip(QApplication::translate("mainForm", "Write changes to the database file", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileSaveAction->setWhatsThis(QApplication::translate("mainForm", "This option is used to save changes to the database file.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileRevertAction->setIconText(QApplication::translate("mainForm", "Revert Changes", 0, QApplication::UnicodeUTF8));
+    fileRevertAction->setText(QApplication::translate("mainForm", "Revert Changes", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileRevertAction->setToolTip(QApplication::translate("mainForm", "Revert database to last saved state", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileRevertAction->setWhatsThis(QApplication::translate("mainForm", "This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    //fileImportAction->setIconText(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
+    //fileImportAction->setText(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
+    //fileExportAction->setIconText(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
+    //fileExportAction->setText(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
+    editCreateTableAction->setIconText(QApplication::translate("mainForm", "Create Table", 0, QApplication::UnicodeUTF8));
+    editCreateTableAction->setText(QApplication::translate("mainForm", "Create Table", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+    editCreateTableAction->setWhatsThis(QApplication::translate("mainForm", "Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editDeleteTableAction->setIconText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+    editDeleteTableAction->setText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+    editDeleteTableActionPopup->setIconText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+    editDeleteTableActionPopup->setText(QApplication::translate("mainForm", "Delete Table", 0, QApplication::UnicodeUTF8));
+
+#ifndef QT_NO_WHATSTHIS
+    editDeleteTableAction->setWhatsThis(QApplication::translate("mainForm", "Open the Delete Table wizard, where you can select a database table to be dropped.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editModifyTableAction->setIconText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+    editModifyTableAction->setText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+
+    editModifyTableActionPopup->setIconText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+    editModifyTableActionPopup->setText(QApplication::translate("mainForm", "Modify Table", 0, QApplication::UnicodeUTF8));
+
+#ifndef QT_NO_WHATSTHIS
+    editModifyTableAction->setWhatsThis(QApplication::translate("mainForm", "Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editCreateIndexAction->setIconText(QApplication::translate("mainForm", "Create Index", 0, QApplication::UnicodeUTF8));
+    editCreateIndexAction->setText(QApplication::translate("mainForm", "Create Index", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+    editCreateIndexAction->setWhatsThis(QApplication::translate("mainForm", "Open the Create Index wizard, where it is possible to define a new index on an existing database table.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editDeleteIndexAction->setIconText(QApplication::translate("mainForm", "Delete Index", 0, QApplication::UnicodeUTF8));
+    editDeleteIndexAction->setText(QApplication::translate("mainForm", "Delete Index", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+    editDeleteIndexAction->setWhatsThis(QApplication::translate("mainForm", "Open the Delete Index wizard, where you can select a database index to be dropped.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileImportSQLAction->setIconText(QApplication::translate("mainForm", "Database from SQL file", 0, QApplication::UnicodeUTF8));
+    fileImportSQLAction->setText(QApplication::translate("mainForm", "Database from SQL file", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileImportSQLAction->setToolTip(QApplication::translate("mainForm", "Import data from an .sql dump text file into a new or existing database.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileImportSQLAction->setWhatsThis(QApplication::translate("mainForm", "This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    fileExportSQLAction->setIconText(QApplication::translate("mainForm", "Database to SQL file", 0, QApplication::UnicodeUTF8));
+    fileExportSQLAction->setText(QApplication::translate("mainForm", "Database to SQL file", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    fileExportSQLAction->setToolTip(QApplication::translate("mainForm", "Export a database to a .sql dump text file.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    fileExportSQLAction->setWhatsThis(QApplication::translate("mainForm", "This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+    editPreferencesAction->setIconText(QApplication::translate("mainForm", "Preferences", 0, QApplication::UnicodeUTF8));
+    editPreferencesAction->setText(QApplication::translate("mainForm", "Preferences", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    editPreferencesAction->setToolTip(QApplication::translate("mainForm", "Open the preferences window..", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    editPreferencesAction->setWhatsThis(QApplication::translate("mainForm", "Open the preferences window.", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+#ifndef QT_NO_TOOLTIP
+    mainTab->setProperty("toolTip", QVariant(QString()));
+#endif // QT_NO_TOOLTIP
+
+#ifndef QT_NO_WHATSTHIS
+
+#endif // QT_NO_WHATSTHIS
+    mainTab->setTabText(mainTab->indexOf(structure), QApplication::translate("mainForm", "Database Structure", 0, QApplication::UnicodeUTF8));
+    textLabel1->setText(QApplication::translate("mainForm", "Table:", 0, QApplication::UnicodeUTF8));
+    comboBrowseTable->clear();
+    comboBrowseTable->insertItems(0, QStringList()
+     << QApplication::translate("mainForm", "select", 0, QApplication::UnicodeUTF8)
+     << QApplication::translate("mainForm", "users", 0, QApplication::UnicodeUTF8)
+    );
+#ifndef QT_NO_TOOLTIP
+    comboBrowseTable->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Select a table to browse data", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    comboBrowseTable->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "Use this list to select a table to be displayed in the database view", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    buttonFind->setText(QString());
+#ifndef QT_NO_TOOLTIP
+    buttonFind->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Open or close the floating find window", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    buttonFind->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button toggles the appearance of the Find window, used to search records in the database view", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    buttonNewRecord->setText(QApplication::translate("mainForm", "New Record", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    buttonNewRecord->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Insert a new record in the current table", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    buttonNewRecord->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button creates a new, empty record in the database", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    buttonDeleteRecord->setText(QApplication::translate("mainForm", "Delete Record", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    buttonDeleteRecord->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Delete the current record", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    buttonDeleteRecord->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button deletes the record currently selected in the database", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+#ifndef QT_NO_TOOLTIP
+    dataTable->setProperty("toolTip", QVariant(QString()));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    dataTable->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This is the database view. You can double-click any record to edit its contents in the cell editor window.", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    buttonPrevious->setText(QApplication::translate("mainForm", "<", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    buttonPrevious->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Go to previous record set page", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    buttonPrevious->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button is used to navigate to the previous set of 1000 records in the database view", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    labelRecordset->setText(QApplication::translate("mainForm", "1000 - 2000 of 100000", 0, QApplication::UnicodeUTF8));
+    buttonNext->setText(QApplication::translate("mainForm", ">", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    buttonNext->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Go to next record set page", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    buttonNext->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button is used to navigate to the next 1000 records set in the database view", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    buttonGoto->setText(QApplication::translate("mainForm", "Go to:", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    buttonGoto->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Click here to browse the specified record ", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    buttonGoto->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button is used to navigate to the record number specied in the Go to: area.", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    editGoto->setText(QApplication::translate("mainForm", "0", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    editGoto->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Enter record number to browse", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    editGoto->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "Type a record number in this area and click the Go to: button to display the record in the database view", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    mainTab->setTabText(mainTab->indexOf(browser), QApplication::translate("mainForm", "Browse Data", 0, QApplication::UnicodeUTF8));
+    textLabel1_2->setText(QApplication::translate("mainForm", "SQL string:", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    sqlTextEdit->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Type SQL string here", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    sqlTextEdit->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "Type the SQL query in this area, and press the button below to execute it. Results and error messages will be shown in the fields at the bottom of this form.", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    executeQueryButton->setText(QApplication::translate("mainForm", "Execute query", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    executeQueryButton->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Execute SQL query", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    executeQueryButton->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button is used to execute the SQL query entered in the text area above.", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    textLabel2->setText(QApplication::translate("mainForm", "Error message from database engine:", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    queryErrorLineEdit->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Error messages", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    queryErrorLineEdit->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "Messages returned from the database engine when the SQL query is executed are displayed in this area.", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    textLabel3->setText(QApplication::translate("mainForm", "Data returned:", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+    queryResultTableView->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Query generated data", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_WHATSTHIS
+    queryResultTableView->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.", 0, QApplication::UnicodeUTF8)));
+#endif // QT_NO_WHATSTHIS
+    mainTab->setTabText(mainTab->indexOf(query), QApplication::translate("mainForm", "Execute SQL", 0, QApplication::UnicodeUTF8));
+    //Toolbar->setLabel(QApplication::translate("mainForm", "Toolbar", 0, QApplication::UnicodeUTF8));
+    fileMenu->setTitle(QApplication::translate("mainForm", "&File", 0, QApplication::UnicodeUTF8));
+    importMenu->setTitle(QApplication::translate("mainForm", "Import", 0, QApplication::UnicodeUTF8));
+    exportMenu->setTitle(QApplication::translate("mainForm", "Export", 0, QApplication::UnicodeUTF8));
+    EditMenu->setTitle(QApplication::translate("mainForm", "Edit", 0, QApplication::UnicodeUTF8));
+    ViewMenu->setTitle(QApplication::translate("mainForm", "View", 0, QApplication::UnicodeUTF8));
+    PopupMenu->setTitle(QApplication::translate("mainForm", "Help", 0, QApplication::UnicodeUTF8));
+} // retranslateUi
+
 /*
  *  Constructs a mainForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
