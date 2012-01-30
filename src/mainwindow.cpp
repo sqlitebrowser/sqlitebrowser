@@ -543,6 +543,7 @@ void mainForm::populateTable( const QString & tablename)
 void mainForm::resetBrowser()
 {
     recAtTop = 0;
+    QString sCurrentTable = comboBrowseTable->currentText();
     comboBrowseTable->clear();
     QStringList tab = db.getTableNames();
     if  (tab.isEmpty()){
@@ -551,7 +552,9 @@ void mainForm::resetBrowser()
         comboBrowseTable->addItems(tab);
     }
     setRecordsetLabel();
-    comboBrowseTable->setCurrentIndex(0);
+    int pos = comboBrowseTable->findText(sCurrentTable);
+    pos = pos == -1 ? 0 : pos;
+    comboBrowseTable->setCurrentIndex(pos);
     populateTable(comboBrowseTable->currentText());
 }
 
