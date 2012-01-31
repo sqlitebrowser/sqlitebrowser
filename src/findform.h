@@ -82,8 +82,8 @@ public:
 
         findTableWidget = new QTableWidget(findForm);
         findTableWidget->setColumnCount(2);
-        findTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem( QApplication::translate("findForm", "Record", 0, QApplication::UnicodeUTF8) ));
-        findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QApplication::translate("findForm", "Data", 0, QApplication::UnicodeUTF8) ));
+        findTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem( QObject::tr("Record") ));
+        findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QObject::tr("Data") ));
         findTableWidget->setObjectName(QString::fromUtf8("findListView"));
         findTableWidget->setMidLineWidth(30);
         //findTableWidget->setResizePolicy(Q3ScrollView::Manual);
@@ -122,51 +122,38 @@ public:
 
     void retranslateUi(QDialog *findForm)
     {
-        findForm->setWindowTitle(QApplication::translate("findForm", "Find", 0, QApplication::UnicodeUTF8));
-        searchButton->setText(QApplication::translate("findForm", "Search", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        searchButton->setProperty("toolTip", QVariant(QApplication::translate("findForm", "Perform the search", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_WHATSTHIS
-        searchButton->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "This button starts the search process", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_WHATSTHIS
+        findForm->setWindowTitle(QObject::tr("Find"));
+        searchButton->setText(QObject::tr("Search"));
+        searchButton->setProperty("toolTip", QVariant(QObject::tr("Perform the search")));
+        searchButton->setProperty("whatsThis", QVariant(QObject::tr("This button starts the search process")));
+
         findFieldCombobox->clear();
         findFieldCombobox->insertItems(0, QStringList()
-         << QApplication::translate("findForm", "user", 0, QApplication::UnicodeUTF8)
+            << QObject::tr("user")
         );
-#ifndef QT_NO_TOOLTIP
-        findFieldCombobox->setProperty("toolTip", QVariant(QApplication::translate("findForm", "Field to be searched", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_WHATSTHIS
-        findFieldCombobox->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "Use this control to select the field to be searched in the current table", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_WHATSTHIS
-#ifndef QT_NO_TOOLTIP
-        searchLine->setProperty("toolTip", QVariant(QApplication::translate("findForm", "Enter values or words to search", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_WHATSTHIS
-        searchLine->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "This is a place to enter the word or number to be searched in the database", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_WHATSTHIS
+        findFieldCombobox->setProperty("toolTip", QVariant(QObject::tr("Field to be searched")));
+        findFieldCombobox->setProperty("whatsThis", QVariant(QObject::tr("Use this control to select the field to be searched in the current table")));
+
+        searchLine->setProperty("toolTip", QVariant(QObject::tr("Enter values or words to search")));
+        searchLine->setProperty("whatsThis", QVariant(QObject::tr("This is a place to enter the word or number to be searched in the database")));
+
         findOperatorComboBox->clear();
         findOperatorComboBox->insertItems(0, QStringList()
-         << QApplication::translate("findForm", "=", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("findForm", "contains", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("findForm", ">", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("findForm", ">=", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("findForm", "<=", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("findForm", "<", 0, QApplication::UnicodeUTF8)
+         << QObject::tr("=")
+         << QObject::tr("contains")
+         << QObject::tr(">")
+         << QObject::tr(">=")
+         << QObject::tr("<=")
+         << QObject::tr("<")
         );
-#ifndef QT_NO_TOOLTIP
-        findOperatorComboBox->setProperty("toolTip", QVariant(QApplication::translate("findForm", "Search criteria: use 'contains' for partial matches", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_WHATSTHIS
-        findOperatorComboBox->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "This control is used to select the search criteria used to look for the search term in the database. Use '=' or 'contains' to find words, and the comparison symbols to filter numeric data.", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_WHATSTHIS
-        findTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem( QApplication::translate("findForm", "Record", 0, QApplication::UnicodeUTF8) ));
-        findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QApplication::translate("findForm", "Data", 0, QApplication::UnicodeUTF8) ));
-#ifndef QT_NO_WHATSTHIS
-        findTableWidget->setProperty("whatsThis", QVariant(QApplication::translate("findForm", "Results of the search will appear in this area. Click on a result to select the corresponding record in the database", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_WHATSTHIS
-        resultsLabel->setText(QApplication::translate("findForm", "Found:", 0, QApplication::UnicodeUTF8));
+        findOperatorComboBox->setProperty("toolTip", QVariant(QObject::tr("Search criteria: use 'contains' for partial matches")));
+        findOperatorComboBox->setProperty("whatsThis", QVariant(QObject::tr("This control is used to select the search criteria used to look for the search term in the database. Use '=' or 'contains' to find words, and the comparison symbols to filter numeric data.")));
+
+        findTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem( QObject::tr("Record") ));
+        findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QObject::tr("Data") ));
+        findTableWidget->setProperty("whatsThis", QVariant(QObject::tr("Results of the search will appear in this area. Click on a result to select the corresponding record in the database")));
+
+        resultsLabel->setText(QObject::tr("Found:"));
     } // retranslateUi
 
 };
