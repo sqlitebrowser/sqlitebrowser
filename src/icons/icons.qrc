@@ -18,6 +18,7 @@
         <file alias="field">page_green.png</file>
         <file alias="table">table.png</file>
         <file alias="index">tag_blue.png</file>
+        <file alias="refresh">view-refresh.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>
