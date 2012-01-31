@@ -101,6 +101,7 @@ public:
     QLabel *textLabel1;
     QComboBox *comboBrowseTable;
     QPushButton *buttonFind;
+    QPushButton *buttonRefresh;
     QSpacerItem *spacer1;
     QPushButton *buttonNewRecord;
     QPushButton *buttonDeleteRecord;
@@ -403,6 +404,12 @@ public:
 
         hboxLayout->addWidget(buttonFind);
 
+        buttonRefresh = new QPushButton(browser);
+        buttonRefresh->setObjectName("buttonRefresh");
+        buttonRefresh->setIcon(QIcon(":/icons/refresh"));
+
+        hboxLayout->addWidget(buttonRefresh);
+
         spacer1 = new QSpacerItem(51, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         hboxLayout->addItem(spacer1);
@@ -660,6 +667,7 @@ public:
         QObject::connect(editGoto, SIGNAL(returnPressed()), mainForm, SLOT(navigateGoto()));
         QObject::connect(buttonGoto, SIGNAL(clicked()), mainForm, SLOT(navigateGoto()));
         QObject::connect(buttonFind, SIGNAL(toggled(bool)), mainForm, SLOT(browseFind(bool)));
+        QObject::connect(buttonRefresh, SIGNAL(clicked()), mainForm, SLOT(browseRefresh()));
         QObject::connect(fileCompactAction, SIGNAL(activated()), mainForm, SLOT(compact()));
         QObject::connect(editCopyAction, SIGNAL(activated()), mainForm, SLOT(copy()));
         QObject::connect(editPasteAction, SIGNAL(activated()), mainForm, SLOT(paste()));
@@ -754,6 +762,7 @@ public slots:
     virtual void setRecordsetLabel();
     virtual void browseFind( bool open );
     virtual void browseFindAway();
+    virtual void browseRefresh();
     virtual void lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm );
     virtual void showrecord( int dec );
     virtual void createTable();

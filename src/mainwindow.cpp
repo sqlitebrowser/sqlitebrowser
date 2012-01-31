@@ -213,6 +213,10 @@ void Ui_mainForm::retranslateUi(QMainWindow *mainForm)
 #ifndef QT_NO_WHATSTHIS
     buttonFind->setProperty("whatsThis", QVariant(QApplication::translate("mainForm", "This button toggles the appearance of the Find window, used to search records in the database view", 0, QApplication::UnicodeUTF8)));
 #endif // QT_NO_WHATSTHIS
+
+    buttonRefresh->setProperty("toolTip", QVariant( QObject::tr("Refresh the data in the selected table.")));
+    buttonRefresh->setProperty("whatsThis", QVariant( QObject::tr("This button refreshes the data in the currently selected table.")));
+
     buttonNewRecord->setText(QApplication::translate("mainForm", "New Record", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
     buttonNewRecord->setProperty("toolTip", QVariant(QApplication::translate("mainForm", "Insert a new record in the current table", 0, QApplication::UnicodeUTF8)));
@@ -799,6 +803,11 @@ void mainForm::browseFind(bool open)
 void mainForm::browseFindAway()
 {
     buttonFind->toggle();
+}
+
+void mainForm::browseRefresh()
+{
+    populateTable(comboBrowseTable->currentText());
 }
 
 void mainForm::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
