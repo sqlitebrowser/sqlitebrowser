@@ -23,10 +23,10 @@ HEADERS += extendedmainform.h \
     findform.h \
     importcsvform.h \
     renametableform.h \
-    sqllogform.h \
     preferencesform.h \
     mainwindow.h \
-    createtabledialog.h
+    createtabledialog.h \
+    SQLLogDock.h
 SOURCES += extendedmainform.cpp \
     browsermain.cpp \
     sqlitedb.cpp \
@@ -47,10 +47,10 @@ SOURCES += extendedmainform.cpp \
     findform.cpp \
     importcsvform.cpp \
     renametableform.cpp \
-    sqllogform.cpp \
     preferencesform.cpp \
     mainwindow.cpp \
-    createtabledialog.cpp
+    createtabledialog.cpp \
+    SQLLogDock.cpp
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc

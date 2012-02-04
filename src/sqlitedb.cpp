@@ -6,6 +6,7 @@
 #include <qfile.h>
 #include <qmessagebox.h>
 #include <QProgressDialog>
+#include "SQLLogDock.h"
 
 void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
 {
@@ -156,6 +157,10 @@ bool DBBrowserDB::revert()
     if (_db){
         sqlite3_exec(_db,"ROLLBACK TO SAVEPOINT RESTOREPOINT;",
                      NULL,NULL,NULL);
+        qDebug(sqlite3_errmsg(_db));
+        sqlite3_exec(_db,"RELEASE RESTOREPOINT;",
+                     NULL,NULL,NULL);
+        qDebug(sqlite3_errmsg(_db));
         setDirty(false);
     }
     return true;
@@ -645,6 +650,7 @@ void DBBrowserDB::updateSchema( )
     }else{
         qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
     }
+    qDebug(sqlite3_errmsg(_db));
 
     //now get the field list for each table in tbmap
     tableMap::Iterator it;

@@ -46,11 +46,15 @@
 #include "QtGui/QRegExpValidator"
 #include "sqlitedb.h"
 
+#include "SQLLogDock.h"
+
 QT_BEGIN_NAMESPACE
 
 class Ui_mainForm
 {
 public:
+    SQLLogDock * logWin;
+
     QAction *fileNewAction;
     QAction *fileOpenAction;
     QAction *fileExitAction;
@@ -148,6 +152,9 @@ public:
         mainForm->resize(800, 552);
 
 
+        logWin = new SQLLogDock(mainForm);
+        sqlLogAction = logWin->toggleViewAction();
+        mainForm->addDockWidget(Qt::BottomDockWidgetArea, logWin);
 
         //** New DB File
         fileNewAction = new QAction(mainForm);
@@ -233,10 +240,8 @@ public:
         helpWhatsThisAction->setText("helpWhatsThisAction");
         helpWhatsThisAction->setIcon(QIcon(":/oldimages/whatis"));
         helpWhatsThisAction->setIconVisibleInMenu(true);
-        sqlLogAction = new QAction(mainForm);
-        sqlLogAction->setObjectName(QString::fromUtf8("sqlLogAction"));
+
         sqlLogAction->setText("sqlLogAction");
-        sqlLogAction->setCheckable(true);
         sqlLogAction->setIcon(QIcon(":/oldimages/log"));
         sqlLogAction->setIconVisibleInMenu(true);
 
@@ -712,7 +717,7 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-class sqlLogForm;
+class SQLLogDock;
 class editForm;
 class findForm;
 
@@ -724,7 +729,6 @@ public:
     mainForm(QWidget* parent = 0);
     ~mainForm();
 
-    sqlLogForm * logWin;
     editForm * editWin;
     QClipboard * clipboard;
     findForm * findWin;

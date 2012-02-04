@@ -5,11 +5,12 @@
 #include <qstringlist.h>
 #include <qmap.h>
 #include <qobject.h>
-#include "sqllogform.h"
 #include "sqlite3.h"
 #include "sqlitebrowsertypes.h"
 
 #define MAX_DISPLAY_LENGTH 255
+
+class SQLLogDock;
 
 enum
 {
@@ -145,7 +146,7 @@ public:
  int curEncoding;
  QString curNewData;
 	
-	sqlLogForm * logWin;
+    SQLLogDock * logWin;
 	
 
 	private:

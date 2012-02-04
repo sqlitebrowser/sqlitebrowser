@@ -24,7 +24,6 @@
 #include "preferencesform.h"
 #include "editform.h"
 #include "findform.h"
-#include "sqllogform.h"
 
 void Ui_mainForm::retranslateUi(QMainWindow *mainForm)
 {
@@ -278,7 +277,6 @@ void mainForm::init()
     
     findWin = 0;
     editWin = 0;
-    logWin = 0;
 
     clipboard = QApplication::clipboard();
 
@@ -303,11 +301,8 @@ void mainForm::init()
                  this,      SLOT( updateRecordText(int, int , QString) ) );
     }
 
-    if(!logWin){
-        logWin = new sqlLogForm(this);
-        connect( logWin, SIGNAL( goingAway() ),  this, SLOT( logWinAway() ) );
-        connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
-    }
+    connect( logWin, SIGNAL( goingAway() ),  this, SLOT( logWinAway() ) );
+    connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
 
     updatePreferences();
 
