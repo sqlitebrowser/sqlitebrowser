@@ -1,16 +1,7 @@
 #ifndef MAINFORM_H
 #define MAINFORM_H
 
-#include <qvariant.h>
-
-/* QT_BEGIN_NAMESPACE and QT_END_NAMESPACE weren't introduced into QT right away... */
-#ifndef QT_BEGIN_NAMESPACE
-#define QT_BEGIN_NAMESPACE
-#endif
-
-#ifndef QT_END_NAMESPACE
-#define QT_END_NAMESPACE
-#endif
+#include <QVariant>
 
 #include <QTableView>
 #include <QStandardItemModel>
@@ -41,6 +32,7 @@
 
 #include <QtCore/QPoint>
 #include <QtCore/QVariant>
+#include <QDragEnterEvent>
 
 #include "QtGui/QClipboard"
 #include "QtGui/QRegExpValidator"
@@ -801,6 +793,10 @@ public slots:
 
 protected:
     DBBrowserDB db;
+
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
 protected slots:
     virtual void languageChange();

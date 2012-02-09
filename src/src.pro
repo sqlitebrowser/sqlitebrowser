@@ -3,7 +3,7 @@ LANGUAGE = C++
 INCLUDEPATH += sqlite_source/
 CONFIG += qt \
     warn_on
-HEADERS += extendedmainform.h \
+HEADERS += \
     sqlitebrowsertypes.h \
     sqlitedb.h \
     sqlbrowser_util.h \
@@ -27,7 +27,7 @@ HEADERS += extendedmainform.h \
     mainwindow.h \
     createtabledialog.h \
     SQLLogDock.h
-SOURCES += extendedmainform.cpp \
+SOURCES += \
     browsermain.cpp \
     sqlitedb.cpp \
     sqlbrowser_util.c \

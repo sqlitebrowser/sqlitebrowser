@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QWhatsThis>
 #include <QMessageBox>
+#include <QUrl>
 
 #include "createtableform.h"
 #include "createindexform.h"
@@ -249,6 +250,7 @@ mainForm::mainForm(QWidget* parent)
     : QMainWindow(parent)
 {
     setupUi(this);
+    setAcceptDrops(true);
 
     (void)statusBar();
     init();
@@ -1558,4 +1560,23 @@ void mainForm::setCurrentFile(const QString &fileName)
         if (mainWin)
             mainWin->updateRecentFileActions();
     }
+}
+
+void mainForm::dragEnterEvent(QDragEnterEvent *event)
+{
+    if( event->mimeData()->hasFormat("text/uri-list") )
+            event->acceptProposedAction();
+}
+
+void mainForm::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+
+    if( urls.isEmpty() )
+        return;
+
+    QString fileName = urls.first().toLocalFile();
+
+    if( !fileName.isEmpty() && fileName.endsWith("db") )
+            fileOpen(fileName);
 }

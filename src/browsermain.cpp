@@ -1,6 +1,5 @@
 #include <qapplication.h>
 #include "mainwindow.h"
-#include "extendedmainform.h"
 
 #if defined(Q_WS_MAC)
 #include <Carbon/Carbon.h>
@@ -71,8 +70,7 @@ static pascal OSErr odocHandler(const AppleEvent* inEvent, AppleEvent*
 int main( int argc, char ** argv )
 {
     QApplication a( argc, argv );
-    mainForm w1;
-	ExtendedMainForm w;
+    mainForm w;
 #if defined(Q_WS_MAC)
 	AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments,
 						  NewAEEventHandlerUPP(odocHandler),reinterpret_cast<long>(&w),false);
