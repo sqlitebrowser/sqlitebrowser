@@ -25,10 +25,572 @@
 #include "preferencesform.h"
 #include "editform.h"
 #include "findform.h"
+#include "SQLLogDock.h"
 
-void Ui_mainForm::retranslateUi(QMainWindow *mainForm)
+void mainForm::setupUi()
 {
-    mainForm->setWindowTitle(QObject::tr("Browser"));
+    if (this->objectName().isEmpty()){
+        this->setObjectName(QString::fromUtf8("mainForm"));
+    }
+
+    logWin = new SQLLogDock(this);
+    sqlLogAction = logWin->toggleViewAction();
+    this->addDockWidget(Qt::BottomDockWidgetArea, logWin);
+
+    //** New DB File
+    fileNewAction = new QAction(this);
+    fileNewAction->setObjectName(QString::fromUtf8("fileNewAction"));
+    fileNewAction->setText("fileNewAction");
+    fileNewAction->setIcon(QIcon(":/icons/db_new"));
+
+    //** Open DB File
+    fileOpenAction = new QAction(this);
+    fileOpenAction->setObjectName(QString::fromUtf8("fileOpenAction"));
+    fileOpenAction->setText("fileOpenAction");
+    fileOpenAction->setIcon(QIcon(":/icons/db_open"));
+
+    //** Save DB Action
+    fileSaveAction = new QAction(this);
+    fileSaveAction->setObjectName(QString::fromUtf8("fileSaveAction"));
+    fileSaveAction->setText("fileSaveAction");
+    fileSaveAction->setEnabled(false);
+    fileSaveAction->setIcon(QIcon(":/icons/db_save"));
+    QFont fntS = fileSaveAction->font();
+    fntS.setBold(true);
+    fileSaveAction->setFont(fntS);
+
+    //** Db Revert
+    fileRevertAction = new QAction(this);
+    fileRevertAction->setObjectName(QString::fromUtf8("fileRevertAction"));
+    fileRevertAction->setText("fileRevertAction");
+    fileRevertAction->setEnabled(false);
+    fileRevertAction->setIcon(QIcon(":/icons/db_revert"));
+    QFont fntR = fileRevertAction->font();
+    fntR.setBold(true);
+    fileRevertAction->setFont(fntR);
+
+    // Recent dbs
+    for(int i = 0; i < MaxRecentFiles; ++i) {
+        recentFileActs[i] = new QAction(this);
+        recentFileActs[i]->setVisible(false);
+        this->connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+    }
+
+
+    //** Exit
+    fileExitAction = new QAction(this);
+    fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
+    fileExitAction->setText("fileExitAction");
+
+    editCopyAction = new QAction(this);
+    editCopyAction->setObjectName(QString::fromUtf8("editCopyAction"));
+    editCopyAction->setText("editCopyAction");
+    editPasteAction = new QAction(this);
+    editPasteAction->setObjectName(QString::fromUtf8("editPasteAction"));
+    editPasteAction->setText("editPasteAction");
+    editFindAction = new QAction(this);
+    editFindAction->setObjectName(QString::fromUtf8("editFindAction"));
+    editFindAction->setText("editFindAction");
+    editFindAction->setIcon(QIcon(":/oldimages/searchfind"));
+    editFindAction->setIconVisibleInMenu(true);
+    helpContentsAction = new QAction(this);
+    helpContentsAction->setObjectName(QString::fromUtf8("helpContentsAction"));
+    helpContentsAction->setText("helpContentsAction");
+    helpIndexAction = new QAction(this);
+    helpIndexAction->setObjectName(QString::fromUtf8("helpIndexAction"));
+    helpIndexAction->setText("helpIndexAction");
+    helpAboutAction = new QAction(this);
+    helpAboutAction->setObjectName(QString::fromUtf8("helpAboutAction"));
+    helpAboutAction->setText("helpAboutAction");
+
+    //** Close Database ??
+    fileCloseAction = new QAction(this);
+    fileCloseAction->setObjectName(QString::fromUtf8("fileCloseAction"));
+    fileCloseAction->setText("fileCloseAction");
+    fileCloseAction->setEnabled(false);
+
+    newRecordAction = new QAction(this);
+    newRecordAction->setObjectName(QString::fromUtf8("newRecordAction"));
+    newRecordAction->setText("newRecordAction");
+    fileCompactAction = new QAction(this);
+    fileCompactAction->setObjectName(QString::fromUtf8("fileCompactAction"));
+    fileCompactAction->setText("fileCompactAction");
+    fileCompactAction->setEnabled(false);
+    helpWhatsThisAction = new QAction(this);
+    helpWhatsThisAction->setObjectName(QString::fromUtf8("helpWhatsThisAction"));
+    helpWhatsThisAction->setText("helpWhatsThisAction");
+    helpWhatsThisAction->setIcon(QIcon(":/oldimages/whatis"));
+    helpWhatsThisAction->setIconVisibleInMenu(true);
+
+    sqlLogAction->setText("sqlLogAction");
+    sqlLogAction->setIcon(QIcon(":/oldimages/log"));
+    sqlLogAction->setIconVisibleInMenu(true);
+
+
+    fileImportCSVAction = new QAction(this);
+    fileImportCSVAction->setObjectName(QString::fromUtf8("fileImportCSVAction"));
+    fileImportCSVAction->setText("fileImportCSVAction");
+    fileExportCSVAction = new QAction(this);
+    fileExportCSVAction->setObjectName(QString::fromUtf8("fileExportCSVAction"));
+    fileExportCSVAction->setText("fileExportCSVAction");
+
+
+
+
+    //fileImportAction = new QAction(this);
+    //fileImportAction->setObjectName(QString::fromUtf8("fileImportAction"));
+    //fileImportAction->setName("fileImportAction");
+    //fileExportAction = new QAction(this);
+    //fileExportAction->setObjectName(QString::fromUtf8("fileExportAction"));
+    //fileExportAction->setName("fileExportAction");
+
+    //** Create Table
+    editCreateTableAction = new QAction(this);
+    editCreateTableAction->setObjectName(QString::fromUtf8("editCreateTableAction"));
+    editCreateTableAction->setText("editCreateTableAction");
+    editCreateTableAction->setEnabled(false);
+    editCreateTableAction->setIcon(QIcon(":/icons/table_create"));
+
+    //** Delete table
+    editDeleteTableAction = new QAction(this);
+    editDeleteTableAction->setObjectName(QString::fromUtf8("editDeleteTableAction"));
+    editDeleteTableAction->setText("editDeleteTableAction");
+    editDeleteTableAction->setEnabled(false);
+    editDeleteTableAction->setIcon(QIcon(":/icons/table_delete"));
+
+    editDeleteTableActionPopup = new QAction(this);
+    editDeleteTableActionPopup->setEnabled(false);
+    editDeleteTableActionPopup->setIcon(QIcon(":/icons/table_delete"));
+
+    //** Modify Table
+    editModifyTableAction = new QAction(this);
+    editModifyTableAction->setObjectName(QString::fromUtf8("editModifyTableAction"));
+    editModifyTableAction->setText("editModifyTableAction");
+    editModifyTableAction->setEnabled(false);
+    editModifyTableAction->setIcon(QIcon(":/icons/table_modify"));
+
+    editModifyTableActionPopup = new QAction(this);
+    editModifyTableActionPopup->setEnabled(false);
+    editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
+
+
+    //************************************************
+    //** Add, Modify, Delete Field
+    editAddFieldActionPopup = new QAction(this);
+    editAddFieldActionPopup->setText("Add Field");
+    editAddFieldActionPopup->setDisabled(true);
+    editAddFieldActionPopup->setIcon(QIcon(":/icons/field_add"));
+
+    editModifyFieldActionPopup = new QAction(this);
+    editModifyFieldActionPopup->setText("Modify Field");
+    editModifyFieldActionPopup->setDisabled(true);
+    editModifyFieldActionPopup->setIcon(QIcon(":/icons/field_edit"));
+
+    editDeleteFieldActionPopup = new QAction(this);
+    editDeleteFieldActionPopup->setText("Delete Field");
+    editDeleteFieldActionPopup->setDisabled(true);
+    editDeleteFieldActionPopup->setIcon(QIcon(":/icons/field_delete"));
+
+    //************************************************
+    //** Create/Delete  Index
+    editCreateIndexAction = new QAction(this);
+    editCreateIndexAction->setObjectName(QString::fromUtf8("editCreateIndexAction"));
+    editCreateIndexAction->setText("editCreateIndexAction");
+    editCreateIndexAction->setEnabled(false);
+    editCreateIndexAction->setIcon(QIcon(":/icons/index_create"));
+
+    editDeleteIndexAction = new QAction(this);
+    editDeleteIndexAction->setObjectName(QString::fromUtf8("editDeleteIndexAction"));
+    editDeleteIndexAction->setText("editDeleteIndexAction");
+    editDeleteIndexAction->setEnabled(false);
+    editDeleteIndexAction->setIcon(QIcon(":/icons/index_delete"));
+
+    fileImportSQLAction = new QAction(this);
+    fileImportSQLAction->setObjectName(QString::fromUtf8("fileImportSQLAction"));
+    fileImportSQLAction->setText("fileImportSQLAction");
+    fileExportSQLAction = new QAction(this);
+    fileExportSQLAction->setObjectName(QString::fromUtf8("fileExportSQLAction"));
+    fileExportSQLAction->setText("fileExportSQLAction");
+    editPreferencesAction = new QAction(this);
+    editPreferencesAction->setObjectName(QString::fromUtf8("editPreferencesAction"));
+    editPreferencesAction->setText("editPreferencesAction");
+    widget = new QWidget(this);
+    widget->setObjectName(QString::fromUtf8("widget"));
+    vboxLayout = new QVBoxLayout(widget);
+    vboxLayout->setSpacing(0);
+    vboxLayout->setContentsMargins(0,0,0,0);
+    vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
+    vboxLayout->setContentsMargins(0, 0, 0, 0);
+    mainTab = new QTabWidget(widget);
+    mainTab->setObjectName(QString::fromUtf8("mainTab"));
+    structure = new QWidget();
+    structure->setObjectName(QString::fromUtf8("structure"));
+
+
+    vboxLayout1 = new QVBoxLayout(structure);
+    vboxLayout1->setSpacing(0);
+    vboxLayout1->setContentsMargins(0,0,0,0);
+    vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+
+    //**** Structure ***********************************
+    QToolBar *dbToolbar = new QToolBar();
+    vboxLayout1->addWidget(dbToolbar);
+    dbToolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    dbToolbar->addAction(editCreateTableAction);
+    dbToolbar->addAction(editModifyTableActionPopup);
+    dbToolbar->addAction(editDeleteTableActionPopup);
+    dbToolbar->addSeparator();
+    dbToolbar->addAction(editAddFieldActionPopup);
+    dbToolbar->addAction(editModifyFieldActionPopup);
+    dbToolbar->addAction(editDeleteFieldActionPopup);
+
+    //*** Tree Widget Setup
+    dbTreeWidget = new QTreeWidget();
+    vboxLayout1->addWidget(dbTreeWidget);
+    QTreeWidgetItem *headerItem = dbTreeWidget->headerItem();
+    headerItem->setText(0, QApplication::translate("mainForm", "Name", 0, QApplication::UnicodeUTF8));
+    headerItem->setText(1, QApplication::translate("mainForm", "Object", 0, QApplication::UnicodeUTF8));
+    headerItem->setText(2, QApplication::translate("mainForm", "Type", 0, QApplication::UnicodeUTF8));
+    headerItem->setText(3, QApplication::translate("mainForm", "Schema", 0, QApplication::UnicodeUTF8));
+    dbTreeWidget->setColumnHidden(1, true);
+    dbTreeWidget->setColumnWidth(0, 300);
+    dbTreeWidget->setAlternatingRowColors(true);
+    dbTreeWidget->setRootIsDecorated(true);
+    dbTreeWidget->setAnimated(true);
+    dbTreeWidget->setContextMenuPolicy( Qt::CustomContextMenu );
+
+
+
+    mainTab->addTab(structure, QString());
+    browser = new QWidget();
+    browser->setObjectName(QString::fromUtf8("browser"));
+    vboxLayout2 = new QVBoxLayout(browser);
+    vboxLayout2->setSpacing(6);
+    vboxLayout2->setContentsMargins(11, 11, 11, 11);
+    vboxLayout2->setObjectName(QString::fromUtf8("vboxLayout2"));
+    hboxLayout = new QHBoxLayout();
+    hboxLayout->setSpacing(6);
+    hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
+    textLabel1 = new QLabel(browser);
+    textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
+    textLabel1->setWordWrap(false);
+
+    hboxLayout->addWidget(textLabel1);
+
+    comboBrowseTable = new QComboBox(browser);
+    comboBrowseTable->setObjectName(QString::fromUtf8("comboBrowseTable"));
+    comboBrowseTable->setMinimumSize(QSize(115, 0));
+
+    hboxLayout->addWidget(comboBrowseTable);
+
+    buttonFind = new QPushButton(browser);
+    buttonFind->setObjectName(QString::fromUtf8("buttonFind"));
+    buttonFind->setIcon(QIcon(":/oldimages/searchfind"));
+    buttonFind->setCheckable(true);
+
+    hboxLayout->addWidget(buttonFind);
+
+    buttonRefresh = new QPushButton(browser);
+    buttonRefresh->setObjectName("buttonRefresh");
+    buttonRefresh->setIcon(QIcon(":/icons/refresh"));
+
+    hboxLayout->addWidget(buttonRefresh);
+
+    spacer1 = new QSpacerItem(51, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    hboxLayout->addItem(spacer1);
+
+    buttonNewRecord = new QPushButton(browser);
+    buttonNewRecord->setObjectName(QString::fromUtf8("buttonNewRecord"));
+
+    hboxLayout->addWidget(buttonNewRecord);
+
+    buttonDeleteRecord = new QPushButton(browser);
+    buttonDeleteRecord->setObjectName(QString::fromUtf8("buttonDeleteRecord"));
+
+    hboxLayout->addWidget(buttonDeleteRecord);
+
+
+    vboxLayout2->addLayout(hboxLayout);
+
+    dataTable = new QTableWidget(browser);
+    dataTable->setObjectName(QString::fromUtf8("dataTable"));
+    dataTable->setAcceptDrops(true);
+    dataTable->setRowCount(0);
+    dataTable->setColumnCount(0);
+    dataTable->setSelectionMode(QTableWidget::SingleSelection);
+
+    vboxLayout2->addWidget(dataTable);
+
+    hboxLayout1 = new QHBoxLayout();
+    hboxLayout1->setSpacing(6);
+    hboxLayout1->setObjectName(QString::fromUtf8("hboxLayout1"));
+    buttonPrevious = new QPushButton(browser);
+    buttonPrevious->setObjectName(QString::fromUtf8("buttonPrevious"));
+    QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(0), static_cast<QSizePolicy::Policy>(0));
+    sizePolicy.setHorizontalStretch(0);
+    sizePolicy.setVerticalStretch(0);
+    sizePolicy.setHeightForWidth(buttonPrevious->sizePolicy().hasHeightForWidth());
+    buttonPrevious->setSizePolicy(sizePolicy);
+
+    hboxLayout1->addWidget(buttonPrevious);
+
+    labelRecordset = new QLabel(browser);
+    labelRecordset->setObjectName(QString::fromUtf8("labelRecordset"));
+    labelRecordset->setWordWrap(false);
+
+    hboxLayout1->addWidget(labelRecordset);
+
+    buttonNext = new QPushButton(browser);
+    buttonNext->setObjectName(QString::fromUtf8("buttonNext"));
+    sizePolicy.setHeightForWidth(buttonNext->sizePolicy().hasHeightForWidth());
+    buttonNext->setSizePolicy(sizePolicy);
+
+    hboxLayout1->addWidget(buttonNext);
+
+    spacer4 = new QSpacerItem(50, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    hboxLayout1->addItem(spacer4);
+
+    buttonGoto = new QPushButton(browser);
+    buttonGoto->setObjectName(QString::fromUtf8("buttonGoto"));
+
+    hboxLayout1->addWidget(buttonGoto);
+
+    editGoto = new QLineEdit(browser);
+    editGoto->setObjectName(QString::fromUtf8("editGoto"));
+    sizePolicy.setHeightForWidth(editGoto->sizePolicy().hasHeightForWidth());
+    editGoto->setSizePolicy(sizePolicy);
+
+    hboxLayout1->addWidget(editGoto);
+
+
+    vboxLayout2->addLayout(hboxLayout1);
+
+    mainTab->addTab(browser, QString());
+    query = new QWidget();
+    query->setObjectName(QString::fromUtf8("query"));
+    vboxLayout3 = new QVBoxLayout(query);
+    vboxLayout3->setSpacing(6);
+    vboxLayout3->setContentsMargins(11, 11, 11, 11);
+    vboxLayout3->setObjectName(QString::fromUtf8("vboxLayout3"));
+    textLabel1_2 = new QLabel(query);
+    textLabel1_2->setObjectName(QString::fromUtf8("textLabel1_2"));
+    textLabel1_2->setWordWrap(false);
+
+    vboxLayout3->addWidget(textLabel1_2);
+
+    sqlTextEdit = new QTextEdit(query);
+    sqlTextEdit->setObjectName(QString::fromUtf8("sqlTextEdit"));
+    QSizePolicy sizePolicy1(static_cast<QSizePolicy::Policy>(7), static_cast<QSizePolicy::Policy>(5));
+    sizePolicy1.setHorizontalStretch(0);
+    sizePolicy1.setVerticalStretch(0);
+    sizePolicy1.setHeightForWidth(sqlTextEdit->sizePolicy().hasHeightForWidth());
+    sqlTextEdit->setSizePolicy(sizePolicy1);
+
+    vboxLayout3->addWidget(sqlTextEdit);
+
+    hboxLayout2 = new QHBoxLayout();
+    hboxLayout2->setSpacing(6);
+    hboxLayout2->setObjectName(QString::fromUtf8("hboxLayout2"));
+    executeQueryButton = new QPushButton(query);
+    executeQueryButton->setObjectName(QString::fromUtf8("executeQueryButton"));
+
+    hboxLayout2->addWidget(executeQueryButton);
+
+    spacer4_2 = new QSpacerItem(325, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    hboxLayout2->addItem(spacer4_2);
+
+
+    vboxLayout3->addLayout(hboxLayout2);
+
+    textLabel2 = new QLabel(query);
+    textLabel2->setObjectName(QString::fromUtf8("textLabel2"));
+    textLabel2->setWordWrap(false);
+
+    vboxLayout3->addWidget(textLabel2);
+
+    queryErrorLineEdit = new QLineEdit(query);
+    queryErrorLineEdit->setObjectName(QString::fromUtf8("queryErrorLineEdit"));
+    queryErrorLineEdit->setReadOnly(true);
+    queryErrorLineEdit->setDisabled(true);
+
+    vboxLayout3->addWidget(queryErrorLineEdit);
+
+    textLabel3 = new QLabel(query);
+    textLabel3->setObjectName(QString::fromUtf8("textLabel3"));
+    textLabel3->setWordWrap(false);
+
+    vboxLayout3->addWidget(textLabel3);
+
+    queryResultListModel = new QStandardItemModel(query);
+
+    queryResultTableView = new QTableView(query);
+    queryResultTableView->setObjectName(QString::fromUtf8("queryResultTableView"));
+    queryResultTableView->setSelectionMode(QTreeView::NoSelection);
+    queryResultTableView->setModel(queryResultListModel);
+
+    vboxLayout3->addWidget(queryResultTableView);
+
+    mainTab->addTab(query, QString());
+
+    vboxLayout->addWidget(mainTab);
+
+    this->setCentralWidget(widget);
+
+    //*** Setup Toolbar
+    Toolbar = new QToolBar();
+    this->addToolBar(Qt::TopToolBarArea, Toolbar);
+    Toolbar->setObjectName(QString::fromUtf8("Toolbar"));
+    Toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
+    //*** Setup main Menu
+    menubar = this->menuBar(); //new QMenuBar(this);
+    menubar->setObjectName(QString::fromUtf8("menubar"));
+    fileMenu = new QMenu(menubar);
+    fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
+    importMenu = new QMenu(fileMenu);
+    importMenu->setObjectName(QString::fromUtf8("PopupMenuEditor_9"));
+    exportMenu = new QMenu(fileMenu);
+    exportMenu->setObjectName(QString::fromUtf8("PopupMenuEditor_12"));
+    EditMenu = new QMenu(menubar);
+    EditMenu->setObjectName(QString::fromUtf8("EditMenu"));
+    ViewMenu = new QMenu(menubar);
+    ViewMenu->setObjectName(QString::fromUtf8("ViewMenu"));
+    PopupMenu = new QMenu(menubar);
+    PopupMenu->setObjectName(QString::fromUtf8("PopupMenu"));
+
+    Toolbar->addAction(fileNewAction);
+    Toolbar->addAction(fileOpenAction);
+    Toolbar->addSeparator();
+
+    Toolbar->addAction(fileSaveAction);
+    Toolbar->addAction(fileRevertAction);
+    Toolbar->addSeparator();
+
+    /*
+    Toolbar->addAction(editCreateTableAction);
+    Toolbar->addAction(editDeleteTableAction);
+    Toolbar->addAction(editModifyTableAction);
+    Toolbar->addSeparator();
+
+    Toolbar->addAction(editCreateIndexAction);
+    Toolbar->addAction(editDeleteIndexAction);
+    Toolbar->addSeparator();
+
+    Toolbar->addAction(sqlLogAction);
+    Toolbar->addSeparator();
+    Toolbar->addAction(helpWhatsThisAction);
+    */
+
+    menubar->addAction(fileMenu->menuAction());
+    menubar->addAction(EditMenu->menuAction());
+    menubar->addAction(ViewMenu->menuAction());
+    menubar->addAction(PopupMenu->menuAction());
+
+    fileMenu->addAction(fileNewAction);
+    fileMenu->addAction(fileOpenAction);
+    fileMenu->addAction(fileCloseAction);
+    fileMenu->addSeparator();
+    fileMenu->addAction(fileSaveAction);
+    fileMenu->addAction(fileRevertAction);
+    fileMenu->addAction(fileCompactAction);
+    fileMenu->addSeparator();
+    //fileMenu->addAction(fileImportAction);
+    fileMenu->addAction(importMenu->menuAction());
+    //fileMenu->addAction(fileExportAction);
+    fileMenu->addAction(exportMenu->menuAction());
+
+    recentSeparatorAct = fileMenu->addSeparator();
+    for(int i = 0; i < MaxRecentFiles; ++i)
+        fileMenu->addAction(recentFileActs[i]);
+
+
+    fileMenu->addSeparator();
+    fileMenu->addAction(fileExitAction);
+    importMenu->addAction(fileImportSQLAction);
+    importMenu->addAction(fileImportCSVAction);
+    exportMenu->addAction(fileExportSQLAction);
+    exportMenu->addAction(fileExportCSVAction);
+    EditMenu->addAction(editCreateTableAction);
+    EditMenu->addAction(editDeleteTableAction);
+    EditMenu->addAction(editModifyTableAction);
+    EditMenu->addSeparator();
+    EditMenu->addAction(editCreateIndexAction);
+    EditMenu->addAction(editDeleteIndexAction);
+    EditMenu->addSeparator();
+    EditMenu->addAction(editPreferencesAction);
+    ViewMenu->addAction(sqlLogAction);
+    PopupMenu->addAction(helpWhatsThisAction);
+    PopupMenu->addAction(helpAboutAction);
+
+    //***********************************************8
+    //** Db Tree Popup Menus
+    popupTableMenu = new QMenu(this);
+    popupTableMenu->addAction(editModifyTableActionPopup);
+    popupTableMenu->addAction(editAddFieldActionPopup);
+    popupTableMenu->addSeparator();
+    popupTableMenu->addAction(editDeleteTableActionPopup);
+
+    popupFieldMenu = new QMenu(this);
+    popupFieldMenu->addAction(editModifyFieldActionPopup);
+    popupFieldMenu->addAction(editDeleteFieldActionPopup);
+    //spopupFieldMenu->addSeparator();
+    //popupFieldMenu->addAction(editDeleteTableActionPopup);
+
+
+    retranslateUi();
+    QObject::connect(fileExitAction, SIGNAL(activated()), this, SLOT(fileExit()));
+    QObject::connect(fileOpenAction, SIGNAL(activated()), this, SLOT(fileOpen()));
+    QObject::connect(fileNewAction, SIGNAL(activated()), this, SLOT(fileNew()));
+    QObject::connect(fileCloseAction, SIGNAL(activated()), this, SLOT(fileClose()));
+    QObject::connect(comboBrowseTable, SIGNAL(activated(QString)), this, SLOT(populateTable(QString)));
+    QObject::connect(buttonNewRecord, SIGNAL(clicked()), this, SLOT(addRecord()));
+    QObject::connect(buttonDeleteRecord, SIGNAL(clicked()), this, SLOT(deleteRecord()));
+    QObject::connect(buttonPrevious, SIGNAL(clicked()), this, SLOT(navigatePrevious()));
+    QObject::connect(buttonNext, SIGNAL(clicked()), this, SLOT(navigateNext()));
+    QObject::connect(editGoto, SIGNAL(returnPressed()), this, SLOT(navigateGoto()));
+    QObject::connect(buttonGoto, SIGNAL(clicked()), this, SLOT(navigateGoto()));
+    QObject::connect(buttonFind, SIGNAL(toggled(bool)), this, SLOT(browseFind(bool)));
+    QObject::connect(buttonRefresh, SIGNAL(clicked()), this, SLOT(browseRefresh()));
+    QObject::connect(fileCompactAction, SIGNAL(activated()), this, SLOT(compact()));
+    QObject::connect(editCopyAction, SIGNAL(activated()), this, SLOT(copy()));
+    QObject::connect(editPasteAction, SIGNAL(activated()), this, SLOT(paste()));
+    QObject::connect(helpWhatsThisAction, SIGNAL(activated()), this, SLOT(helpWhatsThis()));
+    QObject::connect(helpAboutAction, SIGNAL(activated()), this, SLOT(helpAbout()));
+    QObject::connect(dataTable, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(doubleClickTable(int,int)));
+    QObject::connect(mainTab, SIGNAL(selected(QString)), this, SLOT(mainTabSelected(QString)));
+    QObject::connect(sqlLogAction, SIGNAL(toggled(bool)), this, SLOT(toggleLogWindow(bool)));
+    QObject::connect(executeQueryButton, SIGNAL(clicked()), this, SLOT(executeQuery()));
+    QObject::connect(fileImportCSVAction, SIGNAL(activated()), this, SLOT(importTableFromCSV()));
+    QObject::connect(fileExportCSVAction, SIGNAL(activated()), this, SLOT(exportTableToCSV()));
+    QObject::connect(fileRevertAction, SIGNAL(activated()), this, SLOT(fileRevert()));
+    QObject::connect(fileSaveAction, SIGNAL(activated()), this, SLOT(fileSave()));
+    QObject::connect(editDeleteIndexAction, SIGNAL(activated()), this, SLOT(deleteIndex()));
+    QObject::connect(editCreateIndexAction, SIGNAL(activated()), this, SLOT(createIndex()));
+    QObject::connect(editCreateTableAction, SIGNAL(activated()), this, SLOT(createTable()));
+
+    QObject::connect(editDeleteTableAction, SIGNAL(activated()), this, SLOT(deleteTable()));
+    QObject::connect(editModifyTableAction, SIGNAL(activated()), this, SLOT(editTable()));
+    QObject::connect(editDeleteTableActionPopup, SIGNAL(activated()), this, SLOT(deleteTablePopup()));
+    QObject::connect(editModifyTableActionPopup, SIGNAL(activated()), this, SLOT(editTablePopup()));
+    QObject::connect(editAddFieldActionPopup, SIGNAL(activated()), this, SLOT(on_add_field()));
+    QObject::connect(editModifyFieldActionPopup, SIGNAL(activated()), this, SLOT(on_edit_field()));
+
+    QObject::connect(fileExportSQLAction, SIGNAL(activated()), this, SLOT(exportDatabaseToSQL()));
+    QObject::connect(fileImportSQLAction, SIGNAL(activated()), this, SLOT(importDatabaseFromSQL()));
+    QObject::connect(editPreferencesAction, SIGNAL(activated()), this, SLOT(openPreferences()));
+
+    QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(on_tree_context_menu(const QPoint &)));
+    QObject::connect(dbTreeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_tree_selection_changed()));
+
+    QMetaObject::connectSlotsByName(this);
+} // setupUi
+
+void mainForm::retranslateUi()
+{
+    this->setWindowTitle(QObject::tr("Browser"));
 
     fileNewAction->setIconText(QObject::tr("New Database"));
     fileNewAction->setText(QObject::tr("&New Database"));
@@ -249,7 +811,7 @@ void Ui_mainForm::retranslateUi(QMainWindow *mainForm)
 mainForm::mainForm(QWidget* parent)
     : QMainWindow(parent)
 {
-    setupUi(this);
+    setupUi();
     setAcceptDrops(true);
 
     (void)statusBar();
@@ -271,7 +833,7 @@ mainForm::~mainForm()
  */
 void mainForm::languageChange()
 {
-    retranslateUi(this);
+    retranslateUi();
 }
 
 void mainForm::init()
