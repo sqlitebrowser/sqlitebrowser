@@ -288,8 +288,8 @@ void mainForm::init()
     editGoto->setValidator(gotoValidator);
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
-    this->setWindowTitle(applicationName);
-    this->setWindowIcon( QPixmap( applicationIconName ) );
+    this->setWindowTitle(QApplication::applicationName());
+    this->setWindowIcon( QPixmap( g_applicationIconName ) );
     buttonNext->setEnabled(false);
     buttonPrevious->setEnabled(false);
     updateRecentFileActions();
@@ -336,7 +336,7 @@ void mainForm::fileOpen(const QString & fileName)
     {
         if (db.open(wFile))
         {
-            this->setWindowTitle(applicationName+" - "+wFile);
+            this->setWindowTitle(QApplication::applicationName() +" - "+wFile);
             fileCloseAction->setEnabled(true);
             fileCompactAction->setEnabled(true);
             editCreateTableAction->setEnabled(true);
@@ -348,7 +348,7 @@ void mainForm::fileOpen(const QString & fileName)
         } else {
             QString err = "An error occurred:  ";
             err.append(db.lastErrorMessage);
-            QMessageBox::information( this, applicationName ,err);
+            QMessageBox::information( this, QApplication::applicationName() ,err);
         }
         populateStructure();
         resetBrowser();
@@ -374,13 +374,13 @@ void mainForm::fileNew()
         QString err = "File ";
         err.append(fileName);
         err.append(" already exists. Please choose a different name");
-        QMessageBox::information( this, applicationName ,err);
+        QMessageBox::information( this, QApplication::applicationName() ,err);
         return;
     }
     if (!fileName.isNull())
     {
         db.create(fileName);
-        this->setWindowTitle(applicationName+" - "+fileName);
+        this->setWindowTitle( QApplication::applicationName() +" - "+fileName);
         populateStructure();
         resetBrowser();
         createTable();
@@ -498,7 +498,7 @@ void mainForm::resetBrowser()
 void mainForm::fileClose()
 {
     db.close();
-    this->setWindowTitle(applicationName);
+    this->setWindowTitle(QApplication::applicationName());
     resetBrowser();
     populateStructure();
     fileCloseAction->setEnabled(false);
@@ -520,7 +520,7 @@ void mainForm::fileExit()
             QString msg = "Do you want to save the changes made to the database file ";
             msg.append(db.curDBFilename);
             msg.append("?");
-            if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+            if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
             {
                 db.save();
             } else {
@@ -546,7 +546,7 @@ void mainForm::addRecord()
         recAtTop = ((db.getRecordCount()-1)/recsPerView)*recsPerView;
         updateTableView(db.getRecordCount()-recAtTop-1);
     }else{
-        QMessageBox::information( this, applicationName,
+        QMessageBox::information( this, QApplication::applicationName(),
                                   "Error adding record, make sure a table is selected.\n\n"
                                   "If the table contain fields declared as NOT NULL\n"
                                   "please select EDIT->PREFERENCES and adjust the\n"
@@ -569,7 +569,7 @@ void mainForm::deleteRecord()
             selectTableLine(nextselected);
         }
     } else {
-        QMessageBox::information( this, applicationName, "Please select a record first" );
+        QMessageBox::information( this, QApplication::applicationName(), "Please select a record first" );
     }
 }
 
@@ -746,7 +746,7 @@ void mainForm::browseRefresh()
 void mainForm::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
     
@@ -799,7 +799,7 @@ void mainForm::showrecord( int dec )
 void mainForm::createTable()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
     createTableForm * tableForm = new createTableForm( this );
@@ -808,7 +808,7 @@ void mainForm::createTable()
         if (!db.executeSQL(tableForm->createStatement)){
             QString error = "Error: could not create the table. Message from database engine:  ";
             error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
+            QMessageBox::warning( this, QApplication::applicationName(), error );
         } else {
             populateStructure();
             resetBrowser();
@@ -820,7 +820,7 @@ void mainForm::createTable()
 void mainForm::createIndex()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
     createIndexForm * indexForm = new createIndexForm( this );
@@ -831,7 +831,7 @@ void mainForm::createIndex()
         if (!db.executeSQL(indexForm->createStatement)){
             QString error = "Error: could not create the index. Message from database engine:  ";
             error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
+            QMessageBox::warning( this, QApplication::applicationName(), error );
         } else {
             populateStructure();
             resetBrowser();
@@ -847,9 +847,9 @@ void mainForm::compact()
         if (!db.compact()){
             QString error = "Error: could not compact the database file. Message from database engine:  ";
             error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
+            QMessageBox::warning( this, QApplication::applicationName(), error );
         } else {
-            QMessageBox::warning( this, applicationName, "Database compacted" );
+            QMessageBox::warning( this, QApplication::applicationName(), "Database compacted" );
         }
     }
     db.open(db.curDBFilename);
@@ -864,7 +864,7 @@ void mainForm::compact()
 void mainForm::deleteTable()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
         return;
     }
     deleteTableForm * tableForm = new deleteTableForm( this );
@@ -877,7 +877,7 @@ void mainForm::deleteTable()
         if (!db.executeSQL( statement)){
             QString error = "Error: could not delete the table. Message from database engine:  ";
             error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
+            QMessageBox::warning( this, QApplication::applicationName(), error );
         } else {
             populateStructure();
             resetBrowser();
@@ -890,14 +890,14 @@ void mainForm::deleteTable()
 void mainForm::editTable()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
         return;
     }
     chooseTableForm * tableForm = new chooseTableForm( this );
     tableForm->setModal(true);
     QStringList tablelist = db.getTableNames();
     if (tablelist.empty()){
-        QMessageBox::information( this, applicationName, "There are no tables to edit in this database." );
+        QMessageBox::information( this, QApplication::applicationName(), "There are no tables to edit in this database." );
         return;
     }
     tableForm->populateOptions( tablelist );
@@ -919,7 +919,7 @@ void mainForm::editTable()
 void mainForm::editTablePopup()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
         return;
     }
     if(!dbTreeWidget->selectionModel()->hasSelection()){
@@ -953,7 +953,7 @@ void mainForm::editTablePopup()
 void mainForm::deleteIndex()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
         return;
     }
     deleteIndexForm * indexForm = new deleteIndexForm( this );
@@ -966,7 +966,7 @@ void mainForm::deleteIndex()
         if (!db.executeSQL( statement)){
             QString error = "Error: could not delete the index. Message from database engine:  ";
             error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
+            QMessageBox::warning( this, QApplication::applicationName(), error );
         } else {
             populateStructure();
             resetBrowser();
@@ -1025,7 +1025,7 @@ void mainForm::helpAbout()
 void mainForm::updateRecordText(int row, int col, QString newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
-        QMessageBox::information( this, applicationName, "Data could not be updated" );
+        QMessageBox::information( this, QApplication::applicationName(), "Data could not be updated" );
     }
 
     rowList tab = db.browseRecs;
@@ -1086,7 +1086,7 @@ void mainForm::executeQuery()
     QString query = db.GetEncodedQString(sqlTextEdit->toPlainText());
     if (query.isEmpty())
     {
-        QMessageBox::information( this, applicationName, "Query string is empty" );
+        QMessageBox::information( this, QApplication::applicationName(), "Query string is empty" );
         return;
     }
     //log the query
@@ -1176,7 +1176,7 @@ void mainForm::toggleLogWindow( bool enable )
 void mainForm::importTableFromCSV()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened. Please open or create a new database file first." );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file first." );
         return;
     }
 
@@ -1205,7 +1205,7 @@ void mainForm::importTableFromCSV()
         if ( csvForm->exec() ) {
             populateStructure();
             resetBrowser();
-            QMessageBox::information( this, applicationName, "Import completed" );
+            QMessageBox::information( this, QApplication::applicationName(), "Import completed" );
         }
     }
 }
@@ -1213,7 +1213,7 @@ void mainForm::importTableFromCSV()
 void mainForm::exportTableToCSV()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened to export" );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
         return;
     }
     exportTableCSVForm * exportForm = new exportTableCSVForm( this );
@@ -1284,7 +1284,7 @@ void mainForm::exportTableToCSV()
                 }
 
                 file.close();
-                QMessageBox::information( this, applicationName, "Export completed" );
+                QMessageBox::information( this, QApplication::applicationName(), "Export completed" );
             }
         }
         populateStructure();
@@ -1315,7 +1315,7 @@ void mainForm::fileRevert()
         QString msg = "Are you sure you want to undo all changes made to the database file \n\n<b> ";
         msg.append(db.curDBFilename);
         msg.append("</b>\n since the last save?");
-        if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
             db.revert();
             populateStructure();
@@ -1328,7 +1328,7 @@ void mainForm::fileRevert()
 void mainForm::exportDatabaseToSQL()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, applicationName, "There is no database opened to export" );
+        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
         return;
     }
 
@@ -1342,9 +1342,9 @@ void mainForm::exportDatabaseToSQL()
     {
         if (!db.dump(fileName))
         {
-            QMessageBox::information( this, applicationName, "Could not create export file" );
+            QMessageBox::information( this, QApplication::applicationName(), "Could not create export file" );
         } else {
-            QMessageBox::information( this, applicationName, "Export completed" );
+            QMessageBox::information( this, QApplication::applicationName(), "Export completed" );
         }
     }
 }
@@ -1361,7 +1361,7 @@ void mainForm::importDatabaseFromSQL()
     if (fileName.size() > 0)
     {
         QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
-        if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
             QString newDBfile = QFileDialog::getSaveFileName(
                         this,
@@ -1372,7 +1372,7 @@ void mainForm::importDatabaseFromSQL()
                 QString err = "File ";
                 err.append(newDBfile);
                 err.append(" already exists. Please choose a different name");
-                QMessageBox::information( this, applicationName ,err);
+                QMessageBox::information( this, QApplication::applicationName() ,err);
                 return;
             }
             if (!fileName.isNull())
@@ -1383,11 +1383,11 @@ void mainForm::importDatabaseFromSQL()
         int lineErr;
         if (!db.reload(fileName, &lineErr))
         {
-            QMessageBox::information( this, applicationName, QString("Error importing data at line %1").arg(lineErr) );
+            QMessageBox::information( this, QApplication::applicationName(), QString("Error importing data at line %1").arg(lineErr) );
         }
         else
         {
-            QMessageBox::information( this, applicationName, "Import completed" );
+            QMessageBox::information( this, QApplication::applicationName(), "Import completed" );
         }
         populateStructure();
         resetBrowser();
@@ -1524,7 +1524,7 @@ void mainForm::openRecentFile()
 
 void mainForm::updateRecentFileActions()
 {
-    QSettings settings(sOrganisation, sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     QStringList files = settings.value("recentFileList").toStringList();
 
 
@@ -1546,7 +1546,7 @@ void mainForm::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
 
-    QSettings settings(sOrganisation, sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     QStringList files = settings.value("recentFileList").toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);

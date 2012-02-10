@@ -104,7 +104,7 @@ void editTableForm::renameTable()
             error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
             //error.append("").arg(pdb->lastErrorMessage).arg(sql);
             //error.append(pdb->lastErrorMessage);
-            QMessageBox::warning( this, applicationName, error );
+            QMessageBox::warning( this, QApplication::applicationName(), error );
             return;
         }
 
@@ -563,7 +563,7 @@ void editTableForm::removeField()
         msg.append(treeWidget->currentItem()->text(0));
         msg.append("? \n All data currently stored in this field will be lost");
 
-        if (QMessageBox::warning( this, applicationName,
+        if (QMessageBox::warning( this, QApplication::applicationName(),
                                   msg,
                                   QMessageBox::Yes | QMessageBox::Default,
                                   QMessageBox::No | QMessageBox::Escape )

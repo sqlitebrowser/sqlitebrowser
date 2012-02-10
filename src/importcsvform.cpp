@@ -61,7 +61,7 @@ void importCSVForm::createButtonPressed()
     //minimun validation for tabname
     tabname = tableNameEdit->text();
     if (tabname.isEmpty()) {
-        QMessageBox::information( this, applicationName, "Please choose a name for the new table that will hold the csv data" );
+        QMessageBox::information( this, QApplication::applicationName(), "Please choose a name for the new table that will hold the csv data" );
         return;
     }
     tabname.replace(" ", "");
@@ -178,7 +178,7 @@ void importCSVForm::createButtonPressed()
        QApplication::restoreOverrideCursor();  // restore original cursor
        QString error = "Error importing data. Message from database engine:  ";
        error.append(pdb->lastErrorMessage);
-       QMessageBox::warning( this, applicationName, error );
+       QMessageBox::warning( this, QApplication::applicationName(), error );
        //we will uncomment this when SQLite support nested transactions
        pdb->executeSQL(QString("ROLLBACK TO SAVEPOINT CSVIMPORT;"), false, false);
 }

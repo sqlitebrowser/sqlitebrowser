@@ -41,11 +41,11 @@ void renameTableForm::renameClicked()
 {
     QString tabname = tablenameLineEdit->text();
     if (tabname.isEmpty()) {
-        QMessageBox::information( this, applicationName, "Table name can not be empty" );
+        QMessageBox::information( this, QApplication::applicationName(), "Table name can not be empty" );
         return;
     }
     if (tabname.contains(" ")>0) {
-        QMessageBox::warning( this, applicationName, "Spaces are not allowed in the table name" );
+        QMessageBox::warning( this, QApplication::applicationName(), "Spaces are not allowed in the table name" );
         return;
     }
     accept();

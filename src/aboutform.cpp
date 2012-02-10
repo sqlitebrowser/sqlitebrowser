@@ -39,6 +39,6 @@ void aboutForm::languageChange()
 
 void aboutForm::init()
 {
-    this->setWindowTitle(applicationName);
+    this->setWindowTitle(QApplication::applicationName());
 }
 

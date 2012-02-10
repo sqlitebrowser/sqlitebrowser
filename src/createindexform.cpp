@@ -61,12 +61,12 @@ void createIndexForm::confirmCreate()
     QString idxname = indexLineEdit->text();
     if (idxname.isEmpty()) {
         ok = false;
-        QMessageBox::information( this, applicationName, "Please select a name for the index" );
+        QMessageBox::information( this, QApplication::applicationName(), "Please select a name for the index" );
         return;
     }
     if (idxname.contains(" ")>0) {
         ok = false;
-        QMessageBox::warning( this, applicationName, "Spaces are not allowed in the index name" );
+        QMessageBox::warning( this, QApplication::applicationName(), "Spaces are not allowed in the index name" );
         return;
     }
     if (ok){

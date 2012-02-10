@@ -59,11 +59,11 @@ void addFieldForm::confirmAddField()
 {
     QString fieldname = nameLineEdit->text();
     if (fieldname.isEmpty()) {
-        QMessageBox::information( this, applicationName, "Field name can not be empty" );
+        QMessageBox::information( this, QApplication::applicationName(), "Field name can not be empty" );
         return;
     }
     if (fieldname.contains(" ")>0) {
-        QMessageBox::warning( this, applicationName, "Spaces are not allowed in the field name" );
+        QMessageBox::warning( this, QApplication::applicationName(), "Spaces are not allowed in the field name" );
         return;
     }
     fname = fieldname;

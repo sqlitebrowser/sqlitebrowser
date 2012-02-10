@@ -7,6 +7,7 @@
 #include <qmessagebox.h>
 #include <QProgressDialog>
 #include "SQLLogDock.h"
+#include <QApplication>
 
 void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
 {
@@ -206,7 +207,7 @@ void DBBrowserDB::close (){
             QString msg = "Do you want to save the changes made to the database file ";
             msg.append(curDBFilename);
             msg.append(" ?");
-            if (QMessageBox::question( 0, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+            if (QMessageBox::question( 0, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
             {
                 save();
             } else {

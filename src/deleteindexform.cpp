@@ -42,7 +42,7 @@ void deleteIndexForm::confirmDelete()
     msg.append(comboOptions->currentText());
     msg.append("?");
 
-     if (QMessageBox::warning( this, applicationName,
+    if (QMessageBox::warning( this, QApplication::applicationName(),
        msg,
         QMessageBox::Yes | QMessageBox::Default,
         QMessageBox::No | QMessageBox::Escape )

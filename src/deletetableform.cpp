@@ -42,7 +42,7 @@ void deleteTableForm::confirmDelete()
     msg.append(comboOptions->currentText());
     msg.append("? \n All data in the table will be lost");
 
-     if (QMessageBox::warning( this, applicationName,
+     if (QMessageBox::warning( this, QApplication::applicationName(),
        msg,
         QMessageBox::Yes | QMessageBox::Default,
         QMessageBox::No | QMessageBox::Escape )

@@ -109,7 +109,7 @@ void preferencesForm::chooseLocation()
 
 void preferencesForm::loadSettings()
 {
-    QSettings settings(sOrganisation, sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     settings.sync();
 
     defaultencoding = settings.value( "/db/defaultencoding", "UTF8" ).toString();
@@ -150,7 +150,7 @@ void preferencesForm::loadSettings()
 
 void preferencesForm::saveSettings()
 {
-    QSettings settings(sOrganisation, sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
 
     settings.setValue( "/db/defaultencoding", defaultencoding  );
     settings.setValue( "/db/defaultnewdata", defaultnewdata );
