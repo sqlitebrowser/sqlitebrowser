@@ -1,8 +1,12 @@
 TEMPLATE = app
-LANGUAGE = C++
+
+TARGET = sqlitebrowser
+
 INCLUDEPATH += sqlite_source/
 CONFIG += qt \
-    warn_on
+    warn_on \
+    debug
+
 HEADERS += \
     sqlitebrowsertypes.h \
     sqlitedb.h \
