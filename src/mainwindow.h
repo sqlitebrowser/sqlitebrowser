@@ -35,7 +35,7 @@ class SQLLogDock;
 class editForm;
 class findForm;
 
-class mainForm : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -131,8 +131,8 @@ private:
     QAction *recentSeparatorAct;
 
 public:
-    mainForm(QWidget* parent = 0);
-    ~mainForm();
+    MainWindow(QWidget* parent = 0);
+    ~MainWindow();
 
     editForm * editWin;
     QClipboard * clipboard;

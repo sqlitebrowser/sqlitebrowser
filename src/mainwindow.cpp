@@ -27,7 +27,7 @@
 #include "findform.h"
 #include "SQLLogDock.h"
 
-void mainForm::setupUi()
+void MainWindow::setupUi()
 {
     if (this->objectName().isEmpty()){
         this->setObjectName(QString::fromUtf8("mainForm"));
@@ -588,7 +588,7 @@ void mainForm::setupUi()
     QMetaObject::connectSlotsByName(this);
 } // setupUi
 
-void mainForm::retranslateUi()
+void MainWindow::retranslateUi()
 {
     this->setWindowTitle(QObject::tr("Browser"));
 
@@ -808,7 +808,7 @@ void mainForm::retranslateUi()
  *  name 'name' and widget flags set to 'f'.
  *
  */
-mainForm::mainForm(QWidget* parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
 {
     setupUi();
@@ -821,7 +821,7 @@ mainForm::mainForm(QWidget* parent)
 /*
  *  Destroys the object and frees any allocated resources
  */
-mainForm::~mainForm()
+MainWindow::~MainWindow()
 {
     destroy();
     // no need to delete child widgets, Qt does it all for us
@@ -831,12 +831,12 @@ mainForm::~mainForm()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void mainForm::languageChange()
+void MainWindow::languageChange()
 {
     retranslateUi();
 }
 
-void mainForm::init()
+void MainWindow::init()
 {
     
     findWin = 0;
@@ -879,7 +879,7 @@ void mainForm::init()
     restoreState(settings.value("MainWindow/windowState").toByteArray());
 }
 
-void mainForm::destroy()
+void MainWindow::destroy()
 {
     // this should be put into the close event but for now it is ok.
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
@@ -893,7 +893,7 @@ void mainForm::destroy()
 
 //***********************************************************
 //*** Open File
-void mainForm::fileOpen(const QString & fileName)
+void MainWindow::fileOpen(const QString & fileName)
 {
     QString wFile = fileName;
     if (!QFile::exists(wFile))
@@ -927,14 +927,14 @@ void mainForm::fileOpen(const QString & fileName)
 }
 
 
-void mainForm::fileOpen()
+void MainWindow::fileOpen()
 {
     fileOpen(QString());
 }
 
 
 
-void mainForm::fileNew()
+void MainWindow::fileNew()
 {
     QString fileName = QFileDialog::getSaveFileName(
                 this,
@@ -967,7 +967,7 @@ void mainForm::fileNew()
 }
 
 //** Populate DbTree Structure
-void mainForm::populateStructure()
+void MainWindow::populateStructure()
 {
     dbTreeWidget->model()->removeRows(0, dbTreeWidget->model()->rowCount());
     if (!db.isOpen()){
@@ -1012,7 +1012,7 @@ void mainForm::populateStructure()
     }
 }
 
-void mainForm::populateTable( const QString & tablename)
+void MainWindow::populateTable( const QString & tablename)
 {
     bool mustreset = false;
     QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -1048,7 +1048,7 @@ void mainForm::populateTable( const QString & tablename)
     QApplication::restoreOverrideCursor();
 }
 
-void mainForm::resetBrowser()
+void MainWindow::resetBrowser()
 {
     recAtTop = 0;
     QString sCurrentTable = comboBrowseTable->currentText();
@@ -1066,7 +1066,7 @@ void mainForm::resetBrowser()
     populateTable(comboBrowseTable->currentText());
 }
 
-void mainForm::fileClose()
+void MainWindow::fileClose()
 {
     db.close();
     this->setWindowTitle(QApplication::applicationName());
@@ -1082,7 +1082,7 @@ void mainForm::fileClose()
 }
 
 
-void mainForm::fileExit()
+void MainWindow::fileExit()
 {
     if (db.isOpen())
     {
@@ -1104,12 +1104,12 @@ void mainForm::fileExit()
     QApplication::exit( 0 );
 }
 
-void mainForm::closeEvent( QCloseEvent * )
+void MainWindow::closeEvent( QCloseEvent * )
 {
     fileExit();
 }
 
-void mainForm::addRecord()
+void MainWindow::addRecord()
 {
     if (db.addRecord()){
         populateTable(db.curBrowseTableName);
@@ -1126,7 +1126,7 @@ void mainForm::addRecord()
 }
 
 
-void mainForm::deleteRecord()
+void MainWindow::deleteRecord()
 {
     if (dataTable->currentRow()!=-1){
         int lastselected = dataTable->currentRow();
@@ -1144,7 +1144,7 @@ void mainForm::deleteRecord()
     }
 }
 
-void mainForm::updateTableView(int lineToSelect)
+void MainWindow::updateTableView(int lineToSelect)
 {
     //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
     QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -1209,7 +1209,7 @@ void mainForm::updateTableView(int lineToSelect)
     QApplication::restoreOverrideCursor();
 }
 
-void mainForm::selectTableLine(int lineToSelect)
+void MainWindow::selectTableLine(int lineToSelect)
 {
     dataTable->clearSelection();
     dataTable->selectRow(lineToSelect);
@@ -1217,7 +1217,7 @@ void mainForm::selectTableLine(int lineToSelect)
     dataTable->scrollToItem(dataTable->itemAt(lineToSelect, 0));
 }
 
-void mainForm::navigatePrevious()
+void MainWindow::navigatePrevious()
 {
     int nextFirstRec = recAtTop - recsPerView;
     if (nextFirstRec  >= 0 ) {
@@ -1227,7 +1227,7 @@ void mainForm::navigatePrevious()
 }
 
 
-void mainForm::navigateNext()
+void MainWindow::navigateNext()
 {
     int nextFirstRec = recAtTop + recsPerView;
     //qDebug("called navigatenext, nextFirstRec=%d\n",nextFirstRec);
@@ -1238,7 +1238,7 @@ void mainForm::navigateNext()
 }
 
 
-void mainForm::navigateGoto()
+void MainWindow::navigateGoto()
 {
     QString typed = editGoto->text();
     bool ok;
@@ -1251,7 +1251,7 @@ void mainForm::navigateGoto()
     editGoto->setText(QString::number(dec,10));
 }
 
-void mainForm::setRecordsetLabel()
+void MainWindow::setRecordsetLabel()
 {
     if (db.getRecordCount()==0){
         labelRecordset->setText("0 - 0 of 0");
@@ -1285,7 +1285,7 @@ void mainForm::setRecordsetLabel()
     }
 }
 
-void mainForm::browseFind(bool open)
+void MainWindow::browseFind(bool open)
 {
     if (open){
         if ( ! findWin ) {
@@ -1304,17 +1304,17 @@ void mainForm::browseFind(bool open)
     }
 }
 
-void mainForm::browseFindAway()
+void MainWindow::browseFindAway()
 {
     buttonFind->toggle();
 }
 
-void mainForm::browseRefresh()
+void MainWindow::browseRefresh()
 {
     populateTable(comboBrowseTable->currentText());
 }
 
-void mainForm::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
+void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
@@ -1361,13 +1361,13 @@ void mainForm::lookfor( const QString & wfield, const QString & woperator, const
 }
 
 
-void mainForm::showrecord( int dec )
+void MainWindow::showrecord( int dec )
 {
     recAtTop = ((dec-1)/recsPerView)*recsPerView;
     updateTableView(dec-recAtTop-1);
 }
 
-void mainForm::createTable()
+void MainWindow::createTable()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
@@ -1388,7 +1388,7 @@ void mainForm::createTable()
 }
 
 
-void mainForm::createIndex()
+void MainWindow::createIndex()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
@@ -1411,7 +1411,7 @@ void mainForm::createIndex()
 }
 
 
-void mainForm::compact()
+void MainWindow::compact()
 {
     QApplication::setOverrideCursor( Qt::WaitCursor );
     if (db.isOpen()){
@@ -1432,7 +1432,7 @@ void mainForm::compact()
 }
 
 
-void mainForm::deleteTable()
+void MainWindow::deleteTable()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
@@ -1458,7 +1458,7 @@ void mainForm::deleteTable()
 
 //*****************************************
 //** Edit Table
-void mainForm::editTable()
+void MainWindow::editTable()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
@@ -1487,7 +1487,7 @@ void mainForm::editTable()
         }
     }
 }
-void mainForm::editTablePopup()
+void MainWindow::editTablePopup()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
@@ -1521,7 +1521,7 @@ void mainForm::editTablePopup()
     // }
 }
 
-void mainForm::deleteIndex()
+void MainWindow::deleteIndex()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
@@ -1547,7 +1547,7 @@ void mainForm::deleteIndex()
 }
 
 
-void mainForm::copy()
+void MainWindow::copy()
 {
     QWidget * t =dataTable->cellWidget(dataTable->currentRow(), dataTable->currentColumn());
     if (t!=0){
@@ -1564,7 +1564,7 @@ void mainForm::copy()
 }
 
 
-void mainForm::paste()
+void MainWindow::paste()
 {
     QWidget * t =dataTable->cellWidget(dataTable->currentRow(), dataTable->currentColumn());
     if (t!=0){
@@ -1580,20 +1580,20 @@ void mainForm::paste()
 }
 
 
-void mainForm::helpWhatsThis()
+void MainWindow::helpWhatsThis()
 {
     QWhatsThis::enterWhatsThisMode ();
 }
 
 
-void mainForm::helpAbout()
+void MainWindow::helpAbout()
 {
     aboutForm * aForm = new aboutForm( this );
     aForm ->exec() ;
 }
 
 
-void mainForm::updateRecordText(int row, int col, QString newtext)
+void MainWindow::updateRecordText(int row, int col, QString newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
         QMessageBox::information( this, QApplication::applicationName(), "Data could not be updated" );
@@ -1613,12 +1613,12 @@ void mainForm::updateRecordText(int row, int col, QString newtext)
     dataTable->setItem( row - recAtTop, col, new QTableWidgetItem(firstline));
 }
 
-void mainForm::logWinAway()
+void MainWindow::logWinAway()
 {
     sqlLogAction->toggle();
 }
 
-void mainForm::editWinAway()
+void MainWindow::editWinAway()
 {
     editWin->hide();
     activateWindow();
@@ -1627,7 +1627,7 @@ void mainForm::editWinAway()
 
 
 
-void mainForm::editText(int row, int col)
+void MainWindow::editText(int row, int col)
 {
     rowList tab = db.browseRecs;
     QStringList& rt = tab[row];
@@ -1639,7 +1639,7 @@ void mainForm::editText(int row, int col)
 
 
 
-void mainForm::doubleClickTable( int row, int col )
+void MainWindow::doubleClickTable( int row, int col )
 {
     if ((row==-1) || (col==-1)){
         qDebug("no cell selected");
@@ -1652,7 +1652,7 @@ void mainForm::doubleClickTable( int row, int col )
 }
 
 
-void mainForm::executeQuery()
+void MainWindow::executeQuery()
 {
     QString query = db.GetEncodedQString(sqlTextEdit->toPlainText());
     if (query.isEmpty())
@@ -1724,7 +1724,7 @@ void mainForm::executeQuery()
 }
 
 
-void mainForm::mainTabSelected(const QString & tabname)
+void MainWindow::mainTabSelected(const QString & tabname)
 {
     if ((mainTab->currentIndex() == 0)||(mainTab->currentIndex() == 1))
     {
@@ -1734,7 +1734,7 @@ void mainForm::mainTabSelected(const QString & tabname)
 }
 
 
-void mainForm::toggleLogWindow( bool enable )
+void MainWindow::toggleLogWindow( bool enable )
 {
     if (enable){
         logWin->show();
@@ -1744,7 +1744,7 @@ void mainForm::toggleLogWindow( bool enable )
 }
 
 
-void mainForm::importTableFromCSV()
+void MainWindow::importTableFromCSV()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file first." );
@@ -1781,7 +1781,7 @@ void mainForm::importTableFromCSV()
     }
 }
 
-void mainForm::exportTableToCSV()
+void MainWindow::exportTableToCSV()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
@@ -1864,14 +1864,14 @@ void mainForm::exportTableToCSV()
 }
 
 
-void mainForm::dbState( bool dirty )
+void MainWindow::dbState( bool dirty )
 {
     fileSaveAction->setEnabled(dirty);
     fileRevertAction->setEnabled(dirty);
 }
 
 
-void mainForm::fileSave()
+void MainWindow::fileSave()
 {
     if (db.isOpen()){
         db.save();
@@ -1880,7 +1880,7 @@ void mainForm::fileSave()
 }
 
 
-void mainForm::fileRevert()
+void MainWindow::fileRevert()
 {
     if (db.isOpen()){
         QString msg = "Are you sure you want to undo all changes made to the database file \n\n<b> ";
@@ -1896,7 +1896,7 @@ void mainForm::fileRevert()
 }
 
 
-void mainForm::exportDatabaseToSQL()
+void MainWindow::exportDatabaseToSQL()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
@@ -1921,7 +1921,7 @@ void mainForm::exportDatabaseToSQL()
 }
 
 
-void mainForm::importDatabaseFromSQL()
+void MainWindow::importDatabaseFromSQL()
 {
     QString fileName = QFileDialog::getOpenFileName(
                 this,
@@ -1966,7 +1966,7 @@ void mainForm::importDatabaseFromSQL()
 }
 
 
-void mainForm::openPreferences()
+void MainWindow::openPreferences()
 {
     preferencesForm * prefForm = new preferencesForm( this );
     if ( prefForm->exec() ) {
@@ -1975,7 +1975,7 @@ void mainForm::openPreferences()
     }
 }
 
-void mainForm::updatePreferences()
+void MainWindow::updatePreferences()
 {
     preferencesForm * prefForm = new preferencesForm( this );
     prefForm->loadSettings();
@@ -1997,7 +1997,7 @@ void mainForm::updatePreferences()
 //******************************************************************
 
 //** Db Tree Context Menu
-void mainForm::on_tree_context_menu(const QPoint &qPoint){
+void MainWindow::on_tree_context_menu(const QPoint &qPoint){
     if( !dbTreeWidget->selectionModel()->hasSelection() ){
         return;
     }
@@ -2013,7 +2013,7 @@ void mainForm::on_tree_context_menu(const QPoint &qPoint){
     }
 }
 //** Tree selection changed
-void mainForm::on_tree_selection_changed(){
+void MainWindow::on_tree_selection_changed(){
     if (!dbTreeWidget->selectionModel()->hasSelection()){
         editDeleteTableActionPopup->setEnabled(false);
         editModifyTableActionPopup->setEnabled(false);
@@ -2040,7 +2040,7 @@ void mainForm::on_tree_selection_changed(){
 }
 
 
-void mainForm::on_add_field(){
+void MainWindow::on_add_field(){
     qDebug("YES");
     //if( !dbTreeWidget->currentItem() ){
     //   return;
@@ -2066,7 +2066,7 @@ void mainForm::on_add_field(){
         newItem->setText(2, fieldForm->field_type);
     }
 }
-void mainForm::on_edit_field(){
+void MainWindow::on_edit_field(){
     qDebug("YES");
     if( !dbTreeWidget->currentItem() ){
         return;
@@ -2086,14 +2086,14 @@ void mainForm::on_edit_field(){
     }
 }
 
-void mainForm::openRecentFile()
+void MainWindow::openRecentFile()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
         fileOpen(action->data().toString());
 }
 
-void mainForm::updateRecentFileActions()
+void MainWindow::updateRecentFileActions()
 {
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     QStringList files = settings.value("recentFileList").toStringList();
@@ -2113,7 +2113,7 @@ void mainForm::updateRecentFileActions()
     recentSeparatorAct->setVisible(numRecentFiles > 0);
 }
 
-void mainForm::setCurrentFile(const QString &fileName)
+void MainWindow::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
 
@@ -2127,19 +2127,19 @@ void mainForm::setCurrentFile(const QString &fileName)
     settings.setValue("recentFileList", files);
 
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
-        mainForm *mainWin = qobject_cast<mainForm *>(widget);
+        MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
         if (mainWin)
             mainWin->updateRecentFileActions();
     }
 }
 
-void mainForm::dragEnterEvent(QDragEnterEvent *event)
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
     if( event->mimeData()->hasFormat("text/uri-list") )
             event->acceptProposedAction();
 }
 
-void mainForm::dropEvent(QDropEvent *event)
+void MainWindow::dropEvent(QDropEvent *event)
 {
     QList<QUrl> urls = event->mimeData()->urls();
 

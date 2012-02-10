@@ -13,7 +13,7 @@ static OSErr checkAppleEventForMissingParams(const AppleEvent& theAppleEvent)
     switch (err = AEGetAttributePtr(&theAppleEvent,
                                     keyMissedKeywordAttr, typeWildCard, &returnedType, nil, 0,
                                     &actualSize)) {
-    case errAEDescNotFound:  // If we couldn’t find the error attribute
+    case errAEDescNotFound:  // If we couldnt find the error attribute
         return noErr;          //    everything is ok, return noErr
     case noErr:                      // We found an error attribute, so
         return errAEEventNotHandled;   // tell the client we ignored the event
@@ -73,7 +73,7 @@ int main( int argc, char ** argv )
     QApplication a( argc, argv );
     a.setOrganizationName("duckmansoftware");
     a.setApplicationName("SQLite Database Browser");
-    mainForm w;
+    MainWindow w;
 #if defined(Q_WS_MAC)
     AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments,
                           NewAEEventHandlerUPP(odocHandler),reinterpret_cast<long>(&w),false);
