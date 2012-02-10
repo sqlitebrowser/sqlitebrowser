@@ -4,3 +4,4 @@ Makefile
 .obj/
 sqlitedbbrowser.pro.user
 src/qrc_icons.cpp
+src/sqlitebrowser
