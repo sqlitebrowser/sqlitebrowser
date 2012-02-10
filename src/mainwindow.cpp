@@ -311,10 +311,19 @@ void mainForm::init()
     //connect db and log
     db.logWin = logWin;
 
+    //load last ui settings
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+    restoreState(settings.value("MainWindow/windowState").toByteArray());
 }
 
 void mainForm::destroy()
 {
+    // this should be put into the close event but for now it is ok.
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    settings.setValue("MainWindow/geometry", saveGeometry());
+    settings.setValue("MainWindow/windowState", saveState());
+
     if (gotoValidator){
         delete gotoValidator;
     }
