@@ -606,7 +606,7 @@ void MainWindow::retranslateUi()
 
     fileExitAction->setIconText(QObject::tr("Exit"));
     fileExitAction->setText(QObject::tr("E&xit"));
-    fileExitAction->setShortcut(QString());
+    fileExitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
 
     editCopyAction->setIconText(QObject::tr("Copy"));
     editCopyAction->setText(QObject::tr("&Copy"));
@@ -636,6 +636,7 @@ void MainWindow::retranslateUi()
 
     fileCloseAction->setIconText(QObject::tr("Close Database"));
     fileCloseAction->setText(QObject::tr("Close Database"));
+    fileCloseAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
 
     newRecordAction->setIconText(QObject::tr("New Record"));
     newRecordAction->setText(QObject::tr("New Record"));
@@ -650,7 +651,7 @@ void MainWindow::retranslateUi()
     helpWhatsThisAction->setShortcut(QObject::tr("Shift+F1"));
 
     sqlLogAction->setIconText(QObject::tr("SQL Log"));
-    sqlLogAction->setText(QObject::tr("SQL Log"));
+    sqlLogAction->setText(QObject::tr("SQL &Log"));
     sqlLogAction->setWhatsThis(QObject::tr("Display or hide the SQL log window, which stores all SQL commands issued by the user or the application."));
 
     fileImportCSVAction->setIconText(QObject::tr("Table from CSV file"));
@@ -718,12 +719,12 @@ void MainWindow::retranslateUi()
     fileExportSQLAction->setWhatsThis(QObject::tr("This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL."));
 
     editPreferencesAction->setIconText(QObject::tr("Preferences"));
-    editPreferencesAction->setText(QObject::tr("Preferences"));
+    editPreferencesAction->setText(QObject::tr("&Preferences"));
     editPreferencesAction->setToolTip(QObject::tr("Open the preferences window.."));
     editPreferencesAction->setWhatsThis(QObject::tr("Open the preferences window."));
 
     mainTab->setProperty("toolTip", QVariant(QString()));
-    mainTab->setTabText(mainTab->indexOf(structure), QObject::tr("Database Structure"));
+    mainTab->setTabText(mainTab->indexOf(structure), QObject::tr("Database &Structure"));
 
     textLabel1->setText(QObject::tr("Table:"));
 
@@ -773,7 +774,7 @@ void MainWindow::retranslateUi()
     editGoto->setProperty("toolTip", QVariant(QObject::tr("Enter record number to browse")));
     editGoto->setProperty("whatsThis", QVariant(QObject::tr("Type a record number in this area and click the Go to: button to display the record in the database view")));
 
-    mainTab->setTabText(mainTab->indexOf(browser), QObject::tr("Browse Data"));
+    mainTab->setTabText(mainTab->indexOf(browser), QObject::tr("&Browse Data"));
     textLabel1_2->setText(QObject::tr("SQL string:"));
 
     sqlTextEdit->setProperty("toolTip", QVariant(QObject::tr("Type SQL string here")));
@@ -793,14 +794,14 @@ void MainWindow::retranslateUi()
     queryResultTableView->setProperty("toolTip", QVariant(QObject::tr("Query generated data")));
     queryResultTableView->setProperty("whatsThis", QVariant(QObject::tr("This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.")));
 
-    mainTab->setTabText(mainTab->indexOf(query), QObject::tr("Execute SQL"));
+    mainTab->setTabText(mainTab->indexOf(query), QObject::tr("E&xecute SQL"));
     //Toolbar->setLabel(QObject::tr("Toolbar"));
     fileMenu->setTitle(QObject::tr("&File"));
-    importMenu->setTitle(QObject::tr("Import"));
-    exportMenu->setTitle(QObject::tr("Export"));
-    EditMenu->setTitle(QObject::tr("Edit"));
-    ViewMenu->setTitle(QObject::tr("View"));
-    PopupMenu->setTitle(QObject::tr("Help"));
+    importMenu->setTitle(QObject::tr("&Import"));
+    exportMenu->setTitle(QObject::tr("&Export"));
+    EditMenu->setTitle(QObject::tr("&Edit"));
+    ViewMenu->setTitle(QObject::tr("&View"));
+    PopupMenu->setTitle(QObject::tr("&Help"));
 } // retranslateUi
 
 /*
