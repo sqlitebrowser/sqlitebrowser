@@ -1589,7 +1589,7 @@ void MainWindow::helpWhatsThis()
 
 void MainWindow::helpAbout()
 {
-    aboutForm * aForm = new aboutForm( this );
+    AboutDialog * aForm = new AboutDialog( this );
     aForm ->exec() ;
 }
 
