@@ -150,6 +150,7 @@ private:
 
     void updateRecentFileActions();
     void setCurrentFile(const QString& fileName);
+    void activateFields(bool enable = true);
 
 public slots:
     virtual void on_tree_context_menu(const QPoint & qPoint);

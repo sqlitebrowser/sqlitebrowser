@@ -909,13 +909,6 @@ void MainWindow::fileOpen(const QString & fileName)
         if (db.open(wFile))
         {
             this->setWindowTitle(QApplication::applicationName() +" - "+wFile);
-            fileCloseAction->setEnabled(true);
-            fileCompactAction->setEnabled(true);
-            editCreateTableAction->setEnabled(true);
-            editDeleteTableAction->setEnabled(true);
-            editModifyTableAction->setEnabled(true);
-            editCreateIndexAction->setEnabled(true);
-            editDeleteIndexAction->setEnabled(true);
             setCurrentFile(wFile);
         } else {
             QString err = "An error occurred:  ";
@@ -956,13 +949,6 @@ void MainWindow::fileNew()
         populateStructure();
         resetBrowser();
         createTable();
-        fileCloseAction->setEnabled(true);
-        fileCompactAction->setEnabled(true);
-        editCreateTableAction->setEnabled(true);
-        editDeleteTableAction->setEnabled(true);
-        editModifyTableAction->setEnabled(true);
-        editCreateIndexAction->setEnabled(true);
-        editDeleteIndexAction->setEnabled(true);
         setCurrentFile(fileName);
     }
 }
@@ -1073,13 +1059,7 @@ void MainWindow::fileClose()
     this->setWindowTitle(QApplication::applicationName());
     resetBrowser();
     populateStructure();
-    fileCloseAction->setEnabled(false);
-    fileCompactAction->setEnabled(false);
-    editCreateTableAction->setEnabled(false);
-    editDeleteTableAction->setEnabled(false);
-    editModifyTableAction->setEnabled(false);
-    editCreateIndexAction->setEnabled(false);
-    editDeleteIndexAction->setEnabled(false);
+    activateFields(false);
 }
 
 
@@ -2117,6 +2097,7 @@ void MainWindow::updateRecentFileActions()
 void MainWindow::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
+    activateFields(true);
 
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     QStringList files = settings.value("recentFileList").toStringList();
@@ -2151,4 +2132,17 @@ void MainWindow::dropEvent(QDropEvent *event)
 
     if( !fileName.isEmpty() && fileName.endsWith("db") )
             fileOpen(fileName);
+}
+
+void MainWindow::activateFields(bool enable)
+{
+    fileCloseAction->setEnabled(enable);
+    fileCompactAction->setEnabled(enable);
+    editCreateTableAction->setEnabled(enable);
+    editDeleteTableAction->setEnabled(enable);
+    editModifyTableAction->setEnabled(enable);
+    editCreateIndexAction->setEnabled(enable);
+    editDeleteIndexAction->setEnabled(enable);
+
+    executeQueryButton->setEnabled(enable);
 }
