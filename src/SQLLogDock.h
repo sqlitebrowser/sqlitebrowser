@@ -21,12 +21,14 @@ public:
     SQLLogDock(QWidget* parent = 0);
     ~SQLLogDock();
 
+    QComboBox* comboLogType() { return m_comboLogType; }
+
 private:
     QWidget* contentWidget;
     QVBoxLayout *vboxLayout;
     QHBoxLayout *hboxLayout;
     QLabel *textLabel1;
-    QComboBox *comboBox3;
+    QComboBox *m_comboLogType;
     QSpacerItem *spacer10;
     QPushButton *clearButton;
     QStackedWidget *logStack;

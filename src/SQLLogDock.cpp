@@ -35,10 +35,10 @@ void SQLLogDock::setupUi()
 
     hboxLayout->addWidget(textLabel1);
 
-    comboBox3 = new QComboBox(this);
-    comboBox3->setObjectName(QString::fromUtf8("comboBox3"));
+    m_comboLogType = new QComboBox(this);
+    m_comboLogType->setObjectName(QString::fromUtf8("comboBox3"));
 
-    hboxLayout->addWidget(comboBox3);
+    hboxLayout->addWidget(m_comboLogType);
 
     spacer10 = new QSpacerItem(150, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -89,7 +89,7 @@ void SQLLogDock::setupUi()
 
     retranslateUi();
     QObject::connect(clearButton, SIGNAL(clicked()), this, SLOT(clearLog()));
-    QObject::connect(comboBox3, SIGNAL(activated(int)), logStack, SLOT(setCurrentIndex(int)));
+    QObject::connect(m_comboLogType, SIGNAL(currentIndexChanged(int)), logStack, SLOT(setCurrentIndex(int)));
 
     QMetaObject::connectSlotsByName(this);
 }
@@ -98,8 +98,8 @@ void SQLLogDock::retranslateUi()
 {
     this->setWindowTitle(QObject::tr("SQL Log"));
     textLabel1->setText(QObject::tr("Show SQL submitted by:"));
-    comboBox3->clear();
-    comboBox3->insertItems(0, QStringList()
+    m_comboLogType->clear();
+    m_comboLogType->insertItems(0, QStringList()
      << QObject::tr("User")
      << QObject::tr("Application")
     );

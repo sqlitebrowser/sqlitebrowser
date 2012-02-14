@@ -878,6 +878,7 @@ void MainWindow::init()
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
+    logWin->comboLogType()->setCurrentIndex(logWin->comboLogType()->findText(settings.value("SQLLogDock/Log", "Application").toString()));
 }
 
 void MainWindow::destroy()
@@ -886,6 +887,7 @@ void MainWindow::destroy()
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     settings.setValue("MainWindow/geometry", saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
+    settings.setValue("SQLLogDock/Log", logWin->comboLogType()->currentText());
 
     if (gotoValidator){
         delete gotoValidator;
