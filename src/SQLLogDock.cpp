@@ -1,8 +1,6 @@
 #include "SQLLogDock.h"
 
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
+#include <QScrollBar>
 
 #include "sqlitedb.h"
 /*
@@ -133,12 +131,16 @@ void SQLLogDock::closeEvent( QCloseEvent * )
 
 void SQLLogDock::log( QString & statement, int msgtype)
 {
+    QScrollBar* sb = 0;
     if (msgtype==kLogMsg_User)
     {
         userLogText->setPlainText(userLogText->toPlainText()+statement+"\n");
+        sb = userLogText->verticalScrollBar();
     } else {
         appLogText->setPlainText(appLogText->toPlainText()+statement+"\n");
+        sb = appLogText->verticalScrollBar();
     }
+    sb->setValue(sb->maximum());
 }
 
 void SQLLogDock::msgDBDirtyState( bool dirty)
