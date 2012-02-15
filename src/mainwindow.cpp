@@ -1637,7 +1637,7 @@ void MainWindow::doubleClickTable( int row, int col )
 
 void MainWindow::executeQuery()
 {
-    QString query = db.GetEncodedQString(sqlTextEdit->toPlainText());
+    QString query = sqlTextEdit->toPlainText().trimmed();
     if (query.isEmpty())
     {
         QMessageBox::information( this, QApplication::applicationName(), "Query string is empty" );
@@ -1646,20 +1646,19 @@ void MainWindow::executeQuery()
     //log the query
     db.logSQL(query, kLogMsg_User);
     sqlite3_stmt *vm;
-    const char *tail=NULL;
+    std::string tmpQuery = query.toStdString();
+    const char *tail = tmpQuery.c_str();
     int ncol;
     int err=0;
     QString lastErrorMessage = QString("No error");
     //Accept multi-line queries, by looping until the tail is empty
-    while (1) {
-        if (tail!=NULL) {
-            query = QString(tail);
-        }
+    do
+    {
         queryResultListModel->removeRows(0, queryResultListModel->rowCount());
         queryResultListModel->setHorizontalHeaderLabels(QStringList());
         queryResultListModel->setVerticalHeaderLabels(QStringList());
 
-        err=sqlite3_prepare(db._db,query.toUtf8(),query.length(),
+        err=sqlite3_prepare(db._db,tail,query.length(),
                             &vm, &tail);
         if (err == SQLITE_OK){
             db.setDirty(true);
@@ -1701,9 +1700,8 @@ void MainWindow::executeQuery()
         queryErrorLineEdit->setText(lastErrorMessage);
         queryResultTableView->resizeColumnsToContents();
 
-        if ((!tail)||(*tail==0)) break;
         if(err!=SQLITE_OK) break;
-    }
+    } while( tail && *tail != 0 );
 }
 
 
