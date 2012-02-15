@@ -549,7 +549,7 @@ void MainWindow::setupUi()
 
 
     retranslateUi();
-    QObject::connect(fileExitAction, SIGNAL(activated()), this, SLOT(fileExit()));
+    QObject::connect(fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
     QObject::connect(fileOpenAction, SIGNAL(activated()), this, SLOT(fileOpen()));
     QObject::connect(fileNewAction, SIGNAL(activated()), this, SLOT(fileNew()));
     QObject::connect(fileCloseAction, SIGNAL(activated()), this, SLOT(fileClose()));
@@ -891,12 +891,6 @@ void MainWindow::init()
 
 void MainWindow::destroy()
 {
-    // this should be put into the close event but for now it is ok.
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
-    settings.setValue("SQLLogDock/Log", logWin->comboLogType()->currentText());
-
     if (gotoValidator){
         delete gotoValidator;
     }
@@ -1092,12 +1086,16 @@ void MainWindow::fileExit()
         }
         db.close();
     }
-    QApplication::exit( 0 );
 }
 
-void MainWindow::closeEvent( QCloseEvent * )
+void MainWindow::closeEvent( QCloseEvent* event )
 {
+    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    settings.setValue("MainWindow/geometry", saveGeometry());
+    settings.setValue("MainWindow/windowState", saveState());
+    settings.setValue("SQLLogDock/Log", logWin->comboLogType()->currentText());
     fileExit();
+    QMainWindow::closeEvent(event);
 }
 
 void MainWindow::addRecord()

@@ -155,6 +155,9 @@ private:
     void setCurrentFile(const QString& fileName);
     void activateFields(bool enable = true);
 
+protected:
+    void closeEvent(QCloseEvent *);
+
 public slots:
     virtual void on_tree_context_menu(const QPoint & qPoint);
     virtual void on_tree_selection_changed();
@@ -169,7 +172,6 @@ public slots:
     virtual void resetBrowser();
     virtual void fileClose();
     virtual void fileExit();
-    virtual void closeEvent( QCloseEvent * );
     virtual void addRecord();
     virtual void deleteRecord();
     virtual void updateTableView( int lineToSelect );
