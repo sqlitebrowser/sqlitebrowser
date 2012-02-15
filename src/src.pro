@@ -30,7 +30,8 @@ HEADERS += \
     preferencesform.h \
     mainwindow.h \
     createtabledialog.h \
-    SQLLogDock.h
+    SQLLogDock.h \
+    sqlitesyntaxhighlighter.h
 SOURCES += \
     browsermain.cpp \
     sqlitedb.cpp \
@@ -54,7 +55,8 @@ SOURCES += \
     preferencesform.cpp \
     mainwindow.cpp \
     createtabledialog.cpp \
-    SQLLogDock.cpp
+    SQLLogDock.cpp \
+    sqlitesyntaxhighlighter.cpp
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc

@@ -13,6 +13,8 @@
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
+class SQLiteSyntaxHighlighter;
+
 class SQLLogDock : public QDockWidget
 {
     Q_OBJECT
@@ -38,6 +40,9 @@ private:
     QWidget *WStackPage1;
     QVBoxLayout *vboxLayout1;
     QTextEdit *appLogText;
+
+    SQLiteSyntaxHighlighter* userSqliteHighlighter;
+    SQLiteSyntaxHighlighter* appSqliteHighlighter;
 
     void setupUi();
     void retranslateUi();

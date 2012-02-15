@@ -3,6 +3,7 @@
 #include <QScrollBar>
 
 #include "sqlitedb.h"
+#include "sqlitesyntaxhighlighter.h"
 /*
  *  Constructs a sqlLogForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -64,6 +65,14 @@ void SQLLogDock::setupUi()
     userLogText->setObjectName(QString::fromUtf8("userLogText"));
     userLogText->setReadOnly(true);
 
+    QFont font;
+    font.setFamily("Courier");
+    font.setFixedPitch(true);
+    font.setPixelSize(11);
+    userLogText->setFont(font);
+
+    userSqliteHighlighter = new SQLiteSyntaxHighlighter(userLogText->document());
+
     gridLayout->addWidget(userLogText, 0, 0, 1, 1);
     logStack->addWidget(WStackPage);
     WStackPage->setLayout(gridLayout);
@@ -78,6 +87,9 @@ void SQLLogDock::setupUi()
     appLogText = new QTextEdit(WStackPage1);
     appLogText->setObjectName(QString::fromUtf8("appLogText"));
     appLogText->setReadOnly(true);
+    appLogText->setFont(font);
+
+    appSqliteHighlighter = new SQLiteSyntaxHighlighter(appLogText->document());
 
     logStack->addWidget(WStackPage1);
     vboxLayout1->addWidget(appLogText);

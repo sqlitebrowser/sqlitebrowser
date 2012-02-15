@@ -26,6 +26,7 @@
 #include "editform.h"
 #include "findform.h"
 #include "SQLLogDock.h"
+#include "sqlitesyntaxhighlighter.h"
 
 void MainWindow::setupUi()
 {
@@ -387,6 +388,13 @@ void MainWindow::setupUi()
     sizePolicy1.setVerticalStretch(0);
     sizePolicy1.setHeightForWidth(sqlTextEdit->sizePolicy().hasHeightForWidth());
     sqlTextEdit->setSizePolicy(sizePolicy1);
+    QFont font;
+    font.setFamily("Courier");
+    font.setFixedPitch(true);
+    font.setPixelSize(11);
+    sqlTextEdit->setFont(font);
+
+    sqliteHighlighter = new SQLiteSyntaxHighlighter(sqlTextEdit->document());
 
     vboxLayout3->addWidget(sqlTextEdit);
 

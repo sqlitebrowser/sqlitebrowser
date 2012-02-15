@@ -34,6 +34,7 @@
 class SQLLogDock;
 class editForm;
 class findForm;
+class SQLiteSyntaxHighlighter;
 
 class MainWindow : public QMainWindow
 {
@@ -125,6 +126,8 @@ private:
     QMenu *ViewMenu;
     QMenu *PopupMenu;
     QMenu *recentFilesMenu;
+
+    SQLiteSyntaxHighlighter* sqliteHighlighter;
 
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
