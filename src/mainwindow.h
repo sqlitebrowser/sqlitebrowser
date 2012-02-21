@@ -201,7 +201,6 @@ public slots:
     virtual void editText( int row, int col );
     virtual void doubleClickTable( int row, int col );
     virtual void executeQuery();
-    virtual void mainTabSelected( const QString & tabname );
     virtual void toggleLogWindow( bool enable );
     virtual void importTableFromCSV();
     virtual void exportTableToCSV();
@@ -225,6 +224,7 @@ protected slots:
     virtual void languageChange();
     virtual void deleteTablePopup();
     virtual void editTablePopup();
+    virtual void mainTabSelected( int tabindex );
 
 };
 

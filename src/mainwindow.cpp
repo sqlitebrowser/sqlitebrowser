@@ -568,7 +568,7 @@ void MainWindow::setupUi()
     QObject::connect(helpWhatsThisAction, SIGNAL(activated()), this, SLOT(helpWhatsThis()));
     QObject::connect(helpAboutAction, SIGNAL(activated()), this, SLOT(helpAbout()));
     QObject::connect(dataTable, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(doubleClickTable(int,int)));
-    QObject::connect(mainTab, SIGNAL(selected(QString)), this, SLOT(mainTabSelected(QString)));
+    QObject::connect(mainTab, SIGNAL(currentChanged(int)), this, SLOT(mainTabSelected(int)));
     QObject::connect(sqlLogAction, SIGNAL(toggled(bool)), this, SLOT(toggleLogWindow(bool)));
     QObject::connect(executeQueryButton, SIGNAL(clicked()), this, SLOT(executeQuery()));
     QObject::connect(fileImportCSVAction, SIGNAL(activated()), this, SLOT(importTableFromCSV()));
@@ -1701,9 +1701,9 @@ void MainWindow::executeQuery()
 }
 
 
-void MainWindow::mainTabSelected(const QString & tabname)
+void MainWindow::mainTabSelected(int tabindex)
 {
-    if ((mainTab->currentIndex() == 0)||(mainTab->currentIndex() == 1))
+    if ((tabindex == 0)||(tabindex == 1))
     {
         populateStructure();
         resetBrowser();
