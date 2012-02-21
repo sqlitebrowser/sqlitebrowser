@@ -1045,9 +1045,7 @@ void MainWindow::resetBrowser()
     QString sCurrentTable = comboBrowseTable->currentText();
     comboBrowseTable->clear();
     QStringList tab = db.getTableNames();
-    if  (tab.isEmpty()){
-        comboBrowseTable->addItem("");
-    } else {
+    if(!tab.isEmpty()) {
         comboBrowseTable->addItems(tab);
     }
     setRecordsetLabel();
