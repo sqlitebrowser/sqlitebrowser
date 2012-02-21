@@ -196,7 +196,6 @@ public:
         QObject::connect(clearButton, SIGNAL(clicked()), editForm, SLOT(clearData()));
         QObject::connect(textEditor, SIGNAL(textChanged()), editForm, SLOT(editTextChanged()));
         QObject::connect(closeButton, SIGNAL(clicked()), editForm, SLOT(close()));
-        QObject::connect(textEditor, SIGNAL(clicked(int,int)), editForm, SLOT(editorClicked()));
 
         QMetaObject::connectSlotsByName(editForm);
     } // setupUi
@@ -283,7 +282,6 @@ public slots:
     virtual void clearData();
     virtual void saveChanges();
     virtual void editTextChanged();
-    virtual void editorClicked();
 
 signals:
     void goingAway();

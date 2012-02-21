@@ -237,10 +237,3 @@ void editForm::editTextChanged()
 }
     setModified(true);
 }
-
-
-void editForm::editorClicked()
-{
-    enableTextEditor(true);
-}
-
