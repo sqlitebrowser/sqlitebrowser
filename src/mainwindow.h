@@ -190,7 +190,6 @@ public slots:
     virtual void compact();
     virtual void deleteTable();
     virtual void editTable();
-    virtual void editTablePopup();
     virtual void deleteIndex();
     virtual void copy();
     virtual void paste();
@@ -224,6 +223,8 @@ protected:
 
 protected slots:
     virtual void languageChange();
+    virtual void deleteTablePopup();
+    virtual void editTablePopup();
 
 };
 

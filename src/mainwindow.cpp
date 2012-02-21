@@ -1470,6 +1470,12 @@ void MainWindow::editTable()
         }
     }
 }
+
+void MainWindow::deleteTablePopup()
+{
+    //TODO ask if user really wants to delte this table
+}
+
 void MainWindow::editTablePopup()
 {
     if (!db.isOpen()){
