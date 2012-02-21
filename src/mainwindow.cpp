@@ -1173,11 +1173,7 @@ void MainWindow::updateTableView(int lineToSelect)
                 //  if (it!=(*rt).begin()){
                 QString& content = rt[e];
                 QString firstline = content.section( '\n', 0,0 );
-                if (content.length()>MAX_DISPLAY_LENGTH)
-                {
-                    firstline.truncate(MAX_DISPLAY_LENGTH);
-                    firstline.append("...");
-                }
+
                 QTableWidgetItem* item = new QTableWidgetItem(firstline);
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
                 dataTable->setItem( rowNum, colNum, item);
@@ -1594,11 +1590,6 @@ void MainWindow::updateRecordText(int row, int col, QString newtext)
 
     QString content = cv ;
     QString firstline = content.section( '\n', 0,0 );
-    if (content.length()>14)
-    {
-        firstline.truncate(14);
-        firstline.append("...");
-    }
     dataTable->setItem( row - recAtTop, col, new QTableWidgetItem(firstline));
 }
 
@@ -1689,11 +1680,6 @@ void MainWindow::executeQuery()
                     //show it here
                     QString decoded = db.GetDecodedQString(rv);
                     QString firstline = decoded.section( '\n', 0,0 );
-                    if (firstline.length()>MAX_DISPLAY_LENGTH)
-                    {
-                        firstline.truncate(MAX_DISPLAY_LENGTH);
-                        firstline.append("...");
-                    }
                     queryResultListModel->setItem(rownum, e, new QStandardItem(QString(firstline)));
                 }
                 queryResultListModel->setVerticalHeaderItem(rownum, new QStandardItem(QString::number(rownum + 1)));

@@ -8,8 +8,6 @@
 #include "sqlite3.h"
 #include "sqlitebrowsertypes.h"
 
-#define MAX_DISPLAY_LENGTH 255
-
 class SQLLogDock;
 
 enum

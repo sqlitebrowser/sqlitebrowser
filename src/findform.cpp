@@ -43,11 +43,6 @@ void findForm::showResults(resultMap rmap)
     findTableWidget->setRowCount(rmap.size());
     for ( it = rmap.begin(); it != rmap.end(); ++it ) {
         QString firstline = it.value().section( '\n', 0,0 );
-        if (firstline.length()>MAX_DISPLAY_LENGTH)
-        {
-            firstline.truncate(MAX_DISPLAY_LENGTH);
-            firstline.append("...");
-        }
         findTableWidget->setItem( it.key(), 0, new QTableWidgetItem( QString::number(it.key() + 1) ) );
         findTableWidget->setItem( it.key(), 1, new QTableWidgetItem( firstline) );
     }
