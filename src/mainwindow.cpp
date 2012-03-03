@@ -448,10 +448,12 @@ void MainWindow::setupUi()
     this->setCentralWidget(widget);
 
     //*** Setup Toolbar
-    Toolbar = new QToolBar();
-    this->addToolBar(Qt::TopToolBarArea, Toolbar);
-    Toolbar->setObjectName(QString::fromUtf8("Toolbar"));
-    Toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolbarDB = new QToolBar();
+    this->addToolBar(Qt::TopToolBarArea, toolbarDB);
+    toolbarDB->setObjectName(QString::fromUtf8("Toolbar"));
+    toolbarDB->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
+    viewDBToolbarAction = toolbarDB->toggleViewAction();
 
     //*** Setup main Menu
     menubar = this->menuBar(); //new QMenuBar(this);
@@ -469,13 +471,13 @@ void MainWindow::setupUi()
     PopupMenu = new QMenu(menubar);
     PopupMenu->setObjectName(QString::fromUtf8("PopupMenu"));
 
-    Toolbar->addAction(fileNewAction);
-    Toolbar->addAction(fileOpenAction);
-    Toolbar->addSeparator();
+    toolbarDB->addAction(fileNewAction);
+    toolbarDB->addAction(fileOpenAction);
+    toolbarDB->addSeparator();
 
-    Toolbar->addAction(fileSaveAction);
-    Toolbar->addAction(fileRevertAction);
-    Toolbar->addSeparator();
+    toolbarDB->addAction(fileSaveAction);
+    toolbarDB->addAction(fileRevertAction);
+    toolbarDB->addSeparator();
 
     /*
     Toolbar->addAction(editCreateTableAction);
@@ -530,6 +532,7 @@ void MainWindow::setupUi()
     EditMenu->addSeparator();
     EditMenu->addAction(editPreferencesAction);
     ViewMenu->addAction(sqlLogAction);
+    ViewMenu->addAction(viewDBToolbarAction);
     PopupMenu->addAction(helpWhatsThisAction);
     PopupMenu->addAction(helpAboutAction);
 
@@ -660,6 +663,9 @@ void MainWindow::retranslateUi()
     sqlLogAction->setIconText(QObject::tr("SQL Log"));
     sqlLogAction->setText(QObject::tr("SQL &Log"));
     sqlLogAction->setWhatsThis(QObject::tr("Display or hide the SQL log window, which stores all SQL commands issued by the user or the application."));
+
+    viewDBToolbarAction->setText(QObject::tr("&DB Toolbar"));
+    sqlLogAction->setWhatsThis(QObject::tr("Shows or hides the Database toolbar."));
 
     fileImportCSVAction->setIconText(QObject::tr("Table from CSV file"));
     fileImportCSVAction->setText(QObject::tr("Table from CSV file"));

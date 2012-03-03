@@ -57,6 +57,7 @@ private:
     QAction *fileCompactAction;
     QAction *helpWhatsThisAction;
     QAction *sqlLogAction;
+    QAction *viewDBToolbarAction;
     QAction *fileImportCSVAction;
     QAction *fileExportCSVAction;
     QAction *fileSaveAction;
@@ -117,7 +118,7 @@ private:
     QLabel *textLabel3;
     QTableView *queryResultTableView;
     QStandardItemModel *queryResultListModel;
-    QToolBar *Toolbar;
+    QToolBar *toolbarDB;
     QMenuBar *menubar;
     QMenu *fileMenu;
     QMenu *importMenu;
