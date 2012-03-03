@@ -201,7 +201,6 @@ public slots:
     virtual void editText( int row, int col );
     virtual void doubleClickTable( int row, int col );
     virtual void executeQuery();
-    virtual void toggleLogWindow( bool enable );
     virtual void importTableFromCSV();
     virtual void exportTableToCSV();
     virtual void dbState( bool dirty );

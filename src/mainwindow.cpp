@@ -569,7 +569,6 @@ void MainWindow::setupUi()
     QObject::connect(helpAboutAction, SIGNAL(activated()), this, SLOT(helpAbout()));
     QObject::connect(dataTable, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(doubleClickTable(int,int)));
     QObject::connect(mainTab, SIGNAL(currentChanged(int)), this, SLOT(mainTabSelected(int)));
-    QObject::connect(sqlLogAction, SIGNAL(toggled(bool)), this, SLOT(toggleLogWindow(bool)));
     QObject::connect(executeQueryButton, SIGNAL(clicked()), this, SLOT(executeQuery()));
     QObject::connect(fileImportCSVAction, SIGNAL(activated()), this, SLOT(importTableFromCSV()));
     QObject::connect(fileExportCSVAction, SIGNAL(activated()), this, SLOT(exportTableToCSV()));
@@ -1709,17 +1708,6 @@ void MainWindow::mainTabSelected(int tabindex)
         resetBrowser();
     }
 }
-
-
-void MainWindow::toggleLogWindow( bool enable )
-{
-    if (enable){
-        logWin->show();
-    } else {
-        logWin->hide();
-    }
-}
-
 
 void MainWindow::importTableFromCSV()
 {
