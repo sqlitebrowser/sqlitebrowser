@@ -533,11 +533,10 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
 
 QStringList DBBrowserDB::getTableNames()
 {
-    tableMap::Iterator it;
-    tableMap tmap = tbmap;
+    tableMap::ConstIterator it;
     QStringList res;
 
-    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
         res.append( it.value().getname() );
     }
     
@@ -559,16 +558,14 @@ QStringList DBBrowserDB::getIndexNames()
 
 QStringList DBBrowserDB::getTableFields(const QString & tablename)
 {
-    tableMap::Iterator it;
-    tableMap tmap = tbmap;
+    tableMap::ConstIterator it;
     QStringList res;
 
-    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
         if (tablename.compare(it.value().getname())==0 ){
-            fieldMap::Iterator fit;
-            fieldMap fmap = it.value().fldmap;
+            fieldMap::ConstIterator fit;
 
-            for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+            for ( fit = it.value().fldmap.begin(); fit != it.value().fldmap.end(); ++fit ) {
                 res.append( fit.value().getname() );
             }
         }
@@ -578,16 +575,14 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename)
 
 QStringList DBBrowserDB::getTableTypes(const QString & tablename)
 {
-    tableMap::Iterator it;
-    tableMap tmap = tbmap;
+    tableMap::ConstIterator it;
     QStringList res;
 
-    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
         if (tablename.compare(it.value().getname())==0 ){
-            fieldMap::Iterator fit;
-            fieldMap fmap = it.value().fldmap;
+            fieldMap::ConstIterator fit;
 
-            for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+            for ( fit = it.value().fldmap.begin(); fit != it.value().fldmap.end(); ++fit ) {
                 res.append( fit.value().gettype() );
             }
         }
@@ -621,11 +616,7 @@ void DBBrowserDB::updateSchema( )
     // qDebug ("Getting list of tables");
     sqlite3_stmt *vm;
     const char *tail;
-    QStringList r;
     int err=0;
-    QString num;
-    int idxnum =0;
-    int tabnum = 0;
 
     idxmap.clear();
     tbmap.clear();
@@ -640,12 +631,10 @@ void DBBrowserDB::updateSchema( )
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
         while ( sqlite3_step(vm) == SQLITE_ROW ){
-            num.setNum(tabnum);
             QString  val1, val2;
             val1 = QString((const char *) sqlite3_column_text(vm, 0));
             val2 = QString((const char *) sqlite3_column_text(vm, 1));
-            tbmap[num] = DBBrowserTable(GetDecodedQString(val1), GetDecodedQString(val2));
-            tabnum++;
+            tbmap[val1] = DBBrowserTable(GetDecodedQString(val1), GetDecodedQString(val2));
         }
         sqlite3_finalize(vm);
     }else{
@@ -657,7 +646,7 @@ void DBBrowserDB::updateSchema( )
     tableMap::Iterator it;
     for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
         statement = "PRAGMA TABLE_INFO(";
-        statement.append( it.value().getname().toUtf8().constData());
+        statement.append( it.value().getname());
         statement.append(");");
         logSQL(statement, kLogMsg_App);
         err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
@@ -697,9 +686,7 @@ void DBBrowserDB::updateSchema( )
             QString  val1, val2;
             val1 = QString((const char *) sqlite3_column_text(vm, 0));
             val2 = QString((const char *) sqlite3_column_text(vm, 1));
-            num.setNum(idxnum);
-            idxmap[num] = DBBrowserIndex(GetDecodedQString(val1),GetDecodedQString(val2));
-            idxnum ++;
+            idxmap[val1] = DBBrowserIndex(GetDecodedQString(val1),GetDecodedQString(val2));
         }
         sqlite3_finalize(vm);
     }else{

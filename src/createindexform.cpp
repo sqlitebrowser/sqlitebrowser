@@ -91,22 +91,21 @@ void createIndexForm::confirmCreate()
     }
 }
 
-void createIndexForm::populateTable(tableMap rmap)
+void createIndexForm::populateTable(const tableMap& rmap)
 {
-    mtablemap = rmap;
-    tableMap::Iterator it;
-         for ( it = mtablemap.begin(); it != mtablemap.end(); ++it ) {
-             comboTables->addItem( it.value().getname() );
+    tableMap::ConstIterator it;
+    for ( it = rmap.begin(); it != rmap.end(); ++it ) {
+        comboTables->addItem( it.value().getname() );
 
-             //populate the fields with first table name
-             if (it==mtablemap.begin()){
-                 fieldMap::Iterator fit;
-                 fieldMap fmap = it.value().fldmap;
-                 for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
-                     comboFields->addItem( fit.value().getname() );
-                 }
-             }
+        //populate the fields with first table name
+        if (it==mtablemap.begin()){
+            fieldMap::Iterator fit;
+            fieldMap fmap = it.value().fldmap;
+            for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+                comboFields->addItem( fit.value().getname() );
+            }
         }
+    }
 }
 
 

@@ -1,7 +1,6 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
-#include <stdlib.h>
 #include <qstringlist.h>
 #include <qmap.h>
 #include <qobject.h>

@@ -970,10 +970,9 @@ void MainWindow::populateStructure()
         return;
     }
     db.updateSchema();
-    tableMap::Iterator it;
-    tableMap tmap = db.tbmap;
+    tableMap::ConstIterator it;
 
-    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
+    for ( it = db.tbmap.begin(); it != db.tbmap.end(); ++it ) {
 
         //* Table node
         QTreeWidgetItem *tableItem = new QTreeWidgetItem();
@@ -996,9 +995,8 @@ void MainWindow::populateStructure()
         // TODO make an options/setting autoexpand
         dbTreeWidget->setItemExpanded(tableItem, true);
     }
-    indexMap::Iterator it2;
-    indexMap imap = db.idxmap;
-    for ( it2 = imap.begin(); it2 != imap.end(); ++it2 ) {
+    indexMap::ConstIterator it2;
+    for ( it2 = db.idxmap.begin(); it2 != db.idxmap.end(); ++it2 ) {
         QTreeWidgetItem *idxItem = new QTreeWidgetItem();
         idxItem->setText( 0, it2.value().getname() );
         idxItem->setText( 1, "index"  );
@@ -1384,8 +1382,7 @@ void MainWindow::createIndex()
     }
     createIndexForm * indexForm = new createIndexForm( this );
     indexForm->setModal(true);
-    tableMap tmap = db.tbmap;
-    indexForm->populateTable( tmap );
+    indexForm->populateTable( db.tbmap );
     if ( indexForm->exec() ) {
         if (!db.executeSQL(indexForm->createStatement)){
             QString error = "Error: could not create the index. Message from database engine:  ";

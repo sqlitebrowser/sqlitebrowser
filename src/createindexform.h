@@ -266,7 +266,7 @@ public:
 public slots:
     virtual void tableSelected( const QString & entry );
     virtual void confirmCreate();
-    virtual void populateTable( tableMap rmap );
+    virtual void populateTable( const tableMap& rmap );
 
 protected slots:
     virtual void languageChange();
