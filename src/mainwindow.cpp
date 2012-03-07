@@ -970,6 +970,10 @@ void MainWindow::populateStructure()
         return;
     }
     db.updateSchema();
+    QStringList tblnames = db.getTableNames();
+    sqliteHighlighter->setTableNames(tblnames);
+//    logWin->userSqliteHighlighter()->setTableNames(tblnames);
+//    logWin->appSqliteHighlighter()->setTableNames(tblnames);
     tableMap::ConstIterator it;
 
     for ( it = db.tbmap.begin(); it != db.tbmap.end(); ++it ) {
