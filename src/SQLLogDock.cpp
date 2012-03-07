@@ -71,7 +71,7 @@ void SQLLogDock::setupUi()
     font.setPixelSize(11);
     userLogText->setFont(font);
 
-    userSqliteHighlighter = new SQLiteSyntaxHighlighter(userLogText->document());
+    mUserSqliteHighlighter = new SQLiteSyntaxHighlighter(userLogText->document());
 
     gridLayout->addWidget(userLogText, 0, 0, 1, 1);
     logStack->addWidget(WStackPage);
@@ -89,7 +89,7 @@ void SQLLogDock::setupUi()
     appLogText->setReadOnly(true);
     appLogText->setFont(font);
 
-    appSqliteHighlighter = new SQLiteSyntaxHighlighter(appLogText->document());
+    mAppSqliteHighlighter = new SQLiteSyntaxHighlighter(appLogText->document());
 
     logStack->addWidget(WStackPage1);
     vboxLayout1->addWidget(appLogText);

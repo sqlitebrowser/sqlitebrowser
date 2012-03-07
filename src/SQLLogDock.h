@@ -24,6 +24,8 @@ public:
     ~SQLLogDock();
 
     QComboBox* comboLogType() { return m_comboLogType; }
+    SQLiteSyntaxHighlighter* userSqliteHighlighter() { return mUserSqliteHighlighter; }
+    SQLiteSyntaxHighlighter* appSqliteHighlighter() { return mAppSqliteHighlighter; }
 
 private:
     QWidget* contentWidget;
@@ -41,8 +43,8 @@ private:
     QVBoxLayout *vboxLayout1;
     QTextEdit *appLogText;
 
-    SQLiteSyntaxHighlighter* userSqliteHighlighter;
-    SQLiteSyntaxHighlighter* appSqliteHighlighter;
+    SQLiteSyntaxHighlighter* mUserSqliteHighlighter;
+    SQLiteSyntaxHighlighter* mAppSqliteHighlighter;
 
     void setupUi();
     void retranslateUi();
