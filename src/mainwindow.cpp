@@ -987,9 +987,8 @@ void MainWindow::populateStructure()
         dbTreeWidget->addTopLevelItem(tableItem);
 
         //* Field Nodes
-        fieldMap::Iterator fit;
-        fieldMap fmap = it.value().fldmap;
-        for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
+        fieldMap::ConstIterator fit;
+        for ( fit = it.value().fldmap.begin(); fit != it.value().fldmap.end(); ++fit ) {
             QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
             fldItem->setText( 0, fit.value().getname() );
             fldItem->setText( 1, "field"  );
