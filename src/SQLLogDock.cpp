@@ -146,10 +146,10 @@ void SQLLogDock::log( QString & statement, int msgtype)
     QScrollBar* sb = 0;
     if (msgtype==kLogMsg_User)
     {
-        userLogText->setPlainText(userLogText->toPlainText()+statement+"\n");
+        userLogText->append(statement);
         sb = userLogText->verticalScrollBar();
     } else {
-        appLogText->setPlainText(appLogText->toPlainText()+statement+"\n");
+        appLogText->append(statement);
         sb = appLogText->verticalScrollBar();
     }
     sb->setValue(sb->maximum());
