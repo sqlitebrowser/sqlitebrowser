@@ -5,6 +5,9 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
 {
     HighlightingRule rule;
 
+    tableFormat.setForeground(Qt::darkCyan);
+    tableFormat.setFontWeight(QFont::Bold);
+
     keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setFontWeight(QFont::Bold);
     QStringList keywordPatterns;
@@ -68,9 +71,20 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
     highlightingRules.append(rule);
 }
 
-void SQLiteSyntaxHighlighter::highlightBlock(const QString &text)
+void SQLiteSyntaxHighlighter::setTableNames(const QStringList &tablenames)
 {
-    foreach (const HighlightingRule &rule, highlightingRules) {
+    tableNameRules.clear();
+    foreach(const QString& tblname, tablenames) {
+        HighlightingRule rule;
+        rule.pattern = QRegExp(tblname);
+        rule.format = tableFormat;
+        tableNameRules.append(rule);
+    }
+}
+
+void SQLiteSyntaxHighlighter::highlightBlockVector(const QString& text, const QVector<HighlightingRule>& vec)
+{
+    foreach (const HighlightingRule &rule, vec) {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
         while (index >= 0) {
@@ -79,4 +93,10 @@ void SQLiteSyntaxHighlighter::highlightBlock(const QString &text)
             index = expression.indexIn(text, index + length);
         }
     }
+}
+
+void SQLiteSyntaxHighlighter::highlightBlock(const QString &text)
+{
+    highlightBlockVector(text, tableNameRules);
+    highlightBlockVector(text, highlightingRules);
 }

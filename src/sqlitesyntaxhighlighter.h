@@ -9,6 +9,8 @@ class SQLiteSyntaxHighlighter : public QSyntaxHighlighter
 public:
     explicit SQLiteSyntaxHighlighter(QTextDocument *parent = 0);
 
+    void setTableNames(const QStringList& tablenames);
+
 protected:
     void highlightBlock(const QString &text);
 
@@ -18,7 +20,10 @@ private:
         QRegExp pattern;
         QTextCharFormat format;
     };
+    void highlightBlockVector(const QString& text, const QVector<HighlightingRule>& vec);
+
     QVector<HighlightingRule> highlightingRules;
+    QVector<HighlightingRule> tableNameRules;
 
     QRegExp commentStartExpression;
     QRegExp commentEndExpression;
@@ -27,7 +32,7 @@ private:
     QTextCharFormat singleLineCommentFormat;
     QTextCharFormat multiLineCommentFormat;
     QTextCharFormat quotationFormat;
-    
+    QTextCharFormat tableFormat;
 };
 
 #endif // SQLITESYNTAXHIGHLIGHTER_H
