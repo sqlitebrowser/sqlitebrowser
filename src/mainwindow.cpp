@@ -294,6 +294,7 @@ void MainWindow::setupUi()
     buttonRefresh = new QPushButton(browser);
     buttonRefresh->setObjectName("buttonRefresh");
     buttonRefresh->setIcon(QIcon(":/icons/refresh"));
+    buttonRefresh->setShortcut(QKeySequence(Qt::Key_F5));
 
     hboxLayout->addWidget(buttonRefresh);
 
