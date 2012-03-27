@@ -754,6 +754,7 @@ void MainWindow::retranslateUi()
     buttonFind->setText(QString());
     buttonFind->setProperty("toolTip", QVariant(QObject::tr("Open or close the floating find window")));
     buttonFind->setProperty("whatsThis", QVariant(QObject::tr("This button toggles the appearance of the Find window, used to search records in the database view")));
+    buttonFind->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F));
 
 
     buttonRefresh->setProperty("toolTip", QVariant( QObject::tr("Refresh the data in the selected table.")));
