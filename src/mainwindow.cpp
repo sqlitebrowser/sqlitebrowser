@@ -439,6 +439,7 @@ void MainWindow::setupUi()
     queryResultTableView->setObjectName(QString::fromUtf8("queryResultTableView"));
     queryResultTableView->setSelectionMode(QTreeView::NoSelection);
     queryResultTableView->setModel(queryResultListModel);
+    queryResultTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     vboxLayout3->addWidget(queryResultTableView);
 
@@ -1653,8 +1654,8 @@ void MainWindow::executeQuery()
     //log the query
     db.logSQL(query, kLogMsg_User);
     sqlite3_stmt *vm;
-    std::string tmpQuery = query.toStdString();
-    const char *tail = tmpQuery.c_str();
+    QByteArray utf8Query = query.toUtf8();
+    const char *tail = utf8Query.data();
     int ncol;
     int err=0;
     QString lastErrorMessage = QString("No error");
@@ -1662,13 +1663,16 @@ void MainWindow::executeQuery()
     do
     {
         queryResultListModel->removeRows(0, queryResultListModel->rowCount());
+        queryResultListModel->removeColumns(0, queryResultListModel->columnCount());
         queryResultListModel->setHorizontalHeaderLabels(QStringList());
         queryResultListModel->setVerticalHeaderLabels(QStringList());
 
-        err=sqlite3_prepare(db._db,tail,query.length(),
+        QString queryPart = tail;
+        err=sqlite3_prepare(db._db,tail,utf8Query.length(),
                             &vm, &tail);
         if (err == SQLITE_OK){
-            db.setDirty(true);
+            if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive))
+                db.setDirty(true);
             int rownum = 0;
             bool mustCreateColumns = true;
             while ( sqlite3_step(vm) == SQLITE_ROW ){
