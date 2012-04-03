@@ -63,10 +63,12 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
 
     quotationFormat.setForeground(Qt::darkRed);
     rule.pattern = QRegExp("\".*\"");
+    rule.pattern.setMinimal(true);
     rule.format = quotationFormat;
     highlightingRules.append(rule);
 
     rule.pattern = QRegExp("'.*'");
+    rule.pattern.setMinimal(true);
     rule.format = quotationFormat;
     highlightingRules.append(rule);
 }
