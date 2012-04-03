@@ -1140,6 +1140,24 @@ void MainWindow::deleteRecord()
     }
 }
 
+#define WRAP_SIZE 80
+QString wrapText(const QString& text)
+{
+    QString wrap;
+    int textSize = text.size();
+
+    int cur = 0;
+    while( wrap.size() < textSize)
+    {
+        wrap += text.mid(cur, WRAP_SIZE);
+        cur += WRAP_SIZE;
+        if( textSize - cur > WRAP_SIZE)
+            wrap += '\n';
+    }
+
+    return wrap;
+}
+
 void MainWindow::updateTableView(int lineToSelect)
 {
     //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
@@ -1179,10 +1197,10 @@ void MainWindow::updateTableView(int lineToSelect)
                 //skip first one (the rowid)
                 //  if (it!=(*rt).begin()){
                 QString& content = rt[e];
-                QString firstline = content.section( '\n', 0,0 );
 
-                QTableWidgetItem* item = new QTableWidgetItem(firstline);
+                QTableWidgetItem* item = new QTableWidgetItem(content);
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+                item->setToolTip(wrapText(content));
                 dataTable->setItem( rowNum, colNum, item);
                 colNum++;
                 //}
@@ -1600,9 +1618,10 @@ void MainWindow::updateRecordText(int row, int col, QString newtext)
     QStringList& rt = tab[row];
     QString& cv = rt[col+1];//must account for rowid
 
-    QString content = cv ;
-    QString firstline = content.section( '\n', 0,0 );
-    dataTable->setItem( row - recAtTop, col, new QTableWidgetItem(firstline));
+    QTableWidgetItem* item = new QTableWidgetItem(cv);
+    item->setToolTip( wrapText(cv) );
+    dataTable->setItem( row - recAtTop, col, item);
+
 }
 
 void MainWindow::logWinAway()
