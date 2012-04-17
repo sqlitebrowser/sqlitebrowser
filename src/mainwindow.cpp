@@ -321,6 +321,7 @@ void MainWindow::setupUi()
     dataTable->setRowCount(0);
     dataTable->setColumnCount(0);
     dataTable->setSelectionMode(QTableWidget::SingleSelection);
+    dataTable->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
 
     vboxLayout2->addWidget(dataTable);
 
@@ -440,6 +441,7 @@ void MainWindow::setupUi()
     queryResultTableView->setSelectionMode(QTreeView::NoSelection);
     queryResultTableView->setModel(queryResultListModel);
     queryResultTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    queryResultTableView->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
 
     vboxLayout3->addWidget(queryResultTableView);
 
