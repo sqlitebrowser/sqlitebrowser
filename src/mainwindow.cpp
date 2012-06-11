@@ -1212,6 +1212,13 @@ void MainWindow::updateTableView(int lineToSelect)
         }
 
     }
+
+    for(int i = 0; i < dataTable->columnCount(); ++i)
+    {
+        dataTable->resizeColumnToContents(i);
+        if( dataTable->columnWidth(i) > 400 )
+            dataTable->setColumnWidth(i, 400);
+    }
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
         //qDebug("inside selection");
