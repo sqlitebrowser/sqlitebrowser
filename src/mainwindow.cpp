@@ -281,6 +281,7 @@ void MainWindow::setupUi()
     comboBrowseTable = new QComboBox(browser);
     comboBrowseTable->setObjectName(QString::fromUtf8("comboBrowseTable"));
     comboBrowseTable->setMinimumSize(QSize(115, 0));
+    comboBrowseTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
     hboxLayout->addWidget(comboBrowseTable);
 
