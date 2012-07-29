@@ -650,7 +650,7 @@ void MainWindow::retranslateUi()
     helpAboutAction->setShortcut(QString());
 
     fileCloseAction->setIconText(QObject::tr("Close Database"));
-    fileCloseAction->setText(QObject::tr("Close Database"));
+    fileCloseAction->setText(QObject::tr("&Close Database"));
     fileCloseAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
 
     newRecordAction->setIconText(QObject::tr("New Record"));
