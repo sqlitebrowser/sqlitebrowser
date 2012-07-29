@@ -1015,7 +1015,7 @@ void MainWindow::populateStructure()
     }
 }
 
-void MainWindow::populateTable( const QString & tablename)
+void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths)
 {
     bool mustreset = false;
     QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -1035,10 +1035,10 @@ void MainWindow::populateTable( const QString & tablename)
 
     if (mustreset){
         recAtTop = 0;
-        updateTableView(0);
+        updateTableView(0, keepColumnWidths);
         if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
     } else {
-        updateTableView(-1);
+        updateTableView(-1, keepColumnWidths);
     }
     //got to keep findWin in synch
     if (findWin){
@@ -1161,7 +1161,7 @@ QString wrapText(const QString& text)
     return wrap;
 }
 
-void MainWindow::updateTableView(int lineToSelect)
+void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 {
     //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
     QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -1214,11 +1214,13 @@ void MainWindow::updateTableView(int lineToSelect)
 
     }
 
-    for(int i = 0; i < dataTable->columnCount(); ++i)
-    {
-        dataTable->resizeColumnToContents(i);
-        if( dataTable->columnWidth(i) > 400 )
-            dataTable->setColumnWidth(i, 400);
+    if(!keepColumnWidths) {
+        for(int i = 0; i < dataTable->columnCount(); ++i)
+        {
+            dataTable->resizeColumnToContents(i);
+            if( dataTable->columnWidth(i) > 400 )
+                dataTable->setColumnWidth(i, 400);
+        }
     }
     //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
@@ -1331,7 +1333,7 @@ void MainWindow::browseFindAway()
 
 void MainWindow::browseRefresh()
 {
-    populateTable(comboBrowseTable->currentText());
+    populateTable(comboBrowseTable->currentText(), true);
 }
 
 void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )

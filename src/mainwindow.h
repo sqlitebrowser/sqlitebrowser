@@ -169,13 +169,13 @@ public slots:
     virtual void fileOpen();
     virtual void fileNew();
     virtual void populateStructure();
-    virtual void populateTable( const QString & tablename );
+    virtual void populateTable(const QString & tablename , bool keepColumnWidths = false);
     virtual void resetBrowser();
     virtual void fileClose();
     virtual void fileExit();
     virtual void addRecord();
     virtual void deleteRecord();
-    virtual void updateTableView( int lineToSelect );
+    virtual void updateTableView(int lineToSelect , bool keepColumnWidths = false);
     virtual void selectTableLine( int lineToSelect );
     virtual void navigatePrevious();
     virtual void navigateNext();
