@@ -36,6 +36,7 @@ void MainWindow::setupUi()
 
     logWin = new SQLLogDock(this);
     sqlLogAction = logWin->toggleViewAction();
+    sqlLogAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
     this->addDockWidget(Qt::BottomDockWidgetArea, logWin);
 
     //** New DB File
