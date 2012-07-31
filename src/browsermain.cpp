@@ -72,7 +72,7 @@ int main( int argc, char ** argv )
 {
     QApplication a( argc, argv );
     a.setOrganizationName("duckmansoftware");
-    a.setApplicationName("SQLite Database Browser");
+    a.setApplicationName("SQLite Database Browser " + QString(APP_VERSION));
     MainWindow w;
 #if defined(Q_WS_MAC)
     AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments,

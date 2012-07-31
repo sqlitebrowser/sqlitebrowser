@@ -57,6 +57,9 @@ SOURCES += \
     createtabledialog.cpp \
     SQLLogDock.cpp \
     sqlitesyntaxhighlighter.cpp
+
+QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`git log -n1 --format=%h`\\\"
+
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc
