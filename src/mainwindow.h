@@ -31,6 +31,9 @@
 
 #include "sqlitedb.h"
 
+#define ORDERMODE_ASC 0
+#define ORDERMODE_DESC 1
+
 class SQLLogDock;
 class editForm;
 class findForm;
@@ -134,6 +137,9 @@ private:
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
+    int curBrowseOrderByIndex;
+    int curBrowseOrderByMode;
+
 public:
     MainWindow(QWidget* parent = 0);
     ~MainWindow();
@@ -225,6 +231,7 @@ protected slots:
     virtual void deleteTablePopup();
     virtual void editTablePopup();
     virtual void mainTabSelected( int tabindex );
+    virtual void browseTableHeaderClicked(int logicalindex);
 
 };
 

@@ -101,7 +101,7 @@ public:
     bool addRecord();
     bool deleteRecord(int wrow);
     bool updateRecord(int wrow, int wcol, const QString & wtext);
-    bool browseTable( const QString & tablename );
+    bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
     bool renameTable(QString from_table, QString to_table);
     bool createColumn(QString table, QString field, QString type);
@@ -145,7 +145,7 @@ public:
 
 private:
     bool dirty;
-    void getTableRecords( const QString & tablename );
+    void getTableRecords( const QString & tablename, const QString& orderby = "rowid" );
 
 
 };

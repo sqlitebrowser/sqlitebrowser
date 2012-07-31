@@ -576,6 +576,7 @@ void MainWindow::setupUi()
     QObject::connect(helpWhatsThisAction, SIGNAL(activated()), this, SLOT(helpWhatsThis()));
     QObject::connect(helpAboutAction, SIGNAL(activated()), this, SLOT(helpAbout()));
     QObject::connect(dataTable, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(doubleClickTable(int,int)));
+    QObject::connect(dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     QObject::connect(mainTab, SIGNAL(currentChanged(int)), this, SLOT(mainTabSelected(int)));
     QObject::connect(executeQueryButton, SIGNAL(clicked()), this, SLOT(executeQuery()));
     QObject::connect(fileImportCSVAction, SIGNAL(activated()), this, SLOT(importTableFromCSV()));
@@ -1022,7 +1023,8 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
     if (tablename.compare(db.curBrowseTableName)!=0)
         mustreset = true;
 
-    if (!db.browseTable(tablename)){
+    QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
+    if (!db.browseTable(tablename, orderby)){
         dataTable->setRowCount( 0 );
         dataTable->setColumnCount( 0 );
         QApplication::restoreOverrideCursor();
@@ -1064,6 +1066,8 @@ void MainWindow::resetBrowser()
     int pos = comboBrowseTable->findText(sCurrentTable);
     pos = pos == -1 ? 0 : pos;
     comboBrowseTable->setCurrentIndex(pos);
+    curBrowseOrderByIndex = 1;
+    curBrowseOrderByMode = ORDERMODE_ASC;
     populateTable(comboBrowseTable->currentText());
 }
 
@@ -2172,4 +2176,16 @@ void MainWindow::activateFields(bool enable)
     editDeleteIndexAction->setEnabled(enable);
 
     executeQueryButton->setEnabled(enable);
+}
+
+void MainWindow::browseTableHeaderClicked(int logicalindex)
+{
+    // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
+    curBrowseOrderByIndex = logicalindex + 2;
+    curBrowseOrderByMode = curBrowseOrderByMode == ORDERMODE_ASC ? ORDERMODE_DESC : ORDERMODE_ASC;
+    populateTable(comboBrowseTable->currentText(), true);
+
+    // select the first item in the column so the header is bold
+    // we might try to select the last selected item
+    dataTable->setCurrentCell(0, logicalindex);
 }

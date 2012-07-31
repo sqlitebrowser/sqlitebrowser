@@ -411,12 +411,12 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
 }
 
 
-bool DBBrowserDB::browseTable( const QString & tablename )
+bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby )
 {
     QStringList testFields = getTableFields( tablename );
     
     if (testFields.count()>0) {//table exists
-        getTableRecords( tablename );
+        getTableRecords( tablename, orderby );
         browseFields = testFields;
         hasValidBrowseSet = true;
         curBrowseTableName = tablename;
@@ -442,7 +442,7 @@ bool DBBrowserDB::renameTable(QString from_table, QString to_table){
     return true;
 }
 
-void DBBrowserDB::getTableRecords( const QString & tablename )
+void DBBrowserDB::getTableRecords( const QString & tablename, const QString& orderby )
 {
     sqlite3_stmt *vm;
     const char *tail;
@@ -458,7 +458,9 @@ void DBBrowserDB::getTableRecords( const QString & tablename )
 
     QString statement = "SELECT rowid, *  FROM ";
     statement.append( GetEncodedQString(tablename) );
-    statement.append(" ORDER BY rowid; ");
+    statement.append(" ORDER BY ");
+    statement.append(orderby);
+    statement.append(";");
     //qDebug(statement);
     logSQL(statement, kLogMsg_App);
     err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
