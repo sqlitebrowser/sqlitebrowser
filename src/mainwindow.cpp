@@ -16,7 +16,7 @@
 #include "createindexform.h"
 #include "deletetableform.h"
 #include "deleteindexform.h"
-#include "aboutform.h"
+#include "dialogabout.h"
 #include "choosetableform.h"
 #include "edittableform.h"
 #include "editfieldform.h"
@@ -1620,7 +1620,7 @@ void MainWindow::helpWhatsThis()
 
 void MainWindow::helpAbout()
 {
-    AboutDialog * aForm = new AboutDialog( this );
+    DialogAbout * aForm = new DialogAbout( this );
     aForm ->exec() ;
 }
 

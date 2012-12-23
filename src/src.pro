@@ -12,7 +12,6 @@ HEADERS += \
     sqlitedb.h \
     sqlbrowser_util.h \
     sqlite_source/sqlite3.h \
-    aboutform.h \
     addfieldform.h \
     addfieldtypeform.h \
     choosetableform.h \
@@ -31,13 +30,14 @@ HEADERS += \
     mainwindow.h \
     createtabledialog.h \
     SQLLogDock.h \
-    sqlitesyntaxhighlighter.h
+    sqlitesyntaxhighlighter.h \
+    dialogabout.h
+
 SOURCES += \
     browsermain.cpp \
     sqlitedb.cpp \
     sqlbrowser_util.c \
     sqlite_source/sqlite3.c \
-    aboutform.cpp \
     addfieldform.cpp \
     addfieldtypeform.cpp \
     choosetableform.cpp \
@@ -56,9 +56,10 @@ SOURCES += \
     mainwindow.cpp \
     createtabledialog.cpp \
     SQLLogDock.cpp \
-    sqlitesyntaxhighlighter.cpp
+    sqlitesyntaxhighlighter.cpp \
+    dialogabout.cpp
 
-QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h`\\\"
+QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
 unix { 
     UI_DIR = .ui
@@ -78,4 +79,5 @@ mac {
 RESOURCES += icons/icons.qrc
 
 FORMS += \
-    createtabledialog.ui
+    createtabledialog.ui \
+    dialogabout.ui
