@@ -1541,6 +1541,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>editCreateTableAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
