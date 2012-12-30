@@ -7,7 +7,6 @@
 #include <qpixmap.h>
 
 #include "renametableform.h"
-#include "addfieldform.h"
 #include "editfieldform.h"
 /*
  *  Constructs a editTableForm as a child of 'parent', with the
@@ -229,7 +228,7 @@ void editTableForm::editField()
    // } else {
         editFieldForm * fieldForm = new editFieldForm( this );
         fieldForm->setModal(true);
-        fieldForm->setInitialValues(false, "TABLE_NAME", item->text(0), item->text(1));
+        fieldForm->setInitialValues(false, curTable, item->text(0), item->text(1));
         if (fieldForm->exec())
         {
             modified = true;
@@ -335,17 +334,17 @@ void editTableForm::editField()
 
 void editTableForm::addField()
 {
-   addFieldForm * addForm = new addFieldForm( this );
+   editFieldForm * addForm = new editFieldForm( this );
    addForm->setModal(true);
-   addForm->setInitialValues(QString(""),QString(""));
+   addForm->setInitialValues(true, curTable, QString(""),QString(""));
     if (addForm->exec())
    {
         modified = true;
 
         //Q3ListViewItem * tbitem = new Q3ListViewItem( fieldListView);
         QTreeWidgetItem *tbitem = new QTreeWidgetItem();
-        tbitem->setText( 0, addForm->fname);
-        tbitem->setText( 1, addForm->ftype);
+        tbitem->setText( 0, addForm->field_name);
+        tbitem->setText( 1, addForm->field_name);
        //do the sql creation here
         modified = true;
             //do the sql rename here

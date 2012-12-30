@@ -5,7 +5,7 @@
 #include <qpixmap.h>
 
 #include "qmessagebox.h"
-#include "addfieldform.h"
+#include "editfieldform.h"
 /*
  *  Constructs a createTableForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -113,14 +113,14 @@ void createTableForm::confirmCreate()
 void createTableForm::addField()
 {
     //TODO maybe embedd locally
-    addFieldForm * addForm = new addFieldForm( this );
+    editFieldForm * addForm = new editFieldForm( this );
     addForm->setModal(true);
-    addForm->setInitialValues(QString(""),QString(""));
+    addForm->setInitialValues(true, QString(""), QString(""),QString(""));
     if (addForm->exec())
     {
         QTreeWidgetItem *newItem = new QTreeWidgetItem();
-        newItem->setText(0, addForm->fname);
-        newItem->setText(1, addForm->ftype);
+        newItem->setText(0, addForm->field_name);
+        newItem->setText(1, addForm->field_type);
         newItem->setIcon(0, QIcon(":/icons/field"));
         treeWidget->addTopLevelItem(newItem);
     }
