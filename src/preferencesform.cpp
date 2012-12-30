@@ -1,4 +1,5 @@
 #include "preferencesform.h"
+#include "ui_preferencesform.h"
 
 #include <qvariant.h>
 #include <qimage.h>
@@ -17,9 +18,10 @@
  *  true to construct a modal dialog.
  */
 preferencesForm::preferencesForm(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+    : QDialog(parent, fl),
+      ui(new Ui::preferencesForm)
 {
-    setupUi(this);
+    ui->setupUi(this);
 
     init();
 }
@@ -29,16 +31,7 @@ preferencesForm::preferencesForm(QWidget* parent, Qt::WindowFlags fl)
  */
 preferencesForm::~preferencesForm()
 {
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void preferencesForm::languageChange()
-{
-    retranslateUi(this);
+    delete ui;
 }
 
 /****************************************************************************
@@ -102,7 +95,7 @@ void preferencesForm::chooseLocation()
     if(!s.isEmpty())
     {
         defaultlocation = s;
-        locationEdit->setText(defaultlocation);
+	ui->locationEdit->setText(defaultlocation);
     }
 }
 
@@ -119,32 +112,32 @@ void preferencesForm::loadSettings()
 
     if (defaultencoding=="Latin1")
     {
-        encodingComboBox->setCurrentIndex(1);
+	ui->encodingComboBox->setCurrentIndex(1);
     } else {
-        encodingComboBox->setCurrentIndex(0) ;
+	ui->encodingComboBox->setCurrentIndex(0) ;
         defaultencoding = QString("UTF8");
     }
     
     if (defaultnewdata=="\'\'")
     {
-        defaultdataComboBox->setCurrentIndex(2) ;
+	ui->defaultdataComboBox->setCurrentIndex(2) ;
     } else if (defaultnewdata=="0")
     {
-        defaultdataComboBox->setCurrentIndex(1) ;
+	ui->defaultdataComboBox->setCurrentIndex(1) ;
     } else {
-        defaultdataComboBox->setCurrentIndex(0) ;
+	ui->defaultdataComboBox->setCurrentIndex(0) ;
         defaultnewdata = QString("NULL");
     }
 
     if (defaulttext=="Auto")
     {
-        defaultTextComboBox->setCurrentIndex(1) ;
+	ui->defaultTextComboBox->setCurrentIndex(1) ;
     } else {
-        defaultTextComboBox->setCurrentIndex(0) ;
+	ui->defaultTextComboBox->setCurrentIndex(0) ;
         defaulttext = QString("Plain");
     }
     
-    locationEdit->setText(defaultlocation);
+    ui->locationEdit->setText(defaultlocation);
 }
 
 
@@ -159,6 +152,3 @@ void preferencesForm::saveSettings()
     settings.sync();
     accept();
 }
-
-
-
