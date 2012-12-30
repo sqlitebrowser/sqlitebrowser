@@ -15,7 +15,6 @@ HEADERS += \
     sqlitedb.h \
     sqlbrowser_util.h \
     sqlite_source/sqlite3.h \
-    addfieldform.h \
     addfieldtypeform.h \
     choosetableform.h \
     createindexform.h \
@@ -41,7 +40,6 @@ SOURCES += \
     sqlitedb.cpp \
     sqlbrowser_util.c \
     sqlite_source/sqlite3.c \
-    addfieldform.cpp \
     addfieldtypeform.cpp \
     choosetableform.cpp \
     createindexform.cpp \
