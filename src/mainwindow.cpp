@@ -1516,7 +1516,23 @@ void MainWindow::editTable()
 
 void MainWindow::deleteTablePopup()
 {
-    //TODO ask if user really wants to delte this table
+    // Get name of table to delete
+    QString table = dbTreeWidget->currentItem()->text(0);
+
+    // Ask user if he really wants to delete that table
+    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the table '%1'?\nAll data in the table will be lost.").arg(table),
+			    QMessageBox::Yes, QMessageBox::No | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Yes)
+    {
+	// Delete the table
+	QString statement = QString("DROP TABLE %1;").arg(table);
+	if (!db.executeSQL( statement)) {
+	    QString error = QString("Error: could not delete the table. Message from database engine:\n%1").arg(db.lastErrorMessage);
+	    QMessageBox::warning( this, QApplication::applicationName(), error );
+	} else {
+	    populateStructure();
+	    resetBrowser();
+	}
+    }
 }
 
 void MainWindow::editTablePopup()
