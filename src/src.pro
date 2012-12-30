@@ -81,4 +81,5 @@ RESOURCES += icons/icons.qrc
 FORMS += \
     createtabledialog.ui \
     dialogabout.ui \
-    preferencesform.ui
+    preferencesform.ui \
+    mainwindow.ui

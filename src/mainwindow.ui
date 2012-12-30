@@ -1,0 +1,1585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SQLiteBrowser</string>
+  </property>
+  <widget class="QTabWidget" name="mainTab">
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="structure">
+    <attribute name="title">
+     <string>Database &amp;Structure</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QToolBar" name="dbToolbar">
+       <property name="windowTitle">
+        <string>toolBar1</string>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <addaction name="editCreateTableAction"/>
+       <addaction name="editModifyTableActionPopup"/>
+       <addaction name="editDeleteTableActionPopup"/>
+       <addaction name="separator"/>
+       <addaction name="editAddFieldActionPopup"/>
+       <addaction name="editDeleteFieldActionPopup"/>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="dbTreeWidget">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Object</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Schema</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="browser">
+    <attribute name="title">
+     <string>&amp;Browse Data</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Table:</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboBrowseTable</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBrowseTable">
+         <property name="toolTip">
+          <string>Select a table to browse data</string>
+         </property>
+         <property name="whatsThis">
+          <string>Use this list to select a table to be displayed in the database view</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonFind">
+         <property name="toolTip">
+          <string>Open or close the floating find window</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button toggles the appearance of the Find window, used to search records in the database view</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/oldimages/searchfind</normaloff>:/oldimages/searchfind</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonRefresh">
+         <property name="toolTip">
+          <string>Refresh the data in the selected table.</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button refreshes the data in the currently selected table.</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonNewRecord">
+         <property name="toolTip">
+          <string>Insert a new record in the current table</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button creates a new, empty record in the database</string>
+         </property>
+         <property name="text">
+          <string>New Record</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonDeleteRecord">
+         <property name="toolTip">
+          <string>Delete the current record</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button deletes the record currently selected in the database</string>
+         </property>
+         <property name="text">
+          <string>Delete Record</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="dataTable">
+       <property name="whatsThis">
+        <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QToolButton" name="buttonPrevious">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Go to previous record set page</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button is used to navigate to the previous set of 1000 records in the database view</string>
+         </property>
+         <property name="text">
+          <string>&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelRecordset">
+         <property name="text">
+          <string>0 - 0 of 0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonNext">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Go to next record set page</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button is used to navigate to the next 1000 records set in the database view</string>
+         </property>
+         <property name="text">
+          <string>&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonGoto">
+         <property name="toolTip">
+          <string>Click here to browse the specified record</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button is used to navigate to the record number specied in the Go to: area.</string>
+         </property>
+         <property name="text">
+          <string>Go to:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editGoto">
+         <property name="toolTip">
+          <string>Enter record number to browse</string>
+         </property>
+         <property name="whatsThis">
+          <string>Type a record number in this area and click the Go to: button to display the record in the database view</string>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="query">
+    <attribute name="title">
+     <string>E&amp;xecute SQL</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>SQL string:</string>
+       </property>
+       <property name="buddy">
+        <cstring>sqlTextEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="sqlTextEdit">
+       <property name="font">
+        <font>
+         <family>DejaVu Sans Mono</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Type SQL string here</string>
+       </property>
+       <property name="whatsThis">
+        <string>Type the SQL query in this area, and press the button below to execute it. Results and error messages will be shown in the fields at the bottom of this form.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="executeQueryButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Execute SQL query</string>
+       </property>
+       <property name="whatsThis">
+        <string>This button is used to execute the SQL query entered in the text area above.</string>
+       </property>
+       <property name="text">
+        <string>Execute query</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Error message from database engine:</string>
+       </property>
+       <property name="buddy">
+        <cstring>queryErrorLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="queryErrorLineEdit">
+       <property name="whatsThis">
+        <string>Messages returned from the database engine when the SQL query is executed are displayed in this area.</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Data returned:</string>
+       </property>
+       <property name="buddy">
+        <cstring>queryResultTableView</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableView" name="queryResultTableView">
+       <property name="toolTip">
+        <string>Query generated data</string>
+       </property>
+       <property name="whatsThis">
+        <string>This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.</string>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="fileMenu">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>&amp;Import</string>
+     </property>
+     <addaction name="fileImportSQLAction"/>
+     <addaction name="fileImportCSVAction"/>
+    </widget>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>&amp;Export</string>
+     </property>
+     <addaction name="fileExportSQLAction"/>
+     <addaction name="fileExportCSVAction"/>
+    </widget>
+    <addaction name="fileNewAction"/>
+    <addaction name="fileOpenAction"/>
+    <addaction name="fileCloseAction"/>
+    <addaction name="separator"/>
+    <addaction name="fileSaveAction"/>
+    <addaction name="fileRevertAction"/>
+    <addaction name="fileCompactAction"/>
+    <addaction name="separator"/>
+    <addaction name="menuImport"/>
+    <addaction name="menuExport"/>
+    <addaction name="separator"/>
+    <addaction name="fileExitAction"/>
+   </widget>
+   <widget class="QMenu" name="editMenu">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="editCreateTableAction"/>
+    <addaction name="editDeleteTableAction"/>
+    <addaction name="editModifyTableAction"/>
+    <addaction name="separator"/>
+    <addaction name="editCreateIndexAction"/>
+    <addaction name="editDeleteIndexAction"/>
+    <addaction name="separator"/>
+    <addaction name="editPreferencesAction"/>
+   </widget>
+   <widget class="QMenu" name="viewMenu">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="sqlLogAction"/>
+    <addaction name="viewDBToolbarAction"/>
+   </widget>
+   <widget class="QMenu" name="helpMenu">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="helpWhatsThisAction"/>
+    <addaction name="helpAboutAction"/>
+   </widget>
+   <addaction name="fileMenu"/>
+   <addaction name="editMenu"/>
+   <addaction name="viewMenu"/>
+   <addaction name="helpMenu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolbarDB">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="fileNewAction"/>
+   <addaction name="fileOpenAction"/>
+   <addaction name="separator"/>
+   <addaction name="fileSaveAction"/>
+   <addaction name="fileRevertAction"/>
+  </widget>
+  <action name="fileNewAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_new</normaloff>:/icons/db_new</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new database file</string>
+   </property>
+   <property name="statusTip">
+    <string>Create a new database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to create a new database file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="fileOpenAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_open</normaloff>:/icons/db_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Open an existing database file</string>
+   </property>
+   <property name="statusTip">
+    <string>Open an existing database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to open an existing database file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="fileCloseAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Close Database</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="fileRevertAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_revert</normaloff>:/icons/db_revert</iconset>
+   </property>
+   <property name="text">
+    <string>Revert Changes</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert database to last saved state</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</string>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </action>
+  <action name="fileSaveAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_save</normaloff>:/icons/db_save</iconset>
+   </property>
+   <property name="text">
+    <string>Write Changes</string>
+   </property>
+   <property name="toolTip">
+    <string>Write changes to the database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to save changes to the database file.</string>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </action>
+  <action name="fileCompactAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Compact Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Compact the database file, removing space wasted by deleted records</string>
+   </property>
+   <property name="statusTip">
+    <string>Compact the database file, removing space wasted by deleted records.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Compact the database file, removing space wasted by deleted records.</string>
+   </property>
+  </action>
+  <action name="fileExitAction">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="fileImportSQLAction">
+   <property name="text">
+    <string>Database from SQL file</string>
+   </property>
+   <property name="toolTip">
+    <string>Import data from an .sql dump text file into a new or existing database.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</string>
+   </property>
+  </action>
+  <action name="fileImportCSVAction">
+   <property name="text">
+    <string>Table from CSV file</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a wizard that lets you import data from a comma separated text file into a database table.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</string>
+   </property>
+  </action>
+  <action name="fileExportSQLAction">
+   <property name="text">
+    <string>Database to SQL file</string>
+   </property>
+   <property name="toolTip">
+    <string>Export a database to a .sql dump text file.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</string>
+   </property>
+  </action>
+  <action name="fileExportCSVAction">
+   <property name="text">
+    <string>Table as CSV file</string>
+   </property>
+   <property name="toolTip">
+    <string>Export a database table as a comma separated text file.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</string>
+   </property>
+  </action>
+  <action name="editCreateTableAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_create</normaloff>:/icons/table_create</iconset>
+   </property>
+   <property name="text">
+    <string>Create Table</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
+   </property>
+  </action>
+  <action name="editDeleteTableAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Table</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Delete Table wizard, where you can select a database table to be dropped.</string>
+   </property>
+  </action>
+  <action name="editModifyTableAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_modify</normaloff>:/icons/table_modify</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Table</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
+   </property>
+  </action>
+  <action name="editCreateIndexAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/index_create</normaloff>:/icons/index_create</iconset>
+   </property>
+   <property name="text">
+    <string>Create Index</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
+   </property>
+  </action>
+  <action name="editDeleteIndexAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/index_delete</normaloff>:/icons/index_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Index</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Delete Index wizard, where you can select a database index to be dropped.</string>
+   </property>
+  </action>
+  <action name="editPreferencesAction">
+   <property name="text">
+    <string>&amp;Preferences</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the preferences window.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the preferences window.</string>
+   </property>
+  </action>
+  <action name="sqlLogAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/oldimages/log</normaloff>:/oldimages/log</iconset>
+   </property>
+   <property name="text">
+    <string>SQL &amp;Log</string>
+   </property>
+   <property name="whatsThis">
+    <string>Display or hide the SQL log window, which stores all SQL commands issued by the user or the application.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="viewDBToolbarAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;DB Toolbar</string>
+   </property>
+   <property name="whatsThis">
+    <string>Shows or hides the Database toolbar.</string>
+   </property>
+  </action>
+  <action name="helpWhatsThisAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/oldimages/whatis</normaloff>:/oldimages/whatis</iconset>
+   </property>
+   <property name="text">
+    <string>What's This?</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="helpAboutAction">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="editAddFieldActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
+   </property>
+   <property name="text">
+    <string>Add Field</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Field</string>
+   </property>
+  </action>
+  <action name="editDeleteFieldActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Field</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Field</string>
+   </property>
+  </action>
+  <action name="editModifyTableActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_modify</normaloff>:/icons/table_modify</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Table</string>
+   </property>
+   <property name="toolTip">
+    <string>Modify Table</string>
+   </property>
+  </action>
+  <action name="editDeleteTableActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Table</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Table</string>
+   </property>
+  </action>
+  <action name="editModifyFieldActionPopup">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_edit</normaloff>:/icons/field_edit</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Field</string>
+   </property>
+   <property name="toolTip">
+    <string>Modify Field</string>
+   </property>
+  </action>
+  <action name="editCopyAction">
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copies the selected text to the clipboard</string>
+   </property>
+   <property name="whatsThis">
+    <string>Copies the selected text to the clipboard</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="editPasteAction">
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Pastes text from the clipboard into the current text insertion point</string>
+   </property>
+   <property name="whatsThis">
+    <string>Pastes text from the clipboard into the current text insertion point</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionRecent_y_opened">
+   <property name="text">
+    <string>&amp;Recently opened</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>dbTreeWidget</tabstop>
+  <tabstop>comboBrowseTable</tabstop>
+  <tabstop>buttonFind</tabstop>
+  <tabstop>buttonRefresh</tabstop>
+  <tabstop>buttonNewRecord</tabstop>
+  <tabstop>buttonDeleteRecord</tabstop>
+  <tabstop>dataTable</tabstop>
+  <tabstop>buttonPrevious</tabstop>
+  <tabstop>buttonNext</tabstop>
+  <tabstop>buttonGoto</tabstop>
+  <tabstop>editGoto</tabstop>
+  <tabstop>sqlTextEdit</tabstop>
+  <tabstop>executeQueryButton</tabstop>
+  <tabstop>queryErrorLineEdit</tabstop>
+  <tabstop>queryResultTableView</tabstop>
+ </tabstops>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>fileExitAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileOpenAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileOpen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileNewAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileNew()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileCloseAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileClose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBrowseTable</sender>
+   <signal>activated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>populateTable(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonNewRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>623</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDeleteRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>733</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonPrevious</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigatePrevious()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>22</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonNext</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateNext()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonGoto</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateGoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>461</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editGoto</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateGoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>644</x>
+     <y>558</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonFind</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseFind(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRefresh</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseRefresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileCompactAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>compact()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>helpWhatsThisAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpWhatsThis()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>helpAboutAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>cellDoubleClicked(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>doubleClickTable(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainTab</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>mainTabSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>315</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>executeQueryButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>executeQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileImportCSVAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>importTableFromCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileExportCSVAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportTableToCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileRevertAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileRevert()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileSaveAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileSave()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editDeleteIndexAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteIndex()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCreateIndexAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createIndex()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editDeleteTableAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editDeleteTableAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editModifyTableAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editDeleteTableActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteTablePopup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editModifyTableActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editTablePopup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editAddFieldActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_add_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileExportSQLAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportDatabaseToSQL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileImportSQLAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>importDatabaseFromSQL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editPreferencesAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openPreferences()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dbTreeWidget</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_tree_context_menu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dbTreeWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_tree_selection_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCopyAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editPasteAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>paste()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editModifyFieldActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_edit_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewDBToolbarAction</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolbarDB</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>fileOpen()</slot>
+  <slot>fileClose()</slot>
+  <slot>populateTable(QString)</slot>
+  <slot>addRecord()</slot>
+  <slot>deleteRecord()</slot>
+  <slot>navigatePrevious()</slot>
+  <slot>navigateNext()</slot>
+  <slot>navigateGoto()</slot>
+  <slot>browseFind(bool)</slot>
+  <slot>browseRefresh()</slot>
+  <slot>compact()</slot>
+  <slot>copy()</slot>
+  <slot>paste()</slot>
+  <slot>helpWhatsThis()</slot>
+  <slot>doubleClickTable(int,int)</slot>
+  <slot>browseTableHeaderClicked(int)</slot>
+  <slot>mainTabSelected(int)</slot>
+  <slot>executeQuery()</slot>
+  <slot>importTableFromCSV()</slot>
+  <slot>exportTableToCSV()</slot>
+  <slot>fileRevert()</slot>
+  <slot>fileSave()</slot>
+  <slot>deleteIndex()</slot>
+  <slot>createIndex()</slot>
+  <slot>createTable()</slot>
+  <slot>deleteTable()</slot>
+  <slot>editTable()</slot>
+  <slot>deleteTablePopup()</slot>
+  <slot>editTablePopup()</slot>
+  <slot>on_add_field()</slot>
+  <slot>on_edit_field()</slot>
+  <slot>exportDatabaseToSQL()</slot>
+  <slot>importDatabaseFromSQL()</slot>
+  <slot>openPreferences()</slot>
+  <slot>on_tree_context_menu(QPoint)</slot>
+  <slot>on_tree_selection_changed()</slot>
+  <slot>fileNew()</slot>
+  <slot>helpAbout()</slot>
+ </slots>
+</ui>

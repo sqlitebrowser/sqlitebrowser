@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <QtGui/QFileDialog>
 #include <QSettings>
@@ -11,6 +12,8 @@
 #include <QWhatsThis>
 #include <QMessageBox>
 #include <QUrl>
+#include <QStandardItemModel>
+#include <QDragEnterEvent>
 
 #include "createtableform.h"
 #include "createindexform.h"
@@ -30,800 +33,45 @@
 
 void MainWindow::setupUi()
 {
-    if (this->objectName().isEmpty()){
-        this->setObjectName(QString::fromUtf8("mainForm"));
-    }
-
+    // Create the SQL log dock
     logWin = new SQLLogDock(this);
-    sqlLogAction = logWin->toggleViewAction();
-    sqlLogAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
     this->addDockWidget(Qt::BottomDockWidgetArea, logWin);
 
-    //** New DB File
-    fileNewAction = new QAction(this);
-    fileNewAction->setObjectName(QString::fromUtf8("fileNewAction"));
-    fileNewAction->setText("fileNewAction");
-    fileNewAction->setIcon(QIcon(":/icons/db_new"));
+    // Set up the db tree widget
+    ui->dbTreeWidget->setColumnHidden(1, true);
+    ui->dbTreeWidget->setColumnWidth(0, 300);
 
-    //** Open DB File
-    fileOpenAction = new QAction(this);
-    fileOpenAction->setObjectName(QString::fromUtf8("fileOpenAction"));
-    fileOpenAction->setText("fileOpenAction");
-    fileOpenAction->setIcon(QIcon(":/icons/db_open"));
+    // Create the SQL sytax highlighter
+    sqliteHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 
-    //** Save DB Action
-    fileSaveAction = new QAction(this);
-    fileSaveAction->setObjectName(QString::fromUtf8("fileSaveAction"));
-    fileSaveAction->setText("fileSaveAction");
-    fileSaveAction->setEnabled(false);
-    fileSaveAction->setIcon(QIcon(":/icons/db_save"));
-    QFont fntS = fileSaveAction->font();
-    fntS.setBold(true);
-    fileSaveAction->setFont(fntS);
+    // Set up DB model
+    queryResultListModel = new QStandardItemModel(this);
+    ui->queryResultTableView->setModel(queryResultListModel);
 
-    //** Db Revert
-    fileRevertAction = new QAction(this);
-    fileRevertAction->setObjectName(QString::fromUtf8("fileRevertAction"));
-    fileRevertAction->setText("fileRevertAction");
-    fileRevertAction->setEnabled(false);
-    fileRevertAction->setIcon(QIcon(":/icons/db_revert"));
-    QFont fntR = fileRevertAction->font();
-    fntR.setBold(true);
-    fileRevertAction->setFont(fntR);
-
-    // Recent dbs
+    // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
         recentFileActs[i]->setVisible(false);
         this->connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
     }
-
-
-    //** Exit
-    fileExitAction = new QAction(this);
-    fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
-    fileExitAction->setText("fileExitAction");
-
-    editCopyAction = new QAction(this);
-    editCopyAction->setObjectName(QString::fromUtf8("editCopyAction"));
-    editCopyAction->setText("editCopyAction");
-    editPasteAction = new QAction(this);
-    editPasteAction->setObjectName(QString::fromUtf8("editPasteAction"));
-    editPasteAction->setText("editPasteAction");
-    editFindAction = new QAction(this);
-    editFindAction->setObjectName(QString::fromUtf8("editFindAction"));
-    editFindAction->setText("editFindAction");
-    editFindAction->setIcon(QIcon(":/oldimages/searchfind"));
-    editFindAction->setIconVisibleInMenu(true);
-    helpContentsAction = new QAction(this);
-    helpContentsAction->setObjectName(QString::fromUtf8("helpContentsAction"));
-    helpContentsAction->setText("helpContentsAction");
-    helpIndexAction = new QAction(this);
-    helpIndexAction->setObjectName(QString::fromUtf8("helpIndexAction"));
-    helpIndexAction->setText("helpIndexAction");
-    helpAboutAction = new QAction(this);
-    helpAboutAction->setObjectName(QString::fromUtf8("helpAboutAction"));
-    helpAboutAction->setText("helpAboutAction");
-
-    //** Close Database ??
-    fileCloseAction = new QAction(this);
-    fileCloseAction->setObjectName(QString::fromUtf8("fileCloseAction"));
-    fileCloseAction->setText("fileCloseAction");
-    fileCloseAction->setEnabled(false);
-
-    newRecordAction = new QAction(this);
-    newRecordAction->setObjectName(QString::fromUtf8("newRecordAction"));
-    newRecordAction->setText("newRecordAction");
-    fileCompactAction = new QAction(this);
-    fileCompactAction->setObjectName(QString::fromUtf8("fileCompactAction"));
-    fileCompactAction->setText("fileCompactAction");
-    fileCompactAction->setEnabled(false);
-    helpWhatsThisAction = new QAction(this);
-    helpWhatsThisAction->setObjectName(QString::fromUtf8("helpWhatsThisAction"));
-    helpWhatsThisAction->setText("helpWhatsThisAction");
-    helpWhatsThisAction->setIcon(QIcon(":/oldimages/whatis"));
-    helpWhatsThisAction->setIconVisibleInMenu(true);
-
-    sqlLogAction->setText("sqlLogAction");
-    sqlLogAction->setIcon(QIcon(":/oldimages/log"));
-    sqlLogAction->setIconVisibleInMenu(true);
-
-
-    fileImportCSVAction = new QAction(this);
-    fileImportCSVAction->setObjectName(QString::fromUtf8("fileImportCSVAction"));
-    fileImportCSVAction->setText("fileImportCSVAction");
-    fileExportCSVAction = new QAction(this);
-    fileExportCSVAction->setObjectName(QString::fromUtf8("fileExportCSVAction"));
-    fileExportCSVAction->setText("fileExportCSVAction");
-
-
-
-
-    //fileImportAction = new QAction(this);
-    //fileImportAction->setObjectName(QString::fromUtf8("fileImportAction"));
-    //fileImportAction->setName("fileImportAction");
-    //fileExportAction = new QAction(this);
-    //fileExportAction->setObjectName(QString::fromUtf8("fileExportAction"));
-    //fileExportAction->setName("fileExportAction");
-
-    //** Create Table
-    editCreateTableAction = new QAction(this);
-    editCreateTableAction->setObjectName(QString::fromUtf8("editCreateTableAction"));
-    editCreateTableAction->setText("editCreateTableAction");
-    editCreateTableAction->setEnabled(false);
-    editCreateTableAction->setIcon(QIcon(":/icons/table_create"));
-
-    //** Delete table
-    editDeleteTableAction = new QAction(this);
-    editDeleteTableAction->setObjectName(QString::fromUtf8("editDeleteTableAction"));
-    editDeleteTableAction->setText("editDeleteTableAction");
-    editDeleteTableAction->setEnabled(false);
-    editDeleteTableAction->setIcon(QIcon(":/icons/table_delete"));
-
-    editDeleteTableActionPopup = new QAction(this);
-    editDeleteTableActionPopup->setEnabled(false);
-    editDeleteTableActionPopup->setIcon(QIcon(":/icons/table_delete"));
-
-    //** Modify Table
-    editModifyTableAction = new QAction(this);
-    editModifyTableAction->setObjectName(QString::fromUtf8("editModifyTableAction"));
-    editModifyTableAction->setText("editModifyTableAction");
-    editModifyTableAction->setEnabled(false);
-    editModifyTableAction->setIcon(QIcon(":/icons/table_modify"));
-
-    editModifyTableActionPopup = new QAction(this);
-    editModifyTableActionPopup->setEnabled(false);
-    editModifyTableActionPopup->setIcon(QIcon(":/icons/table_modify"));
-
-
-    //************************************************
-    //** Add, Modify, Delete Field
-    editAddFieldActionPopup = new QAction(this);
-    editAddFieldActionPopup->setText("Add Field");
-    editAddFieldActionPopup->setDisabled(true);
-    editAddFieldActionPopup->setIcon(QIcon(":/icons/field_add"));
-
-    editModifyFieldActionPopup = new QAction(this);
-    editModifyFieldActionPopup->setText("Modify Field");
-    editModifyFieldActionPopup->setDisabled(true);
-    editModifyFieldActionPopup->setIcon(QIcon(":/icons/field_edit"));
-
-    editDeleteFieldActionPopup = new QAction(this);
-    editDeleteFieldActionPopup->setText("Delete Field");
-    editDeleteFieldActionPopup->setDisabled(true);
-    editDeleteFieldActionPopup->setIcon(QIcon(":/icons/field_delete"));
-
-    //************************************************
-    //** Create/Delete  Index
-    editCreateIndexAction = new QAction(this);
-    editCreateIndexAction->setObjectName(QString::fromUtf8("editCreateIndexAction"));
-    editCreateIndexAction->setText("editCreateIndexAction");
-    editCreateIndexAction->setEnabled(false);
-    editCreateIndexAction->setIcon(QIcon(":/icons/index_create"));
-
-    editDeleteIndexAction = new QAction(this);
-    editDeleteIndexAction->setObjectName(QString::fromUtf8("editDeleteIndexAction"));
-    editDeleteIndexAction->setText("editDeleteIndexAction");
-    editDeleteIndexAction->setEnabled(false);
-    editDeleteIndexAction->setIcon(QIcon(":/icons/index_delete"));
-
-    fileImportSQLAction = new QAction(this);
-    fileImportSQLAction->setObjectName(QString::fromUtf8("fileImportSQLAction"));
-    fileImportSQLAction->setText("fileImportSQLAction");
-    fileExportSQLAction = new QAction(this);
-    fileExportSQLAction->setObjectName(QString::fromUtf8("fileExportSQLAction"));
-    fileExportSQLAction->setText("fileExportSQLAction");
-    editPreferencesAction = new QAction(this);
-    editPreferencesAction->setObjectName(QString::fromUtf8("editPreferencesAction"));
-    editPreferencesAction->setText("editPreferencesAction");
-    widget = new QWidget(this);
-    widget->setObjectName(QString::fromUtf8("widget"));
-    vboxLayout = new QVBoxLayout(widget);
-    vboxLayout->setSpacing(0);
-    vboxLayout->setContentsMargins(0,0,0,0);
-    vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-    vboxLayout->setContentsMargins(0, 0, 0, 0);
-    mainTab = new QTabWidget(widget);
-    mainTab->setObjectName(QString::fromUtf8("mainTab"));
-    structure = new QWidget();
-    structure->setObjectName(QString::fromUtf8("structure"));
-
-
-    vboxLayout1 = new QVBoxLayout(structure);
-    vboxLayout1->setSpacing(0);
-    vboxLayout1->setContentsMargins(0,0,0,0);
-    vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
-
-    //**** Structure ***********************************
-    QToolBar *dbToolbar = new QToolBar();
-    vboxLayout1->addWidget(dbToolbar);
-    dbToolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    dbToolbar->addAction(editCreateTableAction);
-    dbToolbar->addAction(editModifyTableActionPopup);
-    dbToolbar->addAction(editDeleteTableActionPopup);
-    dbToolbar->addSeparator();
-    dbToolbar->addAction(editAddFieldActionPopup);
-    dbToolbar->addAction(editModifyFieldActionPopup);
-    dbToolbar->addAction(editDeleteFieldActionPopup);
-
-    //*** Tree Widget Setup
-    dbTreeWidget = new QTreeWidget();
-    vboxLayout1->addWidget(dbTreeWidget);
-    QTreeWidgetItem *headerItem = dbTreeWidget->headerItem();
-    headerItem->setText(0, QApplication::translate("mainForm", "Name", 0, QApplication::UnicodeUTF8));
-    headerItem->setText(1, QApplication::translate("mainForm", "Object", 0, QApplication::UnicodeUTF8));
-    headerItem->setText(2, QApplication::translate("mainForm", "Type", 0, QApplication::UnicodeUTF8));
-    headerItem->setText(3, QApplication::translate("mainForm", "Schema", 0, QApplication::UnicodeUTF8));
-    dbTreeWidget->setColumnHidden(1, true);
-    dbTreeWidget->setColumnWidth(0, 300);
-    dbTreeWidget->setAlternatingRowColors(true);
-    dbTreeWidget->setRootIsDecorated(true);
-    dbTreeWidget->setAnimated(true);
-    dbTreeWidget->setContextMenuPolicy( Qt::CustomContextMenu );
-
-
-
-    mainTab->addTab(structure, QString());
-    browser = new QWidget();
-    browser->setObjectName(QString::fromUtf8("browser"));
-    vboxLayout2 = new QVBoxLayout(browser);
-    vboxLayout2->setSpacing(6);
-    vboxLayout2->setContentsMargins(11, 11, 11, 11);
-    vboxLayout2->setObjectName(QString::fromUtf8("vboxLayout2"));
-    hboxLayout = new QHBoxLayout();
-    hboxLayout->setSpacing(6);
-    hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
-    textLabel1 = new QLabel(browser);
-    textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
-    textLabel1->setWordWrap(false);
-
-    hboxLayout->addWidget(textLabel1);
-
-    comboBrowseTable = new QComboBox(browser);
-    comboBrowseTable->setObjectName(QString::fromUtf8("comboBrowseTable"));
-    comboBrowseTable->setMinimumSize(QSize(115, 0));
-    comboBrowseTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-    hboxLayout->addWidget(comboBrowseTable);
-
-    buttonFind = new QPushButton(browser);
-    buttonFind->setObjectName(QString::fromUtf8("buttonFind"));
-    buttonFind->setIcon(QIcon(":/oldimages/searchfind"));
-    buttonFind->setCheckable(true);
-
-    hboxLayout->addWidget(buttonFind);
-
-    buttonRefresh = new QPushButton(browser);
-    buttonRefresh->setObjectName("buttonRefresh");
-    buttonRefresh->setIcon(QIcon(":/icons/refresh"));
-    buttonRefresh->setShortcut(QKeySequence(Qt::Key_F5));
-
-    hboxLayout->addWidget(buttonRefresh);
-
-    spacer1 = new QSpacerItem(51, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    hboxLayout->addItem(spacer1);
-
-    buttonNewRecord = new QPushButton(browser);
-    buttonNewRecord->setObjectName(QString::fromUtf8("buttonNewRecord"));
-
-    hboxLayout->addWidget(buttonNewRecord);
-
-    buttonDeleteRecord = new QPushButton(browser);
-    buttonDeleteRecord->setObjectName(QString::fromUtf8("buttonDeleteRecord"));
-
-    hboxLayout->addWidget(buttonDeleteRecord);
-
-
-    vboxLayout2->addLayout(hboxLayout);
-
-    dataTable = new QTableWidget(browser);
-    dataTable->setObjectName(QString::fromUtf8("dataTable"));
-    dataTable->setAcceptDrops(true);
-    dataTable->setRowCount(0);
-    dataTable->setColumnCount(0);
-    dataTable->setSelectionMode(QTableWidget::SingleSelection);
-    dataTable->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-
-    vboxLayout2->addWidget(dataTable);
-
-    hboxLayout1 = new QHBoxLayout();
-    hboxLayout1->setSpacing(6);
-    hboxLayout1->setObjectName(QString::fromUtf8("hboxLayout1"));
-    buttonPrevious = new QPushButton(browser);
-    buttonPrevious->setObjectName(QString::fromUtf8("buttonPrevious"));
-    QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(0), static_cast<QSizePolicy::Policy>(0));
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(buttonPrevious->sizePolicy().hasHeightForWidth());
-    buttonPrevious->setSizePolicy(sizePolicy);
-
-    hboxLayout1->addWidget(buttonPrevious);
-
-    labelRecordset = new QLabel(browser);
-    labelRecordset->setObjectName(QString::fromUtf8("labelRecordset"));
-    labelRecordset->setWordWrap(false);
-
-    hboxLayout1->addWidget(labelRecordset);
-
-    buttonNext = new QPushButton(browser);
-    buttonNext->setObjectName(QString::fromUtf8("buttonNext"));
-    sizePolicy.setHeightForWidth(buttonNext->sizePolicy().hasHeightForWidth());
-    buttonNext->setSizePolicy(sizePolicy);
-
-    hboxLayout1->addWidget(buttonNext);
-
-    spacer4 = new QSpacerItem(50, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    hboxLayout1->addItem(spacer4);
-
-    buttonGoto = new QPushButton(browser);
-    buttonGoto->setObjectName(QString::fromUtf8("buttonGoto"));
-
-    hboxLayout1->addWidget(buttonGoto);
-
-    editGoto = new QLineEdit(browser);
-    editGoto->setObjectName(QString::fromUtf8("editGoto"));
-    sizePolicy.setHeightForWidth(editGoto->sizePolicy().hasHeightForWidth());
-    editGoto->setSizePolicy(sizePolicy);
-
-    hboxLayout1->addWidget(editGoto);
-
-
-    vboxLayout2->addLayout(hboxLayout1);
-
-    mainTab->addTab(browser, QString());
-    query = new QWidget();
-    query->setObjectName(QString::fromUtf8("query"));
-    vboxLayout3 = new QVBoxLayout(query);
-    vboxLayout3->setSpacing(6);
-    vboxLayout3->setContentsMargins(11, 11, 11, 11);
-    vboxLayout3->setObjectName(QString::fromUtf8("vboxLayout3"));
-    textLabel1_2 = new QLabel(query);
-    textLabel1_2->setObjectName(QString::fromUtf8("textLabel1_2"));
-    textLabel1_2->setWordWrap(false);
-
-    vboxLayout3->addWidget(textLabel1_2);
-
-    sqlTextEdit = new QTextEdit(query);
-    sqlTextEdit->setObjectName(QString::fromUtf8("sqlTextEdit"));
-    QSizePolicy sizePolicy1(static_cast<QSizePolicy::Policy>(7), static_cast<QSizePolicy::Policy>(5));
-    sizePolicy1.setHorizontalStretch(0);
-    sizePolicy1.setVerticalStretch(0);
-    sizePolicy1.setHeightForWidth(sqlTextEdit->sizePolicy().hasHeightForWidth());
-    sqlTextEdit->setSizePolicy(sizePolicy1);
-    QFont font;
-    font.setFamily("Courier");
-    font.setFixedPitch(true);
-    font.setPixelSize(11);
-    sqlTextEdit->setFont(font);
-
-    sqliteHighlighter = new SQLiteSyntaxHighlighter(sqlTextEdit->document());
-
-    vboxLayout3->addWidget(sqlTextEdit);
-
-    hboxLayout2 = new QHBoxLayout();
-    hboxLayout2->setSpacing(6);
-    hboxLayout2->setObjectName(QString::fromUtf8("hboxLayout2"));
-    executeQueryButton = new QPushButton(query);
-    executeQueryButton->setObjectName(QString::fromUtf8("executeQueryButton"));
-
-    hboxLayout2->addWidget(executeQueryButton);
-
-    spacer4_2 = new QSpacerItem(325, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    hboxLayout2->addItem(spacer4_2);
-
-
-    vboxLayout3->addLayout(hboxLayout2);
-
-    textLabel2 = new QLabel(query);
-    textLabel2->setObjectName(QString::fromUtf8("textLabel2"));
-    textLabel2->setWordWrap(false);
-
-    vboxLayout3->addWidget(textLabel2);
-
-    queryErrorLineEdit = new QLineEdit(query);
-    queryErrorLineEdit->setObjectName(QString::fromUtf8("queryErrorLineEdit"));
-    queryErrorLineEdit->setReadOnly(true);
-    queryErrorLineEdit->setDisabled(true);
-
-    vboxLayout3->addWidget(queryErrorLineEdit);
-
-    textLabel3 = new QLabel(query);
-    textLabel3->setObjectName(QString::fromUtf8("textLabel3"));
-    textLabel3->setWordWrap(false);
-
-    vboxLayout3->addWidget(textLabel3);
-
-    queryResultListModel = new QStandardItemModel(query);
-
-    queryResultTableView = new QTableView(query);
-    queryResultTableView->setObjectName(QString::fromUtf8("queryResultTableView"));
-    queryResultTableView->setSelectionMode(QTreeView::NoSelection);
-    queryResultTableView->setModel(queryResultListModel);
-    queryResultTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    queryResultTableView->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-
-    vboxLayout3->addWidget(queryResultTableView);
-
-    mainTab->addTab(query, QString());
-
-    vboxLayout->addWidget(mainTab);
-
-    this->setCentralWidget(widget);
-
-    //*** Setup Toolbar
-    toolbarDB = new QToolBar();
-    this->addToolBar(Qt::TopToolBarArea, toolbarDB);
-    toolbarDB->setObjectName(QString::fromUtf8("Toolbar"));
-    toolbarDB->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
-    viewDBToolbarAction = toolbarDB->toggleViewAction();
-
-    //*** Setup main Menu
-    menubar = this->menuBar(); //new QMenuBar(this);
-    menubar->setObjectName(QString::fromUtf8("menubar"));
-    fileMenu = new QMenu(menubar);
-    fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
-    importMenu = new QMenu(fileMenu);
-    importMenu->setObjectName(QString::fromUtf8("PopupMenuEditor_9"));
-    exportMenu = new QMenu(fileMenu);
-    exportMenu->setObjectName(QString::fromUtf8("PopupMenuEditor_12"));
-    EditMenu = new QMenu(menubar);
-    EditMenu->setObjectName(QString::fromUtf8("EditMenu"));
-    ViewMenu = new QMenu(menubar);
-    ViewMenu->setObjectName(QString::fromUtf8("ViewMenu"));
-    PopupMenu = new QMenu(menubar);
-    PopupMenu->setObjectName(QString::fromUtf8("PopupMenu"));
-
-    toolbarDB->addAction(fileNewAction);
-    toolbarDB->addAction(fileOpenAction);
-    toolbarDB->addSeparator();
-
-    toolbarDB->addAction(fileSaveAction);
-    toolbarDB->addAction(fileRevertAction);
-    toolbarDB->addSeparator();
-
-    /*
-    Toolbar->addAction(editCreateTableAction);
-    Toolbar->addAction(editDeleteTableAction);
-    Toolbar->addAction(editModifyTableAction);
-    Toolbar->addSeparator();
-
-    Toolbar->addAction(editCreateIndexAction);
-    Toolbar->addAction(editDeleteIndexAction);
-    Toolbar->addSeparator();
-
-    Toolbar->addAction(sqlLogAction);
-    Toolbar->addSeparator();
-    Toolbar->addAction(helpWhatsThisAction);
-    */
-
-    menubar->addAction(fileMenu->menuAction());
-    menubar->addAction(EditMenu->menuAction());
-    menubar->addAction(ViewMenu->menuAction());
-    menubar->addAction(PopupMenu->menuAction());
-
-    fileMenu->addAction(fileNewAction);
-    fileMenu->addAction(fileOpenAction);
-    fileMenu->addAction(fileCloseAction);
-    fileMenu->addSeparator();
-    fileMenu->addAction(fileSaveAction);
-    fileMenu->addAction(fileRevertAction);
-    fileMenu->addAction(fileCompactAction);
-    fileMenu->addSeparator();
-    //fileMenu->addAction(fileImportAction);
-    fileMenu->addAction(importMenu->menuAction());
-    //fileMenu->addAction(fileExportAction);
-    fileMenu->addAction(exportMenu->menuAction());
-
-    recentSeparatorAct = fileMenu->addSeparator();
     for(int i = 0; i < MaxRecentFiles; ++i)
-        fileMenu->addAction(recentFileActs[i]);
+        ui->fileMenu->insertAction(ui->fileExitAction, recentFileActs[i]);
+    recentSeparatorAct = ui->fileMenu->insertSeparator(ui->fileExitAction);
 
-
-    fileMenu->addSeparator();
-    fileMenu->addAction(fileExitAction);
-    importMenu->addAction(fileImportSQLAction);
-    importMenu->addAction(fileImportCSVAction);
-    exportMenu->addAction(fileExportSQLAction);
-    exportMenu->addAction(fileExportCSVAction);
-    EditMenu->addAction(editCreateTableAction);
-    EditMenu->addAction(editDeleteTableAction);
-    EditMenu->addAction(editModifyTableAction);
-    EditMenu->addSeparator();
-    EditMenu->addAction(editCreateIndexAction);
-    EditMenu->addAction(editDeleteIndexAction);
-    EditMenu->addSeparator();
-    EditMenu->addAction(editPreferencesAction);
-    ViewMenu->addAction(sqlLogAction);
-    ViewMenu->addAction(viewDBToolbarAction);
-    PopupMenu->addAction(helpWhatsThisAction);
-    PopupMenu->addAction(helpAboutAction);
-
-    //***********************************************8
-    //** Db Tree Popup Menus
+    // Create popup menus
     popupTableMenu = new QMenu(this);
-    popupTableMenu->addAction(editModifyTableActionPopup);
-    popupTableMenu->addAction(editAddFieldActionPopup);
+    popupTableMenu->addAction(ui->editModifyTableActionPopup);
+    popupTableMenu->addAction(ui->editAddFieldActionPopup);
     popupTableMenu->addSeparator();
-    popupTableMenu->addAction(editDeleteTableActionPopup);
-
+    popupTableMenu->addAction(ui->editDeleteTableActionPopup);
     popupFieldMenu = new QMenu(this);
-    popupFieldMenu->addAction(editModifyFieldActionPopup);
-    popupFieldMenu->addAction(editDeleteFieldActionPopup);
-    //spopupFieldMenu->addSeparator();
-    //popupFieldMenu->addAction(editDeleteTableActionPopup);
+    popupFieldMenu->addAction(ui->editModifyFieldActionPopup);
+    popupFieldMenu->addAction(ui->editDeleteFieldActionPopup);
 
-
-    retranslateUi();
-    QObject::connect(fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
-    QObject::connect(fileOpenAction, SIGNAL(activated()), this, SLOT(fileOpen()));
-    QObject::connect(fileNewAction, SIGNAL(activated()), this, SLOT(fileNew()));
-    QObject::connect(fileCloseAction, SIGNAL(activated()), this, SLOT(fileClose()));
-    QObject::connect(comboBrowseTable, SIGNAL(activated(QString)), this, SLOT(populateTable(QString)));
-    QObject::connect(buttonNewRecord, SIGNAL(clicked()), this, SLOT(addRecord()));
-    QObject::connect(buttonDeleteRecord, SIGNAL(clicked()), this, SLOT(deleteRecord()));
-    QObject::connect(buttonPrevious, SIGNAL(clicked()), this, SLOT(navigatePrevious()));
-    QObject::connect(buttonNext, SIGNAL(clicked()), this, SLOT(navigateNext()));
-    QObject::connect(editGoto, SIGNAL(returnPressed()), this, SLOT(navigateGoto()));
-    QObject::connect(buttonGoto, SIGNAL(clicked()), this, SLOT(navigateGoto()));
-    QObject::connect(buttonFind, SIGNAL(toggled(bool)), this, SLOT(browseFind(bool)));
-    QObject::connect(buttonRefresh, SIGNAL(clicked()), this, SLOT(browseRefresh()));
-    QObject::connect(fileCompactAction, SIGNAL(activated()), this, SLOT(compact()));
-    QObject::connect(editCopyAction, SIGNAL(activated()), this, SLOT(copy()));
-    QObject::connect(editPasteAction, SIGNAL(activated()), this, SLOT(paste()));
-    QObject::connect(helpWhatsThisAction, SIGNAL(activated()), this, SLOT(helpWhatsThis()));
-    QObject::connect(helpAboutAction, SIGNAL(activated()), this, SLOT(helpAbout()));
-    QObject::connect(dataTable, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(doubleClickTable(int,int)));
-    QObject::connect(dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
-    QObject::connect(mainTab, SIGNAL(currentChanged(int)), this, SLOT(mainTabSelected(int)));
-    QObject::connect(executeQueryButton, SIGNAL(clicked()), this, SLOT(executeQuery()));
-    QObject::connect(fileImportCSVAction, SIGNAL(activated()), this, SLOT(importTableFromCSV()));
-    QObject::connect(fileExportCSVAction, SIGNAL(activated()), this, SLOT(exportTableToCSV()));
-    QObject::connect(fileRevertAction, SIGNAL(activated()), this, SLOT(fileRevert()));
-    QObject::connect(fileSaveAction, SIGNAL(activated()), this, SLOT(fileSave()));
-    QObject::connect(editDeleteIndexAction, SIGNAL(activated()), this, SLOT(deleteIndex()));
-    QObject::connect(editCreateIndexAction, SIGNAL(activated()), this, SLOT(createIndex()));
-    QObject::connect(editCreateTableAction, SIGNAL(activated()), this, SLOT(createTable()));
-
-    QObject::connect(editDeleteTableAction, SIGNAL(activated()), this, SLOT(deleteTable()));
-    QObject::connect(editModifyTableAction, SIGNAL(activated()), this, SLOT(editTable()));
-    QObject::connect(editDeleteTableActionPopup, SIGNAL(activated()), this, SLOT(deleteTablePopup()));
-    QObject::connect(editModifyTableActionPopup, SIGNAL(activated()), this, SLOT(editTablePopup()));
-    QObject::connect(editAddFieldActionPopup, SIGNAL(activated()), this, SLOT(on_add_field()));
-    QObject::connect(editModifyFieldActionPopup, SIGNAL(activated()), this, SLOT(on_edit_field()));
-
-    QObject::connect(fileExportSQLAction, SIGNAL(activated()), this, SLOT(exportDatabaseToSQL()));
-    QObject::connect(fileImportSQLAction, SIGNAL(activated()), this, SLOT(importDatabaseFromSQL()));
-    QObject::connect(editPreferencesAction, SIGNAL(activated()), this, SLOT(openPreferences()));
-
-    QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(on_tree_context_menu(const QPoint &)));
-    QObject::connect(dbTreeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_tree_selection_changed()));
-
-    QMetaObject::connectSlotsByName(this);
-} // setupUi
-
-void MainWindow::retranslateUi()
-{
-    this->setWindowTitle(QObject::tr("Browser"));
-
-    fileNewAction->setIconText(QObject::tr("New Database"));
-    fileNewAction->setText(QObject::tr("&New Database"));
-    fileNewAction->setToolTip(QObject::tr("Create a new database file"));
-    fileNewAction->setWhatsThis(QObject::tr("This option is used to create a new database file."));
-    fileNewAction->setShortcut(QObject::tr("Ctrl+N"));
-
-    fileOpenAction->setIconText(QObject::tr("Open Database"));
-    fileOpenAction->setText(QObject::tr("&Open Database"));
-    fileOpenAction->setToolTip(QObject::tr("Open an existing database file"));
-    fileOpenAction->setWhatsThis(QObject::tr("This option is used to open an existing database file."));
-    fileOpenAction->setShortcut(QObject::tr("Ctrl+O"));
-
-    fileExitAction->setIconText(QObject::tr("Exit"));
-    fileExitAction->setText(QObject::tr("E&xit"));
-    fileExitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
-
-    editCopyAction->setIconText(QObject::tr("Copy"));
-    editCopyAction->setText(QObject::tr("&Copy"));
-    editCopyAction->setWhatsThis(QObject::tr("Copies the selected text to the clipboard"));
-    editCopyAction->setShortcut(QObject::tr("Ctrl+C"));
-
-    editPasteAction->setIconText(QObject::tr("Paste"));
-    editPasteAction->setText(QObject::tr("&Paste"));
-    editPasteAction->setWhatsThis(QObject::tr("Pastes text from the clipboard into the current text insertion point"));
-    editPasteAction->setShortcut(QObject::tr("Ctrl+V"));
-
-    editFindAction->setIconText(QObject::tr("Find"));
-    editFindAction->setText(QObject::tr("&Find..."));
-    editFindAction->setShortcut(QObject::tr("F"));
-
-    helpContentsAction->setIconText(QObject::tr("Contents"));
-    helpContentsAction->setText(QObject::tr("&Contents..."));
-    helpContentsAction->setShortcut(QString());
-
-    helpIndexAction->setIconText(QObject::tr("Index"));
-    helpIndexAction->setText(QObject::tr("&Index..."));
-    helpIndexAction->setShortcut(QString());
-
-    helpAboutAction->setIconText(QObject::tr("About"));
-    helpAboutAction->setText(QObject::tr("&About"));
-    helpAboutAction->setShortcut(QString());
-
-    fileCloseAction->setIconText(QObject::tr("Close Database"));
-    fileCloseAction->setText(QObject::tr("&Close Database"));
-    fileCloseAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
-
-    newRecordAction->setIconText(QObject::tr("New Record"));
-    newRecordAction->setText(QObject::tr("New Record"));
-
-    fileCompactAction->setIconText(QObject::tr("Compact Database"));
-    fileCompactAction->setText(QObject::tr("Compact Database"));
-    fileCompactAction->setStatusTip(QObject::tr("Compact the database file, removing space wasted by deleted records."));
-    fileCompactAction->setWhatsThis(QObject::tr("Compact the database file, removing space wasted by deleted records."));
-
-    helpWhatsThisAction->setIconText(QObject::tr("What's This?"));
-    helpWhatsThisAction->setText(QObject::tr("What's This?"));
-    helpWhatsThisAction->setShortcut(QObject::tr("Shift+F1"));
-
-    sqlLogAction->setIconText(QObject::tr("SQL Log"));
-    sqlLogAction->setText(QObject::tr("SQL &Log"));
-    sqlLogAction->setWhatsThis(QObject::tr("Display or hide the SQL log window, which stores all SQL commands issued by the user or the application."));
-
-    viewDBToolbarAction->setText(QObject::tr("&DB Toolbar"));
-    sqlLogAction->setWhatsThis(QObject::tr("Shows or hides the Database toolbar."));
-
-    fileImportCSVAction->setIconText(QObject::tr("Table from CSV file"));
-    fileImportCSVAction->setText(QObject::tr("Table from CSV file"));
-    fileImportCSVAction->setToolTip(QObject::tr("Open a wizard that lets you import data from a comma separated text file into a database table."));
-    fileImportCSVAction->setWhatsThis(QObject::tr("Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications."));
-
-    fileExportCSVAction->setIconText(QObject::tr("Table as CSV file"));
-    fileExportCSVAction->setText(QObject::tr("Table as CSV file"));
-    fileExportCSVAction->setToolTip(QObject::tr("Export a database table as a comma separated text file."));
-    fileExportCSVAction->setWhatsThis(QObject::tr("Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications."));
-
-    fileSaveAction->setIconText(QObject::tr("Write Changes"));
-    fileSaveAction->setText(QObject::tr("Revert Changes"));
-    fileSaveAction->setToolTip(QObject::tr("Write changes to the database file"));
-    fileSaveAction->setWhatsThis(QObject::tr("This option is used to save changes to the database file."));
-
-    fileRevertAction->setIconText(QObject::tr("Revert Changes"));
-    fileRevertAction->setText(QObject::tr("Revert Changes"));
-    fileRevertAction->setToolTip(QObject::tr("Revert database to last saved state"));
-    fileRevertAction->setWhatsThis(QObject::tr("This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost."));
-
-    //fileImportAction->setIconText(QObject::tr("Import"));
-    //fileImportAction->setText(QObject::tr("Import"));
-    //fileExportAction->setIconText(QObject::tr("Export"));
-    //fileExportAction->setText(QObject::tr("Export"));
-
-    editCreateTableAction->setIconText(QObject::tr("Create Table"));
-    editCreateTableAction->setText(QObject::tr("Create Table"));
-    editCreateTableAction->setWhatsThis(QObject::tr("Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database"));
-
-    editDeleteTableAction->setIconText(QObject::tr("Delete Table"));
-    editDeleteTableAction->setText(QObject::tr("Delete Table"));
-
-    editDeleteTableActionPopup->setIconText(QObject::tr("Delete Table"));
-    editDeleteTableActionPopup->setText(QObject::tr("Delete Table"));
-
-
-    editDeleteTableAction->setWhatsThis(QObject::tr("Open the Delete Table wizard, where you can select a database table to be dropped."));
-
-    editModifyTableAction->setIconText(QObject::tr("Modify Table"));
-    editModifyTableAction->setText(QObject::tr("Modify Table"));
-
-    editModifyTableActionPopup->setIconText(QObject::tr("Modify Table"));
-    editModifyTableActionPopup->setText(QObject::tr("Modify Table"));
-
-    editModifyTableAction->setWhatsThis(QObject::tr("Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types."));
-
-    editCreateIndexAction->setIconText(QObject::tr("Create Index"));
-    editCreateIndexAction->setText(QObject::tr("Create Index"));
-    editCreateIndexAction->setWhatsThis(QObject::tr("Open the Create Index wizard, where it is possible to define a new index on an existing database table."));
-
-    editDeleteIndexAction->setIconText(QObject::tr("Delete Index"));
-    editDeleteIndexAction->setText(QObject::tr("Delete Index"));
-    editDeleteIndexAction->setWhatsThis(QObject::tr("Open the Delete Index wizard, where you can select a database index to be dropped."));
-
-    fileImportSQLAction->setIconText(QObject::tr("Database from SQL file"));
-    fileImportSQLAction->setText(QObject::tr("Database from SQL file"));
-    fileImportSQLAction->setToolTip(QObject::tr("Import data from an .sql dump text file into a new or existing database."));
-    fileImportSQLAction->setWhatsThis(QObject::tr("This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL."));
-
-    fileExportSQLAction->setIconText(QObject::tr("Database to SQL file"));
-    fileExportSQLAction->setText(QObject::tr("Database to SQL file"));
-    fileExportSQLAction->setToolTip(QObject::tr("Export a database to a .sql dump text file."));
-    fileExportSQLAction->setWhatsThis(QObject::tr("This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL."));
-
-    editPreferencesAction->setIconText(QObject::tr("Preferences"));
-    editPreferencesAction->setText(QObject::tr("&Preferences"));
-    editPreferencesAction->setToolTip(QObject::tr("Open the preferences window.."));
-    editPreferencesAction->setWhatsThis(QObject::tr("Open the preferences window."));
-
-    mainTab->setProperty("toolTip", QVariant(QString()));
-    mainTab->setTabText(mainTab->indexOf(structure), QObject::tr("Database &Structure"));
-
-    textLabel1->setText(QObject::tr("Table:"));
-
-    comboBrowseTable->clear();
-    comboBrowseTable->insertItems(0, QStringList()
-        << QObject::tr("select")
-        << QObject::tr("users")
-    );
-    comboBrowseTable->setProperty("toolTip", QVariant(QObject::tr("Select a table to browse data")));
-    comboBrowseTable->setProperty("whatsThis", QVariant(QObject::tr("Use this list to select a table to be displayed in the database view")));
-
-    buttonFind->setText(QString());
-    buttonFind->setProperty("toolTip", QVariant(QObject::tr("Open or close the floating find window")));
-    buttonFind->setProperty("whatsThis", QVariant(QObject::tr("This button toggles the appearance of the Find window, used to search records in the database view")));
-    buttonFind->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F));
-
-
-    buttonRefresh->setProperty("toolTip", QVariant( QObject::tr("Refresh the data in the selected table.")));
-    buttonRefresh->setProperty("whatsThis", QVariant( QObject::tr("This button refreshes the data in the currently selected table.")));
-
-    buttonNewRecord->setText(QObject::tr("New Record"));
-    buttonNewRecord->setProperty("toolTip", QVariant(QObject::tr("Insert a new record in the current table")));
-    buttonNewRecord->setProperty("whatsThis", QVariant(QObject::tr("This button creates a new, empty record in the database")));
-
-    buttonDeleteRecord->setText(QObject::tr("Delete Record"));
-    buttonDeleteRecord->setProperty("toolTip", QVariant(QObject::tr("Delete the current record")));
-    buttonDeleteRecord->setProperty("whatsThis", QVariant(QObject::tr("This button deletes the record currently selected in the database")));
-
-
-    dataTable->setProperty("toolTip", QVariant(QString()));
-    dataTable->setProperty("whatsThis", QVariant(QObject::tr("This is the database view. You can double-click any record to edit its contents in the cell editor window.")));
-
-    buttonPrevious->setText(QObject::tr("<"));
-    buttonPrevious->setProperty("toolTip", QVariant(QObject::tr("Go to previous record set page")));
-    buttonPrevious->setProperty("whatsThis", QVariant(QObject::tr("This button is used to navigate to the previous set of 1000 records in the database view")));
-
-    labelRecordset->setText(QObject::tr("1000 - 2000 of 100000"));
-
-    buttonNext->setText(QObject::tr(">"));
-    buttonNext->setProperty("toolTip", QVariant(QObject::tr("Go to next record set page")));
-    buttonNext->setProperty("whatsThis", QVariant(QObject::tr("This button is used to navigate to the next 1000 records set in the database view")));
-
-    buttonGoto->setText(QObject::tr("Go to:"));
-    buttonGoto->setProperty("toolTip", QVariant(QObject::tr("Click here to browse the specified record ")));
-    buttonGoto->setProperty("whatsThis", QVariant(QObject::tr("This button is used to navigate to the record number specied in the Go to: area.")));
-
-    editGoto->setText(QObject::tr("0"));
-    editGoto->setProperty("toolTip", QVariant(QObject::tr("Enter record number to browse")));
-    editGoto->setProperty("whatsThis", QVariant(QObject::tr("Type a record number in this area and click the Go to: button to display the record in the database view")));
-
-    mainTab->setTabText(mainTab->indexOf(browser), QObject::tr("&Browse Data"));
-    textLabel1_2->setText(QObject::tr("SQL string:"));
-
-    sqlTextEdit->setProperty("toolTip", QVariant(QObject::tr("Type SQL string here")));
-    sqlTextEdit->setProperty("whatsThis", QVariant(QObject::tr("Type the SQL query in this area, and press the button below to execute it. Results and error messages will be shown in the fields at the bottom of this form.")));
-
-    executeQueryButton->setText(QObject::tr("Execute query"));
-    executeQueryButton->setProperty("toolTip", QVariant(QObject::tr("Execute SQL query")));
-    executeQueryButton->setProperty("whatsThis", QVariant(QObject::tr("This button is used to execute the SQL query entered in the text area above.")));
-
-    textLabel2->setText(QObject::tr("Error message from database engine:"));
-
-    queryErrorLineEdit->setProperty("toolTip", QVariant(QObject::tr("Error messages")));
-    queryErrorLineEdit->setProperty("whatsThis", QVariant(QObject::tr("Messages returned from the database engine when the SQL query is executed are displayed in this area.")));
-
-    textLabel3->setText(QObject::tr("Data returned:"));
-
-    queryResultTableView->setProperty("toolTip", QVariant(QObject::tr("Query generated data")));
-    queryResultTableView->setProperty("whatsThis", QVariant(QObject::tr("This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.")));
-
-    mainTab->setTabText(mainTab->indexOf(query), QObject::tr("E&xecute SQL"));
-    //Toolbar->setLabel(QObject::tr("Toolbar"));
-    fileMenu->setTitle(QObject::tr("&File"));
-    importMenu->setTitle(QObject::tr("&Import"));
-    exportMenu->setTitle(QObject::tr("&Export"));
-    EditMenu->setTitle(QObject::tr("&Edit"));
-    ViewMenu->setTitle(QObject::tr("&View"));
-    PopupMenu->setTitle(QObject::tr("&Help"));
-} // retranslateUi
+    // Connect some more signals and slots
+    connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
+    connect(ui->sqlLogAction, SIGNAL(toggled(bool)), logWin, SLOT(setVisible(bool)));
+}
 
 /*
  *  Constructs a mainForm as a child of 'parent', with the
@@ -831,8 +79,10 @@ void MainWindow::retranslateUi()
  *
  */
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
     setupUi();
     setAcceptDrops(true);
 
@@ -845,17 +95,8 @@ MainWindow::MainWindow(QWidget* parent)
  */
 MainWindow::~MainWindow()
 {
+    delete ui;
     destroy();
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void MainWindow::languageChange()
-{
-    retranslateUi();
 }
 
 void MainWindow::init()
@@ -869,13 +110,11 @@ void MainWindow::init()
     recsPerView = 1000;
     recAtTop = 0;
     gotoValidator = new QIntValidator(0, 0, this);
-    editGoto->setValidator(gotoValidator);
+    ui->editGoto->setValidator(gotoValidator);
     gotoValidator->setRange ( 0, 0);
     resetBrowser();
     this->setWindowTitle(QApplication::applicationName());
     this->setWindowIcon( QPixmap( g_applicationIconName ) );
-    buttonNext->setEnabled(false);
-    buttonPrevious->setEnabled(false);
     updateRecentFileActions();
 
 
@@ -900,6 +139,9 @@ void MainWindow::init()
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
     logWin->comboLogType()->setCurrentIndex(logWin->comboLogType()->findText(settings.value("SQLLogDock/Log", "Application").toString()));
+
+    ui->sqlLogAction->setChecked(!logWin->isHidden());
+    ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 }
 
 void MainWindow::destroy()
@@ -973,7 +215,7 @@ void MainWindow::fileNew()
 //** Populate DbTree Structure
 void MainWindow::populateStructure()
 {
-    dbTreeWidget->model()->removeRows(0, dbTreeWidget->model()->rowCount());
+    ui->dbTreeWidget->model()->removeRows(0, ui->dbTreeWidget->model()->rowCount());
     if (!db.isOpen()){
         return;
     }
@@ -992,7 +234,7 @@ void MainWindow::populateStructure()
         tableItem->setText(1,  "table");
         tableItem->setText(3, it.value().getsql());
         tableItem->setIcon(0, QIcon(":/icons/table"));
-        dbTreeWidget->addTopLevelItem(tableItem);
+        ui->dbTreeWidget->addTopLevelItem(tableItem);
 
         //* Field Nodes
         fieldMap::ConstIterator fit;
@@ -1004,7 +246,7 @@ void MainWindow::populateStructure()
             fldItem->setIcon(0, QIcon(":/icons/field"));
         }
         // TODO make an options/setting autoexpand
-        dbTreeWidget->setItemExpanded(tableItem, true);
+        ui->dbTreeWidget->setItemExpanded(tableItem, true);
     }
     indexMap::ConstIterator it2;
     for ( it2 = db.idxmap.begin(); it2 != db.idxmap.end(); ++it2 ) {
@@ -1013,7 +255,7 @@ void MainWindow::populateStructure()
         idxItem->setText( 1, "index"  );
         idxItem->setText( 3, it2.value().getsql() );
         idxItem->setIcon(0, QIcon(":/icons/index"));
-        dbTreeWidget->addTopLevelItem(idxItem);
+        ui->dbTreeWidget->addTopLevelItem(idxItem);
     }
 }
 
@@ -1026,8 +268,8 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
 
     QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
     if (!db.browseTable(tablename, orderby)){
-        dataTable->setRowCount( 0 );
-        dataTable->setColumnCount( 0 );
+        ui->dataTable->setRowCount( 0 );
+        ui->dataTable->setColumnCount( 0 );
         QApplication::restoreOverrideCursor();
         if (findWin){
             findWin->resetFields(db.getTableFields(""));
@@ -1057,19 +299,19 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
 void MainWindow::resetBrowser()
 {
     recAtTop = 0;
-    QString sCurrentTable = comboBrowseTable->currentText();
-    comboBrowseTable->clear();
+    QString sCurrentTable = ui->comboBrowseTable->currentText();
+    ui->comboBrowseTable->clear();
     QStringList tab = db.getTableNames();
     if(!tab.isEmpty()) {
-        comboBrowseTable->addItems(tab);
+        ui->comboBrowseTable->addItems(tab);
     }
     setRecordsetLabel();
-    int pos = comboBrowseTable->findText(sCurrentTable);
+    int pos = ui->comboBrowseTable->findText(sCurrentTable);
     pos = pos == -1 ? 0 : pos;
-    comboBrowseTable->setCurrentIndex(pos);
+    ui->comboBrowseTable->setCurrentIndex(pos);
     curBrowseOrderByIndex = 1;
     curBrowseOrderByMode = ORDERMODE_ASC;
-    populateTable(comboBrowseTable->currentText());
+    populateTable(ui->comboBrowseTable->currentText());
 }
 
 void MainWindow::fileClose()
@@ -1132,9 +374,9 @@ void MainWindow::addRecord()
 
 void MainWindow::deleteRecord()
 {
-    if (dataTable->currentRow()!=-1){
-        int lastselected = dataTable->currentRow();
-        db.deleteRecord(dataTable->currentRow()+recAtTop);
+    if (ui->dataTable->currentRow()!=-1){
+        int lastselected = ui->dataTable->currentRow();
+        db.deleteRecord(ui->dataTable->currentRow()+recAtTop);
         populateTable(db.curBrowseTableName);
         int nextselected = lastselected ;
         if (nextselected > db.getRecordCount()){
@@ -1171,9 +413,9 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
     //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    dataTable->setRowCount(0);
-    dataTable->setColumnCount( db.browseFields.count() );
-    dataTable->setHorizontalHeaderLabels(db.browseFields);
+    ui->dataTable->setRowCount(0);
+    ui->dataTable->setColumnCount( db.browseFields.count() );
+    ui->dataTable->setHorizontalHeaderLabels(db.browseFields);
 
     rowList tab = db.browseRecs;
     int maxRecs = db.getRecordCount();
@@ -1184,7 +426,7 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 
     // qDebug("recsthisview= %d\n",recsThisView);
 
-    dataTable->setRowCount(recsThisView);
+    ui->dataTable->setRowCount(recsThisView);
 
     if ( recsThisView > 0 ) {
 
@@ -1196,7 +438,7 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
             //for ( int  = tab.at(recAtTop); rt !=tab.end(); ++rt )
         {
             rowLabel.setNum(recAtTop+rowNum+1);
-            dataTable->setVerticalHeaderItem(rowNum, new QTableWidgetItem( rowLabel ));
+            ui->dataTable->setVerticalHeaderItem(rowNum, new QTableWidgetItem( rowLabel ));
             colNum = 0;
             QStringList& rt = tab[i];
             for (int e = 1; e < rt.size(); ++e)
@@ -1209,7 +451,7 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
                 QTableWidgetItem* item = new QTableWidgetItem(content);
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
                 item->setToolTip(wrapText(content));
-                dataTable->setItem( rowNum, colNum, item);
+                ui->dataTable->setItem( rowNum, colNum, item);
                 colNum++;
                 //}
             }
@@ -1220,11 +462,11 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
     }
 
     if(!keepColumnWidths) {
-        for(int i = 0; i < dataTable->columnCount(); ++i)
+        for(int i = 0; i < ui->dataTable->columnCount(); ++i)
         {
-            dataTable->resizeColumnToContents(i);
-            if( dataTable->columnWidth(i) > 400 )
-                dataTable->setColumnWidth(i, 400);
+            ui->dataTable->resizeColumnToContents(i);
+            if( ui->dataTable->columnWidth(i) > 400 )
+                ui->dataTable->setColumnWidth(i, 400);
         }
     }
     //dataTable->clearSelection(true);
@@ -1238,10 +480,10 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 
 void MainWindow::selectTableLine(int lineToSelect)
 {
-    dataTable->clearSelection();
-    dataTable->selectRow(lineToSelect);
-    dataTable->setCurrentCell(lineToSelect, 0);
-    dataTable->scrollToItem(dataTable->itemAt(lineToSelect, 0));
+    ui->dataTable->clearSelection();
+    ui->dataTable->selectRow(lineToSelect);
+    ui->dataTable->setCurrentCell(lineToSelect, 0);
+    ui->dataTable->scrollToItem(ui->dataTable->itemAt(lineToSelect, 0));
 }
 
 void MainWindow::navigatePrevious()
@@ -1267,7 +509,7 @@ void MainWindow::navigateNext()
 
 void MainWindow::navigateGoto()
 {
-    QString typed = editGoto->text();
+    QString typed = ui->editGoto->text();
     bool ok;
     int dec = typed.toInt( &ok);
     if (dec==0) dec=1;
@@ -1275,13 +517,13 @@ void MainWindow::navigateGoto()
 
     recAtTop = ((dec-1)/recsPerView)*recsPerView;
     updateTableView(dec-recAtTop-1);
-    editGoto->setText(QString::number(dec,10));
+    ui->editGoto->setText(QString::number(dec,10));
 }
 
 void MainWindow::setRecordsetLabel()
 {
     if (db.getRecordCount()==0){
-        labelRecordset->setText("0 - 0 of 0");
+        ui->labelRecordset->setText("0 - 0 of 0");
     } else {
         QString label = QString::number(recAtTop+1,10);
         label.append(" - ");
@@ -1291,24 +533,24 @@ void MainWindow::setRecordsetLabel()
         label.append(QString::number(lastthisview,10));
         label.append(" of ");
         label.append(QString::number(db.getRecordCount(),10));
-        labelRecordset->setText(label);
+        ui->labelRecordset->setText(label);
     }
     gotoValidator->setRange ( 0, db.getRecordCount());
 
     if (db.getRecordCount()>1000){
         if (recAtTop>=1000) {
-            buttonPrevious->setEnabled(TRUE);
+            ui->buttonPrevious->setEnabled(TRUE);
         } else {
-            buttonPrevious->setEnabled(FALSE);
+            ui->buttonPrevious->setEnabled(FALSE);
         }
         if (db.getRecordCount()>=(recAtTop+1000)) {
-            buttonNext->setEnabled(TRUE);
+            ui->buttonNext->setEnabled(TRUE);
         } else {
-            buttonNext->setEnabled(FALSE);
+            ui->buttonNext->setEnabled(FALSE);
         }
     } else {
-        buttonNext->setEnabled(FALSE);
-        buttonPrevious->setEnabled(FALSE);
+        ui->buttonNext->setEnabled(FALSE);
+        ui->buttonPrevious->setEnabled(FALSE);
     }
 }
 
@@ -1333,12 +575,12 @@ void MainWindow::browseFind(bool open)
 
 void MainWindow::browseFindAway()
 {
-    buttonFind->toggle();
+    ui->buttonFind->toggle();
 }
 
 void MainWindow::browseRefresh()
 {
-    populateTable(comboBrowseTable->currentText(), true);
+    populateTable(ui->comboBrowseTable->currentText(), true);
 }
 
 void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
@@ -1452,8 +694,8 @@ void MainWindow::compact()
     db.open(db.curDBFilename);
     populateStructure();
     resetBrowser();
-    fileCloseAction->setEnabled(true);
-    fileCompactAction->setEnabled(true);
+    ui->fileCloseAction->setEnabled(true);
+    ui->fileCompactAction->setEnabled(true);
     QApplication::restoreOverrideCursor( );
 }
 
@@ -1517,7 +759,7 @@ void MainWindow::editTable()
 void MainWindow::deleteTablePopup()
 {
     // Get name of table to delete
-    QString table = dbTreeWidget->currentItem()->text(0);
+    QString table = ui->dbTreeWidget->currentItem()->text(0);
 
     // Ask user if he really wants to delete that table
     if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the table '%1'?\nAll data in the table will be lost.").arg(table),
@@ -1541,10 +783,10 @@ void MainWindow::editTablePopup()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
         return;
     }
-    if(!dbTreeWidget->selectionModel()->hasSelection()){
+    if(!ui->dbTreeWidget->selectionModel()->hasSelection()){
         return;
     }
-    QString tableToEdit =dbTreeWidget->currentItem()->text(0);
+    QString tableToEdit = ui->dbTreeWidget->currentItem()->text(0);
     qDebug(tableToEdit.toUtf8());
     //chooseTableForm * tableForm = new chooseTableForm( this, "choosetable", TRUE );
     //QStringList tablelist = db.getTableNames();
@@ -1597,7 +839,7 @@ void MainWindow::deleteIndex()
 
 void MainWindow::copy()
 {
-    QWidget * t =dataTable->cellWidget(dataTable->currentRow(), dataTable->currentColumn());
+    QWidget * t = ui->dataTable->cellWidget(ui->dataTable->currentRow(), ui->dataTable->currentColumn());
     if (t!=0){
         if (QString(t->metaObject()->className()) == "QLineEdit"){
             /*we are in edit mode*/
@@ -1607,14 +849,14 @@ void MainWindow::copy()
             }
         }
     }
-    if (editGoto->hasFocus())
-        editGoto->copy();
+    if (ui->editGoto->hasFocus())
+        ui->editGoto->copy();
 }
 
 
 void MainWindow::paste()
 {
-    QWidget * t =dataTable->cellWidget(dataTable->currentRow(), dataTable->currentColumn());
+    QWidget * t = ui->dataTable->cellWidget(ui->dataTable->currentRow(), ui->dataTable->currentColumn());
     if (t!=0){
         if ( QString(t->metaObject()->className()) == "QLineEdit" ){
             /*we are in edit mode*/
@@ -1623,8 +865,8 @@ void MainWindow::paste()
                 le->paste();}
         }
     }
-    if (editGoto->hasFocus())
-        editGoto->paste();
+    if (ui->editGoto->hasFocus())
+        ui->editGoto->paste();
 }
 
 
@@ -1653,20 +895,20 @@ void MainWindow::updateRecordText(int row, int col, QString newtext)
 
     QTableWidgetItem* item = new QTableWidgetItem(cv);
     item->setToolTip( wrapText(cv) );
-    dataTable->setItem( row - recAtTop, col, item);
+    ui->dataTable->setItem( row - recAtTop, col, item);
 
 }
 
 void MainWindow::logWinAway()
 {
-    sqlLogAction->toggle();
+    ui->sqlLogAction->toggle();
 }
 
 void MainWindow::editWinAway()
 {
     editWin->hide();
     activateWindow();
-    dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow - recAtTop, editWin->curCol, editWin->curRow- recAtTop, editWin->curCol), true);
+    ui->dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow - recAtTop, editWin->curCol, editWin->curRow- recAtTop, editWin->curCol), true);
 }
 
 
@@ -1698,7 +940,7 @@ void MainWindow::doubleClickTable( int row, int col )
 
 void MainWindow::executeQuery()
 {
-    QString query = sqlTextEdit->toPlainText().trimmed();
+    QString query = ui->sqlTextEdit->toPlainText().trimmed();
     if (query.isEmpty())
     {
         QMessageBox::information( this, QApplication::applicationName(), "Query string is empty" );
@@ -1756,8 +998,8 @@ void MainWindow::executeQuery()
         }else{
             lastErrorMessage = QString (sqlite3_errmsg(db._db));
         }
-        queryErrorLineEdit->setText(lastErrorMessage);
-        queryResultTableView->resizeColumnsToContents();
+        ui->queryErrorLineEdit->setText(lastErrorMessage);
+        ui->queryResultTableView->resizeColumnsToContents();
 
         if(err!=SQLITE_OK) break;
     } while( tail && *tail != 0 );
@@ -1895,8 +1137,8 @@ void MainWindow::exportTableToCSV()
 
 void MainWindow::dbState( bool dirty )
 {
-    fileSaveAction->setEnabled(dirty);
-    fileRevertAction->setEnabled(dirty);
+    ui->fileSaveAction->setEnabled(dirty);
+    ui->fileRevertAction->setEnabled(dirty);
 }
 
 
@@ -2027,44 +1269,44 @@ void MainWindow::updatePreferences()
 
 //** Db Tree Context Menu
 void MainWindow::on_tree_context_menu(const QPoint &qPoint){
-    if( !dbTreeWidget->selectionModel()->hasSelection() ){
+    if( !ui->dbTreeWidget->selectionModel()->hasSelection() ){
         return;
     }
-    QTreeWidgetItem *cItem = dbTreeWidget->currentItem();
+    QTreeWidgetItem *cItem = ui->dbTreeWidget->currentItem();
 
     if(cItem->text(1) == "table"){
-        editDeleteTableActionPopup->setDisabled(false);
-        editModifyTableActionPopup->setDisabled(false);
-        popupTableMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+        ui->editDeleteTableActionPopup->setDisabled(false);
+        ui->editModifyTableActionPopup->setDisabled(false);
+        popupTableMenu->exec( ui->dbTreeWidget->mapToGlobal(qPoint) );
 
     }else if(cItem->text(1) == "field"){
-        popupFieldMenu->exec( dbTreeWidget->mapToGlobal(qPoint) );
+        popupFieldMenu->exec( ui->dbTreeWidget->mapToGlobal(qPoint) );
     }
 }
 //** Tree selection changed
 void MainWindow::on_tree_selection_changed(){
-    if (!dbTreeWidget->selectionModel()->hasSelection()){
-        editDeleteTableActionPopup->setEnabled(false);
-        editModifyTableActionPopup->setEnabled(false);
-        editAddFieldActionPopup->setEnabled(false);
-        editModifyFieldActionPopup->setEnabled(false);
-        editDeleteFieldActionPopup->setEnabled(false);
+    if (!ui->dbTreeWidget->selectionModel()->hasSelection()){
+        ui->editDeleteTableActionPopup->setEnabled(false);
+        ui->editModifyTableActionPopup->setEnabled(false);
+        ui->editAddFieldActionPopup->setEnabled(false);
+        ui->editModifyFieldActionPopup->setEnabled(false);
+        ui->editDeleteFieldActionPopup->setEnabled(false);
         return;
     }
 
-    if(dbTreeWidget->currentItem()->text(1) == "table"){
-        editDeleteTableActionPopup->setEnabled(true);
-        editModifyTableActionPopup->setEnabled(true);
-        editAddFieldActionPopup->setEnabled(true);
-        editModifyFieldActionPopup->setEnabled(false);
-        editDeleteFieldActionPopup->setEnabled(false);
+    if(ui->dbTreeWidget->currentItem()->text(1) == "table"){
+        ui->editDeleteTableActionPopup->setEnabled(true);
+        ui->editModifyTableActionPopup->setEnabled(true);
+        ui->editAddFieldActionPopup->setEnabled(true);
+        ui->editModifyFieldActionPopup->setEnabled(false);
+        ui->editDeleteFieldActionPopup->setEnabled(false);
 
-    }else if(dbTreeWidget->currentItem()->text(1) == "field"){
-        editAddFieldActionPopup->setEnabled(false);
-        editDeleteTableActionPopup->setEnabled(false);
-        editModifyTableActionPopup->setEnabled(false);
-        editModifyFieldActionPopup->setEnabled(true);
-        editDeleteFieldActionPopup->setEnabled(true);
+    }else if(ui->dbTreeWidget->currentItem()->text(1) == "field"){
+        ui->editAddFieldActionPopup->setEnabled(false);
+        ui->editDeleteTableActionPopup->setEnabled(false);
+        ui->editModifyTableActionPopup->setEnabled(false);
+        ui->editModifyFieldActionPopup->setEnabled(true);
+        ui->editDeleteFieldActionPopup->setEnabled(true);
     }
 }
 
@@ -2077,7 +1319,7 @@ void MainWindow::on_add_field(){
     //QTreeWidgetItem *item = dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
     //qDebug(item->text(2));
-    fieldForm->setInitialValues(true, dbTreeWidget->currentItem()->text(0), "", "TEXT");
+    fieldForm->setInitialValues(true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
     fieldForm->setDB(this->db);
     if (fieldForm->exec())
     {
@@ -2089,7 +1331,7 @@ void MainWindow::on_add_field(){
         populateStructure();
         //       QTreeWidgetItem *parentItem = dbTreeWidget->findItems()
         return;
-        QTreeWidgetItem *newItem = new QTreeWidgetItem(dbTreeWidget->currentItem());
+        QTreeWidgetItem *newItem = new QTreeWidgetItem(ui->dbTreeWidget->currentItem());
         newItem->setText(0, fieldForm->field_name);
         newItem->setText(1, "field");
         newItem->setText(2, fieldForm->field_type);
@@ -2097,10 +1339,10 @@ void MainWindow::on_add_field(){
 }
 void MainWindow::on_edit_field(){
     qDebug("YES");
-    if( !dbTreeWidget->currentItem() ){
+    if( !ui->dbTreeWidget->currentItem() ){
         return;
     }
-    QTreeWidgetItem *item = dbTreeWidget->currentItem();
+    QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
     qDebug(item->text(2).toUtf8());
     fieldForm->setInitialValues(false, "TABLE_NAME", item->text(0), item->text(2));
@@ -2184,15 +1426,15 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::activateFields(bool enable)
 {
-    fileCloseAction->setEnabled(enable);
-    fileCompactAction->setEnabled(enable);
-    editCreateTableAction->setEnabled(enable);
-    editDeleteTableAction->setEnabled(enable);
-    editModifyTableAction->setEnabled(enable);
-    editCreateIndexAction->setEnabled(enable);
-    editDeleteIndexAction->setEnabled(enable);
+    ui->fileCloseAction->setEnabled(enable);
+    ui->fileCompactAction->setEnabled(enable);
+    ui->editCreateTableAction->setEnabled(enable);
+    ui->editDeleteTableAction->setEnabled(enable);
+    ui->editModifyTableAction->setEnabled(enable);
+    ui->editCreateIndexAction->setEnabled(enable);
+    ui->editDeleteIndexAction->setEnabled(enable);
 
-    executeQueryButton->setEnabled(enable);
+    ui->executeQueryButton->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -2200,9 +1442,9 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
     curBrowseOrderByIndex = logicalindex + 2;
     curBrowseOrderByMode = curBrowseOrderByMode == ORDERMODE_ASC ? ORDERMODE_DESC : ORDERMODE_ASC;
-    populateTable(comboBrowseTable->currentText(), true);
+    populateTable(ui->comboBrowseTable->currentText(), true);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
-    dataTable->setCurrentCell(0, logicalindex);
+    ui->dataTable->setCurrentCell(0, logicalindex);
 }
