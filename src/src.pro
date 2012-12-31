@@ -26,7 +26,6 @@ HEADERS += \
     exporttablecsvform.h \
     findform.h \
     importcsvform.h \
-    renametableform.h \
     preferencesform.h \
     mainwindow.h \
     createtabledialog.h \
@@ -50,7 +49,6 @@ SOURCES += \
     exporttablecsvform.cpp \
     findform.cpp \
     importcsvform.cpp \
-    renametableform.cpp \
     preferencesform.cpp \
     mainwindow.cpp \
     createtabledialog.cpp \

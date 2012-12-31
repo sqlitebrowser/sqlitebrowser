@@ -1,8 +1,8 @@
 #include "edittableform.h"
 #include "ui_edittableform.h"
-#include "renametableform.h"
 #include "editfieldform.h"
 #include <QMessageBox>
+#include <QPushButton>
 
 /*
  *  Constructs a editTableForm as a child of 'parent', with the
