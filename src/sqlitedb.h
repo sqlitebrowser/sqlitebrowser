@@ -105,6 +105,7 @@ public:
 
     bool renameTable(QString from_table, QString to_table);
     bool createColumn(QString table, QString field, QString type);
+    bool renameColumn(QString tablename, QString from, QString to, QString type);
 
     QStringList getTableFields(const QString & tablename);
     QStringList getTableTypes(const QString & tablename);

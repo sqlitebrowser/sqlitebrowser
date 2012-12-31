@@ -437,6 +437,15 @@ bool DBBrowserDB::createColumn( QString tablename, QString fieldname, QString fi
     return executeSQL(sql);
 }
 
+bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QString type) {
+    qDebug("rename column");
+    // TODO change column name and type. SQLite doesn't support natively...
+    //QString sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);
+    //qDebug(sql.toUtf8());
+    //return executeSQL(sql);
+    return true;
+}
+
 bool DBBrowserDB::renameTable(QString from_table, QString to_table){
     qDebug("renameTable column");
     return true;

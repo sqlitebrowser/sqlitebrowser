@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>editFieldForm</class>
+ <widget class="QDialog" name="editFieldForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>214</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Field name:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="buddy">
+        <cstring>nameLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nameLineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Field type:</string>
+       </property>
+       <property name="buddy">
+        <cstring>radioTEXT</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QRadioButton" name="radioTEXT">
+         <property name="text">
+          <string>TEXT</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">groupRadioTypes</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioNUMERIC">
+         <property name="text">
+          <string>NUMERIC</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">groupRadioTypes</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioBLOB">
+         <property name="text">
+          <string>BLOB</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">groupRadioTypes</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioINTPRIMARY">
+         <property name="text">
+          <string>INTEGER PRIMARY KEY</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">groupRadioTypes</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioCustom">
+         <property name="text">
+          <string>Custom</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">groupRadioTypes</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="txtCustomType">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>nameLineEdit</tabstop>
+  <tabstop>radioTEXT</tabstop>
+  <tabstop>radioNUMERIC</tabstop>
+  <tabstop>radioBLOB</tabstop>
+  <tabstop>radioINTPRIMARY</tabstop>
+  <tabstop>radioCustom</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>editFieldForm</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>editFieldForm</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>311</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioCustom</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txtCustomType</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>137</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nameLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>editFieldForm</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>354</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>446</x>
+     <y>33</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txtCustomType</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>editFieldForm</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>29</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>groupRadioTypes</sender>
+   <signal>buttonClicked(int)</signal>
+   <receiver>editFieldForm</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>checkInput()</slot>
+ </slots>
+ <buttongroups>
+  <buttongroup name="groupRadioTypes"/>
+ </buttongroups>
+</ui>
