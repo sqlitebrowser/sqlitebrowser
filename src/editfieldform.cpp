@@ -89,11 +89,10 @@ void editFieldForm::accept()
 void editFieldForm::checkInput()
 {
     ui->nameLineEdit->setText(ui->nameLineEdit->text().trimmed());
-    ui->txtCustomType->setText(ui->txtCustomType->text().trimmed());
     bool valid = true;
     if(ui->nameLineEdit->text().isEmpty() || ui->nameLineEdit->text().contains(" "))
         valid = false;
-    if(ui->radioCustom->isChecked() && (ui->txtCustomType->text().isEmpty() || ui->txtCustomType->text().contains(" ")))
+    if(ui->radioCustom->isChecked() && ui->txtCustomType->text().isEmpty())
             valid = false;
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
