@@ -82,4 +82,5 @@ FORMS += \
     dialogabout.ui \
     preferencesform.ui \
     mainwindow.ui \
-    editfieldform.ui
+    editfieldform.ui \
+    edittableform.ui
