@@ -40,10 +40,10 @@ void editFieldForm::setInitialValues(DBBrowserDB *db, bool is_new, QString table
 
     this->is_new = is_new;
     setWindowIcon(QIcon(is_new ? ":/icons/field_add" : ":/icons/field_edit"));
-    setWindowTitle(is_new
-                   ? QString("New Field in '%1'").arg(table_name)
-                   : QString("Change Field in '%1'").arg(table_name)
-                );
+    if(table == "")
+        setWindowTitle(tr("Add new field to new table"));
+    else
+        setWindowTitle(is_new ? tr("New Field in '%1'").arg(table_name) : tr("Change Field in '%1'").arg(table_name));
 
     QList<QAbstractButton *> buttons =  ui->groupRadioTypes->buttons();
     bool custom = true;
@@ -69,14 +69,19 @@ void editFieldForm::accept()
     field_type = ui->groupRadioTypes->checkedButton()->property("field_type").toString();
     if(field_type == "__custom__")
         field_type = ui->txtCustomType->text();
-    bool ok;
-    if(is_new)
-        ok = pdb->createColumn(table_name, field_name, field_type);
-    else
-        ok = pdb->renameColumn(table_name, original_field_name, field_name, field_type);
-    if(!ok){
-        qDebug(pdb->lastErrorMessage.toUtf8());
-        return;
+
+    // Only change DB when dialog was not opened for a newly created table, i.e. table name is ""
+    if(table_name != "")
+    {
+        bool ok;
+        if(is_new)
+            ok = pdb->createColumn(table_name, field_name, field_type);
+        else
+            ok = pdb->renameColumn(table_name, original_field_name, field_name, field_type);
+        if(!ok){
+            qDebug(pdb->lastErrorMessage.toUtf8());
+            return;
+        }
     }
     QDialog::accept();
 }
