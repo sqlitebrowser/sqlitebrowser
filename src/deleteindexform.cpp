@@ -1,10 +1,5 @@
 #include "deleteindexform.h"
-
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
-#include "qmessagebox.h"
+#include <QMessageBox>
 /*
  *  Constructs a deleteIndexForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.

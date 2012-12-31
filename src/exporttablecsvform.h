@@ -1,31 +1,14 @@
 #ifndef EXPORTTABLECSVFORM_H
 #define EXPORTTABLECSVFORM_H
 
-#include <qvariant.h>
-
-/* QT_BEGIN_NAMESPACE and QT_END_NAMESPACE weren't introduced into QT right away... */
-#ifndef QT_BEGIN_NAMESPACE
-#define QT_BEGIN_NAMESPACE
-#endif
-
-#ifndef QT_END_NAMESPACE
-#define QT_END_NAMESPACE
-#endif
-
-#include <QtCore/QVariant>
-#include <QtGui/QAction>
 #include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QVBoxLayout>
-
-QT_BEGIN_NAMESPACE
 
 class Ui_exportTableCSVForm
 {
@@ -124,8 +107,6 @@ public:
 namespace Ui {
     class exportTableCSVForm: public Ui_exportTableCSVForm {};
 } // namespace Ui
-
-QT_END_NAMESPACE
 
 class exportTableCSVForm : public QDialog, public Ui::exportTableCSVForm
 {

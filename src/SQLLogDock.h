@@ -3,7 +3,6 @@
 
 #include <QTextEdit>
 #include <QStackedWidget>
-#include <QtGui/QAction>
 #include <QtGui/QComboBox>
 #include <QtGui/QDockWidget>
 #include <QtGui/QHBoxLayout>

@@ -1,11 +1,7 @@
 #include "importcsvform.h"
-
-#include <qvariant.h>
-#include <qmessagebox.h>
-#include <qapplication.h>
-#include <qimage.h>
-#include <qpixmap.h>
+#include <QMessageBox>
 #include <QProgressDialog>
+#include "sqlitedb.h"
 
 /*
  *  Constructs a importCSVForm as a child of 'parent', with the

@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-
 #include <QApplication>
 
 #if defined(Q_WS_MAC)

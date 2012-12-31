@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sqlite_source/sqlite3.h"
-
 /*following routines extracted from shell.c for dump support*/
 
 /*

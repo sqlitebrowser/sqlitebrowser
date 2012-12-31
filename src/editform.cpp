@@ -1,13 +1,9 @@
 #include "editform.h"
-
 #include <QTextStream>
-#include <qvariant.h>
-#include <qmessagebox.h>
-#include <qimage.h>
-#include <qpixmap.h>
+#include <QMessageBox>
 #include <QFileDialog>
-
 #include "sqlitedb.h"
+
 /*
  *  Constructs a editForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.

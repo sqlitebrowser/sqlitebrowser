@@ -1,10 +1,6 @@
 #include "deletetableform.h"
+#include <QMessageBox>
 
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
-#include "qmessagebox.h"
 /*
  *  Constructs a deleteTableForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.

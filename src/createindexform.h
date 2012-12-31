@@ -1,35 +1,18 @@
 #ifndef CREATEINDEXFORM_H
 #define CREATEINDEXFORM_H
 
-#include <qvariant.h>
-
-/* QT_BEGIN_NAMESPACE and QT_END_NAMESPACE weren't introduced into QT right away... */
-#ifndef QT_BEGIN_NAMESPACE
-#define QT_BEGIN_NAMESPACE
-#endif
-
-#ifndef QT_END_NAMESPACE
-#define QT_END_NAMESPACE
-#endif
-
 #include <QGroupBox>
-#include <QtCore/QVariant>
-#include <QtGui/QAction>
 #include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
 #include <QtGui/QDialog>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QVBoxLayout>
 #include "sqlitedb.h"
-
-QT_BEGIN_NAMESPACE
 
 class Ui_createIndexForm
 {
@@ -249,8 +232,6 @@ public:
 namespace Ui {
     class createIndexForm: public Ui_createIndexForm {};
 } // namespace Ui
-
-QT_END_NAMESPACE
 
 class createIndexForm : public QDialog, public Ui::createIndexForm
 {

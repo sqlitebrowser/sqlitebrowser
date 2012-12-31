@@ -1,10 +1,9 @@
 #include "sqlitedb.h"
 #include "sqlbrowser_util.h"
 #include <stdlib.h>
-#include <qregexp.h>
-#include <qimage.h>
-#include <qfile.h>
-#include <qmessagebox.h>
+#include <QRegExp>
+#include <QFile>
+#include <QMessageBox>
 #include <QProgressDialog>
 #include "SQLLogDock.h"
 #include <QApplication>

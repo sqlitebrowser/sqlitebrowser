@@ -1,41 +1,18 @@
 #ifndef CREATETABLEFORM_H
 #define CREATETABLEFORM_H
 
-#include <qvariant.h>
-
-/* QT_BEGIN_NAMESPACE and QT_END_NAMESPACE weren't introduced into QT right away... */
-#ifndef QT_BEGIN_NAMESPACE
-#define QT_BEGIN_NAMESPACE
-#endif
-
-#ifndef QT_END_NAMESPACE
-#define QT_END_NAMESPACE
-#endif
-
-#include <QtCore/QVariant>
-
 #include <QtGui/QGroupBox>
-
 #include <QtGui/QTreeWidget>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QHeaderView>
-
-#include <QtGui/QAction>
 #include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
-//#include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
 
-#include "sqlitedb.h"
-
-QT_BEGIN_NAMESPACE
+class DBBrowserDB;
 
 class Ui_createTableForm
 {
@@ -207,8 +184,6 @@ public:
 namespace Ui {
     class createTableForm: public Ui_createTableForm {};
 } // namespace Ui
-
-QT_END_NAMESPACE
 
 class createTableForm : public QDialog, public Ui::createTableForm
 {

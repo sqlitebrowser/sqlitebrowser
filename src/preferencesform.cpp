@@ -1,12 +1,7 @@
 #include "preferencesform.h"
 #include "ui_preferencesform.h"
-
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
-#include "qdir.h"
-#include "qsettings.h"
+#include <QDir>
+#include <QSettings>
 #include <QFileDialog>
 #include "sqlitedb.h"
 
@@ -34,23 +29,10 @@ preferencesForm::~preferencesForm()
     delete ui;
 }
 
-/****************************************************************************
-** ui.h extension file, included from the uic-generated form implementation.
-**
-** If you want to add, delete, or rename functions or slots, use
-** Qt Designer to update this file, preserving your code.
-**
-** You should not define a constructor or destructor in this file.
-** Instead, write your code in functions called init() and destroy().
-** These will automatically be called by the form's constructor and
-** destructor.
-*****************************************************************************/
-
 void preferencesForm::init()
 {
     loadSettings();
 }
-
 
 void preferencesForm::defaultDataChanged( int which )
 {
@@ -73,7 +55,6 @@ void preferencesForm::defaultTextChanged( int which )
 
 }
 
-
 void preferencesForm::encodingChanged( int which )
 {
     if (which==1) {
@@ -82,7 +63,6 @@ void preferencesForm::encodingChanged( int which )
         defaultencoding = QString("UTF8");
     }
 }
-
 
 void preferencesForm::chooseLocation()
 {
@@ -98,7 +78,6 @@ void preferencesForm::chooseLocation()
 	ui->locationEdit->setText(defaultlocation);
     }
 }
-
 
 void preferencesForm::loadSettings()
 {
@@ -139,7 +118,6 @@ void preferencesForm::loadSettings()
     
     ui->locationEdit->setText(defaultlocation);
 }
-
 
 void preferencesForm::saveSettings()
 {

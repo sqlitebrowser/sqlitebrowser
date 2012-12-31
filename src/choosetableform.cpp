@@ -1,9 +1,5 @@
 #include "choosetableform.h"
 
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
 /*
  *  Constructs a chooseTableForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.

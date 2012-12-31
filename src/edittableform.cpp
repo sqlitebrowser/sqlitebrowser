@@ -3,6 +3,7 @@
 #include "editfieldform.h"
 #include <QMessageBox>
 #include <QPushButton>
+#include "sqlitedb.h"
 
 /*
  *  Constructs a editTableForm as a child of 'parent', with the

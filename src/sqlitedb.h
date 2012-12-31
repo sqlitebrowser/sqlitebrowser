@@ -1,9 +1,8 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qobject.h>
+#include <QStringList>
+#include <QMap>
 #include "sqlite3.h"
 #include "sqlitebrowsertypes.h"
 

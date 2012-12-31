@@ -1,20 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include <QtGui/QFileDialog>
 #include <QSettings>
 #include <QFile>
 #include <QApplication>
-#include <QVariant>
-#include <QImage>
-#include <QPixmap>
 #include <QTextStream>
 #include <QWhatsThis>
 #include <QMessageBox>
 #include <QUrl>
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
-
 #include "createtableform.h"
 #include "createindexform.h"
 #include "deletetableform.h"

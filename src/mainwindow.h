@@ -2,7 +2,6 @@
 #define MAINFORM_H
 
 #include <QMainWindow>
-#include <QIntValidator>
 #include "sqlitedb.h"
 
 #define ORDERMODE_ASC 0
@@ -14,6 +13,7 @@ class editForm;
 class findForm;
 class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
+class QIntValidator;
 
 namespace Ui {
 class MainWindow;

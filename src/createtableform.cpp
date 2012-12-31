@@ -1,10 +1,5 @@
 #include "createtableform.h"
-
-#include <qvariant.h>
-#include <qimage.h>
-#include <qpixmap.h>
-
-#include "qmessagebox.h"
+#include <QMessageBox>
 #include "editfieldform.h"
 /*
  *  Constructs a createTableForm as a child of 'parent', with the

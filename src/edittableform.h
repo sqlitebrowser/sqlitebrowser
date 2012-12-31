@@ -2,7 +2,7 @@
 #define EDITTABLEFORM_H
 
 #include <QDialog>
-#include "sqlitedb.h"
+class DBBrowserDB;
 
 namespace Ui {
 class editTableForm;
