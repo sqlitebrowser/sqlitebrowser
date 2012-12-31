@@ -215,7 +215,7 @@ class createTableForm : public QDialog, public Ui::createTableForm
     Q_OBJECT
 
 public:
-    createTableForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
+    createTableForm( DBBrowserDB *db = 0, QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~createTableForm();
 
     QString createStatement;
@@ -231,6 +231,7 @@ protected slots:
 
 private:
     void init();
+    DBBrowserDB *pdb;
 
 };
 

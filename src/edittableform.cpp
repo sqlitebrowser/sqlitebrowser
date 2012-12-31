@@ -64,20 +64,23 @@ void editTableForm::populateFields()
 
 void editTableForm::accept()
 {
-    // Rename table
-    QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
-    modified = true;
-    QString newName = ui->editTableName->text();
-    QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(curTable, newName);
-    if (!pdb->executeSQL(sql)){
-        QApplication::restoreOverrideCursor();
-        QString error("Error renaming table. Message from database engine:\n");
-        error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
-        QMessageBox::warning( this, QApplication::applicationName(), error );
-    } else {
-        QApplication::restoreOverrideCursor();
-        QDialog::accept();
+    // Rename table if necessary
+    if(ui->editTableName->text() != curTable)
+    {
+        QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
+        modified = true;
+        QString newName = ui->editTableName->text();
+        QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(curTable, newName);
+        if (!pdb->executeSQL(sql)){
+            QApplication::restoreOverrideCursor();
+            QString error("Error renaming table. Message from database engine:\n");
+            error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
+            QMessageBox::warning( this, QApplication::applicationName(), error );
+        } else {
+            QApplication::restoreOverrideCursor();
+        }
     }
+    QDialog::accept();
 }
 
 void editTableForm::checkInput()
@@ -97,14 +100,14 @@ void editTableForm::editField()
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     editFieldForm * fieldForm = new editFieldForm( this );
     fieldForm->setModal(true);
-    fieldForm->setInitialValues(false, curTable, item->text(0), item->text(1));
+    fieldForm->setInitialValues(pdb, false, curTable, item->text(0), item->text(1));
     if (fieldForm->exec())
     {
         modified = true;
         //do the sql rename here
         //qDebug(fieldForm->name + fieldForm->type);
         item->setText(0,fieldForm->field_name);
-        item->setText(1,fieldForm->field_name);
+        item->setText(1,fieldForm->field_type);
     }
     //not until nested transaction are supported
     //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
@@ -205,7 +208,7 @@ void editTableForm::addField()
 {
     editFieldForm * addForm = new editFieldForm( this );
     addForm->setModal(true);
-    addForm->setInitialValues(true, curTable, QString(""),QString(""));
+    addForm->setInitialValues(pdb, true, curTable, QString(""),QString(""));
     if (addForm->exec())
     {
         modified = true;

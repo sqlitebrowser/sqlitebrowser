@@ -16,8 +16,6 @@ public:
     editFieldForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~editFieldForm();
 
-    void setDB(DBBrowserDB &db);
-
     QString table_name;
     QString field_name;
     QString field_type;
@@ -25,12 +23,12 @@ public:
     bool is_new;
 
 public slots:
-    virtual void setInitialValues( bool is_new, QString table, QString fld_name, QString fld_type );
+    virtual void setInitialValues( DBBrowserDB *db, bool is_new, QString table, QString fld_name, QString fld_type );
     virtual void accept();
     virtual void checkInput();
 
 private:
-    DBBrowserDB pdb;
+    DBBrowserDB *pdb;
     Ui::editFieldForm *ui;
 };
 

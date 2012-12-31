@@ -642,7 +642,7 @@ void MainWindow::createTable()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
-    createTableForm * tableForm = new createTableForm( this );
+    createTableForm * tableForm = new createTableForm(&db, this);
     tableForm->setModal(true);
     if ( tableForm->exec() ) {
         if (!db.executeSQL(tableForm->createStatement)){
@@ -1319,8 +1319,7 @@ void MainWindow::on_add_field(){
     //QTreeWidgetItem *item = dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
     //qDebug(item->text(2));
-    fieldForm->setInitialValues(true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
-    fieldForm->setDB(this->db);
+    fieldForm->setInitialValues(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
     if (fieldForm->exec())
     {
         //modified = true;
@@ -1345,8 +1344,7 @@ void MainWindow::on_edit_field(){
     QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
     qDebug(item->text(2).toUtf8());
-    fieldForm->setInitialValues(false, "TABLE_NAME", item->text(0), item->text(2));
-    fieldForm->setDB(this->db);
+    fieldForm->setInitialValues(&db, false, "TABLE_NAME", item->text(0), item->text(2));
     if (fieldForm->exec())
     {
         //modified = true;

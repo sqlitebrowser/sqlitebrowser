@@ -32,7 +32,7 @@ public slots:
 protected:
     QStringList types;
     QStringList fields;
-    DBBrowserDB * pdb;
+    DBBrowserDB *pdb;
 
 private:
     void init();

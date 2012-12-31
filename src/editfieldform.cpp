@@ -31,13 +31,9 @@ editFieldForm::~editFieldForm()
     delete ui;
 }
 
-void editFieldForm::setDB(DBBrowserDB &db)
+void editFieldForm::setInitialValues(DBBrowserDB *db, bool is_new, QString table, QString fld_name, QString fld_type)
 {
-    this->pdb = db;
-}
-
-void editFieldForm::setInitialValues(bool is_new, QString table, QString fld_name, QString fld_type)
-{
+    pdb = db;
     original_field_name = QString(fld_name);
     table_name = table;
     ui->nameLineEdit->setText(fld_name);
@@ -75,14 +71,14 @@ void editFieldForm::accept()
         field_type = ui->txtCustomType->text();
     bool ok;
     if(is_new)
-        ok = pdb.createColumn(table_name, field_name, field_type);
+        ok = pdb->createColumn(table_name, field_name, field_type);
     else
-        ok = pdb.renameColumn(table_name, original_field_name, field_name, field_type);
+        ok = pdb->renameColumn(table_name, original_field_name, field_name, field_type);
     if(!ok){
-        qDebug(pdb.lastErrorMessage.toUtf8());
+        qDebug(pdb->lastErrorMessage.toUtf8());
         return;
     }
-    accept();
+    QDialog::accept();
 }
 
 void editFieldForm::checkInput()

@@ -13,8 +13,9 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-createTableForm::createTableForm(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+createTableForm::createTableForm(DBBrowserDB *db, QWidget* parent, Qt::WindowFlags fl)
+    : QDialog(parent, fl),
+      pdb(db)
 {
     setupUi(this);
 
@@ -115,7 +116,7 @@ void createTableForm::addField()
     //TODO maybe embedd locally
     editFieldForm * addForm = new editFieldForm( this );
     addForm->setModal(true);
-    addForm->setInitialValues(true, QString(""), QString(""),QString(""));
+    addForm->setInitialValues(pdb, true, QString(""), QString(""),QString(""));
     if (addForm->exec())
     {
         QTreeWidgetItem *newItem = new QTreeWidgetItem();
