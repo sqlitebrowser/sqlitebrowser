@@ -25,12 +25,8 @@ private:
     QVector<HighlightingRule> highlightingRules;
     QVector<HighlightingRule> tableNameRules;
 
-    QRegExp commentStartExpression;
-    QRegExp commentEndExpression;
-
     QTextCharFormat keywordFormat;
     QTextCharFormat singleLineCommentFormat;
-    QTextCharFormat multiLineCommentFormat;
     QTextCharFormat quotationFormat;
     QTextCharFormat tableFormat;
 };
