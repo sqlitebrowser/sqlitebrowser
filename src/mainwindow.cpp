@@ -953,11 +953,10 @@ void MainWindow::executeQuery()
 
 void MainWindow::mainTabSelected(int tabindex)
 {
-    if ((tabindex == 0)||(tabindex == 1))
-    {
+    if(tabindex == 0)
         populateStructure();
+    else if(tabindex == 1)
         resetBrowser();
-    }
 }
 
 void MainWindow::importTableFromCSV()
