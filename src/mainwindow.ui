@@ -35,6 +35,7 @@
        <addaction name="editDeleteTableActionPopup"/>
        <addaction name="separator"/>
        <addaction name="editAddFieldActionPopup"/>
+       <addaction name="editModifyFieldActionPopup"/>
        <addaction name="editDeleteFieldActionPopup"/>
       </widget>
      </item>
@@ -835,6 +836,9 @@
    </property>
   </action>
   <action name="editModifyFieldActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
      <normaloff>:/icons/field_edit</normaloff>:/icons/field_edit</iconset>
