@@ -267,7 +267,7 @@
           <string>Type a record number in this area and click the Go to: button to display the record in the database view</string>
          </property>
          <property name="text">
-          <string>0</string>
+          <string>1</string>
          </property>
         </widget>
        </item>

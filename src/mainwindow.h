@@ -48,8 +48,6 @@ public:
     editForm * editWin;
     QClipboard * clipboard;
     findForm * findWin;
-    int recAtTop;
-    int recsPerView;
     QIntValidator * gotoValidator;
     QString defaultlocation;
 
@@ -122,9 +120,9 @@ public slots:
 protected:
     DBBrowserDB db;
 
-protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 protected slots:
     virtual void deleteTablePopup();

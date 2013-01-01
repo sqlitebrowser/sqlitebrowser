@@ -10,6 +10,7 @@
 #include <QUrl>
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
+#include <QScrollBar>
 #include "createtableform.h"
 #include "createindexform.h"
 #include "deletetableform.h"
@@ -66,6 +67,7 @@ void MainWindow::setupUi()
     // Connect some more signals and slots
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->sqlLogAction, SIGNAL(toggled(bool)), logWin, SLOT(setVisible(bool)));
+    connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
 }
 
 /*
@@ -96,17 +98,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    
     findWin = 0;
     editWin = 0;
 
     clipboard = QApplication::clipboard();
 
-    recsPerView = 1000;
-    recAtTop = 0;
     gotoValidator = new QIntValidator(0, 0, this);
     ui->editGoto->setValidator(gotoValidator);
-    gotoValidator->setRange ( 0, 0);
     resetBrowser();
     this->setWindowTitle(QApplication::applicationName());
     this->setWindowIcon( QPixmap( g_applicationIconName ) );
@@ -274,7 +272,6 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
     }
 
     if (mustreset){
-        recAtTop = 0;
         updateTableView(0, keepColumnWidths);
         if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
     } else {
@@ -293,7 +290,6 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
 
 void MainWindow::resetBrowser()
 {
-    recAtTop = 0;
     QString sCurrentTable = ui->comboBrowseTable->currentText();
     ui->comboBrowseTable->clear();
     QStringList tab = db.getTableNames();
@@ -355,8 +351,7 @@ void MainWindow::addRecord()
     if (db.addRecord()){
         populateTable(db.curBrowseTableName);
         //added record will be the last one in view
-        recAtTop = ((db.getRecordCount()-1)/recsPerView)*recsPerView;
-        updateTableView(db.getRecordCount()-recAtTop-1);
+        updateTableView(db.getRecordCount()-1);
     }else{
         QMessageBox::information( this, QApplication::applicationName(),
                                   "Error adding record, make sure a table is selected.\n\n"
@@ -371,7 +366,7 @@ void MainWindow::deleteRecord()
 {
     if (ui->dataTable->currentRow()!=-1){
         int lastselected = ui->dataTable->currentRow();
-        db.deleteRecord(ui->dataTable->currentRow()+recAtTop);
+        db.deleteRecord(ui->dataTable->currentRow());
         populateTable(db.curBrowseTableName);
         int nextselected = lastselected ;
         if (nextselected > db.getRecordCount()){
@@ -405,42 +400,29 @@ QString wrapText(const QString& text)
 
 void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 {
-    //  qDebug("line to select value is %d, rowAttop = %d",lineToSelect, recAtTop);
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    ui->dataTable->setRowCount(0);
+    ui->dataTable->setRowCount(db.getRecordCount());
     ui->dataTable->setColumnCount( db.browseFields.count() );
     ui->dataTable->setHorizontalHeaderLabels(db.browseFields);
 
     rowList tab = db.browseRecs;
     int maxRecs = db.getRecordCount();
-    int recsThisView = maxRecs - recAtTop;
+    gotoValidator->setRange(0, maxRecs);
 
-    if (recsThisView>recsPerView)
-        recsThisView = recsPerView;
-
-    // qDebug("recsthisview= %d\n",recsThisView);
-
-    ui->dataTable->setRowCount(recsThisView);
-
-    if ( recsThisView > 0 ) {
+    if ( maxRecs > 0 ) {
 
         int rowNum = 0;
         int colNum = 0;
-        //int dcols =0;
         QString rowLabel;
-        for (int i = recAtTop; i < tab.size(); ++i)
-            //for ( int  = tab.at(recAtTop); rt !=tab.end(); ++rt )
+        for (int i = 0; i < tab.size(); ++i)
         {
-            rowLabel.setNum(recAtTop+rowNum+1);
+            rowLabel.setNum(rowNum+1);
             ui->dataTable->setVerticalHeaderItem(rowNum, new QTableWidgetItem( rowLabel ));
             colNum = 0;
             QStringList& rt = tab[i];
             for (int e = 1; e < rt.size(); ++e)
-                //for ( QStringList::Iterator it = (*rt).begin(); it != (*rt).end(); ++it )
             {
-                //skip first one (the rowid)
-                //  if (it!=(*rt).begin()){
                 QString& content = rt[e];
 
                 QTableWidgetItem* item = new QTableWidgetItem(content);
@@ -448,12 +430,10 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
                 item->setToolTip(wrapText(content));
                 ui->dataTable->setItem( rowNum, colNum, item);
                 colNum++;
-                //}
             }
             rowNum++;
-            if (rowNum==recsThisView) break;
+            if (rowNum==maxRecs) break;
         }
-
     }
 
     if(!keepColumnWidths) {
@@ -464,9 +444,7 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
                 ui->dataTable->setColumnWidth(i, 400);
         }
     }
-    //dataTable->clearSelection(true);
     if (lineToSelect!=-1){
-        //qDebug("inside selection");
         selectTableLine(lineToSelect);
     }
     setRecordsetLabel();
@@ -483,22 +461,19 @@ void MainWindow::selectTableLine(int lineToSelect)
 
 void MainWindow::navigatePrevious()
 {
-    int nextFirstRec = recAtTop - recsPerView;
-    if (nextFirstRec  >= 0 ) {
-        recAtTop = nextFirstRec;
-        updateTableView(-1);
-    }
+    int curRow = ui->dataTable->currentRow();
+    curRow -= 100;
+    if(curRow < 0) curRow = 0;
+    updateTableView(curRow);
 }
 
 
 void MainWindow::navigateNext()
 {
-    int nextFirstRec = recAtTop + recsPerView;
-    //qDebug("called navigatenext, nextFirstRec=%d\n",nextFirstRec);
-    if (nextFirstRec < db.getRecordCount() ) {
-        recAtTop = nextFirstRec;
-        updateTableView(-1);
-    }
+    int curRow = ui->dataTable->currentRow();
+    curRow += 100;
+    if(curRow >= ui->dataTable->rowCount()) curRow = ui->dataTable->rowCount()-1;
+    updateTableView(curRow);
 }
 
 
@@ -510,43 +485,19 @@ void MainWindow::navigateGoto()
     if (dec==0) dec=1;
     if (dec>db.getRecordCount()) dec = db.getRecordCount();
 
-    recAtTop = ((dec-1)/recsPerView)*recsPerView;
-    updateTableView(dec-recAtTop-1);
+    updateTableView(dec-1);
     ui->editGoto->setText(QString::number(dec,10));
 }
 
 void MainWindow::setRecordsetLabel()
 {
-    if (db.getRecordCount()==0){
-        ui->labelRecordset->setText("0 - 0 of 0");
-    } else {
-        QString label = QString::number(recAtTop+1,10);
-        label.append(" - ");
-        int lastrec = db.getRecordCount();
-        int lastthisview = recAtTop+recsPerView;
-        if (lastthisview > lastrec) lastthisview = lastrec;
-        label.append(QString::number(lastthisview,10));
-        label.append(" of ");
-        label.append(QString::number(db.getRecordCount(),10));
-        ui->labelRecordset->setText(label);
-    }
-    gotoValidator->setRange ( 0, db.getRecordCount());
+    int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
+    int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
+    int total = ui->dataTable->rowCount();
+    if(to == -2)
+        to = total;
 
-    if (db.getRecordCount()>1000){
-        if (recAtTop>=1000) {
-            ui->buttonPrevious->setEnabled(TRUE);
-        } else {
-            ui->buttonPrevious->setEnabled(FALSE);
-        }
-        if (db.getRecordCount()>=(recAtTop+1000)) {
-            ui->buttonNext->setEnabled(TRUE);
-        } else {
-            ui->buttonNext->setEnabled(FALSE);
-        }
-    } else {
-        ui->buttonNext->setEnabled(FALSE);
-        ui->buttonPrevious->setEnabled(FALSE);
-    }
+    ui->labelRecordset->setText(QString("%1 - %2 of %3").arg(from).arg(to).arg(total));
 }
 
 void MainWindow::browseFind(bool open)
@@ -627,8 +578,7 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
 
 void MainWindow::showrecord( int dec )
 {
-    recAtTop = ((dec-1)/recsPerView)*recsPerView;
-    updateTableView(dec-recAtTop-1);
+    updateTableView(dec);
 }
 
 void MainWindow::createTable()
@@ -890,7 +840,7 @@ void MainWindow::updateRecordText(int row, int col, QString newtext)
 
     QTableWidgetItem* item = new QTableWidgetItem(cv);
     item->setToolTip( wrapText(cv) );
-    ui->dataTable->setItem( row - recAtTop, col, item);
+    ui->dataTable->setItem(row, col, item);
 
 }
 
@@ -903,7 +853,7 @@ void MainWindow::editWinAway()
 {
     editWin->hide();
     activateWindow();
-    ui->dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow - recAtTop, editWin->curCol, editWin->curRow- recAtTop, editWin->curCol), true);
+    ui->dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow, editWin->curCol, editWin->curRow, editWin->curCol), true);
 }
 
 
@@ -927,7 +877,7 @@ void MainWindow::doubleClickTable( int row, int col )
         return;
     }
 
-    int realRow = row + recAtTop;
+    int realRow = row;
 
     editText(realRow , col);
 }
@@ -1426,7 +1376,8 @@ void MainWindow::activateFields(bool enable)
     ui->editModifyTableAction->setEnabled(enable);
     ui->editCreateIndexAction->setEnabled(enable);
     ui->editDeleteIndexAction->setEnabled(enable);
-
+    ui->buttonNext->setEnabled(enable);
+    ui->buttonPrevious->setEnabled(enable);
     ui->executeQueryButton->setEnabled(enable);
 }
 
@@ -1440,4 +1391,9 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
     ui->dataTable->setCurrentCell(0, logicalindex);
+}
+
+void MainWindow::resizeEvent(QResizeEvent*)
+{
+    setRecordsetLabel();
 }
