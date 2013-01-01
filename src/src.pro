@@ -17,7 +17,6 @@ HEADERS += \
     sqlite_source/sqlite3.h \
     choosetableform.h \
     createindexform.h \
-    createtableform.h \
     deleteindexform.h \
     deletetableform.h \
     editfieldform.h \
@@ -28,7 +27,6 @@ HEADERS += \
     importcsvform.h \
     preferencesform.h \
     mainwindow.h \
-    createtabledialog.h \
     SQLLogDock.h \
     sqlitesyntaxhighlighter.h \
     dialogabout.h
@@ -40,7 +38,6 @@ SOURCES += \
     sqlite_source/sqlite3.c \
     choosetableform.cpp \
     createindexform.cpp \
-    createtableform.cpp \
     deleteindexform.cpp \
     deletetableform.cpp \
     editfieldform.cpp \
@@ -51,7 +48,6 @@ SOURCES += \
     importcsvform.cpp \
     preferencesform.cpp \
     mainwindow.cpp \
-    createtabledialog.cpp \
     SQLLogDock.cpp \
     sqlitesyntaxhighlighter.cpp \
     dialogabout.cpp
@@ -76,7 +72,6 @@ mac {
 RESOURCES += icons/icons.qrc
 
 FORMS += \
-    createtabledialog.ui \
     dialogabout.ui \
     preferencesform.ui \
     mainwindow.ui \

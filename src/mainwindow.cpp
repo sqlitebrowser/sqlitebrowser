@@ -11,7 +11,6 @@
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
 #include <QScrollBar>
-#include "createtableform.h"
 #include "createindexform.h"
 #include "deletetableform.h"
 #include "deleteindexform.h"
@@ -575,7 +574,6 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
     QApplication::restoreOverrideCursor();
 }
 
-
 void MainWindow::showrecord( int dec )
 {
     updateTableView(dec);
@@ -587,20 +585,15 @@ void MainWindow::createTable()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
-    createTableForm * tableForm = new createTableForm(&db, this);
+
+    editTableForm * tableForm = new editTableForm(this);
+    tableForm->setActiveTable(&db, "");
     tableForm->setModal(true);
-    if ( tableForm->exec() ) {
-        if (!db.executeSQL(tableForm->createStatement)){
-            QString error = "Error: could not create the table. Message from database engine:  ";
-            error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
-        } else {
-            populateStructure();
-            resetBrowser();
-        }
+    if(tableForm->exec()) {
+        populateStructure();
+        resetBrowser();
     }
 }
-
 
 void MainWindow::createIndex()
 {

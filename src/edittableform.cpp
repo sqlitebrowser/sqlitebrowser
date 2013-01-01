@@ -39,8 +39,10 @@ void editTableForm::setActiveTable(DBBrowserDB * thedb, QString tableName)
 {
     pdb = thedb;
     curTable = tableName;
-    populateFields();
+    if(curTable != "")
+        populateFields();
     ui->editTableName->setText(curTable);
+    checkInput();
 }
 
 void editTableForm::populateFields()
@@ -65,22 +67,49 @@ void editTableForm::populateFields()
 
 void editTableForm::accept()
 {
-    // Rename table if necessary
-    if(ui->editTableName->text() != curTable)
+    // Are we editing an already existing table or designing a new one? In the first case there is a table name set,
+    // in the latter the current table name is empty
+    if(curTable == "")
     {
-        QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
+        // Creation of new table
+
+        // Build SQL statement from what the use entered
+        QString sql = QString("CREATE TABLE `%1` (").arg(ui->editTableName->text());
+        for(int i=0;i<ui->treeWidget->topLevelItemCount();i++)
+            sql.append(QString("%1 %2,").arg(ui->treeWidget->topLevelItem(i)->text(0)).arg(ui->treeWidget->topLevelItem(i)->text(1)));
+        sql.remove(sql.count() - 1, 1);     // Remove last comma
+        sql.append(");");
+
+        // Execute it
         modified = true;
-        QString newName = ui->editTableName->text();
-        QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(curTable, newName);
         if (!pdb->executeSQL(sql)){
-            QApplication::restoreOverrideCursor();
-            QString error("Error renaming table. Message from database engine:\n");
+            QString error("Error creating table. Message from database engine:\n");
             error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
             QMessageBox::warning( this, QApplication::applicationName(), error );
-        } else {
-            QApplication::restoreOverrideCursor();
+            return;
+        }
+    } else {
+        // Editing of old table
+
+        // Rename table if necessary
+        if(ui->editTableName->text() != curTable)
+        {
+            QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
+            modified = true;
+            QString newName = ui->editTableName->text();
+            QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(curTable, newName);
+            if (!pdb->executeSQL(sql)){
+                QApplication::restoreOverrideCursor();
+                QString error("Error renaming table. Message from database engine:\n");
+                error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
+                QMessageBox::warning( this, QApplication::applicationName(), error );
+                return;
+            } else {
+                QApplication::restoreOverrideCursor();
+            }
         }
     }
+
     QDialog::accept();
 }
 
@@ -101,12 +130,10 @@ void editTableForm::editField()
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     editFieldForm * fieldForm = new editFieldForm( this );
     fieldForm->setModal(true);
-    fieldForm->setInitialValues(pdb, false, curTable, item->text(0), item->text(1));
+    fieldForm->setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
     if (fieldForm->exec())
     {
         modified = true;
-        //do the sql rename here
-        //qDebug(fieldForm->name + fieldForm->type);
         item->setText(0,fieldForm->field_name);
         item->setText(1,fieldForm->field_type);
     }
@@ -212,16 +239,11 @@ void editTableForm::addField()
     addForm->setInitialValues(pdb, true, curTable, QString(""),QString(""));
     if (addForm->exec())
     {
-        modified = true;
-
-        QTreeWidgetItem *tbitem = new QTreeWidgetItem();
+        QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
         tbitem->setText( 0, addForm->field_name);
-        tbitem->setText( 1, addForm->field_name);
-        //do the sql creation here
+        tbitem->setText( 1, addForm->field_type);
         modified = true;
-        //do the sql rename here
-        //qDebug(fieldForm->name + fieldForm->type);
-        QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
+        ui->treeWidget->addTopLevelItem(tbitem);
 
     }
     // Q3ListViewItemIterator it( fieldListView );
@@ -317,7 +339,7 @@ void editTableForm::addField()
     //  while ( it.current() ) {
     //   item = it.current();
     //   sql.append(item->text(0));
-    ///    sql.append(" ");
+    //   sql.append(" ");
     //   sql.append(item->text(1));
     //    if (item->nextSibling() != 0)
     //    {
