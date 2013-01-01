@@ -725,19 +725,9 @@ void MainWindow::editTablePopup()
         return;
     }
     QString tableToEdit = ui->dbTreeWidget->currentItem()->text(0);
-    qDebug(tableToEdit.toUtf8());
-    //chooseTableForm * tableForm = new chooseTableForm( this, "choosetable", TRUE );
-    //QStringList tablelist = db.getTableNames();
-    //if (tablelist.empty()){
-    //    QMessageBox::information( this, applicationName, "There are no tables to edit in this database." );
-    //    return;
-    //}
-    //tableForm->populateOptions( tablelist );
-    //if ( tableForm->exec() ) {
-    //statement.append(tableForm->option);
+
     editTableForm * edTableForm = new editTableForm( this );
     edTableForm->setModal(true);
-    //send table name ? or handle it all from here?
     edTableForm->setActiveTable(&db, tableToEdit);
     edTableForm->exec();
     //check modified status
@@ -746,7 +736,6 @@ void MainWindow::editTablePopup()
         populateStructure();
         resetBrowser();
     }
-    // }
 }
 
 void MainWindow::deleteIndex()
@@ -1249,13 +1238,11 @@ void MainWindow::on_tree_selection_changed(){
 
 
 void MainWindow::on_add_field(){
-    qDebug("YES");
     //if( !dbTreeWidget->currentItem() ){
     //   return;
     //}
     //QTreeWidgetItem *item = dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
-    //qDebug(item->text(2));
     fieldForm->setInitialValues(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
     if (fieldForm->exec())
     {
@@ -1274,7 +1261,6 @@ void MainWindow::on_add_field(){
     }
 }
 void MainWindow::on_edit_field(){
-    qDebug("YES");
     if( !ui->dbTreeWidget->currentItem() ){
         return;
     }
