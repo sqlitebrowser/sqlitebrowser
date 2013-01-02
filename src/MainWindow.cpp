@@ -1280,8 +1280,7 @@ void MainWindow::on_edit_field(){
     }
     QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
-    qDebug(item->text(2).toUtf8());
-    fieldForm->setInitialValues(&db, false, "TABLE_NAME", item->text(0), item->text(2));
+    fieldForm->setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
     if (fieldForm->exec())
     {
         //modified = true;
