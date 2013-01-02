@@ -19,6 +19,12 @@
         <file alias="table">table.png</file>
         <file alias="index">tag_blue.png</file>
         <file alias="refresh">view-refresh.png</file>
+        <file alias="view_delete">picture_delete.png</file>
+        <file alias="view">picture.png</file>
+        <file alias="view_create">picture_add.png</file>
+        <file alias="trigger">script.png</file>
+        <file alias="trigger_create">script_add.png</file>
+        <file alias="trigger_delete">script_delete.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>

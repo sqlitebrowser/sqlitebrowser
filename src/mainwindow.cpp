@@ -214,8 +214,6 @@ void MainWindow::populateStructure()
     db.updateSchema();
     QStringList tblnames = db.getTableNames();
     sqliteHighlighter->setTableNames(tblnames);
-//    logWin->userSqliteHighlighter()->setTableNames(tblnames);
-//    logWin->appSqliteHighlighter()->setTableNames(tblnames);
     tableMap::ConstIterator it;
 
     for ( it = db.tbmap.begin(); it != db.tbmap.end(); ++it ) {
@@ -240,14 +238,30 @@ void MainWindow::populateStructure()
         // TODO make an options/setting autoexpand
         ui->dbTreeWidget->setItemExpanded(tableItem, true);
     }
-    indexMap::ConstIterator it2;
+    objectMap::ConstIterator it2;
     for ( it2 = db.idxmap.begin(); it2 != db.idxmap.end(); ++it2 ) {
-        QTreeWidgetItem *idxItem = new QTreeWidgetItem();
-        idxItem->setText( 0, it2.value().getname() );
-        idxItem->setText( 1, "index"  );
-        idxItem->setText( 3, it2.value().getsql() );
-        idxItem->setIcon(0, QIcon(":/icons/index"));
-        ui->dbTreeWidget->addTopLevelItem(idxItem);
+        QTreeWidgetItem *item = new QTreeWidgetItem();
+        item->setText( 0, it2.value().getname() );
+        item->setText( 1, "index"  );
+        item->setText( 3, it2.value().getsql() );
+        item->setIcon(0, QIcon(":/icons/index"));
+        ui->dbTreeWidget->addTopLevelItem(item);
+    }
+    for ( it2 = db.viewmap.begin(); it2 != db.viewmap.end(); ++it2 ) {
+        QTreeWidgetItem *item = new QTreeWidgetItem();
+        item->setText( 0, it2.value().getname() );
+        item->setText( 1, "view"  );
+        item->setText( 3, it2.value().getsql() );
+        item->setIcon(0, QIcon(":/icons/view"));
+        ui->dbTreeWidget->addTopLevelItem(item);
+    }
+    for ( it2 = db.trgmap.begin(); it2 != db.trgmap.end(); ++it2 ) {
+        QTreeWidgetItem *item = new QTreeWidgetItem();
+        item->setText( 0, it2.value().getname() );
+        item->setText( 1, "trigger"  );
+        item->setText( 3, it2.value().getsql() );
+        item->setIcon(0, QIcon(":/icons/trigger"));
+        ui->dbTreeWidget->addTopLevelItem(item);
     }
 }
 

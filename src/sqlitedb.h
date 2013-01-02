@@ -24,10 +24,9 @@ enum
 static QString g_sApplicationNameShort = QString("sqlitebrowser");
 static QString g_applicationIconName = QString(":/oldimages/icon16");
 
-
 typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMap<QString, class DBBrowserTable> tableMap;
-typedef QMap<QString, class DBBrowserIndex> indexMap;
+typedef QMap<QString, class DBBrowserObject> objectMap;
 typedef QMap<int, int> rowIdMap;
 
 typedef QList<QStringList> rowList;
@@ -47,11 +46,11 @@ private:
     QString type;
 };
 
-class DBBrowserIndex
+class DBBrowserObject
 {
 public:
-    DBBrowserIndex() : name( "" ) { }
-    DBBrowserIndex( const QString& wname,const QString& wsql )
+    DBBrowserObject() : name( "" ) { }
+    DBBrowserObject( const QString& wname,const QString& wsql )
         : name( wname), sql( wsql )
     { }
     QString getname() const { return name; }
@@ -60,7 +59,6 @@ private:
     QString name;
     QString sql;
 };
-
 
 class DBBrowserTable
 {
@@ -128,7 +126,9 @@ public:
     QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);
 
     tableMap tbmap;
-    indexMap idxmap;
+    objectMap idxmap;
+    objectMap viewmap;
+    objectMap trgmap;
     rowIdMap idmap;
 
     rowList browseRecs;

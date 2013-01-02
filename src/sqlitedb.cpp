@@ -218,6 +218,8 @@ void DBBrowserDB::close (){
     }
     _db = 0;
     idxmap.clear();
+    trgmap.clear();
+    viewmap.clear();
     tbmap.clear();
     idmap.clear();
     browseRecs.clear();
@@ -446,7 +448,7 @@ bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QStr
 }
 
 bool DBBrowserDB::renameTable(QString from_table, QString to_table){
-    qDebug("renameTable column");
+    qDebug("renameTable");
     return true;
 }
 
@@ -555,8 +557,8 @@ QStringList DBBrowserDB::getTableNames()
 
 QStringList DBBrowserDB::getIndexNames()
 {
-    indexMap::Iterator it;
-    indexMap tmap = idxmap;
+    objectMap::Iterator it;
+    objectMap tmap = idxmap;
     QStringList res;
 
     for ( it = tmap.begin(); it != tmap.end(); ++it ) {
@@ -623,32 +625,42 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
 
 void DBBrowserDB::updateSchema( )
 {
-    // qDebug ("Getting list of tables");
     sqlite3_stmt *vm;
     const char *tail;
     int err=0;
 
     idxmap.clear();
     tbmap.clear();
+    viewmap.clear();
+    trgmap.clear();
 
     lastErrorMessage = QString("no error");
-    QString statement = "SELECT name, sql "
-            "FROM sqlite_master "
-            "WHERE type='table' ;";
+    QString statement = "SELECT type, name, sql FROM sqlite_master;";
 
     err=sqlite3_prepare(_db, (const char *) statement.toUtf8(),statement.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
         while ( sqlite3_step(vm) == SQLITE_ROW ){
-            QString  val1, val2;
+            QString  val1, val2, val3;
             val1 = QString((const char *) sqlite3_column_text(vm, 0));
             val2 = QString((const char *) sqlite3_column_text(vm, 1));
-            tbmap[val1] = DBBrowserTable(GetDecodedQString(val1), GetDecodedQString(val2));
+            val3 = QString((const char *) sqlite3_column_text(vm, 2));
+
+            if(val1 == "table")
+                tbmap[val2] = DBBrowserTable(GetDecodedQString(val2), GetDecodedQString(val3));
+            else if(val1 == "index")
+                idxmap[val2] = DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3));
+            else if(val1 == "view")
+                viewmap[val2] = DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3));
+            else if(val1 == "trigger")
+                trgmap[val2] = DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3));
+            else
+                qDebug("unknown object type %s", val1.toStdString().c_str());
         }
         sqlite3_finalize(vm);
     }else{
-        qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
+        qDebug ("could not get list of db objects: %d, %s",err,sqlite3_errmsg(_db));
     }
     qDebug(sqlite3_errmsg(_db));
 
@@ -682,25 +694,6 @@ void DBBrowserDB::updateSchema( )
         } else{
             lastErrorMessage = QString ("could not get types");
         }
-    }
-    statement = "SELECT name, sql "
-            "FROM sqlite_master "
-            "WHERE type='index' ";
-    /*"ORDER BY name;"*/
-    //finally get indices
-    err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
-                        &vm, &tail);
-    logSQL(statement, kLogMsg_App);
-    if (err == SQLITE_OK){
-        while ( sqlite3_step(vm) == SQLITE_ROW ){
-            QString  val1, val2;
-            val1 = QString((const char *) sqlite3_column_text(vm, 0));
-            val2 = QString((const char *) sqlite3_column_text(vm, 1));
-            idxmap[val1] = DBBrowserIndex(GetDecodedQString(val1),GetDecodedQString(val2));
-        }
-        sqlite3_finalize(vm);
-    }else{
-        lastErrorMessage = QString ("could not get list of indices");
     }
 }
 
