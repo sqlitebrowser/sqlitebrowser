@@ -431,8 +431,6 @@
     <addaction name="separator"/>
     <addaction name="editCreateIndexAction"/>
     <addaction name="editDeleteIndexAction"/>
-    <addaction name="separator"/>
-    <addaction name="editPreferencesAction"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -440,6 +438,8 @@
     </property>
     <addaction name="sqlLogAction"/>
     <addaction name="viewDBToolbarAction"/>
+    <addaction name="separator"/>
+    <addaction name="viewPreferencesAction"/>
    </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">
@@ -718,7 +718,7 @@
     <string>Open the Delete Index wizard, where you can select a database index to be dropped.</string>
    </property>
   </action>
-  <action name="editPreferencesAction">
+  <action name="viewPreferencesAction">
    <property name="text">
     <string>&amp;Preferences</string>
    </property>
@@ -1434,7 +1434,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>editPreferencesAction</sender>
+   <sender>viewPreferencesAction</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>openPreferences()</slot>
