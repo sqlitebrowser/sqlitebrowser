@@ -1483,6 +1483,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>editDeleteFieldActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_delete_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -1512,7 +1528,6 @@
   <slot>createTable()</slot>
   <slot>deleteTable()</slot>
   <slot>editTable()</slot>
-  <slot>deleteTablePopup()</slot>
   <slot>editTablePopup()</slot>
   <slot>on_add_field()</slot>
   <slot>on_edit_field()</slot>
@@ -1523,5 +1538,6 @@
   <slot>on_tree_selection_changed()</slot>
   <slot>fileNew()</slot>
   <slot>helpAbout()</slot>
+  <slot>on_delete_field()</slot>
  </slots>
 </ui>

@@ -1217,20 +1217,26 @@ void MainWindow::on_add_field(){
     }
 }
 void MainWindow::on_edit_field(){
-    if( !ui->dbTreeWidget->currentItem() ){
+    if(!ui->dbTreeWidget->currentItem())
         return;
-    }
-    QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
+
+    // TODO
+    QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support editing columns yet."));
+    /*QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
     editFieldForm *fieldForm = new editFieldForm( this );
     fieldForm->setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
     if (fieldForm->exec())
     {
-        //modified = true;
-        //do the sql rename here
-        //qDebug(fieldForm->name + fieldForm->type);
         item->setText(0,fieldForm->field_name);
         item->setText(2,fieldForm->field_type);
-    }
+    }*/
+}
+void MainWindow::on_delete_field(){
+    if(!ui->dbTreeWidget->currentItem())
+        return;
+
+    // TODO
+    QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support the deletion of columns yet."));
 }
 
 void MainWindow::openRecentFile()
