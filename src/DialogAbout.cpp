@@ -1,5 +1,5 @@
-#include "dialogabout.h"
-#include "ui_dialogabout.h"
+#include "DialogAbout.h"
+#include "ui_DialogAbout.h"
 #include "sqlite_source/sqlite3.h"
 
 DialogAbout::DialogAbout(QWidget *parent) :

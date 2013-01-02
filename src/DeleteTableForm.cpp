@@ -1,13 +1,14 @@
-#include "deleteindexform.h"
+#include "DeleteTableForm.h"
 #include <QMessageBox>
+
 /*
- *  Constructs a deleteIndexForm as a child of 'parent', with the
+ *  Constructs a deleteTableForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  *
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-deleteIndexForm::deleteIndexForm(QWidget* parent, Qt::WindowFlags fl)
+deleteTableForm::deleteTableForm(QWidget* parent, Qt::WindowFlags fl)
     : QDialog(parent, fl)
 {
     setupUi(this);
@@ -17,7 +18,7 @@ deleteIndexForm::deleteIndexForm(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-deleteIndexForm::~deleteIndexForm()
+deleteTableForm::~deleteTableForm()
 {
     // no need to delete child widgets, Qt does it all for us
 }
@@ -26,18 +27,18 @@ deleteIndexForm::~deleteIndexForm()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void deleteIndexForm::languageChange()
+void deleteTableForm::languageChange()
 {
     retranslateUi(this);
 }
 
-void deleteIndexForm::confirmDelete()
+void deleteTableForm::confirmDelete()
 {
-    QString msg = "Are you sure you want to delete index ";
+    QString msg = "Are you sure you want to delete table ";
     msg.append(comboOptions->currentText());
-    msg.append("?");
+    msg.append("? \n All data in the table will be lost");
 
-    if (QMessageBox::warning( this, QApplication::applicationName(),
+     if (QMessageBox::warning( this, QApplication::applicationName(),
        msg,
         QMessageBox::Yes | QMessageBox::Default,
         QMessageBox::No | QMessageBox::Escape )
@@ -47,7 +48,7 @@ void deleteIndexForm::confirmDelete()
     }
 }
 
-void deleteIndexForm::populateOptions(QStringList entries)
+void deleteTableForm::populateOptions(QStringList entries)
 {
     comboOptions->clear();
     comboOptions->addItems(entries);

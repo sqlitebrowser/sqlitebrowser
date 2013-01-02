@@ -1,7 +1,7 @@
 #include "SQLLogDock.h"
 #include <QScrollBar>
 #include "sqlitedb.h"
-#include "sqlitesyntaxhighlighter.h"
+#include "SQLiteSyntaxHighlighter.h"
 
 /*
  *  Constructs a sqlLogForm as a child of 'parent', with the

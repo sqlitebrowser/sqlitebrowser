@@ -1,5 +1,5 @@
-#include "preferencesform.h"
-#include "ui_preferencesform.h"
+#include "PreferencesForm.h"
+#include "ui_PreferencesForm.h"
 #include <QDir>
 #include <QSettings>
 #include <QFileDialog>

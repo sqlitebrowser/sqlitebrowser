@@ -15,42 +15,42 @@ HEADERS += \
     sqlitedb.h \
     sqlbrowser_util.h \
     sqlite_source/sqlite3.h \
-    choosetableform.h \
-    createindexform.h \
-    deleteindexform.h \
-    deletetableform.h \
-    editfieldform.h \
-    editform.h \
-    edittableform.h \
-    exporttablecsvform.h \
-    findform.h \
-    importcsvform.h \
-    preferencesform.h \
-    mainwindow.h \
     SQLLogDock.h \
-    sqlitesyntaxhighlighter.h \
-    dialogabout.h
+    ChooseTableForm.h \
+    CreateIndexForm.h \
+    DeleteIndexForm.h \
+    DeleteTableForm.h \
+    DialogAbout.h \
+    EditFieldForm.h \
+    EditForm.h \
+    EditTableForm.h \
+    ExportTableCSVForm.h \
+    FindForm.h \
+    ImportCSVForm.h \
+    MainWindow.h \
+    PreferencesForm.h \
+    SQLiteSyntaxHighlighter.h
 
 SOURCES += \
-    browsermain.cpp \
     sqlitedb.cpp \
     sqlbrowser_util.c \
     sqlite_source/sqlite3.c \
-    choosetableform.cpp \
-    createindexform.cpp \
-    deleteindexform.cpp \
-    deletetableform.cpp \
-    editfieldform.cpp \
-    editform.cpp \
-    edittableform.cpp \
-    exporttablecsvform.cpp \
-    findform.cpp \
-    importcsvform.cpp \
-    preferencesform.cpp \
-    mainwindow.cpp \
     SQLLogDock.cpp \
-    sqlitesyntaxhighlighter.cpp \
-    dialogabout.cpp
+    main.cpp \
+    ChooseTableForm.cpp \
+    CreateIndexForm.cpp \
+    DeleteIndexForm.cpp \
+    DeleteTableForm.cpp \
+    DialogAbout.cpp \
+    EditFieldForm.cpp \
+    EditForm.cpp \
+    EditTableForm.cpp \
+    ExportTableCSVForm.cpp \
+    FindForm.cpp \
+    ImportCSVForm.cpp \
+    MainWindow.cpp \
+    PreferencesForm.cpp \
+    SQLiteSyntaxHighlighter.cpp
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
@@ -72,8 +72,8 @@ mac {
 RESOURCES += icons/icons.qrc
 
 FORMS += \
-    dialogabout.ui \
-    preferencesform.ui \
-    mainwindow.ui \
-    editfieldform.ui \
-    edittableform.ui
+    DialogAbout.ui \
+    EditFieldForm.ui \
+    EditTableForm.ui \
+    MainWindow.ui \
+    PreferencesForm.ui

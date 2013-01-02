@@ -1,5 +1,5 @@
-#include "editfieldform.h"
-#include "ui_editfieldform.h"
+#include "EditFieldForm.h"
+#include "ui_EditFieldForm.h"
 #include "sqlitedb.h"
 #include <QPushButton>
 

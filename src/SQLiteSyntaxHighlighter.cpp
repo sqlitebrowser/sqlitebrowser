@@ -1,4 +1,4 @@
-#include "sqlitesyntaxhighlighter.h"
+#include "SQLiteSyntaxHighlighter.h"
 
 SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
     QSyntaxHighlighter(parent)

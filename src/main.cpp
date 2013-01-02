@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include <QApplication>
 
 #if defined(Q_WS_MAC)

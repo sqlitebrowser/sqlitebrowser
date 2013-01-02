@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
 #include <QtGui/QFileDialog>
 #include <QSettings>
 #include <QFile>
@@ -11,20 +11,20 @@
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
 #include <QScrollBar>
-#include "createindexform.h"
-#include "deletetableform.h"
-#include "deleteindexform.h"
-#include "dialogabout.h"
-#include "choosetableform.h"
-#include "edittableform.h"
-#include "editfieldform.h"
-#include "importcsvform.h"
-#include "exporttablecsvform.h"
-#include "preferencesform.h"
-#include "editform.h"
-#include "findform.h"
+#include "CreateIndexForm.h"
+#include "DeleteIndexForm.h"
+#include "DeleteTableForm.h"
+#include "DialogAbout.h"
+#include "ChooseTableForm.h"
+#include "EditTableForm.h"
+#include "EditFieldForm.h"
+#include "ImportCSVForm.h"
+#include "ExportTableCSVForm.h"
+#include "PreferencesForm.h"
+#include "EditForm.h"
+#include "FindForm.h"
 #include "SQLLogDock.h"
-#include "sqlitesyntaxhighlighter.h"
+#include "SQLiteSyntaxHighlighter.h"
 
 void MainWindow::setupUi()
 {

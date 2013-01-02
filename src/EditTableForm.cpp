@@ -1,6 +1,6 @@
-#include "edittableform.h"
-#include "ui_edittableform.h"
-#include "editfieldform.h"
+#include "EditTableForm.h"
+#include "ui_EditTableForm.h"
+#include "EditFieldForm.h"
 #include <QMessageBox>
 #include <QPushButton>
 #include "sqlitedb.h"

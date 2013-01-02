@@ -1,4 +1,4 @@
-#include "createindexform.h"
+#include "CreateIndexForm.h"
 #include <QMessageBox>
 /*
  *  Constructs a createIndexForm as a child of 'parent', with the

@@ -1,4 +1,4 @@
-#include "choosetableform.h"
+#include "ChooseTableForm.h"
 
 /*
  *  Constructs a chooseTableForm as a child of 'parent', with the

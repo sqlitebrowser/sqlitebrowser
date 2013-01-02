@@ -1,4 +1,4 @@
-#include "findform.h"
+#include "FindForm.h"
 
 /*
  *  Constructs a findForm as a child of 'parent', with the

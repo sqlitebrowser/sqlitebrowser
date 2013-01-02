@@ -1,4 +1,4 @@
-#include "editform.h"
+#include "EditForm.h"
 #include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
