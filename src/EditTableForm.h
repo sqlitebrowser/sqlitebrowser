@@ -27,6 +27,7 @@ public slots:
     virtual void removeField();
     virtual void fieldSelectionChanged();
     virtual void accept();
+    virtual void reject();
     virtual void checkInput();
 
 protected:
@@ -35,7 +36,6 @@ protected:
     DBBrowserDB *pdb;
 
 private:
-    void init();
     Ui::editTableForm *ui;
 };
 
