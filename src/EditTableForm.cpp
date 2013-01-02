@@ -147,108 +147,24 @@ void editTableForm::editField()
     if( !ui->treeWidget->currentItem()){
         return;
     }
+
+    // Cancel here when the user tries to edit an existing table
+    if(curTable != "")
+    {
+        QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support editing columns yet."));
+        return;
+    }
+
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     editFieldForm * fieldForm = new editFieldForm( this );
     fieldForm->setModal(true);
     fieldForm->setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
-    if (fieldForm->exec())
+    if(fieldForm->exec())
     {
         modified = true;
         item->setText(0,fieldForm->field_name);
         item->setText(1,fieldForm->field_type);
     }
-    //not until nested transaction are supported
-    //if (!pdb->executeSQL(QString("BEGIN TRANSACTION;"))) goto rollback;
-
-    //             QString sql = "CREATE TEMPORARY TABLE TEMP_TABLE(";
-    //             Q3ListViewItemIterator it( fieldListView );
-    //             Q3ListViewItem * item;
-    //             while ( it.current() ) {
-    //                 item = it.current();
-    //                 sql.append(item->text(0));
-    //                 sql.append(" ");
-    //                 sql.append(item->text(1));
-    //                 if (item->nextSibling() != 0)
-    //                 {
-    //                     sql.append(", ");
-    //                 }
-    //                 ++it;
-    //             }
-    //             sql.append(");");
-    //             if (!pdb->executeSQL(sql)) goto rollback;
-    //
-    //             sql = "INSERT INTO TEMP_TABLE SELECT ";
-    //             for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct )		    {
-    //                 sql.append( *ct );
-    //                 if (*ct != fields.last())
-    //                 {
-    //                     sql.append(", ");
-    //                 }
-    //             }
-    //
-    //             sql.append(" FROM ");
-    //             sql.append(curTable);
-    //             sql.append(";");
-    //             if (!pdb->executeSQL(sql)) goto rollback;
-    //
-    //             sql = "DROP TABLE ";
-    //             sql.append(curTable);
-    //             sql.append(";");
-    //             if (!pdb->executeSQL(sql)) goto rollback;
-    //
-    //             sql = "CREATE TABLE ";
-    //             sql.append(curTable);
-    //             sql.append(" (");
-    //             it = Q3ListViewItemIterator( fieldListView );
-    //             while ( it.current() ) {
-    //                 item = it.current();
-    //                 sql.append(item->text(0));
-    //                 sql.append(" ");
-    //                 sql.append(item->text(1));
-    //                 if (item->nextSibling() != 0)
-    //                 {
-    //                     sql.append(", ");
-    //                 }
-    //                 ++it;
-    //             }
-    //             sql.append(");");
-    //             if (!pdb->executeSQL(sql)) goto rollback;
-    //
-    //             sql = "INSERT INTO ";
-    //             sql.append(curTable);
-    //             sql.append(" SELECT ");
-    //             it = Q3ListViewItemIterator( fieldListView );
-    //             while ( it.current() ) {
-    //                 item = it.current();
-    //                 sql.append(item->text(0));
-    //                 if (item->nextSibling() != 0)
-    //                 {
-    //                     sql.append(", ");
-    //                 }
-    //                 ++it;
-    //             }
-    //             sql.append(" FROM TEMP_TABLE;");
-    //             if (!pdb->executeSQL(sql)) goto rollback;
-    //
-    //             if (!pdb->executeSQL(QString("DROP TABLE TEMP_TABLE;"))) goto rollback;
-    //             //not until nested transaction are supported
-    //             //if (!pdb->executeSQL(QString("COMMIT;"))) goto rollback;
-    //
-    //             setActiveTable(pdb, curTable);
-    //        }
-    //        //everything ok, just return
-    //        QApplication::restoreOverrideCursor();  // restore original cursor
-    //        return;
-    //
-    //        rollback:
-    //            QApplication::restoreOverrideCursor();  // restore original cursor
-    //            QString error = "Error editing field. Message from database engine:  ";
-    //            error.append(pdb->lastErrorMessage);
-    //            QMessageBox::warning( this, applicationName, error );
-    //            //not until nested transaction are supported
-    //            //pdb->executeSQL(QString("ROLLBACK;"));
-    //            setActiveTable(pdb, curTable);
-    //}
 }
 
 
