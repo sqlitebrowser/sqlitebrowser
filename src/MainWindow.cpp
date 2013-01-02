@@ -1355,7 +1355,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
     QString fileName = urls.first().toLocalFile();
 
-    if( !fileName.isEmpty() && fileName.endsWith("db") )
+    if(!fileName.isEmpty())
             fileOpen(fileName);
 }
 
