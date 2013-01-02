@@ -13,9 +13,7 @@
 #include <QScrollBar>
 #include "CreateIndexForm.h"
 #include "DeleteIndexForm.h"
-#include "DeleteTableForm.h"
 #include "DialogAbout.h"
-#include "ChooseTableForm.h"
 #include "EditTableForm.h"
 #include "EditFieldForm.h"
 #include "ImportCSVForm.h"
@@ -55,10 +53,10 @@ void MainWindow::setupUi()
 
     // Create popup menus
     popupTableMenu = new QMenu(this);
-    popupTableMenu->addAction(ui->editModifyTableActionPopup);
+    popupTableMenu->addAction(ui->editModifyTableAction);
     popupTableMenu->addAction(ui->editAddFieldActionPopup);
     popupTableMenu->addSeparator();
-    popupTableMenu->addAction(ui->editDeleteTableActionPopup);
+    popupTableMenu->addAction(ui->editDeleteTableAction);
     popupFieldMenu = new QMenu(this);
     popupFieldMenu->addAction(ui->editModifyFieldActionPopup);
     popupFieldMenu->addAction(ui->editDeleteFieldActionPopup);
@@ -654,62 +652,6 @@ void MainWindow::compact()
 
 void MainWindow::deleteTable()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
-        return;
-    }
-    deleteTableForm * tableForm = new deleteTableForm( this );
-    tableForm->setModal(true);
-    tableForm->populateOptions( db.getTableNames());
-    if ( tableForm->exec() ) {
-        QString statement = "DROP TABLE ";
-        statement.append(tableForm->option);
-        statement.append(";");
-        if (!db.executeSQL( statement)){
-            QString error = "Error: could not delete the table. Message from database engine:  ";
-            error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
-        } else {
-            populateStructure();
-            resetBrowser();
-        }
-    }
-}
-
-//*****************************************
-//** Edit Table
-void MainWindow::editTable()
-{
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
-        return;
-    }
-    chooseTableForm * tableForm = new chooseTableForm( this );
-    tableForm->setModal(true);
-    QStringList tablelist = db.getTableNames();
-    if (tablelist.empty()){
-        QMessageBox::information( this, QApplication::applicationName(), "There are no tables to edit in this database." );
-        return;
-    }
-    tableForm->populateOptions( tablelist );
-    if ( tableForm->exec() ) {
-        //statement.append(tableForm->option);
-        editTableForm * edTableForm = new editTableForm( this );
-        edTableForm->setModal(true);
-        //send table name ? or handle it all from here?
-        edTableForm->setActiveTable(&db, tableForm->option);
-        edTableForm->exec();
-        //check modified status
-        if (edTableForm->modified)
-        {
-            populateStructure();
-            resetBrowser();
-        }
-    }
-}
-
-void MainWindow::deleteTablePopup()
-{
     // Get name of table to delete
     QString table = ui->dbTreeWidget->currentItem()->text(0);
 
@@ -729,7 +671,7 @@ void MainWindow::deleteTablePopup()
     }
 }
 
-void MainWindow::editTablePopup()
+void MainWindow::editTable()
 {
     if (!db.isOpen()){
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
@@ -1215,8 +1157,8 @@ void MainWindow::on_tree_context_menu(const QPoint &qPoint){
     QTreeWidgetItem *cItem = ui->dbTreeWidget->currentItem();
 
     if(cItem->text(1) == "table"){
-        ui->editDeleteTableActionPopup->setDisabled(false);
-        ui->editModifyTableActionPopup->setDisabled(false);
+        ui->editDeleteTableAction->setDisabled(false);
+        ui->editModifyTableAction->setDisabled(false);
         popupTableMenu->exec( ui->dbTreeWidget->mapToGlobal(qPoint) );
 
     }else if(cItem->text(1) == "field"){
@@ -1226,8 +1168,8 @@ void MainWindow::on_tree_context_menu(const QPoint &qPoint){
 //** Tree selection changed
 void MainWindow::on_tree_selection_changed(){
     if (!ui->dbTreeWidget->selectionModel()->hasSelection()){
-        ui->editDeleteTableActionPopup->setEnabled(false);
-        ui->editModifyTableActionPopup->setEnabled(false);
+        ui->editDeleteTableAction->setEnabled(false);
+        ui->editModifyTableAction->setEnabled(false);
         ui->editAddFieldActionPopup->setEnabled(false);
         ui->editModifyFieldActionPopup->setEnabled(false);
         ui->editDeleteFieldActionPopup->setEnabled(false);
@@ -1235,16 +1177,16 @@ void MainWindow::on_tree_selection_changed(){
     }
 
     if(ui->dbTreeWidget->currentItem()->text(1) == "table"){
-        ui->editDeleteTableActionPopup->setEnabled(true);
-        ui->editModifyTableActionPopup->setEnabled(true);
+        ui->editDeleteTableAction->setEnabled(true);
+        ui->editModifyTableAction->setEnabled(true);
         ui->editAddFieldActionPopup->setEnabled(true);
         ui->editModifyFieldActionPopup->setEnabled(false);
         ui->editDeleteFieldActionPopup->setEnabled(false);
 
     }else if(ui->dbTreeWidget->currentItem()->text(1) == "field"){
         ui->editAddFieldActionPopup->setEnabled(false);
-        ui->editDeleteTableActionPopup->setEnabled(false);
-        ui->editModifyTableActionPopup->setEnabled(false);
+        ui->editDeleteTableAction->setEnabled(false);
+        ui->editModifyTableAction->setEnabled(false);
         ui->editModifyFieldActionPopup->setEnabled(true);
         ui->editDeleteFieldActionPopup->setEnabled(true);
     }
@@ -1363,8 +1305,6 @@ void MainWindow::activateFields(bool enable)
     ui->fileCloseAction->setEnabled(enable);
     ui->fileCompactAction->setEnabled(enable);
     ui->editCreateTableAction->setEnabled(enable);
-    ui->editDeleteTableAction->setEnabled(enable);
-    ui->editModifyTableAction->setEnabled(enable);
     ui->editCreateIndexAction->setEnabled(enable);
     ui->editDeleteIndexAction->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);

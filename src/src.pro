@@ -16,10 +16,8 @@ HEADERS += \
     sqlbrowser_util.h \
     sqlite_source/sqlite3.h \
     SQLLogDock.h \
-    ChooseTableForm.h \
     CreateIndexForm.h \
     DeleteIndexForm.h \
-    DeleteTableForm.h \
     DialogAbout.h \
     EditFieldForm.h \
     EditForm.h \
@@ -37,10 +35,8 @@ SOURCES += \
     sqlite_source/sqlite3.c \
     SQLLogDock.cpp \
     main.cpp \
-    ChooseTableForm.cpp \
     CreateIndexForm.cpp \
     DeleteIndexForm.cpp \
-    DeleteTableForm.cpp \
     DialogAbout.cpp \
     EditFieldForm.cpp \
     EditForm.cpp \

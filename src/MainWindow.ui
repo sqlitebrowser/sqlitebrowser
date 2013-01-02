@@ -31,8 +31,8 @@
         <enum>Qt::ToolButtonTextBesideIcon</enum>
        </property>
        <addaction name="editCreateTableAction"/>
-       <addaction name="editModifyTableActionPopup"/>
-       <addaction name="editDeleteTableActionPopup"/>
+       <addaction name="editModifyTableAction"/>
+       <addaction name="editDeleteTableAction"/>
        <addaction name="separator"/>
        <addaction name="editAddFieldActionPopup"/>
        <addaction name="editModifyFieldActionPopup"/>
@@ -805,36 +805,6 @@
     <string>Delete Field</string>
    </property>
   </action>
-  <action name="editModifyTableActionPopup">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/table_modify</normaloff>:/icons/table_modify</iconset>
-   </property>
-   <property name="text">
-    <string>Modify Table</string>
-   </property>
-   <property name="toolTip">
-    <string>Modify Table</string>
-   </property>
-  </action>
-  <action name="editDeleteTableActionPopup">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
-   </property>
-   <property name="text">
-    <string>Delete Table</string>
-   </property>
-   <property name="toolTip">
-    <string>Delete Table</string>
-   </property>
-  </action>
   <action name="editModifyFieldActionPopup">
    <property name="enabled">
     <bool>false</bool>
@@ -1309,22 +1279,6 @@
    <sender>editDeleteTableAction</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
-   <slot>createTable()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editDeleteTableAction</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
    <slot>deleteTable()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1342,38 +1296,6 @@
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>editTable()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editDeleteTableActionPopup</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>deleteTablePopup()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editModifyTableActionPopup</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>editTablePopup()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

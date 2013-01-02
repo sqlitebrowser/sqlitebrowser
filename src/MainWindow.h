@@ -125,8 +125,6 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 protected slots:
-    virtual void deleteTablePopup();
-    virtual void editTablePopup();
     virtual void mainTabSelected( int tabindex );
     virtual void browseTableHeaderClicked(int logicalindex);
 
