@@ -12,9 +12,6 @@
         <file alias="field_edit">page_edit.png</file>
         <file alias="field_delete">page_delete.png</file>
         <file alias="field_add">page_add.png</file>
-        <file alias="add">add.png</file>
-        <file alias="save">accept.png</file>
-        <file alias="cancel">bullet_black.png</file>
         <file alias="field">page_green.png</file>
         <file alias="table">table.png</file>
         <file alias="index">tag_blue.png</file>
@@ -25,12 +22,13 @@
         <file alias="trigger">script.png</file>
         <file alias="trigger_create">script_add.png</file>
         <file alias="trigger_delete">script_delete.png</file>
+        <file alias="searchfind">magnifier.png</file>
+        <file alias="settings">wrench.png</file>
+        <file alias="whatis">help.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>
         <file alias="icon16">oldimages/icone16.png</file>
         <file alias="log">oldimages/log.png</file>
-        <file alias="searchfind">oldimages/searchfind.png</file>
-        <file alias="whatis">oldimages/whatis.png</file>
     </qresource>
 </RCC>

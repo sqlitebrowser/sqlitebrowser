@@ -114,7 +114,7 @@
          </property>
          <property name="icon">
           <iconset resource="icons/icons.qrc">
-           <normaloff>:/oldimages/searchfind</normaloff>:/oldimages/searchfind</iconset>
+           <normaloff>:/icons/searchfind</normaloff>:/icons/searchfind</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -719,6 +719,10 @@
    </property>
   </action>
   <action name="viewPreferencesAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/settings</normaloff>:/icons/settings</iconset>
+   </property>
    <property name="text">
     <string>&amp;Preferences</string>
    </property>
@@ -761,7 +765,7 @@
   <action name="helpWhatsThisAction">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/oldimages/whatis</normaloff>:/oldimages/whatis</iconset>
+     <normaloff>:/icons/whatis</normaloff>:/icons/whatis</iconset>
    </property>
    <property name="text">
     <string>What's This?</string>
