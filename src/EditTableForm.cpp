@@ -5,15 +5,8 @@
 #include <QPushButton>
 #include "sqlitedb.h"
 
-/*
- *  Constructs a editTableForm as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
- *
- *  The dialog will by default be modeless, unless you set 'modal' to
- *  true to construct a modal dialog.
- */
-editTableForm::editTableForm(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl),
+editTableForm::editTableForm(QWidget* parent)
+    : QDialog(parent),
       modified(false),
       pdb(0),
       ui(new Ui::editTableForm)
@@ -21,9 +14,6 @@ editTableForm::editTableForm(QWidget* parent, Qt::WindowFlags fl)
     ui->setupUi(this);
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
 editTableForm::~editTableForm()
 {
     delete ui;
@@ -156,33 +146,29 @@ void editTableForm::editField()
     }
 
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
-    editFieldForm * fieldForm = new editFieldForm( this );
-    fieldForm->setModal(true);
-    fieldForm->setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
-    if(fieldForm->exec())
+    editFieldForm dialog(this);
+    dialog.setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
+    if(dialog.exec())
     {
         modified = true;
-        item->setText(0,fieldForm->field_name);
-        item->setText(1,fieldForm->field_type);
+        item->setText(0, dialog.field_name);
+        item->setText(1, dialog.field_type);
     }
 }
 
-
 void editTableForm::addField()
 {
-    editFieldForm * addForm = new editFieldForm( this );
-    addForm->setModal(true);
-    addForm->setInitialValues(pdb, true, curTable, QString(""),QString(""));
-    if (addForm->exec())
+    editFieldForm dialog(this);
+    dialog.setInitialValues(pdb, true, curTable, QString(""), QString(""));
+    if(dialog.exec())
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
-        tbitem->setText( 0, addForm->field_name);
-        tbitem->setText( 1, addForm->field_type);
+        tbitem->setText(0, dialog.field_name);
+        tbitem->setText(1, dialog.field_type);
         modified = true;
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 }
-
 
 void editTableForm::removeField()
 {

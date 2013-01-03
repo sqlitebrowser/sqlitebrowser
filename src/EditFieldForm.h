@@ -14,7 +14,7 @@ class editFieldForm : public QDialog
     Q_OBJECT
 
 public:
-    editFieldForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
+    editFieldForm(QWidget* parent = 0);
     ~editFieldForm();
 
     QString table_name;

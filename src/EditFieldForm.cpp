@@ -3,15 +3,8 @@
 #include "sqlitedb.h"
 #include <QPushButton>
 
-/*
- *  Constructs a editFieldForm as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
- *
- *  The dialog will by default be modeless, unless you set 'modal' to
- *  true to construct a modal dialog.
- */
-editFieldForm::editFieldForm(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl),
+editFieldForm::editFieldForm(QWidget* parent)
+    : QDialog(parent),
       ui(new Ui::editFieldForm)
 {
     ui->setupUi(this);
@@ -23,9 +16,6 @@ editFieldForm::editFieldForm(QWidget* parent, Qt::WindowFlags fl)
     ui->radioCustom->setProperty("field_type", "__custom__");
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
 editFieldForm::~editFieldForm()
 {
     delete ui;

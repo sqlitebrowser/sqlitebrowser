@@ -5,20 +5,13 @@
 #include <QFileDialog>
 #include "sqlitedb.h"
 
-/*
- *  Constructs a preferencesForm as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
- *
- *  The dialog will by default be modeless, unless you set 'modal' to
- *  true to construct a modal dialog.
- */
-preferencesForm::preferencesForm(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl),
+preferencesForm::preferencesForm(QWidget* parent)
+    : QDialog(parent),
       ui(new Ui::preferencesForm)
 {
     ui->setupUi(this);
 
-    init();
+    loadSettings();
 }
 
 /*
@@ -27,11 +20,6 @@ preferencesForm::preferencesForm(QWidget* parent, Qt::WindowFlags fl)
 preferencesForm::~preferencesForm()
 {
     delete ui;
-}
-
-void preferencesForm::init()
-{
-    loadSettings();
 }
 
 void preferencesForm::defaultDataChanged( int which )

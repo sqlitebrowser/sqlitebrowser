@@ -53,8 +53,6 @@ public:
 
 private:
     void init();
-    void destroy();
-    void setupUi();
 
     void updateRecentFileActions();
     void setCurrentFile(const QString& fileName);

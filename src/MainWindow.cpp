@@ -24,15 +24,45 @@
 #include "SQLLogDock.h"
 #include "SQLiteSyntaxHighlighter.h"
 
-void MainWindow::setupUi()
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      editWin(new editForm(this)),
+      clipboard(QApplication::clipboard()),
+      findWin(0)
+{
+    ui->setupUi(this);
+    init();
+
+    activateFields(false);
+    updatePreferences();
+    resetBrowser();
+    updateRecentFileActions();
+}
+
+/*
+ *  Destroys the object and frees any allocated resources
+ */
+MainWindow::~MainWindow()
+{
+    delete gotoValidator;
+    delete ui;
+}
+
+void MainWindow::init()
 {
     // Create the SQL log dock
     logWin = new SQLLogDock(this);
-    this->addDockWidget(Qt::BottomDockWidgetArea, logWin);
+    db.logWin = logWin;
+    addDockWidget(Qt::BottomDockWidgetArea, logWin);
 
     // Set up the db tree widget
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
+
+    // Create the validator for the goto line edit
+    gotoValidator = new QIntValidator(0, 0, this);
+    ui->editGoto->setValidator(gotoValidator);
 
     // Create the SQL sytax highlighter
     sqliteHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
@@ -45,7 +75,7 @@ void MainWindow::setupUi()
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
         recentFileActs[i]->setVisible(false);
-        this->connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+        connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
     }
     for(int i = 0; i < MaxRecentFiles; ++i)
         ui->fileMenu->insertAction(ui->fileExitAction, recentFileActs[i]);
@@ -61,85 +91,29 @@ void MainWindow::setupUi()
     popupFieldMenu->addAction(ui->editModifyFieldActionPopup);
     popupFieldMenu->addAction(ui->editDeleteFieldActionPopup);
 
+    // Set state of checkable menu actions
+    ui->sqlLogAction->setChecked(!logWin->isHidden());
+    ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
+
     // Connect some more signals and slots
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->sqlLogAction, SIGNAL(toggled(bool)), logWin, SLOT(setVisible(bool)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
-}
+    connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
+    connect(editWin, SIGNAL(updateRecordText(int, int , QString)), this, SLOT(updateRecordText(int, int , QString)));
+    connect(logWin, SIGNAL(goingAway()),  this, SLOT(logWinAway()));
+    connect(logWin, SIGNAL(dbState(bool)),this, SLOT(dbState(bool)));
 
-/*
- *  Constructs a mainForm as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
- *
- */
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent),
-      ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-    setupUi();
-    setAcceptDrops(true);
-
-    (void)statusBar();
-    activateFields(false);
-    init();
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-MainWindow::~MainWindow()
-{
-    delete ui;
-    destroy();
-}
-
-void MainWindow::init()
-{
-    findWin = 0;
-    editWin = 0;
-
-    clipboard = QApplication::clipboard();
-
-    gotoValidator = new QIntValidator(0, 0, this);
-    ui->editGoto->setValidator(gotoValidator);
-    resetBrowser();
-    this->setWindowTitle(QApplication::applicationName());
-    this->setWindowIcon( QPixmap( g_applicationIconName ) );
-    updateRecentFileActions();
-
-
-    if(!editWin){
-        editWin = new editForm(this);
-        connect( editWin, SIGNAL( goingAway() ),
-                 this,    SLOT( editWinAway() ) );
-        connect( editWin, SIGNAL( updateRecordText(int, int , QString) ),
-                 this,      SLOT( updateRecordText(int, int , QString) ) );
-    }
-
-    connect( logWin, SIGNAL( goingAway() ),  this, SLOT( logWinAway() ) );
-    connect( logWin, SIGNAL( dbState(bool) ),this, SLOT( dbState(bool)  ) );
-
-    updatePreferences();
-
-    //connect db and log
-    db.logWin = logWin;
-
-    //load last ui settings
+    // Load window settings
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
     logWin->comboLogType()->setCurrentIndex(logWin->comboLogType()->findText(settings.value("SQLLogDock/Log", "Application").toString()));
 
-    ui->sqlLogAction->setChecked(!logWin->isHidden());
-    ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
-}
-
-void MainWindow::destroy()
-{
-    if (gotoValidator){
-        delete gotoValidator;
-    }
+    // Set other window settings
+    setAcceptDrops(true);
+    setWindowTitle(QApplication::applicationName());
+    setWindowIcon(QPixmap(g_applicationIconName));
 }
 
 //***********************************************************
@@ -158,7 +132,6 @@ void MainWindow::fileOpen(const QString & fileName)
     {
         if (db.open(wFile))
         {
-            this->setWindowTitle(QApplication::applicationName() +" - "+wFile);
             setCurrentFile(wFile);
         } else {
             QString err = "An error occurred:  ";
@@ -172,13 +145,10 @@ void MainWindow::fileOpen(const QString & fileName)
     }
 }
 
-
 void MainWindow::fileOpen()
 {
     fileOpen(QString());
 }
-
-
 
 void MainWindow::fileNew()
 {
@@ -197,7 +167,6 @@ void MainWindow::fileNew()
     if (!fileName.isNull())
     {
         db.create(fileName);
-        this->setWindowTitle( QApplication::applicationName() +" - "+fileName);
         populateStructure();
         resetBrowser();
         createTable();
@@ -322,13 +291,12 @@ void MainWindow::resetBrowser()
 void MainWindow::fileClose()
 {
     db.close();
-    this->setWindowTitle(QApplication::applicationName());
+    setWindowTitle(QApplication::applicationName());
     resetBrowser();
     populateStructure();
     loadPragmas();
     activateFields(false);
 }
-
 
 void MainWindow::fileExit()
 {
@@ -602,10 +570,10 @@ void MainWindow::createTable()
         return;
     }
 
-    editTableForm * tableForm = new editTableForm(this);
-    tableForm->setActiveTable(&db, "");
-    tableForm->setModal(true);
-    if(tableForm->exec()) {
+    editTableForm dialog(this);
+    dialog.setActiveTable(&db, "");
+    if(dialog.exec())
+    {
         populateStructure();
         resetBrowser();
     }
@@ -617,11 +585,11 @@ void MainWindow::createIndex()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
-    createIndexForm * indexForm = new createIndexForm( this );
-    indexForm->setModal(true);
-    indexForm->populateTable( db.tbmap );
-    if ( indexForm->exec() ) {
-        if (!db.executeSQL(indexForm->createStatement)){
+    createIndexForm dialog(this);
+    dialog.populateTable(db.tbmap);
+    if(dialog.exec())
+    {
+        if (!db.executeSQL(dialog.createStatement)){
             QString error = "Error: could not create the index. Message from database engine:  ";
             error.append(db.lastErrorMessage);
             QMessageBox::warning( this, QApplication::applicationName(), error );
@@ -631,7 +599,6 @@ void MainWindow::createIndex()
         }
     }
 }
-
 
 void MainWindow::compact()
 {
@@ -652,7 +619,6 @@ void MainWindow::compact()
     ui->fileCompactAction->setEnabled(true);
     QApplication::restoreOverrideCursor( );
 }
-
 
 void MainWindow::deleteTable()
 {
@@ -686,12 +652,11 @@ void MainWindow::editTable()
     }
     QString tableToEdit = ui->dbTreeWidget->currentItem()->text(0);
 
-    editTableForm * edTableForm = new editTableForm( this );
-    edTableForm->setModal(true);
-    edTableForm->setActiveTable(&db, tableToEdit);
-    edTableForm->exec();
+    editTableForm dialog(this);
+    dialog.setActiveTable(&db, tableToEdit);
+    dialog.exec();
     //check modified status
-    if (edTableForm->modified)
+    if(dialog.modified)
     {
         populateStructure();
         resetBrowser();
@@ -704,12 +669,12 @@ void MainWindow::deleteIndex()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
         return;
     }
-    deleteIndexForm * indexForm = new deleteIndexForm( this );
-    indexForm->setModal(true);
-    indexForm->populateOptions( db.getIndexNames());
-    if ( indexForm->exec() ) {
+    deleteIndexForm dialog(this);
+    dialog.populateOptions(db.getIndexNames());
+    if(dialog.exec())
+    {
         QString statement = "DROP INDEX ";
-        statement.append(indexForm->option);
+        statement.append(dialog.option);
         statement.append(";");
         if (!db.executeSQL( statement)){
             QString error = "Error: could not delete the index. Message from database engine:  ";
@@ -722,7 +687,6 @@ void MainWindow::deleteIndex()
     }
 
 }
-
 
 void MainWindow::copy()
 {
@@ -740,7 +704,6 @@ void MainWindow::copy()
         ui->editGoto->copy();
 }
 
-
 void MainWindow::paste()
 {
     QWidget * t = ui->dataTable->cellWidget(ui->dataTable->currentRow(), ui->dataTable->currentColumn());
@@ -756,19 +719,16 @@ void MainWindow::paste()
         ui->editGoto->paste();
 }
 
-
 void MainWindow::helpWhatsThis()
 {
     QWhatsThis::enterWhatsThisMode ();
 }
 
-
 void MainWindow::helpAbout()
 {
-    DialogAbout * aForm = new DialogAbout( this );
-    aForm ->exec() ;
+    DialogAbout dialog(this);
+    dialog.exec();
 }
-
 
 void MainWindow::updateRecordText(int row, int col, QString newtext)
 {
@@ -798,8 +758,6 @@ void MainWindow::editWinAway()
     ui->dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow, editWin->curCol, editWin->curRow, editWin->curCol), true);
 }
 
-
-
 void MainWindow::editText(int row, int col)
 {
     rowList tab = db.browseRecs;
@@ -809,8 +767,6 @@ void MainWindow::editText(int row, int col)
     editWin->loadText(cv , row, col);
     editWin ->show();
 }
-
-
 
 void MainWindow::doubleClickTable( int row, int col )
 {
@@ -823,7 +779,6 @@ void MainWindow::doubleClickTable( int row, int col )
 
     editText(realRow , col);
 }
-
 
 void MainWindow::executeQuery()
 {
@@ -892,7 +847,6 @@ void MainWindow::executeQuery()
     } while( tail && *tail != 0 );
 }
 
-
 void MainWindow::mainTabSelected(int tabindex)
 {
     if(tabindex == 0)
@@ -930,9 +884,10 @@ void MainWindow::importTableFromCSV()
 
     if (QFile::exists(wFile) )
     {
-        importCSVForm * csvForm = new importCSVForm( this );
-        csvForm->initialize(wFile, &db);
-        if ( csvForm->exec() ) {
+        importCSVForm dialog(this);
+        dialog.initialize(wFile, &db);
+        if(dialog.exec())
+        {
             populateStructure();
             resetBrowser();
             QMessageBox::information( this, QApplication::applicationName(), "Import completed" );
@@ -946,12 +901,12 @@ void MainWindow::exportTableToCSV()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
         return;
     }
-    exportTableCSVForm * exportForm = new exportTableCSVForm( this );
-    exportForm->populateOptions( db.getTableNames());
-    if ( exportForm->exec() ) {
-        //qDebug(exportForm->option);
+    exportTableCSVForm dialog(this);
+    dialog.populateOptions(db.getTableNames());
+    if(dialog.exec())
+    {
         //load our table
-        db.browseTable(exportForm->option);
+        db.browseTable(dialog.option);
 
         QString fileName = QFileDialog::getSaveFileName(
                     this,
@@ -1022,13 +977,11 @@ void MainWindow::exportTableToCSV()
     }
 }
 
-
 void MainWindow::dbState( bool dirty )
 {
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
 }
-
 
 void MainWindow::fileSave()
 {
@@ -1037,7 +990,6 @@ void MainWindow::fileSave()
         //dbStatusBar->showMessage("Date written to file", 4000)
     }
 }
-
 
 void MainWindow::fileRevert()
 {
@@ -1053,7 +1005,6 @@ void MainWindow::fileRevert()
         }
     }
 }
-
 
 void MainWindow::exportDatabaseToSQL()
 {
@@ -1078,7 +1029,6 @@ void MainWindow::exportDatabaseToSQL()
         }
     }
 }
-
 
 void MainWindow::importDatabaseFromSQL()
 {
@@ -1124,11 +1074,11 @@ void MainWindow::importDatabaseFromSQL()
     }
 }
 
-
 void MainWindow::openPreferences()
 {
-    preferencesForm * prefForm = new preferencesForm( this );
-    if ( prefForm->exec() ) {
+    preferencesForm dialog(this);
+    if(dialog.exec())
+    {
         updatePreferences();
         resetBrowser();
     }
@@ -1136,19 +1086,17 @@ void MainWindow::openPreferences()
 
 void MainWindow::updatePreferences()
 {
-    preferencesForm * prefForm = new preferencesForm( this );
-    prefForm->loadSettings();
+    preferencesForm prefs(this);
 
-    if (prefForm->defaultencoding=="Latin1")
-    {
+    if(prefs.defaultencoding == "Latin1")
         db.setEncoding(kEncodingLatin1);
-    } else {
+    else
         db.setEncoding(kEncodingUTF8);
-    }
-    db.setDefaultNewData(prefForm->defaultnewdata);
-    defaultlocation= prefForm->defaultlocation;
+
+    db.setDefaultNewData(prefs.defaultnewdata);
+    defaultlocation= prefs.defaultlocation;
     editWin->defaultlocation = defaultlocation;
-    editWin->setTextFormat(prefForm->defaulttext);
+    editWin->setTextFormat(prefs.defaulttext);
 }
 
 //******************************************************************
@@ -1198,30 +1146,17 @@ void MainWindow::on_tree_selection_changed(){
     }
 }
 
-
 void MainWindow::on_add_field(){
     //if( !dbTreeWidget->currentItem() ){
     //   return;
     //}
-    //QTreeWidgetItem *item = dbTreeWidget->currentItem();
-    editFieldForm *fieldForm = new editFieldForm( this );
-    fieldForm->setInitialValues(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
-    if (fieldForm->exec())
-    {
-        //modified = true;
-        //do the sql rename here
-        //populateStructure();
-        qDebug((fieldForm->field_name + fieldForm->field_type).toUtf8());
-        //* find parent item
+
+    editFieldForm dialog(this);
+    dialog.setInitialValues(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
+    if(dialog.exec())
         populateStructure();
-        //       QTreeWidgetItem *parentItem = dbTreeWidget->findItems()
-        return;
-        QTreeWidgetItem *newItem = new QTreeWidgetItem(ui->dbTreeWidget->currentItem());
-        newItem->setText(0, fieldForm->field_name);
-        newItem->setText(1, "field");
-        newItem->setText(2, fieldForm->field_type);
-    }
 }
+
 void MainWindow::on_edit_field(){
     if(!ui->dbTreeWidget->currentItem())
         return;
@@ -1229,14 +1164,15 @@ void MainWindow::on_edit_field(){
     // TODO
     QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support editing columns yet."));
     /*QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
-    editFieldForm *fieldForm = new editFieldForm( this );
-    fieldForm->setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
-    if (fieldForm->exec())
+    editFieldForm dialog(this);
+    dialog.setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
+    if(dialog.exec())
     {
-        item->setText(0,fieldForm->field_name);
-        item->setText(2,fieldForm->field_type);
+        item->setText(0, dialog.field_name);
+        item->setText(2, dialog.field_type);
     }*/
 }
+
 void MainWindow::on_delete_field(){
     if(!ui->dbTreeWidget->currentItem())
         return;
@@ -1275,6 +1211,7 @@ void MainWindow::updateRecentFileActions()
 void MainWindow::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
+    setWindowTitle( QApplication::applicationName() +" - "+fileName);
     activateFields(true);
 
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);

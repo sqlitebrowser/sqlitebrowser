@@ -12,7 +12,7 @@ class preferencesForm : public QDialog
     Q_OBJECT
 
 public:
-    preferencesForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
+    preferencesForm(QWidget* parent = 0);
     ~preferencesForm();
 
     QString defaulttext;
@@ -29,8 +29,6 @@ public slots:
     virtual void saveSettings();
 
 private:
-    void init();
-
     Ui::preferencesForm *ui;
 };
 

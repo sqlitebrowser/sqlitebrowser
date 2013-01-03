@@ -13,7 +13,7 @@ class editTableForm : public QDialog
     Q_OBJECT
 
 public:
-    editTableForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
+    editTableForm(QWidget* parent = 0);
     ~editTableForm();
 
     bool modified;
