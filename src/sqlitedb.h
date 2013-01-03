@@ -120,6 +120,8 @@ public:
     char * GetEncodedQStringAsPointer( const QString & input);
     QString GetEncodedQString( const QString & input);
     QString GetDecodedQString( const QString & input);
+    QString getPragma(QString pragma);
+    bool setPragma(QString pragma, QString value);
     sqlite3 * _db;
 
 

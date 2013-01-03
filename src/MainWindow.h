@@ -117,6 +117,8 @@ public slots:
     virtual void openPreferences();
     virtual void updatePreferences();
     virtual void openRecentFile();
+    virtual void loadPragmas();
+    virtual void savePragmas();
 
 protected:
     DBBrowserDB db;

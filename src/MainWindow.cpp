@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget* parent)
     setAcceptDrops(true);
 
     (void)statusBar();
+    activateFields(false);
     init();
 }
 
@@ -166,6 +167,8 @@ void MainWindow::fileOpen(const QString & fileName)
         }
         populateStructure();
         resetBrowser();
+        if(ui->mainTab->currentIndex() == 2)
+            loadPragmas();
     }
 }
 
@@ -322,6 +325,7 @@ void MainWindow::fileClose()
     this->setWindowTitle(QApplication::applicationName());
     resetBrowser();
     populateStructure();
+    loadPragmas();
     activateFields(false);
 }
 
@@ -895,6 +899,8 @@ void MainWindow::mainTabSelected(int tabindex)
         populateStructure();
     else if(tabindex == 1)
         resetBrowser();
+    else if(tabindex == 2)
+        loadPragmas();
 }
 
 void MainWindow::importTableFromCSV()
@@ -1316,6 +1322,12 @@ void MainWindow::activateFields(bool enable)
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->executeQueryButton->setEnabled(enable);
+    ui->scrollareaPragmas->setEnabled(enable);
+    ui->buttonGoto->setEnabled(enable);
+    ui->editGoto->setEnabled(enable);
+    ui->buttonRefresh->setEnabled(enable);
+    ui->buttonDeleteRecord->setEnabled(enable);
+    ui->buttonNewRecord->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -1333,4 +1345,60 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 void MainWindow::resizeEvent(QResizeEvent*)
 {
     setRecordsetLabel();
+}
+
+void MainWindow::loadPragmas()
+{
+    ui->comboboxPragmaAutoVacuum->setCurrentIndex(db.getPragma("auto_vacuum").toInt());
+    ui->checkboxPragmaAutomaticIndex->setChecked(db.getPragma("automatic_index").toInt());
+    ui->spinPragmaBusyTimeout->setValue(db.getPragma("busy_timeout").toInt());
+    ui->spinPragmaCacheSize->setValue(db.getPragma("cache_size").toInt());
+    ui->checkboxPragmaCheckpointFullFsync->setChecked(db.getPragma("checkpoint_fullfsync").toInt());
+    ui->comboboxPragmaEncoding->setCurrentIndex(db.getPragma("encoding").toInt());
+    ui->checkboxPragmaForeignKeys->setChecked(db.getPragma("foreign_keys").toInt());
+    ui->checkboxPragmaFullFsync->setChecked(db.getPragma("fullfsync").toInt());
+    ui->checkboxPragmaIgnoreCheckConstraints->setChecked(db.getPragma("ignore_check_constraints").toInt());
+    ui->comboboxPragmaJournalMode->setCurrentIndex(db.getPragma("journal_mode").toInt());
+    ui->spinPragmaJournalSizeLimit->setValue(db.getPragma("journal_size_limit").toInt());
+    ui->checkboxPragmaLegacyFileFormat->setChecked(db.getPragma("legacy_file_format").toInt());
+    ui->comboboxPragmaLockingMode->setCurrentIndex(db.getPragma("locking_mode").toInt());
+    ui->spinPragmaMaxPageCount->setValue(db.getPragma("max_page_count").toInt());
+    ui->spinPragmaPageSize->setValue(db.getPragma("page_size").toInt());
+    ui->checkboxPragmaReadUncommitted->setChecked(db.getPragma("read_uncommitted").toInt());
+    ui->checkboxPragmaRecursiveTriggers->setChecked(db.getPragma("recursive_triggers").toInt());
+    ui->checkboxPragmaReverseUnorderedSelects->setChecked(db.getPragma("reverse_unordered_selects").toInt());
+    ui->spinPragmaSchemaVersion->setValue(db.getPragma("schema_version").toInt());
+    ui->checkboxPragmaSecureDelete->setChecked(db.getPragma("secure_delete").toInt());
+    ui->comboboxPragmaSynchronous->setCurrentIndex(db.getPragma("synchronous").toInt());
+    ui->comboboxPragmaTempStore->setCurrentIndex(db.getPragma("temp_store").toInt());
+    ui->spinPragmaUserVersion->setValue(db.getPragma("user_version").toInt());
+    ui->spinPragmaWalAutoCheckpoint->setValue(db.getPragma("wal_autocheckpoint").toInt());
+}
+
+void MainWindow::savePragmas()
+{
+    db.setPragma("auto_vacuum", QString::number(ui->comboboxPragmaAutoVacuum->currentIndex()));
+    db.setPragma("automatic_index", QString::number(ui->checkboxPragmaAutomaticIndex->isChecked()));
+    db.setPragma("busy_timeout", QString::number(ui->spinPragmaBusyTimeout->value()));
+    db.setPragma("cache_size", QString::number(ui->spinPragmaCacheSize->value()));
+    db.setPragma("checkpoint_fullfsync", QString::number(ui->checkboxPragmaCheckpointFullFsync->isChecked()));
+    db.setPragma("encoding", QString::number(ui->comboboxPragmaEncoding->currentIndex()));
+    db.setPragma("foreign_keys", QString::number(ui->checkboxPragmaForeignKeys->isChecked()));
+    db.setPragma("fullfsync", QString::number(ui->checkboxPragmaFullFsync->isChecked()));
+    db.setPragma("ignore_check_constraints", QString::number(ui->checkboxPragmaIgnoreCheckConstraints->isChecked()));
+    db.setPragma("journal_mode", QString::number(ui->comboboxPragmaJournalMode->currentIndex()));
+    db.setPragma("journal_size_limit", QString::number(ui->spinPragmaJournalSizeLimit->value()));
+    db.setPragma("legacy_file_format", QString::number(ui->checkboxPragmaLegacyFileFormat->isChecked()));
+    db.setPragma("locking_mode", QString::number(ui->comboboxPragmaLockingMode->currentIndex()));
+    db.setPragma("max_page_count", QString::number(ui->spinPragmaMaxPageCount->value()));
+    db.setPragma("page_size", QString::number(ui->spinPragmaPageSize->value()));
+    db.setPragma("read_uncommitted", QString::number(ui->checkboxPragmaReadUncommitted->isChecked()));
+    db.setPragma("recursive_triggers", QString::number(ui->checkboxPragmaRecursiveTriggers->isChecked()));
+    db.setPragma("reverse_unordered_selects", QString::number(ui->checkboxPragmaReverseUnorderedSelects->isChecked()));
+    db.setPragma("schema_version", QString::number(ui->spinPragmaSchemaVersion->value()));
+    db.setPragma("secure_delete", QString::number(ui->checkboxPragmaSecureDelete->isChecked()));
+    db.setPragma("synchronous", QString::number(ui->comboboxPragmaSynchronous->currentIndex()));
+    db.setPragma("temp_store", QString::number(ui->comboboxPragmaTempStore->currentIndex()));
+    db.setPragma("user_version", QString::number(ui->spinPragmaUserVersion->value()));
+    db.setPragma("wal_autocheckpoint", QString::number(ui->spinPragmaWalAutoCheckpoint->value()));
 }
