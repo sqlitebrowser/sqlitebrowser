@@ -47,6 +47,9 @@
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
        <property name="animated">
         <bool>true</bool>
        </property>
@@ -290,8 +293,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-165</y>
-          <width>763</width>
+          <y>0</y>
+          <width>354</width>
           <height>653</height>
          </rect>
         </property>
