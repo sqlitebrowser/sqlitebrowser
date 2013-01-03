@@ -4,7 +4,6 @@
 #include <QStringList>
 #include <QMap>
 #include "sqlite3.h"
-#include "sqlitebrowsertypes.h"
 
 class SQLLogDock;
 
@@ -19,6 +18,15 @@ enum
     kEncodingUTF8,
     kEncodingLatin1,
     kEncodingNONE
+};
+
+/*types for encoded media data*/
+enum
+{
+    kSQLiteMediaType_Void,
+    kSQLiteMediaType_Integer,
+    kSQLiteMediaType_String,
+    kSQLiteMediaType_Binary
 };
 
 static QString g_sApplicationNameShort = QString("sqlitebrowser");

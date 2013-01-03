@@ -11,7 +11,6 @@ CONFIG += qt \
     debug
 
 HEADERS += \
-    sqlitebrowsertypes.h \
     sqlitedb.h \
     sqlbrowser_util.h \
     sqlite_source/sqlite3.h \
