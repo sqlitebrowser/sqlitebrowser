@@ -136,7 +136,7 @@ void MainWindow::fileOpen(const QString & fileName)
         } else {
             QString err = "An error occurred:  ";
             err.append(db.lastErrorMessage);
-            QMessageBox::information( this, QApplication::applicationName() ,err);
+            QMessageBox::warning(this, QApplication::applicationName(), err);
         }
         populateStructure();
         resetBrowser();
@@ -152,25 +152,16 @@ void MainWindow::fileOpen()
 
 void MainWindow::fileNew()
 {
-    QString fileName = QFileDialog::getSaveFileName(
-                this,
-                "Choose a filename to save under",
-                defaultlocation);
-    if (QFile::exists(fileName) )
+    QString fileName = QFileDialog::getSaveFileName(this, "Choose a filename to save under", defaultlocation);
+    if(!fileName.isEmpty())
     {
-        QString err = "File ";
-        err.append(fileName);
-        err.append(" already exists. Please choose a different name");
-        QMessageBox::information( this, QApplication::applicationName() ,err);
-        return;
-    }
-    if (!fileName.isNull())
-    {
+        if(QFile::exists(fileName))
+            QFile::remove(fileName);
         db.create(fileName);
+        setCurrentFile(fileName);
         populateStructure();
         resetBrowser();
         createTable();
-        setCurrentFile(fileName);
     }
 }
 
@@ -603,21 +594,18 @@ void MainWindow::createIndex()
 void MainWindow::compact()
 {
     QApplication::setOverrideCursor( Qt::WaitCursor );
-    if (db.isOpen()){
-        if (!db.compact()){
-            QString error = "Error: could not compact the database file. Message from database engine:  ";
-            error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
-        } else {
-            QMessageBox::warning( this, QApplication::applicationName(), "Database compacted" );
-        }
+    if (!db.compact()){
+        QString error = "Error: could not compact the database file. Message from database engine:  ";
+        error.append(db.lastErrorMessage);
+        QApplication::restoreOverrideCursor( );
+        QMessageBox::warning( this, QApplication::applicationName(), error );
+    } else {
+        QApplication::restoreOverrideCursor( );
+        QMessageBox::information(this, QApplication::applicationName(), "Database successfully compacted.");
     }
     db.open(db.curDBFilename);
     populateStructure();
     resetBrowser();
-    ui->fileCloseAction->setEnabled(true);
-    ui->fileCompactAction->setEnabled(true);
-    QApplication::restoreOverrideCursor( );
 }
 
 void MainWindow::deleteTable()
@@ -859,28 +847,11 @@ void MainWindow::mainTabSelected(int tabindex)
 
 void MainWindow::importTableFromCSV()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file first." );
-        return;
-    }
-
-    // Not needed anymore due to nested savepoints
-    /*     if (db.getDirty())
-     {
-  QString msg = "Database needs to be saved before the import operation.\nSave current changes and continue?";
-  if (QMessageBox::question( this, applicationName ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-  {
-     db.save();
-  } else {
-   return;
-  }
-    }*/
-
     QString wFile = QFileDialog::getOpenFileName(
                 this,
                 "Choose a text file",
                 defaultlocation,
-                "Text files (*.csv *.txt)");
+                "Text files(*.csv *.txt);;All files(*)");
 
     if (QFile::exists(wFile) )
     {
@@ -897,10 +868,6 @@ void MainWindow::importTableFromCSV()
 
 void MainWindow::exportTableToCSV()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
-        return;
-    }
     exportTableCSVForm dialog(this);
     dialog.populateOptions(db.getTableNames());
     if(dialog.exec())
@@ -912,7 +879,7 @@ void MainWindow::exportTableToCSV()
                     this,
                     "Choose a filename to export data",
                     defaultlocation,
-                    "Text files (*.csv *txt)");
+                    "Text files(*.csv *.txt)");
 
         if (fileName.size() > 0)
         {
@@ -994,10 +961,8 @@ void MainWindow::fileSave()
 void MainWindow::fileRevert()
 {
     if (db.isOpen()){
-        QString msg = "Are you sure you want to undo all changes made to the database file \n\n<b> ";
-        msg.append(db.curDBFilename);
-        msg.append("</b>\n since the last save?");
-        if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        QString msg = QString("Are you sure you want to undo all changes made to the database file '%1' since the last save?").arg(db.curDBFilename);
+        if(QMessageBox::question(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
         {
             db.revert();
             populateStructure();
@@ -1008,24 +973,19 @@ void MainWindow::fileRevert()
 
 void MainWindow::exportDatabaseToSQL()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened to export" );
-        return;
-    }
-
     QString fileName = QFileDialog::getSaveFileName(
                 this,
                 "Choose a filename to export",
                 defaultlocation,
-                "Text files (*.sql *txt)");
+                "Text files(*.sql *.txt)");
 
     if (fileName.size() > 0)
     {
         if (!db.dump(fileName))
         {
-            QMessageBox::information( this, QApplication::applicationName(), "Could not create export file" );
+            QMessageBox::warning( this, QApplication::applicationName(), "Could not create export file." );
         } else {
-            QMessageBox::information( this, QApplication::applicationName(), "Export completed" );
+            QMessageBox::information( this, QApplication::applicationName(), "Export completed." );
         }
     }
 }
@@ -1036,7 +996,7 @@ void MainWindow::importDatabaseFromSQL()
                 this,
                 "Choose a file to import",
                 defaultlocation,
-                "Text files (*.sql *txt)");
+                "Text files(*.sql *.txt);;All files(*)");
 
     if (fileName.size() > 0)
     {
@@ -1253,13 +1213,16 @@ void MainWindow::activateFields(bool enable)
 {
     ui->fileCloseAction->setEnabled(enable);
     ui->fileCompactAction->setEnabled(enable);
+    ui->fileExportCSVAction->setEnabled(enable);
+    ui->fileExportSQLAction->setEnabled(enable);
+    ui->fileImportCSVAction->setEnabled(enable);
     ui->editCreateTableAction->setEnabled(enable);
     ui->editCreateIndexAction->setEnabled(enable);
     ui->editDeleteIndexAction->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->executeQueryButton->setEnabled(enable);
-    ui->scrollareaPragmas->setEnabled(enable);
+    ui->scrollAreaWidgetContents->setEnabled(enable);
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
