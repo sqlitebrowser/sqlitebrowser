@@ -129,6 +129,8 @@ void editTableForm::checkInput()
     bool valid = true;
     if(ui->editTableName->text().isEmpty() || ui->editTableName->text().contains(" "))
         valid = false;
+    if(ui->treeWidget->topLevelItemCount() == 0)
+        valid = false;
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
@@ -167,6 +169,7 @@ void editTableForm::addField()
         tbitem->setText(1, dialog.field_type);
         modified = true;
         ui->treeWidget->addTopLevelItem(tbitem);
+        checkInput();
     }
 }
 
@@ -194,6 +197,8 @@ void editTableForm::removeField()
             QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support the deletion of columns yet."));
 //      }
     }
+
+    checkInput();
 }
 
 void editTableForm::fieldSelectionChanged()

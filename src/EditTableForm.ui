@@ -270,6 +270,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidget</sender>
+   <signal>itemChanged(QTreeWidgetItem*,int)</signal>
+   <receiver>editTableForm</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
