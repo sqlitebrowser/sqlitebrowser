@@ -241,13 +241,13 @@ public:
     createIndexForm(QWidget* parent = 0, Qt::WindowFlags fl = Qt::Window);
     ~createIndexForm();
 
-    tableMap mtablemap;
+    objectMap mtablemap;
     QString createStatement;
 
 public slots:
     virtual void tableSelected( const QString & entry );
     virtual void confirmCreate();
-    virtual void populateTable( const tableMap& rmap );
+    virtual void populateTable(const QList<DBBrowserObject> &rmap );
 
 protected slots:
     virtual void languageChange();

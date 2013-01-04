@@ -3,6 +3,7 @@
 
 #include <QStringList>
 #include <QMap>
+#include <QMultiMap>
 #include "sqlite3.h"
 
 class SQLLogDock;
@@ -33,8 +34,7 @@ static QString g_sApplicationNameShort = QString("sqlitebrowser");
 static QString g_applicationIconName = QString(":/oldimages/icon16");
 
 typedef QMap<int, class DBBrowserField> fieldMap;
-typedef QMap<QString, class DBBrowserTable> tableMap;
-typedef QMap<QString, class DBBrowserObject> objectMap;
+typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 typedef QMap<int, int> rowIdMap;
 
 typedef QList<QStringList> rowList;
@@ -58,32 +58,20 @@ class DBBrowserObject
 {
 public:
     DBBrowserObject() : name( "" ) { }
-    DBBrowserObject( const QString& wname,const QString& wsql )
-        : name( wname), sql( wsql )
-    { }
-    QString getname() const { return name; }
-    QString getsql() const { return sql; }
-private:
-    QString name;
-    QString sql;
-};
-
-class DBBrowserTable
-{
-public:
-    DBBrowserTable() : name( "" ) { }
-    DBBrowserTable( const QString& wname,const QString& wsql )
-        : name( wname), sql( wsql )
+    DBBrowserObject( const QString& wname,const QString& wsql, const QString& wtype )
+        : name( wname), sql( wsql ), type(wtype)
     { }
 
     void addField(int order, const QString& wfield,const QString& wtype);
 
     QString getname() const { return name; }
     QString getsql() const { return sql; }
+    QString gettype() const { return type; }
     fieldMap fldmap;
 private:
     QString name;
     QString sql;
+    QString type;
 };
 
 
@@ -114,7 +102,9 @@ public:
 
     QStringList getTableFields(const QString & tablename);
     QStringList getTableTypes(const QString & tablename);
-    QStringList getTableNames();
+    QStringList getBrowsableObjectNames();
+    objectMap getBrowsableObjects();
+    DBBrowserObject getObjectByName(const QString& name);
     QStringList getIndexNames();
     resultMap getFindResults( const QString & wstatement);
     int getRecordCount();
@@ -135,10 +125,7 @@ public:
 
     QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);
 
-    tableMap tbmap;
-    objectMap idxmap;
-    objectMap viewmap;
-    objectMap trgmap;
+    objectMap objMap;
     rowIdMap idmap;
 
     rowList browseRecs;

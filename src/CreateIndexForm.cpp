@@ -34,7 +34,7 @@ void createIndexForm::languageChange()
 
 void createIndexForm::tableSelected( const QString & entry )
 {
-        tableMap::Iterator it;
+        objectMap::Iterator it;
          for ( it = mtablemap.begin(); it != mtablemap.end(); ++it ) {
              QString tname = it.value().getname() ;
 
@@ -86,20 +86,20 @@ void createIndexForm::confirmCreate()
     }
 }
 
-void createIndexForm::populateTable(const tableMap& rmap)
+void createIndexForm::populateTable(const QList<DBBrowserObject>& rmap)
 {
-    tableMap::ConstIterator it;
+    QList<DBBrowserObject>::ConstIterator it;
     for ( it = rmap.begin(); it != rmap.end(); ++it ) {
-        comboTables->addItem( it.value().getname() );
+        comboTables->addItem( (*it).getname() );
 
         //populate the fields with first table name
-        if (it==mtablemap.begin()){
+        /*if (it==mtablemap.begin()){
             fieldMap::Iterator fit;
-            fieldMap fmap = it.value().fldmap;
+            fieldMap fmap = (*it).value().fldmap;
             for ( fit = fmap.begin(); fit != fmap.end(); ++fit ) {
                 comboFields->addItem( fit.value().getname() );
             }
-        }
+        }*/
     }
 }
 

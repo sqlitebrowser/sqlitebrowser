@@ -8,7 +8,7 @@
 #include "SQLLogDock.h"
 #include <QApplication>
 
-void DBBrowserTable::addField(int order, const QString& wfield,const QString& wtype)
+void DBBrowserObject::addField(int order, const QString& wfield,const QString& wtype)
 {
     fldmap[order] = DBBrowserField(wfield,wtype);
 }
@@ -217,10 +217,7 @@ void DBBrowserDB::close (){
         sqlite3_close(_db);
     }
     _db = 0;
-    idxmap.clear();
-    trgmap.clear();
-    viewmap.clear();
-    tbmap.clear();
+    objMap.clear();
     idmap.clear();
     browseRecs.clear();
     browseFields.clear();
@@ -543,26 +540,42 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
 }
 
 
-QStringList DBBrowserDB::getTableNames()
+QStringList DBBrowserDB::getBrowsableObjectNames()
 {
-    tableMap::ConstIterator it;
+    objectMap::ConstIterator it;
     QStringList res;
 
-    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-        res.append( it.value().getname() );
+    for(it=objMap.begin();it!=objMap.end();++it)
+    {
+        if(it.key() == "table" || it.key() == "view")
+            res.append(it.value().getname());
     }
     
     return res;
 }
 
+objectMap DBBrowserDB::getBrowsableObjects()
+{
+    objectMap::ConstIterator it;
+    objectMap res;
+
+    for(it=objMap.begin();it!=objMap.end();++it)
+    {
+        if(it.key() == "table" || it.key() == "view")
+            res.insert(it.key(), it.value());
+    }
+
+    return res;
+}
+
 QStringList DBBrowserDB::getIndexNames()
 {
-    objectMap::Iterator it;
-    objectMap tmap = idxmap;
+    QList<DBBrowserObject> tmap = objMap.values("index");
+    QList<DBBrowserObject>::ConstIterator it;
     QStringList res;
 
     for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-        res.append( it.value().getname() );
+        res.append( (*it).getname() );
     }
     
     return res;
@@ -570,14 +583,16 @@ QStringList DBBrowserDB::getIndexNames()
 
 QStringList DBBrowserDB::getTableFields(const QString & tablename)
 {
-    tableMap::ConstIterator it;
+    objectMap::ConstIterator it;
     QStringList res;
 
-    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-        if (tablename.compare(it.value().getname())==0 ){
+    for ( it = objMap.begin(); it != objMap.end(); ++it )
+    {
+        if((*it).getname() == tablename)
+        {
             fieldMap::ConstIterator fit;
 
-            for ( fit = it.value().fldmap.begin(); fit != it.value().fldmap.end(); ++fit ) {
+            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
                 res.append( fit.value().getname() );
             }
         }
@@ -587,19 +602,34 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename)
 
 QStringList DBBrowserDB::getTableTypes(const QString & tablename)
 {
-    tableMap::ConstIterator it;
+    objectMap::ConstIterator it;
     QStringList res;
 
-    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-        if (tablename.compare(it.value().getname())==0 ){
+    for ( it = objMap.begin(); it != objMap.end(); ++it )
+    {
+        if((*it).getname() == tablename)
+        {
             fieldMap::ConstIterator fit;
 
-            for ( fit = it.value().fldmap.begin(); fit != it.value().fldmap.end(); ++fit ) {
+            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
                 res.append( fit.value().gettype() );
             }
         }
     }
     return res;
+}
+
+DBBrowserObject DBBrowserDB::getObjectByName(const QString& name)
+{
+    objectMap::ConstIterator it;
+    QStringList res;
+
+    for ( it = objMap.begin(); it != objMap.end(); ++it )
+    {
+        if((*it).getname() == name)
+            return *it;
+    }
+    return DBBrowserObject();
 }
 
 int DBBrowserDB::getRecordCount()
@@ -629,10 +659,7 @@ void DBBrowserDB::updateSchema( )
     const char *tail;
     int err=0;
 
-    idxmap.clear();
-    tbmap.clear();
-    viewmap.clear();
-    trgmap.clear();
+    objMap.clear();
 
     lastErrorMessage = QString("no error");
     QString statement = "SELECT type, name, sql FROM sqlite_master;";
@@ -647,14 +674,8 @@ void DBBrowserDB::updateSchema( )
             val2 = QString((const char *) sqlite3_column_text(vm, 1));
             val3 = QString((const char *) sqlite3_column_text(vm, 2));
 
-            if(val1 == "table")
-                tbmap[val2] = DBBrowserTable(GetDecodedQString(val2), GetDecodedQString(val3));
-            else if(val1 == "index")
-                idxmap[val2] = DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3));
-            else if(val1 == "view")
-                viewmap[val2] = DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3));
-            else if(val1 == "trigger")
-                trgmap[val2] = DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3));
+            if(val1 == "table" || val1 == "index" || val1 == "view" || val1 == "trigger")
+                objMap.insert(val1, DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3), GetDecodedQString(val1)));
             else
                 qDebug("unknown object type %s", val1.toStdString().c_str());
         }
@@ -664,35 +685,39 @@ void DBBrowserDB::updateSchema( )
     }
     qDebug(sqlite3_errmsg(_db));
 
-    //now get the field list for each table in tbmap
-    tableMap::Iterator it;
-    for ( it = tbmap.begin(); it != tbmap.end(); ++it ) {
-        statement = "PRAGMA TABLE_INFO(";
-        statement.append( it.value().getname());
-        statement.append(");");
-        logSQL(statement, kLogMsg_App);
-        err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
-                            &vm, &tail);
-        if (err == SQLITE_OK){
-            it.value(). fldmap.clear();
-            int e = 0;
-            while ( sqlite3_step(vm) == SQLITE_ROW ){
-                if (sqlite3_column_count(vm)==6) {
-                    QString  val1, val2;
-                    int ispk= 0;
-                    val1 = QString((const char *) sqlite3_column_text(vm, 1));
-                    val2 = QString((const char *) sqlite3_column_text(vm, 2));
-                    ispk = sqlite3_column_int(vm, 5);
-                    if (ispk==1){
-                        val2.append(QString(" PRIMARY KEY"));
+    //now get the field list for each table
+    objectMap::Iterator it;
+    for ( it = objMap.begin(); it != objMap.end(); ++it )
+    {
+        if((*it).gettype() == "table" || (*it).gettype() == "view")
+        {
+            statement = "PRAGMA TABLE_INFO(";
+            statement.append( (*it).getname());
+            statement.append(");");
+            logSQL(statement, kLogMsg_App);
+            err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
+                                &vm, &tail);
+            if (err == SQLITE_OK){
+                (*it).fldmap.clear();
+                int e = 0;
+                while ( sqlite3_step(vm) == SQLITE_ROW ){
+                    if (sqlite3_column_count(vm)==6) {
+                        QString  val1, val2;
+                        int ispk= 0;
+                        val1 = QString((const char *) sqlite3_column_text(vm, 1));
+                        val2 = QString((const char *) sqlite3_column_text(vm, 2));
+                        ispk = sqlite3_column_int(vm, 5);
+                        if (ispk==1){
+                            val2.append(QString(" PRIMARY KEY"));
+                        }
+                        (*it).addField(e,GetDecodedQString(val1),GetDecodedQString(val2));
+                        e++;
                     }
-                    it.value().addField(e,GetDecodedQString(val1),GetDecodedQString(val2));
-                    e++;
                 }
+                sqlite3_finalize(vm);
+            } else{
+                lastErrorMessage = QString ("could not get types");
             }
-            sqlite3_finalize(vm);
-        } else{
-            lastErrorMessage = QString ("could not get types");
         }
     }
 }

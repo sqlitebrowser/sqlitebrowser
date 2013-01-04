@@ -173,56 +173,34 @@ void MainWindow::populateStructure()
         return;
     }
     db.updateSchema();
-    QStringList tblnames = db.getTableNames();
+    QStringList tblnames = db.getBrowsableObjectNames();
     sqliteHighlighter->setTableNames(tblnames);
-    tableMap::ConstIterator it;
+    objectMap::ConstIterator it;
 
-    for ( it = db.tbmap.begin(); it != db.tbmap.end(); ++it ) {
-
-        //* Table node
+    for ( it = db.objMap.begin(); it != db.objMap.end(); ++it )
+    {
+        // Object node
         QTreeWidgetItem *tableItem = new QTreeWidgetItem();
-        tableItem->setText(0, it.value().getname());
-        tableItem->setText(1,  "table");
-        tableItem->setText(3, it.value().getsql());
-        tableItem->setIcon(0, QIcon(":/icons/table"));
+        tableItem->setIcon(0, QIcon(QString(":/icons/%1").arg((*it).gettype())));
+        tableItem->setText(0, (*it).getname());
+        tableItem->setText(1, (*it).gettype());
+        tableItem->setText(3, (*it).getsql());
         ui->dbTreeWidget->addTopLevelItem(tableItem);
 
-        //* Field Nodes
-        fieldMap::ConstIterator fit;
-        for ( fit = it.value().fldmap.begin(); fit != it.value().fldmap.end(); ++fit ) {
-            QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
-            fldItem->setText( 0, fit.value().getname() );
-            fldItem->setText( 1, "field"  );
-            fldItem->setText( 2, fit.value().gettype() );
-            fldItem->setIcon(0, QIcon(":/icons/field"));
+        // If it is a table add the field Nodes
+        if((*it).gettype() == "table" || (*it).gettype() == "view")
+        {
+            fieldMap::ConstIterator fit;
+            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
+                QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
+                fldItem->setText( 0, fit.value().getname() );
+                fldItem->setText( 1, "field"  );
+                fldItem->setText( 2, fit.value().gettype() );
+                fldItem->setIcon(0, QIcon(":/icons/field"));
+            }
+            // TODO make an options/setting autoexpand
+            ui->dbTreeWidget->setItemExpanded(tableItem, true);
         }
-        // TODO make an options/setting autoexpand
-        ui->dbTreeWidget->setItemExpanded(tableItem, true);
-    }
-    objectMap::ConstIterator it2;
-    for ( it2 = db.idxmap.begin(); it2 != db.idxmap.end(); ++it2 ) {
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText( 0, it2.value().getname() );
-        item->setText( 1, "index"  );
-        item->setText( 3, it2.value().getsql() );
-        item->setIcon(0, QIcon(":/icons/index"));
-        ui->dbTreeWidget->addTopLevelItem(item);
-    }
-    for ( it2 = db.viewmap.begin(); it2 != db.viewmap.end(); ++it2 ) {
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText( 0, it2.value().getname() );
-        item->setText( 1, "view"  );
-        item->setText( 3, it2.value().getsql() );
-        item->setIcon(0, QIcon(":/icons/view"));
-        ui->dbTreeWidget->addTopLevelItem(item);
-    }
-    for ( it2 = db.trgmap.begin(); it2 != db.trgmap.end(); ++it2 ) {
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText( 0, it2.value().getname() );
-        item->setText( 1, "trigger"  );
-        item->setText( 3, it2.value().getsql() );
-        item->setIcon(0, QIcon(":/icons/trigger"));
-        ui->dbTreeWidget->addTopLevelItem(item);
     }
 }
 
@@ -245,6 +223,12 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
         return;
     }
 
+    // Activate the add and delete record buttons and editing only if a table has been selected
+    bool is_table = db.getObjectByName(tablename).gettype() == "table";
+    ui->buttonNewRecord->setEnabled(is_table);
+    ui->buttonDeleteRecord->setEnabled(is_table);
+    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+
     if (mustreset){
         updateTableView(0, keepColumnWidths);
         if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
@@ -266,9 +250,12 @@ void MainWindow::resetBrowser()
 {
     QString sCurrentTable = ui->comboBrowseTable->currentText();
     ui->comboBrowseTable->clear();
-    QStringList tab = db.getTableNames();
-    if(!tab.isEmpty()) {
-        ui->comboBrowseTable->addItems(tab);
+    objectMap tab = db.getBrowsableObjects();
+    for(objectMap::ConstIterator i=tab.begin();i!=tab.end();++i)
+    {
+        ui->comboBrowseTable->addItem(QIcon(QString(":icons/%1").arg(i.value().gettype())), i.value().getname());
+
+        //ui->comboBrowseTable->addItems(tab);
     }
     setRecordsetLabel();
     int pos = ui->comboBrowseTable->findText(sCurrentTable);
@@ -577,7 +564,7 @@ void MainWindow::createIndex()
         return;
     }
     createIndexForm dialog(this);
-    dialog.populateTable(db.tbmap);
+    dialog.populateTable(db.objMap.values("table"));
     if(dialog.exec())
     {
         if (!db.executeSQL(dialog.createStatement)){
@@ -763,6 +750,10 @@ void MainWindow::doubleClickTable( int row, int col )
         return;
     }
 
+    // Don't allow editing of other objects than tables
+    if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
+        return;
+
     int realRow = row;
 
     editText(realRow , col);
@@ -869,7 +860,7 @@ void MainWindow::importTableFromCSV()
 void MainWindow::exportTableToCSV()
 {
     exportTableCSVForm dialog(this);
-    dialog.populateOptions(db.getTableNames());
+    dialog.populateOptions(db.getBrowsableObjectNames());
     if(dialog.exec())
     {
         //load our table
@@ -1081,26 +1072,18 @@ void MainWindow::on_tree_context_menu(const QPoint &qPoint){
 }
 //** Tree selection changed
 void MainWindow::on_tree_selection_changed(){
-    if (!ui->dbTreeWidget->selectionModel()->hasSelection()){
-        ui->editDeleteTableAction->setEnabled(false);
-        ui->editModifyTableAction->setEnabled(false);
-        ui->editAddFieldActionPopup->setEnabled(false);
-        ui->editModifyFieldActionPopup->setEnabled(false);
-        ui->editDeleteFieldActionPopup->setEnabled(false);
-        return;
-    }
+    // Just assume first that something's selected that can not be edited at all
+    ui->editDeleteTableAction->setEnabled(false);
+    ui->editModifyTableAction->setEnabled(false);
+    ui->editAddFieldActionPopup->setEnabled(false);
+    ui->editModifyFieldActionPopup->setEnabled(false);
+    ui->editDeleteFieldActionPopup->setEnabled(false);
 
     if(ui->dbTreeWidget->currentItem()->text(1) == "table"){
         ui->editDeleteTableAction->setEnabled(true);
         ui->editModifyTableAction->setEnabled(true);
         ui->editAddFieldActionPopup->setEnabled(true);
-        ui->editModifyFieldActionPopup->setEnabled(false);
-        ui->editDeleteFieldActionPopup->setEnabled(false);
-
-    }else if(ui->dbTreeWidget->currentItem()->text(1) == "field"){
-        ui->editAddFieldActionPopup->setEnabled(false);
-        ui->editDeleteTableAction->setEnabled(false);
-        ui->editModifyTableAction->setEnabled(false);
+    }else if(ui->dbTreeWidget->currentItem()->text(1) == "field" && ui->dbTreeWidget->currentItem()->parent()->text(1) == "table"){
         ui->editModifyFieldActionPopup->setEnabled(true);
         ui->editDeleteFieldActionPopup->setEnabled(true);
     }
