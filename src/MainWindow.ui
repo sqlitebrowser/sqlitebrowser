@@ -32,7 +32,7 @@
        </property>
        <addaction name="editCreateTableAction"/>
        <addaction name="editModifyTableAction"/>
-       <addaction name="editDeleteTableAction"/>
+       <addaction name="editDeleteObjectAction"/>
        <addaction name="separator"/>
        <addaction name="editAddFieldActionPopup"/>
        <addaction name="editModifyFieldActionPopup"/>
@@ -294,7 +294,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>354</width>
+          <width>763</width>
           <height>653</height>
          </rect>
         </property>
@@ -972,7 +972,7 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="editCreateTableAction"/>
-    <addaction name="editDeleteTableAction"/>
+    <addaction name="editDeleteObjectAction"/>
     <addaction name="editModifyTableAction"/>
     <addaction name="separator"/>
     <addaction name="editCreateIndexAction"/>
@@ -1204,7 +1204,7 @@
     <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
    </property>
   </action>
-  <action name="editDeleteTableAction">
+  <action name="editDeleteObjectAction">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -1213,7 +1213,10 @@
      <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
    </property>
    <property name="text">
-    <string>Delete Table</string>
+    <string>Delete Object</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Object</string>
    </property>
    <property name="whatsThis">
     <string>Open the Delete Table wizard, where you can select a database table to be dropped.</string>
@@ -1852,10 +1855,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>editDeleteTableAction</sender>
+   <sender>editDeleteObjectAction</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
-   <slot>deleteTable()</slot>
+   <slot>deleteObject()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -2134,7 +2137,7 @@
   <slot>deleteIndex()</slot>
   <slot>createIndex()</slot>
   <slot>createTable()</slot>
-  <slot>deleteTable()</slot>
+  <slot>deleteObject()</slot>
   <slot>editTable()</slot>
   <slot>editTablePopup()</slot>
   <slot>on_add_field()</slot>

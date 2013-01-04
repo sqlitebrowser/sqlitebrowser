@@ -86,7 +86,7 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->editModifyTableAction);
     popupTableMenu->addAction(ui->editAddFieldActionPopup);
     popupTableMenu->addSeparator();
-    popupTableMenu->addAction(ui->editDeleteTableAction);
+    popupTableMenu->addAction(ui->editDeleteObjectAction);
     popupFieldMenu = new QMenu(this);
     popupFieldMenu->addAction(ui->editModifyFieldActionPopup);
     popupFieldMenu->addAction(ui->editDeleteFieldActionPopup);
@@ -595,20 +595,22 @@ void MainWindow::compact()
     resetBrowser();
 }
 
-void MainWindow::deleteTable()
+void MainWindow::deleteObject()
 {
     // Get name of table to delete
     QString table = ui->dbTreeWidget->currentItem()->text(0);
+    QString type = ui->dbTreeWidget->currentItem()->text(1);
 
     // Ask user if he really wants to delete that table
-    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the table '%1'?\nAll data in the table will be lost.").arg(table),
+    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the %1 '%2'?\nAll data associated with the %1 will be lost.").arg(type).arg(table),
                             QMessageBox::Yes, QMessageBox::No | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Yes)
     {
         // Delete the table
-        QString statement = QString("DROP TABLE %1;").arg(table);
-        if (!db.executeSQL( statement)) {
-            QString error = QString("Error: could not delete the table. Message from database engine:\n%1").arg(db.lastErrorMessage);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
+        QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(table);
+        if(!db.executeSQL( statement))
+        {
+            QString error = QString("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);
+            QMessageBox::warning(this, QApplication::applicationName(), error);
         } else {
             populateStructure();
             resetBrowser();
@@ -1055,37 +1057,51 @@ void MainWindow::updatePreferences()
 //******************************************************************
 
 //** Db Tree Context Menu
-void MainWindow::on_tree_context_menu(const QPoint &qPoint){
-    if( !ui->dbTreeWidget->selectionModel()->hasSelection() ){
+void MainWindow::on_tree_context_menu(const QPoint &qPoint)
+{
+    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
         return;
-    }
+
     QTreeWidgetItem *cItem = ui->dbTreeWidget->currentItem();
 
-    if(cItem->text(1) == "table"){
-        ui->editDeleteTableAction->setDisabled(false);
-        ui->editModifyTableAction->setDisabled(false);
-        popupTableMenu->exec( ui->dbTreeWidget->mapToGlobal(qPoint) );
-
-    }else if(cItem->text(1) == "field"){
-        popupFieldMenu->exec( ui->dbTreeWidget->mapToGlobal(qPoint) );
-    }
+    if(cItem->text(1) == "table" || cItem->text(1) == "view" || cItem->text(1) == "trigger" || cItem->text(1) == "index")
+        popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
+    else if(cItem->text(1) == "field")
+        popupFieldMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
 //** Tree selection changed
-void MainWindow::on_tree_selection_changed(){
+void MainWindow::on_tree_selection_changed()
+{
     // Just assume first that something's selected that can not be edited at all
-    ui->editDeleteTableAction->setEnabled(false);
+    ui->editDeleteObjectAction->setEnabled(false);
     ui->editModifyTableAction->setEnabled(false);
     ui->editAddFieldActionPopup->setEnabled(false);
     ui->editModifyFieldActionPopup->setEnabled(false);
     ui->editDeleteFieldActionPopup->setEnabled(false);
 
-    if(ui->dbTreeWidget->currentItem()->text(1) == "table"){
-        ui->editDeleteTableAction->setEnabled(true);
+    if(ui->dbTreeWidget->currentItem() == 0)
+        return;
+
+    // Change the text of the actions
+    ui->editDeleteObjectAction->setText(tr("Delete Table"));
+    if(ui->dbTreeWidget->currentItem()->text(1) == "view")
+        ui->editDeleteObjectAction->setText(tr("Delete View"));
+    else if(ui->dbTreeWidget->currentItem()->text(1) == "trigger")
+        ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
+    else if(ui->dbTreeWidget->currentItem()->text(1) == "index")
+        ui->editDeleteObjectAction->setText(tr("Delete Index"));
+
+    // Activate actions
+    if(ui->dbTreeWidget->currentItem()->text(1) == "table")
+    {
+        ui->editDeleteObjectAction->setEnabled(true);
         ui->editModifyTableAction->setEnabled(true);
         ui->editAddFieldActionPopup->setEnabled(true);
-    }else if(ui->dbTreeWidget->currentItem()->text(1) == "field" && ui->dbTreeWidget->currentItem()->parent()->text(1) == "table"){
+    } else if(ui->dbTreeWidget->currentItem()->text(1) == "field" && ui->dbTreeWidget->currentItem()->parent()->text(1) == "table") {
         ui->editModifyFieldActionPopup->setEnabled(true);
         ui->editDeleteFieldActionPopup->setEnabled(true);
+    } else if(ui->dbTreeWidget->currentItem()->text(1) == "view" || ui->dbTreeWidget->currentItem()->text(1) == "trigger" || ui->dbTreeWidget->currentItem()->text(1) == "index") {
+        ui->editDeleteObjectAction->setEnabled(true);
     }
 }
 

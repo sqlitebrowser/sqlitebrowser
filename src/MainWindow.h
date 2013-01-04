@@ -92,7 +92,7 @@ public slots:
     virtual void createTable();
     virtual void createIndex();
     virtual void compact();
-    virtual void deleteTable();
+    virtual void deleteObject();
     virtual void editTable();
     virtual void deleteIndex();
     virtual void copy();
