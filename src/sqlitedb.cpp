@@ -431,7 +431,6 @@ bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby
 bool DBBrowserDB::createColumn( QString tablename, QString fieldname, QString fieldtype ){
     qDebug("create column");
     QString sql = QString("ALTER TABLE `%1` ADD COLUMN `%2` %3").arg(tablename).arg(fieldname).arg(fieldtype);
-    qDebug(sql.toUtf8());
     return executeSQL(sql);
 }
 
@@ -439,7 +438,6 @@ bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QStr
     qDebug("rename column");
     // TODO change column name and type. SQLite doesn't support natively...
     //QString sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);
-    //qDebug(sql.toUtf8());
     //return executeSQL(sql);
     return true;
 }
@@ -683,7 +681,6 @@ void DBBrowserDB::updateSchema( )
     }else{
         qDebug ("could not get list of db objects: %d, %s",err,sqlite3_errmsg(_db));
     }
-    qDebug(sqlite3_errmsg(_db));
 
     //now get the field list for each table
     objectMap::Iterator it;
