@@ -16,7 +16,6 @@ HEADERS += \
     sqlite_source/sqlite3.h \
     SQLLogDock.h \
     CreateIndexForm.h \
-    DeleteIndexForm.h \
     DialogAbout.h \
     EditFieldForm.h \
     EditForm.h \
@@ -35,7 +34,6 @@ SOURCES += \
     SQLLogDock.cpp \
     main.cpp \
     CreateIndexForm.cpp \
-    DeleteIndexForm.cpp \
     DialogAbout.cpp \
     EditFieldForm.cpp \
     EditForm.cpp \

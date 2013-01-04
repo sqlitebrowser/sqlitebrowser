@@ -94,7 +94,6 @@ public slots:
     virtual void compact();
     virtual void deleteObject();
     virtual void editTable();
-    virtual void deleteIndex();
     virtual void copy();
     virtual void paste();
     virtual void helpWhatsThis();

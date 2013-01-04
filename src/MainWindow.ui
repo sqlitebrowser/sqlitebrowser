@@ -294,7 +294,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>763</width>
+          <width>354</width>
           <height>653</height>
          </rect>
         </property>
@@ -972,11 +972,11 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="editCreateTableAction"/>
-    <addaction name="editDeleteObjectAction"/>
     <addaction name="editModifyTableAction"/>
     <addaction name="separator"/>
+    <addaction name="editDeleteObjectAction"/>
+    <addaction name="separator"/>
     <addaction name="editCreateIndexAction"/>
-    <addaction name="editDeleteIndexAction"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -1250,21 +1250,6 @@
    </property>
    <property name="whatsThis">
     <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
-   </property>
-  </action>
-  <action name="editDeleteIndexAction">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/index_delete</normaloff>:/icons/index_delete</iconset>
-   </property>
-   <property name="text">
-    <string>Delete Index</string>
-   </property>
-   <property name="whatsThis">
-    <string>Open the Delete Index wizard, where you can select a database index to be dropped.</string>
    </property>
   </action>
   <action name="viewPreferencesAction">
@@ -1811,22 +1796,6 @@
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileSave()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editDeleteIndexAction</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>deleteIndex()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

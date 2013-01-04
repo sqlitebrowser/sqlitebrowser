@@ -12,7 +12,6 @@
 #include <QDragEnterEvent>
 #include <QScrollBar>
 #include "CreateIndexForm.h"
-#include "DeleteIndexForm.h"
 #include "DialogAbout.h"
 #include "EditTableForm.h"
 #include "EditFieldForm.h"
@@ -640,31 +639,6 @@ void MainWindow::editTable()
     }
 }
 
-void MainWindow::deleteIndex()
-{
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
-        return;
-    }
-    deleteIndexForm dialog(this);
-    dialog.populateOptions(db.getIndexNames());
-    if(dialog.exec())
-    {
-        QString statement = "DROP INDEX ";
-        statement.append(dialog.option);
-        statement.append(";");
-        if (!db.executeSQL( statement)){
-            QString error = "Error: could not delete the index. Message from database engine:  ";
-            error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
-        } else {
-            populateStructure();
-            resetBrowser();
-        }
-    }
-
-}
-
 void MainWindow::copy()
 {
     QWidget * t = ui->dataTable->cellWidget(ui->dataTable->currentRow(), ui->dataTable->currentColumn());
@@ -1083,13 +1057,15 @@ void MainWindow::on_tree_selection_changed()
         return;
 
     // Change the text of the actions
-    ui->editDeleteObjectAction->setText(tr("Delete Table"));
+    ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(ui->dbTreeWidget->currentItem()->text(1))));
     if(ui->dbTreeWidget->currentItem()->text(1) == "view")
         ui->editDeleteObjectAction->setText(tr("Delete View"));
     else if(ui->dbTreeWidget->currentItem()->text(1) == "trigger")
         ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
     else if(ui->dbTreeWidget->currentItem()->text(1) == "index")
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
+    else
+        ui->editDeleteObjectAction->setText(tr("Delete Table"));
 
     // Activate actions
     if(ui->dbTreeWidget->currentItem()->text(1) == "table")
@@ -1217,7 +1193,6 @@ void MainWindow::activateFields(bool enable)
     ui->fileImportCSVAction->setEnabled(enable);
     ui->editCreateTableAction->setEnabled(enable);
     ui->editCreateIndexAction->setEnabled(enable);
-    ui->editDeleteIndexAction->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->executeQueryButton->setEnabled(enable);
