@@ -110,11 +110,9 @@ void importCSVForm::createButtonPressed()
     QProgressDialog progress("Inserting data...", "Cancel", 0, curList.size());
     progress.setWindowModality(Qt::ApplicationModal);
     
-    sql = "CREATE TABLE ";
-    sql.append(tabname);
-    sql.append(" (");
+    sql = QString("CREATE TABLE `%1` (").arg(tabname);
     for (int r=0; r<numfields;r++){
-        sql.append(fieldList[r]);
+        sql.append(QString("`%1`").arg(fieldList[r]));
         //createStatement.append(" text");
         if (r<(numfields - 1))
             sql.append(", ");
@@ -135,11 +133,8 @@ void importCSVForm::createButtonPressed()
     //now lets import all data, one row at a time
     for ( int i=0; i < curList.size(); ++i ) {
         if (colNum==0)
-        {
-            sql = "INSERT INTO ";
-            sql.append(tabname);
-            sql.append(" VALUES(");
-        }
+            sql = QString("INSERT INTO `%1` VALUES(").arg(tabname);
+
         //need to mprintf here
         //sql.append(*ct);
         char * formSQL = sqlite3_mprintf("%Q",(const char *) curList[i].toUtf8());

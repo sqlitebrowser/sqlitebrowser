@@ -71,7 +71,7 @@ void editTableForm::accept()
         // Build SQL statement from what the use entered
         QString sql = QString("CREATE TABLE `%1` (").arg(ui->editTableName->text());
         for(int i=0;i<ui->treeWidget->topLevelItemCount();i++)
-            sql.append(QString("%1 %2,").arg(ui->treeWidget->topLevelItem(i)->text(0)).arg(ui->treeWidget->topLevelItem(i)->text(1)));
+            sql.append(QString("`%1` %2,").arg(ui->treeWidget->topLevelItem(i)->text(0)).arg(ui->treeWidget->topLevelItem(i)->text(1)));
         sql.remove(sql.count() - 1, 1);     // Remove last comma
         sql.append(");");
 

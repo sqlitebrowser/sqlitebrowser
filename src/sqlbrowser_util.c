@@ -287,7 +287,7 @@ static int dump_callback(void *pArg, int nArg, char **azArg, char **azCol){
     d2.mode = MODE_Insert;
     d2.zDestTable = 0;
     set_table_name(&d2, azArg[0]);
-    stmt = sqlite3_mprintf("SELECT * FROM '%q'", azArg[0]);
+    stmt = sqlite3_mprintf("SELECT * FROM `%q`", azArg[0]);
     sqlite3_exec(p->db,stmt, callback, &d2, 0);
     sqlite3_free(stmt);
     set_table_name(&d2, 0);

@@ -69,9 +69,9 @@ void createIndexForm::confirmCreate()
         if (comboUnique->currentIndex()==1){
             createStatement.append("UNIQUE ");
         }
-        createStatement.append("INDEX ");
+        createStatement.append("INDEX `");
         createStatement.append(indexLineEdit->text());
-        createStatement.append(" ON ");
+        createStatement.append("` ON ");
         createStatement.append(comboTables->currentText());
         createStatement.append("(");
         createStatement.append(comboFields->currentText());
@@ -102,5 +102,3 @@ void createIndexForm::populateTable(const QList<DBBrowserObject>& rmap)
         }*/
     }
 }
-
-

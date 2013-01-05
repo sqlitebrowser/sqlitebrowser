@@ -605,7 +605,7 @@ void MainWindow::deleteObject()
                             QMessageBox::Yes, QMessageBox::No | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Yes)
     {
         // Delete the table
-        QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(table);
+        QString statement = QString("DROP %1 `%2`;").arg(type.toUpper()).arg(table);
         if(!db.executeSQL( statement))
         {
             QString error = QString("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);

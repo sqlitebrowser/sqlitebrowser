@@ -309,9 +309,7 @@ bool DBBrowserDB::addRecord ( )
     int fields = browseFields.count();
     QString emptyvalue = curNewData;
 
-    QString statement = "INSERT INTO ";
-    statement.append(GetEncodedQString(curBrowseTableName));
-    statement.append(" VALUES(");
+    QString statement = QString("INSERT INTO `%1` VALUES(").arg(GetEncodedQString(curBrowseTableName));
     for ( int i=1; i<=fields; i++ ) {
         statement.append(emptyvalue);
         if (i<fields) statement.append(", ");
@@ -343,11 +341,7 @@ bool DBBrowserDB::deleteRecord( int wrow)
     QString& rowid = rt[0];
     lastErrorMessage = QString("no error");
     
-    QString statement = "DELETE FROM ";
-    statement.append(GetEncodedQString(curBrowseTableName));
-    statement.append(" WHERE rowid=");
-    statement.append(rowid);
-    statement.append(";");
+    QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(GetEncodedQString(curBrowseTableName)).arg(rowid);
 
     if (_db){
         logSQL(statement, kLogMsg_App);
@@ -376,11 +370,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     QString& cv = rt[wcol+1];//must account for rowid
     QString ct = browseFields.at(wcol);
     
-    QString statement = "UPDATE ";
-    statement.append(GetEncodedQString(curBrowseTableName));
-    statement.append(" SET ");
-    statement.append(GetEncodedQString(ct));
-    statement.append("=");
+    QString statement = QString("UPDATE `%1` SET `%2`=").arg(GetEncodedQString(curBrowseTableName)).arg(ct);
 
     QString wenc = GetEncodedQString(wtext);
     char * formSQL = sqlite3_mprintf("%Q", wenc.toUtf8().constData());
@@ -405,9 +395,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     }
 
     return ok;
-
 }
-
 
 bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby )
 {
@@ -461,12 +449,7 @@ void DBBrowserDB::getTableRecords( const QString & tablename, const QString& ord
     idmap.clear();
     lastErrorMessage = QString("no error");
 
-    QString statement = "SELECT rowid, *  FROM ";
-    statement.append( GetEncodedQString(tablename) );
-    statement.append(" ORDER BY ");
-    statement.append(orderby);
-    statement.append(";");
-    //qDebug(statement);
+    QString statement = QString("SELECT rowid, *  FROM `%1` ORDER BY %2;").arg(GetEncodedQString(tablename)).arg(orderby);
     logSQL(statement, kLogMsg_App);
     err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
                         &vm, &tail);
@@ -688,9 +671,7 @@ void DBBrowserDB::updateSchema( )
     {
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
-            statement = "PRAGMA TABLE_INFO(";
-            statement.append( (*it).getname());
-            statement.append(");");
+            statement = QString("PRAGMA TABLE_INFO(`%1`);").arg((*it).getname());
             logSQL(statement, kLogMsg_App);
             err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
                                 &vm, &tail);
