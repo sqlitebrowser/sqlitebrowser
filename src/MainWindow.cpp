@@ -1038,7 +1038,7 @@ void MainWindow::updatePreferences()
 //******************************************************************
 
 //** Db Tree Context Menu
-void MainWindow::on_tree_context_menu(const QPoint &qPoint)
+void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 {
     if(!ui->dbTreeWidget->selectionModel()->hasSelection())
         return;
@@ -1051,7 +1051,7 @@ void MainWindow::on_tree_context_menu(const QPoint &qPoint)
         popupFieldMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
 //** Tree selection changed
-void MainWindow::on_tree_selection_changed()
+void MainWindow::changeTreeSelection()
 {
     // Just assume first that something's selected that can not be edited at all
     ui->editDeleteObjectAction->setEnabled(false);
@@ -1088,7 +1088,7 @@ void MainWindow::on_tree_selection_changed()
     }
 }
 
-void MainWindow::on_add_field(){
+void MainWindow::addField(){
     //if( !dbTreeWidget->currentItem() ){
     //   return;
     //}
@@ -1099,7 +1099,7 @@ void MainWindow::on_add_field(){
         populateStructure();
 }
 
-void MainWindow::on_edit_field(){
+void MainWindow::editField(){
     if(!ui->dbTreeWidget->currentItem())
         return;
 
@@ -1115,7 +1115,7 @@ void MainWindow::on_edit_field(){
     }*/
 }
 
-void MainWindow::on_delete_field(){
+void MainWindow::deleteField(){
     if(!ui->dbTreeWidget->currentItem())
         return;
 

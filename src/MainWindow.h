@@ -62,12 +62,11 @@ protected:
     void closeEvent(QCloseEvent *);
 
 public slots:
-    virtual void on_tree_context_menu(const QPoint & qPoint);
-    virtual void on_tree_selection_changed();
-    virtual void on_add_field();
-    virtual void on_edit_field();
-    virtual void on_delete_field();
-
+    virtual void createTreeContextMenu(const QPoint & qPoint);
+    virtual void changeTreeSelection();
+    virtual void addField();
+    virtual void editField();
+    virtual void deleteField();
     virtual void fileOpen( const QString & fileName );
     virtual void fileOpen();
     virtual void fileNew();

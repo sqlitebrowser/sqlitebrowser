@@ -1859,7 +1859,7 @@
    <sender>editAddFieldActionPopup</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
-   <slot>on_add_field()</slot>
+   <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1923,7 +1923,7 @@
    <sender>dbTreeWidget</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>MainWindow</receiver>
-   <slot>on_tree_context_menu(QPoint)</slot>
+   <slot>createTreeContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>399</x>
@@ -1939,7 +1939,7 @@
    <sender>dbTreeWidget</sender>
    <signal>itemSelectionChanged()</signal>
    <receiver>MainWindow</receiver>
-   <slot>on_tree_selection_changed()</slot>
+   <slot>changeTreeSelection()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>399</x>
@@ -1987,7 +1987,7 @@
    <sender>editModifyFieldActionPopup</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
-   <slot>on_edit_field()</slot>
+   <slot>editField()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -2035,7 +2035,7 @@
    <sender>editDeleteFieldActionPopup</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
-   <slot>on_delete_field()</slot>
+   <slot>deleteField()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -2109,16 +2109,16 @@
   <slot>deleteObject()</slot>
   <slot>editTable()</slot>
   <slot>editTablePopup()</slot>
-  <slot>on_add_field()</slot>
-  <slot>on_edit_field()</slot>
+  <slot>addField()</slot>
+  <slot>editField()</slot>
   <slot>exportDatabaseToSQL()</slot>
   <slot>importDatabaseFromSQL()</slot>
   <slot>openPreferences()</slot>
-  <slot>on_tree_context_menu(QPoint)</slot>
-  <slot>on_tree_selection_changed()</slot>
+  <slot>createTreeContextMenu(QPoint)</slot>
+  <slot>changeTreeSelection()</slot>
   <slot>fileNew()</slot>
   <slot>helpAbout()</slot>
-  <slot>on_delete_field()</slot>
+  <slot>deleteField()</slot>
   <slot>loadPragmas()</slot>
   <slot>savePragmas()</slot>
  </slots>
