@@ -805,11 +805,14 @@ void MainWindow::executeQuery()
 void MainWindow::mainTabSelected(int tabindex)
 {
     if(tabindex == 0)
+    {
         populateStructure();
-    else if(tabindex == 1)
+    } else if(tabindex == 1) {
+        populateStructure();
         resetBrowser();
-    else if(tabindex == 2)
+    } else if(tabindex == 2) {
         loadPragmas();
+    }
 }
 
 void MainWindow::importTableFromCSV()
