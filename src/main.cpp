@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <QApplication>
+#include <QTextCodec>
 
 #if defined(Q_WS_MAC)
 #include <Carbon/Carbon.h>
@@ -72,6 +73,12 @@ int main( int argc, char ** argv )
     QApplication a( argc, argv );
     a.setOrganizationName("sqlitebrowser");
     a.setApplicationName("SQLite Database Browser " + QString(APP_VERSION));
+
+    // Set character encoding to UTF8
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+
     MainWindow w;
 #if defined(Q_WS_MAC)
     AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments,
