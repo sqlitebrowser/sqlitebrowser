@@ -208,7 +208,11 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
     bool mustreset = false;
     QApplication::setOverrideCursor( Qt::WaitCursor );
     if (tablename.compare(db.curBrowseTableName)!=0)
+    {
         mustreset = true;
+        curBrowseOrderByIndex = 1;
+        curBrowseOrderByMode = ORDERMODE_ASC;
+    }
 
     QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
     if (!db.browseTable(tablename, orderby)){
