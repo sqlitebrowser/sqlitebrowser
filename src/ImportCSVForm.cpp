@@ -185,10 +185,8 @@ void importCSVForm::preview()
     int maxrecs = 20;
     curList = pdb->decodeCSV(csvfilename, sep, quote, maxrecs, &numfields);
 
-    //qDebug("count = %d, numfields = %d", curList .count(), numfields);
-
     previewTable->clear();
-    previewTable->setColumnCount(curList.size());
+    previewTable->setColumnCount(numfields);
 
     //can not operate on an empty result
     if (numfields==0) return;
@@ -206,7 +204,7 @@ void importCSVForm::preview()
     int rowNum = 0;
     int colNum = 0;
     for ( QStringList::Iterator ct = curList .begin(); ct != curList .end(); ++ct ) {
-        if (colNum==0) previewTable->setVerticalHeaderItem( rowNum, new QTableWidgetItem( QString::number(rowNum) ) );
+        if (colNum==0) previewTable->setVerticalHeaderItem( rowNum, new QTableWidgetItem( QString::number(rowNum+1) ) );
         previewTable->setItem(rowNum, colNum, new QTableWidgetItem( *ct ) );
         colNum++;
         if (colNum==numfields)

@@ -733,8 +733,8 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
         QProgressDialog progress("Decoding CSV file...", "Cancel", 0, file.size());
         progress.setWindowModality(Qt::ApplicationModal);
         char c=0;
-        while ( c!=-1) {
-            file.getChar(&c);
+        while(file.getChar(&c))
+        {
             if (c==quote){
                 if (inquotemode){
                     if (inescapemode){
@@ -778,6 +778,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
                     }
                     recs++;
                     progress.setValue(file.pos());
+                    qApp->processEvents();
                     if (progress.wasCanceled()) break;
                     if ((recs>maxrecords)&&(maxrecords!=-1))         {
                         break;
