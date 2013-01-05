@@ -4,7 +4,7 @@
 #include <QStringList>
 #include <QMap>
 #include <QMultiMap>
-#include "sqlite3.h"
+#include <sqlite3.h>
 
 class SQLLogDock;
 

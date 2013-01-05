@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <ctype.h>
-#include "sqlite_source/sqlite3.h"
+#include <sqlite3.h>
 #include <stdio.h>
 
 

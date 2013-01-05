@@ -13,7 +13,6 @@ CONFIG += qt \
 HEADERS += \
     sqlitedb.h \
     sqlbrowser_util.h \
-    sqlite_source/sqlite3.h \
     SQLLogDock.h \
     CreateIndexForm.h \
     DialogAbout.h \
@@ -30,7 +29,6 @@ HEADERS += \
 SOURCES += \
     sqlitedb.cpp \
     sqlbrowser_util.c \
-    sqlite_source/sqlite3.c \
     SQLLogDock.cpp \
     main.cpp \
     CreateIndexForm.cpp \
@@ -51,7 +49,7 @@ unix {
     UI_DIR = .ui
     MOC_DIR = .moc
     OBJECTS_DIR = .obj
-	LIBS += -ldl
+    LIBS += -ldl -lsqlite3
 }
 win32:RC_FILE = winapp.rc
 mac { 

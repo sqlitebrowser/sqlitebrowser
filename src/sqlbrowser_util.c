@@ -1,5 +1,5 @@
 #include "sqlbrowser_util.h"
-#include "sqlite_source/sqlite3.h"
+#include <sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

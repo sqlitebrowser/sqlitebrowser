@@ -1,7 +1,5 @@
 #include "sqlitedb.h"
 #include "sqlbrowser_util.h"
-#include <stdlib.h>
-#include <QRegExp>
 #include <QFile>
 #include <QMessageBox>
 #include <QProgressDialog>
