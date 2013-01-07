@@ -119,6 +119,9 @@
           <iconset resource="icons/icons.qrc">
            <normaloff>:/icons/searchfind</normaloff>:/icons/searchfind</iconset>
          </property>
+         <property name="shortcut">
+          <string>Ctrl+F</string>
+         </property>
          <property name="checkable">
           <bool>true</bool>
          </property>
@@ -138,6 +141,9 @@
          <property name="icon">
           <iconset resource="icons/icons.qrc">
            <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
+         </property>
+         <property name="shortcut">
+          <string>F5</string>
          </property>
         </widget>
        </item>
