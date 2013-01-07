@@ -502,6 +502,91 @@ bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QStr
     return true;
 }
 
+bool DBBrowserDB::dropColumn(QString tablename, QString column)
+{
+    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite. If SQLite should fully support this command one day, this entire
+    // function can be changed to executing something like this:
+    //QString sql = QString("ALTER TABLE `%1` DROP COLUMN `%2`;").arg(table).arg(column);
+    //return executeSQL(sql);
+
+    // Collect information on the current DB layout
+    DBBrowserObject table = getObjectByName(tablename);
+    if(table.getname() == "" || table.getField(column).getname() == "" || table.fldmap.count() == 1)
+    {
+        lastErrorMessage = QString("dropColumn: cannot find table %1 or column %2. Also you can not delete the last column").arg(tablename).arg(column);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        return false;
+    }
+
+    // Create savepoint to be able to go back to it in case of any error
+    if(!executeSQL("SAVEPOINT sqlitebrowser_drop_column"))
+    {
+        lastErrorMessage = "dropColumn: creating savepoint failed";
+        qDebug(lastErrorMessage.toStdString().c_str());
+        return false;
+    }
+
+    // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to drop
+    // of course. Also prepare the columns to be copied in a later step now.
+    QString sql = QString("CREATE TABLE sqlitebrowser_drop_column_new_table (");
+    QString select_cols;
+    for(int i=0;i<table.fldmap.count();i++)
+    {
+        // Only add this if it is not the column to drop?
+        if(table.fldmap.value(i).getname() != column)
+        {
+            sql.append(QString("`%1` %2,").arg(table.fldmap.value(i).getname()).arg(table.fldmap.value(i).gettype()));
+            select_cols.append(QString("`%1`,").arg(table.fldmap.value(i).getname()));
+        }
+    }
+    sql.remove(sql.count() - 1, 1);     // Remove last comma
+    select_cols.remove(select_cols.count() - 1, 1);
+    sql.append(");");
+    if(!executeSQL(sql))
+    {
+        lastErrorMessage = QString("dropColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
+        return false;
+    }
+
+    // Copy the data from the old table to the new one
+    if(!executeSQL(QString("INSERT INTO sqlitebrowser_drop_column_new_table SELECT %1 FROM `%2`;").arg(select_cols).arg(tablename)))
+    {
+        lastErrorMessage = QString("dropColumn: copying data to new table failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
+        return false;
+    }
+
+    // Delete the old table
+    if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename)))
+    {
+        lastErrorMessage = QString("dropColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
+        return false;
+    }
+
+    // Rename the temporary table
+    if(!renameTable("sqlitebrowser_drop_column_new_table", tablename))
+    {
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
+        return false;
+    }
+
+    // Release the savepoint - everything went fine
+    if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_drop_column;"))
+    {
+        lastErrorMessage = QString("dropColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        return false;
+    }
+
+    // Success
+    return true;
+}
+
 bool DBBrowserDB::renameTable(QString from_table, QString to_table)
 {
     QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(from_table, to_table);

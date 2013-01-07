@@ -2,6 +2,7 @@
 #include "ui_EditFieldForm.h"
 #include "sqlitedb.h"
 #include <QPushButton>
+#include <QMessageBox>
 
 editFieldForm::editFieldForm(QWidget* parent)
     : QDialog(parent),
@@ -69,6 +70,7 @@ void editFieldForm::accept()
         else
             ok = pdb->renameColumn(table_name, original_field_name, field_name, field_type);
         if(!ok){
+            QMessageBox::warning(this, QApplication::applicationName(), pdb->lastErrorMessage);
             qDebug(pdb->lastErrorMessage.toUtf8());
             return;
         }

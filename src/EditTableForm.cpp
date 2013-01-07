@@ -180,12 +180,17 @@ void editTableForm::removeField()
         // Editing an old one
 
         // Ask user wether he really wants to delete that column
-//      QString msg = tr("Are you sure you want to delete the field '%1'?\n All data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
-//      if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
-//      {
-            // TODO
-            QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support the deletion of columns yet."));
-//      }
+        QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
+        if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+        {
+            if(!pdb->dropColumn(curTable, ui->treeWidget->currentItem()->text(0)))
+            {
+                QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
+            } else {
+                delete ui->treeWidget->currentItem();
+                modified = true;
+            }
+        }
     }
 
     checkInput();

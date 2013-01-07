@@ -1113,12 +1113,18 @@ void MainWindow::editField(){
     }
 }
 
-void MainWindow::deleteField(){
+void MainWindow::deleteField()
+{
     if(!ui->dbTreeWidget->currentItem())
         return;
 
-    // TODO
-    QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support the deletion of columns yet."));
+    // Ask user wether he really wants to delete that column first
+    QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->dbTreeWidget->currentItem()->text(0));
+    if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+    {
+        db.dropColumn(ui->dbTreeWidget->currentItem()->parent()->text(0), ui->dbTreeWidget->currentItem()->text(0));
+        delete ui->dbTreeWidget->currentItem();
+    }
 }
 
 void MainWindow::openRecentFile()
