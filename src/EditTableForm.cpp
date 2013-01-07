@@ -91,13 +91,10 @@ void editTableForm::accept()
         {
             QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
             modified = true;
-            QString newName = ui->editTableName->text();
-            QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(curTable, newName);
-            if (!pdb->executeSQL(sql)){
+            if(!pdb->renameTable(curTable, ui->editTableName->text()))
+            {
                 QApplication::restoreOverrideCursor();
-                QString error("Error renaming table. Message from database engine:\n");
-                error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
-                QMessageBox::warning( this, QApplication::applicationName(), error );
+                QMessageBox::warning(this, QApplication::applicationName(), pdb->lastErrorMessage);
                 return;
             } else {
                 QApplication::restoreOverrideCursor();

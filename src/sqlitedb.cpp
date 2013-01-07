@@ -428,9 +428,18 @@ bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QStr
     return true;
 }
 
-bool DBBrowserDB::renameTable(QString from_table, QString to_table){
-    qDebug("renameTable");
-    return true;
+bool DBBrowserDB::renameTable(QString from_table, QString to_table)
+{
+    QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(from_table, to_table);
+    if(!executeSQL(sql))
+    {
+        QString error = QString("Error renaming table '%1' to '%2'. Message from database engine:\n%3").arg(from_table).arg(to_table).arg(lastErrorMessage);
+        lastErrorMessage = error;
+        qDebug(error.toStdString().c_str());
+        return false;
+    } else {
+        return true;
+    }
 }
 
 void DBBrowserDB::getTableRecords( const QString & tablename, const QString& orderby )
