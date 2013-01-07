@@ -133,17 +133,10 @@ void editTableForm::checkInput()
 
 void editTableForm::editField()
 {
-    if( !ui->treeWidget->currentItem()){
+    if(!ui->treeWidget->currentItem())
         return;
-    }
 
-    // Cancel here when the user tries to edit an existing table
-    if(curTable != "")
-    {
-        QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support editing columns yet."));
-        return;
-    }
-
+    // Show the edit dialog
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
     editFieldForm dialog(this);
     dialog.setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));

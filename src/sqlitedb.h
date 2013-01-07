@@ -67,6 +67,13 @@ public:
     QString getname() const { return name; }
     QString getsql() const { return sql; }
     QString gettype() const { return type; }
+    DBBrowserField getField(const QString& name) const
+    {
+        for(fieldMap::ConstIterator i=fldmap.begin();i!=fldmap.end();++i)
+            if(i.value().getname() == name)
+                return *i;
+        return DBBrowserField();
+    }
     fieldMap fldmap;
 private:
     QString name;

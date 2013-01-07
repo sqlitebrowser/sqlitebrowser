@@ -420,11 +420,85 @@ bool DBBrowserDB::createColumn( QString tablename, QString fieldname, QString fi
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QString type) {
-    qDebug("rename column");
-    // TODO change column name and type. SQLite doesn't support natively...
+bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QString type)
+{
+    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite. If SQLite should fully support this command one day, this entire
+    // function can be changed to executing something like this:
     //QString sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);
     //return executeSQL(sql);
+
+    // Collect information on the current DB layout
+    DBBrowserObject table = getObjectByName(tablename);
+    if(table.getname() == "" || table.getField(from).getname() == "")
+    {
+        lastErrorMessage = QString("renameColumn: cannot find table %1 with column %2").arg(tablename).arg(from);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        return false;
+    }
+
+    // Create savepoint to be able to go back to it in case of any error
+    if(!executeSQL("SAVEPOINT sqlitebrowser_rename_column"))
+    {
+        lastErrorMessage = "renameColumn: creating savepoint failed";
+        qDebug(lastErrorMessage.toStdString().c_str());
+        return false;
+    }
+
+    // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to change
+    // of course
+    QString sql = QString("CREATE TABLE sqlitebrowser_rename_column_new_table (");
+    for(int i=0;i<table.fldmap.count();i++)
+    {
+        // Is this the column to rename?
+        if(table.fldmap.value(i).getname() == from)
+            sql.append(QString("`%1` %2,").arg(to).arg(type));
+        else
+            sql.append(QString("`%1` %2,").arg(table.fldmap.value(i).getname()).arg(table.fldmap.value(i).gettype()));
+    }
+    sql.remove(sql.count() - 1, 1);     // Remove last comma
+    sql.append(");");
+    if(!executeSQL(sql))
+    {
+        lastErrorMessage = QString("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        return false;
+    }
+
+    // Copy the data from the old table to the new one
+    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT * FROM `%1`;").arg(tablename)))
+    {
+        lastErrorMessage = QString("renameColumn: copying data to new table failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        return false;
+    }
+
+    // Delete the old table
+    if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename)))
+    {
+        lastErrorMessage = QString("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        return false;
+    }
+
+    // Rename the temporary table
+    if(!renameTable("sqlitebrowser_rename_column_new_table", tablename))
+    {
+        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        return false;
+    }
+
+    // Release the savepoint - everything went fine
+    if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_rename_column;"))
+    {
+        lastErrorMessage = QString("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+        qDebug(lastErrorMessage.toStdString().c_str());
+        return false;
+    }
+
+    // Success
     return true;
 }
 

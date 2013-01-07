@@ -1103,16 +1103,14 @@ void MainWindow::editField(){
     if(!ui->dbTreeWidget->currentItem())
         return;
 
-    // TODO
-    QMessageBox::information(this, QApplication::applicationName(), tr("Sorry! This function is currently not implemented as SQLite does not support editing columns yet."));
-    /*QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
+    QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
     editFieldForm dialog(this);
     dialog.setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
     if(dialog.exec())
     {
         item->setText(0, dialog.field_name);
         item->setText(2, dialog.field_type);
-    }*/
+    }
 }
 
 void MainWindow::deleteField(){
