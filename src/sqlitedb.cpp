@@ -155,10 +155,8 @@ bool DBBrowserDB::revert()
     if (_db){
         sqlite3_exec(_db,"ROLLBACK TO SAVEPOINT RESTOREPOINT;",
                      NULL,NULL,NULL);
-        qDebug(sqlite3_errmsg(_db));
         sqlite3_exec(_db,"RELEASE RESTOREPOINT;",
                      NULL,NULL,NULL);
-        qDebug(sqlite3_errmsg(_db));
         setDirty(false);
     }
     return true;
