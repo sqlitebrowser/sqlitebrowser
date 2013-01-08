@@ -14,7 +14,6 @@ HEADERS += \
     sqlitedb.h \
     sqlbrowser_util.h \
     SQLLogDock.h \
-    CreateIndexForm.h \
     DialogAbout.h \
     EditFieldForm.h \
     EditForm.h \
@@ -24,14 +23,14 @@ HEADERS += \
     ImportCSVForm.h \
     MainWindow.h \
     PreferencesForm.h \
-    SQLiteSyntaxHighlighter.h
+    SQLiteSyntaxHighlighter.h \
+    CreateIndexDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
     sqlbrowser_util.c \
     SQLLogDock.cpp \
     main.cpp \
-    CreateIndexForm.cpp \
     DialogAbout.cpp \
     EditFieldForm.cpp \
     EditForm.cpp \
@@ -41,7 +40,8 @@ SOURCES += \
     ImportCSVForm.cpp \
     MainWindow.cpp \
     PreferencesForm.cpp \
-    SQLiteSyntaxHighlighter.cpp
+    SQLiteSyntaxHighlighter.cpp \
+    CreateIndexDialog.cpp
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
@@ -67,4 +67,5 @@ FORMS += \
     EditFieldForm.ui \
     EditTableForm.ui \
     MainWindow.ui \
-    PreferencesForm.ui
+    PreferencesForm.ui \
+    CreateIndexDialog.ui

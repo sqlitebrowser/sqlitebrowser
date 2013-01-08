@@ -11,7 +11,7 @@
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
 #include <QScrollBar>
-#include "CreateIndexForm.h"
+#include "CreateIndexDialog.h"
 #include "DialogAbout.h"
 #include "EditTableForm.h"
 #include "EditFieldForm.h"
@@ -566,18 +566,11 @@ void MainWindow::createIndex()
         QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
         return;
     }
-    createIndexForm dialog(this);
-    dialog.populateTable(db.objMap.values("table"));
+    CreateIndexDialog dialog(&db, this);
     if(dialog.exec())
     {
-        if (!db.executeSQL(dialog.createStatement)){
-            QString error = "Error: could not create the index. Message from database engine:  ";
-            error.append(db.lastErrorMessage);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
-        } else {
-            populateStructure();
-            resetBrowser();
-        }
+        populateStructure();
+        resetBrowser();
     }
 }
 
