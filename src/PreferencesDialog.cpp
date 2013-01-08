@@ -1,13 +1,13 @@
-#include "PreferencesForm.h"
-#include "ui_PreferencesForm.h"
+#include "PreferencesDialog.h"
+#include "ui_PreferencesDialog.h"
 #include <QDir>
 #include <QSettings>
 #include <QFileDialog>
 #include "sqlitedb.h"
 
-preferencesForm::preferencesForm(QWidget* parent)
+PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::preferencesForm)
+      ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
 
@@ -17,12 +17,12 @@ preferencesForm::preferencesForm(QWidget* parent)
 /*
  *  Destroys the object and frees any allocated resources
  */
-preferencesForm::~preferencesForm()
+PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
 }
 
-void preferencesForm::defaultDataChanged( int which )
+void PreferencesDialog::defaultDataChanged( int which )
 {
     if (which==2) {
         defaultnewdata = QString("\'\'");
@@ -33,7 +33,7 @@ void preferencesForm::defaultDataChanged( int which )
     }
 }
 
-void preferencesForm::defaultTextChanged( int which )
+void PreferencesDialog::defaultTextChanged( int which )
 {
     if (which==1) {
         defaulttext = QString("Auto");
@@ -43,7 +43,7 @@ void preferencesForm::defaultTextChanged( int which )
 
 }
 
-void preferencesForm::encodingChanged( int which )
+void PreferencesDialog::encodingChanged( int which )
 {
     if (which==1) {
         defaultencoding = QString("Latin1");
@@ -52,7 +52,7 @@ void preferencesForm::encodingChanged( int which )
     }
 }
 
-void preferencesForm::chooseLocation()
+void PreferencesDialog::chooseLocation()
 {
     QString s = QFileDialog::getExistingDirectory(
                 this,
@@ -67,7 +67,7 @@ void preferencesForm::chooseLocation()
     }
 }
 
-void preferencesForm::loadSettings()
+void PreferencesDialog::loadSettings()
 {
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
     settings.sync();
@@ -107,7 +107,7 @@ void preferencesForm::loadSettings()
     ui->locationEdit->setText(defaultlocation);
 }
 
-void preferencesForm::saveSettings()
+void PreferencesDialog::saveSettings()
 {
     QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
 

@@ -1,19 +1,19 @@
-#ifndef PREFERENCESFORM_H
-#define PREFERENCESFORM_H
+#ifndef __PREFERENCESDIALOG_H__
+#define __PREFERENCESDIALOG_H__
 
 #include <QDialog>
 
 namespace Ui {
-class preferencesForm;
+class PreferencesDialog;
 }
 
-class preferencesForm : public QDialog
+class PreferencesDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    preferencesForm(QWidget* parent = 0);
-    ~preferencesForm();
+    PreferencesDialog(QWidget* parent = 0);
+    ~PreferencesDialog();
 
     QString defaulttext;
     QString defaultlocation;
@@ -29,7 +29,7 @@ public slots:
     virtual void saveSettings();
 
 private:
-    Ui::preferencesForm *ui;
+    Ui::PreferencesDialog *ui;
 };
 
-#endif // PREFERENCESFORM_H
+#endif

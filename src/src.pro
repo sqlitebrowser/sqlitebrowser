@@ -14,17 +14,17 @@ HEADERS += \
     sqlitedb.h \
     sqlbrowser_util.h \
     SQLLogDock.h \
-    DialogAbout.h \
-    EditFieldForm.h \
     EditForm.h \
-    EditTableForm.h \
     ExportTableCSVForm.h \
     FindForm.h \
     ImportCSVForm.h \
     MainWindow.h \
-    PreferencesForm.h \
     SQLiteSyntaxHighlighter.h \
-    CreateIndexDialog.h
+    CreateIndexDialog.h \
+    EditFieldDialog.h \
+    AboutDialog.h \
+    EditTableDialog.h \
+    PreferencesDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -32,16 +32,16 @@ SOURCES += \
     SQLLogDock.cpp \
     main.cpp \
     DialogAbout.cpp \
-    EditFieldForm.cpp \
     EditForm.cpp \
-    EditTableForm.cpp \
     ExportTableCSVForm.cpp \
     FindForm.cpp \
     ImportCSVForm.cpp \
     MainWindow.cpp \
-    PreferencesForm.cpp \
     SQLiteSyntaxHighlighter.cpp \
-    CreateIndexDialog.cpp
+    CreateIndexDialog.cpp \
+    EditFieldDialog.cpp \
+    EditTableDialog.cpp \
+    PreferencesDialog.cpp
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
@@ -63,9 +63,9 @@ mac {
 RESOURCES += icons/icons.qrc
 
 FORMS += \
-    DialogAbout.ui \
-    EditFieldForm.ui \
-    EditTableForm.ui \
     MainWindow.ui \
-    PreferencesForm.ui \
-    CreateIndexDialog.ui
+    CreateIndexDialog.ui \
+    AboutDialog.ui \
+    EditFieldDialog.ui \
+    EditTableDialog.ui \
+    PreferencesDialog.ui

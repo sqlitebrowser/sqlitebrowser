@@ -1,20 +1,20 @@
-#ifndef EDITTABLEFORM_H
-#define EDITTABLEFORM_H
+#ifndef __EDITTABLEDIALOG_H__
+#define __EDITTABLEDIALOG_H__
 
 #include <QDialog>
 class DBBrowserDB;
 
 namespace Ui {
-class editTableForm;
+class EditTableDialog;
 }
 
-class editTableForm : public QDialog
+class EditTableDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    editTableForm(QWidget* parent = 0);
-    ~editTableForm();
+    EditTableDialog(QWidget* parent = 0);
+    ~EditTableDialog();
 
     bool modified;
     QString curTable;
@@ -36,7 +36,7 @@ protected:
     DBBrowserDB *pdb;
 
 private:
-    Ui::editTableForm *ui;
+    Ui::EditTableDialog *ui;
 };
 
-#endif // EDITTABLEFORM_H
+#endif

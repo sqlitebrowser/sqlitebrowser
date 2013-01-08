@@ -1,12 +1,12 @@
-#include "EditFieldForm.h"
-#include "ui_EditFieldForm.h"
+#include "EditFieldDialog.h"
+#include "ui_EditFieldDialog.h"
 #include "sqlitedb.h"
 #include <QPushButton>
 #include <QMessageBox>
 
-editFieldForm::editFieldForm(QWidget* parent)
+EditFieldDialog::EditFieldDialog(QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::editFieldForm)
+      ui(new Ui::EditFieldDialog)
 {
     ui->setupUi(this);
 
@@ -17,12 +17,12 @@ editFieldForm::editFieldForm(QWidget* parent)
     ui->radioCustom->setProperty("field_type", "__custom__");
 }
 
-editFieldForm::~editFieldForm()
+EditFieldDialog::~EditFieldDialog()
 {
     delete ui;
 }
 
-void editFieldForm::setInitialValues(DBBrowserDB *db, bool is_new, QString table, QString fld_name, QString fld_type)
+void EditFieldDialog::setInitialValues(DBBrowserDB *db, bool is_new, QString table, QString fld_name, QString fld_type)
 {
     pdb = db;
     original_field_name = QString(fld_name);
@@ -54,7 +54,7 @@ void editFieldForm::setInitialValues(DBBrowserDB *db, bool is_new, QString table
     checkInput();
 }
 
-void editFieldForm::accept()
+void EditFieldDialog::accept()
 {
     field_name = ui->nameLineEdit->text();
     field_type = ui->groupRadioTypes->checkedButton()->property("field_type").toString();
@@ -78,7 +78,7 @@ void editFieldForm::accept()
     QDialog::accept();
 }
 
-void editFieldForm::checkInput()
+void EditFieldDialog::checkInput()
 {
     ui->nameLineEdit->setText(ui->nameLineEdit->text().trimmed());
     bool valid = true;

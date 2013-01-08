@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>preferencesForm</class>
- <widget class="QDialog" name="preferencesForm">
+ <class>PreferencesDialog</class>
+ <widget class="QDialog" name="PreferencesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -154,7 +154,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>preferencesForm</receiver>
+   <receiver>PreferencesDialog</receiver>
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -170,7 +170,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>preferencesForm</receiver>
+   <receiver>PreferencesDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -186,7 +186,7 @@
   <connection>
    <sender>encodingComboBox</sender>
    <signal>activated(int)</signal>
-   <receiver>preferencesForm</receiver>
+   <receiver>PreferencesDialog</receiver>
    <slot>encodingChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -202,7 +202,7 @@
   <connection>
    <sender>defaultdataComboBox</sender>
    <signal>activated(int)</signal>
-   <receiver>preferencesForm</receiver>
+   <receiver>PreferencesDialog</receiver>
    <slot>defaultDataChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -218,7 +218,7 @@
   <connection>
    <sender>setLocationButton</sender>
    <signal>clicked()</signal>
-   <receiver>preferencesForm</receiver>
+   <receiver>PreferencesDialog</receiver>
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -234,7 +234,7 @@
   <connection>
    <sender>defaultTextComboBox</sender>
    <signal>activated(int)</signal>
-   <receiver>preferencesForm</receiver>
+   <receiver>PreferencesDialog</receiver>
    <slot>defaultTextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">

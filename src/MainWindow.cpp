@@ -12,12 +12,12 @@
 #include <QDragEnterEvent>
 #include <QScrollBar>
 #include "CreateIndexDialog.h"
-#include "DialogAbout.h"
-#include "EditTableForm.h"
-#include "EditFieldForm.h"
+#include "AboutDialog.h"
+#include "EditTableDialog.h"
+#include "EditFieldDialog.h"
 #include "ImportCSVForm.h"
 #include "ExportTableCSVForm.h"
-#include "PreferencesForm.h"
+#include "PreferencesDialog.h"
 #include "EditForm.h"
 #include "FindForm.h"
 #include "SQLLogDock.h"
@@ -551,7 +551,7 @@ void MainWindow::createTable()
         return;
     }
 
-    editTableForm dialog(this);
+    EditTableDialog dialog(this);
     dialog.setActiveTable(&db, "");
     if(dialog.exec())
     {
@@ -625,7 +625,7 @@ void MainWindow::editTable()
     }
     QString tableToEdit = ui->dbTreeWidget->currentItem()->text(0);
 
-    editTableForm dialog(this);
+    EditTableDialog dialog(this);
     dialog.setActiveTable(&db, tableToEdit);
     dialog.exec();
     //check modified status
@@ -674,7 +674,7 @@ void MainWindow::helpWhatsThis()
 
 void MainWindow::helpAbout()
 {
-    DialogAbout dialog(this);
+    AboutDialog dialog(this);
     dialog.exec();
 }
 
@@ -1003,7 +1003,7 @@ void MainWindow::importDatabaseFromSQL()
 
 void MainWindow::openPreferences()
 {
-    preferencesForm dialog(this);
+    PreferencesDialog dialog(this);
     if(dialog.exec())
     {
         updatePreferences();
@@ -1013,7 +1013,7 @@ void MainWindow::openPreferences()
 
 void MainWindow::updatePreferences()
 {
-    preferencesForm prefs(this);
+    PreferencesDialog prefs(this);
 
     if(prefs.defaultencoding == "Latin1")
         db.setEncoding(kEncodingLatin1);
@@ -1086,7 +1086,7 @@ void MainWindow::addField(){
     //   return;
     //}
 
-    editFieldForm dialog(this);
+    EditFieldDialog dialog(this);
     dialog.setInitialValues(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
     if(dialog.exec())
         populateStructure();
@@ -1097,7 +1097,7 @@ void MainWindow::editField(){
         return;
 
     QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
-    editFieldForm dialog(this);
+    EditFieldDialog dialog(this);
     dialog.setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
     if(dialog.exec())
     {

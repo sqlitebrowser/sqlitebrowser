@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>editFieldForm</class>
- <widget class="QDialog" name="editFieldForm">
+ <class>EditFieldDialog</class>
+ <widget class="QDialog" name="EditFieldDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -131,7 +131,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>editFieldForm</receiver>
+   <receiver>EditFieldDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -147,7 +147,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>editFieldForm</receiver>
+   <receiver>EditFieldDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -179,7 +179,7 @@
   <connection>
    <sender>nameLineEdit</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>editFieldForm</receiver>
+   <receiver>EditFieldDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -195,7 +195,7 @@
   <connection>
    <sender>txtCustomType</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>editFieldForm</receiver>
+   <receiver>EditFieldDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -211,7 +211,7 @@
   <connection>
    <sender>groupRadioTypes</sender>
    <signal>buttonClicked(int)</signal>
-   <receiver>editFieldForm</receiver>
+   <receiver>EditFieldDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">

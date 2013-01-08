@@ -1,25 +1,25 @@
-#include "EditTableForm.h"
-#include "ui_EditTableForm.h"
-#include "EditFieldForm.h"
+#include "EditTableDialog.h"
+#include "ui_EditTableDialog.h"
+#include "EditFieldDialog.h"
 #include <QMessageBox>
 #include <QPushButton>
 #include "sqlitedb.h"
 
-editTableForm::editTableForm(QWidget* parent)
+EditTableDialog::EditTableDialog(QWidget* parent)
     : QDialog(parent),
       modified(false),
       pdb(0),
-      ui(new Ui::editTableForm)
+      ui(new Ui::EditTableDialog)
 {
     ui->setupUi(this);
 }
 
-editTableForm::~editTableForm()
+EditTableDialog::~EditTableDialog()
 {
     delete ui;
 }
 
-void editTableForm::setActiveTable(DBBrowserDB * thedb, QString tableName)
+void EditTableDialog::setActiveTable(DBBrowserDB * thedb, QString tableName)
 {
     // Set variables
     pdb = thedb;
@@ -40,7 +40,7 @@ void editTableForm::setActiveTable(DBBrowserDB * thedb, QString tableName)
     checkInput();
 }
 
-void editTableForm::populateFields()
+void EditTableDialog::populateFields()
 {
     if (!pdb) return;
 
@@ -60,7 +60,7 @@ void editTableForm::populateFields()
     }
 }
 
-void editTableForm::accept()
+void EditTableDialog::accept()
 {
     // Are we editing an already existing table or designing a new one? In the first case there is a table name set,
     // in the latter the current table name is empty
@@ -105,7 +105,7 @@ void editTableForm::accept()
     QDialog::accept();
 }
 
-void editTableForm::reject()
+void EditTableDialog::reject()
 {
     // Have we been in the process of editing an old table?
     if(curTable != "")
@@ -117,7 +117,7 @@ void editTableForm::reject()
     QDialog::reject();
 }
 
-void editTableForm::checkInput()
+void EditTableDialog::checkInput()
 {
     ui->editTableName->setText(ui->editTableName->text().trimmed());
     bool valid = true;
@@ -128,14 +128,14 @@ void editTableForm::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
-void editTableForm::editField()
+void EditTableDialog::editField()
 {
     if(!ui->treeWidget->currentItem())
         return;
 
     // Show the edit dialog
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
-    editFieldForm dialog(this);
+    EditFieldDialog dialog(this);
     dialog.setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
     if(dialog.exec())
     {
@@ -145,9 +145,9 @@ void editTableForm::editField()
     }
 }
 
-void editTableForm::addField()
+void EditTableDialog::addField()
 {
-    editFieldForm dialog(this);
+    EditFieldDialog dialog(this);
     dialog.setInitialValues(pdb, true, curTable, QString(""), QString(""));
     if(dialog.exec())
     {
@@ -160,7 +160,7 @@ void editTableForm::addField()
     }
 }
 
-void editTableForm::removeField()
+void EditTableDialog::removeField()
 {
     // Is there any item selected to delete?
     if(!ui->treeWidget->currentItem())
@@ -193,7 +193,7 @@ void editTableForm::removeField()
     checkInput();
 }
 
-void editTableForm::fieldSelectionChanged()
+void EditTableDialog::fieldSelectionChanged()
 {
     ui->renameFieldButton->setEnabled(ui->treeWidget->selectionModel()->hasSelection());
     ui->removeFieldButton->setEnabled(ui->treeWidget->selectionModel()->hasSelection());

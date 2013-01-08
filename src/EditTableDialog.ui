@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>editTableForm</class>
- <widget class="QDialog" name="editTableForm">
+ <class>EditTableDialog</class>
+ <widget class="QDialog" name="EditTableDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -161,7 +161,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -177,7 +177,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -193,7 +193,7 @@
   <connection>
    <sender>treeWidget</sender>
    <signal>itemSelectionChanged()</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>fieldSelectionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -209,7 +209,7 @@
   <connection>
    <sender>addFieldButton</sender>
    <signal>clicked()</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -225,7 +225,7 @@
   <connection>
    <sender>renameFieldButton</sender>
    <signal>clicked()</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>editField()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -241,7 +241,7 @@
   <connection>
    <sender>removeFieldButton</sender>
    <signal>clicked()</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -257,7 +257,7 @@
   <connection>
    <sender>editTableName</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -273,7 +273,7 @@
   <connection>
    <sender>treeWidget</sender>
    <signal>itemChanged(QTreeWidgetItem*,int)</signal>
-   <receiver>editTableForm</receiver>
+   <receiver>EditTableDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">

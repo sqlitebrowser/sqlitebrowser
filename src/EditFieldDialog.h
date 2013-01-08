@@ -1,21 +1,21 @@
-#ifndef EDITFIELDFORM_H
-#define EDITFIELDFORM_H
+#ifndef __EDITFIELDDIALOG_H__
+#define __EDITFIELDDIALOG_H__
 
 #include <QDialog>
 
 class DBBrowserDB;
 
 namespace Ui {
-class editFieldForm;
+class EditFieldDialog;
 }
 
-class editFieldForm : public QDialog
+class EditFieldDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    editFieldForm(QWidget* parent = 0);
-    ~editFieldForm();
+    EditFieldDialog(QWidget* parent = 0);
+    ~EditFieldDialog();
 
     QString table_name;
     QString field_name;
@@ -30,7 +30,7 @@ public slots:
 
 private:
     DBBrowserDB *pdb;
-    Ui::editFieldForm *ui;
+    Ui::EditFieldDialog *ui;
 };
 
-#endif // EDITFIELDFORM_H
+#endif
