@@ -31,7 +31,6 @@ SOURCES += \
     sqlbrowser_util.c \
     SQLLogDock.cpp \
     main.cpp \
-    DialogAbout.cpp \
     EditForm.cpp \
     ExportTableCSVForm.cpp \
     FindForm.cpp \
@@ -41,7 +40,8 @@ SOURCES += \
     CreateIndexDialog.cpp \
     EditFieldDialog.cpp \
     EditTableDialog.cpp \
-    PreferencesDialog.cpp
+    PreferencesDialog.cpp \
+    AboutDialog.cpp
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
