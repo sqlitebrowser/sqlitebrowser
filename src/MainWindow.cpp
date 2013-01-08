@@ -627,9 +627,7 @@ void MainWindow::editTable()
 
     EditTableDialog dialog(this);
     dialog.setActiveTable(&db, tableToEdit);
-    dialog.exec();
-    //check modified status
-    if(dialog.modified)
+    if(dialog.exec())
     {
         populateStructure();
         resetBrowser();

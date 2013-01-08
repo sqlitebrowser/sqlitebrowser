@@ -7,7 +7,6 @@
 
 EditTableDialog::EditTableDialog(QWidget* parent)
     : QDialog(parent),
-      modified(false),
       pdb(0),
       ui(new Ui::EditTableDialog)
 {
@@ -79,7 +78,6 @@ void EditTableDialog::accept()
             QMessageBox::warning(this, QApplication::applicationName(), QString("Error creating table. Message from database engine:\n%1").arg(pdb->lastErrorMessage));
             return;
         }
-        modified = true;
     } else {
         // Editing of old table
 
@@ -87,7 +85,6 @@ void EditTableDialog::accept()
         if(ui->editTableName->text() != curTable)
         {
             QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
-            modified = true;
             if(!pdb->renameTable(curTable, ui->editTableName->text()))
             {
                 QApplication::restoreOverrideCursor();
@@ -139,7 +136,6 @@ void EditTableDialog::editField()
     dialog.setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
     if(dialog.exec())
     {
-        modified = true;
         item->setText(0, dialog.field_name);
         item->setText(1, dialog.field_type);
     }
@@ -154,7 +150,6 @@ void EditTableDialog::addField()
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
         tbitem->setText(0, dialog.field_name);
         tbitem->setText(1, dialog.field_type);
-        modified = true;
         ui->treeWidget->addTopLevelItem(tbitem);
         checkInput();
     }
@@ -185,7 +180,6 @@ void EditTableDialog::removeField()
                 QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
             } else {
                 delete ui->treeWidget->currentItem();
-                modified = true;
             }
         }
     }

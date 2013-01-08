@@ -16,7 +16,6 @@ public:
     EditTableDialog(QWidget* parent = 0);
     ~EditTableDialog();
 
-    bool modified;
     QString curTable;
 
 public slots:
