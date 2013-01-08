@@ -68,21 +68,18 @@ void editTableForm::accept()
     {
         // Creation of new table
 
-        // Build SQL statement from what the use entered
-        QString sql = QString("CREATE TABLE `%1` (").arg(ui->editTableName->text());
+        // Prepare creation of the table
+        QList<DBBrowserField> tbl_structure;
         for(int i=0;i<ui->treeWidget->topLevelItemCount();i++)
-            sql.append(QString("`%1` %2,").arg(ui->treeWidget->topLevelItem(i)->text(0)).arg(ui->treeWidget->topLevelItem(i)->text(1)));
-        sql.remove(sql.count() - 1, 1);     // Remove last comma
-        sql.append(");");
+            tbl_structure.push_back(DBBrowserField(ui->treeWidget->topLevelItem(i)->text(0), ui->treeWidget->topLevelItem(i)->text(1)));
 
-        // Execute it
-        modified = true;
-        if (!pdb->executeSQL(sql)){
-            QString error("Error creating table. Message from database engine:\n");
-            error.append(pdb->lastErrorMessage).append("\n\n").append(sql);
-            QMessageBox::warning( this, QApplication::applicationName(), error );
+        // Create table
+        if(!pdb->createTable(ui->editTableName->text(), tbl_structure))
+        {
+            QMessageBox::warning(this, QApplication::applicationName(), QString("Error creating table. Message from database engine:\n%1").arg(pdb->lastErrorMessage));
             return;
         }
+        modified = true;
     } else {
         // Editing of old table
 

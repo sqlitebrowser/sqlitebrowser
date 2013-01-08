@@ -414,8 +414,21 @@ bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby
     return hasValidBrowseSet;
 }
 
-bool DBBrowserDB::createColumn( QString tablename, QString fieldname, QString fieldtype ){
-    qDebug("create column");
+bool DBBrowserDB::createTable(QString name, const QList<DBBrowserField>& structure)
+{
+    // Build SQL statement
+    QString sql = QString("CREATE TABLE `%1` (").arg(name);
+    for(int i=0;i<structure.count();i++)
+        sql.append(QString("`%1` %2,").arg(structure.at(i).getname()).arg(structure.at(i).gettype()));
+    sql.remove(sql.count() - 1, 1);     // Remove last comma
+    sql.append(");");
+
+    // Execute it
+    return executeSQL(sql);
+}
+
+bool DBBrowserDB::createColumn(QString tablename, QString fieldname, QString fieldtype)
+{
     QString sql = QString("ALTER TABLE `%1` ADD COLUMN `%2` %3").arg(tablename).arg(fieldname).arg(fieldtype);
     return executeSQL(sql);
 }
@@ -446,18 +459,16 @@ bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QStr
 
     // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to change
     // of course
-    QString sql = QString("CREATE TABLE sqlitebrowser_rename_column_new_table (");
+    QList<DBBrowserField> new_table_structure;
     for(int i=0;i<table.fldmap.count();i++)
     {
         // Is this the column to rename?
         if(table.fldmap.value(i).getname() == from)
-            sql.append(QString("`%1` %2,").arg(to).arg(type));
+            new_table_structure.push_back(DBBrowserField(to, type));
         else
-            sql.append(QString("`%1` %2,").arg(table.fldmap.value(i).getname()).arg(table.fldmap.value(i).gettype()));
+            new_table_structure.push_back(DBBrowserField(table.fldmap.value(i).getname(), table.fldmap.value(i).gettype()));
     }
-    sql.remove(sql.count() - 1, 1);     // Remove last comma
-    sql.append(");");
-    if(!executeSQL(sql))
+    if(!createTable("sqlitebrowser_rename_column_new_table", new_table_structure))
     {
         lastErrorMessage = QString("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
         qDebug(lastErrorMessage.toStdString().c_str());
@@ -528,27 +539,25 @@ bool DBBrowserDB::dropColumn(QString tablename, QString column)
 
     // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to drop
     // of course. Also prepare the columns to be copied in a later step now.
-    QString sql = QString("CREATE TABLE sqlitebrowser_drop_column_new_table (");
+    QList<DBBrowserField> new_table_structure;
     QString select_cols;
     for(int i=0;i<table.fldmap.count();i++)
     {
         // Only add this if it is not the column to drop?
         if(table.fldmap.value(i).getname() != column)
         {
-            sql.append(QString("`%1` %2,").arg(table.fldmap.value(i).getname()).arg(table.fldmap.value(i).gettype()));
+            new_table_structure.push_back(DBBrowserField(table.fldmap.value(i).getname(), table.fldmap.value(i).gettype()));
             select_cols.append(QString("`%1`,").arg(table.fldmap.value(i).getname()));
         }
     }
-    sql.remove(sql.count() - 1, 1);     // Remove last comma
-    select_cols.remove(select_cols.count() - 1, 1);
-    sql.append(");");
-    if(!executeSQL(sql))
+    if(!createTable("sqlitebrowser_drop_column_new_table", new_table_structure))
     {
         lastErrorMessage = QString("dropColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
         qDebug(lastErrorMessage.toStdString().c_str());
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
         return false;
     }
+    select_cols.remove(select_cols.count() - 1, 1);
 
     // Copy the data from the old table to the new one
     if(!executeSQL(QString("INSERT INTO sqlitebrowser_drop_column_new_table SELECT %1 FROM `%2`;").arg(select_cols).arg(tablename)))

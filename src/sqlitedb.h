@@ -103,6 +103,7 @@ public:
     bool updateRecord(int wrow, int wcol, const QString & wtext);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
+    bool createTable(QString name, const QList<DBBrowserField>& structure);
     bool renameTable(QString from_table, QString to_table);
     bool createColumn(QString table, QString field, QString type);
     bool renameColumn(QString tablename, QString from, QString to, QString type);
