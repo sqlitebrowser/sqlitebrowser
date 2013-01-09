@@ -124,9 +124,10 @@ void MainWindow::fileOpen(const QString & fileName)
                     "Choose a database file",
                     defaultlocation);
     }
-    if (QFile::exists(wFile) )
+    if(QFile::exists(wFile) )
     {
-        if (db.open(wFile))
+        fileClose();
+        if(db.open(wFile))
         {
             setCurrentFile(wFile);
         } else {
@@ -287,6 +288,7 @@ void MainWindow::fileClose()
     populateStructure();
     loadPragmas();
     activateFields(false);
+    logWin->clearLog();
 }
 
 void MainWindow::fileExit()
