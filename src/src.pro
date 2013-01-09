@@ -16,7 +16,6 @@ HEADERS += \
     SQLLogDock.h \
     EditForm.h \
     ExportTableCSVForm.h \
-    FindForm.h \
     ImportCSVForm.h \
     MainWindow.h \
     SQLiteSyntaxHighlighter.h \
@@ -24,7 +23,8 @@ HEADERS += \
     EditFieldDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
-    PreferencesDialog.h
+    PreferencesDialog.h \
+    FindDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -33,7 +33,6 @@ SOURCES += \
     main.cpp \
     EditForm.cpp \
     ExportTableCSVForm.cpp \
-    FindForm.cpp \
     ImportCSVForm.cpp \
     MainWindow.cpp \
     SQLiteSyntaxHighlighter.cpp \
@@ -41,7 +40,8 @@ SOURCES += \
     EditFieldDialog.cpp \
     EditTableDialog.cpp \
     PreferencesDialog.cpp \
-    AboutDialog.cpp
+    AboutDialog.cpp \
+    FindDialog.cpp
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
@@ -68,4 +68,5 @@ FORMS += \
     AboutDialog.ui \
     EditFieldDialog.ui \
     EditTableDialog.ui \
-    PreferencesDialog.ui
+    PreferencesDialog.ui \
+    FindDialog.ui

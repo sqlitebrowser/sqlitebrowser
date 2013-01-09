@@ -10,7 +10,7 @@
 class QDragEnterEvent;
 class SQLLogDock;
 class editForm;
-class findForm;
+class FindDialog;
 class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
 class QIntValidator;
@@ -47,7 +47,7 @@ public:
 
     editForm * editWin;
     QClipboard * clipboard;
-    findForm * findWin;
+    FindDialog* findWin;
     QIntValidator * gotoValidator;
     QString defaultlocation;
 
@@ -87,7 +87,6 @@ public slots:
     virtual void browseFindAway();
     virtual void browseRefresh();
     virtual void lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm );
-    virtual void showrecord( int dec );
     virtual void createTable();
     virtual void createIndex();
     virtual void compact();

@@ -19,7 +19,7 @@
 #include "ExportTableCSVForm.h"
 #include "PreferencesDialog.h"
 #include "EditForm.h"
-#include "FindForm.h"
+#include "FindDialog.h"
 #include "SQLLogDock.h"
 #include "SQLiteSyntaxHighlighter.h"
 
@@ -237,10 +237,8 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
         ui->dataTable->setRowCount( 0 );
         ui->dataTable->setColumnCount( 0 );
         QApplication::restoreOverrideCursor();
-        if (findWin){
+        if(findWin)
             findWin->resetFields(db.getTableFields(""));
-            findWin->resetResults();
-        }
         return;
     }
 
@@ -257,13 +255,10 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
         updateTableView(-1, keepColumnWidths);
     }
     //got to keep findWin in synch
-    if (findWin){
-        findWin->resetResults();
-    }
-    if (editWin)
-    {
+    if(findWin)
+        findWin->resetFields();
+    if(editWin)
         editWin->reset();
-    }
     QApplication::restoreOverrideCursor();
 }
 
@@ -484,20 +479,20 @@ void MainWindow::setRecordsetLabel()
 
 void MainWindow::browseFind(bool open)
 {
-    if (open){
-        if ( ! findWin ) {
-            findWin= new findForm( this );
-            connect( findWin, SIGNAL( lookfor(const QString&, const QString&, const QString&) ),
-                     this, SLOT( lookfor(const QString&, const QString&, const QString&) ) );
-            connect( findWin, SIGNAL( showrecord(int) ),this, SLOT( showrecord(int) ) );
-            connect( findWin, SIGNAL( goingAway() ),this, SLOT( browseFindAway() ) );
+    if(open)
+    {
+        if(!findWin)
+        {
+            findWin = new FindDialog(this);
+            connect(findWin, SIGNAL(lookfor(const QString&, const QString&, const QString&)), this, SLOT(lookfor(const QString&, const QString&, const QString&)));
+            connect(findWin, SIGNAL(showrecord(int)),this, SLOT(updateTableView(int)));
+            connect(findWin, SIGNAL(goingAway()),this, SLOT(browseFindAway()));
         }
         findWin->resetFields(db.getTableFields(db.curBrowseTableName));
         findWin->show();
     } else {
-        if (findWin){
+        if(findWin)
             findWin->hide();
-        }
     }
 }
 
@@ -555,11 +550,6 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
     resultMap res = db.getFindResults(statement);
     findWin->showResults(res);
     QApplication::restoreOverrideCursor();
-}
-
-void MainWindow::showrecord( int dec )
-{
-    updateTableView(dec);
 }
 
 void MainWindow::createTable()
