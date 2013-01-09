@@ -18,7 +18,7 @@
 #include "ImportCSVForm.h"
 #include "ExportTableCSVForm.h"
 #include "PreferencesDialog.h"
-#include "EditForm.h"
+#include "EditDialog.h"
 #include "FindDialog.h"
 #include "SQLLogDock.h"
 #include "SQLiteSyntaxHighlighter.h"
@@ -26,7 +26,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      editWin(new editForm(this)),
+      editWin(new EditDialog(this)),
       clipboard(QApplication::clipboard()),
       findWin(0)
 {
@@ -39,9 +39,6 @@ MainWindow::MainWindow(QWidget* parent)
     updateRecentFileActions();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
 MainWindow::~MainWindow()
 {
     delete gotoValidator;
@@ -719,7 +716,7 @@ void MainWindow::editText(int row, int col)
     QString cv = rt[col+1];//must account for rowid
 
     editWin->loadText(cv , row, col);
-    editWin ->show();
+    editWin->show();
 }
 
 void MainWindow::doubleClickTable( int row, int col )
@@ -1029,7 +1026,6 @@ void MainWindow::updatePreferences()
     db.setDefaultNewData(prefs.defaultnewdata);
     defaultlocation= prefs.defaultlocation;
     editWin->defaultlocation = defaultlocation;
-    editWin->setTextFormat(prefs.defaulttext);
 }
 
 //******************************************************************

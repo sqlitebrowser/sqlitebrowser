@@ -9,7 +9,7 @@
 
 class QDragEnterEvent;
 class SQLLogDock;
-class editForm;
+class EditDialog;
 class FindDialog;
 class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
@@ -45,8 +45,8 @@ public:
     MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
-    editForm * editWin;
-    QClipboard * clipboard;
+    EditDialog* editWin;
+    QClipboard* clipboard;
     FindDialog* findWin;
     QIntValidator * gotoValidator;
     QString defaultlocation;
