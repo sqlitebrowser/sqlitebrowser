@@ -16,7 +16,7 @@
 #include "EditTableDialog.h"
 #include "EditFieldDialog.h"
 #include "ImportCSVForm.h"
-#include "ExportTableCSVForm.h"
+#include "ExportCsvDialog.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
 #include "FindDialog.h"
@@ -838,80 +838,8 @@ void MainWindow::importTableFromCSV()
 
 void MainWindow::exportTableToCSV()
 {
-    exportTableCSVForm dialog(this);
-    dialog.populateOptions(db.getBrowsableObjectNames());
-    if(dialog.exec())
-    {
-        //load our table
-        db.browseTable(dialog.option);
-
-        QString fileName = QFileDialog::getSaveFileName(
-                    this,
-                    "Choose a filename to export data",
-                    defaultlocation,
-                    "Text files(*.csv *.txt)");
-
-        if (fileName.size() > 0)
-        {
-            QFile file(fileName);
-            if ( file.open( QIODevice::WriteOnly ) )
-            {
-                char quote = '"';
-                char sep = ',';
-                char feed = 10;
-                int colNum = 0;
-                int colCount = 0;
-                QTextStream stream( &file );
-                //fieldnames on first row
-                QStringList fields = db.browseFields;
-                colCount = fields.count();
-                for ( QStringList::Iterator ct = fields.begin(); ct != fields.end(); ++ct ) {
-                    stream << quote;
-                    stream << *ct;
-                    stream << quote;
-                    colNum++;
-                    if (colNum<colCount)
-                    {
-                        stream << sep;
-                    } else {
-                        stream << feed;
-                        colNum = 0;
-                    }
-                }
-
-                //now export data
-                rowList tab = db.browseRecs;
-
-                //int dcols =0;
-                QString rowLabel;
-                for ( int i=0; i<tab.size(); ++i )
-                {
-                    QStringList& rt = tab[i];
-                    for ( int e=1; e<rt.size(); ++e ) {
-                        QString content = rt[e];
-                        stream<< quote;
-                        QChar qquote = quote;
-                        content.replace(quote, QString(qquote).append(qquote));
-                        stream<< content;
-                        stream<< quote;
-                        colNum++;
-                        if (colNum<colCount)
-                        {
-                            stream << sep;
-                        } else {
-                            stream << feed;
-                            colNum = 0;
-                        }
-                    }
-                }
-
-                file.close();
-                QMessageBox::information( this, QApplication::applicationName(), "Export completed" );
-            }
-        }
-        populateStructure();
-        resetBrowser();
-    }
+    ExportCsvDialog dialog(&db, defaultlocation, this);
+    dialog.exec();
 }
 
 void MainWindow::dbState( bool dirty )
