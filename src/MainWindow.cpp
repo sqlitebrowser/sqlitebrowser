@@ -174,17 +174,37 @@ void MainWindow::populateStructure()
     db.updateSchema();
     QStringList tblnames = db.getBrowsableObjectNames();
     sqliteHighlighter->setTableNames(tblnames);
-    objectMap::ConstIterator it;
 
-    for ( it = db.objMap.begin(); it != db.objMap.end(); ++it )
+    QMap<QString, QTreeWidgetItem*> typeToParentItem;
+    QTreeWidgetItem* itemTables = new QTreeWidgetItem(ui->dbTreeWidget);
+    itemTables->setIcon(0, QIcon(QString(":/icons/table")));
+    itemTables->setText(0, tr("Tables (%1)").arg(db.objMap.values("table").count()));
+    typeToParentItem.insert("table", itemTables);
+    QTreeWidgetItem* itemIndices = new QTreeWidgetItem(ui->dbTreeWidget);
+    itemIndices->setIcon(0, QIcon(QString(":/icons/index")));
+    itemIndices->setText(0, tr("Indices (%1)").arg(db.objMap.values("index").count()));
+    typeToParentItem.insert("index", itemIndices);
+    QTreeWidgetItem* itemViews = new QTreeWidgetItem(ui->dbTreeWidget);
+    itemViews->setIcon(0, QIcon(QString(":/icons/view")));
+    itemViews->setText(0, tr("Views (%1)").arg(db.objMap.values("view").count()));
+    typeToParentItem.insert("view", itemViews);
+    QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(ui->dbTreeWidget);
+    itemTriggers->setIcon(0, QIcon(QString(":/icons/trigger")));
+    itemTriggers->setText(0, tr("Triggers (%1)").arg(db.objMap.values("trigger").count()));
+    typeToParentItem.insert("trigger", itemTriggers);
+    ui->dbTreeWidget->setItemExpanded(itemTables, true);
+    ui->dbTreeWidget->setItemExpanded(itemIndices, true);
+    ui->dbTreeWidget->setItemExpanded(itemViews, true);
+    ui->dbTreeWidget->setItemExpanded(itemTriggers, true);
+
+    for(objectMap::ConstIterator it=db.objMap.begin();it!=db.objMap.end();++it)
     {
         // Object node
-        QTreeWidgetItem *tableItem = new QTreeWidgetItem();
+        QTreeWidgetItem *tableItem = new QTreeWidgetItem(typeToParentItem.value((*it).gettype()));
         tableItem->setIcon(0, QIcon(QString(":/icons/%1").arg((*it).gettype())));
         tableItem->setText(0, (*it).getname());
         tableItem->setText(1, (*it).gettype());
         tableItem->setText(3, (*it).getsql());
-        ui->dbTreeWidget->addTopLevelItem(tableItem);
 
         // If it is a table add the field Nodes
         if((*it).gettype() == "table" || (*it).gettype() == "view")
@@ -192,13 +212,11 @@ void MainWindow::populateStructure()
             fieldMap::ConstIterator fit;
             for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
-                fldItem->setText( 0, fit.value().getname() );
-                fldItem->setText( 1, "field"  );
-                fldItem->setText( 2, fit.value().gettype() );
+                fldItem->setText(0, fit.value().getname());
+                fldItem->setText(1, "field");
+                fldItem->setText(2, fit.value().gettype());
                 fldItem->setIcon(0, QIcon(":/icons/field"));
             }
-            // TODO make an options/setting autoexpand
-            ui->dbTreeWidget->setItemExpanded(tableItem, true);
         }
     }
 }
