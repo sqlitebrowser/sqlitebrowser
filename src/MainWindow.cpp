@@ -524,8 +524,8 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
     statement.append(" ");
     //searchterm needs to be quoted if it is not a number
     bool ok = false;
-    wsearchterm.toDouble(&ok);
-    if (!ok) wsearchterm.toInt(&ok, 10);
+    finalsearchterm.toDouble(&ok);
+    if (!ok) finalsearchterm.toInt(&ok, 10);
     if (!ok) {//not a number, quote it
         char * formSQL = sqlite3_mprintf("%Q",(const char *) finalsearchterm.toUtf8());
         statement.append(formSQL);

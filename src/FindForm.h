@@ -68,6 +68,7 @@ public:
         findTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem( QObject::tr("Data") ));
         findTableWidget->setObjectName(QString::fromUtf8("findListView"));
         findTableWidget->setMidLineWidth(30);
+        findTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         //findTableWidget->setResizePolicy(Q3ScrollView::Manual);
         //findTableWidget->setResizeMode(Q3ListView::LastColumn);
 

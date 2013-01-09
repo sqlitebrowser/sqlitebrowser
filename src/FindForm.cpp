@@ -36,11 +36,13 @@ void findForm::showResults(resultMap rmap)
     findTableWidget->clearContents();
     findTableWidget->setSortingEnabled(false);
     resultMap::Iterator it;
+    int rowNum;
     findTableWidget->setRowCount(rmap.size());
-    for ( it = rmap.begin(); it != rmap.end(); ++it ) {
-        QString firstline = it.value().section( '\n', 0,0 );
-        findTableWidget->setItem( it.key(), 0, new QTableWidgetItem( QString::number(it.key() + 1) ) );
-        findTableWidget->setItem( it.key(), 1, new QTableWidgetItem( firstline) );
+    for(it=rmap.begin(),rowNum=0;it!=rmap.end();++it,rowNum++)
+    {
+        QString firstline = it.value().section('\n', 0, 0);
+        findTableWidget->setItem(rowNum, 0, new QTableWidgetItem(QString::number(it.key() + 1)));
+        findTableWidget->setItem(rowNum, 1, new QTableWidgetItem(firstline));
     }
     QString results = "Found: ";
     results.append(QString::number(findTableWidget->rowCount()));
@@ -58,6 +60,9 @@ void findForm::resetFields(QStringList fieldlist)
 {
     findFieldCombobox->clear();
     findFieldCombobox->addItems(fieldlist);
+    searchLine->setText("");
+    findOperatorComboBox->setCurrentIndex(0);
+    findTableWidget->setRowCount(0);
 }
 
 void findForm::resetResults()
@@ -70,8 +75,8 @@ void findForm::resetResults()
 void findForm::recordSelected( QTableWidgetItem * witem)
 {
     if (witem) {
-        int recNum = witem->text().toInt();
-        emit showrecord(recNum);
+        int recNum = findTableWidget->item(witem->row(), 0)->text().toInt();
+        emit showrecord(recNum - 1);
     }
 }
 
@@ -79,5 +84,3 @@ void findForm::closeEvent( QCloseEvent * )
 {
         emit goingAway();
 }
-
-
