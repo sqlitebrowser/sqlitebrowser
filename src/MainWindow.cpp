@@ -879,14 +879,12 @@ void MainWindow::exportDatabaseToSQL()
                 defaultlocation,
                 "Text files(*.sql *.txt)");
 
-    if (fileName.size() > 0)
+    if(fileName.size())
     {
-        if (!db.dump(fileName))
-        {
-            QMessageBox::warning( this, QApplication::applicationName(), "Could not create export file." );
-        } else {
-            QMessageBox::information( this, QApplication::applicationName(), "Export completed." );
-        }
+        if(!db.dump(fileName))
+            QMessageBox::warning(this, QApplication::applicationName(), "Export cancelled or failed.");
+        else
+            QMessageBox::information(this, QApplication::applicationName(), "Export completed.");
     }
 }
 

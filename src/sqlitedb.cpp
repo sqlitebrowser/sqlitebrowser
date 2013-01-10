@@ -5,6 +5,7 @@
 #include <QProgressDialog>
 #include "SQLLogDock.h"
 #include <QApplication>
+#include <QTextStream>
 
 void DBBrowserObject::addField(int order, const QString& wfield,const QString& wtype)
 {
@@ -260,16 +261,92 @@ bool DBBrowserDB::reload( const QString & filename, int * lineErr)
     return true;
 }
 
-bool DBBrowserDB::dump( const QString & filename)
+bool DBBrowserDB::dump(const QString& filename)
 {
-    FILE * cfile = fopen(filename.toUtf8(), (const char *) "w");
-    if (!cfile)
+    // Open file
+    QFile file(filename);
+    if(file.open(QIODevice::WriteOnly))
     {
+        // Create progress dialog. For this count the number of all table rows to be exported first; this does neither take the table creation itself nor
+        // indices, views or triggers into account but compared to the number of rows those should be neglectable
+        unsigned int numRecordsTotal = 0, numRecordsCurrent = 0;
+        QList<DBBrowserObject> tables = objMap.values("table");
+        for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
+            numRecordsTotal += getFindResults(QString("SELECT COUNT(*) FROM `%1`;").arg((*it).getname())).value(0).toInt();
+        QProgressDialog progress("Exporting database to SQL file...", "Cancel", 0, numRecordsTotal);
+        progress.setWindowModality(Qt::ApplicationModal);
+
+        // Regular expression to check for numeric strings
+        QRegExp regexpIsNumeric("\\d*");
+
+        // Open text stream to the file
+        QTextStream stream(&file);
+
+        // Put the SQL commands in a transaction block
+        stream << "BEGIN TRANSACTION;\n";
+
+        // Loop through all tables first as they are required to generate views, indices etc. later
+        for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
+        {
+            // Write the SQL string used to create this table to the output file
+            stream << (*it).getsql() << ";\n";
+
+            // Get data of this table
+            browseTable((*it).getname());
+
+            // Dump all the content of the table
+            rowList data = browseRecs;
+            for(int row=0;row<data.size();row++)
+            {
+                stream << "INSERT INTO `" << (*it).getname() << "` VALUES(";
+                for(int col=1;col<data[row].size();col++)
+                {
+                    QString content = data[row][col];
+                    content.replace("'", "''");
+                    if(content.isNull())
+                        content = "NULL";
+                    else if(content.length() && !regexpIsNumeric.exactMatch(content))
+                        content = "'" + content + "'";
+                    else if(content.length() == 0)
+                        content = "''";
+
+                    stream << content;
+                    if(col < data[row].count() - 1)
+                        stream << ",";
+                    else
+                        stream << ");\n";
+                }
+
+                // Update progress dialog
+                progress.setValue(++numRecordsCurrent);
+                qApp->processEvents();
+                if(progress.wasCanceled())
+                {
+                    file.close();
+                    file.remove();
+                    return false;
+                }
+            }
+        }
+
+        // Now dump all the other objects
+        for(objectMap::ConstIterator it=objMap.begin();it!=objMap.end();++it)
+        {
+            // Make sure it's not a table again
+            if(it.value().gettype() == "table")
+                continue;
+
+            // Write the SQL string used to create this object to the output file
+            stream << (*it).getsql() << ";\n";
+        }
+
+        // Done
+        stream << "COMMIT;\n";
+        file.close();
+        return true;
+    } else {
         return false;
     }
-    dump_database(_db, cfile);
-    fclose(cfile);
-    return true;
 }
 
 bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool logsql)
