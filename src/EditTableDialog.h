@@ -13,13 +13,10 @@ class EditTableDialog : public QDialog
     Q_OBJECT
 
 public:
-    EditTableDialog(QWidget* parent = 0);
+    EditTableDialog(DBBrowserDB* pdb, QString tableName, QWidget* parent = 0);
     ~EditTableDialog();
 
-    QString curTable;
-
 public slots:
-    virtual void setActiveTable( DBBrowserDB * thedb, QString tableName );
     virtual void populateFields();
     virtual void editField();
     virtual void addField();
@@ -29,13 +26,12 @@ public slots:
     virtual void reject();
     virtual void checkInput();
 
-protected:
+private:
+    Ui::EditTableDialog* ui;
+    DBBrowserDB* pdb;
+    QString curTable;
     QStringList types;
     QStringList fields;
-    DBBrowserDB *pdb;
-
-private:
-    Ui::EditTableDialog *ui;
 };
 
 #endif

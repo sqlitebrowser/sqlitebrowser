@@ -558,8 +558,7 @@ void MainWindow::createTable()
         return;
     }
 
-    EditTableDialog dialog(this);
-    dialog.setActiveTable(&db, "");
+    EditTableDialog dialog(&db, "", this);
     if(dialog.exec())
     {
         populateStructure();
@@ -632,8 +631,7 @@ void MainWindow::editTable()
     }
     QString tableToEdit = ui->dbTreeWidget->currentItem()->text(0);
 
-    EditTableDialog dialog(this);
-    dialog.setActiveTable(&db, tableToEdit);
+    EditTableDialog dialog(&db, tableToEdit, this);
     if(dialog.exec())
     {
         populateStructure();
@@ -1010,24 +1008,17 @@ void MainWindow::changeTreeSelection()
     }
 }
 
-void MainWindow::addField(){
-    //if( !dbTreeWidget->currentItem() ){
-    //   return;
-    //}
-
-    EditFieldDialog dialog(this);
-    dialog.setInitialValues(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT");
+void MainWindow::addField()
+{
+    EditFieldDialog dialog(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT", this);
     if(dialog.exec())
         populateStructure();
 }
 
-void MainWindow::editField(){
-    if(!ui->dbTreeWidget->currentItem())
-        return;
-
+void MainWindow::editField()
+{
     QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
-    EditFieldDialog dialog(this);
-    dialog.setInitialValues(&db, false, item->parent()->text(0), item->text(0), item->text(2));
+    EditFieldDialog dialog(&db, false, item->parent()->text(0), item->text(0), item->text(2), this);
     if(dialog.exec())
     {
         item->setText(0, dialog.field_name);

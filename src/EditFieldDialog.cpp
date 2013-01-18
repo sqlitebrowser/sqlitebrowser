@@ -4,38 +4,32 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-EditFieldDialog::EditFieldDialog(QWidget* parent)
+EditFieldDialog::EditFieldDialog(DBBrowserDB* db, bool new_field, QString table, QString fld_name, QString fld_type, QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::EditFieldDialog)
+      ui(new Ui::EditFieldDialog),
+      pdb(db),
+      original_field_name(fld_name),
+      table_name(table),
+      is_new(new_field)
 {
+    // Create window and set its properties
     ui->setupUi(this);
 
-    ui->radioTEXT->setProperty("field_type", "TEXT");
-    ui->radioNUMERIC->setProperty("field_type", "NUMERIC");
-    ui->radioBLOB->setProperty("field_type", "BLOB");
-    ui->radioINTPRIMARY->setProperty("field_type", "INTEGER PRIMARY KEY");
-    ui->radioCustom->setProperty("field_type", "__custom__");
-}
-
-EditFieldDialog::~EditFieldDialog()
-{
-    delete ui;
-}
-
-void EditFieldDialog::setInitialValues(DBBrowserDB *db, bool is_new, QString table, QString fld_name, QString fld_type)
-{
-    pdb = db;
-    original_field_name = QString(fld_name);
-    table_name = table;
-    ui->nameLineEdit->setText(fld_name);
-
-    this->is_new = is_new;
     setWindowIcon(QIcon(is_new ? ":/icons/field_add" : ":/icons/field_edit"));
     if(table == "")
         setWindowTitle(tr("Add new field to new table"));
     else
         setWindowTitle(is_new ? tr("New Field in '%1'").arg(table_name) : tr("Change Field in '%1'").arg(table_name));
 
+    // Associate the radio buttons with their relative SQL data type
+    ui->radioTEXT->setProperty("field_type", "TEXT");
+    ui->radioNUMERIC->setProperty("field_type", "NUMERIC");
+    ui->radioBLOB->setProperty("field_type", "BLOB");
+    ui->radioINTPRIMARY->setProperty("field_type", "INTEGER PRIMARY KEY");
+    ui->radioCustom->setProperty("field_type", "__custom__");
+
+    // Set the current settings
+    ui->nameLineEdit->setText(fld_name);
     QList<QAbstractButton *> buttons =  ui->groupRadioTypes->buttons();
     bool custom = true;
     for(int i = 0; i < buttons.size(); ++i){
@@ -51,7 +45,13 @@ void EditFieldDialog::setInitialValues(DBBrowserDB *db, bool is_new, QString tab
         ui->txtCustomType->setText(fld_type);
     }
 
+    // Check the current input values
     checkInput();
+}
+
+EditFieldDialog::~EditFieldDialog()
+{
+    delete ui;
 }
 
 void EditFieldDialog::accept()

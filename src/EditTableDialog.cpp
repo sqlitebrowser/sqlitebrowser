@@ -5,24 +5,14 @@
 #include <QPushButton>
 #include "sqlitedb.h"
 
-EditTableDialog::EditTableDialog(QWidget* parent)
+EditTableDialog::EditTableDialog(DBBrowserDB* db, QString tableName, QWidget* parent)
     : QDialog(parent),
-      pdb(0),
-      ui(new Ui::EditTableDialog)
+      ui(new Ui::EditTableDialog),
+      pdb(db),
+      curTable(tableName)
 {
+    // Create UI
     ui->setupUi(this);
-}
-
-EditTableDialog::~EditTableDialog()
-{
-    delete ui;
-}
-
-void EditTableDialog::setActiveTable(DBBrowserDB * thedb, QString tableName)
-{
-    // Set variables
-    pdb = thedb;
-    curTable = tableName;
 
     // Editing an existing table?
     if(curTable != "")
@@ -39,10 +29,13 @@ void EditTableDialog::setActiveTable(DBBrowserDB * thedb, QString tableName)
     checkInput();
 }
 
+EditTableDialog::~EditTableDialog()
+{
+    delete ui;
+}
+
 void EditTableDialog::populateFields()
 {
-    if (!pdb) return;
-
     //make sure we are not using cached information
     pdb->updateSchema();
 
@@ -132,8 +125,7 @@ void EditTableDialog::editField()
 
     // Show the edit dialog
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
-    EditFieldDialog dialog(this);
-    dialog.setInitialValues(pdb, curTable == "", curTable, item->text(0), item->text(1));
+    EditFieldDialog dialog(pdb, curTable == "", curTable, item->text(0), item->text(1), this);
     if(dialog.exec())
     {
         item->setText(0, dialog.field_name);
@@ -143,8 +135,7 @@ void EditTableDialog::editField()
 
 void EditTableDialog::addField()
 {
-    EditFieldDialog dialog(this);
-    dialog.setInitialValues(pdb, true, curTable, QString(""), QString(""));
+    EditFieldDialog dialog(pdb, true, curTable, "", "", this);
     if(dialog.exec())
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
