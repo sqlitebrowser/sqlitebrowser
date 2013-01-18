@@ -642,7 +642,6 @@ void DBBrowserDB::updateSchema( )
     }else{
         qDebug ("could not get list of tables: %d, %s",err,sqlite3_errmsg(_db));
     }
-    qDebug(sqlite3_errmsg(_db));
 
     //now get the field list for each table in tbmap
     tableMap::Iterator it;
