@@ -43,7 +43,7 @@ void FindDialog::resetFields(QStringList fieldlist)
     ui->editSearchString->setText("");
     ui->comboOperator->setCurrentIndex(0);
     ui->tableResults->clearContents();
-    ui->labelNumberResults->setText("Found: 0");
+    ui->labelNumberResults->setText(tr("Found: 0"));
 }
 
 void FindDialog::recordSelected(QTableWidgetItem* witem)

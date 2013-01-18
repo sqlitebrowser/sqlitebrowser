@@ -31,9 +31,9 @@ void ExportCsvDialog::accept()
     // Get filename
     QString fileName = QFileDialog::getSaveFileName(
                 this,
-                "Choose a filename to export data",
+                tr("Choose a filename to export data"),
                 defaultLocation,
-                "Text files(*.csv *.txt)");
+                tr("Text files(*.csv *.txt)"));
 
     // Only if the user hasn't clicked the cancel button
     if(fileName.size() > 0)
@@ -45,7 +45,7 @@ void ExportCsvDialog::accept()
         QString quoteChar = ui->comboQuoteCharacter->currentText();
         QString quotequoteChar = quoteChar + quoteChar;
         QString sepChar = ui->comboFieldSeparator->currentText();
-        if(sepChar == "Tab") sepChar = "\t";
+        if(sepChar == tr("Tab")) sepChar = "\t";
         QString newlineChar = "\n";
 
         // Open file
@@ -87,10 +87,10 @@ void ExportCsvDialog::accept()
 
             // Done writing the file
             file.close();
-            QMessageBox::information(this, QApplication::applicationName(), "Export completed.");
+            QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
             QDialog::accept();
         } else {
-            QMessageBox::warning(this, QApplication::applicationName(), "Could not open output file.");
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Could not open output file."));
         }
     }
 }

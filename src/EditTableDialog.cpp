@@ -68,7 +68,7 @@ void EditTableDialog::accept()
         // Create table
         if(!pdb->createTable(ui->editTableName->text(), tbl_structure))
         {
-            QMessageBox::warning(this, QApplication::applicationName(), QString("Error creating table. Message from database engine:\n%1").arg(pdb->lastErrorMessage));
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Error creating table. Message from database engine:\n%1").arg(pdb->lastErrorMessage));
             return;
         }
     } else {

@@ -63,7 +63,7 @@ void PreferencesDialog::chooseLocation()
     if(!s.isEmpty())
     {
         defaultlocation = s;
-	ui->locationEdit->setText(defaultlocation);
+        ui->locationEdit->setText(defaultlocation);
     }
 }
 

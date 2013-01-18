@@ -63,7 +63,7 @@ void ImportCsvDialog::accept()
     }
 
     // Show progress dialog
-    QProgressDialog progress("Inserting data...", "Cancel", 0, curList.size());
+    QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, curList.size());
     progress.setWindowModality(Qt::ApplicationModal);
 
     // declare local variables we will need before the rollback jump
@@ -118,7 +118,7 @@ void ImportCsvDialog::accept()
 rollback:
     progress.hide();
     QApplication::restoreOverrideCursor();  // restore original cursor
-    QString error = QString("Error importing data. Message from database engine: %1").arg(pdb->lastErrorMessage);
+    QString error = tr("Error importing data. Message from database engine: %1").arg(pdb->lastErrorMessage);
     QMessageBox::warning(this, QApplication::applicationName(), error);
     pdb->executeSQL("ROLLBACK TO SAVEPOINT CSVIMPORT;", false);
 }
@@ -187,5 +187,5 @@ char ImportCsvDialog::currentQuoteChar()
 
 char ImportCsvDialog::currentSeparatorChar()
 {
-    return ui->comboSeparator->currentText() == "Tab" ? '\t' : ui->comboSeparator->currentText().at(0).toAscii();
+    return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toAscii();
 }

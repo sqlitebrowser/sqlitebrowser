@@ -121,7 +121,7 @@ void MainWindow::fileOpen(const QString & fileName)
     {
         wFile = QFileDialog::getOpenFileName(
                     this,
-                    "Choose a database file",
+                    tr("Choose a database file"),
                     defaultlocation);
     }
     if(QFile::exists(wFile) )
@@ -131,8 +131,7 @@ void MainWindow::fileOpen(const QString & fileName)
         {
             setCurrentFile(wFile);
         } else {
-            QString err = "An error occurred:  ";
-            err.append(db.lastErrorMessage);
+            QString err = tr("An error occurred: %1").arg(db.lastErrorMessage);
             QMessageBox::warning(this, QApplication::applicationName(), err);
         }
         populateStructure();
@@ -149,7 +148,7 @@ void MainWindow::fileOpen()
 
 void MainWindow::fileNew()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Choose a filename to save under", defaultlocation);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"), defaultlocation);
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -297,16 +296,11 @@ void MainWindow::fileExit()
     {
         if (db.getDirty())
         {
-            QString msg = "Do you want to save the changes made to the database file ";
-            msg.append(db.curDBFilename);
-            msg.append("?");
-            if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-            {
+            QString msg = tr("Do you want to save the changes made to the database file %1?").arg(db.curDBFilename);
+            if(QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
                 db.save();
-            } else {
-                //not really necessary, I think... but will not hurt.
-                db.revert();
-            }
+            else
+                db.revert(); //not really necessary, I think... but will not hurt.
         }
         db.close();
     }
@@ -330,10 +324,10 @@ void MainWindow::addRecord()
         updateTableView(db.getRecordCount()-1);
     }else{
         QMessageBox::information( this, QApplication::applicationName(),
-                                  "Error adding record, make sure a table is selected.\n\n"
+                                  tr("Error adding record, make sure a table is selected.\n\n"
                                   "If the table contain fields declared as NOT NULL\n"
                                   "please select EDIT->PREFERENCES and adjust the\n"
-                                  "default value for new records to insert an empty string." );
+                                  "default value for new records to insert an empty string."));
     }
 }
 
@@ -352,7 +346,7 @@ void MainWindow::deleteRecord()
             selectTableLine(nextselected);
         }
     } else {
-        QMessageBox::information( this, QApplication::applicationName(), "Please select a record first" );
+        QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
 }
 
@@ -473,7 +467,7 @@ void MainWindow::setRecordsetLabel()
     if(to == -2)
         to = total;
 
-    ui->labelRecordset->setText(QString("%1 - %2 of %3").arg(from).arg(to).arg(total));
+    ui->labelRecordset->setText(tr("%1 - %2 of %3").arg(from).arg(to).arg(total));
 }
 
 void MainWindow::browseFind(bool open)
@@ -508,7 +502,7 @@ void MainWindow::browseRefresh()
 void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
+        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
         return;
     }
     
@@ -517,7 +511,8 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
     QString finalsearchterm = wsearchterm;
     
     //special case for CONTAINS operator: use LIKE and surround the search word with % characters
-    if (woperator.compare("contains")==0){
+    if(woperator.compare(tr("contains")) == 0)
+    {
         finaloperator = QString("LIKE");
         QString newsearchterm = "%";
         newsearchterm.append(wsearchterm);
@@ -554,7 +549,7 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
 void MainWindow::createTable()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
+        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
         return;
     }
 
@@ -569,7 +564,7 @@ void MainWindow::createTable()
 void MainWindow::createIndex()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened. Please open or create a new database file." );
+        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
         return;
     }
     CreateIndexDialog dialog(&db, this);
@@ -584,13 +579,12 @@ void MainWindow::compact()
 {
     QApplication::setOverrideCursor( Qt::WaitCursor );
     if (!db.compact()){
-        QString error = "Error: could not compact the database file. Message from database engine:  ";
-        error.append(db.lastErrorMessage);
+        QString error = tr("Error: could not compact the database file. Message from database engine: %1").arg(db.lastErrorMessage);
         QApplication::restoreOverrideCursor( );
         QMessageBox::warning( this, QApplication::applicationName(), error );
     } else {
         QApplication::restoreOverrideCursor( );
-        QMessageBox::information(this, QApplication::applicationName(), "Database successfully compacted.");
+        QMessageBox::information(this, QApplication::applicationName(), tr("Database successfully compacted."));
     }
     db.open(db.curDBFilename);
     populateStructure();
@@ -611,7 +605,7 @@ void MainWindow::deleteObject()
         QString statement = QString("DROP %1 `%2`;").arg(type.toUpper()).arg(table);
         if(!db.executeSQL( statement))
         {
-            QString error = QString("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);
+            QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);
             QMessageBox::warning(this, QApplication::applicationName(), error);
         } else {
             populateStructure();
@@ -623,7 +617,7 @@ void MainWindow::deleteObject()
 void MainWindow::editTable()
 {
     if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), "There is no database opened." );
+        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened."));
         return;
     }
     if(!ui->dbTreeWidget->selectionModel()->hasSelection()){
@@ -684,7 +678,7 @@ void MainWindow::helpAbout()
 void MainWindow::updateRecordText(int row, int col, QString newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
-        QMessageBox::information( this, QApplication::applicationName(), "Data could not be updated" );
+        QMessageBox::information( this, QApplication::applicationName(), tr("Data could not be updated"));
     }
 
     rowList tab = db.browseRecs;
@@ -740,7 +734,7 @@ void MainWindow::executeQuery()
     QString query = ui->sqlTextEdit->toPlainText().trimmed();
     if (query.isEmpty())
     {
-        QMessageBox::information( this, QApplication::applicationName(), "Query string is empty" );
+        QMessageBox::information( this, QApplication::applicationName(), tr("Query string is empty"));
         return;
     }
     //log the query
@@ -750,7 +744,7 @@ void MainWindow::executeQuery()
     const char *tail = utf8Query.data();
     int ncol;
     int err=0;
-    QString lastErrorMessage = QString("No error");
+    QString lastErrorMessage = tr("No error");
     //Accept multi-line queries, by looping until the tail is empty
     do
     {
@@ -819,9 +813,9 @@ void MainWindow::importTableFromCSV()
 {
     QString wFile = QFileDialog::getOpenFileName(
                 this,
-                "Choose a text file",
+                tr("Choose a text file"),
                 defaultlocation,
-                "Text files(*.csv *.txt);;All files(*)");
+                tr("Text files(*.csv *.txt);;All files(*)"));
 
     if (QFile::exists(wFile) )
     {
@@ -830,7 +824,7 @@ void MainWindow::importTableFromCSV()
         {
             populateStructure();
             resetBrowser();
-            QMessageBox::information( this, QApplication::applicationName(), "Import completed" );
+            QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
         }
     }
 }
@@ -849,16 +843,14 @@ void MainWindow::dbState( bool dirty )
 
 void MainWindow::fileSave()
 {
-    if (db.isOpen()){
+    if(db.isOpen())
         db.save();
-        //dbStatusBar->showMessage("Date written to file", 4000)
-    }
 }
 
 void MainWindow::fileRevert()
 {
     if (db.isOpen()){
-        QString msg = QString("Are you sure you want to undo all changes made to the database file '%1' since the last save?").arg(db.curDBFilename);
+        QString msg = tr("Are you sure you want to undo all changes made to the database file '%1' since the last save?").arg(db.curDBFilename);
         if(QMessageBox::question(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
         {
             db.revert();
@@ -872,16 +864,16 @@ void MainWindow::exportDatabaseToSQL()
 {
     QString fileName = QFileDialog::getSaveFileName(
                 this,
-                "Choose a filename to export",
+                tr("Choose a filename to export"),
                 defaultlocation,
-                "Text files(*.sql *.txt)");
+                tr("Text files(*.sql *.txt)"));
 
     if(fileName.size())
     {
         if(!db.dump(fileName))
-            QMessageBox::warning(this, QApplication::applicationName(), "Export cancelled or failed.");
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Export cancelled or failed."));
         else
-            QMessageBox::information(this, QApplication::applicationName(), "Export completed.");
+            QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
     }
 }
 
@@ -889,41 +881,33 @@ void MainWindow::importDatabaseFromSQL()
 {
     QString fileName = QFileDialog::getOpenFileName(
                 this,
-                "Choose a file to import",
+                tr("Choose a file to import"),
                 defaultlocation,
-                "Text files(*.sql *.txt);;All files(*)");
+                tr("Text files(*.sql *.txt);;All files(*)"));
 
     if (fileName.size() > 0)
     {
-        QString msg = "Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.";
+        QString msg = tr("Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.");
         if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
             QString newDBfile = QFileDialog::getSaveFileName(
                         this,
-                        "Choose a filename to save under",
+                        tr("Choose a filename to save under"),
                         defaultlocation);
             if (QFile::exists(newDBfile) )
             {
-                QString err = "File ";
-                err.append(newDBfile);
-                err.append(" already exists. Please choose a different name");
+                QString err = tr("File %1 already exists. Please choose a different name.").arg(newDBfile);
                 QMessageBox::information( this, QApplication::applicationName() ,err);
                 return;
             }
-            if (!fileName.isNull())
-            {
+            if(!fileName.isNull())
                 db.create(newDBfile);
-            }
         }
         int lineErr;
         if (!db.reload(fileName, &lineErr))
-        {
-            QMessageBox::information( this, QApplication::applicationName(), QString("Error importing data at line %1").arg(lineErr) );
-        }
+            QMessageBox::information(this, QApplication::applicationName(), tr("Error importing data at line %1").arg(lineErr) );
         else
-        {
-            QMessageBox::information( this, QApplication::applicationName(), "Import completed" );
-        }
+            QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
         populateStructure();
         resetBrowser();
     }

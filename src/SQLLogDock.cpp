@@ -11,7 +11,7 @@
  *  true to construct a modal dialog.
  */
 SQLLogDock::SQLLogDock(QWidget* parent)
-    : QDockWidget("SQL Log", parent)
+    : QDockWidget(tr("SQL Log"), parent)
 {
     setupUi();
 }

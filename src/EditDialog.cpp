@@ -41,13 +41,12 @@ void EditDialog::setDataType(int type, int size)
     {
     case kSQLiteMediaType_String:
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        if(ui->editData->toPlainText().length() == 1) charstr = QString("char"); else charstr = QString("chars");
-        ui->labelSize->setText(QString("%1 %2").arg(ui->editData->toPlainText().length()).arg(charstr));
+        ui->labelSize->setText(tr("%n char(s)", "", ui->editData->toPlainText().length()));
         enableExport(true);
         break;
     case kSQLiteMediaType_Void:
-        ui->labelType->setText("Type of data currently in cell: Empty");
-        ui->labelSize->setText("");
+        ui->labelType->setText(tr("Type of data currently in cell: Empty"));
+        ui->labelSize->setText(tr(""));
         enableExport(false);
         break;
     }
@@ -78,7 +77,7 @@ void EditDialog::importData()
                 this,
                 tr("Choose a file"),
                 defaultlocation,
-                QString("Text files(*.txt);;All files(*)"));
+                tr("Text files(*.txt);;All files(*)"));
     if(QFile::exists(fileName))
     {
         type = kSQLiteMediaType_String;
@@ -99,7 +98,7 @@ void EditDialog::exportData()
     switch (dataType)
     {
     case kSQLiteMediaType_String:
-        filter = "Text files(*.txt)";
+        filter = tr("Text files(*.txt)");
         break;
     default:
         return;
@@ -107,7 +106,7 @@ void EditDialog::exportData()
 
     QString fileName = QFileDialog::getSaveFileName(
                 this,
-                "Choose a filename to export data",
+                tr("Choose a filename to export data"),
                 defaultlocation,
                 filter);
 
@@ -144,7 +143,7 @@ void EditDialog::accept()
         emit updateRecordText(curRow, curCol, ui->editData->toPlainText());
 
     if (dataType == kSQLiteMediaType_Void)
-        emit updateRecordText(curRow, curCol, QString(""));
+        emit updateRecordText(curRow, curCol, "");
 
     emit goingAway();
 }

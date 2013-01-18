@@ -1,6 +1,9 @@
 #include "MainWindow.h"
 #include <QApplication>
 #include <QTextCodec>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QLocale>
 
 #if defined(Q_WS_MAC)
 #include <Carbon/Carbon.h>
@@ -78,6 +81,14 @@ int main( int argc, char ** argv )
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+
+    // Enable translation
+    QTranslator translator;
+    translator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&translator);
+    QTranslator apptranslator;
+    apptranslator.load("translations/tr_" + QLocale::system().name());
+    a.installTranslator(&apptranslator);
 
     MainWindow w;
 #if defined(Q_WS_MAC)
