@@ -19,10 +19,6 @@ bool DBBrowserDB::isOpen ( )
 
 void DBBrowserDB::setDirty(bool dirtyval)
 {
-    if ((dirty==false)&&(dirtyval==true))
-    {
-        setRestorePoint();
-    }
     dirty = dirtyval;
     if (logWin)
     {
@@ -120,8 +116,10 @@ bool DBBrowserDB::open ( const QString & db)
                 setDirty(false);
             }
             curDBFilename = db;
+            setRestorePoint();
         }
     }
+
     return ok;
 }
 

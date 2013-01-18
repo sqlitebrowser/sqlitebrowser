@@ -15,7 +15,7 @@
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
 #include "EditFieldDialog.h"
-#include "ImportCSVForm.h"
+#include "ImportCsvDialog.h"
 #include "ExportCsvDialog.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
@@ -827,8 +827,7 @@ void MainWindow::importTableFromCSV()
 
     if (QFile::exists(wFile) )
     {
-        importCSVForm dialog(this);
-        dialog.initialize(wFile, &db);
+        ImportCsvDialog dialog(wFile, &db, this);
         if(dialog.exec())
         {
             populateStructure();
