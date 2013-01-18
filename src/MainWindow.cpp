@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       editWin(new EditDialog(this)),
-      clipboard(QApplication::clipboard()),
       findWin(0)
 {
     ui->setupUi(this);
@@ -631,37 +630,6 @@ void MainWindow::editTable()
         populateStructure();
         resetBrowser();
     }
-}
-
-void MainWindow::copy()
-{
-    QWidget * t = ui->dataTable->cellWidget(ui->dataTable->currentRow(), ui->dataTable->currentColumn());
-    if (t!=0){
-        if (QString(t->metaObject()->className()) == "QLineEdit"){
-            /*we are in edit mode*/
-            if (t->hasFocus()){
-                QLineEdit * le = (QLineEdit *) t;
-                le->copy();
-            }
-        }
-    }
-    if (ui->editGoto->hasFocus())
-        ui->editGoto->copy();
-}
-
-void MainWindow::paste()
-{
-    QWidget * t = ui->dataTable->cellWidget(ui->dataTable->currentRow(), ui->dataTable->currentColumn());
-    if (t!=0){
-        if ( QString(t->metaObject()->className()) == "QLineEdit" ){
-            /*we are in edit mode*/
-            if (t->hasFocus()){
-                QLineEdit * le = (QLineEdit *) t;
-                le->paste();}
-        }
-    }
-    if (ui->editGoto->hasFocus())
-        ui->editGoto->paste();
 }
 
 void MainWindow::helpWhatsThis()

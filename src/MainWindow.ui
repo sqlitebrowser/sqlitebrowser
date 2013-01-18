@@ -1364,34 +1364,6 @@
     <string>Modify Field</string>
    </property>
   </action>
-  <action name="editCopyAction">
-   <property name="text">
-    <string>&amp;Copy</string>
-   </property>
-   <property name="toolTip">
-    <string>Copies the selected text to the clipboard</string>
-   </property>
-   <property name="whatsThis">
-    <string>Copies the selected text to the clipboard</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
-   </property>
-  </action>
-  <action name="editPasteAction">
-   <property name="text">
-    <string>&amp;Paste</string>
-   </property>
-   <property name="toolTip">
-    <string>Pastes text from the clipboard into the current text insertion point</string>
-   </property>
-   <property name="whatsThis">
-    <string>Pastes text from the clipboard into the current text insertion point</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+V</string>
-   </property>
-  </action>
   <action name="actionRecent_y_opened">
    <property name="text">
     <string>&amp;Recently opened</string>
@@ -1958,38 +1930,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>editCopyAction</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>copy()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editPasteAction</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>paste()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>editModifyFieldActionPopup</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
@@ -2098,8 +2038,6 @@
   <slot>browseFind(bool)</slot>
   <slot>browseRefresh()</slot>
   <slot>compact()</slot>
-  <slot>copy()</slot>
-  <slot>paste()</slot>
   <slot>helpWhatsThis()</slot>
   <slot>doubleClickTable(int,int)</slot>
   <slot>browseTableHeaderClicked(int)</slot>

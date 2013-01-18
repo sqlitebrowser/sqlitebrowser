@@ -46,7 +46,6 @@ public:
     ~MainWindow();
 
     EditDialog* editWin;
-    QClipboard* clipboard;
     FindDialog* findWin;
     QIntValidator * gotoValidator;
     QString defaultlocation;
@@ -92,8 +91,6 @@ public slots:
     virtual void compact();
     virtual void deleteObject();
     virtual void editTable();
-    virtual void copy();
-    virtual void paste();
     virtual void helpWhatsThis();
     virtual void helpAbout();
     virtual void updateRecordText( int row, int col, QString newtext );
