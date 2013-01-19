@@ -601,8 +601,6 @@ void MainWindow::setupUi()
 
     QObject::connect(dbTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(on_tree_context_menu(const QPoint &)));
     QObject::connect(dbTreeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_tree_selection_changed()));
-
-    QMetaObject::connectSlotsByName(this);
 } // setupUi
 
 void MainWindow::retranslateUi()
