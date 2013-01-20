@@ -14,10 +14,13 @@ class EditFieldDialog : public QDialog
     Q_OBJECT
 
 public:
-    EditFieldDialog(DBBrowserDB* db, bool new_field, QString table, QString fld_name, QString fld_type, QWidget* parent = 0);
+    explicit EditFieldDialog(DBBrowserDB* db, bool new_field, QString table, QString fld_name, QString fld_type, QWidget* parent = 0);
     ~EditFieldDialog();
 
-public slots:
+    QString getFieldName() { return field_name; }
+    QString getFieldType() { return field_type; }
+
+private slots:
     virtual void accept();
     virtual void checkInput();
 
@@ -27,8 +30,6 @@ private:
     QString original_field_name;
     QString table_name;
     bool is_new;
-
-public:
     QString field_name;
     QString field_type;
 };

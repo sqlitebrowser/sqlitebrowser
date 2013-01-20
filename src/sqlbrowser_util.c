@@ -8,16 +8,6 @@
 /*following routines extracted from shell.c for dump support*/
 
 /*
-/Dump database to a file
-*/
-int load_database(sqlite3 * db, FILE * infile, int * lineErr){
-  int rc = 0;
-  process_input(db, infile, lineErr);
-
-  return rc;
-}
-
-/*
 ** Return TRUE if the last non-whitespace character in z[] is a semicolon.
 ** z[] is N characters long.
 */
@@ -51,7 +41,7 @@ static int _all_whitespace(const char *z){
 }
 
 
-char *sqlbrowser_getline(FILE *in){
+static char *sqlbrowser_getline(FILE *in){
   char *zLine;
   int nLine;
   int n;
@@ -89,7 +79,7 @@ char *sqlbrowser_getline(FILE *in){
   return zLine;
 }
 
-void process_input(sqlite3 * db, FILE *in, int * lineErr){
+static void process_input(sqlite3 * db, FILE *in, int * lineErr){
   char *zLine;
   char *zSql = 0;
   char * zErrMsg = 0;
@@ -97,7 +87,7 @@ void process_input(sqlite3 * db, FILE *in, int * lineErr){
   int rc;
   while((zLine = sqlbrowser_getline(in))!=0 ){
     if( (zSql==0 || zSql[0]==0) && _all_whitespace(zLine) ) continue;
-	(*lineErr)++;
+    (*lineErr)++;
     if( zSql==0 ){
       int i;
       for(i=0; zLine[i] && isspace(zLine[i]); i++){}
@@ -126,12 +116,12 @@ void process_input(sqlite3 * db, FILE *in, int * lineErr){
           /*printf("SQL error: %s\n", zErrMsg);*/
           free(zErrMsg);
           zErrMsg = 0;
-		  if( zSql ){
-		    free(zSql);
-  		   }
-		   return;
+          if( zSql ){
+            free(zSql);
+           }
+           return;
         }/*else{
-		  printf("SQL error: %s\n", sqlite3_error_string(rc));
+          printf("SQL error: %s\n", sqlite3_error_string(rc));
         }*/
       }
       free(zSql);
@@ -145,6 +135,16 @@ void process_input(sqlite3 * db, FILE *in, int * lineErr){
   }
   /*normal exit, clear err*/
   *lineErr = 0;
+}
+
+/*
+/Dump database to a file
+*/
+int load_database(sqlite3 * db, FILE * infile, int * lineErr){
+  int rc = 0;
+  process_input(db, infile, lineErr);
+
+  return rc;
 }
 
 /* end of shell.c routines*/

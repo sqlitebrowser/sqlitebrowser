@@ -14,13 +14,15 @@ class FindDialog : public QDialog
     Q_OBJECT
 
 public:
-    FindDialog(QWidget* parent = 0);
+    explicit FindDialog(QWidget* parent = 0);
     ~FindDialog();
 
 public slots:
     virtual void showResults(resultMap rmap);
-    virtual void find();
     virtual void resetFields(QStringList fieldlist = QStringList());
+
+private slots:
+    virtual void find();
     virtual void recordSelected(QTableWidgetItem* witem);
     virtual void closeEvent(QCloseEvent*);
 

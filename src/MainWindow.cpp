@@ -667,7 +667,7 @@ void MainWindow::editWinAway()
 {
     editWin->hide();
     activateWindow();
-    ui->dataTable->setRangeSelected( QTableWidgetSelectionRange(editWin->curRow, editWin->curCol, editWin->curRow, editWin->curCol), true);
+    ui->dataTable->setRangeSelected(QTableWidgetSelectionRange(editWin->getCurrentRow(), editWin->getCurrentCol(), editWin->getCurrentRow(), editWin->getCurrentCol()), true);
 }
 
 void MainWindow::editText(int row, int col)
@@ -972,8 +972,8 @@ void MainWindow::editField()
     EditFieldDialog dialog(&db, false, item->parent()->text(0), item->text(0), item->text(2), this);
     if(dialog.exec())
     {
-        item->setText(0, dialog.field_name);
-        item->setText(2, dialog.field_type);
+        item->setText(0, dialog.getFieldName());
+        item->setText(2, dialog.getFieldType());
     }
 }
 

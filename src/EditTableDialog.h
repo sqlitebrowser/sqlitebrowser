@@ -13,10 +13,10 @@ class EditTableDialog : public QDialog
     Q_OBJECT
 
 public:
-    EditTableDialog(DBBrowserDB* pdb, QString tableName, QWidget* parent = 0);
+    explicit EditTableDialog(DBBrowserDB* pdb, QString tableName, QWidget* parent = 0);
     ~EditTableDialog();
 
-public slots:
+private slots:
     virtual void populateFields();
     virtual void editField();
     virtual void addField();

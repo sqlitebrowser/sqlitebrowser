@@ -12,7 +12,7 @@ class PreferencesDialog : public QDialog
     Q_OBJECT
 
 public:
-    PreferencesDialog(QWidget* parent = 0);
+    explicit PreferencesDialog(QWidget* parent = 0);
     ~PreferencesDialog();
 
     QString defaulttext;
@@ -20,7 +20,7 @@ public:
     QString defaultnewdata;
     QString defaultencoding;
 
-public slots:
+private slots:
     virtual void defaultDataChanged( int which );
     virtual void defaultTextChanged( int which );
     virtual void encodingChanged( int which );

@@ -101,7 +101,7 @@ void EditTableDialog::reject()
     if(curTable != "")
     {
         // Then rollback to our savepoint
-         pdb->executeSQL(QString("ROLLBACK TO SAVEPOINT edittable_%1_save;").arg(curTable));
+        pdb->executeSQL(QString("ROLLBACK TO SAVEPOINT edittable_%1_save;").arg(curTable));
     }
 
     QDialog::reject();
@@ -128,8 +128,8 @@ void EditTableDialog::editField()
     EditFieldDialog dialog(pdb, curTable == "", curTable, item->text(0), item->text(1), this);
     if(dialog.exec())
     {
-        item->setText(0, dialog.field_name);
-        item->setText(1, dialog.field_type);
+        item->setText(0, dialog.getFieldName());
+        item->setText(1, dialog.getFieldType());
     }
 }
 
@@ -139,8 +139,8 @@ void EditTableDialog::addField()
     if(dialog.exec())
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
-        tbitem->setText(0, dialog.field_name);
-        tbitem->setText(1, dialog.field_type);
+        tbitem->setText(0, dialog.getFieldName());
+        tbitem->setText(1, dialog.getFieldType());
         ui->treeWidget->addTopLevelItem(tbitem);
         checkInput();
     }

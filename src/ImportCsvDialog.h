@@ -13,10 +13,10 @@ class ImportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    ImportCsvDialog(QString filename, DBBrowserDB* db, QWidget* parent = 0);
+    explicit ImportCsvDialog(QString filename, DBBrowserDB* db, QWidget* parent = 0);
     ~ImportCsvDialog();
 
-protected slots:
+private slots:
     virtual void accept();
     virtual void updatePreview();
     virtual void checkInput();

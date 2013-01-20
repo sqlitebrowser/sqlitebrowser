@@ -12,19 +12,23 @@ class EditDialog : public QDialog
     Q_OBJECT
 
 public:
-    EditDialog(QWidget* parent = 0);
+    explicit EditDialog(QWidget* parent = 0);
     ~EditDialog();
 
-    int curCol;
-    int curRow;
     QString defaultlocation;
+
+public:
+    int getCurrentCol() { return curCol; }
+    int getCurrentRow() { return curRow; }
 
 public slots:
     virtual void reset();
+    virtual void loadText(QString text, int row, int col);
+
+private slots:
     virtual void enableExport(bool enabled);
     virtual void setDataType(int type, int size);
     virtual void closeEvent(QCloseEvent*);
-    virtual void loadText(QString text, int row, int col);
     virtual void importData();
     virtual void exportData();
     virtual void clearData();
@@ -35,12 +39,12 @@ signals:
     void goingAway();
     void updateRecordText(int, int, QString);
 
-protected:
-    int dataType;
-    int dataSize;
-
 private:
     Ui::EditDialog* ui;
+    int dataType;
+    int dataSize;
+    int curCol;
+    int curRow;
 };
 
 #endif

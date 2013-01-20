@@ -23,6 +23,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+public:
+    MainWindow(QWidget* parent = 0);
+    ~MainWindow();
+
 private:
     Ui::MainWindow* ui;
     SQLLogDock * logWin;
@@ -41,16 +45,13 @@ private:
     int curBrowseOrderByIndex;
     int curBrowseOrderByMode;
 
-public:
-    MainWindow(QWidget* parent = 0);
-    ~MainWindow();
-
     EditDialog* editWin;
     FindDialog* findWin;
-    QIntValidator * gotoValidator;
+    QIntValidator* gotoValidator;
     QString defaultlocation;
 
-private:
+    DBBrowserDB db;
+
     void init();
 
     void updateRecentFileActions();
@@ -59,14 +60,19 @@ private:
 
 protected:
     void closeEvent(QCloseEvent *);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 public slots:
+    virtual void fileOpen( const QString & fileName );
+
+private slots:
     virtual void createTreeContextMenu(const QPoint & qPoint);
     virtual void changeTreeSelection();
     virtual void addField();
     virtual void editField();
     virtual void deleteField();
-    virtual void fileOpen( const QString & fileName );
     virtual void fileOpen();
     virtual void fileNew();
     virtual void populateStructure();
@@ -111,18 +117,8 @@ public slots:
     virtual void openRecentFile();
     virtual void loadPragmas();
     virtual void savePragmas();
-
-protected:
-    DBBrowserDB db;
-
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void resizeEvent(QResizeEvent *event);
-
-protected slots:
     virtual void mainTabSelected( int tabindex );
     virtual void browseTableHeaderClicked(int logicalindex);
-
 };
 
-#endif // MAINFORM_H
+#endif

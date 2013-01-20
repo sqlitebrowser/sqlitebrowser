@@ -13,7 +13,7 @@ class CreateIndexDialog : public QDialog
     Q_OBJECT
 
 public:
-    CreateIndexDialog(DBBrowserDB* db, QWidget* parent = 0);
+    explicit CreateIndexDialog(DBBrowserDB* db, QWidget* parent = 0);
     ~CreateIndexDialog();
 
 private slots:

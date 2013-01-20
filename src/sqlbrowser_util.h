@@ -9,8 +9,6 @@ extern "C" {
 #include <stdio.h>
 
 int load_database(sqlite3 * db, FILE * infile, int * lineErr);
-void process_input(sqlite3 * db, FILE *in, int * lineErr);
-char *sqlbrowser_getline(FILE *in);
 
 #ifdef __cplusplus
 }  /* End of the 'extern "C"' block */
