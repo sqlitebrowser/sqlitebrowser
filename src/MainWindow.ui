@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>SQLiteBrowser</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="icons/icons.qrc">
+    <normaloff>:/oldimages/icon16</normaloff>:/oldimages/icon16</iconset>
+  </property>
   <widget class="QTabWidget" name="mainTab">
    <property name="currentIndex">
     <number>0</number>
@@ -300,7 +304,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>354</width>
+          <width>763</width>
           <height>653</height>
          </rect>
         </property>

@@ -30,9 +30,6 @@ enum
     kSQLiteMediaType_Binary
 };
 
-static QString g_sApplicationNameShort = QString("sqlitebrowser");
-static QString g_applicationIconName = QString(":/oldimages/icon16");
-
 typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 typedef QMap<int, int> rowIdMap;

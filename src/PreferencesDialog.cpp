@@ -69,7 +69,7 @@ void PreferencesDialog::chooseLocation()
 
 void PreferencesDialog::loadSettings()
 {
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.sync();
 
     defaultencoding = settings.value( "/db/defaultencoding", "UTF8" ).toString();
@@ -109,7 +109,7 @@ void PreferencesDialog::loadSettings()
 
 void PreferencesDialog::saveSettings()
 {
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
 
     settings.setValue( "/db/defaultencoding", defaultencoding  );
     settings.setValue( "/db/defaultnewdata", defaultnewdata );

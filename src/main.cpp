@@ -75,7 +75,7 @@ int main( int argc, char ** argv )
 {
     QApplication a( argc, argv );
     a.setOrganizationName("sqlitebrowser");
-    a.setApplicationName("SQLite Database Browser " + QString(APP_VERSION));
+    a.setApplicationName("SQLite Database Browser");
 
     // Set character encoding to UTF8
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));

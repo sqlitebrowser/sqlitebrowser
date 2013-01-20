@@ -100,7 +100,7 @@ void MainWindow::init()
     connect(logWin, SIGNAL(dbState(bool)),this, SLOT(dbState(bool)));
 
     // Load window settings
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
     logWin->comboLogType()->setCurrentIndex(logWin->comboLogType()->findText(settings.value("SQLLogDock/Log", "Application").toString()));
@@ -108,7 +108,6 @@ void MainWindow::init()
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
-    setWindowIcon(QPixmap(g_applicationIconName));
 }
 
 //***********************************************************
@@ -307,7 +306,7 @@ void MainWindow::fileExit()
 
 void MainWindow::closeEvent( QCloseEvent* event )
 {
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.setValue("MainWindow/geometry", saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
     settings.setValue("SQLLogDock/Log", logWin->comboLogType()->currentText());
@@ -1001,7 +1000,7 @@ void MainWindow::openRecentFile()
 
 void MainWindow::updateRecentFileActions()
 {
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     QStringList files = settings.value("recentFileList").toStringList();
 
 
@@ -1025,7 +1024,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
     setWindowTitle( QApplication::applicationName() +" - "+fileName);
     activateFields(true);
 
-    QSettings settings(QApplication::organizationName(), g_sApplicationNameShort);
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     QStringList files = settings.value("recentFileList").toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
