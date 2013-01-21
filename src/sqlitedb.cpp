@@ -776,26 +776,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
     return result;
 }
 
-JournalMode::journalmode DBBrowserDB::journalMode() const
-{
-    JournalMode::journalmode mode = JournalMode::journalmode_unknown;
-    sqlite3_stmt* vm;
-    QString query = "PRAGMA journal_mode;";
-    int s3status = sqlite3_prepare_v2(
-                _db,
-                query.toUtf8(),
-                query.length(),
-                &vm,
-                NULL);
-    if(s3status == SQLITE_OK)
-    {
-        if(sqlite3_step(vm) == SQLITE_ROW)
-        {
-            QString result = QString::fromUtf8(
-                        (const char*)sqlite3_column_text(vm, 0)).toLower();
-            mode = JournalMode::fromString(result);
-        }
-    }
-    sqlite3_finalize(vm);
-    return mode;
-}
+
+
+
+

@@ -42,11 +42,7 @@ MainWindow::MainWindow(QWidget* parent)
     setupUi();
     setAcceptDrops(true);
 
-    m_ToolButtonWAL = new QToolButton(statusBar());
-    m_ToolButtonWAL->setDisabled(true);
-    m_ToolButtonWAL->setToolTip(QObject::tr("Journal mode"));
-    m_ToolButtonWAL->setText("");
-    statusBar()->addPermanentWidget(m_ToolButtonWAL);
+    (void)statusBar();
     init();
 }
 
@@ -260,7 +256,6 @@ void MainWindow::fileOpen(const QString & fileName)
             err.append(db.lastErrorMessage);
             QMessageBox::information( this, QApplication::applicationName() ,err);
         }
-        updateDBInfo();
         populateStructure();
         resetBrowser();
     }
@@ -381,23 +376,6 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
         editWin->reset();
     }
     QApplication::restoreOverrideCursor();
-}
-
-void MainWindow::updateDBInfo()
-{
-    if(db.isOpen())
-    {
-        JournalMode::journalmode mode = db.journalMode();
-        if( mode != JournalMode::journalmode_wal )
-        {
-            m_ToolButtonWAL->setEnabled(true);
-        }
-        m_ToolButtonWAL->setText(JournalMode::toString(db.journalMode()));
-    }
-    else
-    {
-        m_ToolButtonWAL->setEnabled(false);
-    }
 }
 
 void MainWindow::resetBrowser()

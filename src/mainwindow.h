@@ -8,7 +8,6 @@
 
 #include <QtGui/QAction>
 #include <QtGui/QMenu>
-#include <QtGui/QToolButton>
 
 #include <QDragEnterEvent>
 
@@ -53,8 +52,6 @@ private:
     QTreeWidget *dbTreeWidget;
     QStandardItemModel *queryResultListModel;
 
-    QToolButton* m_ToolButtonWAL;
-
     SQLiteSyntaxHighlighter* sqliteHighlighter;
 
     int curBrowseOrderByIndex;
@@ -95,7 +92,6 @@ public slots:
     virtual void populateStructure();
     virtual void populateTable(const QString & tablename , bool keepColumnWidths = false);
     virtual void resetBrowser();
-    virtual void updateDBInfo();
     virtual void fileClose();
     virtual void fileExit();
     virtual void addRecord();
