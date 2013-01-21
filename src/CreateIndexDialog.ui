@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CreateIndexDialog</class>
+ <widget class="QDialog" name="CreateIndexDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>610</width>
+    <height>342</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Create New Index</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons/icons.qrc">
+    <normaloff>:/icons/index_create</normaloff>:/icons/index_create</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelIndexName">
+       <property name="text">
+        <string>&amp;Name</string>
+       </property>
+       <property name="buddy">
+        <cstring>editIndexName</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="editIndexName"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="labelIndexColumns">
+       <property name="text">
+        <string>&amp;Columns</string>
+       </property>
+       <property name="buddy">
+        <cstring>tableIndexColumns</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QTableWidget" name="tableIndexColumns">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>250</height>
+        </size>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Column</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Use in Index</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Order</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelTableName">
+       <property name="text">
+        <string>&amp;Table</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboTableName</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="comboTableName"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelIndexUnique">
+       <property name="text">
+        <string>&amp;Unique</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkIndexUnique</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="checkIndexUnique">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>editIndexName</tabstop>
+  <tabstop>comboTableName</tabstop>
+  <tabstop>checkIndexUnique</tabstop>
+  <tabstop>tableIndexColumns</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>CreateIndexDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>CreateIndexDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboTableName</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>CreateIndexDialog</receiver>
+   <slot>tableChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>236</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editIndexName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CreateIndexDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>443</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableIndexColumns</sender>
+   <signal>cellChanged(int,int)</signal>
+   <receiver>CreateIndexDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>443</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>tableChanged(QString)</slot>
+  <slot>checkInput()</slot>
+ </slots>
+</ui>

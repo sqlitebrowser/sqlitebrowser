@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ExportCsvDialog</class>
+ <widget class="QDialog" name="ExportCsvDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>331</width>
+    <height>141</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Export table to CSV</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelTable">
+       <property name="text">
+        <string>&amp;Table</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboTable</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboTable"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelHeader">
+       <property name="text">
+        <string>&amp;Column names in first line</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkHeader</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="checkHeader">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelFieldSeparator">
+       <property name="text">
+        <string>Field &amp;separator</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboFieldSeparator</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="comboFieldSeparator">
+       <item>
+        <property name="text">
+         <string>,</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>;</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tab</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="labelQuoteCharacter">
+       <property name="text">
+        <string>&amp;Quote character</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboQuoteCharacter</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="comboQuoteCharacter">
+       <item>
+        <property name="text">
+         <string>&quot;</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>'</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>comboTable</tabstop>
+  <tabstop>checkHeader</tabstop>
+  <tabstop>comboFieldSeparator</tabstop>
+  <tabstop>comboQuoteCharacter</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ExportCsvDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ExportCsvDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

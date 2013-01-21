@@ -4,23 +4,47 @@ sqlitebrowser
 
 This is a fork from the SF project which seems to be stagnant. 
 
-Website:
-  http://sqlitebrowser.sourceforge.net
+Old Project
+-----------
+- http://sqlitebrowser.sourceforge.net
+- https://sourceforge.net/projects/sqlitebrowser/
 
-Project:
-  https://sourceforge.net/projects/sqlitebrowser/
+What it is
+----------
 
-Status
-------
+(taken from the website linked to above; it's still true - now even more)
 
+SQLite Database Browser is a freeware, public domain, open source visual tool
+used to create, design and edit database files compatible with SQLite. It is
+meant to be used for users and developers that want to create databases, edit
+and search data using a familiar spreadsheet-like interface, without the need
+to learn complicated SQL commands.
+
+What's been done since then
+---------------------------
 - Qt3Support was removed
 - Recent files menu added
+- Improved UI, making it more modern, replacing some dialogs etc.
+- Syntax highlighting for SQL code
+- Cleaned up the code, reducing the SLOC quite a bit
+- Added basic support for triggers and views
+- Added pragma editing
+- Fixed a ton of bugs
+- Probably more
 
-Todo
-----
+All in all a fair amount of the code has been rewritten in order to regain
+maintainability. Based on this quite a few bugs could be fixed and some
+features added.
 
-- UI cleanup
-- Code cleanup (a lot)
+What's still to do
+------------------
 
-For recent issues look at: https://github.com/rp-/sqlitebrowser/issues
-
+- Even more code cleanup
+- Further improvement of the UI, adding more features and making it easier to
+  use
+- Inline editing of records instead of having to use a special dialog for it
+- Avoid loading all records of a table to avoid problems when opening a very
+  big table
+- Add proper support for BLOBs
+- Feel free to add more issues at
+  https://github.com/mkleusberg/sqlitebrowser/issues

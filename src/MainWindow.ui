@@ -1,0 +1,2073 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SQLiteBrowser</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons/icons.qrc">
+    <normaloff>:/oldimages/icon16</normaloff>:/oldimages/icon16</iconset>
+  </property>
+  <widget class="QTabWidget" name="mainTab">
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="structure">
+    <attribute name="title">
+     <string>Database &amp;Structure</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QToolBar" name="dbToolbar">
+       <property name="windowTitle">
+        <string>toolBar1</string>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <addaction name="editCreateTableAction"/>
+       <addaction name="editModifyTableAction"/>
+       <addaction name="editDeleteObjectAction"/>
+       <addaction name="separator"/>
+       <addaction name="editAddFieldActionPopup"/>
+       <addaction name="editModifyFieldActionPopup"/>
+       <addaction name="editDeleteFieldActionPopup"/>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="dbTreeWidget">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Object</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Schema</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="browser">
+    <attribute name="title">
+     <string>&amp;Browse Data</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Table:</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboBrowseTable</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBrowseTable">
+         <property name="toolTip">
+          <string>Select a table to browse data</string>
+         </property>
+         <property name="whatsThis">
+          <string>Use this list to select a table to be displayed in the database view</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonFind">
+         <property name="toolTip">
+          <string>Open or close the floating find window</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button toggles the appearance of the Find window, used to search records in the database view</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/searchfind</normaloff>:/icons/searchfind</iconset>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+F</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonRefresh">
+         <property name="toolTip">
+          <string>Refresh the data in the selected table.</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button refreshes the data in the currently selected table.</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
+         </property>
+         <property name="shortcut">
+          <string>F5</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonNewRecord">
+         <property name="toolTip">
+          <string>Insert a new record in the current table</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button creates a new, empty record in the database</string>
+         </property>
+         <property name="text">
+          <string>New Record</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonDeleteRecord">
+         <property name="toolTip">
+          <string>Delete the current record</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button deletes the record currently selected in the database</string>
+         </property>
+         <property name="text">
+          <string>Delete Record</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="dataTable">
+       <property name="whatsThis">
+        <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QToolButton" name="buttonPrevious">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Go to previous record set page</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button is used to navigate to the previous set of 1000 records in the database view</string>
+         </property>
+         <property name="text">
+          <string>&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelRecordset">
+         <property name="text">
+          <string>0 - 0 of 0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonNext">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Go to next record set page</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button is used to navigate to the next 1000 records set in the database view</string>
+         </property>
+         <property name="text">
+          <string>&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonGoto">
+         <property name="toolTip">
+          <string>Click here to browse the specified record</string>
+         </property>
+         <property name="whatsThis">
+          <string>This button is used to navigate to the record number specied in the Go to: area.</string>
+         </property>
+         <property name="text">
+          <string>Go to:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editGoto">
+         <property name="toolTip">
+          <string>Enter record number to browse</string>
+         </property>
+         <property name="whatsThis">
+          <string>Type a record number in this area and click the Go to: button to display the record in the database view</string>
+         </property>
+         <property name="text">
+          <string>1</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="pragmas">
+    <attribute name="title">
+     <string>Edit &amp;Pragmas</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <widget class="QScrollArea" name="scrollareaPragmas">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>763</width>
+          <height>653</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::ExpandingFieldsGrow</enum>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelPragmaAutoVacuum">
+           <property name="text">
+            <string>Auto Vacuum</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboboxPragmaAutoVacuum</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="comboboxPragmaAutoVacuum">
+           <item>
+            <property name="text">
+             <string>None</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Full</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Incremental</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelPragmaAutomaticIndex">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatic Index&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaAutomaticIndex</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaAutomaticIndex">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="labelPragmaBusyTimeout">
+           <property name="text">
+            <string>Busy Timeout</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaBusyTimeout</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="labelPragmaCacheSize">
+           <property name="text">
+            <string>Cache Size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaCacheSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="labelPragmaCheckpointFullFsync">
+           <property name="text">
+            <string>Checkpoint Full FSYNC</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaCheckpointFullFsync</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaCheckpointFullFsync">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="labelPragmaEncoding">
+           <property name="text">
+            <string>Encoding</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboboxPragmaEncoding</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="labelPragmaForeignKeys">
+           <property name="text">
+            <string>Foreign Keys</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaForeignKeys</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaForeignKeys">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="labelPragmaFullFsync">
+           <property name="text">
+            <string>Full FSYNC</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaFullFsync</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaFullFsync">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints">
+           <property name="text">
+            <string>Ignore Check Constraints</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaIgnoreCheckConstraints">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="labelPragmaJournalMode">
+           <property name="text">
+            <string>Journal Mode</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboboxPragmaJournalMode</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QComboBox" name="comboboxPragmaJournalMode">
+           <item>
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Truncate</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Persist</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Memory</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>WAL</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Off</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="10" column="0">
+          <widget class="QLabel" name="labelJournalSizeLimit">
+           <property name="text">
+            <string>Journal Size Limit</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaJournalSizeLimit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="0">
+          <widget class="QLabel" name="labelPragmaLegacyFileFormat">
+           <property name="text">
+            <string>Legacy File Format</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaLegacyFileFormat</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaLegacyFileFormat">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="0">
+          <widget class="QLabel" name="labelPragmaLockingMode">
+           <property name="text">
+            <string>Locking Mode</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboboxPragmaLockingMode</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="1">
+          <widget class="QComboBox" name="comboboxPragmaLockingMode">
+           <item>
+            <property name="text">
+             <string>Normal</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Exclusive</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="13" column="0">
+          <widget class="QLabel" name="labelPragmaMaxPageCount">
+           <property name="text">
+            <string>Max Page Count</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaMaxPageCount</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="0">
+          <widget class="QLabel" name="labelPragmaPageSize">
+           <property name="text">
+            <string>Page Size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaPageSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="0">
+          <widget class="QLabel" name="labelPragmaReadUncommitted">
+           <property name="text">
+            <string>Read Uncommitted</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaReadUncommitted</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaReadUncommitted">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="16" column="0">
+          <widget class="QLabel" name="labelPragmaRecursiveTriggers">
+           <property name="text">
+            <string>Recursive Triggers</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaRecursiveTriggers</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="16" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaRecursiveTriggers">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="17" column="0">
+          <widget class="QLabel" name="labelPragmaReverseUnorderedSelects">
+           <property name="text">
+            <string>Reverse Unordered Selects</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaReverseUnorderedSelects</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="17" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaReverseUnorderedSelects">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="18" column="0">
+          <widget class="QLabel" name="labelPragmaSchemaVersion">
+           <property name="text">
+            <string>Schema Version</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaSchemaVersion</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="19" column="0">
+          <widget class="QLabel" name="labelPragmaSecureDelete">
+           <property name="text">
+            <string>Secure Delete</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkboxPragmaSecureDelete</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="19" column="1">
+          <widget class="QCheckBox" name="checkboxPragmaSecureDelete">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="20" column="0">
+          <widget class="QLabel" name="labelPragmaSynchronous">
+           <property name="text">
+            <string>Synchronous</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboboxPragmaSynchronous</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="20" column="1">
+          <widget class="QComboBox" name="comboboxPragmaSynchronous">
+           <item>
+            <property name="text">
+             <string>Off</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Normal</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Full</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="21" column="0">
+          <widget class="QLabel" name="labelPragmaTempStore">
+           <property name="text">
+            <string>Temp Store</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboboxPragmaTempStore</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="21" column="1">
+          <widget class="QComboBox" name="comboboxPragmaTempStore">
+           <item>
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>File</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Memory</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="22" column="0">
+          <widget class="QLabel" name="labelPragmaUserVersion">
+           <property name="text">
+            <string>User Version</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaUserVersion</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="23" column="0">
+          <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
+           <property name="text">
+            <string>WAL Auto Checkpoint</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaWalAutoCheckpoint</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="spinPragmaBusyTimeout">
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="spinPragmaCacheSize">
+           <property name="minimum">
+            <number>-100000</number>
+           </property>
+           <property name="maximum">
+            <number>100000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QComboBox" name="comboboxPragmaEncoding">
+           <item>
+            <property name="text">
+             <string>UTF-8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>UTF-16</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>UTF-16le</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>UTF-16be</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="10" column="1">
+          <widget class="QSpinBox" name="spinPragmaJournalSizeLimit">
+           <property name="minimum">
+            <number>-1</number>
+           </property>
+           <property name="maximum">
+            <number>100000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="13" column="1">
+          <widget class="QSpinBox" name="spinPragmaMaxPageCount">
+           <property name="maximum">
+            <number>2000000000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="1">
+          <widget class="QSpinBox" name="spinPragmaPageSize">
+           <property name="minimum">
+            <number>512</number>
+           </property>
+           <property name="maximum">
+            <number>65536</number>
+           </property>
+          </widget>
+         </item>
+         <item row="18" column="1">
+          <widget class="QSpinBox" name="spinPragmaSchemaVersion">
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="22" column="1">
+          <widget class="QSpinBox" name="spinPragmaUserVersion">
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="23" column="1">
+          <widget class="QSpinBox" name="spinPragmaWalAutoCheckpoint">
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="24" column="1">
+          <widget class="QDialogButtonBox" name="buttonBoxPragmas">
+           <property name="standardButtons">
+            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+           </property>
+           <property name="centerButtons">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="query">
+    <attribute name="title">
+     <string>E&amp;xecute SQL</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>SQL string:</string>
+       </property>
+       <property name="buddy">
+        <cstring>sqlTextEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="sqlTextEdit">
+       <property name="font">
+        <font>
+         <family>DejaVu Sans Mono</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Type SQL string here</string>
+       </property>
+       <property name="whatsThis">
+        <string>Type the SQL query in this area, and press the button below to execute it. Results and error messages will be shown in the fields at the bottom of this form.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="executeQueryButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Execute SQL query</string>
+       </property>
+       <property name="whatsThis">
+        <string>This button is used to execute the SQL query entered in the text area above.</string>
+       </property>
+       <property name="text">
+        <string>Execute query</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Error message from database engine:</string>
+       </property>
+       <property name="buddy">
+        <cstring>queryErrorLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="queryErrorLineEdit">
+       <property name="whatsThis">
+        <string>Messages returned from the database engine when the SQL query is executed are displayed in this area.</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Data returned:</string>
+       </property>
+       <property name="buddy">
+        <cstring>queryResultTableView</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableView" name="queryResultTableView">
+       <property name="toolTip">
+        <string>Query generated data</string>
+       </property>
+       <property name="whatsThis">
+        <string>This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.</string>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="fileMenu">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>&amp;Import</string>
+     </property>
+     <addaction name="fileImportSQLAction"/>
+     <addaction name="fileImportCSVAction"/>
+    </widget>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>&amp;Export</string>
+     </property>
+     <addaction name="fileExportSQLAction"/>
+     <addaction name="fileExportCSVAction"/>
+    </widget>
+    <addaction name="fileNewAction"/>
+    <addaction name="fileOpenAction"/>
+    <addaction name="fileCloseAction"/>
+    <addaction name="separator"/>
+    <addaction name="fileSaveAction"/>
+    <addaction name="fileRevertAction"/>
+    <addaction name="fileCompactAction"/>
+    <addaction name="separator"/>
+    <addaction name="menuImport"/>
+    <addaction name="menuExport"/>
+    <addaction name="separator"/>
+    <addaction name="fileExitAction"/>
+   </widget>
+   <widget class="QMenu" name="editMenu">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="editCreateTableAction"/>
+    <addaction name="editModifyTableAction"/>
+    <addaction name="separator"/>
+    <addaction name="editDeleteObjectAction"/>
+    <addaction name="separator"/>
+    <addaction name="editCreateIndexAction"/>
+   </widget>
+   <widget class="QMenu" name="viewMenu">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="sqlLogAction"/>
+    <addaction name="viewDBToolbarAction"/>
+    <addaction name="separator"/>
+    <addaction name="viewPreferencesAction"/>
+   </widget>
+   <widget class="QMenu" name="helpMenu">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="helpWhatsThisAction"/>
+    <addaction name="helpAboutAction"/>
+   </widget>
+   <addaction name="fileMenu"/>
+   <addaction name="editMenu"/>
+   <addaction name="viewMenu"/>
+   <addaction name="helpMenu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolbarDB">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="fileNewAction"/>
+   <addaction name="fileOpenAction"/>
+   <addaction name="separator"/>
+   <addaction name="fileSaveAction"/>
+   <addaction name="fileRevertAction"/>
+  </widget>
+  <action name="fileNewAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_new</normaloff>:/icons/db_new</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new database file</string>
+   </property>
+   <property name="statusTip">
+    <string>Create a new database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to create a new database file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="fileOpenAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_open</normaloff>:/icons/db_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Open an existing database file</string>
+   </property>
+   <property name="statusTip">
+    <string>Open an existing database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to open an existing database file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="fileCloseAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Close Database</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="fileRevertAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_revert</normaloff>:/icons/db_revert</iconset>
+   </property>
+   <property name="text">
+    <string>Revert Changes</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert database to last saved state</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</string>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </action>
+  <action name="fileSaveAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_save</normaloff>:/icons/db_save</iconset>
+   </property>
+   <property name="text">
+    <string>Write Changes</string>
+   </property>
+   <property name="toolTip">
+    <string>Write changes to the database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to save changes to the database file.</string>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </action>
+  <action name="fileCompactAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Compact Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Compact the database file, removing space wasted by deleted records</string>
+   </property>
+   <property name="statusTip">
+    <string>Compact the database file, removing space wasted by deleted records.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Compact the database file, removing space wasted by deleted records.</string>
+   </property>
+  </action>
+  <action name="fileExitAction">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="fileImportSQLAction">
+   <property name="text">
+    <string>Database from SQL file</string>
+   </property>
+   <property name="toolTip">
+    <string>Import data from an .sql dump text file into a new or existing database.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</string>
+   </property>
+  </action>
+  <action name="fileImportCSVAction">
+   <property name="text">
+    <string>Table from CSV file</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a wizard that lets you import data from a comma separated text file into a database table.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</string>
+   </property>
+  </action>
+  <action name="fileExportSQLAction">
+   <property name="text">
+    <string>Database to SQL file</string>
+   </property>
+   <property name="toolTip">
+    <string>Export a database to a .sql dump text file.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</string>
+   </property>
+  </action>
+  <action name="fileExportCSVAction">
+   <property name="text">
+    <string>Table as CSV file</string>
+   </property>
+   <property name="toolTip">
+    <string>Export a database table as a comma separated text file.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</string>
+   </property>
+  </action>
+  <action name="editCreateTableAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_create</normaloff>:/icons/table_create</iconset>
+   </property>
+   <property name="text">
+    <string>Create Table</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
+   </property>
+  </action>
+  <action name="editDeleteObjectAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Object</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Object</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Delete Table wizard, where you can select a database table to be dropped.</string>
+   </property>
+  </action>
+  <action name="editModifyTableAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_modify</normaloff>:/icons/table_modify</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Table</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
+   </property>
+  </action>
+  <action name="editCreateIndexAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/index_create</normaloff>:/icons/index_create</iconset>
+   </property>
+   <property name="text">
+    <string>Create Index</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
+   </property>
+  </action>
+  <action name="viewPreferencesAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/settings</normaloff>:/icons/settings</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Preferences</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the preferences window.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Open the preferences window.</string>
+   </property>
+  </action>
+  <action name="sqlLogAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/oldimages/log</normaloff>:/oldimages/log</iconset>
+   </property>
+   <property name="text">
+    <string>SQL &amp;Log</string>
+   </property>
+   <property name="whatsThis">
+    <string>Display or hide the SQL log window, which stores all SQL commands issued by the user or the application.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="viewDBToolbarAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;DB Toolbar</string>
+   </property>
+   <property name="whatsThis">
+    <string>Shows or hides the Database toolbar.</string>
+   </property>
+  </action>
+  <action name="helpWhatsThisAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/whatis</normaloff>:/icons/whatis</iconset>
+   </property>
+   <property name="text">
+    <string>What's This?</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="helpAboutAction">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="editAddFieldActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
+   </property>
+   <property name="text">
+    <string>Add Field</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Field</string>
+   </property>
+  </action>
+  <action name="editDeleteFieldActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Field</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Field</string>
+   </property>
+  </action>
+  <action name="editModifyFieldActionPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_edit</normaloff>:/icons/field_edit</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Field</string>
+   </property>
+   <property name="toolTip">
+    <string>Modify Field</string>
+   </property>
+  </action>
+  <action name="actionRecent_y_opened">
+   <property name="text">
+    <string>&amp;Recently opened</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>dbTreeWidget</tabstop>
+  <tabstop>comboBrowseTable</tabstop>
+  <tabstop>buttonFind</tabstop>
+  <tabstop>buttonRefresh</tabstop>
+  <tabstop>buttonNewRecord</tabstop>
+  <tabstop>buttonDeleteRecord</tabstop>
+  <tabstop>dataTable</tabstop>
+  <tabstop>buttonPrevious</tabstop>
+  <tabstop>buttonNext</tabstop>
+  <tabstop>buttonGoto</tabstop>
+  <tabstop>editGoto</tabstop>
+  <tabstop>sqlTextEdit</tabstop>
+  <tabstop>executeQueryButton</tabstop>
+  <tabstop>queryErrorLineEdit</tabstop>
+  <tabstop>queryResultTableView</tabstop>
+  <tabstop>scrollareaPragmas</tabstop>
+  <tabstop>comboboxPragmaAutoVacuum</tabstop>
+  <tabstop>checkboxPragmaAutomaticIndex</tabstop>
+  <tabstop>spinPragmaBusyTimeout</tabstop>
+  <tabstop>spinPragmaCacheSize</tabstop>
+  <tabstop>checkboxPragmaCheckpointFullFsync</tabstop>
+  <tabstop>comboboxPragmaEncoding</tabstop>
+  <tabstop>checkboxPragmaForeignKeys</tabstop>
+  <tabstop>checkboxPragmaFullFsync</tabstop>
+  <tabstop>checkboxPragmaIgnoreCheckConstraints</tabstop>
+  <tabstop>comboboxPragmaJournalMode</tabstop>
+  <tabstop>spinPragmaJournalSizeLimit</tabstop>
+  <tabstop>checkboxPragmaLegacyFileFormat</tabstop>
+  <tabstop>comboboxPragmaLockingMode</tabstop>
+  <tabstop>spinPragmaMaxPageCount</tabstop>
+  <tabstop>spinPragmaPageSize</tabstop>
+  <tabstop>checkboxPragmaReadUncommitted</tabstop>
+  <tabstop>checkboxPragmaRecursiveTriggers</tabstop>
+  <tabstop>checkboxPragmaReverseUnorderedSelects</tabstop>
+  <tabstop>spinPragmaSchemaVersion</tabstop>
+  <tabstop>checkboxPragmaSecureDelete</tabstop>
+  <tabstop>comboboxPragmaSynchronous</tabstop>
+  <tabstop>comboboxPragmaTempStore</tabstop>
+  <tabstop>spinPragmaUserVersion</tabstop>
+  <tabstop>spinPragmaWalAutoCheckpoint</tabstop>
+  <tabstop>buttonBoxPragmas</tabstop>
+ </tabstops>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>fileExitAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileOpenAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileOpen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileNewAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileNew()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileCloseAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileClose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBrowseTable</sender>
+   <signal>activated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>populateTable(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonNewRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>623</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDeleteRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>733</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonPrevious</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigatePrevious()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>22</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonNext</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateNext()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonGoto</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateGoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>461</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editGoto</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateGoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>644</x>
+     <y>558</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonFind</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseFind(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRefresh</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseRefresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileCompactAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>compact()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>helpWhatsThisAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpWhatsThis()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>helpAboutAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>cellDoubleClicked(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>doubleClickTable(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainTab</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>mainTabSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>315</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>executeQueryButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>executeQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileImportCSVAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>importTableFromCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileExportCSVAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportTableToCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileRevertAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileRevert()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileSaveAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileSave()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCreateIndexAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createIndex()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editDeleteObjectAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteObject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editModifyTableAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editAddFieldActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addField()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileExportSQLAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportDatabaseToSQL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileImportSQLAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>importDatabaseFromSQL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewPreferencesAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openPreferences()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dbTreeWidget</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createTreeContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dbTreeWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeTreeSelection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editModifyFieldActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editField()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewDBToolbarAction</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolbarDB</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCreateTableAction</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editDeleteFieldActionPopup</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteField()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBoxPragmas</sender>
+   <signal>rejected()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadPragmas()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>470</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBoxPragmas</sender>
+   <signal>accepted()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>savePragmas()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>715</x>
+     <y>550</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>802</x>
+     <y>522</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>fileOpen()</slot>
+  <slot>fileClose()</slot>
+  <slot>populateTable(QString)</slot>
+  <slot>addRecord()</slot>
+  <slot>deleteRecord()</slot>
+  <slot>navigatePrevious()</slot>
+  <slot>navigateNext()</slot>
+  <slot>navigateGoto()</slot>
+  <slot>browseFind(bool)</slot>
+  <slot>browseRefresh()</slot>
+  <slot>compact()</slot>
+  <slot>helpWhatsThis()</slot>
+  <slot>doubleClickTable(int,int)</slot>
+  <slot>browseTableHeaderClicked(int)</slot>
+  <slot>mainTabSelected(int)</slot>
+  <slot>executeQuery()</slot>
+  <slot>importTableFromCSV()</slot>
+  <slot>exportTableToCSV()</slot>
+  <slot>fileRevert()</slot>
+  <slot>fileSave()</slot>
+  <slot>deleteIndex()</slot>
+  <slot>createIndex()</slot>
+  <slot>createTable()</slot>
+  <slot>deleteObject()</slot>
+  <slot>editTable()</slot>
+  <slot>editTablePopup()</slot>
+  <slot>addField()</slot>
+  <slot>editField()</slot>
+  <slot>exportDatabaseToSQL()</slot>
+  <slot>importDatabaseFromSQL()</slot>
+  <slot>openPreferences()</slot>
+  <slot>createTreeContextMenu(QPoint)</slot>
+  <slot>changeTreeSelection()</slot>
+  <slot>fileNew()</slot>
+  <slot>helpAbout()</slot>
+  <slot>deleteField()</slot>
+  <slot>loadPragmas()</slot>
+  <slot>savePragmas()</slot>
+ </slots>
+</ui>

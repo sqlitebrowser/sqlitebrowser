@@ -1,9 +1,8 @@
 #include "SQLLogDock.h"
-
 #include <QScrollBar>
-
 #include "sqlitedb.h"
-#include "sqlitesyntaxhighlighter.h"
+#include "SQLiteSyntaxHighlighter.h"
+
 /*
  *  Constructs a sqlLogForm as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -12,7 +11,7 @@
  *  true to construct a modal dialog.
  */
 SQLLogDock::SQLLogDock(QWidget* parent)
-    : QDockWidget("SQL Log", parent)
+    : QDockWidget(tr("SQL Log"), parent)
 {
     setupUi();
 }

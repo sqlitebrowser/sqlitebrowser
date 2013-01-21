@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditDialog</class>
+ <widget class="QDialog" name="EditDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>372</width>
+    <height>375</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Edit database cell</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="buttomImport">
+       <property name="toolTip">
+        <string>Import text</string>
+       </property>
+       <property name="whatsThis">
+        <string>Opens a file dialog used to import text to this database cell.</string>
+       </property>
+       <property name="text">
+        <string>&amp;Import</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonExport">
+       <property name="toolTip">
+        <string>Export text</string>
+       </property>
+       <property name="whatsThis">
+        <string>Opens a file dialog used to export the contents of this database cell to a text file.</string>
+       </property>
+       <property name="text">
+        <string>&amp;Export</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonClear">
+       <property name="toolTip">
+        <string>Clear cell data</string>
+       </property>
+       <property name="whatsThis">
+        <string>Erases the contents of the cell</string>
+       </property>
+       <property name="text">
+        <string>&amp;Clear</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="editData">
+     <property name="whatsThis">
+      <string>This area displays information about the data present in this database cell</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelType">
+     <property name="text">
+      <string>Type of data currently in cell</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelSize">
+     <property name="text">
+      <string>Size of data currently in table</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>buttomImport</tabstop>
+  <tabstop>buttonExport</tabstop>
+  <tabstop>buttonClear</tabstop>
+  <tabstop>editData</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>326</x>
+     <y>350</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttomImport</sender>
+   <signal>clicked()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>importData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonExport</sender>
+   <signal>clicked()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>exportData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonClear</sender>
+   <signal>clicked()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>clearData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>12</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editData</sender>
+   <signal>textChanged()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>editTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>218</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>importData()</slot>
+  <slot>exportData()</slot>
+  <slot>clearData()</slot>
+  <slot>editTextChanged()</slot>
+ </slots>
+</ui>

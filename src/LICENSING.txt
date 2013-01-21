@@ -36,5 +36,7 @@ To comply with the terms of the LGPL, sources for Qt 4.6.0 can be obtained from
 the same site where you downloaded this software:
 http://sourceforge.net/projects/sqlitebrowser/files/
 
+----
 
-
+The Icons are licensed under a Creative Commons Attribution 2.5 and 3.0 license.
+They were made by Mark James, also see http://www.famfamfam.com/lab/icons/silk/

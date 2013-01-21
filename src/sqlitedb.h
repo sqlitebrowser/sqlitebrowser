@@ -1,11 +1,10 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qobject.h>
-#include "sqlite3.h"
-#include "sqlitebrowsertypes.h"
+#include <QStringList>
+#include <QMap>
+#include <QMultiMap>
+#include <sqlite3.h>
 
 class SQLLogDock;
 
@@ -22,13 +21,17 @@ enum
     kEncodingNONE
 };
 
-static QString g_sApplicationNameShort = QString("sqlitebrowser");
-static QString g_applicationIconName = QString(":/oldimages/icon16");
-
+/*types for encoded media data*/
+enum
+{
+    kSQLiteMediaType_Void,
+    kSQLiteMediaType_Integer,
+    kSQLiteMediaType_String,
+    kSQLiteMediaType_Binary
+};
 
 typedef QMap<int, class DBBrowserField> fieldMap;
-typedef QMap<QString, class DBBrowserTable> tableMap;
-typedef QMap<QString, class DBBrowserIndex> indexMap;
+typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 typedef QMap<int, int> rowIdMap;
 
 typedef QList<QStringList> rowList;
@@ -48,37 +51,31 @@ private:
     QString type;
 };
 
-class DBBrowserIndex
+class DBBrowserObject
 {
 public:
-    DBBrowserIndex() : name( "" ) { }
-    DBBrowserIndex( const QString& wname,const QString& wsql )
-        : name( wname), sql( wsql )
-    { }
-    QString getname() const { return name; }
-    QString getsql() const { return sql; }
-private:
-    QString name;
-    QString sql;
-};
-
-
-class DBBrowserTable
-{
-public:
-    DBBrowserTable() : name( "" ) { }
-    DBBrowserTable( const QString& wname,const QString& wsql )
-        : name( wname), sql( wsql )
+    DBBrowserObject() : name( "" ) { }
+    DBBrowserObject( const QString& wname,const QString& wsql, const QString& wtype )
+        : name( wname), sql( wsql ), type(wtype)
     { }
 
     void addField(int order, const QString& wfield,const QString& wtype);
 
     QString getname() const { return name; }
     QString getsql() const { return sql; }
+    QString gettype() const { return type; }
+    DBBrowserField getField(const QString& name) const
+    {
+        for(fieldMap::ConstIterator i=fldmap.begin();i!=fldmap.end();++i)
+            if(i.value().getname() == name)
+                return *i;
+        return DBBrowserField();
+    }
     fieldMap fldmap;
 private:
     QString name;
     QString sql;
+    QString type;
 };
 
 
@@ -103,12 +100,17 @@ public:
     bool updateRecord(int wrow, int wcol, const QString & wtext);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
+    bool createTable(QString name, const QList<DBBrowserField>& structure);
     bool renameTable(QString from_table, QString to_table);
     bool createColumn(QString table, QString field, QString type);
+    bool renameColumn(QString tablename, QString from, QString to, QString type);
+    bool dropColumn(QString tablename, QString column);
 
     QStringList getTableFields(const QString & tablename);
     QStringList getTableTypes(const QString & tablename);
-    QStringList getTableNames();
+    QStringList getBrowsableObjectNames();
+    objectMap getBrowsableObjects();
+    DBBrowserObject getObjectByName(const QString& name);
     QStringList getIndexNames();
     resultMap getFindResults( const QString & wstatement);
     int getRecordCount();
@@ -122,13 +124,14 @@ public:
     char * GetEncodedQStringAsPointer( const QString & input);
     QString GetEncodedQString( const QString & input);
     QString GetDecodedQString( const QString & input);
+    QString getPragma(QString pragma);
+    bool setPragma(QString pragma, QString value);
     sqlite3 * _db;
 
 
     QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);
 
-    tableMap tbmap;
-    indexMap idxmap;
+    objectMap objMap;
     rowIdMap idmap;
 
     rowList browseRecs;
