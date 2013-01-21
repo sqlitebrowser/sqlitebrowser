@@ -7,7 +7,7 @@ DialogAbout::DialogAbout(QWidget *parent) :
     ui(new Ui::DialogAbout)
 {
     ui->setupUi(this);
-    this->setFixedSize(this->width(), this->height());
+    this->setFixedSize(669, 306);
 
     ui->label_version->setText(ui->label_version->text() + " " + APP_VERSION);
     ui->label_versionqt->setText(ui->label_versionqt->text() + " " + QT_VERSION_STR);
