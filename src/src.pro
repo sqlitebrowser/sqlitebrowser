@@ -78,6 +78,6 @@ mac {
 }
 RESOURCES += icons/icons.qrc
 
-FORMS += mainwindow.ui \
+FORMS += \
     createtabledialog.ui \
     dialogabout.ui
