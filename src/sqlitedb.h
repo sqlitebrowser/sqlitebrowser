@@ -81,6 +81,52 @@ private:
     QString sql;
 };
 
+class JournalMode
+{
+public:
+    enum journalmode {
+        journalmode_unknown,
+        journalmode_delete,
+        journalmode_truncate,
+        journalmode_persist,
+        journalmode_memory,
+        journalmode_wal,
+        journalmode_off
+    };
+
+    static const char* toString(journalmode mode)
+    {
+        switch(mode)
+        {
+        case journalmode_delete: return "DELETE";
+        case journalmode_truncate: return "TRUNCATE";
+        case journalmode_persist: return "PERSIST";
+        case journalmode_memory: return "MEMORY";
+        case journalmode_wal: return "WAL";
+        case journalmode_off: return "OFF";
+        case journalmode_unknown:
+        default: return "UNKNOWN";
+        }
+    }
+
+    static journalmode fromString(QString smode)
+    {
+        if(smode == "delete")
+            return journalmode_delete;
+        else if(smode == "truncate")
+            return journalmode_truncate;
+        else if(smode == "persist")
+            return journalmode_persist;
+        else if(smode == "memory")
+            return journalmode_memory;
+        else if(smode == "wal")
+            return journalmode_wal;
+        else if(smode == "off")
+            return journalmode_off;
+        else
+            return journalmode_unknown;
+    }
+};
 
 class DBBrowserDB
 {
@@ -105,6 +151,7 @@ public:
 
     bool renameTable(QString from_table, QString to_table);
     bool createColumn(QString table, QString field, QString type);
+    JournalMode::journalmode journalMode() const;
 
     QStringList getTableFields(const QString & tablename);
     QStringList getTableTypes(const QString & tablename);
