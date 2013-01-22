@@ -1097,26 +1097,26 @@ bool DBBrowserDB::setPragma(QString pragma, QString value)
     if(pragma == "journal_mode")
     {
         if(value == "0")
-            value = "delete";
+            value = "\"delete\"";
         else if(value == "1")
-            value = "truncate";
+            value = "\"truncate\"";
         else if(value == "2")
-            value = "persist";
+            value = "\"persist\"";
         else if(value == "3")
-            value = "memory";
+            value = "\"memory\"";
         else if(value == "4")
-            value = "wal";
+            value = "\"wal\"";
         else if(value == "5")
-            value = "off";
+            value = "\"off\"";
         else
-            value = "delete";
+            value = "\"delete\"";
     } else if(value == "locking_mode") {
         if(value == "0")
-            value = "normal";
+            value = "\"normal\"";
         else if(value == "1")
-            value = "exclusive";
+            value = "\"exclusive\"";
         else
-            value = "normal";
+            value = "\"normal\"";
     } else if(pragma == "encoding") {
         if(value == "0")
             value = "\"utf-8\"";
