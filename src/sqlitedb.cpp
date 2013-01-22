@@ -1,9 +1,9 @@
 #include "sqlitedb.h"
 #include "sqlbrowser_util.h"
+#include "MainWindow.h"
 #include <QFile>
 #include <QMessageBox>
 #include <QProgressDialog>
-#include "SQLLogDock.h"
 #include <QApplication>
 #include <QTextStream>
 
@@ -20,19 +20,15 @@ bool DBBrowserDB::isOpen ( )
 void DBBrowserDB::setDirty(bool dirtyval)
 {
     dirty = dirtyval;
-    if (logWin)
-    {
-        logWin->msgDBDirtyState(dirty);
-    }
+    if(mainWindow)
+        mainWindow->dbState(dirtyval);
 }
 
 void DBBrowserDB::setDirtyDirect(bool dirtyval)
 {
     dirty = dirtyval;
-    if (logWin)
-    {
-        logWin->msgDBDirtyState(dirty);
-    }
+    if(mainWindow)
+        mainWindow->dbState(dirtyval);
 }
 
 bool DBBrowserDB::getDirty()
@@ -863,7 +859,7 @@ int DBBrowserDB::getRecordCount()
 
 void DBBrowserDB::logSQL(QString statement, int msgtype)
 {
-    if (logWin)
+    if(mainWindow)
     {
         /*limit log message to a sensible size, this will truncate some binary messages*/
         int loglimit = 300;
@@ -872,7 +868,7 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
             statement.truncate(32);
             statement.append(QObject::tr("... <string too wide to log, probably contains binary data> ..."));
         }
-        logWin->log(statement, msgtype);
+        mainWindow->logSql(statement, msgtype);
     }
 }
 

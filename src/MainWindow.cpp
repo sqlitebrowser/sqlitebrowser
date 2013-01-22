@@ -20,7 +20,6 @@
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
 #include "FindDialog.h"
-#include "SQLLogDock.h"
 #include "SQLiteSyntaxHighlighter.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -46,10 +45,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    // Create the SQL log dock
-    logWin = new SQLLogDock(this);
-    db.logWin = logWin;
-    addDockWidget(Qt::BottomDockWidgetArea, logWin);
+    // Init the SQL log dock
+    db.mainWindow = this;
+    sqliteHighlighterLogUser = new SQLiteSyntaxHighlighter(ui->editLogUser->document());
+    sqliteHighlighterLogApp = new SQLiteSyntaxHighlighter(ui->editLogApplication->document());
 
     // Set up the db tree widget
     ui->dbTreeWidget->setColumnHidden(1, true);
@@ -60,7 +59,7 @@ void MainWindow::init()
     ui->editGoto->setValidator(gotoValidator);
 
     // Create the SQL sytax highlighter
-    sqliteHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
+    sqliteHighlighterTabSql = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 
     // Set up DB model
     queryResultListModel = new QStandardItemModel(this);
@@ -87,23 +86,20 @@ void MainWindow::init()
     popupFieldMenu->addAction(ui->editDeleteFieldActionPopup);
 
     // Set state of checkable menu actions
-    ui->sqlLogAction->setChecked(!logWin->isHidden());
+    ui->sqlLogAction->setChecked(!ui->dockLog->isHidden());
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
     // Connect some more signals and slots
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
-    connect(ui->sqlLogAction, SIGNAL(toggled(bool)), logWin, SLOT(setVisible(bool)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int , QString)), this, SLOT(updateRecordText(int, int , QString)));
-    connect(logWin, SIGNAL(goingAway()),  this, SLOT(logWinAway()));
-    connect(logWin, SIGNAL(dbState(bool)),this, SLOT(dbState(bool)));
 
     // Load window settings
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
-    logWin->comboLogType()->setCurrentIndex(logWin->comboLogType()->findText(settings.value("SQLLogDock/Log", "Application").toString()));
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(settings.value("SQLLogDock/Log", "Application").toString()));
 
     // Set other window settings
     setAcceptDrops(true);
@@ -168,7 +164,9 @@ void MainWindow::populateStructure()
     }
     db.updateSchema();
     QStringList tblnames = db.getBrowsableObjectNames();
-    sqliteHighlighter->setTableNames(tblnames);
+    sqliteHighlighterTabSql->setTableNames(tblnames);
+    sqliteHighlighterLogUser->setTableNames(tblnames);
+    sqliteHighlighterLogApp->setTableNames(tblnames);
 
     QMap<QString, QTreeWidgetItem*> typeToParentItem;
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(ui->dbTreeWidget);
@@ -285,7 +283,7 @@ void MainWindow::fileClose()
     populateStructure();
     loadPragmas();
     activateFields(false);
-    logWin->clearLog();
+    ui->buttonLogClear->click();
 }
 
 void MainWindow::fileExit()
@@ -309,7 +307,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.setValue("MainWindow/geometry", saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
-    settings.setValue("SQLLogDock/Log", logWin->comboLogType()->currentText());
+    settings.setValue("SQLLogDock/Log", ui->comboLogSubmittedBy->currentText());
     fileExit();
     QMainWindow::closeEvent(event);
 }
@@ -656,11 +654,6 @@ void MainWindow::updateRecordText(int row, int col, QString newtext)
     item->setToolTip( wrapText(cv) );
     ui->dataTable->setItem(row, col, item);
 
-}
-
-void MainWindow::logWinAway()
-{
-    ui->sqlLogAction->toggle();
 }
 
 void MainWindow::editWinAway()
@@ -1150,4 +1143,16 @@ void MainWindow::savePragmas()
     db.setPragma("temp_store", QString::number(ui->comboboxPragmaTempStore->currentIndex()));
     db.setPragma("user_version", QString::number(ui->spinPragmaUserVersion->value()));
     db.setPragma("wal_autocheckpoint", QString::number(ui->spinPragmaWalAutoCheckpoint->value()));
+}
+
+void MainWindow::logSql(const QString& sql, int msgtype)
+{
+    if(msgtype == kLogMsg_User)
+    {
+        ui->editLogUser->append(sql);
+        ui->editLogUser->verticalScrollBar()->setValue(ui->editLogUser->verticalScrollBar()->maximum());
+    } else {
+        ui->editLogApplication->append(sql);
+        ui->editLogApplication->verticalScrollBar()->setValue(ui->editLogApplication->verticalScrollBar()->maximum());
+    }
 }

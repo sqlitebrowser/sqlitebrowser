@@ -5,8 +5,7 @@
 #include <QMap>
 #include <QMultiMap>
 #include <sqlite3.h>
-
-class SQLLogDock;
+class MainWindow;
 
 enum
 {
@@ -82,7 +81,7 @@ private:
 class DBBrowserDB
 {
 public:
-    DBBrowserDB (): _db( 0 ) , hasValidBrowseSet(false), curEncoding(kEncodingUTF8) {}
+    DBBrowserDB (): _db( 0 ) , hasValidBrowseSet(false), curEncoding(kEncodingUTF8), mainWindow(0) {}
     ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool create ( const QString & db);
@@ -143,7 +142,7 @@ public:
     int curEncoding;
     QString curNewData;
 
-    SQLLogDock * logWin;
+    MainWindow* mainWindow;
 
 
 private:
