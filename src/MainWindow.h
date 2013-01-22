@@ -8,7 +8,6 @@
 #define ORDERMODE_DESC 1
 
 class QDragEnterEvent;
-class SQLLogDock;
 class EditDialog;
 class FindDialog;
 class SQLiteSyntaxHighlighter;
@@ -29,14 +28,15 @@ public:
 
 private:
     Ui::MainWindow* ui;
-    SQLLogDock * logWin;
 
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
     QMenu *popupFieldMenu;
     QMenu *recentFilesMenu;
 
-    SQLiteSyntaxHighlighter* sqliteHighlighter;
+    SQLiteSyntaxHighlighter* sqliteHighlighterTabSql;
+    SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;
+    SQLiteSyntaxHighlighter* sqliteHighlighterLogApp;
 
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
@@ -66,6 +66,8 @@ protected:
 
 public slots:
     virtual void fileOpen( const QString & fileName );
+    virtual void logSql(const QString &sql, int msgtype);
+    virtual void dbState(bool dirty);
 
 private slots:
     virtual void createTreeContextMenu(const QPoint & qPoint);
@@ -100,14 +102,12 @@ private slots:
     virtual void helpWhatsThis();
     virtual void helpAbout();
     virtual void updateRecordText( int row, int col, QString newtext );
-    virtual void logWinAway();
     virtual void editWinAway();
     virtual void editText( int row, int col );
     virtual void doubleClickTable( int row, int col );
     virtual void executeQuery();
     virtual void importTableFromCSV();
     virtual void exportTableToCSV();
-    virtual void dbState( bool dirty );
     virtual void fileSave();
     virtual void fileRevert();
     virtual void exportDatabaseToSQL();

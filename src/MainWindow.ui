@@ -1029,6 +1029,98 @@
    <addaction name="fileSaveAction"/>
    <addaction name="fileRevertAction"/>
   </widget>
+  <widget class="QDockWidget" name="dockLog">
+   <property name="features">
+    <set>QDockWidget::AllDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>SQL Log</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="labelLogSubmittedBy">
+         <property name="text">
+          <string>&amp;Show SQL submitted by</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboLogSubmittedBy</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboLogSubmittedBy">
+         <item>
+          <property name="text">
+           <string>User</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Application</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonLogClear">
+         <property name="text">
+          <string>&amp;Clear</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QStackedWidget" name="stackLog">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QTextEdit" name="editLogUser">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="editLogApplication">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="fileNewAction">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -1416,6 +1508,8 @@
   <tabstop>spinPragmaUserVersion</tabstop>
   <tabstop>spinPragmaWalAutoCheckpoint</tabstop>
   <tabstop>buttonBoxPragmas</tabstop>
+  <tabstop>comboLogSubmittedBy</tabstop>
+  <tabstop>buttonLogClear</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -1492,8 +1586,8 @@
    <slot>populateTable(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>91</y>
+     <x>59</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1508,8 +1602,8 @@
    <slot>addRecord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>623</x>
-     <y>91</y>
+     <x>584</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1524,8 +1618,8 @@
    <slot>deleteRecord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>733</x>
-     <y>91</y>
+     <x>687</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1541,7 +1635,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>22</x>
-     <y>559</y>
+     <y>321</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1557,7 +1651,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>114</x>
-     <y>559</y>
+     <y>321</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1572,8 +1666,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
-     <y>559</y>
+     <x>443</x>
+     <y>321</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1588,8 +1682,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>644</x>
-     <y>558</y>
+     <x>511</x>
+     <y>321</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1604,8 +1698,8 @@
    <slot>browseFind(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>143</x>
-     <y>91</y>
+     <x>141</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1620,8 +1714,8 @@
    <slot>browseRefresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>173</x>
-     <y>91</y>
+     <x>171</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1684,8 +1778,8 @@
    <slot>doubleClickTable(int,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>399</x>
-     <y>325</y>
+     <x>99</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1716,8 +1810,8 @@
    <slot>executeQuery()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>302</y>
+     <x>86</x>
+     <y>177</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2004,8 +2098,8 @@
    <slot>loadPragmas()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>243</x>
-     <y>551</y>
+     <x>247</x>
+     <y>705</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -2020,12 +2114,92 @@
    <slot>savePragmas()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>715</x>
-     <y>550</y>
+     <x>360</x>
+     <y>705</y>
     </hint>
     <hint type="destinationlabel">
      <x>802</x>
      <y>522</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLogClear</sender>
+   <signal>clicked()</signal>
+   <receiver>editLogApplication</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>750</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>642</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLogClear</sender>
+   <signal>clicked()</signal>
+   <receiver>editLogUser</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>754</x>
+     <y>387</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>611</x>
+     <y>426</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboLogSubmittedBy</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>stackLog</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>492</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sqlLogAction</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dockLog</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>467</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dockLog</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>sqlLogAction</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
