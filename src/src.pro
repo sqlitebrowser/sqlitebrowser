@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = sqlitebrowser
 
-INCLUDEPATH += sqlite_source/
+#INCLUDEPATH += sqlite_source/
 CONFIG += qt \
     warn_on \
     debug
