@@ -115,7 +115,6 @@ public:
     int getRecordCount();
     bool isOpen();
     void setDirty(bool dirtyval);
-    void setDirtyDirect(bool dirtyval);
     bool getDirty();
     void logSQL(QString statement, int msgtype);
     void setEncoding( int encoding );

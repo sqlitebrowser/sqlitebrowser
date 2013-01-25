@@ -24,13 +24,6 @@ void DBBrowserDB::setDirty(bool dirtyval)
         mainWindow->dbState(dirtyval);
 }
 
-void DBBrowserDB::setDirtyDirect(bool dirtyval)
-{
-    dirty = dirtyval;
-    if(mainWindow)
-        mainWindow->dbState(dirtyval);
-}
-
 bool DBBrowserDB::getDirty()
 {
     return dirty;
