@@ -1065,6 +1065,7 @@ void MainWindow::activateFields(bool enable)
     ui->buttonPrevious->setEnabled(enable);
     ui->executeQueryButton->setEnabled(enable);
     ui->scrollAreaWidgetContents->setEnabled(enable);
+    ui->buttonBoxPragmas->setEnabled(enable);
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
@@ -1091,58 +1092,77 @@ void MainWindow::resizeEvent(QResizeEvent*)
 
 void MainWindow::loadPragmas()
 {
-    ui->comboboxPragmaAutoVacuum->setCurrentIndex(db.getPragma("auto_vacuum").toInt());
-    ui->checkboxPragmaAutomaticIndex->setChecked(db.getPragma("automatic_index").toInt());
-    ui->spinPragmaBusyTimeout->setValue(db.getPragma("busy_timeout").toInt());
-    ui->spinPragmaCacheSize->setValue(db.getPragma("cache_size").toInt());
-    ui->checkboxPragmaCheckpointFullFsync->setChecked(db.getPragma("checkpoint_fullfsync").toInt());
-    ui->comboboxPragmaEncoding->setCurrentIndex(db.getPragma("encoding").toInt());
-    ui->checkboxPragmaForeignKeys->setChecked(db.getPragma("foreign_keys").toInt());
-    ui->checkboxPragmaFullFsync->setChecked(db.getPragma("fullfsync").toInt());
-    ui->checkboxPragmaIgnoreCheckConstraints->setChecked(db.getPragma("ignore_check_constraints").toInt());
-    ui->comboboxPragmaJournalMode->setCurrentIndex(db.getPragma("journal_mode").toInt());
-    ui->spinPragmaJournalSizeLimit->setValue(db.getPragma("journal_size_limit").toInt());
-    ui->checkboxPragmaLegacyFileFormat->setChecked(db.getPragma("legacy_file_format").toInt());
-    ui->comboboxPragmaLockingMode->setCurrentIndex(db.getPragma("locking_mode").toInt());
-    ui->spinPragmaMaxPageCount->setValue(db.getPragma("max_page_count").toInt());
-    ui->spinPragmaPageSize->setValue(db.getPragma("page_size").toInt());
-    ui->checkboxPragmaReadUncommitted->setChecked(db.getPragma("read_uncommitted").toInt());
-    ui->checkboxPragmaRecursiveTriggers->setChecked(db.getPragma("recursive_triggers").toInt());
-    ui->checkboxPragmaReverseUnorderedSelects->setChecked(db.getPragma("reverse_unordered_selects").toInt());
-    ui->spinPragmaSchemaVersion->setValue(db.getPragma("schema_version").toInt());
-    ui->checkboxPragmaSecureDelete->setChecked(db.getPragma("secure_delete").toInt());
-    ui->comboboxPragmaSynchronous->setCurrentIndex(db.getPragma("synchronous").toInt());
-    ui->comboboxPragmaTempStore->setCurrentIndex(db.getPragma("temp_store").toInt());
-    ui->spinPragmaUserVersion->setValue(db.getPragma("user_version").toInt());
-    ui->spinPragmaWalAutoCheckpoint->setValue(db.getPragma("wal_autocheckpoint").toInt());
+    pragmaValues.autovacuum = db.getPragma("auto_vacuum").toInt();
+    pragmaValues.automatic_index = db.getPragma("automatic_index").toInt();
+    pragmaValues.checkpoint_fullsync = db.getPragma("checkpoint_fullfsync").toInt();
+    pragmaValues.foreign_keys = db.getPragma("foreign_keys").toInt();
+    pragmaValues.fullfsync = db.getPragma("fullfsync").toInt();
+    pragmaValues.ignore_check_constraints = db.getPragma("ignore_check_constraints").toInt();
+    pragmaValues.journal_mode = db.getPragma("journal_mode").toUpper();
+    pragmaValues.journal_size_limit = db.getPragma("journal_size_limit").toInt();
+    pragmaValues.locking_mode = db.getPragma("locking_mode").toUpper();
+    pragmaValues.max_page_count = db.getPragma("max_page_count").toInt();
+    pragmaValues.page_size = db.getPragma("page_size").toInt();
+    pragmaValues.recursive_triggers = db.getPragma("recursive_triggers").toInt();
+    pragmaValues.secure_delete = db.getPragma("secure_delete").toInt();
+    pragmaValues.synchronous = db.getPragma("synchronous").toInt();
+    pragmaValues.temp_store = db.getPragma("temp_store").toInt();
+    pragmaValues.user_version = db.getPragma("user_version").toInt();
+    pragmaValues.wal_autocheckpoint = db.getPragma("wal_autocheckpoint").toInt();
+
+    updatePragmaUi();
+}
+
+void MainWindow::updatePragmaUi()
+{
+    ui->comboboxPragmaAutoVacuum->setCurrentIndex(pragmaValues.autovacuum);
+    ui->checkboxPragmaAutomaticIndex->setChecked(pragmaValues.automatic_index);
+    ui->checkboxPragmaCheckpointFullFsync->setChecked(pragmaValues.checkpoint_fullsync);
+    ui->checkboxPragmaForeignKeys->setChecked(pragmaValues.foreign_keys);
+    ui->checkboxPragmaFullFsync->setChecked(pragmaValues.fullfsync);
+    ui->checkboxPragmaIgnoreCheckConstraints->setChecked(pragmaValues.ignore_check_constraints);
+    ui->comboboxPragmaJournalMode->setCurrentIndex(ui->comboboxPragmaJournalMode->findText(pragmaValues.journal_mode, Qt::MatchFixedString));
+    ui->spinPragmaJournalSizeLimit->setValue(pragmaValues.journal_size_limit);
+    ui->comboboxPragmaLockingMode->setCurrentIndex(ui->comboboxPragmaLockingMode->findText(pragmaValues.locking_mode, Qt::MatchFixedString));
+    ui->spinPragmaMaxPageCount->setValue(pragmaValues.max_page_count);
+    ui->spinPragmaPageSize->setValue(pragmaValues.page_size);
+    ui->checkboxPragmaRecursiveTriggers->setChecked(pragmaValues.recursive_triggers);
+    ui->checkboxPragmaSecureDelete->setChecked(pragmaValues.secure_delete);
+    ui->comboboxPragmaSynchronous->setCurrentIndex(pragmaValues.synchronous);
+    ui->comboboxPragmaTempStore->setCurrentIndex(pragmaValues.temp_store);
+    ui->spinPragmaUserVersion->setValue(pragmaValues.user_version);
+    ui->spinPragmaWalAutoCheckpoint->setValue(pragmaValues.wal_autocheckpoint);
 }
 
 void MainWindow::savePragmas()
 {
-    db.setPragma("auto_vacuum", QString::number(ui->comboboxPragmaAutoVacuum->currentIndex()));
-    db.setPragma("automatic_index", QString::number(ui->checkboxPragmaAutomaticIndex->isChecked()));
-    db.setPragma("busy_timeout", QString::number(ui->spinPragmaBusyTimeout->value()));
-    db.setPragma("cache_size", QString::number(ui->spinPragmaCacheSize->value()));
-    db.setPragma("checkpoint_fullfsync", QString::number(ui->checkboxPragmaCheckpointFullFsync->isChecked()));
-    db.setPragma("encoding", QString::number(ui->comboboxPragmaEncoding->currentIndex()));
-    db.setPragma("foreign_keys", QString::number(ui->checkboxPragmaForeignKeys->isChecked()));
-    db.setPragma("fullfsync", QString::number(ui->checkboxPragmaFullFsync->isChecked()));
-    db.setPragma("ignore_check_constraints", QString::number(ui->checkboxPragmaIgnoreCheckConstraints->isChecked()));
-    db.setPragma("journal_mode", QString::number(ui->comboboxPragmaJournalMode->currentIndex()));
-    db.setPragma("journal_size_limit", QString::number(ui->spinPragmaJournalSizeLimit->value()));
-    db.setPragma("legacy_file_format", QString::number(ui->checkboxPragmaLegacyFileFormat->isChecked()));
-    db.setPragma("locking_mode", QString::number(ui->comboboxPragmaLockingMode->currentIndex()));
-    db.setPragma("max_page_count", QString::number(ui->spinPragmaMaxPageCount->value()));
-    db.setPragma("page_size", QString::number(ui->spinPragmaPageSize->value()));
-    db.setPragma("read_uncommitted", QString::number(ui->checkboxPragmaReadUncommitted->isChecked()));
-    db.setPragma("recursive_triggers", QString::number(ui->checkboxPragmaRecursiveTriggers->isChecked()));
-    db.setPragma("reverse_unordered_selects", QString::number(ui->checkboxPragmaReverseUnorderedSelects->isChecked()));
-    db.setPragma("schema_version", QString::number(ui->spinPragmaSchemaVersion->value()));
-    db.setPragma("secure_delete", QString::number(ui->checkboxPragmaSecureDelete->isChecked()));
-    db.setPragma("synchronous", QString::number(ui->comboboxPragmaSynchronous->currentIndex()));
-    db.setPragma("temp_store", QString::number(ui->comboboxPragmaTempStore->currentIndex()));
-    db.setPragma("user_version", QString::number(ui->spinPragmaUserVersion->value()));
-    db.setPragma("wal_autocheckpoint", QString::number(ui->spinPragmaWalAutoCheckpoint->value()));
+    if( db.getDirty() )
+    {
+        QString msg = tr("Setting PRAGMA values will commit your current transaction.\nAre you sure?");
+        if(QMessageBox::question(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+        {
+            return; // abort
+        }
+    }
+    db.setPragma("auto_vacuum", ui->comboboxPragmaAutoVacuum->currentIndex(), pragmaValues.autovacuum);
+    db.setPragma("automatic_index", ui->checkboxPragmaAutomaticIndex->isChecked(), pragmaValues.automatic_index);
+    db.setPragma("checkpoint_fullfsync", ui->checkboxPragmaCheckpointFullFsync->isChecked(), pragmaValues.checkpoint_fullsync);
+    db.setPragma("foreign_keys", ui->checkboxPragmaForeignKeys->isChecked(), pragmaValues.foreign_keys);
+    db.setPragma("fullfsync", ui->checkboxPragmaFullFsync->isChecked(), pragmaValues.fullfsync);
+    db.setPragma("ignore_check_constraints", ui->checkboxPragmaIgnoreCheckConstraints->isChecked(), pragmaValues.ignore_check_constraints);
+    db.setPragma("journal_mode", ui->comboboxPragmaJournalMode->currentText().toUpper(), pragmaValues.journal_mode);
+    db.setPragma("journal_size_limit", ui->spinPragmaJournalSizeLimit->value(), pragmaValues.journal_size_limit);
+    db.setPragma("locking_mode", ui->comboboxPragmaLockingMode->currentText().toUpper(), pragmaValues.locking_mode);
+    db.setPragma("max_page_count", ui->spinPragmaMaxPageCount->value(), pragmaValues.max_page_count);
+    db.setPragma("page_size", ui->spinPragmaPageSize->value(), pragmaValues.page_size);
+    db.setPragma("recursive_triggers", ui->checkboxPragmaRecursiveTriggers->isChecked(), pragmaValues.recursive_triggers);
+    db.setPragma("secure_delete", ui->checkboxPragmaSecureDelete->isChecked(), pragmaValues.secure_delete);
+    db.setPragma("synchronous", ui->comboboxPragmaSynchronous->currentIndex(), pragmaValues.synchronous);
+    db.setPragma("temp_store", ui->comboboxPragmaTempStore->currentIndex(), pragmaValues.temp_store);
+    db.setPragma("user_version", ui->spinPragmaUserVersion->value(), pragmaValues.user_version);
+    db.setPragma("wal_autocheckpoint", ui->spinPragmaWalAutoCheckpoint->value(), pragmaValues.wal_autocheckpoint);
+
+    updatePragmaUi();
 }
 
 void MainWindow::logSql(const QString& sql, int msgtype)

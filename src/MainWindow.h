@@ -27,6 +27,27 @@ public:
     ~MainWindow();
 
 private:
+    struct PragmaValues
+    {
+        int autovacuum;
+        int automatic_index;
+        int checkpoint_fullsync;
+        int foreign_keys;
+        int fullfsync;
+        int ignore_check_constraints;
+        QString journal_mode;
+        int journal_size_limit;
+        QString locking_mode;
+        int max_page_count;
+        int page_size;
+        int recursive_triggers;
+        int secure_delete;
+        int synchronous;
+        int temp_store;
+        int user_version;
+        int wal_autocheckpoint;
+    } pragmaValues;
+
     Ui::MainWindow* ui;
 
     QStandardItemModel *queryResultListModel;
@@ -116,6 +137,7 @@ private slots:
     virtual void updatePreferences();
     virtual void openRecentFile();
     virtual void loadPragmas();
+    virtual void updatePragmaUi();
     virtual void savePragmas();
     virtual void mainTabSelected( int tabindex );
     virtual void browseTableHeaderClicked(int logicalindex);

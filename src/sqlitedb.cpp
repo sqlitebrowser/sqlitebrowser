@@ -1014,7 +1014,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
     return result;
 }
 
-QString DBBrowserDB::getPragma(QString pragma)
+QString DBBrowserDB::getPragma(const QString& pragma)
 {
     if(!isOpen())
         return "";
@@ -1025,111 +1025,63 @@ QString DBBrowserDB::getPragma(QString pragma)
     QString retval = "";
 
     // Get value from DB
-    int err = sqlite3_prepare(_db, sql.toStdString().c_str(), sql.length(), &vm, &tail);
+    int err = sqlite3_prepare(_db, sql.toUtf8(), sql.toUtf8().length(), &vm, &tail);
     if(err == SQLITE_OK){
         logSQL(sql, kLogMsg_App);
         if(sqlite3_step(vm) == SQLITE_ROW)
         {
             retval = QString((const char *) sqlite3_column_text(vm, 0));
-            sqlite3_finalize(vm);
+            //qDebug((pragma + ": " + retval).toStdString().c_str());
         } else {
-            sqlite3_finalize(vm);
             qDebug(QObject::tr("didn't receive any output from pragma %1").arg(pragma).toStdString().c_str());
         }
+        sqlite3_finalize(vm);
     } else {
         qDebug(QObject::tr("could not execute pragma command: %1, %2").arg(err).arg(sqlite3_errmsg(_db)).toStdString().c_str());
-    }
-
-    // Make changes to the value when needed
-    if(pragma == "journal_mode")
-    {
-        retval = retval.toLower();
-        if(retval == "delete")
-            retval = "0";
-        else if(retval == "truncate")
-            retval = "1";
-        else if(retval == "persist")
-            retval = "2";
-        else if(retval == "memory")
-            retval = "3";
-        else if(retval == "wal")
-            retval = "4";
-        else if(retval == "off")
-            retval = "5";
-        else
-            retval = "0";
-    } else if(pragma == "locking_mode") {
-        retval = retval.toLower();
-        if(retval == "normal")
-            retval = "0";
-        else if(retval == "exclusive")
-            retval = "1";
-        else
-            retval = "0";
-    } else if(pragma == "encoding") {
-        retval = retval.toLower();
-        if(retval == "utf-8")
-            retval = "0";
-        else if(retval == "utf-16")
-            retval = "1";
-        else if(retval == "utf-16le")
-            retval = "2";
-        else if(retval == "utf-16be")
-            retval = "3";
-        else
-            retval = "0";
     }
 
     // Return it
     return retval;
 }
 
-bool DBBrowserDB::setPragma(QString pragma, QString value)
+bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
 {
-    // Make changes to the value when needed
-    if(pragma == "journal_mode")
-    {
-        if(value == "0")
-            value = "\"delete\"";
-        else if(value == "1")
-            value = "\"truncate\"";
-        else if(value == "2")
-            value = "\"persist\"";
-        else if(value == "3")
-            value = "\"memory\"";
-        else if(value == "4")
-            value = "\"wal\"";
-        else if(value == "5")
-            value = "\"off\"";
-        else
-            value = "\"delete\"";
-    } else if(value == "locking_mode") {
-        if(value == "0")
-            value = "\"normal\"";
-        else if(value == "1")
-            value = "\"exclusive\"";
-        else
-            value = "\"normal\"";
-    } else if(pragma == "encoding") {
-        if(value == "0")
-            value = "\"utf-8\"";
-        else if(value == "1")
-            value = "\"utf-16\"";
-        else if(value == "2")
-            value = "\"utf-16le\"";
-        else if(value == "3")
-            value = "\"utf-16be\"";
-        else
-            value = "\"utf-8\"";
-    }
-
     // Set the pragma value
-    QString sql = QString("PRAGMA %1 = %2;").arg(pragma).arg(value);
-    if(!executeSQL(sql))
-    {
+    QString sql = QString("PRAGMA %1 = \"%2\";").arg(pragma).arg(value);
+    //qDebug(sql.toStdString().c_str());
+
+    setDirty(false);
+    executeSQL("COMMIT;", false, false); // commit the current transaction
+    bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
+    setRestorePoint();
+    if( !res )
         qDebug(QObject::tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage).toStdString().c_str());
-        return false;
-    } else {
-        return true;
+    return res;
+}
+
+bool DBBrowserDB::setPragma(const QString& pragma, const QString& value, QString& originalvalue)
+{
+    if( originalvalue != value )
+    {
+        if( setPragma(pragma, value))
+        {
+            originalvalue = value;
+            return true;
+        }
     }
+    return false;
+}
+
+bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue)
+{
+    if( originalvalue != value )
+    {
+        QString val = QString::number(value);
+        QString origval = QString::number(originalvalue);
+        if( setPragma(pragma, val, origval))
+        {
+            originalvalue = value;
+        }
+    }
+    return false;
 }

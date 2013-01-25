@@ -19,7 +19,7 @@
   </property>
   <widget class="QTabWidget" name="mainTab">
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="structure">
     <attribute name="title">
@@ -303,9 +303,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-182</y>
           <width>763</width>
-          <height>653</height>
+          <height>524</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout">
@@ -315,7 +315,13 @@
          <item row="0" column="0">
           <widget class="QLabel" name="labelPragmaAutoVacuum">
            <property name="text">
-            <string>Auto Vacuum</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse</set>
            </property>
            <property name="buddy">
             <cstring>comboboxPragmaAutoVacuum</cstring>
@@ -344,7 +350,10 @@
          <item row="1" column="0">
           <widget class="QLabel" name="labelPragmaAutomaticIndex">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatic Index&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaAutomaticIndex</cstring>
@@ -359,114 +368,99 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="labelPragmaBusyTimeout">
-           <property name="text">
-            <string>Busy Timeout</string>
-           </property>
-           <property name="buddy">
-            <cstring>spinPragmaBusyTimeout</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="labelPragmaCacheSize">
-           <property name="text">
-            <string>Cache Size</string>
-           </property>
-           <property name="buddy">
-            <cstring>spinPragmaCacheSize</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
           <widget class="QLabel" name="labelPragmaCheckpointFullFsync">
            <property name="text">
-            <string>Checkpoint Full FSYNC</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaCheckpointFullFsync</cstring>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="2" column="1">
           <widget class="QCheckBox" name="checkboxPragmaCheckpointFullFsync">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="labelPragmaEncoding">
-           <property name="text">
-            <string>Encoding</string>
-           </property>
-           <property name="buddy">
-            <cstring>comboboxPragmaEncoding</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="labelPragmaForeignKeys">
            <property name="text">
-            <string>Foreign Keys</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaForeignKeys</cstring>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="3" column="1">
           <widget class="QCheckBox" name="checkboxPragmaForeignKeys">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="labelPragmaFullFsync">
            <property name="text">
-            <string>Full FSYNC</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaFullFsync</cstring>
            </property>
           </widget>
          </item>
-         <item row="7" column="1">
+         <item row="4" column="1">
           <widget class="QCheckBox" name="checkboxPragmaFullFsync">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="8" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints">
            <property name="text">
-            <string>Ignore Check Constraints</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
            </property>
           </widget>
          </item>
-         <item row="8" column="1">
+         <item row="5" column="1">
           <widget class="QCheckBox" name="checkboxPragmaIgnoreCheckConstraints">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="9" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="labelPragmaJournalMode">
            <property name="text">
-            <string>Journal Mode</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>comboboxPragmaJournalMode</cstring>
            </property>
           </widget>
          </item>
-         <item row="9" column="1">
+         <item row="6" column="1">
           <widget class="QComboBox" name="comboboxPragmaJournalMode">
            <item>
             <property name="text">
@@ -500,44 +494,43 @@
            </item>
           </widget>
          </item>
-         <item row="10" column="0">
+         <item row="7" column="0">
           <widget class="QLabel" name="labelJournalSizeLimit">
            <property name="text">
-            <string>Journal Size Limit</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>spinPragmaJournalSizeLimit</cstring>
            </property>
           </widget>
          </item>
-         <item row="11" column="0">
-          <widget class="QLabel" name="labelPragmaLegacyFileFormat">
-           <property name="text">
-            <string>Legacy File Format</string>
+         <item row="7" column="1">
+          <widget class="QSpinBox" name="spinPragmaJournalSizeLimit">
+           <property name="minimum">
+            <number>-1</number>
            </property>
-           <property name="buddy">
-            <cstring>checkboxPragmaLegacyFileFormat</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="1">
-          <widget class="QCheckBox" name="checkboxPragmaLegacyFileFormat">
-           <property name="text">
-            <string/>
+           <property name="maximum">
+            <number>100000</number>
            </property>
           </widget>
          </item>
-         <item row="12" column="0">
+         <item row="8" column="0">
           <widget class="QLabel" name="labelPragmaLockingMode">
            <property name="text">
-            <string>Locking Mode</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>comboboxPragmaLockingMode</cstring>
            </property>
           </widget>
          </item>
-         <item row="12" column="1">
+         <item row="8" column="1">
           <widget class="QComboBox" name="comboboxPragmaLockingMode">
            <item>
             <property name="text">
@@ -551,115 +544,103 @@
            </item>
           </widget>
          </item>
-         <item row="13" column="0">
+         <item row="9" column="0">
           <widget class="QLabel" name="labelPragmaMaxPageCount">
            <property name="text">
-            <string>Max Page Count</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>spinPragmaMaxPageCount</cstring>
            </property>
           </widget>
          </item>
-         <item row="14" column="0">
+         <item row="9" column="1">
+          <widget class="QSpinBox" name="spinPragmaMaxPageCount">
+           <property name="maximum">
+            <number>2000000000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="0">
           <widget class="QLabel" name="labelPragmaPageSize">
            <property name="text">
-            <string>Page Size</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>spinPragmaPageSize</cstring>
            </property>
           </widget>
          </item>
-         <item row="15" column="0">
-          <widget class="QLabel" name="labelPragmaReadUncommitted">
-           <property name="text">
-            <string>Read Uncommitted</string>
+         <item row="10" column="1">
+          <widget class="QSpinBox" name="spinPragmaPageSize">
+           <property name="minimum">
+            <number>512</number>
            </property>
-           <property name="buddy">
-            <cstring>checkboxPragmaReadUncommitted</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="15" column="1">
-          <widget class="QCheckBox" name="checkboxPragmaReadUncommitted">
-           <property name="text">
-            <string/>
+           <property name="maximum">
+            <number>65536</number>
            </property>
           </widget>
          </item>
-         <item row="16" column="0">
+         <item row="11" column="0">
           <widget class="QLabel" name="labelPragmaRecursiveTriggers">
            <property name="text">
-            <string>Recursive Triggers</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaRecursiveTriggers</cstring>
            </property>
           </widget>
          </item>
-         <item row="16" column="1">
+         <item row="11" column="1">
           <widget class="QCheckBox" name="checkboxPragmaRecursiveTriggers">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="17" column="0">
-          <widget class="QLabel" name="labelPragmaReverseUnorderedSelects">
-           <property name="text">
-            <string>Reverse Unordered Selects</string>
-           </property>
-           <property name="buddy">
-            <cstring>checkboxPragmaReverseUnorderedSelects</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="1">
-          <widget class="QCheckBox" name="checkboxPragmaReverseUnorderedSelects">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="18" column="0">
-          <widget class="QLabel" name="labelPragmaSchemaVersion">
-           <property name="text">
-            <string>Schema Version</string>
-           </property>
-           <property name="buddy">
-            <cstring>spinPragmaSchemaVersion</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="19" column="0">
+         <item row="12" column="0">
           <widget class="QLabel" name="labelPragmaSecureDelete">
            <property name="text">
-            <string>Secure Delete</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>checkboxPragmaSecureDelete</cstring>
            </property>
           </widget>
          </item>
-         <item row="19" column="1">
+         <item row="12" column="1">
           <widget class="QCheckBox" name="checkboxPragmaSecureDelete">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="20" column="0">
+         <item row="13" column="0">
           <widget class="QLabel" name="labelPragmaSynchronous">
            <property name="text">
-            <string>Synchronous</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>comboboxPragmaSynchronous</cstring>
            </property>
           </widget>
          </item>
-         <item row="20" column="1">
+         <item row="13" column="1">
           <widget class="QComboBox" name="comboboxPragmaSynchronous">
            <item>
             <property name="text">
@@ -678,17 +659,20 @@
            </item>
           </widget>
          </item>
-         <item row="21" column="0">
+         <item row="14" column="0">
           <widget class="QLabel" name="labelPragmaTempStore">
            <property name="text">
-            <string>Temp Store</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>comboboxPragmaTempStore</cstring>
            </property>
           </widget>
          </item>
-         <item row="21" column="1">
+         <item row="14" column="1">
           <widget class="QComboBox" name="comboboxPragmaTempStore">
            <item>
             <property name="text">
@@ -707,127 +691,58 @@
            </item>
           </widget>
          </item>
-         <item row="22" column="0">
+         <item row="15" column="0">
           <widget class="QLabel" name="labelPragmaUserVersion">
            <property name="text">
-            <string>User Version</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
            <property name="buddy">
             <cstring>spinPragmaUserVersion</cstring>
            </property>
           </widget>
          </item>
-         <item row="23" column="0">
-          <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
-           <property name="text">
-            <string>WAL Auto Checkpoint</string>
-           </property>
-           <property name="buddy">
-            <cstring>spinPragmaWalAutoCheckpoint</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="spinPragmaBusyTimeout">
-           <property name="maximum">
-            <number>10000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QSpinBox" name="spinPragmaCacheSize">
-           <property name="minimum">
-            <number>-100000</number>
-           </property>
-           <property name="maximum">
-            <number>100000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QComboBox" name="comboboxPragmaEncoding">
-           <item>
-            <property name="text">
-             <string>UTF-8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>UTF-16</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>UTF-16le</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>UTF-16be</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="10" column="1">
-          <widget class="QSpinBox" name="spinPragmaJournalSizeLimit">
-           <property name="minimum">
-            <number>-1</number>
-           </property>
-           <property name="maximum">
-            <number>100000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="1">
-          <widget class="QSpinBox" name="spinPragmaMaxPageCount">
-           <property name="maximum">
-            <number>2000000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="1">
-          <widget class="QSpinBox" name="spinPragmaPageSize">
-           <property name="minimum">
-            <number>512</number>
-           </property>
-           <property name="maximum">
-            <number>65536</number>
-           </property>
-          </widget>
-         </item>
-         <item row="18" column="1">
-          <widget class="QSpinBox" name="spinPragmaSchemaVersion">
-           <property name="maximum">
-            <number>10000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="22" column="1">
+         <item row="15" column="1">
           <widget class="QSpinBox" name="spinPragmaUserVersion">
            <property name="maximum">
             <number>10000</number>
            </property>
           </widget>
          </item>
-         <item row="23" column="1">
+         <item row="16" column="0">
+          <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+           <property name="buddy">
+            <cstring>spinPragmaWalAutoCheckpoint</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="16" column="1">
           <widget class="QSpinBox" name="spinPragmaWalAutoCheckpoint">
            <property name="maximum">
             <number>10000</number>
            </property>
           </widget>
          </item>
-         <item row="24" column="1">
-          <widget class="QDialogButtonBox" name="buttonBoxPragmas">
-           <property name="standardButtons">
-            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
-           </property>
-           <property name="centerButtons">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBoxPragmas">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+       </property>
+       <property name="centerButtons">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -943,7 +858,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1485,29 +1400,21 @@
   <tabstop>scrollareaPragmas</tabstop>
   <tabstop>comboboxPragmaAutoVacuum</tabstop>
   <tabstop>checkboxPragmaAutomaticIndex</tabstop>
-  <tabstop>spinPragmaBusyTimeout</tabstop>
-  <tabstop>spinPragmaCacheSize</tabstop>
   <tabstop>checkboxPragmaCheckpointFullFsync</tabstop>
-  <tabstop>comboboxPragmaEncoding</tabstop>
   <tabstop>checkboxPragmaForeignKeys</tabstop>
   <tabstop>checkboxPragmaFullFsync</tabstop>
   <tabstop>checkboxPragmaIgnoreCheckConstraints</tabstop>
   <tabstop>comboboxPragmaJournalMode</tabstop>
   <tabstop>spinPragmaJournalSizeLimit</tabstop>
-  <tabstop>checkboxPragmaLegacyFileFormat</tabstop>
   <tabstop>comboboxPragmaLockingMode</tabstop>
   <tabstop>spinPragmaMaxPageCount</tabstop>
   <tabstop>spinPragmaPageSize</tabstop>
-  <tabstop>checkboxPragmaReadUncommitted</tabstop>
   <tabstop>checkboxPragmaRecursiveTriggers</tabstop>
-  <tabstop>checkboxPragmaReverseUnorderedSelects</tabstop>
-  <tabstop>spinPragmaSchemaVersion</tabstop>
   <tabstop>checkboxPragmaSecureDelete</tabstop>
   <tabstop>comboboxPragmaSynchronous</tabstop>
   <tabstop>comboboxPragmaTempStore</tabstop>
   <tabstop>spinPragmaUserVersion</tabstop>
   <tabstop>spinPragmaWalAutoCheckpoint</tabstop>
-  <tabstop>buttonBoxPragmas</tabstop>
   <tabstop>comboLogSubmittedBy</tabstop>
   <tabstop>buttonLogClear</tabstop>
  </tabstops>
