@@ -19,7 +19,7 @@
   </property>
   <widget class="QTabWidget" name="mainTab">
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="structure">
     <attribute name="title">
@@ -303,9 +303,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-182</y>
+          <y>0</y>
           <width>763</width>
-          <height>524</height>
+          <height>494</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout">
@@ -858,7 +858,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
