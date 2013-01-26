@@ -863,7 +863,10 @@ void DBBrowserDB::logSQL(const QString& statement, int msgtype)
             logst.append(QObject::tr("... <string too wide to log, probably contains binary data> ..."));
             mainWindow->logSql(logst, msgtype);
         }
-        mainWindow->logSql(statement, msgtype);
+        else
+        {
+            mainWindow->logSql(statement, msgtype);
+        }
     }
 }
 
