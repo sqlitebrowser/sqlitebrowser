@@ -47,4 +47,4 @@ What's still to do
   big table
 - Add proper support for BLOBs
 - Feel free to add more issues at
-  https://github.com/mkleusberg/sqlitebrowser/issues
+  https://github.com/rp-/sqlitebrowser/issues
