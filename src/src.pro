@@ -47,7 +47,7 @@ unix {
     UI_DIR = .ui
     MOC_DIR = .moc
     OBJECTS_DIR = .obj
-    LIBS += -ldl -lsqlite3
+    LIBS += -ldl
 }
 win32:RC_FILE = winapp.rc
 mac { 
@@ -58,6 +58,7 @@ mac {
     CONFIG += x86 \
         ppc
 }
+LIBS += -lsqlite3
 RESOURCES += icons/icons.qrc
 
 FORMS += \
