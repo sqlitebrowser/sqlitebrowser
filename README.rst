@@ -48,3 +48,9 @@ What's still to do
 - Add proper support for BLOBs
 - Feel free to add more issues at
   https://github.com/rp-/sqlitebrowser/issues
+
+Windows binaries
+----------------
+Windows binaries can be downloaded from here:
+
+http://rp.oldsch00l.com/sqlitebrowser/
