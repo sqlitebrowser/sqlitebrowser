@@ -23,7 +23,7 @@ CreateIndexDialog::~CreateIndexDialog()
     delete ui;
 }
 
-void CreateIndexDialog::tableChanged(QString new_table)
+void CreateIndexDialog::tableChanged(const QString& new_table)
 {
     // And fill the table again
     QStringList fields = pdb->getTableFields(new_table);

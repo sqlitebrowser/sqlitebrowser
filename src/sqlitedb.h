@@ -99,11 +99,11 @@ public:
     bool updateRecord(int wrow, int wcol, const QString & wtext);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
-    bool createTable(QString name, const QList<DBBrowserField>& structure);
-    bool renameTable(QString from_table, QString to_table);
-    bool createColumn(QString table, QString field, QString type);
-    bool renameColumn(QString tablename, QString from, QString to, QString type);
-    bool dropColumn(QString tablename, QString column);
+    bool createTable(const QString& name, const QList<DBBrowserField>& structure);
+    bool renameTable(const QString& from_table, const QString& to_table);
+    bool createColumn(const QString& table, const QString& field, const QString& type);
+    bool renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type);
+    bool dropColumn(const QString& tablename, const QString& column);
 
     QStringList getTableFields(const QString & tablename);
     QStringList getTableTypes(const QString & tablename);
@@ -116,7 +116,7 @@ public:
     bool isOpen();
     void setDirty(bool dirtyval);
     bool getDirty();
-    void logSQL(QString statement, int msgtype);
+    void logSQL(const QString& statement, int msgtype);
     void setEncoding( int encoding );
     void setDefaultNewData( const QString & data );
     char * GetEncodedQStringAsPointer( const QString & input);

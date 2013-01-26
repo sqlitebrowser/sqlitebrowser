@@ -122,7 +122,7 @@ private slots:
     virtual void editTable();
     virtual void helpWhatsThis();
     virtual void helpAbout();
-    virtual void updateRecordText( int row, int col, QString newtext );
+    virtual void updateRecordText( int row, int col, const QString& newtext );
     virtual void editWinAway();
     virtual void editText( int row, int col );
     virtual void doubleClickTable( int row, int col );

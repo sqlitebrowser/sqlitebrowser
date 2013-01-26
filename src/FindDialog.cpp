@@ -13,11 +13,11 @@ FindDialog::~FindDialog()
     delete ui;
 }
 
-void FindDialog::showResults(resultMap rmap)
+void FindDialog::showResults(const resultMap& rmap)
 {
     ui->tableResults->setSortingEnabled(false);
     ui->tableResults->clearContents();
-    resultMap::Iterator it;
+    resultMap::const_iterator it;
     int rowNum;
     ui->tableResults->setRowCount(rmap.size());
     for(it=rmap.begin(),rowNum=0;it!=rmap.end();++it,rowNum++)
@@ -36,7 +36,7 @@ void FindDialog::find()
     emit lookfor(ui->comboColumn->currentText(), ui->comboOperator->currentText(), ui->editSearchString->text());
 }
 
-void FindDialog::resetFields(QStringList fieldlist)
+void FindDialog::resetFields(const QStringList& fieldlist)
 {
     ui->comboColumn->clear();
     ui->comboColumn->addItems(fieldlist);

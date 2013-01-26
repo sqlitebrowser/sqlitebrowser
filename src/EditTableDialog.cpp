@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include "sqlitedb.h"
 
-EditTableDialog::EditTableDialog(DBBrowserDB* db, QString tableName, QWidget* parent)
+EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
       pdb(db),

@@ -6,7 +6,7 @@
 #include "ui_ExportCsvDialog.h"
 #include "sqlitedb.h"
 
-ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QString deflocation, QWidget* parent)
+ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, const QString& deflocation, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ExportCsvDialog),
       pdb(db),

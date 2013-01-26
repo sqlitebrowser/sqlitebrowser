@@ -13,7 +13,7 @@ class ImportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportCsvDialog(QString filename, DBBrowserDB* db, QWidget* parent = 0);
+    explicit ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent = 0);
     ~ImportCsvDialog();
 
 private slots:

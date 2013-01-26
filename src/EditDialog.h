@@ -23,7 +23,7 @@ public:
 
 public slots:
     virtual void reset();
-    virtual void loadText(QString text, int row, int col);
+    virtual void loadText(const QString& text, int row, int col);
 
 private slots:
     virtual void enableExport(bool enabled);
@@ -37,7 +37,7 @@ private slots:
 
 signals:
     void goingAway();
-    void updateRecordText(int, int, QString);
+    void updateRecordText(int, int, const QString&);
 
 private:
     Ui::EditDialog* ui;

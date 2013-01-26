@@ -18,7 +18,7 @@ public:
 
 private slots:
     void accept();
-    void tableChanged(QString new_table);
+    void tableChanged(const QString& new_table);
     void checkInput();
 
 private:

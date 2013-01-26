@@ -57,7 +57,7 @@ void EditDialog::closeEvent(QCloseEvent*)
     emit goingAway();
 }
 
-void EditDialog::loadText(QString  text, int row, int col)
+void EditDialog::loadText(const QString&  text, int row, int col)
 {
     ui->editData->setPlainText(text);
     ui->editData->setFocus();

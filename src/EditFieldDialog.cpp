@@ -4,7 +4,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-EditFieldDialog::EditFieldDialog(DBBrowserDB* db, bool new_field, QString table, QString fld_name, QString fld_type, QWidget* parent)
+EditFieldDialog::EditFieldDialog(DBBrowserDB* db, bool new_field, const QString& table, const QString& fld_name, const QString& fld_type, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditFieldDialog),
       pdb(db),

@@ -471,7 +471,7 @@ bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby
     return hasValidBrowseSet;
 }
 
-bool DBBrowserDB::createTable(QString name, const QList<DBBrowserField>& structure)
+bool DBBrowserDB::createTable(const QString& name, const QList<DBBrowserField>& structure)
 {
     // Build SQL statement
     QString sql = QString("CREATE TABLE `%1` (").arg(name);
@@ -484,13 +484,13 @@ bool DBBrowserDB::createTable(QString name, const QList<DBBrowserField>& structu
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::createColumn(QString tablename, QString fieldname, QString fieldtype)
+bool DBBrowserDB::createColumn(const QString& tablename, const QString& fieldname, const QString& fieldtype)
 {
     QString sql = QString("ALTER TABLE `%1` ADD COLUMN `%2` %3").arg(tablename).arg(fieldname).arg(fieldtype);
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QString type)
+bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type)
 {
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite. If SQLite should fully support this command one day, this entire
     // function can be changed to executing something like this:
@@ -570,7 +570,7 @@ bool DBBrowserDB::renameColumn(QString tablename, QString from, QString to, QStr
     return true;
 }
 
-bool DBBrowserDB::dropColumn(QString tablename, QString column)
+bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
 {
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite. If SQLite should fully support this command one day, this entire
     // function can be changed to executing something like this:
@@ -653,7 +653,7 @@ bool DBBrowserDB::dropColumn(QString tablename, QString column)
     return true;
 }
 
-bool DBBrowserDB::renameTable(QString from_table, QString to_table)
+bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table)
 {
     QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(from_table, to_table);
     if(!executeSQL(sql))
@@ -850,7 +850,7 @@ int DBBrowserDB::getRecordCount()
     return browseRecs.count();
 }
 
-void DBBrowserDB::logSQL(QString statement, int msgtype)
+void DBBrowserDB::logSQL(const QString& statement, int msgtype)
 {
     if(mainWindow)
     {
@@ -858,8 +858,10 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
         int loglimit = 300;
         if ((statement.length() > loglimit)&&(msgtype==kLogMsg_App))
         {
-            statement.truncate(32);
-            statement.append(QObject::tr("... <string too wide to log, probably contains binary data> ..."));
+            QString logst = statement;
+            logst.truncate(32);
+            logst.append(QObject::tr("... <string too wide to log, probably contains binary data> ..."));
+            mainWindow->logSql(logst, msgtype);
         }
         mainWindow->logSql(statement, msgtype);
     }

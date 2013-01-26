@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include "sqlitedb.h"
 
-ImportCsvDialog::ImportCsvDialog(QString filename, DBBrowserDB* db, QWidget* parent)
+ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
       csvFilename(filename),

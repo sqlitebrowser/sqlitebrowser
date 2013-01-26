@@ -18,8 +18,8 @@ public:
     ~FindDialog();
 
 public slots:
-    virtual void showResults(resultMap rmap);
-    virtual void resetFields(QStringList fieldlist = QStringList());
+    virtual void showResults(const resultMap& rmap);
+    virtual void resetFields(const QStringList& fieldlist = QStringList());
 
 private slots:
     virtual void find();

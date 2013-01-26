@@ -13,7 +13,7 @@ class ExportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExportCsvDialog(DBBrowserDB* db, QString deflocation, QWidget* parent = 0);
+    explicit ExportCsvDialog(DBBrowserDB* db, const QString& deflocation, QWidget* parent = 0);
     ~ExportCsvDialog();
 
 private slots:

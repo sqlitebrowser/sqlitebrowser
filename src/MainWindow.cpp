@@ -640,7 +640,7 @@ void MainWindow::helpAbout()
     dialog.exec();
 }
 
-void MainWindow::updateRecordText(int row, int col, QString newtext)
+void MainWindow::updateRecordText(int row, int col, const QString& newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
         QMessageBox::information( this, QApplication::applicationName(), tr("Data could not be updated"));

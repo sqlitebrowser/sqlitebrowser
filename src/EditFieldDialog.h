@@ -14,7 +14,7 @@ class EditFieldDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditFieldDialog(DBBrowserDB* db, bool new_field, QString table, QString fld_name, QString fld_type, QWidget* parent = 0);
+    explicit EditFieldDialog(DBBrowserDB* db, bool new_field, const QString& table, const QString& fld_name, const QString& fld_type, QWidget* parent = 0);
     ~EditFieldDialog();
 
     QString getFieldName() { return field_name; }
