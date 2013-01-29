@@ -52,6 +52,11 @@ void PreferencesDialog::encodingChanged( int which )
     }
 }
 
+void PreferencesDialog::foreignkeysStateChanged(int state)
+{
+    foreignkeys = state > 0;
+}
+
 void PreferencesDialog::chooseLocation()
 {
     QString s = QFileDialog::getExistingDirectory(
@@ -76,6 +81,7 @@ void PreferencesDialog::loadSettings()
     defaultnewdata = settings.value( "/db/defaultnewdata", "NULL" ).toString();
     defaultlocation = settings.value( "/db/defaultlocation", QDir::homePath() ).toString();
     defaulttext = settings.value( "/db/defaulttext", "Plain" ).toString();
+    foreignkeys = settings.value( "/db/foreignkeys", true ).toBool();
 
     if (defaultencoding=="Latin1")
     {
@@ -103,6 +109,8 @@ void PreferencesDialog::loadSettings()
 	ui->defaultTextComboBox->setCurrentIndex(0) ;
         defaulttext = QString("Plain");
     }
+
+    ui->foreignKeysCheckBox->setChecked(foreignkeys);
     
     ui->locationEdit->setText(defaultlocation);
 }
@@ -115,6 +123,7 @@ void PreferencesDialog::saveSettings()
     settings.setValue( "/db/defaultnewdata", defaultnewdata );
     settings.setValue( "/db/defaultlocation", defaultlocation  );
     settings.setValue( "/db/defaulttext", defaulttext  );
+    settings.setValue( "/db/foreignkeys", foreignkeys );
     settings.sync();
     accept();
 }

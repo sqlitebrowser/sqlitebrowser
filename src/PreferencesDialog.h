@@ -19,11 +19,13 @@ public:
     QString defaultlocation;
     QString defaultnewdata;
     QString defaultencoding;
+    bool foreignkeys;
 
 private slots:
     virtual void defaultDataChanged( int which );
     virtual void defaultTextChanged( int which );
     virtual void encodingChanged( int which );
+    virtual void foreignkeysStateChanged( int state );
     virtual void chooseLocation();
     virtual void loadSettings();
     virtual void saveSettings();

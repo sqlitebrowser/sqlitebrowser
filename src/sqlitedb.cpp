@@ -6,6 +6,7 @@
 #include <QProgressDialog>
 #include <QApplication>
 #include <QTextStream>
+#include <QSettings>
 
 void DBBrowserObject::addField(int order, const QString& wfield,const QString& wtype)
 {
@@ -97,6 +98,12 @@ bool DBBrowserDB::open ( const QString & db)
     }
 
     if (_db){
+        // set preference defaults
+        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+        settings.sync();
+        bool foreignkeys = settings.value( "/db/foreignkeys", false ).toBool();
+        setPragma("foreign_keys", foreignkeys ? "1" : "0");
+
         if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA empty_result_callbacks = ON;",
                                     NULL,NULL,NULL)){
             if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA show_datatypes = ON;",
