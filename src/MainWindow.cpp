@@ -104,6 +104,15 @@ void MainWindow::init()
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
+
+
+    // Fonts for edit fields
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    font.setPointSize(8);
+    ui->sqlTextEdit->setFont(font);
+    ui->editLogApplication->setFont(font);
+    ui->editLogUser->setFont(font);
 }
 
 //***********************************************************
