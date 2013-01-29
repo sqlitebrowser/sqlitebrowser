@@ -1042,7 +1042,7 @@
      <normaloff>:/icons/db_new</normaloff>:/icons/db_new</iconset>
    </property>
    <property name="text">
-    <string>&amp;New Database</string>
+    <string>&amp;New Database...</string>
    </property>
    <property name="toolTip">
     <string>Create a new database file</string>
@@ -1063,7 +1063,7 @@
      <normaloff>:/icons/db_open</normaloff>:/icons/db_open</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open Database</string>
+    <string>&amp;Open Database...</string>
    </property>
    <property name="toolTip">
     <string>Open an existing database file</string>
@@ -1164,7 +1164,7 @@
   </action>
   <action name="fileImportSQLAction">
    <property name="text">
-    <string>Database from SQL file</string>
+    <string>Database from SQL file...</string>
    </property>
    <property name="toolTip">
     <string>Import data from an .sql dump text file into a new or existing database.</string>
@@ -1175,7 +1175,7 @@
   </action>
   <action name="fileImportCSVAction">
    <property name="text">
-    <string>Table from CSV file</string>
+    <string>Table from CSV file...</string>
    </property>
    <property name="toolTip">
     <string>Open a wizard that lets you import data from a comma separated text file into a database table.</string>
@@ -1186,7 +1186,7 @@
   </action>
   <action name="fileExportSQLAction">
    <property name="text">
-    <string>Database to SQL file</string>
+    <string>Database to SQL file...</string>
    </property>
    <property name="toolTip">
     <string>Export a database to a .sql dump text file.</string>
@@ -1197,7 +1197,7 @@
   </action>
   <action name="fileExportCSVAction">
    <property name="text">
-    <string>Table as CSV file</string>
+    <string>Table as CSV file...</string>
    </property>
    <property name="toolTip">
     <string>Export a database table as a comma separated text file.</string>
@@ -1215,7 +1215,7 @@
      <normaloff>:/icons/table_create</normaloff>:/icons/table_create</iconset>
    </property>
    <property name="text">
-    <string>Create Table</string>
+    <string>Create Table...</string>
    </property>
    <property name="whatsThis">
     <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
@@ -1248,7 +1248,7 @@
      <normaloff>:/icons/table_modify</normaloff>:/icons/table_modify</iconset>
    </property>
    <property name="text">
-    <string>Modify Table</string>
+    <string>Modify Table...</string>
    </property>
    <property name="whatsThis">
     <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
@@ -1263,7 +1263,7 @@
      <normaloff>:/icons/index_create</normaloff>:/icons/index_create</iconset>
    </property>
    <property name="text">
-    <string>Create Index</string>
+    <string>Create Index...</string>
    </property>
    <property name="whatsThis">
     <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
@@ -1275,7 +1275,7 @@
      <normaloff>:/icons/settings</normaloff>:/icons/settings</iconset>
    </property>
    <property name="text">
-    <string>&amp;Preferences</string>
+    <string>&amp;Preferences...</string>
    </property>
    <property name="toolTip">
     <string>Open the preferences window.</string>
@@ -1327,7 +1327,7 @@
   </action>
   <action name="helpAboutAction">
    <property name="text">
-    <string>&amp;About</string>
+    <string>&amp;About...</string>
    </property>
   </action>
   <action name="editAddFieldActionPopup">
