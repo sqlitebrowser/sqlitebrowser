@@ -100,6 +100,18 @@
        </item>
        <item>
         <widget class="QComboBox" name="comboBrowseTable">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="toolTip">
           <string>Select a table to browse data</string>
          </property>
@@ -158,7 +170,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
+           <width>300</width>
            <height>20</height>
           </size>
          </property>
