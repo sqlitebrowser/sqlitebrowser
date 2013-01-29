@@ -778,8 +778,8 @@
       <widget class="QTextEdit" name="sqlTextEdit">
        <property name="font">
         <font>
-         <family>DejaVu Sans Mono</family>
-         <pointsize>11</pointsize>
+         <family>Monospace</family>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -1025,7 +1025,7 @@
         <property name="font">
          <font>
           <family>Monospace</family>
-          <pointsize>10</pointsize>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="readOnly">
@@ -1036,7 +1036,7 @@
         <property name="font">
          <font>
           <family>Monospace</family>
-          <pointsize>10</pointsize>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="readOnly">
