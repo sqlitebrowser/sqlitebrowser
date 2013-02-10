@@ -13,7 +13,7 @@ void DBBrowserObject::addField(int order, const QString& wfield,const QString& w
     fldmap[order] = DBBrowserField(wfield,wtype);
 }
 
-bool DBBrowserDB::isOpen ( )
+bool DBBrowserDB::isOpen ( ) const
 {
     return _db!=0;
 }
@@ -25,7 +25,7 @@ void DBBrowserDB::setDirty(bool dirtyval)
         mainWindow->dbState(dirtyval);
 }
 
-bool DBBrowserDB::getDirty()
+bool DBBrowserDB::getDirty() const
 {
     return dirty;
 }
@@ -40,7 +40,7 @@ void DBBrowserDB::setDefaultNewData( const QString & data )
     curNewData = data;
 }
 
-char * DBBrowserDB::GetEncodedQStringAsPointer( const QString & input)
+char * DBBrowserDB::GetEncodedQStringAsPointer( const QString & input) const
 {
     if (curEncoding==kEncodingUTF8) return (char *) input.toUtf8().constData();
     if (curEncoding==kEncodingLatin1) return (char *) input.toLatin1().constData();
@@ -48,7 +48,7 @@ char * DBBrowserDB::GetEncodedQStringAsPointer( const QString & input)
     return (char *) input.constData();
 }
 
-QString DBBrowserDB::GetEncodedQString( const QString & input)
+QString DBBrowserDB::GetEncodedQString( const QString & input) const
 {
     if (curEncoding==kEncodingUTF8) return input.toUtf8();
     if (curEncoding==kEncodingLatin1) return input.toLatin1();
@@ -56,7 +56,7 @@ QString DBBrowserDB::GetEncodedQString( const QString & input)
     return input;
 }
 
-QString DBBrowserDB::GetDecodedQString( const QString & input)
+QString DBBrowserDB::GetDecodedQString( const QString & input) const
 {
     //    if (curEncoding==kEncodingUTF8) return QString::fromUtf8(input);
     //    if (curEncoding==kEncodingLatin1) return QString::fromLatin1(input);
@@ -760,7 +760,7 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
 }
 
 
-QStringList DBBrowserDB::getBrowsableObjectNames()
+QStringList DBBrowserDB::getBrowsableObjectNames() const
 {
     objectMap::ConstIterator it;
     QStringList res;
@@ -774,7 +774,7 @@ QStringList DBBrowserDB::getBrowsableObjectNames()
     return res;
 }
 
-objectMap DBBrowserDB::getBrowsableObjects()
+objectMap DBBrowserDB::getBrowsableObjects() const
 {
     objectMap::ConstIterator it;
     objectMap res;
@@ -788,7 +788,7 @@ objectMap DBBrowserDB::getBrowsableObjects()
     return res;
 }
 
-QStringList DBBrowserDB::getIndexNames()
+QStringList DBBrowserDB::getIndexNames() const
 {
     QList<DBBrowserObject> tmap = objMap.values("index");
     QList<DBBrowserObject>::ConstIterator it;
@@ -801,7 +801,7 @@ QStringList DBBrowserDB::getIndexNames()
     return res;
 }
 
-QStringList DBBrowserDB::getTableFields(const QString & tablename)
+QStringList DBBrowserDB::getTableFields(const QString & tablename) const
 {
     objectMap::ConstIterator it;
     QStringList res;
@@ -820,7 +820,7 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename)
     return res;
 }
 
-QStringList DBBrowserDB::getTableTypes(const QString & tablename)
+QStringList DBBrowserDB::getTableTypes(const QString & tablename) const
 {
     objectMap::ConstIterator it;
     QStringList res;
@@ -839,7 +839,7 @@ QStringList DBBrowserDB::getTableTypes(const QString & tablename)
     return res;
 }
 
-DBBrowserObject DBBrowserDB::getObjectByName(const QString& name)
+DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
 {
     objectMap::ConstIterator it;
     QStringList res;
@@ -852,7 +852,7 @@ DBBrowserObject DBBrowserDB::getObjectByName(const QString& name)
     return DBBrowserObject();
 }
 
-int DBBrowserDB::getRecordCount()
+int DBBrowserDB::getRecordCount() const
 {
     return browseRecs.count();
 }
