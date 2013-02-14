@@ -23,7 +23,8 @@ HEADERS += \
     FindDialog.h \
     EditDialog.h \
     ExportCsvDialog.h \
-    ImportCsvDialog.h
+    ImportCsvDialog.h \
+    sqltextedit.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -39,7 +40,8 @@ SOURCES += \
     FindDialog.cpp \
     EditDialog.cpp \
     ExportCsvDialog.cpp \
-    ImportCsvDialog.cpp
+    ImportCsvDialog.cpp \
+    sqltextedit.cpp
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 

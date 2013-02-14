@@ -11,6 +11,7 @@
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
 #include <QScrollBar>
+
 #include "CreateIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
@@ -21,6 +22,7 @@
 #include "EditDialog.h"
 #include "FindDialog.h"
 #include "SQLiteSyntaxHighlighter.h"
+#include "sqltextedit.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -168,6 +170,8 @@ void MainWindow::fileNew()
 void MainWindow::populateStructure()
 {
     ui->dbTreeWidget->model()->removeRows(0, ui->dbTreeWidget->model()->rowCount());
+    ui->sqlTextEdit->clearFieldCompleterModelMap();
+    ui->sqlTextEdit->setDefaultCompleterModel(new QStandardItemModel());
     if (!db.isOpen()){
         return;
     }
@@ -177,6 +181,43 @@ void MainWindow::populateStructure()
     sqliteHighlighterLogUser->setTableNames(tblnames);
     sqliteHighlighterLogApp->setTableNames(tblnames);
 
+    // setup models for sqltextedit autocomplete
+    QStandardItemModel* completerModel = new QStandardItemModel();
+    completerModel->setRowCount(tblnames.count());
+    completerModel->setColumnCount(1);
+
+    objectMap tab = db.getBrowsableObjects();
+    int row = 0;
+    for(objectMap::ConstIterator it=tab.begin(); it!=tab.end(); ++it, ++row)
+    {
+        QString sName = it.value().getname();
+        QStandardItem* item = new QStandardItem(sName);
+        item->setIcon(QIcon(QString(":icons/%1").arg(it.value().gettype())));
+        completerModel->setItem(row, 0, item);
+
+        // If it is a table add the field Nodes
+        if((*it).gettype() == "table" || (*it).gettype() == "view")
+        {
+            QStandardItemModel* tablefieldmodel = new QStandardItemModel();
+            tablefieldmodel->setRowCount((*it).fldmap.count());
+            tablefieldmodel->setColumnCount(1);
+
+            fieldMap::ConstIterator fit;
+            int fldrow = 0;
+            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit, ++fldrow ) {
+                QString fieldname = fit.value().getname();
+                QStandardItem* fldItem = new QStandardItem(fieldname);
+                fldItem->setIcon(QIcon(":/icons/field"));
+                tablefieldmodel->setItem(fldrow, 0, fldItem);
+            }
+            ui->sqlTextEdit->addFieldCompleterModel(sName.toLower(), tablefieldmodel);
+        }
+
+    }
+    ui->sqlTextEdit->setDefaultCompleterModel(completerModel);
+    // end setup models for sqltextedit autocomplete
+
+    // fill the structure tab
     QMap<QString, QTreeWidgetItem*> typeToParentItem;
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(ui->dbTreeWidget);
     itemTables->setIcon(0, QIcon(QString(":/icons/table")));

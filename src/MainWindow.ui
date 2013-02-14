@@ -775,7 +775,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTextEdit" name="sqlTextEdit">
+      <widget class="SqlTextEdit" name="sqlTextEdit">
        <property name="font">
         <font>
          <family>Monospace</family>
@@ -1393,6 +1393,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>dbTreeWidget</tabstop>
   <tabstop>comboBrowseTable</tabstop>
