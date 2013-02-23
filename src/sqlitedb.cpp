@@ -30,38 +30,9 @@ bool DBBrowserDB::getDirty() const
     return dirty;
 }
 
-void DBBrowserDB::setEncoding( int encoding )
-{
-    curEncoding = encoding;
-}
-
 void DBBrowserDB::setDefaultNewData( const QString & data )
 {
     curNewData = data;
-}
-
-char * DBBrowserDB::GetEncodedQStringAsPointer( const QString & input) const
-{
-    if (curEncoding==kEncodingUTF8) return (char *) input.toUtf8().constData();
-    if (curEncoding==kEncodingLatin1) return (char *) input.toLatin1().constData();
-
-    return (char *) input.constData();
-}
-
-QString DBBrowserDB::GetEncodedQString( const QString & input) const
-{
-    if (curEncoding==kEncodingUTF8) return input.toUtf8();
-    if (curEncoding==kEncodingLatin1) return input.toLatin1();
-
-    return input;
-}
-
-QString DBBrowserDB::GetDecodedQString( const QString & input) const
-{
-    //    if (curEncoding==kEncodingUTF8) return QString::fromUtf8(input);
-    //    if (curEncoding==kEncodingLatin1) return QString::fromLatin1(input);
-
-    return input;
 }
 
 bool DBBrowserDB::open ( const QString & db)
@@ -91,7 +62,7 @@ bool DBBrowserDB::open ( const QString & db)
 
     err = sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL);
     if ( err ) {
-        lastErrorMessage = sqlite3_errmsg(_db);
+        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         sqlite3_close(_db);
         _db = 0;
         return false;
@@ -165,8 +136,20 @@ bool DBBrowserDB::create ( const QString & db)
 
     lastErrorMessage = QObject::tr("no error");
 
-    if( sqlite3_open(db.toUtf8(), &_db) != SQLITE_OK ){
-        lastErrorMessage = sqlite3_errmsg(_db);
+    // read encoding from settings and open with sqlite3_open for utf8
+    // and sqlite3_open16 for utf16
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    QString sEncoding = settings.value("/db/defaultencoding", "UTF-8").toString();
+
+    int openresult = SQLITE_OK;
+
+    if(sEncoding == "UTF-8" || sEncoding == "UTF8" || sEncoding == "Latin1")
+        openresult = sqlite3_open(db.toUtf8(), &_db);
+    else
+        openresult = sqlite3_open16(db.utf16(), &_db);
+
+    if( openresult != SQLITE_OK ){
+        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         sqlite3_close(_db);
         _db = 0;
         return false;
@@ -371,8 +354,8 @@ bool DBBrowserDB::addRecord ( )
     int fields = browseFields.count();
     QString emptyvalue = curNewData;
 
-    QString statement = QString("INSERT INTO `%1` VALUES(").arg(GetEncodedQString(curBrowseTableName));
-    for ( int i=1; i<=fields; i++ ) {
+    QString statement = QString("INSERT INTO `%1` VALUES(").arg(curBrowseTableName);
+    for ( int i=1; i<=fields; ++i ) {
         statement.append(emptyvalue);
         if (i<fields) statement.append(", ");
     }
@@ -403,7 +386,7 @@ bool DBBrowserDB::deleteRecord( int wrow)
     QString& rowid = rt[0];
     lastErrorMessage = QString("no error");
     
-    QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(GetEncodedQString(curBrowseTableName)).arg(rowid);
+    QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(curBrowseTableName).arg(rowid);
 
     if (_db){
         logSQL(statement, kLogMsg_App);
@@ -432,10 +415,9 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
     QString& cv = rt[wcol+1];//must account for rowid
     QString ct = browseFields.at(wcol);
     
-    QString statement = QString("UPDATE `%1` SET `%2`=").arg(GetEncodedQString(curBrowseTableName)).arg(ct);
+    QString statement = QString("UPDATE `%1` SET `%2`=").arg(curBrowseTableName).arg(ct);
 
-    QString wenc = GetEncodedQString(wtext);
-    char * formSQL = sqlite3_mprintf("%Q", wenc.toUtf8().constData());
+    char * formSQL = sqlite3_mprintf("%Q", wtext.toUtf8().constData());
     statement.append(formSQL);
     if (formSQL) sqlite3_free(formSQL);
     
@@ -688,9 +670,10 @@ void DBBrowserDB::getTableRecords( const QString & tablename, const QString& ord
     idmap.clear();
     lastErrorMessage = QObject::tr("no error");
 
-    QString statement = QString("SELECT rowid, *  FROM `%1` ORDER BY %2;").arg(GetEncodedQString(tablename)).arg(orderby);
+    QString statement = QString("SELECT rowid, *  FROM `%1` ORDER BY %2;").arg(tablename).arg(orderby);
     logSQL(statement, kLogMsg_App);
-    err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
+    QByteArray utf8Statement = statement.toUtf8();
+    err=sqlite3_prepare(_db,utf8Statement,utf8Statement.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         int rownum = 0;
@@ -698,12 +681,9 @@ void DBBrowserDB::getTableRecords( const QString & tablename, const QString& ord
         while ( sqlite3_step(vm) == SQLITE_ROW ){
             r.clear();
             ncol = sqlite3_data_count(vm);
-            for (int e=0; e<ncol; e++){
-                char * strresult = 0;
-                QString rv;
-                strresult = (char *) sqlite3_column_text(vm, e);
-                rv = QString(strresult);
-                r << GetDecodedQString(rv);
+            for (int e=0; e<ncol; ++e){
+                QString rv = QString::fromUtf8((const char*)sqlite3_column_text(vm,e));
+                r << rv;
                 if (e==0){
                     idmap.insert(rv.toInt(),rownum);
                     rownum++;
@@ -729,9 +709,9 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
     int err=0;
     resultMap res;
     lastErrorMessage = QObject::tr("no error");
-    QString encstatement = GetEncodedQString(wstatement);
-    logSQL(encstatement, kLogMsg_App);
-    err=sqlite3_prepare(_db,encstatement.toUtf8(),encstatement.length(),
+    logSQL(wstatement, kLogMsg_App);
+    QByteArray statementutf8 = wstatement.toUtf8();
+    err=sqlite3_prepare(_db, statementutf8, statementutf8.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         int rownum = 0;
@@ -739,22 +719,20 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
         QString r;
         while ( sqlite3_step(vm) == SQLITE_ROW ){
             ncol = sqlite3_data_count(vm);
-            for (int e=0; e<ncol; e++){
-                char * strresult = 0;
-                strresult = (char *) sqlite3_column_text(vm, e);
-                r = QString(strresult);
+            for (int e=0; e<ncol; ++e){
+                r = QString::fromUtf8((const char *) sqlite3_column_text(vm, e));
                 if (e==0){
                     rownum = r.toInt();
                     rowIdMap::iterator mit = idmap.find(rownum);
                     recnum = *mit;
                 }
             }
-            res.insert(recnum, GetDecodedQString(r));
+            res.insert(recnum, r);
         }
 
         sqlite3_finalize(vm);
     }else{
-        lastErrorMessage = QString(sqlite3_errmsg(_db));
+        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
     }
     return res;
 }
@@ -889,18 +867,18 @@ void DBBrowserDB::updateSchema( )
     lastErrorMessage = QObject::tr("no error");
     QString statement = "SELECT type, name, sql FROM sqlite_master;";
 
-    err=sqlite3_prepare(_db, (const char *) statement.toUtf8(),statement.length(),
+    QByteArray utf8Statement = statement.toUtf8();
+    err=sqlite3_prepare(_db, utf8Statement, utf8Statement.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
         while ( sqlite3_step(vm) == SQLITE_ROW ){
-            QString  val1, val2, val3;
-            val1 = QString((const char *) sqlite3_column_text(vm, 0));
-            val2 = QString((const char *) sqlite3_column_text(vm, 1));
-            val3 = QString((const char *) sqlite3_column_text(vm, 2));
+            QString val1 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
+            QString val2 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
+            QString val3 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
 
             if(val1 == "table" || val1 == "index" || val1 == "view" || val1 == "trigger")
-                objMap.insert(val1, DBBrowserObject(GetDecodedQString(val2), GetDecodedQString(val3), GetDecodedQString(val1)));
+                objMap.insert(val1, DBBrowserObject(val2, val3, val1));
             else
                 qDebug(QObject::tr("unknown object type %1").arg(val1).toStdString().c_str());
         }
@@ -923,16 +901,16 @@ void DBBrowserDB::updateSchema( )
                 (*it).fldmap.clear();
                 int e = 0;
                 while ( sqlite3_step(vm) == SQLITE_ROW ){
-                    if (sqlite3_column_count(vm)==6) {
-                        QString  val1, val2;
+                    if (sqlite3_column_count(vm)==6)
+                    {
                         int ispk= 0;
-                        val1 = QString((const char *) sqlite3_column_text(vm, 1));
-                        val2 = QString((const char *) sqlite3_column_text(vm, 2));
+                        QString val1 = QString::fromUtf8((const char *) sqlite3_column_text(vm, 1));
+                        QString val2 = QString::fromUtf8((const char *) sqlite3_column_text(vm, 2));
                         ispk = sqlite3_column_int(vm, 5);
                         if(ispk==1)
                             val2.append(QString(" PRIMARY KEY"));
 
-                        (*it).addField(e,GetDecodedQString(val1),GetDecodedQString(val2));
+                        (*it).addField(e, val1, val2);
                         e++;
                     }
                 }
@@ -1042,7 +1020,7 @@ QString DBBrowserDB::getPragma(const QString& pragma)
         logSQL(sql, kLogMsg_App);
         if(sqlite3_step(vm) == SQLITE_ROW)
         {
-            retval = QString((const char *) sqlite3_column_text(vm, 0));
+            retval = QString::fromUtf8((const char *) sqlite3_column_text(vm, 0));
             //qDebug((pragma + ": " + retval).toStdString().c_str());
         } else {
             qDebug(QObject::tr("didn't receive any output from pragma %1").arg(pragma).toStdString().c_str());

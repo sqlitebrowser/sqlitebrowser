@@ -13,13 +13,6 @@ enum
     kLogMsg_App
 };
 
-enum
-{
-    kEncodingUTF8,
-    kEncodingLatin1,
-    kEncodingNONE
-};
-
 /*types for encoded media data*/
 enum
 {
@@ -81,7 +74,7 @@ private:
 class DBBrowserDB
 {
 public:
-    DBBrowserDB (): _db( 0 ) , hasValidBrowseSet(false), curEncoding(kEncodingUTF8), mainWindow(0) {}
+    DBBrowserDB (): _db( 0 ) , hasValidBrowseSet(false), mainWindow(0) {}
     ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool create ( const QString & db);
@@ -117,11 +110,8 @@ public:
     void setDirty(bool dirtyval);
     bool getDirty() const;
     void logSQL(const QString& statement, int msgtype);
-    void setEncoding( int encoding );
     void setDefaultNewData( const QString & data );
-    char * GetEncodedQStringAsPointer( const QString & input) const;
-    QString GetEncodedQString( const QString & input) const;
-    QString GetDecodedQString( const QString & input) const;
+
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);
     bool setPragma(const QString& pragma, const QString& value, QString& originalvalue);
@@ -140,7 +130,6 @@ public:
     QString curBrowseTableName;
     QString lastErrorMessage;
     QString curDBFilename;
-    int curEncoding;
     QString curNewData;
 
     MainWindow* mainWindow;

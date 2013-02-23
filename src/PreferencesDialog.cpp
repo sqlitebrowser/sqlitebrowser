@@ -45,10 +45,10 @@ void PreferencesDialog::defaultTextChanged( int which )
 
 void PreferencesDialog::encodingChanged( int which )
 {
-    if (which==1) {
-        defaultencoding = QString("Latin1");
+    if (which == 0) {
+        defaultencoding = QString("UTF-8");
     } else {
-        defaultencoding = QString("UTF8");
+        defaultencoding = QString("UTF-16");
     }
 }
 
@@ -77,18 +77,18 @@ void PreferencesDialog::loadSettings()
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.sync();
 
-    defaultencoding = settings.value( "/db/defaultencoding", "UTF8" ).toString();
+    defaultencoding = settings.value( "/db/defaultencoding", "UTF-8" ).toString();
     defaultnewdata = settings.value( "/db/defaultnewdata", "NULL" ).toString();
     defaultlocation = settings.value( "/db/defaultlocation", QDir::homePath() ).toString();
     defaulttext = settings.value( "/db/defaulttext", "Plain" ).toString();
     foreignkeys = settings.value( "/db/foreignkeys", true ).toBool();
 
-    if (defaultencoding=="Latin1")
+    if (defaultencoding=="Latin1" || defaultencoding == "UTF-8")
     {
-	ui->encodingComboBox->setCurrentIndex(1);
+        ui->encodingComboBox->setCurrentIndex(0);
     } else {
-	ui->encodingComboBox->setCurrentIndex(0) ;
-        defaultencoding = QString("UTF8");
+        ui->encodingComboBox->setCurrentIndex(1);
+        defaultencoding = QString("UTF-16");
     }
     
     if (defaultnewdata=="\'\'")

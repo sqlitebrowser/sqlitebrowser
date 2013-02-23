@@ -117,12 +117,12 @@
       <widget class="QComboBox" name="encodingComboBox">
        <item>
         <property name="text">
-         <string>UTF8 (Unicode)</string>
+         <string notr="true">UTF-8</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Latin1 (8bit)</string>
+         <string notr="true">UTF-16</string>
         </property>
        </item>
       </widget>

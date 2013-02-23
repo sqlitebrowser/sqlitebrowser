@@ -777,19 +777,15 @@ void MainWindow::executeQuery()
                 if (mustCreateColumns)
                 {
                     QStringList headerList;
-                    for (int e=0; e<ncol; e++)
-                        headerList = headerList << sqlite3_column_name(vm, e);
+                    for (int e=0; e<ncol; ++e)
+                        headerList = headerList << QString::fromUtf8((const char *)sqlite3_column_name(vm, e));
                     queryResultListModel->setHorizontalHeaderLabels(headerList);
                     mustCreateColumns = false;
                 }
-                for (int e=0; e<ncol; e++){
-                    char * strresult = 0;
-                    QString rv;
-                    strresult = (char *) sqlite3_column_text(vm, e);
-                    rv = QString(strresult);
+                for (int e=0; e<ncol; ++e){
+                    QString rv = QString::fromUtf8((const char *) sqlite3_column_text(vm, e));
                     //show it here
-                    QString decoded = db.GetDecodedQString(rv);
-                    QString firstline = decoded.section( '\n', 0,0 );
+                    QString firstline = rv.section( '\n', 0,0 );
                     queryResultListModel->setItem(rownum, e, new QStandardItem(QString(firstline)));
                 }
                 queryResultListModel->setVerticalHeaderItem(rownum, new QStandardItem(QString::number(rownum + 1)));
@@ -797,7 +793,7 @@ void MainWindow::executeQuery()
             }
             sqlite3_finalize(vm);
         }else{
-            lastErrorMessage = QString (sqlite3_errmsg(db._db));
+            lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db));
         }
         ui->queryErrorLineEdit->setText(lastErrorMessage);
         ui->queryResultTableView->resizeColumnsToContents();
@@ -936,11 +932,6 @@ void MainWindow::openPreferences()
 void MainWindow::updatePreferences()
 {
     PreferencesDialog prefs(this);
-
-    if(prefs.defaultencoding == "Latin1")
-        db.setEncoding(kEncodingLatin1);
-    else
-        db.setEncoding(kEncodingUTF8);
 
     db.setDefaultNewData(prefs.defaultnewdata);
     defaultlocation= prefs.defaultlocation;
