@@ -13,6 +13,7 @@ class FindDialog;
 class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
 class QIntValidator;
+class QLabel;
 
 namespace Ui {
 class MainWindow;
@@ -54,6 +55,8 @@ private:
     QMenu *popupTableMenu;
     QMenu *popupFieldMenu;
     QMenu *recentFilesMenu;
+
+    QLabel* statusEncodingLabel;
 
     SQLiteSyntaxHighlighter* sqliteHighlighterTabSql;
     SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;

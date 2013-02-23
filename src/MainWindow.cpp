@@ -91,6 +91,13 @@ void MainWindow::init()
     ui->sqlLogAction->setChecked(!ui->dockLog->isHidden());
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
+    // Set statusbar fields
+    statusEncodingLabel = new QLabel(ui->statusbar);
+    statusEncodingLabel->setEnabled(false);
+    statusEncodingLabel->setText("UTF-8");
+    statusEncodingLabel->setToolTip(tr("Database encoding"));
+    ui->statusbar->addPermanentWidget(statusEncodingLabel);
+
     // Connect some more signals and slots
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
@@ -134,6 +141,7 @@ void MainWindow::fileOpen(const QString & fileName)
         fileClose();
         if(db.open(wFile))
         {
+            statusEncodingLabel->setText(db.getPragma("encoding"));
             setCurrentFile(wFile);
         } else {
             QString err = tr("An error occurred: %1").arg(db.lastErrorMessage);
@@ -160,6 +168,7 @@ void MainWindow::fileNew()
             QFile::remove(fileName);
         db.create(fileName);
         setCurrentFile(fileName);
+        statusEncodingLabel->setText(db.getPragma("encoding"));
         populateStructure();
         resetBrowser();
         createTable();
