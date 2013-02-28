@@ -7,8 +7,7 @@ TARGET = sqlitebrowser
 
 #INCLUDEPATH += sqlite_source/
 CONFIG += qt \
-    warn_on \
-    debug
+    warn_on
 
 HEADERS += \
     sqlitedb.h \
@@ -24,12 +23,12 @@ HEADERS += \
     EditDialog.h \
     ExportCsvDialog.h \
     ImportCsvDialog.h \
-    sqltextedit.h
+    sqltextedit.h \
+    sqlitetypes.h
 
 SOURCES += \
     sqlitedb.cpp \
     sqlbrowser_util.c \
-    main.cpp \
     MainWindow.cpp \
     SQLiteSyntaxHighlighter.cpp \
     CreateIndexDialog.cpp \
@@ -41,7 +40,16 @@ SOURCES += \
     EditDialog.cpp \
     ExportCsvDialog.cpp \
     ImportCsvDialog.cpp \
-    sqltextedit.cpp
+    sqltextedit.cpp \
+    sqlitetypes.cpp
+
+# create a unittest option
+CONFIG(unittest) {
+  CONFIG += qtestlib
+  SOURCES += tests/testsqlobjects.cpp
+} else {
+  SOURCES += main.cpp
+}
 
 QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
