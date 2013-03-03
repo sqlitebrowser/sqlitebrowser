@@ -2,6 +2,8 @@
 
 namespace sqlb {
 
+QStringList Field::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
+
 QString Field::toString(const QString& indent, const QString& sep) const
 {
     QString str = indent + m_name + sep + m_type;
@@ -43,17 +45,30 @@ bool Field::isInteger() const
             || norm == "int8";
 }
 
-Table::~Table()
+void Table::clear()
 {
     foreach(Field* f, m_fields) {
         delete f;
     }
     m_fields.clear();
+    m_primarykey.clear();
+}
+
+Table::~Table()
+{
+    clear();
 }
 
 void Table::addField(Field *f)
 {
     m_fields.append(f);
+}
+
+void Table::setFields(const FieldList &fields)
+{
+    m_primarykey.clear();
+    clear();
+    m_fields = fields;
 }
 
 bool Table::setPrimaryKey(const FieldList& pk)

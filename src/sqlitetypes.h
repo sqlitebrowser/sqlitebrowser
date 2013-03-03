@@ -16,6 +16,10 @@ public:
 
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
 
+    void setName(const QString& name) { m_name = name; }
+    void setType(const QString& type) { m_type = type; }
+    void setNotNull(bool notnull = true) { m_notnull = notnull; }
+    void setCheck(const QString& check) { m_check = check; }
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
 
     bool isText() const;
@@ -26,6 +30,8 @@ public:
     bool notnull() const { return m_notnull; }
     const QString& check() const { return m_check; }
     bool autoIncrement() const { return m_autoincrement; }
+
+    static QStringList Datatypes;
 private:
     QString m_name;
     QString m_type;
@@ -41,10 +47,14 @@ public:
     Table(const QString& name): m_name(name) {}
     virtual ~Table();
 
+    void setName(const QString& name) { m_name = name; }
+
     const QString& name() const { return m_name; }
     QString sql() const;
 
     void addField(Field* f);
+    void setFields(const FieldList& fields);
+    void clear();
 
     bool setPrimaryKey(const FieldList& pk);
     bool setPrimaryKey(Field* pk, bool autoincrement = false);
