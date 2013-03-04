@@ -83,7 +83,6 @@ bool DBBrowserDB::open ( const QString & db)
                 setDirty(false);
             }
             curDBFilename = db;
-            setRestorePoint();
         }
     }
 
@@ -1043,7 +1042,6 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     setDirty(false);
     executeSQL("COMMIT;", false, false); // commit the current transaction
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
-    setRestorePoint();
     if( !res )
         qDebug(QObject::tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage).toStdString().c_str());
     return res;
