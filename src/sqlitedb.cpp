@@ -7,6 +7,7 @@
 #include <QApplication>
 #include <QTextStream>
 #include <QSettings>
+#include <QDebug>
 
 void DBBrowserObject::addField(int order, const QString& wfield,const QString& wtype)
 {
@@ -92,11 +93,12 @@ bool DBBrowserDB::open ( const QString & db)
 bool DBBrowserDB::setRestorePoint()
 {
     if (!isOpen()) return false;
+    if (dirty) return false;
 
     if (_db){
         sqlite3_exec(_db,"SAVEPOINT RESTOREPOINT;",
                      NULL,NULL,NULL);
-        setDirty(false);
+        setDirty(true);
     }
     return true;
 }
@@ -337,7 +339,8 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
     }
 
     if (!ok){
-        lastErrorMessage = QString(errmsg);
+        lastErrorMessage = QString::fromUtf8(errmsg);
+        qWarning() << "executeSQL: " << statement << "->" << lastErrorMessage;
         return false;
     }
     return true;
@@ -362,12 +365,13 @@ bool DBBrowserDB::addRecord ( )
     lastErrorMessage = QObject::tr("no error");
     if (_db){
         logSQL(statement, kLogMsg_App);
-        setDirty(true);
+        setRestorePoint();
         if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),NULL,NULL, &errmsg)){
             ok=true;
             //int newrowid = sqlite3_last_insert_rowid(_db);
         } else {
-            lastErrorMessage = QString(errmsg);
+            lastErrorMessage = QString::fromUtf8(errmsg);
+            qCritical() << "addRecord: " << lastErrorMessage;
         }
     }
 
@@ -389,12 +393,13 @@ bool DBBrowserDB::deleteRecord( int wrow)
 
     if (_db){
         logSQL(statement, kLogMsg_App);
-        setDirty(true);
+        setRestorePoint();
         if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
                                     NULL,NULL,&errmsg)){
             ok=true;
         } else {
-            lastErrorMessage = QString(errmsg);
+            lastErrorMessage = QString::fromUtf8(errmsg);
+            qCritical() << "deleteRecord: " << lastErrorMessage;
         }
     }
     return ok;
@@ -426,14 +431,15 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QString & wtext)
 
     if (_db){
         logSQL(statement, kLogMsg_App);
-        setDirty(true);
+        setRestorePoint();
         if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
                                     NULL,NULL,&errmsg)){
             ok=true;
             /*update local copy*/
             cv = wtext;
         } else {
-            lastErrorMessage = QString(errmsg);
+            lastErrorMessage = QString::fromUtf8(errmsg);
+            qCritical() << "update Record: " << lastErrorMessage;
         }
     }
 
@@ -1039,8 +1045,7 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     QString sql = QString("PRAGMA %1 = \"%2\";").arg(pragma).arg(value);
     //qDebug(sql.toStdString().c_str());
 
-    setDirty(false);
-    executeSQL("COMMIT;", false, false); // commit the current transaction
+    save();
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
         qDebug(QObject::tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage).toStdString().c_str());
