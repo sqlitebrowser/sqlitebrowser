@@ -241,6 +241,7 @@ public:
 	 */
 	virtual void recover(const RecognitionException& ex, const BitSet& tokenSet)
 	{
+        (void)ex;
 		consume();
 		consumeUntil(tokenSet);
 	}
