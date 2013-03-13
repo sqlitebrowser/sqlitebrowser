@@ -1,6 +1,7 @@
 #include "sqlitedb.h"
 #include "sqlbrowser_util.h"
 #include "MainWindow.h"
+
 #include <QFile>
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -860,6 +861,31 @@ void DBBrowserDB::logSQL(const QString& statement, int msgtype)
     }
 }
 
+QString DBBrowserDB::getTableSQL(const QString& sTable)
+{
+    sqlite3_stmt *vm;
+    const char *tail;
+    int err;
+    QString sTableSQL;
+
+    QString statement = QString("SELECT sql FROM sqlite_master WHERE name='%1';").arg(sTable);
+
+    QByteArray utf8Statement = statement.toUtf8();
+    err=sqlite3_prepare(_db, utf8Statement, utf8Statement.length(),
+                        &vm, &tail);
+    if (err == SQLITE_OK){
+        logSQL(statement, kLogMsg_App);
+        if( sqlite3_step(vm) == SQLITE_ROW )
+        {
+            return QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
+        }
+        sqlite3_finalize(vm);
+    }else{
+        qCritical() << "Unable to get sql for table: " << sTable;
+    }
+
+    return sTableSQL;
+}
 
 void DBBrowserDB::updateSchema( )
 {

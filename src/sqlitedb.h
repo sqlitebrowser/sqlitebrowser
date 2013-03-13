@@ -86,6 +86,14 @@ public:
     bool dump( const QString & filename);
     bool reload( const QString & filename, int * lineErr);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
+
+    /**
+     * @brief getTableSQL Returns the create table statement for the given table.
+     * @param sTable Table name
+     * @return An empty string if the table does not exist
+     *         or the create table statement.
+     */
+    QString getTableSQL(const QString& sTable);
     void updateSchema() ;
     bool addRecord();
     bool deleteRecord(int wrow);
