@@ -777,7 +777,7 @@ void MainWindow::executeQuery()
                             &vm, &tail);
         if (err == SQLITE_OK){
             if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive))
-                db.setDirty(true);
+                db.setRestorePoint();
             int rownum = 0;
             bool mustCreateColumns = true;
             while ( sqlite3_step(vm) == SQLITE_ROW ){
