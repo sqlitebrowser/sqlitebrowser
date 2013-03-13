@@ -5,28 +5,20 @@ For more information on QT please consult
 http://www.qtsoftware.com. The GPL version of Qt is available in almost 
 all Linux distributions as a default package.
 
-SQLite is not used as a shared library: it is built from source code
-included in this package (sqlite_source directory), and linked as a 
-static library into the executable. 
-
-SQLite is ideal for embedding, so the only requirement
-for building this code is the presence of Qt. Qt can be included as
-a static or shared library, depending on the current Qt configuration
-in the building machine.
+The only requirements for building this code are the presence of Qt and sqlite3.
+Qt can be included as a static or shared library, depending on the current Qt
+configuration on the building machine.
 
 Provided you have Qt installed and configured, simply run
 
-qmake 
+qmake
 
 followed by
 
 make
 
-in the main directory. This will generate the
-
-sqlitebrowser (or sqlitebrowser .exe, or sqlitebrowser .app)
-
-application in the browser subdirectory.
+in the main directory. This will generate the sqlitebrowser (or
+sqlitebrowser.exe, or sqlitebrowser.app) application in the src subdirectory.
 
 The same process works for building the code
 in any platform supported by Qt (including other Unix systems with
