@@ -316,7 +316,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>278</width>
+          <width>763</width>
           <height>444</height>
          </rect>
         </property>
@@ -1703,22 +1703,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>dataTable</sender>
-   <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>doubleClickTable(int,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>99</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>mainTab</sender>
    <signal>currentChanged(int)</signal>
    <receiver>MainWindow</receiver>
@@ -2134,6 +2118,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>doubleClickTable(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2148,7 +2148,7 @@
   <slot>browseRefresh()</slot>
   <slot>compact()</slot>
   <slot>helpWhatsThis()</slot>
-  <slot>doubleClickTable(int,int)</slot>
+  <slot>doubleClickTable(QModelIndex)</slot>
   <slot>browseTableHeaderClicked(int)</slot>
   <slot>mainTabSelected(int)</slot>
   <slot>executeQuery()</slot>

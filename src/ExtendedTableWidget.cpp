@@ -4,14 +4,8 @@
 #include <QKeyEvent>
 #include "ExtendedTableWidget.h"
 
-ExtendedTableWidget::ExtendedTableWidget(int rows, int columns, QWidget* parent) :
-    QTableWidget(rows, columns, parent)
-{
-}
-
-
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
-    QTableWidget(parent)
+    QTableView(parent)
 {
 }
 
@@ -57,5 +51,5 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     if(event->matches(QKeySequence::Copy))
         copy();
     else
-        QTableWidget::keyPressEvent(event);
+        QTableView::keyPressEvent(event);
 }

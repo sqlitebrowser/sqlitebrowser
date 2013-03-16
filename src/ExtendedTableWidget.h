@@ -1,14 +1,13 @@
 #ifndef __EXTENDEDTABLEWIDGET_H__
 #define __EXTENDEDTABLEWIDGET_H__
 
-#include <QTableWidget>
+#include <QTableView>
 
-class ExtendedTableWidget : public QTableWidget
+class ExtendedTableWidget : public QTableView
 {
     Q_OBJECT
 
 public:
-    explicit ExtendedTableWidget(int rows, int columns, QWidget* parent = 0);
     explicit ExtendedTableWidget(QWidget* parent = 0);
 
 private:

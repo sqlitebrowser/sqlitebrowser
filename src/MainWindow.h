@@ -14,6 +14,7 @@ class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
 class QIntValidator;
 class QLabel;
+class QModelIndex;
 
 namespace Ui {
 class MainWindow;
@@ -51,6 +52,7 @@ private:
 
     Ui::MainWindow* ui;
 
+    QStandardItemModel *browseTableModel;
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
     QMenu *popupFieldMenu;
@@ -128,7 +130,7 @@ private slots:
     virtual void updateRecordText( int row, int col, const QString& newtext );
     virtual void editWinAway();
     virtual void editText( int row, int col );
-    virtual void doubleClickTable( int row, int col );
+    virtual void doubleClickTable(const QModelIndex& index);
     virtual void executeQuery();
     virtual void importTableFromCSV();
     virtual void exportTableToCSV();

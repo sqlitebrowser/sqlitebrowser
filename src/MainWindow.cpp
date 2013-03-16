@@ -27,6 +27,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
+      browseTableModel(new QStandardItemModel(this)),
       editWin(new EditDialog(this)),
       findWin(0)
 {
@@ -63,7 +64,9 @@ void MainWindow::init()
     // Create the SQL sytax highlighter
     sqliteHighlighterTabSql = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 
-    // Set up DB model
+    // Set up DB models
+    ui->dataTable->setModel(browseTableModel);
+
     queryResultListModel = new QStandardItemModel(this);
     ui->queryResultTableView->setModel(queryResultListModel);
 
@@ -113,7 +116,6 @@ void MainWindow::init()
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
-
 
     // Fonts for edit fields
     QFont font("Monospace");
@@ -285,9 +287,10 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
     }
 
     QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
-    if (!db.browseTable(tablename, orderby)){
-        ui->dataTable->setRowCount( 0 );
-        ui->dataTable->setColumnCount( 0 );
+    if(!db.browseTable(tablename, orderby))
+    {
+        browseTableModel->setRowCount(0);
+        browseTableModel->setColumnCount(0);
         QApplication::restoreOverrideCursor();
         if(findWin)
             findWin->resetFields(db.getTableFields(""));
@@ -389,9 +392,10 @@ void MainWindow::addRecord()
 
 void MainWindow::deleteRecord()
 {
-    if (ui->dataTable->currentRow()!=-1){
-        int lastselected = ui->dataTable->currentRow();
-        db.deleteRecord(ui->dataTable->currentRow());
+    if(ui->dataTable->currentIndex().row() != -1)
+    {
+        int lastselected = ui->dataTable->currentIndex().row();
+        db.deleteRecord(lastselected);
         populateTable(db.curBrowseTableName);
         int nextselected = lastselected ;
         if (nextselected > db.getRecordCount()){
@@ -427,9 +431,9 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 {
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    ui->dataTable->setRowCount(db.getRecordCount());
-    ui->dataTable->setColumnCount( db.browseFields.count() );
-    ui->dataTable->setHorizontalHeaderLabels(db.browseFields);
+    browseTableModel->setRowCount(db.getRecordCount());
+    browseTableModel->setColumnCount(db.browseFields.count());
+    browseTableModel->setHorizontalHeaderLabels(db.browseFields);
 
     rowList tab = db.browseRecs;
     int maxRecs = db.getRecordCount();
@@ -443,17 +447,17 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
         for (int i = 0; i < tab.size(); ++i)
         {
             rowLabel.setNum(rowNum+1);
-            ui->dataTable->setVerticalHeaderItem(rowNum, new QTableWidgetItem( rowLabel ));
+            browseTableModel->setVerticalHeaderItem(rowNum, new QStandardItem(rowLabel));
             colNum = 0;
             QStringList& rt = tab[i];
             for (int e = 1; e < rt.size(); ++e)
             {
                 QString& content = rt[e];
 
-                QTableWidgetItem* item = new QTableWidgetItem(content);
+                QStandardItem* item = new QStandardItem(content);
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
                 item->setToolTip(wrapText(content));
-                ui->dataTable->setItem( rowNum, colNum, item);
+                browseTableModel->setItem( rowNum, colNum, item);
                 colNum++;
             }
             rowNum++;
@@ -462,7 +466,7 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
     }
 
     if(!keepColumnWidths) {
-        for(int i = 0; i < ui->dataTable->columnCount(); ++i)
+        for(int i=0;i<browseTableModel->columnCount();++i)
         {
             ui->dataTable->resizeColumnToContents(i);
             if( ui->dataTable->columnWidth(i) > 400 )
@@ -480,13 +484,13 @@ void MainWindow::selectTableLine(int lineToSelect)
 {
     ui->dataTable->clearSelection();
     ui->dataTable->selectRow(lineToSelect);
-    ui->dataTable->setCurrentCell(lineToSelect, 0);
-    ui->dataTable->scrollToItem(ui->dataTable->itemAt(lineToSelect, 0));
+    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(lineToSelect, 0));
+    ui->dataTable->scrollTo(ui->dataTable->currentIndex().sibling(lineToSelect, 0));
 }
 
 void MainWindow::navigatePrevious()
 {
-    int curRow = ui->dataTable->currentRow();
+    int curRow = ui->dataTable->currentIndex().row();
     curRow -= 100;
     if(curRow < 0) curRow = 0;
     updateTableView(curRow);
@@ -495,9 +499,10 @@ void MainWindow::navigatePrevious()
 
 void MainWindow::navigateNext()
 {
-    int curRow = ui->dataTable->currentRow();
+    int curRow = ui->dataTable->currentIndex().row();
     curRow += 100;
-    if(curRow >= ui->dataTable->rowCount()) curRow = ui->dataTable->rowCount()-1;
+    if(curRow >= browseTableModel->rowCount())
+        curRow = browseTableModel->rowCount()-1;
     updateTableView(curRow);
 }
 
@@ -518,7 +523,7 @@ void MainWindow::setRecordsetLabel()
 {
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
-    int total = ui->dataTable->rowCount();
+    int total = browseTableModel->rowCount();
     if(to == -2)
         to = total;
 
@@ -709,9 +714,9 @@ void MainWindow::updateRecordText(int row, int col, const QString& newtext)
     QStringList& rt = tab[row];
     QString& cv = rt[col+1];//must account for rowid
 
-    QTableWidgetItem* item = new QTableWidgetItem(cv);
+    QStandardItem* item = new QStandardItem(cv);
     item->setToolTip( wrapText(cv) );
-    ui->dataTable->setItem(row, col, item);
+    browseTableModel->setItem(row, col, item);
 
 }
 
@@ -719,7 +724,7 @@ void MainWindow::editWinAway()
 {
     editWin->hide();
     activateWindow();
-    ui->dataTable->setRangeSelected(QTableWidgetSelectionRange(editWin->getCurrentRow(), editWin->getCurrentCol(), editWin->getCurrentRow(), editWin->getCurrentCol()), true);
+    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(editWin->getCurrentRow(), editWin->getCurrentCol()));
 }
 
 void MainWindow::editText(int row, int col)
@@ -732,9 +737,10 @@ void MainWindow::editText(int row, int col)
     editWin->show();
 }
 
-void MainWindow::doubleClickTable( int row, int col )
+void MainWindow::doubleClickTable(const QModelIndex& index)
 {
-    if ((row==-1) || (col==-1)){
+    if(!index.isValid())
+    {
         qDebug("no cell selected");
         return;
     }
@@ -743,9 +749,7 @@ void MainWindow::doubleClickTable( int row, int col )
     if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
         return;
 
-    int realRow = row;
-
-    editText(realRow , col);
+    editText(index.row(), index.column());
 }
 
 void MainWindow::executeQuery()
@@ -1132,7 +1136,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
-    ui->dataTable->setCurrentCell(0, logicalindex);
+    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(0, logicalindex));
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
