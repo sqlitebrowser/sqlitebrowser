@@ -1129,6 +1129,10 @@ void MainWindow::activateFields(bool enable)
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
 {
+    // Abort if there is more than one column selected because this tells us that the user pretty sure wants to do a range selection instead of sorting data
+    if(ui->dataTable->selectionModel()->selectedColumns().count() > 1)
+        return;
+
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
     curBrowseOrderByIndex = logicalindex + 2;
     curBrowseOrderByMode = curBrowseOrderByMode == ORDERMODE_ASC ? ORDERMODE_DESC : ORDERMODE_ASC;
