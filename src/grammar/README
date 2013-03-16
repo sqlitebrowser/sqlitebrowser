@@ -1,0 +1,6 @@
+To generate c++ code from the grammar(sqlit3.g) you need
+antlr 2.7.7. Download it from www.antlr2.org.
+
+Either put the antlr.jar into your system classpath or
+start it like this:
+java -cp .:/pathto/antlr.jar antlr.Tool sqlite3.g

@@ -5,7 +5,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = sqlitebrowser
 
-#INCLUDEPATH += sqlite_source/
 CONFIG += qt \
     warn_on
 
@@ -25,7 +24,10 @@ HEADERS += \
     ImportCsvDialog.h \
     sqltextedit.h \
     sqlitetypes.h \
-    ExtendedTableWidget.h
+    ExtendedTableWidget.h \
+    grammar/Sqlite3Lexer.hpp \
+    grammar/Sqlite3Parser.hpp \
+    grammar/sqlite3TokenTypes.hpp
 
 SOURCES += \
     sqlitedb.cpp \
@@ -43,7 +45,9 @@ SOURCES += \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
     sqlitetypes.cpp \
-    ExtendedTableWidget.cpp
+    ExtendedTableWidget.cpp \
+    grammar/Sqlite3Lexer.cpp \
+    grammar/Sqlite3Parser.cpp
 
 # create a unittest option
 CONFIG(unittest) {
@@ -84,3 +88,7 @@ FORMS += \
     EditDialog.ui \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui
+
+INCLUDEPATH += $$PWD/../libs/antlr-2.7.7
+LIBS += -L$$OUT_PWD/../libs/antlr-2.7.7/ -lantlr
+DEPENDPATH += $$PWD/../libs/antlr-2.7.7
