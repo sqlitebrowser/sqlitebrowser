@@ -139,7 +139,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="sqlTextEdit"/>
+       <widget class="QTextEdit" name="sqlTextEdit">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
