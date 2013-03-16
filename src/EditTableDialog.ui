@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>414</width>
-    <height>405</height>
+    <width>597</width>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,9 @@
   <property name="windowIcon">
    <iconset resource="icons/icons.qrc">
     <normaloff>:/icons/table</normaloff>:/icons/table</iconset>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -63,26 +66,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="renameFieldButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Edit field</string>
-          </property>
-          <property name="icon">
-           <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/field_edit</normaloff>:/icons/field_edit</iconset>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextBesideIcon</enum>
-          </property>
-          <property name="autoRaise">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QToolButton" name="removeFieldButton">
           <property name="enabled">
            <bool>false</bool>
@@ -119,17 +102,44 @@
       </item>
       <item>
        <widget class="QTreeWidget" name="treeWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="rootIsDecorated">
+         <bool>false</bool>
+        </property>
         <column>
          <property name="text">
-          <string>Field name</string>
+          <string>Name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Field type</string>
+          <string>Type</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Not null</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Primary key</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Autoincrement</string>
          </property>
         </column>
        </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="sqlTextEdit"/>
       </item>
      </layout>
     </widget>
@@ -149,7 +159,6 @@
  <tabstops>
   <tabstop>editTableName</tabstop>
   <tabstop>addFieldButton</tabstop>
-  <tabstop>renameFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
   <tabstop>treeWidget</tabstop>
   <tabstop>buttonBox</tabstop>
@@ -223,22 +232,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>renameFieldButton</sender>
-   <signal>clicked()</signal>
-   <receiver>EditTableDialog</receiver>
-   <slot>editField()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>136</x>
-     <y>108</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>161</x>
-     <y>65</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>removeFieldButton</sender>
    <signal>clicked()</signal>
    <receiver>EditTableDialog</receiver>
@@ -270,22 +263,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>treeWidget</sender>
-   <signal>itemChanged(QTreeWidgetItem*,int)</signal>
-   <receiver>EditTableDialog</receiver>
-   <slot>checkInput()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>138</x>
-     <y>197</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>412</x>
-     <y>135</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
@@ -293,5 +270,6 @@
   <slot>editField()</slot>
   <slot>removeField()</slot>
   <slot>checkInput()</slot>
+  <slot>itemChanged()</slot>
  </slots>
 </ui>

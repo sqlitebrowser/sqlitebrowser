@@ -3,6 +3,12 @@
 
 #include <QDialog>
 class DBBrowserDB;
+class SQLiteSyntaxHighlighter;
+class QTreeWidgetItem;
+
+namespace sqlb {
+class Table;
+}
 
 namespace Ui {
 class EditTableDialog;
@@ -16,22 +22,38 @@ public:
     explicit EditTableDialog(DBBrowserDB* pdb, const QString& tableName, QWidget* parent = 0);
     ~EditTableDialog();
 
+private:
+    enum Columns {
+        kName = 0,
+        kType = 1,
+        kNotNull = 2,
+        kPrimaryKey = 3,
+        kAutoIncrement = 4
+    };
+
+    void updateColumnWidth();
+    void updateTableObject();
+    void updateSqlText();
+
 private slots:
     virtual void populateFields();
-    virtual void editField();
     virtual void addField();
     virtual void removeField();
     virtual void fieldSelectionChanged();
     virtual void accept();
     virtual void reject();
     virtual void checkInput();
+    virtual void itemChanged(QTreeWidgetItem* item, int column);
+    virtual void updateTypes();
 
 private:
     Ui::EditTableDialog* ui;
     DBBrowserDB* pdb;
     QString curTable;
+    sqlb::Table* m_table;
     QStringList types;
     QStringList fields;
+    SQLiteSyntaxHighlighter* m_sqliteSyntaxHighlighter;
 };
 
 #endif
