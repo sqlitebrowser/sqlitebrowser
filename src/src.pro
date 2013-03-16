@@ -24,7 +24,8 @@ HEADERS += \
     ExportCsvDialog.h \
     ImportCsvDialog.h \
     sqltextedit.h \
-    sqlitetypes.h
+    sqlitetypes.h \
+    ExtendedTableWidget.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -41,7 +42,8 @@ SOURCES += \
     ExportCsvDialog.cpp \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
-    sqlitetypes.cpp
+    sqlitetypes.cpp \
+    ExtendedTableWidget.cpp
 
 # create a unittest option
 CONFIG(unittest) {

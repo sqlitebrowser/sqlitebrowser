@@ -205,12 +205,12 @@
       </layout>
      </item>
      <item>
-      <widget class="QTableWidget" name="dataTable">
+      <widget class="ExtendedTableWidget" name="dataTable">
        <property name="whatsThis">
         <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
        </property>
        <property name="selectionMode">
-        <enum>QAbstractItemView::SingleSelection</enum>
+        <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
        <property name="horizontalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>
@@ -316,8 +316,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>763</width>
-          <height>494</height>
+          <width>278</width>
+          <height>444</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout">
@@ -1399,6 +1399,11 @@
    <extends>QTextEdit</extends>
    <header>sqltextedit.h</header>
   </customwidget>
+  <customwidget>
+   <class>ExtendedTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>ExtendedTableWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>dbTreeWidget</tabstop>
@@ -2169,5 +2174,6 @@
   <slot>deleteField()</slot>
   <slot>loadPragmas()</slot>
   <slot>savePragmas()</slot>
+  <slot>copy()</slot>
  </slots>
 </ui>
