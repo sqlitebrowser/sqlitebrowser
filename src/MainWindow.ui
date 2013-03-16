@@ -843,7 +843,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableView" name="queryResultTableView">
+      <widget class="ExtendedTableWidget" name="queryResultTableView">
        <property name="toolTip">
         <string>Query generated data</string>
        </property>
@@ -854,7 +854,7 @@
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="selectionMode">
-        <enum>QAbstractItemView::NoSelection</enum>
+        <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
        <property name="horizontalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>
@@ -1401,7 +1401,7 @@
   </customwidget>
   <customwidget>
    <class>ExtendedTableWidget</class>
-   <extends>QTableWidget</extends>
+   <extends>QTableView</extends>
    <header>ExtendedTableWidget.h</header>
   </customwidget>
  </customwidgets>
