@@ -62,7 +62,7 @@ QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc
-    OBJECTS_DIR = .obj
+    OBJECTS_DIR = .obj $$PWD/../libs/qhexedit
     LIBS += -ldl
 }
 win32:RC_FILE = winapp.rc
@@ -89,6 +89,6 @@ FORMS += \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui
 
-INCLUDEPATH += $$PWD/../libs/antlr-2.7.7
-LIBS += -L$$OUT_PWD/../libs/antlr-2.7.7/ -lantlr
-DEPENDPATH += $$PWD/../libs/antlr-2.7.7
+INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
+LIBS += -L$$OUT_PWD/../libs/antlr-2.7.7/ -lantlr -L$$OUT_PWD/../libs/qhexedit/ -lqhexedit
+DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
