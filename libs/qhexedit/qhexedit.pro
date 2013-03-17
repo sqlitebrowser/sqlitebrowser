@@ -1,5 +1,7 @@
 TEMPLATE = lib
 
+CONFIG += staticlib
+
 MOC_DIR = .moc
 
 HEADERS += \
