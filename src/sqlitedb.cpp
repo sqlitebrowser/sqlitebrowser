@@ -430,7 +430,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QByteArray& wtext)
         qCritical() << "updateRecord: " << lastErrorMessage;
         return false;
     }
-    if(sqlite3_bind_blob(stmt, 1, wtext.constData(), wtext.length(), SQLITE_STATIC) != SQLITE_OK)
+    if(sqlite3_bind_text(stmt, 1, wtext.constData(), wtext.length(), SQLITE_STATIC) != SQLITE_OK)
     {
         lastErrorMessage = sqlite3_errmsg(_db);
         qCritical() << "updateRecord: " << lastErrorMessage;
