@@ -56,7 +56,7 @@
        </item>
        <item>
         <property name="text">
-         <string>Empty string</string>
+         <string>''</string>
         </property>
        </item>
       </widget>
@@ -162,12 +162,13 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>buttonBox</tabstop>
   <tabstop>encodingComboBox</tabstop>
   <tabstop>defaultdataComboBox</tabstop>
   <tabstop>defaultTextComboBox</tabstop>
+  <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
+  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -178,8 +179,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>140</y>
+     <x>256</x>
+     <y>214</y>
     </hint>
     <hint type="destinationlabel">
      <x>155</x>
@@ -194,44 +195,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>140</y>
+     <x>324</x>
+     <y>214</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
      <y>144</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>encodingComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>encodingChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>265</x>
-     <y>15</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>339</x>
-     <y>8</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>defaultdataComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>defaultDataChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>239</x>
-     <y>40</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>350</x>
-     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -242,44 +211,12 @@
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>468</x>
-     <y>98</y>
+     <x>485</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
      <x>459</x>
      <y>62</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>defaultTextComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>defaultTextChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>72</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>297</x>
-     <y>64</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>foreignKeysCheckBox</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>foreignkeysStateChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>245</x>
-     <y>109</y>
     </hint>
    </hints>
   </connection>
