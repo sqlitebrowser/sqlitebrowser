@@ -56,6 +56,20 @@
       </spacer>
      </item>
      <item>
+      <widget class="QComboBox" name="comboEditor">
+       <item>
+        <property name="text">
+         <string>Text</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Binary</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonClear">
        <property name="toolTip">
         <string>Clear cell data</string>
@@ -80,8 +94,8 @@
        <string>This area displays information about the data present in this database cell</string>
       </property>
      </widget>
-     <widget class="QLabel" name="editorImage"/>
      <widget class="QWidget" name="editorBinary"/>
+     <widget class="QLabel" name="editorImage"/>
     </widget>
    </item>
    <item>
@@ -113,6 +127,7 @@
  <tabstops>
   <tabstop>buttomImport</tabstop>
   <tabstop>buttonExport</tabstop>
+  <tabstop>comboEditor</tabstop>
   <tabstop>buttonClear</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
@@ -214,11 +229,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboEditor</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>editorStack</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editorStack</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>comboEditor</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>267</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>importData()</slot>
   <slot>exportData()</slot>
   <slot>clearData()</slot>
   <slot>editTextChanged()</slot>
+  <slot>checkDataType()</slot>
  </slots>
 </ui>

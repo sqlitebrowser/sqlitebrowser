@@ -34,6 +34,7 @@ private slots:
     virtual void accept();
     virtual void editTextChanged();
     virtual void checkDataType();
+    virtual void toggleOverwriteMode();
 
 signals:
     void goingAway();

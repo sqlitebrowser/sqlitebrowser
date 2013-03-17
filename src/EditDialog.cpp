@@ -1,6 +1,8 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
 #include <QFileDialog>
+#include <QKeySequence>
+#include <QShortcut>
 #include "sqlitedb.h"
 #include <src/qhexedit.h>
 
@@ -14,13 +16,15 @@ EditDialog::EditDialog(QWidget* parent)
     hexEdit = new QHexEdit(this);
     hexLayout->addWidget(hexEdit);
 
+    QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
+    connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
+
     reset();
 }
 
 EditDialog::~EditDialog()
 {
     delete ui;
-    delete hexEdit;
 }
 
 void EditDialog::reset()
@@ -116,6 +120,7 @@ void EditDialog::editTextChanged()
 void EditDialog::checkDataType()
 {
     // Check if data is text only
+    ui->comboEditor->setVisible(true);
     if(QString(hexEdit->data()).toAscii() == hexEdit->data())     // Any proper way??
     {
         ui->editorStack->setCurrentIndex(0);
@@ -129,16 +134,27 @@ void EditDialog::checkDataType()
         {
             // It is.
             ui->editorImage->setPixmap(QPixmap::fromImage(img));
-            ui->editorStack->setCurrentIndex(1);
+            ui->editorStack->setCurrentIndex(2);
 
             ui->labelType->setText(tr("Type of data currently in cell: Image"));
             ui->labelSize->setText(tr("%1x%2 pixel").arg(ui->editorImage->pixmap()->size().width()).arg(ui->editorImage->pixmap()->size().height()));
+
+            ui->comboEditor->setVisible(false);
         } else {
             // It's not. So it's probably some random binary data.
-            ui->editorStack->setCurrentIndex(2);
+            ui->editorStack->setCurrentIndex(1);
 
             ui->labelType->setText(tr("Type of data currently in cell: Binary"));
             ui->labelSize->setText(tr("%n byte(s)", "", hexEdit->data().length()));
         }
     }
+}
+
+void EditDialog::toggleOverwriteMode()
+{
+    static bool currentMode = false;
+    currentMode = !currentMode;
+
+    hexEdit->setOverwriteMode(currentMode);
+    ui->editorText->setOverwriteMode(currentMode);
 }
