@@ -44,6 +44,7 @@ signals:
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
+    QByteArray oldData;
     int curCol;
     int curRow;
 };

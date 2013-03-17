@@ -37,6 +37,7 @@ void EditDialog::reset()
     ui->editorText->setFocus();
     ui->editorImage->clear();
     hexEdit->setData(QByteArray());
+    oldData = "";
     checkDataType();
 }
 
@@ -49,6 +50,7 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
 {
     curRow = row;
     curCol = col;
+    oldData = data;
 
     ui->editorText->setPlainText(data);
     ui->editorText->setFocus();
@@ -113,7 +115,8 @@ void EditDialog::clearData()
 
 void EditDialog::accept()
 {
-    emit updateRecordText(curRow, curCol, hexEdit->data());
+    if(hexEdit->data() != oldData)
+        emit updateRecordText(curRow, curCol, hexEdit->data());
     emit goingAway();
 }
 
