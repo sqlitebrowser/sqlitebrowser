@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>492</width>
-    <height>219</height>
+    <height>147</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,6 +30,20 @@
        <property name="buddy">
         <cstring>encodingComboBox</cstring>
        </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="encodingComboBox">
+       <item>
+        <property name="text">
+         <string notr="true">UTF-8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">UTF-16</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="1" column="0">
@@ -62,30 +76,26 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_5">
+       <property name="toolTip">
+        <string>Open databases with foreign keys enabled.</string>
+       </property>
        <property name="text">
-        <string>Default text editor format</string>
+        <string>Foreign keys</string>
        </property>
        <property name="buddy">
-        <cstring>defaultTextComboBox</cstring>
+        <cstring>foreignKeysCheckBox</cstring>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="defaultTextComboBox">
-       <item>
-        <property name="text">
-         <string>Plain</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Auto</string>
-        </property>
-       </item>
+      <widget class="QCheckBox" name="foreignKeysCheckBox">
+       <property name="text">
+        <string>enabled</string>
+       </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Default location</string>
@@ -95,7 +105,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLineEdit" name="locationEdit">
@@ -112,40 +122,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="encodingComboBox">
-       <item>
-        <property name="text">
-         <string notr="true">UTF-8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">UTF-16</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="toolTip">
-        <string>Open databases with foreign keys enabled.</string>
-       </property>
-       <property name="text">
-        <string>Foreign keys</string>
-       </property>
-       <property name="buddy">
-        <cstring>foreignKeysCheckBox</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QCheckBox" name="foreignKeysCheckBox">
-       <property name="text">
-        <string>enabled</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -164,7 +140,6 @@
  <tabstops>
   <tabstop>encodingComboBox</tabstop>
   <tabstop>defaultdataComboBox</tabstop>
-  <tabstop>defaultTextComboBox</tabstop>
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
@@ -223,10 +198,6 @@
  </connections>
  <slots>
   <slot>saveSettings()</slot>
-  <slot>defaultDataChanged(int)</slot>
-  <slot>encodingChanged(int)</slot>
   <slot>chooseLocation()</slot>
-  <slot>defaultTextChanged(int)</slot>
-  <slot>foreignkeysStateChanged(int)</slot>
  </slots>
 </ui>

@@ -41,7 +41,6 @@ void PreferencesDialog::loadSettings()
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->defaultdataComboBox->setCurrentIndex(ui->defaultdataComboBox->findText(getSettingsValue("db", "defaultnewdata").toString(), Qt::MatchFixedString));
     ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
-    ui->defaultTextComboBox->setCurrentIndex(ui->defaultTextComboBox->findText(getSettingsValue("db", "defaulttext").toString(), Qt::MatchFixedString));
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
 }
 
@@ -50,7 +49,6 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "defaultencoding", ui->encodingComboBox->currentText());
     setSettingsValue("db", "defaultnewdata", ui->defaultdataComboBox->currentText());
     setSettingsValue("db", "defaultlocation", ui->locationEdit->text());
-    setSettingsValue("db", "defaulttext", ui->defaultTextComboBox->currentText());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     accept();
 }
@@ -98,10 +96,6 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // db/defaultlocation?
     if(group == "db" && name == "defaultlocation")
         return QDir::homePath();
-
-    // db/defaulttext?
-    if(group == "db" && name == "defaulttext")
-        return "Plain";
 
     // db/foreignkeys?
     if(group == "db" && name == "foreignkeys")
