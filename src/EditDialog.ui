@@ -71,10 +71,17 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextEdit" name="editData">
-     <property name="whatsThis">
-      <string>This area displays information about the data present in this database cell</string>
+    <widget class="QStackedWidget" name="editorStack">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
+     <widget class="QTextEdit" name="editorText">
+      <property name="whatsThis">
+       <string>This area displays information about the data present in this database cell</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="editorImage"/>
+     <widget class="QWidget" name="editorBinary"/>
     </widget>
    </item>
    <item>
@@ -107,7 +114,6 @@
   <tabstop>buttomImport</tabstop>
   <tabstop>buttonExport</tabstop>
   <tabstop>buttonClear</tabstop>
-  <tabstop>editData</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
@@ -193,7 +199,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>editData</sender>
+   <sender>editorText</sender>
    <signal>textChanged()</signal>
    <receiver>EditDialog</receiver>
    <slot>editTextChanged()</slot>

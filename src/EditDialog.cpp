@@ -12,8 +12,10 @@ EditDialog::EditDialog(QWidget* parent)
 {
     ui->setupUi(this);
 
+    QHBoxLayout* hexLayout = new QHBoxLayout;
     hexEdit = new QHexEdit(this);
-    hexEdit->setVisible(false);
+    hexLayout->addWidget(hexEdit);
+    ui->editorBinary->setLayout(hexLayout);
 
     reset();
 }
@@ -27,8 +29,9 @@ void EditDialog::reset()
 {
     curRow = -1;
     curCol = -1;
-    ui->editData->setPlainText("");
-    ui->editData->setFocus();
+    ui->editorText->clear();
+    ui->editorText->setFocus();
+    ui->editorImage->clear();
     hexEdit->setData(QByteArray());
     setDataType(kSQLiteMediaType_Void, 0);
 }
@@ -47,7 +50,7 @@ void EditDialog::setDataType(int type, int size)
     {
     case kSQLiteMediaType_String:
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        ui->labelSize->setText(tr("%n char(s)", "", ui->editData->toPlainText().length()));
+        ui->labelSize->setText(tr("%n char(s)", "", hexEdit->data().length()));
         enableExport(true);
         break;
     case kSQLiteMediaType_Void:
@@ -65,9 +68,27 @@ void EditDialog::closeEvent(QCloseEvent*)
 
 void EditDialog::loadText(const QByteArray& data, int row, int col)
 {
-    ui->editData->setPlainText(data);
-    ui->editData->setFocus();
-    ui->editData->selectAll();
+    // Check if data is text only
+    if(QString(data).toAscii() == data)     // Any proper way??
+    {
+        ui->editorStack->setCurrentIndex(0);
+    } else {
+        // It's not. So it might be an image.
+        QImage img;
+        if(img.loadFromData(data))
+        {
+            // It is.
+            ui->editorImage->setPixmap(QPixmap::fromImage(img));
+            ui->editorStack->setCurrentIndex(1);
+        } else {
+            // It's not. So it's probably some random binary data.
+            ui->editorStack->setCurrentIndex(2);
+        }
+    }
+
+    ui->editorText->setPlainText(data);
+    ui->editorText->setFocus();
+    ui->editorText->selectAll();
     hexEdit->setData(data);
     curRow = row;
     curCol = col;
@@ -93,7 +114,7 @@ void EditDialog::importData()
         {
             QByteArray d = file.readAll();
             hexEdit->setData(d);
-            ui->editData->setPlainText(d);
+            ui->editorText->setPlainText(d);
             file.close();
         }
         setDataType(type, hexEdit->data().length());
@@ -140,7 +161,8 @@ void EditDialog::exportData()
 
 void EditDialog::clearData()
 {
-    ui->editData->setPlainText("");
+    ui->editorText->clear();
+    ui->editorImage->clear();
     hexEdit->setData(QByteArray());
     setDataType(kSQLiteMediaType_Void, 0);
 }
@@ -158,8 +180,8 @@ void EditDialog::accept()
 
 void EditDialog::editTextChanged()
 {
-    if(ui->editData->hasFocus())
-        hexEdit->setData(ui->editData->toPlainText().toUtf8());
+    if(ui->editorText->hasFocus())
+        hexEdit->setData(ui->editorText->toPlainText().toUtf8());
 
     int newtype = kSQLiteMediaType_String;
     if(hexEdit->data().length() == 0)
