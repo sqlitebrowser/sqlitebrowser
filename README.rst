@@ -45,7 +45,6 @@ What's still to do
 - Inline editing of records instead of having to use a special dialog for it
 - Avoid loading all records of a table to avoid problems when opening a very
   big table
-- Add proper support for BLOBs
 - Feel free to add more issues at
   https://github.com/rp-/sqlitebrowser/issues
 
