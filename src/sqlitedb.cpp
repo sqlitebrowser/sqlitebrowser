@@ -883,7 +883,7 @@ QString DBBrowserDB::getTableSQL(const QString& sTable)
         logSQL(statement, kLogMsg_App);
         if( sqlite3_step(vm) == SQLITE_ROW )
         {
-            return QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
+            sTableSQL = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
         }
         sqlite3_finalize(vm);
     }else{
