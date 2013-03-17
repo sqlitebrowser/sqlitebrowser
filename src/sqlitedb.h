@@ -26,7 +26,7 @@ typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 typedef QMap<int, int> rowIdMap;
 
-typedef QList<QStringList> rowList;
+typedef QList<QList<QByteArray> > rowList;
 typedef QMap<int, QString> resultMap;
 
 class DBBrowserField
@@ -97,7 +97,7 @@ public:
     void updateSchema() ;
     bool addRecord();
     bool deleteRecord(int wrow);
-    bool updateRecord(int wrow, int wcol, const QString & wtext);
+    bool updateRecord(int wrow, int wcol, const QByteArray& wtext);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
     bool createTable(const QString& name, const QList<DBBrowserField>& structure);

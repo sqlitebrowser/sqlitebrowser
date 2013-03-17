@@ -4,12 +4,17 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "sqlitedb.h"
+#include <src/qhexedit.h>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog)
 {
     ui->setupUi(this);
+
+    hexEdit = new QHexEdit(this);
+    hexEdit->setVisible(false);
+
     reset();
 }
 
@@ -24,6 +29,7 @@ void EditDialog::reset()
     curCol = -1;
     ui->editData->setPlainText("");
     ui->editData->setFocus();
+    hexEdit->setData(QByteArray());
     setDataType(kSQLiteMediaType_Void, 0);
 }
 
@@ -57,14 +63,15 @@ void EditDialog::closeEvent(QCloseEvent*)
     emit goingAway();
 }
 
-void EditDialog::loadText(const QString&  text, int row, int col)
+void EditDialog::loadText(const QByteArray& data, int row, int col)
 {
-    ui->editData->setPlainText(text);
+    ui->editData->setPlainText(data);
     ui->editData->setFocus();
     ui->editData->selectAll();
+    hexEdit->setData(data);
     curRow = row;
     curCol = col;
-    if(ui->editData->toPlainText().length() > 0)
+    if(hexEdit->data().length() > 0)
         setDataType(kSQLiteMediaType_String, 0);
     else
         setDataType(kSQLiteMediaType_Void, 0);
@@ -84,11 +91,12 @@ void EditDialog::importData()
         QFile file(fileName);
         if(file.open(QIODevice::ReadOnly))
         {
-            QTextStream stream(&file);
-            ui->editData->setPlainText(stream.readAll());
+            QByteArray d = file.readAll();
+            hexEdit->setData(d);
+            ui->editData->setPlainText(d);
             file.close();
         }
-        setDataType(type, ui->editData->toPlainText().length());
+        setDataType(type, hexEdit->data().length());
     }
 }
 
@@ -119,8 +127,7 @@ void EditDialog::exportData()
                 QFile file(fileName);
                 if(file.open(QIODevice::WriteOnly))
                 {
-                    QTextStream stream(&file);
-                    stream << ui->editData->toPlainText();
+                    file.write(hexEdit->data());
                     file.close();
                 }
             }
@@ -134,13 +141,14 @@ void EditDialog::exportData()
 void EditDialog::clearData()
 {
     ui->editData->setPlainText("");
+    hexEdit->setData(QByteArray());
     setDataType(kSQLiteMediaType_Void, 0);
 }
 
 void EditDialog::accept()
 {
     if(dataType == kSQLiteMediaType_String)
-        emit updateRecordText(curRow, curCol, ui->editData->toPlainText());
+        emit updateRecordText(curRow, curCol, hexEdit->data());
 
     if (dataType == kSQLiteMediaType_Void)
         emit updateRecordText(curRow, curCol, "");
@@ -150,8 +158,11 @@ void EditDialog::accept()
 
 void EditDialog::editTextChanged()
 {
+    if(ui->editData->hasFocus())
+        hexEdit->setData(ui->editData->toPlainText().toUtf8());
+
     int newtype = kSQLiteMediaType_String;
-    if(ui->editData->toPlainText().length() == 0)
+    if(hexEdit->data().length() == 0)
         newtype = kSQLiteMediaType_Void;
-    setDataType(newtype, ui->editData->toPlainText().length());
+    setDataType(newtype, hexEdit->data().length());
 }
