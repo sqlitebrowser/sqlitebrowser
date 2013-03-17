@@ -33,6 +33,7 @@ private slots:
     virtual void clearData();
     virtual void accept();
     virtual void editTextChanged();
+    virtual void hexDataChanged();
     virtual void checkDataType();
     virtual void toggleOverwriteMode();
 

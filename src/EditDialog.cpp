@@ -15,6 +15,8 @@ EditDialog::EditDialog(QWidget* parent)
     QHBoxLayout* hexLayout = new QHBoxLayout(ui->editorBinary);
     hexEdit = new QHexEdit(this);
     hexLayout->addWidget(hexEdit);
+    hexEdit->setOverwriteMode(false);
+    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(hexDataChanged()));
 
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
@@ -112,9 +114,16 @@ void EditDialog::accept()
 void EditDialog::editTextChanged()
 {
     if(ui->editorText->hasFocus())
+    {
         hexEdit->setData(ui->editorText->toPlainText().toUtf8());
+        checkDataType();
+    }
+}
 
-    checkDataType();
+void EditDialog::hexDataChanged()
+{
+    // Update the text editor accordingly
+    ui->editorText->setPlainText(hexEdit->data());
 }
 
 void EditDialog::checkDataType()
