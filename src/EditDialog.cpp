@@ -59,11 +59,17 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
 
 void EditDialog::importData()
 {
+    // Get list of supported image file formats to include them in the file dialog filter
+    QString image_formats;
+    QList<QByteArray> image_formats_list = QImageReader::supportedImageFormats();
+    for(int i=0;i<image_formats_list.size();++i)
+        image_formats.append(QString("*.%1 ").arg(QString::fromUtf8(image_formats_list.at(i))));
+
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a file"),
                 defaultlocation,
-                tr("Text files(*.txt);;All files(*)"));
+                tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats));
     if(QFile::exists(fileName))
     {
         QFile file(fileName);
