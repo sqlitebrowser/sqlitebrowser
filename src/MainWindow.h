@@ -74,7 +74,6 @@ private:
     EditDialog* editWin;
     FindDialog* findWin;
     QIntValidator* gotoValidator;
-    QString defaultlocation;
 
     DBBrowserDB db;
 
@@ -139,7 +138,6 @@ private slots:
     virtual void exportDatabaseToSQL();
     virtual void importDatabaseFromSQL();
     virtual void openPreferences();
-    virtual void updatePreferences();
     virtual void openRecentFile();
     virtual void loadPragmas();
     virtual void updatePragmaUi();

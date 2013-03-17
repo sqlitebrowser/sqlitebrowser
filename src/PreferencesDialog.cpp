@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include "sqlitedb.h"
 
+QHash<QString, QVariant> PreferencesDialog::m_hCache;
+
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog)
@@ -22,108 +24,99 @@ PreferencesDialog::~PreferencesDialog()
     delete ui;
 }
 
-void PreferencesDialog::defaultDataChanged( int which )
-{
-    if (which==2) {
-        defaultnewdata = QString("\'\'");
-    } else if (which==1) {
-        defaultnewdata = QString("0");
-    } else {
-        defaultnewdata = QString("NULL");
-    }
-}
-
-void PreferencesDialog::defaultTextChanged( int which )
-{
-    if (which==1) {
-        defaulttext = QString("Auto");
-    } else {
-        defaulttext = QString("Plain");
-    }
-
-}
-
-void PreferencesDialog::encodingChanged( int which )
-{
-    if (which == 0) {
-        defaultencoding = QString("UTF-8");
-    } else {
-        defaultencoding = QString("UTF-16");
-    }
-}
-
-void PreferencesDialog::foreignkeysStateChanged(int state)
-{
-    foreignkeys = state > 0;
-}
-
 void PreferencesDialog::chooseLocation()
 {
     QString s = QFileDialog::getExistingDirectory(
                 this,
                 tr("Choose a directory"),
-                defaultlocation,
+                getSettingsValue("db", "defaultlocation").toString(),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if(!s.isEmpty())
-    {
-        defaultlocation = s;
-        ui->locationEdit->setText(defaultlocation);
-    }
+        ui->locationEdit->setText(s);
 }
 
 void PreferencesDialog::loadSettings()
 {
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.sync();
-
-    defaultencoding = settings.value( "/db/defaultencoding", "UTF-8" ).toString();
-    defaultnewdata = settings.value( "/db/defaultnewdata", "NULL" ).toString();
-    defaultlocation = settings.value( "/db/defaultlocation", QDir::homePath() ).toString();
-    defaulttext = settings.value( "/db/defaulttext", "Plain" ).toString();
-    foreignkeys = settings.value( "/db/foreignkeys", true ).toBool();
-
-    if (defaultencoding=="Latin1" || defaultencoding == "UTF-8")
-    {
-        ui->encodingComboBox->setCurrentIndex(0);
-    } else {
-        ui->encodingComboBox->setCurrentIndex(1);
-        defaultencoding = QString("UTF-16");
-    }
-    
-    if (defaultnewdata=="\'\'")
-    {
-	ui->defaultdataComboBox->setCurrentIndex(2) ;
-    } else if (defaultnewdata=="0")
-    {
-	ui->defaultdataComboBox->setCurrentIndex(1) ;
-    } else {
-	ui->defaultdataComboBox->setCurrentIndex(0) ;
-        defaultnewdata = QString("NULL");
-    }
-
-    if (defaulttext=="Auto")
-    {
-	ui->defaultTextComboBox->setCurrentIndex(1) ;
-    } else {
-	ui->defaultTextComboBox->setCurrentIndex(0) ;
-        defaulttext = QString("Plain");
-    }
-
-    ui->foreignKeysCheckBox->setChecked(foreignkeys);
-    
-    ui->locationEdit->setText(defaultlocation);
+    ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
+    ui->defaultdataComboBox->setCurrentIndex(ui->defaultdataComboBox->findText(getSettingsValue("db", "defaultnewdata").toString(), Qt::MatchFixedString));
+    ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
+    ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
 }
 
 void PreferencesDialog::saveSettings()
 {
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-
-    settings.setValue( "/db/defaultencoding", defaultencoding  );
-    settings.setValue( "/db/defaultnewdata", defaultnewdata );
-    settings.setValue( "/db/defaultlocation", defaultlocation  );
-    settings.setValue( "/db/defaulttext", defaulttext  );
-    settings.setValue( "/db/foreignkeys", foreignkeys );
-    settings.sync();
+    setSettingsValue("db", "defaultencoding", ui->encodingComboBox->currentText());
+    setSettingsValue("db", "defaultnewdata", ui->defaultdataComboBox->currentText());
+    setSettingsValue("db", "defaultlocation", ui->locationEdit->text());
+    setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     accept();
+}
+
+QVariant PreferencesDialog::getSettingsValue(const QString& group, const QString& name)
+{
+    // Have a look in the cache first
+    QHash<QString, QVariant>::iterator cacheIndex = m_hCache.find(group + name);
+    if(cacheIndex != m_hCache.end())
+    {
+        return cacheIndex.value();
+    } else {
+        // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
+        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+        QVariant value = settings.value(group + "/" + name, getSettingsDefaultValue(group, name));
+
+        // Store this value in the cache for further usage and return it afterwards
+        m_hCache.insert(group + name, value);
+        return value;
+    }
+}
+
+void PreferencesDialog::setSettingsValue(const QString& group, const QString& name, const QVariant& value)
+{
+    // Set the group and save the given value
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    settings.beginGroup(group);
+    settings.setValue(name, value);
+    settings.endGroup();
+
+    // Also change it in the cache
+    m_hCache[group + name] = value;
+}
+
+QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const QString& name)
+{
+    // db/defaultencoding?
+    if(group == "db" && name == "defaultencoding")
+        return "UTF-8";
+
+    // db/defaultnewdata?
+    if(group == "db" && name == "defaultnewdata")
+        return "NULL";
+
+    // db/defaultlocation?
+    if(group == "db" && name == "defaultlocation")
+        return QDir::homePath();
+
+    // db/foreignkeys?
+    if(group == "db" && name == "foreignkeys")
+        return true;
+
+    // MainWindow/geometry?
+    if(group == "MainWindow" && name == "geometry")
+        return "";
+
+    // MainWindow/windowState?
+    if(group == "MainWindow" && name == "windowState")
+        return "";
+
+    // SQLLogDock/Log?
+    if(group == "SQLLogDock" && name == "Log")
+        return "Application";
+
+    // General/recentFileList?
+    if(group == "General" && name == "recentFileList")
+        return QStringList();
+
+    // Unknown combination of group and name? Return an invalid QVariant!
+    return QVariant();
 }
