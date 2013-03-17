@@ -27,14 +27,13 @@ public slots:
     virtual void loadText(const QByteArray& data, int row, int col);
 
 private slots:
-    virtual void enableExport(bool enabled);
-    virtual void setDataType(int type, int size);
     virtual void closeEvent(QCloseEvent*);
     virtual void importData();
     virtual void exportData();
     virtual void clearData();
     virtual void accept();
     virtual void editTextChanged();
+    virtual void checkDataType();
 
 signals:
     void goingAway();
@@ -43,8 +42,6 @@ signals:
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
-    int dataType;
-    int dataSize;
     int curCol;
     int curRow;
 };
