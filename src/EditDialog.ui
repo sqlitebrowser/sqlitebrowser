@@ -56,6 +56,20 @@
       </spacer>
      </item>
      <item>
+      <widget class="QComboBox" name="comboEditor">
+       <item>
+        <property name="text">
+         <string>Text</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Binary</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonClear">
        <property name="toolTip">
         <string>Clear cell data</string>
@@ -71,10 +85,40 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextEdit" name="editData">
-     <property name="whatsThis">
-      <string>This area displays information about the data present in this database cell</string>
+    <widget class="QStackedWidget" name="editorStack">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
+     <widget class="QTextEdit" name="editorText">
+      <property name="whatsThis">
+       <string>This area displays information about the data present in this database cell</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="editorBinary"/>
+     <widget class="QScrollArea" name="editorImageScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>358</width>
+         <height>267</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="editorImage">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </widget>
    </item>
    <item>
@@ -106,8 +150,8 @@
  <tabstops>
   <tabstop>buttomImport</tabstop>
   <tabstop>buttonExport</tabstop>
+  <tabstop>comboEditor</tabstop>
   <tabstop>buttonClear</tabstop>
-  <tabstop>editData</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
@@ -193,7 +237,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>editData</sender>
+   <sender>editorText</sender>
    <signal>textChanged()</signal>
    <receiver>EditDialog</receiver>
    <slot>editTextChanged()</slot>
@@ -208,11 +252,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboEditor</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>editorStack</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editorStack</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>comboEditor</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>267</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>importData()</slot>
   <slot>exportData()</slot>
   <slot>clearData()</slot>
   <slot>editTextChanged()</slot>
+  <slot>checkDataType()</slot>
  </slots>
 </ui>

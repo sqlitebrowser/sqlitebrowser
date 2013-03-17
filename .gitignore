@@ -7,3 +7,6 @@ Makefile
 sqlitedbbrowser.pro.user
 src/qrc_icons.cpp
 src/sqlitebrowser
+Makefile.antlr
+*.so
+*.so.*

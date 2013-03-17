@@ -1,15 +1,26 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
-#include <QTextStream>
-#include <QMessageBox>
 #include <QFileDialog>
+#include <QKeySequence>
+#include <QShortcut>
 #include "sqlitedb.h"
+#include <src/qhexedit.h>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog)
 {
     ui->setupUi(this);
+
+    QHBoxLayout* hexLayout = new QHBoxLayout(ui->editorBinary);
+    hexEdit = new QHexEdit(this);
+    hexLayout->addWidget(hexEdit);
+    hexEdit->setOverwriteMode(false);
+    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(hexDataChanged()));
+
+    QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
+    connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
+
     reset();
 }
 
@@ -22,34 +33,12 @@ void EditDialog::reset()
 {
     curRow = -1;
     curCol = -1;
-    ui->editData->setPlainText("");
-    ui->editData->setFocus();
-    setDataType(kSQLiteMediaType_Void, 0);
-}
-
-void EditDialog::enableExport(bool enabled)
-{
-    ui->buttonExport->setEnabled(enabled);
-}
-
-void EditDialog::setDataType(int type, int size)
-{
-    dataType = type;
-    dataSize = size;
-    QString charstr;
-    switch(dataType)
-    {
-    case kSQLiteMediaType_String:
-        ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        ui->labelSize->setText(tr("%n char(s)", "", ui->editData->toPlainText().length()));
-        enableExport(true);
-        break;
-    case kSQLiteMediaType_Void:
-        ui->labelType->setText(tr("Type of data currently in cell: Empty"));
-        ui->labelSize->setText(tr(""));
-        enableExport(false);
-        break;
-    }
+    ui->editorText->clear();
+    ui->editorText->setFocus();
+    ui->editorImage->clear();
+    hexEdit->setData(QByteArray());
+    oldData = "";
+    checkDataType();
 }
 
 void EditDialog::closeEvent(QCloseEvent*)
@@ -57,101 +46,133 @@ void EditDialog::closeEvent(QCloseEvent*)
     emit goingAway();
 }
 
-void EditDialog::loadText(const QString&  text, int row, int col)
+void EditDialog::loadText(const QByteArray& data, int row, int col)
 {
-    ui->editData->setPlainText(text);
-    ui->editData->setFocus();
-    ui->editData->selectAll();
     curRow = row;
     curCol = col;
-    if(ui->editData->toPlainText().length() > 0)
-        setDataType(kSQLiteMediaType_String, 0);
-    else
-        setDataType(kSQLiteMediaType_Void, 0);
+    oldData = data;
+
+    ui->editorText->setPlainText(data);
+    ui->editorText->setFocus();
+    ui->editorText->selectAll();
+    hexEdit->setData(data);
+    checkDataType();
 }
 
 void EditDialog::importData()
 {
-    int type = kSQLiteMediaType_Void;
+    // Get list of supported image file formats to include them in the file dialog filter
+    QString image_formats;
+    QList<QByteArray> image_formats_list = QImageReader::supportedImageFormats();
+    for(int i=0;i<image_formats_list.size();++i)
+        image_formats.append(QString("*.%1 ").arg(QString::fromUtf8(image_formats_list.at(i))));
+
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a file"),
                 defaultlocation,
-                tr("Text files(*.txt);;All files(*)"));
+                tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats));
     if(QFile::exists(fileName))
     {
-        type = kSQLiteMediaType_String;
         QFile file(fileName);
         if(file.open(QIODevice::ReadOnly))
         {
-            QTextStream stream(&file);
-            ui->editData->setPlainText(stream.readAll());
+            QByteArray d = file.readAll();
+            hexEdit->setData(d);
+            ui->editorText->setPlainText(d);
+            checkDataType();
             file.close();
         }
-        setDataType(type, ui->editData->toPlainText().length());
     }
 }
 
 void EditDialog::exportData()
 {
-    QString filter;
-    switch (dataType)
-    {
-    case kSQLiteMediaType_String:
-        filter = tr("Text files(*.txt)");
-        break;
-    default:
-        return;
-    }
-
     QString fileName = QFileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
                 defaultlocation,
-                filter);
+                tr("Text files(*.txt);;All files(*)"));
 
     if(fileName.size() > 0)
     {
-        switch (dataType)
+        QFile file(fileName);
+        if(file.open(QIODevice::WriteOnly))
         {
-        case kSQLiteMediaType_String:
-            {
-                QFile file(fileName);
-                if(file.open(QIODevice::WriteOnly))
-                {
-                    QTextStream stream(&file);
-                    stream << ui->editData->toPlainText();
-                    file.close();
-                }
-            }
-            break;
-        default:
-            return;
+            file.write(hexEdit->data());
+            file.close();
         }
     }
 }
 
 void EditDialog::clearData()
 {
-    ui->editData->setPlainText("");
-    setDataType(kSQLiteMediaType_Void, 0);
+    ui->editorText->clear();
+    ui->editorImage->clear();
+    hexEdit->setData(QByteArray());
+    checkDataType();
 }
 
 void EditDialog::accept()
 {
-    if(dataType == kSQLiteMediaType_String)
-        emit updateRecordText(curRow, curCol, ui->editData->toPlainText());
-
-    if (dataType == kSQLiteMediaType_Void)
-        emit updateRecordText(curRow, curCol, "");
-
+    if(hexEdit->data() != oldData)
+        emit updateRecordText(curRow, curCol, hexEdit->data());
     emit goingAway();
 }
 
 void EditDialog::editTextChanged()
 {
-    int newtype = kSQLiteMediaType_String;
-    if(ui->editData->toPlainText().length() == 0)
-        newtype = kSQLiteMediaType_Void;
-    setDataType(newtype, ui->editData->toPlainText().length());
+    if(ui->editorText->hasFocus())
+    {
+        hexEdit->setData(ui->editorText->toPlainText().toUtf8());
+        checkDataType();
+    }
+}
+
+void EditDialog::hexDataChanged()
+{
+    // Update the text editor accordingly
+    ui->editorText->setPlainText(hexEdit->data());
+}
+
+void EditDialog::checkDataType()
+{
+    // Check if data is text only
+    ui->comboEditor->setVisible(true);
+    if(QString(hexEdit->data()).toAscii() == hexEdit->data())     // Any proper way??
+    {
+        ui->editorStack->setCurrentIndex(0);
+
+        ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
+        ui->labelSize->setText(tr("%n char(s)", "", hexEdit->data().length()));
+    } else {
+        // It's not. So it might be an image.
+        QImage img;
+        if(img.loadFromData(hexEdit->data()))
+        {
+            // It is.
+            ui->editorImage->setPixmap(QPixmap::fromImage(img));
+            ui->editorStack->setCurrentIndex(2);
+
+            ui->labelType->setText(tr("Type of data currently in cell: Image"));
+            ui->labelSize->setText(tr("%1x%2 pixel").arg(ui->editorImage->pixmap()->size().width()).arg(ui->editorImage->pixmap()->size().height()));
+
+            ui->comboEditor->setVisible(false);
+        } else {
+            // It's not. So it's probably some random binary data.
+            ui->editorStack->setCurrentIndex(1);
+
+            ui->labelType->setText(tr("Type of data currently in cell: Binary"));
+            ui->labelSize->setText(tr("%n byte(s)", "", hexEdit->data().length()));
+        }
+    }
+}
+
+void EditDialog::toggleOverwriteMode()
+{
+    static bool currentMode = false;
+    currentMode = !currentMode;
+
+    hexEdit->setOverwriteMode(currentMode);
+    ui->editorText->setOverwriteMode(currentMode);
 }

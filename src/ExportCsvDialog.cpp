@@ -73,7 +73,7 @@ void ExportCsvDialog::accept()
             rowList data = pdb->browseRecs;
             for(int i=0;i<data.size();i++)
             {
-                QStringList& row = data[i];
+                QList<QByteArray> row = data[i];
                 for(int j=1;j<row.size();j++)
                 {
                     QString content = row[j];

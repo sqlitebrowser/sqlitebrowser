@@ -2,6 +2,7 @@
 #define __EDITDIALOG_H__
 
 #include <QDialog>
+class QHexEdit;
 
 namespace Ui {
 class EditDialog;
@@ -23,26 +24,27 @@ public:
 
 public slots:
     virtual void reset();
-    virtual void loadText(const QString& text, int row, int col);
+    virtual void loadText(const QByteArray& data, int row, int col);
 
 private slots:
-    virtual void enableExport(bool enabled);
-    virtual void setDataType(int type, int size);
     virtual void closeEvent(QCloseEvent*);
     virtual void importData();
     virtual void exportData();
     virtual void clearData();
     virtual void accept();
     virtual void editTextChanged();
+    virtual void hexDataChanged();
+    virtual void checkDataType();
+    virtual void toggleOverwriteMode();
 
 signals:
     void goingAway();
-    void updateRecordText(int, int, const QString&);
+    void updateRecordText(int, int, const QByteArray&);
 
 private:
     Ui::EditDialog* ui;
-    int dataType;
-    int dataSize;
+    QHexEdit* hexEdit;
+    QByteArray oldData;
     int curCol;
     int curRow;
 };

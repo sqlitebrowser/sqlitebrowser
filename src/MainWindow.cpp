@@ -105,7 +105,7 @@ void MainWindow::init()
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
-    connect(editWin, SIGNAL(updateRecordText(int, int , QString)), this, SLOT(updateRecordText(int, int , QString)));
+    connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int , QByteArray)));
 
     // Load window settings
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
@@ -449,10 +449,10 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
             rowLabel.setNum(rowNum+1);
             browseTableModel->setVerticalHeaderItem(rowNum, new QStandardItem(rowLabel));
             colNum = 0;
-            QStringList& rt = tab[i];
+            QList<QByteArray> rt = tab[i];
             for (int e = 1; e < rt.size(); ++e)
             {
-                QString& content = rt[e];
+                QString content = rt[e];
 
                 QStandardItem* item = new QStandardItem(content);
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -704,20 +704,19 @@ void MainWindow::helpAbout()
     dialog.exec();
 }
 
-void MainWindow::updateRecordText(int row, int col, const QString& newtext)
+void MainWindow::updateRecordText(int row, int col, const QByteArray& newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
         QMessageBox::information( this, QApplication::applicationName(), tr("Data could not be updated"));
     }
 
     rowList tab = db.browseRecs;
-    QStringList& rt = tab[row];
-    QString& cv = rt[col+1];//must account for rowid
+    QList<QByteArray>& rt = tab[row];
+    QByteArray& cv = rt[col+1];//must account for rowid
 
-    QStandardItem* item = new QStandardItem(cv);
+    QStandardItem* item = new QStandardItem(QString(cv));
     item->setToolTip( wrapText(cv) );
     browseTableModel->setItem(row, col, item);
-
 }
 
 void MainWindow::editWinAway()
@@ -730,8 +729,8 @@ void MainWindow::editWinAway()
 void MainWindow::editText(int row, int col)
 {
     rowList tab = db.browseRecs;
-    QStringList& rt = tab[row];
-    QString cv = rt[col+1];//must account for rowid
+    QList<QByteArray> rt = tab[row];
+    QByteArray cv = rt[col+1];//must account for rowid
 
     editWin->loadText(cv , row, col);
     editWin->show();
