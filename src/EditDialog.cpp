@@ -5,6 +5,7 @@
 #include <QShortcut>
 #include "sqlitedb.h"
 #include <src/qhexedit.h>
+#include "PreferencesDialog.h"
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -70,7 +71,7 @@ void EditDialog::importData()
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a file"),
-                defaultlocation,
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats));
     if(QFile::exists(fileName))
     {
@@ -91,7 +92,7 @@ void EditDialog::exportData()
     QString fileName = QFileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
-                defaultlocation,
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.txt);;All files(*)"));
 
     if(fileName.size() > 0)

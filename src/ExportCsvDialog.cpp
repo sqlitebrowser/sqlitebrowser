@@ -5,12 +5,12 @@
 #include "ExportCsvDialog.h"
 #include "ui_ExportCsvDialog.h"
 #include "sqlitedb.h"
+#include "PreferencesDialog.h"
 
-ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, const QString& deflocation, QWidget* parent)
+ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ExportCsvDialog),
-      pdb(db),
-      defaultLocation(deflocation)
+      pdb(db)
 {
     // Create UI
     ui->setupUi(this);
@@ -32,7 +32,7 @@ void ExportCsvDialog::accept()
     QString fileName = QFileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
-                defaultLocation,
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.csv *.txt)"));
 
     // Only if the user hasn't clicked the cancel button

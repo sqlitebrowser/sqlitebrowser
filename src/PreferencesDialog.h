@@ -2,6 +2,8 @@
 #define __PREFERENCESDIALOG_H__
 
 #include <QDialog>
+#include <QVariant>
+#include <QHash>
 
 namespace Ui {
 class PreferencesDialog;
@@ -15,23 +17,23 @@ public:
     explicit PreferencesDialog(QWidget* parent = 0);
     ~PreferencesDialog();
 
-    QString defaulttext;
-    QString defaultlocation;
-    QString defaultnewdata;
-    QString defaultencoding;
-    bool foreignkeys;
+    // Use these methods to access the application settings.
+    static QVariant getSettingsValue(const QString& group, const QString& name);
+    static void setSettingsValue(const QString& group, const QString& name, const QVariant& value);
 
 private slots:
-    virtual void defaultDataChanged( int which );
-    virtual void defaultTextChanged( int which );
-    virtual void encodingChanged( int which );
-    virtual void foreignkeysStateChanged( int state );
     virtual void chooseLocation();
     virtual void loadSettings();
     virtual void saveSettings();
 
 private:
     Ui::PreferencesDialog *ui;
+
+    // This works similar to getSettingsValue but returns the default value instead of the value set by the user
+    static QVariant getSettingsDefaultValue(const QString& group, const QString& name);
+
+    // Cache for storing the settings to avoid repeatedly reading the settings file all the time
+    static QHash<QString, QVariant> m_hCache;
 };
 
 #endif

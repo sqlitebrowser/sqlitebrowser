@@ -1,7 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QtGui/QFileDialog>
-#include <QSettings>
+#include <QFileDialog>
 #include <QFile>
 #include <QApplication>
 #include <QTextStream>
@@ -35,7 +34,6 @@ MainWindow::MainWindow(QWidget* parent)
     init();
 
     activateFields(false);
-    updatePreferences();
     resetBrowser();
     updateRecentFileActions();
 }
@@ -108,10 +106,9 @@ void MainWindow::init()
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int , QByteArray)));
 
     // Load window settings
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
-    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(settings.value("SQLLogDock/Log", "Application").toString()));
+    restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
+    restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
 
     // Set other window settings
     setAcceptDrops(true);
@@ -136,7 +133,7 @@ void MainWindow::fileOpen(const QString & fileName)
         wFile = QFileDialog::getOpenFileName(
                     this,
                     tr("Choose a database file"),
-                    defaultlocation);
+                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
     }
     if(QFile::exists(wFile) )
     {
@@ -163,7 +160,7 @@ void MainWindow::fileOpen()
 
 void MainWindow::fileNew()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"), defaultlocation);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"), PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -366,10 +363,9 @@ void MainWindow::fileExit()
 
 void MainWindow::closeEvent( QCloseEvent* event )
 {
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
-    settings.setValue("SQLLogDock/Log", ui->comboLogSubmittedBy->currentText());
+    PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
+    PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
+    PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
     fileExit();
     QMainWindow::closeEvent(event);
 }
@@ -832,7 +828,7 @@ void MainWindow::importTableFromCSV()
     QString wFile = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a text file"),
-                defaultlocation,
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.csv *.txt);;All files(*)"));
 
     if (QFile::exists(wFile) )
@@ -849,7 +845,7 @@ void MainWindow::importTableFromCSV()
 
 void MainWindow::exportTableToCSV()
 {
-    ExportCsvDialog dialog(&db, defaultlocation, this);
+    ExportCsvDialog dialog(&db, this);
     dialog.exec();
 }
 
@@ -883,7 +879,7 @@ void MainWindow::exportDatabaseToSQL()
     QString fileName = QFileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export"),
-                defaultlocation,
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt)"));
 
     if(fileName.size())
@@ -900,7 +896,7 @@ void MainWindow::importDatabaseFromSQL()
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a file to import"),
-                defaultlocation,
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
     if (fileName.size() > 0)
@@ -911,7 +907,7 @@ void MainWindow::importDatabaseFromSQL()
             QString newDBfile = QFileDialog::getSaveFileName(
                         this,
                         tr("Choose a filename to save under"),
-                        defaultlocation);
+                        PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
             if (QFile::exists(newDBfile) )
             {
                 QString err = tr("File %1 already exists. Please choose a different name.").arg(newDBfile);
@@ -936,18 +932,9 @@ void MainWindow::openPreferences()
     PreferencesDialog dialog(this);
     if(dialog.exec())
     {
-        updatePreferences();
+        db.setDefaultNewData(PreferencesDialog::getSettingsValue("db", "defaultnewdata").toString());
         resetBrowser();
     }
-}
-
-void MainWindow::updatePreferences()
-{
-    PreferencesDialog prefs(this);
-
-    db.setDefaultNewData(prefs.defaultnewdata);
-    defaultlocation= prefs.defaultlocation;
-    editWin->defaultlocation = defaultlocation;
 }
 
 //******************************************************************
@@ -1046,10 +1033,7 @@ void MainWindow::openRecentFile()
 
 void MainWindow::updateRecentFileActions()
 {
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    QStringList files = settings.value("recentFileList").toStringList();
-
-
+    QStringList files = PreferencesDialog::getSettingsValue("General", "recentFileList").toStringList();
     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i) {
@@ -1070,14 +1054,13 @@ void MainWindow::setCurrentFile(const QString &fileName)
     setWindowTitle( QApplication::applicationName() +" - "+fileName);
     activateFields(true);
 
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    QStringList files = settings.value("recentFileList").toStringList();
+    QStringList files = PreferencesDialog::getSettingsValue("General", "recentFileList").toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
-    settings.setValue("recentFileList", files);
+    PreferencesDialog::setSettingsValue("General", "recentFileList", files);
 
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);

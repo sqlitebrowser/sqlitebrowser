@@ -16,8 +16,6 @@ public:
     explicit EditDialog(QWidget* parent = 0);
     ~EditDialog();
 
-    QString defaultlocation;
-
 public:
     int getCurrentCol() { return curCol; }
     int getCurrentRow() { return curRow; }
