@@ -26,7 +26,9 @@ private:
         kType = 1,
         kNotNull = 2,
         kPrimaryKey = 3,
-        kAutoIncrement = 4
+        kAutoIncrement = 4,
+        kDefault = 5,
+        kCheck = 6
     };
 
     void updateColumnWidth();

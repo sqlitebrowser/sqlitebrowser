@@ -49,11 +49,11 @@ EditTableDialog::~EditTableDialog()
 
 void EditTableDialog::updateColumnWidth()
 {
-    ui->treeWidget->setColumnWidth(kName, 200);
+    ui->treeWidget->setColumnWidth(kName, 190);
     ui->treeWidget->setColumnWidth(kType, 80);
-    ui->treeWidget->setColumnWidth(kNotNull, 50);
-    ui->treeWidget->setColumnWidth(kPrimaryKey, 50);
-    ui->treeWidget->setColumnWidth(kAutoIncrement, 50);
+    ui->treeWidget->setColumnWidth(kNotNull, 30);
+    ui->treeWidget->setColumnWidth(kPrimaryKey, 30);
+    ui->treeWidget->setColumnWidth(kAutoIncrement, 30);
 }
 
 void EditTableDialog::populateFields()
@@ -87,6 +87,8 @@ void EditTableDialog::populateFields()
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kPrimaryKey, m_table.primarykey().contains(f) ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
+        tbitem->setText(kDefault, f->defaultValue());
+        tbitem->setText(kCheck, f->check());
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
@@ -167,6 +169,8 @@ void EditTableDialog::updateTableObject()
         f->setAutoIncrement(item->checkState(kAutoIncrement) == Qt::Checked);
         if(item->checkState(kPrimaryKey) == Qt::Checked)
             pk.append(f);
+        f->setDefaultValue(item->text(kDefault));
+        f->setCheck(item->text(kCheck));
         fields.append(f);
     }
 
@@ -210,14 +214,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         sqlb::FieldPtr field = m_table.fields().at(index);
         switch(column)
         {
-        case kName:
-        {
-            field->setName(item->text(column));
-        }
-        break;
+        case kName: field->setName(item->text(column)); break;
         case kType:
         {
-            // we don't know which combobox got update
+            // we don't know which combobox got the update
             // so we have to update all at once
             // see updateTypes() SLOT
         }
@@ -246,6 +246,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             field->setAutoIncrement(item->checkState(column) == Qt::Checked);
         }
         break;
+        case kDefault: field->setDefaultValue(item->text(column)); break;
+        case kCheck: field->setCheck(item->text(column)); break;
         }
     }
 
@@ -301,14 +303,12 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
         {
-            // TODO seems this doesn't work, db table is locked.
             if(!pdb->dropColumn(curTable, ui->treeWidget->currentItem()->text(0)))
             {
                 QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
             } else {
                 //relayout
                 QString sTablesql = pdb->getTableSQL(curTable);
-                qDebug() << sTablesql;
                 m_table = sqlb::Table::parseSQL(sTablesql);
                 populateFields();
             }

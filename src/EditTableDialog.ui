@@ -125,15 +125,40 @@
          <property name="text">
           <string>Not null</string>
          </property>
+         <property name="toolTip">
+          <string>Not null</string>
+         </property>
         </column>
         <column>
          <property name="text">
+          <string>PK</string>
+         </property>
+         <property name="toolTip">
           <string>Primary key</string>
          </property>
         </column>
         <column>
          <property name="text">
+          <string>AI</string>
+         </property>
+         <property name="toolTip">
           <string>Autoincrement</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Default</string>
+         </property>
+         <property name="toolTip">
+          <string>Default value</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Check</string>
+         </property>
+         <property name="toolTip">
+          <string>Check constraint</string>
          </property>
         </column>
        </widget>
