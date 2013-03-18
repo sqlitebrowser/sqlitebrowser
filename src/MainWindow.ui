@@ -37,10 +37,6 @@
        <addaction name="editCreateTableAction"/>
        <addaction name="editModifyTableAction"/>
        <addaction name="editDeleteObjectAction"/>
-       <addaction name="separator"/>
-       <addaction name="editAddFieldActionPopup"/>
-       <addaction name="editModifyFieldActionPopup"/>
-       <addaction name="editDeleteFieldActionPopup"/>
       </widget>
      </item>
      <item>
@@ -910,7 +906,6 @@
     </property>
     <addaction name="editCreateTableAction"/>
     <addaction name="editModifyTableAction"/>
-    <addaction name="separator"/>
     <addaction name="editDeleteObjectAction"/>
     <addaction name="separator"/>
     <addaction name="editCreateIndexAction"/>
@@ -1242,7 +1237,7 @@
      <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
    </property>
    <property name="text">
-    <string>Delete Object</string>
+    <string>Delete Table...</string>
    </property>
    <property name="toolTip">
     <string>Delete Object</string>
@@ -1340,51 +1335,6 @@
   <action name="helpAboutAction">
    <property name="text">
     <string>&amp;About...</string>
-   </property>
-  </action>
-  <action name="editAddFieldActionPopup">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
-   </property>
-   <property name="text">
-    <string>Add Field</string>
-   </property>
-   <property name="toolTip">
-    <string>Add Field</string>
-   </property>
-  </action>
-  <action name="editDeleteFieldActionPopup">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
-   </property>
-   <property name="text">
-    <string>Delete Field</string>
-   </property>
-   <property name="toolTip">
-    <string>Delete Field</string>
-   </property>
-  </action>
-  <action name="editModifyFieldActionPopup">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/field_edit</normaloff>:/icons/field_edit</iconset>
-   </property>
-   <property name="text">
-    <string>Modify Field</string>
-   </property>
-   <property name="toolTip">
-    <string>Modify Field</string>
    </property>
   </action>
   <action name="actionRecent_y_opened">
@@ -1847,22 +1797,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>editAddFieldActionPopup</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addField()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>fileExportSQLAction</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
@@ -1943,22 +1877,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>editModifyFieldActionPopup</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>editField()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>viewDBToolbarAction</sender>
    <signal>toggled(bool)</signal>
    <receiver>toolbarDB</receiver>
@@ -1979,22 +1897,6 @@
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>createTable()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editDeleteFieldActionPopup</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>deleteField()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

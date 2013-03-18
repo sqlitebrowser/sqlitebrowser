@@ -14,7 +14,6 @@
 #include "CreateIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
-#include "EditFieldDialog.h"
 #include "ImportCsvDialog.h"
 #include "ExportCsvDialog.h"
 #include "PreferencesDialog.h"
@@ -81,12 +80,8 @@ void MainWindow::init()
     // Create popup menus
     popupTableMenu = new QMenu(this);
     popupTableMenu->addAction(ui->editModifyTableAction);
-    popupTableMenu->addAction(ui->editAddFieldActionPopup);
     popupTableMenu->addSeparator();
     popupTableMenu->addAction(ui->editDeleteObjectAction);
-    popupFieldMenu = new QMenu(this);
-    popupFieldMenu->addAction(ui->editModifyFieldActionPopup);
-    popupFieldMenu->addAction(ui->editDeleteFieldActionPopup);
 
     // Set state of checkable menu actions
     ui->sqlLogAction->setChecked(!ui->dockLog->isHidden());
@@ -951,8 +946,6 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 
     if(cItem->text(1) == "table" || cItem->text(1) == "view" || cItem->text(1) == "trigger" || cItem->text(1) == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
-    else if(cItem->text(1) == "field")
-        popupFieldMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
 //** Tree selection changed
 void MainWindow::changeTreeSelection()
@@ -960,9 +953,6 @@ void MainWindow::changeTreeSelection()
     // Just assume first that something's selected that can not be edited at all
     ui->editDeleteObjectAction->setEnabled(false);
     ui->editModifyTableAction->setEnabled(false);
-    ui->editAddFieldActionPopup->setEnabled(false);
-    ui->editModifyFieldActionPopup->setEnabled(false);
-    ui->editDeleteFieldActionPopup->setEnabled(false);
 
     if(ui->dbTreeWidget->currentItem() == 0)
         return;
@@ -983,44 +973,8 @@ void MainWindow::changeTreeSelection()
     {
         ui->editDeleteObjectAction->setEnabled(true);
         ui->editModifyTableAction->setEnabled(true);
-        ui->editAddFieldActionPopup->setEnabled(true);
-    } else if(ui->dbTreeWidget->currentItem()->text(1) == "field" && ui->dbTreeWidget->currentItem()->parent()->text(1) == "table") {
-        ui->editModifyFieldActionPopup->setEnabled(true);
-        ui->editDeleteFieldActionPopup->setEnabled(true);
     } else if(ui->dbTreeWidget->currentItem()->text(1) == "view" || ui->dbTreeWidget->currentItem()->text(1) == "trigger" || ui->dbTreeWidget->currentItem()->text(1) == "index") {
         ui->editDeleteObjectAction->setEnabled(true);
-    }
-}
-
-void MainWindow::addField()
-{
-    EditFieldDialog dialog(&db, true, ui->dbTreeWidget->currentItem()->text(0), "", "TEXT", this);
-    if(dialog.exec())
-        populateStructure();
-}
-
-void MainWindow::editField()
-{
-    QTreeWidgetItem *item = ui->dbTreeWidget->currentItem();
-    EditFieldDialog dialog(&db, false, item->parent()->text(0), item->text(0), item->text(2), this);
-    if(dialog.exec())
-    {
-        item->setText(0, dialog.getFieldName());
-        item->setText(2, dialog.getFieldType());
-    }
-}
-
-void MainWindow::deleteField()
-{
-    if(!ui->dbTreeWidget->currentItem())
-        return;
-
-    // Ask user wether he really wants to delete that column first
-    QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->dbTreeWidget->currentItem()->text(0));
-    if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
-    {
-        db.dropColumn(ui->dbTreeWidget->currentItem()->parent()->text(0), ui->dbTreeWidget->currentItem()->text(0));
-        delete ui->dbTreeWidget->currentItem();
     }
 }
 

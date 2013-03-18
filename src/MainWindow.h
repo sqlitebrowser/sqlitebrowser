@@ -55,7 +55,6 @@ private:
     QStandardItemModel *browseTableModel;
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
-    QMenu *popupFieldMenu;
     QMenu *recentFilesMenu;
 
     QLabel* statusEncodingLabel;
@@ -97,9 +96,6 @@ public slots:
 private slots:
     virtual void createTreeContextMenu(const QPoint & qPoint);
     virtual void changeTreeSelection();
-    virtual void addField();
-    virtual void editField();
-    virtual void deleteField();
     virtual void fileOpen();
     virtual void fileNew();
     virtual void populateStructure();

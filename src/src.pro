@@ -14,7 +14,6 @@ HEADERS += \
     MainWindow.h \
     SQLiteSyntaxHighlighter.h \
     CreateIndexDialog.h \
-    EditFieldDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
     PreferencesDialog.h \
@@ -35,7 +34,6 @@ SOURCES += \
     MainWindow.cpp \
     SQLiteSyntaxHighlighter.cpp \
     CreateIndexDialog.cpp \
-    EditFieldDialog.cpp \
     EditTableDialog.cpp \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
@@ -81,7 +79,6 @@ FORMS += \
     MainWindow.ui \
     CreateIndexDialog.ui \
     AboutDialog.ui \
-    EditFieldDialog.ui \
     EditTableDialog.ui \
     PreferencesDialog.ui \
     FindDialog.ui \
