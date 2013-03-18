@@ -424,34 +424,25 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QByteArray& wtext)
     setRestorePoint();
 
     sqlite3_stmt* stmt;
+    int success = 1;
     if(sqlite3_prepare(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
-    {
-        lastErrorMessage = sqlite3_errmsg(_db);
-        qCritical() << "updateRecord: " << lastErrorMessage;
-        return false;
-    }
-    if(sqlite3_bind_text(stmt, 1, wtext.constData(), wtext.length(), SQLITE_STATIC) != SQLITE_OK)
-    {
-        lastErrorMessage = sqlite3_errmsg(_db);
-        qCritical() << "updateRecord: " << lastErrorMessage;
-        return false;
-    }
-    if(sqlite3_step(stmt) != SQLITE_DONE)
-    {
-        lastErrorMessage = sqlite3_errmsg(_db);
-        qCritical() << "updateRecord: " << lastErrorMessage;
-        return false;
-    }
-    if(sqlite3_finalize(stmt) != SQLITE_OK)
-    {
-        lastErrorMessage = sqlite3_errmsg(_db);
-        qCritical() << "updateRecord: " << lastErrorMessage;
-        return false;
-    }
+        success = 0;
+    if(success == 1 && sqlite3_bind_text(stmt, 1, wtext.constData(), wtext.length(), SQLITE_STATIC) != SQLITE_OK)
+        success = -1;
+    if(success == 1 && sqlite3_step(stmt) != SQLITE_DONE)
+        success = -1;
+    if(success != 0 && sqlite3_finalize(stmt) != SQLITE_OK)
+        success = -1;
 
-    cv = wtext;
-
-    return true;
+    if(success == 1)
+    {
+        cv = wtext;
+        return true;
+    } else {
+        lastErrorMessage = sqlite3_errmsg(_db);
+        qCritical() << "updateRecord: " << lastErrorMessage;
+        return false;
+    }
 }
 
 bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby )
