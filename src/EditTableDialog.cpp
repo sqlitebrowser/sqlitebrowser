@@ -18,6 +18,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
 {
     // Create UI
     ui->setupUi(this);
+    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
 
     m_sqliteSyntaxHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 
