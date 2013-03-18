@@ -323,6 +323,9 @@ bool CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
         {
             con = con->getNextSibling(); //LPAREN
             check = concatTextAST(con);
+            // remove parenthesis
+            check.remove(check.length()-1, 1);
+            check.remove(0,1);
         }
         break;
         case sqlite3TokenTypes::DEFAULT:
