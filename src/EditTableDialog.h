@@ -1,14 +1,12 @@
 #ifndef __EDITTABLEDIALOG_H__
 #define __EDITTABLEDIALOG_H__
 
+#include "sqlitetypes.h"
+
 #include <QDialog>
 class DBBrowserDB;
 class SQLiteSyntaxHighlighter;
 class QTreeWidgetItem;
-
-namespace sqlb {
-class Table;
-}
 
 namespace Ui {
 class EditTableDialog;
@@ -50,7 +48,7 @@ private:
     Ui::EditTableDialog* ui;
     DBBrowserDB* pdb;
     QString curTable;
-    sqlb::Table* m_table;
+    sqlb::Table m_table;
     QStringList types;
     QStringList fields;
     SQLiteSyntaxHighlighter* m_sqliteSyntaxHighlighter;

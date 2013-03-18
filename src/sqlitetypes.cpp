@@ -68,9 +68,8 @@ void Table::addField(const FieldPtr& f)
     m_fields.append(FieldPtr(f));
 }
 
-void Table::setFields(const FieldList &fields)
+void Table::setFields(const FieldVector &fields)
 {
-    m_primarykey.clear();
     clear();
     m_fields = fields;
 }
@@ -85,7 +84,7 @@ int Table::findField(const QString &sname)
     return -1;
 }
 
-bool Table::setPrimaryKey(const FieldList& pk)
+bool Table::setPrimaryKey(const FieldVector& pk)
 {
     foreach(FieldPtr f, pk) {
         if(!m_fields.contains(f))
@@ -166,7 +165,7 @@ QString Table::sql() const
     if( m_primarykey.size() > 0 && !hasAutoIncrement())
     {
         sql += ",\n\tPRIMARY KEY(";
-        for(FieldList::ConstIterator it = m_primarykey.constBegin();
+        for(FieldVector::ConstIterator it = m_primarykey.constBegin();
             it != m_primarykey.constEnd();
             ++it)
         {
@@ -221,7 +220,7 @@ Table CreateTableWalker::table()
         s = s->getNextSibling(); // first column name
         antlr::RefAST column = s;
         // loop columndefs
-        FieldList pks;
+        FieldVector pks;
         while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::COLUMNDEF)
         {
             FieldPtr f;

@@ -24,7 +24,7 @@ void TestTable::sqlOutput()
     tt.addField(f);
     tt.addField(FieldPtr(new Field("car", "text")));
     tt.addField(fkm);
-    FieldList pk;
+    FieldVector pk;
     pk.append(f);
     pk.append(fkm);
     tt.setPrimaryKey(pk);

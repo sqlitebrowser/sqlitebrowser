@@ -56,7 +56,7 @@ private:
 };
 
 typedef QSharedPointer<Field> FieldPtr;
-typedef QVector< FieldPtr > FieldList;
+typedef QVector< FieldPtr > FieldVector;
 class Table
 {
 public:
@@ -66,12 +66,12 @@ public:
     void setName(const QString& name) { m_name = name; }
 
     const QString& name() const { return m_name; }
-    const FieldList& fields() const { return m_fields; }
-    const FieldList& primarykey() const { return m_primarykey; }
+    const FieldVector& fields() const { return m_fields; }
+    const FieldVector& primarykey() const { return m_primarykey; }
     QString sql() const;
 
     void addField(const FieldPtr& f);
-    void setFields(const FieldList& fields);
+    void setFields(const FieldVector& fields);
     void clear();
     /**
      * @brief findField Finds a field and returns the index.
@@ -81,19 +81,18 @@ public:
      */
     int findField(const QString& sname);
 
-    bool setPrimaryKey(const FieldList& pk);
+    bool setPrimaryKey(const FieldVector& pk);
     bool setPrimaryKey(FieldPtr pk, bool autoincrement = false);
 
     static Table parseSQL(const QString& sSQL);
-
 private:
     QStringList fieldList() const;
     bool hasAutoIncrement() const;
 
 private:
     QString m_name;
-    FieldList m_fields;
-    FieldList m_primarykey;
+    FieldVector m_fields;
+    FieldVector m_primarykey;
 };
 
 /**

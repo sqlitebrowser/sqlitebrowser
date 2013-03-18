@@ -6,7 +6,6 @@
 #include <QComboBox>
 
 #include "sqlitedb.h"
-#include "sqlitetypes.h"
 
 #include <QDebug>
 
@@ -14,7 +13,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
       pdb(db),
-      curTable(tableName)
+      curTable(tableName),
+      m_table(tableName)
 {
     // Create UI
     ui->setupUi(this);
@@ -27,12 +27,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getTableSQL(curTable);
         //qDebug() << sTablesql;
-        m_table = new sqlb::Table(sqlb::Table::parseSQL(sTablesql));
+        m_table = sqlb::Table::parseSQL(sTablesql);
         populateFields();
-    }
-    else
-    {
-        m_table = new sqlb::Table(tableName);
     }
 
     // And create a savepoint
@@ -43,16 +39,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
     updateColumnWidth();
 
     checkInput();
-
-    //connect itemchanged signal now
-    //if we do it before populateFields additem will interfere
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
-
 }
 
 EditTableDialog::~EditTableDialog()
 {
-    delete m_table;
     delete ui;
 }
 
@@ -67,7 +57,13 @@ void EditTableDialog::updateColumnWidth()
 
 void EditTableDialog::populateFields()
 {
-    sqlb::FieldList fields = m_table->fields();
+    // disconnect the itemChanged signal or the table item will
+    // be updated while filling the treewidget
+    disconnect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+               this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+
+    ui->treeWidget->clear();
+    sqlb::FieldVector fields = m_table.fields();
     foreach(sqlb::FieldPtr f, fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
@@ -88,10 +84,13 @@ void EditTableDialog::populateFields()
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kPrimaryKey, m_table->primarykey().contains(f) ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kPrimaryKey, m_table.primarykey().contains(f) ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
         ui->treeWidget->addTopLevelItem(tbitem);
     }
+
+    // and reconnect
+    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
 }
 
 void EditTableDialog::accept()
@@ -102,7 +101,7 @@ void EditTableDialog::accept()
     {
         // Creation of new table
         // we commit immediatly so no need to setdirty
-        if(!pdb->executeSQL(m_table->sql(), false))
+        if(!pdb->executeSQL(m_table.sql(), false))
         {
             QMessageBox::warning(
                 this,
@@ -145,13 +144,13 @@ void EditTableDialog::reject()
 void EditTableDialog::updateSqlText()
 {
     ui->sqlTextEdit->clear();
-    ui->sqlTextEdit->insertPlainText(m_table->sql());
+    ui->sqlTextEdit->insertPlainText(m_table.sql());
 }
 
 void EditTableDialog::updateTableObject()
 {
-    sqlb::FieldList fields;
-    sqlb::FieldList pk;
+    sqlb::FieldVector fields;
+    sqlb::FieldVector pk;
     for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
     {
         QTreeWidgetItem* item = ui->treeWidget->topLevelItem(i);
@@ -170,8 +169,8 @@ void EditTableDialog::updateTableObject()
         fields.append(f);
     }
 
-    m_table->setFields(fields);
-    m_table->setPrimaryKey(pk);
+    m_table.setFields(fields);
+    m_table.setPrimaryKey(pk);
 }
 
 void EditTableDialog::checkInput()
@@ -183,7 +182,7 @@ void EditTableDialog::checkInput()
         valid = false;
     if(ui->treeWidget->topLevelItemCount() == 0)
         valid = false;
-    m_table->setName(normTableName);
+    m_table.setName(normTableName);
     updateSqlText();
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
@@ -197,7 +196,7 @@ void EditTableDialog::updateTypes()
         QString sType = "INTEGER";
         if(typeBox)
             sType = typeBox->currentText();
-        m_table->fields().at(i)->setType(sType);
+        m_table.fields().at(i)->setType(sType);
     }
     checkInput();
 }
@@ -205,9 +204,9 @@ void EditTableDialog::updateTypes()
 void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 {
     int index = ui->treeWidget->indexOfTopLevelItem(item);
-    if(index < m_table->fields().count())
+    if(index < m_table.fields().count())
     {
-        sqlb::FieldPtr field = m_table->fields().at(index);
+        sqlb::FieldPtr field = m_table.fields().at(index);
         switch(column)
         {
         case kName:
@@ -224,12 +223,16 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         break;
         case kPrimaryKey:
         {
-            sqlb::FieldList pks = m_table->primarykey();
+            sqlb::FieldVector pks = m_table.primarykey();
             if(item->checkState(column) == Qt::Checked)
                 pks.append(field);
             else
-                pks.remove(pks.indexOf(field));
-            m_table->setPrimaryKey(pks);
+            {
+                int index = pks.indexOf(field);
+                if(index != -1)
+                pks.remove(index);
+            }
+            m_table.setPrimaryKey(pks);
         }
         break;
         case kNotNull:
@@ -269,7 +272,7 @@ void EditTableDialog::addField()
                       tbitem->text(kName),
                       typeBox->currentText()
                       ));
-    m_table->addField(f);
+    m_table.addField(f);
 
     checkInput();
 }
@@ -286,9 +289,9 @@ void EditTableDialog::removeField()
         // Creating a new one
 
         // Just delete that item. At this point there is no DB table to edit or data to be lost anyway
-        sqlb::FieldList fields = m_table->fields();
+        sqlb::FieldVector fields = m_table.fields();
         fields.remove(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem()));
-        m_table->setFields(fields);
+        m_table.setFields(fields);
         delete ui->treeWidget->currentItem();
     } else {
         // Editing an old one
@@ -304,10 +307,9 @@ void EditTableDialog::removeField()
             } else {
                 //relayout
                 QString sTablesql = pdb->getTableSQL(curTable);
-                m_table = new sqlb::Table(sqlb::Table::parseSQL(sTablesql));
+                qDebug() << sTablesql;
+                m_table = sqlb::Table::parseSQL(sTablesql);
                 populateFields();
-
-                delete ui->treeWidget->currentItem();
             }
         }
     }
