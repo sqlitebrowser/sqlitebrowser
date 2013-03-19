@@ -746,18 +746,16 @@ void MainWindow::executeQuery()
 {
     QString query = ui->sqlTextEdit->toPlainText().trimmed();
     if (query.isEmpty())
-    {
-        QMessageBox::information( this, QApplication::applicationName(), tr("Query string is empty"));
         return;
-    }
+
     //log the query
     db.logSQL(query, kLogMsg_User);
     sqlite3_stmt *vm;
     QByteArray utf8Query = query.toUtf8();
     const char *tail = utf8Query.data();
-    int ncol;
-    int err=0;
-    QString lastErrorMessage = tr("No error");
+    int sql3status = 0;
+    QString statusMessage;
+
     //Accept multi-line queries, by looping until the tail is empty
     do
     {
@@ -767,42 +765,65 @@ void MainWindow::executeQuery()
         queryResultListModel->setVerticalHeaderLabels(QStringList());
 
         QString queryPart = tail;
-        err=sqlite3_prepare(db._db,tail,utf8Query.length(),
+        int sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
                             &vm, &tail);
-        if (err == SQLITE_OK){
-            if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive))
-                db.setRestorePoint();
+        if (sql3status == SQLITE_OK){
             int rownum = 0;
             bool mustCreateColumns = true;
-            while ( sqlite3_step(vm) == SQLITE_ROW ){
-                ncol = sqlite3_data_count(vm);
-                //setup num of cols here for display grid
-                if (mustCreateColumns)
+
+            sql3status = sqlite3_step(vm);
+            switch(sql3status)
+            {
+            case SQLITE_ROW:
+            {
+                do
                 {
-                    QStringList headerList;
-                    for (int e=0; e<ncol; ++e)
-                        headerList = headerList << QString::fromUtf8((const char *)sqlite3_column_name(vm, e));
-                    queryResultListModel->setHorizontalHeaderLabels(headerList);
-                    mustCreateColumns = false;
-                }
-                for (int e=0; e<ncol; ++e){
-                    QString rv = QString::fromUtf8((const char *) sqlite3_column_text(vm, e));
-                    //show it here
-                    QString firstline = rv.section( '\n', 0,0 );
-                    queryResultListModel->setItem(rownum, e, new QStandardItem(QString(firstline)));
-                }
-                queryResultListModel->setVerticalHeaderItem(rownum, new QStandardItem(QString::number(rownum + 1)));
-                rownum++;
+                    int ncol = sqlite3_data_count(vm);
+                    //setup num of cols here for display grid
+                    if (mustCreateColumns)
+                    {
+                        QStringList headerList;
+                        for (int e=0; e<ncol; ++e)
+                            headerList = headerList << QString::fromUtf8((const char *)sqlite3_column_name(vm, e));
+                        queryResultListModel->setHorizontalHeaderLabels(headerList);
+                        mustCreateColumns = false;
+                    }
+                    for (int e=0; e<ncol; ++e){
+                        QString rv = QString::fromUtf8((const char *) sqlite3_column_text(vm, e));
+                        //show it here
+                        QString firstline = rv.section( '\n', 0,0 );
+                        queryResultListModel->setItem(rownum, e, new QStandardItem(QString(firstline)));
+                    }
+                    queryResultListModel->setVerticalHeaderItem(rownum, new QStandardItem(QString::number(rownum + 1)));
+                    rownum++;
+                } while ( sqlite3_step(vm) == SQLITE_ROW );
+                sql3status = SQLITE_OK;
+            }
+            break;
+            case SQLITE_DONE:
+            case SQLITE_OK:
+            {
+                if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive))
+                    db.setRestorePoint();
+            }
+            break;
+            default:
+                statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
+                        ": " + queryPart;
+            break;
+
             }
             sqlite3_finalize(vm);
-        }else{
-            lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db));
         }
-        ui->queryErrorLineEdit->setText(lastErrorMessage);
+        else
+        {
+            statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
+                    ": " + queryPart;
+        }
+        ui->queryErrorLineEdit->setText(statusMessage);
         ui->queryResultTableView->resizeColumnsToContents();
 
-        if(err!=SQLITE_OK) break;
-    } while( tail && *tail != 0 );
+    } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
 }
 
 void MainWindow::mainTabSelected(int tabindex)
