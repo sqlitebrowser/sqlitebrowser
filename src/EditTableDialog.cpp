@@ -226,12 +226,24 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         {
             sqlb::FieldVector pks = m_table.primarykey();
             if(item->checkState(column) == Qt::Checked)
+            {
                 pks.append(field);
+                // this will unset any set autoincrement
+                for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
+                {
+                    QTreeWidgetItem* tbitem = ui->treeWidget->topLevelItem(i);
+                    if(tbitem != item)
+                    {
+                        tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
+                    }
+                }
+            }
             else
             {
+                item->setCheckState(kAutoIncrement, Qt::Unchecked);
                 int index = pks.indexOf(field);
                 if(index != -1)
-                pks.remove(index);
+                    pks.remove(index);
             }
             m_table.setPrimaryKey(pks);
         }
@@ -243,7 +255,24 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         break;
         case kAutoIncrement:
         {
-            field->setAutoIncrement(item->checkState(column) == Qt::Checked);
+            bool ischecked = item->checkState(column) == Qt::Checked;
+            field->setAutoIncrement(ischecked);
+            if(ischecked)
+            {
+                  item->setCheckState(kPrimaryKey, Qt::Checked);
+
+                // this will reset all other primary keys unset
+                // there can't be more then one autoincrement pk
+                for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
+                {
+                    QTreeWidgetItem* tbitem = ui->treeWidget->topLevelItem(i);
+                    if(tbitem != item)
+                    {
+                        tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
+                        tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
+                    }
+                }
+            }
         }
         break;
         case kDefault: field->setDefaultValue(item->text(column)); break;
