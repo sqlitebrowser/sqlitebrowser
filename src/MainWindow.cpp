@@ -765,7 +765,7 @@ void MainWindow::executeQuery()
         queryResultListModel->setVerticalHeaderLabels(QStringList());
 
         QString queryPart = tail;
-        int sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
+        sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
                             &vm, &tail);
         if (sql3status == SQLITE_OK){
             int rownum = 0;
