@@ -1,5 +1,4 @@
 #include "sqlitedb.h"
-#include "sqlbrowser_util.h"
 #include "MainWindow.h"
 
 #include <QFile>
@@ -220,21 +219,6 @@ bool DBBrowserDB::compact ( )
     }
 }
 
-bool DBBrowserDB::reload( const QString & filename, int * lineErr)
-{
-    /*to avoid a nested transaction error*/
-    sqlite3_exec(_db,"COMMIT;", NULL,NULL,NULL);
-    FILE * cfile = fopen(filename.toUtf8(), (const char *) "r");
-    load_database(_db, cfile, lineErr);
-    fclose(cfile);
-    setDirty(false);
-    if ((*lineErr)!=0)
-    {
-        return false;
-    }
-    return true;
-}
-
 bool DBBrowserDB::dump(const QString& filename)
 {
     // Open file
@@ -347,6 +331,51 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
     return true;
 }
 
+bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log)
+{
+    // First check if a DB is opened
+    if(!isOpen())
+        return false;
+
+    // Log the statement if needed
+    if(log)
+        logSQL(statement, kLogMsg_App);
+
+    // Execute the statement by looping until SQLite stops giving back a tail string
+    sqlite3_stmt* vm;
+    QByteArray utf8Query = statement.toUtf8();
+    const char *tail = utf8Query.data();
+    int res = 0;
+    unsigned int line = 0;
+    do
+    {
+        line++;
+        res = sqlite3_prepare_v2(_db, tail, strlen(tail), &vm, &tail);
+        if(res == SQLITE_OK)
+        {
+            if(sqlite3_step(vm) == SQLITE_ERROR)
+            {
+                sqlite3_finalize(vm);
+                lastErrorMessage = QObject::tr("Error in statement #%1: %2.\nAborting execution.").arg(line).arg(sqlite3_errmsg(_db));
+                qDebug(lastErrorMessage.toStdString().c_str());
+                return false;
+            } else {
+                sqlite3_finalize(vm);
+            }
+        } else {
+            lastErrorMessage = QObject::tr("Error in statement #%1: %2.\nAborting execution.").arg(line).arg(sqlite3_errmsg(_db));
+            qDebug(lastErrorMessage.toStdString().c_str());
+            return false;
+        }
+    } while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE));
+
+    // Set dirty flag
+    if(dirty)
+        setDirty(true);
+
+    // Exit
+    return true;
+}
 
 bool DBBrowserDB::addRecord ( )
 {
