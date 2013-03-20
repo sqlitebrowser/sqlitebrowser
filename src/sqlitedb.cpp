@@ -454,7 +454,7 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QByteArray& wtext)
 
     sqlite3_stmt* stmt;
     int success = 1;
-    if(sqlite3_prepare(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
         success = 0;
     if(success == 1 && sqlite3_bind_text(stmt, 1, wtext.constData(), wtext.length(), SQLITE_STATIC) != SQLITE_OK)
         success = -1;
@@ -703,7 +703,7 @@ void DBBrowserDB::getTableRecords( const QString & tablename, const QString& ord
 
     QString sql = QString("SELECT rowid, *  FROM `%1` ORDER BY %2;").arg(tablename).arg(orderby);
     logSQL(sql, kLogMsg_App);
-    if(sqlite3_prepare(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
     {
         lastErrorMessage = QObject::tr("could not get fields");
         return;
@@ -745,7 +745,7 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
     lastErrorMessage = QObject::tr("no error");
     logSQL(wstatement, kLogMsg_App);
     QByteArray statementutf8 = wstatement.toUtf8();
-    err=sqlite3_prepare(_db, statementutf8, statementutf8.length(),
+    err=sqlite3_prepare_v2(_db, statementutf8, statementutf8.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         int rownum = 0;
@@ -899,7 +899,7 @@ QString DBBrowserDB::getTableSQL(const QString& sTable)
     QString statement = QString("SELECT sql FROM sqlite_master WHERE name='%1';").arg(sTable);
 
     QByteArray utf8Statement = statement.toUtf8();
-    err=sqlite3_prepare(_db, utf8Statement, utf8Statement.length(),
+    err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
@@ -927,7 +927,7 @@ void DBBrowserDB::updateSchema( )
     QString statement = "SELECT type, name, sql FROM sqlite_master;";
 
     QByteArray utf8Statement = statement.toUtf8();
-    err=sqlite3_prepare(_db, utf8Statement, utf8Statement.length(),
+    err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
                         &vm, &tail);
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
@@ -954,7 +954,7 @@ void DBBrowserDB::updateSchema( )
         {
             statement = QString("PRAGMA TABLE_INFO(`%1`);").arg((*it).getname());
             logSQL(statement, kLogMsg_App);
-            err=sqlite3_prepare(_db,statement.toUtf8(),statement.length(),
+            err=sqlite3_prepare_v2(_db,statement.toUtf8(),statement.length(),
                                 &vm, &tail);
             if (err == SQLITE_OK){
                 (*it).fldmap.clear();
@@ -1074,7 +1074,7 @@ QString DBBrowserDB::getPragma(const QString& pragma)
     QString retval = "";
 
     // Get value from DB
-    int err = sqlite3_prepare(_db, sql.toUtf8(), sql.toUtf8().length(), &vm, &tail);
+    int err = sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &vm, &tail);
     if(err == SQLITE_OK){
         logSQL(sql, kLogMsg_App);
         if(sqlite3_step(vm) == SQLITE_ROW)
