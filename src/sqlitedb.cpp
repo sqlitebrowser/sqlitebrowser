@@ -1,5 +1,7 @@
 #include "sqlitedb.h"
+
 #include "MainWindow.h"
+#include "sqlitetypes.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -600,11 +602,20 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
     //return executeSQL(sql);
 
     // Collect information on the current DB layout
-    DBBrowserObject table = getObjectByName(tablename);
-    if(table.getname() == "" || table.getField(column).getname() == "" || table.fldmap.count() == 1)
+    QString sTableSql = getTableSQL(tablename);
+    if(sTableSql.isEmpty())
     {
-        lastErrorMessage = QObject::tr("dropColumn: cannot find table %1 or column %2. Also you can not delete the last column").arg(tablename).arg(column);
-        qDebug(lastErrorMessage.toStdString().c_str());
+        lastErrorMessage = QObject::tr("dropColumn: cannot find table %1.").arg(tablename);
+        qWarning() << lastErrorMessage;
+        return false;
+    }
+
+    sqlb::Table oldSchema = sqlb::Table::parseSQL(sTableSql);
+
+    if(oldSchema.findField(column) == -1 || oldSchema.fields().count() == 1)
+    {
+        lastErrorMessage = QObject::tr("dropColumn: cannot find column %1. Also you can not delete the last column").arg(column);
+        qWarning() << lastErrorMessage;
         return false;
     }
 
@@ -612,31 +623,32 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
     if(!executeSQL("SAVEPOINT sqlitebrowser_drop_column;", false))
     {
         lastErrorMessage = QObject::tr("dropColumn: creating savepoint failed");
-        qDebug(lastErrorMessage.toStdString().c_str());
+        qWarning() << lastErrorMessage;
         return false;
     }
 
     // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to drop
     // of course. Also prepare the columns to be copied in a later step now.
-    QList<DBBrowserField> new_table_structure;
+    sqlb::Table newSchema = oldSchema;
+    newSchema.setName("sqlitebrowser_drop_column_new_table");
+    newSchema.removeField(column);
+
     QString select_cols;
-    for(int i=0;i<table.fldmap.count();i++)
+    for(int i=0; i<newSchema.fields().count(); ++i)
     {
-        // Only add this if it is not the column to drop?
-        if(table.fldmap.value(i).getname() != column)
-        {
-            new_table_structure.push_back(DBBrowserField(table.fldmap.value(i).getname(), table.fldmap.value(i).gettype()));
-            select_cols.append(QString("`%1`,").arg(table.fldmap.value(i).getname()));
-        }
+        select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
     }
-    if(!createTable("sqlitebrowser_drop_column_new_table", new_table_structure))
+    // remove last ,
+    select_cols.remove(select_cols.count() -1, 1);
+
+    // create the new table
+    if(!executeSQL(newSchema.sql(), false))
     {
         lastErrorMessage = QObject::tr("dropColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
-        qDebug(lastErrorMessage.toStdString().c_str());
+        qWarning() << lastErrorMessage;
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;", false);
         return false;
     }
-    select_cols.remove(select_cols.count() - 1, 1);
 
     // Copy the data from the old table to the new one
     if(!executeSQL(
@@ -644,7 +656,7 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
           false))
     {
         lastErrorMessage = QObject::tr("dropColumn: copying data to new table failed. DB says: %1").arg(lastErrorMessage);
-        qDebug(lastErrorMessage.toStdString().c_str());
+        qWarning() << lastErrorMessage;
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
         return false;
     }
@@ -653,7 +665,7 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
     if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename), false))
     {
         lastErrorMessage = QObject::tr("dropColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage);
-        qDebug(lastErrorMessage.toStdString().c_str());
+        qWarning() << lastErrorMessage;
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
         return false;
     }
@@ -669,7 +681,7 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
     if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_drop_column;", false))
     {
         lastErrorMessage = QObject::tr("dropColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
-        qDebug(lastErrorMessage.toStdString().c_str());
+        qWarning() << lastErrorMessage;
         return false;
     }
 
