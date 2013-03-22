@@ -71,6 +71,7 @@ public:
     QString sql() const;
 
     void addField(const FieldPtr& f);
+    bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
     void clear();
     /**

@@ -68,6 +68,17 @@ void Table::addField(const FieldPtr& f)
     m_fields.append(FieldPtr(f));
 }
 
+bool Table::removeField(const QString& sFieldName)
+{
+    int index = findField(sFieldName);
+    if( index != -1)
+    {
+        m_fields.remove(index);
+        return true;
+    }
+    return false;
+}
+
 void Table::setFields(const FieldVector &fields)
 {
     clear();
