@@ -15,7 +15,7 @@ private:
 public:
 	bool getCaseSensitiveLiterals() const
 	{
-		return true;
+		return false;
 	}
 public:
 	Sqlite3Lexer(ANTLR_USE_NAMESPACE(std)istream& in);
@@ -29,10 +29,10 @@ public:
 	public: void mNUMERIC(bool _createToken);
 	public: void mPLUS(bool _createToken);
 	public: void mMINUS(bool _createToken);
-	public: void mSL_COMMENT(bool _createToken);
-	public: void mML_COMMENT(bool _createToken);
+	protected: void mNL(bool _createToken);
+	public: void mCOMMENT(bool _createToken);
 	public: void mWS(bool _createToken);
-	public: void mSTRING(bool _createToken);
+	public: void mSTRINGLITERAL(bool _createToken);
 	public: void mLPAREN(bool _createToken);
 	public: void mRPAREN(bool _createToken);
 	public: void mCOMMA(bool _createToken);
@@ -64,8 +64,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_3;
 	static const unsigned long _tokenSet_4_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_4;
-	static const unsigned long _tokenSet_5_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_5;
 };
 
 #endif /*INC_Sqlite3Lexer_hpp_*/

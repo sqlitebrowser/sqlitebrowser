@@ -28,42 +28,44 @@ Sqlite3Lexer::Sqlite3Lexer(const ANTLR_USE_NAMESPACE(antlr)LexerSharedInputState
 
 void Sqlite3Lexer::initLiterals()
 {
-	literals["DEFAULT"] = 16;
-	literals["IF"] = 25;
-	literals["CURRENT_DATE"] = 14;
-	literals["LIKE"] = 23;
+	literals["DEFAULT"] = 18;
+	literals["IF"] = 27;
+	literals["CURRENT_DATE"] = 16;
+	literals["LIKE"] = 25;
 	literals["AS"] = 5;
-	literals["TEMPORARY"] = 35;
-	literals["UNIQUE"] = 38;
-	literals["CHECK"] = 8;
-	literals["COLLATE"] = 10;
-	literals["NOT"] = 27;
-	literals["ELSE"] = 18;
-	literals["REFERENCES"] = 33;
-	literals["CREATE"] = 9;
-	literals["THEN"] = 37;
-	literals["EXISTS"] = 30;
-	literals["CASE"] = 7;
-	literals["REGEXP"] = 34;
-	literals["ON"] = 31;
-	literals["CURRENT_TIME"] = 13;
-	literals["GLOB"] = 21;
-	literals["CURRENT_TIMESTAMP"] = 15;
+	literals["TEMPORARY"] = 37;
+	literals["UNIQUE"] = 40;
+	literals["CHECK"] = 10;
+	literals["COLLATE"] = 12;
+	literals["NOT"] = 29;
+	literals["ELSE"] = 20;
+	literals["REFERENCES"] = 35;
+	literals["THEN"] = 39;
+	literals["CREATE"] = 11;
+	literals["EXISTS"] = 32;
+	literals["CASE"] = 9;
+	literals["REGEXP"] = 36;
+	literals["ON"] = 33;
+	literals["CURRENT_TIME"] = 15;
+	literals["GLOB"] = 23;
+	literals["CURRENT_TIMESTAMP"] = 17;
+	literals["AND"] = 7;
 	literals["ASC"] = 6;
-	literals["ESCAPE"] = 20;
-	literals["DESC"] = 17;
-	literals["TABLE"] = 24;
-	literals["TEMP"] = 36;
-	literals["END"] = 19;
-	literals["KEY"] = 22;
-	literals["WHEN"] = 39;
-	literals["CONSTRAINT"] = 12;
-	literals["MATCH"] = 29;
+	literals["ESCAPE"] = 22;
+	literals["DESC"] = 19;
+	literals["TABLE"] = 26;
+	literals["TEMP"] = 38;
+	literals["END"] = 21;
+	literals["KEY"] = 24;
+	literals["WHEN"] = 41;
+	literals["CONSTRAINT"] = 14;
+	literals["MATCH"] = 31;
+	literals["OR"] = 8;
 	literals["AUTOINCREMENT"] = 4;
-	literals["IS"] = 26;
-	literals["NULL"] = 28;
-	literals["CONFLICT"] = 11;
-	literals["PRIMARY"] = 32;
+	literals["IS"] = 28;
+	literals["NULL"] = 30;
+	literals["CONFLICT"] = 13;
+	literals["PRIMARY"] = 34;
 }
 
 ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
@@ -143,8 +145,15 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 				theRetToken=_returnToken;
 				break;
 			}
+			case 0x2f /* '/' */ :
+			{
+				mCOMMENT(true);
+				theRetToken=_returnToken;
+				break;
+			}
 			case 0x9 /* '\t' */ :
 			case 0xa /* '\n' */ :
+			case 0xc /* '\14' */ :
 			case 0xd /* '\r' */ :
 			case 0x20 /* ' ' */ :
 			{
@@ -154,7 +163,7 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 			}
 			case 0x27 /* '\'' */ :
 			{
-				mSTRING(true);
+				mSTRINGLITERAL(true);
 				theRetToken=_returnToken;
 				break;
 			}
@@ -207,15 +216,7 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 				break;
 			}
 			default:
-				if ((LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2f /* '/' */ )) {
-					mSL_COMMENT(true);
-					theRetToken=_returnToken;
-				}
-				else if ((LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2a /* '*' */ )) {
-					mML_COMMENT(true);
-					theRetToken=_returnToken;
-				}
-				else if ((LA(1) == 0x7c /* '|' */ ) && (LA(2) == 0x7c /* '|' */ )) {
+				if ((LA(1) == 0x7c /* '|' */ ) && (LA(2) == 0x7c /* '|' */ )) {
 					mOROP(true);
 					theRetToken=_returnToken;
 				}
@@ -680,26 +681,30 @@ void Sqlite3Lexer::mMINUS(bool _createToken) {
 	_saveIndex=0;
 }
 
-void Sqlite3Lexer::mSL_COMMENT(bool _createToken) {
+void Sqlite3Lexer::mNL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
-	_ttype = SL_COMMENT;
+	_ttype = NL;
 	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match("//");
-	{ // ( ... )*
-	for (;;) {
-		if ((_tokenSet_3.member(LA(1)))) {
-			matchNot('\n' /* charlit */ );
-		}
-		else {
-			goto _loop32;
-		}
-		
+	{
+	switch ( LA(1)) {
+	case 0xd /* '\r' */ :
+	{
+		match('\r' /* charlit */ );
+		break;
 	}
-	_loop32:;
-	} // ( ... )*
-	match('\n' /* charlit */ );
-	_ttype = ANTLR_USE_NAMESPACE(antlr)Token::SKIP; newline();
+	case 0xa /* '\n' */ :
+	{
+		match('\n' /* charlit */ );
+		newline();
+		break;
+	}
+	default:
+	{
+		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());
+	}
+	}
+	}
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
@@ -708,165 +713,60 @@ void Sqlite3Lexer::mSL_COMMENT(bool _createToken) {
 	_saveIndex=0;
 }
 
-void Sqlite3Lexer::mML_COMMENT(bool _createToken) {
+void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
-	_ttype = ML_COMMENT;
+	_ttype = COMMENT;
 	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
-	match("/*");
-	{ // ( ... )*
-	for (;;) {
-		switch ( LA(1)) {
-		case 0xa /* '\n' */ :
-		{
-			match('\n' /* charlit */ );
-			newline();
-			break;
-		}
-		case 0x0 /* '\0' */ :
-		case 0x1 /* '\1' */ :
-		case 0x2 /* '\2' */ :
-		case 0x3 /* '\3' */ :
-		case 0x4 /* '\4' */ :
-		case 0x5 /* '\5' */ :
-		case 0x6 /* '\6' */ :
-		case 0x7 /* '\7' */ :
-		case 0x8 /* '\10' */ :
-		case 0x9 /* '\t' */ :
-		case 0xb /* '\13' */ :
-		case 0xc /* '\14' */ :
-		case 0xd /* '\r' */ :
-		case 0xe /* '\16' */ :
-		case 0xf /* '\17' */ :
-		case 0x10 /* '\20' */ :
-		case 0x11 /* '\21' */ :
-		case 0x12 /* '\22' */ :
-		case 0x13 /* '\23' */ :
-		case 0x14 /* '\24' */ :
-		case 0x15 /* '\25' */ :
-		case 0x16 /* '\26' */ :
-		case 0x17 /* '\27' */ :
-		case 0x18 /* '\30' */ :
-		case 0x19 /* '\31' */ :
-		case 0x1a /* '\32' */ :
-		case 0x1b /* '\33' */ :
-		case 0x1c /* '\34' */ :
-		case 0x1d /* '\35' */ :
-		case 0x1e /* '\36' */ :
-		case 0x1f /* '\37' */ :
-		case 0x20 /* ' ' */ :
-		case 0x21 /* '!' */ :
-		case 0x22 /* '\"' */ :
-		case 0x23 /* '#' */ :
-		case 0x24 /* '$' */ :
-		case 0x25 /* '%' */ :
-		case 0x26 /* '&' */ :
-		case 0x27 /* '\'' */ :
-		case 0x28 /* '(' */ :
-		case 0x29 /* ')' */ :
-		case 0x2b /* '+' */ :
-		case 0x2c /* ',' */ :
-		case 0x2d /* '-' */ :
-		case 0x2e /* '.' */ :
-		case 0x2f /* '/' */ :
-		case 0x30 /* '0' */ :
-		case 0x31 /* '1' */ :
-		case 0x32 /* '2' */ :
-		case 0x33 /* '3' */ :
-		case 0x34 /* '4' */ :
-		case 0x35 /* '5' */ :
-		case 0x36 /* '6' */ :
-		case 0x37 /* '7' */ :
-		case 0x38 /* '8' */ :
-		case 0x39 /* '9' */ :
-		case 0x3a /* ':' */ :
-		case 0x3b /* ';' */ :
-		case 0x3c /* '<' */ :
-		case 0x3d /* '=' */ :
-		case 0x3e /* '>' */ :
-		case 0x3f /* '?' */ :
-		case 0x40 /* '@' */ :
-		case 0x41 /* 'A' */ :
-		case 0x42 /* 'B' */ :
-		case 0x43 /* 'C' */ :
-		case 0x44 /* 'D' */ :
-		case 0x45 /* 'E' */ :
-		case 0x46 /* 'F' */ :
-		case 0x47 /* 'G' */ :
-		case 0x48 /* 'H' */ :
-		case 0x49 /* 'I' */ :
-		case 0x4a /* 'J' */ :
-		case 0x4b /* 'K' */ :
-		case 0x4c /* 'L' */ :
-		case 0x4d /* 'M' */ :
-		case 0x4e /* 'N' */ :
-		case 0x4f /* 'O' */ :
-		case 0x50 /* 'P' */ :
-		case 0x51 /* 'Q' */ :
-		case 0x52 /* 'R' */ :
-		case 0x53 /* 'S' */ :
-		case 0x54 /* 'T' */ :
-		case 0x55 /* 'U' */ :
-		case 0x56 /* 'V' */ :
-		case 0x57 /* 'W' */ :
-		case 0x58 /* 'X' */ :
-		case 0x59 /* 'Y' */ :
-		case 0x5a /* 'Z' */ :
-		case 0x5b /* '[' */ :
-		case 0x5c /* '\\' */ :
-		case 0x5d /* ']' */ :
-		case 0x5e /* '^' */ :
-		case 0x5f /* '_' */ :
-		case 0x60 /* '`' */ :
-		case 0x61 /* 'a' */ :
-		case 0x62 /* 'b' */ :
-		case 0x63 /* 'c' */ :
-		case 0x64 /* 'd' */ :
-		case 0x65 /* 'e' */ :
-		case 0x66 /* 'f' */ :
-		case 0x67 /* 'g' */ :
-		case 0x68 /* 'h' */ :
-		case 0x69 /* 'i' */ :
-		case 0x6a /* 'j' */ :
-		case 0x6b /* 'k' */ :
-		case 0x6c /* 'l' */ :
-		case 0x6d /* 'm' */ :
-		case 0x6e /* 'n' */ :
-		case 0x6f /* 'o' */ :
-		case 0x70 /* 'p' */ :
-		case 0x71 /* 'q' */ :
-		case 0x72 /* 'r' */ :
-		case 0x73 /* 's' */ :
-		case 0x74 /* 't' */ :
-		case 0x75 /* 'u' */ :
-		case 0x76 /* 'v' */ :
-		case 0x77 /* 'w' */ :
-		case 0x78 /* 'x' */ :
-		case 0x79 /* 'y' */ :
-		case 0x7a /* 'z' */ :
-		case 0x7b /* '{' */ :
-		case 0x7c /* '|' */ :
-		case 0x7d /* '}' */ :
-		case 0x7e /* '~' */ :
-		case 0x7f:
-		{
-			{
-			match(_tokenSet_4);
+	{
+	if ((LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2f /* '/' */ )) {
+		match("//");
+		{ // ( ... )*
+		for (;;) {
+			if ((_tokenSet_3.member(LA(1)))) {
+				{
+				match(_tokenSet_3);
+				}
 			}
-			break;
-		}
-		default:
-			if (((LA(1) == 0x2a /* '*' */ ) && ((LA(2) >= 0x0 /* '\0' */  && LA(2) <= 0x7f)))&&( LA(2)!='/' )) {
-				match('*' /* charlit */ );
+			else {
+				goto _loop36;
 			}
-		else {
-			goto _loop36;
+			
 		}
-		}
+		_loop36:;
+		} // ( ... )*
+		mNL(false);
+		newline();
 	}
-	_loop36:;
-	} // ( ... )*
-	match("*/");
+	else if ((LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2a /* '*' */ )) {
+		match("/*");
+		{ // ( ... )*
+		for (;;) {
+			// nongreedy exit test
+			if ((LA(1) == 0x2a /* '*' */ ) && (LA(2) == 0x2f /* '/' */ )) goto _loop39;
+			if ((_tokenSet_3.member(LA(1))) && ((LA(2) >= 0x0 /* '\0' */  && LA(2) <= 0x7f))) {
+				{
+				match(_tokenSet_3);
+				}
+			}
+			else if ((LA(1) == 0xa /* '\n' */  || LA(1) == 0xd /* '\r' */ )) {
+				mNL(false);
+				newline();
+			}
+			else {
+				goto _loop39;
+			}
+			
+		}
+		_loop39:;
+		} // ( ... )*
+		match("*/");
+	}
+	else {
+		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());
+	}
+	
+	}
 	_ttype = ANTLR_USE_NAMESPACE(antlr)Token::SKIP;
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
@@ -893,15 +793,15 @@ void Sqlite3Lexer::mWS(bool _createToken) {
 		match('\t' /* charlit */ );
 		break;
 	}
-	case 0xd /* '\r' */ :
+	case 0xc /* '\14' */ :
 	{
-		match('\r' /* charlit */ );
+		match('\14' /* charlit */ );
 		break;
 	}
 	case 0xa /* '\n' */ :
+	case 0xd /* '\r' */ :
 	{
-		match('\n' /* charlit */ );
-		newline();
+		mNL(false);
 		break;
 	}
 	default:
@@ -919,25 +819,25 @@ void Sqlite3Lexer::mWS(bool _createToken) {
 	_saveIndex=0;
 }
 
-void Sqlite3Lexer::mSTRING(bool _createToken) {
+void Sqlite3Lexer::mSTRINGLITERAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
-	_ttype = STRING;
+	_ttype = STRINGLITERAL;
 	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match('\'' /* charlit */ );
 	{ // ( ... )*
 	for (;;) {
-		if ((_tokenSet_5.member(LA(1)))) {
+		if ((_tokenSet_4.member(LA(1)))) {
 			{
-			match(_tokenSet_5);
+			match(_tokenSet_4);
 			}
 		}
 		else {
-			goto _loop42;
+			goto _loop45;
 		}
 		
 	}
-	_loop42:;
+	_loop45:;
 	} // ( ... )*
 	match('\'' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1236,25 +1136,18 @@ const unsigned long Sqlite3Lexer::_tokenSet_2_data_[] = { 4294967295UL, 42949672
 // @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` 
 // a b c d 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_2(_tokenSet_2_data_,8);
-const unsigned long Sqlite3Lexer::_tokenSet_3_data_[] = { 4294966271UL, 4294967295UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
-// 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xd 0xe 0xf 0x10 0x11 
-// 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f 
-//   ! \" # $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ 
-// A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a 
-// b c d 
+const unsigned long Sqlite3Lexer::_tokenSet_3_data_[] = { 4294958079UL, 4294967295UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
+// 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xe 0xf 0x10 0x11 0x12 
+// 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f   ! 
+// \" # $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B 
+// C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a b c 
+// d 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_3(_tokenSet_3_data_,8);
-const unsigned long Sqlite3Lexer::_tokenSet_4_data_[] = { 4294966271UL, 4294966271UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
-// 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xd 0xe 0xf 0x10 0x11 
-// 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f 
-//   ! \" # $ % & \' ( ) + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A 
-// B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a b 
-// c d 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_4(_tokenSet_4_data_,8);
-const unsigned long Sqlite3Lexer::_tokenSet_5_data_[] = { 4294967295UL, 4294967167UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
+const unsigned long Sqlite3Lexer::_tokenSet_4_data_[] = { 4294967295UL, 4294967167UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
 // 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf 0x10 
 // 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 
 // 0x1f   ! \" # $ % & ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? 
 // @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` 
 // a b c d 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_5(_tokenSet_5_data_,8);
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_4(_tokenSet_4_data_,8);
 

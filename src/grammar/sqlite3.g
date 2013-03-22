@@ -8,12 +8,15 @@ options {
   k=2;
   exportVocab=sqlite3;
   caseSensitive=false;
+  caseSensitiveLiterals=false;
 }
 
 tokens {
   AUTOINCREMENT="AUTOINCREMENT";
   AS="AS";
   ASC="ASC";
+  AND="AND";
+  OR="OR";
   CASE_T="CASE";
   CHECK="CHECK";
   CREATE="CREATE";
@@ -79,31 +82,25 @@ NUMERIC
       ( 'e' (PLUS|MINUS)? (DIGIT)+ )?
 	; 
 
-SL_COMMENT
-  :
-  "//" (~'\n')* '\n' { _ttype = ANTLR_USE_NAMESPACE(antlr)Token::SKIP; newline(); }
-  ;
+protected
+NL :
+    ( '\r'
+    | '\n' {newline();}
+    );
 
-ML_COMMENT
-  : "/*"
-  ( { LA(2)!='/' }? '*'
-  | '\n' { newline(); }
-  | ~('*'|'\n')
-  )*
-  "*/" 
-  {$setType(ANTLR_USE_NAMESPACE(antlr)Token::SKIP);}
-  ;
+COMMENT :
+    ( "//" (~('\n'|'\r'))* NL {newline();} // single line comment
+    | "/*" ( options{greedy=false;} : NL {newline();} | ~('\n'|'\r') )* "*/" // multi-line comment
+    ) { $setType(ANTLR_USE_NAMESPACE(antlr)Token::SKIP); };
 
-WS
-  :
-  ( ' '
-  | '\t'
-  | '\r'
-  | '\n' {newline();}
-  ) { _ttype = ANTLR_USE_NAMESPACE(antlr)Token::SKIP; }
-  ;
+WS :
+    ( ' '
+    | '\t'
+    | '\f'
+    | NL
+    ) { $setType(ANTLR_USE_NAMESPACE(antlr)Token::SKIP); };
 
-STRING
+STRINGLITERAL
   :
 //  '"' ( ESC_SEQ | ~('\\'|'"') )* '"'
   '\'' ( ~('\'') )* '\''
@@ -224,7 +221,7 @@ columnconstraint
   | NOT NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
-  | DEFAULT (signednumber | STRING | LPAREN expr RPAREN)
+  | DEFAULT (signednumber | STRINGLITERAL | LPAREN expr RPAREN)
   | COLLATE collationname
   | foreignkeyclause)
   {#columnconstraint = #([COLUMNCONSTRAINT, "COLUMNCONSTRAINT"], #columnconstraint);}
@@ -267,7 +264,8 @@ foreignkeyclause
     )
   | MATCH name
   )*
-  ( (NOT)? DEFERRABLE (INITIALLY (DEFERRED | IMMEDIATE))? )?
+  ( (NOT DEFERRABLE) => NOT DEFERRABLE (INITIALLY (DEFERRED | IMMEDIATE))?
+  | DEFERRABLE (INITIALLY (DEFERRED | IMMEDIATE) ) )?
   ;
 	
 selectstmt
@@ -279,39 +277,50 @@ functionname
 
 expr
   :
-  subexpr ( ( binaryoperator | AND | OR) subexpr )*
-//  {#expr = #([EXPR, "EXPR"],#expr);}
+  ( subexpr (binaryoperator | AND | OR) ) => subexpr ( ( binaryoperator | AND | OR) subexpr )*
+  | subexpr
   ;
 
 subexpr
   :
-  (unaryoperator)?
+  ( MINUS | PLUS | TILDE | NOT)?
   ( literalvalue
 //  | bindparameter TODO
   | ((databasename DOT)? tablename)? columnname
   | functionname LPAREN (expr (COMMA expr)* )? RPAREN //TODO
-  | CAST LPAREN expr AS type_name RPAREN
-  | LPAREN expr RPAREN
-  | ( (NOT)? EXISTS)? LPAREN selectstmt RPAREN
-  | CASE_T (expr)? (WHEN expr THEN expr)+ (ELSE expr)? END
+  | castexpr 
+  | (EXISTS)? LPAREN (expr | selectstmt) RPAREN
+  | caseexpr 
   | raisefunction
   )
   (suffixexpr)?
   ;
 
+castexpr
+  :
+  CAST LPAREN expr AS type_name RPAREN
+  ;
+
+caseexpr
+  :
+  CASE_T (expr)? (WHEN expr THEN expr)+ (ELSE expr)? END
+  ;
+
 suffixexpr
   :
-  ( COLLATE collationname
-  | (NOT)? 
-    ( (LIKE | GLOB | REGEXP | MATCH) expr (ESCAPE expr)?
-    | IN ( LPAREN (selectstmt | expr (COMMA expr)* )? RPAREN | tablename)
-    )
-  )
+   COLLATE collationname
+//  | (NOT)? 
+//    ( (LIKE | GLOB | REGEXP | MATCH) 
+//		( (expr ESCAPE) => ESCAPE expr | expr)
+ //   | IN ( LPAREN (selectstmt | expr (COMMA expr)* )? RPAREN | tablename)
+//    )
+  
   ;
 	
 literalvalue
-  :	signednumber
-  | STRING
+  :	
+    NUMERIC
+  | STRINGLITERAL
 //  | blob-literal
   | NULL_T
   | CURRENT_TIME
@@ -320,9 +329,8 @@ literalvalue
   ;
 
 raisefunction
-  : RAISE LPAREN ( IGNORE | (ROLLBACK | ABORT | FAIL) COMMA STRING ) RPAREN ;
+  : RAISE LPAREN ( IGNORE | (ROLLBACK | ABORT | FAIL) COMMA STRINGLITERAL ) RPAREN ;
 
-// TODO operators missing
 binaryoperator
   :	
     OROP	
@@ -331,9 +339,6 @@ binaryoperator
   | BITWISELEFT | BITWISERIGHT | AMPERSAND | BITOR
   | LOWER | LOWEREQUAL | GREATER | GREATEREQUAL
   | EQUAL | EQUAL2 | UNEQUAL | UNEQUAL2 
-  | IS (NOT)? | IN | LIKE | GLOB | MATCH | REGEXP
+  | IS | IN | LIKE | GLOB | MATCH | REGEXP
   ;
-
-unaryoperator
-  : MINUS | PLUS | TILDE | NOT ;
 

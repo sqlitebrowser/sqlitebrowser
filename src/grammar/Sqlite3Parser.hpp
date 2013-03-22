@@ -58,8 +58,9 @@ public:
 	public: void functionname();
 	public: void subexpr();
 	public: void binaryoperator();
-	public: void unaryoperator();
 	public: void literalvalue();
+	public: void castexpr();
+	public: void caseexpr();
 	public: void raisefunction();
 	public: void suffixexpr();
 public:
@@ -124,14 +125,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_20;
 	static const unsigned long _tokenSet_21_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_21;
-	static const unsigned long _tokenSet_22_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_22;
-	static const unsigned long _tokenSet_23_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_23;
-	static const unsigned long _tokenSet_24_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_24;
-	static const unsigned long _tokenSet_25_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_25;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/
