@@ -13,6 +13,7 @@ private slots:
     void notnull();
 
     void parseSQL();
+    void parseSQLdefaultexpr();
     void parseSQLMultiPk();
 };
 
@@ -73,7 +74,7 @@ void TestTable::notnull()
 
 void TestTable::parseSQL()
 {
-    QString sSQL = "CREATE TABLE hero (\n"
+    QString sSQL = "create TABLE hero (\n"
             "\tid integer PRIMARY KEY AUTOINCREMENT,\n"
             "\tname text NOT NULL DEFAULT 'xxxx',\n"
             "\tinfo VARCHAR(255) CHECK (info == x)\n"
@@ -92,8 +93,35 @@ void TestTable::parseSQL()
 
     QVERIFY(tab.fields().at(0)->autoIncrement());
     QVERIFY(tab.fields().at(1)->notnull());
+    QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
-    QCOMPARE(tab.fields().at(2)->check(), QString("(info==x)"));
+    QCOMPARE(tab.fields().at(2)->check(), QString("info==x"));
+
+    QVERIFY(tab.primarykey().contains(tab.fields().at(0)));
+}
+
+void TestTable::parseSQLdefaultexpr()
+{
+    QString sSQL = "CREATE TABLE chtest(\n"
+            "id integer primary key,\n"
+            "dumpytext text default('axa') CHECK(dumpytext == \"aa\"),\n"
+            "zoi integer)";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.name() == "chtest");
+    QVERIFY(tab.fields().at(0)->name() == "id");
+    QVERIFY(tab.fields().at(1)->name() == "dumpytext");
+    QVERIFY(tab.fields().at(2)->name() == "zoi");
+
+    QVERIFY(tab.fields().at(0)->type() == "integer");
+    QVERIFY(tab.fields().at(1)->type() == "text");
+    QVERIFY(tab.fields().at(2)->type() == "integer");
+
+    QCOMPARE(tab.fields().at(1)->defaultValue(), QString("('axa')"));
+    QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext==\"aa\""));
+    QCOMPARE(tab.fields().at(2)->defaultValue(), QString(""));
+    QCOMPARE(tab.fields().at(2)->check(), QString(""));
 
     QVERIFY(tab.primarykey().contains(tab.fields().at(0)));
 }
