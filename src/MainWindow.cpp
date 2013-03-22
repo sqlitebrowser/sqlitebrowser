@@ -933,11 +933,19 @@ void MainWindow::importDatabaseFromSQL()
             if(!fileName.isNull())
                 db.create(newDBfile);
         }
-        int lineErr;
-        if (!db.reload(fileName, &lineErr))
-            QMessageBox::information(this, QApplication::applicationName(), tr("Error importing data at line %1").arg(lineErr) );
+
+        // Open, read, execute and close file
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+        QFile f(fileName);
+        f.open(QIODevice::ReadOnly);
+        if(!db.executeMultiSQL(f.readAll()))
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastErrorMessage));
         else
-            QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
+            QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
+        f.close();
+        QApplication::restoreOverrideCursor();
+
+        // Resfresh window
         populateStructure();
         resetBrowser();
     }

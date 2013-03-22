@@ -10,7 +10,6 @@ CONFIG += qt \
 
 HEADERS += \
     sqlitedb.h \
-    sqlbrowser_util.h \
     MainWindow.h \
     SQLiteSyntaxHighlighter.h \
     CreateIndexDialog.h \
@@ -30,7 +29,6 @@ HEADERS += \
 
 SOURCES += \
     sqlitedb.cpp \
-    sqlbrowser_util.c \
     MainWindow.cpp \
     SQLiteSyntaxHighlighter.cpp \
     CreateIndexDialog.cpp \

@@ -69,14 +69,41 @@ void ImportCsvDialog::accept()
     // declare local variables we will need before the rollback jump
     int colNum = 0;
 
+    // Are we importing into an existing table?
+    bool importToExistingTable = false;
+    objectMap objects = pdb->getBrowsableObjects();
+    for(objectMap::ConstIterator i=objects.begin();i!=objects.end();++i)
+    {
+        if(i.value().gettype() == "table" && i.value().getname() == ui->editName->text())
+        {
+            if(i.value().fldmap.size() != numfields)
+            {
+                QMessageBox::warning(this, QApplication::applicationName(),
+                                     tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
+                return;
+            } else {
+                if(QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+                {
+                    importToExistingTable = true;
+                    break;
+                } else {
+                    return;
+                }
+            }
+        }
+    }
+
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
     if(!pdb->executeSQL("SAVEPOINT CSVIMPORT;", false))
         goto rollback;
 
     // Create table
-    if(!pdb->createTable(ui->editName->text(), fieldList))
-        goto rollback;
+    if(!importToExistingTable)
+    {
+        if(!pdb->createTable(ui->editName->text(), fieldList))
+            goto rollback;
+    }
 
     { // avoid error on MSVC due to rollback label
         // now lets import all data, one row at a time
