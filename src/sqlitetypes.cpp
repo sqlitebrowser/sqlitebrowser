@@ -173,10 +173,17 @@ QString Table::emptyInsertStmt() const
     foreach(FieldPtr f, m_fields) {
         if(f->notnull())
         {
-            if(f->isInteger())
-                vals << "0";
+            if( m_primarykey.contains(f) && f->isInteger() )
+            {
+                vals << "NULL";
+            }
             else
-                vals << "''";
+            {
+                if(f->isInteger())
+                    vals << "0";
+                else
+                    vals << "''";
+            }
         }
         else
             vals << "NULL";
