@@ -367,11 +367,14 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
 void MainWindow::addRecord()
 {
-    if (db.addRecord()){
+    if (db.addRecord(db.curBrowseTableName))
+    {
         populateTable(db.curBrowseTableName);
         //added record will be the last one in view
         updateTableView(db.getRecordCount()-1);
-    }else{
+    }
+    else
+    {
         QMessageBox::information( this, QApplication::applicationName(),
                                   tr("Error adding record, make sure a table is selected.\n\n"
                                   "If the table contain fields declared as NOT NULL\n"

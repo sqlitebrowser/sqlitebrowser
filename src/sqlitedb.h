@@ -99,7 +99,7 @@ public:
      */
     QString getTableSQL(const QString& sTable);
     void updateSchema() ;
-    bool addRecord();
+    bool addRecord(const QString& sTableName);
     bool deleteRecord(int wrow);
     bool updateRecord(int wrow, int wcol, const QByteArray& wtext);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );

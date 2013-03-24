@@ -378,35 +378,28 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::addRecord ( )
+bool DBBrowserDB::addRecord(const QString& sTableName)
 {
     char *errmsg;
-    if (!hasValidBrowseSet) return false;
     if (!isOpen()) return false;
-    bool ok = false;
-    int fields = browseFields.count();
-    QString emptyvalue = curNewData;
 
-    QString statement = QString("INSERT INTO `%1` VALUES(").arg(curBrowseTableName);
-    for ( int i=1; i<=fields; ++i ) {
-        statement.append(emptyvalue);
-        if (i<fields) statement.append(", ");
-    }
-    statement.append(");");
-    lastErrorMessage = QObject::tr("no error");
-    if (_db){
-        logSQL(statement, kLogMsg_App);
-        setRestorePoint();
-        if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),NULL,NULL, &errmsg)){
-            ok=true;
-            //int newrowid = sqlite3_last_insert_rowid(_db);
-        } else {
-            lastErrorMessage = QString::fromUtf8(errmsg);
-            qCritical() << "addRecord: " << lastErrorMessage;
-        }
-    }
+    // add record is seldom called, for now this is ok
+    // but if we ever going to add a lot of records
+    // we should cache the parsed tables somewhere
+    sqlb::Table table = sqlb::Table::parseSQL(getTableSQL(sTableName));
+    QString sInsertstmt = table.emptyInsertStmt();
 
-    return ok;
+    lastErrorMessage = "";
+    logSQL(sInsertstmt, kLogMsg_App);
+    setRestorePoint();
+
+    if (SQLITE_OK != sqlite3_exec(_db, sInsertstmt.toUtf8(), NULL, NULL, &errmsg))
+    {
+        lastErrorMessage = QString::fromUtf8(errmsg);
+        qCritical() << "addRecord: " << lastErrorMessage;
+        return false;
+    }
+    return true;
 }
 
 bool DBBrowserDB::deleteRecord( int wrow)
