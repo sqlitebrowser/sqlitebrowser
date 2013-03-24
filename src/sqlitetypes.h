@@ -68,12 +68,19 @@ public:
     const QString& name() const { return m_name; }
     const FieldVector& fields() const { return m_fields; }
     const FieldVector& primarykey() const { return m_primarykey; }
+
+    /**
+     * @brief Creates an empty insert statement.
+     * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
+     */
+    QString emptyInsertStmt() const;
     QString sql() const;
 
     void addField(const FieldPtr& f);
     bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
     void clear();
+
     /**
      * @brief findField Finds a field and returns the index.
      * @param sname

@@ -165,6 +165,29 @@ Table Table::parseSQL(const QString &sSQL)
 
     return Table("");
 }
+QString Table::emptyInsertStmt() const
+{
+    QString stmt = QString("INSERT INTO `%1` VALUES(").arg(m_name);
+
+    QStringList vals;
+    foreach(FieldPtr f, m_fields) {
+        if(f->notnull())
+        {
+            if(f->isInteger())
+                vals << "0";
+            else
+                vals << "''";
+        }
+        else
+            vals << "NULL";
+    }
+
+    stmt.append(vals.join(","));
+    stmt.append(");");
+
+    return stmt;
+}
+
 
 QString Table::sql() const
 {
