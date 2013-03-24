@@ -1,7 +1,6 @@
 #include "sqlitedb.h"
 
 #include "MainWindow.h"
-#include "sqlitetypes.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -508,10 +507,10 @@ bool DBBrowserDB::createTable(const QString& name, const QList<DBBrowserField>& 
     return executeSQL(sql, false);
 }
 
-bool DBBrowserDB::createColumn(const QString& tablename, const QString& fieldname, const QString& fieldtype)
+bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& field)
 {
-    QString sql = QString("ALTER TABLE `%1` ADD COLUMN `%2` %3").arg(tablename).arg(fieldname).arg(fieldtype);
-    return executeSQL(sql);
+    QString sql = QString("ALTER TABLE `%1` ADD COLUMN %2").arg(tablename).arg(field->toString());
+    return executeSQL(sql, false);
 }
 
 bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type)

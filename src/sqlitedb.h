@@ -1,10 +1,13 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
+#include "sqlitetypes.h"
+
 #include <QStringList>
 #include <QMap>
 #include <QMultiMap>
 #include <sqlite3.h>
+
 class MainWindow;
 
 enum
@@ -103,7 +106,7 @@ public:
 
     bool createTable(const QString& name, const QList<DBBrowserField>& structure);
     bool renameTable(const QString& from_table, const QString& to_table);
-    bool createColumn(const QString& table, const QString& field, const QString& type);
+    bool addColumn(const QString& table, const sqlb::FieldPtr& field);
     bool renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type);
     bool dropColumn(const QString& tablename, const QString& column);
 
