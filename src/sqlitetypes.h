@@ -74,6 +74,11 @@ public:
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
     QString emptyInsertStmt() const;
+
+    /**
+     * @brief Returns the CREATE TABLE statement for this table object
+     * @return A QString with the CREATE TABLE object.
+     */
     QString sql() const;
 
     void addField(const FieldPtr& f);
