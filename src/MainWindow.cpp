@@ -701,7 +701,8 @@ void MainWindow::helpAbout()
 void MainWindow::updateRecordText(int row, int col, const QByteArray& newtext)
 {
     if (!db.updateRecord(row, col, newtext)){
-        QMessageBox::information( this, QApplication::applicationName(), tr("Data could not be updated"));
+        QMessageBox::information( this, QApplication::applicationName(),
+                                  tr("Data could not be updated:\n") + db.lastErrorMessage);
     }
 
     rowList tab = db.browseRecs;
