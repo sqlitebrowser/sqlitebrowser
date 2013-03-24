@@ -1,6 +1,9 @@
 TEMPLATE = lib
 
-CONFIG = release static
+CONFIG = release staticlib
+
+OBJECTS_DIR = .obj
+INCLUDEPATH += ./
 
 HEADERS += \
     antlr/config.hpp \

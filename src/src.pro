@@ -58,14 +58,22 @@ QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 unix { 
     UI_DIR = .ui
     MOC_DIR = .moc
-    OBJECTS_DIR = .obj $$PWD/../libs/qhexedit
-    LIBS += -ldl
+    OBJECTS_DIR = .obj
+    LIBS += -ldl -L$$OUT_PWD/../libs/qhexedit/
 }
-win32:RC_FILE = winapp.rc
+win32 {
+    RC_FILE = winapp.rc
+    CONFIG(debug, debug|release) {
+        LIBS += -L$$OUT_PWD/../libs/qhexedit/debug/
+    } else {
+        LIBS += -L$$OUT_PWD/../libs/qhexedit/release/
+    }
+}
 mac { 
     RC_FILE = macapp.icns
     LIBS += -framework \
-        Carbon
+        Carbon \
+        -L$$OUT_PWD/../libs/qhexedit/
     QMAKE_INFO_PLIST = app.plist
     CONFIG += x86 \
         ppc
@@ -85,5 +93,5 @@ FORMS += \
     ImportCsvDialog.ui
 
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
-LIBS += -L$$OUT_PWD/../libs/antlr-2.7.7/ -lantlr -L$$OUT_PWD/../libs/qhexedit/ -lqhexedit
+LIBS += -L$$OUT_PWD/../libs/antlr-2.7.7/ -lantlr -lqhexedit
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
