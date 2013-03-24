@@ -376,10 +376,7 @@ void MainWindow::addRecord()
     else
     {
         QMessageBox::information( this, QApplication::applicationName(),
-                                  tr("Error adding record, make sure a table is selected.\n\n"
-                                  "If the table contain fields declared as NOT NULL\n"
-                                  "please select EDIT->PREFERENCES and adjust the\n"
-                                  "default value for new records to insert an empty string."));
+                                  tr("Error adding record:\n") + db.lastErrorMessage);
     }
 }
 
