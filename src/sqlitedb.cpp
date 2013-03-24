@@ -32,11 +32,6 @@ bool DBBrowserDB::getDirty() const
     return dirty;
 }
 
-void DBBrowserDB::setDefaultNewData( const QString & data )
-{
-    curNewData = data;
-}
-
 bool DBBrowserDB::open ( const QString & db)
 {
     bool ok=false;

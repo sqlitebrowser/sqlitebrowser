@@ -122,7 +122,6 @@ public:
     void setDirty(bool dirtyval);
     bool getDirty() const;
     void logSQL(const QString& statement, int msgtype);
-    void setDefaultNewData( const QString & data );
 
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);
@@ -142,7 +141,6 @@ public:
     QString curBrowseTableName;
     QString lastErrorMessage;
     QString curDBFilename;
-    QString curNewData;
 
     MainWindow* mainWindow;
 

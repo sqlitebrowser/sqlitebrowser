@@ -959,7 +959,6 @@ void MainWindow::openPreferences()
     PreferencesDialog dialog(this);
     if(dialog.exec())
     {
-        db.setDefaultNewData(PreferencesDialog::getSettingsValue("db", "defaultnewdata").toString());
         resetBrowser();
     }
 }
