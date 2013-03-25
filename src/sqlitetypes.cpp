@@ -167,12 +167,14 @@ Table Table::parseSQL(const QString &sSQL)
 }
 QString Table::emptyInsertStmt() const
 {
-    QString stmt = QString("INSERT INTO `%1` VALUES(").arg(m_name);
+    QString stmt = QString("INSERT INTO `%1`").arg(m_name);
 
     QStringList vals;
+    QStringList fields;
     foreach(FieldPtr f, m_fields) {
         if(f->notnull())
         {
+            fields << f->name();
             if( m_primarykey.contains(f) && f->isInteger() )
             {
                 vals << "NULL";
@@ -186,9 +188,24 @@ QString Table::emptyInsertStmt() const
             }
         }
         else
-            vals << "NULL";
+        {
+            // don't insert into fields with a default value
+            // or we will never see it.
+            if(f->defaultValue().length() == 0)
+            {
+                fields << f->name();
+                vals << "NULL";
+            }
+        }
     }
 
+    if(!fields.empty())
+    {
+        stmt.append("(`");
+        stmt.append(fields.join("`,`"));
+        stmt.append("`)");
+    }
+    stmt.append(" VALUES (");
     stmt.append(vals.join(","));
     stmt.append(");");
 
