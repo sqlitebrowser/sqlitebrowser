@@ -174,8 +174,11 @@ void DBBrowserDB::close (){
     {
         if (getDirty())
         {
-            QString msg = QObject::tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename);
-            if (QMessageBox::question( 0, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+            if (QMessageBox::question( 0,
+                                       QApplication::applicationName(),
+                                       QObject::tr("Do you want to save the changes "
+                                                   "made to the database file %1?").arg(curDBFilename),
+                                       QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
                 save();
             else
                 revert(); //not really necessary, I think... but will not hurt.
@@ -221,13 +224,16 @@ bool DBBrowserDB::dump(const QString& filename)
     QFile file(filename);
     if(file.open(QIODevice::WriteOnly))
     {
-        // Create progress dialog. For this count the number of all table rows to be exported first; this does neither take the table creation itself nor
+        // Create progress dialog. For this count the number of all table rows to be exported first;
+        // this does neither take the table creation itself nor
         // indices, views or triggers into account but compared to the number of rows those should be neglectable
         unsigned int numRecordsTotal = 0, numRecordsCurrent = 0;
         QList<DBBrowserObject> tables = objMap.values("table");
         for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
-            numRecordsTotal += getFindResults(QString("SELECT COUNT(*) FROM `%1`;").arg((*it).getname())).value(0).toInt();
-        QProgressDialog progress(QObject::tr("Exporting database to SQL file..."), QObject::tr("Cancel"), 0, numRecordsTotal);
+            numRecordsTotal += getFindResults(
+                QString("SELECT COUNT(*) FROM `%1`;").arg((*it).getname())).value(0).toInt();
+        QProgressDialog progress(QObject::tr("Exporting database to SQL file..."),
+                                 QObject::tr("Cancel"), 0, numRecordsTotal);
         progress.setWindowModality(Qt::ApplicationModal);
 
         // Regular expression to check for numeric strings
@@ -352,14 +358,16 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
             if(sqlite3_step(vm) == SQLITE_ERROR)
             {
                 sqlite3_finalize(vm);
-                lastErrorMessage = QObject::tr("Error in statement #%1: %2.\nAborting execution.").arg(line).arg(sqlite3_errmsg(_db));
+                lastErrorMessage = QObject::tr("Error in statement #%1: %2.\n"
+                    "Aborting execution.").arg(line).arg(sqlite3_errmsg(_db));
                 qDebug(lastErrorMessage.toStdString().c_str());
                 return false;
             } else {
                 sqlite3_finalize(vm);
             }
         } else {
-            lastErrorMessage = QObject::tr("Error in statement #%1: %2.\nAborting execution.").arg(line).arg(sqlite3_errmsg(_db));
+            lastErrorMessage = QObject::tr("Error in statement #%1: %2.\n"
+                "Aborting execution.").arg(line).arg(sqlite3_errmsg(_db));
             qDebug(lastErrorMessage.toStdString().c_str());
             return false;
         }
@@ -503,7 +511,8 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
 
 bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type)
 {
-    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite. If SQLite should fully support this command one day, this entire
+    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
+    // If SQLite should fully support this command one day, this entire
     // function can be changed to executing something like this:
     //QString sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);
     //return executeSQL(sql);
@@ -525,7 +534,8 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
         return false;
     }
 
-    // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to change
+    // Create a new table with a name that hopefully doesn't exist yet.
+    // Its layout is exactly the same as the one of the table to change - except for the column to change
     // of course
     QList<DBBrowserField> new_table_structure;
     for(int i=0;i<table.fldmap.count();i++)
@@ -534,7 +544,9 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
         if(table.fldmap.value(i).getname() == from)
             new_table_structure.push_back(DBBrowserField(to, type));
         else
-            new_table_structure.push_back(DBBrowserField(table.fldmap.value(i).getname(), table.fldmap.value(i).gettype()));
+            new_table_structure.push_back(
+                        DBBrowserField(table.fldmap.value(i).getname(), table.fldmap.value(i).gettype())
+            );
     }
     if(!createTable("sqlitebrowser_rename_column_new_table", new_table_structure))
     {
@@ -547,7 +559,8 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
     // Copy the data from the old table to the new one
     if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT * FROM `%1`;").arg(tablename)))
     {
-        lastErrorMessage = QObject::tr("renameColumn: copying data to new table failed. DB says: %1").arg(lastErrorMessage);
+        lastErrorMessage = QObject::tr("renameColumn: copying data to new table failed. DB says:\n"
+                                       "%1").arg(lastErrorMessage);
         qDebug(lastErrorMessage.toStdString().c_str());
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
         return false;
@@ -583,7 +596,8 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
 
 bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
 {
-    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite. If SQLite should fully support this command one day, this entire
+    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
+    // If SQLite should fully support this command one day, this entire
     // function can be changed to executing something like this:
     //QString sql = QString("ALTER TABLE `%1` DROP COLUMN `%2`;").arg(table).arg(column);
     //return executeSQL(sql);
@@ -601,7 +615,8 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
 
     if(oldSchema.findField(column) == -1 || oldSchema.fields().count() == 1)
     {
-        lastErrorMessage = QObject::tr("dropColumn: cannot find column %1. Also you can not delete the last column").arg(column);
+        lastErrorMessage = QObject::tr("dropColumn: cannot find column %1. "
+            "Also you can not delete the last column").arg(column);
         qWarning() << lastErrorMessage;
         return false;
     }
@@ -614,7 +629,8 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
         return false;
     }
 
-    // Create a new table with a name that hopefully doesn't exist yet. Its layout is exactly the same as the one of the table to change - except for the column to drop
+    // Create a new table with a name that hopefully doesn't exist yet.
+    // Its layout is exactly the same as the one of the table to change - except for the column to drop
     // of course. Also prepare the columns to be copied in a later step now.
     sqlb::Table newSchema = oldSchema;
     newSchema.setName("sqlitebrowser_drop_column_new_table");
@@ -681,7 +697,8 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
     QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(from_table, to_table);
     if(!executeSQL(sql, false))
     {
-        QString error = QObject::tr("Error renaming table '%1' to '%2'. Message from database engine:\n%3").arg(from_table).arg(to_table).arg(lastErrorMessage);
+        QString error = QObject::tr("Error renaming table '%1' to '%2'."
+            "Message from database engine:\n%3").arg(from_table).arg(to_table).arg(lastErrorMessage);
         lastErrorMessage = error;
         qDebug(error.toStdString().c_str());
         return false;
@@ -942,7 +959,8 @@ void DBBrowserDB::updateSchema( )
         }
         sqlite3_finalize(vm);
     }else{
-        qDebug(QObject::tr("could not get list of db objects: %1, %2").arg(err).arg(sqlite3_errmsg(_db)).toStdString().c_str());
+        qDebug(QObject::tr("could not get list of db objects: %1, %2").
+               arg(err).arg(sqlite3_errmsg(_db)).toStdString().c_str());
     }
 
     //now get the field list for each table
@@ -1085,7 +1103,8 @@ QString DBBrowserDB::getPragma(const QString& pragma)
         }
         sqlite3_finalize(vm);
     } else {
-        qDebug(QObject::tr("could not execute pragma command: %1, %2").arg(err).arg(sqlite3_errmsg(_db)).toStdString().c_str());
+        qDebug(QObject::tr("could not execute pragma command: %1, %2").
+               arg(err).arg(sqlite3_errmsg(_db)).toStdString().c_str());
     }
 
     // Return it
@@ -1101,7 +1120,8 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     save();
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
-        qDebug(QObject::tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage).toStdString().c_str());
+        qDebug(QObject::tr("Error setting pragma %1 to %2: %3").
+               arg(pragma).arg(value).arg(lastErrorMessage).toStdString().c_str());
     return res;
 }
 
