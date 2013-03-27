@@ -767,6 +767,7 @@ void MainWindow::executeQuery()
     const char *tail = utf8Query.data();
     int sql3status = 0;
     QString statusMessage;
+    bool modified = false;
 
     //Accept multi-line queries, by looping until the tail is empty
     do
@@ -822,7 +823,11 @@ void MainWindow::executeQuery()
                 statusMessage = tr("%1 Rows returned from: %2").arg(rownum).arg(queryPart);
             case SQLITE_OK:
             {
-                statusMessage = tr("Query executed successfully: %1").arg(queryPart);
+                if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) )
+                {
+                    modified = true;
+                    statusMessage = tr("Query executed successfully: %1").arg(queryPart);
+                }
             }
             break;
             default:
@@ -842,6 +847,9 @@ void MainWindow::executeQuery()
         ui->queryResultTableView->resizeColumnsToContents();
 
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
+
+    if(!modified)
+        db.revert(); // better rollback, if the logic is not enough we can tune it.
 }
 
 void MainWindow::mainTabSelected(int tabindex)
