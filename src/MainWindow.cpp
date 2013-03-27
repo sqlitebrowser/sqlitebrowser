@@ -743,9 +743,20 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     editText(index.row(), index.column());
 }
 
+/*
+ * I'm still not happy how the results are represented to the user
+ * right now you only see the result of the last executed statement.
+ * A better experiance would be tabs on the bottom with query results
+ * for all the executed statements.
+ * Or at least a some way the use could see results/status message
+ * per executed statement.
+ */
 void MainWindow::executeQuery()
 {
-    QString query = ui->sqlTextEdit->toPlainText().trimmed();
+    // if a part of the query is selected, we will only execute this part
+    QString query = ui->sqlTextEdit->textCursor().selectedText();
+    if(query.isEmpty())
+        query = ui->sqlTextEdit->toPlainText().trimmed();
     if (query.isEmpty())
         return;
 
@@ -765,9 +776,10 @@ void MainWindow::executeQuery()
         queryResultListModel->setHorizontalHeaderLabels(QStringList());
         queryResultListModel->setVerticalHeaderLabels(QStringList());
 
-        QString queryPart = tail;
+        const char* qbegin = tail;
         sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
                             &vm, &tail);
+        QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         if (sql3status == SQLITE_OK){
             int rownum = 0;
             bool mustCreateColumns = true;
@@ -800,12 +812,15 @@ void MainWindow::executeQuery()
                 } while ( sqlite3_step(vm) == SQLITE_ROW );
                 sql3status = SQLITE_OK;
             }
-            break;
             case SQLITE_DONE:
+                statusMessage = tr("%1 Rows returned from: %2").arg(rownum).arg(queryPart);
             case SQLITE_OK:
             {
                 if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive))
+                {
                     db.setRestorePoint();
+                    statusMessage = tr("Query executed successfully: %1").arg(queryPart);
+                }
             }
             break;
             default:

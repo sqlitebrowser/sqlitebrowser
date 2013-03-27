@@ -798,7 +798,10 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Execute SQL query</string>
+        <string>Execute SQL query (CTRL+E)</string>
+       </property>
+       <property name="statusTip">
+        <string>Execute SQL query (CTRL+E)</string>
        </property>
        <property name="whatsThis">
         <string>This button is used to execute the SQL query entered in the text area above.</string>
@@ -806,12 +809,15 @@
        <property name="text">
         <string>Execute query</string>
        </property>
+       <property name="shortcut">
+        <string>Ctrl+E</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Error message from database engine:</string>
+        <string>Status:</string>
        </property>
        <property name="buddy">
         <cstring>queryErrorLineEdit</cstring>
