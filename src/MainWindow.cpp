@@ -776,6 +776,12 @@ void MainWindow::executeQuery()
         queryResultListModel->setHorizontalHeaderLabels(QStringList());
         queryResultListModel->setVerticalHeaderLabels(QStringList());
 
+        // there is no choice, we have to start a transaction before
+        // we create the prepared statement, otherwise every executed
+        // statement will get committed after the prepared statement
+        // gets finalized, see http://www.sqlite.org/lang_transaction.html
+        db.setRestorePoint();
+
         const char* qbegin = tail;
         sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
                             &vm, &tail);
@@ -816,11 +822,7 @@ void MainWindow::executeQuery()
                 statusMessage = tr("%1 Rows returned from: %2").arg(rownum).arg(queryPart);
             case SQLITE_OK:
             {
-                if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive))
-                {
-                    db.setRestorePoint();
-                    statusMessage = tr("Query executed successfully: %1").arg(queryPart);
-                }
+                statusMessage = tr("Query executed successfully: %1").arg(queryPart);
             }
             break;
             default:
