@@ -144,12 +144,11 @@ void ImportCsvDialog::accept()
     }
 
     // Everything ok, release the savepoint
-    if(!pdb->executeSQL("RELEASE SAVEPOINT CSVIMPORT;"))
+    if(!pdb->executeSQL("RELEASE SAVEPOINT CSVIMPORT;", false))
         return rollback(this, pdb, progress);
-    pdb->setDirty(true);
+
     QApplication::restoreOverrideCursor();  // restore original cursor
     QDialog::accept();
-    return;
 }
 
 void ImportCsvDialog::updatePreview()
