@@ -768,6 +768,13 @@ void MainWindow::executeQuery()
     int sql3status = 0;
     QString statusMessage;
     bool modified = false;
+    bool wasdirty = db.getDirty();
+
+    // there is no choice, we have to start a transaction before
+    // we create the prepared statement, otherwise every executed
+    // statement will get committed after the prepared statement
+    // gets finalized, see http://www.sqlite.org/lang_transaction.html
+    db.setRestorePoint();
 
     //Accept multi-line queries, by looping until the tail is empty
     do
@@ -776,12 +783,6 @@ void MainWindow::executeQuery()
         queryResultListModel->removeColumns(0, queryResultListModel->columnCount());
         queryResultListModel->setHorizontalHeaderLabels(QStringList());
         queryResultListModel->setVerticalHeaderLabels(QStringList());
-
-        // there is no choice, we have to start a transaction before
-        // we create the prepared statement, otherwise every executed
-        // statement will get committed after the prepared statement
-        // gets finalized, see http://www.sqlite.org/lang_transaction.html
-        db.setRestorePoint();
 
         const char* qbegin = tail;
         sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
@@ -848,7 +849,7 @@ void MainWindow::executeQuery()
 
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
 
-    if(!modified)
+    if(!modified && !wasdirty)
         db.revert(); // better rollback, if the logic is not enough we can tune it.
 }
 
