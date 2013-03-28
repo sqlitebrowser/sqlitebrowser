@@ -331,7 +331,7 @@ void EditTableDialog::removeField()
         return;
 
     // Are we creating a new table or editing an old one?
-    if(!m_bNewTable)
+    if(m_bNewTable)
     {
         // Creating a new one
 
