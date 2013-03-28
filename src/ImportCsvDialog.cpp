@@ -22,6 +22,17 @@ ImportCsvDialog::~ImportCsvDialog()
     delete ui;
 }
 
+namespace {
+void rollback(ImportCsvDialog* dialog, DBBrowserDB* pdb, QProgressDialog& progress)
+{
+    progress.hide();
+    QApplication::restoreOverrideCursor();  // restore original cursor
+    QString error = QObject::tr("Error importing data. Message from database engine: %1").arg(pdb->lastErrorMessage);
+    QMessageBox::warning(dialog, QApplication::applicationName(), error);
+    pdb->executeSQL("ROLLBACK TO SAVEPOINT CSVIMPORT;", false);
+}
+}
+
 void ImportCsvDialog::accept()
 {
     QString sql;
@@ -96,58 +107,49 @@ void ImportCsvDialog::accept()
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
     if(!pdb->executeSQL("SAVEPOINT CSVIMPORT;", false))
-        goto rollback;
+        return rollback(this, pdb, progress);
 
     // Create table
     if(!importToExistingTable)
     {
         if(!pdb->createTable(ui->editName->text(), fieldList))
-            goto rollback;
+            return rollback(this, pdb, progress);
     }
 
-    { // avoid error on MSVC due to rollback label
-        // now lets import all data, one row at a time
-        for(int i=0;i<curList.size();++i)
+    // now lets import all data, one row at a time
+    for(int i=0;i<curList.size();++i)
+    {
+        if(colNum == 0)
+            sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
+
+        // need to mprintf here
+        char* formSQL = sqlite3_mprintf("%Q", (const char*)curList[i].toUtf8());
+        sql.append(formSQL);
+        if(formSQL)
+            sqlite3_free(formSQL);
+
+        colNum++;
+        if(colNum < numfields)
         {
-            if(colNum == 0)
-                sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
-
-            // need to mprintf here
-            char* formSQL = sqlite3_mprintf("%Q", (const char*)curList[i].toUtf8());
-            sql.append(formSQL);
-            if(formSQL)
-                sqlite3_free(formSQL);
-
-            colNum++;
-            if(colNum < numfields)
-            {
-                sql.append(",");
-            } else {
-                colNum = 0;
-                sql.append(");");
-                if(!pdb->executeSQL(sql, false, false))
-                    goto rollback;
-            }
-            progress.setValue(i);
-            if(progress.wasCanceled())
-                goto rollback;
+            sql.append(",");
+        } else {
+            colNum = 0;
+            sql.append(");");
+            if(!pdb->executeSQL(sql, false, false))
+                return rollback(this, pdb, progress);
         }
+        progress.setValue(i);
+        if(progress.wasCanceled())
+            return rollback(this, pdb, progress);
     }
 
     // Everything ok, release the savepoint
     if(!pdb->executeSQL("RELEASE SAVEPOINT CSVIMPORT;"))
-        goto rollback;
+        return rollback(this, pdb, progress);
     pdb->setDirty(true);
     QApplication::restoreOverrideCursor();  // restore original cursor
     QDialog::accept();
     return;
-
-rollback:
-    progress.hide();
-    QApplication::restoreOverrideCursor();  // restore original cursor
-    QString error = tr("Error importing data. Message from database engine: %1").arg(pdb->lastErrorMessage);
-    QMessageBox::warning(this, QApplication::applicationName(), error);
-    pdb->executeSQL("ROLLBACK TO SAVEPOINT CSVIMPORT;", false);
 }
 
 void ImportCsvDialog::updatePreview()
