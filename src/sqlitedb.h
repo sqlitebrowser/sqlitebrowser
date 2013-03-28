@@ -83,9 +83,9 @@ public:
     bool create ( const QString & db);
     void close ();
     bool compact ();
-    bool setRestorePoint();
-    bool save ();
-    bool revert ();
+    bool setRestorePoint(const QString& pointname = "RESTOREPOINT");
+    bool save (const QString& pointname = "RESTOREPOINT");
+    bool revert (const QString& pointname = "RESTOREPOINT");
     bool dump( const QString & filename);
     bool reload( const QString & filename, int * lineErr);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);

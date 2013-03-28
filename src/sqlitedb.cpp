@@ -86,39 +86,43 @@ bool DBBrowserDB::open ( const QString & db)
     return ok;
 }
 
-bool DBBrowserDB::setRestorePoint()
+bool DBBrowserDB::setRestorePoint(const QString& pointname)
 {
     if (!isOpen()) return false;
     if (dirty) return false;
 
     if (_db){
-        sqlite3_exec(_db,"SAVEPOINT RESTOREPOINT;",
+        QString query = QString("SAVEPOINT %1;").arg(pointname);
+        sqlite3_exec(_db, query.toUtf8(),
                      NULL,NULL,NULL);
         setDirty(true);
     }
     return true;
 }
 
-bool DBBrowserDB::save()
+bool DBBrowserDB::save(const QString& pointname)
 {
     if (!isOpen()) return false;
 
     if (_db){
-        sqlite3_exec(_db,"RELEASE RESTOREPOINT;",
+        QString query = QString("RELEASE %1;").arg(pointname);
+        sqlite3_exec(_db, query.toUtf8(),
                      NULL,NULL,NULL);
         setDirty(false);
     }
     return true;
 }
 
-bool DBBrowserDB::revert()
+bool DBBrowserDB::revert(const QString& pointname)
 {
     if (!isOpen()) return false;
 
     if (_db){
-        sqlite3_exec(_db,"ROLLBACK TO SAVEPOINT RESTOREPOINT;",
+        QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(pointname);
+        sqlite3_exec(_db, query.toUtf8(),
                      NULL,NULL,NULL);
-        sqlite3_exec(_db,"RELEASE RESTOREPOINT;",
+        query = QString("RELEASE %1;").arg(pointname);
+        sqlite3_exec(_db, query.toUtf8(),
                      NULL,NULL,NULL);
         setDirty(false);
     }
@@ -391,7 +395,7 @@ bool DBBrowserDB::addRecord(const QString& sTableName)
     // we should cache the parsed tables somewhere
     sqlb::Table table = sqlb::Table::parseSQL(getTableSQL(sTableName));
     QString sInsertstmt = table.emptyInsertStmt();
-
+    qDebug() << sInsertstmt;
     lastErrorMessage = "";
     logSQL(sInsertstmt, kLogMsg_App);
     setRestorePoint();
