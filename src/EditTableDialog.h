@@ -54,6 +54,7 @@ private:
     QStringList types;
     QStringList fields;
     SQLiteSyntaxHighlighter* m_sqliteSyntaxHighlighter;
+    bool m_bNewTable;
 };
 
 #endif

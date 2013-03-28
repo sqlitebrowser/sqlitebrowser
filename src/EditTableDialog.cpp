@@ -14,7 +14,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
       ui(new Ui::EditTableDialog),
       pdb(db),
       curTable(tableName),
-      m_table(tableName)
+      m_table(tableName),
+      m_bNewTable(true)
 {
     // Create UI
     ui->setupUi(this);
@@ -25,6 +26,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
     // Editing an existing table?
     if(curTable != "")
     {
+        m_bNewTable = false; // we are editing an existing table
+
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getTableSQL(curTable);
         //qDebug() << sTablesql;
@@ -68,7 +71,9 @@ void EditTableDialog::populateFields()
     foreach(sqlb::FieldPtr f, fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
-        tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
+        //currently we don't support editing of field data
+        if(m_bNewTable)
+            tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
         tbitem->setText(kName, f->name());
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         QObject::connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
@@ -100,7 +105,7 @@ void EditTableDialog::accept()
 {
     // Are we editing an already existing table or designing a new one? In the first case there is a table name set,
     // in the latter the current table name is empty
-    if(curTable == "")
+    if(m_bNewTable)
     {
         // Creation of new table
         // we commit immediatly so no need to setdirty
@@ -326,7 +331,7 @@ void EditTableDialog::removeField()
         return;
 
     // Are we creating a new table or editing an old one?
-    if(curTable == "")
+    if(!m_bNewTable)
     {
         // Creating a new one
 
