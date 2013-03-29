@@ -61,18 +61,28 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
         highlightingRules.append(rule);
     }
 
+    // single line comment
     singleLineCommentFormat.setForeground(Qt::darkGreen);
     rule.pattern = QRegExp("--[^\n]*");
     rule.format = singleLineCommentFormat;
     highlightingRules.append(rule);
 
-    quotationFormat.setForeground(Qt::red);
-    rule.pattern = QRegExp("\".*\"");
-    rule.format = quotationFormat;
+    // identifiers
+    identifierFormat.setForeground(Qt::darkMagenta);
+    rule.pattern = QRegExp("\"[^\"]*\""); // ""
+    rule.format = identifierFormat;
     highlightingRules.append(rule);
 
-    rule.pattern = QRegExp("'.*'");
-    rule.format = quotationFormat;
+    rule.pattern = QRegExp("\\[[^\\]]*\\]"); // []
+    highlightingRules.append(rule);
+
+    rule.pattern = QRegExp("`[^`]*`"); // ``
+    highlightingRules.append(rule);
+
+    // string
+    stringFormat.setForeground(Qt::red);
+    rule.pattern = QRegExp("'[^']*'"); // ''
+    rule.format = stringFormat;
     highlightingRules.append(rule);
 }
 

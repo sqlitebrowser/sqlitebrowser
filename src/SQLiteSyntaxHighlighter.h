@@ -27,7 +27,8 @@ private:
 
     QTextCharFormat keywordFormat;
     QTextCharFormat singleLineCommentFormat;
-    QTextCharFormat quotationFormat;
+    QTextCharFormat stringFormat;
+    QTextCharFormat identifierFormat;
     QTextCharFormat tableFormat;
 };
 
