@@ -83,7 +83,9 @@ void SqlTextEdit::insertCompletion(const QString& completion)
     // eg. "tablename.;" if you would select a field completion and hit enter
     // without this workaround the text would be inserted after the ';'
     // because endofword moves to the end of the line
-    if(tc.selectedText() == ".")
+    // or we have no competionprefix at all (CTRL+SPACE) without text
+    // under cursor
+    if(tc.selectedText() == "." || m_Completer->completionPrefix().isEmpty())
         tc.movePosition(QTextCursor::Right);
     else
         tc.movePosition(QTextCursor::EndOfWord);
