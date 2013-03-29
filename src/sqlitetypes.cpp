@@ -11,7 +11,7 @@ QStringList Field::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" <<
 
 QString Field::toString(const QString& indent, const QString& sep) const
 {
-    QString str = indent + m_name + sep + m_type;
+    QString str = indent + '`' + m_name + '`' + sep + m_type;
     if(m_notnull)
         str += " NOT NULL";
     if(!m_defaultvalue.isEmpty())
