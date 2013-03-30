@@ -47,7 +47,11 @@ void PreferencesDialog::loadSettings()
     for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
     {
         QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, getSettingsValue("syntaxhighlighter", name + "_colour").toString());
+        QString colorname = getSettingsValue("syntaxhighlighter", name + "_colour").toString();
+        QColor color = QColor(colorname);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, getSettingsValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
@@ -174,5 +178,9 @@ void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
 
     QColor colour = QColorDialog::getColor(QColor(item->text(column)), this);
     if(colour.isValid())
+    {
+        item->setTextColor(column, colour);
+        item->setBackgroundColor(column, colour);
         item->setText(column, colour.name());
+    }
 }
