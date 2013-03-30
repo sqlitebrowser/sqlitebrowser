@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>492</width>
-    <height>135</height>
+    <height>276</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,83 +18,166 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Database Encoding</string>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>&amp;Database</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::ExpandingFieldsGrow</enum>
        </property>
-       <property name="buddy">
-        <cstring>encodingComboBox</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="encodingComboBox">
-       <item>
-        <property name="text">
-         <string notr="true">UTF-8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">UTF-16</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="toolTip">
-        <string>Open databases with foreign keys enabled.</string>
-       </property>
-       <property name="text">
-        <string>Foreign keys</string>
-       </property>
-       <property name="buddy">
-        <cstring>foreignKeysCheckBox</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="foreignKeysCheckBox">
-       <property name="text">
-        <string>enabled</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Default location</string>
-       </property>
-       <property name="buddy">
-        <cstring>locationEdit</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="locationEdit">
-         <property name="enabled">
-          <bool>false</bool>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Database &amp;encoding</string>
+         </property>
+         <property name="buddy">
+          <cstring>encodingComboBox</cstring>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QToolButton" name="setLocationButton">
-         <property name="text">
-          <string>...</string>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="encodingComboBox">
+         <item>
+          <property name="text">
+           <string notr="true">UTF-8</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">UTF-16</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="toolTip">
+          <string>Open databases with foreign keys enabled.</string>
          </property>
+         <property name="text">
+          <string>&amp;Foreign keys</string>
+         </property>
+         <property name="buddy">
+          <cstring>foreignKeysCheckBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="foreignKeysCheckBox">
+         <property name="text">
+          <string>enabled</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Default &amp;location</string>
+         </property>
+         <property name="buddy">
+          <cstring>locationEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="locationEdit">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="setLocationButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>&amp;SQL</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QTreeWidget" name="treeSyntaxHighlighting">
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
+         <column>
+          <property name="text">
+           <string>Context</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Colour</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Bold</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Italic</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Underline</string>
+          </property>
+         </column>
+         <item>
+          <property name="text">
+           <string>Keyword</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Table</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Comment</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Identifier</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>String</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -109,10 +192,12 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>encodingComboBox</tabstop>
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
+  <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
@@ -124,8 +209,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>214</y>
+     <x>260</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>155</x>
@@ -140,8 +225,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>214</y>
+     <x>328</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -156,8 +241,8 @@
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>485</x>
-     <y>134</y>
+     <x>478</x>
+     <y>107</y>
     </hint>
     <hint type="destinationlabel">
      <x>459</x>
@@ -165,9 +250,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeSyntaxHighlighting</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>saveSettings()</slot>
   <slot>chooseLocation()</slot>
+  <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

@@ -26,6 +26,9 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       browseTableModel(new QStandardItemModel(this)),
+      sqliteHighlighterTabSql(0),
+      sqliteHighlighterLogUser(0),
+      sqliteHighlighterLogApp(0),
       editWin(new EditDialog(this)),
       findWin(0)
 {
@@ -47,8 +50,6 @@ void MainWindow::init()
 {
     // Init the SQL log dock
     db.mainWindow = this;
-    sqliteHighlighterLogUser = new SQLiteSyntaxHighlighter(ui->editLogUser->document());
-    sqliteHighlighterLogApp = new SQLiteSyntaxHighlighter(ui->editLogApplication->document());
 
     // Set up the db tree widget
     ui->dbTreeWidget->setColumnHidden(1, true);
@@ -58,8 +59,8 @@ void MainWindow::init()
     gotoValidator = new QIntValidator(0, 0, this);
     ui->editGoto->setValidator(gotoValidator);
 
-    // Create the SQL sytax highlighter
-    sqliteHighlighterTabSql = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
+    // Create the SQL sytax highlighters
+    createSyntaxHighlighters();
 
     // Set up DB models
     ui->dataTable->setModel(browseTableModel);
@@ -983,8 +984,20 @@ void MainWindow::openPreferences()
     PreferencesDialog dialog(this);
     if(dialog.exec())
     {
+        createSyntaxHighlighters();
+        populateStructure();
         resetBrowser();
     }
+}
+
+void MainWindow::createSyntaxHighlighters()
+{
+    delete sqliteHighlighterLogApp;
+    delete sqliteHighlighterLogUser;
+    delete sqliteHighlighterTabSql;
+    sqliteHighlighterLogApp = new SQLiteSyntaxHighlighter(ui->editLogApplication->document());
+    sqliteHighlighterLogUser = new SQLiteSyntaxHighlighter(ui->editLogUser->document());
+    sqliteHighlighterTabSql = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 }
 
 //******************************************************************

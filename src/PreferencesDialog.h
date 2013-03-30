@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QVariant>
 #include <QHash>
+class QTreeWidgetItem;
 
 namespace Ui {
 class PreferencesDialog;
@@ -25,6 +26,7 @@ private slots:
     virtual void chooseLocation();
     virtual void loadSettings();
     virtual void saveSettings();
+    virtual void showColourDialog(QTreeWidgetItem* item, int column);
 
 private:
     Ui::PreferencesDialog *ui;

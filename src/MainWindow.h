@@ -140,6 +140,7 @@ private slots:
     virtual void savePragmas();
     virtual void mainTabSelected( int tabindex );
     virtual void browseTableHeaderClicked(int logicalindex);
+    virtual void createSyntaxHighlighters();
 };
 
 #endif
