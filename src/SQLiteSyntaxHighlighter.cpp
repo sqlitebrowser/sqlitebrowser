@@ -6,15 +6,12 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
 {
     HighlightingRule rule;
 
-    tableFormat.setForeground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "table_colour").toString()));
-    tableFormat.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", "table_bold").toBool() ? QFont::Bold : QFont::Normal);
-    tableFormat.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", "table_italic").toBool());
-    tableFormat.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", "table_underline").toBool());
+    tableFormat = createFormat("table");
+    keywordFormat = createFormat("keyword");
+    singleLineCommentFormat = createFormat("comment");
+    identifierFormat = createFormat("identifier");
+    stringFormat = createFormat("string");
 
-    keywordFormat.setForeground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "keyword_colour").toString()));
-    keywordFormat.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", "keyword_bold").toBool() ? QFont::Bold : QFont::Normal);
-    keywordFormat.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", "keyword_italic").toBool());
-    keywordFormat.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", "keyword_underline").toBool());
     QStringList keywordPatterns;
     keywordPatterns
             << "\\bREINDEX\\b" << "\\bINDEXED\\b" << "\\bINDEX\\b"
@@ -67,19 +64,11 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
     }
 
     // single line comment
-    singleLineCommentFormat.setForeground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "comment_colour").toString()));
-    singleLineCommentFormat.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", "comment_bold").toBool() ? QFont::Bold : QFont::Normal);
-    singleLineCommentFormat.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", "comment_italic").toBool());
-    singleLineCommentFormat.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", "comment_underline").toBool());
     rule.pattern = QRegExp("--[^\n]*");
     rule.format = singleLineCommentFormat;
     highlightingRules.append(rule);
 
     // identifiers
-    identifierFormat.setForeground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "identifier_colour").toString()));
-    identifierFormat.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", "identifier_bold").toBool() ? QFont::Bold : QFont::Normal);
-    identifierFormat.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", "identifier_italic").toBool());
-    identifierFormat.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", "identifier_underline").toBool());
     rule.pattern = QRegExp("\"[^\"]*\""); // ""
     rule.format = identifierFormat;
     highlightingRules.append(rule);
@@ -91,10 +80,6 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
     highlightingRules.append(rule);
 
     // string
-    stringFormat.setForeground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "string_colour").toString()));
-    stringFormat.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", "string_bold").toBool() ? QFont::Bold : QFont::Normal);
-    stringFormat.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", "string_italic").toBool());
-    stringFormat.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", "string_underline").toBool());
     rule.pattern = QRegExp("'[^']*'"); // ''
     rule.format = stringFormat;
     highlightingRules.append(rule);
@@ -128,4 +113,14 @@ void SQLiteSyntaxHighlighter::highlightBlock(const QString &text)
 {
     highlightBlockVector(text, tableNameRules);
     highlightBlockVector(text, highlightingRules);
+}
+
+QTextCharFormat SQLiteSyntaxHighlighter::createFormat(const QString& settings_name)
+{
+    QTextCharFormat format;
+    format.setForeground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_colour").toString()));
+    format.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_bold").toBool() ? QFont::Bold : QFont::Normal);
+    format.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_italic").toBool());
+    format.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_underline").toBool());
+    return format;
 }

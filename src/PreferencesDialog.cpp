@@ -13,6 +13,7 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
       ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
+    ui->treeSyntaxHighlighting->setColumnHidden(0, true);
 
     loadSettings();
 }
@@ -45,17 +46,11 @@ void PreferencesDialog::loadSettings()
 
     for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
     {
-        QString name;
-        if(i == 0) name = "keyword";
-        else if(i == 1) name = "table";
-        else if(i == 2) name = "comment";
-        else if(i == 3) name = "identifier";
-        else if(i == 4) name = "string";
-
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setText(1, getSettingsValue("syntaxhighlighter", name + "_colour").toString());
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(2, getSettingsValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
+        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, getSettingsValue("syntaxhighlighter", name + "_colour").toString());
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, getSettingsValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
     }
 }
 
@@ -67,17 +62,11 @@ void PreferencesDialog::saveSettings()
 
     for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
     {
-        QString name;
-        if(i == 0) name = "keyword";
-        else if(i == 1) name = "table";
-        else if(i == 2) name = "comment";
-        else if(i == 3) name = "identifier";
-        else if(i == 4) name = "string";
-
-        setSettingsValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(1));
-        setSettingsValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(2) == Qt::Checked);
-        setSettingsValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
-        setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
+        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        setSettingsValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
+        setSettingsValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
+        setSettingsValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
+        setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
 
     accept();

@@ -119,6 +119,11 @@
          </property>
          <column>
           <property name="text">
+           <string>Settings name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Context</string>
           </property>
          </column>
@@ -144,6 +149,9 @@
          </column>
          <item>
           <property name="text">
+           <string notr="true">keyword</string>
+          </property>
+          <property name="text">
            <string>Keyword</string>
           </property>
           <property name="text">
@@ -152,25 +160,91 @@
           <property name="text">
            <string/>
           </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </item>
          <item>
+          <property name="text">
+           <string notr="true">table</string>
+          </property>
           <property name="text">
            <string>Table</string>
           </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </item>
          <item>
+          <property name="text">
+           <string notr="true">comment</string>
+          </property>
           <property name="text">
            <string>Comment</string>
           </property>
-         </item>
-         <item>
           <property name="text">
-           <string>Identifier</string>
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </item>
          <item>
           <property name="text">
+           <string notr="true">identifier</string>
+          </property>
+          <property name="text">
+           <string>Identifier</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">string</string>
+          </property>
+          <property name="text">
            <string>String</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </item>
         </widget>

@@ -30,6 +30,8 @@ private:
     QTextCharFormat stringFormat;
     QTextCharFormat identifierFormat;
     QTextCharFormat tableFormat;
+
+    QTextCharFormat createFormat(const QString& settings_name);
 };
 
 #endif // SQLITESYNTAXHIGHLIGHTER_H
