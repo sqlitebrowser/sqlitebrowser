@@ -26,7 +26,7 @@ static OSErr checkAppleEventForMissingParams(const AppleEvent& theAppleEvent)
 }
 
 static pascal OSErr odocHandler(const AppleEvent* inEvent, AppleEvent*
-                                /*reply*/, long refCon)
+                                /*reply*/, SInt32 refCon)
 {
     AEDescList documentList;
     OSErr err = AEGetParamDesc(inEvent, keyDirectObject, typeAEList,
