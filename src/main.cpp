@@ -5,7 +5,7 @@
 #include <QLibraryInfo>
 #include <QLocale>
 
-#if defined(Q_WS_MAC)
+#if 0 and defined(Q_WS_MAC)
 #include <Carbon/Carbon.h>
 static OSErr checkAppleEventForMissingParams(const AppleEvent& theAppleEvent)
 {
@@ -92,8 +92,8 @@ int main( int argc, char ** argv )
 
     MainWindow w;
 #if defined(Q_WS_MAC)
-    AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments,
-                          NewAEEventHandlerUPP(odocHandler),reinterpret_cast<long>(&w),false);
+//    AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments,
+//                          NewAEEventHandlerUPP(odocHandler),reinterpret_cast<long>(&w),false);
 #endif // Q_WS_MAC
     w.show();
     if (argc>1) {
