@@ -75,7 +75,6 @@ mac {
         Carbon \
         -L$$OUT_PWD/../libs/qhexedit/
     QMAKE_INFO_PLIST = app.plist
-    CONFIG += x86
 }
 LIBS += -lsqlite3
 RESOURCES += icons/icons.qrc
