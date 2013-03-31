@@ -57,7 +57,7 @@ static pascal OSErr odocHandler(const AppleEvent* inEvent, AppleEvent*
                         char buf[1024];
                         err = FSRefMakePath(&ref, reinterpret_cast<UInt8*>(buf), 1024);
                         if ( err == noErr )
-                            reinterpret_cast<mainForm*>(refCon)->fileOpen(QString::fromUtf8(buf));
+                            reinterpret_cast<MainWindow*>(refCon)->fileOpen(QString::fromUtf8(buf));
                     }
                 }
             }
