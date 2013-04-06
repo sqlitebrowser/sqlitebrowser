@@ -15,6 +15,7 @@ class QStandardItemModel;
 class QIntValidator;
 class QLabel;
 class QModelIndex;
+class SqliteTableModel;
 
 namespace Ui {
 class MainWindow;
@@ -53,6 +54,7 @@ private:
     Ui::MainWindow* ui;
 
     QStandardItemModel *browseTableModel;
+    SqliteTableModel* m_browseTableModel;
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;

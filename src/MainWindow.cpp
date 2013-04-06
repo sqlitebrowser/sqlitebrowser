@@ -21,6 +21,7 @@
 #include "FindDialog.h"
 #include "SQLiteSyntaxHighlighter.h"
 #include "sqltextedit.h"
+#include "sqlitetablemodel.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -51,6 +52,8 @@ void MainWindow::init()
     // Init the SQL log dock
     db.mainWindow = this;
 
+    m_browseTableModel = new SqliteTableModel(this, &db);
+
     // Set up the db tree widget
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
@@ -63,7 +66,8 @@ void MainWindow::init()
     createSyntaxHighlighters();
 
     // Set up DB models
-    ui->dataTable->setModel(browseTableModel);
+    //ui->dataTable->setModel(browseTableModel);
+    ui->dataTable->setModel(m_browseTableModel);
 
     queryResultListModel = new QStandardItemModel(this);
     ui->queryResultTableView->setModel(queryResultListModel);
@@ -270,43 +274,45 @@ void MainWindow::populateStructure()
 
 void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths)
 {
-    bool mustreset = false;
     QApplication::setOverrideCursor( Qt::WaitCursor );
-    if (tablename.compare(db.curBrowseTableName)!=0)
-    {
-        mustreset = true;
-        curBrowseOrderByIndex = 1;
-        curBrowseOrderByMode = ORDERMODE_ASC;
-    }
+    if(!tablename.isEmpty())
+        m_browseTableModel->setQuery(QString("SELECT * FROM `%1`").arg(tablename));
+//    bool mustreset = false;
+//    if (tablename.compare(db.curBrowseTableName)!=0)
+//    {
+//        mustreset = true;
+//        curBrowseOrderByIndex = 1;
+//        curBrowseOrderByMode = ORDERMODE_ASC;
+//    }
 
-    QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
-    if(!db.browseTable(tablename, orderby))
-    {
-        browseTableModel->setRowCount(0);
-        browseTableModel->setColumnCount(0);
-        QApplication::restoreOverrideCursor();
-        if(findWin)
-            findWin->resetFields(db.getTableFields(""));
-        return;
-    }
+//    QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
+//    if(!db.browseTable(tablename, orderby))
+//    {
+//        browseTableModel->setRowCount(0);
+//        browseTableModel->setColumnCount(0);
+//        QApplication::restoreOverrideCursor();
+//        if(findWin)
+//            findWin->resetFields(db.getTableFields(""));
+//        return;
+//    }
 
-    // Activate the add and delete record buttons and editing only if a table has been selected
-    bool is_table = db.getObjectByName(tablename).gettype() == "table";
-    ui->buttonNewRecord->setEnabled(is_table);
-    ui->buttonDeleteRecord->setEnabled(is_table);
-    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+//    // Activate the add and delete record buttons and editing only if a table has been selected
+//    bool is_table = db.getObjectByName(tablename).gettype() == "table";
+//    ui->buttonNewRecord->setEnabled(is_table);
+//    ui->buttonDeleteRecord->setEnabled(is_table);
+//    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
 
-    if (mustreset){
-        updateTableView(0, keepColumnWidths);
-        if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
-    } else {
-        updateTableView(-1, keepColumnWidths);
-    }
-    //got to keep findWin in synch
-    if(findWin)
-        findWin->resetFields();
-    if(editWin)
-        editWin->reset();
+//    if (mustreset){
+//        updateTableView(0, keepColumnWidths);
+//        if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
+//    } else {
+//        updateTableView(-1, keepColumnWidths);
+//    }
+//    //got to keep findWin in synch
+//    if(findWin)
+//        findWin->resetFields();
+//    if(editWin)
+//        editWin->reset();
     QApplication::restoreOverrideCursor();
 }
 
@@ -423,52 +429,52 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 {
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    browseTableModel->setRowCount(db.getRecordCount());
-    browseTableModel->setColumnCount(db.browseFields.count());
-    browseTableModel->setHorizontalHeaderLabels(db.browseFields);
+//    browseTableModel->setRowCount(db.getRecordCount());
+//    browseTableModel->setColumnCount(db.browseFields.count());
+//    browseTableModel->setHorizontalHeaderLabels(db.browseFields);
 
-    rowList tab = db.browseRecs;
-    int maxRecs = db.getRecordCount();
-    gotoValidator->setRange(0, maxRecs);
+//    rowList tab = db.browseRecs;
+//    int maxRecs = db.getRecordCount();
+//    gotoValidator->setRange(0, maxRecs);
 
-    if ( maxRecs > 0 ) {
+//    if ( maxRecs > 0 ) {
 
-        int rowNum = 0;
-        int colNum = 0;
-        QString rowLabel;
-        for (int i = 0; i < tab.size(); ++i)
-        {
-            rowLabel.setNum(rowNum+1);
-            browseTableModel->setVerticalHeaderItem(rowNum, new QStandardItem(rowLabel));
-            colNum = 0;
-            QList<QByteArray> rt = tab[i];
-            for (int e = 1; e < rt.size(); ++e)
-            {
-                QString content = rt[e];
+//        int rowNum = 0;
+//        int colNum = 0;
+//        QString rowLabel;
+//        for (int i = 0; i < tab.size(); ++i)
+//        {
+//            rowLabel.setNum(rowNum+1);
+//            browseTableModel->setVerticalHeaderItem(rowNum, new QStandardItem(rowLabel));
+//            colNum = 0;
+//            QList<QByteArray> rt = tab[i];
+//            for (int e = 1; e < rt.size(); ++e)
+//            {
+//                QString content = rt[e];
 
-                QStandardItem* item = new QStandardItem(content);
-                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-                item->setToolTip(wrapText(content));
-                browseTableModel->setItem( rowNum, colNum, item);
-                colNum++;
-            }
-            rowNum++;
-            if (rowNum==maxRecs) break;
-        }
-    }
+//                QStandardItem* item = new QStandardItem(content);
+//                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+//                item->setToolTip(wrapText(content));
+//                browseTableModel->setItem( rowNum, colNum, item);
+//                colNum++;
+//            }
+//            rowNum++;
+//            if (rowNum==maxRecs) break;
+//        }
+//    }
 
-    if(!keepColumnWidths) {
-        for(int i=0;i<browseTableModel->columnCount();++i)
-        {
-            ui->dataTable->resizeColumnToContents(i);
-            if( ui->dataTable->columnWidth(i) > 400 )
-                ui->dataTable->setColumnWidth(i, 400);
-        }
-    }
-    if (lineToSelect!=-1){
-        selectTableLine(lineToSelect);
-    }
-    setRecordsetLabel();
+//    if(!keepColumnWidths) {
+//        for(int i=0;i<browseTableModel->columnCount();++i)
+//        {
+//            ui->dataTable->resizeColumnToContents(i);
+//            if( ui->dataTable->columnWidth(i) > 400 )
+//                ui->dataTable->setColumnWidth(i, 400);
+//        }
+//    }
+//    if (lineToSelect!=-1){
+//        selectTableLine(lineToSelect);
+//    }
+//    setRecordsetLabel();
     QApplication::restoreOverrideCursor();
 }
 

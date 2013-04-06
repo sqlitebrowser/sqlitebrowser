@@ -25,7 +25,8 @@ HEADERS += \
     ExtendedTableWidget.h \
     grammar/Sqlite3Lexer.hpp \
     grammar/Sqlite3Parser.hpp \
-    grammar/sqlite3TokenTypes.hpp
+    grammar/sqlite3TokenTypes.hpp \
+    sqlitetablemodel.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -43,7 +44,8 @@ SOURCES += \
     sqlitetypes.cpp \
     ExtendedTableWidget.cpp \
     grammar/Sqlite3Lexer.cpp \
-    grammar/Sqlite3Parser.cpp
+    grammar/Sqlite3Parser.cpp \
+    sqlitetablemodel.cpp
 
 # create a unittest option
 CONFIG(unittest) {
