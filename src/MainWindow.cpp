@@ -104,7 +104,7 @@ void MainWindow::init()
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
-    connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int , QByteArray)));
+    connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
 
     // Load window settings
     restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
@@ -277,7 +277,7 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
 {
     QApplication::setOverrideCursor( Qt::WaitCursor );
     if(!tablename.isEmpty())
-        m_browseTableModel->setQuery(QString("SELECT * FROM `%1`").arg(tablename));
+        m_browseTableModel->setTable(tablename);
 //    bool mustreset = false;
 //    if (tablename.compare(db.curBrowseTableName)!=0)
 //    {
@@ -706,18 +706,7 @@ void MainWindow::helpAbout()
 
 void MainWindow::updateRecordText(int row, int col, const QByteArray& newtext)
 {
-    if (!db.updateRecord(row, col, newtext)){
-        QMessageBox::information( this, QApplication::applicationName(),
-                                  tr("Data could not be updated:\n") + db.lastErrorMessage);
-    }
-
-    rowList tab = db.browseRecs;
-    QList<QByteArray>& rt = tab[row];
-    QByteArray& cv = rt[col+1];//must account for rowid
-
-    QStandardItem* item = new QStandardItem(QString(cv));
-    item->setToolTip( wrapText(cv) );
-    browseTableModel->setItem(row, col, item);
+    m_browseTableModel->setData(m_browseTableSortProxy->mapToSource(m_browseTableSortProxy->index(row, col)), newtext);
 }
 
 void MainWindow::editWinAway()
@@ -727,13 +716,9 @@ void MainWindow::editWinAway()
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(editWin->getCurrentRow(), editWin->getCurrentCol()));
 }
 
-void MainWindow::editText(int row, int col)
+void MainWindow::editText(const QModelIndex& index)
 {
-    rowList tab = db.browseRecs;
-    QList<QByteArray> rt = tab[row];
-    QByteArray cv = rt[col+1];//must account for rowid
-
-    editWin->loadText(cv , row, col);
+    editWin->loadText(index.data().toByteArray(), index.row(), index.column());
     editWin->show();
 }
 
@@ -749,7 +734,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
         return;
 
-    editText(index.row(), index.column());
+    editText(index);
 }
 
 /*

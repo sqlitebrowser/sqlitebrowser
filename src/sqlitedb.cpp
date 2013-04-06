@@ -475,6 +475,38 @@ bool DBBrowserDB::updateRecord(int wrow, int wcol, const QByteArray& wtext)
     }
 }
 
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int row, const QByteArray& value)
+{
+    if (!isOpen()) return false;
+
+    lastErrorMessage = QString("no error");
+
+    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE rowid=%3;").arg(table).arg(column).arg(row);
+
+    logSQL(sql, kLogMsg_App);
+    setRestorePoint();
+
+    sqlite3_stmt* stmt;
+    int success = 1;
+    if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+        success = 0;
+    if(success == 1 && sqlite3_bind_text(stmt, 1, value.constData(), value.length(), SQLITE_STATIC) != SQLITE_OK)
+        success = -1;
+    if(success == 1 && sqlite3_step(stmt) != SQLITE_DONE)
+        success = -1;
+    if(success != 0 && sqlite3_finalize(stmt) != SQLITE_OK)
+        success = -1;
+
+    if(success == 1)
+    {
+        return true;
+    } else {
+        lastErrorMessage = sqlite3_errmsg(_db);
+        qCritical() << "updateRecord: " << lastErrorMessage;
+        return false;
+    }
+}
+
 bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby )
 {
     QStringList testFields = getTableFields( tablename );

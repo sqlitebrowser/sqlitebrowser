@@ -205,6 +205,9 @@
        <property name="whatsThis">
         <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
        </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>

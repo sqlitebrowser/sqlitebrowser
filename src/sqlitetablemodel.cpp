@@ -1,5 +1,4 @@
 #include "sqlitetablemodel.h"
-
 #include "sqlitedb.h"
 
 #include <QDebug>
@@ -16,6 +15,12 @@ SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db)
 void SqliteTableModel::setChunkSize(size_t chunksize)
 {
     m_chunkSize = chunksize;
+}
+
+void SqliteTableModel::setTable(const QString& table)
+{
+    m_sTable = table;
+    setQuery(QString("SELECT * FROM `%1`").arg(table));
 }
 
 void SqliteTableModel::setQuery(const QString& sQuery)
@@ -116,6 +121,24 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
 }
 
+bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if(index.isValid() && role == Qt::EditRole)
+    {
+        m_data[index.row()].replace(index.column(), value.toString());
+
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), index.row()+1, value.toByteArray()))
+        {
+            emit(dataChanged(index, index));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    return false;
+}
+
 bool SqliteTableModel::canFetchMore(const QModelIndex &parent) const
 {
     return m_data.size() < m_rowCount;
@@ -149,4 +172,12 @@ void SqliteTableModel::fetchMore(const QModelIndex& parent)
     sqlite3_finalize(stmt);
     beginInsertRows(parent, currentsize, m_data.size());
     endInsertRows();
+}
+
+Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
+{
+    if(!index.isValid())
+        return Qt::ItemIsEnabled;
+
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
 }

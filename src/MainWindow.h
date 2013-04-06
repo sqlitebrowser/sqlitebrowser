@@ -125,7 +125,7 @@ private slots:
     virtual void helpAbout();
     virtual void updateRecordText(int row, int col, const QByteArray& newtext);
     virtual void editWinAway();
-    virtual void editText( int row, int col );
+    virtual void editText(const QModelIndex& index);
     virtual void doubleClickTable(const QModelIndex& index);
     virtual void executeQuery();
     virtual void importTableFromCSV();
