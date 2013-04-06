@@ -100,7 +100,7 @@ private slots:
     virtual void fileOpen();
     virtual void fileNew();
     virtual void populateStructure();
-    virtual void populateTable(const QString & tablename , bool keepColumnWidths = false);
+    virtual void populateTable(const QString& tablename);
     virtual void resetBrowser();
     virtual void fileClose();
     virtual void fileExit();

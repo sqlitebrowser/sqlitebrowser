@@ -507,12 +507,12 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int 
     }
 }
 
-bool DBBrowserDB::browseTable( const QString & tablename, const QString& orderby )
+bool DBBrowserDB::browseTable( const QString & tablename, const QString& /*orderby*/ )
 {
     QStringList testFields = getTableFields( tablename );
     
     if (testFields.count()>0) {//table exists
-        getTableRecords( tablename, orderby );
+        //getTableRecords( tablename, orderby );
         browseFields = testFields;
         hasValidBrowseSet = true;
         curBrowseTableName = tablename;
@@ -789,9 +789,6 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
     sqlite3_stmt *vm;
     const char *tail;
 
-    int ncol;
-
-    //   char *errmsg;
     int err=0;
     resultMap res;
     lastErrorMessage = QObject::tr("no error");
@@ -799,25 +796,13 @@ resultMap DBBrowserDB::getFindResults( const QString & wstatement)
     QByteArray statementutf8 = wstatement.toUtf8();
     err=sqlite3_prepare_v2(_db, statementutf8, statementutf8.length(),
                         &vm, &tail);
-    if (err == SQLITE_OK){
-        int rownum = 0;
-        int recnum = 0;
-        QString r;
-        while ( sqlite3_step(vm) == SQLITE_ROW ){
-            ncol = sqlite3_data_count(vm);
-            for (int e=0; e<ncol; ++e){
-                r = QString::fromUtf8((const char *) sqlite3_column_text(vm, e));
-                if (e==0){
-                    rownum = r.toInt();
-                    rowIdMap::iterator mit = idmap.find(rownum);
-                    recnum = *mit;
-                }
-            }
-            res.insert(recnum, r);
-        }
+    if (err == SQLITE_OK)
+    {
+        while ( sqlite3_step(vm) == SQLITE_ROW )
+            res.insert(sqlite3_column_int(vm, 0)-1, QString::fromUtf8((const char *)sqlite3_column_text(vm, 1)));
 
         sqlite3_finalize(vm);
-    }else{
+    } else {
         lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
     }
     return res;

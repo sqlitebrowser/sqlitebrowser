@@ -273,47 +273,34 @@ void MainWindow::populateStructure()
     }
 }
 
-void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths)
+void MainWindow::populateTable( const QString & tablename)
 {
-    QApplication::setOverrideCursor( Qt::WaitCursor );
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // Set new table
     if(!tablename.isEmpty())
         m_browseTableModel->setTable(tablename);
-//    bool mustreset = false;
-//    if (tablename.compare(db.curBrowseTableName)!=0)
-//    {
-//        mustreset = true;
-//        curBrowseOrderByIndex = 1;
-//        curBrowseOrderByMode = ORDERMODE_ASC;
-//    }
 
-//    QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
-//    if(!db.browseTable(tablename, orderby))
-//    {
-//        browseTableModel->setRowCount(0);
-//        browseTableModel->setColumnCount(0);
-//        QApplication::restoreOverrideCursor();
-//        if(findWin)
-//            findWin->resetFields(db.getTableFields(""));
-//        return;
-//    }
+    // Reset sorting
+    curBrowseOrderByIndex = 1;
+    curBrowseOrderByMode = Qt::AscendingOrder;
+    m_browseTableSortProxy->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
 
-//    // Activate the add and delete record buttons and editing only if a table has been selected
-//    bool is_table = db.getObjectByName(tablename).gettype() == "table";
-//    ui->buttonNewRecord->setEnabled(is_table);
-//    ui->buttonDeleteRecord->setEnabled(is_table);
-//    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+    // Get table layout
+    db.browseTable(tablename);
 
-//    if (mustreset){
-//        updateTableView(0, keepColumnWidths);
-//        if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
-//    } else {
-//        updateTableView(-1, keepColumnWidths);
-//    }
-//    //got to keep findWin in synch
-//    if(findWin)
-//        findWin->resetFields();
-//    if(editWin)
-//        editWin->reset();
+    // Activate the add and delete record buttons and editing only if a table has been selected
+    bool is_table = db.getObjectByName(tablename).gettype() == "table";
+    ui->buttonNewRecord->setEnabled(is_table);
+    ui->buttonDeleteRecord->setEnabled(is_table);
+    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+
+    //got to keep findWin in synch
+    if(findWin)
+        findWin->resetFields();
+    if(editWin)
+        editWin->reset();
+
     QApplication::restoreOverrideCursor();
 }
 
@@ -483,9 +470,8 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 void MainWindow::selectTableLine(int lineToSelect)
 {
     ui->dataTable->clearSelection();
-    ui->dataTable->selectRow(lineToSelect);
-    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(lineToSelect, 0));
-    ui->dataTable->scrollTo(ui->dataTable->currentIndex().sibling(lineToSelect, 0));
+    ui->dataTable->selectRow(m_browseTableSortProxy->mapFromSource(m_browseTableModel->index(lineToSelect, 0)).row());
+    ui->dataTable->scrollTo(ui->dataTable->currentIndex());
 }
 
 void MainWindow::navigatePrevious()
@@ -538,7 +524,7 @@ void MainWindow::browseFind(bool open)
         {
             findWin = new FindDialog(this);
             connect(findWin, SIGNAL(lookfor(const QString&, const QString&, const QString&)), this, SLOT(lookfor(const QString&, const QString&, const QString&)));
-            connect(findWin, SIGNAL(showrecord(int)),this, SLOT(updateTableView(int)));
+            connect(findWin, SIGNAL(showrecord(int)),this, SLOT(selectTableLine(int)));
             connect(findWin, SIGNAL(goingAway()),this, SLOT(browseFindAway()));
         }
         findWin->resetFields(db.getTableFields(db.curBrowseTableName));
@@ -556,7 +542,7 @@ void MainWindow::browseFindAway()
 
 void MainWindow::browseRefresh()
 {
-    populateTable(ui->comboBrowseTable->currentText(), true);
+    populateTable(ui->comboBrowseTable->currentText());
 }
 
 void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
@@ -580,15 +566,7 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
         finalsearchterm = QString(newsearchterm);
     }
     QApplication::setOverrideCursor( Qt::WaitCursor );
-    QString statement = "SELECT rowid, ";
-    statement.append(wfield);
-    statement.append("  FROM ");
-    statement.append(db.curBrowseTableName);
-    statement.append(" WHERE ");
-    statement.append(wfield);
-    statement.append(" ");
-    statement.append(finaloperator);
-    statement.append(" ");
+    QString statement = QString("SELECT rowid, `%1` FROM `%2` WHERE `%3` %4 ").arg(wfield).arg(db.curBrowseTableName).arg(wfield).arg(finaloperator);
     //searchterm needs to be quoted if it is not a number
     bool ok = false;
     finalsearchterm.toDouble(&ok);
@@ -600,7 +578,7 @@ void MainWindow::lookfor( const QString & wfield, const QString & woperator, con
     } else {//append the number, unquoted
         statement.append(finalsearchterm);
     }
-    statement.append(" ORDER BY rowid; ");
+    statement.append(" ORDER BY rowid;");
     resultMap res = db.getFindResults(statement);
     findWin->showResults(res);
     QApplication::restoreOverrideCursor();

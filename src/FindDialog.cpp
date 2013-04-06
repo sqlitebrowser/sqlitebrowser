@@ -23,7 +23,7 @@ void FindDialog::showResults(const resultMap& rmap)
     for(it=rmap.begin(),rowNum=0;it!=rmap.end();++it,rowNum++)
     {
         QString firstline = it.value().section('\n', 0, 0);
-        ui->tableResults->setItem(rowNum, 0, new QTableWidgetItem(QString::number(it.key() + 1)));
+        ui->tableResults->setItem(rowNum, 0, new QTableWidgetItem(QString::number(it.key())));
         ui->tableResults->setItem(rowNum, 1, new QTableWidgetItem(firstline));
     }
     QString results = tr("Found: %1").arg(ui->tableResults->rowCount());
@@ -51,7 +51,7 @@ void FindDialog::recordSelected(QTableWidgetItem* witem)
     if(witem)
     {
         int recNum = ui->tableResults->item(witem->row(), 0)->text().toInt();
-        emit showrecord(recNum - 1);
+        emit showrecord(recNum);
     }
 }
 
