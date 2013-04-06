@@ -10,6 +10,7 @@
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
 #include <QScrollBar>
+#include <QSortFilterProxyModel>
 
 #include "CreateIndexDialog.h"
 #include "AboutDialog.h"
@@ -27,6 +28,8 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       browseTableModel(new QStandardItemModel(this)),
+      m_browseTableModel(new SqliteTableModel(this, &db)),
+      m_browseTableSortProxy(new QSortFilterProxyModel(this)),
       sqliteHighlighterTabSql(0),
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
@@ -52,8 +55,6 @@ void MainWindow::init()
     // Init the SQL log dock
     db.mainWindow = this;
 
-    m_browseTableModel = new SqliteTableModel(this, &db);
-
     // Set up the db tree widget
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
@@ -66,8 +67,8 @@ void MainWindow::init()
     createSyntaxHighlighters();
 
     // Set up DB models
-    //ui->dataTable->setModel(browseTableModel);
-    ui->dataTable->setModel(m_browseTableModel);
+    m_browseTableSortProxy->setSourceModel(m_browseTableModel);
+    ui->dataTable->setModel(m_browseTableSortProxy);
 
     queryResultListModel = new QStandardItemModel(this);
     ui->queryResultTableView->setModel(queryResultListModel);
@@ -332,7 +333,8 @@ void MainWindow::resetBrowser()
     pos = pos == -1 ? 0 : pos;
     ui->comboBrowseTable->setCurrentIndex(pos);
     curBrowseOrderByIndex = 1;
-    curBrowseOrderByMode = ORDERMODE_ASC;
+    curBrowseOrderByMode = Qt::AscendingOrder;
+    m_browseTableSortProxy->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
     populateTable(ui->comboBrowseTable->currentText());
 }
 
@@ -1144,9 +1146,9 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
         return;
 
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
-    curBrowseOrderByIndex = logicalindex + 2;
-    curBrowseOrderByMode = curBrowseOrderByMode == ORDERMODE_ASC ? ORDERMODE_DESC : ORDERMODE_ASC;
-    populateTable(ui->comboBrowseTable->currentText(), true);
+    curBrowseOrderByIndex = logicalindex;
+    curBrowseOrderByMode = curBrowseOrderByMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+    m_browseTableSortProxy->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item

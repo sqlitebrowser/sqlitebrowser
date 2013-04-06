@@ -37,7 +37,6 @@ void SqliteTableModel::setQuery(const QString& sQuery)
         status = sqlite3_step(stmt);
         if(SQLITE_ROW == status)
         {
-            m_columnCount = sqlite3_data_count(stmt);
             QString sCount = QString::fromUtf8((const char *) sqlite3_column_text(stmt, 0));
             m_rowCount = sCount.toInt();
         }
@@ -46,6 +45,7 @@ void SqliteTableModel::setQuery(const QString& sQuery)
 
     // now fetch the first 100 entries and get headers
     m_headers.clear();
+    m_data.clear();
     m_columnCount = 0;
     QString sLimitQuery = QString("%1 LIMIT 0, %2;").arg(sQuery).arg(m_chunkSize);
     utf8Query = sLimitQuery.toUtf8();
