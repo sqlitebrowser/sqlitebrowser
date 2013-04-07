@@ -22,6 +22,11 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
 void SqliteTableModel::setTable(const QString& table)
 {
     m_sTable = table;
+
+    m_headers.clear();
+    m_headers.push_back("rowid");
+    m_headers.append(m_db->getTableFields(table));
+
     setQuery(QString("SELECT rowid,* FROM `%1`").arg(table));
 }
 
@@ -51,8 +56,7 @@ void SqliteTableModel::setQuery(const QString& sQuery)
     }
     sqlite3_finalize(stmt);
 
-    // now fetch the first 100 entries and get headers
-    m_headers.clear();
+    // now fetch the first 100 entries
     m_data.clear();
     m_columnCount = 0;
     QString sLimitQuery = QString("%1 LIMIT 0, %2;").arg(sQuery).arg(m_chunkSize);
@@ -67,9 +71,6 @@ void SqliteTableModel::setQuery(const QString& sQuery)
         if(SQLITE_ROW == status)
         {
             m_columnCount = sqlite3_data_count(stmt);
-            for (int i = 0; i < m_columnCount; ++i)
-                m_headers.append(QString::fromUtf8((const char *)sqlite3_column_name(stmt, i)));
-
             // row data starts here
             do
             {
