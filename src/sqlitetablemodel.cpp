@@ -22,7 +22,7 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
 void SqliteTableModel::setTable(const QString& table)
 {
     m_sTable = table;
-    setQuery(QString("SELECT * FROM `%1`").arg(table));
+    setQuery(QString("SELECT rowid,* FROM `%1`").arg(table));
 }
 
 void SqliteTableModel::setQuery(const QString& sQuery)
@@ -136,7 +136,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
     {
         m_data[index.row()].replace(index.column(), value.toString());
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), index.row()+1, value.toByteArray()))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), index.sibling(index.row(), 0).data().toInt(), value.toByteArray()))
         {
             emit(dataChanged(index, index));
             return true;
@@ -189,7 +189,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(!index.isValid())
         return Qt::ItemIsEnabled;
 
-    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+    return QAbstractTableModel::flags(index)/* | Qt::ItemIsEditable*/;
 }
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
