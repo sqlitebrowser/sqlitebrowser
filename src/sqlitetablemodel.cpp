@@ -7,7 +7,6 @@ SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_rowCount(0)
-    , m_columnCount(0)
     , m_iSortColumn(0)
     , m_sSortOrder("ASC")
     , m_chunkSize(1000)
@@ -56,39 +55,15 @@ void SqliteTableModel::setQuery(const QString& sQuery)
     }
     sqlite3_finalize(stmt);
 
-    // now fetch the first 100 entries
+    // now fetch the first entries
     m_data.clear();
-    m_columnCount = 0;
-    QString sLimitQuery = QString("%1 LIMIT 0, %2;").arg(sQuery).arg(m_chunkSize);
-    m_db->logSQL(sLimitQuery, kLogMsg_App);
-    utf8Query = sLimitQuery.toUtf8();
-    status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
-
-    if(SQLITE_OK == status)
-    {
-        status = sqlite3_step(stmt);
-
-        if(SQLITE_ROW == status)
-        {
-            m_columnCount = sqlite3_data_count(stmt);
-            // row data starts here
-            do
-            {
-                QStringList rowdata;
-                for (int i = 0; i < m_columnCount; ++i)
-                    rowdata.append(QString::fromUtf8((const char *)sqlite3_column_text(stmt, i)));
-                m_data.push_back(rowdata);
-            } while(sqlite3_step(stmt) == SQLITE_ROW);
-        }
-    }
-    sqlite3_finalize(stmt);
+    fetchData(0, m_chunkSize);
 
     emit layoutChanged();
 }
 
-int SqliteTableModel::rowCount(const QModelIndex &parent) const
+int SqliteTableModel::rowCount(const QModelIndex&) const
 {
-    (void)parent;
     return m_data.size(); // current fetched row count
 }
 
@@ -97,10 +72,9 @@ int SqliteTableModel::totalRowCount() const
     return m_rowCount;
 }
 
-int SqliteTableModel::columnCount(const QModelIndex &parent) const
+int SqliteTableModel::columnCount(const QModelIndex&) const
 {
-    (void)parent;
-    return m_columnCount;
+    return m_headers.size();
 }
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -153,35 +127,10 @@ bool SqliteTableModel::canFetchMore(const QModelIndex&) const
     return m_data.size() < m_rowCount;
 }
 
-void SqliteTableModel::fetchMore(const QModelIndex& parent)
+void SqliteTableModel::fetchMore(const QModelIndex&)
 {
-    int currentsize = m_data.size();
     int row = m_data.size();
-    QString sLimitQuery = QString("%1 LIMIT %2, %3;").arg(m_sQuery).arg(row).arg(row + m_chunkSize);
-    m_db->logSQL(sLimitQuery, kLogMsg_App);
-    QByteArray utf8Query = sLimitQuery.toUtf8();
-    sqlite3_stmt *stmt;
-    int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
-
-    if(SQLITE_OK == status)
-    {
-        status = sqlite3_step(stmt);
-
-        if(SQLITE_ROW == status)
-        {
-            do
-            {
-                QStringList rowdata;
-                for (int i = 0; i < m_columnCount; ++i)
-                    rowdata.append(QString::fromUtf8((const char *)sqlite3_column_text(stmt, i)));
-                Q_ASSERT(m_headers.size() == rowdata.size());
-                m_data.push_back(rowdata);
-            } while(sqlite3_step(stmt) == SQLITE_ROW);
-        }
-    }
-    sqlite3_finalize(stmt);
-    beginInsertRows(parent, currentsize, m_data.size());
-    endInsertRows();
+    fetchData(row, row + m_chunkSize);
 }
 
 Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
@@ -239,4 +188,29 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
     endRemoveRows();
     return true;
+}
+
+void SqliteTableModel::fetchData(unsigned int from, unsigned to)
+{
+    int currentsize = m_data.size();
+
+    QString sLimitQuery = QString("%1 LIMIT %2, %3;").arg(m_sQuery).arg(from).arg(to);
+    m_db->logSQL(sLimitQuery, kLogMsg_App);
+    QByteArray utf8Query = sLimitQuery.toUtf8();
+    sqlite3_stmt *stmt;
+    int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+
+    if(SQLITE_OK == status)
+    {
+        while(sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            QStringList rowdata;
+            for (int i = 0; i < m_headers.size(); ++i)
+                rowdata.append(QString::fromUtf8((const char *)sqlite3_column_text(stmt, i)));
+            m_data.push_back(rowdata);
+        }
+    }
+    sqlite3_finalize(stmt);
+    beginInsertRows(QModelIndex(), currentsize, m_data.size());
+    endInsertRows();
 }

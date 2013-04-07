@@ -37,9 +37,10 @@ signals:
 public slots:
 
 private:
+    void fetchData(unsigned int from, unsigned to);
+
     DBBrowserDB* m_db;
     int m_rowCount;
-    int m_columnCount;
     QStringList m_headers;
     QList<QStringList> m_data;
 
