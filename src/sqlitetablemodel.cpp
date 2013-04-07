@@ -211,6 +211,6 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         }
     }
     sqlite3_finalize(stmt);
-    beginInsertRows(QModelIndex(), currentsize, m_data.size());
+    beginInsertRows(QModelIndex(), currentsize + 1, m_data.size());
     endInsertRows();
 }
