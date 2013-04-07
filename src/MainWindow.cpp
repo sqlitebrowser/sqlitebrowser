@@ -29,12 +29,12 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       browseTableModel(new QStandardItemModel(this)),
       m_browseTableModel(new SqliteTableModel(this, &db)),
-      m_browseTableSortProxy(new QSortFilterProxyModel(this)),
       sqliteHighlighterTabSql(0),
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
       editWin(new EditDialog(this)),
-      findWin(0)
+      findWin(0),
+      gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
     init();
@@ -59,16 +59,14 @@ void MainWindow::init()
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
 
-    // Create the validator for the goto line edit
-    gotoValidator = new QIntValidator(0, 0, this);
+    // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
 
     // Create the SQL sytax highlighters
     createSyntaxHighlighters();
 
     // Set up DB models
-    m_browseTableSortProxy->setSourceModel(m_browseTableModel);
-    ui->dataTable->setModel(m_browseTableSortProxy);
+    ui->dataTable->setModel(m_browseTableModel);
 
     queryResultListModel = new QStandardItemModel(this);
     ui->queryResultTableView->setModel(queryResultListModel);
@@ -284,7 +282,7 @@ void MainWindow::populateTable( const QString & tablename)
     // Reset sorting
     curBrowseOrderByIndex = 1;
     curBrowseOrderByMode = Qt::AscendingOrder;
-    m_browseTableSortProxy->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
+    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
 
     // Get table layout
     db.browseTable(tablename);
@@ -294,6 +292,9 @@ void MainWindow::populateTable( const QString & tablename)
     ui->buttonNewRecord->setEnabled(is_table);
     ui->buttonDeleteRecord->setEnabled(is_table);
     ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+
+    // Set the recordset label
+    setRecordsetLabel();
 
     //got to keep findWin in synch
     if(findWin)
@@ -321,7 +322,7 @@ void MainWindow::resetBrowser()
     ui->comboBrowseTable->setCurrentIndex(pos);
     curBrowseOrderByIndex = 1;
     curBrowseOrderByMode = Qt::AscendingOrder;
-    m_browseTableSortProxy->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
+    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
     populateTable(ui->comboBrowseTable->currentText());
 }
 
@@ -463,14 +464,15 @@ void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
 //    if (lineToSelect!=-1){
 //        selectTableLine(lineToSelect);
 //    }
-//    setRecordsetLabel();
+
+    setRecordsetLabel();
     QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::selectTableLine(int lineToSelect)
 {
     ui->dataTable->clearSelection();
-    ui->dataTable->selectRow(m_browseTableSortProxy->mapFromSource(m_browseTableModel->index(lineToSelect, 0)).row());
+    ui->dataTable->selectRow(lineToSelect);
     ui->dataTable->scrollTo(ui->dataTable->currentIndex());
 }
 
@@ -478,41 +480,51 @@ void MainWindow::navigatePrevious()
 {
     int curRow = ui->dataTable->currentIndex().row();
     curRow -= 100;
-    if(curRow < 0) curRow = 0;
-    updateTableView(curRow);
+    if(curRow < 0)
+        curRow = 0;
+    selectTableLine(curRow);
 }
 
 
 void MainWindow::navigateNext()
 {
+    // TODO: Fetch more data from DB if necessary
+
     int curRow = ui->dataTable->currentIndex().row();
     curRow += 100;
-    if(curRow >= browseTableModel->rowCount())
-        curRow = browseTableModel->rowCount()-1;
-    updateTableView(curRow);
+    if(curRow >= m_browseTableModel->totalRowCount())
+        curRow = m_browseTableModel->totalRowCount() - 1;
+    selectTableLine(curRow);
 }
 
 
 void MainWindow::navigateGoto()
 {
-    QString typed = ui->editGoto->text();
-    bool ok;
-    int dec = typed.toInt( &ok);
-    if (dec==0) dec=1;
-    if (dec>db.getRecordCount()) dec = db.getRecordCount();
+    // TODO: Fetch more data from DB if necessary
 
-    updateTableView(dec-1);
-    ui->editGoto->setText(QString::number(dec,10));
+    int row = ui->editGoto->text().toInt();
+    if(row <= 0)
+        row = 1;
+    if(row > m_browseTableModel->totalRowCount())
+        row = m_browseTableModel->totalRowCount();
+
+    selectTableLine(row - 1);
+    ui->editGoto->setText(QString::number(row));
 }
 
 void MainWindow::setRecordsetLabel()
 {
+    // Get all the numbers, i.e. the number of the first row and the last row as well as the total number of rows
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
-    int total = browseTableModel->rowCount();
+    int total = m_browseTableModel->totalRowCount();
     if(to == -2)
         to = total;
 
+    // Update the validator of the goto row field
+    gotoValidator->setRange(0, total);
+
+    // Update the label showing the current position
     ui->labelRecordset->setText(tr("%1 - %2 of %3").arg(from).arg(to).arg(total));
 }
 
@@ -684,7 +696,7 @@ void MainWindow::helpAbout()
 
 void MainWindow::updateRecordText(int row, int col, const QByteArray& newtext)
 {
-    m_browseTableModel->setData(m_browseTableSortProxy->mapToSource(m_browseTableSortProxy->index(row, col)), newtext);
+    m_browseTableModel->setData(m_browseTableModel->index(row, col), newtext);
 }
 
 void MainWindow::editWinAway()
@@ -1111,7 +1123,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
     curBrowseOrderByIndex = logicalindex;
     curBrowseOrderByMode = curBrowseOrderByMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-    m_browseTableSortProxy->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
+    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item

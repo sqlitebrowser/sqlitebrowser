@@ -8,6 +8,8 @@ SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db)
     , m_db(db)
     , m_rowCount(0)
     , m_columnCount(0)
+    , m_iSortColumn(0)
+    , m_sSortOrder("ASC")
     , m_chunkSize(1000)
 {
 }
@@ -34,6 +36,7 @@ void SqliteTableModel::setQuery(const QString& sQuery)
 
     // do a count query to get the full row count in a fast manner
     QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(sQuery);
+    m_db->logSQL(sCountQuery, kLogMsg_App);
     QByteArray utf8Query = sCountQuery.toUtf8();
     int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
 
@@ -53,6 +56,7 @@ void SqliteTableModel::setQuery(const QString& sQuery)
     m_data.clear();
     m_columnCount = 0;
     QString sLimitQuery = QString("%1 LIMIT 0, %2;").arg(sQuery).arg(m_chunkSize);
+    m_db->logSQL(sLimitQuery, kLogMsg_App);
     utf8Query = sLimitQuery.toUtf8();
     status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
 
@@ -88,6 +92,11 @@ int SqliteTableModel::rowCount(const QModelIndex &parent) const
     return m_data.size(); // current fetched row count
 }
 
+int SqliteTableModel::totalRowCount() const
+{
+    return m_rowCount;
+}
+
 int SqliteTableModel::columnCount(const QModelIndex &parent) const
 {
     (void)parent;
@@ -102,7 +111,7 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal)
         return m_headers.at(section);
     else
-        return QString("Row %1").arg(section);
+        return QString("%1").arg(section + 1);
 }
 
 QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
@@ -139,7 +148,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
     return false;
 }
 
-bool SqliteTableModel::canFetchMore(const QModelIndex &parent) const
+bool SqliteTableModel::canFetchMore(const QModelIndex&) const
 {
     return m_data.size() < m_rowCount;
 }
@@ -149,6 +158,7 @@ void SqliteTableModel::fetchMore(const QModelIndex& parent)
     int currentsize = m_data.size();
     int row = m_data.size();
     QString sLimitQuery = QString("%1 LIMIT %2, %3;").arg(m_sQuery).arg(row).arg(row + m_chunkSize);
+    m_db->logSQL(sLimitQuery, kLogMsg_App);
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
     int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
@@ -180,4 +190,21 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
         return Qt::ItemIsEnabled;
 
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+}
+
+void SqliteTableModel::sort(int column, Qt::SortOrder order)
+{
+    // Save sort order
+    m_iSortColumn = column;
+    m_sSortOrder = (order == Qt::AscendingOrder ? "ASC" : "DESC");
+
+    // Set the new query (but only if a table has already been set
+    if(m_sTable != "")
+    {
+        setQuery(QString("SELECT * FROM `%1` ORDER BY `%2` %3")
+                 .arg(m_sTable)
+                 .arg(m_headers.at(m_iSortColumn))
+                 .arg(m_sSortOrder)
+        );
+    }
 }

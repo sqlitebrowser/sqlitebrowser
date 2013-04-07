@@ -13,7 +13,6 @@ class QIntValidator;
 class QLabel;
 class QModelIndex;
 class SqliteTableModel;
-class QSortFilterProxyModel;
 
 namespace Ui {
 class MainWindow;
@@ -53,7 +52,6 @@ private:
 
     QStandardItemModel *browseTableModel;
     SqliteTableModel* m_browseTableModel;
-    QSortFilterProxyModel* m_browseTableSortProxy;
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
