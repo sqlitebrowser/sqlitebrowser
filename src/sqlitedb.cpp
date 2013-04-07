@@ -385,7 +385,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::addRecord(const QString& sTableName)
+int DBBrowserDB::addRecord(const QString& sTableName)
 {
     char *errmsg;
     if (!isOpen()) return false;
@@ -404,23 +404,21 @@ bool DBBrowserDB::addRecord(const QString& sTableName)
     {
         lastErrorMessage = QString::fromUtf8(errmsg);
         qCritical() << "addRecord: " << lastErrorMessage;
-        return false;
+        return -1;
+    } else {
+        return sqlite3_last_insert_rowid(_db);
     }
-    return true;
 }
 
-bool DBBrowserDB::deleteRecord( int wrow)
+bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
 {
     char * errmsg;
     if (!hasValidBrowseSet) return false;
     if (!isOpen()) return false;
     bool ok = false;
-    rowList tab = browseRecs;
-    QList<QByteArray> rt = tab[wrow];
-    QString rowid = rt[0];
     lastErrorMessage = QString("no error");
     
-    QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(curBrowseTableName).arg(rowid);
+    QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(table).arg(rowid);
 
     if (_db){
         logSQL(statement, kLogMsg_App);

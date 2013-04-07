@@ -50,7 +50,6 @@ private:
 
     Ui::MainWindow* ui;
 
-    QStandardItemModel *browseTableModel;
     SqliteTableModel* m_browseTableModel;
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
@@ -104,7 +103,6 @@ private slots:
     virtual void fileExit();
     virtual void addRecord();
     virtual void deleteRecord();
-    virtual void updateTableView(int lineToSelect , bool keepColumnWidths = false);
     virtual void selectTableLine( int lineToSelect );
     virtual void navigatePrevious();
     virtual void navigateNext();

@@ -12,7 +12,7 @@ class SqliteTableModel : public QAbstractTableModel
 public:
     explicit SqliteTableModel(QObject *parent = 0, DBBrowserDB* db = 0);
 
-    int rowCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int totalRowCount() const;
     int columnCount(const QModelIndex &parent) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -21,6 +21,9 @@ public:
     bool canFetchMore(const QModelIndex &parent) const;
     void fetchMore(const QModelIndex &parent);
     size_t queryMore(size_t offset);
+
+    bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex());
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
 
     void setQuery(const QString& sQuery);
     void setTable(const QString& table);
@@ -38,7 +41,7 @@ private:
     int m_rowCount;
     int m_columnCount;
     QStringList m_headers;
-    QMap<int, QStringList> m_data;
+    QList<QStringList> m_data;
 
     QString m_sQuery;
     QString m_sTable;

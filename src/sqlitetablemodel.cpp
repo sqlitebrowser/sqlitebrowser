@@ -70,14 +70,13 @@ void SqliteTableModel::setQuery(const QString& sQuery)
             for (int i = 0; i < m_columnCount; ++i)
                 m_headers.append(QString::fromUtf8((const char *)sqlite3_column_name(stmt, i)));
 
-            int row = 0;
             // row data starts here
             do
             {
                 QStringList rowdata;
                 for (int i = 0; i < m_columnCount; ++i)
                     rowdata.append(QString::fromUtf8((const char *)sqlite3_column_text(stmt, i)));
-                m_data.insert(row++, rowdata);
+                m_data.push_back(rowdata);
             } while(sqlite3_step(stmt) == SQLITE_ROW);
         }
     }
@@ -124,7 +123,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole)
     {
-        return m_data[index.row()].at(index.column());
+        return m_data.at(index.row()).at(index.column());
     }
     else
         return QVariant();
@@ -136,7 +135,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
     {
         m_data[index.row()].replace(index.column(), value.toString());
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), index.sibling(index.row(), 0).data().toInt(), value.toByteArray()))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toInt(), value.toByteArray()))
         {
             emit(dataChanged(index, index));
             return true;
@@ -175,7 +174,7 @@ void SqliteTableModel::fetchMore(const QModelIndex& parent)
                 for (int i = 0; i < m_columnCount; ++i)
                     rowdata.append(QString::fromUtf8((const char *)sqlite3_column_text(stmt, i)));
                 Q_ASSERT(m_headers.size() == rowdata.size());
-                m_data.insert(row++, rowdata);
+                m_data.push_back(rowdata);
             } while(sqlite3_step(stmt) == SQLITE_ROW);
         }
     }
@@ -201,10 +200,42 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
     // Set the new query (but only if a table has already been set
     if(m_sTable != "")
     {
-        setQuery(QString("SELECT * FROM `%1` ORDER BY `%2` %3")
+        setQuery(QString("SELECT rowid,* FROM `%1` ORDER BY `%2` %3")
                  .arg(m_sTable)
                  .arg(m_headers.at(m_iSortColumn))
                  .arg(m_sSortOrder)
         );
     }
+}
+
+bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
+{
+    beginInsertRows(parent, row, row + count - 1);
+
+    QStringList blank_data;
+    for(int i=0;i<m_headers.size();i++)
+        blank_data.push_back("");
+
+    for(int i=0;i<count;i++)
+    {
+        m_data.insert(row, blank_data);
+        m_data[row].replace(0, QString::number(m_db->addRecord(m_sTable)));
+    }
+
+    endInsertRows();
+    return true;
+}
+
+bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+    beginRemoveRows(parent, row, row + count - 1);
+
+    for(int i=count-1;i>=0;i--)
+    {
+        m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0).toInt());
+        m_data.removeAt(row + i);
+    }
+
+    endRemoveRows();
+    return true;
 }
