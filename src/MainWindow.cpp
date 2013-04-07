@@ -272,11 +272,20 @@ void MainWindow::populateStructure()
 
 void MainWindow::populateTable( const QString & tablename)
 {
+    // Remove the model-view link if the table name is empty in order to remove any data from the view
+    if(tablename.isEmpty())
+    {
+        ui->dataTable->setModel(0);
+        return;
+    }
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    // Set model
+    ui->dataTable->setModel(m_browseTableModel);
+
     // Set new table
-    if(!tablename.isEmpty())
-        m_browseTableModel->setTable(tablename);
+    m_browseTableModel->setTable(tablename);
     ui->dataTable->setColumnHidden(0, true);
 
     // Reset sorting
