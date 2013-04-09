@@ -14,7 +14,7 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int totalRowCount() const;
-    int columnCount(const QModelIndex &parent) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
@@ -35,9 +35,12 @@ public:
 signals:
     
 public slots:
+    void updateFilter(int column, QString value);
 
 private:
     void fetchData(unsigned int from, unsigned to);
+
+    void buildQuery();
 
     DBBrowserDB* m_db;
     int m_rowCount;
@@ -48,6 +51,7 @@ private:
     QString m_sTable;
     int m_iSortColumn;
     QString m_sSortOrder;
+    QMap<int, QString> m_mWhere;
 
     size_t m_chunkSize;
 };

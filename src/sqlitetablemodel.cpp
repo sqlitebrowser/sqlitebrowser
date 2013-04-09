@@ -26,7 +26,9 @@ void SqliteTableModel::setTable(const QString& table)
     m_headers.push_back("rowid");
     m_headers.append(m_db->getTableFields(table));
 
-    setQuery(QString("SELECT rowid,* FROM `%1`").arg(table));
+    m_mWhere.clear();
+
+    buildQuery();
 }
 
 void SqliteTableModel::setQuery(const QString& sQuery)
@@ -149,13 +151,7 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
 
     // Set the new query (but only if a table has already been set
     if(m_sTable != "")
-    {
-        setQuery(QString("SELECT rowid,* FROM `%1` ORDER BY `%2` %3")
-                 .arg(m_sTable)
-                 .arg(m_headers.at(m_iSortColumn))
-                 .arg(m_sSortOrder)
-        );
-    }
+        buildQuery();
 }
 
 bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
@@ -213,4 +209,30 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
     sqlite3_finalize(stmt);
     beginInsertRows(QModelIndex(), currentsize + 1, m_data.size());
     endInsertRows();
+}
+
+void SqliteTableModel::buildQuery()
+{
+    QString where;
+    if(m_mWhere.size())
+    {
+        where = "WHERE 1=1";
+        for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
+            where.append(QString(" AND `%1` %2").arg(m_headers.at(i.key())).arg(i.value()));
+    }
+
+    QString sql = QString("SELECT rowid,* FROM `%1` %2 ORDER BY `%3` %4").arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
+    setQuery(sql);
+}
+
+void SqliteTableModel::updateFilter(int column, QString value)
+{
+    // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
+    if(value.isEmpty())
+        m_mWhere.remove(column);
+    else
+        m_mWhere.insert(column, QString("LIKE '%1'").arg(value.replace('\'', "")));   // TODO: Add some code here to detect fancy filter values like '>5' and change the operator in these cases
+
+    // Build the new query
+    buildQuery();
 }

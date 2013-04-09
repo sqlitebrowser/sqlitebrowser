@@ -23,6 +23,7 @@
 #include "SQLiteSyntaxHighlighter.h"
 #include "sqltextedit.h"
 #include "sqlitetablemodel.h"
+#include "FilterTableHeader.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -70,6 +71,10 @@ void MainWindow::init()
     queryResultListModel = new QStandardItemModel(this);
     ui->queryResultTableView->setModel(queryResultListModel);
 
+    FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
+    connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
+    ui->dataTable->setHorizontalHeader(tableHeader);
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
@@ -98,7 +103,7 @@ void MainWindow::init()
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
     // Connect some more signals and slots
-    connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
+    connect(tableHeader, SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
@@ -295,6 +300,9 @@ void MainWindow::populateTable( const QString & tablename)
 
     // Get table layout
     db.browseTable(tablename);
+
+    // Update the filter row
+    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
 
     // Activate the add and delete record buttons and editing only if a table has been selected
     bool is_table = db.getObjectByName(tablename).gettype() == "table";
