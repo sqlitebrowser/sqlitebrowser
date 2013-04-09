@@ -35,7 +35,7 @@ public:
 signals:
     
 public slots:
-    void updateFilter(int column, QString value);
+    void updateFilter(int column, const QString& value);
 
 private:
     void fetchData(unsigned int from, unsigned to);

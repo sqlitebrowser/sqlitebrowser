@@ -225,13 +225,44 @@ void SqliteTableModel::buildQuery()
     setQuery(sql);
 }
 
-void SqliteTableModel::updateFilter(int column, QString value)
+void SqliteTableModel::updateFilter(int column, const QString& value)
 {
+    // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
+    QString op = "LIKE";
+    QString val;
+    if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
+    {
+        bool ok;
+        value.mid(2).toFloat(&ok);
+        if(ok)
+        {
+            op = value.left(2);
+            val = value.mid(2);
+        }
+    } else if(value.left(1) == ">" || value.left(1) == "<") {
+        bool ok;
+        value.mid(1).toFloat(&ok);
+        if(ok)
+        {
+            op = value.left(1);
+            val = value.mid(1);
+        }
+    } else {
+        if(value.left(1) == "=")
+        {
+            op = "=";
+            val = value.mid(1);
+        } else {
+            val = value;
+        }
+        val = QString("'%1'").arg(val.replace("'", ""));
+    }
+
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
     if(value.isEmpty())
         m_mWhere.remove(column);
     else
-        m_mWhere.insert(column, QString("LIKE '%1'").arg(value.replace('\'', "")));   // TODO: Add some code here to detect fancy filter values like '>5' and change the operator in these cases
+        m_mWhere.insert(column, QString("%1 %2").arg(op).arg(val));
 
     // Build the new query
     buildQuery();
