@@ -6,7 +6,6 @@
 
 class QDragEnterEvent;
 class EditDialog;
-class FindDialog;
 class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
 class QIntValidator;
@@ -69,7 +68,6 @@ private:
     Qt::SortOrder curBrowseOrderByMode;
 
     EditDialog* editWin;
-    FindDialog* findWin;
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
@@ -108,10 +106,7 @@ private slots:
     virtual void navigateNext();
     virtual void navigateGoto();
     virtual void setRecordsetLabel();
-    virtual void browseFind( bool open );
-    virtual void browseFindAway();
     virtual void browseRefresh();
-    virtual void lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm );
     virtual void createTable();
     virtual void createIndex();
     virtual void compact();

@@ -117,29 +117,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonFind">
-         <property name="toolTip">
-          <string>Open or close the floating find window</string>
-         </property>
-         <property name="whatsThis">
-          <string>This button toggles the appearance of the Find window, used to search records in the database view</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icons/icons.qrc">
-           <normaloff>:/icons/searchfind</normaloff>:/icons/searchfind</iconset>
-         </property>
-         <property name="shortcut">
-          <string>Ctrl+F</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QToolButton" name="buttonRefresh">
          <property name="toolTip">
           <string>Refresh the data in the selected table.</string>
@@ -315,7 +292,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>278</width>
+          <width>763</width>
           <height>444</height>
          </rect>
         </property>
@@ -1367,7 +1344,6 @@
  <tabstops>
   <tabstop>dbTreeWidget</tabstop>
   <tabstop>comboBrowseTable</tabstop>
-  <tabstop>buttonFind</tabstop>
   <tabstop>buttonRefresh</tabstop>
   <tabstop>buttonNewRecord</tabstop>
   <tabstop>buttonDeleteRecord</tabstop>
@@ -1574,22 +1550,6 @@
     <hint type="sourcelabel">
      <x>511</x>
      <y>321</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonFind</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>browseFind(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>141</x>
-     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>

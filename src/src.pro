@@ -16,7 +16,6 @@ HEADERS += \
     AboutDialog.h \
     EditTableDialog.h \
     PreferencesDialog.h \
-    FindDialog.h \
     EditDialog.h \
     ExportCsvDialog.h \
     ImportCsvDialog.h \
@@ -37,7 +36,6 @@ SOURCES += \
     EditTableDialog.cpp \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
-    FindDialog.cpp \
     EditDialog.cpp \
     ExportCsvDialog.cpp \
     ImportCsvDialog.cpp \
@@ -89,7 +87,6 @@ FORMS += \
     AboutDialog.ui \
     EditTableDialog.ui \
     PreferencesDialog.ui \
-    FindDialog.ui \
     EditDialog.ui \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui

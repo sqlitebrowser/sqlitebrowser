@@ -19,7 +19,6 @@
 #include "ExportCsvDialog.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
-#include "FindDialog.h"
 #include "SQLiteSyntaxHighlighter.h"
 #include "sqltextedit.h"
 #include "sqlitetablemodel.h"
@@ -33,7 +32,6 @@ MainWindow::MainWindow(QWidget* parent)
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
       editWin(new EditDialog(this)),
-      findWin(0),
       gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
@@ -313,9 +311,7 @@ void MainWindow::populateTable( const QString & tablename)
     // Set the recordset label
     setRecordsetLabel();
 
-    //got to keep findWin in synch
-    if(findWin)
-        findWin->resetFields();
+    // Reset the edit dialog
     if(editWin)
         editWin->reset();
 
@@ -468,72 +464,9 @@ void MainWindow::setRecordsetLabel()
     ui->labelRecordset->setText(tr("%1 - %2 of %3").arg(from).arg(to).arg(total));
 }
 
-void MainWindow::browseFind(bool open)
-{
-    if(open)
-    {
-        if(!findWin)
-        {
-            findWin = new FindDialog(this);
-            connect(findWin, SIGNAL(lookfor(const QString&, const QString&, const QString&)), this, SLOT(lookfor(const QString&, const QString&, const QString&)));
-            connect(findWin, SIGNAL(showrecord(int)),this, SLOT(selectTableLine(int)));
-            connect(findWin, SIGNAL(goingAway()),this, SLOT(browseFindAway()));
-        }
-        findWin->resetFields(db.getTableFields(db.curBrowseTableName));
-        findWin->show();
-    } else {
-        if(findWin)
-            findWin->hide();
-    }
-}
-
-void MainWindow::browseFindAway()
-{
-    ui->buttonFind->toggle();
-}
-
 void MainWindow::browseRefresh()
 {
     populateTable(ui->comboBrowseTable->currentText());
-}
-
-void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
-{
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
-        return;
-    }
-    
-    //we may need to modify woperator and wsearchterm, so use copies
-    QString finaloperator = woperator;
-    QString finalsearchterm = wsearchterm;
-    
-    //special case for CONTAINS operator: use LIKE and surround the search word with % characters
-    if(woperator.compare(tr("contains")) == 0)
-    {
-        finaloperator = QString("LIKE");
-        QString newsearchterm = "%";
-        newsearchterm.append(wsearchterm);
-        newsearchterm.append("%");
-        finalsearchterm = QString(newsearchterm);
-    }
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    QString statement = QString("SELECT rowid, `%1` FROM `%2` WHERE `%3` %4 ").arg(wfield).arg(db.curBrowseTableName).arg(wfield).arg(finaloperator);
-    //searchterm needs to be quoted if it is not a number
-    bool ok = false;
-    finalsearchterm.toDouble(&ok);
-    if (!ok) finalsearchterm.toInt(&ok, 10);
-    if (!ok) {//not a number, quote it
-        char * formSQL = sqlite3_mprintf("%Q",(const char *) finalsearchterm.toUtf8());
-        statement.append(formSQL);
-        if (formSQL) sqlite3_free(formSQL);
-    } else {//append the number, unquoted
-        statement.append(finalsearchterm);
-    }
-    statement.append(" ORDER BY rowid;");
-    resultMap res = db.getFindResults(statement);
-    findWin->showResults(res);
-    QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::createTable()
