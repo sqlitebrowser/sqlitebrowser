@@ -476,7 +476,6 @@ bool DBBrowserDB::browseTable( const QString & tablename, const QString& /*order
     QStringList testFields = getTableFields( tablename );
     
     if (testFields.count()>0) {//table exists
-        //getTableRecords( tablename, orderby );
         browseFields = testFields;
         hasValidBrowseSet = true;
         curBrowseTableName = tablename;
