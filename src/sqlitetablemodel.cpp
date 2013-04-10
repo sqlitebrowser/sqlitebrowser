@@ -110,7 +110,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
 {
     if(index.isValid() && role == Qt::EditRole)
     {
-        m_data[index.row()].replace(index.column(), value.toString());
+        m_data[index.row()].replace(index.column(), value.toByteArray());
 
         if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toInt(), value.toByteArray()))
         {
@@ -158,14 +158,14 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 {
     beginInsertRows(parent, row, row + count - 1);
 
-    QStringList blank_data;
+    QByteArrayList blank_data;
     for(int i=0;i<m_headers.size();i++)
         blank_data.push_back("");
 
     for(int i=0;i<count;i++)
     {
         m_data.insert(row, blank_data);
-        m_data[row].replace(0, QString::number(m_db->addRecord(m_sTable)));
+        m_data[row].replace(0, QByteArray::number(m_db->addRecord(m_sTable)));
     }
 
     endInsertRows();
@@ -200,9 +200,9 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
     {
         while(sqlite3_step(stmt) == SQLITE_ROW)
         {
-            QStringList rowdata;
+            QByteArrayList rowdata;
             for (int i = 0; i < m_headers.size(); ++i)
-                rowdata.append(QString::fromUtf8((const char *)sqlite3_column_text(stmt, i)));
+                rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), sqlite3_column_bytes(stmt, i)));
             m_data.push_back(rowdata);
         }
     }

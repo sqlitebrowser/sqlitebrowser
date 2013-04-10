@@ -434,45 +434,6 @@ bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(int wrow, int wcol, const QByteArray& wtext)
-{
-    if (!hasValidBrowseSet) return false;
-    if (!isOpen()) return false;
-    
-    lastErrorMessage = QString("no error");
-    
-    QList<QByteArray>& rt = browseRecs[wrow];
-    QString rowid = rt[0];
-    QByteArray& cv = rt[wcol+1];//must account for rowid
-    QString ct = browseFields.at(wcol);
-    
-    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE rowid=%4;").arg(curBrowseTableName).arg(ct).arg(rowid);
-
-    logSQL(sql, kLogMsg_App);
-    setRestorePoint();
-
-    sqlite3_stmt* stmt;
-    int success = 1;
-    if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
-        success = 0;
-    if(success == 1 && sqlite3_bind_text(stmt, 1, wtext.constData(), wtext.length(), SQLITE_STATIC) != SQLITE_OK)
-        success = -1;
-    if(success == 1 && sqlite3_step(stmt) != SQLITE_DONE)
-        success = -1;
-    if(success != 0 && sqlite3_finalize(stmt) != SQLITE_OK)
-        success = -1;
-
-    if(success == 1)
-    {
-        cv = wtext;
-        return true;
-    } else {
-        lastErrorMessage = sqlite3_errmsg(_db);
-        qCritical() << "updateRecord: " << lastErrorMessage;
-        return false;
-    }
-}
-
 bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int row, const QByteArray& value)
 {
     if (!isOpen()) return false;
@@ -739,47 +700,6 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
     } else {
         return true;
     }
-}
-
-void DBBrowserDB::getTableRecords( const QString & tablename, const QString& orderby )
-{
-    sqlite3_stmt* stmt;
-
-    int ncol;
-    QList<QByteArray> r;
-    browseRecs.clear();
-    idmap.clear();
-    lastErrorMessage = QObject::tr("no error");
-
-    QString sql = QString("SELECT rowid, *  FROM `%1` ORDER BY %2;").arg(tablename).arg(orderby);
-    logSQL(sql, kLogMsg_App);
-    if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
-    {
-        lastErrorMessage = QObject::tr("could not get fields");
-        return;
-    }
-
-    int rownum = 0;
-
-    while(sqlite3_step(stmt) == SQLITE_ROW)
-    {
-        r.clear();
-        ncol = sqlite3_data_count(stmt);
-        for(int e=0;e<ncol;++e)
-        {
-            QByteArray rv = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, e)), sqlite3_column_bytes(stmt, e));
-            r.append(rv);
-
-            if(e == 0)
-            {
-                idmap.insert(rv.toInt(), rownum);
-                rownum++;
-            }
-        }
-        browseRecs.append(r);
-    }
-
-    sqlite3_finalize(stmt);
 }
 
 resultMap DBBrowserDB::getFindResults( const QString & wstatement)

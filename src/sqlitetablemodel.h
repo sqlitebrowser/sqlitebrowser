@@ -32,6 +32,8 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const;
 
+    typedef QList<QByteArray> QByteArrayList;
+
 signals:
     
 public slots:
@@ -45,7 +47,7 @@ private:
     DBBrowserDB* m_db;
     int m_rowCount;
     QStringList m_headers;
-    QList<QStringList> m_data;
+    QList<QByteArrayList> m_data;
 
     QString m_sQuery;
     QString m_sTable;

@@ -102,7 +102,6 @@ public:
     int addRecord(const QString& sTableName);
     bool deleteRecord(const QString& table, int rowid);
     bool updateRecord(const QString& table, const QString& column, int row, const QByteArray& value);
-    bool updateRecord(int wrow, int wcol, const QByteArray& wtext);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
     bool createTable(const QString& name, const QList<DBBrowserField>& structure);
@@ -145,12 +144,8 @@ public:
 
     MainWindow* mainWindow;
 
-
 private:
     bool dirty;
-    void getTableRecords( const QString & tablename, const QString& orderby = "rowid" );
-
-
 };
 
 #endif
