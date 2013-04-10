@@ -1,5 +1,5 @@
 #include "sqlitedb.h"
-
+#include "sqlitetablemodel.h"
 #include "MainWindow.h"
 
 #include <QFile>
@@ -234,8 +234,11 @@ bool DBBrowserDB::dump(const QString& filename)
         unsigned int numRecordsTotal = 0, numRecordsCurrent = 0;
         QList<DBBrowserObject> tables = objMap.values("table");
         for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
-            numRecordsTotal += getFindResults(
-                QString("SELECT COUNT(*) FROM `%1`;").arg((*it).getname())).value(0).toInt();
+        {
+            SqliteTableModel tableModel(0, this);
+            tableModel.setTable((*it).getname());
+            numRecordsTotal += tableModel.totalRowCount();
+        }
         QProgressDialog progress(QObject::tr("Exporting database to SQL file..."),
                                  QObject::tr("Cancel"), 0, numRecordsTotal);
         progress.setWindowModality(Qt::ApplicationModal);
@@ -256,16 +259,18 @@ bool DBBrowserDB::dump(const QString& filename)
             stream << (*it).getsql() << ";\n";
 
             // Get data of this table
-            browseTable((*it).getname());
+            SqliteTableModel tableModel(0, this);
+            tableModel.setTable((*it).getname());
+            while(tableModel.canFetchMore())
+                tableModel.fetchMore();
 
             // Dump all the content of the table
-            rowList data = browseRecs;
-            for(int row=0;row<data.size();row++)
+            for(int row=0;row<tableModel.totalRowCount();row++)
             {
                 stream << "INSERT INTO `" << (*it).getname() << "` VALUES(";
-                for(int col=1;col<data[row].size();col++)
+                for(int col=1;col<tableModel.columnCount();col++)
                 {
-                    QString content = data[row][col];
+                    QString content = tableModel.data(tableModel.index(row, col)).toString();
                     content.replace("'", "''");
                     if(content.isNull())
                         content = "NULL";
@@ -275,7 +280,7 @@ bool DBBrowserDB::dump(const QString& filename)
                         content = "''";
 
                     stream << content;
-                    if(col < data[row].count() - 1)
+                    if(col < tableModel.columnCount() - 1)
                         stream << ",";
                     else
                         stream << ");\n";
@@ -701,31 +706,6 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
         return true;
     }
 }
-
-resultMap DBBrowserDB::getFindResults( const QString & wstatement)
-{
-    sqlite3_stmt *vm;
-    const char *tail;
-
-    int err=0;
-    resultMap res;
-    lastErrorMessage = QObject::tr("no error");
-    logSQL(wstatement, kLogMsg_App);
-    QByteArray statementutf8 = wstatement.toUtf8();
-    err=sqlite3_prepare_v2(_db, statementutf8, statementutf8.length(),
-                        &vm, &tail);
-    if (err == SQLITE_OK)
-    {
-        while ( sqlite3_step(vm) == SQLITE_ROW )
-            res.insert(sqlite3_column_int(vm, 0)-1, QString::fromUtf8((const char *)sqlite3_column_text(vm, 1)));
-
-        sqlite3_finalize(vm);
-    } else {
-        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
-    }
-    return res;
-}
-
 
 QStringList DBBrowserDB::getBrowsableObjectNames() const
 {

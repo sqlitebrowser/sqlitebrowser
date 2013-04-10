@@ -116,7 +116,6 @@ public:
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
     QStringList getIndexNames() const;
-    resultMap getFindResults( const QString & wstatement);
     int getRecordCount() const;
     bool isOpen() const;
     void setDirty(bool dirtyval);
