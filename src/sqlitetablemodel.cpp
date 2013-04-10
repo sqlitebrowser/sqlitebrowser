@@ -172,6 +172,8 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         m_data[row].replace(0, QByteArray::number(m_db->addRecord(m_sTable)));
     }
 
+    m_rowCount += count;
+
     endInsertRows();
     return true;
 }
@@ -185,6 +187,8 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0).toInt());
         m_data.removeAt(row + i);
     }
+
+    m_rowCount -= count;
 
     endRemoveRows();
     return true;
