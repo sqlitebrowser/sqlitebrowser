@@ -145,6 +145,10 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
+    // Don't do anything when the sort order hasn't changed
+    if(m_iSortColumn == column && m_sSortOrder == (order == Qt::AscendingOrder ? "ASC" : "DESC"))
+        return;
+
     // Save sort order
     m_iSortColumn = column;
     m_sSortOrder = (order == Qt::AscendingOrder ? "ASC" : "DESC");
