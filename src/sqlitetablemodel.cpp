@@ -58,7 +58,7 @@ void SqliteTableModel::setQuery(const QString& sQuery)
     sqlite3_finalize(stmt);
 
     // now fetch the first entries
-    m_data.clear();
+    clearCache();
     fetchData(0, m_chunkSize);
 
     emit layoutChanged();
@@ -281,4 +281,11 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 
     // Build the new query
     buildQuery();
+}
+
+void SqliteTableModel::clearCache()
+{
+    beginRemoveRows(QModelIndex(), 0, m_data.size()-1);
+    m_data.clear();
+    endRemoveRows();
 }

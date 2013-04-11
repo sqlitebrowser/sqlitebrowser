@@ -41,6 +41,7 @@ public slots:
 
 private:
     void fetchData(unsigned int from, unsigned to);
+    void clearCache();
 
     void buildQuery();
 
