@@ -13,8 +13,12 @@ public:
 private:
     void copy();
 
+private slots:
+    void vscrollbarChanged(int value);
+
 protected:
     virtual void keyPressEvent(QKeyEvent* event);
+    virtual void updateGeometries();
 };
 
 #endif
