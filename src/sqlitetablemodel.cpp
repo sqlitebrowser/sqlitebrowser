@@ -100,20 +100,26 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole)
     {
+        // If this row is not in the cache yet get it first
+        while(index.row() >= m_data.size() && canFetchMore())
+            const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
+
         return m_data.at(index.row()).at(index.column());
-    }
-    else
+    } else {
         return QVariant();
+    }
 }
 
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     if(index.isValid() && role == Qt::EditRole)
     {
-        m_data[index.row()].replace(index.column(), value.toByteArray());
-
         if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toInt(), value.toByteArray()))
         {
+            // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
+            if(index.row() < m_data.size())
+                m_data[index.row()].replace(index.column(), value.toByteArray());
+
             emit(dataChanged(index, index));
             return true;
         } else {
@@ -215,7 +221,8 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         }
     }
     sqlite3_finalize(stmt);
-    beginInsertRows(QModelIndex(), currentsize + 1, m_data.size());
+
+    beginInsertRows(QModelIndex(), currentsize, m_data.size()-1);
     endInsertRows();
 }
 

@@ -407,6 +407,15 @@ void MainWindow::deleteRecord()
 
 void MainWindow::selectTableLine(int lineToSelect)
 {
+    // Are there even that many lines?
+    if(lineToSelect >= m_browseTableModel->totalRowCount())
+        return;
+
+    // Make sure this line has already been fetched
+    while(lineToSelect >= m_browseTableModel->rowCount() && m_browseTableModel->canFetchMore())
+          m_browseTableModel->fetchMore();
+
+    // Select it
     ui->dataTable->clearSelection();
     ui->dataTable->selectRow(lineToSelect);
     ui->dataTable->scrollTo(ui->dataTable->currentIndex());
