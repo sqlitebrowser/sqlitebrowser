@@ -56,6 +56,14 @@ private:
     QString m_sSortOrder;
     QMap<int, QString> m_mWhere;
 
+    /**
+     * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.
+     * This value should be rather high, because our query
+     * uses LIMIT and sqlite3 will still execute the whole query and
+     * just skip the not wanted rows, but the execution will
+     * still take nearly the same time as doing the query at all up
+     * to that row count.
+     */
     size_t m_chunkSize;
 };
 

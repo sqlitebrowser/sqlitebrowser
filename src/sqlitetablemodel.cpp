@@ -9,7 +9,7 @@ SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db)
     , m_rowCount(0)
     , m_iSortColumn(0)
     , m_sSortOrder("ASC")
-    , m_chunkSize(1000)
+    , m_chunkSize(50000)
 {
 }
 
