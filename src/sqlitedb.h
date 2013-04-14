@@ -99,9 +99,9 @@ public:
      */
     QString getTableSQL(const QString& sTable);
     void updateSchema() ;
-    bool addRecord(const QString& sTableName);
-    bool deleteRecord(int wrow);
-    bool updateRecord(int wrow, int wcol, const QByteArray& wtext);
+    int addRecord(const QString& sTableName);
+    bool deleteRecord(const QString& table, int rowid);
+    bool updateRecord(const QString& table, const QString& column, int row, const QByteArray& value);
     bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
     bool createTable(const QString& name, const QList<DBBrowserField>& structure);
@@ -116,7 +116,6 @@ public:
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
     QStringList getIndexNames() const;
-    resultMap getFindResults( const QString & wstatement);
     int getRecordCount() const;
     bool isOpen() const;
     void setDirty(bool dirtyval);
@@ -144,12 +143,8 @@ public:
 
     MainWindow* mainWindow;
 
-
 private:
     bool dirty;
-    void getTableRecords( const QString & tablename, const QString& orderby = "rowid" );
-
-
 };
 
 #endif

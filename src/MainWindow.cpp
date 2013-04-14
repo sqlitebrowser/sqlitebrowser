@@ -10,6 +10,7 @@
 #include <QStandardItemModel>
 #include <QDragEnterEvent>
 #include <QScrollBar>
+#include <QSortFilterProxyModel>
 
 #include "CreateIndexDialog.h"
 #include "AboutDialog.h"
@@ -18,19 +19,20 @@
 #include "ExportCsvDialog.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
-#include "FindDialog.h"
 #include "SQLiteSyntaxHighlighter.h"
 #include "sqltextedit.h"
+#include "sqlitetablemodel.h"
+#include "FilterTableHeader.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      browseTableModel(new QStandardItemModel(this)),
+      m_browseTableModel(new SqliteTableModel(this, &db)),
       sqliteHighlighterTabSql(0),
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
       editWin(new EditDialog(this)),
-      findWin(0)
+      gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
     init();
@@ -55,18 +57,21 @@ void MainWindow::init()
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
 
-    // Create the validator for the goto line edit
-    gotoValidator = new QIntValidator(0, 0, this);
+    // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
 
     // Create the SQL sytax highlighters
     createSyntaxHighlighters();
 
     // Set up DB models
-    ui->dataTable->setModel(browseTableModel);
+    ui->dataTable->setModel(m_browseTableModel);
 
     queryResultListModel = new QStandardItemModel(this);
     ui->queryResultTableView->setModel(queryResultListModel);
+
+    FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
+    connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
+    ui->dataTable->setHorizontalHeader(tableHeader);
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -96,10 +101,10 @@ void MainWindow::init()
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
     // Connect some more signals and slots
-    connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
+    connect(tableHeader, SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
-    connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int , QByteArray)));
+    connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
 
     // Load window settings
     restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
@@ -268,27 +273,34 @@ void MainWindow::populateStructure()
     }
 }
 
-void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths)
+void MainWindow::populateTable( const QString & tablename)
 {
-    bool mustreset = false;
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    if (tablename.compare(db.curBrowseTableName)!=0)
+    // Remove the model-view link if the table name is empty in order to remove any data from the view
+    if(tablename.isEmpty())
     {
-        mustreset = true;
-        curBrowseOrderByIndex = 1;
-        curBrowseOrderByMode = ORDERMODE_ASC;
-    }
-
-    QString orderby = QString::number(curBrowseOrderByIndex) + " " + (curBrowseOrderByMode == ORDERMODE_ASC ? "ASC" : "DESC");
-    if(!db.browseTable(tablename, orderby))
-    {
-        browseTableModel->setRowCount(0);
-        browseTableModel->setColumnCount(0);
-        QApplication::restoreOverrideCursor();
-        if(findWin)
-            findWin->resetFields(db.getTableFields(""));
+        ui->dataTable->setModel(0);
         return;
     }
+
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // Set model
+    ui->dataTable->setModel(m_browseTableModel);
+
+    // Set new table
+    m_browseTableModel->setTable(tablename);
+    ui->dataTable->setColumnHidden(0, true);
+
+    // Reset sorting
+    curBrowseOrderByIndex = 0;
+    curBrowseOrderByMode = Qt::AscendingOrder;
+    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
+
+    // Get table layout
+    db.browseTable(tablename);
+
+    // Update the filter row
+    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
 
     // Activate the add and delete record buttons and editing only if a table has been selected
     bool is_table = db.getObjectByName(tablename).gettype() == "table";
@@ -296,17 +308,13 @@ void MainWindow::populateTable( const QString & tablename, bool keepColumnWidths
     ui->buttonDeleteRecord->setEnabled(is_table);
     ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
 
-    if (mustreset){
-        updateTableView(0, keepColumnWidths);
-        if (findWin) findWin->resetFields(db.getTableFields(db.curBrowseTableName));
-    } else {
-        updateTableView(-1, keepColumnWidths);
-    }
-    //got to keep findWin in synch
-    if(findWin)
-        findWin->resetFields();
+    // Set the recordset label
+    setRecordsetLabel();
+
+    // Reset the edit dialog
     if(editWin)
         editWin->reset();
+
     QApplication::restoreOverrideCursor();
 }
 
@@ -325,8 +333,9 @@ void MainWindow::resetBrowser()
     int pos = ui->comboBrowseTable->findText(sCurrentTable);
     pos = pos == -1 ? 0 : pos;
     ui->comboBrowseTable->setCurrentIndex(pos);
-    curBrowseOrderByIndex = 1;
-    curBrowseOrderByMode = ORDERMODE_ASC;
+    curBrowseOrderByIndex = 0;
+    curBrowseOrderByMode = Qt::AscendingOrder;
+    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
     populateTable(ui->comboBrowseTable->currentText());
 }
 
@@ -368,234 +377,107 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
 void MainWindow::addRecord()
 {
-    if (db.addRecord(db.curBrowseTableName))
+    int row = m_browseTableModel->rowCount();
+    if(m_browseTableModel->insertRow(row))
     {
-        populateTable(db.curBrowseTableName);
-        //added record will be the last one in view
-        updateTableView(db.getRecordCount()-1);
-    }
-    else
-    {
-        QMessageBox::information( this, QApplication::applicationName(),
-                                  tr("Error adding record:\n") + db.lastErrorMessage);
+        selectTableLine(row);
+    } else {
+        QMessageBox::warning( this, QApplication::applicationName(), tr("Error adding record:\n") + db.lastErrorMessage);
     }
 }
 
-
 void MainWindow::deleteRecord()
 {
-    if(ui->dataTable->currentIndex().row() != -1)
+    if(ui->dataTable->currentIndex().isValid())
     {
-        int lastselected = ui->dataTable->currentIndex().row();
-        db.deleteRecord(lastselected);
-        populateTable(db.curBrowseTableName);
-        int nextselected = lastselected ;
-        if (nextselected > db.getRecordCount()){
-            nextselected = db.getRecordCount();
-        }
-        if (nextselected>0){
-            selectTableLine(nextselected);
+        int row = ui->dataTable->currentIndex().row();
+        if(m_browseTableModel->removeRow(row))
+        {
+            populateTable(db.curBrowseTableName);
+            if(row > m_browseTableModel->totalRowCount())
+                row = m_browseTableModel->totalRowCount();
+            selectTableLine(row);
+        } else {
+            QMessageBox::warning( this, QApplication::applicationName(), tr("Error deleting record:\n") + db.lastErrorMessage);
         }
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
 }
 
-#define WRAP_SIZE 80
-QString wrapText(const QString& text)
-{
-    QString wrap;
-    int textSize = text.size();
-
-    int cur = 0;
-    while( wrap.size() < textSize)
-    {
-        wrap += text.mid(cur, WRAP_SIZE);
-        cur += WRAP_SIZE;
-        if( textSize - cur > WRAP_SIZE)
-            wrap += '\n';
-    }
-
-    return wrap;
-}
-
-void MainWindow::updateTableView(int lineToSelect, bool keepColumnWidths)
-{
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-
-    browseTableModel->setRowCount(db.getRecordCount());
-    browseTableModel->setColumnCount(db.browseFields.count());
-    browseTableModel->setHorizontalHeaderLabels(db.browseFields);
-
-    rowList tab = db.browseRecs;
-    int maxRecs = db.getRecordCount();
-    gotoValidator->setRange(0, maxRecs);
-
-    if ( maxRecs > 0 ) {
-
-        int rowNum = 0;
-        int colNum = 0;
-        QString rowLabel;
-        for (int i = 0; i < tab.size(); ++i)
-        {
-            rowLabel.setNum(rowNum+1);
-            browseTableModel->setVerticalHeaderItem(rowNum, new QStandardItem(rowLabel));
-            colNum = 0;
-            QList<QByteArray> rt = tab[i];
-            for (int e = 1; e < rt.size(); ++e)
-            {
-                QString content = rt[e];
-
-                QStandardItem* item = new QStandardItem(content);
-                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-                item->setToolTip(wrapText(content));
-                browseTableModel->setItem( rowNum, colNum, item);
-                colNum++;
-            }
-            rowNum++;
-            if (rowNum==maxRecs) break;
-        }
-    }
-
-    if(!keepColumnWidths) {
-        for(int i=0;i<browseTableModel->columnCount();++i)
-        {
-            ui->dataTable->resizeColumnToContents(i);
-            if( ui->dataTable->columnWidth(i) > 400 )
-                ui->dataTable->setColumnWidth(i, 400);
-        }
-    }
-    if (lineToSelect!=-1){
-        selectTableLine(lineToSelect);
-    }
-    setRecordsetLabel();
-    QApplication::restoreOverrideCursor();
-}
-
 void MainWindow::selectTableLine(int lineToSelect)
 {
+    // Are there even that many lines?
+    if(lineToSelect >= m_browseTableModel->totalRowCount())
+        return;
+
+    QApplication::setOverrideCursor( Qt::WaitCursor );
+    // Make sure this line has already been fetched
+    while(lineToSelect >= m_browseTableModel->rowCount() && m_browseTableModel->canFetchMore())
+          m_browseTableModel->fetchMore();
+
+    // Select it
     ui->dataTable->clearSelection();
     ui->dataTable->selectRow(lineToSelect);
-    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(lineToSelect, 0));
-    ui->dataTable->scrollTo(ui->dataTable->currentIndex().sibling(lineToSelect, 0));
+    ui->dataTable->scrollTo(ui->dataTable->currentIndex());
+    QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::navigatePrevious()
 {
     int curRow = ui->dataTable->currentIndex().row();
     curRow -= 100;
-    if(curRow < 0) curRow = 0;
-    updateTableView(curRow);
+    if(curRow < 0)
+        curRow = 0;
+    selectTableLine(curRow);
 }
 
 
 void MainWindow::navigateNext()
 {
+    // TODO: Fetch more data from DB if necessary
+
     int curRow = ui->dataTable->currentIndex().row();
     curRow += 100;
-    if(curRow >= browseTableModel->rowCount())
-        curRow = browseTableModel->rowCount()-1;
-    updateTableView(curRow);
+    if(curRow >= m_browseTableModel->totalRowCount())
+        curRow = m_browseTableModel->totalRowCount() - 1;
+    selectTableLine(curRow);
 }
 
 
 void MainWindow::navigateGoto()
 {
-    QString typed = ui->editGoto->text();
-    bool ok;
-    int dec = typed.toInt( &ok);
-    if (dec==0) dec=1;
-    if (dec>db.getRecordCount()) dec = db.getRecordCount();
+    // TODO: Fetch more data from DB if necessary
 
-    updateTableView(dec-1);
-    ui->editGoto->setText(QString::number(dec,10));
+    int row = ui->editGoto->text().toInt();
+    if(row <= 0)
+        row = 1;
+    if(row > m_browseTableModel->totalRowCount())
+        row = m_browseTableModel->totalRowCount();
+
+    selectTableLine(row - 1);
+    ui->editGoto->setText(QString::number(row));
 }
 
 void MainWindow::setRecordsetLabel()
 {
+    // Get all the numbers, i.e. the number of the first row and the last row as well as the total number of rows
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
-    int total = browseTableModel->rowCount();
+    int total = m_browseTableModel->totalRowCount();
     if(to == -2)
         to = total;
 
+    // Update the validator of the goto row field
+    gotoValidator->setRange(0, total);
+
+    // Update the label showing the current position
     ui->labelRecordset->setText(tr("%1 - %2 of %3").arg(from).arg(to).arg(total));
-}
-
-void MainWindow::browseFind(bool open)
-{
-    if(open)
-    {
-        if(!findWin)
-        {
-            findWin = new FindDialog(this);
-            connect(findWin, SIGNAL(lookfor(const QString&, const QString&, const QString&)), this, SLOT(lookfor(const QString&, const QString&, const QString&)));
-            connect(findWin, SIGNAL(showrecord(int)),this, SLOT(updateTableView(int)));
-            connect(findWin, SIGNAL(goingAway()),this, SLOT(browseFindAway()));
-        }
-        findWin->resetFields(db.getTableFields(db.curBrowseTableName));
-        findWin->show();
-    } else {
-        if(findWin)
-            findWin->hide();
-    }
-}
-
-void MainWindow::browseFindAway()
-{
-    ui->buttonFind->toggle();
 }
 
 void MainWindow::browseRefresh()
 {
-    populateTable(ui->comboBrowseTable->currentText(), true);
-}
-
-void MainWindow::lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm )
-{
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
-        return;
-    }
-    
-    //we may need to modify woperator and wsearchterm, so use copies
-    QString finaloperator = woperator;
-    QString finalsearchterm = wsearchterm;
-    
-    //special case for CONTAINS operator: use LIKE and surround the search word with % characters
-    if(woperator.compare(tr("contains")) == 0)
-    {
-        finaloperator = QString("LIKE");
-        QString newsearchterm = "%";
-        newsearchterm.append(wsearchterm);
-        newsearchterm.append("%");
-        finalsearchterm = QString(newsearchterm);
-    }
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    QString statement = "SELECT rowid, ";
-    statement.append(wfield);
-    statement.append("  FROM ");
-    statement.append(db.curBrowseTableName);
-    statement.append(" WHERE ");
-    statement.append(wfield);
-    statement.append(" ");
-    statement.append(finaloperator);
-    statement.append(" ");
-    //searchterm needs to be quoted if it is not a number
-    bool ok = false;
-    finalsearchterm.toDouble(&ok);
-    if (!ok) finalsearchterm.toInt(&ok, 10);
-    if (!ok) {//not a number, quote it
-        char * formSQL = sqlite3_mprintf("%Q",(const char *) finalsearchterm.toUtf8());
-        statement.append(formSQL);
-        if (formSQL) sqlite3_free(formSQL);
-    } else {//append the number, unquoted
-        statement.append(finalsearchterm);
-    }
-    statement.append(" ORDER BY rowid; ");
-    resultMap res = db.getFindResults(statement);
-    findWin->showResults(res);
-    QApplication::restoreOverrideCursor();
+    populateTable(ui->comboBrowseTable->currentText());
 }
 
 void MainWindow::createTable()
@@ -698,18 +580,7 @@ void MainWindow::helpAbout()
 
 void MainWindow::updateRecordText(int row, int col, const QByteArray& newtext)
 {
-    if (!db.updateRecord(row, col, newtext)){
-        QMessageBox::information( this, QApplication::applicationName(),
-                                  tr("Data could not be updated:\n") + db.lastErrorMessage);
-    }
-
-    rowList tab = db.browseRecs;
-    QList<QByteArray>& rt = tab[row];
-    QByteArray& cv = rt[col+1];//must account for rowid
-
-    QStandardItem* item = new QStandardItem(QString(cv));
-    item->setToolTip( wrapText(cv) );
-    browseTableModel->setItem(row, col, item);
+    m_browseTableModel->setData(m_browseTableModel->index(row, col), newtext);
 }
 
 void MainWindow::editWinAway()
@@ -719,13 +590,9 @@ void MainWindow::editWinAway()
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(editWin->getCurrentRow(), editWin->getCurrentCol()));
 }
 
-void MainWindow::editText(int row, int col)
+void MainWindow::editText(const QModelIndex& index)
 {
-    rowList tab = db.browseRecs;
-    QList<QByteArray> rt = tab[row];
-    QByteArray cv = rt[col+1];//must account for rowid
-
-    editWin->loadText(cv , row, col);
+    editWin->loadText(index.data().toByteArray(), index.row(), index.column());
     editWin->show();
 }
 
@@ -741,7 +608,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
         return;
 
-    editText(index.row(), index.column());
+    editText(index);
 }
 
 /*
@@ -1138,9 +1005,9 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
         return;
 
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
-    curBrowseOrderByIndex = logicalindex + 2;
-    curBrowseOrderByMode = curBrowseOrderByMode == ORDERMODE_ASC ? ORDERMODE_DESC : ORDERMODE_ASC;
-    populateTable(ui->comboBrowseTable->currentText(), true);
+    curBrowseOrderByIndex = logicalindex;
+    curBrowseOrderByMode = curBrowseOrderByMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item

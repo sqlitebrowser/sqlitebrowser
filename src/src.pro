@@ -16,7 +16,6 @@ HEADERS += \
     AboutDialog.h \
     EditTableDialog.h \
     PreferencesDialog.h \
-    FindDialog.h \
     EditDialog.h \
     ExportCsvDialog.h \
     ImportCsvDialog.h \
@@ -25,7 +24,9 @@ HEADERS += \
     ExtendedTableWidget.h \
     grammar/Sqlite3Lexer.hpp \
     grammar/Sqlite3Parser.hpp \
-    grammar/sqlite3TokenTypes.hpp
+    grammar/sqlite3TokenTypes.hpp \
+    sqlitetablemodel.h \
+    FilterTableHeader.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -35,7 +36,6 @@ SOURCES += \
     EditTableDialog.cpp \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
-    FindDialog.cpp \
     EditDialog.cpp \
     ExportCsvDialog.cpp \
     ImportCsvDialog.cpp \
@@ -43,7 +43,9 @@ SOURCES += \
     sqlitetypes.cpp \
     ExtendedTableWidget.cpp \
     grammar/Sqlite3Lexer.cpp \
-    grammar/Sqlite3Parser.cpp
+    grammar/Sqlite3Parser.cpp \
+    sqlitetablemodel.cpp \
+    FilterTableHeader.cpp
 
 # create a unittest option
 CONFIG(unittest) {
@@ -85,7 +87,6 @@ FORMS += \
     AboutDialog.ui \
     EditTableDialog.ui \
     PreferencesDialog.ui \
-    FindDialog.ui \
     EditDialog.ui \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui

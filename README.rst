@@ -29,6 +29,9 @@ What's been done since then
 - Cleaned up the code, reducing the SLOC quite a bit
 - Added basic support for triggers and views
 - Added pragma editing
+- Added BLOB support
+- Added a new filter row for searching
+- Improved performance when opening large tables
 - Fixed a ton of bugs
 - Probably more
 
@@ -43,8 +46,6 @@ What's still to do
 - Further improvement of the UI, adding more features and making it easier to
   use
 - Inline editing of records instead of having to use a special dialog for it
-- Avoid loading all records of a table to avoid problems when opening a very
-  big table
 - Feel free to add more issues at
   https://github.com/rp-/sqlitebrowser/issues
 

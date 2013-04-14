@@ -3,10 +3,14 @@
 #include <QKeySequence>
 #include <QKeyEvent>
 #include "ExtendedTableWidget.h"
+#include "sqlitetablemodel.h"
+#include <QScrollBar>
+#include <QHeaderView>
 
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
 {
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
 }
 
 void ExtendedTableWidget::copy()
@@ -52,4 +56,35 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
         copy();
     else
         QTableView::keyPressEvent(event);
+}
+
+void ExtendedTableWidget::updateGeometries()
+{
+    // Call the parent implementation first - it does most of the actual logic
+    QTableView::updateGeometries();
+
+    // Check if a model has already been set yet
+    if(model())
+    {
+        // If so and if it is a SqliteTableModel and if the parent implementation of this method decided that a scrollbar is needed, update its maximum value
+        SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+        if(m && verticalScrollBar()->maximum())
+            verticalScrollBar()->setMaximum(m->totalRowCount());
+    }
+}
+
+void ExtendedTableWidget::vscrollbarChanged(int value)
+{
+    // Cancel if there is no model set yet - this shouldn't happen (because without a model there should be no scrollbar) but just to be sure...
+    if(!model())
+        return;
+
+    // How many rows are visible right now?
+    int row_top = rowAt(0) == -1 ? 0 : rowAt(0);
+    int row_bottom = rowAt(height()) == -1 ? model()->rowCount() : rowAt(height());
+    int num_visible_rows = row_bottom - row_top;
+
+    // Fetch more data from the DB if necessary
+    if((value + num_visible_rows) >= model()->rowCount() && model()->canFetchMore(QModelIndex()))
+        model()->fetchMore(QModelIndex());
 }

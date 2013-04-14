@@ -4,17 +4,14 @@
 #include <QMainWindow>
 #include "sqlitedb.h"
 
-#define ORDERMODE_ASC 0
-#define ORDERMODE_DESC 1
-
 class QDragEnterEvent;
 class EditDialog;
-class FindDialog;
 class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
 class QIntValidator;
 class QLabel;
 class QModelIndex;
+class SqliteTableModel;
 
 namespace Ui {
 class MainWindow;
@@ -52,7 +49,7 @@ private:
 
     Ui::MainWindow* ui;
 
-    QStandardItemModel *browseTableModel;
+    SqliteTableModel* m_browseTableModel;
     QStandardItemModel *queryResultListModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
@@ -68,10 +65,9 @@ private:
     QAction *recentSeparatorAct;
 
     int curBrowseOrderByIndex;
-    int curBrowseOrderByMode;
+    Qt::SortOrder curBrowseOrderByMode;
 
     EditDialog* editWin;
-    FindDialog* findWin;
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
@@ -99,22 +95,18 @@ private slots:
     virtual void fileOpen();
     virtual void fileNew();
     virtual void populateStructure();
-    virtual void populateTable(const QString & tablename , bool keepColumnWidths = false);
+    virtual void populateTable(const QString& tablename);
     virtual void resetBrowser();
     virtual void fileClose();
     virtual void fileExit();
     virtual void addRecord();
     virtual void deleteRecord();
-    virtual void updateTableView(int lineToSelect , bool keepColumnWidths = false);
     virtual void selectTableLine( int lineToSelect );
     virtual void navigatePrevious();
     virtual void navigateNext();
     virtual void navigateGoto();
     virtual void setRecordsetLabel();
-    virtual void browseFind( bool open );
-    virtual void browseFindAway();
     virtual void browseRefresh();
-    virtual void lookfor( const QString & wfield, const QString & woperator, const QString & wsearchterm );
     virtual void createTable();
     virtual void createIndex();
     virtual void compact();
@@ -124,7 +116,7 @@ private slots:
     virtual void helpAbout();
     virtual void updateRecordText(int row, int col, const QByteArray& newtext);
     virtual void editWinAway();
-    virtual void editText( int row, int col );
+    virtual void editText(const QModelIndex& index);
     virtual void doubleClickTable(const QModelIndex& index);
     virtual void executeQuery();
     virtual void importTableFromCSV();

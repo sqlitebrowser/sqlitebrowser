@@ -6,6 +6,7 @@
 #include "ui_ExportCsvDialog.h"
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
+#include "sqlitetablemodel.h"
 
 ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
@@ -39,7 +40,10 @@ void ExportCsvDialog::accept()
     if(fileName.size() > 0)
     {
         // Get data from selected table
-        pdb->browseTable(ui->comboTable->currentText());
+        SqliteTableModel tableModel(this, pdb);
+        tableModel.setTable(ui->comboTable->currentText());
+        while(tableModel.canFetchMore())
+            tableModel.fetchMore();
 
         // Prepare the quote and separating characters
         QString quoteChar = ui->comboQuoteCharacter->currentText();
@@ -58,11 +62,10 @@ void ExportCsvDialog::accept()
             // Put field names in first row if user wants to have them
             if(ui->checkHeader->isChecked())
             {
-                QStringList fields = pdb->browseFields;
-                for(int i=0;i<fields.count();i++)
+                for(int i=1;i<tableModel.columnCount();i++)
                 {
-                    stream << quoteChar << fields.at(i) << quoteChar;
-                    if(i < fields.count() - 1)
+                    stream << quoteChar << tableModel.headerData(i, Qt::Horizontal).toString() << quoteChar;
+                    if(i < tableModel.columnCount() - 1)
                         stream << sepChar;
                     else
                         stream << newlineChar;
@@ -70,15 +73,13 @@ void ExportCsvDialog::accept()
             }
 
             // Get and write actual data
-            rowList data = pdb->browseRecs;
-            for(int i=0;i<data.size();i++)
+            for(int i=0;i<tableModel.totalRowCount();i++)
             {
-                QList<QByteArray> row = data[i];
-                for(int j=1;j<row.size();j++)
+                for(int j=1;j<tableModel.columnCount();j++)
                 {
-                    QString content = row[j];
+                    QString content = tableModel.data(tableModel.index(i, j)).toString();
                     stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
-                    if(j < row.count() - 1)
+                    if(j < tableModel.columnCount() - 1)
                         stream << sepChar;
                     else
                         stream << newlineChar;

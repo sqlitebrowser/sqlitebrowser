@@ -22,7 +22,6 @@
         <file alias="trigger">script.png</file>
         <file alias="trigger_create">script_add.png</file>
         <file alias="trigger_delete">script_delete.png</file>
-        <file alias="searchfind">magnifier.png</file>
         <file alias="settings">wrench.png</file>
         <file alias="whatis">help.png</file>
     </qresource>
