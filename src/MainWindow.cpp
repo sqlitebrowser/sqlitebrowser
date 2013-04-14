@@ -411,6 +411,7 @@ void MainWindow::selectTableLine(int lineToSelect)
     if(lineToSelect >= m_browseTableModel->totalRowCount())
         return;
 
+    QApplication::setOverrideCursor( Qt::WaitCursor );
     // Make sure this line has already been fetched
     while(lineToSelect >= m_browseTableModel->rowCount() && m_browseTableModel->canFetchMore())
           m_browseTableModel->fetchMore();
@@ -419,6 +420,7 @@ void MainWindow::selectTableLine(int lineToSelect)
     ui->dataTable->clearSelection();
     ui->dataTable->selectRow(lineToSelect);
     ui->dataTable->scrollTo(ui->dataTable->currentIndex());
+    QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::navigatePrevious()
