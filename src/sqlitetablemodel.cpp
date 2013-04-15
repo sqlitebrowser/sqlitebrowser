@@ -23,26 +23,35 @@ void SqliteTableModel::setTable(const QString& table)
 {
     m_sTable = table;
 
-    m_headers.clear();
-    m_headers.push_back("rowid");
-    m_headers.append(m_db->getTableFields(table));
-
     m_mWhere.clear();
 
     buildQuery();
 }
 
+namespace {
+QString rtrimChar(const QString& s, QChar c) {
+    QString r = s.trimmed();
+    int i = r.length() - 1;
+    for(; i >= 0 && r.at(i) != c; --i);
+    return r.left(i);
+}
+}
+
 void SqliteTableModel::setQuery(const QString& sQuery)
 {
+    // clear
+    m_mWhere.clear();
+    m_headers.clear();
+
     if(!m_db->isOpen())
         return;
 
     sqlite3_stmt *stmt;
     m_rowCount = 0;
-    m_sQuery = sQuery;
+    m_sQuery = rtrimChar(sQuery, ';');
 
     // do a count query to get the full row count in a fast manner
-    QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(sQuery);
+    QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(m_sQuery);
     m_db->logSQL(sCountQuery, kLogMsg_App);
     QByteArray utf8Query = sCountQuery.toUtf8();
     int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
@@ -55,6 +64,7 @@ void SqliteTableModel::setQuery(const QString& sQuery)
             QString sCount = QString::fromUtf8((const char *) sqlite3_column_text(stmt, 0));
             m_rowCount = sCount.toInt();
         }
+        sqlite3_finalize(stmt);
     }
     else
     {
@@ -63,6 +73,16 @@ void SqliteTableModel::setQuery(const QString& sQuery)
         m_valid = false;
         return;
     }
+
+    // headers
+    utf8Query = sQuery.toUtf8();
+    status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+    if(SQLITE_OK == status)
+    {
+        status = sqlite3_step(stmt);
+        int columns = sqlite3_data_count(stmt);
+        for(int i = 0; i < columns; ++i)
+            m_headers.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
     }
     sqlite3_finalize(stmt);
 
@@ -235,14 +255,19 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 void SqliteTableModel::buildQuery()
 {
     QString where;
+    QStringList headers;
+    headers.push_back("rowid");
+    headers.append(m_db->getTableFields(m_sTable));
+
     if(m_mWhere.size())
     {
         where = "WHERE 1=1";
+
         for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
-            where.append(QString(" AND `%1` %2").arg(m_headers.at(i.key())).arg(i.value()));
+            where.append(QString(" AND `%1` %2").arg(headers.at(i.key())).arg(i.value()));
     }
 
-    QString sql = QString("SELECT rowid,* FROM `%1` %2 ORDER BY `%3` %4").arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
+    QString sql = QString("SELECT rowid,* FROM `%1` %2 ORDER BY `%3` %4").arg(m_sTable).arg(where).arg(headers.at(m_iSortColumn)).arg(m_sSortOrder);
     setQuery(sql);
 }
 
