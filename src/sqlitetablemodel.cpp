@@ -100,10 +100,6 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole)
     {
-        // If this row is not in the cache yet get it first
-        while(index.row() >= m_data.size() && canFetchMore())
-            const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
-
         return m_data.at(index.row()).at(index.column());
     } else {
         return QVariant();
