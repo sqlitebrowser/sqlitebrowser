@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(this, &db)),
+      m_executeQueryModel(new SqliteTableModel(this, &db)),
       sqliteHighlighterTabSql(0),
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
@@ -65,9 +66,7 @@ void MainWindow::init()
 
     // Set up DB models
     ui->dataTable->setModel(m_browseTableModel);
-
-    queryResultListModel = new QStandardItemModel(this);
-    ui->queryResultTableView->setModel(queryResultListModel);
+    ui->queryResultTableView->setModel(m_executeQueryModel);
 
     FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
     connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
@@ -647,49 +646,31 @@ void MainWindow::executeQuery()
     //Accept multi-line queries, by looping until the tail is empty
     do
     {
-        queryResultListModel->removeRows(0, queryResultListModel->rowCount());
-        queryResultListModel->removeColumns(0, queryResultListModel->columnCount());
-        queryResultListModel->setHorizontalHeaderLabels(QStringList());
-        queryResultListModel->setVerticalHeaderLabels(QStringList());
-
         const char* qbegin = tail;
         sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
                             &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         if (sql3status == SQLITE_OK){
-            int rownum = 0;
-            bool mustCreateColumns = true;
-
             sql3status = sqlite3_step(vm);
+            sqlite3_finalize(vm);
             switch(sql3status)
             {
+            case SQLITE_DONE:
             case SQLITE_ROW:
             {
-                do
+                m_executeQueryModel->setQuery(queryPart);
+                if(m_executeQueryModel->valid())
                 {
-                    int ncol = sqlite3_data_count(vm);
-                    //setup num of cols here for display grid
-                    if (mustCreateColumns)
-                    {
-                        QStringList headerList;
-                        for (int e=0; e<ncol; ++e)
-                            headerList = headerList << QString::fromUtf8((const char *)sqlite3_column_name(vm, e));
-                        queryResultListModel->setHorizontalHeaderLabels(headerList);
-                        mustCreateColumns = false;
-                    }
-                    for (int e=0; e<ncol; ++e){
-                        QString rv = QString::fromUtf8((const char *) sqlite3_column_text(vm, e));
-                        //show it here
-                        QString firstline = rv.section( '\n', 0,0 );
-                        queryResultListModel->setItem(rownum, e, new QStandardItem(QString(firstline)));
-                    }
-                    queryResultListModel->setVerticalHeaderItem(rownum, new QStandardItem(QString::number(rownum + 1)));
-                    rownum++;
-                } while ( sqlite3_step(vm) == SQLITE_ROW );
-                sql3status = SQLITE_OK;
+                    statusMessage = tr("%1 Rows returned from: %2").arg(
+                                m_executeQueryModel->totalRowCount()).arg(queryPart);
+                    sql3status = SQLITE_OK;
+                }
+                else
+                {
+                    statusMessage = tr("Error executing query: %1").arg(queryPart);
+                    sql3status = SQLITE_ERROR;
+                }
             }
-            case SQLITE_DONE:
-                statusMessage = tr("%1 Rows returned from: %2").arg(rownum).arg(queryPart);
             case SQLITE_OK:
             {
                 if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) )
@@ -705,7 +686,6 @@ void MainWindow::executeQuery()
             break;
 
             }
-            sqlite3_finalize(vm);
         }
         else
         {

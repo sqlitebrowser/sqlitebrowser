@@ -50,7 +50,7 @@ private:
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;
-    QStandardItemModel *queryResultListModel;
+    SqliteTableModel* m_executeQueryModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
 
