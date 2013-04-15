@@ -32,6 +32,8 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const;
 
+    bool valid() const { return m_valid; }
+
     typedef QList<QByteArray> QByteArrayList;
 
 signals:
@@ -65,6 +67,8 @@ private:
      * to that row count.
      */
     size_t m_chunkSize;
+
+    bool m_valid; //! tells if the current query is valid.
 };
 
 #endif // SQLITETABLEMODEL_H

@@ -10,6 +10,7 @@ SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db)
     , m_iSortColumn(0)
     , m_sSortOrder("ASC")
     , m_chunkSize(50000)
+    , m_valid(false)
 {
 }
 
@@ -55,11 +56,20 @@ void SqliteTableModel::setQuery(const QString& sQuery)
             m_rowCount = sCount.toInt();
         }
     }
+    else
+    {
+        qWarning() << "Count query failed: " << sCountQuery;
+        sqlite3_finalize(stmt);
+        m_valid = false;
+        return;
+    }
+    }
     sqlite3_finalize(stmt);
 
     // now fetch the first entries
     clearCache();
     fetchData(0, m_chunkSize);
+    m_valid = true;
 
     emit layoutChanged();
 }
