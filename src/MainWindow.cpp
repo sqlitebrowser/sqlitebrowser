@@ -319,15 +319,27 @@ void MainWindow::populateTable( const QString & tablename)
 
 void MainWindow::resetBrowser()
 {
-    QString sCurrentTable = ui->comboBrowseTable->currentText();
+    const QString sCurrentTable = ui->comboBrowseTable->currentText();
     ui->comboBrowseTable->clear();
-    objectMap tab = db.getBrowsableObjects();
+    const objectMap& tab = db.getBrowsableObjects();
+
+    // fill a objmap which is sorted by table/view names
+    QMap<QString, DBBrowserObject> objmap;
     for(objectMap::ConstIterator i=tab.begin();i!=tab.end();++i)
     {
-        ui->comboBrowseTable->addItem(QIcon(QString(":icons/%1").arg(i.value().gettype())), i.value().getname());
-
-        //ui->comboBrowseTable->addItems(tab);
+        objmap[i.value().getname()] = i.value();;
     }
+
+    // finaly fill the combobox in sorted order
+    for(QMap<QString, DBBrowserObject>::ConstIterator it=objmap.constBegin();
+        it!=objmap.constEnd();
+        ++it)
+    {
+        ui->comboBrowseTable->addItem(
+                    QIcon(QString(":icons/%1").arg((*it).gettype())),
+                    (*it).getname());
+    }
+
     setRecordsetLabel();
     int pos = ui->comboBrowseTable->findText(sCurrentTable);
     pos = pos == -1 ? 0 : pos;
