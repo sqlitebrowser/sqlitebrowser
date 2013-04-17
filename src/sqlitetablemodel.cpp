@@ -23,6 +23,10 @@ void SqliteTableModel::setTable(const QString& table)
 {
     m_sTable = table;
 
+    m_headers.clear();
+    m_headers.push_back("rowid");
+    m_headers.append(m_db->getTableFields(table));
+
     m_mWhere.clear();
 
     buildQuery();
@@ -37,11 +41,12 @@ QString rtrimChar(const QString& s, QChar c) {
 }
 }
 
-void SqliteTableModel::setQuery(const QString& sQuery)
+void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
 {
     // clear
     m_mWhere.clear();
-    m_headers.clear();
+    if(!dontClearHeaders)
+        m_headers.clear();
 
     if(!m_db->isOpen())
         return;
@@ -75,16 +80,19 @@ void SqliteTableModel::setQuery(const QString& sQuery)
     }
 
     // headers
-    utf8Query = sQuery.toUtf8();
-    status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
-    if(SQLITE_OK == status)
+    if(!dontClearHeaders)
     {
-        status = sqlite3_step(stmt);
-        int columns = sqlite3_data_count(stmt);
-        for(int i = 0; i < columns; ++i)
-            m_headers.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
+        utf8Query = sQuery.toUtf8();
+        status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+        if(SQLITE_OK == status)
+        {
+            status = sqlite3_step(stmt);
+            int columns = sqlite3_data_count(stmt);
+            for(int i = 0; i < columns; ++i)
+                m_headers.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
+        }
+        sqlite3_finalize(stmt);
     }
-    sqlite3_finalize(stmt);
 
     // now fetch the first entries
     clearCache();
@@ -272,7 +280,7 @@ void SqliteTableModel::buildQuery()
     }
 
     QString sql = QString("SELECT rowid,* FROM `%1` %2 ORDER BY `%3` %4").arg(m_sTable).arg(where).arg(headers.at(m_iSortColumn)).arg(m_sSortOrder);
-    setQuery(sql);
+    setQuery(sql, true);
 }
 
 void SqliteTableModel::updateFilter(int column, const QString& value)

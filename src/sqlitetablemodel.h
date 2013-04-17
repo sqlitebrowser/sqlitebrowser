@@ -25,7 +25,7 @@ public:
     bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
 
-    void setQuery(const QString& sQuery);
+    void setQuery(const QString& sQuery, bool dontClearHeaders = false);
     void setTable(const QString& table);
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
