@@ -69,7 +69,7 @@ void ExtendedTableWidget::updateGeometries()
         // If so and if it is a SqliteTableModel and if the parent implementation of this method decided that a scrollbar is needed, update its maximum value
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
         if(m && verticalScrollBar()->maximum())
-            verticalScrollBar()->setMaximum(m->totalRowCount());
+            verticalScrollBar()->setMaximum(m->totalRowCount() - numVisibleRows() + 1);
     }
 }
 
@@ -79,12 +79,17 @@ void ExtendedTableWidget::vscrollbarChanged(int value)
     if(!model())
         return;
 
-    // How many rows are visible right now?
+    // Fetch more data from the DB if necessary
+    if((value + numVisibleRows()) >= model()->rowCount() && model()->canFetchMore(QModelIndex()))
+        model()->fetchMore(QModelIndex());
+}
+
+int ExtendedTableWidget::numVisibleRows()
+{
+    // Get the row numbers of the rows currently visible at the top and the bottom of the widget
     int row_top = rowAt(0) == -1 ? 0 : rowAt(0);
     int row_bottom = rowAt(height()) == -1 ? model()->rowCount() : rowAt(height());
-    int num_visible_rows = row_bottom - row_top;
 
-    // Fetch more data from the DB if necessary
-    if((value + num_visible_rows) >= model()->rowCount() && model()->canFetchMore(QModelIndex()))
-        model()->fetchMore(QModelIndex());
+    // Calculate the number of visible rows
+    return row_bottom - row_top;
 }

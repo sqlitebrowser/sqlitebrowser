@@ -12,6 +12,7 @@ public:
 
 private:
     void copy();
+    int numVisibleRows();
 
 private slots:
     void vscrollbarChanged(int value);
