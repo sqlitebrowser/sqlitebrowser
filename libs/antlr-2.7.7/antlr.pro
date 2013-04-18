@@ -1,6 +1,6 @@
 TEMPLATE = lib
 
-CONFIG = release staticlib
+CONFIG = staticlib
 
 OBJECTS_DIR = .obj
 INCLUDEPATH += ./
