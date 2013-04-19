@@ -1,4 +1,10 @@
 #!/bin/sh
 cd $1
-echo -n "#define APP_VERSION " > gen_version.h
-git log -n1 --format="\"%h_git\"" >> gen_version.h
+
+version=`git log -n1 --format="\"%h_git\""`
+version_macro="#define APP_VERSION $version"
+current_file=`cat gen_version.h`
+
+if [ "$version_macro" != "$current_file" ]; then
+	echo "$version_macro" > gen_version.h
+fi

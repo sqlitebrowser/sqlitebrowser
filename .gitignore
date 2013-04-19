@@ -6,6 +6,7 @@ src/sqlitebrowser
 src/Makefile*
 src/debug
 src/release
+src/gen_version.h
 
 libs/*/Makefile*
 libs/*/debug/
