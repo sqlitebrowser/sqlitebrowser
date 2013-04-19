@@ -70,6 +70,7 @@ void MainWindow::init()
 
     FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
     connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
+    connect(tableHeader, SIGNAL(filterChanged(int,QString)), this, SLOT(setRecordsetLabel()));
     ui->dataTable->setHorizontalHeader(tableHeader);
 
     // Create the actions for the recently opened dbs list
