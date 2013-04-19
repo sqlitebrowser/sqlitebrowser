@@ -447,8 +447,6 @@ void MainWindow::navigatePrevious()
 
 void MainWindow::navigateNext()
 {
-    // TODO: Fetch more data from DB if necessary
-
     int curRow = ui->dataTable->currentIndex().row();
     curRow += 100;
     if(curRow >= m_browseTableModel->totalRowCount())
@@ -459,8 +457,6 @@ void MainWindow::navigateNext()
 
 void MainWindow::navigateGoto()
 {
-    // TODO: Fetch more data from DB if necessary
-
     int row = ui->editGoto->text().toInt();
     if(row <= 0)
         row = 1;
