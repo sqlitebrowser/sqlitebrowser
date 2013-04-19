@@ -19,12 +19,7 @@ CONFIG(unittest) {
 
 # version reporting
 #version.depends = version.sh
-# the following line is commented because otherwise qmake would always call
-# this build step and would always relink the target
-# I assume that is kinda ok for release, but for development we dont care
-# about an all time super actual git version number
-# so this is disabled for the debug build
-#CONFIG(debug,debug|release):version.target = Makefile.Debug
+CONFIG(debug,debug|release):version.target = Makefile.Debug
 CONFIG(release,debug|release):version.target = Makefile.Release
 version.commands = sh $$PWD/version.sh $$PWD
 QMAKE_EXTRA_TARGETS += version
@@ -96,5 +91,5 @@ mac {
 
 UI_DIR = .ui
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
-LIBS += -L$$PWD/../libs/qhexedit -lantlr -lqhexedit -lsqlite3
+LIBS += -L$$PWD/../libs/qhexedit -L$$PWD/../libs/antlr-2.7.7 -lantlr -lqhexedit -lsqlite3
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
