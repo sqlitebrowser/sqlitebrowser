@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS hugetable (
 
 def main():
     if len(sys.argv) != 2:
-        print("please specify the db filename")
+        sys.exit("please specify the db filename")
 
     with sqlite3.connect(sys.argv[1]) as c:
         c.executescript(CREATE)

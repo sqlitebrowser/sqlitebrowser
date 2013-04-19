@@ -74,7 +74,6 @@ public:
     bool save (const QString& pointname = "RESTOREPOINT");
     bool revert (const QString& pointname = "RESTOREPOINT");
     bool dump( const QString & filename);
-    bool reload( const QString & filename, int * lineErr);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
 
