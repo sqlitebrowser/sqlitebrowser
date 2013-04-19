@@ -17,6 +17,18 @@ CONFIG(unittest) {
   SOURCES += main.cpp
 }
 
+# version reporting
+#version.depends = version.sh
+# the following line is commented because otherwise qmake would always call
+# this build step and would always relink the target
+# I assume that is kinda ok for release, but for development we dont care
+# about an all time super actual git version number
+# so this is disabled for the debug build
+#CONFIG(debug,debug|release):version.target = Makefile.Debug
+CONFIG(release,debug|release):version.target = Makefile.Release
+version.commands = sh $$PWD/version.sh $$PWD
+QMAKE_EXTRA_TARGETS += version
+
 HEADERS += \
     sqlitedb.h \
     MainWindow.h \
@@ -35,7 +47,8 @@ HEADERS += \
     grammar/Sqlite3Parser.hpp \
     grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
-    FilterTableHeader.h
+    FilterTableHeader.h \
+    gen_version.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -67,9 +80,6 @@ FORMS += \
     EditDialog.ui \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui
-
-
-QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
 
 unix { 
     LIBS += -ldl
