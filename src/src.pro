@@ -5,8 +5,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = sqlitebrowser
 
-CONFIG += qt \
-    warn_on
+CONFIG += debug_and_release
+CONFIG += qt
+CONFIG += warn_on
+
+# create a unittest option
+CONFIG(unittest) {
+  CONFIG += qtestlib
+  SOURCES += tests/testsqlobjects.cpp
+} else {
+  SOURCES += main.cpp
+}
 
 HEADERS += \
     sqlitedb.h \
@@ -47,38 +56,6 @@ SOURCES += \
     sqlitetablemodel.cpp \
     FilterTableHeader.cpp
 
-# create a unittest option
-CONFIG(unittest) {
-  CONFIG += qtestlib
-  SOURCES += tests/testsqlobjects.cpp
-} else {
-  SOURCES += main.cpp
-}
-
-QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
-
-unix { 
-    UI_DIR = .ui
-    MOC_DIR = .moc
-    OBJECTS_DIR = .obj
-    LIBS += -ldl -L$$OUT_PWD/../libs/qhexedit/
-}
-win32 {
-    RC_FILE = winapp.rc
-    CONFIG(debug, debug|release) {
-        LIBS += -L$$OUT_PWD/../libs/qhexedit/debug/
-    } else {
-        LIBS += -L$$OUT_PWD/../libs/qhexedit/release/
-    }
-}
-mac { 
-    RC_FILE = macapp.icns
-    LIBS += -framework \
-        Carbon \
-        -L$$OUT_PWD/../libs/qhexedit/
-    QMAKE_INFO_PLIST = app.plist
-}
-LIBS += -lsqlite3
 RESOURCES += icons/icons.qrc
 
 FORMS += \
@@ -91,6 +68,23 @@ FORMS += \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui
 
+
+QMAKE_CXXFLAGS += -DAPP_VERSION=\\\"`cd $$PWD;git log -n1 --format=%h_git`\\\"
+
+unix { 
+    LIBS += -ldl
+}
+win32 {
+    RC_FILE = winapp.rc
+}
+mac { 
+    RC_FILE = macapp.icns
+    LIBS += -framework \
+        Carbon
+    QMAKE_INFO_PLIST = app.plist
+}
+
+UI_DIR = .ui
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
-LIBS += -L$$OUT_PWD/../libs/antlr-2.7.7/ -lantlr -lqhexedit
+LIBS += -L$$PWD/../libs/qhexedit -lantlr -lqhexedit -lsqlite3
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit

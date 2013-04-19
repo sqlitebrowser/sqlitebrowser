@@ -1,8 +1,8 @@
 TEMPLATE = lib
 
-CONFIG = staticlib
+CONFIG += staticlib
+CONFIG += debug_and_release
 
-OBJECTS_DIR = .obj
 INCLUDEPATH += ./
 
 HEADERS += \

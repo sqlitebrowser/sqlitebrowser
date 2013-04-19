@@ -1,8 +1,7 @@
 TEMPLATE = lib
 
 CONFIG += staticlib
-
-MOC_DIR = .moc
+CONFIG += debug_and_release
 
 HEADERS += \
     src/commands.h \
