@@ -191,9 +191,6 @@ void DBBrowserDB::close (){
     }
     _db = 0;
     objMap.clear();
-    idmap.clear();
-    browseRecs.clear();
-    browseFields.clear();
     hasValidBrowseSet = false;
 }
 
@@ -471,24 +468,6 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int 
     }
 }
 
-bool DBBrowserDB::browseTable( const QString & tablename, const QString& /*orderby*/ )
-{
-    QStringList testFields = getTableFields( tablename );
-    
-    if (testFields.count()>0) {//table exists
-        browseFields = testFields;
-        hasValidBrowseSet = true;
-        curBrowseTableName = tablename;
-    } else {
-        hasValidBrowseSet = false;
-        curBrowseTableName = QString(" ");
-        browseFields.clear();
-        browseRecs.clear();
-        idmap.clear();
-    }
-    return hasValidBrowseSet;
-}
-
 bool DBBrowserDB::createTable(const QString& name, const QList<DBBrowserField>& structure)
 {
     // Build SQL statement
@@ -734,19 +713,6 @@ objectMap DBBrowserDB::getBrowsableObjects() const
     return res;
 }
 
-QStringList DBBrowserDB::getIndexNames() const
-{
-    QList<DBBrowserObject> tmap = objMap.values("index");
-    QList<DBBrowserObject>::ConstIterator it;
-    QStringList res;
-
-    for ( it = tmap.begin(); it != tmap.end(); ++it ) {
-        res.append( (*it).getname() );
-    }
-    
-    return res;
-}
-
 QStringList DBBrowserDB::getTableFields(const QString & tablename) const
 {
     objectMap::ConstIterator it;
@@ -766,25 +732,6 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename) const
     return res;
 }
 
-QStringList DBBrowserDB::getTableTypes(const QString & tablename) const
-{
-    objectMap::ConstIterator it;
-    QStringList res;
-
-    for ( it = objMap.begin(); it != objMap.end(); ++it )
-    {
-        if((*it).getname() == tablename)
-        {
-            fieldMap::ConstIterator fit;
-
-            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
-                res.append( fit.value().gettype() );
-            }
-        }
-    }
-    return res;
-}
-
 DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
 {
     objectMap::ConstIterator it;
@@ -796,11 +743,6 @@ DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
             return *it;
     }
     return DBBrowserObject();
-}
-
-int DBBrowserDB::getRecordCount() const
-{
-    return browseRecs.count();
 }
 
 void DBBrowserDB::logSQL(const QString& statement, int msgtype)

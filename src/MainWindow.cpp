@@ -296,9 +296,6 @@ void MainWindow::populateTable( const QString & tablename)
     curBrowseOrderByMode = Qt::AscendingOrder;
     m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
 
-    // Get table layout
-    db.browseTable(tablename);
-
     // Update the filter row
     qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
 
@@ -405,7 +402,7 @@ void MainWindow::deleteRecord()
         int row = ui->dataTable->currentIndex().row();
         if(m_browseTableModel->removeRow(row))
         {
-            populateTable(db.curBrowseTableName);
+            populateTable(ui->comboBrowseTable->currentText());
             if(row > m_browseTableModel->totalRowCount())
                 row = m_browseTableModel->totalRowCount();
             selectTableLine(row);

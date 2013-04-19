@@ -16,21 +16,8 @@ enum
     kLogMsg_App
 };
 
-/*types for encoded media data*/
-enum
-{
-    kSQLiteMediaType_Void,
-    kSQLiteMediaType_Integer,
-    kSQLiteMediaType_String,
-    kSQLiteMediaType_Binary
-};
-
 typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMultiMap<QString, class DBBrowserObject> objectMap;
-typedef QMap<int, int> rowIdMap;
-
-typedef QList<QList<QByteArray> > rowList;
-typedef QMap<int, QString> resultMap;
 
 class DBBrowserField
 {
@@ -98,11 +85,10 @@ public:
      *         or the create table statement.
      */
     QString getTableSQL(const QString& sTable);
-    void updateSchema() ;
+    void updateSchema();
     int addRecord(const QString& sTableName);
     bool deleteRecord(const QString& table, int rowid);
     bool updateRecord(const QString& table, const QString& column, int row, const QByteArray& value);
-    bool browseTable( const QString & tablename, const QString& orderby = "rowid" );
 
     bool createTable(const QString& name, const QList<DBBrowserField>& structure);
     bool renameTable(const QString& from_table, const QString& to_table);
@@ -111,12 +97,9 @@ public:
     bool dropColumn(const QString& tablename, const QString& column);
 
     QStringList getTableFields(const QString & tablename) const;
-    QStringList getTableTypes(const QString & tablename) const;
     QStringList getBrowsableObjectNames() const;
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
-    QStringList getIndexNames() const;
-    int getRecordCount() const;
     bool isOpen() const;
     void setDirty(bool dirtyval);
     bool getDirty() const;
@@ -132,12 +115,8 @@ public:
     QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);
 
     objectMap objMap;
-    rowIdMap idmap;
 
-    rowList browseRecs;
-    QStringList browseFields;
     bool hasValidBrowseSet;
-    QString curBrowseTableName;
     QString lastErrorMessage;
     QString curDBFilename;
 
