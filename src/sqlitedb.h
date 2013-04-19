@@ -64,7 +64,7 @@ private:
 class DBBrowserDB
 {
 public:
-    DBBrowserDB (): _db( 0 ) , hasValidBrowseSet(false), mainWindow(0) {}
+    DBBrowserDB (): _db( 0 ), mainWindow(0) {}
     ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool create ( const QString & db);
@@ -116,7 +116,6 @@ public:
 
     objectMap objMap;
 
-    bool hasValidBrowseSet;
     QString lastErrorMessage;
     QString curDBFilename;
 

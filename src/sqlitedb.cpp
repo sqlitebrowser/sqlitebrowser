@@ -191,7 +191,6 @@ void DBBrowserDB::close (){
     }
     _db = 0;
     objMap.clear();
-    hasValidBrowseSet = false;
 }
 
 bool DBBrowserDB::compact ( )
@@ -415,7 +414,6 @@ int DBBrowserDB::addRecord(const QString& sTableName)
 bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
 {
     char * errmsg;
-    if (!hasValidBrowseSet) return false;
     if (!isOpen()) return false;
     bool ok = false;
     lastErrorMessage = QString("no error");
