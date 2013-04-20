@@ -102,5 +102,5 @@ mac {
 
 UI_DIR = .ui
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
-LIBS += -L$$PWD/../libs/qhexedit -L$$PWD/../libs/antlr-2.7.7 -lantlr -lqhexedit -lsqlite3
+LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -lantlr -lqhexedit -lsqlite3
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
