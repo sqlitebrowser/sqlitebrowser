@@ -76,11 +76,22 @@ FORMS += \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui
 
+LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
+LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
 unix { 
     LIBS += -ldl
 }
 win32 {
     RC_FILE = winapp.rc
+	INCLUDEPATH += $$PWD
+	CONFIG(debug,debug|release) {
+		LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
+		LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
+	}
+	CONFIG(release,debug|release) {
+		LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
+		LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
+	}
 }
 mac { 
     RC_FILE = macapp.icns
