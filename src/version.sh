@@ -6,8 +6,6 @@ version_macro="#define APP_VERSION $version"
 
 if [ -f gen_version.h ]; then
 	current_file=`cat gen_version.h`
-else
-	current_files=""
 fi
 
 if [ "$version_macro" != "$current_file" ]; then
