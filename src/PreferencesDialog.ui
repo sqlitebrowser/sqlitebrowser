@@ -102,6 +102,26 @@
          </item>
         </layout>
        </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>&amp;Prefetch block size</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinPrefetchSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinPrefetchSize">
+         <property name="minimum">
+          <number>255</number>
+         </property>
+         <property name="maximum">
+          <number>1000000</number>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -271,6 +291,7 @@
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
+  <tabstop>spinPrefetchSize</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
@@ -331,8 +352,8 @@
    <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>92</y>
+     <x>103</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>

@@ -43,6 +43,7 @@ void PreferencesDialog::loadSettings()
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
+    ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
 
     for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
     {
@@ -63,6 +64,7 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "defaultencoding", ui->encodingComboBox->currentText());
     setSettingsValue("db", "defaultlocation", ui->locationEdit->text());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
+    setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
 
     for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
     {
@@ -119,6 +121,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // db/foreignkeys?
     if(group == "db" && name == "foreignkeys")
         return true;
+
+    // db/prefetchsize?
+    if(group == "db" && name == "prefetchsize")
+        return 50000;
 
     // MainWindow/geometry?
     if(group == "MainWindow" && name == "geometry")
