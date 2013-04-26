@@ -27,8 +27,8 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      m_browseTableModel(new SqliteTableModel(this, &db)),
-      m_executeQueryModel(new SqliteTableModel(this, &db)),
+      m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
+      m_executeQueryModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
       sqliteHighlighterTabSql(0),
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
@@ -837,6 +837,8 @@ void MainWindow::openPreferences()
     PreferencesDialog dialog(this);
     if(dialog.exec())
     {
+        m_browseTableModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+        m_executeQueryModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
         createSyntaxHighlighters();
         populateStructure();
         resetBrowser();

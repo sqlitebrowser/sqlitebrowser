@@ -1,15 +1,14 @@
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
-#include "PreferencesDialog.h"
 #include <QDebug>
 
-SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db)
+SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_rowCount(0)
     , m_iSortColumn(0)
     , m_sSortOrder("ASC")
-    , m_chunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())
+    , m_chunkSize(chunkSize)
     , m_valid(false)
 {
 }
