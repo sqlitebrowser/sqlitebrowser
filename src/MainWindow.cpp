@@ -23,13 +23,12 @@
 #include "sqltextedit.h"
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
+#include "SqlExecutionArea.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
-      m_executeQueryModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
-      sqliteHighlighterTabSql(0),
       sqliteHighlighterLogUser(0),
       sqliteHighlighterLogApp(0),
       editWin(new EditDialog(this)),
@@ -66,7 +65,6 @@ void MainWindow::init()
 
     // Set up DB models
     ui->dataTable->setModel(m_browseTableModel);
-    ui->queryResultTableView->setModel(m_executeQueryModel);
 
     FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
     connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
@@ -119,7 +117,6 @@ void MainWindow::init()
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
     font.setPointSize(8);
-    ui->sqlTextEdit->setFont(font);
     ui->editLogApplication->setFont(font);
     ui->editLogUser->setFont(font);
 }
@@ -179,14 +176,13 @@ void MainWindow::fileNew()
 void MainWindow::populateStructure()
 {
     ui->dbTreeWidget->model()->removeRows(0, ui->dbTreeWidget->model()->rowCount());
-    ui->sqlTextEdit->clearFieldCompleterModelMap();
-    ui->sqlTextEdit->setDefaultCompleterModel(new QStandardItemModel());
-    if (!db.isOpen()){
+    if(!db.isOpen())
         return;
-    }
+
     db.updateSchema();
     QStringList tblnames = db.getBrowsableObjectNames();
-    sqliteHighlighterTabSql->setTableNames(tblnames);
+    for(int i=0;i<ui->tabSqlAreas->count();i++)
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->setTableNames(tblnames);
     sqliteHighlighterLogUser->setTableNames(tblnames);
     sqliteHighlighterLogApp->setTableNames(tblnames);
 
@@ -219,11 +215,13 @@ void MainWindow::populateStructure()
                 fldItem->setIcon(QIcon(":/icons/field"));
                 tablefieldmodel->setItem(fldrow, 0, fldItem);
             }
-            ui->sqlTextEdit->addFieldCompleterModel(sName.toLower(), tablefieldmodel);
+            // TODO:
+            //ui->sqlTextEdit->addFieldCompleterModel(sName.toLower(), tablefieldmodel);
         }
 
     }
-    ui->sqlTextEdit->setDefaultCompleterModel(completerModel);
+    // TODO:
+    //ui->sqlTextEdit->setDefaultCompleterModel(completerModel);
     // end setup models for sqltextedit autocomplete
 
     // fill the structure tab
@@ -357,6 +355,9 @@ void MainWindow::fileClose()
     loadPragmas();
     activateFields(false);
     ui->buttonLogClear->click();
+    for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
+        closeSqlTab(i, true);
+    openSqlTab(true);
 }
 
 void MainWindow::fileExit()
@@ -627,9 +628,10 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 void MainWindow::executeQuery()
 {
     // if a part of the query is selected, we will only execute this part
-    QString query = ui->sqlTextEdit->textCursor().selectedText();
+    SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    QString query = sqlWidget->getSelectedSql();
     if(query.isEmpty())
-        query = ui->sqlTextEdit->toPlainText().trimmed();
+        query = sqlWidget->getSql();
     if (query.isEmpty())
         return;
 
@@ -664,11 +666,11 @@ void MainWindow::executeQuery()
             case SQLITE_DONE:
             case SQLITE_ROW:
             {
-                m_executeQueryModel->setQuery(queryPart);
-                if(m_executeQueryModel->valid())
+                sqlWidget->getModel()->setQuery(queryPart);
+                if(sqlWidget->getModel()->valid())
                 {
                     statusMessage = tr("%1 Rows returned from: %2").arg(
-                                m_executeQueryModel->totalRowCount()).arg(queryPart);
+                                sqlWidget->getModel()->totalRowCount()).arg(queryPart);
                     sql3status = SQLITE_OK;
                 }
                 else
@@ -698,8 +700,7 @@ void MainWindow::executeQuery()
             statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                     ": " + queryPart;
         }
-        ui->queryErrorLineEdit->setText(statusMessage);
-        ui->queryResultTableView->resizeColumnsToContents();
+        sqlWidget->finishExecution(statusMessage);
 
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
 
@@ -838,7 +839,8 @@ void MainWindow::openPreferences()
     if(dialog.exec())
     {
         m_browseTableModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-        m_executeQueryModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+        for(int i=0;i<ui->tabSqlAreas->count();i++)
+            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getModel()->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
         createSyntaxHighlighters();
         populateStructure();
         resetBrowser();
@@ -849,10 +851,8 @@ void MainWindow::createSyntaxHighlighters()
 {
     delete sqliteHighlighterLogApp;
     delete sqliteHighlighterLogUser;
-    delete sqliteHighlighterTabSql;
     sqliteHighlighterLogApp = new SQLiteSyntaxHighlighter(ui->editLogApplication->document());
     sqliteHighlighterLogUser = new SQLiteSyntaxHighlighter(ui->editLogUser->document());
-    sqliteHighlighterTabSql = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 }
 
 //******************************************************************
@@ -976,7 +976,6 @@ void MainWindow::activateFields(bool enable)
     ui->editCreateIndexAction->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
-    ui->executeQueryButton->setEnabled(enable);
     ui->scrollAreaWidgetContents->setEnabled(enable);
     ui->buttonBoxPragmas->setEnabled(enable);
     ui->buttonGoto->setEnabled(enable);
@@ -984,6 +983,7 @@ void MainWindow::activateFields(bool enable)
     ui->buttonRefresh->setEnabled(enable);
     ui->buttonDeleteRecord->setEnabled(enable);
     ui->buttonNewRecord->setEnabled(enable);
+    ui->actionExecuteSql->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -1092,4 +1092,29 @@ void MainWindow::logSql(const QString& sql, int msgtype)
         ui->editLogApplication->append(sql);
         ui->editLogApplication->verticalScrollBar()->setValue(ui->editLogApplication->verticalScrollBar()->maximum());
     }
+}
+
+void MainWindow::closeSqlTab(int index, bool force)
+{
+    // Don't close last tab
+    if(ui->tabSqlAreas->count() == 1 && !force)
+        return;
+
+    // Remove the tab and delete the widget
+    QWidget* w = ui->tabSqlAreas->widget(index);
+    ui->tabSqlAreas->removeTab(index);
+    delete w;
+}
+
+void MainWindow::openSqlTab(bool resetCounter)
+{
+    static unsigned int tabNumber = 0;
+
+    if(resetCounter)
+        tabNumber = 0;
+
+    // Create new tab, add it to the tab widget and select it
+    QWidget* w = new SqlExecutionArea(this, &db);
+    int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
+    ui->tabSqlAreas->setCurrentIndex(index);
 }

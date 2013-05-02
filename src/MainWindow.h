@@ -50,13 +50,11 @@ private:
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;
-    SqliteTableModel* m_executeQueryModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
 
     QLabel* statusEncodingLabel;
 
-    SQLiteSyntaxHighlighter* sqliteHighlighterTabSql;
     SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;
     SQLiteSyntaxHighlighter* sqliteHighlighterLogApp;
 
@@ -133,6 +131,8 @@ private slots:
     virtual void mainTabSelected( int tabindex );
     virtual void browseTableHeaderClicked(int logicalindex);
     virtual void createSyntaxHighlighters();
+    virtual void openSqlTab(bool resetCounter = false);
+    virtual void closeSqlTab(int index, bool force = false);
 };
 
 #endif

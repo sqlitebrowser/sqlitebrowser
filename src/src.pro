@@ -43,7 +43,8 @@ HEADERS += \
     grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
     FilterTableHeader.h \
-    gen_version.h
+    gen_version.h \
+    SqlExecutionArea.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -62,7 +63,8 @@ SOURCES += \
     grammar/Sqlite3Lexer.cpp \
     grammar/Sqlite3Parser.cpp \
     sqlitetablemodel.cpp \
-    FilterTableHeader.cpp
+    FilterTableHeader.cpp \
+    SqlExecutionArea.cpp
 
 RESOURCES += icons/icons.qrc
 

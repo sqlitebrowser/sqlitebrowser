@@ -24,6 +24,8 @@
         <file alias="trigger_delete">script_delete.png</file>
         <file alias="settings">wrench.png</file>
         <file alias="whatis">help.png</file>
+        <file alias="open_tab">tab_add.png</file>
+        <file alias="run">resultset_next.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>

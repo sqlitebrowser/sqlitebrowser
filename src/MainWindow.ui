@@ -741,105 +741,24 @@
     </attribute>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>SQL string:</string>
+      <widget class="QToolBar" name="toolbarSql">
+       <property name="windowTitle">
+        <string>toolBar1</string>
        </property>
-       <property name="buddy">
-        <cstring>sqlTextEdit</cstring>
-       </property>
+       <addaction name="actionSqlOpenTab"/>
+       <addaction name="actionExecuteSql"/>
       </widget>
      </item>
      <item>
-      <widget class="SqlTextEdit" name="sqlTextEdit">
-       <property name="font">
-        <font>
-         <family>Monospace</family>
-         <pointsize>8</pointsize>
-        </font>
+      <widget class="QTabWidget" name="tabSqlAreas">
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
-       <property name="toolTip">
-        <string>Type SQL string here</string>
-       </property>
-       <property name="whatsThis">
-        <string>Type the SQL query in this area, and press the button below to execute it. Results and error messages will be shown in the fields at the bottom of this form.</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="executeQueryButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>150</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Execute SQL query (CTRL+E)</string>
-       </property>
-       <property name="statusTip">
-        <string>Execute SQL query (CTRL+E)</string>
-       </property>
-       <property name="whatsThis">
-        <string>This button is used to execute the SQL query entered in the text area above.</string>
-       </property>
-       <property name="text">
-        <string>Execute query</string>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+E</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Status:</string>
-       </property>
-       <property name="buddy">
-        <cstring>queryErrorLineEdit</cstring>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="queryErrorLineEdit">
-       <property name="whatsThis">
-        <string>Messages returned from the database engine when the SQL query is executed are displayed in this area.</string>
-       </property>
-       <property name="readOnly">
+       <property name="tabsClosable">
         <bool>true</bool>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Data returned:</string>
-       </property>
-       <property name="buddy">
-        <cstring>queryResultTableView</cstring>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="ExtendedTableWidget" name="queryResultTableView">
-       <property name="toolTip">
-        <string>Query generated data</string>
-       </property>
-       <property name="whatsThis">
-        <string>This table displays data returned from the database engine as a result of the SQL query. You can not modify data directly on this view, only consult it.</string>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
-       </property>
-       <property name="horizontalScrollMode">
-        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       <property name="movable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -1328,13 +1247,32 @@
     <string>&amp;Recently opened</string>
    </property>
   </action>
+  <action name="actionSqlOpenTab">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/open_tab</normaloff>:/icons/open_tab</iconset>
+   </property>
+   <property name="text">
+    <string>Open &amp;tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionExecuteSql">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/run</normaloff>:/icons/run</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Execute SQL</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>sqltextedit.h</header>
-  </customwidget>
   <customwidget>
    <class>ExtendedTableWidget</class>
    <extends>QTableView</extends>
@@ -1352,10 +1290,6 @@
   <tabstop>buttonNext</tabstop>
   <tabstop>buttonGoto</tabstop>
   <tabstop>editGoto</tabstop>
-  <tabstop>sqlTextEdit</tabstop>
-  <tabstop>executeQueryButton</tabstop>
-  <tabstop>queryErrorLineEdit</tabstop>
-  <tabstop>queryResultTableView</tabstop>
   <tabstop>scrollareaPragmas</tabstop>
   <tabstop>comboboxPragmaAutoVacuum</tabstop>
   <tabstop>checkboxPragmaAutomaticIndex</tabstop>
@@ -1500,8 +1434,8 @@
    <slot>navigatePrevious()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>22</x>
-     <y>321</y>
+     <x>27</x>
+     <y>380</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1516,8 +1450,8 @@
    <slot>navigateNext()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>114</x>
-     <y>321</y>
+     <x>128</x>
+     <y>380</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1532,8 +1466,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>443</x>
-     <y>321</y>
+     <x>493</x>
+     <y>380</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1548,8 +1482,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>511</x>
-     <y>321</y>
+     <x>790</x>
+     <y>379</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1564,8 +1498,8 @@
    <slot>browseRefresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>171</x>
-     <y>81</y>
+     <x>265</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1630,22 +1564,6 @@
     <hint type="sourcelabel">
      <x>399</x>
      <y>315</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>executeQueryButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>executeQuery()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>177</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1884,8 +1802,8 @@
    <slot>loadPragmas()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>705</y>
+     <x>251</x>
+     <y>381</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -1900,8 +1818,8 @@
    <slot>savePragmas()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>360</x>
-     <y>705</y>
+     <x>364</x>
+     <y>381</y>
     </hint>
     <hint type="destinationlabel">
      <x>802</x>
@@ -1916,12 +1834,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>750</x>
-     <y>392</y>
+     <x>794</x>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
-     <x>642</x>
-     <y>454</y>
+     <x>103</x>
+     <y>476</y>
     </hint>
    </hints>
   </connection>
@@ -1932,12 +1850,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>754</x>
-     <y>387</y>
+     <x>794</x>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>426</y>
+     <y>576</y>
     </hint>
    </hints>
   </connection>
@@ -1948,8 +1866,8 @@
    <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>193</x>
-     <y>392</y>
+     <x>258</x>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2005,6 +1923,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tabSqlAreas</sender>
+   <signal>tabCloseRequested(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>closeSqlTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExecuteSql</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>executeQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlOpenTab</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openSqlTab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2046,5 +2012,7 @@
   <slot>loadPragmas()</slot>
   <slot>savePragmas()</slot>
   <slot>copy()</slot>
+  <slot>closeSqlTab(int)</slot>
+  <slot>openSqlTab()</slot>
  </slots>
 </ui>
