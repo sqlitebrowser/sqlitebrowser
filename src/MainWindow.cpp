@@ -303,7 +303,7 @@ void MainWindow::populateTable( const QString & tablename)
     bool is_table = db.getObjectByName(tablename).gettype() == "table";
     ui->buttonNewRecord->setEnabled(is_table);
     ui->buttonDeleteRecord->setEnabled(is_table);
-    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::DoubleClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
 
     // Set the recordset label
     setRecordsetLabel();

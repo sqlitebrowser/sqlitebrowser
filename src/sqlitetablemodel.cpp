@@ -135,7 +135,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     if (index.row() >= m_rowCount)
         return QVariant();
 
-    if (role == Qt::DisplayRole)
+    if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
         // If this row is not in the cache yet get it first
         while(index.row() >= m_data.size() && canFetchMore())
@@ -183,7 +183,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(!index.isValid())
         return Qt::ItemIsEnabled;
 
-    return QAbstractTableModel::flags(index)/* | Qt::ItemIsEditable*/;
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
 }
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
