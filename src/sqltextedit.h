@@ -25,8 +25,8 @@ public:
     // map that associates table -> field model
     typedef QMap<QString,QAbstractItemModel*> FieldCompleterModelMap;
 
-    void clearFieldCompleterModelMap();
     QAbstractItemModel* addFieldCompleterModel(const QString& tablename, QAbstractItemModel *model);
+    void insertFieldCompleterModels(const FieldCompleterModelMap& fieldmap);
 
 protected:
     void keyPressEvent(QKeyEvent *e);

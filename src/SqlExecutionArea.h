@@ -2,6 +2,7 @@
 #define __SQLEXECUTIONAREA_H__
 
 #include <QFrame>
+#include "sqltextedit.h"
 class QSplitter;
 class SqlTextEdit;
 class ExtendedTableWidget;
@@ -10,6 +11,7 @@ class QVBoxLayout;
 class SQLiteSyntaxHighlighter;
 class SqliteTableModel;
 class DBBrowserDB;
+class QStandardItemModel;
 
 class SqlExecutionArea : public QFrame
 {

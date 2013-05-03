@@ -176,20 +176,19 @@ void MainWindow::fileNew()
 void MainWindow::populateStructure()
 {
     ui->dbTreeWidget->model()->removeRows(0, ui->dbTreeWidget->model()->rowCount());
+    completerModelTables.clear();
+    completerModelsFields.clear();
     if(!db.isOpen())
         return;
 
     db.updateSchema();
     QStringList tblnames = db.getBrowsableObjectNames();
-    for(int i=0;i<ui->tabSqlAreas->count();i++)
-        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->setTableNames(tblnames);
     sqliteHighlighterLogUser->setTableNames(tblnames);
     sqliteHighlighterLogApp->setTableNames(tblnames);
 
     // setup models for sqltextedit autocomplete
-    QStandardItemModel* completerModel = new QStandardItemModel();
-    completerModel->setRowCount(tblnames.count());
-    completerModel->setColumnCount(1);
+    completerModelTables.setRowCount(tblnames.count());
+    completerModelTables.setColumnCount(1);
 
     objectMap tab = db.getBrowsableObjects();
     int row = 0;
@@ -198,7 +197,7 @@ void MainWindow::populateStructure()
         QString sName = it.value().getname();
         QStandardItem* item = new QStandardItem(sName);
         item->setIcon(QIcon(QString(":icons/%1").arg(it.value().gettype())));
-        completerModel->setItem(row, 0, item);
+        completerModelTables.setItem(row, 0, item);
 
         // If it is a table add the field Nodes
         if((*it).gettype() == "table" || (*it).gettype() == "view")
@@ -215,14 +214,17 @@ void MainWindow::populateStructure()
                 fldItem->setIcon(QIcon(":/icons/field"));
                 tablefieldmodel->setItem(fldrow, 0, fldItem);
             }
-            // TODO:
-            //ui->sqlTextEdit->addFieldCompleterModel(sName.toLower(), tablefieldmodel);
+            completerModelsFields.insert(sName.toLower(), tablefieldmodel);
         }
 
     }
-    // TODO:
-    //ui->sqlTextEdit->setDefaultCompleterModel(completerModel);
-    // end setup models for sqltextedit autocomplete
+    for(int i=0;i<ui->tabSqlAreas->count();i++)
+    {
+        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+        sqlarea->setTableNames(tblnames);
+        sqlarea->getEditor()->setDefaultCompleterModel(&completerModelTables);
+        sqlarea->getEditor()->insertFieldCompleterModels(completerModelsFields);
+    }
 
     // fill the structure tab
     QMap<QString, QTreeWidgetItem*> typeToParentItem;
@@ -1114,7 +1116,10 @@ void MainWindow::openSqlTab(bool resetCounter)
         tabNumber = 0;
 
     // Create new tab, add it to the tab widget and select it
-    QWidget* w = new SqlExecutionArea(this, &db);
+    SqlExecutionArea* w = new SqlExecutionArea(this, &db);
+    w->setTableNames(db.getBrowsableObjectNames());
+    w->getEditor()->setDefaultCompleterModel(&completerModelTables);
+    w->getEditor()->insertFieldCompleterModels(completerModelsFields);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
 }

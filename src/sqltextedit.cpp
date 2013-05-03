@@ -22,8 +22,6 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 
 SqlTextEdit::~SqlTextEdit()
 {
-    clearFieldCompleterModelMap();
-    delete m_defaultCompleterModel;
 }
 
 void SqlTextEdit::setCompleter(QCompleter *completer)
@@ -50,25 +48,24 @@ QCompleter* SqlTextEdit::completer() const
 
 void SqlTextEdit::setDefaultCompleterModel(QAbstractItemModel *model)
 {
-    delete m_defaultCompleterModel;
     m_defaultCompleterModel = model;
     m_Completer->setModel(m_defaultCompleterModel);
-}
-
-void SqlTextEdit::clearFieldCompleterModelMap()
-{
-    QAbstractItemModel* model;
-    foreach (model, m_fieldCompleterMap)
-    {
-        delete model;
-    }
-    m_fieldCompleterMap.clear();
 }
 
 QAbstractItemModel* SqlTextEdit::addFieldCompleterModel(const QString &tablename, QAbstractItemModel* model)
 {
     m_fieldCompleterMap[tablename] = model;
     return model;
+}
+
+void SqlTextEdit::insertFieldCompleterModels(const FieldCompleterModelMap& fieldmap)
+{
+    QMapIterator<QString, QAbstractItemModel*> i(fieldmap);
+    while(i.hasNext())
+    {
+        i.next();
+        addFieldCompleterModel(i.key(), i.value());
+    }
 }
 
 void SqlTextEdit::insertCompletion(const QString& completion)

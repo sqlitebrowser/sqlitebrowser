@@ -2,6 +2,8 @@
 #define MAINFORM_H
 
 #include <QMainWindow>
+#include <QStandardItemModel>
+#include "sqltextedit.h"
 #include "sqlitedb.h"
 
 class QDragEnterEvent;
@@ -69,6 +71,9 @@ private:
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
+
+    QStandardItemModel completerModelTables;
+    SqlTextEdit::FieldCompleterModelMap completerModelsFields;
 
     void init();
 
