@@ -15,6 +15,7 @@ private slots:
     void parseSQL();
     void parseSQLdefaultexpr();
     void parseSQLMultiPk();
+    void parseSQLForeignKey();
 };
 
 void TestTable::sqlOutput()
@@ -146,6 +147,18 @@ void TestTable::parseSQLMultiPk()
 
     QVERIFY(tab.primarykey().contains(tab.fields().at(0)));
     QVERIFY(tab.primarykey().contains(tab.fields().at(1)));
+}
+
+void TestTable::parseSQLForeignKey()
+{
+    QString sSQL = "CREATE TABLE grammar_test(id, test, FOREIGN KEY(test) REFERENCES other_table);";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.name() == "grammar_test");
+    QVERIFY(tab.fields().at(0)->name() == "id");
+    QVERIFY(tab.fields().at(1)->name() == "test");
+
 }
 
 QTEST_MAIN(TestTable)
