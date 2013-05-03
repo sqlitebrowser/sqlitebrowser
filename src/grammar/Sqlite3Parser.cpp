@@ -691,9 +691,9 @@ void Sqlite3Parser::tableconstraint() {
 			break;
 		}
 		case CHECK:
+		case FOREIGN:
 		case PRIMARY:
 		case UNIQUE:
-		case FOREIGN:
 		{
 			break;
 		}
@@ -1818,6 +1818,7 @@ void Sqlite3Parser::foreignkeyclause() {
 		case COLLATE:
 		case CONSTRAINT:
 		case DEFAULT:
+		case DEFERRABLE:
 		case NOT:
 		case MATCH:
 		case ON:
@@ -1826,7 +1827,6 @@ void Sqlite3Parser::foreignkeyclause() {
 		case UNIQUE:
 		case RPAREN:
 		case COMMA:
-		case DEFERRABLE:
 		{
 			break;
 		}
@@ -2231,18 +2231,18 @@ void Sqlite3Parser::subexpr() {
 			break;
 		}
 		case CASE_T:
+		case CAST:
 		case CURRENT_TIME:
 		case CURRENT_DATE:
 		case CURRENT_TIMESTAMP:
 		case NULL_T:
 		case EXISTS:
+		case RAISE:
 		case ID:
 		case QUOTEDID:
 		case NUMERIC:
 		case STRINGLITERAL:
 		case LPAREN:
-		case CAST:
-		case RAISE:
 		{
 			break;
 		}
@@ -2309,12 +2309,14 @@ void Sqlite3Parser::subexpr() {
 			{
 			switch ( LA(1)) {
 			case CASE_T:
+			case CAST:
 			case CURRENT_TIME:
 			case CURRENT_DATE:
 			case CURRENT_TIMESTAMP:
 			case NOT:
 			case NULL_T:
 			case EXISTS:
+			case RAISE:
 			case ID:
 			case QUOTEDID:
 			case NUMERIC:
@@ -2323,8 +2325,6 @@ void Sqlite3Parser::subexpr() {
 			case PLUS:
 			case MINUS:
 			case TILDE:
-			case CAST:
-			case RAISE:
 			{
 				expr();
 				if (inputState->guessing==0) {
@@ -2425,12 +2425,14 @@ void Sqlite3Parser::subexpr() {
 				{
 				switch ( LA(1)) {
 				case CASE_T:
+				case CAST:
 				case CURRENT_TIME:
 				case CURRENT_DATE:
 				case CURRENT_TIMESTAMP:
 				case NOT:
 				case NULL_T:
 				case EXISTS:
+				case RAISE:
 				case ID:
 				case QUOTEDID:
 				case NUMERIC:
@@ -2439,8 +2441,6 @@ void Sqlite3Parser::subexpr() {
 				case PLUS:
 				case MINUS:
 				case TILDE:
-				case CAST:
-				case RAISE:
 				{
 					expr();
 					if (inputState->guessing==0) {
@@ -2504,6 +2504,7 @@ void Sqlite3Parser::subexpr() {
 		case AS:
 		case AND:
 		case OR:
+		case ELSE_T:
 		case END:
 		case GLOB:
 		case LIKE:
@@ -2530,7 +2531,6 @@ void Sqlite3Parser::subexpr() {
 		case UNEQUAL2:
 		case BITWISELEFT:
 		case BITWISERIGHT:
-		case ELSE:
 		case SLASH:
 		case PERCENT:
 		case IN:
@@ -3000,12 +3000,14 @@ void Sqlite3Parser::caseexpr() {
 		{
 		switch ( LA(1)) {
 		case CASE_T:
+		case CAST:
 		case CURRENT_TIME:
 		case CURRENT_DATE:
 		case CURRENT_TIMESTAMP:
 		case NOT:
 		case NULL_T:
 		case EXISTS:
+		case RAISE:
 		case ID:
 		case QUOTEDID:
 		case NUMERIC:
@@ -3014,8 +3016,6 @@ void Sqlite3Parser::caseexpr() {
 		case PLUS:
 		case MINUS:
 		case TILDE:
-		case CAST:
-		case RAISE:
 		{
 			expr();
 			if (inputState->guessing==0) {
@@ -3068,14 +3068,14 @@ void Sqlite3Parser::caseexpr() {
 		}  // ( ... )+
 		{
 		switch ( LA(1)) {
-		case ELSE:
+		case ELSE_T:
 		{
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp143_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
 				tmp143_AST = astFactory->create(LT(1));
 				astFactory->addASTChild(currentAST, tmp143_AST);
 			}
-			match(ELSE);
+			match(ELSE_T);
 			expr();
 			if (inputState->guessing==0) {
 				astFactory->addASTChild( currentAST, returnAST );
@@ -3141,9 +3141,9 @@ void Sqlite3Parser::raisefunction() {
 			match(IGNORE);
 			break;
 		}
-		case ROLLBACK:
 		case ABORT:
 		case FAIL:
+		case ROLLBACK:
 		{
 			{
 			switch ( LA(1)) {
@@ -3253,19 +3253,23 @@ void Sqlite3Parser::suffixexpr() {
 
 void Sqlite3Parser::initializeASTFactory( ANTLR_USE_NAMESPACE(antlr)ASTFactory& factory )
 {
-	factory.setMaxNodeType(100);
+	factory.setMaxNodeType(99);
 }
 const char* Sqlite3Parser::tokenNames[] = {
 	"<0>",
 	"EOF",
 	"<2>",
 	"NULL_TREE_LOOKAHEAD",
+	"\"ABORT\"",
+	"\"ACTION\"",
 	"\"AUTOINCREMENT\"",
 	"\"AS\"",
 	"\"ASC\"",
 	"\"AND\"",
 	"\"OR\"",
+	"\"CASCADE\"",
 	"\"CASE\"",
+	"\"CAST\"",
 	"\"CHECK\"",
 	"\"CREATE\"",
 	"\"COLLATE\"",
@@ -3275,15 +3279,23 @@ const char* Sqlite3Parser::tokenNames[] = {
 	"\"CURRENT_DATE\"",
 	"\"CURRENT_TIMESTAMP\"",
 	"\"DEFAULT\"",
+	"\"DEFERRABLE\"",
+	"\"DEFERRED\"",
+	"\"DELETE\"",
 	"\"DESC\"",
 	"\"ELSE\"",
 	"\"END\"",
 	"\"ESCAPE\"",
+	"\"FAIL\"",
+	"\"FOREIGN\"",
 	"\"GLOB\"",
 	"\"KEY\"",
 	"\"LIKE\"",
 	"\"TABLE\"",
 	"\"IF\"",
+	"\"IGNORE\"",
+	"\"INITIALLY\"",
+	"\"IMMEDIATE\"",
 	"\"IS\"",
 	"\"NOT\"",
 	"\"NULL\"",
@@ -3291,12 +3303,18 @@ const char* Sqlite3Parser::tokenNames[] = {
 	"\"EXISTS\"",
 	"\"ON\"",
 	"\"PRIMARY\"",
+	"\"RAISE\"",
 	"\"REFERENCES\"",
 	"\"REGEXP\"",
+	"\"REPLACE\"",
+	"\"RESTRICT\"",
+	"\"ROLLBACK\"",
+	"\"SET\"",
 	"\"TEMPORARY\"",
 	"\"TEMP\"",
 	"\"THEN\"",
 	"\"UNIQUE\"",
+	"\"UPDATE\"",
 	"\"WHEN\"",
 	"TYPE_NAME",
 	"COLUMNDEF",
@@ -3333,137 +3351,120 @@ const char* Sqlite3Parser::tokenNames[] = {
 	"UNEQUAL2",
 	"BITWISELEFT",
 	"BITWISERIGHT",
-	"FOREIGN",
-	"ROLLBACK",
-	"ABORT",
-	"FAIL",
-	"IGNORE",
-	"REPLACE",
-	"DELETE",
-	"UPDATE",
-	"SET",
-	"CASCADE",
-	"RESTRICT",
 	"NO",
-	"ACTION",
-	"DEFERRABLE",
-	"INITIALLY",
-	"DEFERRED",
-	"IMMEDIATE",
 	"SELECT",
-	"CAST",
-	"ELSE",
-	"RAISE",
 	"SLASH",
 	"PERCENT",
 	"IN",
 	0
 };
 
-const unsigned long Sqlite3Parser::_tokenSet_0_data_[] = { 2997114274UL, 1996948382UL, 67117055UL, 29UL, 0UL, 0UL, 0UL, 0UL };
-// EOF "AS" "AND" "OR" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "END" "GLOB" 
-// "LIKE" "IS" "NOT" "MATCH" "ON" "PRIMARY" "REFERENCES" "REGEXP" "THEN" 
-// "UNIQUE" "WHEN" DOT ID QUOTEDID LPAREN RPAREN COMMA PLUS MINUS STAR 
-// AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL 
-// UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT DEFERRABLE ELSE SLASH PERCENT 
+const unsigned long Sqlite3Parser::_tokenSet_0_data_[] = { 415581826UL, 184773381UL, 2147343388UL, 14UL, 0UL, 0UL, 0UL, 0UL };
+// EOF "AS" "AND" "OR" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "DEFERRABLE" 
+// "ELSE" "END" "GLOB" "LIKE" "IS" "NOT" "MATCH" "ON" "PRIMARY" "REFERENCES" 
+// "REGEXP" "THEN" "UNIQUE" "WHEN" DOT ID QUOTEDID LPAREN RPAREN COMMA 
+// PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL 
+// LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
 // IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_0(_tokenSet_0_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_1_data_[] = { 0UL, 65536UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_1_data_[] = { 0UL, 0UL, 4UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // DOT 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_1(_tokenSet_1_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_2_data_[] = { 2684638242UL, 117833998UL, 67108864UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// EOF "AS" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "NOT" "MATCH" "ON" 
-// "PRIMARY" "REFERENCES" "UNIQUE" ID QUOTEDID LPAREN RPAREN COMMA DEFERRABLE 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_1(_tokenSet_1_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_2_data_[] = { 12927106UL, 33647104UL, 7192UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// EOF "AS" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "DEFERRABLE" "NOT" 
+// "MATCH" "ON" "PRIMARY" "REFERENCES" "UNIQUE" ID QUOTEDID LPAREN RPAREN 
+// COMMA 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_2(_tokenSet_2_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_3_data_[] = { 2997114272UL, 1980105628UL, 8191UL, 29UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "END" "GLOB" 
-// "LIKE" "IS" "NOT" "MATCH" "PRIMARY" "REFERENCES" "REGEXP" "THEN" "UNIQUE" 
-// "WHEN" ID QUOTEDID RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP 
-// EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
-// BITWISELEFT BITWISERIGHT ELSE SLASH PERCENT IN 
+const unsigned long Sqlite3Parser::_tokenSet_3_data_[] = { 407193216UL, 184765189UL, 2147342360UL, 14UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "ELSE" "END" 
+// "GLOB" "LIKE" "IS" "NOT" "MATCH" "PRIMARY" "REFERENCES" "REGEXP" "THEN" 
+// "UNIQUE" "WHEN" ID QUOTEDID RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR 
+// OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
+// BITWISELEFT BITWISERIGHT SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_3(_tokenSet_3_data_,8);
 const unsigned long Sqlite3Parser::_tokenSet_4_data_[] = { 2UL, 0UL, 0UL, 0UL };
 // EOF 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_4(_tokenSet_4_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_5_data_[] = { 2997114272UL, 1979712412UL, 8191UL, 29UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "END" "GLOB" 
-// "LIKE" "IS" "NOT" "MATCH" "PRIMARY" "REFERENCES" "REGEXP" "THEN" "UNIQUE" 
-// "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 
-// GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT 
-// ELSE SLASH PERCENT IN 
+const unsigned long Sqlite3Parser::_tokenSet_5_data_[] = { 407193216UL, 184765189UL, 2147342336UL, 14UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "ELSE" "END" 
+// "GLOB" "LIKE" "IS" "NOT" "MATCH" "PRIMARY" "REFERENCES" "REGEXP" "THEN" 
+// "UNIQUE" "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL 
+// EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT 
+// BITWISERIGHT SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_5(_tokenSet_5_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_6_data_[] = { 537154560UL, 100663564UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_6_data_[] = { 4538368UL, 33636864UL, 6144UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "NOT" "PRIMARY" "REFERENCES" 
 // "UNIQUE" RPAREN COMMA 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_6(_tokenSet_6_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_7_data_[] = { 2UL, 134217728UL, 0UL, 0UL };
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_6(_tokenSet_6_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_7_data_[] = { 2UL, 0UL, 8192UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // EOF SEMI 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_7(_tokenSet_7_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_8_data_[] = { 537154560UL, 268UL, 0UL, 0UL };
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_7(_tokenSet_7_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_8_data_[] = { 4538368UL, 33636864UL, 0UL, 0UL };
 // "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "NOT" "PRIMARY" "REFERENCES" 
 // "UNIQUE" 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_8(_tokenSet_8_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_9_data_[] = { 0UL, 100663296UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_9_data_[] = { 0UL, 0UL, 6144UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // RPAREN COMMA 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_9(_tokenSet_9_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_10_data_[] = { 2UL, 167772160UL, 0UL, 0UL };
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_9(_tokenSet_9_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_10_data_[] = { 2UL, 0UL, 10240UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // EOF RPAREN SEMI 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_10(_tokenSet_10_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_11_data_[] = { 2684638208UL, 117833998UL, 67117056UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "NOT" "MATCH" "ON" "PRIMARY" 
-// "REFERENCES" "UNIQUE" ID QUOTEDID LPAREN RPAREN COMMA FOREIGN DEFERRABLE 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_10(_tokenSet_10_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_11_data_[] = { 2160410624UL, 33647104UL, 7192UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "DEFERRABLE" "FOREIGN" "NOT" 
+// "MATCH" "ON" "PRIMARY" "REFERENCES" "UNIQUE" ID QUOTEDID LPAREN RPAREN 
+// COMMA 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_11(_tokenSet_11_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_12_data_[] = { 1610842624UL, 2978873345UL, 2147483648UL, 2UL, 0UL, 0UL, 0UL, 0UL };
-// "CASE" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" "NOT" "NULL" 
-// "EXISTS" ID QUOTEDID NUMERIC STRINGLITERAL LPAREN PLUS MINUS TILDE CAST 
-// RAISE 
+const unsigned long Sqlite3Parser::_tokenSet_12_data_[] = { 3682304UL, 38400UL, 181816UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "CASE" "CAST" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" "NOT" 
+// "NULL" "EXISTS" "RAISE" ID QUOTEDID NUMERIC STRINGLITERAL LPAREN PLUS 
+// MINUS TILDE 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_12(_tokenSet_12_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_13_data_[] = { 4070806432UL, 4153344657UL, 3221233663UL, 31UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "CASE" "COLLATE" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
-// "END" "GLOB" "LIKE" "IS" "NOT" "NULL" "MATCH" "EXISTS" "REGEXP" "THEN" 
-// "WHEN" DOT ID QUOTEDID NUMERIC STRINGLITERAL LPAREN RPAREN COMMA PLUS 
-// MINUS STAR TILDE AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL 
-// LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT SELECT CAST 
-// ELSE RAISE SLASH PERCENT IN 
+const unsigned long Sqlite3Parser::_tokenSet_13_data_[] = { 406402688UL, 151166725UL, 2147475004UL, 15UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "CASE" "CAST" "COLLATE" "CURRENT_TIME" "CURRENT_DATE" 
+// "CURRENT_TIMESTAMP" "ELSE" "END" "GLOB" "LIKE" "IS" "NOT" "NULL" "MATCH" 
+// "EXISTS" "RAISE" "REGEXP" "THEN" "WHEN" DOT ID QUOTEDID NUMERIC STRINGLITERAL 
+// LPAREN RPAREN COMMA PLUS MINUS STAR TILDE AMPERSAND BITOR OROP EQUAL 
+// EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT 
+// BITWISERIGHT SELECT SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_13(_tokenSet_13_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_14_data_[] = { 2457862528UL, 1879048208UL, 8191UL, 28UL, 0UL, 0UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_14_data_[] = { 1536UL, 133381UL, 2147336192UL, 14UL, 0UL, 0UL, 0UL, 0UL };
 // "AND" "OR" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" PLUS MINUS STAR AMPERSAND 
 // BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL 
 // UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_14(_tokenSet_14_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_15_data_[] = { 1612943904UL, 3079602817UL, 3221225472UL, 3UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "CASE" "COLLATE" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
-// "END" "NOT" "NULL" "EXISTS" "THEN" "WHEN" DOT ID QUOTEDID NUMERIC STRINGLITERAL 
-// LPAREN RPAREN COMMA PLUS MINUS TILDE SELECT CAST ELSE RAISE 
+const unsigned long Sqlite3Parser::_tokenSet_15_data_[] = { 406401152UL, 151033344UL, 187964UL, 1UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "CASE" "CAST" "COLLATE" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
+// "ELSE" "END" "NOT" "NULL" "EXISTS" "RAISE" "THEN" "WHEN" DOT ID QUOTEDID 
+// NUMERIC STRINGLITERAL LPAREN RPAREN COMMA PLUS MINUS TILDE SELECT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_15(_tokenSet_15_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_16_data_[] = { 2097184UL, 100663936UL, 0UL, 1UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "END" "THEN" "WHEN" RPAREN COMMA ELSE 
+const unsigned long Sqlite3Parser::_tokenSet_16_data_[] = { 402653312UL, 150994944UL, 6144UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "ELSE" "END" "THEN" "WHEN" RPAREN COMMA 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_16(_tokenSet_16_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_17_data_[] = { 1627673602UL, 1066270990UL, 8192UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// EOF "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "KEY" "NOT" "NULL" "ON" 
-// "PRIMARY" "REFERENCES" "UNIQUE" ID QUOTEDID NUMERIC STRINGLITERAL LPAREN 
-// RPAREN COMMA SEMI PLUS MINUS FOREIGN 
+const unsigned long Sqlite3Parser::_tokenSet_17_data_[] = { 2152022018UL, 33646082UL, 65080UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// EOF "CHECK" "COLLATE" "CONSTRAINT" "DEFAULT" "FOREIGN" "KEY" "NOT" "NULL" 
+// "ON" "PRIMARY" "REFERENCES" "UNIQUE" ID QUOTEDID NUMERIC STRINGLITERAL 
+// LPAREN RPAREN COMMA SEMI PLUS MINUS 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_17(_tokenSet_17_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_18_data_[] = { 0UL, 16777216UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_18_data_[] = { 0UL, 0UL, 1024UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // LPAREN 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_18(_tokenSet_18_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_19_data_[] = { 2459963808UL, 1980170896UL, 8191UL, 29UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "COLLATE" "END" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_18(_tokenSet_18_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_19_data_[] = { 402720384UL, 151128325UL, 2147342364UL, 14UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "COLLATE" "ELSE" "END" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" 
 // "THEN" "WHEN" DOT ID QUOTEDID RPAREN COMMA PLUS MINUS STAR AMPERSAND 
 // BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL 
-// UNEQUAL2 BITWISELEFT BITWISERIGHT ELSE SLASH PERCENT IN 
+// UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_19(_tokenSet_19_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_20_data_[] = { 2459963808UL, 1979712144UL, 8191UL, 29UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "COLLATE" "END" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" 
+const unsigned long Sqlite3Parser::_tokenSet_20_data_[] = { 402720384UL, 151128325UL, 2147342336UL, 14UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "COLLATE" "ELSE" "END" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" 
 // "THEN" "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL 
 // EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT 
-// BITWISERIGHT ELSE SLASH PERCENT IN 
+// BITWISERIGHT SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_20(_tokenSet_20_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_21_data_[] = { 2459959712UL, 1979712144UL, 8191UL, 29UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "END" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" "THEN" "WHEN" 
-// RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER 
-// GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT 
-// ELSE SLASH PERCENT IN 
+const unsigned long Sqlite3Parser::_tokenSet_21_data_[] = { 402654848UL, 151128325UL, 2147342336UL, 14UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "ELSE" "END" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" "THEN" 
+// "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 
+// GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT 
+// SLASH PERCENT IN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_21(_tokenSet_21_data_,8);
 
 

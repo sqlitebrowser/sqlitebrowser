@@ -28,44 +28,62 @@ Sqlite3Lexer::Sqlite3Lexer(const ANTLR_USE_NAMESPACE(antlr)LexerSharedInputState
 
 void Sqlite3Lexer::initLiterals()
 {
-	literals["DEFAULT"] = 18;
-	literals["IF"] = 27;
-	literals["CURRENT_DATE"] = 16;
-	literals["LIKE"] = 25;
-	literals["AS"] = 5;
-	literals["TEMPORARY"] = 37;
-	literals["UNIQUE"] = 40;
-	literals["CHECK"] = 10;
-	literals["COLLATE"] = 12;
-	literals["NOT"] = 29;
-	literals["ELSE"] = 20;
-	literals["REFERENCES"] = 35;
-	literals["THEN"] = 39;
-	literals["CREATE"] = 11;
-	literals["EXISTS"] = 32;
-	literals["CASE"] = 9;
-	literals["REGEXP"] = 36;
-	literals["ON"] = 33;
-	literals["CURRENT_TIME"] = 15;
-	literals["GLOB"] = 23;
-	literals["CURRENT_TIMESTAMP"] = 17;
-	literals["AND"] = 7;
-	literals["ASC"] = 6;
-	literals["ESCAPE"] = 22;
-	literals["DESC"] = 19;
-	literals["TABLE"] = 26;
-	literals["TEMP"] = 38;
-	literals["END"] = 21;
-	literals["KEY"] = 24;
-	literals["WHEN"] = 41;
-	literals["CONSTRAINT"] = 14;
-	literals["MATCH"] = 31;
-	literals["OR"] = 8;
-	literals["AUTOINCREMENT"] = 4;
-	literals["IS"] = 28;
-	literals["NULL"] = 30;
-	literals["CONFLICT"] = 13;
-	literals["PRIMARY"] = 34;
+	literals["CONSTRAINT"] = 18;
+	literals["CREATE"] = 15;
+	literals["CASE"] = 12;
+	literals["END"] = 28;
+	literals["CASCADE"] = 11;
+	literals["TEMPORARY"] = 54;
+	literals["DEFERRABLE"] = 23;
+	literals["IMMEDIATE"] = 39;
+	literals["AUTOINCREMENT"] = 6;
+	literals["EXISTS"] = 44;
+	literals["THEN"] = 56;
+	literals["AND"] = 9;
+	literals["CURRENT_DATE"] = 20;
+	literals["NOT"] = 41;
+	literals["KEY"] = 33;
+	literals["COLLATE"] = 16;
+	literals["NULL"] = 42;
+	literals["TEMP"] = 55;
+	literals["INITIALLY"] = 38;
+	literals["RESTRICT"] = 51;
+	literals["LIKE"] = 34;
+	literals["WHEN"] = 59;
+	literals["FOREIGN"] = 31;
+	literals["SET"] = 53;
+	literals["IS"] = 40;
+	literals["OR"] = 10;
+	literals["PRIMARY"] = 46;
+	literals["DEFERRED"] = 24;
+	literals["UPDATE"] = 58;
+	literals["IF"] = 36;
+	literals["UNIQUE"] = 57;
+	literals["AS"] = 7;
+	literals["TABLE"] = 35;
+	literals["DEFAULT"] = 22;
+	literals["ACTION"] = 5;
+	literals["DELETE"] = 25;
+	literals["GLOB"] = 32;
+	literals["IGNORE"] = 37;
+	literals["CURRENT_TIMESTAMP"] = 21;
+	literals["CONFLICT"] = 17;
+	literals["REPLACE"] = 50;
+	literals["ASC"] = 8;
+	literals["FAIL"] = 30;
+	literals["REGEXP"] = 49;
+	literals["REFERENCES"] = 48;
+	literals["ON"] = 45;
+	literals["DESC"] = 26;
+	literals["CAST"] = 13;
+	literals["ESCAPE"] = 29;
+	literals["ELSE"] = 27;
+	literals["MATCH"] = 43;
+	literals["RAISE"] = 47;
+	literals["ABORT"] = 4;
+	literals["CHECK"] = 14;
+	literals["ROLLBACK"] = 52;
+	literals["CURRENT_TIME"] = 19;
 }
 
 ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
@@ -1120,34 +1138,33 @@ const unsigned long Sqlite3Lexer::_tokenSet_0_data_[] = { 4294967295UL, 42949672
 // 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 
 // 0x1f   ! \" # $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > 
 // ? @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ 
-// a b c d 
+// a b c 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_0(_tokenSet_0_data_,8);
 const unsigned long Sqlite3Lexer::_tokenSet_1_data_[] = { 4294967295UL, 4294967295UL, 3758096383UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
 // 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf 0x10 
 // 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 
 // 0x1f   ! \" # $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > 
 // ? @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ^ _ ` 
-// a b c d 
+// a b c 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_1(_tokenSet_1_data_,8);
 const unsigned long Sqlite3Lexer::_tokenSet_2_data_[] = { 4294967295UL, 4294967291UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
 // 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf 0x10 
 // 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 
 // 0x1f   ! # $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? 
 // @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` 
-// a b c d 
+// a b c 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_2(_tokenSet_2_data_,8);
 const unsigned long Sqlite3Lexer::_tokenSet_3_data_[] = { 4294958079UL, 4294967295UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
 // 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xb 0xc 0xe 0xf 0x10 0x11 0x12 
 // 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 0x1f   ! 
 // \" # $ % & \' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B 
 // C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` a b c 
-// d 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_3(_tokenSet_3_data_,8);
 const unsigned long Sqlite3Lexer::_tokenSet_4_data_[] = { 4294967295UL, 4294967167UL, 4294967295UL, 4294967295UL, 0UL, 0UL, 0UL, 0UL };
 // 0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf 0x10 
 // 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x1e 
 // 0x1f   ! \" # $ % & ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? 
 // @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ 0x5c ] ^ _ ` 
-// a b c d 
+// a b c 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Lexer::_tokenSet_4(_tokenSet_4_data_,8);
 
