@@ -148,6 +148,7 @@ void MainWindow::fileOpen(const QString & fileName)
         resetBrowser();
         if(ui->mainTab->currentIndex() == 2)
             loadPragmas();
+        loadExtensionsFromSettings();
     }
 }
 
@@ -848,6 +849,7 @@ void MainWindow::openPreferences()
         createSyntaxHighlighters();
         populateStructure();
         resetBrowser();
+        loadExtensionsFromSettings();
     }
 }
 
@@ -1175,4 +1177,14 @@ void MainWindow::loadExtension()
         QMessageBox::information(this, QApplication::applicationName(), tr("Extension successfully loaded."));
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastErrorMessage));
+}
+
+void MainWindow::loadExtensionsFromSettings()
+{
+    QStringList list = PreferencesDialog::getSettingsValue("extensions", "list").toStringList();
+    foreach(QString ext, list)
+    {
+        if(db.loadExtension(ext) == false)
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastErrorMessage));
+    }
 }

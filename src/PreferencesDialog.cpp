@@ -57,6 +57,8 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
     }
+
+    ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
 }
 
 void PreferencesDialog::saveSettings()
@@ -74,6 +76,11 @@ void PreferencesDialog::saveSettings()
         setSettingsValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
         setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
+
+    QStringList extList;
+    foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
+        extList.append(item->text());
+    setSettingsValue("extensions", "list", extList);
 
     accept();
 }
@@ -173,6 +180,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
         }
     }
 
+    // extensions/list?
+    if(group == "extensions" && name == "list")
+        return QStringList();
+
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
 }
@@ -189,4 +200,22 @@ void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
         item->setBackgroundColor(column, colour);
         item->setText(column, colour.name());
     }
+}
+
+void PreferencesDialog::addExtension()
+{
+    QString file = QFileDialog::getOpenFileName(
+                this,
+                tr("Select extension file"),
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
+                tr("Extensions(*.so *.dll);;All files(*)"));
+
+    if(QFile::exists(file))
+        ui->listExtensions->addItem(file);
+}
+
+void PreferencesDialog::removeExtension()
+{
+    if(ui->listExtensions->currentIndex().isValid())
+        ui->listExtensions->takeItem(ui->listExtensions->currentIndex().row());
 }

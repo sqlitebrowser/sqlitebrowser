@@ -23,10 +23,13 @@ public:
     static void setSettingsValue(const QString& group, const QString& name, const QVariant& value);
 
 private slots:
-    virtual void chooseLocation();
     virtual void loadSettings();
     virtual void saveSettings();
+
+    virtual void chooseLocation();
     virtual void showColourDialog(QTreeWidgetItem* item, int column);
+    virtual void addExtension();
+    virtual void removeExtension();
 
 private:
     Ui::PreferencesDialog *ui;

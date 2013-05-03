@@ -80,6 +80,7 @@ private:
     void updateRecentFileActions();
     void setCurrentFile(const QString& fileName);
     void activateFields(bool enable = true);
+    void loadExtensionsFromSettings();
 
 protected:
     void closeEvent(QCloseEvent *);

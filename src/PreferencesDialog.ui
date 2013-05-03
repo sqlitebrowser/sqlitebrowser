@@ -271,6 +271,73 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>&amp;Extensions</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Select extensions to load for every database:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QListWidget" name="listExtensions">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QToolButton" name="buttonAddExtension">
+             <property name="toolTip">
+              <string>Add extension</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons/icons.qrc">
+               <normaloff>:/icons/load_extension</normaloff>:/icons/load_extension</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="buttonRemoveExtension">
+             <property name="toolTip">
+              <string>Remove extension</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons/icons.qrc">
+               <normaloff>:/icons/remove_extension</normaloff>:/icons/remove_extension</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -295,7 +362,9 @@
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
@@ -361,10 +430,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonAddExtension</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>addExtension()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>464</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRemoveExtension</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>removeExtension()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>464</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>saveSettings()</slot>
   <slot>chooseLocation()</slot>
   <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
+  <slot>addExtension()</slot>
+  <slot>removeExtension()</slot>
  </slots>
 </ui>
