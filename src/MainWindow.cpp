@@ -1108,7 +1108,7 @@ void MainWindow::closeSqlTab(int index, bool force)
     delete w;
 }
 
-void MainWindow::openSqlTab(bool resetCounter)
+unsigned int MainWindow::openSqlTab(bool resetCounter)
 {
     static unsigned int tabNumber = 0;
 
@@ -1122,4 +1122,40 @@ void MainWindow::openSqlTab(bool resetCounter)
     w->getEditor()->insertFieldCompleterModels(completerModelsFields);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
+
+    return index;
+}
+
+void MainWindow::openSqlFile()
+{
+    QString file = QFileDialog::getOpenFileName(
+                this,
+                tr("Select SQL file to open"),
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
+                tr("Text files(*.sql *.txt);;All files(*)"));
+
+    if(QFile::exists(file))
+    {
+        QFile f(file);
+        f.open(QIODevice::ReadOnly);
+        unsigned int index = openSqlTab();
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setPlainText(f.readAll());
+        QFileInfo fileinfo(file);
+        ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
+    }
+}
+
+void MainWindow::saveSqlFile()
+{
+    QString file = QFileDialog::getSaveFileName(
+                this,
+                tr("Select file name"),
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
+                tr("Text files(*.sql *.txt);;All files(*)"));
+
+    QFile f(file);
+    f.open(QIODevice::WriteOnly);
+    f.write(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->getSql().toUtf8());
+    QFileInfo fileinfo(file);
+    ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
 }

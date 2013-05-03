@@ -136,8 +136,10 @@ private slots:
     virtual void mainTabSelected( int tabindex );
     virtual void browseTableHeaderClicked(int logicalindex);
     virtual void createSyntaxHighlighters();
-    virtual void openSqlTab(bool resetCounter = false);
+    virtual unsigned int openSqlTab(bool resetCounter = false);
     virtual void closeSqlTab(int index, bool force = false);
+    virtual void openSqlFile();
+    virtual void saveSqlFile();
 };
 
 #endif

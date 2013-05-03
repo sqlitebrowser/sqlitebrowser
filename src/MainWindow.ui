@@ -292,7 +292,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>763</width>
+          <width>278</width>
           <height>444</height>
          </rect>
         </property>
@@ -746,6 +746,9 @@
         <string>toolBar1</string>
        </property>
        <addaction name="actionSqlOpenTab"/>
+       <addaction name="actionSqlOpenFile"/>
+       <addaction name="actionSqlSaveFile"/>
+       <addaction name="separator"/>
        <addaction name="actionExecuteSql"/>
       </widget>
      </item>
@@ -1269,6 +1272,24 @@
    </property>
    <property name="shortcut">
     <string>F5</string>
+   </property>
+  </action>
+  <action name="actionSqlOpenFile">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/open_sql</normaloff>:/icons/open_sql</iconset>
+   </property>
+   <property name="text">
+    <string>Open SQL file</string>
+   </property>
+  </action>
+  <action name="actionSqlSaveFile">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_sql</normaloff>:/icons/save_sql</iconset>
+   </property>
+   <property name="text">
+    <string>Save SQL file</string>
    </property>
   </action>
  </widget>
@@ -1971,6 +1992,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSqlOpenFile</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openSqlFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlSaveFile</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSqlFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2014,5 +2067,7 @@
   <slot>copy()</slot>
   <slot>closeSqlTab(int)</slot>
   <slot>openSqlTab()</slot>
+  <slot>openSqlFile()</slot>
+  <slot>saveSqlFile()</slot>
  </slots>
 </ui>
