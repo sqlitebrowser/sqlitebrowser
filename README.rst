@@ -32,6 +32,7 @@ What's been done since then
 - Added BLOB support
 - Added a new filter row for searching
 - Improved performance when opening large tables
+- Extended the SQL tab
 - Fixed a ton of bugs
 - Probably more
 
@@ -45,7 +46,6 @@ What's still to do
 - Even more code cleanup
 - Further improvement of the UI, adding more features and making it easier to
   use
-- Inline editing of records instead of having to use a special dialog for it
 - Feel free to add more issues at
   https://github.com/rp-/sqlitebrowser/issues
 
