@@ -1181,6 +1181,9 @@ void MainWindow::loadExtension()
 
 void MainWindow::loadExtensionsFromSettings()
 {
+    if(!db.isOpen())
+        return;
+
     QStringList list = PreferencesDialog::getSettingsValue("extensions", "list").toStringList();
     foreach(QString ext, list)
     {

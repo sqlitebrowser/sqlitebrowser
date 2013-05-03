@@ -1015,6 +1015,9 @@ bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue
 
 bool DBBrowserDB::loadExtension(const QString& filename)
 {
+    if(!isOpen())
+        return false;
+
     // Check if file exists
     if(!QFile::exists(filename))
     {
