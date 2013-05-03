@@ -279,6 +279,8 @@ void MainWindow::populateTable( const QString & tablename)
     if(tablename.isEmpty())
     {
         ui->dataTable->setModel(0);
+        if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
+            qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
         return;
     }
 
