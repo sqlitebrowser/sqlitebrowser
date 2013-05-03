@@ -33,6 +33,7 @@ What's been done since then
 - Added a new filter row for searching
 - Improved performance when opening large tables
 - Extended the SQL tab
+- Added SQLite extension support
 - Fixed a ton of bugs
 - Probably more
 
