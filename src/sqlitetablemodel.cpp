@@ -287,6 +287,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
     QString op = "LIKE";
     QString val;
+    bool numeric = false;
     if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
     {
         bool ok;
@@ -295,6 +296,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
         {
             op = value.left(2);
             val = value.mid(2);
+            numeric = true;
         }
     } else if(value.left(1) == ">" || value.left(1) == "<") {
         bool ok;
@@ -303,20 +305,22 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
         {
             op = value.left(1);
             val = value.mid(1);
+            numeric = true;
         }
     } else {
         if(value.left(1) == "=")
         {
             op = "=";
             val = value.mid(1);
-        } else {
-            val = value;
         }
-        val = QString("'%1'").arg(val.replace("'", ""));
     }
+    if(val.isEmpty())
+        val = value;
+    if(!numeric)
+        val = QString("'%1'").arg(val.replace("'", "''"));
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(value.isEmpty())
+    if(val == "''")
         m_mWhere.remove(column);
     else
         m_mWhere.insert(column, QString("%1 %2").arg(op).arg(val));
