@@ -81,6 +81,9 @@ bool DBBrowserDB::open ( const QString & db)
             }
             curDBFilename = db;
         }
+
+        // Enable extension loading
+        sqlite3_enable_load_extension(_db, 1);
     }
 
     return ok;
@@ -1008,4 +1011,25 @@ bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue
         }
     }
     return false;
+}
+
+bool DBBrowserDB::loadExtension(const QString& filename)
+{
+    // Check if file exists
+    if(!QFile::exists(filename))
+    {
+        lastErrorMessage = QObject::tr("File not found.");
+        return false;
+    }
+
+    // Try to load extension
+    char* error;
+    if(sqlite3_load_extension(_db, filename.toUtf8(), 0, &error) == SQLITE_OK)
+    {
+        return true;
+    } else {
+        lastErrorMessage = QString::fromUtf8(error);
+        sqlite3_free(error);
+        return false;
+    }
 }

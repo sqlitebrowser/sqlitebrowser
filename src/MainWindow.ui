@@ -292,7 +292,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>278</width>
+          <width>763</width>
           <height>444</height>
          </rect>
         </property>
@@ -802,6 +802,7 @@
     <addaction name="fileSaveAction"/>
     <addaction name="fileRevertAction"/>
     <addaction name="fileCompactAction"/>
+    <addaction name="actionLoadExtension"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
@@ -1290,6 +1291,18 @@
    </property>
    <property name="text">
     <string>Save SQL file</string>
+   </property>
+  </action>
+  <action name="actionLoadExtension">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/load_extension</normaloff>:/icons/load_extension</iconset>
+   </property>
+   <property name="text">
+    <string>Load extension</string>
    </property>
   </action>
  </widget>
@@ -2024,6 +2037,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionLoadExtension</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadExtension()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2069,5 +2098,6 @@
   <slot>openSqlTab()</slot>
   <slot>openSqlFile()</slot>
   <slot>saveSqlFile()</slot>
+  <slot>loadExtension()</slot>
  </slots>
 </ui>

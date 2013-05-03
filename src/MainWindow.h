@@ -140,6 +140,7 @@ private slots:
     virtual void closeSqlTab(int index, bool force = false);
     virtual void openSqlFile();
     virtual void saveSqlFile();
+    virtual void loadExtension();
 };
 
 #endif

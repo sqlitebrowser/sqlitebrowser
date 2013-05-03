@@ -988,6 +988,7 @@ void MainWindow::activateFields(bool enable)
     ui->buttonDeleteRecord->setEnabled(enable);
     ui->buttonNewRecord->setEnabled(enable);
     ui->actionExecuteSql->setEnabled(enable);
+    ui->actionLoadExtension->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -1160,4 +1161,18 @@ void MainWindow::saveSqlFile()
     f.write(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->getSql().toUtf8());
     QFileInfo fileinfo(file);
     ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
+}
+
+void MainWindow::loadExtension()
+{
+    QString file = QFileDialog::getOpenFileName(
+                this,
+                tr("Select extension file"),
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
+                tr("Extensions(*.so *.dll);;All files(*)"));
+
+    if(db.loadExtension(file))
+        QMessageBox::information(this, QApplication::applicationName(), tr("Extension successfully loaded."));
+    else
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastErrorMessage));
 }

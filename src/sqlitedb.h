@@ -108,6 +108,9 @@ public:
     bool setPragma(const QString& pragma, const QString& value);
     bool setPragma(const QString& pragma, const QString& value, QString& originalvalue);
     bool setPragma(const QString& pragma, int value, int& originalvalue);
+
+    bool loadExtension(const QString& filename);
+
     sqlite3 * _db;
 
 
