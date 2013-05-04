@@ -121,8 +121,6 @@ void MainWindow::init()
     ui->editLogUser->setFont(font);
 }
 
-//***********************************************************
-//*** Open File
 void MainWindow::fileOpen(const QString & fileName)
 {
     QString wFile = fileName;
@@ -144,11 +142,11 @@ void MainWindow::fileOpen(const QString & fileName)
             QString err = tr("An error occurred: %1").arg(db.lastErrorMessage);
             QMessageBox::warning(this, QApplication::applicationName(), err);
         }
+        loadExtensionsFromSettings();
         populateStructure();
         resetBrowser();
         if(ui->mainTab->currentIndex() == 2)
             loadPragmas();
-        loadExtensionsFromSettings();
     }
 }
 
@@ -167,6 +165,7 @@ void MainWindow::fileNew()
         db.create(fileName);
         setCurrentFile(fileName);
         statusEncodingLabel->setText(db.getPragma("encoding"));
+        loadExtensionsFromSettings();
         populateStructure();
         resetBrowser();
         createTable();
