@@ -177,6 +177,8 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
                 return QColor(Qt::darkMagenta).name();
             else if(name == "string_colour")
                 return QColor(Qt::red).name();
+            else if(name == "currentline_colour")
+                return QColor(236, 236, 245).name();
         }
     }
 

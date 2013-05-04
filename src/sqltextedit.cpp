@@ -1,4 +1,5 @@
 #include "sqltextedit.h"
+#include "PreferencesDialog.h"
 
 #include <QKeyEvent>
 #include <QAbstractItemView>
@@ -16,8 +17,10 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     m_Completer->setWrapAround(false);
     m_Completer->setWidget(this);
 
-    QObject::connect(m_Completer, SIGNAL(activated(QString)),
-                     this, SLOT(insertCompletion(QString)));
+    connect(m_Completer, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString)));
+    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+
+    highlightCurrentLine();
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -89,6 +92,23 @@ void SqlTextEdit::insertCompletion(const QString& completion)
 
     tc.insertText(completion.right(extra));
     setTextCursor(tc);
+}
+
+void SqlTextEdit::highlightCurrentLine()
+{
+    QList<QTextEdit::ExtraSelection> extra_selections;
+
+    QTextEdit::ExtraSelection selection;
+    selection.format.setBackground(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
+    selection.format.setFontWeight(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_bold").toBool() ? QFont::Bold : QFont::Normal);
+    selection.format.setFontItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_italic").toBool());
+    selection.format.setFontUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_underline").toBool());
+    selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+    selection.cursor = textCursor();
+    selection.cursor.clearSelection();
+    extra_selections.append(selection);
+
+    setExtraSelections(extra_selections);
 }
 
 namespace {

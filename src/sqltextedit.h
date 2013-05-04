@@ -37,6 +37,7 @@ private:
 
 private slots:
     void insertCompletion(const QString& completion);
+    void highlightCurrentLine();
 
 private:
     QCompleter* m_Completer;

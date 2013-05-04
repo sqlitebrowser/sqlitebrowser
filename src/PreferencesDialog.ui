@@ -267,6 +267,14 @@
            <string/>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>currentline</string>
+          </property>
+          <property name="text">
+           <string>Current line</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
