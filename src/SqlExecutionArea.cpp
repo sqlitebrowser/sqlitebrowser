@@ -8,6 +8,8 @@
 #include "PreferencesDialog.h"
 #include "ExportCsvDialog.h"
 #include <QMenu>
+#include <QInputDialog>
+#include <QMessageBox>
 
 SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     QWidget(parent),
@@ -27,7 +29,7 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     // Create popup menu for save button
     menuPopupSave = new QMenu(this);
     menuPopupSave->addAction(ui->actionExportCsv);
-    //menuPopupSave->addAction(ui->actionSaveAsView);
+    menuPopupSave->addAction(ui->actionSaveAsView);
     ui->buttonSave->setMenu(menuPopupSave);
 }
 
@@ -75,5 +77,24 @@ void SqlExecutionArea::saveAsCsv()
 
 void SqlExecutionArea::saveAsView()
 {
-    // TODO
+    // Let the user select a name for the new view and make sure it doesn't already exist
+    QString name;
+    while(true)
+    {
+        name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
+        if(name.isEmpty())
+            break;
+        if(!db->getObjectByName(name).getname().isEmpty())
+            QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
+        else
+            break;
+    }
+    if(name.isEmpty())
+        return;
+
+    // Create the view
+    if(db->executeSQL(QString("CREATE VIEW `%1` AS %2;").arg(name).arg(model->query())))
+        QMessageBox::information(this, qApp->applicationName(), tr("View successfully created."));
+    else
+        QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db->lastErrorMessage));
 }
