@@ -76,7 +76,8 @@ FORMS += \
     PreferencesDialog.ui \
     EditDialog.ui \
     ExportCsvDialog.ui \
-    ImportCsvDialog.ui
+    ImportCsvDialog.ui \
+    SqlExecutionArea.ui
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7

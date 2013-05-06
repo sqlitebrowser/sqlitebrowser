@@ -1,44 +1,30 @@
 #include "SqlExecutionArea.h"
+#include "ui_SqlExecutionArea.h"
 #include "sqltextedit.h"
 #include "ExtendedTableWidget.h"
 #include "SQLiteSyntaxHighlighter.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
-#include <QLabel>
-#include <QSplitter>
-#include <QVBoxLayout>
 
 SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* db) :
-    QFrame(parent)
+    QWidget(parent),
+    ui(new Ui::SqlExecutionArea)
 {
-    // Create widgets
-    splitter = new QSplitter(Qt::Vertical, this);
-    editor = new SqlTextEdit(this);
-    table = new ExtendedTableWidget(this);
-    errors = new QLabel(this);
+    // Create UI
+    ui->setupUi(this);
 
-    // Set up widgets
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(8);
-    editor->setFont(font);
+    // Create syntax highlighter
+    highlighter = new SQLiteSyntaxHighlighter(ui->editEditor->document());
 
-    highlighter = new SQLiteSyntaxHighlighter(editor->document());
-
+    // Create model
     model = new SqliteTableModel(this, db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-    table->setModel(model);
-    table->setEditTriggers(ExtendedTableWidget::NoEditTriggers);
+    ui->tableResult->setModel(model);
+}
 
-    // Build layout
-    splitter->addWidget(editor);
-    splitter->addWidget(table);
-
-    layout = new QVBoxLayout(this);
-    layout->addWidget(splitter);
-    layout->addWidget(errors);
-
-    setLayout(layout);
+SqlExecutionArea::~SqlExecutionArea()
+{
+    delete ui;
 }
 
 void SqlExecutionArea::setTableNames(const QStringList& tables)
@@ -48,16 +34,21 @@ void SqlExecutionArea::setTableNames(const QStringList& tables)
 
 QString SqlExecutionArea::getSql() const
 {
-    return editor->toPlainText().trimmed();
+    return ui->editEditor->toPlainText().trimmed();
 }
 
 QString SqlExecutionArea::getSelectedSql() const
 {
-    return editor->textCursor().selectedText().trimmed();
+    return ui->editEditor->textCursor().selectedText().trimmed();
 }
 
 void SqlExecutionArea::finishExecution(const QString& result)
 {
-    errors->setText(result);
-    table->resizeColumnsToContents();
+    ui->labelErrors->setText(result);
+    ui->tableResult->resizeColumnsToContents();
+}
+
+SqlTextEdit* SqlExecutionArea::getEditor()
+{
+    return ui->editEditor;
 }

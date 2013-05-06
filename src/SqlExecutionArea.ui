@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SqlExecutionArea</class>
+ <widget class="QWidget" name="SqlExecutionArea">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>434</width>
+    <height>451</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="SqlTextEdit" name="editEditor">
+      <property name="font">
+       <font>
+        <family>Monospace</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="ExtendedTableWidget" name="tableResult">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelErrors">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ExtendedTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>ExtendedTableWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
