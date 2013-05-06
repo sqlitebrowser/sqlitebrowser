@@ -823,7 +823,6 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="sqlLogAction"/>
     <addaction name="viewDBToolbarAction"/>
     <addaction name="separator"/>
     <addaction name="viewPreferencesAction"/>
@@ -1200,24 +1199,6 @@
     <string>Open the preferences window.</string>
    </property>
   </action>
-  <action name="sqlLogAction">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/oldimages/log</normaloff>:/oldimages/log</iconset>
-   </property>
-   <property name="text">
-    <string>SQL &amp;Log</string>
-   </property>
-   <property name="whatsThis">
-    <string>Display or hide the SQL log window, which stores all SQL commands issued by the user or the application.</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+L</string>
-   </property>
-  </action>
   <action name="viewDBToolbarAction">
    <property name="checkable">
     <bool>true</bool>
@@ -1309,7 +1290,7 @@
  <customwidgets>
   <customwidget>
    <class>ExtendedTableWidget</class>
-   <extends>QTableView</extends>
+   <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
   </customwidget>
  </customwidgets>
@@ -1906,38 +1887,6 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>492</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sqlLogAction</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>dockLog</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>467</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dockLog</sender>
-   <signal>visibilityChanged(bool)</signal>
-   <receiver>sqlLogAction</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>399</x>
-     <y>467</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
     </hint>
    </hints>
   </connection>

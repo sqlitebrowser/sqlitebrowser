@@ -88,7 +88,9 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->editDeleteObjectAction);
 
     // Set state of checkable menu actions
-    ui->sqlLogAction->setChecked(!ui->dockLog->isHidden());
+    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
+    ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
+    ui->viewMenu->actions().at(0)->setIcon(QIcon(":/oldimages/log"));
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
     // Set statusbar fields
