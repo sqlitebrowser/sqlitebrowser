@@ -30,6 +30,7 @@
         <file alias="open_sql">page_white_database.png</file>
         <file alias="load_extension">plugin_add.png</file>
         <file alias="remove_extension">plugin_delete.png</file>
+        <file alias="save_table">table_save.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>

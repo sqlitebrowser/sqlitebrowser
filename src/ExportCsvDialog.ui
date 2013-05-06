@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Export table to CSV</string>
+   <string>Export data as CSV</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

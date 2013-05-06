@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>434</width>
-    <height>451</height>
+    <width>367</width>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,13 +35,44 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="labelErrors">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="labelErrors">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonSave">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
+  <action name="actionExportCsv">
+   <property name="text">
+    <string>Export to &amp;CSV</string>
+   </property>
+  </action>
+  <action name="actionSaveAsView">
+   <property name="text">
+    <string>Save as &amp;view</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as view</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -55,6 +86,45 @@
    <header>ExtendedTableWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
- <connections/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionExportCsv</sender>
+   <signal>activated()</signal>
+   <receiver>SqlExecutionArea</receiver>
+   <slot>saveAsCsv()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>183</x>
+     <y>215</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveAsView</sender>
+   <signal>activated()</signal>
+   <receiver>SqlExecutionArea</receiver>
+   <slot>saveAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>183</x>
+     <y>215</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>saveAsCsv()</slot>
+  <slot>saveAsView()</slot>
+ </slots>
 </ui>

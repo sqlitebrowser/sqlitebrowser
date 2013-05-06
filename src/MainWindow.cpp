@@ -675,6 +675,7 @@ void MainWindow::executeQuery()
                 {
                     statusMessage = tr("%1 Rows returned from: %2").arg(
                                 sqlWidget->getModel()->totalRowCount()).arg(queryPart);
+                    sqlWidget->enableSaveButton(true);
                     sql3status = SQLITE_OK;
                 }
                 else

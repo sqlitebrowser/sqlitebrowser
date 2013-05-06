@@ -8,18 +8,27 @@
 #include "PreferencesDialog.h"
 #include "sqlitetablemodel.h"
 
-ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent)
+ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query)
     : QDialog(parent),
       ui(new Ui::ExportCsvDialog),
-      pdb(db)
+      pdb(db),
+      m_sQuery(query)
 {
     // Create UI
     ui->setupUi(this);
 
-    // Get list of tables to export
-    objectMap objects = pdb->getBrowsableObjects();
-    for(objectMap::ConstIterator i=objects.begin();i!=objects.end();++i)
-        ui->comboTable->addItem(QIcon(QString(":icons/%1").arg(i.value().gettype())), i.value().getname());
+    // If a SQL query was specified hide the table combo box. If not fill it with tables to export
+    if(query.isEmpty())
+    {
+        // Get list of tables to export
+        objectMap objects = pdb->getBrowsableObjects();
+        for(objectMap::ConstIterator i=objects.begin();i!=objects.end();++i)
+            ui->comboTable->addItem(QIcon(QString(":icons/%1").arg(i.value().gettype())), i.value().getname());
+    } else {
+        // Hide table combo box
+        ui->labelTable->setVisible(false);
+        ui->comboTable->setVisible(false);
+    }
 }
 
 ExportCsvDialog::~ExportCsvDialog()
@@ -39,9 +48,18 @@ void ExportCsvDialog::accept()
     // Only if the user hasn't clicked the cancel button
     if(fileName.size() > 0)
     {
+        unsigned int first_column;
+
         // Get data from selected table
         SqliteTableModel tableModel(this, pdb);
-        tableModel.setTable(ui->comboTable->currentText());
+        if(m_sQuery.isEmpty())
+        {
+            tableModel.setTable(ui->comboTable->currentText());
+            first_column = 1;
+        } else {
+            tableModel.setQuery(m_sQuery);
+            first_column = 0;
+        }
         while(tableModel.canFetchMore())
             tableModel.fetchMore();
 
@@ -62,7 +80,7 @@ void ExportCsvDialog::accept()
             // Put field names in first row if user wants to have them
             if(ui->checkHeader->isChecked())
             {
-                for(int i=1;i<tableModel.columnCount();i++)
+                for(int i=first_column;i<tableModel.columnCount();i++)
                 {
                     stream << quoteChar << tableModel.headerData(i, Qt::Horizontal).toString() << quoteChar;
                     if(i < tableModel.columnCount() - 1)
@@ -75,7 +93,7 @@ void ExportCsvDialog::accept()
             // Get and write actual data
             for(int i=0;i<tableModel.totalRowCount();i++)
             {
-                for(int j=1;j<tableModel.columnCount();j++)
+                for(int j=first_column;j<tableModel.columnCount();j++)
                 {
                     QString content = tableModel.data(tableModel.index(i, j)).toString();
                     stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
