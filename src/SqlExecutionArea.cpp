@@ -28,6 +28,7 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* db) :
 
     model = new SqliteTableModel(this, db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
     table->setModel(model);
+    table->setEditTriggers(ExtendedTableWidget::NoEditTriggers);
 
     // Build layout
     splitter->addWidget(editor);
