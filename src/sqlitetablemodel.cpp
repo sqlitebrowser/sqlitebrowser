@@ -1,6 +1,8 @@
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include <QDebug>
+#include <QMessageBox>
+#include <QApplication>
 
 SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize)
     : QAbstractTableModel(parent)
@@ -160,6 +162,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
             emit(dataChanged(index, index));
             return true;
         } else {
+            QMessageBox::warning(0, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db->lastErrorMessage));
             return false;
         }
     }
