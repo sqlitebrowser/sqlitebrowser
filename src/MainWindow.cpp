@@ -1145,7 +1145,15 @@ void MainWindow::openSqlFile()
     {
         QFile f(file);
         f.open(QIODevice::ReadOnly);
-        unsigned int index = openSqlTab();
+
+        // Decide wether to open a new tab or take the current one
+        unsigned int index;
+        SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+        if(current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
+            index = ui->tabSqlAreas->currentIndex();
+        else
+            index = openSqlTab();
+
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setPlainText(f.readAll());
         QFileInfo fileinfo(file);
         ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
