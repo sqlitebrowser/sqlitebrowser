@@ -143,7 +143,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         while(index.row() >= m_data.size() && canFetchMore())
             const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
 
-        return m_data.at(index.row()).at(index.column());
+        if(role == Qt::DisplayRole && isBinary(index))
+            return "(BLOB)";
+        else
+            return m_data.at(index.row()).at(index.column());
     } else {
         return QVariant();
     }
@@ -186,7 +189,10 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(!index.isValid())
         return Qt::ItemIsEnabled;
 
-    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+    Qt::ItemFlags ret = QAbstractTableModel::flags(index);
+    if(!isBinary(index))
+        ret |= Qt::ItemIsEditable;
+    return ret;
 }
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
@@ -337,4 +343,10 @@ void SqliteTableModel::clearCache()
     beginRemoveRows(QModelIndex(), 0, m_data.size()-1);
     m_data.clear();
     endRemoveRows();
+}
+
+bool SqliteTableModel::isBinary(const QModelIndex& index) const
+{
+    QByteArray val = m_data.at(index.row()).at(index.column());
+    return val.size() > 1024 || val.contains('\0');     // Cheap BLOB test here...
 }

@@ -604,7 +604,7 @@ void MainWindow::editWinAway()
 
 void MainWindow::editText(const QModelIndex& index)
 {
-    editWin->loadText(index.data().toByteArray(), index.row(), index.column());
+    editWin->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
     editWin->show();
 }
 

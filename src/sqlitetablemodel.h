@@ -35,6 +35,8 @@ public:
 
     bool valid() const { return m_valid; }
 
+    bool isBinary(const QModelIndex& index) const;
+
     typedef QList<QByteArray> QByteArrayList;
 
 signals:
