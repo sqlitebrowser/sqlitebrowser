@@ -156,6 +156,10 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
 {
     if(index.isValid() && role == Qt::EditRole)
     {
+        // Don't do anything if the data hasn't changed
+        if(m_data.at(index.row()).at(index.column()) == value)
+            return true;
+
         if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toInt(), value.toByteArray()))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
