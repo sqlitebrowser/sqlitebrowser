@@ -5,10 +5,11 @@
 #include <QAbstractItemView>
 #include <QCompleter>
 #include <QScrollBar>
-//#include <QDebug>
+#include <QPainter>
+#include <QTextBlock>
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
-    QTextEdit(parent), m_Completer(0), m_defaultCompleterModel(0)
+    QPlainTextEdit(parent), m_Completer(0), m_defaultCompleterModel(0)
 {
     // basic auto completer for sqliteedit
     m_Completer = new QCompleter(this);
@@ -17,10 +18,16 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     m_Completer->setWrapAround(false);
     m_Completer->setWidget(this);
 
+    // Create line number area
+    lineNumberArea = new LineNumberArea(this);
+
+    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
+    connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     connect(m_Completer, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
 
     highlightCurrentLine();
+    updateLineNumberAreaWidth();
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -111,6 +118,74 @@ void SqlTextEdit::highlightCurrentLine()
     setExtraSelections(extra_selections);
 }
 
+int SqlTextEdit::lineNumberAreaWidth()
+{
+    int digits = 1;
+    int max = qMax(1, blockCount());
+    while(max >= 10)
+    {
+        max /= 10;
+        ++digits;
+    }
+
+    return 3 + fontMetrics().width(QLatin1Char('9')) * digits;
+}
+
+void SqlTextEdit::updateLineNumberAreaWidth()
+{
+    setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
+}
+
+void SqlTextEdit::updateLineNumberArea(const QRect& rect, int dy)
+{
+    if(dy)
+        lineNumberArea->scroll(0, dy);
+    else
+        lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
+
+    if(rect.contains(viewport()->rect()))
+        updateLineNumberAreaWidth();
+}
+
+void SqlTextEdit::resizeEvent(QResizeEvent* e)
+{
+    QPlainTextEdit::resizeEvent(e);
+
+    QRect cr = contentsRect();
+    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+}
+
+void SqlTextEdit::LineNumberArea::paintEvent(QPaintEvent* event)
+{
+    QPainter painter(this);
+    painter.fillRect(event->rect(), Qt::lightGray);
+
+    QTextBlock block = parent->firstVisibleBlock();
+    int blockNumber = block.blockNumber();
+    int top = parent->blockBoundingGeometry(block).translated(parent->contentOffset()).top();
+    int bottom = top + parent->blockBoundingRect(block).height();
+
+    while(block.isValid() && top <= event->rect().bottom())
+    {
+        if(block.isVisible() && bottom >= event->rect().top())
+        {
+            QString number = QString::number(blockNumber + 1);
+            painter.setPen(Qt::black);
+            painter.drawText(0, top, width(), fontMetrics().height(), Qt::AlignRight, number);
+        }
+
+        block = block.next();
+        top = bottom;
+        bottom = top + parent->blockBoundingRect(block).height();
+        blockNumber++;
+    }
+}
+
+QSize SqlTextEdit::LineNumberArea::sizeHint() const
+{
+    return QSize(parent->lineNumberAreaWidth(), 0);
+}
+
 namespace {
 bool isSqliteIdentifierChar(QChar c) {
     return c.isLetterOrNumber() || c == '.' || c == '_';
@@ -165,7 +240,7 @@ void SqlTextEdit::focusInEvent(QFocusEvent *e)
 {
     if (m_Completer)
         m_Completer->setWidget(this);
-    QTextEdit::focusInEvent(e);
+    QPlainTextEdit::focusInEvent(e);
 }
 
 void SqlTextEdit::keyPressEvent(QKeyEvent *e)
@@ -187,7 +262,7 @@ void SqlTextEdit::keyPressEvent(QKeyEvent *e)
 
     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Space); // CTRL+SPACE
     if (!m_Completer || !isShortcut) // do not process the shortcut when we have a completer
-        QTextEdit::keyPressEvent(e);
+        QPlainTextEdit::keyPressEvent(e);
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
     const bool cursorKey = e->key() == Qt::Key_Left ||
             e->key() == Qt::Key_Up ||

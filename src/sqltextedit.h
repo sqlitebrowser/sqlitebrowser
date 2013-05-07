@@ -1,7 +1,7 @@
 #ifndef SQLTEXTEDIT_H
 #define SQLTEXTEDIT_H
 
-#include <QTextEdit>
+#include <QPlainTextEdit>
 
 class QCompleter;
 class QAbstractItemModel;
@@ -11,7 +11,7 @@ class QAbstractItemModel;
  * With basic table and fieldname auto completion.
  * This class is based on the Qt custom completion example.
  */
-class SqlTextEdit : public QTextEdit
+class SqlTextEdit : public QPlainTextEdit
 {
     Q_OBJECT
 public:
@@ -31,13 +31,31 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
+    void resizeEvent(QResizeEvent* event);
+
+    void lineNumberAreaPaintEvent(QPaintEvent* event);
+    int lineNumberAreaWidth();
 
 private:
+    class LineNumberArea : public QWidget
+    {
+    public:
+        LineNumberArea(SqlTextEdit *editor) : QWidget(editor), parent(editor) {}
+        QSize sizeHint() const;
+
+    protected:
+        void paintEvent(QPaintEvent* event);
+        SqlTextEdit* parent;
+    };
+
+    LineNumberArea* lineNumberArea;
     QString identifierUnderCursor() const;
 
 private slots:
     void insertCompletion(const QString& completion);
     void highlightCurrentLine();
+    void updateLineNumberAreaWidth();
+    void updateLineNumberArea(const QRect& rect, int dy);
 
 private:
     QCompleter* m_Completer;
