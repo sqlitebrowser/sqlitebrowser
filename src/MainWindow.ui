@@ -292,7 +292,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>763</width>
+          <width>278</width>
           <height>444</height>
          </rect>
         </property>
@@ -750,6 +750,7 @@
        <addaction name="actionSqlSaveFile"/>
        <addaction name="separator"/>
        <addaction name="actionExecuteSql"/>
+       <addaction name="actionSqlExecuteLine"/>
       </widget>
      </item>
      <item>
@@ -1272,6 +1273,18 @@
    </property>
    <property name="text">
     <string>Load extension</string>
+   </property>
+  </action>
+  <action name="actionSqlExecuteLine">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/run_line</normaloff>:/icons/run_line</iconset>
+   </property>
+   <property name="text">
+    <string>Execute current line</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F5</string>
    </property>
   </action>
  </widget>
@@ -1979,6 +1992,22 @@
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>loadExtension()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlExecuteLine</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>executeQuery()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

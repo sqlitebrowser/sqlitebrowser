@@ -31,6 +31,7 @@
         <file alias="load_extension">plugin_add.png</file>
         <file alias="remove_extension">plugin_delete.png</file>
         <file alias="save_table">table_save.png</file>
+        <file alias="run_line">resultset_last.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>

@@ -633,11 +633,21 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
  */
 void MainWindow::executeQuery()
 {
-    // if a part of the query is selected, we will only execute this part
     SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-    QString query = sqlWidget->getSelectedSql();
-    if(query.isEmpty())
-        query = sqlWidget->getSql();
+
+    // Get SQL code to execute. This depends on the button that's been pressed
+    QString query;
+    bool singleStep = false;
+    if(sender()->objectName() == "actionSqlExecuteLine")
+    {
+        query = sqlWidget->getEditor()->document()->toPlainText().mid(sqlWidget->getEditor()->textCursor().block().position());
+        singleStep = true;
+    } else {
+        // if a part of the query is selected, we will only execute this part
+        query = sqlWidget->getSelectedSql();
+        if(query.isEmpty())
+            query = sqlWidget->getSql();
+    }
     if (query.isEmpty())
         return;
 
@@ -701,9 +711,11 @@ void MainWindow::executeQuery()
             break;
 
             }
-        }
-        else
-        {
+
+            // Stop after the first full statement if we're in single step mode
+            if(singleStep)
+                break;
+        } else {
             statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                     ": " + queryPart;
         }
@@ -993,6 +1005,7 @@ void MainWindow::activateFields(bool enable)
     ui->buttonNewRecord->setEnabled(enable);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
+    ui->actionSqlExecuteLine->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
