@@ -149,6 +149,7 @@ void MainWindow::fileOpen(const QString & fileName)
         resetBrowser();
         if(ui->mainTab->currentIndex() == 2)
             loadPragmas();
+        openSqlTab(true);
     }
 }
 
@@ -170,6 +171,7 @@ void MainWindow::fileNew()
         loadExtensionsFromSettings();
         populateStructure();
         resetBrowser();
+        openSqlTab(true);
         createTable();
     }
 }
@@ -363,7 +365,6 @@ void MainWindow::fileClose()
     ui->buttonLogClear->click();
     for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
         closeSqlTab(i, true);
-    openSqlTab(true);
 }
 
 void MainWindow::fileExit()
@@ -1006,6 +1007,9 @@ void MainWindow::activateFields(bool enable)
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
+    ui->actionSqlOpenFile->setEnabled(enable);
+    ui->actionSqlOpenTab->setEnabled(enable);
+    ui->actionSqlSaveFile->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
