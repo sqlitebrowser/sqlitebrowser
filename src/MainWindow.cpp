@@ -612,10 +612,7 @@ void MainWindow::editText(const QModelIndex& index)
 void MainWindow::doubleClickTable(const QModelIndex& index)
 {
     if(!index.isValid())
-    {
-        qDebug("no cell selected");
         return;
-    }
 
     // Don't allow editing of other objects than tables
     if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")

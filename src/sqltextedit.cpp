@@ -280,7 +280,7 @@ void SqlTextEdit::keyPressEvent(QKeyEvent *e)
         table = identifier.left(dotpos);
         field = identifier.mid(dotpos + 1);
     }
-//    qDebug() << identifier << ":" << table << ":" << field;
+
     if( dotpos > 0 )
     {
         // swap model to field completion

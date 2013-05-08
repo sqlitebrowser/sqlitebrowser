@@ -269,7 +269,6 @@ Table CreateTableWalker::table()
     if( m_root ) //CREATE TABLE
     {
         antlr::RefAST s = m_root->getFirstChild();
-        //qDebug() << m_root->toStringTree().cd;
         //skip to tablename
         while(s->getType() != Sqlite3Lexer::ID && s->getType() != Sqlite3Lexer::QUOTEDID) s = s->getNextSibling();
         tab.setName(identifier(s));

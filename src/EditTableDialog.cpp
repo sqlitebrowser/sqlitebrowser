@@ -7,8 +7,6 @@
 
 #include "sqlitedb.h"
 
-#include <QDebug>
-
 EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
@@ -30,7 +28,6 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
 
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getTableSQL(curTable);
-        //qDebug() << sTablesql;
         m_table = sqlb::Table::parseSQL(sTablesql);
         populateFields();
     }
