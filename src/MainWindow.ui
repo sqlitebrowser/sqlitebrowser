@@ -1021,12 +1021,6 @@
    <property name="whatsThis">
     <string>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</string>
    </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
   </action>
   <action name="fileSaveAction">
    <property name="enabled">
@@ -1044,12 +1038,6 @@
    </property>
    <property name="whatsThis">
     <string>This option is used to save changes to the database file.</string>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
    </property>
   </action>
   <action name="fileCompactAction">
