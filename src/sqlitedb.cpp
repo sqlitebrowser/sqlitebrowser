@@ -279,14 +279,21 @@ bool DBBrowserDB::dump(const QString& filename)
                 stream << "INSERT INTO `" << (*it).getname() << "` VALUES(";
                 for(int col=1;col<tableModel.columnCount();col++)
                 {
-                    QString content = tableModel.data(tableModel.index(row, col)).toString();
-                    content.replace("'", "''");
-                    if(content.isNull())
-                        content = "NULL";
-                    else if(content.length() && !regexpIsNumeric.exactMatch(content))
-                        content = "'" + content + "'";
-                    else if(content.length() == 0)
-                        content = "''";
+                    QString content;
+                    if(tableModel.isBinary(tableModel.index(row, col)))
+                    {
+                        content = QString("X'%1'").arg(QString(tableModel.data(tableModel.index(row, col), Qt::EditRole).toByteArray().toHex()));
+                        if(content.isNull())
+                            content = "NULL";
+                    } else {
+                        content = tableModel.data(tableModel.index(row, col)).toString().replace("'", "''");
+                        if(content.isNull())
+                            content = "NULL";
+                        else if(content.length() && !regexpIsNumeric.exactMatch(content))
+                            content = "'" + content + "'";
+                        else if(content.length() == 0)
+                            content = "''";
+                    }
 
                     stream << content;
                     if(col < tableModel.columnCount() - 1)
