@@ -232,11 +232,21 @@ bool DBBrowserDB::dump(const QString& filename)
         // indices, views or triggers into account but compared to the number of rows those should be neglectable
         unsigned int numRecordsTotal = 0, numRecordsCurrent = 0;
         QList<DBBrowserObject> tables = objMap.values("table");
-        for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
+        QMutableListIterator<DBBrowserObject> it(tables);
+        while(it.hasNext())
         {
-            SqliteTableModel tableModel(0, this);
-            tableModel.setTable((*it).getname());
-            numRecordsTotal += tableModel.totalRowCount();
+            it.next();
+
+            // Remove the sqlite_stat1 table if there is one
+            if(it.value().getname() == "sqlite_stat1")
+            {
+                it.remove();
+            } else {
+                // Otherwise get the number of records in this table
+                SqliteTableModel tableModel(0, this);
+                tableModel.setTable(it.value().getname());
+                numRecordsTotal += tableModel.totalRowCount();
+            }
         }
         QProgressDialog progress(QObject::tr("Exporting database to SQL file..."),
                                  QObject::tr("Cancel"), 0, numRecordsTotal);
