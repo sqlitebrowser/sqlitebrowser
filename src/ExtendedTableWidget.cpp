@@ -10,6 +10,8 @@
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
 {
+    setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
+
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
 }
 

@@ -185,12 +185,6 @@
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
-       </property>
-       <property name="horizontalScrollMode">
-        <enum>QAbstractItemView::ScrollPerPixel</enum>
-       </property>
       </widget>
      </item>
      <item>
@@ -292,7 +286,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>278</width>
+          <width>763</width>
           <height>444</height>
          </rect>
         </property>
