@@ -1,11 +1,11 @@
 [Desktop Entry]
 Name=SQLiteBrowser
 Comment=SQLiteBrowser is a light GUI editor for SQLite databases
-Comment[de]=SQLiteBrowser ist ein GUI editor für SQLite-Datenbanken
-Exec=sqlitebrowser
+Comment[de]=SQLiteBrowser ist ein GUI-Editor für SQLite-Datenbanken
+Exec=sqlitebrowser %f
 Icon=/usr/share/sqlitebrowser/icons/sqlitebrowser-128.png
 Terminal=false
 X-MultipleArgs=false
 Type=Application
-Categories=Development;
-MimeType=application/sqlitebrowser;application/x-sqlitebrowser;
+Categories=Development;Utility;Database;
+MimeType=application/sqlitebrowser;application/x-sqlitebrowser;application/x-sqlite2;application/x-sqlite3;
