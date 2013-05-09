@@ -32,10 +32,10 @@
         <file alias="remove_extension">plugin_delete.png</file>
         <file alias="save_table">table_save.png</file>
         <file alias="run_line">resultset_last.png</file>
+        <file alias="log_dock">layout_sidebar.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>
         <file alias="icon16">oldimages/icone16.png</file>
-        <file alias="log">oldimages/log.png</file>
     </qresource>
 </RCC>

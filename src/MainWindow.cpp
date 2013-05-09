@@ -90,7 +90,7 @@ void MainWindow::init()
     // Set state of checkable menu actions
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
     ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
-    ui->viewMenu->actions().at(0)->setIcon(QIcon(":/oldimages/log"));
+    ui->viewMenu->actions().at(0)->setIcon(QIcon(":/icons/log_dock"));
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
     // Set statusbar fields
