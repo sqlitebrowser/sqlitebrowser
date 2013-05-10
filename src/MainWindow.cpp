@@ -820,43 +820,47 @@ void MainWindow::importDatabaseFromSQL()
         return;
 
     // If there is already a database file opened ask the user wether to import into this one or a new one. If no DB is opened just ask for a DB name directly
-    bool importToNewDb = false;
+    QString newDbFile;
     if((db.isOpen() && QMessageBox::question(this,
                                             QApplication::applicationName(),
                                             tr("Do you want to create a new database file to hold the imported data?\n"
                                                "If you answer no we will attempt to import the data in the SQL file to the current database."),
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
-        QString newDBfile = QFileDialog::getSaveFileName(
+        newDbFile = QFileDialog::getSaveFileName(
                     this,
                     tr("Choose a filename to save under"),
                     PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
-        if(QFile::exists(newDBfile))
+        if(QFile::exists(newDbFile))
         {
-            QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDBfile));
+            QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
             return;
-        } else if(newDBfile.size() == 0) {
+        } else if(newDbFile.size() == 0) {
             return;
         }
 
-        db.create(newDBfile);
-        importToNewDb = true;
+        db.create(newDbFile);
     }
 
     // Open, read, execute and close file
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
-    if(!db.executeMultiSQL(f.readAll(), !importToNewDb))
+    if(!db.executeMultiSQL(f.readAll(), newDbFile.size() == 0))
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastErrorMessage));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
     f.close();
     QApplication::restoreOverrideCursor();
 
-    // Resfresh window
-    populateStructure();
-    resetBrowser();
+    // Resfresh window when importing into an existing DB or - when creating a new file - just open it correctly
+    if(newDbFile.size())
+    {
+        fileOpen(newDbFile);
+    } else {
+        populateStructure();
+        resetBrowser();
+    }
 }
 
 void MainWindow::openPreferences()
