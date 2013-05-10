@@ -808,46 +808,53 @@ void MainWindow::exportDatabaseToSQL()
 
 void MainWindow::importDatabaseFromSQL()
 {
+    // Get file name to import
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a file to import"),
                 PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
-    if (fileName.size() > 0)
+    // Cancel when no file doesn't exist
+    if(!QFile::exists(fileName))
+        return;
+
+    // If there is already a database file opened ask the user wether to import into this one or a new one. If no DB is opened just ask for a DB name directly
+    if((db.isOpen() && QMessageBox::question(this,
+                                            QApplication::applicationName(),
+                                            tr("Do you want to create a new database file to hold the imported data?\n"
+                                               "If you answer no we will attempt to import the data in the SQL file to the current database."),
+                                            QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
-        QString msg = tr("Do you want to create a new database file to hold the imported data?\nIf you answer NO we will attempt to import data in the .sql file to the current database.");
-        if (QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+        QString newDBfile = QFileDialog::getSaveFileName(
+                    this,
+                    tr("Choose a filename to save under"),
+                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
+        if(QFile::exists(newDBfile))
         {
-            QString newDBfile = QFileDialog::getSaveFileName(
-                        this,
-                        tr("Choose a filename to save under"),
-                        PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
-            if (QFile::exists(newDBfile) )
-            {
-                QString err = tr("File %1 already exists. Please choose a different name.").arg(newDBfile);
-                QMessageBox::information( this, QApplication::applicationName() ,err);
-                return;
-            }
-            if(!fileName.isNull())
-                db.create(newDBfile);
+            QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDBfile));
+            return;
+        } else if(newDBfile.size() == 0) {
+            return;
         }
 
-        // Open, read, execute and close file
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-        QFile f(fileName);
-        f.open(QIODevice::ReadOnly);
-        if(!db.executeMultiSQL(f.readAll()))
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastErrorMessage));
-        else
-            QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
-        f.close();
-        QApplication::restoreOverrideCursor();
-
-        // Resfresh window
-        populateStructure();
-        resetBrowser();
+        db.create(newDBfile);
     }
+
+    // Open, read, execute and close file
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    QFile f(fileName);
+    f.open(QIODevice::ReadOnly);
+    if(!db.executeMultiSQL(f.readAll()))
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastErrorMessage));
+    else
+        QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
+    f.close();
+    QApplication::restoreOverrideCursor();
+
+    // Resfresh window
+    populateStructure();
+    resetBrowser();
 }
 
 void MainWindow::openPreferences()
