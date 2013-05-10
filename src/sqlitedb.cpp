@@ -368,6 +368,13 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     if(log)
         logSQL(statement, kLogMsg_App);
 
+    // Show progress dialog
+    int statement_size = statement.size();
+    QProgressDialog progress(QObject::tr("Executing SQL..."),
+                             QObject::tr("Cancel"), 0, statement_size);
+    progress.setWindowModality(Qt::ApplicationModal);
+    progress.show();
+
     // Execute the statement by looping until SQLite stops giving back a tail string
     sqlite3_stmt* vm;
     QByteArray utf8Query = statement.toUtf8();
@@ -377,7 +384,19 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     do
     {
         line++;
-        res = sqlite3_prepare_v2(_db, tail, strlen(tail), &vm, &tail);
+        size_t tail_length = strlen(tail);
+
+        // Update progress dialog, keep UI responsive
+        progress.setValue(statement_size - tail_length);
+        qApp->processEvents();
+        if(progress.wasCanceled())
+        {
+            lastErrorMessage = QObject::tr("Action cancelled.");
+            return false;
+        }
+
+        // Execute next statement
+        res = sqlite3_prepare_v2(_db, tail, tail_length, &vm, &tail);
         if(res == SQLITE_OK)
         {
             if(sqlite3_step(vm) == SQLITE_ERROR)
