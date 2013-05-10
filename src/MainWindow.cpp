@@ -820,6 +820,7 @@ void MainWindow::importDatabaseFromSQL()
         return;
 
     // If there is already a database file opened ask the user wether to import into this one or a new one. If no DB is opened just ask for a DB name directly
+    bool importToNewDb = false;
     if((db.isOpen() && QMessageBox::question(this,
                                             QApplication::applicationName(),
                                             tr("Do you want to create a new database file to hold the imported data?\n"
@@ -839,13 +840,14 @@ void MainWindow::importDatabaseFromSQL()
         }
 
         db.create(newDBfile);
+        importToNewDb = true;
     }
 
     // Open, read, execute and close file
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
-    if(!db.executeMultiSQL(f.readAll()))
+    if(!db.executeMultiSQL(f.readAll(), !importToNewDb))
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastErrorMessage));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
