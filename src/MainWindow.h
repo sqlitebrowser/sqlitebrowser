@@ -27,6 +27,8 @@ public:
     MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
+    DBBrowserDB* getDb() { return &db; }
+
 private:
     struct PragmaValues
     {
@@ -89,9 +91,10 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 public slots:
-    virtual void fileOpen( const QString & fileName );
+    virtual bool fileOpen(const QString& fileName);
     virtual void logSql(const QString &sql, int msgtype);
     virtual void dbState(bool dirty);
+    virtual void browseRefresh();
 
 private slots:
     virtual void createTreeContextMenu(const QPoint & qPoint);
@@ -110,7 +113,6 @@ private slots:
     virtual void navigateNext();
     virtual void navigateGoto();
     virtual void setRecordsetLabel();
-    virtual void browseRefresh();
     virtual void createTable();
     virtual void createIndex();
     virtual void compact();

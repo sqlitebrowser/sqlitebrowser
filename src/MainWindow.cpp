@@ -123,8 +123,10 @@ void MainWindow::init()
     ui->editLogUser->setFont(font);
 }
 
-void MainWindow::fileOpen(const QString & fileName)
+bool MainWindow::fileOpen(const QString& fileName)
 {
+    bool retval = false;
+
     QString wFile = fileName;
     if (!QFile::exists(wFile))
     {
@@ -140,6 +142,7 @@ void MainWindow::fileOpen(const QString & fileName)
         {
             statusEncodingLabel->setText(db.getPragma("encoding"));
             setCurrentFile(wFile);
+            retval = true;
         } else {
             QString err = tr("An error occurred: %1").arg(db.lastErrorMessage);
             QMessageBox::warning(this, QApplication::applicationName(), err);
@@ -151,6 +154,8 @@ void MainWindow::fileOpen(const QString & fileName)
             loadPragmas();
         openSqlTab(true);
     }
+
+    return retval;
 }
 
 void MainWindow::fileOpen()
