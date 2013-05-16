@@ -30,6 +30,7 @@ private:
     QTextCharFormat stringFormat;
     QTextCharFormat identifierFormat;
     QTextCharFormat tableFormat;
+    QTextCharFormat functionFormat;
 
     QTextCharFormat createFormat(const QString& settings_name);
 };

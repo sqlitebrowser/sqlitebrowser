@@ -11,7 +11,9 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
     singleLineCommentFormat = createFormat("comment");
     identifierFormat = createFormat("identifier");
     stringFormat = createFormat("string");
+    functionFormat = createFormat("function");
 
+    // Keywords
     QStringList keywordPatterns;
     keywordPatterns
             << "ABORT" << "ACTION" << "ADD" << "AFTER" << "ALL"
@@ -40,10 +42,35 @@ SQLiteSyntaxHighlighter::SQLiteSyntaxHighlighter(QTextDocument *parent) :
             << "VACUUM" << "VALUES" << "VIEW" << "VIRTUAL" << "WHEN"
             << "WHERE";
 
+    rule.format = keywordFormat;
     foreach (const QString &pattern, keywordPatterns) {
         rule.pattern = QRegExp(QString("\\b%1\\b").arg(pattern));
         rule.pattern.setCaseSensitivity(Qt::CaseInsensitive);
-        rule.format = keywordFormat;
+        highlightingRules.append(rule);
+    }
+
+    // Functions
+    QStringList functionPatterns;
+    functionPatterns
+            // Core functions
+            << "ABS" << "CHANGES" << "CHAR" << "COALESCE" << "GLOB"
+            << "IFNULL" << "INSTR" << "HEX" << "LAST_INSERT_ROW" << "LENGTH"
+            << "LIKE" << "LOAD_EXTENSION" << "LOWER" << "LTRIM" << "MAX"
+            << "MIN" << "NULLIF" << "QUOTE" << "RANDOM" << "RANDOMBLOB"
+            << "REPLACE" << "ROUND" << "RTRIM" << "SOUNDEX" << "SQLITE_COMPILEOPTION_GET"
+            << "SQLITE_COMPILEOPTION_USED" << "SQLITE_SOURCE_ID" << "SQLITE_VERSION" << "SUBSTR" << "TOTAL_CHANGES"
+            << "TRIM" << "TYPEOF" << "UNICODE" << "UPPER" << "ZEROBLOB"
+            // Date and time functions
+            << "DATE" << "TIME" << "DATETIME" << "JULIANDAY" << "STRFTIME"
+            // Aggregate functions
+            << "AVG" << "COUNT" << "GROUP_CONCAT" << "MAX" << "MIN"
+            << "SUM" << "TOTAL";
+
+    rule.format = functionFormat;
+    foreach(const QString& pattern, functionPatterns)
+    {
+        rule.pattern = QRegExp(QString("\\b%1\\b").arg(pattern));
+        rule.pattern.setCaseSensitivity(Qt::CaseInsensitive);
         highlightingRules.append(rule);
     }
 

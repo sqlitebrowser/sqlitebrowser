@@ -189,6 +189,14 @@
          </item>
          <item>
           <property name="text">
+           <string>function</string>
+          </property>
+          <property name="text">
+           <string>Function</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string notr="true">table</string>
           </property>
           <property name="text">

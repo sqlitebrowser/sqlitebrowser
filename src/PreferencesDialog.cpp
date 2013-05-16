@@ -152,9 +152,9 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // syntaxhighlighter?
     if(group == "syntaxhighlighter")
     {
-        // Bold? Only tables and keywords are bold by default
+        // Bold? Only tables, functions and keywords are bold by default
         if(name.right(4) == "bold")
-            return name == "keyword_bold" || name == "table_bold";
+            return name == "keyword_bold" || name == "table_bold" || name == "function_bold";
 
         // Italic? Nothing by default
         if(name.right(6) == "italic")
@@ -169,6 +169,8 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
         {
             if(name == "keyword_colour")
                 return QColor(Qt::darkBlue).name();
+            else if(name == "function_colour")
+                return QColor(Qt::blue).name();
             else if(name == "table_colour")
                 return QColor(Qt::darkCyan).name();
             else if(name == "comment_colour")
