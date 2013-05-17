@@ -343,7 +343,7 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
 
     if (_db){
         if (logsql) logSQL(statement, kLogMsg_App);
-        if (dirtyDB) setDirty(true);
+        if (dirtyDB) setRestorePoint();
         if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
                                     NULL,NULL,&errmsg)){
             ok=true;
@@ -367,6 +367,10 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     // Log the statement if needed
     if(log)
         logSQL(statement, kLogMsg_App);
+
+    // Set DB to dirty/create restore point if necessary
+    if(dirty)
+        setRestorePoint();
 
     // Show progress dialog
     int statement_size = statement.size();
@@ -416,10 +420,6 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
             return false;
         }
     } while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE));
-
-    // Set dirty flag
-    if(dirty)
-        setDirty(true);
 
     // Exit
     return true;
