@@ -11,6 +11,7 @@
 #include <QDragEnterEvent>
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
+#include <QElapsedTimer>
 
 #include "CreateIndexDialog.h"
 #include "AboutDialog.h"
@@ -671,6 +672,8 @@ void MainWindow::executeQuery()
     db.setRestorePoint();
 
     //Accept multi-line queries, by looping until the tail is empty
+    QElapsedTimer timer;
+    timer.start();
     do
     {
         const char* qbegin = tail;
@@ -688,8 +691,8 @@ void MainWindow::executeQuery()
                 sqlWidget->getModel()->setQuery(queryPart);
                 if(sqlWidget->getModel()->valid())
                 {
-                    statusMessage = tr("%1 Rows returned from: %2").arg(
-                                sqlWidget->getModel()->totalRowCount()).arg(queryPart);
+                    statusMessage = tr("%1 Rows returned from: %2 (took %3ms)").arg(
+                                sqlWidget->getModel()->totalRowCount()).arg(queryPart.trimmed()).arg(timer.elapsed());
                     sqlWidget->enableSaveButton(true);
                     sql3status = SQLITE_OK;
                 }
@@ -704,16 +707,16 @@ void MainWindow::executeQuery()
                 if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) )
                 {
                     modified = true;
-                    statusMessage = tr("Query executed successfully: %1").arg(queryPart);
+                    statusMessage = tr("Query executed successfully: %1 (took %2ms)").arg(queryPart.trimmed()).arg(timer.elapsed());
                 }
+                break;
             }
-            break;
             default:
                 statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                         ": " + queryPart;
-            break;
-
+                break;
             }
+            timer.restart();
 
             // Stop after the first full statement if we're in single step mode
             if(singleStep)
@@ -722,9 +725,8 @@ void MainWindow::executeQuery()
             statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                     ": " + queryPart;
         }
-        sqlWidget->finishExecution(statusMessage);
-
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
+    sqlWidget->finishExecution(statusMessage);
 
     if(!modified && !wasdirty)
         db.revert(); // better rollback, if the logic is not enough we can tune it.
