@@ -55,7 +55,7 @@ QString SqlExecutionArea::getSelectedSql() const
 
 void SqlExecutionArea::finishExecution(const QString& result)
 {
-    ui->labelErrors->setText(result);
+    ui->editErrors->setText(result);
     ui->tableResult->resizeColumnsToContents();
 }
 
