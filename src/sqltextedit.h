@@ -32,6 +32,7 @@ protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
     void resizeEvent(QResizeEvent* event);
+    void dropEvent(QDropEvent* e);
 
     void lineNumberAreaPaintEvent(QPaintEvent* event);
     int lineNumberAreaWidth();

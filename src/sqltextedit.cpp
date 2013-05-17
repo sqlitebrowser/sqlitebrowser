@@ -7,6 +7,7 @@
 #include <QScrollBar>
 #include <QPainter>
 #include <QTextBlock>
+#include <QUrl>
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
     QPlainTextEdit(parent), m_Completer(0), m_defaultCompleterModel(0)
@@ -179,6 +180,22 @@ void SqlTextEdit::LineNumberArea::paintEvent(QPaintEvent* event)
         bottom = top + parent->blockBoundingRect(block).height();
         blockNumber++;
     }
+}
+
+void SqlTextEdit::dropEvent(QDropEvent* e)
+{
+    QList<QUrl> urls = e->mimeData()->urls();
+    if(urls.isEmpty())
+        return QPlainTextEdit::dropEvent(e);
+
+    QString file = urls.first().toLocalFile();
+    if(!QFile::exists(file))
+        return;
+
+    QFile f(file);
+    f.open(QIODevice::ReadOnly);
+    setPlainText(f.readAll());
+    f.close();
 }
 
 QSize SqlTextEdit::LineNumberArea::sizeHint() const
