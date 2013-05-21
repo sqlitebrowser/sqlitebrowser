@@ -198,31 +198,6 @@ void DBBrowserDB::close (){
     objMap.clear();
 }
 
-bool DBBrowserDB::compact ( )
-{
-    char *errmsg;
-    bool ok=false;
-    
-    if (!isOpen()) return false;
-
-    if (_db){
-        save();
-        logSQL(QString("VACUUM;"), kLogMsg_App);
-        if (SQLITE_OK==sqlite3_exec(_db,"VACUUM;",
-                                    NULL,NULL,&errmsg)){
-            ok=true;
-            setDirty(false);
-        }
-    }
-
-    if (!ok){
-        lastErrorMessage = QString(errmsg);
-        return false;
-    }else{
-        return true;
-    }
-}
-
 bool DBBrowserDB::dump(const QString& filename)
 {
     // Open file

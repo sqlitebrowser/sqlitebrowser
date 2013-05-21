@@ -44,7 +44,8 @@ HEADERS += \
     sqlitetablemodel.h \
     FilterTableHeader.h \
     gen_version.h \
-    SqlExecutionArea.h
+    SqlExecutionArea.h \
+    VacuumDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -64,7 +65,8 @@ SOURCES += \
     grammar/Sqlite3Parser.cpp \
     sqlitetablemodel.cpp \
     FilterTableHeader.cpp \
-    SqlExecutionArea.cpp
+    SqlExecutionArea.cpp \
+    VacuumDialog.cpp
 
 RESOURCES += icons/icons.qrc
 
@@ -77,7 +79,8 @@ FORMS += \
     EditDialog.ui \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui \
-    SqlExecutionArea.ui
+    SqlExecutionArea.ui \
+    VacuumDialog.ui
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7

@@ -25,6 +25,7 @@
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
 #include "SqlExecutionArea.h"
+#include "VacuumDialog.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -530,18 +531,12 @@ void MainWindow::createIndex()
 
 void MainWindow::compact()
 {
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    if (!db.compact()){
-        QString error = tr("Error: could not compact the database file. Message from database engine: %1").arg(db.lastErrorMessage);
-        QApplication::restoreOverrideCursor( );
-        QMessageBox::warning( this, QApplication::applicationName(), error );
-    } else {
-        QApplication::restoreOverrideCursor( );
-        QMessageBox::information(this, QApplication::applicationName(), tr("Database successfully compacted."));
+    VacuumDialog dialog(&db, this);
+    if(dialog.exec())
+    {
+        populateStructure();
+        resetBrowser();
     }
-    db.open(db.curDBFilename);
-    populateStructure();
-    resetBrowser();
 }
 
 void MainWindow::deleteObject()
