@@ -170,6 +170,8 @@ bool DBBrowserDB::create ( const QString & db)
             curDBFilename = db;
         }
 
+        // Enable extension loading
+        sqlite3_enable_load_extension(_db, 1);
     }
 
     return ok;
