@@ -107,7 +107,6 @@ void EditTableDialog::accept()
     if(m_bNewTable)
     {
         // Creation of new table
-        // we commit immediatly so no need to setdirty
         if(!pdb->executeSQL(m_table.sql()))
         {
             QMessageBox::warning(

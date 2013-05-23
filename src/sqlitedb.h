@@ -101,7 +101,6 @@ public:
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
     bool isOpen() const;
-    void setDirty(bool dirtyval);
     bool getDirty() const;
     void logSQL(const QString& statement, int msgtype);
 
@@ -123,9 +122,8 @@ public:
 
     MainWindow* mainWindow;
 
-    QStringList savepointList;
 private:
-    bool dirty;
+    QStringList savepointList;
 };
 
 #endif

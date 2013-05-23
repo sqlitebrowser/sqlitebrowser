@@ -20,16 +20,9 @@ bool DBBrowserDB::isOpen ( ) const
     return _db!=0;
 }
 
-void DBBrowserDB::setDirty(bool dirtyval)
-{
-    dirty = dirtyval;
-    if(mainWindow)
-        mainWindow->dbState(dirtyval);
-}
-
 bool DBBrowserDB::getDirty() const
 {
-    return dirty;
+    return !savepointList.empty();
 }
 
 bool DBBrowserDB::open ( const QString & db)
@@ -77,7 +70,6 @@ bool DBBrowserDB::open ( const QString & db)
             if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA show_datatypes = ON;",
                                         NULL,NULL,NULL)){
                 ok=true;
-                setDirty(false);
             }
             curDBFilename = db;
         }
@@ -101,7 +93,7 @@ bool DBBrowserDB::setRestorePoint(const QString& pointname)
         QString query = QString("SAVEPOINT %1;").arg(pointname);
         sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
         savepointList.append(pointname);
-        setDirty(true);
+        if(mainWindow) mainWindow->dbState(getDirty());
     }
     return true;
 }
@@ -116,7 +108,7 @@ bool DBBrowserDB::save(const QString& pointname)
         QString query = QString("RELEASE %1;").arg(pointname);
         sqlite3_exec(_db, query.toUtf8(), NULL,NULL,NULL);
         savepointList.removeAll(pointname);
-        setDirty(!savepointList.empty());
+        if(mainWindow) mainWindow->dbState(getDirty());
     }
     return true;
 }
@@ -133,7 +125,7 @@ bool DBBrowserDB::revert(const QString& pointname)
         query = QString("RELEASE %1;").arg(pointname);
         sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
         savepointList.removeAll(pointname);
-        setDirty(!savepointList.empty());
+        if(mainWindow) mainWindow->dbState(getDirty());
     }
     return true;
 }
@@ -191,7 +183,6 @@ bool DBBrowserDB::create ( const QString & db)
             if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA show_datatypes = ON;",
                                         NULL,NULL,NULL)){
                 ok=true;
-                setDirty(false);
             }
             curDBFilename = db;
         }
@@ -223,6 +214,7 @@ void DBBrowserDB::close (){
     _db = 0;
     objMap.clear();
     savepointList.clear();
+    if(mainWindow) mainWindow->dbState(getDirty());
 }
 
 bool DBBrowserDB::dump(const QString& filename)
