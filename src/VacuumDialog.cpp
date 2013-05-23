@@ -38,12 +38,12 @@ VacuumDialog::~VacuumDialog()
 void VacuumDialog::accept()
 {
     if(ui->treeSelectedObjects->selectedItems().count() == 0)
-        QDialog::accept();
+        return QDialog::reject();
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // Commit all changes first
-    db->save();
+    db->saveAll();
 
     // All items selected?
     if(ui->treeSelectedObjects->selectedItems().count() ==  ui->treeSelectedObjects->topLevelItemCount())
@@ -57,7 +57,6 @@ void VacuumDialog::accept()
             db->executeSQL(QString("VACUUM `%1`;").arg(item->text(0)), false);
     }
 
-    db->setDirty(false);
     QApplication::restoreOverrideCursor();
     QDialog::accept();
 }
