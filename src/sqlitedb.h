@@ -72,6 +72,8 @@ public:
     bool setRestorePoint(const QString& pointname = "RESTOREPOINT");
     bool save (const QString& pointname = "RESTOREPOINT");
     bool revert (const QString& pointname = "RESTOREPOINT");
+    bool saveAll();
+    bool revertAll();
     bool dump( const QString & filename);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
@@ -112,7 +114,6 @@ public:
 
     sqlite3 * _db;
 
-
     QStringList decodeCSV(const QString & csvfilename, char sep, char quote,  int maxrecords, int * numfields);
 
     objectMap objMap;
@@ -122,6 +123,7 @@ public:
 
     MainWindow* mainWindow;
 
+    QStringList savepointList;
 private:
     bool dirty;
 };

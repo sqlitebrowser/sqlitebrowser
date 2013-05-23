@@ -91,13 +91,16 @@ bool DBBrowserDB::open ( const QString & db)
 
 bool DBBrowserDB::setRestorePoint(const QString& pointname)
 {
-    if (!isOpen()) return false;
-    if (dirty) return false;
+    if(!isOpen())
+        return false;
+    if(savepointList.contains(pointname))
+        return true;
 
-    if (_db){
+    if(_db)
+    {
         QString query = QString("SAVEPOINT %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(),
-                     NULL,NULL,NULL);
+        sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
+        savepointList.append(pointname);
         setDirty(true);
     }
     return true;
@@ -105,29 +108,52 @@ bool DBBrowserDB::setRestorePoint(const QString& pointname)
 
 bool DBBrowserDB::save(const QString& pointname)
 {
-    if (!isOpen()) return false;
+    if(!isOpen() || savepointList.contains(pointname) == false)
+        return false;
 
-    if (_db){
+    if(_db)
+    {
         QString query = QString("RELEASE %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(),
-                     NULL,NULL,NULL);
-        setDirty(false);
+        sqlite3_exec(_db, query.toUtf8(), NULL,NULL,NULL);
+        savepointList.removeAll(pointname);
+        setDirty(!savepointList.empty());
     }
     return true;
 }
 
 bool DBBrowserDB::revert(const QString& pointname)
 {
-    if (!isOpen()) return false;
+    if(!isOpen() || savepointList.contains(pointname) == false)
+        return false;
 
-    if (_db){
+    if(_db)
+    {
         QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(),
-                     NULL,NULL,NULL);
+        sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
         query = QString("RELEASE %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(),
-                     NULL,NULL,NULL);
-        setDirty(false);
+        sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
+        savepointList.removeAll(pointname);
+        setDirty(!savepointList.empty());
+    }
+    return true;
+}
+
+bool DBBrowserDB::saveAll()
+{
+    foreach(const QString& point, savepointList)
+    {
+        if(!save(point))
+            return false;
+    }
+    return true;
+}
+
+bool DBBrowserDB::revertAll()
+{
+    foreach(const QString& point, savepointList)
+    {
+        if(!revert(point))
+            return false;
     }
     return true;
 }
@@ -188,14 +214,15 @@ void DBBrowserDB::close (){
                                        QObject::tr("Do you want to save the changes "
                                                    "made to the database file %1?").arg(curDBFilename),
                                        QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
-                save();
+                saveAll();
             else
-                revert(); //not really necessary, I think... but will not hurt.
+                revertAll(); //not really necessary, I think... but will not hurt.
         }
         sqlite3_close(_db);
     }
     _db = 0;
     objMap.clear();
+    savepointList.clear();
 }
 
 bool DBBrowserDB::dump(const QString& filename)
@@ -491,13 +518,13 @@ bool DBBrowserDB::createTable(const QString& name, const QList<DBBrowserField>& 
     sql.append(");");
 
     // Execute it
-    return executeSQL(sql, false);
+    return executeSQL(sql);
 }
 
 bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& field)
 {
     QString sql = QString("ALTER TABLE `%1` ADD COLUMN %2").arg(tablename).arg(field->toString());
-    return executeSQL(sql, false);
+    return executeSQL(sql);
 }
 
 bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type)
@@ -686,7 +713,7 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
 bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table)
 {
     QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(from_table, to_table);
-    if(!executeSQL(sql, false))
+    if(!executeSQL(sql))
     {
         QString error = QObject::tr("Error renaming table '%1' to '%2'."
             "Message from database engine:\n%3").arg(from_table).arg(to_table).arg(lastErrorMessage);

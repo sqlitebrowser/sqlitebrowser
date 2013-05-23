@@ -55,6 +55,7 @@ private:
     QStringList fields;
     SQLiteSyntaxHighlighter* m_sqliteSyntaxHighlighter;
     bool m_bNewTable;
+    QString m_sRestorePointName;
 };
 
 #endif

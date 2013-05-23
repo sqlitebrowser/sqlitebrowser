@@ -382,9 +382,9 @@ void MainWindow::fileExit()
         {
             QString msg = tr("Do you want to save the changes made to the database file %1?").arg(db.curDBFilename);
             if(QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-                db.save();
+                db.saveAll();
             else
-                db.revert(); //not really necessary, I think... but will not hurt.
+                db.revertAll(); //not really necessary, I think... but will not hurt.
         }
         db.close();
     }
@@ -775,7 +775,7 @@ void MainWindow::dbState( bool dirty )
 void MainWindow::fileSave()
 {
     if(db.isOpen())
-        db.save();
+        db.saveAll();
 }
 
 void MainWindow::fileRevert()
@@ -784,7 +784,7 @@ void MainWindow::fileRevert()
         QString msg = tr("Are you sure you want to undo all changes made to the database file '%1' since the last save?").arg(db.curDBFilename);
         if(QMessageBox::question(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
         {
-            db.revert();
+            db.revertAll();
             populateStructure();
             resetBrowser();
         }

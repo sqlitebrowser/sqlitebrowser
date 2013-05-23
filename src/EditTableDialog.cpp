@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QComboBox>
+#include <QDateTime>
 
 #include "sqlitedb.h"
 
@@ -13,7 +14,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
       pdb(db),
       curTable(tableName),
       m_table(tableName),
-      m_bNewTable(true)
+      m_bNewTable(true),
+      m_sRestorePointName(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch()))
 {
     // Create UI
     ui->setupUi(this);
@@ -33,7 +35,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
     }
 
     // And create a savepoint
-    pdb->executeSQL(QString("SAVEPOINT edittable_%1_save;").arg(curTable), false);
+    pdb->setRestorePoint(m_sRestorePointName);
 
     // Update UI
     ui->editTableName->setText(curTable);
@@ -106,7 +108,7 @@ void EditTableDialog::accept()
     {
         // Creation of new table
         // we commit immediatly so no need to setdirty
-        if(!pdb->executeSQL(m_table.sql(), false))
+        if(!pdb->executeSQL(m_table.sql()))
         {
             QMessageBox::warning(
                 this,
@@ -142,16 +144,13 @@ void EditTableDialog::accept()
         }
     }
 
-    // Release the savepoint
-    pdb->executeSQL(QString("RELEASE SAVEPOINT edittable_%1_save;").arg(curTable), false);
-
     QDialog::accept();
 }
 
 void EditTableDialog::reject()
 {    
     // Then rollback to our savepoint
-    pdb->executeSQL(QString("ROLLBACK TO SAVEPOINT edittable_%1_save;").arg(curTable), false);
+    pdb->revert(m_sRestorePointName);
 
     QDialog::reject();
 }
