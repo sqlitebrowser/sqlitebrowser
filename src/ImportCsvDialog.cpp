@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QPushButton>
+#include <QDateTime>
 #include "sqlitedb.h"
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
@@ -23,13 +24,13 @@ ImportCsvDialog::~ImportCsvDialog()
 }
 
 namespace {
-void rollback(ImportCsvDialog* dialog, DBBrowserDB* pdb, QProgressDialog& progress)
+void rollback(ImportCsvDialog* dialog, DBBrowserDB* pdb, QProgressDialog& progress, const QString& savepointName)
 {
     progress.hide();
     QApplication::restoreOverrideCursor();  // restore original cursor
     QString error = QObject::tr("Error importing data. Message from database engine: %1").arg(pdb->lastErrorMessage);
     QMessageBox::warning(dialog, QApplication::applicationName(), error);
-    pdb->executeSQL("ROLLBACK TO SAVEPOINT CSVIMPORT;", false);
+    pdb->revert(savepointName);
 }
 }
 
@@ -106,14 +107,15 @@ void ImportCsvDialog::accept()
 
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
-    if(!pdb->executeSQL("SAVEPOINT CSVIMPORT;", false))
-        return rollback(this, pdb, progress);
+    QString restorepointName = QString("CSVIMPORT_%1").arg(QDateTime::currentMSecsSinceEpoch());
+    if(!pdb->setRestorePoint(restorepointName))
+        return rollback(this, pdb, progress, restorepointName);
 
     // Create table
     if(!importToExistingTable)
     {
         if(!pdb->createTable(ui->editName->text(), fieldList))
-            return rollback(this, pdb, progress);
+            return rollback(this, pdb, progress, restorepointName);
     }
 
     // now lets import all data, one row at a time
@@ -136,16 +138,12 @@ void ImportCsvDialog::accept()
             colNum = 0;
             sql.append(");");
             if(!pdb->executeSQL(sql, false, false))
-                return rollback(this, pdb, progress);
+                return rollback(this, pdb, progress, restorepointName);
         }
         progress.setValue(i);
         if(progress.wasCanceled())
-            return rollback(this, pdb, progress);
+            return rollback(this, pdb, progress, restorepointName);
     }
-
-    // Everything ok, release the savepoint
-    if(!pdb->executeSQL("RELEASE SAVEPOINT CSVIMPORT;", false))
-        return rollback(this, pdb, progress);
 
     QApplication::restoreOverrideCursor();  // restore original cursor
     QDialog::accept();
