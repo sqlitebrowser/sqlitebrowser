@@ -131,14 +131,10 @@ void EditTableDialog::accept()
         // Rename table if necessary
         if(ui->editTableName->text() != curTable)
         {
-            QApplication::setOverrideCursor( Qt::WaitCursor ); // this might take time
             if(!pdb->renameTable(curTable, ui->editTableName->text()))
             {
-                QApplication::restoreOverrideCursor();
                 QMessageBox::warning(this, QApplication::applicationName(), pdb->lastErrorMessage);
                 return;
-            } else {
-                QApplication::restoreOverrideCursor();
             }
         }
     }
