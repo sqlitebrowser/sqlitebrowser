@@ -70,9 +70,7 @@ void EditTableDialog::populateFields()
     foreach(sqlb::FieldPtr f, fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
-        //currently we don't support editing of field data
-        if(m_bNewTable)
-            tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
+        tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
         tbitem->setText(kName, f->name());
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         QObject::connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
@@ -220,7 +218,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         sqlb::FieldPtr field = m_table.fields().at(index);
         switch(column)
         {
-        case kName: field->setName(item->text(column)); break;
+        case kName:
+            if(curTable == "" || pdb->renameColumn(curTable, field->name(), item->text(column), field->type()))
+                field->setName(item->text(column));
+            break;
         case kType:
         {
             // we don't know which combobox got the update
