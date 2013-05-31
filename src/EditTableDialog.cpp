@@ -73,6 +73,7 @@ void EditTableDialog::populateFields()
         tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
         tbitem->setText(kName, f->name());
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
+        typeBox->setProperty("column", f->name());
         QObject::connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
         typeBox->setEditable(false);
         typeBox->addItems(sqlb::Field::Datatypes);
@@ -198,16 +199,24 @@ void EditTableDialog::checkInput()
 
 void EditTableDialog::updateTypes()
 {
-    for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
+    QComboBox* typeBox = qobject_cast<QComboBox*>(sender());
+    if(typeBox)
     {
-        QTreeWidgetItem* item = ui->treeWidget->topLevelItem(i);
-        QComboBox* typeBox = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType));
-        QString sType = "INTEGER";
-        if(typeBox)
-            sType = typeBox->currentText();
-        m_table.fields().at(i)->setType(sType);
+        QString type = typeBox->currentText();
+        QString column = sender()->property("column").toString();
+        if(curTable == "" || pdb->renameColumn(curTable, column, column, type))
+        {
+            for(int i=0;i<m_table.fields().size();i++)
+            {
+                if(m_table.fields().at(i)->name() == column)
+                {
+                    m_table.fields().at(i)->setType(type);
+                    break;
+                }
+            }
+        }
+        checkInput();
     }
-    checkInput();
 }
 
 void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
@@ -220,7 +229,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         {
         case kName:
             if(curTable == "" || pdb->renameColumn(curTable, field->name(), item->text(column), field->type()))
+            {
+                qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
                 field->setName(item->text(column));
+            }
             break;
         case kType:
         {
@@ -296,6 +308,7 @@ void EditTableDialog::addField()
     tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
     tbitem->setText(kName, "Field" + QString::number(ui->treeWidget->topLevelItemCount()));
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
+    typeBox->setProperty("column", tbitem->text(kName));
     QObject::connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
     typeBox->setEditable(false);
     typeBox->addItems(sqlb::Field::Datatypes);
