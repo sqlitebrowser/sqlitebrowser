@@ -16,22 +16,7 @@ enum
     kLogMsg_App
 };
 
-typedef QMap<int, class DBBrowserField> fieldMap;
 typedef QMultiMap<QString, class DBBrowserObject> objectMap;
-
-class DBBrowserField
-{
-public:
-    DBBrowserField() : name( "" ) { }
-    DBBrowserField( const QString& wname,const QString& wtype )
-        : name( wname), type( wtype )
-    { }
-    QString getname() const { return name; }
-    QString gettype() const { return type; }
-private:
-    QString name;
-    QString type;
-};
 
 class DBBrowserObject
 {
@@ -41,19 +26,19 @@ public:
         : name( wname), sql( wsql ), type(wtype)
     { }
 
-    void addField(int order, const QString& wfield,const QString& wtype);
+    void addField(sqlb::FieldPtr field) { fldmap.push_back(field); }
 
     QString getname() const { return name; }
     QString getsql() const { return sql; }
     QString gettype() const { return type; }
-    DBBrowserField getField(const QString& name) const
+    sqlb::FieldPtr getField(const QString& name) const
     {
-        for(fieldMap::ConstIterator i=fldmap.begin();i!=fldmap.end();++i)
-            if(i.value().getname() == name)
-                return *i;
-        return DBBrowserField();
+        for(int i=0;i<fldmap.size();i++)
+            if(fldmap.at(i)->name() == name)
+                return fldmap.at(i);
+        return sqlb::FieldPtr();
     }
-    fieldMap fldmap;
+    sqlb::FieldVector fldmap;
 private:
     QString name;
     QString sql;

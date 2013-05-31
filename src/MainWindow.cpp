@@ -217,10 +217,10 @@ void MainWindow::populateStructure()
             tablefieldmodel->setRowCount((*it).fldmap.count());
             tablefieldmodel->setColumnCount(1);
 
-            fieldMap::ConstIterator fit;
             int fldrow = 0;
-            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit, ++fldrow ) {
-                QString fieldname = fit.value().getname();
+            for(int i=0;i<(*it).fldmap.size();i++,fldrow++)
+            {
+                QString fieldname = (*it).fldmap.at(i)->name();
                 QStandardItem* fldItem = new QStandardItem(fieldname);
                 fldItem->setIcon(QIcon(":/icons/field"));
                 tablefieldmodel->setItem(fldrow, 0, fldItem);
@@ -272,12 +272,12 @@ void MainWindow::populateStructure()
         // If it is a table add the field Nodes
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
-            fieldMap::ConstIterator fit;
-            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
+            for(int i=0;i<(*it).fldmap.size();i++)
+            {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
-                fldItem->setText(0, fit.value().getname());
+                fldItem->setText(0, (*it).fldmap.at(i)->name());
                 fldItem->setText(1, "field");
-                fldItem->setText(2, fit.value().gettype());
+                fldItem->setText(2, (*it).fldmap.at(i)->type());
                 fldItem->setIcon(0, QIcon(":/icons/field"));
             }
         }

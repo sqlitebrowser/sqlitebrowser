@@ -10,11 +10,6 @@
 #include <QSettings>
 #include <QDebug>
 
-void DBBrowserObject::addField(int order, const QString& wfield,const QString& wtype)
-{
-    fldmap[order] = DBBrowserField(wfield,wtype);
-}
-
 bool DBBrowserDB::isOpen ( ) const
 {
     return _db!=0;
@@ -535,7 +530,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
 
     // Collect information on the current DB layout
     DBBrowserObject table = getObjectByName(tablename);
-    if(table.getname() == "" || table.getField(name).getname() == "")
+    if(table.getname() == "" || table.getField(name)->name() == "")
     {
         lastErrorMessage = QObject::tr("renameColumn: cannot find table %1 with column %2").arg(tablename).arg(name);
         qWarning() << lastErrorMessage;
@@ -557,10 +552,10 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     for(int i=0;i<table.fldmap.count();i++)
     {
         // Is this the column to rename?
-        if(table.fldmap.value(i).getname() == name)
+        if(table.fldmap.value(i)->name() == name)
             new_table_structure.push_back(to->toString());
         else
-            new_table_structure.push_back(QString("`%1` %2").arg(table.fldmap.value(i).getname()).arg(table.fldmap.value(i).gettype()));
+            new_table_structure.push_back(table.fldmap.value(i)->toString());
     }
     if(!createTable("sqlitebrowser_rename_column_new_table", new_table_structure))
     {
@@ -761,11 +756,8 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename) const
     {
         if((*it).getname() == tablename)
         {
-            fieldMap::ConstIterator fit;
-
-            for ( fit = (*it).fldmap.begin(); fit != (*it).fldmap.end(); ++fit ) {
-                res.append( fit.value().getname() );
-            }
+            for(int i=0;i<(*it).fldmap.size();i++)
+                res.append((*it).fldmap.at(i)->name());
         }
     }
     return res;
@@ -873,7 +865,6 @@ void DBBrowserDB::updateSchema( )
                                 &vm, &tail);
             if (err == SQLITE_OK){
                 (*it).fldmap.clear();
-                int e = 0;
                 while ( sqlite3_step(vm) == SQLITE_ROW ){
                     if (sqlite3_column_count(vm)==6)
                     {
@@ -884,8 +875,8 @@ void DBBrowserDB::updateSchema( )
                         if(ispk==1)
                             val2.append(QString(" PRIMARY KEY"));
 
-                        (*it).addField(e, val1, val2);
-                        e++;
+                        sqlb::FieldPtr f(new sqlb::Field(val1, val2));
+                        (*it).addField(f);
                     }
                 }
                 sqlite3_finalize(vm);
