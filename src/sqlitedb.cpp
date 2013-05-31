@@ -509,14 +509,20 @@ bool DBBrowserDB::createTable(const QString& name, const QList<DBBrowserField>& 
     sql.remove(sql.count() - 1, 1);     // Remove last comma
     sql.append(");");
 
-    // Execute it
-    return executeSQL(sql);
+    // Execute it and update the schema
+    bool result = executeSQL(sql);
+    updateSchema();
+    return result;
 }
 
 bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& field)
 {
     QString sql = QString("ALTER TABLE `%1` ADD COLUMN %2").arg(tablename).arg(field->toString());
-    return executeSQL(sql);
+
+    // Execute it and update the schema
+    bool result = executeSQL(sql);
+    updateSchema();
+    return result;
 }
 
 bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type)
@@ -600,7 +606,8 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
         return false;
     }
 
-    // Success
+    // Success, update the DB schema before returning
+    updateSchema();
     return true;
 }
 
@@ -698,7 +705,8 @@ bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
         return false;
     }
 
-    // Success
+    // Success, update the DB schema before returning
+    updateSchema();
     return true;
 }
 
@@ -713,6 +721,7 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
         qWarning() << lastErrorMessage;
         return false;
     } else {
+        updateSchema();
         return true;
     }
 }
