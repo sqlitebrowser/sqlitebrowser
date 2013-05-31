@@ -117,16 +117,6 @@ void EditTableDialog::accept()
     } else {
         // Editing of old table
 
-        // add added fields
-        // TODO this will not work if an added field is marked
-        // as autoincrement
-        QString sTablesql = pdb->getTableSQL(curTable);
-        sqlb::Table oldschema = sqlb::Table::parseSQL(sTablesql);
-        for( int i = oldschema.fields().count(); i < m_table.fields().count(); ++i)
-        {
-            pdb->addColumn(curTable, m_table.fields().at(i));
-        }
-
         // Rename table if necessary
         if(ui->editTableName->text() != curTable)
         {
@@ -325,6 +315,10 @@ void EditTableDialog::addField()
                       typeBox->currentText()
                       ));
     m_table.addField(f);
+
+    // Actually add the new column to the table if we're editing an existing table
+    if(!m_bNewTable)
+        pdb->addColumn(curTable, f);
 
     checkInput();
 }
