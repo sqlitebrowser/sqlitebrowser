@@ -74,7 +74,7 @@ void EditTableDialog::populateFields()
         tbitem->setText(kName, f->name());
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         typeBox->setProperty("column", f->name());
-        QObject::connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
+        connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
         typeBox->setEditable(false);
         typeBox->addItems(sqlb::Field::Datatypes);
         int index = typeBox->findText(f->type(), Qt::MatchExactly);
@@ -194,7 +194,7 @@ void EditTableDialog::updateTypes()
     {
         QString type = typeBox->currentText();
         QString column = sender()->property("column").toString();
-        if(curTable == "" || pdb->renameColumn(curTable, column, column, type))
+        if(m_bNewTable || pdb->renameColumn(curTable, column, column, type))
         {
             for(int i=0;i<m_table.fields().size();i++)
             {
@@ -218,19 +218,15 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         switch(column)
         {
         case kName:
-            if(curTable == "" || pdb->renameColumn(curTable, field->name(), item->text(column), field->type()))
+            if(m_bNewTable || pdb->renameColumn(curTable, field->name(), item->text(column), field->type()))
             {
                 qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
                 field->setName(item->text(column));
             }
             break;
         case kType:
-        {
-            // we don't know which combobox got the update
-            // so we have to update all at once
             // see updateTypes() SLOT
-        }
-        break;
+            break;
         case kPrimaryKey:
         {
             sqlb::FieldVector pks = m_table.primarykey();
@@ -299,7 +295,7 @@ void EditTableDialog::addField()
     tbitem->setText(kName, "Field" + QString::number(ui->treeWidget->topLevelItemCount()));
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
-    QObject::connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
+    connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
     typeBox->setEditable(false);
     typeBox->addItems(sqlb::Field::Datatypes);
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
