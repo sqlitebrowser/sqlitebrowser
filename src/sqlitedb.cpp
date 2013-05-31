@@ -500,12 +500,12 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int 
     }
 }
 
-bool DBBrowserDB::createTable(const QString& name, const QList<DBBrowserField>& structure)
+bool DBBrowserDB::createTable(const QString& name, const QStringList& structure)
 {
     // Build SQL statement
     QString sql = QString("CREATE TABLE `%1` (").arg(name);
     for(int i=0;i<structure.count();i++)
-        sql.append(QString("`%1` %2,").arg(structure.at(i).getname()).arg(structure.at(i).gettype()));
+        sql.append(QString("%1,").arg(structure.at(i)));
     sql.remove(sql.count() - 1, 1);     // Remove last comma
     sql.append(");");
 
@@ -525,7 +525,7 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
     return result;
 }
 
-bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, const QString& to, const QString& type)
+bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to)
 {
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
     // If SQLite should fully support this command one day, this entire
@@ -535,9 +535,9 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
 
     // Collect information on the current DB layout
     DBBrowserObject table = getObjectByName(tablename);
-    if(table.getname() == "" || table.getField(from).getname() == "")
+    if(table.getname() == "" || table.getField(name).getname() == "")
     {
-        lastErrorMessage = QObject::tr("renameColumn: cannot find table %1 with column %2").arg(tablename).arg(from);
+        lastErrorMessage = QObject::tr("renameColumn: cannot find table %1 with column %2").arg(tablename).arg(name);
         qWarning() << lastErrorMessage;
         return false;
     }
@@ -553,16 +553,14 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& from, co
     // Create a new table with a name that hopefully doesn't exist yet.
     // Its layout is exactly the same as the one of the table to change - except for the column to change
     // of course
-    QList<DBBrowserField> new_table_structure;
+    QStringList new_table_structure;
     for(int i=0;i<table.fldmap.count();i++)
     {
         // Is this the column to rename?
-        if(table.fldmap.value(i).getname() == from)
-            new_table_structure.push_back(DBBrowserField(to, type));
+        if(table.fldmap.value(i).getname() == name)
+            new_table_structure.push_back(to->toString());
         else
-            new_table_structure.push_back(
-                        DBBrowserField(table.fldmap.value(i).getname(), table.fldmap.value(i).gettype())
-            );
+            new_table_structure.push_back(QString("`%1` %2").arg(table.fldmap.value(i).getname()).arg(table.fldmap.value(i).gettype()));
     }
     if(!createTable("sqlitebrowser_rename_column_new_table", new_table_structure))
     {

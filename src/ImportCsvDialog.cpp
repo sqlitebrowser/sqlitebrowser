@@ -47,7 +47,7 @@ void ImportCsvDialog::accept()
         return;
 
     // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
-    QList<DBBrowserField> fieldList;
+    QStringList fieldList;
     if(ui->checkboxHeader->isChecked())
     {
         int cfieldnum = 0;
@@ -65,13 +65,13 @@ void ImportCsvDialog::accept()
             if(thisfield.isEmpty())
                 thisfield = QString("field%1").arg(cfieldnum+1);
 
-            fieldList.push_back(DBBrowserField(thisfield, ""));
+            fieldList.push_back(thisfield);
             cfieldnum++;
             curList.pop_front();
         }
     } else {
         for(int i=0;i<numfields;i++)
-            fieldList.push_back(DBBrowserField(QString("field%1").arg(i+1), ""));
+            fieldList.push_back(QString("field%1").arg(i+1));
     }
 
     // Show progress dialog

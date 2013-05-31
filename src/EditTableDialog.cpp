@@ -194,17 +194,17 @@ void EditTableDialog::updateTypes()
     {
         QString type = typeBox->currentText();
         QString column = sender()->property("column").toString();
-        if(m_bNewTable || pdb->renameColumn(curTable, column, column, type))
+
+        int index;
+        for(index=0;index<m_table.fields().size();index++)
         {
-            for(int i=0;i<m_table.fields().size();i++)
-            {
-                if(m_table.fields().at(i)->name() == column)
-                {
-                    m_table.fields().at(i)->setType(type);
-                    break;
-                }
-            }
+            if(m_table.fields().at(index)->name() == column)
+                break;
         }
+
+        m_table.fields().at(index)->setType(type);
+        if(!m_bNewTable)
+            pdb->renameColumn(curTable, column, m_table.fields().at(index));
         checkInput();
     }
 }
@@ -215,14 +215,15 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
     if(index < m_table.fields().count())
     {
         sqlb::FieldPtr field = m_table.fields().at(index);
+        bool callRenameColumn = false;
+
         switch(column)
         {
         case kName:
-            if(m_bNewTable || pdb->renameColumn(curTable, field->name(), item->text(column), field->type()))
-            {
-                qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
-                field->setName(item->text(column));
-            }
+            field->setName(item->text(column));
+            qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
+            if(!m_bNewTable)
+                callRenameColumn = true;
             break;
         case kType:
             // see updateTypes() SLOT
@@ -256,6 +257,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         case kNotNull:
         {
             field->setNotNull(item->checkState(column) == Qt::Checked);
+            if(!m_bNewTable)
+                callRenameColumn = true;
         }
         break;
         case kAutoIncrement:
@@ -278,11 +281,25 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                     }
                 }
             }
+
+            if(!m_bNewTable)
+                callRenameColumn = true;
         }
         break;
-        case kDefault: field->setDefaultValue(item->text(column)); break;
-        case kCheck: field->setCheck(item->text(column)); break;
+        case kDefault:
+            field->setDefaultValue(item->text(column));
+            if(!m_bNewTable)
+                callRenameColumn = true;
+            break;
+        case kCheck:
+            field->setCheck(item->text(column));
+            if(!m_bNewTable)
+                callRenameColumn = true;
+            break;
         }
+
+        if(callRenameColumn)
+            pdb->renameColumn(curTable, field->name(), field);
     }
 
     checkInput();
