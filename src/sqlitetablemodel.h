@@ -49,6 +49,7 @@ private:
     void clearCache();
 
     void buildQuery();
+    int getQueryRowCount();
 
     DBBrowserDB* m_db;
     int m_rowCount;

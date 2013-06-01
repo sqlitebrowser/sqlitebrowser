@@ -52,30 +52,12 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     if(!m_db->isOpen())
         return;
 
-    sqlite3_stmt *stmt;
-    m_rowCount = 0;
-    m_sQuery = rtrimChar(sQuery, ';');
+    m_sQuery = sQuery.trimmed();
 
     // do a count query to get the full row count in a fast manner
-    QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(m_sQuery);
-    m_db->logSQL(sCountQuery, kLogMsg_App);
-    QByteArray utf8Query = sCountQuery.toUtf8();
-    int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
-
-    if(SQLITE_OK == status)
+    m_rowCount = getQueryRowCount();
+    if(m_rowCount == -1)
     {
-        status = sqlite3_step(stmt);
-        if(SQLITE_ROW == status)
-        {
-            QString sCount = QString::fromUtf8((const char *) sqlite3_column_text(stmt, 0));
-            m_rowCount = sCount.toInt();
-        }
-        sqlite3_finalize(stmt);
-    }
-    else
-    {
-        qWarning() << "Count query failed: " << sCountQuery;
-        sqlite3_finalize(stmt);
         m_valid = false;
         return;
     }
@@ -83,8 +65,9 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     // headers
     if(!dontClearHeaders)
     {
-        utf8Query = sQuery.toUtf8();
-        status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+        sqlite3_stmt* stmt;
+        QByteArray utf8Query = sQuery.toUtf8();
+        int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
         if(SQLITE_OK == status)
         {
             status = sqlite3_step(stmt);
@@ -101,6 +84,54 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     m_valid = true;
 
     emit layoutChanged();
+}
+
+int SqliteTableModel::getQueryRowCount()
+{
+    // Return -1 if there is an error
+    int retval = -1;
+
+    // Use a different approach of determining the row count when a EXPLAIN or a PRAGMA statement is used because a COUNT fails on these queries
+    if(m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive) || m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive))
+    {
+        // So just execute the statement as it is and fetch all results counting the rows
+        sqlite3_stmt* stmt;
+        QByteArray utf8Query = m_sQuery.toUtf8();
+        if(sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+        {
+            retval = 0;
+            while(sqlite3_step(stmt) == SQLITE_ROW)
+                retval++;
+            sqlite3_finalize(stmt);
+
+            // Return the results but also set the chunk size the number of rows to prevent the lazy population mechanism to kick in as using LIMIT
+            // fails on this kind of queries as well
+            m_chunkSize = retval;
+            return retval;
+        }
+    } else {
+        // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
+        QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(m_sQuery, ';'));
+        m_db->logSQL(sCountQuery, kLogMsg_App);
+        QByteArray utf8Query = sCountQuery.toUtf8();
+
+        sqlite3_stmt* stmt;
+        int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+        if(status == SQLITE_OK)
+        {
+            status = sqlite3_step(stmt);
+            if(status == SQLITE_ROW)
+            {
+                QString sCount = QString::fromUtf8((const char*)sqlite3_column_text(stmt, 0));
+                retval = sCount.toInt();
+            }
+            sqlite3_finalize(stmt);
+        } else {
+            qWarning() << "Count query failed: " << sCountQuery;
+        }
+    }
+
+    return retval;
 }
 
 int SqliteTableModel::rowCount(const QModelIndex&) const
