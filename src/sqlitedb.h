@@ -75,7 +75,7 @@ public:
     bool deleteRecord(const QString& table, int rowid);
     bool updateRecord(const QString& table, const QString& column, int row, const QByteArray& value);
 
-    bool createTable(const QString& name, const QStringList& structure);
+    bool createTable(const QString& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& from_table, const QString& to_table);
     bool addColumn(const QString& table, const sqlb::FieldPtr& field);
     bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to);

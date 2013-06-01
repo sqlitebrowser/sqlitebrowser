@@ -495,17 +495,15 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int 
     }
 }
 
-bool DBBrowserDB::createTable(const QString& name, const QStringList& structure)
+bool DBBrowserDB::createTable(const QString& name, const sqlb::FieldVector& structure)
 {
     // Build SQL statement
-    QString sql = QString("CREATE TABLE `%1` (").arg(name);
-    for(int i=0;i<structure.count();i++)
-        sql.append(QString("%1,").arg(structure.at(i)));
-    sql.remove(sql.count() - 1, 1);     // Remove last comma
-    sql.append(");");
+    sqlb::Table table(name);
+    for(int i=0;i<structure.size();i++)
+        table.addField(structure.at(i));
 
     // Execute it and update the schema
-    bool result = executeSQL(sql);
+    bool result = executeSQL(table.sql());
     updateSchema();
     return result;
 }
@@ -548,14 +546,14 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // Create a new table with a name that hopefully doesn't exist yet.
     // Its layout is exactly the same as the one of the table to change - except for the column to change
     // of course
-    QStringList new_table_structure;
+    sqlb::FieldVector new_table_structure;
     for(int i=0;i<table.fldmap.count();i++)
     {
         // Is this the column to rename?
         if(table.fldmap.value(i)->name() == name)
-            new_table_structure.push_back(to->toString());
+            new_table_structure.push_back(to);
         else
-            new_table_structure.push_back(table.fldmap.value(i)->toString());
+            new_table_structure.push_back(table.fldmap.value(i));
     }
     if(!createTable("sqlitebrowser_rename_column_new_table", new_table_structure))
     {
