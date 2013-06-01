@@ -216,6 +216,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
     {
         sqlb::FieldPtr field = m_table.fields().at(index);
         bool callRenameColumn = false;
+        QString oldFieldName = field->name();
 
         switch(column)
         {
@@ -299,7 +300,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
 
         if(callRenameColumn)
-            pdb->renameColumn(curTable, field->name(), field);
+            pdb->renameColumn(curTable, oldFieldName, field);
     }
 
     checkInput();
