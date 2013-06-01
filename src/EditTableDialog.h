@@ -32,7 +32,6 @@ private:
     };
 
     void updateColumnWidth();
-    void updateTableObject();
     void updateSqlText();
 
 private slots:

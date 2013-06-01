@@ -145,34 +145,6 @@ void EditTableDialog::updateSqlText()
     ui->sqlTextEdit->insertPlainText(m_table.sql());
 }
 
-void EditTableDialog::updateTableObject()
-{
-    sqlb::FieldVector fields;
-    sqlb::FieldVector pk;
-    for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
-    {
-        QTreeWidgetItem* item = ui->treeWidget->topLevelItem(i);
-        QComboBox* typeBox = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType));
-        QString sType = "INTEGER";
-        if(typeBox)
-            sType = typeBox->currentText();
-        sqlb::FieldPtr f(new sqlb::Field(
-                          item->text(kName),
-                          sType,
-                          item->checkState(kNotNull) == Qt::Checked
-                          ));
-        f->setAutoIncrement(item->checkState(kAutoIncrement) == Qt::Checked);
-        if(item->checkState(kPrimaryKey) == Qt::Checked)
-            pk.append(f);
-        f->setDefaultValue(item->text(kDefault));
-        f->setCheck(item->text(kCheck));
-        fields.append(f);
-    }
-
-    m_table.setFields(fields);
-    m_table.setPrimaryKey(pk);
-}
-
 void EditTableDialog::checkInput()
 {
     QString normTableName = ui->editTableName->text().trimmed();
