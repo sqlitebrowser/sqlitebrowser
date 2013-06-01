@@ -36,9 +36,9 @@ void SqliteTableModel::setTable(const QString& table)
 namespace {
 QString rtrimChar(const QString& s, QChar c) {
     QString r = s.trimmed();
-    int i = r.length() - 1;
-    for(; i >= 0 && r.at(i) != c; --i);
-    return r.left(i);
+    while(r.endsWith(c))
+        r.chop(1);
+    return r;
 }
 }
 
