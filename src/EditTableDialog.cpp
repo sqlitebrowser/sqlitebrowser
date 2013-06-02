@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include <QDateTime>
 
+#include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 
 EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWidget* parent)
@@ -229,6 +230,23 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         break;
         case kNotNull:
         {
+            // When editing an existing table and trying to set a column to Not Null an extra check is needed
+            if(!m_bNewTable && item->checkState(column) == Qt::Checked)
+            {
+                // Because our renameColumn() function fails when setting a column to Not Null when it already contains some NULL values
+                // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
+                // to at least replace all troublesome NULL values by the default value
+                SqliteTableModel m(this, pdb);
+                m.setQuery(QString("SELECT COUNT(rowid) FROM `%1` WHERE `%2` IS NULL;").arg(curTable).arg(field->name()));
+                if(m.data(m.index(0, 0)).toInt() > 0)
+                {
+                    // There is a NULL value, so print an error message, uncheck the combobox, and return here
+                    QMessageBox::information(this, qApp->applicationName(), tr("There is at least one row with this field set to NULL. "
+                                                                               "This makes it impossible to set this flag. Please change the table data first."));
+                    item->setCheckState(column, Qt::Unchecked);
+                    return;
+                }
+            }
             field->setNotNull(item->checkState(column) == Qt::Checked);
             if(!m_bNewTable)
                 callRenameColumn = true;
