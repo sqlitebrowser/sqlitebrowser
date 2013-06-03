@@ -75,7 +75,6 @@ void EditTableDialog::populateFields()
         tbitem->setText(kName, f->name());
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         typeBox->setProperty("column", f->name());
-        connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
         typeBox->setEditable(false);
         typeBox->addItems(sqlb::Field::Datatypes);
         int index = typeBox->findText(f->type(), Qt::MatchExactly);
@@ -86,10 +85,11 @@ void EditTableDialog::populateFields()
             index = typeBox->count() - 1;
         }
         typeBox->setCurrentIndex(index);
+        connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kPrimaryKey, m_table.primarykey().contains(f) ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kPrimaryKey, f->primaryKey() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
         tbitem->setText(kDefault, f->defaultValue());
         tbitem->setText(kCheck, f->check());
@@ -204,28 +204,21 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             break;
         case kPrimaryKey:
         {
-            sqlb::FieldVector pks = m_table.primarykey();
+            field->setPrimaryKey(item->checkState(column) == Qt::Checked);
             if(item->checkState(column) == Qt::Checked)
             {
-                pks.append(field);
-                // this will unset any set autoincrement
+                // this will unset any other autoincrement
                 for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
                 {
                     QTreeWidgetItem* tbitem = ui->treeWidget->topLevelItem(i);
                     if(tbitem != item)
-                    {
                         tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
-                    }
                 }
-            }
-            else
-            {
+            } else {
                 item->setCheckState(kAutoIncrement, Qt::Unchecked);
-                int index = pks.indexOf(field);
-                if(index != -1)
-                    pks.remove(index);
             }
-            m_table.setPrimaryKey(pks);
+            if(!m_bNewTable)
+                callRenameColumn = true;
         }
         break;
         case kNotNull:
@@ -255,13 +248,14 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         case kAutoIncrement:
         {
             bool ischecked = item->checkState(column) == Qt::Checked;
-            field->setAutoIncrement(ischecked);
             if(ischecked)
             {
-                  item->setCheckState(kPrimaryKey, Qt::Checked);
+                QComboBox* comboType = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType));
+                comboType->setCurrentIndex(comboType->findText("INTEGER"));
+                item->setCheckState(kPrimaryKey, Qt::Checked);
 
-                // this will reset all other primary keys unset
-                // there can't be more then one autoincrement pk
+                // this will unset all other primary keys
+                // there can't be more than one autoincrement pk
                 for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
                 {
                     QTreeWidgetItem* tbitem = ui->treeWidget->topLevelItem(i);
@@ -272,6 +266,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                     }
                 }
             }
+            field->setAutoIncrement(ischecked);
 
             if(!m_bNewTable)
                 callRenameColumn = true;

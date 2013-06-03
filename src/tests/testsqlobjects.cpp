@@ -22,19 +22,17 @@ void TestTable::sqlOutput()
 {
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("id", "integer"));
+    f->setPrimaryKey(true);
     FieldPtr fkm = FieldPtr(new Field("km", "integer", false, "", "km > 1000"));
+    fkm->setPrimaryKey(true);
     tt.addField(f);
     tt.addField(FieldPtr(new Field("car", "text")));
     tt.addField(fkm);
-    FieldVector pk;
-    pk.append(f);
-    pk.append(fkm);
-    tt.setPrimaryKey(pk);
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\tid\tinteger,\n"
-                               "\tcar\ttext,\n"
-                               "\tkm\tinteger CHECK(km > 1000),\n"
+                               "\t`id`\tinteger,\n"
+                               "\t`car`\ttext,\n"
+                               "\t`km`\tinteger CHECK(km > 1000),\n"
                                "\tPRIMARY KEY(id,km)\n"
                                ");"));
 }
@@ -43,16 +41,17 @@ void TestTable::autoincrement()
 {
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("id", "integer"));
+    f->setPrimaryKey(true);
+    f->setAutoIncrement(true);
     FieldPtr fkm = FieldPtr(new Field("km", "integer"));
     tt.addField(f);
     tt.addField(FieldPtr(new Field("car", "text")));
     tt.addField(fkm);
-    tt.setPrimaryKey(f, true);
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\tid\tinteger PRIMARY KEY AUTOINCREMENT,\n"
-                               "\tcar\ttext,\n"
-                               "\tkm\tinteger\n"
+                               "\t`id`\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                               "\t`car`\ttext,\n"
+                               "\t`km`\tinteger\n"
                                ");"));
 }
 
@@ -60,16 +59,17 @@ void TestTable::notnull()
 {
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("id", "integer"));
+    f->setPrimaryKey(true);
+    f->setAutoIncrement(true);
     FieldPtr fkm = FieldPtr(new Field("km", "integer"));
     tt.addField(f);
     tt.addField(FieldPtr(new Field("car", "text", true)));
     tt.addField(fkm);
-    tt.setPrimaryKey(f, true);
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\tid\tinteger PRIMARY KEY AUTOINCREMENT,\n"
-                               "\tcar\ttext NOT NULL,\n"
-                               "\tkm\tinteger\n"
+                               "\t`id`\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                               "\t`car`\ttext NOT NULL,\n"
+                               "\t`km`\tinteger\n"
                                ");"));
 }
 
@@ -93,12 +93,13 @@ void TestTable::parseSQL()
     QVERIFY(tab.fields().at(2)->type() == "VARCHAR(255)");
 
     QVERIFY(tab.fields().at(0)->autoIncrement());
+    QVERIFY(tab.fields().at(0)->primaryKey());
     QVERIFY(tab.fields().at(1)->notnull());
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
     QCOMPARE(tab.fields().at(2)->check(), QString("info==x"));
 
-    QVERIFY(tab.primarykey().contains(tab.fields().at(0)));
+
 }
 
 void TestTable::parseSQLdefaultexpr()
@@ -124,7 +125,7 @@ void TestTable::parseSQLdefaultexpr()
     QCOMPARE(tab.fields().at(2)->defaultValue(), QString(""));
     QCOMPARE(tab.fields().at(2)->check(), QString(""));
 
-    QVERIFY(tab.primarykey().contains(tab.fields().at(0)));
+    QVERIFY(tab.fields().at(0)->primaryKey());
 }
 
 void TestTable::parseSQLMultiPk()
@@ -145,8 +146,8 @@ void TestTable::parseSQLMultiPk()
     QVERIFY(tab.fields().at(0)->type() == "integer");
     QVERIFY(tab.fields().at(1)->type() == "integer");
 
-    QVERIFY(tab.primarykey().contains(tab.fields().at(0)));
-    QVERIFY(tab.primarykey().contains(tab.fields().at(1)));
+    QVERIFY(tab.fields().at(0)->primaryKey());
+    QVERIFY(tab.fields().at(1)->primaryKey());
 }
 
 void TestTable::parseSQLForeignKey()

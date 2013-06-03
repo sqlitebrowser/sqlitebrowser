@@ -55,7 +55,6 @@ bool Field::isInteger() const
 void Table::clear()
 {
     m_fields.clear();
-    m_primarykey.clear();
 }
 
 Table::~Table()
@@ -93,31 +92,6 @@ int Table::findField(const QString &sname)
             return i;
     }
     return -1;
-}
-
-bool Table::setPrimaryKey(const FieldVector& pk)
-{
-    foreach(FieldPtr f, pk) {
-        if(!m_fields.contains(f))
-            return false;
-    }
-
-    m_primarykey = pk;
-    return true;
-}
-
-bool Table::setPrimaryKey(FieldPtr pk, bool autoincrement)
-{
-    if(m_fields.contains(pk))
-    {
-        if(pk->isInteger() && autoincrement)
-            pk->setAutoIncrement(true);
-        m_primarykey.clear();
-        m_primarykey.append(pk);
-        return true;
-    }
-
-    return false;
 }
 
 QStringList Table::fieldList() const
@@ -175,12 +149,10 @@ QString Table::emptyInsertStmt() const
         if(f->notnull())
         {
             fields << f->name();
-            if( m_primarykey.contains(f) && f->isInteger() )
+            if( f->primaryKey() && f->isInteger() )
             {
                 vals << "NULL";
-            }
-            else
-            {
+            } else {
                 if(f->isInteger())
                     vals << "0";
                 else
@@ -220,18 +192,21 @@ QString Table::sql() const
     sql += fieldList().join(",\n");
 
     // primary key
-    if( m_primarykey.size() > 0 && !hasAutoIncrement())
+    if(!hasAutoIncrement())
     {
-        sql += ",\n\tPRIMARY KEY(";
-        for(FieldVector::ConstIterator it = m_primarykey.constBegin();
-            it != m_primarykey.constEnd();
-            ++it)
+        QString pk = ",\n\tPRIMARY KEY(";
+        bool pks_found = false;
+        foreach(FieldPtr f, m_fields)
         {
-            sql += (*it)->name();
-            if(*it != m_primarykey.last())
-                sql += ",";
+            if(f->primaryKey())
+            {
+                pk += f->name() + ",";
+                pks_found = true;
+            }
         }
-        sql += ")";
+        pk.chop(1);
+        if(pks_found)
+            sql += pk + ")";
     }
 
     return sql + "\n);";
@@ -281,15 +256,11 @@ Table CreateTableWalker::table()
         while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::COLUMNDEF)
         {
             FieldPtr f;
-            bool pk = parsecolumn(f, column->getFirstChild());
+            parsecolumn(f, column->getFirstChild());
             tab.addField(f);
-            if(pk)
-                pks.append(FieldPtr(f));
             column = column->getNextSibling(); //COMMA or RPAREN
             column = column->getNextSibling(); //null or tableconstraint
         }
-
-        tab.setPrimaryKey(pks);
 
         // now we are finished or it is a tableconstraint
         while(s != antlr::nullAST)
@@ -305,18 +276,15 @@ Table CreateTableWalker::table()
             {
                 tc = tc->getNextSibling()->getNextSibling(); // skip primary and key
                 tc = tc->getNextSibling(); // skip LPAREN
-                pks.clear();
                 do
                 {
                     QString col = identifier(tc);
                     int fieldindex = tab.findField(col);
                     if(fieldindex != -1)
-                        pks.append(tab.fields().at(fieldindex));
+                        tab.fields().at(fieldindex)->setPrimaryKey(true);
                     tc = tc->getNextSibling(); // skip ident and comma
                     tc = tc->getNextSibling();
                 } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
-
-                tab.setPrimaryKey(pks);
             }
             break;
             default: break;
@@ -330,7 +298,7 @@ Table CreateTableWalker::table()
     return tab;
 }
 
-bool CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
+void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
 {
     QString columnname;
     QString type = "TEXT";
@@ -396,9 +364,8 @@ bool CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
         c = c->getNextSibling();
     }
 
-    f = FieldPtr( new Field(columnname, type, notnull, defaultvalue, check));
+    f = FieldPtr( new Field(columnname, type, notnull, defaultvalue, check, primarykey));
     f->setAutoIncrement(autoincrement);
-    return primarykey;
 }
 
 } //namespace sqlb

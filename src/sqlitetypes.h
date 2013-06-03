@@ -18,13 +18,16 @@ public:
           const QString& type,
           bool notnull = false,
           const QString& defaultvalue = "",
-          const QString& check = "")
+          const QString& check = "",
+          bool pk = false)
         : m_name(name)
         , m_type(type)
         , m_notnull(notnull)
         , m_check(check)
         , m_defaultvalue(defaultvalue)
-        , m_autoincrement(false) {}
+        , m_autoincrement(false)
+        , m_primaryKey(pk)
+    {}
 
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
 
@@ -34,6 +37,7 @@ public:
     void setCheck(const QString& check) { m_check = check; }
     void setDefaultValue(const QString& defaultvalue) { m_defaultvalue = defaultvalue; }
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
+    void setPrimaryKey(bool pk) { m_primaryKey = pk; }
 
     bool isText() const;
     bool isInteger() const;
@@ -44,6 +48,7 @@ public:
     const QString& check() const { return m_check; }
     const QString& defaultValue() const { return m_defaultvalue; }
     bool autoIncrement() const { return m_autoincrement; }
+    bool primaryKey() const { return m_primaryKey; }
 
     static QStringList Datatypes;
 private:
@@ -53,6 +58,7 @@ private:
     QString m_check;
     QString m_defaultvalue;
     bool m_autoincrement; //! this is stored here for simplification
+    bool m_primaryKey;
 };
 
 typedef QSharedPointer<Field> FieldPtr;
@@ -67,7 +73,6 @@ public:
 
     const QString& name() const { return m_name; }
     const FieldVector& fields() const { return m_fields; }
-    const FieldVector& primarykey() const { return m_primarykey; }
 
     /**
      * @brief Creates an empty insert statement.
@@ -94,9 +99,6 @@ public:
      */
     int findField(const QString& sname);
 
-    bool setPrimaryKey(const FieldVector& pk);
-    bool setPrimaryKey(FieldPtr pk, bool autoincrement = false);
-
     static Table parseSQL(const QString& sSQL);
 private:
     QStringList fieldList() const;
@@ -105,7 +107,6 @@ private:
 private:
     QString m_name;
     FieldVector m_fields;
-    FieldVector m_primarykey;
 };
 
 /**
@@ -121,7 +122,7 @@ public:
     Table table();
 
 private:
-    bool parsecolumn(FieldPtr& f, antlr::RefAST c);
+    void parsecolumn(FieldPtr& f, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
