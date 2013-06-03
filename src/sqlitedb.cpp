@@ -866,14 +866,15 @@ void DBBrowserDB::updateSchema( )
                 while ( sqlite3_step(vm) == SQLITE_ROW ){
                     if (sqlite3_column_count(vm)==6)
                     {
-                        int ispk= 0;
-                        QString val1 = QString::fromUtf8((const char *) sqlite3_column_text(vm, 1));
-                        QString val2 = QString::fromUtf8((const char *) sqlite3_column_text(vm, 2));
-                        ispk = sqlite3_column_int(vm, 5);
-                        if(ispk==1)
-                            val2.append(QString(" PRIMARY KEY"));
+                        QString val_name = QString::fromUtf8((const char *)sqlite3_column_text(vm, 1));
+                        QString val_type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
+                        bool val_nn = sqlite3_column_int(vm, 3) == 1;
+                        QString val_default = QString::fromUtf8((const char *)sqlite3_column_text(vm, 4));
+                        int val_pk = sqlite3_column_int(vm, 5);
+                        if(val_pk == 1)
+                            val_type.append(QString(" PRIMARY KEY"));
 
-                        sqlb::FieldPtr f(new sqlb::Field(val1, val2));
+                        sqlb::FieldPtr f(new sqlb::Field(val_name, val_type, val_nn, val_default));
                         (*it).addField(f);
                     }
                 }
