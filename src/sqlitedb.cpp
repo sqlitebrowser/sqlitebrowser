@@ -876,26 +876,25 @@ void DBBrowserDB::updateSchema( )
     objectMap::Iterator it;
     for ( it = objMap.begin(); it != objMap.end(); ++it )
     {
-        if((*it).gettype() == "table" || (*it).gettype() == "view")
+        // Use our SQL parser to generate the field list for tables. For views we currently have to fall back to the
+        // pragma SQLite offers.
+        if((*it).gettype() == "table")
         {
+            sqlb::Table t((*it).getname());
+            (*it).fldmap = t.parseSQL((*it).getsql()).fields();
+        } else if((*it).gettype() == "view") {
             statement = QString("PRAGMA TABLE_INFO(`%1`);").arg((*it).getname());
             logSQL(statement, kLogMsg_App);
             err=sqlite3_prepare_v2(_db,statement.toUtf8(),statement.length(),
                                 &vm, &tail);
             if (err == SQLITE_OK){
-                (*it).fldmap.clear();
                 while ( sqlite3_step(vm) == SQLITE_ROW ){
                     if (sqlite3_column_count(vm)==6)
                     {
                         QString val_name = QString::fromUtf8((const char *)sqlite3_column_text(vm, 1));
                         QString val_type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
-                        bool val_nn = sqlite3_column_int(vm, 3) == 1;
-                        QString val_default = QString::fromUtf8((const char *)sqlite3_column_text(vm, 4));
-                        int val_pk = sqlite3_column_int(vm, 5);
-                        if(val_pk == 1)
-                            val_type.append(QString(" PRIMARY KEY"));
 
-                        sqlb::FieldPtr f(new sqlb::Field(val_name, val_type, val_nn, val_default));
+                        sqlb::FieldPtr f(new sqlb::Field(val_name, val_type));
                         (*it).addField(f);
                     }
                 }
