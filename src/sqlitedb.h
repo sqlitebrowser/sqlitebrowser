@@ -22,8 +22,8 @@ class DBBrowserObject
 {
 public:
     DBBrowserObject() : name( "" ) { }
-    DBBrowserObject( const QString& wname,const QString& wsql, const QString& wtype )
-        : name( wname), sql( wsql ), type(wtype)
+    DBBrowserObject( const QString& wname,const QString& wsql, const QString& wtype, const QString& tbl_name )
+        : name( wname), sql( wsql ), type(wtype), table_name(tbl_name)
     { }
 
     void addField(sqlb::FieldPtr field) { fldmap.push_back(field); }
@@ -31,6 +31,7 @@ public:
     QString getname() const { return name; }
     QString getsql() const { return sql; }
     QString gettype() const { return type; }
+    QString getTableName() const { return table_name; }
     sqlb::FieldPtr getField(const QString& name) const
     {
         for(int i=0;i<fldmap.size();i++)
@@ -43,6 +44,7 @@ private:
     QString name;
     QString sql;
     QString type;
+    QString table_name;     // The name of the table this object references, interesting for views, triggers and indices
 };
 
 

@@ -573,6 +573,15 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         return false;
     }
 
+    // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
+    QString otherObjectsSql;
+    for(objectMap::ConstIterator it=objMap.begin();it!=objMap.end();++it)
+    {
+        // If this object references the table and it's not the table itself save it's SQL string
+        if((*it).getTableName() == tablename && (*it).gettype() != "table")
+            otherObjectsSql += (*it).getsql() + "\n";
+    }
+
     // Delete the old table
     if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename)))
     {
@@ -587,6 +596,15 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
         return false;
+    }
+
+    // Restore the saved triggers, views and indices
+    if(!executeMultiSQL(otherObjectsSql, true, true))
+    {
+        QMessageBox::information(0, qApp->applicationName(), QObject::tr("Restoring some of the objects associated with this table failed. "
+                                                                         "This is most likely because some column namaes changed. "
+                                                                         "Here's the SQL statement which you might want to fix and execute manually:\n\n")
+                                 + otherObjectsSql);
     }
 
     // Release the savepoint - everything went fine
@@ -845,7 +863,7 @@ void DBBrowserDB::updateSchema( )
     objMap.clear();
 
     lastErrorMessage = QObject::tr("no error");
-    QString statement = "SELECT type, name, sql FROM sqlite_master;";
+    QString statement = "SELECT type, name, sql, tbl_name FROM sqlite_master;";
 
     QByteArray utf8Statement = statement.toUtf8();
     err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
@@ -856,9 +874,10 @@ void DBBrowserDB::updateSchema( )
             QString val1 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
             QString val2 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
             QString val3 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
+            QString val4 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 3));
 
             if(val1 == "table" || val1 == "index" || val1 == "view" || val1 == "trigger")
-                objMap.insert(val1, DBBrowserObject(val2, val3, val1));
+                objMap.insert(val1, DBBrowserObject(val2, val3, val1, val4));
             else
                 qWarning() << QObject::tr("unknown object type %1").arg(val1);
         }
