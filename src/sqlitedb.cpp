@@ -229,7 +229,7 @@ bool DBBrowserDB::dump(const QString& filename)
             it.next();
 
             // Remove the sqlite_stat1 table if there is one
-            if(it.value().getname() == "sqlite_stat1")
+            if(it.value().getname() == "sqlite_stat1" || it.value().getname() == "sqlite_sequence")
             {
                 it.remove();
             } else {
