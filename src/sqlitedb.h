@@ -80,8 +80,15 @@ public:
     bool createTable(const QString& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& from_table, const QString& to_table);
     bool addColumn(const QString& table, const sqlb::FieldPtr& field);
+
+    /**
+     * @brief renameColumn Can be used to rename, modify or drop an existing column of a given table
+     * @param tablename Specifies the table name
+     * @param name Name of the column to edit
+     * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
+     * @return true if renaming was successfull, false if not. In the latter case also lastErrorMessage is set
+     */
     bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to);
-    bool dropColumn(const QString& tablename, const QString& column);
 
     QStringList getTableFields(const QString & tablename) const;
     QStringList getBrowsableObjectNames() const;

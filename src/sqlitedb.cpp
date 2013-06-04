@@ -523,14 +523,29 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
     // If SQLite should fully support this command one day, this entire
     // function can be changed to executing something like this:
-    //QString sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);
+    //QString sql;
+    //if(to.isNull())
+    //    sql = QString("ALTER TABLE `%1` DROP COLUMN `%2`;").arg(table).arg(column);
+    //else
+    //    sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);    // This is wrong...
     //return executeSQL(sql);
 
     // Collect information on the current DB layout
-    DBBrowserObject table = getObjectByName(tablename);
-    if(table.getname() == "" || table.getField(name)->name() == "")
+    QString tableSql = getTableSQL(tablename);
+    if(tableSql.isEmpty())
     {
-        lastErrorMessage = QObject::tr("renameColumn: cannot find table %1 with column %2").arg(tablename).arg(name);
+        lastErrorMessage = QObject::tr("renameColumn: cannot find table %1.").arg(tablename);
+        qWarning() << lastErrorMessage;
+        return false;
+    }
+
+    // Create table schema
+    sqlb::Table oldSchema = sqlb::Table::parseSQL(tableSql);
+
+    // Check if field actually exists
+    if(oldSchema.findField(name) == -1)
+    {
+        lastErrorMessage = QObject::tr("renameColumn: cannot find column %1.").arg(name);
         qWarning() << lastErrorMessage;
         return false;
     }
@@ -546,16 +561,26 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // Create a new table with a name that hopefully doesn't exist yet.
     // Its layout is exactly the same as the one of the table to change - except for the column to change
     // of course
-    sqlb::FieldVector new_table_structure;
-    for(int i=0;i<table.fldmap.count();i++)
+    sqlb::Table newSchema = oldSchema;
+    newSchema.setName("sqlitebrowser_rename_column_new_table");
+    QString select_cols;
+    if(to.isNull())
     {
-        // Is this the column to rename?
-        if(table.fldmap.value(i)->name() == name)
-            new_table_structure.push_back(to);
-        else
-            new_table_structure.push_back(table.fldmap.value(i));
+        // We want drop the column - so just remove the field
+        newSchema.removeField(name);
+
+        for(int i=0;i<newSchema.fields().count();++i)
+            select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
+        select_cols.chop(1);    // remove last comma
+    } else {
+        // We want to modify it
+        newSchema.setField(newSchema.findField(name), to);
+
+        select_cols = "*";
     }
-    if(!createTable("sqlitebrowser_rename_column_new_table", new_table_structure))
+
+    // Create the new table
+    if(!executeSQL(newSchema.sql()))
     {
         lastErrorMessage = QObject::tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
@@ -564,7 +589,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT * FROM `%1`;").arg(tablename)))
+    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM `%2`;").arg(select_cols).arg(tablename)))
     {
         lastErrorMessage = QObject::tr("renameColumn: copying data to new table failed. DB says:\n"
                                        "%1").arg(lastErrorMessage);
@@ -611,105 +636,6 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_rename_column;"))
     {
         lastErrorMessage = QObject::tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
-        return false;
-    }
-
-    // Success, update the DB schema before returning
-    updateSchema();
-    return true;
-}
-
-bool DBBrowserDB::dropColumn(const QString& tablename, const QString& column)
-{
-    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
-    // If SQLite should fully support this command one day, this entire
-    // function can be changed to executing something like this:
-    //QString sql = QString("ALTER TABLE `%1` DROP COLUMN `%2`;").arg(table).arg(column);
-    //return executeSQL(sql);
-
-    // Collect information on the current DB layout
-    QString sTableSql = getTableSQL(tablename);
-    if(sTableSql.isEmpty())
-    {
-        lastErrorMessage = QObject::tr("dropColumn: cannot find table %1.").arg(tablename);
-        qWarning() << lastErrorMessage;
-        return false;
-    }
-
-    sqlb::Table oldSchema = sqlb::Table::parseSQL(sTableSql);
-
-    if(oldSchema.findField(column) == -1 || oldSchema.fields().count() == 1)
-    {
-        lastErrorMessage = QObject::tr("dropColumn: cannot find column %1. "
-            "Also you can not delete the last column").arg(column);
-        qWarning() << lastErrorMessage;
-        return false;
-    }
-
-    // Create savepoint to be able to go back to it in case of any error
-    if(!executeSQL("SAVEPOINT sqlitebrowser_drop_column;", false))
-    {
-        lastErrorMessage = QObject::tr("dropColumn: creating savepoint failed");
-        qWarning() << lastErrorMessage;
-        return false;
-    }
-
-    // Create a new table with a name that hopefully doesn't exist yet.
-    // Its layout is exactly the same as the one of the table to change - except for the column to drop
-    // of course. Also prepare the columns to be copied in a later step now.
-    sqlb::Table newSchema = oldSchema;
-    newSchema.setName("sqlitebrowser_drop_column_new_table");
-    newSchema.removeField(column);
-
-    QString select_cols;
-    for(int i=0; i<newSchema.fields().count(); ++i)
-    {
-        select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
-    }
-    // remove last ,
-    select_cols.remove(select_cols.count() -1, 1);
-
-    // create the new table
-    if(!executeSQL(newSchema.sql(), false))
-    {
-        lastErrorMessage = QObject::tr("dropColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;", false);
-        return false;
-    }
-
-    // Copy the data from the old table to the new one
-    if(!executeSQL(
-          QString("INSERT INTO sqlitebrowser_drop_column_new_table SELECT %1 FROM `%2`;").arg(select_cols).arg(tablename),
-          false))
-    {
-        lastErrorMessage = QObject::tr("dropColumn: copying data to new table failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
-        return false;
-    }
-
-    // Delete the old table
-    if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename), false))
-    {
-        lastErrorMessage = QObject::tr("dropColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
-        return false;
-    }
-
-    // Rename the temporary table
-    if(!renameTable("sqlitebrowser_drop_column_new_table", tablename))
-    {
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_drop_column;");
-        return false;
-    }
-
-    // Release the savepoint - everything went fine
-    if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_drop_column;", false))
-    {
-        lastErrorMessage = QObject::tr("dropColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
         return false;
     }

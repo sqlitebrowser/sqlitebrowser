@@ -89,6 +89,7 @@ public:
     void addField(const FieldPtr& f);
     bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
+    void setField(int index, FieldPtr f) { m_fields[index] = f; }
     void clear();
 
     /**
