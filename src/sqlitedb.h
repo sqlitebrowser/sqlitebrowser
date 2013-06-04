@@ -89,7 +89,7 @@ public:
     DBBrowserObject getObjectByName(const QString& name) const;
     bool isOpen() const;
     bool getDirty() const;
-    void logSQL(const QString& statement, int msgtype);
+    void logSQL(QString statement, int msgtype);
 
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);

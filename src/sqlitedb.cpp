@@ -792,39 +792,25 @@ DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
     return DBBrowserObject();
 }
 
-void DBBrowserDB::logSQL(const QString& statement, int msgtype)
+void DBBrowserDB::logSQL(QString statement, int msgtype)
 {
     if(mainWindow)
-    {        
-        bool binary = FALSE;
-        QString logst = statement;
-
-        /*limit log message to a sensible size, this will truncate some binary messages*/
-        int loglimit = 300;
-        if ((logst.length() > loglimit)&&(msgtype==kLogMsg_App))
-        {            
-            for (int i = 0; i < logst.size(); i++)
+    {
+        // Replace binary log messages by a placeholder text instead of printing gibberish
+        for(int i=0;i<statement.size();i++)
+        {
+            if(statement.at(i) < 32)
             {
-                if (logst.at(i) < 32)
-                {
-                    binary = TRUE;
-                    // early exit if we detect a binary character, 
-                    // to prevent checking all characters in a potential big string
-                    break;
-                }
+                statement.truncate(32);
+                statement.append(QObject::tr("... <string can not be logged, contains binary data> ..."));
+
+                // early exit if we detect a binary character,
+                // to prevent checking all characters in a potential big string
+                break;
             }
         }
-                
-        if (binary)
-        {
-            logst.truncate(32);
-            logst.append("... <string can not be logged, contains binary data> ...");
-            mainWindow->logSql(logst, msgtype);
-        }
-        else 
-        {
-            mainWindow->logSql(logst, msgtype);
-        }
+
+        mainWindow->logSql(statement, msgtype);
     }
 }
 
