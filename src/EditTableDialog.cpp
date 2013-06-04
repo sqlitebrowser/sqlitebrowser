@@ -250,6 +250,22 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             bool ischecked = item->checkState(column) == Qt::Checked;
             if(ischecked)
             {
+                // First check if the contents of this column are all integers. If not this field cannot be set to AI
+                if(!m_bNewTable)
+                {
+                    SqliteTableModel m(this, pdb);
+                    m.setQuery(QString("SELECT COUNT(*) FROM `%1` WHERE `%2` <> CAST(`%3` AS INTEGER);").arg(curTable).arg(field->name()).arg(field->name()));
+                    if(m.data(m.index(0, 0)).toInt() > 0)
+                    {
+                        // There is a non-integer value, so print an error message, uncheck the combobox, and return here
+                        QMessageBox::information(this, qApp->applicationName(), tr("There is at least one row with a non-integer value in this field. "
+                                                                                   "This makes it impossible to set the AI flag. Please change the table data first."));
+                        item->setCheckState(column, Qt::Unchecked);
+                        return;
+                    }
+                }
+
+                // Make sure the data type is set to integer
                 QComboBox* comboType = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType));
                 comboType->setCurrentIndex(comboType->findText("INTEGER"));
                 item->setCheckState(kPrimaryKey, Qt::Checked);
