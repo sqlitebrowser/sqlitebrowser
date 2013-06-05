@@ -817,7 +817,7 @@ void MainWindow::importDatabaseFromSQL()
                 PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
-    // Cancel when no file doesn't exist
+    // Cancel when file doesn't exist
     if(!QFile::exists(fileName))
         return;
 
@@ -842,6 +842,7 @@ void MainWindow::importDatabaseFromSQL()
         }
 
         db.create(newDbFile);
+        loadExtensionsFromSettings();
     }
 
     // Open, read, execute and close file
