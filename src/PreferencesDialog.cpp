@@ -57,6 +57,8 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
     }
+    ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
+    ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
 }
@@ -76,6 +78,8 @@ void PreferencesDialog::saveSettings()
         setSettingsValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
         setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
+    setSettingsValue("editor", "fontsize", ui->spinEditorFontSize->value());
+    setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
 
     QStringList extList;
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
@@ -183,6 +187,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
                 return QColor(236, 236, 245).name();
         }
     }
+
+    // editor/fontsize or log/fontsize?
+    if((group == "editor" || group == "log") && name == "fontsize")
+        return 9;
 
     // extensions/list?
     if(group == "extensions" && name == "list")

@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget* parent)
     init();
 
     activateFields(false);
-    resetBrowser();
     updateRecentFileActions();
 }
 
@@ -61,9 +60,6 @@ void MainWindow::init()
 
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
-
-    // Create the SQL sytax highlighters
-    createSyntaxHighlighters();
 
     // Set up DB models
     ui->dataTable->setModel(m_browseTableModel);
@@ -117,12 +113,8 @@ void MainWindow::init()
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
 
-    // Fonts for edit fields
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(8);
-    ui->editLogApplication->setFont(font);
-    ui->editLogUser->setFont(font);
+    // Load all settings
+    reloadSettings();
 }
 
 bool MainWindow::fileOpen(const QString& fileName)
@@ -870,15 +862,7 @@ void MainWindow::openPreferences()
 {
     PreferencesDialog dialog(this);
     if(dialog.exec())
-    {
-        m_browseTableModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-        for(int i=0;i<ui->tabSqlAreas->count();i++)
-            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getModel()->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-        createSyntaxHighlighters();
-        populateStructure();
-        resetBrowser();
-        loadExtensionsFromSettings();
-    }
+        reloadSettings();
 }
 
 void MainWindow::createSyntaxHighlighters()
@@ -1230,4 +1214,36 @@ void MainWindow::loadExtensionsFromSettings()
         if(db.loadExtension(ext) == false)
             QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastErrorMessage));
     }
+}
+
+void MainWindow::reloadSettings()
+{
+    // Set prefetch sizes for lazy population of table models
+    m_browseTableModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+    for(int i=0;i<ui->tabSqlAreas->count();i++)
+    {
+        SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+        sqlArea->getModel()->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+
+        QFont font = sqlArea->getEditor()->font();
+        font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+        sqlArea->getEditor()->setFont(font);
+    }
+
+    // Create the syntax highlighters
+    createSyntaxHighlighters();
+
+    // Set font for SQL logs
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    font.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
+    ui->editLogApplication->setFont(font);
+    ui->editLogUser->setFont(font);
+
+    // Load extensions
+    loadExtensionsFromSettings();
+
+    // Refresh view
+    populateStructure();
+    resetBrowser();
 }

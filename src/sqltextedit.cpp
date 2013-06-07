@@ -19,6 +19,12 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     m_Completer->setWrapAround(false);
     m_Completer->setWidget(this);
 
+    // Set font
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+    setFont(font);
+
     // Create line number area
     lineNumberArea = new LineNumberArea(this);
 

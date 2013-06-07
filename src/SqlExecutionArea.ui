@@ -19,14 +19,7 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="SqlTextEdit" name="editEditor">
-      <property name="font">
-       <font>
-        <family>Monospace</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
+     <widget class="SqlTextEdit" name="editEditor"/>
      <widget class="ExtendedTableWidget" name="tableResult">
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
@@ -106,14 +99,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>sqltextedit.h</header>
-  </customwidget>
-  <customwidget>
    <class>ExtendedTableWidget</class>
    <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

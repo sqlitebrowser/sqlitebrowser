@@ -144,6 +144,7 @@ private slots:
     virtual void openSqlFile();
     virtual void saveSqlFile();
     virtual void loadExtension();
+    virtual void reloadSettings();
 };
 
 #endif

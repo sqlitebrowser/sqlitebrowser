@@ -128,8 +128,8 @@
       <attribute name="title">
        <string>&amp;SQL</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
         <widget class="QTreeWidget" name="treeSyntaxHighlighting">
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>
@@ -285,6 +285,44 @@
          </item>
         </widget>
        </item>
+       <item>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>SQL &amp;editor font size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinEditorFontSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="spinEditorFontSize">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinLogFontSize">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>SQL &amp;log font size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinLogFontSize</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_3">
@@ -376,6 +414,11 @@
   <tabstop>setLocationButton</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
+  <tabstop>spinEditorFontSize</tabstop>
+  <tabstop>spinLogFontSize</tabstop>
+  <tabstop>listExtensions</tabstop>
+  <tabstop>buttonAddExtension</tabstop>
+  <tabstop>buttonRemoveExtension</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
