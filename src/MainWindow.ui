@@ -247,7 +247,7 @@
           <string>Click here to browse the specified record</string>
          </property>
          <property name="whatsThis">
-          <string>This button is used to navigate to the record number specied in the Go to: area.</string>
+          <string>This button is used to navigate to the record number specified in the Go to: area.</string>
          </property>
          <property name="text">
           <string>Go to:</string>
