@@ -84,22 +84,22 @@ FORMS += \
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
-unix { 
+unix {
     LIBS += -ldl
 }
 win32 {
     RC_FILE = winapp.rc
-	INCLUDEPATH += $$PWD
-	CONFIG(debug,debug|release) {
-		LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
-		LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
-	}
-	CONFIG(release,debug|release) {
-		LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
-		LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
-	}
+    INCLUDEPATH += $$PWD
+    CONFIG(debug,debug|release) {
+        LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
+        LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
+    }
+    CONFIG(release,debug|release) {
+        LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
+        LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
+    }
 }
-mac { 
+mac {
     RC_FILE = macapp.icns
     INCLUDEPATH += -I/usr/local/include \
                    -I/usr/local/opt/sqlite/include
