@@ -101,6 +101,8 @@ win32 {
 }
 mac { 
     RC_FILE = macapp.icns
+    INCLUDEPATH += -I/usr/local/include \
+                   -I/usr/local/opt/sqlite/include
     LIBS += -L/usr/local/lib \
             -L/usr/local/opt/sqlite/lib \
             -framework Carbon
