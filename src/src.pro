@@ -101,7 +101,9 @@ win32 {
 }
 mac { 
     RC_FILE = macapp.icns
-    LIBS += -L/usr/local/lib -framework Carbon
+    LIBS += -L/usr/local/lib \
+            -L/usr/local/opt/sqlite/lib \
+            -framework Carbon
     QMAKE_INFO_PLIST = app.plist
 }
 
