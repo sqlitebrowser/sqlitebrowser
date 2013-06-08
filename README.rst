@@ -1,8 +1,8 @@
-=============
-sqlitebrowser
-=============
+=======================
+SQLite Database Browser
+=======================
 
-This is a fork from the SF project which seems to be stagnant. 
+This is a fork from the SF project which seems to be stagnant.
 
 Old Project
 -----------
@@ -55,3 +55,29 @@ Windows binaries
 Windows binaries can be downloaded from here:
 
 http://rp.oldsch00l.com/sqlitebrowser/
+
+=======
+MacOS X
+=======
+
+SQLite Database Browser works pretty well on MacOS X.
+
+- OSX 10.7 (Lion) works
+- OSX 10.8 (Mountain Lion) probably works, but hasn't been tested yet.
+
+Building on OSX is simple, but depends on SQLite and Qt to be installed
+using Homebrew first::
+
+  $ brew install sqlite --with-functions
+  $ brew install qt --with-qt3support
+
+Then it's just a matter of::
+
+  $ git checkout https://github.com/rp-/sqlitebrowser.git
+  $ cd sqlitebrowser
+  $ qmake
+  $ make
+  $ mv src/sqlitebrowser.app /Applications/
+
+An icon for "sqlitebrowser" should now be in your main OSX Applications
+list, ready to launch.
