@@ -1,1 +1,1 @@
-#define APP_VERSION "master_git"
+#define APP_VERSION "3.0b1"
