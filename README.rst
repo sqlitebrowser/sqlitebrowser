@@ -56,9 +56,8 @@ Windows binaries can be downloaded from here:
 
 http://rp.oldsch00l.com/sqlitebrowser/
 
-=======
 MacOS X
-=======
+-------
 
 SQLite Database Browser works pretty well on MacOS X.
 
