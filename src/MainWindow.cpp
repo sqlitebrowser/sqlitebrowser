@@ -368,18 +368,7 @@ void MainWindow::fileClose()
 
 void MainWindow::fileExit()
 {
-    if (db.isOpen())
-    {
-        if (db.getDirty())
-        {
-            QString msg = tr("Do you want to save the changes made to the database file %1?").arg(db.curDBFilename);
-            if(QMessageBox::question( this, QApplication::applicationName() ,msg, QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
-                db.saveAll();
-            else
-                db.revertAll(); //not really necessary, I think... but will not hurt.
-        }
-        db.close();
-    }
+    db.close();
 }
 
 void MainWindow::closeEvent( QCloseEvent* event )
