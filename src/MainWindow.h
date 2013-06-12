@@ -105,7 +105,6 @@ private slots:
     virtual void populateTable(const QString& tablename);
     virtual void resetBrowser();
     virtual void fileClose();
-    virtual void fileExit();
     virtual void addRecord();
     virtual void deleteRecord();
     virtual void selectTableLine( int lineToSelect );

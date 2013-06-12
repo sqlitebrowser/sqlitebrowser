@@ -366,17 +366,12 @@ void MainWindow::fileClose()
         closeSqlTab(i, true);
 }
 
-void MainWindow::fileExit()
-{
-    db.close();
-}
-
 void MainWindow::closeEvent( QCloseEvent* event )
 {
+    db.close();
     PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
     PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
     PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
-    fileExit();
     QMainWindow::closeEvent(event);
 }
 
