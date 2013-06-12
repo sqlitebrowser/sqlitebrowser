@@ -85,7 +85,7 @@ void CreateIndexDialog::accept()
                        .arg(qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText()));
         }
     }
-    sql.remove(sql.count() - 1, 1);     // Remove last comma
+    sql.chop(1);    // Remove last comma
     sql.append(");");
 
     if(pdb->executeSQL(sql))
