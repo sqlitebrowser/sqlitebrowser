@@ -33,6 +33,8 @@
         <file alias="save_table">table_save.png</file>
         <file alias="run_line">resultset_last.png</file>
         <file alias="log_dock">layout_sidebar.png</file>
+        <file alias="down">bullet_arrow_down.png</file>
+        <file alias="up">bullet_arrow_up.png</file>
     </qresource>
     <qresource prefix="/oldimages">
         <file alias="128">oldimages/128.png</file>

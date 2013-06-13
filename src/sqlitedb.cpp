@@ -518,7 +518,7 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
     return result;
 }
 
-bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to)
+bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move)
 {
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
     // If SQLite should fully support this command one day, this entire
@@ -574,9 +574,20 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         select_cols.chop(1);    // remove last comma
     } else {
         // We want to modify it
-        newSchema.setField(newSchema.findField(name), to);
 
-        select_cols = "*";
+        // Move field
+        int index = newSchema.findField(name);
+        sqlb::FieldPtr temp = newSchema.fields().at(index);
+        newSchema.setField(index, newSchema.fields().at(index + move));
+        newSchema.setField(index + move, temp);
+
+        // Get names of fields to select from old table now - after the field has been moved and before it might be renamed
+        for(int i=0;i<newSchema.fields().count();++i)
+            select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
+        select_cols.chop(1);    // remove last comma
+
+        // Modify field
+        newSchema.setField(index + move, to);
     }
 
     // Create the new table

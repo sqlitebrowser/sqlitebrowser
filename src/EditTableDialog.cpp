@@ -378,5 +378,86 @@ void EditTableDialog::removeField()
 
 void EditTableDialog::fieldSelectionChanged()
 {
-    ui->removeFieldButton->setEnabled(ui->treeWidget->selectionModel()->hasSelection());
+    bool hasSelection = ui->treeWidget->selectionModel()->hasSelection();
+
+    // Enable the remove and the move up/down buttons if a field is selected, disable it otherwise
+    ui->removeFieldButton->setEnabled(hasSelection);
+    ui->buttonMoveUp->setEnabled(hasSelection);
+    ui->buttonMoveDown->setEnabled(hasSelection);
+
+    // If the selected line is the first one disable the move up button, it it's the last one disable the move down button
+    if(hasSelection)
+    {
+        ui->buttonMoveUp->setEnabled(ui->treeWidget->selectionModel()->currentIndex().row() != 0);
+        ui->buttonMoveDown->setEnabled(ui->treeWidget->selectionModel()->currentIndex().row() != ui->treeWidget->topLevelItemCount() - 1);
+    }
+}
+
+void EditTableDialog::moveUp()
+{
+    moveCurrentField(false);
+}
+
+void EditTableDialog::moveDown()
+{
+    moveCurrentField(true);
+}
+
+void EditTableDialog::moveCurrentField(bool down)
+{
+    int currentRow = ui->treeWidget->currentIndex().row();
+    int newRow = currentRow + (down ? 1 : -1);
+
+    // Are we creating a new table or editing an old one?
+    if(m_bNewTable)
+    {
+        // Creating a new one
+
+        // Save the combobox first by making a copy
+        QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
+        QComboBox* newCombo = new QComboBox(ui->treeWidget);
+        newCombo->setProperty("column", oldCombo->property("column"));
+        connect(newCombo, SIGNAL(activated(int)), this, SLOT(updateTypes()));
+        newCombo->setEditable(false);
+        for(int i=0;i<oldCombo->count();i++)
+            newCombo->addItem(oldCombo->itemText(i));
+        newCombo->setCurrentIndex(oldCombo->currentIndex());
+
+        // Now, just remove the item and insert it at it's new position, then restore the combobox
+        QTreeWidgetItem* item = ui->treeWidget->takeTopLevelItem(currentRow);
+        ui->treeWidget->insertTopLevelItem(newRow, item);
+        ui->treeWidget->setItemWidget(item, kType, newCombo);
+
+        // Select the old item at its new position
+        ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
+
+        // Finally update the table SQL
+        sqlb::FieldVector fields = m_table.fields();
+        std::swap(fields[newRow], fields[currentRow]);
+        m_table.setFields(fields);
+    } else {
+        // Editing an old one
+
+        // Move the actual column
+        if(!pdb->renameColumn(
+                    curTable,
+                    ui->treeWidget->currentItem()->text(0),
+                    m_table.fields().at(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())),
+                    (down ? 1 : -1)
+                ))
+        {
+            QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
+        } else {
+            // Reload table SQL
+            QString sTablesql = pdb->getObjectByName(curTable).getsql();
+            m_table = sqlb::Table::parseSQL(sTablesql);
+            populateFields();
+
+            // Select old item at new position
+            ui->treeWidget->setCurrentIndex(ui->treeWidget->indexAt(QPoint(1, 1)).sibling(newRow, 0));
+        }
+    }
+
+    // Update the SQL preview
+    updateSqlText();
 }
