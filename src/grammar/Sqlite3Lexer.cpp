@@ -157,18 +157,6 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 				theRetToken=_returnToken;
 				break;
 			}
-			case 0x2d /* '-' */ :
-			{
-				mMINUS(true);
-				theRetToken=_returnToken;
-				break;
-			}
-			case 0x2f /* '/' */ :
-			{
-				mCOMMENT(true);
-				theRetToken=_returnToken;
-				break;
-			}
 			case 0x9 /* '\t' */ :
 			case 0xa /* '\n' */ :
 			case 0xc /* '\14' */ :
@@ -234,7 +222,11 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 				break;
 			}
 			default:
-				if ((LA(1) == 0x7c /* '|' */ ) && (LA(2) == 0x7c /* '|' */ )) {
+				if ((LA(1) == 0x2d /* '-' */  || LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2a /* '*' */  || LA(2) == 0x2d /* '-' */ )) {
+					mCOMMENT(true);
+					theRetToken=_returnToken;
+				}
+				else if ((LA(1) == 0x7c /* '|' */ ) && (LA(2) == 0x7c /* '|' */ )) {
 					mOROP(true);
 					theRetToken=_returnToken;
 				}
@@ -260,6 +252,10 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 				}
 				else if ((LA(1) == 0x3e /* '>' */ ) && (LA(2) == 0x3e /* '>' */ )) {
 					mBITWISERIGHT(true);
+					theRetToken=_returnToken;
+				}
+				else if ((LA(1) == 0x2d /* '-' */ ) && (true)) {
+					mMINUS(true);
 					theRetToken=_returnToken;
 				}
 				else if ((LA(1) == 0x7c /* '|' */ ) && (true)) {
@@ -737,8 +733,10 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
-	if ((LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2f /* '/' */ )) {
-		match("//");
+	switch ( LA(1)) {
+	case 0x2d /* '-' */ :
+	{
+		match("--");
 		{ // ( ... )*
 		for (;;) {
 			if ((_tokenSet_3.member(LA(1)))) {
@@ -755,8 +753,10 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 		} // ( ... )*
 		mNL(false);
 		newline();
+		break;
 	}
-	else if ((LA(1) == 0x2f /* '/' */ ) && (LA(2) == 0x2a /* '*' */ )) {
+	case 0x2f /* '/' */ :
+	{
 		match("/*");
 		{ // ( ... )*
 		for (;;) {
@@ -779,11 +779,13 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 		_loop39:;
 		} // ( ... )*
 		match("*/");
+		break;
 	}
-	else {
+	default:
+	{
 		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());
 	}
-	
+	}
 	}
 	_ttype = ANTLR_USE_NAMESPACE(antlr)Token::SKIP;
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {

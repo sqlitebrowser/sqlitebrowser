@@ -107,7 +107,7 @@ NL :
     );
 
 COMMENT :
-    ( "//" (~('\n'|'\r'))* NL {newline();} // single line comment
+    ( "--" (~('\n'|'\r'))* NL {newline();} // single line comment
     | "/*" ( options{greedy=false;} : NL {newline();} | ~('\n'|'\r') )* "*/" // multi-line comment
     ) { $setType(ANTLR_USE_NAMESPACE(antlr)Token::SKIP); };
 
