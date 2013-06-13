@@ -65,13 +65,6 @@ public:
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
 
-    /**
-     * @brief getTableSQL Returns the create table statement for the given table.
-     * @param sTable Table name
-     * @return An empty string if the table does not exist
-     *         or the create table statement.
-     */
-    QString getTableSQL(const QString& sTable);
     void updateSchema();
     int addRecord(const QString& sTableName);
     bool deleteRecord(const QString& table, int rowid);

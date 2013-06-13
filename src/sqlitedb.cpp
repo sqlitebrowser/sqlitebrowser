@@ -424,7 +424,7 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     // add record is seldom called, for now this is ok
     // but if we ever going to add a lot of records
     // we should cache the parsed tables somewhere
-    sqlb::Table table = sqlb::Table::parseSQL(getTableSQL(sTableName));
+    sqlb::Table table = sqlb::Table::parseSQL(getObjectByName(sTableName).getsql());
     QString sInsertstmt = table.emptyInsertStmt();
     lastErrorMessage = "";
     logSQL(sInsertstmt, kLogMsg_App);
@@ -531,7 +531,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     //return executeSQL(sql);
 
     // Collect information on the current DB layout
-    QString tableSql = getTableSQL(tablename);
+    QString tableSql = getObjectByName(tablename).getsql();
     if(tableSql.isEmpty())
     {
         lastErrorMessage = QObject::tr("renameColumn: cannot find table %1.").arg(tablename);
@@ -738,32 +738,6 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
 
         mainWindow->logSql(statement, msgtype);
     }
-}
-
-QString DBBrowserDB::getTableSQL(const QString& sTable)
-{
-    sqlite3_stmt *vm;
-    const char *tail;
-    int err;
-    QString sTableSQL;
-
-    QString statement = QString("SELECT sql FROM sqlite_master WHERE name='%1';").arg(sTable);
-
-    QByteArray utf8Statement = statement.toUtf8();
-    err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
-                        &vm, &tail);
-    if (err == SQLITE_OK){
-        logSQL(statement, kLogMsg_App);
-        if( sqlite3_step(vm) == SQLITE_ROW )
-        {
-            sTableSQL = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
-        }
-        sqlite3_finalize(vm);
-    }else{
-        qCritical() << "Unable to get sql for table: " << sTable;
-    }
-
-    return sTableSQL;
 }
 
 void DBBrowserDB::updateSchema( )

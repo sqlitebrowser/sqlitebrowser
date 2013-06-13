@@ -30,7 +30,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
         m_bNewTable = false; // we are editing an existing table
 
         // Existing table, so load and set the current layout
-        QString sTablesql = pdb->getTableSQL(curTable);
+        QString sTablesql = pdb->getObjectByName(curTable).getsql();
         m_table = sqlb::Table::parseSQL(sTablesql);
         populateFields();
     }
@@ -366,7 +366,7 @@ void EditTableDialog::removeField()
                 QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
             } else {
                 //relayout
-                QString sTablesql = pdb->getTableSQL(curTable);
+                QString sTablesql = pdb->getObjectByName(curTable).getsql();
                 m_table = sqlb::Table::parseSQL(sTablesql);
                 populateFields();
             }
