@@ -1197,6 +1197,9 @@ void MainWindow::loadExtension()
                 PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Extensions(*.so *.dll);;All files(*)"));
 
+    if(file.isEmpty())
+        return;
+
     if(db.loadExtension(file))
         QMessageBox::information(this, QApplication::applicationName(), tr("Extension successfully loaded."));
     else
