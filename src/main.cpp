@@ -152,7 +152,8 @@ int main( int argc, char ** argv )
                     file.close();
                 }
             }
-            w.browseRefresh();
+            if(!sqlToExecute.isEmpty())
+                w.browseRefresh();
         }
     }
 
