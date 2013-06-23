@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (20121001): "sqlite3.g" -> "Sqlite3Parser.cpp"$ */
+/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.cpp"$ */
 #include "Sqlite3Parser.hpp"
 #include <antlr/NoViableAltException.hpp>
 #include <antlr/SemanticException.hpp>
@@ -327,11 +327,11 @@ void Sqlite3Parser::statementlist() {
 				}
 			}
 			else {
-				goto _loop80;
+				goto _loop83;
 			}
 			
 		}
-		_loop80:;
+		_loop83:;
 		} // ( ... )*
 		statementlist_AST = currentAST.root;
 	}
@@ -487,11 +487,11 @@ void Sqlite3Parser::createtable() {
 					}
 				}
 				else {
-					goto _loop88;
+					goto _loop91;
 				}
 				
 			}
-			_loop88:;
+			_loop91:;
 			} // ( ... )*
 			{ // ( ... )*
 			for (;;) {
@@ -508,11 +508,11 @@ void Sqlite3Parser::createtable() {
 					}
 				}
 				else {
-					goto _loop90;
+					goto _loop93;
 				}
 				
 			}
-			_loop90:;
+			_loop93:;
 			} // ( ... )*
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp19_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
@@ -638,11 +638,11 @@ void Sqlite3Parser::columndef() {
 				}
 			}
 			else {
-				goto _loop94;
+				goto _loop97;
 			}
 			
 		}
-		_loop94:;
+		_loop97:;
 		} // ( ... )*
 		if ( inputState->guessing==0 ) {
 			columndef_AST = ANTLR_USE_NAMESPACE(antlr)RefAST(currentAST.root);
@@ -744,11 +744,11 @@ void Sqlite3Parser::tableconstraint() {
 					}
 				}
 				else {
-					goto _loop113;
+					goto _loop116;
 				}
 				
 			}
-			_loop113:;
+			_loop116:;
 			} // ( ... )*
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp26_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
@@ -812,11 +812,11 @@ void Sqlite3Parser::tableconstraint() {
 					}
 				}
 				else {
-					goto _loop116;
+					goto _loop119;
 				}
 				
 			}
-			_loop116:;
+			_loop119:;
 			} // ( ... )*
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp30_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
@@ -912,11 +912,11 @@ void Sqlite3Parser::tableconstraint() {
 					}
 				}
 				else {
-					goto _loop119;
+					goto _loop122;
 				}
 				
 			}
-			_loop119:;
+			_loop122:;
 			} // ( ... )*
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp38_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
@@ -992,7 +992,7 @@ void Sqlite3Parser::type_name() {
 	
 	try {      // for error handling
 		{ // ( ... )+
-		int _cnt98=0;
+		int _cnt101=0;
 		for (;;) {
 			if ((LA(1) == ID || LA(1) == QUOTEDID)) {
 				name();
@@ -1001,12 +1001,12 @@ void Sqlite3Parser::type_name() {
 				}
 			}
 			else {
-				if ( _cnt98>=1 ) { goto _loop98; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
+				if ( _cnt101>=1 ) { goto _loop101; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
 			}
 			
-			_cnt98++;
+			_cnt101++;
 		}
-		_loop98:;
+		_loop101:;
 		}  // ( ... )+
 		{
 		switch ( LA(1)) {
@@ -1589,10 +1589,10 @@ void Sqlite3Parser::expr() {
 	ANTLR_USE_NAMESPACE(antlr)RefAST expr_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
 	try {      // for error handling
-		bool synPredMatched144 = false;
+		bool synPredMatched147 = false;
 		if (((_tokenSet_12.member(LA(1))) && (_tokenSet_13.member(LA(2))))) {
-			int _m144 = mark();
-			synPredMatched144 = true;
+			int _m147 = mark();
+			synPredMatched147 = true;
 			inputState->guessing++;
 			try {
 				{
@@ -1646,12 +1646,12 @@ void Sqlite3Parser::expr() {
 				}
 			}
 			catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& pe) {
-				synPredMatched144 = false;
+				synPredMatched147 = false;
 			}
-			rewind(_m144);
+			rewind(_m147);
 			inputState->guessing--;
 		}
-		if ( synPredMatched144 ) {
+		if ( synPredMatched147 ) {
 			subexpr();
 			if (inputState->guessing==0) {
 				astFactory->addASTChild( currentAST, returnAST );
@@ -1724,11 +1724,11 @@ void Sqlite3Parser::expr() {
 					}
 				}
 				else {
-					goto _loop147;
+					goto _loop150;
 				}
 				
 			}
-			_loop147:;
+			_loop150:;
 			} // ( ... )*
 			expr_AST = currentAST.root;
 		}
@@ -1800,11 +1800,11 @@ void Sqlite3Parser::foreignkeyclause() {
 					}
 				}
 				else {
-					goto _loop126;
+					goto _loop129;
 				}
 				
 			}
-			_loop126:;
+			_loop129:;
 			} // ( ... )*
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp74_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
@@ -1975,17 +1975,17 @@ void Sqlite3Parser::foreignkeyclause() {
 			}
 			default:
 			{
-				goto _loop131;
+				goto _loop134;
 			}
 			}
 		}
-		_loop131:;
+		_loop134:;
 		} // ( ... )*
 		{
-		bool synPredMatched134 = false;
+		bool synPredMatched137 = false;
 		if (((LA(1) == NOT) && (LA(2) == DEFERRABLE))) {
-			int _m134 = mark();
-			synPredMatched134 = true;
+			int _m137 = mark();
+			synPredMatched137 = true;
 			inputState->guessing++;
 			try {
 				{
@@ -1994,12 +1994,12 @@ void Sqlite3Parser::foreignkeyclause() {
 				}
 			}
 			catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& pe) {
-				synPredMatched134 = false;
+				synPredMatched137 = false;
 			}
-			rewind(_m134);
+			rewind(_m137);
 			inputState->guessing--;
 		}
-		if ( synPredMatched134 ) {
+		if ( synPredMatched137 ) {
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp86_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
 				tmp86_AST = astFactory->create(LT(1));
@@ -2461,11 +2461,11 @@ void Sqlite3Parser::subexpr() {
 							}
 						}
 						else {
-							goto _loop155;
+							goto _loop158;
 						}
 						
 					}
-					_loop155:;
+					_loop158:;
 					} // ( ... )*
 					break;
 				}
@@ -3034,7 +3034,7 @@ void Sqlite3Parser::caseexpr() {
 		}
 		}
 		{ // ( ... )+
-		int _cnt163=0;
+		int _cnt166=0;
 		for (;;) {
 			if ((LA(1) == WHEN)) {
 				ANTLR_USE_NAMESPACE(antlr)RefAST tmp141_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
@@ -3059,12 +3059,12 @@ void Sqlite3Parser::caseexpr() {
 				}
 			}
 			else {
-				if ( _cnt163>=1 ) { goto _loop163; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
+				if ( _cnt166>=1 ) { goto _loop166; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
 			}
 			
-			_cnt163++;
+			_cnt166++;
 		}
-		_loop163:;
+		_loop166:;
 		}  // ( ... )+
 		{
 		switch ( LA(1)) {
