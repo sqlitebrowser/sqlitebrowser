@@ -1,22 +1,9 @@
+#include "testsqlobjects.h"
 #include "../sqlitetypes.h"
 
 #include <QtTest/QtTest>
 
 using namespace sqlb;
-
-class TestTable: public QObject
-{
-    Q_OBJECT
-private slots:
-    void sqlOutput();
-    void autoincrement();
-    void notnull();
-
-    void parseSQL();
-    void parseSQLdefaultexpr();
-    void parseSQLMultiPk();
-    void parseSQLForeignKey();
-};
 
 void TestTable::sqlOutput()
 {
@@ -163,4 +150,4 @@ void TestTable::parseSQLForeignKey()
 }
 
 QTEST_MAIN(TestTable)
-#include "testsqlobjects.moc"
+//#include "testsqlobjects.moc"
