@@ -1,4 +1,4 @@
-// $ANTLR 2.7.7 (20130425): sqlite3.g -> sqlite3TokenTypes.txt$
+// $ANTLR 2.7.7 (20121001): sqlite3.g -> sqlite3TokenTypes.txt$
 sqlite3    // output token vocab name
 ABORT="ABORT"=4
 ACTION="ACTION"=5

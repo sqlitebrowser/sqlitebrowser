@@ -92,7 +92,6 @@ QUOTEDID
 	: '`' ( ~('`') )* '`'
 	| '[' ( ~(']') )*  ']'
 	| '"' ( ~('"') )* '"'
-	| '\'' ( ~('\'') )* '\''
 	;
 
 NUMERIC
@@ -160,7 +159,7 @@ options {
   buildAST = true;
 }
 
-id : ID | QUOTEDID ;
+id : ID | QUOTEDID | STRINGLITERAL ;
 
 databasename
   :
@@ -224,7 +223,7 @@ columndef
   {#columndef = #([COLUMNDEF, "COLUMNDEF"], #columndef);}
   ;
 	
-name : ID | QUOTEDID;
+name : ID | QUOTEDID | STRINGLITERAL;
 
 type_name
   :
@@ -339,7 +338,7 @@ suffixexpr
 literalvalue
   :	
     NUMERIC
-  | STRINGLITERAL
+//  | STRINGLITERAL // captured by columnname
 //  | blob-literal
   | NULL_T
   | CURRENT_TIME
