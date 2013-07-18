@@ -2,7 +2,7 @@
 #define INC_Sqlite3Parser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
+/* $ANTLR 2.7.7 (20121001): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "sqlite3TokenTypes.hpp"
@@ -125,6 +125,8 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_20;
 	static const unsigned long _tokenSet_21_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_21;
+	static const unsigned long _tokenSet_22_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_22;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/
