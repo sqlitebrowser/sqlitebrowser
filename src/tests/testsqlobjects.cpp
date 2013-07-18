@@ -146,7 +146,17 @@ void TestTable::parseSQLForeignKey()
     QVERIFY(tab.name() == "grammar_test");
     QVERIFY(tab.fields().at(0)->name() == "id");
     QVERIFY(tab.fields().at(1)->name() == "test");
+}
 
+void TestTable::parseSQLSingleQuotes()
+{
+    QString sSQL = "CREATE TABLE 'test'('id','test');";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.name() == "test");
+    QVERIFY(tab.fields().at(0)->name() == "id");
+    QVERIFY(tab.fields().at(1)->name() == "test");
 }
 
 QTEST_MAIN(TestTable)
