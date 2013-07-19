@@ -1,5 +1,6 @@
 #include "DbStructureModel.h"
 #include "sqlitedb.h"
+#include "sqlitetablemodel.h"
 #include <QTreeWidgetItem>
 #include <QMimeData>
 #include <QMessageBox>
@@ -183,7 +184,26 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
     {
         // Only export data for valid indices and only for the SQL column, i.e. only once per row
         if(index.isValid() && index.column() == 3)
+        {
+            // Add the SQL code used to create the object
             d = d.append(data(index, Qt::DisplayRole).toString() + ";\n");
+
+            // If it is a table also add the content
+            if(data(index.sibling(index.row(), 1), Qt::DisplayRole).toString() == "table")
+            {
+                SqliteTableModel tableModel(0, m_db);
+                tableModel.setTable(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString());
+                for(int i=0;i<tableModel.rowCount();i++)
+                {
+                    QString insertStatement = "INSERT INTO `" + data(index.sibling(index.row(), 0), Qt::DisplayRole).toString() + "` VALUES(";
+                    for(int j=1;j<tableModel.columnCount();j++)
+                        insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
+                    insertStatement.chop(1);
+                    insertStatement += ");\n";
+                    d = d.append(insertStatement);
+                }
+            }
+        }
     }
 
     // Create the MIME data object
