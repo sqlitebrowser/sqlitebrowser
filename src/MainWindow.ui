@@ -48,7 +48,7 @@
         <bool>true</bool>
        </property>
        <property name="dragDropMode">
-        <enum>QAbstractItemView::DragOnly</enum>
+        <enum>QAbstractItemView::DragDrop</enum>
        </property>
        <property name="alternatingRowColors">
         <bool>true</bool>

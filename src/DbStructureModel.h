@@ -25,9 +25,11 @@ public:
 
     QStringList mimeTypes() const;
     QMimeData* mimeData(const QModelIndexList& indices) const;
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
 
 private:
     QTreeWidgetItem* rootItem;
+    DBBrowserDB* m_db;
 };
 
 #endif

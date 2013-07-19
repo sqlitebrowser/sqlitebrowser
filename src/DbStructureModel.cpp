@@ -2,6 +2,8 @@
 #include "sqlitedb.h"
 #include <QTreeWidgetItem>
 #include <QMimeData>
+#include <QMessageBox>
+#include <QApplication>
 
 DbStructureModel::DbStructureModel(QObject* parent)
     : QAbstractItemModel(parent)
@@ -42,15 +44,15 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
 Qt::ItemFlags DbStructureModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
-        return 0;
+        return Qt::ItemIsDropEnabled;
 
     // All items are enabled and selectable
-    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDropEnabled;
 
     // Only enable dragging for entire table objects
     QString type = data(index.sibling(index.row(), 1), Qt::DisplayRole).toString();
     if(type == "table" || type == "view" || type == "index" || type == "trigger")
-            flags |= Qt::ItemIsDragEnabled;
+        flags |= Qt::ItemIsDragEnabled;
 
     return flags;
 }
@@ -109,6 +111,9 @@ int DbStructureModel::rowCount(const QModelIndex& parent) const
 
 void DbStructureModel::reloadData(DBBrowserDB* db)
 {
+    // Save pointer to DB object
+    m_db = db;
+
     // Remove all data except for the root item
     while(rootItem->childCount())
     {
@@ -183,6 +188,33 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 
     // Create the MIME data object
     QMimeData* mime = new QMimeData();
+    mime->setProperty("db_file", m_db->curDBFilename);      // Also save the file name to avoid dropping an object on the same database as it comes from
     mime->setData("text/plain", d);
     return mime;
+}
+
+bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int, int, const QModelIndex&)
+{
+    if(action == Qt::IgnoreAction)
+        return true;
+
+    if(!data->hasFormat("text/plain"))
+        return false;
+
+    if(data->property("db_file") == m_db->curDBFilename)
+        return false;
+
+    // Get data
+    QByteArray d = data->data("text/plain");
+
+    // Try to execute the SQL statement
+    if(m_db->executeMultiSQL(d, true, true))
+    {
+        m_db->updateSchema();
+        reloadData(m_db);
+        return true;
+    } else {
+        QMessageBox::warning(0, QApplication::applicationName(), m_db->lastErrorMessage);
+        return false;
+    }
 }
