@@ -89,10 +89,11 @@ QT4_WRAP_UI(SQLB_FORM_HDR ${SQLB_FORMS})
 QT4_ADD_RESOURCES(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
 
 # get git version hash
-if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
-	add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/src/gen_version.h COMMAND ${CMAKE_SOURCE_DIR}/src/version.sh ${CMAKE_SOURCE_DIR}/src DEPENDS .git/HEAD)
-endif(EXISTS ${CMAKE_SOURCE_DIR}/.git)
-set_source_files_properties(src/AboutDialog.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_SOURCE_DIR}/src/gen_version.h)
+# disable version info generation for release #
+#if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
+#	add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/src/gen_version.h COMMAND ${CMAKE_SOURCE_DIR}/src/version.sh ${CMAKE_SOURCE_DIR}/src DEPENDS .git/HEAD)
+#endif(EXISTS ${CMAKE_SOURCE_DIR}/.git)
+#set_source_files_properties(src/AboutDialog.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_SOURCE_DIR}/src/gen_version.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} src)
 
