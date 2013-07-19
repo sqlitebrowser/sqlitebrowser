@@ -1,6 +1,7 @@
 #include "DbStructureModel.h"
 #include "sqlitedb.h"
 #include <QTreeWidgetItem>
+#include <QMimeData>
 
 DbStructureModel::DbStructureModel(QObject* parent)
     : QAbstractItemModel(parent)
@@ -43,7 +44,15 @@ Qt::ItemFlags DbStructureModel::flags(const QModelIndex &index) const
     if(!index.isValid())
         return 0;
 
-    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    // All items are enabled and selectable
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+
+    // Only enable dragging for entire table objects
+    QString type = data(index.sibling(index.row(), 1), Qt::DisplayRole).toString();
+    if(type == "table" || type == "view" || type == "index" || type == "trigger")
+            flags |= Qt::ItemIsDragEnabled;
+
+    return flags;
 }
 
 QVariant DbStructureModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -152,4 +161,28 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
 
     // Refresh the view
     reset();
+}
+
+QStringList DbStructureModel::mimeTypes() const
+{
+    QStringList types;
+    types << "text/plain";
+    return types;
+}
+
+QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
+{
+    // Loop through selected indices
+    QByteArray d;
+    foreach(QModelIndex index, indices)
+    {
+        // Only export data for valid indices and only for the SQL column, i.e. only once per row
+        if(index.isValid() && index.column() == 3)
+            d = d.append(data(index, Qt::DisplayRole).toString() + ";\n");
+    }
+
+    // Create the MIME data object
+    QMimeData* mime = new QMimeData();
+    mime->setData("text/plain", d);
+    return mime;
 }

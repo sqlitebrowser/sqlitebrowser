@@ -23,6 +23,9 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& = QModelIndex()) const;
 
+    QStringList mimeTypes() const;
+    QMimeData* mimeData(const QModelIndexList& indices) const;
+
 private:
     QTreeWidgetItem* rootItem;
 };
