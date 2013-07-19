@@ -26,6 +26,7 @@
 #include "FilterTableHeader.h"
 #include "SqlExecutionArea.h"
 #include "VacuumDialog.h"
+#include "DbStructureModel.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -54,16 +55,19 @@ void MainWindow::init()
     // Init the SQL log dock
     db.mainWindow = this;
 
-    // Set up the db tree widget
-    ui->dbTreeWidget->setColumnHidden(1, true);
-    ui->dbTreeWidget->setColumnWidth(0, 300);
-
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
 
     // Set up DB models
     ui->dataTable->setModel(m_browseTableModel);
 
+    // Set up DB structure tab
+    dbStructureModel = new DbStructureModel(ui->dbTreeWidget);
+    ui->dbTreeWidget->setModel(dbStructureModel);
+    ui->dbTreeWidget->setColumnHidden(1, true);
+    ui->dbTreeWidget->setColumnWidth(0, 300);
+
+    // Set up filter row
     FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
     connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
     connect(tableHeader, SIGNAL(filterChanged(int,QString)), this, SLOT(setRecordsetLabel()));
@@ -103,6 +107,7 @@ void MainWindow::init()
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
+    connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
 
     // Load window settings
     restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
@@ -175,10 +180,8 @@ void MainWindow::fileNew()
     }
 }
 
-//** Populate DbTree Structure
 void MainWindow::populateStructure()
 {
-    ui->dbTreeWidget->model()->removeRows(0, ui->dbTreeWidget->model()->rowCount());
     completerModelTables.clear();
     completerModelsFields.clear();
     if(!db.isOpen())
@@ -229,51 +232,9 @@ void MainWindow::populateStructure()
         sqlarea->getEditor()->insertFieldCompleterModels(completerModelsFields);
     }
 
-    // fill the structure tab
-    QMap<QString, QTreeWidgetItem*> typeToParentItem;
-    QTreeWidgetItem* itemTables = new QTreeWidgetItem(ui->dbTreeWidget);
-    itemTables->setIcon(0, QIcon(QString(":/icons/table")));
-    itemTables->setText(0, tr("Tables (%1)").arg(db.objMap.values("table").count()));
-    typeToParentItem.insert("table", itemTables);
-    QTreeWidgetItem* itemIndices = new QTreeWidgetItem(ui->dbTreeWidget);
-    itemIndices->setIcon(0, QIcon(QString(":/icons/index")));
-    itemIndices->setText(0, tr("Indices (%1)").arg(db.objMap.values("index").count()));
-    typeToParentItem.insert("index", itemIndices);
-    QTreeWidgetItem* itemViews = new QTreeWidgetItem(ui->dbTreeWidget);
-    itemViews->setIcon(0, QIcon(QString(":/icons/view")));
-    itemViews->setText(0, tr("Views (%1)").arg(db.objMap.values("view").count()));
-    typeToParentItem.insert("view", itemViews);
-    QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(ui->dbTreeWidget);
-    itemTriggers->setIcon(0, QIcon(QString(":/icons/trigger")));
-    itemTriggers->setText(0, tr("Triggers (%1)").arg(db.objMap.values("trigger").count()));
-    typeToParentItem.insert("trigger", itemTriggers);
-    ui->dbTreeWidget->setItemExpanded(itemTables, true);
-    ui->dbTreeWidget->setItemExpanded(itemIndices, true);
-    ui->dbTreeWidget->setItemExpanded(itemViews, true);
-    ui->dbTreeWidget->setItemExpanded(itemTriggers, true);
-
-    for(objectMap::ConstIterator it=db.objMap.begin();it!=db.objMap.end();++it)
-    {
-        // Object node
-        QTreeWidgetItem *tableItem = new QTreeWidgetItem(typeToParentItem.value((*it).gettype()));
-        tableItem->setIcon(0, QIcon(QString(":/icons/%1").arg((*it).gettype())));
-        tableItem->setText(0, (*it).getname());
-        tableItem->setText(1, (*it).gettype());
-        tableItem->setText(3, (*it).getsql());
-
-        // If it is a table add the field Nodes
-        if((*it).gettype() == "table" || (*it).gettype() == "view")
-        {
-            for(int i=0;i<(*it).fldmap.size();i++)
-            {
-                QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
-                fldItem->setText(0, (*it).fldmap.at(i)->name());
-                fldItem->setText(1, "field");
-                fldItem->setText(2, (*it).fldmap.at(i)->type());
-                fldItem->setIcon(0, QIcon(":/icons/field"));
-            }
-        }
-    }
+    // Refresh the structure tab
+    dbStructureModel->reloadData(&db);
+    ui->dbTreeWidget->expandToDepth(0);
 }
 
 void MainWindow::populateTable( const QString & tablename)
@@ -517,9 +478,9 @@ void MainWindow::compact()
 
 void MainWindow::deleteObject()
 {
-    // Get name of table to delete
-    QString table = ui->dbTreeWidget->currentItem()->text(0);
-    QString type = ui->dbTreeWidget->currentItem()->text(1);
+    // Get name and type of object to delete
+    QString table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
 
     // Ask user if he really wants to delete that table
     if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the %1 '%2'?\nAll data associated with the %1 will be lost.").arg(type).arg(table),
@@ -547,7 +508,7 @@ void MainWindow::editTable()
     if(!ui->dbTreeWidget->selectionModel()->hasSelection()){
         return;
     }
-    QString tableToEdit = ui->dbTreeWidget->currentItem()->text(0);
+    QString tableToEdit = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
     EditTableDialog dialog(&db, tableToEdit, this);
     if(dialog.exec())
@@ -867,9 +828,9 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
     if(!ui->dbTreeWidget->selectionModel()->hasSelection())
         return;
 
-    QTreeWidgetItem *cItem = ui->dbTreeWidget->currentItem();
+    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
 
-    if(cItem->text(1) == "table" || cItem->text(1) == "view" || cItem->text(1) == "trigger" || cItem->text(1) == "index")
+    if(type == "table" || type == "view" || type == "trigger" || type == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
 //** Tree selection changed
@@ -879,26 +840,27 @@ void MainWindow::changeTreeSelection()
     ui->editDeleteObjectAction->setEnabled(false);
     ui->editModifyTableAction->setEnabled(false);
 
-    if(ui->dbTreeWidget->currentItem() == 0)
+    if(!ui->dbTreeWidget->currentIndex().isValid())
         return;
 
     // Change the text of the actions
-    ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(ui->dbTreeWidget->currentItem()->text(1))));
-    if(ui->dbTreeWidget->currentItem()->text(1) == "view")
+    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
+    ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(type)));
+    if(type == "view")
         ui->editDeleteObjectAction->setText(tr("Delete View"));
-    else if(ui->dbTreeWidget->currentItem()->text(1) == "trigger")
+    else if(type == "trigger")
         ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
-    else if(ui->dbTreeWidget->currentItem()->text(1) == "index")
+    else if(type == "index")
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
     else
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
 
     // Activate actions
-    if(ui->dbTreeWidget->currentItem()->text(1) == "table")
+    if(type == "table")
     {
         ui->editDeleteObjectAction->setEnabled(true);
         ui->editModifyTableAction->setEnabled(true);
-    } else if(ui->dbTreeWidget->currentItem()->text(1) == "view" || ui->dbTreeWidget->currentItem()->text(1) == "trigger" || ui->dbTreeWidget->currentItem()->text(1) == "index") {
+    } else if(type == "view" || type == "trigger" || type == "index") {
         ui->editDeleteObjectAction->setEnabled(true);
     }
 }

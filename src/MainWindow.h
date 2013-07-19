@@ -14,6 +14,7 @@ class QIntValidator;
 class QLabel;
 class QModelIndex;
 class SqliteTableModel;
+class DbStructureModel;
 
 namespace Ui {
 class MainWindow;
@@ -61,6 +62,8 @@ private:
 
     SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;
     SQLiteSyntaxHighlighter* sqliteHighlighterLogApp;
+
+    DbStructureModel* dbStructureModel;
 
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];

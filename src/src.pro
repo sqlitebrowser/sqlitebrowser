@@ -46,7 +46,8 @@ HEADERS += \
     FilterTableHeader.h \
     gen_version.h \
     SqlExecutionArea.h \
-    VacuumDialog.h
+    VacuumDialog.h \
+    DbStructureModel.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -67,7 +68,8 @@ SOURCES += \
     sqlitetablemodel.cpp \
     FilterTableHeader.cpp \
     SqlExecutionArea.cpp \
-    VacuumDialog.cpp
+    VacuumDialog.cpp \
+    DbStructureModel.cpp
 
 RESOURCES += icons/icons.qrc
 
