@@ -217,7 +217,8 @@ namespace
 QString identifier(antlr::RefAST ident)
 {
     QString sident = ident->getText().c_str();
-    if(ident->getType() == sqlite3TokenTypes::QUOTEDID)
+    if(ident->getType() == sqlite3TokenTypes::QUOTEDID ||
+       ident->getType() == sqlite3TokenTypes::STRINGLITERAL)
     {
         sident.remove(0, 1);
         sident.remove(sident.length() - 1, 1);
@@ -245,7 +246,13 @@ Table CreateTableWalker::table()
     {
         antlr::RefAST s = m_root->getFirstChild();
         //skip to tablename
-        while(s->getType() != Sqlite3Lexer::ID && s->getType() != Sqlite3Lexer::QUOTEDID) s = s->getNextSibling();
+        while(s->getType() != Sqlite3Lexer::ID &&
+              s->getType() != Sqlite3Lexer::QUOTEDID &&
+              s->getType() != Sqlite3Lexer::STRINGLITERAL)
+        {
+            s = s->getNextSibling();
+        }
+
         tab.setName(identifier(s));
 
         s = s->getNextSibling(); // LPAREN
