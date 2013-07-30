@@ -672,7 +672,6 @@ void MainWindow::executeQuery()
             sqlite3_finalize(vm);
             switch(sql3status)
             {
-            case SQLITE_DONE:
             case SQLITE_ROW:
             {
                 sqlWidget->getModel()->setQuery(queryPart);
@@ -689,6 +688,7 @@ void MainWindow::executeQuery()
                     sql3status = SQLITE_ERROR;
                 }
             }
+            case SQLITE_DONE:
             case SQLITE_OK:
             {
                 if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) )

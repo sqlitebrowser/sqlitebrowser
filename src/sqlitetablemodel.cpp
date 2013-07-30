@@ -285,7 +285,11 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 {
     int currentsize = m_data.size();
 
-    QString sLimitQuery = QString("%1 LIMIT %2, %3;").arg(m_sQuery).arg(from).arg(to-from);
+    QString sLimitQuery;
+    if(m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive) || m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive))
+        sLimitQuery = m_sQuery;
+    else
+        sLimitQuery = QString("%1 LIMIT %2, %3;").arg(m_sQuery).arg(from).arg(to-from);
     m_db->logSQL(sLimitQuery, kLogMsg_App);
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
