@@ -287,9 +287,18 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 
     QString sLimitQuery;
     if(m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive) || m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive))
+    {
         sLimitQuery = m_sQuery;
-    else
-        sLimitQuery = QString("%1 LIMIT %2, %3;").arg(m_sQuery).arg(from).arg(to-from);
+    } else {
+        // Remove trailing trailing semicolon
+        QString queryTemp = rtrimChar(m_sQuery, ';');
+
+        // If the query ends with a LIMIT statement take it as it is, if not append our own LIMIT part for lazy population
+        if(queryTemp.contains(QRegExp("LIMIT\\s+\\d+\\s*,\\s*\\d+\\s*$", Qt::CaseInsensitive)))
+            sLimitQuery = queryTemp;
+        else
+            sLimitQuery = QString("%1 LIMIT %2, %3;").arg(queryTemp).arg(from).arg(to-from);
+    }
     m_db->logSQL(sLimitQuery, kLogMsg_App);
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
