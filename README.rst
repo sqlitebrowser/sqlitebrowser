@@ -54,7 +54,7 @@ Windows binaries
 ----------------
 Windows binaries can be downloaded from here:
 
-http://rp.oldsch00l.com/sqlitebrowser/
+https://github.com/rp-/sqlitebrowser/releases
 
 MacOS X
 -------
