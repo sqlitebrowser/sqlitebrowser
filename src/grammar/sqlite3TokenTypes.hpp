@@ -1,7 +1,7 @@
 #ifndef INC_sqlite3TokenTypes_hpp_
 #define INC_sqlite3TokenTypes_hpp_
 
-/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "sqlite3TokenTypes.hpp"$ */
+/* $ANTLR 2.7.7 (20121001): "sqlite3.g" -> "sqlite3TokenTypes.hpp"$ */
 
 #ifndef CUSTOM_API
 # define CUSTOM_API

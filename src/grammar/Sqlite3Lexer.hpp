@@ -2,7 +2,7 @@
 #define INC_Sqlite3Lexer_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Lexer.hpp"$ */
+/* $ANTLR 2.7.7 (20121001): "sqlite3.g" -> "Sqlite3Lexer.hpp"$ */
 #include <antlr/CommonToken.hpp>
 #include <antlr/InputBuffer.hpp>
 #include <antlr/BitSet.hpp>
@@ -64,8 +64,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_3;
 	static const unsigned long _tokenSet_4_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_4;
-	static const unsigned long _tokenSet_5_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_5;
 };
 
 #endif /*INC_Sqlite3Lexer_hpp_*/

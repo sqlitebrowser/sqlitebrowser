@@ -1,22 +1,9 @@
+#include "testsqlobjects.h"
 #include "../sqlitetypes.h"
 
 #include <QtTest/QtTest>
 
 using namespace sqlb;
-
-class TestTable: public QObject
-{
-    Q_OBJECT
-private slots:
-    void sqlOutput();
-    void autoincrement();
-    void notnull();
-
-    void parseSQL();
-    void parseSQLdefaultexpr();
-    void parseSQLMultiPk();
-    void parseSQLForeignKey();
-};
 
 void TestTable::sqlOutput()
 {
@@ -159,8 +146,18 @@ void TestTable::parseSQLForeignKey()
     QVERIFY(tab.name() == "grammar_test");
     QVERIFY(tab.fields().at(0)->name() == "id");
     QVERIFY(tab.fields().at(1)->name() == "test");
+}
 
+void TestTable::parseSQLSingleQuotes()
+{
+    QString sSQL = "CREATE TABLE 'test'('id','test');";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.name() == "test");
+    QVERIFY(tab.fields().at(0)->name() == "id");
+    QVERIFY(tab.fields().at(1)->name() == "test");
 }
 
 QTEST_MAIN(TestTable)
-#include "testsqlobjects.moc"
+//#include "testsqlobjects.moc"
