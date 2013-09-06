@@ -62,7 +62,7 @@ QString removeComments(QString s)
                 stringChars.push_back(s.at(i));
         } else if(stringChars.empty() && s.at(i) == '-' && lastChar == '-') {
             if(s.contains('\n'))
-                return removeComments(s.remove(i-1, s.indexOf('\n', i)-i));
+                return removeComments(s.remove(i-1, s.indexOf('\n', i)-i+2));
             else
                 return s.left(i-1);
         }
