@@ -61,8 +61,7 @@ MacOS X
 
 SQLite Database Browser works pretty well on MacOS X.
 
-- OSX 10.7 (Lion) works
-- OSX 10.8 (Mountain Lion) probably works, but hasn't been tested yet.
+- OSX 10.7 (Lion) and 10.8 (Mountain Lion) are tested and known to work
 
 Building on OSX is simple, but depends on SQLite and Qt to be installed
 using Homebrew first::
@@ -72,7 +71,7 @@ using Homebrew first::
 
 Then it's just a matter of::
 
-  $ git checkout https://github.com/rp-/sqlitebrowser.git
+  $ git clone https://github.com/rp-/sqlitebrowser.git
   $ cd sqlitebrowser
   $ qmake
   $ make
