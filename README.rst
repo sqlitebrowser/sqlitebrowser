@@ -4,6 +4,16 @@ SQLite Database Browser
 
 This is a fork from the SF project which seems to be stagnant.
 
+Screenshot
+----------
+
+.. image:: https://github.com/rp-/sqlitebrowser/raw/master/images/sqlitebrowser.png
+   :height: 641px
+   :width: 725px
+   :scale: 100%
+   :alt: SQLiteBrowser Screenshot
+   :align: center
+
 Old Project
 -----------
 - http://sqlitebrowser.sourceforge.net
