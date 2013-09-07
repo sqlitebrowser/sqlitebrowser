@@ -349,18 +349,21 @@ void MainWindow::addRecord()
 
 void MainWindow::deleteRecord()
 {
-    if(ui->dataTable->currentIndex().isValid())
+    if(ui->dataTable->selectionModel()->hasSelection())
     {
-        int row = ui->dataTable->currentIndex().row();
-        if(m_browseTableModel->removeRow(row))
+        int old_row = ui->dataTable->currentIndex().row();
+        while(ui->dataTable->selectionModel()->hasSelection())
         {
-            populateTable(ui->comboBrowseTable->currentText());
-            if(row > m_browseTableModel->totalRowCount())
-                row = m_browseTableModel->totalRowCount();
-            selectTableLine(row);
-        } else {
-            QMessageBox::warning( this, QApplication::applicationName(), tr("Error deleting record:\n") + db.lastErrorMessage);
+            if(!m_browseTableModel->removeRow(ui->dataTable->selectionModel()->selectedIndexes().first().row()))
+            {
+                QMessageBox::warning(this, QApplication::applicationName(), tr("Error deleting record:\n%1").arg(db.lastErrorMessage));
+                break;
+            }
         }
+        populateTable(ui->comboBrowseTable->currentText());
+        if(old_row > m_browseTableModel->totalRowCount())
+            old_row = m_browseTableModel->totalRowCount();
+        selectTableLine(old_row);
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
