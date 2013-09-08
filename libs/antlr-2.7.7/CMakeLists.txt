@@ -85,5 +85,7 @@ set(ANTLR_HDR
 		antlr/config.hpp
 		)
 
+include_directories(.)
+
 add_library(antlr ${ANTLR_SRC} ${ANTLR_HDR})
 
