@@ -14,6 +14,7 @@ class QIntValidator;
 class QLabel;
 class QModelIndex;
 class SqliteTableModel;
+class DbStructureModel;
 
 namespace Ui {
 class MainWindow;
@@ -62,6 +63,8 @@ private:
     SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;
     SQLiteSyntaxHighlighter* sqliteHighlighterLogApp;
 
+    DbStructureModel* dbStructureModel;
+
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
@@ -105,7 +108,6 @@ private slots:
     virtual void populateTable(const QString& tablename);
     virtual void resetBrowser();
     virtual void fileClose();
-    virtual void fileExit();
     virtual void addRecord();
     virtual void deleteRecord();
     virtual void selectTableLine( int lineToSelect );

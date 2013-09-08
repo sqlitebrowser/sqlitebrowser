@@ -4,6 +4,16 @@ SQLite Database Browser
 
 This is a fork from the SF project which seems to be stagnant.
 
+Screenshot
+----------
+
+.. image:: https://github.com/rp-/sqlitebrowser/raw/master/images/sqlitebrowser.png
+   :height: 641px
+   :width: 725px
+   :scale: 100%
+   :alt: SQLiteBrowser Screenshot
+   :align: center
+
 Old Project
 -----------
 - http://sqlitebrowser.sourceforge.net
@@ -54,16 +64,14 @@ Windows binaries
 ----------------
 Windows binaries can be downloaded from here:
 
-http://rp.oldsch00l.com/sqlitebrowser/
+https://github.com/rp-/sqlitebrowser/releases
 
-=======
 MacOS X
-=======
+-------
 
 SQLite Database Browser works pretty well on MacOS X.
 
-- OSX 10.7 (Lion) works
-- OSX 10.8 (Mountain Lion) probably works, but hasn't been tested yet.
+- OSX 10.7 (Lion) and 10.8 (Mountain Lion) are tested and known to work
 
 Building on OSX is simple, but depends on SQLite and Qt to be installed
 using Homebrew first::
@@ -73,7 +81,7 @@ using Homebrew first::
 
 Then it's just a matter of::
 
-  $ git checkout https://github.com/rp-/sqlitebrowser.git
+  $ git clone https://github.com/rp-/sqlitebrowser.git
   $ cd sqlitebrowser
   $ qmake
   $ make

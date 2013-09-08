@@ -34,6 +34,8 @@ private:
     void updateColumnWidth();
     void updateSqlText();
 
+    void moveCurrentField(bool down);
+
 private slots:
     virtual void populateFields();
     virtual void addField();
@@ -44,6 +46,8 @@ private slots:
     virtual void checkInput();
     virtual void itemChanged(QTreeWidgetItem* item, int column);
     virtual void updateTypes();
+    virtual void moveUp();
+    virtual void moveDown();
 
 private:
     Ui::EditTableDialog* ui;

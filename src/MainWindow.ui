@@ -40,9 +40,15 @@
       </widget>
      </item>
      <item>
-      <widget class="QTreeWidget" name="dbTreeWidget">
+      <widget class="QTreeView" name="dbTreeWidget">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDrop</enum>
        </property>
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -53,26 +59,6 @@
        <property name="animated">
         <bool>true</bool>
        </property>
-       <column>
-        <property name="text">
-         <string>Name</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Object</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Type</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Schema</string>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
@@ -1746,22 +1732,6 @@
    <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>MainWindow</receiver>
    <slot>createTreeContextMenu(QPoint)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>399</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dbTreeWidget</sender>
-   <signal>itemSelectionChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>changeTreeSelection()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>399</x>

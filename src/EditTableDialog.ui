@@ -86,6 +86,46 @@
          </widget>
         </item>
         <item>
+         <widget class="QToolButton" name="buttonMoveUp">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Move field up</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons.qrc">
+            <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="buttonMoveDown">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Move field down</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons.qrc">
+            <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -292,6 +332,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonMoveUp</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>moveUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonMoveDown</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>moveDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>413</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
@@ -300,5 +372,7 @@
   <slot>removeField()</slot>
   <slot>checkInput()</slot>
   <slot>itemChanged()</slot>
+  <slot>moveUp()</slot>
+  <slot>moveDown()</slot>
  </slots>
 </ui>

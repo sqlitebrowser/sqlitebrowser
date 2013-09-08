@@ -65,13 +65,6 @@ public:
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
 
-    /**
-     * @brief getTableSQL Returns the create table statement for the given table.
-     * @param sTable Table name
-     * @return An empty string if the table does not exist
-     *         or the create table statement.
-     */
-    QString getTableSQL(const QString& sTable);
     void updateSchema();
     int addRecord(const QString& sTableName);
     bool deleteRecord(const QString& table, int rowid);
@@ -86,9 +79,10 @@ public:
      * @param tablename Specifies the table name
      * @param name Name of the column to edit
      * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
+     * @param move Set this to a value != 0 to move the new column to a different position
      * @return true if renaming was successfull, false if not. In the latter case also lastErrorMessage is set
      */
-    bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to);
+    bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move = 0);
 
     QStringList getTableFields(const QString & tablename) const;
     QStringList getBrowsableObjectNames() const;

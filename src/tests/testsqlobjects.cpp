@@ -65,7 +65,7 @@ void TestTable::parseSQL()
     QString sSQL = "create TABLE hero (\n"
             "\tid integer PRIMARY KEY AUTOINCREMENT,\n"
             "\tname text NOT NULL DEFAULT 'xxxx',\n"
-            "\tinfo VARCHAR(255) CHECK (info == x)\n"
+            "\tinfo VARCHAR(255) CHECK (info == 'x')\n"
             ");";
 
     Table tab = Table::parseSQL(sSQL);
@@ -84,7 +84,7 @@ void TestTable::parseSQL()
     QVERIFY(tab.fields().at(1)->notnull());
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
-    QCOMPARE(tab.fields().at(2)->check(), QString("info==x"));
+    QCOMPARE(tab.fields().at(2)->check(), QString("info=='x'"));
 
 
 }

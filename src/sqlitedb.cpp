@@ -424,7 +424,7 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     // add record is seldom called, for now this is ok
     // but if we ever going to add a lot of records
     // we should cache the parsed tables somewhere
-    sqlb::Table table = sqlb::Table::parseSQL(getTableSQL(sTableName));
+    sqlb::Table table = sqlb::Table::parseSQL(getObjectByName(sTableName).getsql());
     QString sInsertstmt = table.emptyInsertStmt();
     lastErrorMessage = "";
     logSQL(sInsertstmt, kLogMsg_App);
@@ -518,7 +518,7 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
     return result;
 }
 
-bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to)
+bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move)
 {
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
     // If SQLite should fully support this command one day, this entire
@@ -531,7 +531,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     //return executeSQL(sql);
 
     // Collect information on the current DB layout
-    QString tableSql = getTableSQL(tablename);
+    QString tableSql = getObjectByName(tablename).getsql();
     if(tableSql.isEmpty())
     {
         lastErrorMessage = QObject::tr("renameColumn: cannot find table %1.").arg(tablename);
@@ -574,9 +574,20 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         select_cols.chop(1);    // remove last comma
     } else {
         // We want to modify it
-        newSchema.setField(newSchema.findField(name), to);
 
-        select_cols = "*";
+        // Move field
+        int index = newSchema.findField(name);
+        sqlb::FieldPtr temp = newSchema.fields().at(index);
+        newSchema.setField(index, newSchema.fields().at(index + move));
+        newSchema.setField(index + move, temp);
+
+        // Get names of fields to select from old table now - after the field has been moved and before it might be renamed
+        for(int i=0;i<newSchema.fields().count();++i)
+            select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
+        select_cols.chop(1);    // remove last comma
+
+        // Modify field
+        newSchema.setField(index + move, to);
     }
 
     // Create the new table
@@ -738,32 +749,6 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
 
         mainWindow->logSql(statement, msgtype);
     }
-}
-
-QString DBBrowserDB::getTableSQL(const QString& sTable)
-{
-    sqlite3_stmt *vm;
-    const char *tail;
-    int err;
-    QString sTableSQL;
-
-    QString statement = QString("SELECT sql FROM sqlite_master WHERE name='%1';").arg(sTable);
-
-    QByteArray utf8Statement = statement.toUtf8();
-    err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
-                        &vm, &tail);
-    if (err == SQLITE_OK){
-        logSQL(statement, kLogMsg_App);
-        if( sqlite3_step(vm) == SQLITE_ROW )
-        {
-            sTableSQL = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
-        }
-        sqlite3_finalize(vm);
-    }else{
-        qCritical() << "Unable to get sql for table: " << sTable;
-    }
-
-    return sTableSQL;
 }
 
 void DBBrowserDB::updateSchema( )

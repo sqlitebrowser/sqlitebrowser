@@ -36,6 +36,7 @@ set(SQLB_MOC_HDR
 	src/VacuumDialog.h
 	src/sqlitetablemodel.h
 	src/sqltextedit.h
+	src/DbStructureModel.h
 )
 
 set(SQLB_SRC
@@ -56,6 +57,7 @@ set(SQLB_SRC
 	src/sqlitetablemodel.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
+	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp
 )
