@@ -96,6 +96,18 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
 endif(EXISTS ${CMAKE_SOURCE_DIR}/.git)
 set_source_files_properties(src/AboutDialog.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_SOURCE_DIR}/src/gen_version.h)
 
+#icon for windows
+if(WIN32)
+	IF( MINGW )
+	# resource compilation for MinGW
+		ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o
+			COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc -o ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o )
+		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o)
+	ELSE( MINGW )
+		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_SOURCE_DIR}src/winapp.rc)
+	ENDIF( MINGW )
+endif(WIN32)
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} src)
 
 add_executable(${PROJECT_NAME} ${SQLB_HDR} ${SQLB_SRC} ${SQLB_FORM_HDR} ${SQLB_MOC} ${SQLB_RESOURCES_RCC})
@@ -105,3 +117,45 @@ add_dependencies(${PROJECT_NAME} antlr qhexedit)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR})
 
 target_link_libraries(${PROJECT_NAME} antlr qhexedit ${QT_LIBRARIES} sqlite3)
+
+install(TARGETS ${PROJECT_NAME}
+	RUNTIME DESTINATION bin
+	LIBRARY DESTINATION lib)
+
+if(WIN32)
+	install(FILES
+			${CMAKE_CURRENT_SOURCE_DIR}/dlls/libgcc_s_dw2-1.dll
+			${CMAKE_CURRENT_SOURCE_DIR}/dlls/libsqlite3-0.dll
+			${CMAKE_CURRENT_SOURCE_DIR}/dlls/libstdc++-6.dll
+			${CMAKE_CURRENT_SOURCE_DIR}/dlls/mingwm10.dll
+			${CMAKE_CURRENT_SOURCE_DIR}/dlls/QtCore4.dll
+			${CMAKE_CURRENT_SOURCE_DIR}/dlls/QtGui4.dll
+		DESTINATION bin)
+endif(WIN32)
+
+#cpack
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sqlite database browser UI")
+set(CPACK_PACKAGE_VENDOR "oldsch00l")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.rst")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_VERSION_MAJOR "3")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "SqliteBrowser${CPACK_PACKAGE_VERSION_MAJOR}")
+if(WIN32 AND NOT UNIX)
+	# There is a bug in NSI that does not handle full unix paths properly. Make
+	# sure there is at least one set of four (4) backlasshes.
+	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
+	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\sqlitebrowser.exe")
+	set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY}")
+	set(CPACK_NSIS_HELP_LINK "https:\\\\\\\\github.com\\\\rp-\\\\sqlitebrowser")
+	set(CPACK_NSIS_URL_INFO_ABOUT "https:\\\\\\\\github.com\\\\rp-\\\\sqlitebrowser")
+	set(CPACK_NSIS_CONTACT "peinthor@gmail.com")
+	set(CPACK_NSIS_MODIFY_PATH ON)
+else(WIN32 AND NOT UNIX)
+	set(CPACK_STRIP_FILES "bin/sqlitebrowser")
+	set(CPACK_SOURCE_STRIP_FILES "")
+endif(WIN32 AND NOT UNIX)
+set(CPACK_PACKAGE_EXECUTABLES "sqlitebrowser" "SqliteBrowser")
+include(CPack)
+
