@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>531</width>
-    <height>329</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>280</y>
+     <y>330</y>
      <width>351</width>
      <height>32</height>
     </rect>
@@ -71,11 +71,11 @@
      <x>20</x>
      <y>110</y>
      <width>491</width>
-     <height>161</height>
+     <height>211</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large;&quot;&gt;SQLite Database Browser is an open source, public domain, freeware visual tool used to create, design and edit SQLite database files.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;For more information on this program please visit our site at: &lt;a href=&quot;https://github.com/rp-/sqlitebrowser&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/rp-/sqlitebrowser&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the LGPL Qt Toolkit from http://www.qtsoftware.com&lt;br/&gt;See LICENSING.txt and Qt_LICENSE_LGPL.txt for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;SQLite Database Browser is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;br/&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our site at: &lt;a href=&quot;https://github.com/rp-/sqlitebrowser&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/rp-/sqlitebrowser&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the LGPL Qt Toolkit from http://www.qtsoftware.com&lt;br/&gt;See LICENSING.txt and Qt_LICENSE_LGPL.txt for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="scaledContents">
     <bool>false</bool>
