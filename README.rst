@@ -24,11 +24,11 @@ What it is
 
 (taken from the website linked to above; it's still true - now even more)
 
-SQLite Database Browser is a freeware, public domain, open source visual tool
-used to create, design and edit database files compatible with SQLite. It is
-meant to be used for users and developers that want to create databases, edit
-and search data using a familiar spreadsheet-like interface, without the need
-to learn complicated SQL commands.
+SQLite Database Browser is a freeware, open source visual tool used to create,
+design and edit database files compatible with SQLite. It is meant to be used
+for users and developers that want to create databases, edit and search data
+using a familiar spreadsheet-like interface, without the need to learn
+complicated SQL commands.
 
 What's been done since then
 ---------------------------
