@@ -97,13 +97,15 @@ QT4_ADD_RESOURCES(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
 #endif(EXISTS ${CMAKE_SOURCE_DIR}/.git)
 #set_source_files_properties(src/AboutDialog.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_SOURCE_DIR}/src/gen_version.h)
 
-#icon for windows
+#icon and correct libs/subsystem for windows
 if(WIN32)
 	IF( MINGW )
 	# resource compilation for MinGW
 		ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o
-			COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc -o ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o )
+			COMMAND windres -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc -o ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o )
 		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o)
+		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
+		set(ADDITIONAL_LIBS lcms lzma)
 	ELSE( MINGW )
 		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_SOURCE_DIR}src/winapp.rc)
 	ENDIF( MINGW )
@@ -117,22 +119,11 @@ add_dependencies(${PROJECT_NAME} antlr qhexedit)
 
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR})
 
-target_link_libraries(${PROJECT_NAME} antlr qhexedit ${QT_LIBRARIES} sqlite3)
+target_link_libraries(${PROJECT_NAME} antlr qhexedit ${QT_LIBRARIES} sqlite3 ${ADDITIONAL_LIBS})
 
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib)
-
-if(WIN32)
-	install(FILES
-			${CMAKE_CURRENT_SOURCE_DIR}/dlls/libgcc_s_dw2-1.dll
-			${CMAKE_CURRENT_SOURCE_DIR}/dlls/libsqlite3-0.dll
-			${CMAKE_CURRENT_SOURCE_DIR}/dlls/libstdc++-6.dll
-			${CMAKE_CURRENT_SOURCE_DIR}/dlls/mingwm10.dll
-			${CMAKE_CURRENT_SOURCE_DIR}/dlls/QtCore4.dll
-			${CMAKE_CURRENT_SOURCE_DIR}/dlls/QtGui4.dll
-		DESTINATION bin)
-endif(WIN32)
 
 #cpack
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sqlite database browser UI")
