@@ -49,7 +49,14 @@ the windows binary and create the correct makefiles:
 
   mkdir build-win
   cd build-win
-  cmake /path to mxe/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake ..
+  cmake -DCMAKE_TOOLCHAIN_FILE=/path to mxe/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake ..
+
+Before compiling we have to add the mxe/usr/bin directory to the PATH (so windres and makensis can be found):
+
+  export PATH=/path to mxe/usr/bin:$PATH
+
+Now compile:
+
   make
 
 If additionaly want an NSIS install:
