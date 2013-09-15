@@ -1,8 +1,8 @@
 BUILD INSTRUCTIONS AND REQUIREMENTS
 
-SQLite Database Browser requires Trolltech's Qt, version 4.6. 
+SQLite Database Browser requires Trolltech's Qt, version 4.6.
 For more information on QT please consult
-http://www.qtsoftware.com. The GPL version of Qt is available in almost 
+http://www.qtsoftware.com. The GPL version of Qt is available in almost
 all Linux distributions as a default package.
 
 The only requirements for building this code are the presence of Qt and sqlite3.
@@ -22,7 +22,39 @@ sqlitebrowser.exe, or sqlitebrowser.app) application in the src subdirectory.
 
 The same process works for building the code
 in any platform supported by Qt (including other Unix systems with
-X11.) 
+X11.)
 
-Please check the LICENSING.txt file for additional information.
+Cross compile windows
+=====================
+
+These are instructions to cross compile within a Linux system a Windows binary and installer
+
+Requirements:
+
+  * mxe cross compile environment --> http://mxe.cc
+  * cmake
+  * sqlitebrowser sources
+
+Get the following mxe packages:
+
+  make gcc sqlite qt nsis
+
+After successful compilation go into your mxedir/usr/bin and add 2 symlinks:
+
+  ln -s i686-pc-mingw32-windres windres
+  ln -s i686-pc-mingw32-makensis makensis
+
+Now cd into your sqlitebrowser source directory and create a build directory for
+the windows binary and create the correct makefiles:
+
+  mkdir build-win
+  cd build-win
+  cmake /path to mxe/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake ..
+  make
+
+If additionaly want an NSIS install:
+
+  make package
+
+done.
 
