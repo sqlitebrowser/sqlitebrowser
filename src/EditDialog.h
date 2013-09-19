@@ -2,6 +2,7 @@
 #define __EDITDIALOG_H__
 
 #include <QDialog>
+
 class QHexEdit;
 
 namespace Ui {

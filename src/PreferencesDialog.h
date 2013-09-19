@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QVariant>
 #include <QHash>
+
 class QTreeWidgetItem;
 
 namespace Ui {

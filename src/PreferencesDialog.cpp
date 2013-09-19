@@ -1,10 +1,11 @@
 #include "PreferencesDialog.h"
 #include "ui_PreferencesDialog.h"
+#include "sqlitedb.h"
+
 #include <QDir>
 #include <QSettings>
 #include <QFileDialog>
 #include <QColorDialog>
-#include "sqlitedb.h"
 
 QHash<QString, QVariant> PreferencesDialog::m_hCache;
 

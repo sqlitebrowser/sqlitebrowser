@@ -4,11 +4,10 @@
 #include "sqlitetypes.h"
 
 #include <QStringList>
-#include <QMap>
 #include <QMultiMap>
-#include <sqlite3.h>
 
 class MainWindow;
+class sqlite3;
 
 enum
 {

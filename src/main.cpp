@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+
 #include <QApplication>
 #include <QTextCodec>
 #include <QTranslator>

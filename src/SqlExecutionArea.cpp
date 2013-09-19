@@ -7,6 +7,7 @@
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
 #include "ExportCsvDialog.h"
+
 #include <QMenu>
 #include <QInputDialog>
 #include <QMessageBox>

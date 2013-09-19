@@ -1,13 +1,13 @@
 #include "EditTableDialog.h"
 #include "ui_EditTableDialog.h"
 #include "SQLiteSyntaxHighlighter.h"
+#include "sqlitetablemodel.h"
+#include "sqlitedb.h"
+
 #include <QMessageBox>
 #include <QPushButton>
 #include <QComboBox>
 #include <QDateTime>
-
-#include "sqlitetablemodel.h"
-#include "sqlitedb.h"
 
 EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWidget* parent)
     : QDialog(parent),

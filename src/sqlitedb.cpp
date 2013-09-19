@@ -9,6 +9,7 @@
 #include <QTextStream>
 #include <QSettings>
 #include <QDebug>
+#include <sqlite3.h>
 
 bool DBBrowserDB::isOpen ( ) const
 {

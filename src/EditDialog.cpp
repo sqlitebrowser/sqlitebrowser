@@ -1,11 +1,12 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
+#include "sqlitedb.h"
+#include "PreferencesDialog.h"
+#include "src/qhexedit.h"
+
 #include <QFileDialog>
 #include <QKeySequence>
 #include <QShortcut>
-#include "sqlitedb.h"
-#include <src/qhexedit.h>
-#include "PreferencesDialog.h"
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),

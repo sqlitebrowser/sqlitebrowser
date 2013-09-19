@@ -1,6 +1,7 @@
 #include "DbStructureModel.h"
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
+
 #include <QTreeWidgetItem>
 #include <QMimeData>
 #include <QMessageBox>

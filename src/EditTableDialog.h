@@ -4,6 +4,7 @@
 #include "sqlitetypes.h"
 
 #include <QDialog>
+
 class DBBrowserDB;
 class SQLiteSyntaxHighlighter;
 class QTreeWidgetItem;

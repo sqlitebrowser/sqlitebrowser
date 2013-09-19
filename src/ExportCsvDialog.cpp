@@ -1,12 +1,13 @@
-#include <QFile>
-#include <QTextStream>
-#include <QMessageBox>
-#include <QFileDialog>
 #include "ExportCsvDialog.h"
 #include "ui_ExportCsvDialog.h"
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
 #include "sqlitetablemodel.h"
+
+#include <QFile>
+#include <QTextStream>
+#include <QMessageBox>
+#include <QFileDialog>
 
 ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query)
     : QDialog(parent),

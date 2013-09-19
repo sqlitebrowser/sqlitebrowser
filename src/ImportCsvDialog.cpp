@@ -1,10 +1,12 @@
 #include "ImportCsvDialog.h"
 #include "ui_ImportCsvDialog.h"
+#include "sqlitedb.h"
+
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QPushButton>
 #include <QDateTime>
-#include "sqlitedb.h"
+#include <sqlite3.h>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),

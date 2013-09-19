@@ -1,6 +1,7 @@
 #include "CreateIndexDialog.h"
 #include "ui_CreateIndexDialog.h"
 #include "sqlitedb.h"
+
 #include <QMessageBox>
 #include <QPushButton>
 

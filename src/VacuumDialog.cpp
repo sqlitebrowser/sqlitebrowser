@@ -1,6 +1,7 @@
 #include "VacuumDialog.h"
 #include "ui_VacuumDialog.h"
 #include "sqlitedb.h"
+
 #include <QTreeWidgetItem>
 
 VacuumDialog::VacuumDialog(DBBrowserDB* _db, QWidget* parent) :

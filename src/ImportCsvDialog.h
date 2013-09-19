@@ -2,6 +2,7 @@
 #define __IMPORTCSVDIALOG_H__
 
 #include <QDialog>
+
 class DBBrowserDB;
 
 namespace Ui {

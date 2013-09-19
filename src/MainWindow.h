@@ -1,10 +1,11 @@
 #ifndef MAINFORM_H
 #define MAINFORM_H
 
-#include <QMainWindow>
-#include <QStandardItemModel>
 #include "sqltextedit.h"
 #include "sqlitedb.h"
+
+#include <QMainWindow>
+#include <QStandardItemModel>
 
 class QDragEnterEvent;
 class EditDialog;

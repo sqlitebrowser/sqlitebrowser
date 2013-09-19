@@ -2,6 +2,7 @@
 #define __EXPORTCSVDIALOG_H__
 
 #include <QDialog>
+
 class DBBrowserDB;
 
 namespace Ui {

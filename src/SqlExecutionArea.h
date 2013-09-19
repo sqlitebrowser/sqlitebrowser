@@ -1,8 +1,10 @@
 #ifndef __SQLEXECUTIONAREA_H__
 #define __SQLEXECUTIONAREA_H__
 
-#include <QWidget>
 #include "sqltextedit.h"
+
+#include <QWidget>
+
 class SQLiteSyntaxHighlighter;
 class SqliteTableModel;
 class DBBrowserDB;

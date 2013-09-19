@@ -2,6 +2,7 @@
 #define __DBSTRUCTUREMODEL_H__
 
 #include <QAbstractItemModel>
+
 class DBBrowserDB;
 class QTreeWidgetItem;
 

@@ -1,8 +1,10 @@
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
+
 #include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
+#include <sqlite3.h>
 
 SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize)
     : QAbstractTableModel(parent)

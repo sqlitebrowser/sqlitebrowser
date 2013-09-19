@@ -2,6 +2,7 @@
 #define __CREATEINDEXDIALOG_H__
 
 #include <QDialog>
+
 class DBBrowserDB;
 
 namespace Ui {

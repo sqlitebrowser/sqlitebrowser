@@ -1,9 +1,10 @@
+#include "ExtendedTableWidget.h"
+#include "sqlitetablemodel.h"
+
 #include <QApplication>
 #include <QClipboard>
 #include <QKeySequence>
 #include <QKeyEvent>
-#include "ExtendedTableWidget.h"
-#include "sqlitetablemodel.h"
 #include <QScrollBar>
 #include <QHeaderView>
 

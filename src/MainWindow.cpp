@@ -1,17 +1,5 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QFileDialog>
-#include <QFile>
-#include <QApplication>
-#include <QTextStream>
-#include <QWhatsThis>
-#include <QMessageBox>
-#include <QUrl>
-#include <QStandardItemModel>
-#include <QDragEnterEvent>
-#include <QScrollBar>
-#include <QSortFilterProxyModel>
-#include <QElapsedTimer>
 
 #include "CreateIndexDialog.h"
 #include "AboutDialog.h"
@@ -27,6 +15,20 @@
 #include "SqlExecutionArea.h"
 #include "VacuumDialog.h"
 #include "DbStructureModel.h"
+
+#include <QFileDialog>
+#include <QFile>
+#include <QApplication>
+#include <QTextStream>
+#include <QWhatsThis>
+#include <QMessageBox>
+#include <QUrl>
+#include <QStandardItemModel>
+#include <QDragEnterEvent>
+#include <QScrollBar>
+#include <QSortFilterProxyModel>
+#include <QElapsedTimer>
+#include <sqlite3.h>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),

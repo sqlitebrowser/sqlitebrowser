@@ -1,4 +1,5 @@
 #include "FilterTableHeader.h"
+
 #include <QLineEdit>
 #include <QTableView>
 #include <QScrollBar>
