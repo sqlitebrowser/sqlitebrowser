@@ -1,5 +1,9 @@
 Makefile
 sqlitebrowser.pro.user
+CMakeLists.txt.user
+
+# ignore any build folders
+build*/
 
 src/.ui/
 src/sqlitebrowser
