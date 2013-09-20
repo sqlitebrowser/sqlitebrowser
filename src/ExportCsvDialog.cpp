@@ -81,7 +81,7 @@ void ExportCsvDialog::accept()
             // Put field names in first row if user wants to have them
             if(ui->checkHeader->isChecked())
             {
-                for(int i=first_column;i<tableModel.columnCount();i++)
+                for(int i=first_column; i < tableModel.columnCount(); ++i)
                 {
                     stream << quoteChar << tableModel.headerData(i, Qt::Horizontal).toString() << quoteChar;
                     if(i < tableModel.columnCount() - 1)
@@ -92,9 +92,9 @@ void ExportCsvDialog::accept()
             }
 
             // Get and write actual data
-            for(int i=0;i<tableModel.totalRowCount();i++)
+            for(int i=0;i < tableModel.totalRowCount(); ++i)
             {
-                for(int j=first_column;j<tableModel.columnCount();j++)
+                for(int j=first_column; j < tableModel.columnCount(); ++j)
                 {
                     QString content = tableModel.data(tableModel.index(i, j)).toString();
                     stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;

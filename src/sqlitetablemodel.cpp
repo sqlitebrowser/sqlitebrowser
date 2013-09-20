@@ -54,7 +54,7 @@ QString removeComments(QString s)
 
     QChar lastChar = 0;
     QList<QChar> stringChars;
-    for(int i=0;i<s.length();i++)
+    for(int i=0; i < s.length(); ++i)
     {
         if(lastChar != '\\' && (s.at(i) == '\'' || s.at(i) == '"' || s.at(i) == '`'))
         {
@@ -284,10 +284,10 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     beginInsertRows(parent, row, row + count - 1);
 
     QByteArrayList blank_data;
-    for(int i=0;i<m_headers.size();i++)
+    for(int i=0; i < m_headers.size(); ++i)
         blank_data.push_back("");
 
-    for(int i=0;i<count;i++)
+    for(int i=0; i < count; ++i)
     {
         m_data.insert(row, blank_data);
         m_data[row].replace(0, QByteArray::number(m_db->addRecord(m_sTable)));

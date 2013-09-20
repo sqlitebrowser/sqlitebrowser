@@ -15,7 +15,7 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
 
     // Fill table combobox
     QList<DBBrowserObject> tables = pdb->objMap.values("table");
-    for(int i=0;i<tables.count();i++)
+    for(int i=0; i < tables.count(); ++i)
         ui->comboTableName->addItem(tables.at(i).getname());
 }
 
@@ -29,7 +29,7 @@ void CreateIndexDialog::tableChanged(const QString& new_table)
     // And fill the table again
     QStringList fields = pdb->getTableFields(new_table);
     ui->tableIndexColumns->setRowCount(fields.size());
-    for(int i=0;i<fields.size();i++)
+    for(int i=0; i < fields.size(); ++i)
     {
         // Put the name of the field in the first column
         QTableWidgetItem* name = new QTableWidgetItem(fields.at(i));
@@ -59,7 +59,7 @@ void CreateIndexDialog::checkInput()
         valid = false;
 
     int num_columns = 0;
-    for(int i=0;i<ui->tableIndexColumns->rowCount();i++)
+    for(int i=0; i < ui->tableIndexColumns->rowCount(); ++i)
     {
         if(ui->tableIndexColumns->item(i, 1) && ui->tableIndexColumns->item(i, 1)->data(Qt::CheckStateRole) == Qt::Checked)
             num_columns++;
@@ -77,7 +77,7 @@ void CreateIndexDialog::accept()
             .arg(ui->editIndexName->text())
             .arg(ui->comboTableName->currentText());
 
-    for(int i=0;i<ui->tableIndexColumns->rowCount();i++)
+    for(int i=0; i < ui->tableIndexColumns->rowCount(); ++i)
     {
         if(ui->tableIndexColumns->item(i, 1)->data(Qt::CheckStateRole) == Qt::Checked)
         {

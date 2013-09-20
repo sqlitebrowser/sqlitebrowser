@@ -215,7 +215,7 @@ void MainWindow::populateStructure()
             tablefieldmodel->setColumnCount(1);
 
             int fldrow = 0;
-            for(int i=0;i<(*it).fldmap.size();i++,fldrow++)
+            for(int i=0; i < (*it).fldmap.size(); ++i, ++fldrow)
             {
                 QString fieldname = (*it).fldmap.at(i)->name();
                 QStandardItem* fldItem = new QStandardItem(fieldname);
@@ -226,7 +226,7 @@ void MainWindow::populateStructure()
         }
 
     }
-    for(int i=0;i<ui->tabSqlAreas->count();i++)
+    for(int i=0; i < ui->tabSqlAreas->count(); ++i)
     {
         SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
         sqlarea->setTableNames(tblnames);
@@ -1174,7 +1174,7 @@ void MainWindow::reloadSettings()
 {
     // Set prefetch sizes for lazy population of table models
     m_browseTableModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-    for(int i=0;i<ui->tabSqlAreas->count();i++)
+    for(int i=0; i < ui->tabSqlAreas->count(); ++i)
     {
         SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
         sqlArea->getModel()->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());

@@ -169,7 +169,7 @@ void EditTableDialog::updateTypes()
         QString column = sender()->property("column").toString();
 
         int index;
-        for(index=0;index<m_table.fields().size();index++)
+        for(index=0; index < m_table.fields().size(); ++index)
         {
             if(m_table.fields().at(index)->name() == column)
                 break;
@@ -419,7 +419,7 @@ void EditTableDialog::moveCurrentField(bool down)
         newCombo->setProperty("column", oldCombo->property("column"));
         connect(newCombo, SIGNAL(activated(int)), this, SLOT(updateTypes()));
         newCombo->setEditable(false);
-        for(int i=0;i<oldCombo->count();i++)
+        for(int i=0; i < oldCombo->count(); ++i)
             newCombo->addItem(oldCombo->itemText(i));
         newCombo->setCurrentIndex(oldCombo->currentIndex());
 

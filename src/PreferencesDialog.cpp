@@ -46,7 +46,7 @@ void PreferencesDialog::loadSettings()
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
 
-    for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
+    for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
         QString colorname = getSettingsValue("syntaxhighlighter", name + "_colour").toString();
@@ -71,7 +71,7 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
 
-    for(int i=0;i<ui->treeSyntaxHighlighting->topLevelItemCount();i++)
+    for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
         setSettingsValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));

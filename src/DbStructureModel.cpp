@@ -143,7 +143,7 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
     typeToParentItem.insert("trigger", itemTriggers);
 
     // Add the actual table objects
-    for(objectMap::ConstIterator it=db->objMap.begin();it!=db->objMap.end();++it)
+    for(objectMap::ConstIterator it=db->objMap.begin(); it != db->objMap.end(); ++it)
     {
         // Object node
         QTreeWidgetItem *tableItem = new QTreeWidgetItem(typeToParentItem.value((*it).gettype()));
@@ -155,7 +155,7 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
         // If it is a table or view add the field Nodes
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
-            for(int i=0;i<(*it).fldmap.size();i++)
+            for(int i=0; i < it->fldmap.size(); ++i)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
                 fldItem->setText(0, (*it).fldmap.at(i)->name());
@@ -194,10 +194,10 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
             {
                 SqliteTableModel tableModel(0, m_db);
                 tableModel.setTable(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString());
-                for(int i=0;i<tableModel.rowCount();i++)
+                for(int i=0; i < tableModel.rowCount(); ++i)
                 {
                     QString insertStatement = "INSERT INTO `" + data(index.sibling(index.row(), 0), Qt::DisplayRole).toString() + "` VALUES(";
-                    for(int j=1;j<tableModel.columnCount();j++)
+                    for(int j=1; j < tableModel.columnCount(); ++j)
                         insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
                     insertStatement.chop(1);
                     insertStatement += ");\n";

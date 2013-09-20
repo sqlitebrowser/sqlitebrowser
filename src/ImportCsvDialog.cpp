@@ -72,7 +72,7 @@ void ImportCsvDialog::accept()
             curList.pop_front();
         }
     } else {
-        for(int i=0;i<numfields;i++)
+        for(int i=0; i < numfields; ++i)
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(QString("field%1").arg(i+1), "")));
     }
 
@@ -172,7 +172,7 @@ void ImportCsvDialog::updatePreview()
         ui->tablePreview->setHorizontalHeaderLabels(curList);
 
         // Remove this row to not show it in the data section
-        for(int e=0;e<numfields;e++)
+        for(int e=0;e < numfields; ++e)
             curList.pop_front();
     }
 

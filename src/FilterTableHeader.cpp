@@ -19,12 +19,12 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
 void FilterTableHeader::generateFilters(int number)
 {
     // Delete all the current filter widgets
-    for(int i=0;i<filterWidgets.size();i++)
+    for(int i=0;i < filterWidgets.size(); ++i)
         delete filterWidgets.at(i);
     filterWidgets.clear();
 
     // And generate a bunch of new ones
-    for(int i=0;i<number;i++)
+    for(int i=0;i < number; ++i)
     {
         QLineEdit* l = new QLineEdit(this);
         l->setPlaceholderText(tr("Filter"));
@@ -63,7 +63,7 @@ void FilterTableHeader::updateGeometries()
 void FilterTableHeader::adjustPositions()
 {
     // Loop through all widgets
-    for(int i=0;i<filterWidgets.size();++i)
+    for(int i=0;i < filterWidgets.size(); ++i)
     {
         // Get the current widget, move it and reisize it
         QWidget* w = filterWidgets.at(i);
