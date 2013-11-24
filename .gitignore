@@ -12,6 +12,9 @@ src/debug
 src/release
 src/gen_version.h
 
+# no one needs the txt file
+src/grammar/sqlite3TokenTypes.txt
+
 libs/*/Makefile*
 libs/*/debug/
 libs/*/release/
