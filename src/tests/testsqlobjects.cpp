@@ -159,5 +159,16 @@ void TestTable::parseSQLSingleQuotes()
     QVERIFY(tab.fields().at(1)->name() == "test");
 }
 
+void TestTable::parseSQLKeywordInIdentifier()
+{
+    QString sSQL = "CREATE TABLE deffered(key integer primary key, if text);";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.name() == "deffered");
+    QVERIFY(tab.fields().at(0)->name() == "key");
+    QVERIFY(tab.fields().at(1)->name() == "if");
+}
+
 QTEST_MAIN(TestTable)
 //#include "testsqlobjects.moc"
