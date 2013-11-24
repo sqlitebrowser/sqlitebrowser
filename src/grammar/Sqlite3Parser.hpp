@@ -2,7 +2,7 @@
 #define INC_Sqlite3Parser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20121001): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
+/* $ANTLR 2.7.7 (20130818): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "sqlite3TokenTypes.hpp"
@@ -45,9 +45,11 @@ public:
 	public: void statement();
 	public: void createtable();
 	public: void create_statements();
+	public: void keywordastablename();
 	public: void columndef();
 	public: void tableconstraint();
 	public: void selectstmt();
+	public: void keywordascolumnname();
 	public: void type_name();
 	public: void columnconstraint();
 	public: void name();
@@ -74,10 +76,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 100;
+	static const int NUM_TOKENS = 102;
 #else
 	enum {
-		NUM_TOKENS = 100
+		NUM_TOKENS = 102
 	};
 #endif
 	
@@ -127,6 +129,12 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_21;
 	static const unsigned long _tokenSet_22_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_22;
+	static const unsigned long _tokenSet_23_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_23;
+	static const unsigned long _tokenSet_24_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_24;
+	static const unsigned long _tokenSet_25_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_25;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/
