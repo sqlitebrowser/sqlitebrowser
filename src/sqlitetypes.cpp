@@ -248,7 +248,8 @@ Table CreateTableWalker::table()
         //skip to tablename
         while(s->getType() != Sqlite3Lexer::ID &&
               s->getType() != Sqlite3Lexer::QUOTEDID &&
-              s->getType() != Sqlite3Lexer::STRINGLITERAL)
+              s->getType() != Sqlite3Lexer::STRINGLITERAL &&
+              s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
         {
             s = s->getNextSibling();
         }
@@ -315,7 +316,10 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
     QString defaultvalue;
     QString check;
 
-    columnname = identifier(c);
+    if(c->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME)
+        columnname = concatTextAST(c->getFirstChild());
+    else
+        columnname = identifier(c);
     c = c->getNextSibling(); //type?
     if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::TYPE_NAME)
     {

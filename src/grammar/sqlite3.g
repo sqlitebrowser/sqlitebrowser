@@ -76,6 +76,8 @@ tokens {
   COLUMNCONSTRAINT;
   TABLECONSTRAINT;
   CREATETABLE;
+  KEYWORDASTABLENAME;
+  KEYWORDASCOLUMNNAME;
 }
 
 protected
@@ -207,19 +209,109 @@ create_statements
   :
   createtable
   ;
-	
+
+keywordastablename
+  :
+  ( ABORT
+  | ACTION
+  | ASC
+  | CASCADE
+  | CAST
+  | CONFLICT
+  | CURRENT_TIME
+  | CURRENT_DATE
+  | CURRENT_TIMESTAMP
+  | DEFERRED
+  | DESC
+  | END
+  | FAIL
+  | GLOB
+  | KEY
+  | LIKE
+  | IGNORE
+  | INITIALLY
+  | IMMEDIATE
+  | MATCH
+  | RAISE
+  | REGEXP
+  | REPLACE
+  | RESTRICT
+  | ROLLBACK
+  | TEMPORARY
+  | TEMP
+  )
+  {#keywordastablename = #([KEYWORDASTABLENAME, "KEYWORDASTABLENAME"], #keywordastablename);}
+  ;
+
 createtable
   :
-  CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? tablename 
+  CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
   ( LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN
   | AS selectstmt
   )
   {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
   ;
 
+keywordascolumnname
+  :
+  ( ABORT
+  | ACTION
+  | AUTOINCREMENT
+  | AS
+  | ASC
+  | AND
+  | OR
+  | CASCADE
+  | CASE_T
+  | CAST
+  | CREATE
+  | COLLATE
+  | CONFLICT
+  | CURRENT_TIME
+  | CURRENT_DATE
+  | CURRENT_TIMESTAMP
+  | DEFAULT
+  | DEFERRABLE
+  | DEFERRED
+  | DELETE
+  | DESC
+  | ELSE_T
+  | END
+  | ESCAPE
+  | FAIL
+  | GLOB
+  | KEY
+  | LIKE
+  | TABLE
+  | IF_T
+  | IGNORE
+  | INITIALLY
+  | IMMEDIATE
+  | IS
+  | NOT
+  | NULL_T
+  | MATCH
+  | EXISTS
+  | ON
+  | RAISE
+  | REFERENCES
+  | REGEXP
+  | REPLACE
+  | RESTRICT
+  | ROLLBACK
+  | SET
+  | TEMPORARY
+  | TEMP
+  | THEN
+  | UPDATE
+  | WHEN
+  )
+  {#keywordascolumnname = #([KEYWORDASCOLUMNNAME, "KEYWORDASCOLUMNNAME"], #keywordascolumnname);}
+  ;
+
 columndef
   :
-  columnname (type_name)? (columnconstraint)*
+  (columnname | keywordascolumnname) (type_name)? (columnconstraint)*
   {#columndef = #([COLUMNDEF, "COLUMNDEF"], #columndef);}
   ;
 	
