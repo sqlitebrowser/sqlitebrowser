@@ -13,5 +13,6 @@ private slots:
     void parseSQLMultiPk();
     void parseSQLForeignKey();
     void parseSQLSingleQuotes();
+    void parseSQLKeywordInIdentifier();
 };
 
