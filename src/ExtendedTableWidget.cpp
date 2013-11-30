@@ -23,7 +23,12 @@ void ExtendedTableWidget::copy()
 
     // Abort if there's nothing to copy
     if(indices.size() == 0)
+    {
         return;
+    } else if(indices.size() == 1) {
+        qApp->clipboard()->setText(indices.front().data().toString());
+        return;
+    }
 
     // Sort the items by row, then by column
     qSort(indices);
