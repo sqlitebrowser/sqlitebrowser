@@ -16,6 +16,8 @@ class QLabel;
 class QModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
+class QNetworkReply;
+class QNetworkAccessManager;
 
 namespace Ui {
 class MainWindow;
@@ -80,6 +82,8 @@ private:
 
     QStandardItemModel completerModelTables;
     SqlTextEdit::FieldCompleterModelMap completerModelsFields;
+
+    QNetworkAccessManager* m_NetworkManager;
 
     void init();
 
@@ -148,6 +152,7 @@ private slots:
     virtual void saveSqlFile();
     virtual void loadExtension();
     virtual void reloadSettings();
+    virtual void httpresponse(QNetworkReply* reply);
 };
 
 #endif

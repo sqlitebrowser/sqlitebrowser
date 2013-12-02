@@ -15,6 +15,7 @@
 #include "SqlExecutionArea.h"
 #include "VacuumDialog.h"
 #include "DbStructureModel.h"
+#include "gen_version.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -29,6 +30,11 @@
 #include <QSortFilterProxyModel>
 #include <QElapsedTimer>
 #include <sqlite3.h>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+#include <QSettings>
+
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -122,6 +128,15 @@ void MainWindow::init()
 
     // Load all settings
     reloadSettings();
+
+#ifdef CHECKNEWVERSION
+    // Check for a new release version, usually only enabled on windows
+    m_NetworkManager = new QNetworkAccessManager(this);
+    QObject::connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
+
+    QUrl url("https://raw.github.com/rp-/sqlitebrowser/master/currentrelease");
+    m_NetworkManager->get(QNetworkRequest(url));
+#endif
 }
 
 bool MainWindow::fileOpen(const QString& fileName)
@@ -1200,4 +1215,67 @@ void MainWindow::reloadSettings()
     // Refresh view
     populateStructure();
     resetBrowser();
+}
+
+void MainWindow::httpresponse(QNetworkReply *reply)
+{
+    //QVariant statuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+
+    if(reply->error() == QNetworkReply::NoError)
+    {
+        // first line of the currentrelease file contains a major.minor.patch version string
+        QString sversion(reply->readLine());
+
+        QStringList versiontokens = sversion.split(".");
+        int major = versiontokens[0].toInt();
+        int minor = versiontokens[1].toInt();
+        int patch = versiontokens[2].toInt();
+
+        bool newversion = false;
+        if(major > MAJOR_VERSION)
+            newversion = true;
+        else if(major == MAJOR_VERSION)
+        {
+            if(minor > MINOR_VERSION)
+                newversion = true;
+            else if(minor == MINOR_VERSION)
+            {
+                if(patch > PATCH_VERSION)
+                    newversion = true;
+            }
+        }
+
+        if(newversion)
+        {
+            QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+            bool disablecheck = settings.value("checkversion/disable", false).toBool();
+            int ignmajor = settings.value("checkversion/major", 999).toInt();
+            int ignminor = settings.value("checkversion/minor", 0).toInt();
+            int ignpatch = settings.value("checkversion/patch", 0).toInt();
+
+            // check if the user doesn't care about the current update
+            if(!(ignmajor == major && ignminor == minor && ignpatch == patch && disablecheck))
+            {
+                QMessageBox msgBox;
+                QPushButton *idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
+                msgBox.addButton(QMessageBox::Ok);
+                msgBox.setTextFormat(Qt::RichText);
+                msgBox.setWindowTitle(tr("New version available."));
+                msgBox.setText(tr("A new sqlitebrowser version is available (%1.%2.%3).<br/><br/>"
+                                  "Please download at <a href='https://github.com/rp-/sqlitebrowser/releases'>https://github.com/rp-/sqlitebrowser/releases</a>.").arg(major).arg(minor).arg(patch));
+                msgBox.exec();
+
+                if(msgBox.clickedButton() == idontcarebutton)
+                {
+                    // save that the user don't want to get bothered about this update
+                    settings.beginGroup("checkversion");
+                    settings.setValue("major", major);
+                    settings.setValue("minor", minor);
+                    settings.setValue("patch", minor);
+                    settings.setValue("disable", true);
+                    settings.endGroup();
+                }
+            }
+        }
+    }
 }

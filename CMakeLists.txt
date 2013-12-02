@@ -9,7 +9,7 @@ set(QHEXEDIT_DIR libs/qhexedit)
 add_subdirectory(${ANTLR_DIR})
 add_subdirectory(${QHEXEDIT_DIR})
 
-find_package(Qt4 COMPONENTS QtCore QtGui QtTest REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui QtNetwork QtTest REQUIRED)
 
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
@@ -98,6 +98,9 @@ set_source_files_properties(src/AboutDialog.cpp PROPERTIES OBJECT_DEPENDS ${CMAK
 
 #icon and correct libs/subsystem for windows
 if(WIN32)
+        #enable version check for windows
+        add_definitions(-DCHECKNEWVERSION)
+
 	IF( MINGW )
 	# resource compilation for MinGW
 		ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o
