@@ -108,6 +108,7 @@ if(WIN32)
 			COMMAND windres -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc -o ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o )
 		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o)
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
+		set(WIN32_STATIC_LINK -Wl,-Bstatic -lssl -lcrypto -lws2_32)
 		set(ADDITIONAL_LIBS lcms lzma)
 	ELSE( MINGW )
 		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_SOURCE_DIR}src/winapp.rc)
@@ -122,7 +123,7 @@ add_dependencies(${PROJECT_NAME} antlr qhexedit)
 
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR})
 
-target_link_libraries(${PROJECT_NAME} antlr qhexedit ${QT_LIBRARIES} sqlite3 ${ADDITIONAL_LIBS})
+target_link_libraries(${PROJECT_NAME} antlr qhexedit ${QT_LIBRARIES} ${WIN32_STATIC_LINK} sqlite3 ${ADDITIONAL_LIBS})
 
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
