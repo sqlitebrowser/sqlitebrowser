@@ -139,6 +139,17 @@ void MainWindow::init()
 #endif
 }
 
+void MainWindow::clearCompleterModelsFields()
+{
+    for(SqlTextEdit::FieldCompleterModelMap::iterator it = completerModelsFields.begin();
+        it != completerModelsFields.end();
+        ++it)
+    {
+        delete *it;
+    }
+    completerModelsFields.clear();
+}
+
 bool MainWindow::fileOpen(const QString& fileName)
 {
     bool retval = false;
@@ -200,7 +211,7 @@ void MainWindow::fileNew()
 void MainWindow::populateStructure()
 {
     completerModelTables.clear();
-    completerModelsFields.clear();
+    clearCompleterModelsFields();
     if(!db.isOpen())
         return;
 
@@ -350,6 +361,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
     PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
     PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
     PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+    clearCompleterModelsFields();
     QMainWindow::closeEvent(event);
 }
 
