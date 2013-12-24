@@ -85,6 +85,7 @@ private:
     QNetworkAccessManager* m_NetworkManager;
 
     void init();
+    void clearCompleterModelsFields();
 
     void updateRecentFileActions();
     void setCurrentFile(const QString& fileName);
