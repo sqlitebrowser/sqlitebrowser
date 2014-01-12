@@ -9,7 +9,7 @@ The only requirements for building this code are the presence of Qt and sqlite3.
 Qt can be included as a static or shared library, depending on the current Qt
 configuration on the building machine.
 
-Provided you have Qt installed and configured, simply run
+Provided you have Qt and cmake  installed and configured, simply run
 
 qmake
 
