@@ -24,7 +24,6 @@
 # include <stdio.h>
 #endif
 #include <cstdio>
-#include <strings.h>
 
 #include <antlr/TokenStream.hpp>
 #include <antlr/RecognitionException.hpp>
@@ -60,6 +59,7 @@ inline int strcasecmp(const char *s1, const char *s2)
 #ifdef NO_STRCASECMP
 ANTLR_C_USING(stricmp)
 #else
+#include <strings.h>
 ANTLR_C_USING(strcasecmp)
 #endif
 #endif

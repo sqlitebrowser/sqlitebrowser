@@ -25,7 +25,7 @@ int XByteArray::addressWidth()
 
 void XByteArray::setAddressWidth(int width)
 {
-    if ((width >= 0) and (width<=6))
+    if ((width >= 0) && (width<=6))
     {
         _addressNumbers = width;
     }
@@ -134,7 +134,7 @@ QByteArray & XByteArray::replace(int index, int length, const QByteArray & ba)
 QChar XByteArray::asciiChar(int index)
 {
     char ch = _data[index];
-    if ((ch < 0x20) or (ch > 0x7e))
+    if ((ch < 0x20) || (ch > 0x7e))
             ch = '.';
     return QChar(ch);
 }
