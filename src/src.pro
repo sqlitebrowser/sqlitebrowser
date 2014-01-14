@@ -18,9 +18,6 @@ CONFIG(unittest) {
   SOURCES += main.cpp
 }
 
-CONFIG(debug,debug|release):version.target = Makefile.Debug
-CONFIG(release,debug|release):version.target = Makefile.Release
-
 HEADERS += \
     sqlitedb.h \
     MainWindow.h \
