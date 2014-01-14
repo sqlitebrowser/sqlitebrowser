@@ -18,12 +18,8 @@ CONFIG(unittest) {
   SOURCES += main.cpp
 }
 
-# version reporting
-#version.depends = version.sh
 CONFIG(debug,debug|release):version.target = Makefile.Debug
 CONFIG(release,debug|release):version.target = Makefile.Release
-version.commands = sh $$PWD/version.sh $$PWD
-QMAKE_EXTRA_TARGETS += version
 
 HEADERS += \
     sqlitedb.h \
