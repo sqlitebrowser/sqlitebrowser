@@ -57,6 +57,7 @@ void ImportCsvDialog::accept()
         {
             // Remove invalid characters
             QString thisfield = curList.front();
+            thisfield.replace("`", "");
             thisfield.replace(" ", "");
             thisfield.replace('"', "");
             thisfield.replace("'","");
@@ -196,10 +197,8 @@ void ImportCsvDialog::updatePreview()
 
 void ImportCsvDialog::checkInput()
 {
-    ui->editName->setText(ui->editName->text().trimmed());
-
     bool valid = true;
-    if(ui->editName->text().isEmpty() || ui->editName->text().contains(" "))
+    if(ui->editName->text().isEmpty() || ui->editName->text().contains("`"))
         valid = false;
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);

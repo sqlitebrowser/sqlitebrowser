@@ -52,10 +52,8 @@ void CreateIndexDialog::tableChanged(const QString& new_table)
 
 void CreateIndexDialog::checkInput()
 {
-    ui->editIndexName->setText(ui->editIndexName->text().trimmed());
-
     bool valid = true;
-    if(ui->editIndexName->text().isEmpty() || ui->editIndexName->text().contains(" "))
+    if(ui->editIndexName->text().isEmpty() || ui->editIndexName->text().contains("`"))
         valid = false;
 
     int num_columns = 0;

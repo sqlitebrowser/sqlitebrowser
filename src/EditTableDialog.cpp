@@ -149,9 +149,8 @@ void EditTableDialog::updateSqlText()
 void EditTableDialog::checkInput()
 {
     QString normTableName = ui->editTableName->text().trimmed();
-    ui->editTableName->setText(normTableName);
     bool valid = true;
-    if(normTableName.isEmpty() || normTableName.contains(" "))
+    if(normTableName.isEmpty() || normTableName.contains("`"))
         valid = false;
     if(ui->treeWidget->topLevelItemCount() == 0)
         valid = false;
