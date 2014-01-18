@@ -1377,7 +1377,7 @@
   </connection>
   <connection>
    <sender>comboBrowseTable</sender>
-   <signal>triggered(QString)</signal>
+   <signal>activated(QString)</signal>
    <receiver>MainWindow</receiver>
    <slot>populateTable(QString)</slot>
    <hints>
