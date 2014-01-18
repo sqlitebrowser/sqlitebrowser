@@ -121,7 +121,7 @@
  <connections>
   <connection>
    <sender>actionExportCsv</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>SqlExecutionArea</receiver>
    <slot>saveAsCsv()</slot>
    <hints>
@@ -137,7 +137,7 @@
   </connection>
   <connection>
    <sender>actionSaveAsView</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>SqlExecutionArea</receiver>
    <slot>saveAsView()</slot>
    <hints>

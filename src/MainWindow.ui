@@ -1313,7 +1313,7 @@
  <connections>
   <connection>
    <sender>fileExitAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
    <hints>
@@ -1329,7 +1329,7 @@
   </connection>
   <connection>
    <sender>fileOpenAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileOpen()</slot>
    <hints>
@@ -1345,7 +1345,7 @@
   </connection>
   <connection>
    <sender>fileNewAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileNew()</slot>
    <hints>
@@ -1361,7 +1361,7 @@
   </connection>
   <connection>
    <sender>fileCloseAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileClose()</slot>
    <hints>
@@ -1377,7 +1377,7 @@
   </connection>
   <connection>
    <sender>comboBrowseTable</sender>
-   <signal>activated(QString)</signal>
+   <signal>triggered(QString)</signal>
    <receiver>MainWindow</receiver>
    <slot>populateTable(QString)</slot>
    <hints>
@@ -1505,7 +1505,7 @@
   </connection>
   <connection>
    <sender>fileCompactAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>compact()</slot>
    <hints>
@@ -1521,7 +1521,7 @@
   </connection>
   <connection>
    <sender>helpWhatsThisAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>helpWhatsThis()</slot>
    <hints>
@@ -1537,7 +1537,7 @@
   </connection>
   <connection>
    <sender>helpAboutAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>helpAbout()</slot>
    <hints>
@@ -1569,7 +1569,7 @@
   </connection>
   <connection>
    <sender>fileImportCSVAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>importTableFromCSV()</slot>
    <hints>
@@ -1585,7 +1585,7 @@
   </connection>
   <connection>
    <sender>fileExportCSVAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>exportTableToCSV()</slot>
    <hints>
@@ -1601,7 +1601,7 @@
   </connection>
   <connection>
    <sender>fileRevertAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileRevert()</slot>
    <hints>
@@ -1617,7 +1617,7 @@
   </connection>
   <connection>
    <sender>fileSaveAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileSave()</slot>
    <hints>
@@ -1633,7 +1633,7 @@
   </connection>
   <connection>
    <sender>editCreateIndexAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>createIndex()</slot>
    <hints>
@@ -1649,7 +1649,7 @@
   </connection>
   <connection>
    <sender>editDeleteObjectAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>deleteObject()</slot>
    <hints>
@@ -1665,7 +1665,7 @@
   </connection>
   <connection>
    <sender>editModifyTableAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editTable()</slot>
    <hints>
@@ -1681,7 +1681,7 @@
   </connection>
   <connection>
    <sender>fileExportSQLAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>exportDatabaseToSQL()</slot>
    <hints>
@@ -1697,7 +1697,7 @@
   </connection>
   <connection>
    <sender>fileImportSQLAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>importDatabaseFromSQL()</slot>
    <hints>
@@ -1713,7 +1713,7 @@
   </connection>
   <connection>
    <sender>viewPreferencesAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>openPreferences()</slot>
    <hints>
@@ -1761,7 +1761,7 @@
   </connection>
   <connection>
    <sender>editCreateTableAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>createTable()</slot>
    <hints>
@@ -1889,7 +1889,7 @@
   </connection>
   <connection>
    <sender>actionExecuteSql</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>executeQuery()</slot>
    <hints>
@@ -1905,7 +1905,7 @@
   </connection>
   <connection>
    <sender>actionSqlOpenTab</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>openSqlTab()</slot>
    <hints>
@@ -1921,7 +1921,7 @@
   </connection>
   <connection>
    <sender>actionSqlOpenFile</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>openSqlFile()</slot>
    <hints>
@@ -1937,7 +1937,7 @@
   </connection>
   <connection>
    <sender>actionSqlSaveFile</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveSqlFile()</slot>
    <hints>
@@ -1953,7 +1953,7 @@
   </connection>
   <connection>
    <sender>actionLoadExtension</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>loadExtension()</slot>
    <hints>
@@ -1969,7 +1969,7 @@
   </connection>
   <connection>
    <sender>actionSqlExecuteLine</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>executeQuery()</slot>
    <hints>
