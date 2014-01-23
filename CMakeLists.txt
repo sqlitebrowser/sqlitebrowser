@@ -1,15 +1,13 @@
 project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.6)
 
-option(UNITTEST OFF "Build unittest")
-
 set(ANTLR_DIR libs/antlr-2.7.7)
 set(QHEXEDIT_DIR libs/qhexedit)
 
 add_subdirectory(${ANTLR_DIR})
 add_subdirectory(${QHEXEDIT_DIR})
 
-find_package(Qt4 COMPONENTS QtCore QtGui QtNetwork QtTest REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui QtNetwork REQUIRED)
 
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
@@ -18,6 +16,9 @@ set(SQLB_HDR
 	src/gen_version.h
 	src/sqlitedb.h
 	src/sqlitetypes.h
+	src/grammar/sqlite3TokenTypes.hpp
+	src/grammar/Sqlite3Lexer.hpp
+	src/grammar/Sqlite3Parser.hpp
 )
 
 set(SQLB_MOC_HDR
@@ -60,14 +61,8 @@ set(SQLB_SRC
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp
+	src/main.cpp
 )
-
-if(UNITTEST)
-	set(SQLB_SRC ${SQLB_SRC} src/tests/testsqlobjects.cpp)
-	set(SQLB_MOC_HDR ${SQLB_MOC_HDR} src/tests/testsqlobjects.h)
-else(UNITTEST)
-	set(SQLB_SRC ${SQLB_SRC} src/main.cpp)
-endif(UNITTEST)
 
 set(SQLB_FORMS
 	src/AboutDialog.ui
