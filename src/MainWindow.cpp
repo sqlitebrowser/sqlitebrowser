@@ -647,6 +647,12 @@ void MainWindow::executeQuery()
         if (sql3status == SQLITE_OK){
             sql3status = sqlite3_step(vm);
             sqlite3_finalize(vm);
+
+            // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
+            // the status message and the table view anyway manipulate the status value here.
+            if(queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) && sql3status == SQLITE_DONE)
+                sql3status = SQLITE_ROW;
+
             switch(sql3status)
             {
             case SQLITE_ROW:
