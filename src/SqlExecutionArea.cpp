@@ -50,7 +50,7 @@ QString SqlExecutionArea::getSql() const
 
 QString SqlExecutionArea::getSelectedSql() const
 {
-    return ui->editEditor->textCursor().selectedText().trimmed();
+    return ui->editEditor->textCursor().selectedText().trimmed().replace(QChar(0x2029), '\n');
 }
 
 void SqlExecutionArea::finishExecution(const QString& result)
