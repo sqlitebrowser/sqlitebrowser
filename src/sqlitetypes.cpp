@@ -134,7 +134,7 @@ Table Table::parseSQL(const QString &sSQL)
     }
     catch(...)
     {
-        qCritical() << "Sqlite parse error."; //TODO
+        qCritical() << "Sqlite parse error: " << sSQL; //TODO
     }
 
     return Table("");
