@@ -170,5 +170,18 @@ void TestTable::parseSQLKeywordInIdentifier()
     QVERIFY(tab.fields().at(1)->name() == "if");
 }
 
+void TestTable::parseNonASCIIChars()
+{
+    QString sSQL = "CREATE TABLE `lösung` ("
+            "`Fieldöäüß`	INTEGER,"
+            "PRIMARY KEY(Fieldöäüß)"
+            ");";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.name() == "lösung");
+    QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
+}
+
 QTEST_MAIN(TestTable)
 //#include "testsqlobjects.moc"

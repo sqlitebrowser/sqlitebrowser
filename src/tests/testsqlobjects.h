@@ -14,5 +14,6 @@ private slots:
     void parseSQLForeignKey();
     void parseSQLSingleQuotes();
     void parseSQLKeywordInIdentifier();
+    void parseNonASCIIChars();
 };
 
