@@ -57,7 +57,6 @@ Before compiling we have to add the mxe/usr/bin directory to the PATH (so windre
 
 Now compile:
 
->>>>>>> master
   make
 
 If additionaly want an NSIS install:
