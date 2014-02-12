@@ -1,6 +1,10 @@
 project(sqlb-unittests)
 cmake_minimum_required(VERSION 2.8.9)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
 set(ANTLR_DIR ../libs/antlr-2.7.7)
 add_subdirectory(${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/antlr)
 
@@ -32,3 +36,4 @@ add_executable(${PROJECT_NAME} ${SQLB_MOC} ${SQLB_HDR} ${SQLB_SRC})
 add_dependencies(${PROJECT_NAME} antlr)
 target_link_libraries(${PROJECT_NAME} antlr ${QT_LIBRARIES})
 
+MESSAGE(STATUS "Build type is ${CMAKE_BUILD_TYPE}")

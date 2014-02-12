@@ -1,6 +1,10 @@
 project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.6)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
 set(ANTLR_DIR libs/antlr-2.7.7)
 set(QHEXEDIT_DIR libs/qhexedit)
 
