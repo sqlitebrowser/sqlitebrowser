@@ -9,6 +9,7 @@ options {
   exportVocab=sqlite3;
   caseSensitive=false;
   caseSensitiveLiterals=false;
+  charVocabulary='\u0000'..'\uFFFE';
 }
 
 tokens {
@@ -87,7 +88,9 @@ protected DOT:;
 
 ID
   :
-  ('a'..'z'|'_') ('a'..'z'|'0'..'9'|'_')*
+  // 00C0 - 02B8 load of good looking unicode chars
+  // there might be more allowed characters
+  ('a'..'z'|'_') ('a'..'z'|'0'..'9'|'_'|'\u0080'..'\u02B8')*
   ;
 
 QUOTEDID
@@ -109,8 +112,8 @@ NL :
     );
 
 COMMENT :
-    ( "--" (~('\n'|'\r'))* NL {newline();} // single line comment
-    | "/*" ( options{greedy=false;} : NL {newline();} | ~('\n'|'\r') )* "*/" // multi-line comment
+    ( '-''-' (~('\n'|'\r'))* NL {newline();} // single line comment
+    | '/''*' ( options{greedy=false;} : NL {newline();} | ~('\n'|'\r') )* '*''/' // multi-line comment
     ) { $setType(ANTLR_USE_NAMESPACE(antlr)Token::SKIP); };
 
 WS :
@@ -141,17 +144,17 @@ STAR    :   '*';
 TILDE : '~';
 AMPERSAND: '&';
 BITOR: '|';
-OROP: "||";
+OROP: BITOR BITOR;
 EQUAL: '=';
-EQUAL2: "==";
+EQUAL2: EQUAL EQUAL;
 GREATER: '>';
-GREATEREQUAL: ">=";
+GREATEREQUAL: GREATER EQUAL;
 LOWER: '<';
-LOWEREQUAL: "<=";
-UNEQUAL: "!=";
-UNEQUAL2: "<>";
-BITWISELEFT: "<<";
-BITWISERIGHT: ">>";
+LOWEREQUAL: LOWER EQUAL;
+UNEQUAL: '!' EQUAL;
+UNEQUAL2: LOWER GREATER;
+BITWISELEFT: LOWER LOWER;
+BITWISERIGHT: GREATER GREATER;
 
 // parser
 
