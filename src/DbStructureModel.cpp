@@ -116,6 +116,8 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
     // Save pointer to DB object
     m_db = db;
 
+    beginResetModel();
+
     // Remove all data except for the root item
     while(rootItem->childCount())
     {
@@ -167,7 +169,7 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
     }
 
     // Refresh the view
-    reset();
+    endResetModel();
 }
 
 QStringList DbStructureModel::mimeTypes() const
