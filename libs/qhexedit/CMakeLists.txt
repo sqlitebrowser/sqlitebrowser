@@ -1,9 +1,14 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.9)
 
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-
-include(${QT_USE_FILE})
-add_definitions(${QT_DEFINITIONS})
+if(USE_QT5)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+    find_package(Qt5Widgets REQUIRED)
+else()
+    find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+    include(${QT_USE_FILE})
+    add_definitions(${QT_DEFINITIONS})
+endif()
 
 set(QHEXEDIT_SRC
     src/commands.cpp
@@ -22,7 +27,13 @@ set(QHEXEDIT_MOC_HDR
 	src/qhexedit_p.h
 )
 
-QT4_WRAP_CPP(QHEXEDIT_MOC ${QHEXEDIT_MOC_HDR})
+if(NOT USE_QT5)
+    QT4_WRAP_CPP(QHEXEDIT_MOC ${QHEXEDIT_MOC_HDR})
+endif()
 
 add_library(qhexedit ${QHEXEDIT_SRC} ${QHEXEDIT_HDR} ${QHEXEDIT_MOC})
+
+if(USE_QT5)
+    qt5_use_modules(qhexedit Widgets)
+endif()
 
