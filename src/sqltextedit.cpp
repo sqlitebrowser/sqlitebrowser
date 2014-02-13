@@ -8,6 +8,7 @@
 #include <QPainter>
 #include <QTextBlock>
 #include <QUrl>
+#include <QMimeData>
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
     QPlainTextEdit(parent), m_Completer(0), m_defaultCompleterModel(0)

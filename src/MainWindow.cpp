@@ -34,6 +34,7 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QSettings>
+#include <QMimeData>
 
 
 MainWindow::MainWindow(QWidget* parent)
