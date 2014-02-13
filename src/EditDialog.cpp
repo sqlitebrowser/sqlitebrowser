@@ -141,7 +141,7 @@ void EditDialog::checkDataType()
 {
     // Check if data is text only
     ui->comboEditor->setVisible(true);
-    if(QString(hexEdit->data()).toAscii() == hexEdit->data())     // Any proper way??
+    if(QString(hexEdit->data()).toLatin1() == hexEdit->data())     // Any proper way??
     {
         ui->editorStack->setCurrentIndex(0);
 

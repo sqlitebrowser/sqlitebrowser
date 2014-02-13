@@ -207,12 +207,12 @@ void ImportCsvDialog::checkInput()
 char ImportCsvDialog::currentQuoteChar()
 {
     if(ui->comboQuote->currentText().length())
-        return ui->comboQuote->currentText().at(0).toAscii();
+        return ui->comboQuote->currentText().at(0).toLatin1();
     else
         return 0;
 }
 
 char ImportCsvDialog::currentSeparatorChar()
 {
-    return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toAscii();
+    return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toLatin1();
 }
