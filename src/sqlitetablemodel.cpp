@@ -63,8 +63,9 @@ QString removeComments(QString s)
             else if(!(!stringChars.empty() && (stringChars.last() != '\'' || stringChars.last() != '"')) || stringChars.empty())
                 stringChars.push_back(s.at(i));
         } else if(stringChars.empty() && s.at(i) == '-' && lastChar == '-') {
-            if(s.contains('\n'))
-                return removeComments(s.remove(i-1, s.indexOf('\n', i)-i+2));
+            int nextNL = s.indexOf('\n', i);
+            if(nextNL >= 0)
+                return removeComments(s.remove(i-1, nextNL - i + 2));
             else
                 return s.left(i-1);
         }
