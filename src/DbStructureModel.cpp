@@ -141,8 +141,13 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
     itemTriggers->setText(0, tr("Triggers (%1)").arg(db->objMap.values("trigger").count()));
     typeToParentItem.insert("trigger", itemTriggers);
 
+    // Get all database objects and sort them by their name
+    QMultiMap<QString, DBBrowserObject> dbobjs;
+    for(objectMap::ConstIterator it=db->objMap.begin(); it != db->objMap.end(); ++it)
+        dbobjs.insert((*it).getname(), (*it));
+
     // Add the actual table objects
-    for(objectMap::ConstIterator it=db->objMap.begin();it!=db->objMap.end();++it)
+    for(QMultiMap<QString, DBBrowserObject>::ConstIterator it=dbobjs.begin(); it != dbobjs.end(); ++it)
     {
         // Object node
         QTreeWidgetItem *tableItem = new QTreeWidgetItem(typeToParentItem.value((*it).gettype()));
