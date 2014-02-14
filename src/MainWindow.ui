@@ -272,7 +272,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>763</width>
+          <width>278</width>
           <height>444</height>
          </rect>
         </property>
@@ -1267,6 +1267,17 @@
     <string>Ctrl+F5</string>
    </property>
   </action>
+  <action name="actionExportCsvPopup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export as CSV file</string>
+   </property>
+   <property name="toolTip">
+    <string>Export table as comma separated values file</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -1972,6 +1983,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>executeQuery()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExportCsvPopup</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportTableToCSV()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
