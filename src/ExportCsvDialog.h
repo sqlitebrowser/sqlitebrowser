@@ -14,7 +14,7 @@ class ExportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExportCsvDialog(DBBrowserDB* db, QWidget* parent = 0, const QString& query = "");
+    explicit ExportCsvDialog(DBBrowserDB* db, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
     ~ExportCsvDialog();
 
 private slots:
