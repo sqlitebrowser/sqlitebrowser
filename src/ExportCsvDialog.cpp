@@ -8,7 +8,8 @@
 #include "PreferencesDialog.h"
 #include "sqlitetablemodel.h"
 
-ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query)
+
+ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
       ui(new Ui::ExportCsvDialog),
       pdb(db),
@@ -24,6 +25,13 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString
         objectMap objects = pdb->getBrowsableObjects();
         for(objectMap::ConstIterator i=objects.begin();i!=objects.end();++i)
             ui->comboTable->addItem(QIcon(QString(":icons/%1").arg(i.value().gettype())), i.value().getname());
+
+        // Sort list of tables and select the table specified in the selection parameter or alternatively the first one
+        ui->comboTable->model()->sort(0);
+        if(selection.isEmpty())
+            ui->comboTable->setCurrentIndex(0);
+        else
+            ui->comboTable->setCurrentIndex(ui->comboTable->findText(selection));
     } else {
         // Hide table combo box
         ui->labelTable->setVisible(false);

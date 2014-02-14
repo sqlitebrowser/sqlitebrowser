@@ -749,7 +749,13 @@ void MainWindow::importTableFromCSV()
 
 void MainWindow::exportTableToCSV()
 {
-    ExportCsvDialog dialog(&db, this);
+    // Get the current table name if we are in the Browse Data tab
+    QString current_table;
+    if(ui->mainTab->currentIndex() == 1)
+        current_table = ui->comboBrowseTable->currentText();
+
+    // Open dialog
+    ExportCsvDialog dialog(&db, this, "", current_table);
     dialog.exec();
 }
 
