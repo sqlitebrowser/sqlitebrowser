@@ -66,6 +66,10 @@ Windows binaries can be downloaded from here:
 
 https://github.com/rp-/sqlitebrowser/releases
 
+Nightly builds are also available at:
+
+http://rp.oldsch00l.com/sqlitebrowser/
+
 MacOS X
 -------
 
