@@ -52,8 +52,11 @@
        <property name="whatsThis">
         <string>This field shows the results and status codes of the last executed statements.</string>
        </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
        <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
+        <enum>QFrame::Sunken</enum>
        </property>
        <property name="tabChangesFocus">
         <bool>true</bool>
