@@ -1416,7 +1416,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
         if(xtype == QVariant::DateTime)
         {
             ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
-            ui->plotWidget->xAxis->setDateTimeFormat("yyyy-mm-dd");
+            ui->plotWidget->xAxis->setDateTimeFormat("yyyy-MM-dd");
         }
         else
         {
