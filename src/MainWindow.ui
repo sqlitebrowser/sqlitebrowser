@@ -18,7 +18,7 @@
     <normaloff>:/oldimages/icon16</normaloff>:/oldimages/icon16</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayoutmain">
+   <layout class="QVBoxLayout" name="verticalLayout_7">
     <item>
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
@@ -275,7 +275,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>296</width>
+             <width>452</width>
              <height>494</height>
             </rect>
            </property>
@@ -761,7 +761,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -933,6 +933,71 @@
          <bool>true</bool>
         </property>
        </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockPlot">
+   <property name="features">
+    <set>QDockWidget::AllDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Plot</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <widget class="QWidget" name="widget_2" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QSplitter" name="splitterForPlot">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QTreeWidget" name="treePlotColumns">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>2</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="columnCount">
+            <number>3</number>
+           </property>
+           <attribute name="headerDefaultSectionSize">
+            <number>100</number>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Columns</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>X</string>
+            </property>
+           </column>
+          </widget>
+          <widget class="QCustomPlot" name="plotWidget" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>8</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -1228,7 +1293,7 @@
     <string>&amp;Execute SQL</string>
    </property>
    <property name="shortcut">
-    <string>F5</string>
+    <string>F5, Ctrl+Return</string>
    </property>
   </action>
   <action name="actionSqlOpenFile">
@@ -1270,7 +1335,7 @@
     <string>Execute current line</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+F5</string>
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionExportCsvPopup">
@@ -1290,6 +1355,12 @@
    <class>ExtendedTableWidget</class>
    <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>libs/qcustomplot-source/qcustomplot.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -49,6 +49,7 @@ set(SQLB_MOC_HDR
 	src/sqlitetablemodel.h
 	src/sqltextedit.h
 	src/DbStructureModel.h
+        libs/qcustomplot-source/qcustomplot.h
 )
 
 set(SQLB_SRC
@@ -72,6 +73,7 @@ set(SQLB_SRC
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp
+        libs/qcustomplot-source/qcustomplot.cpp
 	src/main.cpp
 )
 
@@ -141,7 +143,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} src
 add_executable(${PROJECT_NAME} ${SQLB_HDR} ${SQLB_SRC} ${SQLB_FORM_HDR} ${SQLB_MOC} ${SQLB_RESOURCES_RCC})
 
 if(USE_QT5)
-    qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test)
+    qt5_use_modules(${PROJECT_NAME} Gui Widgets PrintSupport Network Test)
     set(QT_LIBRARIES "")
 endif()
 add_dependencies(${PROJECT_NAME} antlr qhexedit)

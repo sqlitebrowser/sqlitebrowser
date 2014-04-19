@@ -1,7 +1,7 @@
 TEMPLATE = app
 
 QT += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = sqlitebrowser
 
@@ -40,7 +40,8 @@ HEADERS += \
     gen_version.h \
     SqlExecutionArea.h \
     VacuumDialog.h \
-    DbStructureModel.h
+    DbStructureModel.h \
+	../../libs/qcustomplot-source/qcustomplot.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -62,7 +63,8 @@ SOURCES += \
     FilterTableHeader.cpp \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \
-    DbStructureModel.cpp
+    DbStructureModel.cpp \
+	../../libs/qcustomplot-source/qcustomplot.cpp
 
 RESOURCES += icons/icons.qrc
 

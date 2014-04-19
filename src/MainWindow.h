@@ -18,6 +18,7 @@ class SqliteTableModel;
 class DbStructureModel;
 class QNetworkReply;
 class QNetworkAccessManager;
+class QTreeWidgetItem;
 
 namespace Ui {
 class MainWindow;
@@ -58,6 +59,7 @@ private:
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;
+    SqliteTableModel* m_currentPlotModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
 
@@ -154,6 +156,8 @@ private slots:
     virtual void loadExtension();
     virtual void reloadSettings();
     virtual void httpresponse(QNetworkReply* reply);
+    virtual void updatePlot(SqliteTableModel* model, bool update = true);
+    void on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column);
 };
 
 #endif

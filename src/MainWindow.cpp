@@ -105,6 +105,11 @@ void MainWindow::init()
     ui->viewMenu->actions().at(0)->setIcon(QIcon(":/icons/log_dock"));
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
+    // Plot view menu
+    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockPlot->toggleViewAction());
+    ui->viewMenu->actions().at(1)->setShortcut(QKeySequence(tr("Ctrl+P")));
+    ui->viewMenu->actions().at(1)->setIcon(QIcon(":/icons/log_dock"));
+
     // Set statusbar fields
     statusEncodingLabel = new QLabel(ui->statusbar);
     statusEncodingLabel->setEnabled(false);
@@ -123,6 +128,7 @@ void MainWindow::init()
     restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
     restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
+    ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
 
     // Set other window settings
     setAcceptDrops(true);
@@ -308,6 +314,9 @@ void MainWindow::populateTable( const QString & tablename)
     if(editWin)
         editWin->reset();
 
+    // update plot
+    updatePlot(m_browseTableModel);
+
     QApplication::restoreOverrideCursor();
 }
 
@@ -363,6 +372,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
     PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
     PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
     PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+    PreferencesDialog::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
     clearCompleterModelsFields();
     QMainWindow::closeEvent(event);
 }
@@ -699,6 +709,7 @@ void MainWindow::executeQuery()
         }
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
     sqlWidget->finishExecution(statusMessage);
+    updatePlot(sqlWidget->getModel());
 
     if(!modified && !wasdirty)
         db.revert(); // better rollback, if the logic is not enough we can tune it.
@@ -1307,4 +1318,158 @@ void MainWindow::httpresponse(QNetworkReply *reply)
             }
         }
     }
+}
+
+namespace {
+/*!
+ * \brief guessdatatype try to parse the first 10 rows and decide the datatype
+ * \param model model to check the data
+ * \param column index of the column to check
+ * \return the guessed datatype
+ */
+QVariant::Type guessdatatype(SqliteTableModel* model, int column)
+{
+    QVariant::Type type = QVariant::Invalid;
+    for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
+    {
+        QVariant data = model->data(model->index(i, column));
+        if(data.convert(QVariant::Double))
+        {
+            type = QVariant::Double;
+        }
+        else
+        {
+            QString s = model->data(model->index(i, column)).toString();
+            QDate d = QDate::fromString(s, Qt::ISODate);
+            if(d.isValid())
+                type = QVariant::DateTime;
+            else
+                type = QVariant::String;
+        }
+
+    }
+    return type;
+}
+}
+
+void MainWindow::updatePlot(SqliteTableModel *model, bool update)
+{
+    // add columns to x/y seleciton tree widget
+    if(update)
+    {
+        disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+                   this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+
+        m_currentPlotModel = model;
+        ui->treePlotColumns->clear();
+
+        for(int i = 0; i < model->columnCount(); ++i)
+        {
+            QVariant::Type columntype = guessdatatype(model, i);
+            if(columntype != QVariant::String && columntype != QVariant::Invalid)
+            {
+                QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
+                // maybe i make this more complicated than i should
+                // but store the model column index in the first 16 bit and the type
+                // in the other 16 bits
+                uint itemdata = 0;
+                itemdata = i << 16;
+                itemdata |= columntype;
+                columnitem->setData(0, Qt::UserRole, itemdata);
+
+                columnitem->setText(0, model->headerData(i, Qt::Horizontal).toString());
+                columnitem->setCheckState(1, Qt::Unchecked);
+                columnitem->setCheckState(2, Qt::Unchecked);
+                ui->treePlotColumns->addTopLevelItem(columnitem);
+            }
+        }
+
+        ui->plotWidget->yAxis->setLabel("Y");
+        ui->plotWidget->xAxis->setLabel("X");
+        connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+    }
+
+    // search for the x axis select
+    QTreeWidgetItem* xitem = 0;
+    for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
+    {
+        xitem = ui->treePlotColumns->topLevelItem(i);
+        if(xitem->checkState(2) == Qt::Checked)
+            break;
+
+        xitem = 0;
+    }
+
+    QStringList yAxisLabels;
+    QVector<QColor> colors;
+    colors << Qt::blue << Qt::red << Qt::green << Qt::darkYellow << Qt::darkCyan << Qt::darkGray;
+
+    ui->plotWidget->clearGraphs();
+    if(xitem)
+    {
+        uint xitemdata = xitem->data(0, Qt::UserRole).toUInt();
+        int x = xitemdata >> 16;
+        int xtype = xitemdata & (uint)0xFF;
+
+
+        // check if we have a x axis with datetime data
+        if(xtype == QVariant::DateTime)
+        {
+            ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
+            ui->plotWidget->xAxis->setDateTimeFormat("yyyy-mm-dd");
+        }
+        else
+        {
+            ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltNumber);
+        }
+
+        // add graph for each selected y axis
+        for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
+        {
+            QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
+            if(item->checkState((1)) == Qt::Checked && ui->plotWidget->graphCount() < colors.size())
+            {
+                uint itemdata = item->data(0, Qt::UserRole).toUInt();
+                int column = itemdata >> 16;
+                QCPGraph* graph = ui->plotWidget->addGraph();
+
+                int y = column;
+
+                graph->setPen(QPen(colors[y]));
+
+                QVector<double> xdata(model->rowCount()), ydata(model->rowCount());
+                for(int i = 0; i < model->rowCount(); ++i)
+                {
+                    // convert x type axis if it's datetime
+                    if(xtype == QVariant::DateTime)
+                    {
+                        QString s = model->data(model->index(i, x)).toString();
+                        QDateTime d = QDateTime::fromString(s, Qt::ISODate);
+                        xdata[i] = d.toTime_t();
+                    }
+                    else
+                    {
+                        xdata[i] = model->data(model->index(i, x)).toDouble();
+                    }
+
+                    ydata[i] = model->data(model->index(i, y)).toDouble();
+                }
+                graph->setData(xdata, ydata);
+                graph->setLineStyle(QCPGraph::lsLine);
+                graph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
+                yAxisLabels << model->headerData(y, Qt::Horizontal).toString();
+                graph->rescaleAxes();
+            }
+        }
+
+        // set axis labels
+        ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
+        ui->plotWidget->yAxis->setLabel(yAxisLabels.join("|"));
+    }
+    ui->plotWidget->replot();
+}
+
+void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column)
+{
+    updatePlot(m_currentPlotModel, false);
 }
