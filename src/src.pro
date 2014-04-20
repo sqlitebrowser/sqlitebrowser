@@ -41,7 +41,7 @@ HEADERS += \
     SqlExecutionArea.h \
     VacuumDialog.h \
     DbStructureModel.h \
-	../../libs/qcustomplot-source/qcustomplot.h
+    ../../libs/qcustomplot-source/qcustomplot.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -64,7 +64,7 @@ SOURCES += \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \
     DbStructureModel.cpp \
-	../../libs/qcustomplot-source/qcustomplot.cpp
+    ../../libs/qcustomplot-source/qcustomplot.cpp
 
 RESOURCES += icons/icons.qrc
 
@@ -82,6 +82,7 @@ FORMS += \
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
+LIBPATH_QCUSTOMPLOT=$$PWD/../libs/qcustomplot-source
 unix {
     LIBS += -ldl
 }
@@ -91,10 +92,12 @@ win32 {
     CONFIG(debug,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
+        LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/debug
     }
     CONFIG(release,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
+        LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/release
     }
 }
 mac {
@@ -108,6 +111,6 @@ mac {
 }
 
 UI_DIR = .ui
-INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
-LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -lantlr -lqhexedit -lsqlite3
-DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit
+INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/..
+LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -lantlr -lqhexedit -lqcustomplot -lsqlite3
+DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source
