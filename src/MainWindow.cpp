@@ -361,6 +361,14 @@ void MainWindow::fileClose()
     resetBrowser();
     populateStructure();
     loadPragmas();
+
+    // Delete the model for the Browse tab and create a new one
+    delete m_browseTableModel;
+    m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+
+    // Manually update the recordset label inside the Browse tab now
+    setRecordsetLabel();
+
     activateFields(false);
     ui->buttonLogClear->click();
     for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
