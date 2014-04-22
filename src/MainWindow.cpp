@@ -369,6 +369,9 @@ void MainWindow::fileClose()
     // Manually update the recordset label inside the Browse tab now
     setRecordsetLabel();
 
+    // Reset the plot dock model
+    updatePlot(0);
+
     activateFields(false);
     ui->buttonLogClear->click();
     for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
@@ -1372,24 +1375,27 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
         m_currentPlotModel = model;
         ui->treePlotColumns->clear();
 
-        for(int i = 0; i < model->columnCount(); ++i)
+        if(model)
         {
-            QVariant::Type columntype = guessdatatype(model, i);
-            if(columntype != QVariant::String && columntype != QVariant::Invalid)
+            for(int i = 0; i < model->columnCount(); ++i)
             {
-                QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
-                // maybe i make this more complicated than i should
-                // but store the model column index in the first 16 bit and the type
-                // in the other 16 bits
-                uint itemdata = 0;
-                itemdata = i << 16;
-                itemdata |= columntype;
-                columnitem->setData(0, Qt::UserRole, itemdata);
+                QVariant::Type columntype = guessdatatype(model, i);
+                if(columntype != QVariant::String && columntype != QVariant::Invalid)
+                {
+                    QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
+                    // maybe i make this more complicated than i should
+                    // but store the model column index in the first 16 bit and the type
+                    // in the other 16 bits
+                    uint itemdata = 0;
+                    itemdata = i << 16;
+                    itemdata |= columntype;
+                    columnitem->setData(0, Qt::UserRole, itemdata);
 
-                columnitem->setText(0, model->headerData(i, Qt::Horizontal).toString());
-                columnitem->setCheckState(1, Qt::Unchecked);
-                columnitem->setCheckState(2, Qt::Unchecked);
-                ui->treePlotColumns->addTopLevelItem(columnitem);
+                    columnitem->setText(0, model->headerData(i, Qt::Horizontal).toString());
+                    columnitem->setCheckState(1, Qt::Unchecked);
+                    columnitem->setCheckState(2, Qt::Unchecked);
+                    ui->treePlotColumns->addTopLevelItem(columnitem);
+                }
             }
         }
 
