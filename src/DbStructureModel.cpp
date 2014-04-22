@@ -125,6 +125,13 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
         rootItem->removeChild(rootItem->child(0));
     }
 
+    // Return here if no DB is opened
+    if(!db->isOpen())
+    {
+        endResetModel();
+        return;
+    }
+
     // Create the nodes for tables, indices, views and triggers
     QMap<QString, QTreeWidgetItem*> typeToParentItem;
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(rootItem);
