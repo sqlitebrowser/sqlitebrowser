@@ -756,10 +756,14 @@ void DBBrowserDB::updateSchema( )
     sqlite3_stmt *vm;
     const char *tail;
     int err=0;
+    lastErrorMessage = QObject::tr("no error");
 
     objMap.clear();
 
-    lastErrorMessage = QObject::tr("no error");
+    // Exit here is no DB is opened
+    if(!isOpen())
+        return;
+
     QString statement = "SELECT type, name, sql, tbl_name FROM sqlite_master;";
 
     QByteArray utf8Statement = statement.toUtf8();

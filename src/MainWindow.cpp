@@ -224,10 +224,15 @@ void MainWindow::populateStructure()
 {
     completerModelTables.clear();
     clearCompleterModelsFields();
+
+    // Refresh the structure tab
+    db.updateSchema();
+    dbStructureModel->reloadData(&db);
+    ui->dbTreeWidget->expandToDepth(0);
+
     if(!db.isOpen())
         return;
 
-    db.updateSchema();
     QStringList tblnames = db.getBrowsableObjectNames();
     sqliteHighlighterLogUser->setTableNames(tblnames);
     sqliteHighlighterLogApp->setTableNames(tblnames);
@@ -271,10 +276,6 @@ void MainWindow::populateStructure()
         sqlarea->getEditor()->setDefaultCompleterModel(&completerModelTables);
         sqlarea->getEditor()->insertFieldCompleterModels(completerModelsFields);
     }
-
-    // Refresh the structure tab
-    dbStructureModel->reloadData(&db);
-    ui->dbTreeWidget->expandToDepth(0);
 }
 
 void MainWindow::populateTable( const QString & tablename)
