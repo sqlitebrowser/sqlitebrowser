@@ -9,9 +9,11 @@ endif()
 
 set(ANTLR_DIR libs/antlr-2.7.7)
 set(QHEXEDIT_DIR libs/qhexedit)
+set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
 
 add_subdirectory(${ANTLR_DIR})
 add_subdirectory(${QHEXEDIT_DIR})
+add_subdirectory(${QCUSTOMPLOT_DIR})
 
 if(USE_QT5)
     find_package(Qt5Widgets REQUIRED)
@@ -49,7 +51,6 @@ set(SQLB_MOC_HDR
 	src/sqlitetablemodel.h
 	src/sqltextedit.h
 	src/DbStructureModel.h
-        libs/qcustomplot-source/qcustomplot.h
 )
 
 set(SQLB_SRC
@@ -73,7 +74,6 @@ set(SQLB_SRC
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp
-        libs/qcustomplot-source/qcustomplot.cpp
 	src/main.cpp
 )
 
@@ -138,19 +138,19 @@ if(WIN32)
 	ENDIF( MINGW )
 endif(WIN32)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} src)
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} ${QCUSTOMPLOT_DIR} src)
 
 add_executable(${PROJECT_NAME} ${SQLB_HDR} ${SQLB_SRC} ${SQLB_FORM_HDR} ${SQLB_MOC} ${SQLB_RESOURCES_RCC})
 
 if(USE_QT5)
-    qt5_use_modules(${PROJECT_NAME} Gui Widgets PrintSupport Network Test)
+    qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test)
     set(QT_LIBRARIES "")
 endif()
-add_dependencies(${PROJECT_NAME} antlr qhexedit)
+add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot)
 
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR})
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR})
 
-target_link_libraries(${PROJECT_NAME} antlr qhexedit ${QT_LIBRARIES} ${WIN32_STATIC_LINK} sqlite3 ${ADDITIONAL_LIBS})
+target_link_libraries(${PROJECT_NAME} antlr qhexedit qcustomplot ${QT_LIBRARIES} ${WIN32_STATIC_LINK} sqlite3 ${ADDITIONAL_LIBS})
 
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
