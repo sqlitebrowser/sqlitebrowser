@@ -56,6 +56,13 @@ private:
         int wal_autocheckpoint;
     } pragmaValues;
 
+    enum PlotColumns
+    {
+        PlotColumnField = 0,
+        PlotColumnY = 1,
+        PlotColumnX = 2
+    };
+
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;

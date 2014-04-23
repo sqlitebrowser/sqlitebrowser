@@ -1389,11 +1389,11 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                     uint itemdata = 0;
                     itemdata = i << 16;
                     itemdata |= columntype;
-                    columnitem->setData(0, Qt::UserRole, itemdata);
+                    columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
 
-                    columnitem->setText(0, model->headerData(i, Qt::Horizontal).toString());
-                    columnitem->setCheckState(1, Qt::Unchecked);
-                    columnitem->setCheckState(2, Qt::Unchecked);
+                    columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
+                    columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
+                    columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
                     ui->treePlotColumns->addTopLevelItem(columnitem);
                 }
             }
@@ -1401,7 +1401,8 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
         ui->plotWidget->yAxis->setLabel("Y");
         ui->plotWidget->xAxis->setLabel("X");
-        connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+        connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+                this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
     }
 
     // search for the x axis select
@@ -1409,7 +1410,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
     for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
     {
         xitem = ui->treePlotColumns->topLevelItem(i);
-        if(xitem->checkState(2) == Qt::Checked)
+        if(xitem->checkState(PlotColumnX) == Qt::Checked)
             break;
 
         xitem = 0;
@@ -1422,7 +1423,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
     ui->plotWidget->clearGraphs();
     if(xitem)
     {
-        uint xitemdata = xitem->data(0, Qt::UserRole).toUInt();
+        uint xitemdata = xitem->data(PlotColumnField, Qt::UserRole).toUInt();
         int x = xitemdata >> 16;
         int xtype = xitemdata & (uint)0xFF;
 
@@ -1442,7 +1443,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
         {
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            if(item->checkState((1)) == Qt::Checked && ui->plotWidget->graphCount() < colors.size())
+            if(item->checkState((PlotColumnY)) == Qt::Checked && ui->plotWidget->graphCount() < colors.size())
             {
                 uint itemdata = item->data(0, Qt::UserRole).toUInt();
                 int column = itemdata >> 16;
@@ -1484,7 +1485,26 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
     ui->plotWidget->replot();
 }
 
-void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column)
+void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int column)
 {
+    // make sure only 1 X axis is selected
+    if(column == PlotColumnX)
+    {
+        // disable change updates, or we get unwanted redrawing and weird behavior
+        disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+                   this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+
+        for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
+        {
+            QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
+            if(item->checkState(column) == Qt::Checked && item != changeitem)
+            {
+                item->setCheckState(column, Qt::Unchecked);
+            }
+        }
+
+        connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+                this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+    }
     updatePlot(m_currentPlotModel, false);
 }
