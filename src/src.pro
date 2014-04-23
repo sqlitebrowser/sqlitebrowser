@@ -40,8 +40,7 @@ HEADERS += \
     gen_version.h \
     SqlExecutionArea.h \
     VacuumDialog.h \
-    DbStructureModel.h \
-    ../../libs/qcustomplot-source/qcustomplot.h
+    DbStructureModel.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -63,8 +62,7 @@ SOURCES += \
     FilterTableHeader.cpp \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \
-    DbStructureModel.cpp \
-    ../../libs/qcustomplot-source/qcustomplot.cpp
+    DbStructureModel.cpp
 
 RESOURCES += icons/icons.qrc
 
