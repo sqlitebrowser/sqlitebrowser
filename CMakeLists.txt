@@ -143,7 +143,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} ${Q
 add_executable(${PROJECT_NAME} ${SQLB_HDR} ${SQLB_SRC} ${SQLB_FORM_HDR} ${SQLB_MOC} ${SQLB_RESOURCES_RCC})
 
 if(USE_QT5)
-    qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test)
+    qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
     set(QT_LIBRARIES "")
 endif()
 add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot)
