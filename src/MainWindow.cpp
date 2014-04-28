@@ -1269,10 +1269,23 @@ void MainWindow::httpresponse(QNetworkReply *reply)
 
     if(reply->error() == QNetworkReply::NoError)
     {
+        // Check for redirect
+        QVariant possibleRedirectUrl =
+                     reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+
+        if(!possibleRedirectUrl.toUrl().isEmpty())
+        {
+            m_NetworkManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+            return;
+        }
+
         // first line of the currentrelease file contains a major.minor.patch version string
         QString sversion(reply->readLine());
 
         QStringList versiontokens = sversion.split(".");
+        if(versiontokens.size() < 3)
+            return;
+
         int major = versiontokens[0].toInt();
         int minor = versiontokens[1].toInt();
         int patch = versiontokens[2].toInt();
