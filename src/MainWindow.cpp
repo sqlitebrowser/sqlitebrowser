@@ -227,7 +227,8 @@ void MainWindow::populateStructure()
 
     // Refresh the structure tab
     db.updateSchema();
-    dbStructureModel->reloadData(&db);
+    if(dbStructureModel)
+        dbStructureModel->reloadData(&db);
     ui->dbTreeWidget->expandToDepth(0);
 
     if(!db.isOpen())
