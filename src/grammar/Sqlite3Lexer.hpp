@@ -2,7 +2,7 @@
 #define INC_Sqlite3Lexer_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20121001): "sqlite3.g" -> "Sqlite3Lexer.hpp"$ */
+/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Lexer.hpp"$ */
 #include <antlr/CommonToken.hpp>
 #include <antlr/InputBuffer.hpp>
 #include <antlr/BitSet.hpp>
@@ -26,6 +26,7 @@ public:
 	protected: void mDOT(bool _createToken);
 	public: void mID(bool _createToken);
 	public: void mQUOTEDID(bool _createToken);
+	public: void mQUOTEDLITERAL(bool _createToken);
 	public: void mNUMERIC(bool _createToken);
 	public: void mPLUS(bool _createToken);
 	public: void mMINUS(bool _createToken);

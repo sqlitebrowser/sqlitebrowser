@@ -96,8 +96,11 @@ ID
 QUOTEDID
 	: '`' ( ~('`') )* '`'
 	| '[' ( ~(']') )*  ']'
-	| '"' ( ~('"') )* '"'
 	;
+
+QUOTEDLITERAL
+  : '"' ( ~('"') )* '"'
+  ;
 
 NUMERIC
     : ( (DIGIT)+ ( '.' (DIGIT)* )?
@@ -164,7 +167,7 @@ options {
   buildAST = true;
 }
 
-id : ID | QUOTEDID | STRINGLITERAL ;
+id : ID | QUOTEDID | QUOTEDLITERAL | STRINGLITERAL ;
 
 databasename
   :
@@ -318,7 +321,7 @@ columndef
   {#columndef = #([COLUMNDEF, "COLUMNDEF"], #columndef);}
   ;
 	
-name : ID | QUOTEDID | STRINGLITERAL;
+name : ID | QUOTEDID | QUOTEDLITERAL | STRINGLITERAL;
 
 type_name
   :
@@ -334,7 +337,7 @@ columnconstraint
   | NOT NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
-  | DEFAULT (signednumber | STRINGLITERAL | LPAREN expr RPAREN)
+  | DEFAULT (signednumber | QUOTEDLITERAL | STRINGLITERAL | LPAREN expr RPAREN)
   | COLLATE collationname
   | foreignkeyclause)
   {#columnconstraint = #([COLUMNCONSTRAINT, "COLUMNCONSTRAINT"], #columnconstraint);}
