@@ -218,6 +218,7 @@ QString identifier(antlr::RefAST ident)
 {
     QString sident = ident->getText().c_str();
     if(ident->getType() == sqlite3TokenTypes::QUOTEDID ||
+       ident->getType() == Sqlite3Lexer::QUOTEDLITERAL ||
        ident->getType() == sqlite3TokenTypes::STRINGLITERAL)
     {
         sident.remove(0, 1);
@@ -248,6 +249,7 @@ Table CreateTableWalker::table()
         //skip to tablename
         while(s->getType() != Sqlite3Lexer::ID &&
               s->getType() != Sqlite3Lexer::QUOTEDID &&
+              s->getType() != Sqlite3Lexer::QUOTEDLITERAL &&
               s->getType() != Sqlite3Lexer::STRINGLITERAL &&
               s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
         {
