@@ -77,10 +77,8 @@ void MainWindow::init()
     ui->dbTreeWidget->setColumnWidth(0, 300);
 
     // Set up filter row
-    FilterTableHeader* tableHeader = new FilterTableHeader(ui->dataTable);
-    connect(tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
-    connect(tableHeader, SIGNAL(filterChanged(int,QString)), this, SLOT(setRecordsetLabel()));
-    ui->dataTable->setHorizontalHeader(tableHeader);
+    m_tableHeader = new FilterTableHeader(ui->dataTable);
+    ui->dataTable->setHorizontalHeader(m_tableHeader);
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -118,7 +116,8 @@ void MainWindow::init()
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
     // Connect some more signals and slots
-    connect(tableHeader, SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
+    connect(m_tableHeader, SIGNAL(filterChanged(int,QString)), this, SLOT(setRecordsetLabel()));
+    connect(m_tableHeader, SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
@@ -365,6 +364,7 @@ void MainWindow::fileClose()
     // Delete the model for the Browse tab and create a new one
     delete m_browseTableModel;
     m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+    connect(m_tableHeader, SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
 
     // Manually update the recordset label inside the Browse tab now
     setRecordsetLabel();
