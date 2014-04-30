@@ -87,9 +87,7 @@ Then it's just a matter of::
 
   $ git clone https://github.com/rp-/sqlitebrowser.git
   $ cd sqlitebrowser
-  $ mkdir build
-  $ cd build
-  $ cmake ..
+  $ qmake
   $ make
   $ mv src/sqlitebrowser.app /Applications/
 
