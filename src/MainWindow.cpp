@@ -141,7 +141,7 @@ void MainWindow::init()
     m_NetworkManager = new QNetworkAccessManager(this);
     QObject::connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
 
-    QUrl url("https://raw.github.com/rp-/sqlitebrowser/master/currentrelease");
+    QUrl url("https://raw.github.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
     m_NetworkManager->get(QNetworkRequest(url));
 #endif
 }
@@ -1327,7 +1327,7 @@ void MainWindow::httpresponse(QNetworkReply *reply)
                 msgBox.setTextFormat(Qt::RichText);
                 msgBox.setWindowTitle(tr("New version available."));
                 msgBox.setText(tr("A new sqlitebrowser version is available (%1.%2.%3).<br/><br/>"
-                                  "Please download at <a href='https://github.com/rp-/sqlitebrowser/releases'>https://github.com/rp-/sqlitebrowser/releases</a>.").arg(major).arg(minor).arg(patch));
+                                  "Please download at <a href='https://github.com/sqlitebrowser/sqlitebrowser/releases'>https://github.com/sqlitebrowser/sqlitebrowser/releases</a>.").arg(major).arg(minor).arg(patch));
                 msgBox.exec();
 
                 if(msgBox.clickedButton() == idontcarebutton)

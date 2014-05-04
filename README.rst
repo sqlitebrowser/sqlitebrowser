@@ -7,7 +7,7 @@ This is a fork from the SF project which seems to be stagnant.
 Screenshot
 ----------
 
-.. image:: https://github.com/rp-/sqlitebrowser/raw/master/images/sqlitebrowser.png
+.. image:: https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png
    :height: 641px
    :width: 725px
    :scale: 100%
@@ -58,13 +58,13 @@ What's still to do
 - Further improvement of the UI, adding more features and making it easier to
   use
 - Feel free to add more issues at
-  https://github.com/rp-/sqlitebrowser/issues
+  https://github.com/sqlitebrowser/sqlitebrowser/issues
 
 Windows binaries
 ----------------
 Windows binaries can be downloaded from here:
 
-https://github.com/rp-/sqlitebrowser/releases
+https://github.com/sqlitebrowser/sqlitebrowser/releases
 
 Nightly builds are also available at:
 
@@ -85,7 +85,7 @@ using Homebrew first::
 
 Then it's just a matter of::
 
-  $ git clone https://github.com/rp-/sqlitebrowser.git
+  $ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
   $ cd sqlitebrowser
   $ qmake
   $ make
