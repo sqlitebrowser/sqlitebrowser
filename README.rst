@@ -2,7 +2,8 @@
 SQLite Database Browser
 =======================
 
-This is a fork from the SF project which seems to be stagnant.
+This is the official home of the SQLite Database Browser project, previously
+housed on SourceForge.
 
 Screenshot
 ----------
@@ -14,24 +15,24 @@ Screenshot
    :alt: SQLiteBrowser Screenshot
    :align: center
 
-Old Project
------------
+Old Project Pages
+-----------------
+
 - http://sqlitebrowser.sourceforge.net
 - https://sourceforge.net/projects/sqlitebrowser/
 
 What it is
 ----------
 
-(taken from the website linked to above; it's still true - now even more)
-
-SQLite Database Browser is a freeware, open source visual tool used to create,
+SQLite Database Browser is a free, open source visual tool used to create,
 design and edit database files compatible with SQLite. It is meant to be used
-for users and developers that want to create databases, edit and search data
+by users and developers wanting to create databases, edit and search data
 using a familiar spreadsheet-like interface, without the need to learn
 complicated SQL commands.
 
 What's been done since then
 ---------------------------
+
 - Qt3Support was removed
 - Recent files menu added
 - Improved UI, making it more modern, replacing some dialogs etc.
@@ -64,11 +65,11 @@ Windows binaries
 ----------------
 Windows binaries can be downloaded from here:
 
-https://github.com/sqlitebrowser/sqlitebrowser/releases
+- https://github.com/sqlitebrowser/sqlitebrowser/releases
 
 Nightly builds are also available at:
 
-http://rp.oldsch00l.com/sqlitebrowser/
+- http://rp.oldsch00l.com/sqlitebrowser/
 
 MacOS X
 -------
