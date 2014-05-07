@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>SQLite Database Browser by sqlitebrowser</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>SQLite Database Browser</h1>
+        <h2>The Official home of the SQLite Database Browser project</h2>
+        <a href="https://github.com/sqlitebrowser/sqlitebrowser" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><img src="https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png" alt="SQLiteBrowser Screenshot" title="SQLiteBrowser Screenshot"></p>
+
+<h2>
+<a name="old-project-pages" class="anchor" href="#old-project-pages"><span class="octicon octicon-link"></span></a>Old project pages</h2>
+
+<ul>
+<li><a href="http://sqlitebrowser.sourceforge.net">http://sqlitebrowser.sourceforge.net</a></li>
+<li><a href="https://sourceforge.net/projects/sqlitebrowser">https://sourceforge.net/projects/sqlitebrowser</a></li>
+</ul><h2>
+<a name="what-it-is" class="anchor" href="#what-it-is"><span class="octicon octicon-link"></span></a>What it is</h2>
+
+<p>SQLite Database Browser is a high quality, open source visual tool used to create, design and edit database files compatible with SQLite.</p>
+
+<p>It is for users and developers who want to create databases, edit and search data, using a familiar spreadsheet-like interface, without the need to learn complicated SQL commands.</p>
+
+<p>Controls and wizards are available for users to:</p>
+
+<ul>
+<li>Create and compact database files</li>
+<li>Create, define, modify and delete tables</li>
+<li>Create, define and delete indexes</li>
+<li>Browse, edit, add and delete records</li>
+<li>Search records</li>
+<li>Import and export records as text</li>
+<li>Import and export tables from/to CSV files</li>
+<li>Import and export databases from/to SQL dump files</li>
+<li>Issue SQL queries and inspect the results</li>
+<li>Examine a log of all SQL commands issued by the application</li>
+</ul><h2>
+<a name="what-it-is-not" class="anchor" href="#what-it-is-not"><span class="octicon octicon-link"></span></a>What it is not</h2>
+
+<p>This program is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands. It is a tool to be used both by developers and by end users, and it must remain as simple to use as possible in order to achieve its goals.</p>
+
+<h2>
+<a name="whats-been-done-since-the-sourceforge-project" class="anchor" href="#whats-been-done-since-the-sourceforge-project"><span class="octicon octicon-link"></span></a>What's been done since the SourceForge project</h2>
+
+<ul>
+<li>Qt3Support was removed</li>
+<li>Recent files menu added</li>
+<li>Improved UI, making it more modern, replacing some dialogs etc.</li>
+<li>Syntax highlighting for SQL code</li>
+<li>Cleaned up the code, reducing the SLOC quite a bit</li>
+<li>Added basic support for triggers and views</li>
+<li>Added pragma editing</li>
+<li>Added BLOB support</li>
+<li>Added a new filter row for searching</li>
+<li>Improved performance when opening large tables</li>
+<li>Extended the SQL tab</li>
+<li>Added SQLite extension support</li>
+<li>Fixed a ton of bugs</li>
+<li>Probably more</li>
+</ul><p>All in all a fair amount of the code has been rewritten in order to regain
+maintainability.  Based on this quite a few bugs can be fixed and new
+features added.</p>
+
+<h2>
+<a name="whats-still-to-do" class="anchor" href="#whats-still-to-do"><span class="octicon octicon-link"></span></a>What's still to do</h2>
+
+<ul>
+<li>Even more code cleanup</li>
+<li>Further improvement of the UI, adding more features and making it easier to use</li>
+<li>Feel free to add more issues at
+<a href="https://github.com/sqlitebrowser/sqlitebrowser/issues">https://github.com/sqlitebrowser/sqlitebrowser/issues</a>
+</li>
+</ul><h2>
+<a name="windows-binaries" class="anchor" href="#windows-binaries"><span class="octicon octicon-link"></span></a>Windows binaries</h2>
+
+<p>Windows binaries can be downloaded from here:</p>
+
+<ul>
+<li><a href="https://github.com/sqlitebrowser/sqlitebrowser/releases">https://github.com/sqlitebrowser/sqlitebrowser/releases</a></li>
+</ul><p>Nightly builds are also available at:</p>
+
+<ul>
+<li><a href="http://rp.oldsch00l.com/sqlitebrowser/">http://rp.oldsch00l.com/sqlitebrowser/</a></li>
+</ul><h2>
+<a name="macos-x" class="anchor" href="#macos-x"><span class="octicon octicon-link"></span></a>MacOS X</h2>
+
+<p>SQLite Database Browser works well on MacOS X.</p>
+
+<ul>
+<li>OSX 10.7 (Lion) and 10.8 (Mountain Lion) are tested and known to work</li>
+</ul><p>Building on OSX is simple, but depends on SQLite and Qt 4.8.x being installed
+using Homebrew first::</p>
+
+<pre><code>$ brew install sqlite --with-functions
+$ brew install qt --with-qt3support
+</code></pre>
+
+<p>Then it's just a matter of::</p>
+
+<pre><code>$ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
+$ cd sqlitebrowser
+$ qmake
+$ make
+$ mv src/sqlitebrowser.app /Applications/
+</code></pre>
+
+<p>An icon for "sqlitebrowser" should now be in your main OSX Applications
+list, ready to launch.</p>
+
+<h2>
+<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
+
+<ul>
+<li>Version 3.0.3 released - 2014-04-28</li>
+<li>Version 3.0.2 released - 2014-02-12</li>
+<li>Version 3.0.1 released - 2013-12-02</li>
+<li>Version 3.0 released - 2013-09-15</li>
+<li>Version 3.0rc1 released - 2013-09-09 - Project now on GitHub</li>
+<li>Version 2.0b1 released - 2009-12-09 - Based on Qt4.6</li>
+<li>Version 1.2 released - 2005-04-05</li>
+<li>Version 1.1 released - 2004-07-20</li>
+<li>Version 1.01 released - 2003-10-02</li>
+<li>Version 1.0 released to public domain - 2003-08-19</li>
+</ul><h2>
+<a name="contributors" class="anchor" href="#contributors"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<p>This program was developed originally by Mauricio Piacentini (<a href="https://github.com/piacentini" class="user-mention">@piacentini</a>) from Tabuleiro Producoes, as the Arca Database Browser. The original version was used as a free companion tool to the Arca Database Xtra, a commercial product that embeds SQLite databases with some additional extensions to handle compressed and binary data.</p>
+
+<p>The original code was trimmed and adjusted to be compatible with standard SQLite 2.x databases. The resulting program was renamed SQLite Database Browser, and released into the Public Domain by Mauricio. Icons were contributed by Raquel Ravanini, also from Tabuleiro. Jens Miltner contributed the code to support SQLite 3.x databases for the 1.2 release.</p>
+
+<p>Pete Morgan (<a href="https://github.com/daffodil" class="user-mention">@daffodil</a>) created an initial project on GitHub with the code in 2012, where several contributors fixed and improved pieces over the years. René Peinthor (<a href="https://github.com/rp-" class="user-mention">@rp-</a>) and Martin Kleusberg (<a href="https://github.com/MKleusberg" class="user-mention">@MKleusberg</a>) then became involved, and have been the main driving force from that point.  Justin Clift (<a href="https://github.com/justinclift" class="user-mention">@justinclift</a>) helps out with testing on OSX, and started the new github.com/sqlitebrowser organisation on GitHub.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/sqlitebrowser/sqlitebrowser/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/sqlitebrowser/sqlitebrowser/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/sqlitebrowser/sqlitebrowser"></a> is maintained by <a href="https://github.com/sqlitebrowser">sqlitebrowser</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-50741720-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
