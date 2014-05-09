@@ -193,7 +193,13 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
         return QVariant();
 
     if (orientation == Qt::Horizontal)
-        return m_headers.at(section);
+    {
+        // if we have a VIRTUAL table the model will not be valid, with no header data
+        if(section < m_headers.size())
+            return m_headers.at(section);
+
+        return QString("%1").arg(section + 1);
+    }
     else
         return QString("%1").arg(section + 1);
 }
