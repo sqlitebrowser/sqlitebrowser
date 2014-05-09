@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons/icons.qrc">
-    <normaloff>:/oldimages/icon16</normaloff>:/oldimages/icon16</iconset>
+    <normaloff>:/icons/appicon</normaloff>:/icons/appicon</iconset>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -41,15 +41,18 @@
     <rect>
      <x>380</x>
      <y>10</y>
-     <width>131</width>
-     <height>81</height>
+     <width>111</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="icons/icons.qrc">:/oldimages/128</pixmap>
+    <pixmap resource="icons/icons.qrc">:/icons/appicon</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_version">

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons/icons.qrc">
-    <normaloff>:/oldimages/icon16</normaloff>:/oldimages/icon16</iconset>
+    <normaloff>:/icons/appicon</normaloff>:/icons/appicon</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -275,8 +275,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>452</width>
-             <height>494</height>
+             <width>278</width>
+             <height>444</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -761,7 +761,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
