@@ -27,7 +27,10 @@ void SqliteTableModel::setTable(const QString& table)
     m_sTable = table;
 
     m_headers.clear();
-    m_headers.push_back("rowid");
+    QString rowid = "rowid";
+    if(m_db->getObjectByName(table).gettype() == "table")
+        rowid = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql()).rowidColumn();
+    m_headers.push_back(rowid);
     m_headers.append(m_db->getTableFields(table));
 
     m_mWhere.clear();
@@ -358,19 +361,16 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 void SqliteTableModel::buildQuery()
 {
     QString where;
-    QStringList headers;
-    headers.push_back("rowid");
-    headers.append(m_db->getTableFields(m_sTable));
 
     if(m_mWhere.size())
     {
         where = "WHERE 1=1";
 
         for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
-            where.append(QString(" AND `%1` %2").arg(headers.at(i.key())).arg(i.value()));
+            where.append(QString(" AND `%1` %2").arg(m_headers.at(i.key())).arg(i.value()));
     }
 
-    QString sql = QString("SELECT rowid,* FROM `%1` %2 ORDER BY `%3` %4").arg(m_sTable).arg(where).arg(headers.at(m_iSortColumn)).arg(m_sSortOrder);
+    QString sql = QString("SELECT `%1`,* FROM `%2` %3 ORDER BY `%4` %5").arg(m_headers.at(0)).arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
     setQuery(sql, true);
 }
 
