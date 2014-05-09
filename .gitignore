@@ -1,6 +1,9 @@
 Makefile
 sqlitebrowser.pro.user
 CMakeLists.txt.user
+CMakeFiles
+*.cmake
+*.cxx_parameters
 
 # ignore any build folders
 build*/
