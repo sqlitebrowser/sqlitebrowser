@@ -1493,7 +1493,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
                 int y = column;
 
-                graph->setPen(QPen(colors[y]));
+                graph->setPen(QPen(colors[ui->plotWidget->graphCount() - 1]));
 
                 // prepare the data vectors for qcustomplot
                 // possible improvement might be a QVector subclass that directly
