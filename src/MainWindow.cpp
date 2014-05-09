@@ -1453,12 +1453,16 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
     }
 
     QStringList yAxisLabels;
+    // right now we don't support more than 6 colors, they should be setable via the columns tree anyway
     QVector<QColor> colors;
     colors << Qt::blue << Qt::red << Qt::green << Qt::darkYellow << Qt::darkCyan << Qt::darkGray;
 
     ui->plotWidget->clearGraphs();
     if(xitem)
     {
+        // regain the model column index and the datatype
+        // leading 16 bit are column index, the other 16 bit are the datatype
+        // right now datatype is only important for X axis (date, non date)
         uint xitemdata = xitem->data(PlotColumnField, Qt::UserRole).toUInt();
         int x = xitemdata >> 16;
         int xtype = xitemdata & (uint)0xFF;
@@ -1481,6 +1485,8 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
             if(item->checkState((PlotColumnY)) == Qt::Checked && ui->plotWidget->graphCount() < colors.size())
             {
+                // regain the model column index and the datatype
+                // leading 16 bit are column index
                 uint itemdata = item->data(0, Qt::UserRole).toUInt();
                 int column = itemdata >> 16;
                 QCPGraph* graph = ui->plotWidget->addGraph();
@@ -1489,6 +1495,9 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
                 graph->setPen(QPen(colors[y]));
 
+                // prepare the data vectors for qcustomplot
+                // possible improvement might be a QVector subclass that directly
+                // access the model data, to save memory, we are copying here
                 QVector<double> xdata(model->rowCount()), ydata(model->rowCount());
                 for(int i = 0; i < model->rowCount(); ++i)
                 {
@@ -1506,10 +1515,19 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
                     ydata[i] = model->data(model->index(i, y)).toDouble();
                 }
+
+                // set some graph styles, this could also be improved to let the user choose
+                // some styling
                 graph->setData(xdata, ydata);
                 graph->setLineStyle(QCPGraph::lsLine);
                 graph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
+
+                // gather Y label column names
                 yAxisLabels << model->headerData(y, Qt::Horizontal).toString();
+
+                // scaling is anything than optimal right now, the last selected
+                // Y axis will always "win" the scaling, either let the use choose
+                // or try to scale the plot by the graph with the biggest values
                 graph->rescaleAxes();
             }
         }
