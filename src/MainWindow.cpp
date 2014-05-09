@@ -1382,10 +1382,25 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
     // add columns to x/y seleciton tree widget
     if(update)
     {
+        // disconnect treeplotcolumns item changed updates
         disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
                    this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
 
         m_currentPlotModel = model;
+
+        // save current selected columns, so we can restore them after the update
+        QString sItemX; // selected X column
+        QStringList sItemsY; // selected Y columns
+        for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
+        {
+            QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
+            if(item->checkState(PlotColumnX) == Qt::Checked)
+                sItemX = item->text(PlotColumnField);
+
+            if(item->checkState(PlotColumnY) == Qt::Checked)
+                sItemsY << item->text(PlotColumnField);
+        }
+
         ui->treePlotColumns->clear();
 
         if(model)
@@ -1403,10 +1418,18 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                     itemdata = i << 16;
                     itemdata |= columntype;
                     columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
-
                     columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
-                    columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
-                    columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
+
+                    // restore previous check state
+                    if(sItemsY.contains(columnitem->text(PlotColumnField)))
+                        columnitem->setCheckState(PlotColumnY, Qt::Checked);
+                    else
+                        columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
+                    if(sItemX == columnitem->text(PlotColumnField))
+                        columnitem->setCheckState(PlotColumnX, Qt::Checked);
+                    else
+                        columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
+
                     ui->treePlotColumns->addTopLevelItem(columnitem);
                 }
             }
