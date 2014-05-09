@@ -60,6 +60,22 @@ void TestTable::notnull()
                                ");"));
 }
 
+void TestTable::withoutRowid()
+{
+    Table tt("testtable");
+    FieldPtr f = FieldPtr(new Field("a", "integer"));
+    f->setPrimaryKey(true);
+    f->setAutoIncrement(true);
+    tt.addField(f);
+    tt.addField(FieldPtr(new Field("b", "integer")));
+    tt.setRowidColumn("a");
+
+    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
+                               "\t`a`\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                               "\t`b`\tinteger\n"
+                               ") WITHOUT ROWID;"));
+}
+
 void TestTable::parseSQL()
 {
     QString sSQL = "create TABLE hero (\n"
@@ -71,6 +87,7 @@ void TestTable::parseSQL()
     Table tab = Table::parseSQL(sSQL);
 
     QVERIFY(tab.name() == "hero");
+    QVERIFY(tab.rowidColumn() == "rowid");
     QVERIFY(tab.fields().at(0)->name() == "id");
     QVERIFY(tab.fields().at(1)->name() == "name");
     QVERIFY(tab.fields().at(2)->name() == "info");
@@ -85,8 +102,6 @@ void TestTable::parseSQL()
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
     QCOMPARE(tab.fields().at(2)->check(), QString("info=='x'"));
-
-
 }
 
 void TestTable::parseSQLdefaultexpr()
@@ -168,6 +183,16 @@ void TestTable::parseSQLKeywordInIdentifier()
     QVERIFY(tab.name() == "deffered");
     QVERIFY(tab.fields().at(0)->name() == "key");
     QVERIFY(tab.fields().at(1)->name() == "if");
+}
+
+void TestTable::parseSQLWithoutRowid()
+{
+    QString sSQL = "CREATE TABLE test(a integer primary key, b integer) WITHOUT ROWID;";
+
+    Table tab = Table::parseSQL(sSQL);
+
+    QVERIFY(tab.fields().at(tab.findPk())->name() == "a");
+    QVERIFY(tab.rowidColumn() == "a");
 }
 
 void TestTable::parseNonASCIIChars()

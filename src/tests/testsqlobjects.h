@@ -7,6 +7,7 @@ private slots:
     void sqlOutput();
     void autoincrement();
     void notnull();
+    void withoutRowid();
 
     void parseSQL();
     void parseSQLdefaultexpr();
@@ -14,6 +15,7 @@ private slots:
     void parseSQLForeignKey();
     void parseSQLSingleQuotes();
     void parseSQLKeywordInIdentifier();
+    void parseSQLWithoutRowid();
     void parseNonASCIIChars();
 };
 
