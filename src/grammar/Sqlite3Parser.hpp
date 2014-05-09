@@ -2,7 +2,7 @@
 #define INC_Sqlite3Parser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
+/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "sqlite3TokenTypes.hpp"
@@ -76,10 +76,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 103;
+	static const int NUM_TOKENS = 105;
 #else
 	enum {
-		NUM_TOKENS = 103
+		NUM_TOKENS = 105
 	};
 #endif
 	

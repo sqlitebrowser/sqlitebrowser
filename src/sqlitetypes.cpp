@@ -55,6 +55,7 @@ bool Field::isInteger() const
 void Table::clear()
 {
     m_fields.clear();
+    m_rowidColumn = "rowid";
 }
 
 Table::~Table()
@@ -89,6 +90,16 @@ int Table::findField(const QString &sname)
     for(int i = 0; i < m_fields.count(); ++i)
     {
         if(sname == m_fields.at(i)->name())
+            return i;
+    }
+    return -1;
+}
+
+int Table::findPk() const
+{
+    for(int i = 0; i < m_fields.count(); ++i)
+    {
+        if(m_fields.at(i)->primaryKey())
             return i;
     }
     return -1;
@@ -208,8 +219,13 @@ QString Table::sql() const
         if(pks_found)
             sql += pk + ")";
     }
+    sql += "\n)";
 
-    return sql + "\n);";
+    // without rowid
+    if(m_rowidColumn != "rowid")
+        sql += " WITHOUT ROWID";
+
+    return sql + ";";
 }
 
 namespace
@@ -262,7 +278,6 @@ Table CreateTableWalker::table()
         s = s->getNextSibling(); // first column name
         antlr::RefAST column = s;
         // loop columndefs
-        FieldVector pks;
         while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::COLUMNDEF)
         {
             FieldPtr f;
@@ -275,33 +290,46 @@ Table CreateTableWalker::table()
         // now we are finished or it is a tableconstraint
         while(s != antlr::nullAST)
         {
-            antlr::RefAST tc = s->getFirstChild();
-            // skip constraint name, if there is any
-            if(tc->getType() == sqlite3TokenTypes::CONSTRAINT)
-                tc = tc->getNextSibling()->getNextSibling();
+            // Is this a 'without rowid' definiton?
+            if(s->getType() != sqlite3TokenTypes::WITHOUT)
+            {
+                // It's not, so treat this as table constraints
 
-            switch(tc->getType())
-            {
-            case sqlite3TokenTypes::PRIMARY:
-            {
-                tc = tc->getNextSibling()->getNextSibling(); // skip primary and key
-                tc = tc->getNextSibling(); // skip LPAREN
-                do
+                antlr::RefAST tc = s->getFirstChild();
+                // skip constraint name, if there is any
+                if(tc->getType() == sqlite3TokenTypes::CONSTRAINT)
+                    tc = tc->getNextSibling()->getNextSibling();
+
+                switch(tc->getType())
                 {
-                    QString col = identifier(tc);
-                    int fieldindex = tab.findField(col);
-                    if(fieldindex != -1)
-                        tab.fields().at(fieldindex)->setPrimaryKey(true);
-                    tc = tc->getNextSibling(); // skip ident and comma
-                    tc = tc->getNextSibling();
-                } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
-            }
-            break;
-            default: break;
-            }
+                case sqlite3TokenTypes::PRIMARY:
+                {
+                    tc = tc->getNextSibling()->getNextSibling(); // skip primary and key
+                    tc = tc->getNextSibling(); // skip LPAREN
+                    do
+                    {
+                        QString col = identifier(tc);
+                        int fieldindex = tab.findField(col);
+                        if(fieldindex != -1)
+                            tab.fields().at(fieldindex)->setPrimaryKey(true);
+                        tc = tc->getNextSibling(); // skip ident and comma
+                        tc = tc->getNextSibling();
+                    } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
+                }
+                break;
+                default: break;
+                }
 
-            s = s->getNextSibling(); //COMMA or RPAREN
-            s = s->getNextSibling();
+                s = s->getNextSibling(); //COMMA or RPAREN
+                s = s->getNextSibling();
+            } else {
+                // It is
+
+                s = s->getNextSibling();    // WITHOUT
+                s = s->getNextSibling();    // ROWID
+
+                tab.setRowidColumn(tab.fields().at(tab.findPk())->name());
+            }
         }
     }
 

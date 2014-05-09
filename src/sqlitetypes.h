@@ -66,7 +66,7 @@ typedef QVector< FieldPtr > FieldVector;
 class Table
 {
 public:
-    Table(const QString& name): m_name(name) {}
+    Table(const QString& name): m_name(name), m_rowidColumn("rowid") {}
     virtual ~Table();
 
     void setName(const QString& name) { m_name = name; }
@@ -90,6 +90,8 @@ public:
     bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
     void setField(int index, FieldPtr f) { m_fields[index] = f; }
+    void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
+    QString rowidColumn() const { return m_rowidColumn; }
     void clear();
 
     /**
@@ -100,6 +102,8 @@ public:
      */
     int findField(const QString& sname);
 
+    int findPk() const;
+
     static Table parseSQL(const QString& sSQL);
 private:
     QStringList fieldList() const;
@@ -108,6 +112,7 @@ private:
 private:
     QString m_name;
     FieldVector m_fields;
+    QString m_rowidColumn;
 };
 
 /**

@@ -62,6 +62,7 @@ tokens {
   REPLACE="REPLACE";
   RESTRICT="RESTRICT";
   ROLLBACK="ROLLBACK";
+  ROWID="ROWID";
   SET="SET";
   TEMPORARY="TEMPORARY";
   TEMP="TEMP";
@@ -69,6 +70,7 @@ tokens {
   UNIQUE="UNIQUE";
   UPDATE="UPDATE";
   WHEN="WHEN";
+  WITHOUT="WITHOUT";
 
 //ast
 
@@ -252,7 +254,7 @@ keywordastablename
 createtable
   :
   CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
-  ( LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN
+  ( LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN (WITHOUT ROWID)?
   | AS selectstmt
   )
   {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
