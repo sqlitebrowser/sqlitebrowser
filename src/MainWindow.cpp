@@ -1562,3 +1562,32 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
     }
     updatePlot(m_currentPlotModel, false);
 }
+
+void MainWindow::on_butSavePlot_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"));
+    if(!fileName.isEmpty())
+    {
+        if(fileName.endsWith(".png", Qt::CaseInsensitive))
+        {
+            ui->plotWidget->savePng(fileName);
+        }
+        else if(fileName.endsWith(".jpg", Qt::CaseInsensitive))
+        {
+            ui->plotWidget->saveJpg(fileName);
+        }
+        else if(fileName.endsWith(".pdf", Qt::CaseInsensitive))
+        {
+            ui->plotWidget->savePdf(fileName);
+        }
+        else if(fileName.endsWith(".bmp", Qt::CaseInsensitive))
+        {
+            ui->plotWidget->saveBmp(fileName);
+        }
+        else
+        {
+            fileName += ".png";
+            ui->plotWidget->savePng(fileName);
+        }
+    }
+}

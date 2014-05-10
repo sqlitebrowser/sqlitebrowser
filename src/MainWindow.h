@@ -167,6 +167,7 @@ private slots:
     virtual void httpresponse(QNetworkReply* reply);
     virtual void updatePlot(SqliteTableModel* model, bool update = true);
     void on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column);
+    void on_butSavePlot_clicked();
 };
 
 #endif
