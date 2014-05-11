@@ -1161,6 +1161,7 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
     w->getEditor()->insertFieldCompleterModels(completerModelsFields);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
+    w->getEditor()->setFocus();
 
     return index;
 }
