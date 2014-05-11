@@ -1565,7 +1565,11 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
 
 void MainWindow::on_butSavePlot_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"));
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Choose a filename to save under"),
+                                                    QString(),
+                                                    tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
+                                                    );
     if(!fileName.isEmpty())
     {
         if(fileName.endsWith(".png", Qt::CaseInsensitive))
