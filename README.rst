@@ -18,7 +18,7 @@ Screenshot
 New Project website
 -------------------
 
-http://sqlitebrowser.org
+- http://sqlitebrowser.org
 
 Old Project Pages
 -----------------
