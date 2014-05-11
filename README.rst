@@ -15,6 +15,11 @@ Screenshot
    :alt: SQLiteBrowser Screenshot
    :align: center
 
+New Project website
+-------------------
+
+http://sqlitebrowser.org
+
 Old Project Pages
 -----------------
 
