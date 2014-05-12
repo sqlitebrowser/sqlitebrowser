@@ -22,3 +22,6 @@ libs/*/Makefile*
 libs/*/debug/
 libs/*/release/
 libs/*/*.a
+
+# Ignore .DS_Store files on OSX
+.DS_Store
