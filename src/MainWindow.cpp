@@ -129,6 +129,9 @@ void MainWindow::init()
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
     ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
 
+    // plot widgets
+    ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
+
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
