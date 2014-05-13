@@ -1,3 +1,5 @@
+# SQLite Database Browser
+
 ![SQLiteBrowser Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "SQLiteBrowser Screenshot")
 
 ## What it is
@@ -22,14 +24,6 @@ Controls and wizards are available for users to:
 ## What it is not
 
 This program is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands. It is a tool to be used both by developers and by end users, and it must remain as simple to use as possible in order to achieve its goals.
-
-## License
-
-SQLite Database Browser is bi-licensed under the Mozilla Public License
-Version 2, as well as the GNU General Public License Version 3 or later.
-
-You can modify or redistribute it under the conditions of these
-licenses.
 
 ## What's been done since the SourceForge project
 
@@ -112,8 +106,18 @@ list, ready to launch.
 
 ## History
 
-This program was developed originally by Mauricio Piacentini (@piacentini) from Tabuleiro Producoes, as the Arca Database Browser. The original version was used as a free companion tool to the Arca Database Xtra, a commercial product that embeds SQLite databases with some additional extensions to handle compressed and binary data.
+This program was developed originally by Mauricio Piacentini [@piacentini](https://github.com/piacentini) from Tabuleiro Producoes, as the Arca Database Browser. The original version was used as a free companion tool to the Arca Database Xtra, a commercial product that embeds SQLite databases with some additional extensions to handle compressed and binary data.
 
 The original code was trimmed and adjusted to be compatible with standard SQLite 2.x databases. The resulting program was renamed SQLite Database Browser, and released into the Public Domain by Mauricio. Icons were contributed by Raquel Ravanini, also from Tabuleiro. Jens Miltner contributed the code to support SQLite 3.x databases for the 1.2 release.
 
-Pete Morgan (@daffodil) created an initial project on GitHub with the code in 2012, where several contributors fixed and improved pieces over the years. René Peinthor (@rp-) and Martin Kleusberg (@MKleusberg) then became involved, and have been the main driving force from that point.  Justin Clift (@justinclift) helps out with testing on OSX, and started the new github.com/sqlitebrowser organisation on GitHub.
+Pete Morgan ([@daffodil](https://github.com/daffodil)) created an initial project on GitHub with the code in 2012, where several contributors fixed and improved pieces over the years. René Peinthor ([@rp-](https://github.com/rp-)) and Martin Kleusberg ([@MKleusberg](https://github.com/MKleusberg)) then became involved, and have been the main driving force from that point.  Justin Clift ([@justinclift](https://github.com/justinclift)) helps out with testing on OSX, and started the new github.com/sqlitebrowser organisation on GitHub.
+
+[John T. Haller](http://johnhaller.com), of [PortableApps.com](http://portableapps.com) fame, created the new logo.  He based it on the Tango icon set (public domain).
+
+## License
+
+SQLite Database Browser is bi-licensed under the Mozilla Public License
+Version 2, as well as the GNU General Public License Version 3 or later.
+
+You can modify or redistribute it under the conditions of these
+licenses.
