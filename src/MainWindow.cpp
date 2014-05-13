@@ -1457,9 +1457,6 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
     }
 
     QStringList yAxisLabels;
-    // right now we don't support more than 6 colors, they should be setable via the columns tree anyway
-    QVector<QColor> colors;
-    colors << Qt::blue << Qt::red << Qt::green << Qt::darkYellow << Qt::darkCyan << Qt::darkGray;
 
     ui->plotWidget->clearGraphs();
     if(xitem)
@@ -1487,7 +1484,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
         {
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            if(item->checkState((PlotColumnY)) == Qt::Checked && ui->plotWidget->graphCount() < colors.size())
+            if(item->checkState((PlotColumnY)) == Qt::Checked)
             {
                 // regain the model column index and the datatype
                 // leading 16 bit are column index
@@ -1497,7 +1494,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
                 int y = column;
 
-                graph->setPen(QPen(colors[ui->plotWidget->graphCount() - 1]));
+                graph->setPen(QPen(item->backgroundColor(PlotColumnY)));
 
                 // prepare the data vectors for qcustomplot
                 // possible improvement might be a QVector subclass that directly
@@ -1545,13 +1542,13 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
 void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int column)
 {
+    // disable change updates, or we get unwanted redrawing and weird behavior
+    disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+               this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+
     // make sure only 1 X axis is selected
     if(column == PlotColumnX)
     {
-        // disable change updates, or we get unwanted redrawing and weird behavior
-        disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-                   this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
-
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
         {
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
@@ -1560,10 +1557,29 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
                 item->setCheckState(column, Qt::Unchecked);
             }
         }
-
-        connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-                this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
     }
+    else
+    {
+        if(changeitem->checkState(column) == Qt::Checked)
+        {
+            QColorDialog colordialog(this);
+            QColor curbkcolor = changeitem->backgroundColor(column);
+            QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
+            QColor color = colordialog.getColor(precolor, this, tr("Choose a axis color"));
+            if(color.isValid())
+            {
+                changeitem->setBackgroundColor(column, color);
+            }
+            else
+            {
+                changeitem->setCheckState(column, Qt::Unchecked);
+            }
+        }
+    }
+
+    connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+            this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+
     updatePlot(m_currentPlotModel, false);
 }
 
