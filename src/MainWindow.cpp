@@ -35,6 +35,7 @@
 #include <QNetworkAccessManager>
 #include <QSettings>
 #include <QMimeData>
+#include <QColorDialog>
 
 
 MainWindow::MainWindow(QWidget* parent)
