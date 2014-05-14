@@ -86,6 +86,10 @@ Then it's just a matter of::
 An icon for "sqlitebrowser" should now be in your main OSX Applications
 list, ready to launch.
 
+## Twitter
+
+Follow us on Twitter: https://twitter.com/sqlitebrowser
+
 ## Old project pages
 
 * http://sqlitebrowser.sourceforge.net
