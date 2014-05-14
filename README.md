@@ -106,7 +106,7 @@ list, ready to launch.
 
 ## History
 
-This program was developed originally by Mauricio Piacentini [@piacentini](https://github.com/piacentini) from Tabuleiro Producoes, as the Arca Database Browser. The original version was used as a free companion tool to the Arca Database Xtra, a commercial product that embeds SQLite databases with some additional extensions to handle compressed and binary data.
+This program was developed originally by Mauricio Piacentini ([@piacentini](https://github.com/piacentini)) from Tabuleiro Producoes, as the Arca Database Browser. The original version was used as a free companion tool to the Arca Database Xtra, a commercial product that embeds SQLite databases with some additional extensions to handle compressed and binary data.
 
 The original code was trimmed and adjusted to be compatible with standard SQLite 2.x databases. The resulting program was renamed SQLite Database Browser, and released into the Public Domain by Mauricio. Icons were contributed by Raquel Ravanini, also from Tabuleiro. Jens Miltner contributed the code to support SQLite 3.x databases for the 1.2 release.
 
