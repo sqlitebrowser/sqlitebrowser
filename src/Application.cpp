@@ -91,3 +91,15 @@ Application::Application(int& argc, char** argv) :
         }
     }
 }
+
+bool Application::event(QEvent* event)
+{
+    switch(event->type())
+    {
+    case QEvent::FileOpen:
+        m_mainWindow->fileOpen(static_cast<QFileOpenEvent*>(event)->file());
+        return true;
+    default:
+        return QApplication::event(event);
+    }
+}
