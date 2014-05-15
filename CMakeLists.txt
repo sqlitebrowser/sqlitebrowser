@@ -51,6 +51,7 @@ set(SQLB_MOC_HDR
 	src/sqlitetablemodel.h
 	src/sqltextedit.h
 	src/DbStructureModel.h
+	src/Application.h
 )
 
 set(SQLB_SRC
@@ -75,6 +76,7 @@ set(SQLB_SRC
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp
 	src/main.cpp
+	src/Application.cpp
 )
 
 set(SQLB_FORMS
