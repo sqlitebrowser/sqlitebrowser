@@ -1,0 +1,93 @@
+#include <QFileOpenEvent>
+#include <QTranslator>
+#include <QTextCodec>
+#include <QLibraryInfo>
+#include <QLocale>
+#include <QDebug>
+
+#include "Application.h"
+#include "MainWindow.h"
+
+Application::Application(int& argc, char** argv) :
+    QApplication(argc, argv)
+{
+    // Set organisation and application names
+    setOrganizationName("sqlitebrowser");
+    setApplicationName("SQLite Database Browser");
+
+    // Set character encoding to UTF8
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+#if QT_VERSION < 0x050000
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
+
+    // Enable translation
+    QTranslator translator;
+    translator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    installTranslator(&translator);
+    QTranslator apptranslator;
+    apptranslator.load("translations/tr_" + QLocale::system().name());
+    installTranslator(&apptranslator);
+
+    // Parse command line
+    QString fileToOpen;
+    QStringList sqlToExecute;
+    m_dontShowMainWindow = false;
+    for(int i=1;i<arguments().size();i++)
+    {
+        // Check next command line argument
+        if(arguments().at(i) == "-h" || arguments().at(i) == "--help")
+        {
+            // Help
+            qWarning() << qPrintable(tr("Usage: %1 [options] [db]\n").arg(argv[0]));
+            qWarning() << qPrintable(tr("Possible command line arguments:"));
+            qWarning() << qPrintable(tr("  -h, --help\t\tShow command line options"));
+            qWarning() << qPrintable(tr("  -s, --sql  [file]\tExecute this SQL file after opening the DB"));
+            qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
+            qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
+            m_dontShowMainWindow = true;
+        } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
+            // Run SQL file: If file exists add it to list of scripts to execute
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(tr("The -s/--sql option requires an argument"));
+            else if(!QFile::exists(arguments().at(i)))
+                qWarning() << qPrintable(tr("The file %1 does not exist").arg(arguments().at(i)));
+            else
+                sqlToExecute.append(arguments().at(i));
+        } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
+            m_dontShowMainWindow = true;
+        } else {
+            // Other: Check if it's a valid file name
+            if(QFile::exists(arguments().at(i)))
+                fileToOpen = arguments().at(i);
+            else
+                qWarning() << qPrintable(tr("Invalid option/non-existant file: %1").arg(arguments().at(i)));
+        }
+    }
+
+    // Show main window
+    m_mainWindow = new MainWindow();
+    m_mainWindow->show();
+    connect(this, SIGNAL(lastWindowClosed()), this, SLOT(quit()));
+
+    // Open database if one was specified
+    if(fileToOpen.size())
+    {
+        if(m_mainWindow->fileOpen(fileToOpen))
+        {
+            // If database could be opened run the SQL scripts
+            foreach(const QString& f, sqlToExecute)
+            {
+                QFile file(f);
+                if(file.open(QIODevice::ReadOnly))
+                {
+                    m_mainWindow->getDb()->executeMultiSQL(file.readAll(), false, true);
+                    file.close();
+                }
+            }
+            if(!sqlToExecute.isEmpty())
+                m_mainWindow->browseRefresh();
+        }
+    }
+}
