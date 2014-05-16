@@ -966,7 +966,7 @@
             </sizepolicy>
            </property>
            <property name="columnCount">
-            <number>3</number>
+            <number>4</number>
            </property>
            <attribute name="headerDefaultSectionSize">
             <number>100</number>
@@ -978,12 +978,17 @@
            </column>
            <column>
             <property name="text">
+             <string>X</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
              <string>Y</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>X</string>
+             <string/>
             </property>
            </column>
           </widget>

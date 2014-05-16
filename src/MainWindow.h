@@ -60,8 +60,9 @@ private:
     enum PlotColumns
     {
         PlotColumnField = 0,
-        PlotColumnY = 1,
-        PlotColumnX = 2
+        PlotColumnX = 1,
+        PlotColumnY = 2,
+        PlotColumnDummy = 3
     };
 
     Ui::MainWindow* ui;
