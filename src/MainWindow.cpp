@@ -1286,6 +1286,8 @@ void MainWindow::httpresponse(QNetworkReply *reply)
 
         if(!possibleRedirectUrl.toUrl().isEmpty())
         {
+            if(reply->url() == possibleRedirectUrl.toUrl())
+                return; // escape possible redirect loop
             m_NetworkManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
             return;
         }
