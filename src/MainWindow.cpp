@@ -1395,7 +1395,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
         // save current selected columns, so we can restore them after the update
         QString sItemX; // selected X column
-        QStringList sItemsY; // selected Y columns
+        QMap<QString, QColor> mapItemsY; // selected Y columns with color
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
         {
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
@@ -1403,7 +1403,9 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                 sItemX = item->text(PlotColumnField);
 
             if(item->checkState(PlotColumnY) == Qt::Checked)
-                sItemsY << item->text(PlotColumnField);
+            {
+                mapItemsY[item->text(PlotColumnField)] = item->backgroundColor(PlotColumnY);
+            }
         }
 
         ui->treePlotColumns->clear();
@@ -1426,8 +1428,11 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                     columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
 
                     // restore previous check state
-                    if(sItemsY.contains(columnitem->text(PlotColumnField)))
+                    if(mapItemsY.contains(columnitem->text(PlotColumnField)))
+                    {
                         columnitem->setCheckState(PlotColumnY, Qt::Checked);
+                        columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)]);
+                    }
                     else
                         columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
                     if(sItemX == columnitem->text(PlotColumnField))
