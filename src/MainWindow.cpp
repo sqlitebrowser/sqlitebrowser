@@ -1531,13 +1531,10 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
                 // gather Y label column names
                 yAxisLabels << model->headerData(y, Qt::Horizontal).toString();
-
-                // scaling is anything than optimal right now, the last selected
-                // Y axis will always "win" the scaling, either let the use choose
-                // or try to scale the plot by the graph with the biggest values
-                graph->rescaleAxes();
             }
         }
+
+        ui->plotWidget->rescaleAxes(true);
 
         // set axis labels
         ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
