@@ -1564,14 +1564,13 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
             }
         }
     }
-    else
+    else if(column == PlotColumnY)
     {
         if(changeitem->checkState(column) == Qt::Checked)
         {
-            QColorDialog colordialog(this);
+            // get a default color
             QColor curbkcolor = changeitem->backgroundColor(column);
-            QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
-            QColor color = colordialog.getColor(precolor, this, tr("Choose a axis color"));
+            QColor color = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
             if(color.isValid())
             {
                 changeitem->setBackgroundColor(column, color);
@@ -1580,6 +1579,36 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
             {
                 changeitem->setCheckState(column, Qt::Unchecked);
             }
+        }
+    }
+
+    connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+            this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+
+    updatePlot(m_currentPlotModel, false);
+}
+
+void MainWindow::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    // disable change updates, or we get unwanted redrawing and weird behavior
+    disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+               this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+
+    if(column == PlotColumnY)
+    {
+        // On double click open the colordialog
+        QColorDialog colordialog(this);
+        QColor curbkcolor = item->backgroundColor(column);
+        QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
+        QColor color = colordialog.getColor(precolor, this, tr("Choose a axis color"));
+        if(color.isValid())
+        {
+            item->setCheckState(column, Qt::Checked);
+            item->setBackgroundColor(column, color);
+        }
+        else
+        {
+            item->setCheckState(column, Qt::Unchecked);
         }
     }
 
