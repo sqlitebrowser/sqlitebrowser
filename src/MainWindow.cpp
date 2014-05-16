@@ -1334,7 +1334,8 @@ void MainWindow::httpresponse(QNetworkReply *reply)
                 msgBox.setTextFormat(Qt::RichText);
                 msgBox.setWindowTitle(tr("New version available."));
                 msgBox.setText(tr("A new sqlitebrowser version is available (%1.%2.%3).<br/><br/>"
-                                  "Please download at <a href='https://github.com/sqlitebrowser/sqlitebrowser/releases'>https://github.com/sqlitebrowser/sqlitebrowser/releases</a>.").arg(major).arg(minor).arg(patch));
+                                  "Please download at <a href='%4'>%4</a>.").arg(major).arg(minor).arg(patch).
+                                    arg(QString(reply->readLine()).trimmed()));
                 msgBox.exec();
 
                 if(msgBox.clickedButton() == idontcarebutton)
