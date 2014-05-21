@@ -97,6 +97,10 @@ list, ready to launch.
 
 Follow us on Twitter: https://twitter.com/sqlitebrowser
 
+## Website
+
+* http://sqlitebrowser.org
+
 ## Old project pages
 
 * http://sqlitebrowser.sourceforge.net
