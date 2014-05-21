@@ -103,18 +103,25 @@ features added.</p>
 <p>SQLite Database Browser works well on MacOS X.</p>
 
 <ul>
-<li>OSX 10.7 (Lion) and 10.8 (Mountain Lion) are tested and known to work</li>
-</ul><p>Building on OSX is simple, but depends on SQLite and Qt 4.8.x being installed
-using Homebrew first::</p>
+<li>OSX 10.7 (Lion), 10.8 (Mountain Lion) and 10.9 (Mavericks) are tested and known to work</li>
+</ul><p>Building on OSX is simple, but requires SQLite and Qt 4.8.x to be installed
+first.  These are the Homebrew steps, though other package managers should
+work:</p>
 
 <pre><code>$ brew install sqlite --with-functions
 $ brew install qt --with-qt3support
 </code></pre>
 
-<p>Then it's just a matter of::</p>
+<p>Then it's just a matter of getting the source:</p>
 
-<pre><code>$ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
-$ cd sqlitebrowser
+<pre><code>$ git clone https://github.com/sqlitebrowser/sqlitebrowser.git</code></pre>
+
+<p><b>Note</b> - Don't clone the repo to a directory with a quote character (') in
+it's name (eg ~/tmp/foo').  There's an open bug for that which <a href="https://github.com/sqlitebrowser/sqlitebrowser/issues/10">breaks the build</a>.</p>
+
+<p>And compiling it:</p>
+
+<pre><code>$ cd sqlitebrowser
 $ qmake
 $ make
 $ mv src/sqlitebrowser.app /Applications/
@@ -127,6 +134,13 @@ list, ready to launch.</p>
 <a name="twitter" class="anchor" href="#twitter"><span class="octicon octicon-link"></span></a>Twitter</h2>
 
 <p>Follow us on Twitter: <a href="https://twitter.com/sqlitebrowser">https://twitter.com/sqlitebrowser</a></p>
+
+<h2>
+<a name="website" class="anchor" href="#website"><span class="octicon octicon-link"></span></a>Website</h2>
+
+<ul>
+<li><a href="http://sqlitebrowser.org">http://sqlitebrowser.org</a></li>
+</ul>
 
 <h2>
 <a name="old-project-pages" class="anchor" href="#old-project-pages"><span class="octicon octicon-link"></span></a>Old project pages</h2>
