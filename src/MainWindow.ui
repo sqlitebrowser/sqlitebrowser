@@ -184,10 +184,10 @@
              <bool>false</bool>
             </property>
             <property name="toolTip">
-             <string>Go to previous record set page</string>
+             <string>Scroll 100 records upwards</string>
             </property>
             <property name="whatsThis">
-             <string>This button is used to navigate to the previous set of 1000 records in the database view</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>&lt;</string>
@@ -207,10 +207,10 @@
              <bool>false</bool>
             </property>
             <property name="toolTip">
-             <string>Go to next record set page</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="whatsThis">
-             <string>This button is used to navigate to the next 1000 records set in the database view</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>&gt;</string>
@@ -233,10 +233,10 @@
           <item>
            <widget class="QPushButton" name="buttonGoto">
             <property name="toolTip">
-             <string>Click here to browse the specified record</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="whatsThis">
-             <string>This button is used to navigate to the record number specified in the Go to: area.</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>Go to:</string>
@@ -1005,16 +1005,7 @@
         <item>
          <widget class="QWidget" name="widget" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
