@@ -24,10 +24,10 @@ Application::Application(int& argc, char** argv) :
 
     // Load translations
     m_translatorQt = new QTranslator();
-    m_translatorQt->load("qt_de"/* + QLocale::system().name()*/, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    m_translatorQt->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     installTranslator(m_translatorQt);
     m_translatorApp = new QTranslator();
-    m_translatorApp->load("tr_de", "translations");// + QLocale::system().name());
+    m_translatorApp->load("tr_" + QLocale::system().name(), "translations");
     installTranslator(m_translatorApp);
 
     // Parse command line
