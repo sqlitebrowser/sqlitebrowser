@@ -436,6 +436,6 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    QByteArray val = m_data.at(index.row()).at(index.column());
-    return val.size() > 1024 || val.contains('\0');     // Cheap BLOB test here...
+    QByteArray val = m_data.at(index.row()).at(index.column()).left(1024);
+    return val.contains('\0');     // Cheap BLOB test here...
 }
