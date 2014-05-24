@@ -22,13 +22,13 @@ Application::Application(int& argc, char** argv) :
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 #endif
 
-    // Enable translation
-    QTranslator translator;
-    translator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    installTranslator(&translator);
-    QTranslator apptranslator;
-    apptranslator.load("translations/tr_" + QLocale::system().name());
-    installTranslator(&apptranslator);
+    // Load translations
+    m_translatorQt = new QTranslator();
+    m_translatorQt->load("qt_de"/* + QLocale::system().name()*/, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    installTranslator(m_translatorQt);
+    m_translatorApp = new QTranslator();
+    m_translatorApp->load("tr_de", "translations");// + QLocale::system().name());
+    installTranslator(m_translatorApp);
 
     // Parse command line
     QString fileToOpen;

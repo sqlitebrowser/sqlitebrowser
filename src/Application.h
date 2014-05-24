@@ -4,6 +4,7 @@
 #include <QApplication>
 
 class MainWindow;
+class QTranslator;
 
 class Application : public QApplication
 {
@@ -20,6 +21,8 @@ protected:
 private:
     bool m_dontShowMainWindow;
     MainWindow* m_mainWindow;
+    QTranslator* m_translatorQt;
+    QTranslator* m_translatorApp;
 };
 
 #endif
