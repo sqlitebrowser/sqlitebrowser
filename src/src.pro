@@ -80,6 +80,9 @@ FORMS += \
     SqlExecutionArea.ui \
     VacuumDialog.ui
 
+TRANSLATIONS += \
+    translations/de.ts
+
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
 LIBPATH_QCUSTOMPLOT=$$PWD/../libs/qcustomplot-source
