@@ -81,7 +81,7 @@ FORMS += \
     VacuumDialog.ui
 
 TRANSLATIONS += \
-    translations/de.ts
+    translations/tr_de.ts
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
