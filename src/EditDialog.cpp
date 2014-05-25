@@ -54,10 +54,15 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
     curCol = col;
     oldData = data;
 
-    ui->editorText->setPlainText(data);
+    QString textData = QString::fromUtf8(data.constData(), data.size());
+    ui->editorText->setPlainText(textData);
     ui->editorText->setFocus();
     ui->editorText->selectAll();
     hexEdit->setData(data);
+
+    // Assume it's binary data and only call checkDatyType afterwards. This means the correct input widget is selected here in all cases
+    // but once the user changed it to text input it will stay there.
+    ui->editorStack->setCurrentIndex(1);
     checkDataType();
 }
 
@@ -162,7 +167,6 @@ void EditDialog::checkDataType()
             ui->comboEditor->setVisible(false);
         } else {
             // It's not. So it's probably some random binary data.
-            ui->editorStack->setCurrentIndex(1);
 
             ui->labelType->setText(tr("Type of data currently in cell: Binary"));
             ui->labelSize->setText(tr("%n byte(s)", "", hexEdit->data().length()));

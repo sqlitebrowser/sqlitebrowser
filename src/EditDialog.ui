@@ -93,6 +93,9 @@
       <property name="whatsThis">
        <string>This area displays information about the data present in this database cell</string>
       </property>
+      <property name="acceptRichText">
+       <bool>false</bool>
+      </property>
      </widget>
      <widget class="QWidget" name="editorBinary"/>
      <widget class="QScrollArea" name="editorImageScrollArea">
