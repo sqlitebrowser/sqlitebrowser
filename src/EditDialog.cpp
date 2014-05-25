@@ -144,12 +144,14 @@ void EditDialog::hexDataChanged()
 
 void EditDialog::checkDataType()
 {
-    // Check if data is text only
     ui->comboEditor->setVisible(true);
+
+    // Check if data is text only
     if(QString(hexEdit->data()).toUtf8() == hexEdit->data())     // Any proper way??
     {
         ui->editorStack->setCurrentIndex(0);
 
+        ui->labelBinayWarning->setVisible(false);
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         ui->labelSize->setText(tr("%n char(s)", "", hexEdit->data().length()));
     } else {
@@ -168,6 +170,7 @@ void EditDialog::checkDataType()
         } else {
             // It's not. So it's probably some random binary data.
 
+            ui->labelBinayWarning->setVisible(true);
             ui->labelType->setText(tr("Type of data currently in cell: Binary"));
             ui->labelSize->setText(tr("%n byte(s)", "", hexEdit->data().length()));
         }

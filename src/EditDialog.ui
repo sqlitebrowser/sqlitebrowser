@@ -89,13 +89,26 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QTextEdit" name="editorText">
-      <property name="whatsThis">
-       <string>This area displays information about the data present in this database cell</string>
-      </property>
-      <property name="acceptRichText">
-       <bool>false</bool>
-      </property>
+     <widget class="QWidget" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="labelBinayWarning">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Warning: Editing binary content in text mode may result in corrupted data!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="editorText">
+         <property name="whatsThis">
+          <string>This area displays information about the data present in this database cell</string>
+         </property>
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="editorBinary"/>
      <widget class="QScrollArea" name="editorImageScrollArea">
