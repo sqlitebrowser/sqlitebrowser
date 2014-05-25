@@ -14,9 +14,10 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
     ui->setupUi(this);
 
     // Fill table combobox
-    QList<DBBrowserObject> tables = pdb->objMap.values("table");
-    for(int i=0; i < tables.count(); ++i)
-        ui->comboTableName->addItem(tables.at(i).getname());
+    QStringList tables = pdb->getBrowsableObjectNames();
+    tables.sort();
+    for(QStringList::ConstIterator i=tables.begin();i!=tables.end();++i)
+        ui->comboTableName->addItem(QIcon(QString(":icons/table")), *i);
 }
 
 CreateIndexDialog::~CreateIndexDialog()
