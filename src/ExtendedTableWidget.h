@@ -2,6 +2,7 @@
 #define __EXTENDEDTABLEWIDGET_H__
 
 #include <QTableView>
+#include "FilterTableHeader.h"
 
 class ExtendedTableWidget : public QTableView
 {
@@ -9,6 +10,8 @@ class ExtendedTableWidget : public QTableView
 
 public:
     explicit ExtendedTableWidget(QWidget* parent = 0);
+
+    FilterTableHeader* filterHeader() { return m_tableHeader; }
 
 private:
     void copy();
@@ -20,6 +23,8 @@ private slots:
 protected:
     virtual void keyPressEvent(QKeyEvent* event);
     virtual void updateGeometries();
+
+    FilterTableHeader* m_tableHeader;
 };
 
 #endif

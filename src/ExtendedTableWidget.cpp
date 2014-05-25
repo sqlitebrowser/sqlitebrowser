@@ -1,5 +1,6 @@
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
+#include "FilterTableHeader.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -14,6 +15,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
 
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
+
+    // Set up filter row
+    m_tableHeader = new FilterTableHeader(this);
+    setHorizontalHeader(m_tableHeader);
 }
 
 void ExtendedTableWidget::copy()

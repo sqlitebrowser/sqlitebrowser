@@ -14,6 +14,8 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     setClickable(true);
 #endif
 
+    setSortIndicatorShown(true);
+
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes
     connect(this, SIGNAL(sectionResized(int,int,int)), this, SLOT(adjustPositions()));
     connect(parent->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(adjustPositions()));

@@ -19,7 +19,6 @@ class DbStructureModel;
 class QNetworkReply;
 class QNetworkAccessManager;
 class QTreeWidgetItem;
-class FilterTableHeader;
 
 namespace Ui {
 class MainWindow;
@@ -69,7 +68,6 @@ private:
 
     SqliteTableModel* m_browseTableModel;
     SqliteTableModel* m_currentPlotModel;
-    FilterTableHeader* m_tableHeader;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
 
