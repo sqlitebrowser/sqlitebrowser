@@ -36,6 +36,7 @@
 #include <QSettings>
 #include <QMimeData>
 #include <QColorDialog>
+#include <QDesktopServices>
 
 
 MainWindow::MainWindow(QWidget* parent)
