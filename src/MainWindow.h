@@ -170,6 +170,9 @@ private slots:
     void on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column);
     void on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int column);
     void on_butSavePlot_clicked();
+    void on_actionWiki_triggered();
+    void on_actionBug_report_triggered();
+    void on_actionWebsite_triggered();
 };
 
 #endif

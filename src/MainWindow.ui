@@ -819,6 +819,9 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="helpWhatsThisAction"/>
+    <addaction name="actionWebsite"/>
+    <addaction name="actionWiki"/>
+    <addaction name="actionBug_report"/>
     <addaction name="helpAboutAction"/>
    </widget>
    <addaction name="fileMenu"/>
@@ -1403,6 +1406,33 @@
    </property>
    <property name="toolTip">
     <string>Export table as comma separated values file</string>
+   </property>
+  </action>
+  <action name="actionWiki">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Wiki...</string>
+   </property>
+  </action>
+  <action name="actionBug_report">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>Bug &amp;report...</string>
+   </property>
+  </action>
+  <action name="actionWebsite">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>Web&amp;site...</string>
    </property>
   </action>
  </widget>

@@ -1650,3 +1650,18 @@ void MainWindow::on_butSavePlot_clicked()
         }
     }
 }
+
+void MainWindow::on_actionWiki_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
+}
+
+void MainWindow::on_actionBug_report_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/issues/new"));
+}
+
+void MainWindow::on_actionWebsite_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://sqlitebrowser.org"));
+}
