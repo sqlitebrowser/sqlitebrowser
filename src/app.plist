@@ -55,5 +55,9 @@
 	<string>SqLB</string>
 	<key>CFBundleVersion</key>
 	<string>3.1</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 </dict>
 </plist>
