@@ -313,10 +313,10 @@ void EditTableDialog::addField()
     tbitem->setText(kName, "Field" + QString::number(ui->treeWidget->topLevelItemCount()));
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
-    connect(typeBox, SIGNAL(activated(int)), this, SLOT(updateTypes()));
     typeBox->setEditable(false);
     typeBox->addItems(sqlb::Field::Datatypes);
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
+    connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
