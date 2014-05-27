@@ -1153,6 +1153,9 @@
    <property name="whatsThis">
     <string>This option is used to save changes to the database file.</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="fileCompactAction">
    <property name="enabled">
