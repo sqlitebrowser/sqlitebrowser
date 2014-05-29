@@ -74,7 +74,7 @@ first.  These are the Homebrew steps, though other package managers should
 work:
 
     $ brew install sqlite --with-functions
-    $ brew install qt --with-qt3support
+    $ brew install qt
 
 Then it's just a matter of getting the source:
 
