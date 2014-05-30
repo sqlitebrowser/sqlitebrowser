@@ -19,6 +19,7 @@ public:
 
 private slots:
     virtual void accept();
+    void showCustomCharEdits();
 
 private:
     Ui::ExportCsvDialog* ui;

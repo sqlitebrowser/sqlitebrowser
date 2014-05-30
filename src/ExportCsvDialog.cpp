@@ -17,6 +17,7 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString
 {
     // Create UI
     ui->setupUi(this);
+    showCustomCharEdits();
 
     // If a SQL query was specified hide the table combo box. If not fill it with tables to export
     if(query.isEmpty())
@@ -72,10 +73,16 @@ void ExportCsvDialog::accept()
             tableModel.fetchMore();
 
         // Prepare the quote and separating characters
-        QString quoteChar = ui->comboQuoteCharacter->currentText();
+        QString quoteChar = ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1 ? ui->editCustomQuote->text() : ui->comboQuoteCharacter->currentText();
         QString quotequoteChar = quoteChar + quoteChar;
-        QString sepChar = ui->comboFieldSeparator->currentText();
-        if(sepChar == tr("Tab")) sepChar = "\t";
+        QString sepChar;
+        if(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1)
+        {
+            sepChar = ui->editCustomSeparator->text();
+        } else {
+            sepChar = ui->comboFieldSeparator->currentText();
+            if(sepChar == tr("Tab")) sepChar = "\t";
+        }
         QString newlineChar = "\n";
 
         // Open file
@@ -120,4 +127,11 @@ void ExportCsvDialog::accept()
             QMessageBox::warning(this, QApplication::applicationName(), tr("Could not open output file."));
         }
     }
+}
+
+void ExportCsvDialog::showCustomCharEdits()
+{
+    // Show/hide custom quote/separator input fields
+    ui->editCustomQuote->setVisible(ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1);
+    ui->editCustomSeparator->setVisible(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1);
 }
