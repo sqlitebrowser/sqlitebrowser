@@ -827,15 +827,15 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
     QFile file(csvfilename);
     QStringList result;
     QString current = "";
-    bool inquotemode = false;
-    bool inescapemode = false;
-    int recs = 0;
     *numfields = 0;
 
     if ( file.open( QIODevice::ReadWrite ) ) {
         QProgressDialog progress(QObject::tr("Decoding CSV file..."), QObject::tr("Cancel"), 0, file.size());
         progress.setWindowModality(Qt::ApplicationModal);
         char c=0;
+        bool inquotemode = false;
+        bool inescapemode = false;
+        int recs = 0;
         while(file.getChar(&c))
         {
             if (c==quote){
