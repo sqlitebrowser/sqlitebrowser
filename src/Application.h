@@ -12,6 +12,7 @@ class Application : public QApplication
 
 public:
     explicit Application(int& argc, char** argv);
+    virtual ~Application();
 
     bool dontShowMainWindow() { return m_dontShowMainWindow; }
 

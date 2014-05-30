@@ -23,10 +23,10 @@ Application::Application(int& argc, char** argv) :
 #endif
 
     // Load translations
-    m_translatorQt = new QTranslator();
+    m_translatorQt = new QTranslator(this);
     m_translatorQt->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     installTranslator(m_translatorQt);
-    m_translatorApp = new QTranslator();
+    m_translatorApp = new QTranslator(this);
     m_translatorApp->load("tr_" + QLocale::system().name(), "translations");
     installTranslator(m_translatorApp);
 
@@ -90,6 +90,11 @@ Application::Application(int& argc, char** argv) :
                 m_mainWindow->browseRefresh();
         }
     }
+}
+
+Application::~Application()
+{
+    delete m_mainWindow;
 }
 
 bool Application::event(QEvent* event)
