@@ -154,6 +154,10 @@ void ImportCsvDialog::accept()
 
 void ImportCsvDialog::updatePreview()
 {
+    // Show/hide custom quote/separator input fields
+    ui->editCustomQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1);
+    ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1);
+
     // Get preview data
     int numfields;
     int maxrecs = 20;
@@ -206,6 +210,10 @@ void ImportCsvDialog::checkInput()
 
 char ImportCsvDialog::currentQuoteChar()
 {
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1)
+        return ui->editCustomQuote->text().length() ? ui->editCustomQuote->text().at(0).toLatin1() : 0;
+
     if(ui->comboQuote->currentText().length())
         return ui->comboQuote->currentText().at(0).toLatin1();
     else
@@ -214,5 +222,9 @@ char ImportCsvDialog::currentQuoteChar()
 
 char ImportCsvDialog::currentSeparatorChar()
 {
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1)
+        return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
+
     return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toLatin1();
 }
