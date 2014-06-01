@@ -116,6 +116,7 @@ void MainWindow::init()
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(setRecordsetLabel()));
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
+    connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
@@ -293,6 +294,19 @@ void MainWindow::populateTable( const QString & tablename)
     m_browseTableModel->setTable(tablename);
     ui->dataTable->setColumnHidden(0, true);
 
+    // Restore column widths
+    QMap<QString, QMap<int, int> >::ConstIterator colWidthsIt;
+    if((colWidthsIt = browseTableColumnWidths.constFind(tablename)) != browseTableColumnWidths.constEnd())
+    {
+        // There are some column widths stored for this table
+        for(QMap<int, int>::ConstIterator it=colWidthsIt.value().constBegin();it!=colWidthsIt.value().constEnd();++it)
+            ui->dataTable->setColumnWidth(it.key(), it.value());
+    } else {
+        // There aren't any column widths stored for this table yet, so set default widths
+        for(int i=1;i<m_browseTableModel->columnCount();i++)
+            ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
+    }
+
     // Reset sorting
     curBrowseOrderByIndex = 0;
     curBrowseOrderByMode = Qt::AscendingOrder;
@@ -366,6 +380,9 @@ void MainWindow::fileClose()
     delete m_browseTableModel;
     m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
+
+    // Remove all stored column widths for the browse data table
+    browseTableColumnWidths.clear();
 
     // Manually update the recordset label inside the Browse tab now
     setRecordsetLabel();
@@ -1661,4 +1678,9 @@ void MainWindow::on_actionBug_report_triggered()
 void MainWindow::on_actionWebsite_triggered()
 {
     QDesktopServices::openUrl(QUrl("http://sqlitebrowser.org"));
+}
+
+void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
+{
+    browseTableColumnWidths[ui->comboBrowseTable->currentText()][section] = new_size;
 }

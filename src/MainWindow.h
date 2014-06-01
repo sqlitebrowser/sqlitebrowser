@@ -6,6 +6,7 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QMap>
 
 class QDragEnterEvent;
 class EditDialog;
@@ -84,6 +85,7 @@ private:
 
     int curBrowseOrderByIndex;
     Qt::SortOrder curBrowseOrderByMode;
+    QMap<QString, QMap<int, int> > browseTableColumnWidths;
 
     EditDialog* editWin;
     QIntValidator* gotoValidator;
@@ -171,6 +173,7 @@ private slots:
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
     void on_actionWebsite_triggered();
+    void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
 };
 
 #endif
