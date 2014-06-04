@@ -336,7 +336,7 @@ columnconstraint
   :
   (CONSTRAINT name)?
   ( PRIMARY KEY (ASC|DESC)? (AUTOINCREMENT)?
-  | NOT NULL_T (conflictclause)?
+  | (NOT)? NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
   | DEFAULT (signednumber | QUOTEDLITERAL | STRINGLITERAL | LPAREN expr RPAREN)
