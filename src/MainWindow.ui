@@ -797,6 +797,9 @@
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>
+    <addaction name="actionOpenProject"/>
+    <addaction name="actionSaveProject"/>
+    <addaction name="separator"/>
     <addaction name="fileExitAction"/>
    </widget>
    <widget class="QMenu" name="editMenu">
@@ -1439,6 +1442,36 @@
    </property>
    <property name="text">
     <string>Web&amp;site...</string>
+   </property>
+  </action>
+  <action name="actionSaveProject">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/project_save</normaloff>:/icons/project_save</iconset>
+   </property>
+   <property name="text">
+    <string>Save Project</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current session to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the current session to a file</string>
+   </property>
+  </action>
+  <action name="actionOpenProject">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/project_open</normaloff>:/icons/project_open</iconset>
+   </property>
+   <property name="text">
+    <string>Open Project</string>
+   </property>
+   <property name="toolTip">
+    <string>Load a working session from a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Load a working session from a file</string>
    </property>
   </action>
  </widget>
@@ -2179,6 +2212,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionOpenProject</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadProject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveProject</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveProject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2225,5 +2290,7 @@
   <slot>openSqlFile()</slot>
   <slot>saveSqlFile()</slot>
   <slot>loadExtension()</slot>
+  <slot>loadProject()</slot>
+  <slot>saveProject()</slot>
  </slots>
 </ui>

@@ -174,6 +174,8 @@ private slots:
     void on_actionBug_report_triggered();
     void on_actionWebsite_triggered();
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
+    bool loadProject(QString filename = QString());
+    void saveProject();
 };
 
 #endif

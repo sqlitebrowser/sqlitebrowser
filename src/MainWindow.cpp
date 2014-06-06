@@ -36,6 +36,8 @@
 #include <QMimeData>
 #include <QColorDialog>
 #include <QDesktopServices>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -179,8 +181,8 @@ bool MainWindow::fileOpen(const QString& fileName)
             setCurrentFile(wFile);
             retval = true;
         } else {
-            QString err = tr("An error occurred: %1").arg(db.lastErrorMessage);
-            QMessageBox::warning(this, QApplication::applicationName(), err);
+            // Failed opening file; so it might be a SQLiteBrowser project file
+            return loadProject(wFile);
         }
         loadExtensionsFromSettings();
         populateStructure();
@@ -1043,6 +1045,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlOpenFile->setEnabled(enable);
     ui->actionSqlOpenTab->setEnabled(enable);
     ui->actionSqlSaveFile->setEnabled(enable);
+    ui->actionSaveProject->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -1683,4 +1686,222 @@ void MainWindow::on_actionWebsite_triggered()
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
 {
     browseTableColumnWidths[ui->comboBrowseTable->currentText()][section] = new_size;
+}
+
+bool MainWindow::loadProject(QString filename)
+{
+    // Show the open file dialog when no filename was passed as parameter
+    if(filename.isEmpty())
+    {
+        filename = QFileDialog::getOpenFileName(this,
+                                                tr("Choose a file to open"),
+                                                QString(),
+                                                tr("SQLiteBrowser project(*.sqbpro)"));
+    }
+
+    if(!filename.isEmpty())
+    {
+        QFile file(filename);
+        file.open(QFile::ReadOnly | QFile::Text);
+
+        QXmlStreamReader xml(&file);
+        xml.readNext();     // token == QXmlStreamReader::StartDocument
+        xml.readNext();     // name == sqlb_project
+        if(xml.name() != "sqlb_project")
+        {
+            QMessageBox::warning(this, qApp->applicationName(), tr("Invalid file format."));
+            return false;
+        }
+
+        while(!xml.atEnd() && !xml.hasError())
+        {
+            // Read next token
+            QXmlStreamReader::TokenType token = xml.readNext();
+
+            // Handle element start
+            if(token == QXmlStreamReader::StartElement)
+            {
+                if(xml.name() == "db")
+                {
+                    // DB file
+                    fileOpen(xml.attributes().value("path").toString());
+                    ui->dbTreeWidget->collapseAll();
+                } else if(xml.name() == "window") {
+                    // Window settings
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
+                    {
+                        // Currently selected tab
+                        if(xml.name() == "current_tab")
+                            ui->mainTab->setCurrentIndex(xml.attributes().value("id").toString().toInt());
+                    }
+                } else if(xml.name() == "tab_structure") {
+                    // Database Structure tab settings
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "tab_structure")
+                    {
+                        if(xml.name() == "column_width")
+                        {
+                            // Tree view column widths
+                            ui->dbTreeWidget->setColumnWidth(xml.attributes().value("id").toString().toInt(),
+                                                             xml.attributes().value("width").toString().toInt());
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "expanded_item") {
+                            // Tree view expanded items
+                            int parent = xml.attributes().value("parent").toString().toInt();
+                            QModelIndex idx;
+                            if(parent == -1)
+                                idx = ui->dbTreeWidget->model()->index(xml.attributes().value("id").toString().toInt(), 0);
+                            else
+                                idx = ui->dbTreeWidget->model()->index(xml.attributes().value("id").toString().toInt(), 0, ui->dbTreeWidget->model()->index(parent, 0));
+                            ui->dbTreeWidget->expand(idx);
+                            xml.skipCurrentElement();
+                        }
+                    }
+                } else if(xml.name() == "tab_browse") {
+                    // Browse Data tab settings
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "tab_browse")
+                    {
+                        if(xml.name() == "current_table")
+                        {
+                            // Currently selected table
+                            ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(xml.attributes().value("name").toString()));
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "column_widths") {
+                            // Column widths
+                            QByteArray temp = QByteArray::fromBase64(xml.attributes().value("data").toUtf8());
+                            QDataStream stream(temp);
+                            stream >> browseTableColumnWidths;
+                            populateTable(ui->comboBrowseTable->currentText());     // Refresh view
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "sort") {
+                            // Sort order
+                            ui->dataTable->sortByColumn(xml.attributes().value("column").toString().toInt(),
+                                                        static_cast<Qt::SortOrder>(xml.attributes().value("order").toString().toInt()));
+                            xml.skipCurrentElement();
+                        }
+                    }
+                } else if(xml.name() == "tab_sql") {
+                    // Close existing tab
+                    QWidget* w = ui->tabSqlAreas->widget(0);
+                    ui->tabSqlAreas->removeTab(0);
+                    delete w;
+
+                    // Execute SQL tab data
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "tab_sql")
+                    {
+                        if(xml.name() == "sql")
+                        {
+                            // SQL editor tab
+                            unsigned int index = openSqlTab();
+                            ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
+                            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setPlainText(xml.readElementText());
+                        } else if(xml.name() == "current_tab") {
+                            // Currently selected tab
+                            ui->tabSqlAreas->setCurrentIndex(xml.attributes().value("id").toString().toInt());
+                            xml.skipCurrentElement();
+                        }
+                    }
+                }
+            }
+        }
+
+        file.close();
+        return !xml.hasError();
+    } else {
+        // No project was opened
+        return false;
+    }
+}
+
+static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModelIndex index = QModelIndex(), int parent_row = -1)
+{
+    for(int i=0;i<tree->model()->rowCount(index);i++)
+    {
+        if(tree->isExpanded(tree->model()->index(i, 0, index)))
+        {
+            xml.writeStartElement("expanded_item");
+            xml.writeAttribute("id", QString::number(i));
+            xml.writeAttribute("parent", QString::number(parent_row));
+            xml.writeEndElement();
+        }
+
+        saveDbTreeState(tree, xml, tree->model()->index(i, 0, index), i);
+    }
+}
+
+void MainWindow::saveProject()
+{
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Choose a filename to save under"),
+                                                    QString(),
+                                                    tr("SQLiteBrowser project(*.sqbpro)")
+                                                    );
+    if(!filename.isEmpty())
+    {
+        QFile file(filename);
+        file.open(QFile::WriteOnly | QFile::Text);
+        QXmlStreamWriter xml(&file);
+        xml.writeStartDocument();
+        xml.writeStartElement("sqlb_project");
+
+        // Database file name
+        xml.writeStartElement("db");
+        xml.writeAttribute("path", db.curDBFilename);
+        xml.writeEndElement();
+
+        // Window settings
+        xml.writeStartElement("window");
+        xml.writeStartElement("current_tab");   // Currently selected tab
+        xml.writeAttribute("id", QString::number(ui->mainTab->currentIndex()));
+        xml.writeEndElement();
+        xml.writeEndElement();
+
+        // Database Structure tab settings
+        xml.writeStartElement("tab_structure");
+        for(int i=0;i<ui->dbTreeWidget->model()->columnCount();i++) // Widths of tree view columns
+        {
+            xml.writeStartElement("column_width");
+            xml.writeAttribute("id", QString::number(i));
+            xml.writeAttribute("width", QString::number(ui->dbTreeWidget->columnWidth(i)));
+            xml.writeEndElement();
+        }
+        saveDbTreeState(ui->dbTreeWidget, xml);                     // Expanded tree items
+        xml.writeEndElement();
+
+        // Browse Data tab settings
+        xml.writeStartElement("tab_browse");
+        xml.writeStartElement("current_table");     // Currently selected table
+        xml.writeAttribute("name", ui->comboBrowseTable->currentText());
+        xml.writeEndElement();
+        {                                           // Column widths
+            QByteArray temp;
+            QDataStream stream(&temp, QIODevice::WriteOnly);
+            stream << browseTableColumnWidths;
+            xml.writeStartElement("column_widths");
+            xml.writeAttribute("data", temp.toBase64());
+            xml.writeEndElement();
+        }
+        xml.writeStartElement("sort");       // Sort order
+        xml.writeAttribute("column", QString::number(curBrowseOrderByIndex));
+        xml.writeAttribute("order", QString::number(curBrowseOrderByMode));
+        xml.writeEndElement();
+        xml.writeEndElement();
+
+        // Execute SQL tab data
+        xml.writeStartElement("tab_sql");
+        for(int i=0;i<ui->tabSqlAreas->count();i++)                                     // All SQL tabs content
+        {
+            xml.writeStartElement("sql");
+            xml.writeAttribute("name", ui->tabSqlAreas->tabText(i));
+            xml.writeCharacters(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getSql());
+            xml.writeEndElement();
+        }
+        xml.writeStartElement("current_tab");                                           // Currently selected tab
+        xml.writeAttribute("id", QString::number(ui->tabSqlAreas->currentIndex()));
+        xml.writeEndElement();
+        xml.writeEndElement();
+
+        xml.writeEndElement();
+        xml.writeEndDocument();
+        file.close();
+    }
 }
