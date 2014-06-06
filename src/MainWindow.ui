@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -278,8 +278,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>278</width>
-             <height>444</height>
+             <width>637</width>
+             <height>501</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -763,7 +763,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1000</width>
      <height>20</height>
     </rect>
    </property>
@@ -863,7 +863,7 @@
     <string>SQL Log</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout" name="verticalLayout_5">

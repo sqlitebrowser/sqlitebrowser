@@ -124,6 +124,7 @@ void MainWindow::init()
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
 
     // Load window settings
+    tabifyDockWidget(ui->dockPlot, ui->dockLog);
     restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
     restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
