@@ -23,6 +23,20 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>sqbpro</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>SQLiteBrowser Project</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>*</string>
 			</array>
 			<key>CFBundleTypeName</key>
@@ -38,7 +52,7 @@
 	<key>CFBundleExecutable</key>
 	<string>@EXECUTABLE@</string>
 	<key>CFBundleGetInfoString</key>
-	<string>SQLite Database Browser 1.3</string>
+	<string>SQLite Database Browser</string>
 	<key>CFBundleIconFile</key>
 	<string>@ICON@</string>
 	<key>CFBundleIdentifier</key>
