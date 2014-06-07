@@ -765,7 +765,7 @@ void DBBrowserDB::updateSchema( )
     if(!isOpen())
         return;
 
-    QString statement = "SELECT type, name, sql, tbl_name FROM sqlite_master;";
+    QString statement = "SELECT type,name,sql,tbl_name FROM sqlite_master UNION SELECT type,name,sql,tbl_name FROM sqlite_temp_master;";
 
     QByteArray utf8Statement = statement.toUtf8();
     err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
