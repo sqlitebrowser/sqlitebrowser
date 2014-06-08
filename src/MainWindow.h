@@ -112,7 +112,7 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 public slots:
-    bool fileOpen(const QString& fileName);
+    bool fileOpen(const QString& fileName = QString());
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void browseRefresh();
@@ -120,7 +120,6 @@ public slots:
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
-    void fileOpen();
     void fileNew();
     void populateStructure();
     void populateTable(const QString& tablename);

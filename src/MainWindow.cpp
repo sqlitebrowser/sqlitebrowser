@@ -196,11 +196,6 @@ bool MainWindow::fileOpen(const QString& fileName)
     return retval;
 }
 
-void MainWindow::fileOpen()
-{
-    fileOpen(QString());
-}
-
 void MainWindow::fileNew()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"), PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
