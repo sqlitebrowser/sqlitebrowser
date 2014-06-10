@@ -208,5 +208,18 @@ void TestTable::parseNonASCIIChars()
     QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
 }
 
+void TestTable::createTableWithIn()
+{
+    QString sSQL = "CREATE TABLE not_working("
+            "_id PRIMARY KEY NOT NULL,"
+            "value NVARCHAR(5) CHECK (value IN ('a', 'b', 'c'))"
+            ");";
+
+    Table tab = Table::parseSQL(sSQL);
+    QVERIFY(tab.name() == "not_working");
+
+    QVERIFY(tab.fields().at(1)->check() == "value IN ('a', 'b', 'c')");
+}
+
 QTEST_MAIN(TestTable)
 //#include "testsqlobjects.moc"

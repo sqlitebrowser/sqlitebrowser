@@ -17,5 +17,6 @@ private slots:
     void parseSQLKeywordInIdentifier();
     void parseSQLWithoutRowid();
     void parseNonASCIIChars();
+    void createTableWithIn();
 };
 
