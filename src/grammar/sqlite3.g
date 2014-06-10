@@ -47,6 +47,7 @@ tokens {
   TABLE="TABLE";
   IF_T="IF";
   IGNORE="IGNORE";
+  IN="IN";
   INITIALLY="INITIALLY";
   IMMEDIATE="IMMEDIATE";
   IS="IS";
@@ -430,7 +431,7 @@ suffixexpr
 //  | (NOT)? 
 //    ( (LIKE | GLOB | REGEXP | MATCH) 
 //		( (expr ESCAPE) => ESCAPE expr | expr)
- //   | IN ( LPAREN (selectstmt | expr (COMMA expr)* )? RPAREN | tablename)
+   | IN ( LPAREN (selectstmt | expr (COMMA expr)* )? RPAREN | tablename)
 //    )
   
   ;
