@@ -1720,7 +1720,10 @@ bool MainWindow::loadProject(QString filename)
                 if(xml.name() == "db")
                 {
                     // DB file
-                    fileOpen(xml.attributes().value("path").toString());
+                    QString dbfilename = xml.attributes().value("path").toString();
+                    if(!QFile::exists(dbfilename))
+                        dbfilename = QFileInfo(filename).absolutePath() + QDir::separator() + dbfilename;
+                    fileOpen(dbfilename);
                     ui->dbTreeWidget->collapseAll();
                 } else if(xml.name() == "window") {
                     // Window settings
