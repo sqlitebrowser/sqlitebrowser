@@ -218,7 +218,7 @@ void TestTable::createTableWithIn()
     Table tab = Table::parseSQL(sSQL);
     QVERIFY(tab.name() == "not_working");
 
-    QVERIFY(tab.fields().at(1)->check() == "value IN ('a', 'b', 'c')");
+    QVERIFY(tab.fields().at(1)->check() == "value IN ( 'a' , 'b' , 'c' )");
 }
 
 QTEST_MAIN(TestTable)

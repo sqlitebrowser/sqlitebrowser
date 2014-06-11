@@ -243,15 +243,15 @@ QString identifier(antlr::RefAST ident)
     return sident;
 }
 
-QString concatTextAST(antlr::RefAST t)
+QString concatTextAST(antlr::RefAST t, bool withspace = false)
 {
-    QString stext;
+    QStringList stext;
     while(t != antlr::nullAST)
     {
         stext.append(t->getText().c_str());
         t = t->getNextSibling();
     }
-    return stext;
+    return stext.join(withspace ? " " : "");
 }
 }
 
@@ -388,10 +388,11 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
         case sqlite3TokenTypes::CHECK:
         {
             con = con->getNextSibling(); //LPAREN
-            check = concatTextAST(con);
+            check = concatTextAST(con, true);
             // remove parenthesis
             check.remove(check.length()-1, 1);
             check.remove(0,1);
+            check = check.trimmed();
         }
         break;
         case sqlite3TokenTypes::DEFAULT:
