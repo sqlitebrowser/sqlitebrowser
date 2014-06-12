@@ -139,7 +139,7 @@ void EditDialog::editTextChanged()
 void EditDialog::hexDataChanged()
 {
     // Update the text editor accordingly
-    ui->editorText->setPlainText(hexEdit->data());
+    ui->editorText->setPlainText(QString::fromUtf8(hexEdit->data().constData(), hexEdit->data().size()));
 }
 
 void EditDialog::checkDataType()
