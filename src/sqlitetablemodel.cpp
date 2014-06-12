@@ -83,9 +83,11 @@ QString removeComments(QString s)
 void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
 {
     // clear
-    m_mWhere.clear();
     if(!dontClearHeaders)
+    {
+        m_mWhere.clear();
         m_headers.clear();
+    }
 
     if(!m_db->isOpen())
         return;
