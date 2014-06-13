@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>618</width>
-    <height>471</height>
+    <width>650</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,73 +141,103 @@
        </layout>
       </item>
       <item>
-       <widget class="QTreeWidget" name="treeWidget">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="rootIsDecorated">
-         <bool>false</bool>
-        </property>
-        <column>
-         <property name="text">
-          <string>Name</string>
+       <widget class="QWidget" name="widget" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Type</string>
+         <property name="leftMargin">
+          <number>0</number>
          </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Not null</string>
+         <property name="topMargin">
+          <number>0</number>
          </property>
-         <property name="toolTip">
-          <string>Not null</string>
+         <property name="rightMargin">
+          <number>0</number>
          </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>PK</string>
+         <property name="bottomMargin">
+          <number>0</number>
          </property>
-         <property name="toolTip">
-          <string>Primary key</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>AI</string>
-         </property>
-         <property name="toolTip">
-          <string>Autoincrement</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Default</string>
-         </property>
-         <property name="toolTip">
-          <string>Default value</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Check</string>
-         </property>
-         <property name="toolTip">
-          <string>Check constraint</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextEdit" name="sqlTextEdit">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
+         <item>
+          <widget class="QSplitter" name="splitter">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <widget class="QTreeWidget" name="treeWidget">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>140</height>
+             </size>
+            </property>
+            <property name="rootIsDecorated">
+             <bool>false</bool>
+            </property>
+            <column>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Type</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Not null</string>
+             </property>
+             <property name="toolTip">
+              <string>Not null</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>PK</string>
+             </property>
+             <property name="toolTip">
+              <string>Primary key</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>AI</string>
+             </property>
+             <property name="toolTip">
+              <string>Autoincrement</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Default</string>
+             </property>
+             <property name="toolTip">
+              <string>Default value</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Check</string>
+             </property>
+             <property name="toolTip">
+              <string>Check constraint</string>
+             </property>
+            </column>
+           </widget>
+           <widget class="QTextEdit" name="sqlTextEdit">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -229,7 +259,6 @@
   <tabstop>editTableName</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
-  <tabstop>treeWidget</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
