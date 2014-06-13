@@ -1361,7 +1361,7 @@
     <string>&amp;Execute SQL</string>
    </property>
    <property name="shortcut">
-    <string>F5, Ctrl+Return</string>
+    <string>F5</string>
    </property>
   </action>
   <action name="actionSqlOpenFile">
