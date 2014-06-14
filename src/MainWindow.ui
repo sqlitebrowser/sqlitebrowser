@@ -1360,6 +1360,9 @@
    <property name="text">
     <string>&amp;Execute SQL</string>
    </property>
+   <property name="toolTip">
+    <string>Execute SQL [F5, Ctrl+Return]</string>
+   </property>
    <property name="shortcut">
     <string>F5</string>
    </property>
@@ -1401,6 +1404,9 @@
    </property>
    <property name="text">
     <string>Execute current line</string>
+   </property>
+   <property name="toolTip">
+    <string>Execute current line [Ctrl+E]</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>

@@ -79,6 +79,11 @@ void MainWindow::init()
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
 
+    // Add keyboard shortcuts
+    QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
+    shortcuts.push_back(QKeySequence(tr("Ctrl+Return")));
+    ui->actionExecuteSql->setShortcuts(shortcuts);
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
