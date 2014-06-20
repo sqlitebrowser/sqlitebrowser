@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Parser.cpp"$ */
+/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.cpp"$ */
 #include "Sqlite3Parser.hpp"
 #include <antlr/NoViableAltException.hpp>
 #include <antlr/SemanticException.hpp>
@@ -2721,6 +2721,7 @@ void Sqlite3Parser::expr() {
 				case LIKE:
 				case IN:
 				case IS:
+				case NOT:
 				case MATCH:
 				case REGEXP:
 				case PLUS:
@@ -2783,6 +2784,7 @@ void Sqlite3Parser::expr() {
 					case LIKE:
 					case IN:
 					case IS:
+					case NOT:
 					case MATCH:
 					case REGEXP:
 					case PLUS:
@@ -3878,12 +3880,31 @@ void Sqlite3Parser::binaryoperator() {
 			binaryoperator_AST = currentAST.root;
 			break;
 		}
-		case GLOB:
+		case NOT:
 		{
+			{
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp212_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
 				tmp212_AST = astFactory->create(LT(1));
 				astFactory->addASTChild(currentAST, tmp212_AST);
+			}
+			match(NOT);
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp213_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			if ( inputState->guessing == 0 ) {
+				tmp213_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp213_AST);
+			}
+			match(LIKE);
+			}
+			binaryoperator_AST = currentAST.root;
+			break;
+		}
+		case GLOB:
+		{
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp214_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			if ( inputState->guessing == 0 ) {
+				tmp214_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp214_AST);
 			}
 			match(GLOB);
 			binaryoperator_AST = currentAST.root;
@@ -3891,10 +3912,10 @@ void Sqlite3Parser::binaryoperator() {
 		}
 		case MATCH:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp213_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp215_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp213_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp213_AST);
+				tmp215_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp215_AST);
 			}
 			match(MATCH);
 			binaryoperator_AST = currentAST.root;
@@ -3902,10 +3923,10 @@ void Sqlite3Parser::binaryoperator() {
 		}
 		case REGEXP:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp214_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp216_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp214_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp214_AST);
+				tmp216_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp216_AST);
 			}
 			match(REGEXP);
 			binaryoperator_AST = currentAST.root;
@@ -3937,10 +3958,10 @@ void Sqlite3Parser::literalvalue() {
 		switch ( LA(1)) {
 		case NUMERIC:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp215_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp217_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp215_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp215_AST);
+				tmp217_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp217_AST);
 			}
 			match(NUMERIC);
 			literalvalue_AST = currentAST.root;
@@ -3948,10 +3969,10 @@ void Sqlite3Parser::literalvalue() {
 		}
 		case NULL_T:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp216_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp218_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp216_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp216_AST);
+				tmp218_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp218_AST);
 			}
 			match(NULL_T);
 			literalvalue_AST = currentAST.root;
@@ -3959,10 +3980,10 @@ void Sqlite3Parser::literalvalue() {
 		}
 		case CURRENT_TIME:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp217_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp219_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp217_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp217_AST);
+				tmp219_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp219_AST);
 			}
 			match(CURRENT_TIME);
 			literalvalue_AST = currentAST.root;
@@ -3970,10 +3991,10 @@ void Sqlite3Parser::literalvalue() {
 		}
 		case CURRENT_DATE:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp218_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp220_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp218_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp218_AST);
+				tmp220_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp220_AST);
 			}
 			match(CURRENT_DATE);
 			literalvalue_AST = currentAST.root;
@@ -3981,10 +4002,10 @@ void Sqlite3Parser::literalvalue() {
 		}
 		case CURRENT_TIMESTAMP:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp219_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp221_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp219_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp219_AST);
+				tmp221_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp221_AST);
 			}
 			match(CURRENT_TIMESTAMP);
 			literalvalue_AST = currentAST.root;
@@ -4013,36 +4034,36 @@ void Sqlite3Parser::castexpr() {
 	ANTLR_USE_NAMESPACE(antlr)RefAST castexpr_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
 	try {      // for error handling
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp220_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp222_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp220_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp220_AST);
+			tmp222_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp222_AST);
 		}
 		match(CAST);
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp221_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp223_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp221_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp221_AST);
+			tmp223_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp223_AST);
 		}
 		match(LPAREN);
 		expr();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp222_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp224_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp222_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp222_AST);
+			tmp224_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp224_AST);
 		}
 		match(AS);
 		type_name();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp223_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp225_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp223_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp223_AST);
+			tmp225_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp225_AST);
 		}
 		match(RPAREN);
 		castexpr_AST = currentAST.root;
@@ -4064,10 +4085,10 @@ void Sqlite3Parser::caseexpr() {
 	ANTLR_USE_NAMESPACE(antlr)RefAST caseexpr_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
 	try {      // for error handling
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp224_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp226_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp224_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp224_AST);
+			tmp226_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp226_AST);
 		}
 		match(CASE_T);
 		{
@@ -4111,20 +4132,20 @@ void Sqlite3Parser::caseexpr() {
 		int _cnt172=0;
 		for (;;) {
 			if ((LA(1) == WHEN)) {
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp225_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp227_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp225_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp225_AST);
+					tmp227_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp227_AST);
 				}
 				match(WHEN);
 				expr();
 				if (inputState->guessing==0) {
 					astFactory->addASTChild( currentAST, returnAST );
 				}
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp226_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp228_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp226_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp226_AST);
+					tmp228_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp228_AST);
 				}
 				match(THEN);
 				expr();
@@ -4144,10 +4165,10 @@ void Sqlite3Parser::caseexpr() {
 		switch ( LA(1)) {
 		case ELSE_T:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp227_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp229_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp227_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp227_AST);
+				tmp229_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp229_AST);
 			}
 			match(ELSE_T);
 			expr();
@@ -4166,10 +4187,10 @@ void Sqlite3Parser::caseexpr() {
 		}
 		}
 		}
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp228_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp230_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp228_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp228_AST);
+			tmp230_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp230_AST);
 		}
 		match(END);
 		caseexpr_AST = currentAST.root;
@@ -4191,26 +4212,26 @@ void Sqlite3Parser::raisefunction() {
 	ANTLR_USE_NAMESPACE(antlr)RefAST raisefunction_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
 	try {      // for error handling
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp229_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp231_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp229_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp229_AST);
+			tmp231_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp231_AST);
 		}
 		match(RAISE);
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp230_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp232_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp230_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp230_AST);
+			tmp232_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp232_AST);
 		}
 		match(LPAREN);
 		{
 		switch ( LA(1)) {
 		case IGNORE:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp231_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp233_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp231_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp231_AST);
+				tmp233_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp233_AST);
 			}
 			match(IGNORE);
 			break;
@@ -4223,30 +4244,30 @@ void Sqlite3Parser::raisefunction() {
 			switch ( LA(1)) {
 			case ROLLBACK:
 			{
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp232_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp234_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp232_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp232_AST);
+					tmp234_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp234_AST);
 				}
 				match(ROLLBACK);
 				break;
 			}
 			case ABORT:
 			{
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp233_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp235_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp233_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp233_AST);
+					tmp235_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp235_AST);
 				}
 				match(ABORT);
 				break;
 			}
 			case FAIL:
 			{
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp234_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp236_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp234_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp234_AST);
+					tmp236_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp236_AST);
 				}
 				match(FAIL);
 				break;
@@ -4257,16 +4278,16 @@ void Sqlite3Parser::raisefunction() {
 			}
 			}
 			}
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp235_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp237_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp235_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp235_AST);
+				tmp237_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp237_AST);
 			}
 			match(COMMA);
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp236_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp238_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp236_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp236_AST);
+				tmp238_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp238_AST);
 			}
 			match(STRINGLITERAL);
 			break;
@@ -4277,10 +4298,10 @@ void Sqlite3Parser::raisefunction() {
 		}
 		}
 		}
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp237_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp239_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp237_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp237_AST);
+			tmp239_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp239_AST);
 		}
 		match(RPAREN);
 		raisefunction_AST = currentAST.root;
@@ -4305,10 +4326,10 @@ void Sqlite3Parser::suffixexpr() {
 		switch ( LA(1)) {
 		case COLLATE:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp238_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp240_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp238_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp238_AST);
+				tmp240_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp240_AST);
 			}
 			match(COLLATE);
 			collationname();
@@ -4320,20 +4341,20 @@ void Sqlite3Parser::suffixexpr() {
 		}
 		case IN:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp239_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp241_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp239_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp239_AST);
+				tmp241_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp241_AST);
 			}
 			match(IN);
 			{
 			switch ( LA(1)) {
 			case LPAREN:
 			{
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp240_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp242_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp240_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp240_AST);
+					tmp242_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp242_AST);
 				}
 				match(LPAREN);
 				{
@@ -4372,10 +4393,10 @@ void Sqlite3Parser::suffixexpr() {
 					{ // ( ... )*
 					for (;;) {
 						if ((LA(1) == COMMA)) {
-							ANTLR_USE_NAMESPACE(antlr)RefAST tmp241_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+							ANTLR_USE_NAMESPACE(antlr)RefAST tmp243_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 							if ( inputState->guessing == 0 ) {
-								tmp241_AST = astFactory->create(LT(1));
-								astFactory->addASTChild(currentAST, tmp241_AST);
+								tmp243_AST = astFactory->create(LT(1));
+								astFactory->addASTChild(currentAST, tmp243_AST);
 							}
 							match(COMMA);
 							expr();
@@ -4402,10 +4423,10 @@ void Sqlite3Parser::suffixexpr() {
 				}
 				}
 				}
-				ANTLR_USE_NAMESPACE(antlr)RefAST tmp242_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp244_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 				if ( inputState->guessing == 0 ) {
-					tmp242_AST = astFactory->create(LT(1));
-					astFactory->addASTChild(currentAST, tmp242_AST);
+					tmp244_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp244_AST);
 				}
 				match(RPAREN);
 				break;
@@ -4654,9 +4675,9 @@ const unsigned long Sqlite3Parser::_tokenSet_18_data_[] = { 406402688UL, 6043233
 // BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL 
 // UNEQUAL2 BITWISELEFT BITWISERIGHT SELECT SLASH PERCENT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_18(_tokenSet_18_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_19_data_[] = { 1536UL, 266821UL, 4285530112UL, 415UL, 0UL, 0UL, 0UL, 0UL };
-// "AND" "OR" "GLOB" "LIKE" "IN" "IS" "MATCH" "REGEXP" PLUS MINUS STAR 
-// AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL 
+const unsigned long Sqlite3Parser::_tokenSet_19_data_[] = { 1536UL, 267845UL, 4285530112UL, 415UL, 0UL, 0UL, 0UL, 0UL };
+// "AND" "OR" "GLOB" "LIKE" "IN" "IS" "NOT" "MATCH" "REGEXP" PLUS MINUS 
+// STAR AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL 
 // UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_19(_tokenSet_19_data_,8);
 const unsigned long Sqlite3Parser::_tokenSet_20_data_[] = { 406401152UL, 604056640UL, 12029824UL, 64UL, 0UL, 0UL, 0UL, 0UL };
@@ -4682,23 +4703,24 @@ const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_22(_tokenSet_22_
 const unsigned long Sqlite3Parser::_tokenSet_23_data_[] = { 0UL, 0UL, 65536UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // LPAREN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_23(_tokenSet_23_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_24_data_[] = { 402720384UL, 604246597UL, 4285958016UL, 415UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "COLLATE" "ELSE" "END" "GLOB" "LIKE" "IN" "IS" "MATCH" 
-// "REGEXP" "THEN" "WHEN" DOT ID QUOTEDID QUOTEDLITERAL STRINGLITERAL RPAREN 
-// COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL 
-// LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
+const unsigned long Sqlite3Parser::_tokenSet_24_data_[] = { 402720384UL, 604247621UL, 4285958016UL, 415UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "COLLATE" "ELSE" "END" "GLOB" "LIKE" "IN" "IS" "NOT" 
+// "MATCH" "REGEXP" "THEN" "WHEN" DOT ID QUOTEDID QUOTEDLITERAL STRINGLITERAL 
+// RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER 
+// GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT 
+// SLASH PERCENT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_24(_tokenSet_24_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_25_data_[] = { 402720384UL, 604246597UL, 4285923328UL, 415UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "COLLATE" "ELSE" "END" "GLOB" "LIKE" "IN" "IS" "MATCH" 
-// "REGEXP" "THEN" "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR 
-// OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
-// BITWISELEFT BITWISERIGHT SLASH PERCENT 
+const unsigned long Sqlite3Parser::_tokenSet_25_data_[] = { 402720384UL, 604247621UL, 4285923328UL, 415UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "COLLATE" "ELSE" "END" "GLOB" "LIKE" "IN" "IS" "NOT" 
+// "MATCH" "REGEXP" "THEN" "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND 
+// BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL 
+// UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_25(_tokenSet_25_data_,8);
 const unsigned long Sqlite3Parser::_tokenSet_26_data_[] = { 0UL, 0UL, 100096UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // ID QUOTEDID QUOTEDLITERAL STRINGLITERAL LPAREN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_26(_tokenSet_26_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_27_data_[] = { 402654848UL, 604246597UL, 4285923328UL, 415UL, 0UL, 0UL, 0UL, 0UL };
-// "AS" "AND" "OR" "ELSE" "END" "GLOB" "LIKE" "IN" "IS" "MATCH" "REGEXP" 
+const unsigned long Sqlite3Parser::_tokenSet_27_data_[] = { 402654848UL, 604247621UL, 4285923328UL, 415UL, 0UL, 0UL, 0UL, 0UL };
+// "AS" "AND" "OR" "ELSE" "END" "GLOB" "LIKE" "IN" "IS" "NOT" "MATCH" "REGEXP" 
 // "THEN" "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL 
 // EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT 
 // BITWISERIGHT SLASH PERCENT 
