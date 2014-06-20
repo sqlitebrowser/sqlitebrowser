@@ -18,5 +18,5 @@ private slots:
     void parseSQLWithoutRowid();
     void parseNonASCIIChars();
     void createTableWithIn();
+    void createTableWithNotLikeConstraint();
 };
-

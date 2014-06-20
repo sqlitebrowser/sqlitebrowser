@@ -221,5 +221,17 @@ void TestTable::createTableWithIn()
     QVERIFY(tab.fields().at(1)->check() == "value IN ( 'a' , 'b' , 'c' )");
 }
 
+void TestTable::createTableWithNotLikeConstraint()
+{
+    QString sSQL = "CREATE TABLE hopefully_working("
+            "value TEXT CONSTRAINT 'value' CHECK(value NOT LIKE 'prefix%')"
+            ");";
+
+    Table tab = Table::parseSQL(sSQL);
+    QVERIFY(tab.name() == "hopefully_working");
+
+    QVERIFY(tab.fields().at(0)->check() == "value NOT LIKE 'prefix%'");
+}
+
 QTEST_MAIN(TestTable)
 //#include "testsqlobjects.moc"
