@@ -101,7 +101,7 @@ void TestTable::parseSQL()
     QVERIFY(tab.fields().at(1)->notnull());
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
-    QCOMPARE(tab.fields().at(2)->check(), QString("info=='x'"));
+    QCOMPARE(tab.fields().at(2)->check(), QString("info == 'x'"));
 }
 
 void TestTable::parseSQLdefaultexpr()
@@ -123,7 +123,7 @@ void TestTable::parseSQLdefaultexpr()
     QVERIFY(tab.fields().at(2)->type() == "integer");
 
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("('axa')"));
-    QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext==\"aa\""));
+    QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext == \"aa\""));
     QCOMPARE(tab.fields().at(2)->defaultValue(), QString(""));
     QCOMPARE(tab.fields().at(2)->check(), QString(""));
 
