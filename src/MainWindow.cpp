@@ -373,7 +373,9 @@ void MainWindow::resetBrowser()
 
 void MainWindow::fileClose()
 {
-    db.close();
+    if(!db.close())
+        return;
+
     setWindowTitle(QApplication::applicationName());
     resetBrowser();
     populateStructure();
@@ -401,13 +403,17 @@ void MainWindow::fileClose()
 
 void MainWindow::closeEvent( QCloseEvent* event )
 {
-    db.close();
-    PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
-    PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
-    PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
-    PreferencesDialog::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
-    clearCompleterModelsFields();
-    QMainWindow::closeEvent(event);
+    if(db.close())
+    {
+        PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
+        PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
+        PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+        PreferencesDialog::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
+        clearCompleterModelsFields();
+        QMainWindow::closeEvent(event);
+    } else {
+        event->ignore();
+    }
 }
 
 void MainWindow::addRecord()

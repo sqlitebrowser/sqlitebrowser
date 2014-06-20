@@ -54,7 +54,7 @@ public:
     ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool create ( const QString & db);
-    void close ();
+    bool close();
     bool setRestorePoint(const QString& pointname = "RESTOREPOINT");
     bool save (const QString& pointname = "RESTOREPOINT");
     bool revert (const QString& pointname = "RESTOREPOINT");

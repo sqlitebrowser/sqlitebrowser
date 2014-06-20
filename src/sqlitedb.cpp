@@ -191,16 +191,24 @@ bool DBBrowserDB::create ( const QString & db)
 }
 
 
-void DBBrowserDB::close (){
-    if (_db)
+bool DBBrowserDB::close()
+{
+    if(_db)
     {
         if (getDirty())
         {
-            if (QMessageBox::question( 0,
-                                       QApplication::applicationName(),
-                                       QObject::tr("Do you want to save the changes "
-                                                   "made to the database file %1?").arg(curDBFilename),
-                                       QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+            QMessageBox::StandardButton reply = QMessageBox::question(0,
+                                                                      QApplication::applicationName(),
+                                                                      QObject::tr("Do you want to save the changes "
+                                                                                  "made to the database file %1?").arg(curDBFilename),
+                                                                      QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+            // If the user clicked the cancel button stop here and return false
+            if(reply == QMessageBox::Cancel)
+                return false;
+
+            // If he didn't it was either yes or no
+            if(reply == QMessageBox::Yes)
                 saveAll();
             else
                 revertAll(); //not really necessary, I think... but will not hurt.
@@ -211,6 +219,9 @@ void DBBrowserDB::close (){
     objMap.clear();
     savepointList.clear();
     if(mainWindow) mainWindow->dbState(getDirty());
+
+    // Return true to tell the calling function that the closing wasn't cancelled by the user
+    return true;
 }
 
 bool DBBrowserDB::dump(const QString& filename)
