@@ -110,6 +110,7 @@ work:</p>
 
 <pre><code>$ brew install sqlite --with-functions
 $ brew install qt
+$ brew link sqlite3 --force
 </code></pre>
 
 <p>Then it's just a matter of getting the source:</p>
@@ -124,6 +125,7 @@ it's name (eg ~/tmp/foo').  There's an open bug for that which <a href="https://
 <pre><code>$ cd sqlitebrowser
 $ qmake
 $ make
+$ brew unlink sqlite3
 $ mv src/sqlitebrowser.app /Applications/
 </code></pre>
 
