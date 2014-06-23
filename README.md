@@ -75,6 +75,7 @@ work:
 
     $ brew install sqlite --with-functions
     $ brew install qt
+    $ brew link sqlite3 --force
 
 Then it's just a matter of getting the source:
 
@@ -88,6 +89,7 @@ And compiling it:
     $ cd sqlitebrowser
     $ qmake
     $ make
+    $ brew unlink sqlite3
     $ mv src/sqlitebrowser.app /Applications/
 
 An icon for "sqlitebrowser" should now be in your main OSX Applications
