@@ -223,14 +223,24 @@ void TestTable::createTableWithIn()
 
 void TestTable::createTableWithNotLikeConstraint()
 {
-    QString sSQL = "CREATE TABLE hopefully_working("
-            "value TEXT CONSTRAINT 'value' CHECK(value NOT LIKE 'prefix%')"
+    QString sSQL = "CREATE TABLE hopefully_working(\n"
+            "value TEXT CONSTRAINT 'value' CHECK(value NOT LIKE 'prefix%'),\n"
+            "value2 TEXT CONSTRAINT 'value' CHECK(value2 NOT MATCH 'prefix%'),\n"
+            "value3 TEXT CONSTRAINT 'value' CHECK(value3 NOT REGEXP 'prefix%'),\n"
+            "value4 TEXT CONSTRAINT 'value' CHECK(value4 NOT GLOB 'prefix%'),\n"
+            "value5 INTEGER CONSTRAINT 'value' CHECK(value5 BETWEEN 1+4 AND 100 OR 200),\n"
+            "value6 INTEGER CONSTRAINT 'value' CHECK(value6 NOT BETWEEN 1 AND 100)\n"
             ");";
 
     Table tab = Table::parseSQL(sSQL);
     QVERIFY(tab.name() == "hopefully_working");
 
     QVERIFY(tab.fields().at(0)->check() == "value NOT LIKE 'prefix%'");
+    QVERIFY(tab.fields().at(1)->check() == "value2 NOT MATCH 'prefix%'");
+    QVERIFY(tab.fields().at(2)->check() == "value3 NOT REGEXP 'prefix%'");
+    QVERIFY(tab.fields().at(3)->check() == "value4 NOT GLOB 'prefix%'");
+    QVERIFY(tab.fields().at(4)->check() == "value5 BETWEEN 1 + 4 AND 100 OR 200");
+    QVERIFY(tab.fields().at(5)->check() == "value6 NOT BETWEEN 1 AND 100");
 }
 
 QTEST_MAIN(TestTable)
