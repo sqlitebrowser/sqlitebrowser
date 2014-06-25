@@ -20,6 +20,7 @@ tokens {
   ASC="ASC";
   AND="AND";
   OR="OR";
+  BETWEEN="BETWEEN";
   CASCADE="CASCADE";
   CASE_T="CASE";
   CAST="CAST";
@@ -396,8 +397,7 @@ functionname
 
 expr
   :
-  ( subexpr (binaryoperator | AND | OR) ) => subexpr ( ( binaryoperator | AND | OR) subexpr )*
-  | subexpr
+  subexpr ((binaryoperator | AND | OR) subexpr )*
   ;
 
 subexpr
@@ -425,15 +425,27 @@ caseexpr
   CASE_T (expr)? (WHEN expr THEN expr)+ (ELSE_T expr)? END
   ;
 
+like_operator
+  :
+  LIKE
+  | GLOB
+  | REGEXP
+  | MATCH
+  ;
+
+between_subexpr
+  :
+  subexpr (AND subexpr)+
+  ;
+
 suffixexpr
   :
-   COLLATE collationname
-//  | (NOT)? 
-//    ( (LIKE | GLOB | REGEXP | MATCH) 
-//		( (expr ESCAPE) => ESCAPE expr | expr)
-   | IN ( LPAREN (selectstmt | expr (COMMA expr)* )? RPAREN | tablename)
-//    )
-  
+  COLLATE collationname
+  | (NOT)?
+	( BETWEEN subexpr ((binaryoperator | OR) subexpr )* AND expr
+	| IN ( LPAREN (selectstmt | expr (COMMA expr)* )? RPAREN | tablename)
+    | like_operator subexpr (ESCAPE subexpr)?
+    )
   ;
 	
 literalvalue
@@ -458,6 +470,6 @@ binaryoperator
   | BITWISELEFT | BITWISERIGHT | AMPERSAND | BITOR
   | LOWER | LOWEREQUAL | GREATER | GREATEREQUAL
   | EQUAL | EQUAL2 | UNEQUAL | UNEQUAL2 
-  | IS | ((NOT)? (LIKE | GLOB | MATCH | REGEXP | IN))
+  | IS | like_operator
   ;
 

@@ -2,7 +2,7 @@
 #define INC_Sqlite3Parser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
+/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "sqlite3TokenTypes.hpp"
@@ -65,6 +65,8 @@ public:
 	public: void caseexpr();
 	public: void raisefunction();
 	public: void suffixexpr();
+	public: void like_operator();
+	public: void between_subexpr();
 public:
 	ANTLR_USE_NAMESPACE(antlr)RefAST getAST()
 	{
@@ -76,10 +78,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 105;
+	static const int NUM_TOKENS = 106;
 #else
 	enum {
-		NUM_TOKENS = 105
+		NUM_TOKENS = 106
 	};
 #endif
 	
@@ -139,8 +141,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_26;
 	static const unsigned long _tokenSet_27_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_27;
-	static const unsigned long _tokenSet_28_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_28;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/
