@@ -10,11 +10,18 @@ SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chun
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_rowCount(0)
-    , m_iSortColumn(0)
-    , m_sSortOrder("ASC")
     , m_chunkSize(chunkSize)
     , m_valid(false)
 {
+    reset();
+}
+
+void SqliteTableModel::reset()
+{
+    m_iSortColumn = 0;
+    m_sSortOrder = "ASC";
+    m_headers.clear();
+    m_mWhere.clear();
 }
 
 void SqliteTableModel::setChunkSize(size_t chunksize)
@@ -24,16 +31,15 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
 
 void SqliteTableModel::setTable(const QString& table)
 {
+    reset();
+
     m_sTable = table;
 
-    m_headers.clear();
     QString rowid = "rowid";
     if(m_db->getObjectByName(table).gettype() == "table")
         rowid = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql()).rowidColumn();
     m_headers.push_back(rowid);
     m_headers.append(m_db->getTableFields(table));
-
-    m_mWhere.clear();
 
     buildQuery();
 }
@@ -84,10 +90,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
 {
     // clear
     if(!dontClearHeaders)
-    {
-        m_mWhere.clear();
-        m_headers.clear();
-    }
+        reset();
 
     if(!m_db->isOpen())
         return;

@@ -11,6 +11,7 @@ class SqliteTableModel : public QAbstractTableModel
     Q_OBJECT
 public:
     explicit SqliteTableModel(QObject *parent = 0, DBBrowserDB* db = 0, size_t chunkSize = 50000);
+    void reset();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int totalRowCount() const;
