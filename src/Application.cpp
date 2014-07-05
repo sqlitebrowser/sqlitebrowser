@@ -23,12 +23,29 @@ Application::Application(int& argc, char** argv) :
 #endif
 
     // Load translations
-    m_translatorQt = new QTranslator(this);
-    m_translatorQt->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    installTranslator(m_translatorQt);
+    bool ok;
+    QString name = QLocale::system().name();
+
+    // First of all try to load the application translation file.
     m_translatorApp = new QTranslator(this);
-    m_translatorApp->load("tr_" + QLocale::system().name(), "translations");
-    installTranslator(m_translatorApp);
+    ok = m_translatorApp->load("sqlitebrowser_" + name, "translations");
+    if (ok == true) {
+        installTranslator(m_translatorApp);
+
+        // The application translation file has been found and loaded.
+        // And now try to load a Qt translation file.
+        // Search path:
+        // 1) standard Qt translations directory;
+        // 2) the application translations directory.
+        m_translatorQt = new QTranslator(this);
+
+        ok = m_translatorQt->load("qt_" + name,
+                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+        if (ok == false)
+            ok = m_translatorQt->load("qt_" + name, "translations");
+        if (ok == true)
+            installTranslator(m_translatorQt);
+    }
 
     // Parse command line
     QString fileToOpen;

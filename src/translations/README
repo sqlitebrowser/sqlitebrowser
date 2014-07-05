@@ -1,0 +1,1 @@
+TS files for the application should be all named according to a convention such as <appname>_<locale>, e.g. sqlitebrowser_de, sqlitebrowser_ru etc.
