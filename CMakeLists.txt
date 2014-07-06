@@ -108,18 +108,25 @@ endif()
 # get git version hash
 if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
 	add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND echo "#ifndef __VERSION_H__" > ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND echo "#define __VERSION_H__" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND git log -n1 "--format=#define APP_VERSION \"%h_git\"" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND echo "#define MAJOR_VERSION 999" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND echo "#define MINOR_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND echo "#define PATCH_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           COMMAND echo "#endif" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-                           DEPENDS .git/HEAD
-                           WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-                           VERBATIM)
+        COMMAND echo "#ifndef __VERSION_H__" > ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#define __VERSION_H__" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND git log -n1 "--format=#define APP_VERSION \"%h_git\"" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#define MAJOR_VERSION 999" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#define MINOR_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#define PATCH_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#endif" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        DEPENDS .git/HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        VERBATIM)
 else()
-	file(WRITE ${CMAKE_SOURCE_DIR}/src/gen_version.h "#ifndef __GEN_VERSIONS_H__\n#define __GEN_VERSIONS_H__\n#define APP_VERSION \"3.0.1\"\n#define MAJOR_VERSION 3\n#define MINOR_VERSION 0\n#define PATCH_VERSION 1\n#endif")
+	file(WRITE ${CMAKE_SOURCE_DIR}/src/gen_version.h
+		 "#ifndef __GEN_VERSIONS_H__\n"
+		 "#define __GEN_VERSIONS_H__\n"
+		 "#define APP_VERSION \"3.0.1\"\n"
+		 "#define MAJOR_VERSION 3\n"
+		 "#define MINOR_VERSION 0\n"
+		 "#define PATCH_VERSION 1\n"
+		 "#endif")
 endif()
 
 #icon and correct libs/subsystem for windows
@@ -148,9 +155,20 @@ else(APPLE)
 	find_library(LIBSQLITE sqlite3)
 endif(APPLE)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${ANTLR_DIR} ${QHEXEDIT_DIR} ${QCUSTOMPLOT_DIR} ${ADDITIONAL_INCLUDE_PATHS} src)
+include_directories(
+		${CMAKE_CURRENT_BINARY_DIR}
+		${ANTLR_DIR}
+		${QHEXEDIT_DIR}
+		${QCUSTOMPLOT_DIR}
+		${ADDITIONAL_INCLUDE_PATHS}
+		src)
 
-add_executable(${PROJECT_NAME} ${SQLB_HDR} ${SQLB_SRC} ${SQLB_FORM_HDR} ${SQLB_MOC} ${SQLB_RESOURCES_RCC})
+add_executable(${PROJECT_NAME}
+		${SQLB_HDR}
+		${SQLB_SRC}
+		${SQLB_FORM_HDR}
+		${SQLB_MOC}
+		${SQLB_RESOURCES_RCC})
 
 if(USE_QT5)
     qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
@@ -158,9 +176,19 @@ if(USE_QT5)
 endif()
 add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot)
 
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR})
+link_directories(
+		${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}
+		${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}
+		${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR})
 
-target_link_libraries(${PROJECT_NAME} antlr qhexedit qcustomplot ${QT_LIBRARIES} ${WIN32_STATIC_LINK} ${LIBSQLITE} ${ADDITIONAL_LIBS})
+target_link_libraries(${PROJECT_NAME}
+		antlr
+		qhexedit
+		qcustomplot
+		${QT_LIBRARIES}
+		${WIN32_STATIC_LINK}
+		${LIBSQLITE}
+		${ADDITIONAL_LIBS})
 
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
