@@ -7,7 +7,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-set(ANTLR_DIR ../libs/antlr-2.7.7)
+set(ANTLR_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../libs/antlr-2.7.7)
 add_subdirectory(${ANTLR_DIR} ${CMAKE_CURRENT_BINARY_DIR}/antlr)
 
 if(USE_QT5)
@@ -39,7 +39,7 @@ if(NOT USE_QT5)
     QT4_WRAP_CPP(SQLB_MOC ${SQLB_MOC_HDR})
 endif()
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR})
+include_directories(${ANTLR_DIR})
 
 add_executable(${PROJECT_NAME} ${SQLB_MOC} ${SQLB_HDR} ${SQLB_SRC})
 
