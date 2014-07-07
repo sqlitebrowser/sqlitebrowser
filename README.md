@@ -103,9 +103,8 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 * http://sqlitebrowser.org
 
-## Old project pages
+## Old project page
 
-* http://sqlitebrowser.sourceforge.net
 * https://sourceforge.net/projects/sqlitebrowser
 
 ## Releases
