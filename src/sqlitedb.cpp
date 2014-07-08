@@ -839,16 +839,32 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
     QStringList result;
     QString current = "";
     *numfields = 0;
+    int recs = 0;
 
-    if ( file.open( QIODevice::ReadWrite ) ) {
-        QProgressDialog progress(QObject::tr("Decoding CSV file..."), QObject::tr("Cancel"), 0, file.size());
-        progress.setWindowModality(Qt::ApplicationModal);
-        char c=0;
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return result;
+    }
+
+    //Other than QFile, the QTextStream-class properly detects 2-Byte QChars and converts them accordingly (UTF-8)
+    QTextStream inStream(&file);
+
+    QProgressDialog progress(QObject::tr("Decoding CSV file..."), QObject::tr("Cancel"), 0, file.size());
+    progress.setWindowModality(Qt::ApplicationModal);
+
+    QString line = "";
+    inStream >> line;
+
+    while (!inStream.atEnd()) {
+
+        //For every Line, we iterate over the single QChars
+        QString::ConstIterator i = line.begin();
         bool inquotemode = false;
         bool inescapemode = false;
-        int recs = 0;
-        while(file.getChar(&c))
-        {
+
+        while (i != line.end()) {
+
+            QChar c = *i;
+
             if (c==quote){
                 if (inquotemode){
                     if (inescapemode){
@@ -857,14 +873,15 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
                         current.append(c);
                     } else {
                         //are we escaping, or just finishing the quote?
-                        char d;
-                        file.getChar(&d);
+                        i++; //Performing lookahead using the iterator
+                        QChar d = *i;
+
                         if (d==quote) {
                             inescapemode = true;
                         } else {
                             inquotemode = false;
                         }
-                        file.ungetChar(d);
+                        i--;
                     }
                 } else {
                     inquotemode = true;
@@ -882,22 +899,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
                 if (inquotemode){
                     //add the newline
                     current.append(c);
-                } else {
-                    //not quoting, start new record
-                    result << current;
-                    current = "";
-                    //for the first line, store the field count
-                    if (*numfields == 0){
-                        *numfields = result.count();
-                    }
-                    recs++;
-                    progress.setValue(file.pos());
-                    qApp->processEvents();
-                    if (progress.wasCanceled()) break;
-                    if ((recs>maxrecords)&&(maxrecords!=-1))         {
-                        break;
-                    }
-                }
+                } 
             } else if (c==13) {
                 if (inquotemode){
                     //add the carrier return if in quote mode only
@@ -906,13 +908,32 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
             } else {//another character type
                 current.append(c);
             }
+
+            i++;
         }
-        file.close();
-        //do we still have a last result, not appended?
-        //proper csv files should end with a linefeed , so this is not necessary
-        //if (current.length()>0) result << current;
+        
+        //Moved this block from (c==10), as line-separation is now handeled by the outer-loop
+        result << current;
+        current = "";
+
+        if (*numfields == 0){
+            *numfields = result.count();
+        }
+        recs++;
+        progress.setValue(file.pos());
+        qApp->processEvents();
+        if (progress.wasCanceled()) break;
+        if ((recs>maxrecords)&&(maxrecords!=-1)) {
+            break;
+        }
+
+        inStream >> line;
     }
+
+    file.close();
+
     return result;
+
 }
 
 QString DBBrowserDB::getPragma(const QString& pragma)
