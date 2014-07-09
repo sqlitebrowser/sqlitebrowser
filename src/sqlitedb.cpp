@@ -898,16 +898,18 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
                     result << current;
                     current = "";
                 }
-            } else if (c==10) {
+            } else if (c==10 || c==13) {
                 if (inquotemode){
-                    //add the newline
+                    //add the newline/carrier return
                     current.append(c);
                 }
-            } else if (c==13) {
-                if (inquotemode){
-                    //add the carrier return if in quote mode only
-                    current.append(c);
-                }
+            } else if (c==32) {
+              
+              // Only append blanks if we are inside of quotes
+              if (inquotemode) {
+                current.append(c);
+              }
+
             } else {//another character type
                 current.append(c);
             }
