@@ -5,6 +5,7 @@
 
 #include <QStringList>
 #include <QMultiMap>
+#include <QByteArray>
 
 class MainWindow;
 class sqlite3;
@@ -63,6 +64,16 @@ public:
     bool dump( const QString & filename);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+
+    /**
+     * @brief getRow Executes a sqlite statement to get the rowdata(columns)
+     *        for the given rowid.
+     * @param sTableName Table to query.
+     * @param rowid The rowid to fetch.
+     * @param rowdata A list of QByteArray containing the row data.
+     * @return true if statement execution was ok, else false.
+     */
+    bool getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata);
 
     void updateSchema();
     int addRecord(const QString& sTableName);

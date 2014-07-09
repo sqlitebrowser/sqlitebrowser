@@ -428,6 +428,27 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
+bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata)
+{
+    QString sQuery = QString("SELECT * from %1 WHERE rowid=%2;").arg(sTableName).arg(rowid);
+    QByteArray utf8Query = sQuery.toUtf8();
+    sqlite3_stmt *stmt;
+
+    int status = sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL);
+    if(SQLITE_OK == status)
+    {
+        // even this is a while loop, the statement should always only return 1 row
+        while(sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            for (int i = 0; i < sqlite3_column_count(stmt); ++i)
+                rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), sqlite3_column_bytes(stmt, i)));
+        }
+    }
+    sqlite3_finalize(stmt);
+
+    return status == SQLITE_OK;
+}
+
 int DBBrowserDB::addRecord(const QString& sTableName)
 {
     char *errmsg;
