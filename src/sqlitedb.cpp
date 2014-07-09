@@ -149,7 +149,7 @@ bool DBBrowserDB::revertAll()
 bool DBBrowserDB::create ( const QString & db)
 {
     bool ok=false;
-    
+
     if (isOpen()) close();
 
     lastErrorMessage = QObject::tr("no error");
@@ -341,7 +341,7 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
 {
     char *errmsg;
     bool ok = false;
-    
+
     if (!isOpen()) return false;
 
     if (_db){
@@ -458,7 +458,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
     if (!isOpen()) return false;
     bool ok = false;
     lastErrorMessage = QString("no error");
-    
+
     QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(table).arg(rowid);
 
     if (_db){
@@ -694,7 +694,7 @@ QStringList DBBrowserDB::getBrowsableObjectNames() const
         if(it.key() == "table" || it.key() == "view")
             res.append(it.value().getname());
     }
-    
+
     return res;
 }
 
@@ -837,7 +837,6 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
 {
     QFile file(csvfilename);
     QStringList result;
-    QString current = "";
     *numfields = 0;
     int recs = 0;
 
@@ -851,15 +850,19 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
     QProgressDialog progress(QObject::tr("Decoding CSV file..."), QObject::tr("Cancel"), 0, file.size());
     progress.setWindowModality(Qt::ApplicationModal);
 
-    QString line = "";
-    inStream >> line;
+
 
     while (!inStream.atEnd()) {
 
-        //For every Line, we iterate over the single QChars
-        QString::ConstIterator i = line.begin();
         bool inquotemode = false;
         bool inescapemode = false;
+        QString line = "";
+        QString current = "";
+
+        line = inStream.readLine();
+
+        //For every Line, we iterate over the single QChars
+        QString::ConstIterator i = line.begin();
 
         while (i != line.end()) {
 
@@ -899,7 +902,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
                 if (inquotemode){
                     //add the newline
                     current.append(c);
-                } 
+                }
             } else if (c==13) {
                 if (inquotemode){
                     //add the carrier return if in quote mode only
@@ -911,10 +914,9 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
 
             i++;
         }
-        
+
         //Moved this block from (c==10), as line-separation is now handeled by the outer-loop
         result << current;
-        current = "";
 
         if (*numfields == 0){
             *numfields = result.count();
@@ -922,12 +924,10 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
         recs++;
         progress.setValue(file.pos());
         qApp->processEvents();
-        if (progress.wasCanceled()) break;
-        if ((recs>maxrecords)&&(maxrecords!=-1)) {
+
+        if ( (progress.wasCanceled() || recs>maxrecords) && maxrecords!=-1) {
             break;
         }
-
-        inStream >> line;
     }
 
     file.close();
