@@ -302,13 +302,26 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     for(int i=0; i < m_headers.size(); ++i)
         blank_data.push_back("");
 
-    for(int i=0; i < count; ++i)
+    for(int i=row; i < row + count; ++i)
     {
-        m_data.insert(row, blank_data);
-        m_data[row].replace(0, QByteArray::number(m_db->addRecord(m_sTable)));
-    }
+        int rowid = m_db->addRecord(m_sTable);
+        if(rowid < 0)
+        {
+            endInsertRows();
+            return false;
+        }
+        m_rowCount++;
+        m_data.insert(i, blank_data);
+        m_data[i].replace(0, QByteArray::number(rowid));
 
-    m_rowCount += count;
+        // update column with default values
+        QByteArrayList rowdata;
+        m_db->getRow(m_sTable, rowid, rowdata);
+        for(int j=1; j < m_headers.size(); ++j)
+        {
+            m_data[i].replace(j, rowdata[j - 1]);
+        }
+    }
 
     endInsertRows();
     return true;
