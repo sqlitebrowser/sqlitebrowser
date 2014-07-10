@@ -109,6 +109,7 @@ void TestTable::parseSQLdefaultexpr()
     QString sSQL = "CREATE TABLE chtest(\n"
             "id integer primary key,\n"
             "dumpytext text default('axa') CHECK(dumpytext == \"aa\"),\n"
+            "date datetime default CURRENT_TIMESTAMP,"
             "zoi integer)";
 
     Table tab = Table::parseSQL(sSQL);
@@ -126,6 +127,8 @@ void TestTable::parseSQLdefaultexpr()
     QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext == \"aa\""));
     QCOMPARE(tab.fields().at(2)->defaultValue(), QString(""));
     QCOMPARE(tab.fields().at(2)->check(), QString(""));
+    QCOMPARE(tab.fields().at(3)->defaultValue(), QString("CURRENT_TIMESTAMP"));
+    QCOMPARE(tab.fields().at(3)->check(), QString(""));
 
     QVERIFY(tab.fields().at(0)->primaryKey());
 }
