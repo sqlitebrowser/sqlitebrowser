@@ -55,12 +55,12 @@ public:
 	public: void name();
 	public: void conflictclause();
 	public: void expr();
+	public: void literalvalue();
 	public: void foreignkeyclause();
 	public: void indexedcolumn();
 	public: void functionname();
 	public: void subexpr();
 	public: void binaryoperator();
-	public: void literalvalue();
 	public: void castexpr();
 	public: void caseexpr();
 	public: void raisefunction();
@@ -141,6 +141,12 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_26;
 	static const unsigned long _tokenSet_27_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_27;
+	static const unsigned long _tokenSet_28_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_28;
+	static const unsigned long _tokenSet_29_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_29;
+	static const unsigned long _tokenSet_30_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_30;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/
