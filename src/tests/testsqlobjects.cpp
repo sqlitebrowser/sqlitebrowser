@@ -114,20 +114,22 @@ void TestTable::parseSQLdefaultexpr()
 
     Table tab = Table::parseSQL(sSQL);
 
-    QVERIFY(tab.name() == "chtest");
-    QVERIFY(tab.fields().at(0)->name() == "id");
-    QVERIFY(tab.fields().at(1)->name() == "dumpytext");
-    QVERIFY(tab.fields().at(2)->name() == "zoi");
+    QCOMPARE(tab.name(), QString("chtest"));
+    QCOMPARE(tab.fields().at(0)->name(), QString("id"));
+    QCOMPARE(tab.fields().at(1)->name(), QString("dumpytext"));
+    QCOMPARE(tab.fields().at(2)->name(), QString("date"));
+    QCOMPARE(tab.fields().at(3)->name(), QString("zoi"));
 
-    QVERIFY(tab.fields().at(0)->type() == "integer");
-    QVERIFY(tab.fields().at(1)->type() == "text");
-    QVERIFY(tab.fields().at(2)->type() == "integer");
+    QCOMPARE(tab.fields().at(0)->type(), QString("integer"));
+    QCOMPARE(tab.fields().at(1)->type(), QString("text"));
+    QCOMPARE(tab.fields().at(2)->type(), QString("datetime"));
+    QCOMPARE(tab.fields().at(3)->type(), QString("integer"));
 
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("('axa')"));
     QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext == \"aa\""));
-    QCOMPARE(tab.fields().at(2)->defaultValue(), QString(""));
+    QCOMPARE(tab.fields().at(2)->defaultValue(), QString("CURRENT_TIMESTAMP"));
     QCOMPARE(tab.fields().at(2)->check(), QString(""));
-    QCOMPARE(tab.fields().at(3)->defaultValue(), QString("CURRENT_TIMESTAMP"));
+    QCOMPARE(tab.fields().at(3)->defaultValue(), QString(""));
     QCOMPARE(tab.fields().at(3)->check(), QString(""));
 
     QVERIFY(tab.fields().at(0)->primaryKey());
