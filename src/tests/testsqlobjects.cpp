@@ -249,6 +249,3 @@ void TestTable::createTableWithNotLikeConstraint()
     QVERIFY(tab.fields().at(5)->check() == "value6 NOT BETWEEN 1 AND 100");
     QVERIFY(tab.fields().at(6)->check() == "NOT EXISTS ( 1 )");
 }
-
-QTEST_MAIN(TestTable)
-//#include "testsqlobjects.moc"

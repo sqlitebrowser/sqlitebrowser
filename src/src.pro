@@ -12,8 +12,8 @@ CONFIG += warn_on
 # create a unittest option
 CONFIG(unittest) {
   CONFIG += qtestlib
-  HEADERS += tests/testsqlobjects.h
-  SOURCES += tests/testsqlobjects.cpp
+  HEADERS += tests/testsqlobjects.h tests/TestImport.h
+  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp
 } else {
   SOURCES += main.cpp
 }
