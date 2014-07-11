@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de">
+<TS version="2.0" language="de">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -32,48 +32,48 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="43"/>
+        <location filename="../Application.cpp" line="60"/>
         <source>Usage: %1 [options] [db]
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="44"/>
+        <location filename="../Application.cpp" line="61"/>
         <source>Possible command line arguments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="45"/>
+        <location filename="../Application.cpp" line="62"/>
         <source>  -h, --help		Show command line options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="46"/>
+        <location filename="../Application.cpp" line="63"/>
         <source>  -s, --sql  [file]	Execute this SQL file after opening the DB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="47"/>
+        <location filename="../Application.cpp" line="64"/>
         <source>  -q, --quit		Exit application after running scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="48"/>
+        <location filename="../Application.cpp" line="65"/>
         <source>  [file]		Open this SQLite database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="53"/>
+        <location filename="../Application.cpp" line="70"/>
         <source>The -s/--sql option requires an argument</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="55"/>
+        <location filename="../Application.cpp" line="72"/>
         <source>The file %1 does not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="65"/>
+        <location filename="../Application.cpp" line="82"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1007,11 +1007,6 @@ All data currently stored in this field will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1036"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format choosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1039"/>
         <source>Save current plot...</source>
         <translation type="unfinished"></translation>
@@ -1205,11 +1200,6 @@ All data currently stored in this field will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1259"/>
-        <source>Delete Object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1262"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation type="unfinished"></translation>
@@ -1335,6 +1325,11 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="1376"/>
         <source>Open SQL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1036"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1554,6 +1549,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="1259"/>
         <location filename="../MainWindow.cpp" line="954"/>
         <source>Delete Table</source>
         <translation type="unfinished"></translation>

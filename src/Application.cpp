@@ -28,7 +28,7 @@ Application::Application(int& argc, char** argv) :
 
     // First of all try to load the application translation file.
     m_translatorApp = new QTranslator(this);
-    ok = m_translatorApp->load("sqlitebrowser_" + name, "translations");
+    ok = m_translatorApp->load("sqlb_" + name, "translations");
     if (ok == true) {
         installTranslator(m_translatorApp);
 
