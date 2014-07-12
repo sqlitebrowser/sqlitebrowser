@@ -1,7 +1,7 @@
 #include <QTemporaryFile>
 #include <QtTest/QTest>
+#include <QApplication>
 
-#include "Application.h"
 #include "TestImport.h"
 #include "../sqlitedb.h"
 
@@ -17,7 +17,7 @@ void TestImport::csvImport()
     // Init basic application
     int argcount = 1;
     const char* appname = "sqlb-unittests";
-    Application app(argcount, const_cast<char**>(&appname));
+    QApplication app(argcount, const_cast<char**>(&appname));
 
     // Create temporary CSV file
     QTemporaryFile file;
