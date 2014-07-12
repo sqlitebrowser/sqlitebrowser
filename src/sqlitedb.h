@@ -7,7 +7,6 @@
 #include <QMultiMap>
 #include <QByteArray>
 
-class MainWindow;
 class sqlite3;
 
 enum
@@ -47,12 +46,13 @@ private:
     QString table_name;     // The name of the table this object references, interesting for views, triggers and indices
 };
 
-
-class DBBrowserDB
+class DBBrowserDB : public QObject
 {
+    Q_OBJECT
+
 public:
-    DBBrowserDB (): _db( 0 ), mainWindow(0) {}
-    ~DBBrowserDB (){}
+    explicit DBBrowserDB () : _db( 0 ) {}
+    virtual ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool create ( const QString & db);
     bool close();
@@ -118,7 +118,9 @@ public:
     QString lastErrorMessage;
     QString curDBFilename;
 
-    MainWindow* mainWindow;
+signals:
+    void sqlExecuted(QString sql, int msgtype);
+    void dbChanged(bool dirty);
 
 private:
     QStringList savepointList;

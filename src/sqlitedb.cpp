@@ -1,6 +1,5 @@
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
-#include "MainWindow.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -89,7 +88,7 @@ bool DBBrowserDB::setRestorePoint(const QString& pointname)
         QString query = QString("SAVEPOINT %1;").arg(pointname);
         sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
         savepointList.append(pointname);
-        if(mainWindow) mainWindow->dbState(getDirty());
+        emit dbChanged(getDirty());
     }
     return true;
 }
@@ -104,7 +103,7 @@ bool DBBrowserDB::save(const QString& pointname)
         QString query = QString("RELEASE %1;").arg(pointname);
         sqlite3_exec(_db, query.toUtf8(), NULL,NULL,NULL);
         savepointList.removeAll(pointname);
-        if(mainWindow) mainWindow->dbState(getDirty());
+        emit dbChanged(getDirty());
     }
     return true;
 }
@@ -121,7 +120,7 @@ bool DBBrowserDB::revert(const QString& pointname)
         query = QString("RELEASE %1;").arg(pointname);
         sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
         savepointList.removeAll(pointname);
-        if(mainWindow) mainWindow->dbState(getDirty());
+        emit dbChanged(getDirty());
     }
     return true;
 }
@@ -218,7 +217,7 @@ bool DBBrowserDB::close()
     _db = 0;
     objMap.clear();
     savepointList.clear();
-    if(mainWindow) mainWindow->dbState(getDirty());
+    emit dbChanged(getDirty());
 
     // Return true to tell the calling function that the closing wasn't cancelled by the user
     return true;
@@ -764,24 +763,21 @@ DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
 
 void DBBrowserDB::logSQL(QString statement, int msgtype)
 {
-    if(mainWindow)
+    // Replace binary log messages by a placeholder text instead of printing gibberish
+    for(int i=0;i<statement.size();i++)
     {
-        // Replace binary log messages by a placeholder text instead of printing gibberish
-        for(int i=0;i<statement.size();i++)
+        if(statement.at(i) < 32 && statement.at(i) != '\n')
         {
-            if(statement.at(i) < 32 && statement.at(i) != '\n')
-            {
-                statement.truncate(32);
-                statement.append(QObject::tr("... <string can not be logged, contains binary data> ..."));
+            statement.truncate(32);
+            statement.append(QObject::tr("... <string can not be logged, contains binary data> ..."));
 
-                // early exit if we detect a binary character,
-                // to prevent checking all characters in a potential big string
-                break;
-            }
+            // early exit if we detect a binary character,
+            // to prevent checking all characters in a potential big string
+            break;
         }
-
-        mainWindow->logSql(statement, msgtype);
     }
+
+    emit sqlExecuted(statement, msgtype);
 }
 
 void DBBrowserDB::updateSchema( )

@@ -27,7 +27,6 @@ endif()
 
 set(SQLB_HDR
 	src/gen_version.h
-	src/sqlitedb.h
 	src/sqlitetypes.h
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
@@ -35,6 +34,7 @@ set(SQLB_HDR
 )
 
 set(SQLB_MOC_HDR
+	src/sqlitedb.h
 	src/AboutDialog.h
 	src/CreateIndexDialog.h
 	src/EditDialog.h

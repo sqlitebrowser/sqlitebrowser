@@ -64,8 +64,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    // Init the SQL log dock
-    db.mainWindow = this;
+    // Connect SQL logging and database state setting to main window
+    connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
+    connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
 
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
