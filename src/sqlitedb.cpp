@@ -670,7 +670,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     if(!executeMultiSQL(otherObjectsSql, true, true))
     {
         QMessageBox::information(0, qApp->applicationName(), QObject::tr("Restoring some of the objects associated with this table failed. "
-                                                                         "This is most likely because some column namaes changed. "
+                                                                         "This is most likely because some column names changed. "
                                                                          "Here's the SQL statement which you might want to fix and execute manually:\n\n")
                                  + otherObjectsSql);
     }
