@@ -15,6 +15,9 @@ src/debug
 src/release
 src/gen_version.h
 
+# ignore compiled translation files
+src/translations/*.qm
+
 # no one needs the txt file
 src/grammar/sqlite3TokenTypes.txt
 

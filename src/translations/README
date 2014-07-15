@@ -1,0 +1,1 @@
+TS files for the application should be all named according to a convention such as <short_appname>_<locale>, e.g. sqlb_de, sqlb_ru etc.

@@ -81,7 +81,8 @@ FORMS += \
     VacuumDialog.ui
 
 TRANSLATIONS += \
-    translations/tr_de.ts
+    translations/sqlb_de.ts \
+    translations/sqlb_ru.ts
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
@@ -117,3 +118,6 @@ UI_DIR = .ui
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/..
 LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -lantlr -lqhexedit -lqcustomplot -lsqlite3
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source
+
+# Rules for creating/updating {ts|qm}-files
+include(i18n.pri)
