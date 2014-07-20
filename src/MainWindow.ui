@@ -278,8 +278,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>637</width>
-             <height>501</height>
+             <width>281</width>
+             <height>444</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -1033,7 +1033,7 @@
            <item>
             <widget class="QPushButton" name="butSavePlot">
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format choosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="statusTip">
               <string>Save current plot...</string>
@@ -1256,7 +1256,7 @@
     <string>Delete Table...</string>
    </property>
    <property name="toolTip">
-    <string>Delete Object</string>
+    <string>Delete Table</string>
    </property>
    <property name="whatsThis">
     <string>Open the Delete Table wizard, where you can select a database table to be dropped.</string>
