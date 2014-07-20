@@ -923,7 +923,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
             } else if (c==32) {
               
               // Only append blanks if we are inside of quotes
-              if (inquotemode) {
+              if (inquotemode || quote == 0) {
                 current.append(c);
               }
 
