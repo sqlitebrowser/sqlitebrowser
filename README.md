@@ -73,7 +73,7 @@ Building on OSX is simple, but requires SQLite and Qt 4.8.x to be installed
 first.  These are the Homebrew steps, though other package managers should
 work:
 
-    $ brew install sqlite --with-functions
+    $ brew install sqlite --with-functions  --without-readline
     $ brew install qt
     $ brew link sqlite3 --force
 
