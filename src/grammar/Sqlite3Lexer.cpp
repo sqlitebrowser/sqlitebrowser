@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Lexer.cpp"$ */
+/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Lexer.cpp"$ */
 #include "Sqlite3Lexer.hpp"
 #include <antlr/CharBuffer.hpp>
 #include <antlr/TokenStreamException.hpp>
@@ -33,33 +33,34 @@ void Sqlite3Lexer::initLiterals()
 	literals["CASE"] = 13;
 	literals["END"] = 29;
 	literals["CASCADE"] = 12;
-	literals["TEMPORARY"] = 57;
+	literals["TEMPORARY"] = 58;
 	literals["DEFERRABLE"] = 24;
 	literals["IMMEDIATE"] = 41;
 	literals["AUTOINCREMENT"] = 6;
-	literals["ROWID"] = 55;
-	literals["EXISTS"] = 46;
-	literals["THEN"] = 59;
+	literals["ROWID"] = 56;
+	literals["EXISTS"] = 47;
+	literals["NO"] = 43;
+	literals["THEN"] = 60;
 	literals["AND"] = 9;
 	literals["CURRENT_DATE"] = 21;
-	literals["NOT"] = 43;
+	literals["NOT"] = 44;
 	literals["KEY"] = 34;
 	literals["COLLATE"] = 17;
-	literals["NULL"] = 44;
-	literals["TEMP"] = 58;
+	literals["NULL"] = 45;
+	literals["TEMP"] = 59;
 	literals["INITIALLY"] = 40;
-	literals["RESTRICT"] = 53;
+	literals["RESTRICT"] = 54;
 	literals["LIKE"] = 35;
-	literals["WHEN"] = 62;
+	literals["WHEN"] = 63;
 	literals["FOREIGN"] = 32;
-	literals["SET"] = 56;
+	literals["SET"] = 57;
 	literals["IS"] = 42;
 	literals["OR"] = 10;
-	literals["PRIMARY"] = 48;
+	literals["PRIMARY"] = 49;
 	literals["DEFERRED"] = 25;
-	literals["UPDATE"] = 61;
+	literals["UPDATE"] = 62;
 	literals["IF"] = 37;
-	literals["UNIQUE"] = 60;
+	literals["UNIQUE"] = 61;
 	literals["AS"] = 7;
 	literals["TABLE"] = 36;
 	literals["DEFAULT"] = 23;
@@ -69,24 +70,24 @@ void Sqlite3Lexer::initLiterals()
 	literals["IGNORE"] = 38;
 	literals["CURRENT_TIMESTAMP"] = 22;
 	literals["CONFLICT"] = 18;
-	literals["REPLACE"] = 52;
+	literals["REPLACE"] = 53;
 	literals["ASC"] = 8;
 	literals["FAIL"] = 31;
-	literals["REGEXP"] = 51;
-	literals["REFERENCES"] = 50;
-	literals["ON"] = 47;
+	literals["REGEXP"] = 52;
+	literals["REFERENCES"] = 51;
+	literals["ON"] = 48;
 	literals["DESC"] = 27;
 	literals["IN"] = 39;
 	literals["CAST"] = 14;
 	literals["ESCAPE"] = 30;
 	literals["ELSE"] = 28;
-	literals["WITHOUT"] = 63;
-	literals["MATCH"] = 45;
-	literals["RAISE"] = 49;
+	literals["WITHOUT"] = 64;
+	literals["MATCH"] = 46;
+	literals["RAISE"] = 50;
 	literals["ABORT"] = 4;
 	literals["BETWEEN"] = 11;
 	literals["CHECK"] = 15;
-	literals["ROLLBACK"] = 54;
+	literals["ROLLBACK"] = 55;
 	literals["CURRENT_TIME"] = 20;
 }
 

@@ -52,6 +52,7 @@ tokens {
   INITIALLY="INITIALLY";
   IMMEDIATE="IMMEDIATE";
   IS="IS";
+  NO="NO";
   NOT="NOT";
   NULL_T="NULL";
   MATCH="MATCH";
