@@ -312,8 +312,10 @@ Table CreateTableWalker::table()
                         int fieldindex = tab.findField(col);
                         if(fieldindex != -1)
                             tab.fields().at(fieldindex)->setPrimaryKey(true);
-                        tc = tc->getNextSibling(); // skip ident and comma
-                        tc = tc->getNextSibling();
+                        do
+                        {
+                            tc = tc->getNextSibling(); // skip ident and comma
+                        } while(tc->getType() == sqlite3TokenTypes::COMMA);
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
                 }
                 break;
