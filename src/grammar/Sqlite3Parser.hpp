@@ -147,6 +147,12 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_29;
 	static const unsigned long _tokenSet_30_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_30;
+	static const unsigned long _tokenSet_31_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_31;
+	static const unsigned long _tokenSet_32_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_32;
+	static const unsigned long _tokenSet_33_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_33;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/

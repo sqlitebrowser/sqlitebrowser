@@ -323,7 +323,8 @@ Table CreateTableWalker::table()
                 }
 
                 s = s->getNextSibling(); //COMMA or RPAREN
-                s = s->getNextSibling();
+                if(s->getType() == sqlite3TokenTypes::COMMA || s->getType() == sqlite3TokenTypes::RPAREN)
+                    s = s->getNextSibling();
             } else {
                 // It is
 

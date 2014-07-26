@@ -258,7 +258,7 @@ keywordastablename
 createtable
   :
   CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
-  ( LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN (WITHOUT ROWID)?
+  ( LPAREN columndef (COMMA columndef)* ((COMMA)? tableconstraint)* RPAREN (WITHOUT ROWID)?
   | AS selectstmt
   )
   {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
