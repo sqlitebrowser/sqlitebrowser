@@ -50,6 +50,7 @@ tokens {
   IGNORE="IGNORE";
   IN="IN";
   INITIALLY="INITIALLY";
+  INSERT="INSERT";
   IMMEDIATE="IMMEDIATE";
   IS="IS";
   NO="NO";
@@ -377,7 +378,7 @@ conflictclause
 foreignkeyclause
   :
   REFERENCES tablename (LPAREN columnname (COMMA columnname)* RPAREN)?
-  ( ON (DELETE | UPDATE)
+  ( ON (DELETE | UPDATE | INSERT)
     ( SET (NULL_T | DEFAULT)
     | CASCADE
     | RESTRICT
