@@ -805,6 +805,7 @@ void DBBrowserDB::updateSchema( )
             QString val2 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
             QString val3 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
             QString val4 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 3));
+            val3.replace("\r", "");
 
             if(val1 == "table" || val1 == "index" || val1 == "view" || val1 == "trigger")
                 objMap.insert(val1, DBBrowserObject(val2, val3, val1, val4));
