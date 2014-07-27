@@ -40,10 +40,11 @@ Get the following mxe packages:
     $ make gcc sqlite qt nsis
 
 After successful compilation go into your mxedir/usr/bin and
-add 2 symlinks:
+add 3 symlinks:
 
     $ ln -s i686-pc-mingw32-windres windres
     $ ln -s i686-pc-mingw32-makensis makensis
+    $ ln -s /usr/bin/lrelease
 
 Now cd into your sqlitebrowser source directory and create
 a build directory for
