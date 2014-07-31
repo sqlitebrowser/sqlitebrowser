@@ -71,7 +71,7 @@ SQLite Database Browser works well on MacOS X.
 
 It can be compiled to a single executable binary file, similar to other command line
 utilities.  Or it can either be compiled to a .app bundle, suitable for placing in
-/Applications.  
+/Applications.
 
 ### Compiling to a single executable binary
 
