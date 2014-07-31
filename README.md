@@ -97,7 +97,7 @@ Then it's just a matter of getting the source:
     $ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
 
 **Note** - Don't clone the repo to a directory with a quote character (') in
-it's name (eg ~/tmp/foo').  There's an open bug for that which [breaks the build](https://github.com/sqlitebrowser/sqlitebrowser/issues/10).
+it's name (eg ~/tmp/foo'), as compiling will error out.
 
 And compiling it:
 
