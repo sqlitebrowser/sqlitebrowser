@@ -278,7 +278,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>281</width>
+             <width>278</width>
              <height>444</height>
             </rect>
            </property>
@@ -920,7 +920,7 @@
        <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QTextEdit" name="editLogUser">
+       <widget class="SqlTextEdit" name="editLogUser">
         <property name="font">
          <font>
           <family>Monospace</family>
@@ -931,7 +931,7 @@
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QTextEdit" name="editLogApplication">
+       <widget class="SqlTextEdit" name="editLogApplication">
         <property name="font">
          <font>
           <family>Monospace</family>
@@ -1492,6 +1492,11 @@
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

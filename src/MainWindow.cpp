@@ -1156,10 +1156,10 @@ void MainWindow::logSql(const QString& sql, int msgtype)
 {
     if(msgtype == kLogMsg_User)
     {
-        ui->editLogUser->append(sql);
+        ui->editLogUser->appendPlainText(sql);
         ui->editLogUser->verticalScrollBar()->setValue(ui->editLogUser->verticalScrollBar()->maximum());
     } else {
-        ui->editLogApplication->append(sql);
+        ui->editLogApplication->appendPlainText(sql);
         ui->editLogApplication->verticalScrollBar()->setValue(ui->editLogApplication->verticalScrollBar()->maximum());
     }
 }
