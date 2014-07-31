@@ -1,5 +1,5 @@
-#ifndef __TESTIMPORT_H__
-#define __TESTIMPORT_H__
+#ifndef TESTIMPORT_H
+#define TESTIMPORT_H
 
 #include <QObject>
 

@@ -1,5 +1,5 @@
-#ifndef __FILTERTABLEHEADER_H__
-#define __FILTERTABLEHEADER_H__
+#ifndef FILTERTABLEHEADER_H
+#define FILTERTABLEHEADER_H
 
 #include <QHeaderView>
 #include <QList>

@@ -1,5 +1,5 @@
-#ifndef __VACUUMDIALOG_H__
-#define __VACUUMDIALOG_H__
+#ifndef VACUUMDIALOG_H
+#define VACUUMDIALOG_H
 
 #include <QDialog>
 

@@ -1,5 +1,5 @@
-#ifndef __CREATEINDEXDIALOG_H__
-#define __CREATEINDEXDIALOG_H__
+#ifndef CREATEINDEXDIALOG_H
+#define CREATEINDEXDIALOG_H
 
 #include <QDialog>
 

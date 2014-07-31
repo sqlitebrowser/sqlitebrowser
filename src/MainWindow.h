@@ -1,5 +1,5 @@
-#ifndef MAINFORM_H
-#define MAINFORM_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include "sqltextedit.h"
 #include "sqlitedb.h"

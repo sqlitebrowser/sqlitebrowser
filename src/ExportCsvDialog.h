@@ -1,5 +1,5 @@
-#ifndef __EXPORTCSVDIALOG_H__
-#define __EXPORTCSVDIALOG_H__
+#ifndef EXPORTCSVDIALOG_H
+#define EXPORTCSVDIALOG_H
 
 #include <QDialog>
 

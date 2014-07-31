@@ -1,5 +1,5 @@
-#ifndef __DBSTRUCTUREMODEL_H__
-#define __DBSTRUCTUREMODEL_H__
+#ifndef DBSTRUCTUREMODEL_H
+#define DBSTRUCTUREMODEL_H
 
 #include <QAbstractItemModel>
 

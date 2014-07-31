@@ -1,5 +1,5 @@
-#ifndef __EDITTABLEDIALOG_H__
-#define __EDITTABLEDIALOG_H__
+#ifndef EDITTABLEDIALOG_H
+#define EDITTABLEDIALOG_H
 
 #include "sqlitetypes.h"
 

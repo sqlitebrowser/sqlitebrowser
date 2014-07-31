@@ -1,5 +1,5 @@
-#ifndef __SQLEXECUTIONAREA_H__
-#define __SQLEXECUTIONAREA_H__
+#ifndef SQLEXECUTIONAREA_H
+#define SQLEXECUTIONAREA_H
 
 #include "sqltextedit.h"
 

@@ -1,5 +1,5 @@
-#ifndef __PREFERENCESDIALOG_H__
-#define __PREFERENCESDIALOG_H__
+#ifndef PREFERENCESDIALOG_H
+#define PREFERENCESDIALOG_H
 
 #include <QDialog>
 #include <QVariant>

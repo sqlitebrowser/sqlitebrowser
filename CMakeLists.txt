@@ -129,25 +129,25 @@ endif()
 # get git version hash
 if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
 	add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#ifndef __VERSION_H__" > ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#define __VERSION_H__" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#ifndef GEN_VERSION_H" > ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#define GEN_VERSION_H" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         COMMAND git log -n1 "--format=#define APP_VERSION \"%h_git\"" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         COMMAND echo "#define MAJOR_VERSION 999" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         COMMAND echo "#define MINOR_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         COMMAND echo "#define PATCH_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#endif" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#endif\n" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         DEPENDS .git/HEAD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         VERBATIM)
 else()
 	file(WRITE ${CMAKE_SOURCE_DIR}/src/gen_version.h
-		 "#ifndef __GEN_VERSIONS_H__\n"
-		 "#define __GEN_VERSIONS_H__\n"
+		 "#ifndef GEN_VERSION_H\n"
+		 "#define GEN_VERSION_H\n"
 		 "#define APP_VERSION \"3.0.1\"\n"
 		 "#define MAJOR_VERSION 3\n"
 		 "#define MINOR_VERSION 0\n"
 		 "#define PATCH_VERSION 1\n"
-		 "#endif")
+		 "#endif\n")
 endif()
 
 #icon and correct libs/subsystem for windows

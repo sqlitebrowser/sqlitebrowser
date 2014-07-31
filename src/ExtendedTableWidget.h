@@ -1,5 +1,5 @@
-#ifndef __EXTENDEDTABLEWIDGET_H__
-#define __EXTENDEDTABLEWIDGET_H__
+#ifndef EXTENDEDTABLEWIDGET_H
+#define EXTENDEDTABLEWIDGET_H
 
 #include <QTableView>
 #include "FilterTableHeader.h"

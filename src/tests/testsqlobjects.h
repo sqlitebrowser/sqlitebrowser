@@ -1,3 +1,6 @@
+#ifndef TESTSQLOBJECTS_H
+#define TESTSQLOBJECTS_H
+
 #include <QObject>
 
 class TestTable: public QObject
@@ -20,3 +23,5 @@ private slots:
     void createTableWithIn();
     void createTableWithNotLikeConstraint();
 };
+
+#endif

@@ -1,5 +1,5 @@
-#ifndef __EDITDIALOG_H__
-#define __EDITDIALOG_H__
+#ifndef EDITDIALOG_H
+#define EDITDIALOG_H
 
 #include <QDialog>
 
