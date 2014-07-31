@@ -352,7 +352,7 @@ void MainWindow::resetBrowser()
         objmap[i.value().getname()] = i.value();;
     }
 
-    // finaly fill the combobox in sorted order
+    // Finally fill the combobox in sorted order
     for(QMap<QString, DBBrowserObject>::ConstIterator it=objmap.constBegin();
         it!=objmap.constEnd();
         ++it)
@@ -646,7 +646,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 /*
  * I'm still not happy how the results are represented to the user
  * right now you only see the result of the last executed statement.
- * A better experiance would be tabs on the bottom with query results
+ * A better experience would be tabs on the bottom with query results
  * for all the executed statements.
  * Or at least a some way the use could see results/status message
  * per executed statement.
@@ -857,7 +857,7 @@ void MainWindow::importDatabaseFromSQL()
     if(!QFile::exists(fileName))
         return;
 
-    // If there is already a database file opened ask the user wether to import into this one or a new one. If no DB is opened just ask for a DB name directly
+    // If there is already a database file opened ask the user whether to import into this one or a new one. If no DB is opened just ask for a DB name directly
     QString newDbFile;
     if((db.isOpen() && QMessageBox::question(this,
                                             QApplication::applicationName(),
@@ -892,7 +892,7 @@ void MainWindow::importDatabaseFromSQL()
     f.close();
     QApplication::restoreOverrideCursor();
 
-    // Resfresh window when importing into an existing DB or - when creating a new file - just open it correctly
+    // Refresh window when importing into an existing DB or - when creating a new file - just open it correctly
     if(newDbFile.size())
     {
         fileOpen(newDbFile);
@@ -1412,7 +1412,7 @@ QVariant::Type guessdatatype(SqliteTableModel* model, int column)
 
 void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 {
-    // add columns to x/y seleciton tree widget
+    // add columns to x/y selection tree widget
     if(update)
     {
         // disconnect treeplotcolumns item changed updates
