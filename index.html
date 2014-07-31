@@ -110,9 +110,26 @@ features added.</p>
 
 <ul>
 <li>OSX 10.7 (Lion), 10.8 (Mountain Lion) and 10.9 (Mavericks) are tested and known to work</li>
-</ul><p>Building on OSX is simple, but requires SQLite and Qt 4.8.x to be installed
-first.  These are the Homebrew steps, though other package managers should
-work:</p>
+</ul>
+
+<p>It can be compiled to a single executable binary file, similar to other command line
+utilities.  Or it can either be compiled to a .app bundle, suitable for placing in
+/Applications.</p>
+
+<h3>Compiling to a single executable binary</h3>
+
+<p>This is incredibly easy using <a href="http://brew.sh">Homebrew</a>.  Just run this command:</p>
+
+<pre><code>$ brew install sqlitebrowser</code></pre>
+
+<p>And you're done.  A "sqlitebrowser" command should now available in your PATH, and can
+also be launched through Spotlight.</p>
+
+<h3>Compiling to a .app bundle</h3>
+
+<p>Building the .app bundle version takes a bit more effort, but isn't too hard.  It
+requires SQLite and Qt 4.8.x to be installed first.  These are the
+<a href="http://brew.sh">Homebrew</a> steps, though other package managers should work:</p>
 
 <pre><code>$ brew install sqlite --with-functions --without-readline
 $ brew install qt
