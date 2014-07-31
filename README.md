@@ -69,9 +69,24 @@ SQLite Database Browser works well on MacOS X.
 
 * OSX 10.7 (Lion), 10.8 (Mountain Lion) and 10.9 (Mavericks) are tested and known to work
 
-Building on OSX is simple, but requires SQLite and Qt 4.8.x to be installed
-first.  These are the Homebrew steps, though other package managers should
-work:
+It can be compiled to a single executable binary file, similar to other command line
+utilities.  Or it can either be compiled to a .app bundle, suitable for placing in
+/Applications.  
+
+### Compiling to a single executable binary
+
+This is incredibly easy using [Homebrew](http://brew.sh).  Just run this command:
+
+    $ brew install sqlitebrowser
+
+And you're done.  A "sqlitebrowser" command should now available in your PATH, and can
+also be launched through Spotlight.
+
+### Compiling to a .app bundle
+
+Building the .app bundle version takes a bit more effort, but isn't too hard.  It
+requires SQLite and Qt 4.8.x to be installed first.  These are the
+[Homebrew](http://brew.sh) steps, though other package managers should work:
 
     $ brew install sqlite --with-functions --without-readline
     $ brew install qt
