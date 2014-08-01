@@ -11,7 +11,7 @@ depending on the current Qt configuration on the building machine.
 
 Provided you have Qt and cmake installed and configured, simply run
 
-    $ cmake
+    $ cmake .
 
 followed by
 
