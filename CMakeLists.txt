@@ -22,7 +22,7 @@ if(USE_QT5)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 else()
     find_package(Qt4 COMPONENTS QtCore QtGui QtNetwork REQUIRED)
-    include(${QT_USE_FILE})
+    include("${QT_USE_FILE}")
     add_definitions(${QT_DEFINITIONS})
 endif()
 
@@ -99,8 +99,8 @@ set(SQLB_RESOURCES
 
 # Translation files
 set(SQLB_TSS
-	${CMAKE_SOURCE_DIR}/src/translations/sqlb_de.ts
-	${CMAKE_SOURCE_DIR}/src/translations/sqlb_ru.ts
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_de.ts"
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ru.ts"
 )
 
 if(USE_QT5)
@@ -109,7 +109,7 @@ if(USE_QT5)
     if(SQLB_TSS)
         # add translations
         foreach(SQLB_TS ${SQLB_TSS})
-            SET_SOURCE_FILES_PROPERTIES(${SQLB_TS} PROPERTIES OUTPUT_LOCATION "${CMAKE_BINARY_DIR}/translations")
+            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_BINARY_DIR}/translations")
         endforeach(SQLB_TS ${SQLB_TSS})
         qt5_add_translation(SQLB_QMS ${SQLB_TSS})
     endif(SQLB_TSS)
@@ -120,27 +120,29 @@ else()
     if(SQLB_TSS)
         # add translations
         foreach(SQLB_TS ${SQLB_TSS})
-            SET_SOURCE_FILES_PROPERTIES(${SQLB_TS} PROPERTIES OUTPUT_LOCATION "${CMAKE_BINARY_DIR}/translations")
+            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_BINARY_DIR}/translations")
         endforeach(SQLB_TS ${SQLB_TSS})
         QT4_ADD_TRANSLATION(SQLB_QMS ${SQLB_TSS})
     endif(SQLB_TSS)
 endif()
 
+set(gv "${CMAKE_SOURCE_DIR}/src/gen_version.h")
+
 # get git version hash
-if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
-	add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#ifndef GEN_VERSION_H" > ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#define GEN_VERSION_H" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND git log -n1 "--format=#define APP_VERSION \"%h_git\"" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#define MAJOR_VERSION 999" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#define MINOR_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#define PATCH_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#endif" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+	add_custom_command(OUTPUT "${gv}"
+        COMMAND echo "#ifndef GEN_VERSION_H" > "${gv}"
+        COMMAND echo "#define GEN_VERSION_H" >> "${gv}"
+        COMMAND git log -n1 "--format=#define APP_VERSION \"%h_git\"" >> "${gv}"
+        COMMAND echo "#define MAJOR_VERSION 999" >> "${gv}"
+        COMMAND echo "#define MINOR_VERSION 0" >> "${gv}"
+        COMMAND echo "#define PATCH_VERSION 0" >> "${gv}"
+        COMMAND echo "#endif" >> "${gv}"
         DEPENDS .git/HEAD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
         VERBATIM)
 else()
-	file(WRITE ${CMAKE_SOURCE_DIR}/src/gen_version.h
+	file(WRITE "${gv}"
 		 "#ifndef GEN_VERSION_H\n"
 		 "#define GEN_VERSION_H\n"
 		 "#define APP_VERSION \"3.0.1\"\n"
@@ -157,14 +159,14 @@ if(WIN32)
 
 	IF( MINGW )
 	# resource compilation for MinGW
-		ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o
-			COMMAND windres -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc -o ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o )
-		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o)
+		ADD_CUSTOM_COMMAND(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o"
+			COMMAND windres "-I${CMAKE_CURRENT_SOURCE_DIR}" "-i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc" -o "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o" VERBATIM)
+		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o")
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
 		set(WIN32_STATIC_LINK -Wl,-Bstatic -lssl -lcrypto -lws2_32)
 		set(ADDITIONAL_LIBS lcms lzma)
 	ELSE( MINGW )
-		set(SQLB_SRC ${SQLB_SRC} ${CMAKE_CURRENT_SOURCE_DIR}src/winapp.rc)
+		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_SOURCE_DIR}src/winapp.rc")
 	ENDIF( MINGW )
 endif(WIN32)
 
@@ -177,7 +179,7 @@ else(APPLE)
 endif(APPLE)
 
 include_directories(
-		${CMAKE_CURRENT_BINARY_DIR}
+		"${CMAKE_CURRENT_BINARY_DIR}"
 		${ANTLR_DIR}
 		${QHEXEDIT_DIR}
 		${QCUSTOMPLOT_DIR}
@@ -199,9 +201,9 @@ endif()
 add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot)
 
 link_directories(
-		${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}
-		${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}
-		${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR})
+		"${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}"
+		"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
+		"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
 
 target_link_libraries(${PROJECT_NAME}
 		antlr

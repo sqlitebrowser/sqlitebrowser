@@ -6,7 +6,7 @@ if(USE_QT5)
     find_package(Qt5Widgets REQUIRED)
 else()
     find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-    include(${QT_USE_FILE})
+    include("${QT_USE_FILE}")
     add_definitions(${QT_DEFINITIONS})
 endif()
 
