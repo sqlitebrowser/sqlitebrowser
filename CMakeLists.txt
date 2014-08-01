@@ -135,7 +135,7 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/.git)
         COMMAND echo "#define MAJOR_VERSION 999" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         COMMAND echo "#define MINOR_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         COMMAND echo "#define PATCH_VERSION 0" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
-        COMMAND echo "#endif\n" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
+        COMMAND echo "#endif" >> ${CMAKE_SOURCE_DIR}/src/gen_version.h
         DEPENDS .git/HEAD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         VERBATIM)
