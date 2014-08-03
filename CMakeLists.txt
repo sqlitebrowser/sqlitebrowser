@@ -145,10 +145,10 @@ else()
 	file(WRITE "${gv}"
 		 "#ifndef GEN_VERSION_H\n"
 		 "#define GEN_VERSION_H\n"
-		 "#define APP_VERSION \"3.0.1\"\n"
-		 "#define MAJOR_VERSION 3\n"
+		 "#define APP_VERSION \"999.0.0\"\n"
+		 "#define MAJOR_VERSION 999\n"
 		 "#define MINOR_VERSION 0\n"
-		 "#define PATCH_VERSION 1\n"
+		 "#define PATCH_VERSION 0\n"
 		 "#endif\n")
 endif()
 
