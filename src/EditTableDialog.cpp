@@ -294,9 +294,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // When editing an existing table and trying to set a column to unique an extra check is needed
             if(!m_bNewTable && item->checkState(column) == Qt::Checked)
             {
-                // Because our renameColumn() function fails when setting a column to Not Null when it already contains some NULL values
-                // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
-                // to at least replace all troublesome NULL values by the default value
+                // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
                 SqliteTableModel m(this, pdb);
                 m.setQuery(QString("SELECT COUNT(`%2`) FROM `%1`;").arg(curTable).arg(field->name()));
                 int rowcount = m.data(m.index(0, 0)).toInt();
