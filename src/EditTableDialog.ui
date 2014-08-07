@@ -215,6 +215,14 @@
             </column>
             <column>
              <property name="text">
+              <string>U</string>
+             </property>
+             <property name="toolTip">
+              <string>Unique</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
               <string>Default</string>
              </property>
              <property name="toolTip">

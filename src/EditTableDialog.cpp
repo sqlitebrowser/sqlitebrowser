@@ -57,6 +57,7 @@ void EditTableDialog::updateColumnWidth()
     ui->treeWidget->setColumnWidth(kNotNull, 30);
     ui->treeWidget->setColumnWidth(kPrimaryKey, 30);
     ui->treeWidget->setColumnWidth(kAutoIncrement, 30);
+    ui->treeWidget->setColumnWidth(kUnique, 30);
 }
 
 void EditTableDialog::populateFields()
@@ -91,6 +92,7 @@ void EditTableDialog::populateFields()
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kPrimaryKey, f->primaryKey() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kUnique, f->unique() ? Qt::Checked : Qt::Unchecked);
         tbitem->setText(kDefault, f->defaultValue());
         tbitem->setText(kCheck, f->check());
         ui->treeWidget->addTopLevelItem(tbitem);
@@ -287,6 +289,34 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 callRenameColumn = true;
         }
         break;
+        case kUnique:
+        {
+            // When editing an existing table and trying to set a column to unique an extra check is needed
+            if(!m_bNewTable && item->checkState(column) == Qt::Checked)
+            {
+                // Because our renameColumn() function fails when setting a column to Not Null when it already contains some NULL values
+                // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
+                // to at least replace all troublesome NULL values by the default value
+                SqliteTableModel m(this, pdb);
+                m.setQuery(QString("SELECT COUNT(`%2`) FROM `%1`;").arg(curTable).arg(field->name()));
+                int rowcount = m.data(m.index(0, 0)).toInt();
+                m.setQuery(QString("SELECT COUNT(distinct `%2`) FROM `%1`;").arg(curTable).arg(field->name()));
+                int uniquecount = m.data(m.index(0, 0)).toInt();
+                if(rowcount != uniquecount)
+                {
+                    // There is a NULL value, so print an error message, uncheck the combobox, and return here
+                    QMessageBox::information(this, qApp->applicationName(), tr("Column `%1` has no unique data.\n").arg(field->name())
+                                             + tr("This makes it impossible to set this flag. Please change the table data first."));
+                    item->setCheckState(column, Qt::Unchecked);
+                    return;
+                }
+            }
+            field->setUnique(item->checkState(column) == Qt::Checked);
+
+            if(!m_bNewTable)
+                callRenameColumn = true;
+        }
+        break;
         case kDefault:
             field->setDefaultValue(item->text(column));
             if(!m_bNewTable)
@@ -321,6 +351,7 @@ void EditTableDialog::addField()
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
     tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
+    tbitem->setCheckState(kUnique, Qt::Unchecked);
     ui->treeWidget->addTopLevelItem(tbitem);
 
     // add field to table object

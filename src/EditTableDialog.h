@@ -28,8 +28,9 @@ private:
         kNotNull = 2,
         kPrimaryKey = 3,
         kAutoIncrement = 4,
-        kDefault = 5,
-        kCheck = 6
+        kUnique = 5,
+        kDefault = 6,
+        kCheck = 7
     };
 
     void updateColumnWidth();
