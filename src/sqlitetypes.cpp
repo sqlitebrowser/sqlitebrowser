@@ -20,6 +20,8 @@ QString Field::toString(const QString& indent, const QString& sep) const
         str += " CHECK(" + m_check + ")";
     if(m_autoincrement)
         str += " PRIMARY KEY AUTOINCREMENT";
+    if(m_unique)
+        str += " UNIQUE";
     return str;
 }
 
@@ -346,6 +348,7 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
     bool autoincrement = false;
     bool primarykey = false;
     bool notnull = false;
+    bool unique = false;
     QString defaultvalue;
     QString check;
 
@@ -404,12 +407,17 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
             defaultvalue = concatTextAST(con);
         }
         break;
+        case sqlite3TokenTypes::UNIQUE:
+        {
+            unique = true;
+        }
+        break;
         default: break;
         }
         c = c->getNextSibling();
     }
 
-    f = FieldPtr( new Field(columnname, type, notnull, defaultvalue, check, primarykey));
+    f = FieldPtr( new Field(columnname, type, notnull, defaultvalue, check, primarykey, unique));
     f->setAutoIncrement(autoincrement);
 }
 

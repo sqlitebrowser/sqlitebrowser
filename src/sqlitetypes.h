@@ -19,7 +19,8 @@ public:
           bool notnull = false,
           const QString& defaultvalue = "",
           const QString& check = "",
-          bool pk = false)
+          bool pk = false,
+          bool unique = false)
         : m_name(name)
         , m_type(type)
         , m_notnull(notnull)
@@ -27,6 +28,7 @@ public:
         , m_defaultvalue(defaultvalue)
         , m_autoincrement(false)
         , m_primaryKey(pk)
+        , m_unique(unique)
     {}
 
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
@@ -38,6 +40,7 @@ public:
     void setDefaultValue(const QString& defaultvalue) { m_defaultvalue = defaultvalue; }
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
     void setPrimaryKey(bool pk) { m_primaryKey = pk; }
+    void setUnique(bool u) { m_unique = u; }
 
     bool isText() const;
     bool isInteger() const;
@@ -49,6 +52,7 @@ public:
     const QString& defaultValue() const { return m_defaultvalue; }
     bool autoIncrement() const { return m_autoincrement; }
     bool primaryKey() const { return m_primaryKey; }
+    bool unique() const { return m_unique; }
 
     static QStringList Datatypes;
 private:
@@ -59,6 +63,7 @@ private:
     QString m_defaultvalue;
     bool m_autoincrement; //! this is stored here for simplification
     bool m_primaryKey;
+    bool m_unique;
 };
 
 typedef QSharedPointer<Field> FieldPtr;
