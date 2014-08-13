@@ -356,7 +356,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         QString queryTemp = rtrimChar(m_sQuery, ';');
 
         // If the query ends with a LIMIT statement take it as it is, if not append our own LIMIT part for lazy population
-        if(queryTemp.contains(QRegExp("LIMIT\\s+\\d+\\s*(,\\s*\\d+\\s*)?$", Qt::CaseInsensitive)))
+        if(queryTemp.contains(QRegExp("LIMIT\\s+\\d+\\s*((,|\\b(OFFSET)\\b)\\s*\\d+\\s*)?$", Qt::CaseInsensitive)))
             sLimitQuery = queryTemp;
         else
             sLimitQuery = QString("%1 LIMIT %2, %3;").arg(queryTemp).arg(from).arg(to-from);
