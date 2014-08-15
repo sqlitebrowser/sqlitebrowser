@@ -138,6 +138,7 @@ void EditTableDialog::reject()
 {    
     // Then rollback to our savepoint
     pdb->revert(m_sRestorePointName);
+    pdb->updateSchema();
 
     QDialog::reject();
 }
