@@ -145,6 +145,10 @@ Table Table::parseSQL(const QString &sSQL)
         CreateTableWalker ctw(parser.getAST());
         return ctw.table();
     }
+    catch(antlr::ANTLRException& ex)
+    {
+        qCritical() << "Sqlite parse error: " << QString::fromStdString(ex.toString()) << "(" << sSQL << ")";
+    }
     catch(...)
     {
         qCritical() << "Sqlite parse error: " << sSQL; //TODO
