@@ -318,10 +318,17 @@ Table CreateTableWalker::table()
                         int fieldindex = tab.findField(col);
                         if(fieldindex != -1)
                             tab.fields().at(fieldindex)->setPrimaryKey(true);
-                        do
+
+                        tc = tc->getNextSibling();
+                        if(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::AUTOINCREMENT)
+                        {
+                            tab.fields().at(fieldindex)->setAutoIncrement(true);
+                            tc = tc->getNextSibling();
+                        }
+                        while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
                         {
                             tc = tc->getNextSibling(); // skip ident and comma
-                        } while(tc->getType() == sqlite3TokenTypes::COMMA);
+                        }
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
                 }
                 break;

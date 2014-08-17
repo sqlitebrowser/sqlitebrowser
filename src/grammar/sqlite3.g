@@ -359,11 +359,12 @@ tableconstraint
   )
   {#tableconstraint = #([TABLECONSTRAINT, "TABLECONSTRAINT"], #tableconstraint);}
   ;
-	
+
 indexedcolumn
-  : id	
+  :
+  id (AUTOINCREMENT)?
   ;
-	
+
 conflictclause
   :
   ON CONFLICT
