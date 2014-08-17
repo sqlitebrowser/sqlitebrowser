@@ -184,6 +184,13 @@ bool DBBrowserDB::create ( const QString & db)
 
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
+
+        // force sqlite3 do write proper file header
+        // if we don't create and drop the table we might end up
+        // with a 0 byte file, if the user cancels the create table dialog
+        sqlite3_exec(_db, "CREATE TABLE notempty (id integer primary key);", NULL, NULL, NULL);
+        sqlite3_exec(_db, "DROP TABLE notempty", NULL, NULL, NULL);
+        sqlite3_exec(_db, "COMMIT;", NULL, NULL, NULL);
     }
 
     return ok;
