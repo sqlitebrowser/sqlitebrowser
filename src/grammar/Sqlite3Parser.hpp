@@ -2,7 +2,7 @@
 #define INC_Sqlite3Parser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
+/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "sqlite3TokenTypes.hpp"
@@ -123,36 +123,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_17;
 	static const unsigned long _tokenSet_18_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_18;
-	static const unsigned long _tokenSet_19_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_19;
-	static const unsigned long _tokenSet_20_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_20;
-	static const unsigned long _tokenSet_21_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_21;
-	static const unsigned long _tokenSet_22_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_22;
-	static const unsigned long _tokenSet_23_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_23;
-	static const unsigned long _tokenSet_24_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_24;
-	static const unsigned long _tokenSet_25_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_25;
-	static const unsigned long _tokenSet_26_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_26;
-	static const unsigned long _tokenSet_27_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_27;
-	static const unsigned long _tokenSet_28_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_28;
-	static const unsigned long _tokenSet_29_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_29;
-	static const unsigned long _tokenSet_30_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_30;
-	static const unsigned long _tokenSet_31_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_31;
-	static const unsigned long _tokenSet_32_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_32;
-	static const unsigned long _tokenSet_33_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_33;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/

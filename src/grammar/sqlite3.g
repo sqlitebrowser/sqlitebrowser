@@ -171,6 +171,7 @@ class Sqlite3Parser extends Parser;
 options {
   k=2;
   buildAST = true;
+  defaultErrorHandler=false;
 }
 
 id : ID | QUOTEDID | QUOTEDLITERAL | STRINGLITERAL ;
