@@ -50,6 +50,7 @@ private:
     void clearCache();
 
     void buildQuery();
+    QStringList getColumns(const QString sQuery);
     int getQueryRowCount();
 
     DBBrowserDB* m_db;

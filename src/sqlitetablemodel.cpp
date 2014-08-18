@@ -35,11 +35,26 @@ void SqliteTableModel::setTable(const QString& table)
 
     m_sTable = table;
 
-    QString rowid = "rowid";
+    QString sColumnQuery = QString::fromUtf8("SELECT * FROM `%1`;").arg(table);
     if(m_db->getObjectByName(table).gettype() == "table")
-        rowid = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql()).rowidColumn();
-    m_headers.push_back(rowid);
-    m_headers.append(m_db->getTableFields(table));
+    {
+        sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql());
+        if(t.name() != "") // parsing was OK
+        {
+            m_headers.push_back(t.rowidColumn());
+            m_headers.append(m_db->getTableFields(table));
+        }
+        else
+        {
+            m_headers.push_back("rowid");
+            m_headers.append(getColumns(sColumnQuery));
+        }
+    }
+    else
+    {
+        m_headers.push_back("rowid");
+        m_headers.append(getColumns(sColumnQuery));
+    }
 
     buildQuery();
 }
@@ -108,17 +123,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     // headers
     if(!dontClearHeaders)
     {
-        sqlite3_stmt* stmt;
-        QByteArray utf8Query = sQuery.toUtf8();
-        int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
-        if(SQLITE_OK == status)
-        {
-            status = sqlite3_step(stmt);
-            int columns = sqlite3_data_count(stmt);
-            for(int i = 0; i < columns; ++i)
-                m_headers.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
-        }
-        sqlite3_finalize(stmt);
+        m_headers.append(getColumns(sQuery));
     }
 
     // now fetch the first entries
@@ -396,6 +401,24 @@ void SqliteTableModel::buildQuery()
 
     QString sql = QString("SELECT `%1`,* FROM `%2` %3 ORDER BY `%4` %5").arg(m_headers.at(0)).arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
     setQuery(sql, true);
+}
+
+QStringList SqliteTableModel::getColumns(const QString sQuery)
+{
+    sqlite3_stmt* stmt;
+    QByteArray utf8Query = sQuery.toUtf8();
+    int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+    QStringList listColumns;
+    if(SQLITE_OK == status)
+    {
+        status = sqlite3_step(stmt);
+        int columns = sqlite3_data_count(stmt);
+        for(int i = 0; i < columns; ++i)
+            listColumns.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
+    }
+    sqlite3_finalize(stmt);
+
+    return listColumns;
 }
 
 void SqliteTableModel::updateFilter(int column, const QString& value)
