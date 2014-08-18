@@ -96,7 +96,7 @@ public:
     void setFields(const FieldVector& fields);
     void setField(int index, FieldPtr f) { m_fields[index] = f; }
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
-    QString rowidColumn() const { return m_rowidColumn; }
+    const QString& rowidColumn() const { return m_rowidColumn; }
     void clear();
 
     /**
