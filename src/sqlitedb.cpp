@@ -463,7 +463,7 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     // add record is seldom called, for now this is ok
     // but if we ever going to add a lot of records
     // we should cache the parsed tables somewhere
-    sqlb::Table table = sqlb::Table::parseSQL(getObjectByName(sTableName).getsql());
+    sqlb::Table table = sqlb::Table::parseSQL(getObjectByName(sTableName).getsql()).first;
     QString sInsertstmt = table.emptyInsertStmt();
     lastErrorMessage = "";
     logSQL(sInsertstmt, kLogMsg_App);
@@ -579,7 +579,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Create table schema
-    sqlb::Table oldSchema = sqlb::Table::parseSQL(tableSql);
+    sqlb::Table oldSchema = sqlb::Table::parseSQL(tableSql).first;
 
     // Check if field actually exists
     if(oldSchema.findField(name) == -1)
@@ -833,7 +833,7 @@ void DBBrowserDB::updateSchema( )
         if((*it).gettype() == "table")
         {
             sqlb::Table t((*it).getname());
-            (*it).fldmap = t.parseSQL((*it).getsql()).fields();
+            (*it).fldmap = t.parseSQL((*it).getsql()).first.fields();
         } else if((*it).gettype() == "view") {
             statement = QString("PRAGMA TABLE_INFO(`%1`);").arg((*it).getname());
             logSQL(statement, kLogMsg_App);

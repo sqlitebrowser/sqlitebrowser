@@ -127,7 +127,7 @@ bool Table::hasAutoIncrement() const
     return false;
 }
 
-Table Table::parseSQL(const QString &sSQL)
+QPair<Table, bool> Table::parseSQL(const QString &sSQL)
 {
     std::stringstream s;
     s << sSQL.toStdString();
@@ -143,7 +143,7 @@ Table Table::parseSQL(const QString &sSQL)
     {
         parser.createtable();
         CreateTableWalker ctw(parser.getAST());
-        return ctw.table();
+        return qMakePair(ctw.table(), ctw.modifysupported());
     }
     catch(antlr::ANTLRException& ex)
     {
@@ -154,7 +154,7 @@ Table Table::parseSQL(const QString &sSQL)
         qCritical() << "Sqlite parse error: " << sSQL; //TODO
     }
 
-    return Table("");
+    return qMakePair(Table(""), false);
 }
 QString Table::emptyInsertStmt() const
 {
@@ -325,6 +325,7 @@ Table CreateTableWalker::table()
                                     || tc->getType() == sqlite3TokenTypes::DESC))
                         {
                             // TODO save ASC / DESC information?
+                            m_bModifySupported = false;
                             tc = tc->getNextSibling();
                         }
 
@@ -340,7 +341,50 @@ Table CreateTableWalker::table()
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
                 }
                 break;
-                default: break;
+                case sqlite3TokenTypes::UNIQUE:
+                {
+                    tc = tc->getNextSibling(); // skip UNIQUE
+                    tc = tc->getNextSibling(); // skip LPAREN
+                    QVector<int> uniquefieldsindex;
+                    do
+                    {
+                        QString col = identifier(tc);
+                        int fieldindex = tab.findField(col);
+                        if(fieldindex != -1)
+                            uniquefieldsindex.append(fieldindex);
+
+                        tc = tc->getNextSibling();
+                        if(tc != antlr::nullAST
+                                && (tc->getType() == sqlite3TokenTypes::ASC
+                                    || tc->getType() == sqlite3TokenTypes::DESC))
+                        {
+                            // TODO save ASC / DESC information?
+                            m_bModifySupported = false;
+                            tc = tc->getNextSibling();
+                        }
+
+                        while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
+                        {
+                            tc = tc->getNextSibling(); // skip ident and comma
+                        }
+                    } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
+
+                    if(uniquefieldsindex.size() == 1)
+                    {
+                        tab.fields().at(uniquefieldsindex[0])->setUnique(true);
+                    }
+                    else
+                    {
+                        // else save on table a unique with more than one field
+                        m_bModifySupported = false;
+                    }
+                }
+                break;
+                default:
+                {
+                    m_bModifySupported = false;
+                }
+                    break;
                 }
 
                 s = s->getNextSibling(); //COMMA or RPAREN
@@ -390,7 +434,10 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
 
         // skip constraint name, if there is any
         if(con->getType() == sqlite3TokenTypes::CONSTRAINT)
+        {
+            m_bModifySupported = false;
             con = con->getNextSibling()->getNextSibling();
+        }
 
         switch(con->getType())
         {
@@ -400,7 +447,10 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
             con = con->getNextSibling()->getNextSibling(); // skip KEY
             if(con != antlr::nullAST && (con->getType() == sqlite3TokenTypes::ASC
                                          || con->getType() == sqlite3TokenTypes::DESC))
+            {
+                m_bModifySupported = false;
                 con = con->getNextSibling(); //skip
+            }
             if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::AUTOINCREMENT)
                 autoincrement = true;
         }
@@ -431,7 +481,11 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
             unique = true;
         }
         break;
-        default: break;
+        default:
+        {
+            m_bModifySupported = false;
+        }
+        break;
         }
         c = c->getNextSibling();
     }

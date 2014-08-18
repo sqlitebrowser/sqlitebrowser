@@ -8,6 +8,7 @@
 #include <QSharedPointer>
 #include <QVector>
 #include <QStringList>
+#include <QPair>
 
 namespace sqlb {
 
@@ -109,7 +110,14 @@ public:
 
     int findPk() const;
 
-    static Table parseSQL(const QString& sSQL);
+    /**
+     * @brief parseSQL Parses the create Table statement in sSQL.
+     * @param sSQL The create table statement.
+     * @return A pair first is a table object, second is a bool indicating
+     *         if our modify dialog supports the table.
+     *         The table object may be a empty table if parsing failed.
+     */
+    static QPair<Table, bool> parseSQL(const QString& sSQL);
 private:
     QStringList fieldList() const;
     bool hasAutoIncrement() const;
@@ -128,15 +136,20 @@ private:
 class CreateTableWalker
 {
 public:
-    CreateTableWalker(antlr::RefAST r) : m_root(r) {}
+    CreateTableWalker(antlr::RefAST r)
+        : m_root(r)
+        , m_bModifySupported(true)
+    {}
 
     Table table();
+    bool modifysupported() const { return m_bModifySupported; }
 
 private:
     void parsecolumn(FieldPtr& f, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
+    bool m_bModifySupported;
 };
 
 } //namespace sqlb

@@ -31,7 +31,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
 
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getObjectByName(curTable).getsql();
-        m_table = sqlb::Table::parseSQL(sTablesql);
+        m_table = sqlb::Table::parseSQL(sTablesql).first;
         populateFields();
     }
 
@@ -396,7 +396,7 @@ void EditTableDialog::removeField()
             } else {
                 //relayout
                 QString sTablesql = pdb->getObjectByName(curTable).getsql();
-                m_table = sqlb::Table::parseSQL(sTablesql);
+                m_table = sqlb::Table::parseSQL(sTablesql).first;
                 populateFields();
             }
         }
@@ -479,7 +479,7 @@ void EditTableDialog::moveCurrentField(bool down)
         } else {
             // Reload table SQL
             QString sTablesql = pdb->getObjectByName(curTable).getsql();
-            m_table = sqlb::Table::parseSQL(sTablesql);
+            m_table = sqlb::Table::parseSQL(sTablesql).first;
             populateFields();
 
             // Select old item at new position

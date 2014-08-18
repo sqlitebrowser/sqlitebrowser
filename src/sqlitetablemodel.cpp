@@ -38,7 +38,7 @@ void SqliteTableModel::setTable(const QString& table)
     QString sColumnQuery = QString::fromUtf8("SELECT * FROM `%1`;").arg(table);
     if(m_db->getObjectByName(table).gettype() == "table")
     {
-        sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql());
+        sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql()).first;
         if(t.name() != "") // parsing was OK
         {
             m_headers.push_back(t.rowidColumn());
