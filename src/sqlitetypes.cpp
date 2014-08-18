@@ -320,6 +320,14 @@ Table CreateTableWalker::table()
                             tab.fields().at(fieldindex)->setPrimaryKey(true);
 
                         tc = tc->getNextSibling();
+                        if(tc != antlr::nullAST
+                                && (tc->getType() == sqlite3TokenTypes::ASC
+                                    || tc->getType() == sqlite3TokenTypes::DESC))
+                        {
+                            // TODO save ASC / DESC information?
+                            tc = tc->getNextSibling();
+                        }
+
                         if(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::AUTOINCREMENT)
                         {
                             tab.fields().at(fieldindex)->setAutoIncrement(true);

@@ -363,7 +363,7 @@ tableconstraint
 
 indexedcolumn
   :
-  id (AUTOINCREMENT)?
+  id (COLLATE collationname)? (ASC|DESC)? (AUTOINCREMENT)?
   ;
 
 conflictclause
