@@ -112,7 +112,7 @@ NUMERIC
     : ( (DIGIT)+ ( '.' (DIGIT)* )?
       | '.' { _ttype=DOT; } (DIGIT)+)
       ( 'e' (PLUS|MINUS)? (DIGIT)+ )?
-	; 
+	;
 
 protected
 NL :
@@ -142,7 +142,7 @@ STRINGLITERAL
 //ESC_SEQ
 //    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
 //    ;
-    
+
 LPAREN	:	'(';
 RPAREN	:	')';
 COMMA	:	',';
@@ -180,17 +180,17 @@ databasename
   :
   id
   ;
-	
+
 tablename
   :
   id
   ;
-	
+
 columnname
   :
   id
   ;
-    
+
 identifier
   :
   ((databasename)? DOT)? tablename
@@ -205,7 +205,7 @@ signednumber
   : (PLUS | MINUS)? NUMERIC
 //	{#signednumber = #([SIGNEDNUMBER, "SIGNEDNUMBER"], #signednumber);}
   ;
-		
+
 // parser part
 statementlist
   :
@@ -217,7 +217,7 @@ statement
   :
   createtable
   ;
-	
+
 create_statements
   :
   createtable
@@ -327,7 +327,7 @@ columndef
   (columnname | keywordascolumnname) (type_name)? (columnconstraint)*
   {#columndef = #([COLUMNDEF, "COLUMNDEF"], #columndef);}
   ;
-	
+
 name : ID | QUOTEDID | QUOTEDLITERAL | STRINGLITERAL;
 
 type_name
@@ -336,7 +336,7 @@ type_name
   (LPAREN signednumber (COMMA signednumber)? RPAREN)?
   {#type_name = #([TYPE_NAME, "TYPE_NAME"], #type_name);}
   ;
-	
+
 columnconstraint
   :
   (CONSTRAINT name)?
@@ -349,7 +349,7 @@ columnconstraint
   | foreignkeyclause)
   {#columnconstraint = #([COLUMNCONSTRAINT, "COLUMNCONSTRAINT"], #columnconstraint);}
   ;
-	
+
 tableconstraint
   :
   (CONSTRAINT name)?
@@ -376,7 +376,7 @@ conflictclause
   | REPLACE
   )
   ;
-	
+
 foreignkeyclause
   :
   REFERENCES tablename (LPAREN columnname (COMMA columnname)* RPAREN)?
@@ -391,7 +391,7 @@ foreignkeyclause
   ( (NOT DEFERRABLE) => NOT DEFERRABLE (INITIALLY (DEFERRED | IMMEDIATE))?
   | DEFERRABLE (INITIALLY (DEFERRED | IMMEDIATE) ) )?
   ;
-	
+
 selectstmt
   : SELECT
   ;
@@ -411,9 +411,9 @@ subexpr
 //  | bindparameter TODO
   | ((databasename DOT)? tablename)? columnname
   | functionname LPAREN (expr (COMMA expr)* )? RPAREN //TODO
-  | castexpr 
+  | castexpr
   | (EXISTS)? LPAREN (expr | selectstmt) RPAREN
-  | caseexpr 
+  | caseexpr
   | raisefunction
   )
   (suffixexpr)?
@@ -451,9 +451,9 @@ suffixexpr
     | like_operator subexpr (ESCAPE subexpr)?
     )
   ;
-	
+
 literalvalue
-  :	
+  :
     NUMERIC
 //  | STRINGLITERAL // captured by columnname
 //  | blob-literal
@@ -467,13 +467,12 @@ raisefunction
   : RAISE LPAREN ( IGNORE | (ROLLBACK | ABORT | FAIL) COMMA STRINGLITERAL ) RPAREN ;
 
 binaryoperator
-  :	
-    OROP	
+  :
+    OROP
   | STAR | SLASH | PERCENT
   | PLUS | MINUS
   | BITWISELEFT | BITWISERIGHT | AMPERSAND | BITOR
   | LOWER | LOWEREQUAL | GREATER | GREATEREQUAL
-  | EQUAL | EQUAL2 | UNEQUAL | UNEQUAL2 
+  | EQUAL | EQUAL2 | UNEQUAL | UNEQUAL2
   | IS | like_operator
   ;
-
