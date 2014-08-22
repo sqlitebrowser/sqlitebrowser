@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (20140222): "sqlite3.g" -> "Sqlite3Parser.cpp"$ */
+/* $ANTLR 2.7.7 (20130425): "sqlite3.g" -> "Sqlite3Parser.cpp"$ */
 #include "Sqlite3Parser.hpp"
 #include <antlr/NoViableAltException.hpp>
 #include <antlr/SemanticException.hpp>
@@ -112,17 +112,17 @@ void Sqlite3Parser::tablename() {
 	returnAST = tablename_AST;
 }
 
-void Sqlite3Parser::columnname() {
+void Sqlite3Parser::nonkeyword_columnname() {
 	returnAST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	ANTLR_USE_NAMESPACE(antlr)ASTPair currentAST;
-	ANTLR_USE_NAMESPACE(antlr)RefAST columnname_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+	ANTLR_USE_NAMESPACE(antlr)RefAST nonkeyword_columnname_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
 	id();
 	if (inputState->guessing==0) {
 		astFactory->addASTChild( currentAST, returnAST );
 	}
-	columnname_AST = currentAST.root;
-	returnAST = columnname_AST;
+	nonkeyword_columnname_AST = currentAST.root;
+	returnAST = nonkeyword_columnname_AST;
 }
 
 void Sqlite3Parser::identifier() {
@@ -933,82 +933,9 @@ void Sqlite3Parser::columndef() {
 	ANTLR_USE_NAMESPACE(antlr)ASTPair currentAST;
 	ANTLR_USE_NAMESPACE(antlr)RefAST columndef_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
-	{
-	switch ( LA(1)) {
-	case ID:
-	case QUOTEDID:
-	case QUOTEDLITERAL:
-	case STRINGLITERAL:
-	{
-		columnname();
-		if (inputState->guessing==0) {
-			astFactory->addASTChild( currentAST, returnAST );
-		}
-		break;
-	}
-	case ABORT:
-	case ACTION:
-	case AUTOINCREMENT:
-	case AS:
-	case ASC:
-	case AND:
-	case OR:
-	case CASCADE:
-	case CASE_T:
-	case CAST:
-	case CREATE:
-	case COLLATE:
-	case CONFLICT:
-	case CURRENT_TIME:
-	case CURRENT_DATE:
-	case CURRENT_TIMESTAMP:
-	case DEFAULT:
-	case DEFERRABLE:
-	case DEFERRED:
-	case DELETE:
-	case DESC:
-	case ELSE_T:
-	case END:
-	case ESCAPE:
-	case FAIL:
-	case GLOB:
-	case KEY:
-	case LIKE:
-	case TABLE:
-	case IF_T:
-	case IGNORE:
-	case INITIALLY:
-	case IMMEDIATE:
-	case IS:
-	case NOT:
-	case NULL_T:
-	case MATCH:
-	case EXISTS:
-	case ON:
-	case RAISE:
-	case REFERENCES:
-	case REGEXP:
-	case REPLACE:
-	case RESTRICT:
-	case ROLLBACK:
-	case SET:
-	case TEMPORARY:
-	case TEMP:
-	case THEN:
-	case UPDATE:
-	case WHEN:
-	{
-		keywordascolumnname();
-		if (inputState->guessing==0) {
-			astFactory->addASTChild( currentAST, returnAST );
-		}
-		break;
-	}
-	default:
-	{
-		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
-	}
-	}
+	columnname();
+	if (inputState->guessing==0) {
+		astFactory->addASTChild( currentAST, returnAST );
 	}
 	{
 	switch ( LA(1)) {
@@ -1053,11 +980,11 @@ void Sqlite3Parser::columndef() {
 			}
 		}
 		else {
-			goto _loop103;
+			goto _loop104;
 		}
 		
 	}
-	_loop103:;
+	_loop104:;
 	} // ( ... )*
 	if ( inputState->guessing==0 ) {
 		columndef_AST = ANTLR_USE_NAMESPACE(antlr)RefAST(currentAST.root);
@@ -1149,11 +1076,11 @@ void Sqlite3Parser::tableconstraint() {
 				}
 			}
 			else {
-				goto _loop123;
+				goto _loop124;
 			}
 			
 		}
-		_loop123:;
+		_loop124:;
 		} // ( ... )*
 		ANTLR_USE_NAMESPACE(antlr)RefAST tmp57_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
@@ -1222,11 +1149,11 @@ void Sqlite3Parser::tableconstraint() {
 				}
 			}
 			else {
-				goto _loop126;
+				goto _loop127;
 			}
 			
 		}
-		_loop126:;
+		_loop127:;
 		} // ( ... )*
 		ANTLR_USE_NAMESPACE(antlr)RefAST tmp61_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
@@ -1327,11 +1254,11 @@ void Sqlite3Parser::tableconstraint() {
 				}
 			}
 			else {
-				goto _loop129;
+				goto _loop130;
 			}
 			
 		}
-		_loop129:;
+		_loop130:;
 		} // ( ... )*
 		ANTLR_USE_NAMESPACE(antlr)RefAST tmp69_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
@@ -1919,13 +1846,101 @@ void Sqlite3Parser::keywordascolumnname() {
 	returnAST = keywordascolumnname_AST;
 }
 
+void Sqlite3Parser::columnname() {
+	returnAST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+	ANTLR_USE_NAMESPACE(antlr)ASTPair currentAST;
+	ANTLR_USE_NAMESPACE(antlr)RefAST columnname_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+	
+	{
+	switch ( LA(1)) {
+	case ID:
+	case QUOTEDID:
+	case QUOTEDLITERAL:
+	case STRINGLITERAL:
+	{
+		nonkeyword_columnname();
+		if (inputState->guessing==0) {
+			astFactory->addASTChild( currentAST, returnAST );
+		}
+		break;
+	}
+	case ABORT:
+	case ACTION:
+	case AUTOINCREMENT:
+	case AS:
+	case ASC:
+	case AND:
+	case OR:
+	case CASCADE:
+	case CASE_T:
+	case CAST:
+	case CREATE:
+	case COLLATE:
+	case CONFLICT:
+	case CURRENT_TIME:
+	case CURRENT_DATE:
+	case CURRENT_TIMESTAMP:
+	case DEFAULT:
+	case DEFERRABLE:
+	case DEFERRED:
+	case DELETE:
+	case DESC:
+	case ELSE_T:
+	case END:
+	case ESCAPE:
+	case FAIL:
+	case GLOB:
+	case KEY:
+	case LIKE:
+	case TABLE:
+	case IF_T:
+	case IGNORE:
+	case INITIALLY:
+	case IMMEDIATE:
+	case IS:
+	case NOT:
+	case NULL_T:
+	case MATCH:
+	case EXISTS:
+	case ON:
+	case RAISE:
+	case REFERENCES:
+	case REGEXP:
+	case REPLACE:
+	case RESTRICT:
+	case ROLLBACK:
+	case SET:
+	case TEMPORARY:
+	case TEMP:
+	case THEN:
+	case UPDATE:
+	case WHEN:
+	{
+		keywordascolumnname();
+		if (inputState->guessing==0) {
+			astFactory->addASTChild( currentAST, returnAST );
+		}
+		break;
+	}
+	default:
+	{
+		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
+	}
+	}
+	}
+	if ( inputState->guessing==0 ) {
+	}
+	columnname_AST = currentAST.root;
+	returnAST = columnname_AST;
+}
+
 void Sqlite3Parser::type_name() {
 	returnAST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	ANTLR_USE_NAMESPACE(antlr)ASTPair currentAST;
 	ANTLR_USE_NAMESPACE(antlr)RefAST type_name_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
 	{ // ( ... )+
-	int _cnt107=0;
+	int _cnt108=0;
 	for (;;) {
 		if ((_tokenSet_1.member(LA(1)))) {
 			name();
@@ -1934,12 +1949,12 @@ void Sqlite3Parser::type_name() {
 			}
 		}
 		else {
-			if ( _cnt107>=1 ) { goto _loop107; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
+			if ( _cnt108>=1 ) { goto _loop108; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
 		}
 		
-		_cnt107++;
+		_cnt108++;
 	}
-	_loop107:;
+	_loop108:;
 	}  // ( ... )+
 	{
 	switch ( LA(1)) {
@@ -2615,11 +2630,11 @@ void Sqlite3Parser::expr() {
 			}
 		}
 		else {
-			goto _loop157;
+			goto _loop158;
 		}
 		
 	}
-	_loop157:;
+	_loop158:;
 	} // ( ... )*
 	expr_AST = currentAST.root;
 	returnAST = expr_AST;
@@ -2738,11 +2753,11 @@ void Sqlite3Parser::foreignkeyclause() {
 				}
 			}
 			else {
-				goto _loop139;
+				goto _loop140;
 			}
 			
 		}
-		_loop139:;
+		_loop140:;
 		} // ( ... )*
 		ANTLR_USE_NAMESPACE(antlr)RefAST tmp164_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
@@ -2925,17 +2940,17 @@ void Sqlite3Parser::foreignkeyclause() {
 		}
 		default:
 		{
-			goto _loop144;
+			goto _loop145;
 		}
 		}
 	}
-	_loop144:;
+	_loop145:;
 	} // ( ... )*
 	{
-	bool synPredMatched147 = false;
+	bool synPredMatched148 = false;
 	if (((LA(1) == NOT) && (LA(2) == DEFERRABLE))) {
-		int _m147 = mark();
-		synPredMatched147 = true;
+		int _m148 = mark();
+		synPredMatched148 = true;
 		inputState->guessing++;
 		try {
 			{
@@ -2944,12 +2959,12 @@ void Sqlite3Parser::foreignkeyclause() {
 			}
 		}
 		catch (ANTLR_USE_NAMESPACE(antlr)RecognitionException& pe) {
-			synPredMatched147 = false;
+			synPredMatched148 = false;
 		}
-		rewind(_m147);
+		rewind(_m148);
 		inputState->guessing--;
 	}
-	if ( synPredMatched147 ) {
+	if ( synPredMatched148 ) {
 		ANTLR_USE_NAMESPACE(antlr)RefAST tmp177_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
 			tmp177_AST = astFactory->create(LT(1));
@@ -3084,7 +3099,7 @@ void Sqlite3Parser::indexedcolumn() {
 	ANTLR_USE_NAMESPACE(antlr)ASTPair currentAST;
 	ANTLR_USE_NAMESPACE(antlr)RefAST indexedcolumn_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 	
-	id();
+	columnname();
 	if (inputState->guessing==0) {
 		astFactory->addASTChild( currentAST, returnAST );
 	}
@@ -3229,72 +3244,202 @@ void Sqlite3Parser::subexpr() {
 		match(TILDE);
 		break;
 	}
-	case NOT:
-	{
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp193_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
-		if ( inputState->guessing == 0 ) {
-			tmp193_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp193_AST);
-		}
-		match(NOT);
-		break;
-	}
-	case CASE_T:
-	case CAST:
-	case CURRENT_TIME:
-	case CURRENT_DATE:
-	case CURRENT_TIMESTAMP:
-	case NULL_T:
-	case EXISTS:
-	case RAISE:
-	case ID:
-	case QUOTEDID:
-	case QUOTEDLITERAL:
-	case NUMERIC:
-	case STRINGLITERAL:
-	case LPAREN:
-	{
-		break;
-	}
 	default:
-	{
+		if ((LA(1) == NOT) && (_tokenSet_12.member(LA(2)))) {
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp193_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			if ( inputState->guessing == 0 ) {
+				tmp193_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp193_AST);
+			}
+			match(NOT);
+		}
+		else if ((_tokenSet_12.member(LA(1))) && (_tokenSet_13.member(LA(2)))) {
+		}
+	else {
 		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
 	}
 	}
 	}
 	{
-	switch ( LA(1)) {
-	case CURRENT_TIME:
-	case CURRENT_DATE:
-	case CURRENT_TIMESTAMP:
-	case NULL_T:
-	case NUMERIC:
-	{
+	if ((_tokenSet_7.member(LA(1))) && (_tokenSet_14.member(LA(2)))) {
 		literalvalue();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		break;
 	}
-	case CAST:
-	{
+	else if ((_tokenSet_2.member(LA(1))) && (_tokenSet_15.member(LA(2)))) {
+		{
+		if ((_tokenSet_1.member(LA(1))) && (_tokenSet_16.member(LA(2)))) {
+			{
+			if ((_tokenSet_1.member(LA(1))) && (LA(2) == DOT)) {
+				databasename();
+				if (inputState->guessing==0) {
+					astFactory->addASTChild( currentAST, returnAST );
+				}
+				ANTLR_USE_NAMESPACE(antlr)RefAST tmp194_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+				if ( inputState->guessing == 0 ) {
+					tmp194_AST = astFactory->create(LT(1));
+					astFactory->addASTChild(currentAST, tmp194_AST);
+				}
+				match(DOT);
+			}
+			else if ((_tokenSet_1.member(LA(1))) && (_tokenSet_2.member(LA(2)))) {
+			}
+			else {
+				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
+			}
+			
+			}
+			tablename();
+			if (inputState->guessing==0) {
+				astFactory->addASTChild( currentAST, returnAST );
+			}
+		}
+		else if ((_tokenSet_2.member(LA(1))) && (_tokenSet_14.member(LA(2)))) {
+		}
+		else {
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
+		}
+		
+		}
+		columnname();
+		if (inputState->guessing==0) {
+			astFactory->addASTChild( currentAST, returnAST );
+		}
+	}
+	else if ((_tokenSet_1.member(LA(1))) && (LA(2) == LPAREN)) {
+		functionname();
+		if (inputState->guessing==0) {
+			astFactory->addASTChild( currentAST, returnAST );
+		}
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp195_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		if ( inputState->guessing == 0 ) {
+			tmp195_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp195_AST);
+		}
+		match(LPAREN);
+		{
+		switch ( LA(1)) {
+		case ABORT:
+		case ACTION:
+		case AUTOINCREMENT:
+		case AS:
+		case ASC:
+		case AND:
+		case OR:
+		case CASCADE:
+		case CASE_T:
+		case CAST:
+		case CREATE:
+		case COLLATE:
+		case CONFLICT:
+		case CURRENT_TIME:
+		case CURRENT_DATE:
+		case CURRENT_TIMESTAMP:
+		case DEFAULT:
+		case DEFERRABLE:
+		case DEFERRED:
+		case DELETE:
+		case DESC:
+		case ELSE_T:
+		case END:
+		case ESCAPE:
+		case FAIL:
+		case GLOB:
+		case KEY:
+		case LIKE:
+		case TABLE:
+		case IF_T:
+		case IGNORE:
+		case INITIALLY:
+		case IMMEDIATE:
+		case IS:
+		case NOT:
+		case NULL_T:
+		case MATCH:
+		case EXISTS:
+		case ON:
+		case RAISE:
+		case REFERENCES:
+		case REGEXP:
+		case REPLACE:
+		case RESTRICT:
+		case ROLLBACK:
+		case SET:
+		case TEMPORARY:
+		case TEMP:
+		case THEN:
+		case UPDATE:
+		case WHEN:
+		case ID:
+		case QUOTEDID:
+		case QUOTEDLITERAL:
+		case NUMERIC:
+		case STRINGLITERAL:
+		case LPAREN:
+		case PLUS:
+		case MINUS:
+		case TILDE:
+		{
+			expr();
+			if (inputState->guessing==0) {
+				astFactory->addASTChild( currentAST, returnAST );
+			}
+			{ // ( ... )*
+			for (;;) {
+				if ((LA(1) == COMMA)) {
+					ANTLR_USE_NAMESPACE(antlr)RefAST tmp196_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+					if ( inputState->guessing == 0 ) {
+						tmp196_AST = astFactory->create(LT(1));
+						astFactory->addASTChild(currentAST, tmp196_AST);
+					}
+					match(COMMA);
+					expr();
+					if (inputState->guessing==0) {
+						astFactory->addASTChild( currentAST, returnAST );
+					}
+				}
+				else {
+					goto _loop166;
+				}
+				
+			}
+			_loop166:;
+			} // ( ... )*
+			break;
+		}
+		case RPAREN:
+		{
+			break;
+		}
+		default:
+		{
+			throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
+		}
+		}
+		}
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp197_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		if ( inputState->guessing == 0 ) {
+			tmp197_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp197_AST);
+		}
+		match(RPAREN);
+	}
+	else if ((LA(1) == CAST) && (LA(2) == LPAREN)) {
 		castexpr();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		break;
 	}
-	case EXISTS:
-	case LPAREN:
-	{
+	else if ((LA(1) == EXISTS || LA(1) == LPAREN) && (_tokenSet_17.member(LA(2)))) {
 		{
 		switch ( LA(1)) {
 		case EXISTS:
 		{
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp194_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+			ANTLR_USE_NAMESPACE(antlr)RefAST tmp198_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
-				tmp194_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp194_AST);
+				tmp198_AST = astFactory->create(LT(1));
+				astFactory->addASTChild(currentAST, tmp198_AST);
 			}
 			match(EXISTS);
 			break;
@@ -3309,23 +3454,65 @@ void Sqlite3Parser::subexpr() {
 		}
 		}
 		}
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp195_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp199_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp195_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp195_AST);
+			tmp199_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp199_AST);
 		}
 		match(LPAREN);
 		{
 		switch ( LA(1)) {
+		case ABORT:
+		case ACTION:
+		case AUTOINCREMENT:
+		case AS:
+		case ASC:
+		case AND:
+		case OR:
+		case CASCADE:
 		case CASE_T:
 		case CAST:
+		case CREATE:
+		case COLLATE:
+		case CONFLICT:
 		case CURRENT_TIME:
 		case CURRENT_DATE:
 		case CURRENT_TIMESTAMP:
+		case DEFAULT:
+		case DEFERRABLE:
+		case DEFERRED:
+		case DELETE:
+		case DESC:
+		case ELSE_T:
+		case END:
+		case ESCAPE:
+		case FAIL:
+		case GLOB:
+		case KEY:
+		case LIKE:
+		case TABLE:
+		case IF_T:
+		case IGNORE:
+		case INITIALLY:
+		case IMMEDIATE:
+		case IS:
 		case NOT:
 		case NULL_T:
+		case MATCH:
 		case EXISTS:
+		case ON:
 		case RAISE:
+		case REFERENCES:
+		case REGEXP:
+		case REPLACE:
+		case RESTRICT:
+		case ROLLBACK:
+		case SET:
+		case TEMPORARY:
+		case TEMP:
+		case THEN:
+		case UPDATE:
+		case WHEN:
 		case ID:
 		case QUOTEDID:
 		case QUOTEDLITERAL:
@@ -3356,160 +3543,38 @@ void Sqlite3Parser::subexpr() {
 		}
 		}
 		}
-		ANTLR_USE_NAMESPACE(antlr)RefAST tmp196_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
+		ANTLR_USE_NAMESPACE(antlr)RefAST tmp200_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 		if ( inputState->guessing == 0 ) {
-			tmp196_AST = astFactory->create(LT(1));
-			astFactory->addASTChild(currentAST, tmp196_AST);
+			tmp200_AST = astFactory->create(LT(1));
+			astFactory->addASTChild(currentAST, tmp200_AST);
 		}
 		match(RPAREN);
-		break;
 	}
-	case CASE_T:
-	{
+	else if ((LA(1) == CASE_T) && (_tokenSet_10.member(LA(2)))) {
 		caseexpr();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		break;
 	}
-	case RAISE:
-	{
+	else if ((LA(1) == RAISE) && (LA(2) == LPAREN)) {
 		raisefunction();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		break;
 	}
-	default:
-		if ((_tokenSet_1.member(LA(1))) && (_tokenSet_12.member(LA(2)))) {
-			{
-			if ((_tokenSet_1.member(LA(1))) && (_tokenSet_0.member(LA(2)))) {
-				{
-				if ((_tokenSet_1.member(LA(1))) && (LA(2) == DOT)) {
-					databasename();
-					if (inputState->guessing==0) {
-						astFactory->addASTChild( currentAST, returnAST );
-					}
-					ANTLR_USE_NAMESPACE(antlr)RefAST tmp197_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
-					if ( inputState->guessing == 0 ) {
-						tmp197_AST = astFactory->create(LT(1));
-						astFactory->addASTChild(currentAST, tmp197_AST);
-					}
-					match(DOT);
-				}
-				else if ((_tokenSet_1.member(LA(1))) && (_tokenSet_1.member(LA(2)))) {
-				}
-				else {
-					throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
-				}
-				
-				}
-				tablename();
-				if (inputState->guessing==0) {
-					astFactory->addASTChild( currentAST, returnAST );
-				}
-			}
-			else if ((_tokenSet_1.member(LA(1))) && (_tokenSet_13.member(LA(2)))) {
-			}
-			else {
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
-			}
-			
-			}
-			columnname();
-			if (inputState->guessing==0) {
-				astFactory->addASTChild( currentAST, returnAST );
-			}
-		}
-		else if ((_tokenSet_1.member(LA(1))) && (LA(2) == LPAREN)) {
-			functionname();
-			if (inputState->guessing==0) {
-				astFactory->addASTChild( currentAST, returnAST );
-			}
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp198_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
-			if ( inputState->guessing == 0 ) {
-				tmp198_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp198_AST);
-			}
-			match(LPAREN);
-			{
-			switch ( LA(1)) {
-			case CASE_T:
-			case CAST:
-			case CURRENT_TIME:
-			case CURRENT_DATE:
-			case CURRENT_TIMESTAMP:
-			case NOT:
-			case NULL_T:
-			case EXISTS:
-			case RAISE:
-			case ID:
-			case QUOTEDID:
-			case QUOTEDLITERAL:
-			case NUMERIC:
-			case STRINGLITERAL:
-			case LPAREN:
-			case PLUS:
-			case MINUS:
-			case TILDE:
-			{
-				expr();
-				if (inputState->guessing==0) {
-					astFactory->addASTChild( currentAST, returnAST );
-				}
-				{ // ( ... )*
-				for (;;) {
-					if ((LA(1) == COMMA)) {
-						ANTLR_USE_NAMESPACE(antlr)RefAST tmp199_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
-						if ( inputState->guessing == 0 ) {
-							tmp199_AST = astFactory->create(LT(1));
-							astFactory->addASTChild(currentAST, tmp199_AST);
-						}
-						match(COMMA);
-						expr();
-						if (inputState->guessing==0) {
-							astFactory->addASTChild( currentAST, returnAST );
-						}
-					}
-					else {
-						goto _loop165;
-					}
-					
-				}
-				_loop165:;
-				} // ( ... )*
-				break;
-			}
-			case RPAREN:
-			{
-				break;
-			}
-			default:
-			{
-				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
-			}
-			}
-			}
-			ANTLR_USE_NAMESPACE(antlr)RefAST tmp200_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
-			if ( inputState->guessing == 0 ) {
-				tmp200_AST = astFactory->create(LT(1));
-				astFactory->addASTChild(currentAST, tmp200_AST);
-			}
-			match(RPAREN);
-		}
 	else {
 		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
 	}
-	}
+	
 	}
 	{
-	if ((_tokenSet_14.member(LA(1))) && (_tokenSet_15.member(LA(2)))) {
+	if ((_tokenSet_18.member(LA(1))) && (_tokenSet_19.member(LA(2)))) {
 		suffixexpr();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
 	}
-	else if ((_tokenSet_16.member(LA(1))) && (_tokenSet_17.member(LA(2)))) {
+	else if ((_tokenSet_20.member(LA(1))) && (_tokenSet_21.member(LA(2)))) {
 	}
 	else {
 		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
@@ -3808,44 +3873,21 @@ void Sqlite3Parser::caseexpr() {
 	}
 	match(CASE_T);
 	{
-	switch ( LA(1)) {
-	case CASE_T:
-	case CAST:
-	case CURRENT_TIME:
-	case CURRENT_DATE:
-	case CURRENT_TIMESTAMP:
-	case NOT:
-	case NULL_T:
-	case EXISTS:
-	case RAISE:
-	case ID:
-	case QUOTEDID:
-	case QUOTEDLITERAL:
-	case NUMERIC:
-	case STRINGLITERAL:
-	case LPAREN:
-	case PLUS:
-	case MINUS:
-	case TILDE:
-	{
+	if ((_tokenSet_10.member(LA(1))) && (_tokenSet_22.member(LA(2)))) {
 		expr();
 		if (inputState->guessing==0) {
 			astFactory->addASTChild( currentAST, returnAST );
 		}
-		break;
 	}
-	case WHEN:
-	{
-		break;
+	else if ((LA(1) == WHEN) && (_tokenSet_10.member(LA(2)))) {
 	}
-	default:
-	{
+	else {
 		throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
 	}
-	}
+	
 	}
 	{ // ( ... )+
-	int _cnt173=0;
+	int _cnt174=0;
 	for (;;) {
 		if ((LA(1) == WHEN)) {
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp225_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
@@ -3870,12 +3912,12 @@ void Sqlite3Parser::caseexpr() {
 			}
 		}
 		else {
-			if ( _cnt173>=1 ) { goto _loop173; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
+			if ( _cnt174>=1 ) { goto _loop174; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
 		}
 		
-		_cnt173++;
+		_cnt174++;
 	}
-	_loop173:;
+	_loop174:;
 	}  // ( ... )+
 	{
 	switch ( LA(1)) {
@@ -4086,7 +4128,7 @@ void Sqlite3Parser::suffixexpr() {
 			}
 			{ // ( ... )*
 			for (;;) {
-				if ((_tokenSet_18.member(LA(1)))) {
+				if ((_tokenSet_23.member(LA(1)))) {
 					{
 					switch ( LA(1)) {
 					case GLOB:
@@ -4141,11 +4183,11 @@ void Sqlite3Parser::suffixexpr() {
 					}
 				}
 				else {
-					goto _loop184;
+					goto _loop185;
 				}
 				
 			}
-			_loop184:;
+			_loop185:;
 			} // ( ... )*
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp242_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
 			if ( inputState->guessing == 0 ) {
@@ -4187,15 +4229,57 @@ void Sqlite3Parser::suffixexpr() {
 					}
 					break;
 				}
+				case ABORT:
+				case ACTION:
+				case AUTOINCREMENT:
+				case AS:
+				case ASC:
+				case AND:
+				case OR:
+				case CASCADE:
 				case CASE_T:
 				case CAST:
+				case CREATE:
+				case COLLATE:
+				case CONFLICT:
 				case CURRENT_TIME:
 				case CURRENT_DATE:
 				case CURRENT_TIMESTAMP:
+				case DEFAULT:
+				case DEFERRABLE:
+				case DEFERRED:
+				case DELETE:
+				case DESC:
+				case ELSE_T:
+				case END:
+				case ESCAPE:
+				case FAIL:
+				case GLOB:
+				case KEY:
+				case LIKE:
+				case TABLE:
+				case IF_T:
+				case IGNORE:
+				case INITIALLY:
+				case IMMEDIATE:
+				case IS:
 				case NOT:
 				case NULL_T:
+				case MATCH:
 				case EXISTS:
+				case ON:
 				case RAISE:
+				case REFERENCES:
+				case REGEXP:
+				case REPLACE:
+				case RESTRICT:
+				case ROLLBACK:
+				case SET:
+				case TEMPORARY:
+				case TEMP:
+				case THEN:
+				case UPDATE:
+				case WHEN:
 				case ID:
 				case QUOTEDID:
 				case QUOTEDLITERAL:
@@ -4225,11 +4309,11 @@ void Sqlite3Parser::suffixexpr() {
 							}
 						}
 						else {
-							goto _loop188;
+							goto _loop189;
 						}
 						
 					}
-					_loop188:;
+					_loop189:;
 					} // ( ... )*
 					break;
 				}
@@ -4296,7 +4380,7 @@ void Sqlite3Parser::suffixexpr() {
 					astFactory->addASTChild( currentAST, returnAST );
 				}
 			}
-			else if ((_tokenSet_16.member(LA(1))) && (_tokenSet_17.member(LA(2)))) {
+			else if ((_tokenSet_20.member(LA(1))) && (_tokenSet_21.member(LA(2)))) {
 			}
 			else {
 				throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());
@@ -4390,7 +4474,7 @@ void Sqlite3Parser::between_subexpr() {
 		astFactory->addASTChild( currentAST, returnAST );
 	}
 	{ // ( ... )+
-	int _cnt178=0;
+	int _cnt179=0;
 	for (;;) {
 		if ((LA(1) == AND)) {
 			ANTLR_USE_NAMESPACE(antlr)RefAST tmp252_AST = ANTLR_USE_NAMESPACE(antlr)nullAST;
@@ -4405,12 +4489,12 @@ void Sqlite3Parser::between_subexpr() {
 			}
 		}
 		else {
-			if ( _cnt178>=1 ) { goto _loop178; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
+			if ( _cnt179>=1 ) { goto _loop179; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
 		}
 		
-		_cnt178++;
+		_cnt179++;
 	}
-	_loop178:;
+	_loop179:;
 	}  // ( ... )+
 	between_subexpr_AST = currentAST.root;
 	returnAST = between_subexpr_AST;
@@ -4575,10 +4659,15 @@ const unsigned long Sqlite3Parser::_tokenSet_9_data_[] = { 1536UL, 2131978UL, 42
 // BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL 
 // UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_9(_tokenSet_9_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_10_data_[] = { 7364608UL, 614400UL, 93091840UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// "CASE" "CAST" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" "NOT" 
-// "NULL" "EXISTS" "RAISE" ID QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL 
-// LPAREN PLUS MINUS TILDE 
+const unsigned long Sqlite3Parser::_tokenSet_10_data_[] = { 4294408176UL, 3187404158UL, 93091841UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "CASCADE" "CASE" 
+// "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
+// "DEFAULT" "DEFERRABLE" "DEFERRED" "DELETE" "DESC" "ELSE" "END" "ESCAPE" 
+// "FAIL" "GLOB" "KEY" "LIKE" "TABLE" "IF" "IGNORE" "INITIALLY" "IMMEDIATE" 
+// "IS" "NOT" "NULL" "MATCH" "EXISTS" "ON" "RAISE" "REFERENCES" "REGEXP" 
+// "REPLACE" "RESTRICT" "ROLLBACK" "SET" "TEMPORARY" "TEMP" "THEN" "UPDATE" 
+// "WHEN" ID QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN PLUS MINUS 
+// TILDE 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_10(_tokenSet_10_data_,8);
 const unsigned long Sqlite3Parser::_tokenSet_11_data_[] = { 4294965234UL, 4261408127UL, 33323011UL, 0UL, 0UL, 0UL, 0UL, 0UL };
 // EOF "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "CASCADE" 
@@ -4591,46 +4680,112 @@ const unsigned long Sqlite3Parser::_tokenSet_11_data_[] = { 4294965234UL, 426140
 // "WHEN" "WITHOUT" ID QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN 
 // RPAREN COMMA SEMI PLUS MINUS 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_11(_tokenSet_11_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_12_data_[] = { 1879182978UL, 539011210UL, 4222893057UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
-// EOF "AS" "AND" "OR" "BETWEEN" "COLLATE" "ELSE" "END" "ESCAPE" "GLOB" 
-// "LIKE" "IN" "IS" "NOT" "MATCH" "REGEXP" "THEN" "WHEN" DOT ID QUOTEDID 
-// QUOTEDLITERAL STRINGLITERAL RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR 
-// OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
-// BITWISELEFT BITWISERIGHT SLASH PERCENT 
+const unsigned long Sqlite3Parser::_tokenSet_12_data_[] = { 4294408176UL, 3187404158UL, 817153UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "CASCADE" "CASE" 
+// "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
+// "DEFAULT" "DEFERRABLE" "DEFERRED" "DELETE" "DESC" "ELSE" "END" "ESCAPE" 
+// "FAIL" "GLOB" "KEY" "LIKE" "TABLE" "IF" "IGNORE" "INITIALLY" "IMMEDIATE" 
+// "IS" "NOT" "NULL" "MATCH" "EXISTS" "ON" "RAISE" "REFERENCES" "REGEXP" 
+// "REPLACE" "RESTRICT" "ROLLBACK" "SET" "TEMPORARY" "TEMP" "THEN" "UPDATE" 
+// "WHEN" ID QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_12(_tokenSet_12_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_13_data_[] = { 1879182978UL, 539011210UL, 4222615553UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_13_data_[] = { 4294410226UL, 3187404286UL, 4290542593UL, 2047UL, 0UL, 0UL, 0UL, 0UL };
+// EOF "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "BETWEEN" 
+// "CASCADE" "CASE" "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" 
+// "CURRENT_DATE" "CURRENT_TIMESTAMP" "DEFAULT" "DEFERRABLE" "DEFERRED" 
+// "DELETE" "DESC" "ELSE" "END" "ESCAPE" "FAIL" "GLOB" "KEY" "LIKE" "TABLE" 
+// "IF" "IGNORE" "IN" "INITIALLY" "IMMEDIATE" "IS" "NOT" "NULL" "MATCH" 
+// "EXISTS" "ON" "RAISE" "REFERENCES" "REGEXP" "REPLACE" "RESTRICT" "ROLLBACK" 
+// "SET" "TEMPORARY" "TEMP" "THEN" "UPDATE" "WHEN" DOT ID QUOTEDID QUOTEDLITERAL 
+// NUMERIC STRINGLITERAL LPAREN RPAREN COMMA PLUS MINUS STAR TILDE AMPERSAND 
+// BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL 
+// UNEQUAL2 BITWISELEFT BITWISERIGHT SELECT SLASH PERCENT 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_13(_tokenSet_13_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_14_data_[] = { 1879182978UL, 539011210UL, 4222615553UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
 // EOF "AS" "AND" "OR" "BETWEEN" "COLLATE" "ELSE" "END" "ESCAPE" "GLOB" 
 // "LIKE" "IN" "IS" "NOT" "MATCH" "REGEXP" "THEN" "WHEN" RPAREN COMMA PLUS 
 // MINUS STAR AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER 
 // LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_13(_tokenSet_13_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_14_data_[] = { 133120UL, 2138250UL, 0UL, 0UL };
-// "BETWEEN" "COLLATE" "GLOB" "LIKE" "IN" "NOT" "MATCH" "REGEXP" 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_14(_tokenSet_14_data_,4);
-const unsigned long Sqlite3Parser::_tokenSet_15_data_[] = { 7366656UL, 2744458UL, 93091840UL, 0UL, 0UL, 0UL, 0UL, 0UL };
-// "BETWEEN" "CASE" "CAST" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
-// "GLOB" "LIKE" "IN" "NOT" "NULL" "MATCH" "EXISTS" "RAISE" "REGEXP" ID 
-// QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN PLUS MINUS TILDE 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_14(_tokenSet_14_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_15_data_[] = { 4294410226UL, 3187404286UL, 4222893057UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
+// EOF "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "BETWEEN" 
+// "CASCADE" "CASE" "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" 
+// "CURRENT_DATE" "CURRENT_TIMESTAMP" "DEFAULT" "DEFERRABLE" "DEFERRED" 
+// "DELETE" "DESC" "ELSE" "END" "ESCAPE" "FAIL" "GLOB" "KEY" "LIKE" "TABLE" 
+// "IF" "IGNORE" "IN" "INITIALLY" "IMMEDIATE" "IS" "NOT" "NULL" "MATCH" 
+// "EXISTS" "ON" "RAISE" "REFERENCES" "REGEXP" "REPLACE" "RESTRICT" "ROLLBACK" 
+// "SET" "TEMPORARY" "TEMP" "THEN" "UPDATE" "WHEN" DOT ID QUOTEDID QUOTEDLITERAL 
+// STRINGLITERAL RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR OROP EQUAL 
+// EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT 
+// BITWISERIGHT SLASH PERCENT 
 const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_15(_tokenSet_15_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_16_data_[] = { 1879049858UL, 539002890UL, 4222615553UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
+const unsigned long Sqlite3Parser::_tokenSet_16_data_[] = { 4294408176UL, 3187404158UL, 277505UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "CASCADE" "CASE" 
+// "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
+// "DEFAULT" "DEFERRABLE" "DEFERRED" "DELETE" "DESC" "ELSE" "END" "ESCAPE" 
+// "FAIL" "GLOB" "KEY" "LIKE" "TABLE" "IF" "IGNORE" "INITIALLY" "IMMEDIATE" 
+// "IS" "NOT" "NULL" "MATCH" "EXISTS" "ON" "RAISE" "REFERENCES" "REGEXP" 
+// "REPLACE" "RESTRICT" "ROLLBACK" "SET" "TEMPORARY" "TEMP" "THEN" "UPDATE" 
+// "WHEN" DOT ID QUOTEDID QUOTEDLITERAL STRINGLITERAL 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_16(_tokenSet_16_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_17_data_[] = { 4294408176UL, 3187404158UL, 93091841UL, 256UL, 0UL, 0UL, 0UL, 0UL };
+// "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "CASCADE" "CASE" 
+// "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" 
+// "DEFAULT" "DEFERRABLE" "DEFERRED" "DELETE" "DESC" "ELSE" "END" "ESCAPE" 
+// "FAIL" "GLOB" "KEY" "LIKE" "TABLE" "IF" "IGNORE" "INITIALLY" "IMMEDIATE" 
+// "IS" "NOT" "NULL" "MATCH" "EXISTS" "ON" "RAISE" "REFERENCES" "REGEXP" 
+// "REPLACE" "RESTRICT" "ROLLBACK" "SET" "TEMPORARY" "TEMP" "THEN" "UPDATE" 
+// "WHEN" ID QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN PLUS MINUS 
+// TILDE SELECT 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_17(_tokenSet_17_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_18_data_[] = { 133120UL, 2138250UL, 0UL, 0UL };
+// "BETWEEN" "COLLATE" "GLOB" "LIKE" "IN" "NOT" "MATCH" "REGEXP" 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_18(_tokenSet_18_data_,4);
+const unsigned long Sqlite3Parser::_tokenSet_19_data_[] = { 4294410224UL, 3187404286UL, 93091841UL, 0UL, 0UL, 0UL, 0UL, 0UL };
+// "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "BETWEEN" "CASCADE" 
+// "CASE" "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" "CURRENT_DATE" 
+// "CURRENT_TIMESTAMP" "DEFAULT" "DEFERRABLE" "DEFERRED" "DELETE" "DESC" 
+// "ELSE" "END" "ESCAPE" "FAIL" "GLOB" "KEY" "LIKE" "TABLE" "IF" "IGNORE" 
+// "IN" "INITIALLY" "IMMEDIATE" "IS" "NOT" "NULL" "MATCH" "EXISTS" "ON" 
+// "RAISE" "REFERENCES" "REGEXP" "REPLACE" "RESTRICT" "ROLLBACK" "SET" 
+// "TEMPORARY" "TEMP" "THEN" "UPDATE" "WHEN" ID QUOTEDID QUOTEDLITERAL 
+// NUMERIC STRINGLITERAL LPAREN PLUS MINUS TILDE 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_19(_tokenSet_19_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_20_data_[] = { 1879049858UL, 539002890UL, 4222615553UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
 // EOF "AS" "AND" "OR" "ELSE" "END" "ESCAPE" "GLOB" "LIKE" "IS" "MATCH" 
 // "REGEXP" "THEN" "WHEN" RPAREN COMMA PLUS MINUS STAR AMPERSAND BITOR 
 // OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
 // BITWISELEFT BITWISERIGHT SLASH PERCENT 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_16(_tokenSet_16_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_17_data_[] = { 1895493250UL, 1614669963UL, 4290541569UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
-// EOF "AS" "AND" "OR" "BETWEEN" "CASE" "CAST" "CHECK" "COLLATE" "CONSTRAINT" 
-// "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" "DEFAULT" "ELSE" "END" 
-// "ESCAPE" "FOREIGN" "GLOB" "LIKE" "IN" "IS" "NOT" "NULL" "MATCH" "EXISTS" 
-// "PRIMARY" "RAISE" "REFERENCES" "REGEXP" "THEN" "UNIQUE" "WHEN" ID QUOTEDID 
-// QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN RPAREN COMMA PLUS MINUS STAR 
-// TILDE AMPERSAND BITOR OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL 
-// UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT SLASH PERCENT 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_17(_tokenSet_17_data_,8);
-const unsigned long Sqlite3Parser::_tokenSet_18_data_[] = { 1024UL, 2131978UL, 4219469824UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_20(_tokenSet_20_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_21_data_[] = { 4294967282UL, 4261408255UL, 4290541569UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
+// EOF "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "BETWEEN" 
+// "CASCADE" "CASE" "CAST" "CHECK" "CREATE" "COLLATE" "CONFLICT" "CONSTRAINT" 
+// "CURRENT_TIME" "CURRENT_DATE" "CURRENT_TIMESTAMP" "DEFAULT" "DEFERRABLE" 
+// "DEFERRED" "DELETE" "DESC" "ELSE" "END" "ESCAPE" "FAIL" "FOREIGN" "GLOB" 
+// "KEY" "LIKE" "TABLE" "IF" "IGNORE" "IN" "INITIALLY" "IMMEDIATE" "IS" 
+// "NOT" "NULL" "MATCH" "EXISTS" "ON" "PRIMARY" "RAISE" "REFERENCES" "REGEXP" 
+// "REPLACE" "RESTRICT" "ROLLBACK" "SET" "TEMPORARY" "TEMP" "THEN" "UNIQUE" 
+// "UPDATE" "WHEN" ID QUOTEDID QUOTEDLITERAL NUMERIC STRINGLITERAL LPAREN 
+// RPAREN COMMA PLUS MINUS STAR TILDE AMPERSAND BITOR OROP EQUAL EQUAL2 
+// GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 BITWISELEFT BITWISERIGHT 
+// SLASH PERCENT 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_21(_tokenSet_21_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_22_data_[] = { 4294410224UL, 3187404286UL, 4287396865UL, 2047UL, 0UL, 0UL, 0UL, 0UL };
+// "ABORT" "ACTION" "AUTOINCREMENT" "AS" "ASC" "AND" "OR" "BETWEEN" "CASCADE" 
+// "CASE" "CAST" "CREATE" "COLLATE" "CONFLICT" "CURRENT_TIME" "CURRENT_DATE" 
+// "CURRENT_TIMESTAMP" "DEFAULT" "DEFERRABLE" "DEFERRED" "DELETE" "DESC" 
+// "ELSE" "END" "ESCAPE" "FAIL" "GLOB" "KEY" "LIKE" "TABLE" "IF" "IGNORE" 
+// "IN" "INITIALLY" "IMMEDIATE" "IS" "NOT" "NULL" "MATCH" "EXISTS" "ON" 
+// "RAISE" "REFERENCES" "REGEXP" "REPLACE" "RESTRICT" "ROLLBACK" "SET" 
+// "TEMPORARY" "TEMP" "THEN" "UPDATE" "WHEN" DOT ID QUOTEDID QUOTEDLITERAL 
+// NUMERIC STRINGLITERAL LPAREN PLUS MINUS STAR TILDE AMPERSAND BITOR OROP 
+// EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
+// BITWISELEFT BITWISERIGHT SELECT SLASH PERCENT 
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_22(_tokenSet_22_data_,8);
+const unsigned long Sqlite3Parser::_tokenSet_23_data_[] = { 1024UL, 2131978UL, 4219469824UL, 1791UL, 0UL, 0UL, 0UL, 0UL };
 // "OR" "GLOB" "LIKE" "IS" "MATCH" "REGEXP" PLUS MINUS STAR AMPERSAND BITOR 
 // OROP EQUAL EQUAL2 GREATER GREATEREQUAL LOWER LOWEREQUAL UNEQUAL UNEQUAL2 
 // BITWISELEFT BITWISERIGHT SLASH PERCENT 
-const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_18(_tokenSet_18_data_,8);
+const ANTLR_USE_NAMESPACE(antlr)BitSet Sqlite3Parser::_tokenSet_23(_tokenSet_23_data_,8);
 
 

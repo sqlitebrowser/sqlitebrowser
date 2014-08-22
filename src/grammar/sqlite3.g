@@ -186,7 +186,7 @@ tablename
   id
   ;
 
-columnname
+nonkeyword_columnname
   :
   id
   ;
@@ -322,9 +322,17 @@ keywordascolumnname
   {#keywordascolumnname = #([KEYWORDASCOLUMNNAME, "KEYWORDASCOLUMNNAME"], #keywordascolumnname);}
   ;
 
+columnname
+  :
+  ( nonkeyword_columnname
+  | keywordascolumnname
+  )
+  {}
+  ;
+
 columndef
   :
-  (columnname | keywordascolumnname) (type_name)? (columnconstraint)*
+  columnname (type_name)? (columnconstraint)*
   {#columndef = #([COLUMNDEF, "COLUMNDEF"], #columndef);}
   ;
 
@@ -363,7 +371,7 @@ tableconstraint
 
 indexedcolumn
   :
-  id (COLLATE collationname)? (ASC|DESC)? (AUTOINCREMENT)?
+  columnname (COLLATE collationname)? (ASC|DESC)? (AUTOINCREMENT)?
   ;
 
 conflictclause
