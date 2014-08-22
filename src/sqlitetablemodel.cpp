@@ -321,10 +321,12 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 
         // update column with default values
         QByteArrayList rowdata;
-        m_db->getRow(m_sTable, rowid, rowdata);
-        for(int j=1; j < m_headers.size(); ++j)
+        if( m_db->getRow(m_sTable, rowid, rowdata) )
         {
-            m_data[i].replace(j, rowdata[j - 1]);
+            for(int j=1; j < m_headers.size(); ++j)
+            {
+                m_data[i].replace(j, rowdata[j - 1]);
+            }
         }
     }
 

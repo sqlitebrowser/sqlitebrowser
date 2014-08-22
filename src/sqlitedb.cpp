@@ -439,6 +439,7 @@ bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>
     QString sQuery = QString("SELECT * from %1 WHERE rowid=%2;").arg(sTableName).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
+    bool ret = false;
 
     int status = sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL);
     if(SQLITE_OK == status)
@@ -448,11 +449,12 @@ bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>
         {
             for (int i = 0; i < sqlite3_column_count(stmt); ++i)
                 rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), sqlite3_column_bytes(stmt, i)));
+            ret = true;
         }
     }
     sqlite3_finalize(stmt);
 
-    return status == SQLITE_OK;
+    return ret;
 }
 
 int DBBrowserDB::addRecord(const QString& sTableName)
