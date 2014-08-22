@@ -436,7 +436,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
 bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata)
 {
-    QString sQuery = QString("SELECT * from %1 WHERE rowid=%2;").arg(sTableName).arg(rowid);
+    QString sQuery = QString("SELECT * from %1 WHERE _rowid_=%2;").arg(sTableName).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
     bool ret = false;
@@ -488,7 +488,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
     bool ok = false;
     lastErrorMessage = QString("no error");
 
-    QString statement = QString("DELETE FROM `%1` WHERE rowid=%2;").arg(table).arg(rowid);
+    QString statement = QString("DELETE FROM `%1` WHERE _rowid_=%2;").arg(table).arg(rowid);
 
     if (_db){
         logSQL(statement, kLogMsg_App);
@@ -510,7 +510,7 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int 
 
     lastErrorMessage = QString("no error");
 
-    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE rowid=%3;").arg(table).arg(column).arg(row);
+    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE _rowid_=%3;").arg(table).arg(column).arg(row);
 
     logSQL(sql, kLogMsg_App);
     setRestorePoint();

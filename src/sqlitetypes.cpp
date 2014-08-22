@@ -57,7 +57,7 @@ bool Field::isInteger() const
 void Table::clear()
 {
     m_fields.clear();
-    m_rowidColumn = "rowid";
+    m_rowidColumn = "_rowid_";
 }
 
 Table::~Table()

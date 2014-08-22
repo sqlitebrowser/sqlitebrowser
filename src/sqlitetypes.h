@@ -72,7 +72,7 @@ typedef QVector< FieldPtr > FieldVector;
 class Table
 {
 public:
-    Table(const QString& name): m_name(name), m_rowidColumn("rowid") {}
+    Table(const QString& name): m_name(name), m_rowidColumn("_rowid_") {}
     virtual ~Table();
 
     void setName(const QString& name) { m_name = name; }

@@ -232,7 +232,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(this, pdb);
-                m.setQuery(QString("SELECT COUNT(rowid) FROM `%1` WHERE `%2` IS NULL;").arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(_rowid_) FROM `%1` WHERE `%2` IS NULL;").arg(curTable).arg(field->name()));
                 if(m.data(m.index(0, 0)).toInt() > 0)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
