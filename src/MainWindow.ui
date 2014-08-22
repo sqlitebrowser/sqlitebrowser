@@ -838,7 +838,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolbarDB">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>DB Toolbar</string>
    </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextBesideIcon</enum>
