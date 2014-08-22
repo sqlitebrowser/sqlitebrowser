@@ -278,8 +278,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>278</width>
-             <height>444</height>
+             <width>575</width>
+             <height>458</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -764,7 +764,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1014,7 +1014,16 @@
         <item>
          <widget class="QWidget" name="widget" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -1063,6 +1072,31 @@
          </widget>
         </item>
        </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockSchema">
+   <property name="windowTitle">
+    <string>DB Schema</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_9">
+     <item>
+      <widget class="QTreeView" name="treeSchemaDock">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -1488,15 +1522,15 @@
    <header>ExtendedTableWidget.h</header>
   </customwidget>
   <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
+  </customwidget>
+  <customwidget>
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>sqltextedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

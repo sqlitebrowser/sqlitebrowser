@@ -80,6 +80,11 @@ void MainWindow::init()
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
 
+    // Set up DB schema dock
+    ui->treeSchemaDock->setModel(dbStructureModel);
+    ui->treeSchemaDock->setColumnHidden(1, true);
+    ui->treeSchemaDock->setColumnWidth(0, 300);
+
     // Add keyboard shortcuts
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
     shortcuts.push_back(QKeySequence(tr("Ctrl+Return")));
@@ -102,16 +107,20 @@ void MainWindow::init()
     popupTableMenu->addSeparator();
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
-    // Set state of checkable menu actions
+    // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
     ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
     ui->viewMenu->actions().at(0)->setIcon(QIcon(":/icons/log_dock"));
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
-    // Plot view menu
+    // Add menu item for plot dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockPlot->toggleViewAction());
     ui->viewMenu->actions().at(1)->setShortcut(QKeySequence(tr("Ctrl+P")));
     ui->viewMenu->actions().at(1)->setIcon(QIcon(":/icons/log_dock"));
+
+    // Add menu item for schema dock
+    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockSchema->toggleViewAction());
+    ui->viewMenu->actions().at(2)->setIcon(QIcon(":/icons/log_dock"));
 
     // Set statusbar fields
     statusEncodingLabel = new QLabel(ui->statusbar);
@@ -130,7 +139,8 @@ void MainWindow::init()
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
 
     // Load window settings
-    tabifyDockWidget(ui->dockPlot, ui->dockLog);
+    tabifyDockWidget(ui->dockLog, ui->dockPlot);
+    tabifyDockWidget(ui->dockLog, ui->dockSchema);
     restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
     restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
@@ -229,6 +239,7 @@ void MainWindow::populateStructure()
     db.updateSchema();
     dbStructureModel->reloadData(&db);
     ui->dbTreeWidget->expandToDepth(0);
+    ui->treeSchemaDock->expandToDepth(0);
 
     if(!db.isOpen())
         return;
