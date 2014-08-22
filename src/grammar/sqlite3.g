@@ -312,6 +312,7 @@ keywordascolumnname
   | REPLACE
   | RESTRICT
   | ROLLBACK
+  | ROWID
   | SET
   | TEMPORARY
   | TEMP
