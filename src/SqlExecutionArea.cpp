@@ -57,7 +57,14 @@ QString SqlExecutionArea::getSelectedSql() const
 void SqlExecutionArea::finishExecution(const QString& result)
 {
     ui->editErrors->setText(result);
+
+    // Set column widths according to their contents but make sure they don't exceed a certain size
     ui->tableResult->resizeColumnsToContents();
+    for(int i=0;i<model->columnCount();i++)
+    {
+        if(ui->tableResult->columnWidth(i) > 300)
+            ui->tableResult->setColumnWidth(i, 300);
+    }
 }
 
 SqlTextEdit* SqlExecutionArea::getEditor()
