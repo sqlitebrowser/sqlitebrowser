@@ -228,7 +228,7 @@ QString Table::sql() const
     sql += "\n)";
 
     // without rowid
-    if(m_rowidColumn != "rowid")
+    if(m_rowidColumn != "_rowid_")
         sql += " WITHOUT ROWID";
 
     return sql + ";";
