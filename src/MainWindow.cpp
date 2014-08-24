@@ -115,7 +115,9 @@ void MainWindow::init()
 
     // Add menu item for plot dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockPlot->toggleViewAction());
-    ui->viewMenu->actions().at(1)->setShortcut(QKeySequence(tr("Ctrl+P")));
+    QList<QKeySequence> plotkeyseqlist;
+    plotkeyseqlist << QKeySequence(tr("Ctrl+P")) << QKeySequence(tr("Ctrl+D"));
+    ui->viewMenu->actions().at(1)->setShortcuts(plotkeyseqlist);
     ui->viewMenu->actions().at(1)->setIcon(QIcon(":/icons/log_dock"));
 
     // Add menu item for schema dock
