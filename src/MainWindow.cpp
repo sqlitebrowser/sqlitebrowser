@@ -120,6 +120,7 @@ void MainWindow::init()
 
     // Add menu item for schema dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockSchema->toggleViewAction());
+    ui->viewMenu->actions().at(2)->setShortcut(QKeySequence(tr("Ctrl+I")));
     ui->viewMenu->actions().at(2)->setIcon(QIcon(":/icons/log_dock"));
 
     // Set statusbar fields
