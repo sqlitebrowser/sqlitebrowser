@@ -156,28 +156,29 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
 
     return qMakePair(Table(""), false);
 }
-QString Table::emptyInsertStmt() const
+QString Table::emptyInsertStmt(int pk_value) const
 {
     QString stmt = QString("INSERT INTO `%1`").arg(m_name);
 
     QStringList vals;
     QStringList fields;
     foreach(FieldPtr f, m_fields) {
-        if(f->notnull())
+        if( f->primaryKey() && f->isInteger() )
         {
             fields << f->name();
-            if( f->primaryKey() && f->isInteger() )
-            {
+
+            if(pk_value != -1)
+                vals << QString::number(pk_value);
+            else
                 vals << "NULL";
-            } else {
-                if(f->isInteger())
-                    vals << "0";
-                else
-                    vals << "''";
-            }
-        }
-        else
-        {
+        } else if(f->notnull()) {
+            fields << f->name();
+
+            if(f->isInteger())
+                vals << "0";
+            else
+                vals << "''";
+        } else {
             // don't insert into fields with a default value
             // or we will never see it.
             if(f->defaultValue().length() == 0)
@@ -228,7 +229,7 @@ QString Table::sql() const
     sql += "\n)";
 
     // without rowid
-    if(m_rowidColumn != "_rowid_")
+    if(isWithoutRowidTable())
         sql += " WITHOUT ROWID";
 
     return sql + ";";

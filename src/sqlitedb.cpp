@@ -462,11 +462,22 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     char *errmsg;
     if (!isOpen()) return false;
 
-    // add record is seldom called, for now this is ok
-    // but if we ever going to add a lot of records
-    // we should cache the parsed tables somewhere
-    sqlb::Table table = sqlb::Table::parseSQL(getObjectByName(sTableName).getsql()).first;
-    QString sInsertstmt = table.emptyInsertStmt();
+    sqlb::Table table = getObjectByName(sTableName).table;
+
+    // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
+    // and adding one to it.
+    QString sInsertstmt;
+    int pk_value;
+    if(table.isWithoutRowidTable())
+    {
+        SqliteTableModel m(this, this);
+        m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(getObjectByName(sTableName).table.rowidColumn()).arg(sTableName));
+        pk_value = m.data(m.index(0, 0)).toInt() + 1;
+        sInsertstmt = table.emptyInsertStmt(pk_value);
+    } else {
+        sInsertstmt = table.emptyInsertStmt();
+    }
+
     lastErrorMessage = "";
     logSQL(sInsertstmt, kLogMsg_App);
     setRestorePoint();
@@ -477,7 +488,10 @@ int DBBrowserDB::addRecord(const QString& sTableName)
         qWarning() << "addRecord: " << lastErrorMessage;
         return -1;
     } else {
-        return sqlite3_last_insert_rowid(_db);
+        if(table.isWithoutRowidTable())
+            return pk_value;
+        else
+            return sqlite3_last_insert_rowid(_db);
     }
 }
 

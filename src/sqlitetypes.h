@@ -82,9 +82,10 @@ public:
 
     /**
      * @brief Creates an empty insert statement.
+     * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
-    QString emptyInsertStmt() const;
+    QString emptyInsertStmt(int pk_value = -1) const;
 
     /**
      * @brief Returns the CREATE TABLE statement for this table object
@@ -98,6 +99,7 @@ public:
     void setField(int index, FieldPtr f) { m_fields[index] = f; }
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
     const QString& rowidColumn() const { return m_rowidColumn; }
+    bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
     void clear();
 
     /**
