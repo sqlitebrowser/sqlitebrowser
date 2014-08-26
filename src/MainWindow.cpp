@@ -268,13 +268,13 @@ void MainWindow::populateStructure()
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
             QStandardItemModel* tablefieldmodel = new QStandardItemModel();
-            tablefieldmodel->setRowCount((*it).fldmap.count());
+            tablefieldmodel->setRowCount((*it).table.fields().count());
             tablefieldmodel->setColumnCount(1);
 
             int fldrow = 0;
-            for(int i=0; i < (*it).fldmap.size(); ++i, ++fldrow)
+            for(int i=0; i < (*it).table.fields().size(); ++i, ++fldrow)
             {
-                QString fieldname = (*it).fldmap.at(i)->name();
+                QString fieldname = (*it).table.fields().at(i)->name();
                 QStandardItem* fldItem = new QStandardItem(fieldname);
                 fldItem->setIcon(QIcon(":/icons/field"));
                 tablefieldmodel->setItem(fldrow, 0, fldItem);

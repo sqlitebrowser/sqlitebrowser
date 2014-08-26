@@ -750,8 +750,8 @@ QStringList DBBrowserDB::getTableFields(const QString & tablename) const
     {
         if((*it).getname() == tablename)
         {
-            for(int i=0;i<(*it).fldmap.size();i++)
-                res.append((*it).fldmap.at(i)->name());
+            for(int i=0;i<(*it).table.fields().size();i++)
+                res.append((*it).table.fields().at(i)->name());
         }
     }
     return res;
@@ -834,8 +834,7 @@ void DBBrowserDB::updateSchema( )
         // pragma SQLite offers.
         if((*it).gettype() == "table")
         {
-            sqlb::Table t((*it).getname());
-            (*it).fldmap = t.parseSQL((*it).getsql()).first.fields();
+            (*it).table = sqlb::Table::parseSQL((*it).getsql()).first;
         } else if((*it).gettype() == "view") {
             statement = QString("PRAGMA TABLE_INFO(`%1`);").arg((*it).getname());
             logSQL(statement, kLogMsg_App);
@@ -849,7 +848,7 @@ void DBBrowserDB::updateSchema( )
                         QString val_type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
 
                         sqlb::FieldPtr f(new sqlb::Field(val_name, val_type));
-                        (*it).addField(f);
+                        (*it).table.addField(f);
                     }
                 }
                 sqlite3_finalize(vm);

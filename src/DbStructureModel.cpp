@@ -169,12 +169,12 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
         // If it is a table or view add the field Nodes
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
-            for(int i=0; i < it->fldmap.size(); ++i)
+            for(int i=0; i < (*it).table.fields().size(); ++i)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
-                fldItem->setText(0, (*it).fldmap.at(i)->name());
+                fldItem->setText(0, (*it).table.fields().at(i)->name());
                 fldItem->setText(1, "field");
-                fldItem->setText(2, (*it).fldmap.at(i)->type());
+                fldItem->setText(2, (*it).table.fields().at(i)->type());
                 fldItem->setIcon(0, QIcon(":/icons/field"));
             }
         }

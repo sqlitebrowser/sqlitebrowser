@@ -91,7 +91,7 @@ void ImportCsvDialog::accept()
     {
         if(i.value().gettype() == "table" && i.value().getname() == ui->editName->text())
         {
-            if(i.value().fldmap.size() != numfields)
+            if(i.value().table.fields().size() != numfields)
             {
                 QMessageBox::warning(this, QApplication::applicationName(),
                                      tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));

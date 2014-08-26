@@ -20,25 +20,24 @@ typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 class DBBrowserObject
 {
 public:
-    DBBrowserObject() : name( "" ) { }
+    DBBrowserObject() : table(""), name( "" ) { }
     DBBrowserObject( const QString& wname,const QString& wsql, const QString& wtype, const QString& tbl_name )
-        : name( wname), sql( wsql ), type(wtype), table_name(tbl_name)
+        : table(wname), name( wname), sql( wsql ), type(wtype), table_name(tbl_name)
     { }
-
-    void addField(sqlb::FieldPtr field) { fldmap.push_back(field); }
 
     QString getname() const { return name; }
     QString getsql() const { return sql; }
     QString gettype() const { return type; }
     QString getTableName() const { return table_name; }
-    sqlb::FieldPtr getField(const QString& name) const
+    sqlb::FieldPtr getField(const QString& name)
     {
-        for(int i=0;i<fldmap.size();i++)
-            if(fldmap.at(i)->name() == name)
-                return fldmap.at(i);
-        return sqlb::FieldPtr();
+        int id = table.findField(name);
+        if(id == -1)
+            return sqlb::FieldPtr();
+        else
+            return table.fields().at(id);
     }
-    sqlb::FieldVector fldmap;
+    sqlb::Table table;
 private:
     QString name;
     QString sql;
