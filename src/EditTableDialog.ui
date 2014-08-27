@@ -37,6 +37,38 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QToolButton" name="buttonMore">
+        <property name="text">
+         <string>Advanced</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="arrowType">
+         <enum>Qt::DownArrow</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widgetExtension" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QCheckBox" name="checkWithoutRowid">
+           <property name="toolTip">
+            <string>Make this a 'WITHOUT rowid' table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</string>
+           </property>
+           <property name="text">
+            <string>Without Rowid</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -265,9 +297,14 @@
  </widget>
  <tabstops>
   <tabstop>editTableName</tabstop>
+  <tabstop>buttonMore</tabstop>
+  <tabstop>checkWithoutRowid</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
-  <tabstop>buttonBox</tabstop>
+  <tabstop>buttonMoveUp</tabstop>
+  <tabstop>buttonMoveDown</tabstop>
+  <tabstop>treeWidget</tabstop>
+  <tabstop>sqlTextEdit</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -280,8 +317,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>400</y>
+     <x>261</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -296,8 +333,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>400</y>
+     <x>329</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -312,8 +349,8 @@
    <slot>fieldSelectionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>116</x>
-     <y>193</y>
+     <x>137</x>
+     <y>367</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
@@ -328,8 +365,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>106</y>
+     <x>79</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -344,8 +381,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>276</x>
-     <y>111</y>
+     <x>232</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -376,8 +413,8 @@
    <slot>moveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>282</x>
-     <y>107</y>
+     <x>356</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -392,12 +429,44 @@
    <slot>moveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>413</x>
-     <y>107</y>
+     <x>497</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
      <y>235</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonMore</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widgetExtension</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>103</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkWithoutRowid</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>setWithoutRowid(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
@@ -411,5 +480,6 @@
   <slot>itemChanged()</slot>
   <slot>moveUp()</slot>
   <slot>moveDown()</slot>
+  <slot>setWithoutRowid(bool)</slot>
  </slots>
 </ui>

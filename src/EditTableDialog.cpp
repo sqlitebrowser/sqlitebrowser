@@ -20,6 +20,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
 {
     // Create UI
     ui->setupUi(this);
+    ui->widgetExtension->setVisible(false);
     connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
 
     m_sqliteSyntaxHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
@@ -32,6 +33,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getObjectByName(curTable).getsql();
         m_table = sqlb::Table::parseSQL(sTablesql).first;
+        ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
         populateFields();
     }
 
@@ -489,4 +491,34 @@ void EditTableDialog::moveCurrentField(bool down)
 
     // Update the SQL preview
     updateSqlText();
+}
+
+void EditTableDialog::setWithoutRowid(bool without_rowid)
+{
+    if(without_rowid)
+    {
+        // Before setting the without rowid flag, first perform a check to see if the table meets all thr required criteria for without rowid tables
+        int pk = m_table.findPk();
+        if(pk == -1 || m_table.fields().at(pk)->isInteger() == false || m_table.fields().at(pk)->autoIncrement())
+        {
+            QMessageBox::information(this, QApplication::applicationName(),
+                                     tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
+                                        " - Primary key flag set\n"
+                                        " - Auto incremenct disabled\n"
+                                        " - Type INTEGER"));
+            ui->checkWithoutRowid->setChecked(false);
+            return;
+        }
+
+        // If it does, override the the rowid column name of the table object with the name of the primary key.
+        m_table.setRowidColumn(m_table.fields().at(pk)->name());
+    } else {
+        // If the without rowid flag is unset no further checks are required. Just set the rowid column name back to "_rowid_"
+        m_table.setRowidColumn("_rowid_");
+    }
+
+    // Update the SQL preview
+    updateSqlText();
+
+    // TODO: Update table if we're editing an existing table
 }

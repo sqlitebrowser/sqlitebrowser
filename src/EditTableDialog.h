@@ -50,6 +50,7 @@ private slots:
     virtual void updateTypes();
     virtual void moveUp();
     virtual void moveDown();
+    virtual void setWithoutRowid(bool without_rowid);
 
 private:
     Ui::EditTableDialog* ui;
