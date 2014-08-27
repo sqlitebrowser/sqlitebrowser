@@ -13,7 +13,7 @@ Application::Application(int& argc, char** argv) :
 {
     // Set organisation and application names
     setOrganizationName("sqlitebrowser");
-    setApplicationName("SQLite Database Browser");
+    setApplicationName("Database Browser for SQLite");
 
     // Set character encoding to UTF8
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));

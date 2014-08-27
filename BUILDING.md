@@ -1,6 +1,6 @@
 ## BUILD INSTRUCTIONS AND REQUIREMENTS ##
 
-SQLite Database Browser requires Trolltech's Qt, version 4.6 or newer.
+Database Browser for SQLite requires Trolltech's Qt, version 4.6 or newer.
 For more information on Qt please consult http://www.qtsoftware.com.
 The GPL version of Qt is available in almost all Linux distributions
 as a default package.
