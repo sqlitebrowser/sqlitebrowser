@@ -1,10 +1,10 @@
-# SQLite Database Browser
+# Database Browser for SQLite
 
-![SQLiteBrowser Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "SQLiteBrowser Screenshot")
+![Database Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "Database Browser for SQLite Screenshot")
 
 ## What it is
 
-SQLite Database Browser is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.
+Database Browser for SQLite is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.
 
 It is for users and developers wanting to create databases, search, and edit data.  It uses a familiar spreadsheet-like interface, and you don't need to learn complicated SQL commands.
 
@@ -65,7 +65,7 @@ Nightly builds are also available at:
 
 ## MacOS X
 
-SQLite Database Browser works well on MacOS X.
+Database Browser for SQLite works well on MacOS X.
 
 * OSX 10.7 (Lion), 10.8 (Mountain Lion) and 10.9 (Mavericks) are tested and known to work
 
@@ -148,10 +148,11 @@ Pete Morgan ([@daffodil](https://github.com/daffodil)) created an initial projec
 
 [John T. Haller](http://johnhaller.com), of [PortableApps.com](http://portableapps.com) fame, created the new logo.  He based it on the Tango icon set (public domain).
 
+In August 2014, the project was renamed to "Database Browser for SQLite" at the request of [Richard Hipp](http://www.hwaci.com/drh) (creator of [SQLite](http://sqlite.org)), as the previous name was creating unintended support issues.
+
 ## License
 
-SQLite Database Browser is bi-licensed under the Mozilla Public License
+Database Browser for SQLite is bi-licensed under the Mozilla Public License
 Version 2, as well as the GNU General Public License Version 3 or later.
 
-You can modify or redistribute it under the conditions of these
-licenses.
+You can modify or redistribute it under the conditions of these licenses.
