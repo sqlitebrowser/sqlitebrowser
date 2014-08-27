@@ -87,7 +87,7 @@ void TestTable::parseSQL()
     Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "hero");
-    QVERIFY(tab.rowidColumn() == "rowid");
+    QVERIFY(tab.rowidColumn() == "_rowid_");
     QVERIFY(tab.fields().at(0)->name() == "id");
     QVERIFY(tab.fields().at(1)->name() == "name");
     QVERIFY(tab.fields().at(2)->name() == "info");
