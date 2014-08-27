@@ -84,7 +84,7 @@ void TestTable::parseSQL()
             "\tinfo VARCHAR(255) CHECK (info == 'x')\n"
             ");";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "hero");
     QVERIFY(tab.rowidColumn() == "rowid");
@@ -112,7 +112,7 @@ void TestTable::parseSQLdefaultexpr()
             "date datetime default CURRENT_TIMESTAMP,"
             "zoi integer)";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QCOMPARE(tab.name(), QString("chtest"));
     QCOMPARE(tab.fields().at(0)->name(), QString("id"));
@@ -144,7 +144,7 @@ void TestTable::parseSQLMultiPk()
             "PRIMARY KEY(id1,id2)\n"
             ");";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "hero");
     QVERIFY(tab.fields().at(0)->name() == "id1");
@@ -161,7 +161,7 @@ void TestTable::parseSQLForeignKey()
 {
     QString sSQL = "CREATE TABLE grammar_test(id, test, FOREIGN KEY(test) REFERENCES other_table);";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "grammar_test");
     QVERIFY(tab.fields().at(0)->name() == "id");
@@ -172,7 +172,7 @@ void TestTable::parseSQLSingleQuotes()
 {
     QString sSQL = "CREATE TABLE 'test'('id','test');";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "test");
     QVERIFY(tab.fields().at(0)->name() == "id");
@@ -183,7 +183,7 @@ void TestTable::parseSQLKeywordInIdentifier()
 {
     QString sSQL = "CREATE TABLE deffered(key integer primary key, if text);";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "deffered");
     QVERIFY(tab.fields().at(0)->name() == "key");
@@ -194,7 +194,7 @@ void TestTable::parseSQLWithoutRowid()
 {
     QString sSQL = "CREATE TABLE test(a integer primary key, b integer) WITHOUT ROWID;";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.fields().at(tab.findPk())->name() == "a");
     QVERIFY(tab.rowidColumn() == "a");
@@ -207,7 +207,7 @@ void TestTable::parseNonASCIIChars()
             "PRIMARY KEY(Fieldöäüß)"
             ");";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
 
     QVERIFY(tab.name() == "lösung");
     QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
@@ -220,7 +220,7 @@ void TestTable::createTableWithIn()
             "value NVARCHAR(5) CHECK (value IN ('a', 'b', 'c'))"
             ");";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
     QVERIFY(tab.name() == "not_working");
 
     QVERIFY(tab.fields().at(1)->check() == "value IN ( 'a' , 'b' , 'c' )");
@@ -238,7 +238,7 @@ void TestTable::createTableWithNotLikeConstraint()
             "value7 INTEGER CONSTRAINT 'value' CHECK(NOT EXISTS (1))\n"
             ");";
 
-    Table tab = Table::parseSQL(sSQL);
+    Table tab = Table::parseSQL(sSQL).first;
     QVERIFY(tab.name() == "hopefully_working");
 
     QVERIFY(tab.fields().at(0)->check() == "value NOT LIKE 'prefix%'");
