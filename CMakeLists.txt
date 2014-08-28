@@ -131,10 +131,10 @@ set(gv "${CMAKE_SOURCE_DIR}/src/gen_version.h")
 file(WRITE "${gv}"
 	 "#ifndef GEN_VERSION_H\n"
 	 "#define GEN_VERSION_H\n"
-	 "#define APP_VERSION \"3.3.0\"\n"
+	 "#define APP_VERSION \"3.3.1\"\n"
 	 "#define MAJOR_VERSION 3\n"
 	 "#define MINOR_VERSION 3\n"
-	 "#define PATCH_VERSION 0\n"
+	 "#define PATCH_VERSION 1\n"
 	 "#endif\n")
 
 #icon and correct libs/subsystem for windows
@@ -210,7 +210,7 @@ set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
 set(CPACK_PACKAGE_VERSION_MINOR "3")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_VERSION_PATCH "1")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "SqliteBrowser${CPACK_PACKAGE_VERSION_MAJOR}")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSI that does not handle full unix paths properly. Make
