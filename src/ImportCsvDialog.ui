@@ -170,6 +170,60 @@
        </item>
       </layout>
      </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="labelEncoding">
+       <property name="text">
+        <string>&amp;Encoding</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboEncoding</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QComboBox" name="comboEncoding">
+         <item>
+          <property name="text">
+           <string>UTF-8</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>UTF-16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ISO-8859-1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Other</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editCustomEncoding"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
@@ -194,8 +248,9 @@
   <tabstop>editCustomSeparator</tabstop>
   <tabstop>comboQuote</tabstop>
   <tabstop>editCustomQuote</tabstop>
+  <tabstop>comboEncoding</tabstop>
+  <tabstop>editCustomEncoding</tabstop>
   <tabstop>tablePreview</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -206,8 +261,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>485</y>
+     <x>261</x>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -222,8 +277,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>485</y>
+     <x>329</x>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -324,6 +379,38 @@
     <hint type="destinationlabel">
      <x>530</x>
      <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboEncoding</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>572</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCustomEncoding</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>378</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>540</x>
+     <y>133</y>
     </hint>
    </hints>
   </connection>

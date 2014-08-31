@@ -11,6 +11,7 @@ void TestImport::csvImport()
     QFETCH(QString, csv);
     QFETCH(char, separator);
     QFETCH(char, quote);
+    QFETCH(QString, encoding);
     QFETCH(int, numfields);
     QFETCH(QStringList, result);
 
@@ -28,7 +29,7 @@ void TestImport::csvImport()
     // Call decodeCSV function
     DBBrowserDB db;
     int numfields_read;
-    QStringList retval = db.decodeCSV(file.fileName(), separator, quote, -1, &numfields_read);
+    QStringList retval = db.decodeCSV(file.fileName(), separator, quote, encoding, -1, &numfields_read);
 
     // Check return values
     QCOMPARE(retval, result);
@@ -40,6 +41,7 @@ void TestImport::csvImport_data()
     QTest::addColumn<QString>("csv");
     QTest::addColumn<char>("separator");
     QTest::addColumn<char>("quote");
+    QTest::addColumn<QString>("encoding");
     QTest::addColumn<int>("numfields");
     QTest::addColumn<QStringList>("result");
 
@@ -48,26 +50,31 @@ void TestImport::csvImport_data()
     QTest::newRow("commas_noquotes") << "a,b,c\nd,e,f\ng,h,i\n"
                                      << ','
                                      << (char)0
+                                     << "UTF-8"
                                      << 3
                                      << result;
     QTest::newRow("semicolons_noquotes") << "a;b;c\nd;e;f\ng;h;i\n"
                                          << ';'
                                          << (char)0
+                                         << "UTF-8"
                                          << 3
                                          << result;
     QTest::newRow("commas_doublequotes") << "\"a\",\"b\",\"c\"\n\"d\",\"e\",\"f\"\n\"g\",\"h\",\"i\"\n"
                                          << ','
                                          << '"'
+                                         << "UTF-8"
                                          << 3
                                          << result;
     QTest::newRow("noquotes_butquotesset") << "a,b,c\nd,e,f\ng,h,i\n"
                                            << ','
                                            << '"'
+                                           << "UTF-8"
                                            << 3
                                            << result;
     QTest::newRow("windowslinebreaks") << "a,b,c\r\nd,e,f\r\ng,h,i\r\n"
                                        << ','
                                        << (char)0
+                                       << "UTF-8"
                                        << 3
                                        << result;
 
@@ -76,6 +83,7 @@ void TestImport::csvImport_data()
     QTest::newRow("oneline") << "a,b,c"
                              << ','
                              << (char)0
+                             << "UTF-8"
                              << 3
                              << result;
 
@@ -84,6 +92,7 @@ void TestImport::csvImport_data()
     QTest::newRow("manyquotes") << "\"a,a\"\"\",\"b\",\"c\"\n\"d\",\"e\",\"\"\"\"\"f,f\"\n"
                                 << ','
                                 << '"'
+                                << "UTF-8"
                                 << 3
                                 << result;
 
@@ -93,6 +102,7 @@ void TestImport::csvImport_data()
     QTest::newRow("utf8chars") << csv
                                << ','
                                << (char)0
+                               << "UTF-8"
                                << 3
                                << result;
 }

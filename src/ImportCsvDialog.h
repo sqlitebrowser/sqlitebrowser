@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class DBBrowserDB;
+class QCompleter;
 
 namespace Ui {
 class ImportCsvDialog;
@@ -26,9 +27,11 @@ private:
     Ui::ImportCsvDialog* ui;
     QString csvFilename;
     DBBrowserDB* pdb;
+    QCompleter* encodingCompleter;
 
-    char currentQuoteChar();
-    char currentSeparatorChar();
+    char currentQuoteChar() const;
+    char currentSeparatorChar() const;
+    QString currentEncoding() const;
 };
 
 #endif

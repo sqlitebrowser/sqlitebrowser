@@ -6,6 +6,8 @@
 #include <QProgressDialog>
 #include <QPushButton>
 #include <QDateTime>
+#include <QTextCodec>
+#include <QCompleter>
 #include <sqlite3.h>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
@@ -15,6 +17,13 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
       pdb(db)
 {
     ui->setupUi(this);
+
+    QStringList encodingList;
+    foreach(QString enc, QTextCodec::availableCodecs())
+        encodingList.push_back(enc);
+    encodingCompleter = new QCompleter(encodingList, this);
+    encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->editCustomEncoding->setCompleter(encodingCompleter);
 
     checkInput();
     updatePreview();
@@ -42,7 +51,7 @@ void ImportCsvDialog::accept()
 
     // Parse all csv data
     int numfields;
-    QStringList curList = pdb->decodeCSV(csvFilename, currentSeparatorChar(), currentQuoteChar(), -1, &numfields);
+    QStringList curList = pdb->decodeCSV(csvFilename, currentSeparatorChar(), currentQuoteChar(), currentEncoding(), -1, &numfields);
 
     // Can not operate on an empty result
     if(numfields == 0)
@@ -157,11 +166,12 @@ void ImportCsvDialog::updatePreview()
     // Show/hide custom quote/separator input fields
     ui->editCustomQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1);
     ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1);
+    ui->editCustomEncoding->setVisible(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1);
 
     // Get preview data
     int numfields;
     int maxrecs = 20;
-    QStringList curList = pdb->decodeCSV(csvFilename, currentSeparatorChar(), currentQuoteChar(), maxrecs, &numfields);
+    QStringList curList = pdb->decodeCSV(csvFilename, currentSeparatorChar(), currentQuoteChar(), currentEncoding(), maxrecs, &numfields);
 
     // Reset preview widget
     ui->tablePreview->clear();
@@ -208,7 +218,7 @@ void ImportCsvDialog::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
-char ImportCsvDialog::currentQuoteChar()
+char ImportCsvDialog::currentQuoteChar() const
 {
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
     if(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1)
@@ -220,11 +230,20 @@ char ImportCsvDialog::currentQuoteChar()
         return 0;
 }
 
-char ImportCsvDialog::currentSeparatorChar()
+char ImportCsvDialog::currentSeparatorChar() const
 {
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
     if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1)
         return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
 
     return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toLatin1();
+}
+
+QString ImportCsvDialog::currentEncoding() const
+{
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1)
+        return ui->editCustomEncoding->text().length() ? ui->editCustomEncoding->text() : "UTF-8";
+    else
+        return ui->comboEncoding->currentText();
 }

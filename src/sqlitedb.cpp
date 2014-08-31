@@ -873,7 +873,7 @@ void DBBrowserDB::updateSchema( )
     }
 }
 
-QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char quote, int maxrecords, int * numfields)
+QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char quote, const QString& encoding, int maxrecords, int * numfields)
 {
     QFile file(csvfilename);
     QStringList result;
@@ -886,6 +886,7 @@ QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char q
 
     //Other than QFile, the QTextStream-class properly detects 2-Byte QChars and converts them accordingly (UTF-8)
     QTextStream inStream(&file);
+    inStream.setCodec(encoding.toUtf8());
 
     QProgressDialog progress(QObject::tr("Decoding CSV file..."), QObject::tr("Cancel"), 0, file.size());
     progress.setWindowModality(Qt::ApplicationModal);
