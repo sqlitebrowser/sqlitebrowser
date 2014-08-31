@@ -301,7 +301,6 @@ keywordascolumnname
   | INITIALLY
   | IMMEDIATE
   | IS
-  | NOT
   | NULL_T
   | MATCH
   | EXISTS
