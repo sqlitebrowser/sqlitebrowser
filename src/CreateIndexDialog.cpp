@@ -28,7 +28,7 @@ CreateIndexDialog::~CreateIndexDialog()
 void CreateIndexDialog::tableChanged(const QString& new_table)
 {
     // And fill the table again
-    QStringList fields = pdb->getTableFields(new_table);
+    QStringList fields = pdb->getObjectByName(new_table).table.fieldNames();
     ui->tableIndexColumns->setRowCount(fields.size());
     for(int i=0; i < fields.size(); ++i)
     {

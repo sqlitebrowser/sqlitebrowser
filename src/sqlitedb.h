@@ -29,14 +29,6 @@ public:
     QString getsql() const { return sql; }
     QString gettype() const { return type; }
     QString getTableName() const { return table_name; }
-    sqlb::FieldPtr getField(const QString& name)
-    {
-        int id = table.findField(name);
-        if(id == -1)
-            return sqlb::FieldPtr();
-        else
-            return table.fields().at(id);
-    }
     sqlb::Table table;
 private:
     QString name;
@@ -93,7 +85,6 @@ public:
      */
     bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move = 0);
 
-    QStringList getTableFields(const QString & tablename) const;
     QStringList getBrowsableObjectNames() const;
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;

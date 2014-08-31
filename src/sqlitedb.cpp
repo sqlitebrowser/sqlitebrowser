@@ -755,28 +755,9 @@ objectMap DBBrowserDB::getBrowsableObjects() const
     return res;
 }
 
-QStringList DBBrowserDB::getTableFields(const QString & tablename) const
-{
-    objectMap::ConstIterator it;
-    QStringList res;
-
-    for ( it = objMap.begin(); it != objMap.end(); ++it )
-    {
-        if((*it).getname() == tablename)
-        {
-            for(int i=0;i<(*it).table.fields().size();i++)
-                res.append((*it).table.fields().at(i)->name());
-        }
-    }
-    return res;
-}
-
 DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
 {
-    objectMap::ConstIterator it;
-    QStringList res;
-
-    for ( it = objMap.begin(); it != objMap.end(); ++it )
+    for (objectMap::ConstIterator it = objMap.begin(); it != objMap.end(); ++it )
     {
         if((*it).getname() == name)
             return *it;

@@ -118,6 +118,16 @@ QStringList Table::fieldList() const
     return sl;
 }
 
+QStringList Table::fieldNames() const
+{
+    QStringList sl;
+
+    foreach(FieldPtr f, m_fields)
+        sl << f->name();
+
+    return sl;
+}
+
 bool Table::hasAutoIncrement() const
 {
     foreach(FieldPtr f, m_fields) {

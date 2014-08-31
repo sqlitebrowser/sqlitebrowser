@@ -42,7 +42,7 @@ void SqliteTableModel::setTable(const QString& table)
         if(t.name() != "") // parsing was OK
         {
             m_headers.push_back(t.rowidColumn());
-            m_headers.append(m_db->getTableFields(table));
+            m_headers.append(m_db->getObjectByName(table).table.fieldNames());
         }
         else
         {

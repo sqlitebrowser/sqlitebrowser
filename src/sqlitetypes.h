@@ -97,6 +97,7 @@ public:
     bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
     void setField(int index, FieldPtr f) { m_fields[index] = f; }
+    QStringList fieldNames() const;
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
     const QString& rowidColumn() const { return m_rowidColumn; }
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
