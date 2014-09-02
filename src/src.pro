@@ -31,6 +31,7 @@ HEADERS += \
     ImportCsvDialog.h \
     sqltextedit.h \
     sqlitetypes.h \
+    csvparser.h \
     ExtendedTableWidget.h \
     grammar/Sqlite3Lexer.hpp \
     grammar/Sqlite3Parser.hpp \
@@ -56,6 +57,7 @@ SOURCES += \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
     sqlitetypes.cpp \
+    csvparser.cpp \
     ExtendedTableWidget.cpp \
     grammar/Sqlite3Lexer.cpp \
     grammar/Sqlite3Parser.cpp \
