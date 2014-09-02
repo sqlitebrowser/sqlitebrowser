@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QApplication>
-#include <QTextStream>
 #include <QSettings>
 #include <QDebug>
 #include <sqlite3.h>
@@ -852,112 +851,6 @@ void DBBrowserDB::updateSchema( )
             }
         }
     }
-}
-
-QStringList DBBrowserDB::decodeCSV(const QString & csvfilename, char sep, char quote, const QString& encoding, int maxrecords, int * numfields)
-{
-    QFile file(csvfilename);
-    QStringList result;
-    *numfields = 0;
-    int recs = 0;
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return result;
-    }
-
-    //Other than QFile, the QTextStream-class properly detects 2-Byte QChars and converts them accordingly (UTF-8)
-    QTextStream inStream(&file);
-    inStream.setCodec(encoding.toUtf8());
-
-    QProgressDialog progress(QObject::tr("Decoding CSV file..."), QObject::tr("Cancel"), 0, file.size());
-    progress.setWindowModality(Qt::ApplicationModal);
-
-
-
-    while (!inStream.atEnd()) {
-
-        bool inquotemode = false;
-        bool inescapemode = false;
-        QString line = "";
-        QString current = "";
-
-        line = inStream.readLine();
-
-        //For every Line, we iterate over the single QChars
-        QString::ConstIterator i = line.begin();
-
-        while (i != line.end()) {
-
-            QChar c = *i;
-
-            if (c==quote){
-                if (inquotemode){
-                    if (inescapemode){
-                        inescapemode = false;
-                        //add the escaped char here
-                        current.append(c);
-                    } else {
-                        //are we escaping, or just finishing the quote?
-                        i++; //Performing lookahead using the iterator
-                        QChar d = *i;
-
-                        if (d==quote) {
-                            inescapemode = true;
-                        } else {
-                            inquotemode = false;
-                        }
-                        i--;
-                    }
-                } else {
-                    inquotemode = true;
-                }
-            } else if (c==sep) {
-                if (inquotemode){
-                    //add the sep here
-                    current.append(c);
-                } else {
-                    //not quoting, start new record
-                    result << current;
-                    current = "";
-                }
-            } else if (c==10 || c==13) {
-                if (inquotemode){
-                    //add the newline/carrier return
-                    current.append(c);
-                }
-            } else if (c==32) {
-              
-              // Only append blanks if we are inside of quotes
-              if (inquotemode || quote == 0) {
-                current.append(c);
-              }
-
-            } else {//another character type
-                current.append(c);
-            }
-
-            i++;
-        }
-
-        //Moved this block from (c==10), as line-separation is now handeled by the outer-loop
-        result << current;
-
-        if (*numfields == 0){
-            *numfields = result.count();
-        }
-        recs++;
-        progress.setValue(file.pos());
-        qApp->processEvents();
-
-        if ( (progress.wasCanceled() || recs>maxrecords) && maxrecords!=-1) {
-            break;
-        }
-    }
-
-    file.close();
-
-    return result;
-
 }
 
 QString DBBrowserDB::getPragma(const QString& pragma)

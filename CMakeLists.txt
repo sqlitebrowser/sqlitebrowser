@@ -29,6 +29,7 @@ endif()
 set(SQLB_HDR
 	src/gen_version.h
 	src/sqlitetypes.h
+    src/csvparser.h
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
@@ -73,6 +74,7 @@ set(SQLB_SRC
 	src/sqlitetablemodel.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
+    src/csvparser.cpp
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp

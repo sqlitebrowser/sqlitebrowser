@@ -1,9 +1,28 @@
 #include <QTemporaryFile>
 #include <QtTest/QTest>
 #include <QApplication>
+#include <QTextStream>
 
+#include "csvparser.h"
 #include "TestImport.h"
 #include "../sqlitedb.h"
+
+Q_DECLARE_METATYPE(CSVParser::TCSVResult)
+
+TestImport::TestImport()
+{
+    // Init basic application
+    // The app needs to be initialized for the utf8 test
+    // to work
+    int argcount = 1;
+    const char* appname = "sqlb-unittests";
+    app = new QApplication(argcount, const_cast<char**>(&appname));
+}
+
+TestImport::~TestImport()
+{
+    delete app;
+}
 
 void TestImport::csvImport()
 {
@@ -13,12 +32,7 @@ void TestImport::csvImport()
     QFETCH(char, quote);
     QFETCH(QString, encoding);
     QFETCH(int, numfields);
-    QFETCH(QStringList, result);
-
-    // Init basic application
-    int argcount = 1;
-    const char* appname = "sqlb-unittests";
-    QApplication app(argcount, const_cast<char**>(&appname));
+    QFETCH(QVector<QStringList>, result);
 
     // Create temporary CSV file
     QTemporaryFile file;
@@ -28,12 +42,15 @@ void TestImport::csvImport()
 
     // Call decodeCSV function
     DBBrowserDB db;
-    int numfields_read;
-    QStringList retval = db.decodeCSV(file.fileName(), separator, quote, encoding, -1, &numfields_read);
+
+    CSVParser csvparser(true, separator, quote);
+    file.seek(0);
+    QTextStream tstream(&file);
+    csvparser.parse(tstream);
 
     // Check return values
-    QCOMPARE(retval, result);
-    QCOMPARE(numfields_read, numfields);
+    QCOMPARE(csvparser.csv(), result);
+    QCOMPARE((int)csvparser.columns(), numfields);
 }
 
 void TestImport::csvImport_data()
@@ -43,10 +60,12 @@ void TestImport::csvImport_data()
     QTest::addColumn<char>("quote");
     QTest::addColumn<QString>("encoding");
     QTest::addColumn<int>("numfields");
-    QTest::addColumn<QStringList>("result");
+    QTest::addColumn<CSVParser::TCSVResult>("result");
 
-    QStringList result;
-    result << "a" << "b" << "c" << "d" << "e" << "f" << "g" << "h" << "i";
+    CSVParser::TCSVResult result;
+    result.append(QStringList() << "a" << "b" << "c");
+    result.append(QStringList() << "d" << "e" << "f");
+    result.append(QStringList() << "g" << "h" << "i");
     QTest::newRow("commas_noquotes") << "a,b,c\nd,e,f\ng,h,i\n"
                                      << ','
                                      << (char)0
@@ -79,7 +98,7 @@ void TestImport::csvImport_data()
                                        << result;
 
     result.clear();
-    result << "a" << "b" << "c";
+    result.append(QStringList() << "a" << "b" << "c");
     QTest::newRow("oneline") << "a,b,c"
                              << ','
                              << (char)0
@@ -88,7 +107,8 @@ void TestImport::csvImport_data()
                              << result;
 
     result.clear();
-    result << "a,a\"" << "b" << "c" << "d" << "e" << "\"\"f,f";
+    result.append(QStringList() << "a,a\"" << "b" << "c");
+    result.append(QStringList() << "d" << "e" << "\"\"f,f");
     QTest::newRow("manyquotes") << "\"a,a\"\"\",\"b\",\"c\"\n\"d\",\"e\",\"\"\"\"\"f,f\"\n"
                                 << ','
                                 << '"'
@@ -97,7 +117,7 @@ void TestImport::csvImport_data()
                                 << result;
 
     result.clear();
-    result << QString::fromUtf8("\u4E18") << QString::fromUtf8("\u4E26") << QString::fromUtf8("\u4E4B");
+    result.append(QStringList() << QString::fromUtf8("\u4E18") << QString::fromUtf8("\u4E26") << QString::fromUtf8("\u4E4B"));
     QString csv = QString::fromUtf8("\u4E18") + "," + QString::fromUtf8("\u4E26") + "," + QString::fromUtf8("\u4E4B") + "\n";
     QTest::newRow("utf8chars") << csv
                                << ','

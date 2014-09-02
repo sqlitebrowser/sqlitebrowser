@@ -101,8 +101,6 @@ public:
 
     sqlite3 * _db;
 
-    QStringList decodeCSV(const QString & csvfilename, char sep, char quote, const QString& encoding, int maxrecords, int * numfields);
-
     objectMap objMap;
 
     QString lastErrorMessage;

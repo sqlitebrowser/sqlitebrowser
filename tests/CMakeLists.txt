@@ -32,6 +32,7 @@ set(SQLB_SRC
 	../src/sqlitedb.cpp
 	../src/sqlitetablemodel.cpp
 	../src/sqlitetypes.cpp
+    ../src/csvparser.cpp
 	../src/grammar/Sqlite3Lexer.cpp
 	../src/grammar/Sqlite3Parser.cpp
 	../src/tests/TestImport.cpp
@@ -42,6 +43,7 @@ set(SQLB_HDR
 	../src/grammar/sqlite3TokenTypes.hpp
 	../src/grammar/Sqlite3Lexer.hpp
 	../src/grammar/Sqlite3Parser.hpp
+    ../src/csvparser.h
 	../src/sqlitetypes.h)
 
 set(SQLB_MOC_HDR

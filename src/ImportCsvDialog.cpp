@@ -1,6 +1,7 @@
 #include "ImportCsvDialog.h"
 #include "ui_ImportCsvDialog.h"
 #include "sqlitedb.h"
+#include "csvparser.h"
 
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -9,6 +10,9 @@
 #include <QTextCodec>
 #include <QCompleter>
 #include <sqlite3.h>
+#include <QFile>
+#include <QTextStream>
+#include <memory>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
@@ -45,27 +49,77 @@ void rollback(ImportCsvDialog* dialog, DBBrowserDB* pdb, QProgressDialog& progre
 }
 }
 
+class CSVImportProgress : public CSVProgress
+{
+public:
+    CSVImportProgress(size_t filesize)
+    {
+        m_pProgressDlg = new QProgressDialog(
+                    QObject::tr("Decoding CSV file..."),
+                    QObject::tr("Cancel"),
+                    0,
+                    filesize);
+        m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
+    }
+
+    ~CSVImportProgress()
+    {
+        delete m_pProgressDlg;
+    }
+
+    void start()
+    {
+        m_pProgressDlg->show();
+    }
+
+    bool update(size_t pos)
+    {
+        m_pProgressDlg->setValue(pos);
+        qApp->processEvents();
+
+        return !m_pProgressDlg->wasCanceled();
+    }
+
+    void end()
+    {
+        m_pProgressDlg->hide();
+    }
+
+private:
+    QProgressDialog* m_pProgressDlg;
+};
+
 void ImportCsvDialog::accept()
 {
     QString sql;
 
     // Parse all csv data
-    int numfields;
-    QStringList curList = pdb->decodeCSV(csvFilename, currentSeparatorChar(), currentQuoteChar(), currentEncoding(), -1, &numfields);
+    QFile file(csvFilename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-    // Can not operate on an empty result
-    if(numfields == 0)
+    CSVParser csv(true, currentSeparatorChar(), currentQuoteChar());
+    csv.setCSVProgress(new CSVImportProgress(file.size()));
+
+    QTextStream tstream(&file);
+    tstream.setCodec(currentEncoding().toUtf8());
+    csv.parse(tstream);
+    file.close();
+
+    if(csv.csv().size() == 0)
         return;
 
     // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
     sqlb::FieldVector fieldList;
+    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
     if(ui->checkboxHeader->isChecked())
     {
-        int cfieldnum = 0;
-        while(!curList.empty() && cfieldnum != numfields)
+        ++itBegin;
+        for(QStringList::const_iterator it = csv.csv().at(0).begin();
+            it != csv.csv().at(0).end();
+            ++it)
         {
             // Remove invalid characters
-            QString thisfield = curList.front();
+            QString thisfield = *it;
             thisfield.replace("`", "");
             thisfield.replace(" ", "");
             thisfield.replace('"', "");
@@ -75,23 +129,18 @@ void ImportCsvDialog::accept()
 
             // Avoid empty field names
             if(thisfield.isEmpty())
-                thisfield = QString("field%1").arg(cfieldnum+1);
+                thisfield = QString("field%1").arg(std::distance(csv.csv().at(0).begin(), it) + 1);
 
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(thisfield, "")));
-            cfieldnum++;
-            curList.pop_front();
         }
     } else {
-        for(int i=0; i < numfields; ++i)
+        for(int i=0; i < csv.columns(); ++i)
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(QString("field%1").arg(i+1), "")));
     }
 
     // Show progress dialog
-    QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, curList.size());
+    QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, csv.csv().size());
     progress.setWindowModality(Qt::ApplicationModal);
-
-    // declare local variables we will need before the rollback jump
-    int colNum = 0;
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
@@ -100,7 +149,7 @@ void ImportCsvDialog::accept()
     {
         if(i.value().gettype() == "table" && i.value().getname() == ui->editName->text())
         {
-            if(i.value().table.fields().size() != numfields)
+            if(i.value().table.fields().size() != csv.columns())
             {
                 QMessageBox::warning(this, QApplication::applicationName(),
                                      tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
@@ -131,28 +180,30 @@ void ImportCsvDialog::accept()
     }
 
     // now lets import all data, one row at a time
-    for(int i=0;i<curList.size();++i)
+    for(CSVParser::TCSVResult::const_iterator it = itBegin;
+        it != csv.csv().end();
+        ++it)
     {
-        if(colNum == 0)
-            sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
+        sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
 
-        // need to mprintf here
-        char* formSQL = sqlite3_mprintf("%Q", (const char*)curList[i].toUtf8());
-        sql.append(formSQL);
-        if(formSQL)
-            sqlite3_free(formSQL);
-
-        colNum++;
-        if(colNum < numfields)
+        for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
         {
-            sql.append(",");
-        } else {
-            colNum = 0;
-            sql.append(");");
-            if(!pdb->executeSQL(sql, false, false))
-                return rollback(this, pdb, progress, restorepointName);
+            // need to mprintf here
+            char* formSQL = sqlite3_mprintf("%Q", (const char*)jt->toUtf8());
+            sql.append(formSQL);
+            if(formSQL)
+                sqlite3_free(formSQL);
+
+            if(jt != (it->end() - 1))
+                sql.append((','));
         }
-        progress.setValue(i);
+
+        sql.append(");");
+
+        if(!pdb->executeSQL(sql, false, false))
+            return rollback(this, pdb, progress, restorepointName);
+
+        progress.setValue(std::distance(csv.csv().begin(), it));
         if(progress.wasCanceled())
             return rollback(this, pdb, progress, restorepointName);
     }
@@ -169,42 +220,52 @@ void ImportCsvDialog::updatePreview()
     ui->editCustomEncoding->setVisible(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1);
 
     // Get preview data
-    int numfields;
-    int maxrecs = 20;
-    QStringList curList = pdb->decodeCSV(csvFilename, currentSeparatorChar(), currentQuoteChar(), currentEncoding(), maxrecs, &numfields);
+    QFile file(csvFilename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    CSVParser csv(true, currentSeparatorChar(), currentQuoteChar());
+
+    QTextStream tstream(&file);
+    tstream.setCodec(currentEncoding().toUtf8());
+    csv.parse(tstream, 20);
+    file.close();
 
     // Reset preview widget
     ui->tablePreview->clear();
-    ui->tablePreview->setColumnCount(numfields);
+    ui->tablePreview->setColumnCount(csv.columns());
 
     // Exit if there are no lines to preview at all
-    if(numfields == 0)
+    if(csv.columns() == 0)
         return;
 
     // Use first row as header if necessary
+    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
     if(ui->checkboxHeader->isChecked())
     {
-        ui->tablePreview->setHorizontalHeaderLabels(curList);
-
-        // Remove this row to not show it in the data section
-        for(int e=0;e < numfields; ++e)
-            curList.pop_front();
+        ui->tablePreview->setHorizontalHeaderLabels(*itBegin);
+        ++itBegin;
     }
 
     // Fill data section
-    ui->tablePreview->setRowCount(curList.count() / numfields);
-    int rowNum = 0;
-    int colNum = 0;
-    for(QStringList::Iterator ct=curList.begin();ct!=curList.end();++ct)
+    ui->tablePreview->setRowCount(std::distance(itBegin, csv.csv().end()));
+
+    for(CSVParser::TCSVResult::const_iterator ct = itBegin;
+        ct != csv.csv().end();
+        ++ct)
     {
-        if(colNum == 0)
-            ui->tablePreview->setVerticalHeaderItem(rowNum, new QTableWidgetItem(QString::number(rowNum + 1)));
-        ui->tablePreview->setItem(rowNum, colNum, new QTableWidgetItem(*ct));
-        colNum++;
-        if(colNum == numfields)
+        for(QStringList::const_iterator it = ct->begin(); it != ct->end(); ++it)
         {
-            colNum = 0;
-            rowNum++;
+            int rowNum = std::distance(itBegin, ct);
+            if(it == ct->begin())
+            {
+                ui->tablePreview->setVerticalHeaderItem(
+                            rowNum,
+                            new QTableWidgetItem(QString::number(rowNum + 1)));
+            }
+            ui->tablePreview->setItem(
+                        rowNum,
+                        std::distance(ct->begin(), it),
+                        new QTableWidgetItem(*it));
         }
     }
 }
