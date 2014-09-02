@@ -84,6 +84,7 @@ FORMS += \
 
 TRANSLATIONS += \
     translations/sqlb_de.ts \
+    translations/sqlb_fr.ts \
     translations/sqlb_ru.ts
 
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
