@@ -29,8 +29,13 @@ private:
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
 
+    void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
+
+    void setSeparatorChar(const QChar& c);
     char currentSeparatorChar() const;
+
+    void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
 };
 

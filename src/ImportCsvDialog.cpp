@@ -9,9 +9,11 @@
 #include <QDateTime>
 #include <QTextCodec>
 #include <QCompleter>
+#include <QComboBox>
 #include <sqlite3.h>
 #include <QFile>
 #include <QTextStream>
+#include <QSettings>
 #include <memory>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
@@ -28,6 +30,13 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     encodingCompleter = new QCompleter(encodingList, this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->editCustomEncoding->setCompleter(encodingCompleter);
+
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
+    ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
+    setSeparatorChar(QChar(settings.value("importcsv/separator", 44).toInt()));
+    setQuoteChar(QChar(settings.value("importcsv/quotecharacter", 34).toInt()));
+    setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
 
     checkInput();
     updatePreview();
@@ -91,13 +100,21 @@ private:
 
 void ImportCsvDialog::accept()
 {
-    QString sql;
+    // save settings
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    settings.beginGroup("importcsv");
+    settings.setValue("firstrowheader", ui->checkboxHeader->isChecked());
+    settings.setValue("separator", currentSeparatorChar());
+    settings.setValue("quotecharacter", currentQuoteChar());
+    settings.setValue("trimfields", ui->checkBoxTrimFields->isChecked());
+    settings.setValue("encoding", currentEncoding());
+    settings.endGroup();
 
     // Parse all csv data
     QFile file(csvFilename);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-    CSVParser csv(true, currentSeparatorChar(), currentQuoteChar());
+    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
     csv.setCSVProgress(new CSVImportProgress(file.size()));
 
     QTextStream tstream(&file);
@@ -184,6 +201,7 @@ void ImportCsvDialog::accept()
         it != csv.csv().end();
         ++it)
     {
+        QString sql;
         sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
 
         for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
@@ -223,7 +241,7 @@ void ImportCsvDialog::updatePreview()
     QFile file(csvFilename);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-    CSVParser csv(true, currentSeparatorChar(), currentQuoteChar());
+    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
 
     QTextStream tstream(&file);
     tstream.setCodec(currentEncoding().toUtf8());
@@ -279,6 +297,21 @@ void ImportCsvDialog::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
+void ImportCsvDialog::setQuoteChar(const QChar& c)
+{
+    QComboBox* combo = ui->comboQuote;
+    int index = combo->findText(c);
+    if(index == -1)
+    {
+        combo->setCurrentIndex(combo->count());
+        ui->editCustomQuote->setText(c);
+    }
+    else
+    {
+        combo->setCurrentIndex(index);
+    }
+}
+
 char ImportCsvDialog::currentQuoteChar() const
 {
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
@@ -291,6 +324,22 @@ char ImportCsvDialog::currentQuoteChar() const
         return 0;
 }
 
+void ImportCsvDialog::setSeparatorChar(const QChar& c)
+{
+    QComboBox* combo = ui->comboSeparator;
+    QString sText = c == '\t' ? QString("Tab") : QString(c);
+    int index = combo->findText(sText);
+    if(index == -1)
+    {
+        combo->setCurrentIndex(combo->count());
+        ui->editCustomSeparator->setText(c);
+    }
+    else
+    {
+        combo->setCurrentIndex(index);
+    }
+}
+
 char ImportCsvDialog::currentSeparatorChar() const
 {
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
@@ -298,6 +347,21 @@ char ImportCsvDialog::currentSeparatorChar() const
         return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
 
     return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toLatin1();
+}
+
+void ImportCsvDialog::setEncoding(const QString& sEnc)
+{
+    QComboBox* combo = ui->comboEncoding;
+    int index = combo->findText(sEnc);
+    if(index == -1)
+    {
+        combo->setCurrentIndex(combo->count());
+        ui->editCustomEncoding->setText(sEnc);
+    }
+    else
+    {
+        combo->setCurrentIndex(index);
+    }
 }
 
 QString ImportCsvDialog::currentEncoding() const
