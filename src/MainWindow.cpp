@@ -691,6 +691,7 @@ void MainWindow::executeQuery()
     QByteArray utf8Query = query.toUtf8();
     const char *tail = utf8Query.data();
     int sql3status = 0;
+    int tail_length = utf8Query.length();
     QString statusMessage;
     bool modified = false;
     bool wasdirty = db.getDirty();
@@ -707,9 +708,10 @@ void MainWindow::executeQuery()
     do
     {
         const char* qbegin = tail;
-        sql3status = sqlite3_prepare_v2(db._db,tail,utf8Query.length(),
+        sql3status = sqlite3_prepare_v2(db._db,tail, tail_length,
                             &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
+        tail_length -= (tail - qbegin);
         if (sql3status == SQLITE_OK){
             sql3status = sqlite3_step(vm);
             sqlite3_finalize(vm);
