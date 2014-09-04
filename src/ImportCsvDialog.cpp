@@ -151,7 +151,7 @@ void ImportCsvDialog::accept()
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(thisfield, "")));
         }
     } else {
-        for(int i=0; i < csv.columns(); ++i)
+        for(size_t i=0; i < csv.columns(); ++i)
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(QString("field%1").arg(i+1), "")));
     }
 
@@ -166,7 +166,7 @@ void ImportCsvDialog::accept()
     {
         if(i.value().gettype() == "table" && i.value().getname() == ui->editName->text())
         {
-            if(i.value().table.fields().size() != csv.columns())
+            if((size_t)i.value().table.fields().size() != csv.columns())
             {
                 QMessageBox::warning(this, QApplication::applicationName(),
                                      tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
