@@ -181,7 +181,7 @@ QString Table::emptyInsertStmt(int pk_value) const
                 vals << QString::number(pk_value);
             else
                 vals << "NULL";
-        } else if(f->notnull()) {
+        } else if(f->notnull() && f->defaultValue().length() == 0) {
             fields << f->name();
 
             if(f->isInteger())
