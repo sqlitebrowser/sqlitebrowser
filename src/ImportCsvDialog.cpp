@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QSettings>
+#include <QDebug>
 #include <memory>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
@@ -48,11 +49,20 @@ ImportCsvDialog::~ImportCsvDialog()
 }
 
 namespace {
-void rollback(ImportCsvDialog* dialog, DBBrowserDB* pdb, QProgressDialog& progress, const QString& savepointName)
+void rollback(
+        ImportCsvDialog* dialog,
+        DBBrowserDB* pdb,
+        QProgressDialog& progress,
+        const QString& savepointName,
+        size_t nRecord)
 {
     progress.hide();
     QApplication::restoreOverrideCursor();  // restore original cursor
-    QString error = QObject::tr("Error importing data. Message from database engine: %1").arg(pdb->lastErrorMessage);
+    QString sCSVInfo = QObject::tr("Error importing data");
+    if(nRecord)
+        sCSVInfo += QObject::tr(" from record number %1").arg(nRecord);
+    QString error = sCSVInfo + QObject::tr(".\nMessage from database engine:\n%1").arg(
+                pdb->lastErrorMessage);
     QMessageBox::warning(dialog, QApplication::applicationName(), error);
     pdb->revert(savepointName);
 }
@@ -187,13 +197,13 @@ void ImportCsvDialog::accept()
     // db needs to be saved or an error will occur
     QString restorepointName = QString("CSVIMPORT_%1").arg(QDateTime::currentMSecsSinceEpoch());
     if(!pdb->setRestorePoint(restorepointName))
-        return rollback(this, pdb, progress, restorepointName);
+        return rollback(this, pdb, progress, restorepointName, 0);
 
     // Create table
     if(!importToExistingTable)
     {
         if(!pdb->createTable(ui->editName->text(), fieldList))
-            return rollback(this, pdb, progress, restorepointName);
+            return rollback(this, pdb, progress, restorepointName, 0);
     }
 
     // now lets import all data, one row at a time
@@ -204,26 +214,32 @@ void ImportCsvDialog::accept()
         QString sql;
         sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
 
+        QStringList insertlist;
         for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
         {
             // need to mprintf here
             char* formSQL = sqlite3_mprintf("%Q", (const char*)jt->toUtf8());
-            sql.append(formSQL);
+            insertlist << formSQL;
             if(formSQL)
                 sqlite3_free(formSQL);
-
-            if(jt != (it->end() - 1))
-                sql.append((','));
         }
 
+        // add missing fields with empty values
+        for(int i = insertlist.size(); i < csv.columns(); ++i)
+        {
+            qWarning() << "ImportCSV" << tr("Missing field for record %1").arg(std::distance(itBegin, it) + 1);
+            insertlist << "NULL";
+        }
+
+        sql.append(insertlist.join(','));
         sql.append(");");
 
         if(!pdb->executeSQL(sql, false, false))
-            return rollback(this, pdb, progress, restorepointName);
+            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1);
 
         progress.setValue(std::distance(csv.csv().begin(), it));
         if(progress.wasCanceled())
-            return rollback(this, pdb, progress, restorepointName);
+            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1);
     }
 
     QApplication::restoreOverrideCursor();  // restore original cursor
