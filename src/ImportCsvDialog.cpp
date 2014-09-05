@@ -168,6 +168,7 @@ void ImportCsvDialog::accept()
     // Show progress dialog
     QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, csv.csv().size());
     progress.setWindowModality(Qt::ApplicationModal);
+    progress.show();
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
@@ -211,8 +212,7 @@ void ImportCsvDialog::accept()
         it != csv.csv().end();
         ++it)
     {
-        QString sql;
-        sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
+        QString sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
 
         QStringList insertlist;
         for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
@@ -225,7 +225,7 @@ void ImportCsvDialog::accept()
         }
 
         // add missing fields with empty values
-        for(int i = insertlist.size(); i < csv.columns(); ++i)
+        for(unsigned int i = insertlist.size(); i < csv.columns(); ++i)
         {
             qWarning() << "ImportCSV" << tr("Missing field for record %1").arg(std::distance(itBegin, it) + 1);
             insertlist << "NULL";
@@ -237,7 +237,10 @@ void ImportCsvDialog::accept()
         if(!pdb->executeSQL(sql, false, false))
             return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1);
 
-        progress.setValue(std::distance(csv.csv().begin(), it));
+        // Update progress bar and check if cancel button was clicked
+        unsigned int prog = std::distance(csv.csv().begin(), it);
+        if(prog % 100 == 0)
+            progress.setValue(prog);
         if(progress.wasCanceled())
             return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1);
     }
