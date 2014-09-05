@@ -431,6 +431,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxTrimFields</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>368</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updatePreview()</slot>
