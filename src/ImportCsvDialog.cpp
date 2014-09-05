@@ -231,7 +231,7 @@ void ImportCsvDialog::accept()
             insertlist << "NULL";
         }
 
-        sql.append(insertlist.join(','));
+        sql.append(insertlist.join(QChar(',')));
         sql.append(");");
 
         if(!pdb->executeSQL(sql, false, false))
