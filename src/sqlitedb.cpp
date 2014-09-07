@@ -470,7 +470,7 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     if(table.isWithoutRowidTable())
     {
         SqliteTableModel m(this, this);
-        m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(getObjectByName(sTableName).table.rowidColumn()).arg(sTableName));
+        m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(table.rowidColumn()).arg(sTableName));
         pk_value = m.data(m.index(0, 0)).toInt() + 1;
         sInsertstmt = table.emptyInsertStmt(pk_value);
     } else {
