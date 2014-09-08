@@ -13,11 +13,13 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
     // Create UI
     ui->setupUi(this);
 
-    // Fill table combobox
-    QStringList tables = pdb->getBrowsableObjectNames();
-    tables.sort();
-    for(QStringList::ConstIterator i=tables.begin();i!=tables.end();++i)
-        ui->comboTableName->addItem(QIcon(QString(":icons/table")), *i);
+    // Get list of tables, sort it alphabetically and fill the combobox
+    QMultiMap<QString, DBBrowserObject> dbobjs;
+    QList<DBBrowserObject> tables = pdb->objMap.values("table");
+    for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
+        dbobjs.insert((*it).getname(), (*it));
+    for(QMultiMap<QString, DBBrowserObject>::ConstIterator it=dbobjs.begin(); it != dbobjs.end(); ++it)
+        ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it).getname());
 }
 
 CreateIndexDialog::~CreateIndexDialog()
