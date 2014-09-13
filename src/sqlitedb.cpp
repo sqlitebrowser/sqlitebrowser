@@ -9,6 +9,30 @@
 #include <QDebug>
 #include <sqlite3.h>
 
+// collation callbacks
+int collCompare(void* pArg, int eTextRepA, const void* sA, int eTextRepB, const void* sB)
+{
+    size_t sizeA = strlen((const char*)sA);
+    size_t sizeB = strlen((const char*)sB);
+
+    if(sizeA == sizeB)
+        return memcmp(sA, sB, sizeA);
+    return sizeA - sizeB;
+}
+
+void collation_needed(void* pData, sqlite3* db, int eTextRep, const char* sCollationName)
+{
+    QMessageBox::StandardButton reply = QMessageBox::question(
+                0,
+                QObject::tr("Collation needed! Proceed?"),
+                QObject::tr("A table in this database requires a special collation function '%1' "
+                            "that this application can't provide without further knowledge.\n"
+                            "If you choose to proceed, be aware bad things can happen to your database.\n"
+                            "Create a backup!").arg(sCollationName), QMessageBox::Yes | QMessageBox::No);
+    if(reply == QMessageBox::Yes)
+        sqlite3_create_collation(db, sCollationName, eTextRep, NULL, collCompare);
+}
+
 bool DBBrowserDB::isOpen ( ) const
 {
     return _db!=0;
@@ -45,6 +69,10 @@ bool DBBrowserDB::open ( const QString & db)
     lastErrorMessage = QObject::tr("no error");
 
     err = sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL);
+
+    // register collation callback
+    sqlite3_collation_needed(_db, NULL, collation_needed);
+
     if ( err ) {
         lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         sqlite3_close(_db);
