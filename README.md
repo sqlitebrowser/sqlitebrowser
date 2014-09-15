@@ -97,7 +97,7 @@ This is incredibly easy using [Homebrew](http://brew.sh).  Just run this command
 
     $ brew install sqlitebrowser
 
-And you're done.  A "sqlitebrowser" command should now available in your PATH,
+And you're done.  A "sqlitebrowser" command should now be available in your PATH,
 and can also be launched through Spotlight.
 
 ### Compiling to a .app bundle
