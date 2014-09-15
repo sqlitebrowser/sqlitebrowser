@@ -4,9 +4,12 @@
 
 ## What it is
 
-Database Browser for SQLite is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.
+Database Browser for SQLite is a high quality, visual, open source tool to
+create, design, and edit database files compatible with SQLite.
 
-It is for users and developers wanting to create databases, search, and edit data.  It uses a familiar spreadsheet-like interface, and you don't need to learn complicated SQL commands.
+It is for users and developers wanting to create databases, search, and edit
+data.  It uses a familiar spreadsheet-like interface, and you don't need to
+learn complicated SQL commands.
 
 Controls and wizards are available for users to:
 
@@ -23,7 +26,10 @@ Controls and wizards are available for users to:
 
 ## What it is not
 
-This program is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands. It is a tool to be used both by developers and by end users, and it must remain as simple to use as possible in order to achieve its goals.
+This program is not a visual shell for the sqlite command line tool. It does
+not require familiarity with SQL commands. It is a tool to be used both by
+developers and by end users, and it must remain as simple to use as possible
+in order to achieve its goals.
 
 ## What's been done since the SourceForge project
 
@@ -69,9 +75,21 @@ Database Browser for SQLite works well on MacOS X.
 
 * OSX 10.7 (Lion), 10.8 (Mountain Lion) and 10.9 (Mavericks) are tested and known to work
 
-It can be compiled to a single executable binary file, similar to other command line
-utilities.  Or it can either be compiled to a .app bundle, suitable for placing in
-/Applications.
+### MacOS X binaries
+
+OSX binaries can be downloaded from here:
+
+* https://github.com/sqlitebrowser/sqlitebrowser/releases
+
+Nightly builds for OSX are available at:
+
+* http://mirror.salasaga.org/sqlitebrowser/nightly/
+
+### Compiling on MacOS X
+
+The application can be compiled to a single executable binary file, similar to
+other command line utilities.  Or it can be compiled to a .app bundle, suitable
+for placing in /Applications.
 
 ### Compiling to a single executable binary
 
@@ -79,13 +97,13 @@ This is incredibly easy using [Homebrew](http://brew.sh).  Just run this command
 
     $ brew install sqlitebrowser
 
-And you're done.  A "sqlitebrowser" command should now available in your PATH, and can
-also be launched through Spotlight.
+And you're done.  A "sqlitebrowser" command should now available in your PATH,
+and can also be launched through Spotlight.
 
 ### Compiling to a .app bundle
 
-Building the .app bundle version takes a bit more effort, but isn't too hard.  It
-requires SQLite and Qt 4.8.x to be installed first.  These are the
+Building the .app bundle version takes a bit more effort, but isn't too hard.
+It requires SQLite and Qt 4.8.x to be installed first.  These are the
 [Homebrew](http://brew.sh) steps, though other package managers should work:
 
     $ brew install sqlite --with-functions --without-readline
@@ -141,15 +159,35 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## History
 
-This program was developed originally by Mauricio Piacentini ([@piacentini](https://github.com/piacentini)) from Tabuleiro Producoes, as the Arca Database Browser. The original version was used as a free companion tool to the Arca Database Xtra, a commercial product that embeds SQLite databases with some additional extensions to handle compressed and binary data.
+This program was developed originally by Mauricio Piacentini
+([@piacentini](https://github.com/piacentini)) from Tabuleiro Producoes, as
+the Arca Database Browser. The original version was used as a free companion
+tool to the Arca Database Xtra, a commercial product that embeds SQLite
+databases with some additional extensions to handle compressed and binary data.
 
-The original code was trimmed and adjusted to be compatible with standard SQLite 2.x databases. The resulting program was renamed SQLite Database Browser, and released into the Public Domain by Mauricio. Icons were contributed by [Raquel Ravanini](http://www.raquelravanini.com), also from Tabuleiro. Jens Miltner ([@jmiltner](https://github.com/jmiltner)) contributed the code to support SQLite 3.x databases for the 1.2 release.
+The original code was trimmed and adjusted to be compatible with standard
+SQLite 2.x databases. The resulting program was renamed SQLite Database
+Browser, and released into the Public Domain by Mauricio. Icons were
+contributed by [Raquel Ravanini](http://www.raquelravanini.com), also from
+Tabuleiro. Jens Miltner ([@jmiltner](https://github.com/jmiltner)) contributed
+the code to support SQLite 3.x databases for the 1.2 release.
 
-Pete Morgan ([@daffodil](https://github.com/daffodil)) created an initial project on GitHub with the code in 2012, where several contributors fixed and improved pieces over the years. René Peinthor ([@rp-](https://github.com/rp-)) and Martin Kleusberg ([@MKleusberg](https://github.com/MKleusberg)) then became involved, and have been the main driving force from that point.  Justin Clift ([@justinclift](https://github.com/justinclift)) helps out with testing on OSX, and started the new github.com/sqlitebrowser organisation on GitHub.
+Pete Morgan ([@daffodil](https://github.com/daffodil)) created an initial
+project on GitHub with the code in 2012, where several contributors fixed and
+improved pieces over the years. René Peinthor ([@rp-](https://github.com/rp-))
+and Martin Kleusberg ([@MKleusberg](https://github.com/MKleusberg)) then
+became involved, and have been the main driving force from that point.  Justin
+Clift ([@justinclift](https://github.com/justinclift)) helps out with testing
+on OSX, and started the new github.com/sqlitebrowser organisation on GitHub.
 
-[John T. Haller](http://johnhaller.com), of [PortableApps.com](http://portableapps.com) fame, created the new logo.  He based it on the Tango icon set (public domain).
+[John T. Haller](http://johnhaller.com), of
+[PortableApps.com](http://portableapps.com) fame, created the new logo.  He
+based it on the Tango icon set (public domain).
 
-In August 2014, the project was renamed to "Database Browser for SQLite" at the request of [Richard Hipp](http://www.hwaci.com/drh) (creator of [SQLite](http://sqlite.org)), as the previous name was creating unintended support issues.
+In August 2014, the project was renamed to "Database Browser for SQLite" at
+the request of [Richard Hipp](http://www.hwaci.com/drh) (creator of
+[SQLite](http://sqlite.org)), as the previous name was creating unintended
+support issues.
 
 ## License
 
