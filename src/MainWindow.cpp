@@ -38,6 +38,7 @@
 #include <QDesktopServices>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <QInputDialog>
 
 
 MainWindow::MainWindow(QWidget* parent)
