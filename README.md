@@ -73,7 +73,7 @@ Nightly builds are also available at:
 
 Database Browser for SQLite works well on MacOS X.
 
-* OSX 10.7 (Lion), 10.8 (Mountain Lion) and 10.9 (Mavericks) are tested and known to work
+* OSX 10.6 (Snow Leopard) - 10.9 (Mavericks) are tested and known to work
 
 ### MacOS X binaries
 
