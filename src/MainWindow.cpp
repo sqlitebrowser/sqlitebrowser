@@ -822,6 +822,7 @@ void MainWindow::dbState( bool dirty )
 {
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
+    ui->fileAttachAction->setEnabled(!dirty);
 }
 
 void MainWindow::fileSave()
@@ -1931,4 +1932,27 @@ void MainWindow::saveProject()
         xml.writeEndDocument();
         file.close();
     }
+}
+
+void MainWindow::fileAttach()
+{
+    // Get file name of database to attach
+    QString file = QFileDialog::getOpenFileName(
+                this,
+                tr("Choose a database file"),
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
+    if(!QFile::exists(file))
+        return;
+
+    // Ask for name to be given to the attached database
+    QString attachAs = QInputDialog::getText(this,
+                                             qApp->applicationName(),
+                                             tr("Please specify the database name under which you want to access the attached database")
+                                             ).trimmed();
+    if(attachAs.isEmpty())
+        return;
+
+    // Attach database
+    if(!db.executeSQL(QString("ATTACH '%1' AS `%2`").arg(file).arg(attachAs), false))
+        QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
 }

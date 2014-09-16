@@ -175,6 +175,7 @@ private slots:
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
     bool loadProject(QString filename = QString());
     void saveProject();
+    void fileAttach();
 };
 
 #endif

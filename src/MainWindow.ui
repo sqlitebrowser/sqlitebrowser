@@ -787,6 +787,7 @@
     </widget>
     <addaction name="fileNewAction"/>
     <addaction name="fileOpenAction"/>
+    <addaction name="fileAttachAction"/>
     <addaction name="fileCloseAction"/>
     <addaction name="separator"/>
     <addaction name="fileSaveAction"/>
@@ -1512,6 +1513,14 @@
    </property>
    <property name="statusTip">
     <string>Load a working session from a file</string>
+   </property>
+  </action>
+  <action name="fileAttachAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Attach Database</string>
    </property>
   </action>
  </widget>
@@ -2289,6 +2298,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>fileAttachAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileAttach()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2337,5 +2362,6 @@
   <slot>loadExtension()</slot>
   <slot>loadProject()</slot>
   <slot>saveProject()</slot>
+  <slot>fileAttach()</slot>
  </slots>
 </ui>
