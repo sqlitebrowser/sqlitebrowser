@@ -1,6 +1,6 @@
 ## BUILD INSTRUCTIONS AND REQUIREMENTS ##
 
-Database Browser for SQLite requires Trolltech's Qt, version 4.6 or newer.
+DB Browser for SQLite requires Trolltech's Qt, version 4.6 or newer.
 For more information on Qt please consult http://www.qtsoftware.com.
 The GPL version of Qt is available in almost all Linux distributions
 as a default package.
@@ -72,7 +72,7 @@ done.
 
 ## Compiling and running the Unit Tests ##
 
-SQLite Browser has unit tests in the "tests" subdirectory.
+DB Browser for SQLite has unit tests in the "tests" subdirectory.
 
 ### Compile the unit tests ###
 
@@ -91,7 +91,7 @@ $ make
 Then run them like this:
 
 ```
-$ ./sqlb-unittests 
+$ ./sqlb-unittests
 ********* Start testing of TestTable *********
 Config: Using QTest library 4.8.6, Qt 4.8.6
 PASS   : TestTable::initTestCase()

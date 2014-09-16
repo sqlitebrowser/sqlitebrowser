@@ -228,7 +228,7 @@ install(TARGETS ${PROJECT_NAME}
 	LIBRARY DESTINATION lib)
 
 #cpack
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Database Browser for SQLite")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "DB Browser for SQLite")
 set(CPACK_PACKAGE_VENDOR "oldsch00l")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
@@ -241,7 +241,7 @@ if(WIN32 AND NOT UNIX)
 	# sure there is at least one set of four (4) backlasshes.
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
 	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\sqlitebrowser.exe")
-	set(CPACK_NSIS_DISPLAY_NAME "Database Browser for SQLite")
+	set(CPACK_NSIS_DISPLAY_NAME "DB Browser for SQLite")
 	set(CPACK_NSIS_HELP_LINK "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
 	set(CPACK_NSIS_URL_INFO_ABOUT "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
 	set(CPACK_NSIS_CONTACT "peinthor@gmail.com")
