@@ -115,6 +115,7 @@ mac {
             -L/usr/local/opt/sqlite/lib \
             -framework Carbon
     QMAKE_INFO_PLIST = app.plist
+    QMAKE_CXXFLAGS += -DCHECKNEWVERSION
 }
 
 UI_DIR = .ui

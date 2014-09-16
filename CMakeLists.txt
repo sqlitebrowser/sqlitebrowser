@@ -173,6 +173,11 @@ if(WIN32)
 	ENDIF( MINGW )
 endif(WIN32)
 
+#enable version check for MacOS
+if(APPLE)
+	add_definitions(-DCHECKNEWVERSION)
+endif(APPLE)
+
 # add extra library path for MacOS and FreeBSD
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH) 
