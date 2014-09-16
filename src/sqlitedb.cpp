@@ -10,7 +10,7 @@
 #include <sqlite3.h>
 
 // collation callbacks
-int collCompare(void* pArg, int eTextRepA, const void* sA, int eTextRepB, const void* sB)
+int collCompare(void* /*pArg*/, int /*eTextRepA*/, const void* sA, int /*eTextRepB*/, const void* sB)
 {
     size_t sizeA = strlen((const char*)sA);
     size_t sizeB = strlen((const char*)sB);
@@ -20,7 +20,7 @@ int collCompare(void* pArg, int eTextRepA, const void* sA, int eTextRepB, const 
     return sizeA - sizeB;
 }
 
-void collation_needed(void* pData, sqlite3* db, int eTextRep, const char* sCollationName)
+void collation_needed(void* /*pData*/, sqlite3* db, int eTextRep, const char* sCollationName)
 {
     QMessageBox::StandardButton reply = QMessageBox::question(
                 0,
