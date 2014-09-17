@@ -1,5 +1,7 @@
 # Database Browser for SQLite
 
+[![Build Status](https://travis-ci.org/sqlitebrowser/sqlitebrowser.svg?branch=master)](https://travis-ci.org/sqlitebrowser/sqlitebrowser)
+
 ![Database Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "Database Browser for SQLite Screenshot")
 
 ## What it is
