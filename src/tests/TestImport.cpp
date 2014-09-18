@@ -16,7 +16,7 @@ TestImport::TestImport()
     // to work
     int argcount = 1;
     const char* appname = "sqlb-unittests";
-    app = new QApplication(argcount, const_cast<char**>(&appname));
+    app = new QCoreApplication(argcount, const_cast<char**>(&appname));
 }
 
 TestImport::~TestImport()
