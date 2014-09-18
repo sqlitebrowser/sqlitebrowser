@@ -1,5 +1,5 @@
 project(sqlb-unittests)
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 2.8.7)
 
 OPTION(USE_QT5 FALSE "Build with qt5")
 
