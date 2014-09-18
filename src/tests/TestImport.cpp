@@ -1,6 +1,6 @@
 #include <QTemporaryFile>
 #include <QtTest/QTest>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QTextStream>
 
 #include "csvparser.h"

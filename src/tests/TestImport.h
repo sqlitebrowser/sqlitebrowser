@@ -13,7 +13,7 @@ public:
     ~TestImport();
 
 private:
-    QApplication* app;
+    QCoreApplication* app;
 
 private slots:
     void csvImport();
