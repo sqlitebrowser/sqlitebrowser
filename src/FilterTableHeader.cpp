@@ -22,11 +22,16 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     connect(parent->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(adjustPositions()));
 }
 
-void FilterTableHeader::generateFilters(int number)
+void FilterTableHeader::generateFilters(int number, bool bKeepValues)
 {
     // Delete all the current filter widgets
+    QStringList oldvalues;
     for(int i=0;i < filterWidgets.size(); ++i)
+    {
+        if(bKeepValues)
+            oldvalues << filterWidgets.at(i)->text();
         delete filterWidgets.at(i);
+    }
     filterWidgets.clear();
 
     // And generate a bunch of new ones
@@ -37,6 +42,8 @@ void FilterTableHeader::generateFilters(int number)
         l->setProperty("column", i);            // Store the column number for later use
         l->setVisible(i>0);                     // This hides the first input widget which belongs to the hidden rowid column
         connect(l, SIGNAL(textChanged(QString)), this, SLOT(inputChanged(QString)));
+        if(bKeepValues && !oldvalues[i].isEmpty())  // restore old values
+            l->setText(oldvalues[i]);
         filterWidgets.push_back(l);
     }
 
