@@ -122,7 +122,7 @@ private slots:
     void changeTreeSelection();
     void fileNew();
     void populateStructure();
-    void populateTable(const QString& tablename);
+    void populateTable(const QString& tablename, bool bKeepFilter = false);
     void resetBrowser();
     void fileClose();
     void addRecord();

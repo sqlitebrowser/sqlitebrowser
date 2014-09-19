@@ -293,7 +293,7 @@ void MainWindow::populateStructure()
     }
 }
 
-void MainWindow::populateTable( const QString & tablename)
+void MainWindow::populateTable(const QString & tablename, bool bKeepFilter)
 {
     // Remove the model-view link if the table name is empty in order to remove any data from the view
     if(tablename.isEmpty())
@@ -333,7 +333,7 @@ void MainWindow::populateTable( const QString & tablename)
     ui->dataTable->filterHeader()->setSortIndicator(curBrowseOrderByIndex, curBrowseOrderByMode);
 
     // Update the filter row
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
+    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), bKeepFilter);
 
     // Activate the add and delete record buttons and editing only if a table has been selected
     bool is_table = db.getObjectByName(tablename).gettype() == "table";
@@ -533,7 +533,7 @@ void MainWindow::setRecordsetLabel()
 
 void MainWindow::browseRefresh()
 {
-    populateTable(ui->comboBrowseTable->currentText());
+    populateTable(ui->comboBrowseTable->currentText(), true);
 }
 
 void MainWindow::createTable()

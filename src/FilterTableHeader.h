@@ -16,7 +16,7 @@ public:
     virtual QSize sizeHint() const;
     
 public slots:
-    void generateFilters(int number);
+    void generateFilters(int number, bool bKeepValues = false);
     void adjustPositions();
 
 signals:
