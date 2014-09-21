@@ -484,6 +484,86 @@ bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>
     return ret;
 }
 
+int64_t DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
+{
+    QString sQuery = QString("SELECT MAX(`%2`) from `%1`;").arg(t.name()).arg(field->name());
+    QByteArray utf8Query = sQuery.toUtf8();
+    sqlite3_stmt *stmt;
+    int64_t ret = 0;
+
+    int status = sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL);
+    if(SQLITE_OK == status)
+    {
+        // even this is a while loop, the statement should always only return 1 row
+        while(sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            if(sqlite3_column_count(stmt) == 1)
+            {
+                ret = sqlite3_column_int64(stmt, 0);
+            }
+        }
+    }
+    sqlite3_finalize(stmt);
+
+    return ret;
+}
+
+QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int pk_value) const
+{
+    QString stmt = QString("INSERT INTO `%1`").arg(t.name());
+
+    QStringList vals;
+    QStringList fields;
+    foreach(sqlb::FieldPtr f, t.fields()) {
+        if( f->primaryKey() && f->isInteger() )
+        {
+            fields << f->name();
+
+            if(pk_value != -1)
+                vals << QString::number(pk_value);
+            else
+            {
+                if(f->notnull())
+                {
+                    int64_t maxval = this->max(t, f);
+                    vals << QString::number(maxval + 1);
+                }
+                else
+                {
+                    vals << "NULL";
+                }
+            }
+        } else if(f->notnull() && f->defaultValue().length() == 0) {
+            fields << f->name();
+
+            if(f->isInteger())
+                vals << "0";
+            else
+                vals << "''";
+        } else {
+            // don't insert into fields with a default value
+            // or we will never see it.
+            if(f->defaultValue().length() == 0)
+            {
+                fields << f->name();
+                vals << "NULL";
+            }
+        }
+    }
+
+    if(!fields.empty())
+    {
+        stmt.append("(`");
+        stmt.append(fields.join("`,`"));
+        stmt.append("`)");
+    }
+    stmt.append(" VALUES (");
+    stmt.append(vals.join(","));
+    stmt.append(");");
+
+    return stmt;
+}
+
 int DBBrowserDB::addRecord(const QString& sTableName)
 {
     char *errmsg;
@@ -500,9 +580,9 @@ int DBBrowserDB::addRecord(const QString& sTableName)
         SqliteTableModel m(this, this);
         m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(table.rowidColumn()).arg(sTableName));
         pk_value = m.data(m.index(0, 0)).toInt() + 1;
-        sInsertstmt = table.emptyInsertStmt(pk_value);
+        sInsertstmt = emptyInsertStmt(table, pk_value);
     } else {
-        sInsertstmt = table.emptyInsertStmt();
+        sInsertstmt = emptyInsertStmt(table);
     }
 
     lastErrorMessage = "";

@@ -66,8 +66,23 @@ public:
      */
     bool getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata);
 
+    /**
+     * @brief max Queries the table t for the max value of field.
+     * @param t Table to query
+     * @param field Field to get the max value
+     * @return the max value of the field or 0 on error
+     */
+    int64_t max(const sqlb::Table& t, sqlb::FieldPtr field) const;
+
     void updateSchema();
     int addRecord(const QString& sTableName);
+
+    /**
+     * @brief Creates an empty insert statement.
+     * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
+     * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
+     */
+    QString emptyInsertStmt(const sqlb::Table& t, int pk_value = -1) const;
     bool deleteRecord(const QString& table, int rowid);
     bool updateRecord(const QString& table, const QString& column, int row, const QByteArray& value);
 

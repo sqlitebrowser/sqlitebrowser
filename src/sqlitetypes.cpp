@@ -166,52 +166,6 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
 
     return qMakePair(Table(""), false);
 }
-QString Table::emptyInsertStmt(int pk_value) const
-{
-    QString stmt = QString("INSERT INTO `%1`").arg(m_name);
-
-    QStringList vals;
-    QStringList fields;
-    foreach(FieldPtr f, m_fields) {
-        if( f->primaryKey() && f->isInteger() )
-        {
-            fields << f->name();
-
-            if(pk_value != -1)
-                vals << QString::number(pk_value);
-            else
-                vals << "NULL";
-        } else if(f->notnull() && f->defaultValue().length() == 0) {
-            fields << f->name();
-
-            if(f->isInteger())
-                vals << "0";
-            else
-                vals << "''";
-        } else {
-            // don't insert into fields with a default value
-            // or we will never see it.
-            if(f->defaultValue().length() == 0)
-            {
-                fields << f->name();
-                vals << "NULL";
-            }
-        }
-    }
-
-    if(!fields.empty())
-    {
-        stmt.append("(`");
-        stmt.append(fields.join("`,`"));
-        stmt.append("`)");
-    }
-    stmt.append(" VALUES (");
-    stmt.append(vals.join(","));
-    stmt.append(");");
-
-    return stmt;
-}
-
 
 QString Table::sql() const
 {
