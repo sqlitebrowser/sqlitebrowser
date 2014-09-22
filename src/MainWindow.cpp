@@ -202,7 +202,7 @@ bool MainWindow::fileOpen(const QString& fileName)
             setCurrentFile(wFile);
             retval = true;
         } else {
-            // Failed opening file; so it might be a SQLiteBrowser project file
+            // Failed opening file; so it might be a project file instead
             return loadProject(wFile);
         }
         loadExtensionsFromSettings();
@@ -1376,7 +1376,7 @@ void MainWindow::httpresponse(QNetworkReply *reply)
                 msgBox.addButton(QMessageBox::Ok);
                 msgBox.setTextFormat(Qt::RichText);
                 msgBox.setWindowTitle(tr("New version available."));
-                msgBox.setText(tr("A new sqlitebrowser version is available (%1.%2.%3).<br/><br/>"
+                msgBox.setText(tr("A new DB Browser for SQLite version is available (%1.%2.%3).<br/><br/>"
                                   "Please download at <a href='%4'>%4</a>.").arg(major).arg(minor).arg(patch).
                                     arg(QString(reply->readLine()).trimmed()));
                 msgBox.exec();
@@ -1722,7 +1722,7 @@ bool MainWindow::loadProject(QString filename)
         filename = QFileDialog::getOpenFileName(this,
                                                 tr("Choose a file to open"),
                                                 QString(),
-                                                tr("SQLiteBrowser project(*.sqbpro)"));
+                                                tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
     if(!filename.isEmpty())
@@ -1862,7 +1862,7 @@ void MainWindow::saveProject()
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
                                                     QString(),
-                                                    tr("SQLiteBrowser project(*.sqbpro)")
+                                                    tr("DB Browser for SQLite project file (*.sqbpro)")
                                                     );
     if(!filename.isEmpty())
     {
