@@ -192,7 +192,7 @@ the request of [Richard Hipp](http://www.hwaci.com/drh) (creator of
 support issues.
 
 In September 2014, the project was renamed to "DB Browser for SQLite", to
-+avoid confusion with an existing application called "Database Browser".
+avoid confusion with an existing application called "Database Browser".
 
 ## License
 
