@@ -21,6 +21,9 @@ public:
     explicit EditTableDialog(DBBrowserDB* pdb, const QString& tableName, QWidget* parent = 0);
     ~EditTableDialog();
 
+protected:
+    void keyPressEvent(QKeyEvent *evt);
+
 private:
     enum Columns {
         kName = 0,

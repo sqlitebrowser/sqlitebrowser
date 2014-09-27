@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QDateTime>
+#include <QKeyEvent>
 
 EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWidget* parent)
     : QDialog(parent),
@@ -52,10 +53,23 @@ EditTableDialog::~EditTableDialog()
     delete ui;
 }
 
+void EditTableDialog::keyPressEvent(QKeyEvent *evt)
+{
+    if((evt->modifiers() & Qt::ControlModifier)
+            && (evt->key() == Qt::Key_Enter || evt->key() == Qt::Key_Return))
+    {
+        emit accept();
+        return;
+    }
+    if(evt->key() == Qt::Key_Enter || evt->key() == Qt::Key_Return)
+        return;
+    QDialog::keyPressEvent(evt);
+}
+
 void EditTableDialog::updateColumnWidth()
 {
     ui->treeWidget->setColumnWidth(kName, 190);
-    ui->treeWidget->setColumnWidth(kType, 80);
+    ui->treeWidget->setColumnWidth(kType, 100);
     ui->treeWidget->setColumnWidth(kNotNull, 30);
     ui->treeWidget->setColumnWidth(kPrimaryKey, 30);
     ui->treeWidget->setColumnWidth(kAutoIncrement, 30);
@@ -78,7 +92,7 @@ void EditTableDialog::populateFields()
         tbitem->setText(kName, f->name());
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         typeBox->setProperty("column", f->name());
-        typeBox->setEditable(false);
+        typeBox->setEditable(true);
         typeBox->addItems(sqlb::Field::Datatypes);
         int index = typeBox->findText(f->type(), Qt::MatchExactly);
         if(index == -1)
@@ -89,6 +103,7 @@ void EditTableDialog::populateFields()
         }
         typeBox->setCurrentIndex(index);
         connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+        connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
@@ -344,10 +359,11 @@ void EditTableDialog::addField()
     tbitem->setText(kName, "Field" + QString::number(ui->treeWidget->topLevelItemCount()));
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
-    typeBox->setEditable(false);
+    typeBox->setEditable(true);
     typeBox->addItems(sqlb::Field::Datatypes);
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
     connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+    connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
@@ -449,7 +465,7 @@ void EditTableDialog::moveCurrentField(bool down)
         QComboBox* newCombo = new QComboBox(ui->treeWidget);
         newCombo->setProperty("column", oldCombo->property("column"));
         connect(newCombo, SIGNAL(activated(int)), this, SLOT(updateTypes()));
-        newCombo->setEditable(false);
+        newCombo->setEditable(true);
         for(int i=0; i < oldCombo->count(); ++i)
             newCombo->addItem(oldCombo->itemText(i));
         newCombo->setCurrentIndex(oldCombo->currentIndex());
