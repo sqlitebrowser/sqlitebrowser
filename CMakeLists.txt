@@ -226,6 +226,14 @@ target_link_libraries(${PROJECT_NAME}
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib)
+	
+if(UNIX AND NOT APPLE)
+install(FILES src/icons/${PROJECT_NAME}.png
+	DESTINATION share/pixmaps/)
+	
+install(FILES distri/${PROJECT_NAME}.desktop
+	DESTINATION share/applications/)
+endif(UNIX AND NOT APPLE)
 
 #cpack
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "DB Browser for SQLite")
