@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <sqlite3.h>
 
 ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
@@ -57,23 +58,14 @@ void ExportCsvDialog::accept()
     // Only if the user hasn't clicked the cancel button
     if(fileName.size() > 0)
     {
-        unsigned int first_column;
-
-        // Get data from selected table
-        SqliteTableModel tableModel(this, pdb);
         if(m_sQuery.isEmpty())
         {
-            tableModel.setTable(ui->comboTable->currentText());
-            first_column = 1;
-        } else {
-            tableModel.setQuery(m_sQuery);
-            first_column = 0;
+            m_sQuery = QString("SELECT * from `%1`;").arg(ui->comboTable->currentText());
         }
-        while(tableModel.canFetchMore())
-            tableModel.fetchMore();
 
         // Prepare the quote and separating characters
-        QString quoteChar = ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1 ? ui->editCustomQuote->text() : ui->comboQuoteCharacter->currentText();
+        QString quoteChar = ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1
+                    ? ui->editCustomQuote->text() : ui->comboQuoteCharacter->currentText();
         QString quotequoteChar = quoteChar + quoteChar;
         QString sepChar;
         if(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1)
@@ -92,32 +84,49 @@ void ExportCsvDialog::accept()
             // Open text stream to the file
             QTextStream stream(&file);
 
-            // Put field names in first row if user wants to have them
-            if(ui->checkHeader->isChecked())
-            {
-                for(int i=first_column; i < tableModel.columnCount(); ++i)
-                {
-                    stream << quoteChar << tableModel.headerData(i, Qt::Horizontal).toString() << quoteChar;
-                    if(i < tableModel.columnCount() - 1)
-                        stream << sepChar;
-                    else
-                        stream << newlineChar;
-                }
-            }
+            QByteArray utf8Query = m_sQuery.toUtf8();
+            sqlite3_stmt *stmt;
 
-            // Get and write actual data
-            for(int i=0;i < tableModel.totalRowCount(); ++i)
+            int status = sqlite3_prepare_v2(pdb->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+            if(SQLITE_OK == status)
             {
-                for(int j=first_column; j < tableModel.columnCount(); ++j)
+                if(ui->checkHeader->isChecked())
                 {
-                    QString content = tableModel.data(tableModel.index(i, j)).toString();
-                    stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
-                    if(j < tableModel.columnCount() - 1)
-                        stream << sepChar;
-                    else
-                        stream << newlineChar;
+                    int columns = sqlite3_column_count(stmt);
+                    for (int i = 0; i < columns; ++i)
+                    {
+                        QString content = QString::fromUtf8(sqlite3_column_name(stmt, i));
+                        stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                        if(i != columns - 1)
+                            stream << sepChar;
+                    }
+                    stream << newlineChar;
+                }
+
+                QApplication::setOverrideCursor(Qt::WaitCursor);
+                int columns = sqlite3_column_count(stmt);
+                size_t counter = 0;
+                while(sqlite3_step(stmt) == SQLITE_ROW)
+                {
+                    for (int i = 0; i < columns; ++i)
+                    {
+                        QString content = QString::fromUtf8(
+                                    (const char*)sqlite3_column_blob(stmt, i),
+                                    sqlite3_column_bytes(stmt, i));
+                        stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                        if(i != columns - 1)
+                            stream << sepChar;
+                    }
+                    stream << newlineChar;
+                    if(counter % 1000 == 0)
+                        qApp->processEvents();
+                    counter++;
                 }
             }
+            sqlite3_finalize(stmt);
+
+            QApplication::restoreOverrideCursor();
+            qApp->processEvents();
 
             // Done writing the file
             file.close();
