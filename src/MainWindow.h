@@ -176,6 +176,7 @@ private slots:
     bool loadProject(QString filename = QString());
     void saveProject();
     void fileAttach();
+    void updateFilter(int column, const QString& value);
 };
 
 #endif

@@ -134,7 +134,6 @@ void MainWindow::init()
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
     // Connect some more signals and slots
-    connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(setRecordsetLabel()));
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
@@ -400,7 +399,7 @@ void MainWindow::fileClose()
     // Delete the model for the Browse tab and create a new one
     delete m_browseTableModel;
     m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-    connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), m_browseTableModel, SLOT(updateFilter(int,QString)));
+    connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
 
     // Remove all stored column widths for the browse data table
     browseTableColumnWidths.clear();
@@ -1956,4 +1955,10 @@ void MainWindow::fileAttach()
     // Attach database
     if(!db.executeSQL(QString("ATTACH '%1' AS `%2`").arg(file).arg(attachAs), false))
         QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
+}
+
+void MainWindow::updateFilter(int column, const QString& value)
+{
+    m_browseTableModel->updateFilter(column ,value);
+    setRecordsetLabel();
 }
