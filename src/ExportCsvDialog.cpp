@@ -75,7 +75,7 @@ void ExportCsvDialog::accept()
             sepChar = ui->comboFieldSeparator->currentText();
             if(sepChar == tr("Tab")) sepChar = "\t";
         }
-        QString newlineChar = "\n";
+        QString newlineChar = "\r\n";
 
         // Open file
         QFile file(fileName);
