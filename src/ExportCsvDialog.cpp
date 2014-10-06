@@ -96,7 +96,10 @@ void ExportCsvDialog::accept()
                     for (int i = 0; i < columns; ++i)
                     {
                         QString content = QString::fromUtf8(sqlite3_column_name(stmt, i));
-                        stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                        if(content.contains(quoteChar) || content.contains(newlineChar))
+                            stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                        else
+                            stream << content;
                         if(i != columns - 1)
                             stream << sepChar;
                     }
@@ -113,7 +116,10 @@ void ExportCsvDialog::accept()
                         QString content = QString::fromUtf8(
                                     (const char*)sqlite3_column_blob(stmt, i),
                                     sqlite3_column_bytes(stmt, i));
-                        stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                        if(content.contains(quoteChar) || content.contains("\r\n") || content.contains('\n'))
+                            stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                        else
+                            stream << content;
                         if(i != columns - 1)
                             stream << sepChar;
                     }
