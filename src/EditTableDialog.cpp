@@ -103,7 +103,7 @@ void EditTableDialog::populateFields()
         }
         typeBox->setCurrentIndex(index);
         connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-        connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
+        //connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
