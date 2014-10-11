@@ -3,6 +3,41 @@
 #include <QLineEdit>
 #include <QTableView>
 #include <QScrollBar>
+#include <QKeyEvent>
+#include <QDebug>
+
+class FilterLineEdit : public QLineEdit
+{
+public:
+    explicit FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
+    {
+        setPlaceholderText(tr("Filter"));
+        setProperty("column", columnnum);            // Store the column number for later use
+    }
+
+protected:
+    void keyReleaseEvent(QKeyEvent* event)
+    {
+        if(event->key() == Qt::Key_Tab)
+        {
+            if(columnNumber < filterList->size() - 1)
+            {
+                filterList->at(columnNumber + 1)->setFocus();
+                event->accept();
+            }
+        } else if(event->key() == Qt::Key_Backtab) {
+            if(columnNumber > 0)
+            {
+                filterList->at(columnNumber - 1)->setFocus();
+                event->accept();
+            }
+        }
+    }
+
+private:
+    QList<FilterLineEdit*>* filterList;
+    int columnNumber;
+};
 
 FilterTableHeader::FilterTableHeader(QTableView* parent) :
     QHeaderView(Qt::Horizontal, parent)
@@ -37,9 +72,7 @@ void FilterTableHeader::generateFilters(int number, bool bKeepValues)
     // And generate a bunch of new ones
     for(int i=0;i < number; ++i)
     {
-        QLineEdit* l = new QLineEdit(this);
-        l->setPlaceholderText(tr("Filter"));
-        l->setProperty("column", i);            // Store the column number for later use
+        FilterLineEdit* l = new FilterLineEdit(this, &filterWidgets, i);
         l->setVisible(i>0);                     // This hides the first input widget which belongs to the hidden rowid column
         connect(l, SIGNAL(textChanged(QString)), this, SLOT(inputChanged(QString)));
         if(bKeepValues && !oldvalues[i].isEmpty())  // restore old values

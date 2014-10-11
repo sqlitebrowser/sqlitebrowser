@@ -67,8 +67,8 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     // Call a custom copy method when Ctrl-C is pressed
     if(event->matches(QKeySequence::Copy))
         copy();
-    else
-        QTableView::keyPressEvent(event);
+    else if((event->key() != Qt::Key_Tab && event->key() != Qt::Key_Backtab) || hasFocus()) // This prevents the current selection from being changed when pressing
+        QTableView::keyPressEvent(event);                                                   // tab to move to the next filter
 }
 
 void ExtendedTableWidget::updateGeometries()

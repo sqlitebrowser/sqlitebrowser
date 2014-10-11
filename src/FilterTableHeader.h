@@ -6,6 +6,7 @@
 
 class QLineEdit;
 class QTableView;
+class FilterLineEdit;
 
 class FilterTableHeader : public QHeaderView
 {
@@ -29,7 +30,7 @@ private slots:
     void inputChanged(const QString& new_value);
 
 private:
-    QList<QLineEdit*> filterWidgets;
+    QList<FilterLineEdit*> filterWidgets;
 };
 
 #endif
