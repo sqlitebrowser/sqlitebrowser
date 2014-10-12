@@ -290,6 +290,9 @@ void MainWindow::populateStructure()
         sqlarea->getEditor()->setDefaultCompleterModel(&completerModelTables);
         sqlarea->getEditor()->insertFieldCompleterModels(completerModelsFields);
     }
+
+    // Resize SQL column to fit contents
+    ui->dbTreeWidget->resizeColumnToContents(3);
 }
 
 void MainWindow::populateTable(const QString & tablename, bool bKeepFilter)
