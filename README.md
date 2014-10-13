@@ -33,34 +33,6 @@ not require familiarity with SQL commands. It is a tool to be used both by
 developers and by end users, and it must remain as simple to use as possible
 in order to achieve its goals.
 
-## What's been done since the SourceForge project
-
-* Qt3Support was removed
-* Recent files menu added
-* Improved UI, making it more modern, replacing some dialogs etc.
-* Syntax highlighting for SQL code
-* Cleaned up the code, reducing the SLOC quite a bit
-* Added basic support for triggers and views
-* Added pragma editing
-* Added BLOB support
-* Added a new filter row for searching
-* Improved performance when opening large tables
-* Extended the SQL tab
-* Added SQLite extension support
-* Fixed a ton of bugs
-* Probably more
-
-All in all a fair amount of the code has been rewritten in order to regain
-maintainability.  Based on this quite a few bugs can be fixed and new
-features added.
-
-## What's still to do
-
-* Even more code cleanup
-* Further improvement of the UI, adding more features and making it easier to use
-* Feel free to add more issues at
-  https://github.com/sqlitebrowser/sqlitebrowser/issues
-
 ## Windows binaries
 
 Windows binaries can be downloaded from here:
