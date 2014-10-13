@@ -59,48 +59,24 @@ Nightly builds for OSX are available at:
 
 * http://mirror.salasaga.org/sqlitebrowser/nightly/
 
-### Compiling on MacOS X
+## Linux
 
-The application can be compiled to a single executable binary file, similar to
-other command line utilities.  Or it can be compiled to a .app bundle, suitable
-for placing in /Applications.
+DB Browser for SQLite works well on Linux.  Some Linux distributions, such as
+Arch Linux and Ubuntu, provide a package ready for use.  On others you'll need
+to compile it yourself using the (simple) instructions in BUILDING.md.
 
-### Compiling to a single executable binary
+## FreeBSD
 
-This is incredibly easy using [Homebrew](http://brew.sh).  Just run this command:
+DB Browser for SQLite works well on FreeBSD, although you need to compile it
+yourself using the generic instructions in BUILDING.md.
 
-    $ brew install sqlitebrowser
+If someone creates a FreeBSD Port or PCBSD package for this, please let us know
+so we can update these instructions. :)
 
-And you're done.  A "sqlitebrowser" command should now be available in your PATH,
-and can also be launched through Spotlight.
+### Compiling
 
-### Compiling to a .app bundle
-
-Building the .app bundle version takes a bit more effort, but isn't too hard.
-It requires SQLite and Qt 4.8.x to be installed first.  These are the
-[Homebrew](http://brew.sh) steps, though other package managers should work:
-
-    $ brew install sqlite --with-functions --without-readline
-    $ brew install qt
-    $ brew link sqlite3 --force
-
-Then it's just a matter of getting the source:
-
-    $ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
-
-**Note** - Don't clone the repo to a directory with a quote character (') in
-it's name (eg ~/tmp/foo'), as compiling will error out.
-
-And compiling it:
-
-    $ cd sqlitebrowser
-    $ qmake
-    $ make
-    $ brew unlink sqlite3
-    $ mv src/sqlitebrowser.app /Applications/
-
-An icon for "sqlitebrowser" should now be in your main OSX Applications
-list, ready to launch.
+Instructions for compiling on (at least) Windows, OSX, Linux, and FreeBSD are
+in BUILDING.md.
 
 ## Twitter
 
