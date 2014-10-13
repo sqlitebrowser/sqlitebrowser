@@ -2,14 +2,13 @@
 
 ### Generic Linux and FreeBSD
 
-DB Browser for SQLite requires Trolltech's Qt, version 4.6 or newer.
-For more information on Qt please consult http://www.qtsoftware.com.
-The GPL version of Qt is available in almost all Linux distributions
-as a default package.
+DB Browser for SQLite requires Trolltech's Qt, version 4.6 or newer. For more
+information on Qt please consult http://www.qtsoftware.com. The GPL version of
+Qt is available in almost all Linux distributions as a default package.
 
-The only requirements for building this code are the presence of Qt
-and sqlite3. Qt can be included as a static or shared library,
-depending on the current Qt configuration on the building machine.
+The only requirements for building this code are the presence of Qt and
+sqlite3. Qt can be included as a static or shared library, depending on the
+current Qt configuration on the building machine.
 
 Provided you have Qt and cmake installed and configured, simply run:
 
@@ -20,15 +19,19 @@ followed by:
     $ make
 
 in the main directory. This will generate the sqlitebrowser (or
-sqlitebrowser.exe, or sqlitebrowser.app) application in the src
-subdirectory.
+sqlitebrowser.exe, or sqlitebrowser.app) application in the src subdirectory.
+On some distributions you can then install this in the correct places by
+running:
 
-The same process works for building the code in any platform
-supported by Qt (including other Unix systems with X11.)
+    $ sudo make install
+
+The same process works for building the code in any platform supported by Qt
+(including other Unix systems with X11.)
 
 ### Ubuntu Linux
 
-**1**. Make sure the build-essentials, cmake, libqt4-dev and libsqlite3-dev packages are installed.<br />
+**1**. Make sure the build-essentials, cmake, libqt4-dev and libsqlite3-dev
+       packages are installed.<br />
 **2**. Download the DB Browser for SQLite source code.<br />
 **3**. Open a terminal in the source code directory.<br />
 **4**. Run these commands:<br />
@@ -37,9 +40,10 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
+$ sudo make install
 ```
 **5**. This should complete without errors, giving you a binary file called
-   'sqlitebrowser'.
+       'sqlitebrowser'.
 
 Done. :)
 
