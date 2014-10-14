@@ -90,6 +90,19 @@ And compiling it:
 An icon for "sqlitebrowser" should now be in your main OSX Applications
 list, ready to launch.
 
+**Note 2** - There have been occasional [reports of compilation problems on OSX
+10.9](https://github.com/sqlitebrowser/sqlitebrowser/issues/38), with the
+'make' step complaining about no targets.  This seems to be solvable by
+running:
+
+    $ qmake -spec macx-g++
+
+or:
+
+    $ qmake -spec macx-llvm
+
+(before the 'make' step)
+
 ### Cross compiling for Windows
 
 These are instructions to cross compile within a Linux system a Windows binary
