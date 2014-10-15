@@ -334,10 +334,32 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
         break;
         case kDefault:
+        {
+            QString new_value = item->text(column);
+            // If the default value isn't a SQL keyword perform an extra check: If it isn't numeric but doesn't start and end with quotes,
+            // add the quotes
+            if(new_value.compare("null", Qt::CaseInsensitive) &&
+                    new_value.compare("current_time", Qt::CaseInsensitive) &&
+                    new_value.compare("current_date", Qt::CaseInsensitive) &&
+                    new_value.compare("current_timestamp", Qt::CaseInsensitive))
+            {
+                if(!((new_value.trimmed().startsWith('\'') ||
+                      new_value.trimmed().startsWith('"')) && (new_value.trimmed().endsWith('\'') || new_value.trimmed().endsWith('"'))))
+                {
+                    bool is_numeric;
+                    new_value.toDouble(&is_numeric);
+                    if(!is_numeric)
+                    {
+                        new_value = QString("'%1'").arg(new_value.replace("'", "''"));
+                        item->setText(column, new_value);
+                    }
+                }
+            }
             field->setDefaultValue(item->text(column));
             if(!m_bNewTable)
                 callRenameColumn = true;
-            break;
+        }
+        break;
         case kCheck:
             field->setCheck(item->text(column));
             if(!m_bNewTable)

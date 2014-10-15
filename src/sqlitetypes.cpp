@@ -15,7 +15,7 @@ QString Field::toString(const QString& indent, const QString& sep) const
     if(m_notnull)
         str += " NOT NULL";
     if(!m_defaultvalue.isEmpty())
-        str += QString(" DEFAULT '%1'").arg(m_defaultvalue);
+        str += QString(" DEFAULT %1").arg(m_defaultvalue);
     if(!m_check.isEmpty())
         str += " CHECK(" + m_check + ")";
     if(m_autoincrement)
