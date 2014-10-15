@@ -20,6 +20,12 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     // Create UI
     ui->setupUi(this);
 
+    // Set font
+    QFont logfont("Monospace");
+    logfont.setStyleHint(QFont::TypeWriter);
+    logfont.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
+    ui->editErrors->setFont(logfont);
+
     // Create syntax highlighter
     highlighter = new SQLiteSyntaxHighlighter(ui->editEditor->document());
 
@@ -70,6 +76,11 @@ void SqlExecutionArea::finishExecution(const QString& result)
 SqlTextEdit* SqlExecutionArea::getEditor()
 {
     return ui->editEditor;
+}
+
+QTextEdit* SqlExecutionArea::getResultView()
+{
+    return ui->editErrors;
 }
 
 void SqlExecutionArea::enableSaveButton(bool enable)

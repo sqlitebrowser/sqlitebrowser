@@ -26,6 +26,7 @@ public:
     QString getSelectedSql() const;
 
     SqliteTableModel* getModel() { return model; }
+    QTextEdit* getResultView();
     SqlTextEdit* getEditor();
 
 public slots:

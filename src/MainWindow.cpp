@@ -1295,15 +1295,25 @@ void MainWindow::loadExtensionsFromSettings()
 
 void MainWindow::reloadSettings()
 {
+    // Read settings
+    int prefetch_size = PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt();
+    int edit_fontsize = PreferencesDialog::getSettingsValue("editor", "fontsize").toInt();
+    int log_fontsize = PreferencesDialog::getSettingsValue("log", "fontsize").toInt();
+
+    QFont logfont("Monospace");
+    logfont.setStyleHint(QFont::TypeWriter);
+    logfont.setPointSize(log_fontsize);
+
     // Set prefetch sizes for lazy population of table models
-    m_browseTableModel->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+    m_browseTableModel->setChunkSize(prefetch_size);
     for(int i=0; i < ui->tabSqlAreas->count(); ++i)
     {
         SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
-        sqlArea->getModel()->setChunkSize(PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+        sqlArea->getModel()->setChunkSize(prefetch_size);
+        sqlArea->getResultView()->setFont(logfont);
 
         QFont font = sqlArea->getEditor()->font();
-        font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+        font.setPointSize(edit_fontsize);
         sqlArea->getEditor()->setFont(font);
     }
 
@@ -1311,11 +1321,8 @@ void MainWindow::reloadSettings()
     createSyntaxHighlighters();
 
     // Set font for SQL logs
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
-    ui->editLogApplication->setFont(font);
-    ui->editLogUser->setFont(font);
+    ui->editLogApplication->setFont(logfont);
+    ui->editLogUser->setFont(logfont);
 
     // Load extensions
     loadExtensionsFromSettings();
