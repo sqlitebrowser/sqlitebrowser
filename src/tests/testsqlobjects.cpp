@@ -213,6 +213,17 @@ void TestTable::parseNonASCIIChars()
     QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
 }
 
+void TestTable::parseSQLEscapedQuotes()
+{
+    QString sSql = "CREATE TABLE double_quotes(a text default 'a''a');";
+
+    Table tab = Table::parseSQL(sSql).first;
+
+    QCOMPARE(tab.name(), QString("double_quotes"));
+    QCOMPARE(tab.fields().at(0)->name(), QString("a"));
+    QCOMPARE(tab.fields().at(0)->defaultValue(), QString("a''a"));
+}
+
 void TestTable::createTableWithIn()
 {
     QString sSQL = "CREATE TABLE not_working("
