@@ -1680,7 +1680,7 @@ void MainWindow::on_butSavePlot_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
-                                                    QString(),
+                                                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                                                     tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
                                                     );
     if(!fileName.isEmpty())
