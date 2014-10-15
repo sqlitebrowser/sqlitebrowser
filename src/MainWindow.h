@@ -102,6 +102,7 @@ private:
 
     void updateRecentFileActions();
     void setCurrentFile(const QString& fileName);
+    void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
     void loadExtensionsFromSettings();
 
@@ -112,7 +113,7 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 public slots:
-    bool fileOpen(const QString& fileName = QString());
+    bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false);
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void browseRefresh();

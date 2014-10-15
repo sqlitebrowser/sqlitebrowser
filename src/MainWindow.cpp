@@ -180,7 +180,7 @@ void MainWindow::clearCompleterModelsFields()
     completerModelsFields.clear();
 }
 
-bool MainWindow::fileOpen(const QString& fileName)
+bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
 {
     bool retval = false;
 
@@ -199,6 +199,8 @@ bool MainWindow::fileOpen(const QString& fileName)
         {
             statusEncodingLabel->setText(db.getPragma("encoding"));
             setCurrentFile(wFile);
+            if(!dontAddToRecentFiles)
+                addToRecentFilesMenu(wFile);
             retval = true;
         } else {
             // Failed opening file; so it might be a project file instead
@@ -224,6 +226,7 @@ void MainWindow::fileNew()
             QFile::remove(fileName);
         db.create(fileName);
         setCurrentFile(fileName);
+        addToRecentFilesMenu(fileName);
         statusEncodingLabel->setText(db.getPragma("encoding"));
         loadExtensionsFromSettings();
         populateStructure();
@@ -1014,10 +1017,13 @@ void MainWindow::setCurrentFile(const QString &fileName)
     setWindowFilePath(fileName);
     setWindowTitle( QApplication::applicationName() +" - "+fileName);
     activateFields(true);
+}
 
+void MainWindow::addToRecentFilesMenu(const QString& filename)
+{
     QStringList files = PreferencesDialog::getSettingsValue("General", "recentFileList").toStringList();
-    files.removeAll(fileName);
-    files.prepend(fileName);
+    files.removeAll(filename);
+    files.prepend(filename);
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
@@ -1741,6 +1747,8 @@ bool MainWindow::loadProject(QString filename)
             return false;
         }
 
+        addToRecentFilesMenu(filename);
+
         while(!xml.atEnd() && !xml.hasError())
         {
             // Read next token
@@ -1755,7 +1763,7 @@ bool MainWindow::loadProject(QString filename)
                     QString dbfilename = xml.attributes().value("path").toString();
                     if(!QFile::exists(dbfilename))
                         dbfilename = QFileInfo(filename).absolutePath() + QDir::separator() + dbfilename;
-                    fileOpen(dbfilename);
+                    fileOpen(dbfilename, true);
                     ui->dbTreeWidget->collapseAll();
                 } else if(xml.name() == "window") {
                     // Window settings
