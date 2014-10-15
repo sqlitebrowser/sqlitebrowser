@@ -43,6 +43,9 @@ Nightly builds are also available at:
 
 * http://rp.oldsch00l.com/sqlitebrowser/
 
+The .xz file (for the nightly build) is a type of compression.  You can
+uncompress it using [7-Zip](http://www.7-zip.org), also open source.
+
 ## MacOS X
 
 DB Browser for SQLite works well on MacOS X.
