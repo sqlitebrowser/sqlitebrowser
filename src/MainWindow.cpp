@@ -1729,7 +1729,7 @@ bool MainWindow::loadProject(QString filename)
     {
         filename = QFileDialog::getOpenFileName(this,
                                                 tr("Choose a file to open"),
-                                                QString(),
+                                                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                                                 tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
@@ -1871,11 +1871,15 @@ void MainWindow::saveProject()
 {
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
-                                                    QString(),
+                                                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                                                     tr("DB Browser for SQLite project file (*.sqbpro)")
                                                     );
     if(!filename.isEmpty())
     {
+        // Make sure the file has got a .sqbpro ending
+        if(!filename.endsWith(".sqbpro", Qt::CaseInsensitive))
+            filename.append(".sqbpro");
+
         QFile file(filename);
         file.open(QFile::WriteOnly | QFile::Text);
         QXmlStreamWriter xml(&file);
@@ -1942,6 +1946,7 @@ void MainWindow::saveProject()
         xml.writeEndElement();
         xml.writeEndDocument();
         file.close();
+        addToRecentFilesMenu(filename);
     }
 }
 
