@@ -528,10 +528,14 @@ void Sqlite3Lexer::mQUOTEDLITERAL(bool _createToken) {
 	match(L'\"' /* charlit */ );
 	{ // ( ... )*
 	for (;;) {
-		if ((_tokenSet_2.member(LA(1)))) {
+		if ((LA(1) == 0x22 /* '\"' */ ) && (LA(2) == 0x22 /* '\"' */ )) {
 			{
-			match(_tokenSet_2);
+			match(L'\"' /* charlit */ );
+			match(L'\"' /* charlit */ );
 			}
+		}
+		else if ((_tokenSet_2.member(LA(1)))) {
+			matchNot(L'\"' /* charlit */ );
 		}
 		else {
 			goto _loop17;
@@ -873,10 +877,14 @@ void Sqlite3Lexer::mSTRINGLITERAL(bool _createToken) {
 	match(L'\'' /* charlit */ );
 	{ // ( ... )*
 	for (;;) {
-		if ((_tokenSet_4.member(LA(1)))) {
+		if ((LA(1) == 0x27 /* '\'' */ ) && (LA(2) == 0x27 /* '\'' */ )) {
 			{
-			match(_tokenSet_4);
+			match(L'\'' /* charlit */ );
+			match(L'\'' /* charlit */ );
 			}
+		}
+		else if ((_tokenSet_4.member(LA(1)))) {
+			matchNot(L'\'' /* charlit */ );
 		}
 		else {
 			goto _loop46;

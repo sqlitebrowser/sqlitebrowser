@@ -221,7 +221,7 @@ void TestTable::parseSQLEscapedQuotes()
 
     QCOMPARE(tab.name(), QString("double_quotes"));
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
-    QCOMPARE(tab.fields().at(0)->defaultValue(), QString("a''a"));
+    QCOMPARE(tab.fields().at(0)->defaultValue(), QString("'a''a'"));
 }
 
 void TestTable::createTableWithIn()
