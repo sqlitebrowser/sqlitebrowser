@@ -338,7 +338,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             QString new_value = item->text(column);
             // If the default value isn't a SQL keyword perform an extra check: If it isn't numeric but doesn't start and end with quotes,
             // add the quotes
-            if(new_value.compare("null", Qt::CaseInsensitive) &&
+            if(new_value.size() && new_value.compare("null", Qt::CaseInsensitive) &&
                     new_value.compare("current_time", Qt::CaseInsensitive) &&
                     new_value.compare("current_date", Qt::CaseInsensitive) &&
                     new_value.compare("current_timestamp", Qt::CaseInsensitive))
