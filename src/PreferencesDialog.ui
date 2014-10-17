@@ -102,7 +102,7 @@
          </item>
         </layout>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>&amp;Prefetch block size</string>
@@ -112,7 +112,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QSpinBox" name="spinPrefetchSize">
          <property name="minimum">
           <number>255</number>
@@ -121,6 +121,19 @@
           <number>1000000</number>
          </property>
         </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Remove line breaks in schema view</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkHideSchemaLinebreaks</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="checkHideSchemaLinebreaks"/>
        </item>
       </layout>
      </widget>
@@ -412,6 +425,7 @@
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
+  <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>spinEditorFontSize</tabstop>
@@ -419,7 +433,6 @@
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -432,8 +445,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>260</x>
-     <y>265</y>
+     <x>269</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>155</x>
@@ -448,8 +461,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>328</x>
-     <y>265</y>
+     <x>337</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -464,8 +477,8 @@
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
-     <y>107</y>
+     <x>568</x>
+     <y>119</y>
     </hint>
     <hint type="destinationlabel">
      <x>459</x>
@@ -496,8 +509,8 @@
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>464</x>
-     <y>64</y>
+     <x>567</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -512,8 +525,8 @@
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>464</x>
-     <y>93</y>
+     <x>567</x>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>

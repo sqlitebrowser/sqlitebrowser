@@ -1,6 +1,7 @@
 #include "DbStructureModel.h"
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
+#include "PreferencesDialog.h"
 
 #include <QTreeWidgetItem>
 #include <QMimeData>
@@ -36,7 +37,7 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
 
     // Depending on the role either return the text or the icon
     if(role == Qt::DisplayRole)
-        return item->text(index.column());
+        return PreferencesDialog::getSettingsValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ") : item->text(index.column());
     else if(role == Qt::DecorationRole)
         return item->icon(index.column());
     else

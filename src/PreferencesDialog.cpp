@@ -43,6 +43,7 @@ void PreferencesDialog::loadSettings()
 {
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
+    ui->checkHideSchemaLinebreaks->setChecked(getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
 
@@ -68,6 +69,7 @@ void PreferencesDialog::saveSettings()
 {
     setSettingsValue("db", "defaultencoding", ui->encodingComboBox->currentText());
     setSettingsValue("db", "defaultlocation", ui->locationEdit->text());
+    setSettingsValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
 
@@ -129,6 +131,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // db/defaultlocation?
     if(group == "db" && name == "defaultlocation")
         return QDir::homePath();
+
+    // db/hideschemalinebreaks?
+    if(group == "db" && name == "hideschemalinebreaks")
+        return false;
 
     // db/foreignkeys?
     if(group == "db" && name == "foreignkeys")
