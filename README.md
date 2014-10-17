@@ -33,7 +33,7 @@ not require familiarity with SQL commands. It is a tool to be used both by
 developers and by end users, and it must remain as simple to use as possible
 in order to achieve its goals.
 
-## Windows binaries
+## Windows
 
 Windows binaries can be downloaded from here:
 
@@ -48,8 +48,6 @@ Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are also ava
 DB Browser for SQLite works well on MacOS X.
 
 * OSX 10.6 (Snow Leopard) - 10.9 (Mavericks) are tested and known to work
-
-### MacOS X binaries
 
 OSX binaries can be downloaded from here:
 
