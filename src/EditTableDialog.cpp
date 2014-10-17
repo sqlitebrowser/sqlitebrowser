@@ -385,7 +385,7 @@ void EditTableDialog::addField()
     typeBox->addItems(sqlb::Field::Datatypes);
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
     connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-    connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
+    //connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
