@@ -39,5 +39,6 @@
         <file alias="browser_open">internet-web-browser.png</file>
         <file alias="project_save">package.png</file>
         <file alias="project_open">package_go.png</file>
+        <file alias="field_key">page_key.png</file>
     </qresource>
 </RCC>

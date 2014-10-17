@@ -175,7 +175,11 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
                 fldItem->setText(0, (*it).table.fields().at(i)->name());
                 fldItem->setText(1, "field");
                 fldItem->setText(2, (*it).table.fields().at(i)->type());
-                fldItem->setIcon(0, QIcon(":/icons/field"));
+                fldItem->setText(3, (*it).table.fields().at(i)->toString("  ", " "));
+                if((*it).table.fields().at(i)->primaryKey())
+                    fldItem->setIcon(0, QIcon(":/icons/field_key"));
+                else
+                    fldItem->setIcon(0, QIcon(":/icons/field"));
             }
         }
     }
