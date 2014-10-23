@@ -263,10 +263,9 @@ bool DBBrowserDB::dump(const QString& filename)
     QFile file(filename);
     if(file.open(QIODevice::WriteOnly))
     {
-        // Create progress dialog. For this count the number of all table rows to be exported first;
-        // this does neither take the table creation itself nor
-        // indices, views or triggers into account but compared to the number of rows those should be neglectable
-        unsigned int numRecordsTotal = 0, numRecordsCurrent = 0;
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
+        size_t numRecordsTotal = 0, numRecordsCurrent = 0;
         QList<DBBrowserObject> tables = objMap.values("table");
         QMutableListIterator<DBBrowserObject> it(tables);
         while(it.hasNext())
@@ -284,12 +283,12 @@ bool DBBrowserDB::dump(const QString& filename)
                 numRecordsTotal += tableModel.totalRowCount();
             }
         }
+
         QProgressDialog progress(QObject::tr("Exporting database to SQL file..."),
                                  QObject::tr("Cancel"), 0, numRecordsTotal);
         progress.setWindowModality(Qt::ApplicationModal);
-
-        // Regular expression to check for numeric strings
-        QRegExp regexpIsNumeric("\\d*");
+        progress.show();
+        qApp->processEvents();
 
         // Open text stream to the file
         QTextStream stream(&file);
@@ -301,53 +300,64 @@ bool DBBrowserDB::dump(const QString& filename)
         for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
         {
             // Write the SQL string used to create this table to the output file
-            stream << (*it).getsql() << ";\n";
+            stream << it->getsql() << ";\n";
 
-            // Get data of this table
-            SqliteTableModel tableModel(0, this);
-            tableModel.setTable((*it).getname());
-            while(tableModel.canFetchMore())
-                tableModel.fetchMore();
+            QString sQuery = QString("SELECT * FROM `%1`;").arg(it->getTableName());
+            QByteArray utf8Query = sQuery.toUtf8();
+            sqlite3_stmt *stmt;
 
-            // Dump all the content of the table
-            for(int row=0;row<tableModel.totalRowCount();row++)
+            int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+            if(SQLITE_OK == status)
             {
-                stream << "INSERT INTO `" << (*it).getname() << "` VALUES(";
-                for(int col=1;col<tableModel.columnCount();col++)
-                {
-                    QString content;
-                    if(tableModel.isBinary(tableModel.index(row, col)))
-                    {
-                        content = QString("X'%1'").arg(QString(tableModel.data(tableModel.index(row, col), Qt::EditRole).toByteArray().toHex()));
-                        if(content.isNull())
-                            content = "NULL";
-                    } else {
-                        content = tableModel.data(tableModel.index(row, col)).toString().replace("'", "''");
-                        if(content.isNull())
-                            content = "NULL";
-                        else if(content.length() && !regexpIsNumeric.exactMatch(content))
-                            content = "'" + content + "'";
-                        else if(content.length() == 0)
-                            content = "''";
-                    }
-
-                    stream << content;
-                    if(col < tableModel.columnCount() - 1)
-                        stream << ",";
-                    else
-                        stream << ");\n";
-                }
-
-                // Update progress dialog
-                progress.setValue(++numRecordsCurrent);
+                int columns = sqlite3_column_count(stmt);
+                size_t counter = 0;
                 qApp->processEvents();
-                if(progress.wasCanceled())
+                while(sqlite3_step(stmt) == SQLITE_ROW)
                 {
-                    file.close();
-                    file.remove();
-                    return false;
+                    stream << "INSERT INTO `" << it->getTableName() << "` VALUES (";
+                    for (int i = 0; i < columns; ++i)
+                    {
+                        int fieldsize = sqlite3_column_bytes(stmt, i);
+                        if(fieldsize)
+                        {
+                            QByteArray bcontent(
+                                        (const char*)sqlite3_column_blob(stmt, i),
+                                        fieldsize);
+
+                            if(bcontent.left(2048).contains('\0')) // binary check
+                            {
+                                stream << QString("X'%1'").arg(QString(bcontent.toHex()));
+                            }
+                            else
+                            {
+                                stream << "'" << bcontent.replace("'", "''") << "'";
+                            }
+                        }
+                        else
+                        {
+                            stream << "NULL";
+                        }
+                        if(i != columns - 1)
+                            stream << ',';
+                    }
+                    stream << ");\n";
+
+                    progress.setValue(++numRecordsCurrent);
+                    if(counter % 5000 == 0)
+                        qApp->processEvents();
+                    counter++;
+
+                    if(progress.wasCanceled())
+                    {
+                        sqlite3_finalize(stmt);
+                        file.close();
+                        file.remove();
+                        QApplication::restoreOverrideCursor();
+                        return false;
+                    }
                 }
             }
+            sqlite3_finalize(stmt);
         }
 
         // Now dump all the other objects
@@ -364,6 +374,9 @@ bool DBBrowserDB::dump(const QString& filename)
         // Done
         stream << "COMMIT;\n";
         file.close();
+
+        QApplication::restoreOverrideCursor();
+        qApp->processEvents();
         return true;
     } else {
         return false;
