@@ -30,7 +30,7 @@ The same process works for building the code in any platform supported by Qt
 
 ### Ubuntu Linux
 
-**1**. Make sure the build-essentials, cmake, g++, libqt4-dev and libsqlite3-dev
+**1**. Make sure the build-essential, cmake, libqt4-dev and libsqlite3-dev
        packages are installed.<br />
 **2**. Download the DB Browser for SQLite source code.<br />
 **3**. Open a terminal in the source code directory.<br />
@@ -39,7 +39,6 @@ The same process works for building the code in any platform supported by Qt
 $ mkdir build
 $ cd build
 $ cmake ..
-$ cd ..
 $ make
 $ sudo make install
 ```
