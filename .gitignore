@@ -7,6 +7,8 @@ CMakeFiles
 
 # ignore any build folders
 build*/
+# folder with temporary test data
+testdata/
 
 src/.ui/
 src/sqlitebrowser
