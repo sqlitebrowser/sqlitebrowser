@@ -229,7 +229,7 @@ install(TARGETS ${PROJECT_NAME}
 	
 if(UNIX AND NOT APPLE)
 install(FILES src/icons/${PROJECT_NAME}.png
-	DESTINATION share/pixmaps/)
+	DESTINATION share/icons/hicolor/256x256/apps/)
 	
 install(FILES distri/${PROJECT_NAME}.desktop
 	DESTINATION share/applications/)
