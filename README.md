@@ -47,7 +47,7 @@ Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are also ava
 
 DB Browser for SQLite works well on MacOS X.
 
-* OSX 10.6 (Snow Leopard) / 10.9 (Mavericks) and 10.10 (Yosemite) are tested and known to work
+* OSX 10.6 (Snow Leopard) - 10.10 (Yosemite) are tested and known to work
 
 OSX binaries can be downloaded from here:
 
