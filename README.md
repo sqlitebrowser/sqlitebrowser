@@ -39,7 +39,7 @@ Windows binaries can be downloaded from here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
 
-Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are also available at:
+Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are available at:
 
 * http://rp.oldsch00l.com/sqlitebrowser/
 
