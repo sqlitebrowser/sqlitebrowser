@@ -74,7 +74,7 @@ set(SQLB_SRC
 	src/sqlitetablemodel.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
-    src/csvparser.cpp
+	src/csvparser.cpp
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
 	src/grammar/Sqlite3Parser.cpp
@@ -101,9 +101,10 @@ set(SQLB_RESOURCES
 
 # Translation files
 set(SQLB_TSS
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_cn.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_de.ts"
-	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ru.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_fr.ts"
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ru.ts"
 )
 
 if(USE_QT5)
