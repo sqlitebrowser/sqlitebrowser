@@ -3,7 +3,7 @@
 ### Generic Linux and FreeBSD
 
 DB Browser for SQLite requires Trolltech's Qt, version 4.6 or newer. For more
-information on Qt please consult http://www.qtsoftware.com. The GPL version of
+information on Qt please consult http://www.qt.io. The GPL version of
 Qt is available in almost all Linux distributions as a default package.
 
 The only requirements for building this code are the presence of Qt and
