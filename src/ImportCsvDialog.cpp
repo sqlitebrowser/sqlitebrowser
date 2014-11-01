@@ -2,6 +2,7 @@
 #include "ui_ImportCsvDialog.h"
 #include "sqlitedb.h"
 #include "csvparser.h"
+#include "sqlite.h"
 
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -10,7 +11,6 @@
 #include <QTextCodec>
 #include <QCompleter>
 #include <QComboBox>
-#include <sqlite3.h>
 #include <QFile>
 #include <QTextStream>
 #include <QSettings>

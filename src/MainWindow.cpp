@@ -15,6 +15,7 @@
 #include "VacuumDialog.h"
 #include "DbStructureModel.h"
 #include "gen_version.h"
+#include "sqlite.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -28,7 +29,6 @@
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 #include <QElapsedTimer>
-#include <sqlite3.h>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
@@ -195,23 +195,30 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
     if(QFile::exists(wFile) )
     {
         fileClose();
-        if(db.open(wFile))
+        // Try opening it as a project file first
+        if(loadProject(wFile))
         {
-            statusEncodingLabel->setText(db.getPragma("encoding"));
-            setCurrentFile(wFile);
-            if(!dontAddToRecentFiles)
-                addToRecentFilesMenu(wFile);
             retval = true;
         } else {
-            // Failed opening file; so it might be a project file instead
-            return loadProject(wFile);
+            // No project file; so it should be a database file
+            if(db.open(wFile))
+            {
+                statusEncodingLabel->setText(db.getPragma("encoding"));
+                setCurrentFile(wFile);
+                if(!dontAddToRecentFiles)
+                    addToRecentFilesMenu(wFile);
+                openSqlTab(true);
+                retval = true;
+            } else {
+                QMessageBox::warning(this, qApp->applicationName(), tr("Invalid file format."));
+                return false;
+            }
         }
         loadExtensionsFromSettings();
         populateStructure();
         resetBrowser();
         if(ui->mainTab->currentIndex() == 2)
             loadPragmas();
-        openSqlTab(true);
     }
 
     return retval;
@@ -1749,10 +1756,7 @@ bool MainWindow::loadProject(QString filename)
         xml.readNext();     // token == QXmlStreamReader::StartDocument
         xml.readNext();     // name == sqlb_project
         if(xml.name() != "sqlb_project")
-        {
-            QMessageBox::warning(this, qApp->applicationName(), tr("Invalid file format."));
             return false;
-        }
 
         addToRecentFilesMenu(filename);
 

@@ -42,7 +42,8 @@ HEADERS += \
     SqlExecutionArea.h \
     VacuumDialog.h \
     DbStructureModel.h \
-    Application.h
+    Application.h \
+    sqlite.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -88,6 +89,13 @@ TRANSLATIONS += \
     translations/sqlb_fr.ts \
     translations/sqlb_ru.ts
 
+CONFIG(sqlcipher) {
+	QMAKE_CXXFLAGS += -DENABLE_SQLCIPHER
+	LIBS += -lsqlcipher
+} else {
+	LIBS += -lsqlite3
+}
+
 LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
 LIBPATH_QCUSTOMPLOT=$$PWD/../libs/qcustomplot-source
@@ -121,7 +129,7 @@ mac {
 
 UI_DIR = .ui
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/..
-LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -lantlr -lqhexedit -lqcustomplot -lsqlite3
+LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -lantlr -lqhexedit -lqcustomplot
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source
 
 # Rules for creating/updating {ts|qm}-files

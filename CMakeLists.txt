@@ -29,7 +29,7 @@ endif()
 set(SQLB_HDR
 	src/gen_version.h
 	src/sqlitetypes.h
-    src/csvparser.h
+	src/csvparser.h
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
@@ -54,6 +54,7 @@ set(SQLB_MOC_HDR
 	src/sqltextedit.h
 	src/DbStructureModel.h
 	src/Application.h
+	src/sqlite.h
 )
 
 set(SQLB_SRC
@@ -179,13 +180,21 @@ if(APPLE)
 	add_definitions(-DCHECKNEWVERSION)
 endif(APPLE)
 
+# SQLCipher option
+if(sqlcipher)
+	add_definitions(-DSQLCIPHER)
+	set(LIBSQLITE_NAME sqlcipher)
+else(sqlcipher)
+	set(LIBSQLITE_NAME sqlite3)
+endif(sqlcipher)
+
 # add extra library path for MacOS and FreeBSD
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH) 
-	find_library(LIBSQLITE sqlite3 HINTS /usr/local/lib /usr/local/opt/sqlite/lib)
+	find_library(LIBSQLITE ${LIBSQLITE_NAME} HINTS /usr/local/lib /usr/local/opt/sqlite/lib)
 	set(ADDITIONAL_INCLUDE_PATHS /usr/local/include /usr/local/opt/sqlite/include)
 else(EXTRAPATH)
-	find_library(LIBSQLITE sqlite3)
+	find_library(LIBSQLITE ${LIBSQLITE_NAME})
 endif(EXTRAPATH)
 
 include_directories(

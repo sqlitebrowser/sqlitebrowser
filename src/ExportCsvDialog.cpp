@@ -3,12 +3,12 @@
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
 #include "sqlitetablemodel.h"
+#include "sqlite.h"
 
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <sqlite3.h>
 
 ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),

@@ -1,5 +1,6 @@
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
+#include "sqlite.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -7,7 +8,7 @@
 #include <QApplication>
 #include <QSettings>
 #include <QDebug>
-#include <sqlite3.h>
+#include <QInputDialog>
 
 // collation callbacks
 int collCompare(void* /*pArg*/, int /*eTextRepA*/, const void* sA, int /*eTextRepB*/, const void* sB)
@@ -43,32 +44,62 @@ bool DBBrowserDB::getDirty() const
     return !savepointList.empty();
 }
 
-bool DBBrowserDB::open ( const QString & db)
+bool DBBrowserDB::open(const QString& db)
 {
     bool ok=false;
     int  err;
 
     if (isOpen()) close();
 
-    //try to verify the SQLite version 3 file header
-    QFile dbfile(db);
-    if ( dbfile.open( QIODevice::ReadOnly ) ) {
-        char buffer[16+1];
-        dbfile.readLine(buffer, 16);
-        QString contents = QString(buffer);
-        dbfile.close();
-        if (!contents.startsWith("SQLite format 3")) {
-            lastErrorMessage = QObject::tr("File is not a SQLite 3 database");
-            return false;
-        }
-    } else {
-        lastErrorMessage = QObject::tr("File could not be read");
+    lastErrorMessage = QObject::tr("no error");
+
+    // Open database file
+    if(sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+    {
+        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         return false;
     }
 
-    lastErrorMessage = QObject::tr("no error");
-
-    err = sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL);
+    // Try reading from database
+    bool done = false;
+    do
+    {
+        QString statement = "SELECT COUNT(*) FROM sqlite_master;";
+        QByteArray utf8Statement = statement.toUtf8();
+        sqlite3_stmt* vm;
+        const char* tail;
+        err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, &tail);
+        if(sqlite3_step(vm) != SQLITE_ROW)
+        {
+#ifdef SQLCIPHER
+            QString pass = QInputDialog::getText(0, qApp->applicationName(),
+                                                 QObject::tr("Couldn't read from database file. This means it is either not a valid SQLite3 "
+                                                             "database or it is encrypted.\nIn the latter case you can provide a passphrase to open the file. Note"
+                                                             "that only databases encrypted using SQLCipher are supported."));
+            if(pass.isEmpty())
+            {
+                sqlite3_close(_db);
+                _db = 0;
+                return false;
+            } else {
+                int pagesize = QInputDialog::getInt(0, qApp->applicationName(),
+                                                    QObject::tr("If the database has been encrypted using a different page size than normally (i.e. 1024 bytes) this "
+                                                                "value is required, too."),
+                                                    1024, 0);
+                if(pagesize == 0) pagesize = 1024;
+                sqlite3_key(_db, pass.toUtf8(), pass.toUtf8().length());
+                sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(pagesize).toUtf8(), NULL, NULL, NULL);
+            }
+#else
+            sqlite3_close(_db);
+            _db = 0;
+            return false;
+#endif
+        } else {
+            done = true;
+        }
+        sqlite3_finalize(vm);
+    } while(!done);
 
     // register collation callback
     sqlite3_collation_needed(_db, NULL, collation_needed);
