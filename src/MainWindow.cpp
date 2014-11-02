@@ -16,6 +16,7 @@
 #include "DbStructureModel.h"
 #include "gen_version.h"
 #include "sqlite.h"
+#include "CipherDialog.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -173,6 +174,11 @@ void MainWindow::init()
 
     QUrl url("https://raw.github.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
     m_NetworkManager->get(QNetworkRequest(url));
+#endif
+
+#ifndef ENABLE_SQLCIPHER
+    // Only show encrpytion menu action when SQLCipher support is enabled
+    ui->actionEncryption->setVisible(false);
 #endif
 }
 
@@ -845,6 +851,7 @@ void MainWindow::dbState( bool dirty )
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
     ui->fileAttachAction->setEnabled(!dirty);
+    //ui->actionEncryption->setEnabled(!dirty);
 }
 
 void MainWindow::fileSave()
@@ -1096,6 +1103,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlOpenTab->setEnabled(enable);
     ui->actionSqlSaveFile->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable);
+    ui->actionEncryption->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -1997,4 +2005,62 @@ void MainWindow::updateFilter(int column, const QString& value)
 {
     m_browseTableModel->updateFilter(column ,value);
     setRecordsetLabel();
+}
+
+void MainWindow::editEncryption()
+{
+#ifdef ENABLE_SQLCIPHER
+    CipherDialog dialog(this, true);
+    if(dialog.exec())
+    {
+        // Show progress dialog even though we can't provide any detailed progress information but this
+        // process might take some time.
+        QProgressDialog progress(this);
+        progress.setCancelButton(0);
+        progress.setWindowModality(Qt::ApplicationModal);
+        progress.show();
+        qApp->processEvents();
+
+        // Apply all unsaved changes
+        bool ok = db.saveAll();
+        qApp->processEvents();
+
+        // Create the new file first or it won't work
+        if(ok)
+        {
+            QFile file(db.curDBFilename + ".enctemp");
+            file.open(QFile::WriteOnly);
+            file.close();
+        }
+
+        // Attach a new database using the new settings
+        qApp->processEvents();
+        if(ok)
+            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY '%2';").arg(db.curDBFilename + ".enctemp").arg(dialog.password()),
+                               false, false);
+        qApp->processEvents();
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = %1").arg(dialog.pageSize()), false, false);
+
+        // Export the current database to the new one
+        qApp->processEvents();
+        if(ok)
+            ok = db.executeSQL("SELECT sqlcipher_export('sqlitebrowser_edit_encryption');", false, false);
+
+        // Check for errors
+        qApp->processEvents();
+        if(ok)
+        {
+            // No errors: Then close the current database, switch names, open the new one and if that succeeded delete the old one
+
+            fileClose();
+            QFile::rename(db.curDBFilename, db.curDBFilename + ".enctempold");
+            QFile::rename(db.curDBFilename + ".enctemp", db.curDBFilename);
+            if(fileOpen(db.curDBFilename))
+                QFile::remove(db.curDBFilename + ".enctempold");
+        } else {
+            QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
+        }
+    }
+#endif
 }

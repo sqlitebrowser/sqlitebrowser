@@ -179,6 +179,7 @@ private slots:
     void saveProject();
     void fileAttach();
     void updateFilter(int column, const QString& value);
+    void editEncryption();
 };
 
 #endif

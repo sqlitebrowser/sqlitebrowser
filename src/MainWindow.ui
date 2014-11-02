@@ -278,8 +278,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>575</width>
-             <height>458</height>
+             <width>294</width>
+             <height>444</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -793,6 +793,7 @@
     <addaction name="fileSaveAction"/>
     <addaction name="fileRevertAction"/>
     <addaction name="fileCompactAction"/>
+    <addaction name="actionEncryption"/>
     <addaction name="actionLoadExtension"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
@@ -1521,6 +1522,15 @@
    </property>
    <property name="text">
     <string>&amp;Attach Database</string>
+   </property>
+  </action>
+  <action name="actionEncryption">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/encryption</normaloff>:/icons/encryption</iconset>
+   </property>
+   <property name="text">
+    <string>Set Encryption</string>
    </property>
   </action>
  </widget>
@@ -2314,6 +2324,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionEncryption</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editEncryption()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2363,5 +2389,6 @@
   <slot>loadProject()</slot>
   <slot>saveProject()</slot>
   <slot>fileAttach()</slot>
+  <slot>editEncryption()</slot>
  </slots>
 </ui>

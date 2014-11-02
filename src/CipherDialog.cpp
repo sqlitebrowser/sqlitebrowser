@@ -13,9 +13,11 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     if(encrypt)
     {
         ui->labelDialogDescription->setText(tr("Please set a key to encrypt the database.\nNote that if you change any of the other, optional, settings you'll need "
-                                               "to re-enter them as well every time you open the database file."));
+                                               "to re-enter them as well every time you open the database file.\nLeave the password fields empty to disable the "
+                                               "encryption.\nThe encrpytion process might take some time and you should have a backup copy of you database! Unsaved "
+                                               "changes are applied before modifying the encryption."));
     } else {
-        ui->labelDialogDescription->setText(tr("Please enter the key used to encrypt the database.\nIf any of the other setting were altered for this database file "
+        ui->labelDialogDescription->setText(tr("Please enter the key used to encrypt the database.\nIf any of the other settings were altered for this database file "
                                                "you need to provide this information as well."));
         ui->editPassword2->setVisible(false);
         ui->labelPassword2->setVisible(false);
