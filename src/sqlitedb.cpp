@@ -54,6 +54,8 @@ bool DBBrowserDB::open(const QString& db)
 
     lastErrorMessage = QObject::tr("no error");
 
+    isEncrypted = false;
+
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
     {
@@ -78,9 +80,11 @@ bool DBBrowserDB::open(const QString& db)
             {
                 sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
                 sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher.pageSize()).toUtf8(), NULL, NULL, NULL);
+                isEncrypted = true;
             } else {
                 sqlite3_close(_db);
                 _db = 0;
+                isEncrypted = false;
                 return false;
             }
 #else

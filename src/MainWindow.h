@@ -73,6 +73,7 @@ private:
     QMenu *recentFilesMenu;
 
     QLabel* statusEncodingLabel;
+    QLabel* statusEncryptionLabel;
 
     SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;
     SQLiteSyntaxHighlighter* sqliteHighlighterLogApp;

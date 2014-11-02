@@ -133,6 +133,13 @@ void MainWindow::init()
     statusEncodingLabel->setToolTip(tr("Database encoding"));
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
+    statusEncryptionLabel = new QLabel(ui->statusbar);
+    statusEncryptionLabel->setEnabled(false);
+    statusEncryptionLabel->setVisible(false);
+    statusEncryptionLabel->setText("Encrypted");
+    statusEncryptionLabel->setToolTip(tr("Database is encrypted using SQLCipher"));
+    ui->statusbar->addPermanentWidget(statusEncryptionLabel);
+
     // Connect some more signals and slots
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
@@ -204,6 +211,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
             if(db.open(wFile))
             {
                 statusEncodingLabel->setText(db.getPragma("encoding"));
+                statusEncryptionLabel->setVisible(db.encrypted());
                 setCurrentFile(wFile);
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
@@ -408,6 +416,7 @@ void MainWindow::fileClose()
     resetBrowser();
     populateStructure();
     loadPragmas();
+    statusEncryptionLabel->setVisible(false);
 
     // Delete the model for the Browse tab and create a new one
     delete m_browseTableModel;

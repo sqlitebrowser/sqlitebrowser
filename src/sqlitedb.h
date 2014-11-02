@@ -104,6 +104,7 @@ public:
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
     bool isOpen() const;
+    bool encrypted() const { return isEncrypted; }
     bool getDirty() const;
     void logSQL(QString statement, int msgtype);
 
@@ -127,6 +128,8 @@ signals:
 
 private:
     QStringList savepointList;
+
+    bool isEncrypted;
 };
 
 #endif

@@ -27,12 +27,12 @@ CipherDialog::~CipherDialog()
     delete ui;
 }
 
-QString CipherDialog::password()
+QString CipherDialog::password() const
 {
     return ui->editPassword->text();
 }
 
-int CipherDialog::pageSize()
+int CipherDialog::pageSize() const
 {
     return ui->spinPageSize->value();
 }

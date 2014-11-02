@@ -18,8 +18,8 @@ public:
     ~CipherDialog();
 
     // Allow read access  tothe input fields
-    QString password();
-    int pageSize();
+    QString password() const;
+    int pageSize() const;
 
 private:
     Ui::CipherDialog* ui;
