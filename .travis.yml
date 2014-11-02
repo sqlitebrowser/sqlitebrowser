@@ -4,18 +4,23 @@ compiler:
   - clang
 
 before_install:
+  - sudo add-apt-repository ppa:likemartinma/devel -y
   - sudo apt-get update -qq
-  - sudo apt-get install -qq libqt4-dev libsqlite3-dev
+  - sudo apt-get install -qq libqt4-dev libsqlite3-dev libsqlcipher-dev
 
 script:
   - mkdir tests/build
   - mkdir build
+  - mkdir build_cipher
   - cd tests/build
   - cmake ..
   - make
   - ./sqlb-unittests
   - cd ../../build
   - cmake ..
+  - make
+  - cd ../build_cipher
+  - cmake -Dsqlcipher=1 ..
   - make
 
 matrix:
