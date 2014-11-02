@@ -40,6 +40,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QInputDialog>
+#include <QProgressDialog>
 
 
 MainWindow::MainWindow(QWidget* parent)
