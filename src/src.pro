@@ -43,7 +43,8 @@ HEADERS += \
     VacuumDialog.h \
     DbStructureModel.h \
     Application.h \
-    sqlite.h
+    sqlite.h \
+    CipherDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -67,7 +68,8 @@ SOURCES += \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \
     DbStructureModel.cpp \
-    Application.cpp
+    Application.cpp \
+    CipherDialog.cpp
 
 RESOURCES += icons/icons.qrc
 
@@ -81,7 +83,8 @@ FORMS += \
     ExportCsvDialog.ui \
     ImportCsvDialog.ui \
     SqlExecutionArea.ui \
-    VacuumDialog.ui
+    VacuumDialog.ui \
+    CipherDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_cn.ts \

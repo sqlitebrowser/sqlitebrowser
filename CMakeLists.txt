@@ -30,6 +30,7 @@ set(SQLB_HDR
 	src/gen_version.h
 	src/sqlitetypes.h
 	src/csvparser.h
+	src/sqlite.h
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
@@ -54,7 +55,7 @@ set(SQLB_MOC_HDR
 	src/sqltextedit.h
 	src/DbStructureModel.h
 	src/Application.h
-	src/sqlite.h
+	src/CipherDialog.h
 )
 
 set(SQLB_SRC
@@ -81,6 +82,7 @@ set(SQLB_SRC
 	src/grammar/Sqlite3Parser.cpp
 	src/main.cpp
 	src/Application.cpp
+	src/CipherDialog.cpp
 )
 
 set(SQLB_FORMS
@@ -94,6 +96,7 @@ set(SQLB_FORMS
 	src/PreferencesDialog.ui
 	src/SqlExecutionArea.ui
 	src/VacuumDialog.ui
+	src/CipherDialog.ui
 )
 
 set(SQLB_RESOURCES
@@ -182,7 +185,7 @@ endif(APPLE)
 
 # SQLCipher option
 if(sqlcipher)
-	add_definitions(-DSQLCIPHER)
+	add_definitions(-DENABLE_SQLCIPHER)
 	set(LIBSQLITE_NAME sqlcipher)
 else(sqlcipher)
 	set(LIBSQLITE_NAME sqlite3)

@@ -1,7 +1,7 @@
 #ifndef SQLITE_H
 #define SQLITE_H
 
-#ifdef SQLCIPHER
+#ifdef ENABLE_SQLCIPHER
     #define SQLITE_TEMP_STORE 2
     #define SQLITE_HAS_CODEC
     #include <sqlcipher/sqlite3.h>

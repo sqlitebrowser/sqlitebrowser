@@ -1,6 +1,7 @@
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
 #include "sqlite.h"
+#include "CipherDialog.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -71,24 +72,16 @@ bool DBBrowserDB::open(const QString& db)
         err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, &tail);
         if(sqlite3_step(vm) != SQLITE_ROW)
         {
-#ifdef SQLCIPHER
-            QString pass = QInputDialog::getText(0, qApp->applicationName(),
-                                                 QObject::tr("Couldn't read from database file. This means it is either not a valid SQLite3 "
-                                                             "database or it is encrypted.\nIn the latter case you can provide a passphrase to open the file. Note"
-                                                             "that only databases encrypted using SQLCipher are supported."));
-            if(pass.isEmpty())
+#ifdef ENABLE_SQLCIPHER
+            CipherDialog cipher(0, false);
+            if(cipher.exec())
             {
+                sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
+                sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher.pageSize()).toUtf8(), NULL, NULL, NULL);
+            } else {
                 sqlite3_close(_db);
                 _db = 0;
                 return false;
-            } else {
-                int pagesize = QInputDialog::getInt(0, qApp->applicationName(),
-                                                    QObject::tr("If the database has been encrypted using a different page size than normally (i.e. 1024 bytes) this "
-                                                                "value is required, too."),
-                                                    1024, 0);
-                if(pagesize == 0) pagesize = 1024;
-                sqlite3_key(_db, pass.toUtf8(), pass.toUtf8().length());
-                sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(pagesize).toUtf8(), NULL, NULL, NULL);
             }
 #else
             sqlite3_close(_db);
