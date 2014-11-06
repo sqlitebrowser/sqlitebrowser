@@ -269,6 +269,11 @@
               <string>Check constraint</string>
              </property>
             </column>
+            <column>
+             <property name="text">
+              <string>Foreign Key</string>
+             </property>
+            </column>
            </widget>
            <widget class="QTextEdit" name="sqlTextEdit">
             <property name="readOnly">

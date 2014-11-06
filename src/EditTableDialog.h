@@ -33,7 +33,8 @@ private:
         kAutoIncrement = 4,
         kUnique = 5,
         kDefault = 6,
-        kCheck = 7
+        kCheck = 7,
+        kForeignKey = 8
     };
 
     void updateColumnWidth();

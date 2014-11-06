@@ -112,6 +112,7 @@ void EditTableDialog::populateFields()
         tbitem->setCheckState(kUnique, f->unique() ? Qt::Checked : Qt::Unchecked);
         tbitem->setText(kDefault, f->defaultValue());
         tbitem->setText(kCheck, f->check());
+        tbitem->setText(kForeignKey, f->foreignKey());
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
@@ -362,6 +363,11 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         break;
         case kCheck:
             field->setCheck(item->text(column));
+            if(!m_bNewTable)
+                callRenameColumn = true;
+            break;
+        case kForeignKey:
+            field->setForeignKey(item->text(column));
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;
