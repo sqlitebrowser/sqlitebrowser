@@ -190,6 +190,14 @@ QString Table::sql() const
         if(pks_found)
             sql += pk + ")";
     }
+
+    // foreign keys
+    foreach(FieldPtr f, m_fields)
+    {
+        if(!f->foreignKey().isEmpty())
+            sql += QString(",\n\tFOREIGN KEY(`%1`) REFERENCES %2").arg(f->name()).arg(f->foreignKey());
+    }
+
     sql += "\n)";
 
     // without rowid
@@ -343,6 +351,25 @@ Table CreateTableWalker::table()
                         // else save on table a unique with more than one field
                         m_bModifySupported = false;
                     }
+                }
+                break;
+                case sqlite3TokenTypes::FOREIGN:
+                {
+                    tc = tc->getNextSibling();  // FOREIGN
+                    tc = tc->getNextSibling();  // KEY
+                    tc = tc->getNextSibling();  // LPAREN
+                    QString column_name = identifier(tc);
+                    tc = tc->getNextSibling();  // identifier
+                    if(tc->getType() == sqlite3TokenTypes::COMMA)
+                    {
+                        // No support for composite foreign keys
+                        m_bModifySupported = false;
+                        break;
+                    }
+                    tc = tc->getNextSibling();  // RPAREN
+                    tc = tc->getNextSibling();  // REFERENCES
+
+                    tab.fields().at(tab.findField(column_name))->setForeignKey(concatTextAST(tc, true));
                 }
                 break;
                 default:

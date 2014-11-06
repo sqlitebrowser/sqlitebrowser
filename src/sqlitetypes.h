@@ -42,6 +42,7 @@ public:
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
     void setPrimaryKey(bool pk) { m_primaryKey = pk; }
     void setUnique(bool u) { m_unique = u; }
+    void setForeignKey(const QString& key) { m_foreignKey = key; }
 
     bool isText() const;
     bool isInteger() const;
@@ -54,6 +55,7 @@ public:
     bool autoIncrement() const { return m_autoincrement; }
     bool primaryKey() const { return m_primaryKey; }
     bool unique() const { return m_unique; }
+    const QString& foreignKey() const { return m_foreignKey; }
 
     static QStringList Datatypes;
 private:
@@ -62,6 +64,7 @@ private:
     bool m_notnull;
     QString m_check;
     QString m_defaultvalue;
+    QString m_foreignKey;   // Even though this information is a table constraint easier for accessing and processing to store it here
     bool m_autoincrement; //! this is stored here for simplification
     bool m_primaryKey;
     bool m_unique;
