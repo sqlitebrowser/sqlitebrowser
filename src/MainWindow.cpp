@@ -209,6 +209,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
     if(QFile::exists(wFile) )
     {
         fileClose();
+
         // Try opening it as a project file first
         if(loadProject(wFile))
         {
@@ -223,17 +224,17 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
+                loadExtensionsFromSettings();
+                populateStructure();
+                resetBrowser();
+                if(ui->mainTab->currentIndex() == 2)
+                    loadPragmas();
                 retval = true;
             } else {
                 QMessageBox::warning(this, qApp->applicationName(), tr("Invalid file format."));
                 return false;
             }
         }
-        loadExtensionsFromSettings();
-        populateStructure();
-        resetBrowser();
-        if(ui->mainTab->currentIndex() == 2)
-            loadPragmas();
     }
 
     return retval;
