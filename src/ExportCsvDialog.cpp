@@ -116,7 +116,7 @@ void ExportCsvDialog::accept()
                         QString content = QString::fromUtf8(
                                     (const char*)sqlite3_column_blob(stmt, i),
                                     sqlite3_column_bytes(stmt, i));
-                        if(content.contains(quoteChar) || content.contains("\r\n") || content.contains('\n'))
+                        if(content.contains(quoteChar) || content.contains(sepChar) || content.contains('\n'))
                             stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
                         else
                             stream << content;
