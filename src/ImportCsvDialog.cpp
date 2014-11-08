@@ -35,8 +35,8 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
     ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
-    setSeparatorChar(QChar(settings.value("importcsv/separator", 44).toInt()));
-    setQuoteChar(QChar(settings.value("importcsv/quotecharacter", 34).toInt()));
+    setSeparatorChar(QChar(settings.value("importcsv/separator", ',').toInt()));
+    setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
     setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
 
     checkInput();
