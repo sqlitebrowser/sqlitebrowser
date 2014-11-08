@@ -9,6 +9,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QSettings>
 
 ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
@@ -18,6 +19,12 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString
 {
     // Create UI
     ui->setupUi(this);
+
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    ui->checkHeader->setChecked(settings.value("exportcsv/firstrowheader", true).toBool());
+    setSeparatorChar(QChar(settings.value("exportcsv/separator", ',').toInt()));
+    setQuoteChar(QChar(settings.value("exportcsv/quotecharacter", '"').toInt()));
+
     showCustomCharEdits();
 
     // If a SQL query was specified hide the table combo box. If not fill it with tables to export
@@ -58,23 +65,24 @@ void ExportCsvDialog::accept()
     // Only if the user hasn't clicked the cancel button
     if(fileName.size() > 0)
     {
+        // save settings
+        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+        settings.beginGroup("exportcsv");
+        settings.setValue("firstrowheader", ui->checkHeader->isChecked());
+        settings.setValue("separator", currentSeparatorChar());
+        settings.setValue("quotecharacter", currentQuoteChar());
+        settings.endGroup();
+
+        // Create select statement when exporting an entire table
         if(m_sQuery.isEmpty())
         {
             m_sQuery = QString("SELECT * from `%1`;").arg(ui->comboTable->currentText());
         }
 
         // Prepare the quote and separating characters
-        QString quoteChar = ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1
-                    ? ui->editCustomQuote->text() : ui->comboQuoteCharacter->currentText();
-        QString quotequoteChar = quoteChar + quoteChar;
-        QString sepChar;
-        if(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1)
-        {
-            sepChar = ui->editCustomSeparator->text();
-        } else {
-            sepChar = ui->comboFieldSeparator->currentText();
-            if(sepChar == tr("Tab")) sepChar = "\t";
-        }
+        QChar quoteChar = currentQuoteChar();
+        QString quotequoteChar = QString(quoteChar) + quoteChar;
+        QChar sepChar = currentSeparatorChar();
         QString newlineChar = "\r\n";
 
         // Open file
@@ -149,4 +157,56 @@ void ExportCsvDialog::showCustomCharEdits()
     // Show/hide custom quote/separator input fields
     ui->editCustomQuote->setVisible(ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1);
     ui->editCustomSeparator->setVisible(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1);
+}
+
+void ExportCsvDialog::setQuoteChar(const QChar& c)
+{
+    QComboBox* combo = ui->comboQuoteCharacter;
+    int index = combo->findText(c);
+    if(index == -1)
+    {
+        combo->setCurrentIndex(combo->count());
+        ui->editCustomQuote->setText(c);
+    }
+    else
+    {
+        combo->setCurrentIndex(index);
+    }
+}
+
+char ExportCsvDialog::currentQuoteChar() const
+{
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1)
+        return ui->editCustomQuote->text().length() ? ui->editCustomQuote->text().at(0).toLatin1() : 0;
+
+    if(ui->comboQuoteCharacter->currentText().length())
+        return ui->comboQuoteCharacter->currentText().at(0).toLatin1();
+    else
+        return 0;
+}
+
+void ExportCsvDialog::setSeparatorChar(const QChar& c)
+{
+    QComboBox* combo = ui->comboFieldSeparator;
+    QString sText = c == '\t' ? QString("Tab") : QString(c);
+    int index = combo->findText(sText);
+    if(index == -1)
+    {
+        combo->setCurrentIndex(combo->count());
+        ui->editCustomSeparator->setText(c);
+    }
+    else
+    {
+        combo->setCurrentIndex(index);
+    }
+}
+
+char ExportCsvDialog::currentSeparatorChar() const
+{
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1)
+        return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
+
+    return ui->comboFieldSeparator->currentText() == tr("Tab") ? '\t' : ui->comboFieldSeparator->currentText().at(0).toLatin1();
 }

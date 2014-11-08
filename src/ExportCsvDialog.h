@@ -26,6 +26,12 @@ private:
     DBBrowserDB* pdb;
 
     QString m_sQuery;
+
+    void setQuoteChar(const QChar& c);
+    char currentQuoteChar() const;
+
+    void setSeparatorChar(const QChar& c);
+    char currentSeparatorChar() const;
 };
 
 #endif
