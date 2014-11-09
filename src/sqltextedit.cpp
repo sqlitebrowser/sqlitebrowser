@@ -1,5 +1,6 @@
 #include "sqltextedit.h"
 #include "PreferencesDialog.h"
+#include "SQLiteSyntaxHighlighter.h"
 
 #include <QKeyEvent>
 #include <QAbstractItemView>
@@ -11,7 +12,7 @@
 #include <QMimeData>
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
-    QPlainTextEdit(parent), m_Completer(0), m_defaultCompleterModel(0)
+    QPlainTextEdit(parent), m_defaultCompleterModel(0)
 {
     // basic auto completer for sqliteedit
     m_Completer = new QCompleter(this);
@@ -25,6 +26,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     font.setStyleHint(QFont::TypeWriter);
     font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
     setFont(font);
+
+    // Create syntax highlighter
+    m_syntaxHighlighter = new SQLiteSyntaxHighlighter(document());
 
     // Create line number area
     lineNumberArea = new LineNumberArea(this);

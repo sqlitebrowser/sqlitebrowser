@@ -47,8 +47,6 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
-      sqliteHighlighterLogUser(0),
-      sqliteHighlighterLogApp(0),
       editWin(new EditDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this))
 {
@@ -274,8 +272,8 @@ void MainWindow::populateStructure()
         return;
 
     QStringList tblnames = db.getBrowsableObjectNames();
-    sqliteHighlighterLogUser->setTableNames(tblnames);
-    sqliteHighlighterLogApp->setTableNames(tblnames);
+    ui->editLogUser->syntaxHighlighter()->setTableNames(tblnames);
+    ui->editLogApplication->syntaxHighlighter()->setTableNames(tblnames);
 
     // setup models for sqltextedit autocomplete
     completerModelTables.setRowCount(tblnames.count());
@@ -957,14 +955,6 @@ void MainWindow::openPreferences()
         reloadSettings();
 }
 
-void MainWindow::createSyntaxHighlighters()
-{
-    delete sqliteHighlighterLogApp;
-    delete sqliteHighlighterLogUser;
-    sqliteHighlighterLogApp = new SQLiteSyntaxHighlighter(ui->editLogApplication->document());
-    sqliteHighlighterLogUser = new SQLiteSyntaxHighlighter(ui->editLogUser->document());
-}
-
 //******************************************************************
 //** Tree Events
 //******************************************************************
@@ -1342,9 +1332,6 @@ void MainWindow::reloadSettings()
         font.setPointSize(edit_fontsize);
         sqlArea->getEditor()->setFont(font);
     }
-
-    // Create the syntax highlighters
-    createSyntaxHighlighters();
 
     // Set font for SQL logs
     ui->editLogApplication->setFont(logfont);

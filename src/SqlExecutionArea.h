@@ -5,7 +5,6 @@
 
 #include <QWidget>
 
-class SQLiteSyntaxHighlighter;
 class SqliteTableModel;
 class DBBrowserDB;
 class QMenu;
@@ -39,7 +38,6 @@ public slots:
 private:
     DBBrowserDB* db;
     Ui::SqlExecutionArea* ui;
-    SQLiteSyntaxHighlighter* highlighter;
     SqliteTableModel* model;
     QMenu* menuPopupSave;
 };

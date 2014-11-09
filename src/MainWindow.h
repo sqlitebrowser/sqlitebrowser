@@ -10,7 +10,6 @@
 
 class QDragEnterEvent;
 class EditDialog;
-class SQLiteSyntaxHighlighter;
 class QStandardItemModel;
 class QIntValidator;
 class QLabel;
@@ -74,9 +73,6 @@ private:
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
-
-    SQLiteSyntaxHighlighter* sqliteHighlighterLogUser;
-    SQLiteSyntaxHighlighter* sqliteHighlighterLogApp;
 
     DbStructureModel* dbStructureModel;
 
@@ -159,7 +155,6 @@ private slots:
     void savePragmas();
     void mainTabSelected( int tabindex );
     void browseTableHeaderClicked(int logicalindex);
-    void createSyntaxHighlighters();
     unsigned int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false);
     void openSqlFile();

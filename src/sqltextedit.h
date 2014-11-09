@@ -5,6 +5,7 @@
 
 class QCompleter;
 class QAbstractItemModel;
+class SQLiteSyntaxHighlighter;
 
 /**
  * @brief The SqlTextEdit class
@@ -27,6 +28,8 @@ public:
 
     QAbstractItemModel* addFieldCompleterModel(const QString& tablename, QAbstractItemModel *model);
     void insertFieldCompleterModels(const FieldCompleterModelMap& fieldmap);
+
+    SQLiteSyntaxHighlighter* syntaxHighlighter() { return m_syntaxHighlighter; }
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -62,6 +65,7 @@ private:
     QCompleter* m_Completer;
     QAbstractItemModel* m_defaultCompleterModel;
     FieldCompleterModelMap m_fieldCompleterMap;
+    SQLiteSyntaxHighlighter* m_syntaxHighlighter;
 };
 
 #endif // SQLTEXTEDIT_H

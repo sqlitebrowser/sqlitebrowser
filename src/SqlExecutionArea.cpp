@@ -26,9 +26,6 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     logfont.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
     ui->editErrors->setFont(logfont);
 
-    // Create syntax highlighter
-    highlighter = new SQLiteSyntaxHighlighter(ui->editEditor->document());
-
     // Create model
     model = new SqliteTableModel(this, db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
@@ -47,7 +44,7 @@ SqlExecutionArea::~SqlExecutionArea()
 
 void SqlExecutionArea::setTableNames(const QStringList& tables)
 {
-    highlighter->setTableNames(tables);
+    ui->editEditor->syntaxHighlighter()->setTableNames(tables);
 }
 
 QString SqlExecutionArea::getSql() const
