@@ -79,6 +79,8 @@ bool DBBrowserDB::open(const QString& db)
             if(cipher.exec())
             {
                 sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
+                sqlite3_exec(_db, QString("PRAGMA cipher_page_size = 4096;").toUtf8(), NULL, NULL, NULL);
+                sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
                 sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher.pageSize()).toUtf8(), NULL, NULL, NULL);
                 isEncrypted = true;
             } else {
