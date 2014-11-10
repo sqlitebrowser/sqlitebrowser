@@ -74,6 +74,7 @@ bool DBBrowserDB::open(const QString& db)
         err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, &tail);
         if(sqlite3_step(vm) != SQLITE_ROW)
         {
+            sqlite3_finalize(vm);
 #ifdef ENABLE_SQLCIPHER
             CipherDialog cipher(0, false);
             if(cipher.exec())
@@ -97,7 +98,6 @@ bool DBBrowserDB::open(const QString& db)
         } else {
             done = true;
         }
-        sqlite3_finalize(vm);
     } while(!done);
 
     // register collation callback
