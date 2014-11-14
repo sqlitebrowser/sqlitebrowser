@@ -146,6 +146,29 @@ If you additionaly want an NSIS installer:
 
 done.
 
+## Build with SQLCipher support
+
+When built with SQLCipher support, DB Browser for SQLite will allow you to open
+and edit databases encrypted using SQLCipher as well as standard SQLite3
+databases.
+
+Before compiling make sure you have the necessary SQLCipher development files
+installed. On Linux this can usually be accomplished by just installing the
+correct package (e.g. 'libsqlcipher-dev' on Debian-based distributions). On
+MacOS X the easiest way is to install it via Homebrew ('brew install
+sqlcipher'). On Windows unfortunately it's a bit more difficult: You'll have
+to download and compile the code as described on the
+[SQLCipher website](https://www.zetetic.net/sqlcipher/) before you can proceed.
+
+If SQLCipher is installed, simply follow the standard instructions for your
+platform but enable the 'sqlcipher' build option by replacing any calls to
+cmake and qmake like this:
+```
+If it says...			Change it to...
+cmake				cmake -Dsqlcipher=1
+cmake ..			cmake -Dsqlcipher=1 ..
+qmake				qmake CONFIG+=sqlcipher
+```
 
 ## Building and running the Unit Tests
 
