@@ -79,10 +79,19 @@ bool DBBrowserDB::open(const QString& db)
             CipherDialog cipher(0, false);
             if(cipher.exec())
             {
+                // Close and reopen database first to be in a clean state after the failed read attempt from above
+                sqlite3_close(_db);
+                if(sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                {
+                    lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
+                    return false;
+                }
+
+                // Set key and, if it differs from the default value, the page size
                 sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
-                sqlite3_exec(_db, QString("PRAGMA cipher_page_size = 4096;").toUtf8(), NULL, NULL, NULL);
-                sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
-                sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher.pageSize()).toUtf8(), NULL, NULL, NULL);
+                if(cipher.pageSize() != 1024)
+                    sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher.pageSize()).toUtf8(), NULL, NULL, NULL);
+
                 isEncrypted = true;
             } else {
                 sqlite3_close(_db);
