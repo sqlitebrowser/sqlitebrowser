@@ -24,6 +24,9 @@ public:
     QString getSql() const;
     QString getSelectedSql() const;
 
+    QString fileName() const { return sqlFileName; }
+    void setFileName(const QString& filename) { sqlFileName = filename; }
+
     SqliteTableModel* getModel() { return model; }
     QTextEdit* getResultView();
     SqlTextEdit* getEditor();
@@ -40,6 +43,7 @@ private:
     Ui::SqlExecutionArea* ui;
     SqliteTableModel* model;
     QMenu* menuPopupSave;
+    QString sqlFileName;
 };
 
 #endif

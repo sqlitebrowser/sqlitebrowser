@@ -108,6 +108,11 @@ void MainWindow::init()
     popupTableMenu->addSeparator();
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
+    popupSaveSqlFileMenu = new QMenu(this);
+    popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFile);
+    popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFileAs);
+    ui->actionSqlSaveFilePopup->setMenu(popupSaveSqlFileMenu);
+
     // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
     ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
@@ -1260,7 +1265,9 @@ void MainWindow::openSqlFile()
         else
             index = openSqlTab();
 
-        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setPlainText(f.readAll());
+        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
+        sqlarea->getEditor()->setPlainText(f.readAll());
+        sqlarea->setFileName(file);
         QFileInfo fileinfo(file);
         ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
     }
@@ -1268,17 +1275,36 @@ void MainWindow::openSqlFile()
 
 void MainWindow::saveSqlFile()
 {
+    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+
+    // If this SQL file hasn't been saved before open the Save As dialog. Otherwise just use the old file name for saving
+    if(sqlarea->fileName().isEmpty())
+    {
+        saveSqlFileAs();
+    } else {
+        QFile f(sqlarea->fileName());
+        f.open(QIODevice::WriteOnly);
+        f.write(sqlarea->getSql().toUtf8());
+
+        QFileInfo fileinfo(sqlarea->fileName());
+        ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
+    }
+}
+
+void MainWindow::saveSqlFileAs()
+{
     QString file = QFileDialog::getSaveFileName(
                 this,
                 tr("Select file name"),
                 PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
-    QFile f(file);
-    f.open(QIODevice::WriteOnly);
-    f.write(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->getSql().toUtf8());
-    QFileInfo fileinfo(file);
-    ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
+    if(!file.isEmpty())
+    {
+        // Just set the selected file name and call the standard save action which is going to use it
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFileName(file);
+        saveSqlFile();
+    }
 }
 
 void MainWindow::loadExtension()

@@ -70,6 +70,7 @@ private:
     SqliteTableModel* m_currentPlotModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
+    QMenu *popupSaveSqlFileMenu;
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
@@ -159,6 +160,7 @@ private slots:
     void closeSqlTab(int index, bool force = false);
     void openSqlFile();
     void saveSqlFile();
+    void saveSqlFileAs();
     void loadExtension();
     void reloadSettings();
     void httpresponse(QNetworkReply* reply);

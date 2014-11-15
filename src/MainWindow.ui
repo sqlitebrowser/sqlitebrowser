@@ -278,8 +278,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>294</width>
-             <height>444</height>
+             <width>575</width>
+             <height>458</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -733,7 +733,7 @@
           </property>
           <addaction name="actionSqlOpenTab"/>
           <addaction name="actionSqlOpenFile"/>
-          <addaction name="actionSqlSaveFile"/>
+          <addaction name="actionSqlSaveFilePopup"/>
           <addaction name="separator"/>
           <addaction name="actionExecuteSql"/>
           <addaction name="actionSqlExecuteLine"/>
@@ -1531,6 +1531,30 @@
    </property>
    <property name="text">
     <string>Set Encryption</string>
+   </property>
+  </action>
+  <action name="actionSqlSaveFileAs">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_sql</normaloff>:/icons/save_sql</iconset>
+   </property>
+   <property name="text">
+    <string>Save SQL file as</string>
+   </property>
+   <property name="toolTip">
+    <string>Save SQL file as</string>
+   </property>
+  </action>
+  <action name="actionSqlSaveFilePopup">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_sql</normaloff>:/icons/save_sql</iconset>
+   </property>
+   <property name="text">
+    <string>Save SQL file</string>
+   </property>
+   <property name="toolTip">
+    <string>Save SQL file</string>
    </property>
   </action>
  </widget>
@@ -2340,6 +2364,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSqlSaveFilePopup</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSqlFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlSaveFileAs</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSqlFileAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2390,5 +2446,6 @@
   <slot>saveProject()</slot>
   <slot>fileAttach()</slot>
   <slot>editEncryption()</slot>
+  <slot>saveSqlFileAs()</slot>
  </slots>
 </ui>
