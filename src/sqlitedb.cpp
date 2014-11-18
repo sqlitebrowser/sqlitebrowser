@@ -357,6 +357,7 @@ bool DBBrowserDB::dump(const QString& filename)
                     for (int i = 0; i < columns; ++i)
                     {
                         int fieldsize = sqlite3_column_bytes(stmt, i);
+                        int fieldtype = sqlite3_column_type(stmt, i);
                         if(fieldsize)
                         {
                             QByteArray bcontent(
@@ -369,7 +370,14 @@ bool DBBrowserDB::dump(const QString& filename)
                             }
                             else
                             {
-                                stream << "'" << bcontent.replace("'", "''") << "'";
+                                if(fieldtype == SQLITE_TEXT || fieldtype == SQLITE_BLOB)
+                                {
+                                    stream << "'" << bcontent.replace("'", "''") << "'";
+                                }
+                                else
+                                {
+                                    stream << bcontent;
+                                }
                             }
                         }
                         else
