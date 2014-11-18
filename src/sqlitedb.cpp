@@ -415,7 +415,10 @@ bool DBBrowserDB::dump(const QString& filename)
                 continue;
 
             // Write the SQL string used to create this object to the output file
-            stream << (*it).getsql() << ";\n";
+            if(!it->getsql().isEmpty())
+            {
+                stream << it->getsql() << ";\n";
+            }
         }
 
         // Done
