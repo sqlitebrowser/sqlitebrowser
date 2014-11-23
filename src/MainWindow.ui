@@ -1256,7 +1256,7 @@
   </action>
   <action name="fileExportCSVAction">
    <property name="text">
-    <string>Table as CSV file...</string>
+    <string>Table(s) as CSV file...</string>
    </property>
    <property name="toolTip">
     <string>Export a database table as a comma separated text file.</string>

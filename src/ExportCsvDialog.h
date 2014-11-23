@@ -22,16 +22,19 @@ private slots:
     void showCustomCharEdits();
 
 private:
-    Ui::ExportCsvDialog* ui;
-    DBBrowserDB* pdb;
-
-    QString m_sQuery;
-
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
 
     void setSeparatorChar(const QChar& c);
     char currentSeparatorChar() const;
+
+    bool exportQuery(const QString& sQuery, const QString& sFilename);
+
+private:
+    Ui::ExportCsvDialog* ui;
+    DBBrowserDB* pdb;
+
+    QString m_sQuery;
 };
 
 #endif
