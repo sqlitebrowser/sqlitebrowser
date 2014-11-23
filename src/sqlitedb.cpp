@@ -358,31 +358,28 @@ bool DBBrowserDB::dump(const QString& filename)
                     {
                         int fieldsize = sqlite3_column_bytes(stmt, i);
                         int fieldtype = sqlite3_column_type(stmt, i);
-                        if(fieldsize)
-                        {
-                            QByteArray bcontent(
-                                        (const char*)sqlite3_column_blob(stmt, i),
-                                        fieldsize);
+                        QByteArray bcontent(
+                                    (const char*)sqlite3_column_blob(stmt, i),
+                                    fieldsize);
 
-                            if(bcontent.left(2048).contains('\0')) // binary check
-                            {
-                                stream << QString("X'%1'").arg(QString(bcontent.toHex()));
-                            }
-                            else
-                            {
-                                if(fieldtype == SQLITE_TEXT || fieldtype == SQLITE_BLOB)
-                                {
-                                    stream << "'" << bcontent.replace("'", "''") << "'";
-                                }
-                                else
-                                {
-                                    stream << bcontent;
-                                }
-                            }
+                        if(bcontent.left(2048).contains('\0')) // binary check
+                        {
+                            stream << QString("X'%1'").arg(QString(bcontent.toHex()));
                         }
                         else
                         {
-                            stream << "NULL";
+                            switch(fieldtype)
+                            {
+                            case SQLITE_TEXT:
+                            case SQLITE_BLOB:
+                                stream << "'" << bcontent.replace("'", "''") << "'";
+                            break;
+                            case SQLITE_NULL:
+                                stream << "NULL";
+                            break;
+                            default:
+                                stream << bcontent;
+                            }
                         }
                         if(i != columns - 1)
                             stream << ',';
@@ -428,9 +425,8 @@ bool DBBrowserDB::dump(const QString& filename)
         QApplication::restoreOverrideCursor();
         qApp->processEvents();
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool logsql)
