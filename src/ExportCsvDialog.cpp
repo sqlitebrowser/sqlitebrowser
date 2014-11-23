@@ -131,7 +131,10 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     } else {
         QMessageBox::warning(this, QApplication::applicationName(),
                              tr("Could not open output file: %1").arg(sFilename));
+        return false;
     }
+
+    return true;
 }
 
 void ExportCsvDialog::accept()
