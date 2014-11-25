@@ -234,6 +234,23 @@ QString concatTextAST(antlr::RefAST t, bool withspace = false)
 }
 }
 
+namespace {
+QString tablename(const antlr::RefAST& n)
+{
+    if(n->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME)
+        return concatTextAST(n->getFirstChild());
+    else
+        return identifier(n);
+}
+QString columnname(const antlr::RefAST& n)
+{
+    if(n->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME)
+        return concatTextAST(n->getFirstChild());
+    else
+        return identifier(n);
+}
+}
+
 Table CreateTableWalker::table()
 {
     Table tab("");
@@ -251,7 +268,7 @@ Table CreateTableWalker::table()
             s = s->getNextSibling();
         }
 
-        tab.setName(identifier(s));
+        tab.setName(tablename(s));
 
         s = s->getNextSibling(); // LPAREN
         s = s->getNextSibling(); // first column name
@@ -287,7 +304,7 @@ Table CreateTableWalker::table()
                     tc = tc->getNextSibling(); // skip LPAREN
                     do
                     {
-                        QString col = identifier(tc);
+                        QString col = columnname(tc);
                         int fieldindex = tab.findField(col);
                         if(fieldindex != -1)
                             tab.fields().at(fieldindex)->setPrimaryKey(true);
@@ -321,7 +338,7 @@ Table CreateTableWalker::table()
                     QVector<int> uniquefieldsindex;
                     do
                     {
-                        QString col = identifier(tc);
+                        QString col = columnname(tc);
                         int fieldindex = tab.findField(col);
                         if(fieldindex != -1)
                             uniquefieldsindex.append(fieldindex);
@@ -358,7 +375,7 @@ Table CreateTableWalker::table()
                     tc = tc->getNextSibling();  // FOREIGN
                     tc = tc->getNextSibling();  // KEY
                     tc = tc->getNextSibling();  // LPAREN
-                    QString column_name = identifier(tc);
+                    QString column_name = columnname(tc);
                     tc = tc->getNextSibling();  // identifier
                     if(tc->getType() == sqlite3TokenTypes::COMMA)
                     {
@@ -398,7 +415,7 @@ Table CreateTableWalker::table()
 
 void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
 {
-    QString columnname;
+    QString colname;
     QString type = "TEXT";
     bool autoincrement = false;
     bool primarykey = false;
@@ -407,10 +424,7 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
     QString defaultvalue;
     QString check;
 
-    if(c->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME)
-        columnname = concatTextAST(c->getFirstChild());
-    else
-        columnname = identifier(c);
+    colname = columnname(c);
     c = c->getNextSibling(); //type?
     if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::TYPE_NAME)
     {
@@ -482,7 +496,7 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
         c = c->getNextSibling();
     }
 
-    f = FieldPtr( new Field(columnname, type, notnull, defaultvalue, check, primarykey, unique));
+    f = FieldPtr( new Field(colname, type, notnull, defaultvalue, check, primarykey, unique));
     f->setAutoIncrement(autoincrement);
 }
 
