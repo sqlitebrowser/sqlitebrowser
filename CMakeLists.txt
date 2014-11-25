@@ -103,6 +103,10 @@ set(SQLB_RESOURCES
 	src/icons/icons.qrc
 )
 
+set(SQLB_MISC
+    src/grammar/sqlite3.g
+)
+
 # Translation files
 set(SQLB_TSS
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_cn.ts"
@@ -214,7 +218,8 @@ add_executable(${PROJECT_NAME}
 		${SQLB_FORM_HDR}
 		${SQLB_MOC}
 		${SQLB_RESOURCES_RCC}
-		${SQLB_QMS})
+                ${SQLB_QMS}
+                ${SQLB_MISC})
 
 if(USE_QT5)
     qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
