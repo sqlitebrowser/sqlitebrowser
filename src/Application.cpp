@@ -1,3 +1,4 @@
+#include <Qfile>
 #include <QFileOpenEvent>
 #include <QTranslator>
 #include <QTextCodec>
