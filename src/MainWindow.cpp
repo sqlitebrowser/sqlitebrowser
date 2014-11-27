@@ -1851,7 +1851,7 @@ bool MainWindow::loadProject(QString filename)
                             xml.skipCurrentElement();
                         } else if(xml.name() == "column_widths") {
                             // Column widths
-                            QByteArray temp = QByteArray::fromBase64(xml.attributes().value("data").toUtf8());
+                            QByteArray temp = QByteArray::fromBase64(xml.attributes().value("data").toString().toUtf8());
                             QDataStream stream(temp);
                             stream >> browseTableColumnWidths;
                             populateTable(ui->comboBrowseTable->currentText());     // Refresh view

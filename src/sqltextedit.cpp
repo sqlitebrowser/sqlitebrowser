@@ -2,6 +2,7 @@
 #include "PreferencesDialog.h"
 #include "SQLiteSyntaxHighlighter.h"
 
+#include <Qfile>
 #include <QKeyEvent>
 #include <QAbstractItemView>
 #include <QCompleter>
