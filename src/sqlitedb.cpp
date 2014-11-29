@@ -105,6 +105,7 @@ bool DBBrowserDB::open(const QString& db)
             return false;
 #endif
         } else {
+            sqlite3_finalize(vm);
             done = true;
         }
     } while(!done);
