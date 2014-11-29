@@ -344,19 +344,24 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                     new_value.compare("current_date", Qt::CaseInsensitive) &&
                     new_value.compare("current_timestamp", Qt::CaseInsensitive))
             {
-                if(!((new_value.trimmed().startsWith('\'') ||
-                      new_value.trimmed().startsWith('"')) && (new_value.trimmed().endsWith('\'') || new_value.trimmed().endsWith('"'))))
+                QChar first_char = new_value.trimmed().at(0);
+                if(!((first_char == '\'' || first_char == '"') && new_value.trimmed().endsWith(first_char)))
                 {
                     bool is_numeric;
                     new_value.toDouble(&is_numeric);
                     if(!is_numeric)
                     {
-                        new_value = QString("'%1'").arg(new_value.replace("'", "''"));
-                        item->setText(column, new_value);
+                        if(new_value.trimmed().startsWith("=(") && new_value.trimmed().endsWith(')'))
+                        {
+                            new_value = new_value.trimmed().mid(1); // Leave the brackets as they are needed for a valid SQL expression
+                        } else {
+                            new_value = QString("'%1'").arg(new_value.replace("'", "''"));
+                            item->setText(column, new_value);
+                        }
                     }
                 }
             }
-            field->setDefaultValue(item->text(column));
+            field->setDefaultValue(new_value);
             if(!m_bNewTable)
                 callRenameColumn = true;
         }
