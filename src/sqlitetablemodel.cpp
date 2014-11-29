@@ -229,9 +229,20 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
 
         if(role == Qt::DisplayRole && isBinary(index))
-            return "(BLOB)";
+            return "BLOB";
+        else if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
+            return "NULL";
         else
             return m_data.at(index.row()).at(index.column());
+    } else if(role == Qt::FontRole) {
+        QFont font;
+        if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+            font.setItalic(true);
+        return font;
+    } else if(role == Qt::TextColorRole) {
+        if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+            return QColor(Qt::gray);
+        return QColor(Qt::black);
     } else {
         return QVariant();
     }
@@ -379,7 +390,18 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         {
             QByteArrayList rowdata;
             for (int i = 0; i < m_headers.size(); ++i)
-                rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), sqlite3_column_bytes(stmt, i)));
+            {
+                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                {
+                    rowdata.append(QByteArray());
+                } else {
+                    int bytes = sqlite3_column_bytes(stmt, i);
+                    if(bytes)
+                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                    else
+                        rowdata.append(QByteArray(""));
+                }
+            }
             m_data.push_back(rowdata);
         }
     }
