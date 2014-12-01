@@ -523,7 +523,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
 bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata)
 {
-    QString sQuery = QString("SELECT * from %1 WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
+    QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
     bool ret = false;
