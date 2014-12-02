@@ -120,24 +120,19 @@ bool DBBrowserDB::open(const QString& db)
         return false;
     }
 
-    if (_db){
+    if (_db)
+    {
         // set preference defaults
         QSettings settings(QApplication::organizationName(), QApplication::organizationName());
         settings.sync();
         bool foreignkeys = settings.value( "/db/foreignkeys", false ).toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
 
-        if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA empty_result_callbacks = ON;",
-                                    NULL,NULL,NULL)){
-            if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA show_datatypes = ON;",
-                                        NULL,NULL,NULL)){
-                ok=true;
-            }
-            curDBFilename = db;
-        }
-
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
+
+        ok = true;
+        curDBFilename = db;
     }
 
     return ok;
@@ -239,16 +234,8 @@ bool DBBrowserDB::create ( const QString & db)
         return false;
     }
 
-    if (_db){
-        if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA empty_result_callbacks = ON;",
-                                    NULL,NULL,NULL)){
-            if (SQLITE_OK==sqlite3_exec(_db,"PRAGMA show_datatypes = ON;",
-                                        NULL,NULL,NULL)){
-                ok=true;
-            }
-            curDBFilename = db;
-        }
-
+    if (_db)
+    {
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
 
@@ -258,6 +245,9 @@ bool DBBrowserDB::create ( const QString & db)
         sqlite3_exec(_db, "CREATE TABLE notempty (id integer primary key);", NULL, NULL, NULL);
         sqlite3_exec(_db, "DROP TABLE notempty", NULL, NULL, NULL);
         sqlite3_exec(_db, "COMMIT;", NULL, NULL, NULL);
+
+        ok = true;
+        curDBFilename = db;
     }
 
     return ok;
