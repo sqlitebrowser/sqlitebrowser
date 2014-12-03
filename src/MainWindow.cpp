@@ -534,6 +534,16 @@ void MainWindow::navigateNext()
     selectTableLine(curRow);
 }
 
+void MainWindow::navigateBegin()
+{
+    selectTableLine(0);
+}
+
+void MainWindow::navigateEnd()
+{
+    selectTableLine(m_browseTableModel->totalRowCount()-1);
+}
+
 
 void MainWindow::navigateGoto()
 {
@@ -1088,6 +1098,8 @@ void MainWindow::activateFields(bool enable)
     ui->editCreateIndexAction->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
+    ui->buttonBegin->setEnabled(enable);
+    ui->buttonEnd->setEnabled(enable);
     ui->scrollAreaWidgetContents->setEnabled(enable);
     ui->buttonBoxPragmas->setEnabled(enable);
     ui->buttonGoto->setEnabled(enable);

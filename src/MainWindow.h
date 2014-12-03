@@ -129,6 +129,8 @@ private slots:
     void selectTableLine( int lineToSelect );
     void navigatePrevious();
     void navigateNext();
+    void navigateBegin();
+    void navigateEnd();
     void navigateGoto();
     void setRecordsetLabel();
     void createTable();
