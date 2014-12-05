@@ -105,6 +105,9 @@ LIBPATH_QCUSTOMPLOT=$$PWD/../libs/qcustomplot-source
 unix {
     LIBS += -ldl
 }
+os2 {
+    RC_FILE = os2app.rc
+}
 win32 {
     RC_FILE = winapp.rc
     INCLUDEPATH += $$PWD
