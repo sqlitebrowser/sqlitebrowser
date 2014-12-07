@@ -192,6 +192,8 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
                 return QColor(Qt::red).name();
             else if(name == "currentline_colour")
                 return QColor(236, 236, 245).name();
+            else if(name == "null_colour")
+                return QColor(255,0,0,20).name();
         }
     }
 
