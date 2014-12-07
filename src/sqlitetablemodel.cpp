@@ -230,8 +230,6 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
         if(role == Qt::DisplayRole && isBinary(index))
             return "BLOB";
-        else if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
-            return "NULL";
         else
             return m_data.at(index.row()).at(index.column());
     } else if(role == Qt::FontRole) {
