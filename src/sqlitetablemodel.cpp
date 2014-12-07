@@ -1,7 +1,7 @@
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "sqlite.h"
-
+#include "PreferencesDialog.h"
 #include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
@@ -243,6 +243,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
             return QColor(Qt::gray);
         return QColor(Qt::black);
+    } else if (role == Qt::BackgroundColorRole) {
+        if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+            return QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "null_colour").toString());
+        return QVariant();
     } else {
         return QVariant();
     }
