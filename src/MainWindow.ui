@@ -182,6 +182,22 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
+           <widget class="QToolButton" name="buttonBegin">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>&lt;&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="buttonPrevious">
             <property name="enabled">
              <bool>false</bool>
@@ -217,6 +233,22 @@
             </property>
             <property name="text">
              <string>&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonEnd">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Scroll to the end</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>&gt;&gt;</string>
             </property>
            </widget>
           </item>
@@ -278,8 +310,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>575</width>
-             <height>458</height>
+             <width>311</width>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -764,7 +796,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>19</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1683,8 +1715,8 @@
    <slot>populateTable(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>59</x>
-     <y>82</y>
+     <x>118</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1699,8 +1731,8 @@
    <slot>addRecord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>584</x>
-     <y>82</y>
+     <x>443</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1715,8 +1747,8 @@
    <slot>deleteRecord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>687</x>
-     <y>82</y>
+     <x>565</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1731,8 +1763,8 @@
    <slot>navigatePrevious()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>380</y>
+     <x>74</x>
+     <y>585</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1747,8 +1779,8 @@
    <slot>navigateNext()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>128</x>
-     <y>380</y>
+     <x>168</x>
+     <y>585</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1763,8 +1795,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>493</x>
-     <y>380</y>
+     <x>413</x>
+     <y>586</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1779,8 +1811,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>790</x>
-     <y>379</y>
+     <x>565</x>
+     <y>586</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1795,8 +1827,8 @@
    <slot>browseRefresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>265</x>
-     <y>103</y>
+     <x>245</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2035,8 +2067,8 @@
    <slot>createTreeContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>399</x>
-     <y>341</y>
+     <x>101</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2083,8 +2115,8 @@
    <slot>loadPragmas()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>381</y>
+     <x>101</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -2099,8 +2131,8 @@
    <slot>savePragmas()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>364</x>
-     <y>381</y>
+     <x>101</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>802</x>
@@ -2115,12 +2147,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>794</x>
-     <y>441</y>
+     <x>989</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>103</x>
-     <y>476</y>
+     <x>691</x>
+     <y>163</y>
     </hint>
    </hints>
   </connection>
@@ -2131,12 +2163,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>794</x>
-     <y>441</y>
+     <x>989</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>611</x>
-     <y>576</y>
+     <x>990</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
@@ -2147,12 +2179,12 @@
    <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
-     <y>441</y>
+     <x>872</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>492</y>
+     <x>987</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
@@ -2179,8 +2211,8 @@
    <slot>closeSqlTab(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>48</x>
-     <y>90</y>
+     <x>81</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -2396,6 +2428,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonEnd</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateEnd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>573</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBegin</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>navigateBegin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2405,6 +2469,8 @@
   <slot>deleteRecord()</slot>
   <slot>navigatePrevious()</slot>
   <slot>navigateNext()</slot>
+  <slot>navigateBegin()</slot>
+  <slot>navigateEnd()</slot>
   <slot>navigateGoto()</slot>
   <slot>browseFind(bool)</slot>
   <slot>browseRefresh()</slot>
