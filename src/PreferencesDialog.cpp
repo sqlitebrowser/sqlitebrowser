@@ -55,9 +55,11 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, getSettingsValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
+        if (name != "null") {
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, getSettingsValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
+        }
     }
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
