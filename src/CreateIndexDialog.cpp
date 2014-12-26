@@ -47,6 +47,7 @@ void CreateIndexDialog::tableChanged(const QString& new_table)
 
         // And put a combobox to select the order in which to index the field in the last column
         QComboBox* order = new QComboBox(this);
+        order->addItem("");
         order->addItem("ASC");
         order->addItem("DESC");
         ui->tableIndexColumns->setCellWidget(i, 2, order);
