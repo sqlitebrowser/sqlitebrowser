@@ -463,7 +463,7 @@ suffixexpr
 literalvalue
   :
     NUMERIC
-//  | STRINGLITERAL // captured by columnname
+  | STRINGLITERAL
 //  | blob-literal
   | NULL_T
   | CURRENT_TIME
