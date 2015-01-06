@@ -23,6 +23,7 @@ private slots:
     void parseNonASCIIChars();
     void parseSQLEscapedQuotes();
     void parseSQLForeignKeys();
+    void parseSQLCheckConstraint();
     void createTableWithIn();
     void createTableWithNotLikeConstraint();
 };

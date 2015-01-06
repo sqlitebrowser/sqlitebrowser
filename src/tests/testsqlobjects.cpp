@@ -252,6 +252,18 @@ void TestTable::parseSQLForeignKeys()
     QCOMPARE(tab.fields().at(1)->foreignKey(), QString("w ( z ) on delete set null"));
 }
 
+void TestTable::parseSQLCheckConstraint()
+{
+    QString sql = "CREATE TABLE a (`b` text CHECK(`b`='A' or `b`='B'));";
+
+    Table tab = Table::parseSQL(sql).first;
+
+    QCOMPARE(tab.name(), QString("a"));
+    QCOMPARE(tab.fields().at(0)->name(), QString("b"));
+    QCOMPARE(tab.fields().at(0)->type(), QString("text"));
+    QCOMPARE(tab.fields().at(0)->check(), QString("`b` = 'A' or `b` = 'B'"));
+}
+
 void TestTable::createTableWithIn()
 {
     QString sSQL = "CREATE TABLE not_working("
