@@ -99,9 +99,9 @@ CONFIG(sqlcipher) {
 	LIBS += -lsqlite3
 }
 
-LIBPATH_QHEXEDIT=$$PWD/../libs/qhexedit
-LIBPATH_ANTLR=$$PWD/../libs/antlr-2.7.7
-LIBPATH_QCUSTOMPLOT=$$PWD/../libs/qcustomplot-source
+LIBPATH_QHEXEDIT=$$OUT_PWD/../libs/qhexedit
+LIBPATH_ANTLR=$$OUT_PWD/../libs/antlr-2.7.7
+LIBPATH_QCUSTOMPLOT=$$OUT_PWD/../libs/qcustomplot-source
 unix {
     LIBS += -ldl
 }
