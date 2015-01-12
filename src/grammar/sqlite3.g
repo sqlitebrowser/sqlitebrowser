@@ -352,7 +352,7 @@ columnconstraint
   | (NOT)? NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
-  | DEFAULT (signednumber | QUOTEDLITERAL | STRINGLITERAL | LPAREN expr RPAREN | literalvalue)
+  | DEFAULT (signednumber | QUOTEDLITERAL | STRINGLITERAL | LPAREN expr RPAREN | literalvalue | ID)
   | COLLATE collationname
   | foreignkeyclause)
   {#columnconstraint = #([COLUMNCONSTRAINT, "COLUMNCONSTRAINT"], #columnconstraint);}
