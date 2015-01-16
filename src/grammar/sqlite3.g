@@ -348,7 +348,7 @@ type_name
 columnconstraint
   :
   (CONSTRAINT name)?
-  ( PRIMARY KEY (ASC|DESC)? (AUTOINCREMENT)?
+  ( PRIMARY KEY (ASC|DESC)? (conflictclause)? (AUTOINCREMENT)?
   | (NOT)? NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
