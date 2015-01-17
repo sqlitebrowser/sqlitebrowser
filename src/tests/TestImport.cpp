@@ -14,9 +14,9 @@ TestImport::TestImport()
     // Init basic application
     // The app needs to be initialized for the utf8 test
     // to work
-    int argcount = 1;
-    const char* appname = "sqlb-unittests";
-    app = new QCoreApplication(argcount, const_cast<char**>(&appname));
+    argcount = 1;
+    args[0] = "sqlb-unittests";
+    app = new QCoreApplication(argcount, args);
 }
 
 TestImport::~TestImport()
