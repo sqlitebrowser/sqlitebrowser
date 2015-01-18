@@ -6,6 +6,8 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <QColorDialog>
+#include <QMessageBox>
+#include <QSortFilterProxyModel>
 
 QHash<QString, QVariant> PreferencesDialog::m_hCache;
 
@@ -15,6 +17,15 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
+
+    // Model to sort the languages in the language combo box
+    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(ui->languageComboBox);
+    proxy->setSourceModel(ui->languageComboBox->model());
+
+    // Prevent setModel() from deleting the current model (now source of the proxy model)
+    ui->languageComboBox->model()->setParent(proxy);
+
+    ui->languageComboBox->setModel(proxy);
 
     loadSettings();
 }
@@ -63,6 +74,7 @@ void PreferencesDialog::loadSettings()
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
+    fillLanguageBox();
 }
 
 void PreferencesDialog::saveSettings()
@@ -88,6 +100,14 @@ void PreferencesDialog::saveSettings()
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
         extList.append(item->text());
     setSettingsValue("extensions", "list", extList);
+
+    // Warn about restarting to change language
+    QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
+    if (newLanguage != getSettingsValue("General", "language"))
+        QMessageBox::information(this, QApplication::applicationName(),
+                                 tr("The language will change after you restart the application."));
+
+    setSettingsValue("General", "language", newLanguage);
 
     accept();
 }
@@ -159,6 +179,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // General/recentFileList?
     if(group == "General" && name == "recentFileList")
         return QStringList();
+
+    // General/language?
+    if(group == "General" && name == "language")
+        return QLocale::system().name();
 
     // syntaxhighlighter?
     if(group == "syntaxhighlighter")
@@ -237,4 +261,38 @@ void PreferencesDialog::removeExtension()
 {
     if(ui->listExtensions->currentIndex().isValid())
         ui->listExtensions->takeItem(ui->listExtensions->currentIndex().row());
+}
+
+void PreferencesDialog::fillLanguageBox()
+{
+    QDir translationsDir("translations", "sqlb_*.qm");
+
+    // Add default language
+    ui->languageComboBox->addItem("English (United States)", "en_US");
+
+    foreach(const QFileInfo &file, translationsDir.entryInfoList())
+    {
+        QLocale locale(file.baseName().remove("sqlb_"));
+
+        // Prevent invalid locales from being added to the box
+        if(locale.name() == "C")
+            continue;
+
+        QString language = QLocale::languageToString(locale.language()) + " (" +
+                           QLocale::countryToString(locale.country()) + ")";
+
+        ui->languageComboBox->addItem(language, locale.name());
+    }
+
+    ui->languageComboBox->model()->sort(0);
+
+    // Try to select the language for the stored locale
+    int index = ui->languageComboBox->findData(getSettingsValue("General", "language"),
+                                               Qt::UserRole, Qt::MatchExactly);
+
+    // If there's no translation for the current locale, default to English
+    if(index < 0)
+        index = ui->languageComboBox->findData("en_US", Qt::UserRole, Qt::MatchExactly);
+
+    ui->languageComboBox->setCurrentIndex(index);
 }
