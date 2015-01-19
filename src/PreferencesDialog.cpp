@@ -265,7 +265,9 @@ void PreferencesDialog::removeExtension()
 
 void PreferencesDialog::fillLanguageBox()
 {
-    QDir translationsDir("translations", "sqlb_*.qm");
+    // Use the path relative to the main executable
+    QDir translationsDir(QCoreApplication::applicationDirPath() + "/translations",
+                         "sqlb_*.qm");
 
     // Add default language
     ui->languageComboBox->addItem("English (United States)", "en_US");

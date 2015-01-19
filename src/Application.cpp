@@ -30,7 +30,9 @@ Application::Application(int& argc, char** argv) :
 
     // First of all try to load the application translation file.
     m_translatorApp = new QTranslator(this);
-    ok = m_translatorApp->load("sqlb_" + name, "translations");
+    ok = m_translatorApp->load("sqlb_" + name,
+                               QCoreApplication::applicationDirPath() + "/translations");
+
     if (ok == true) {
         PreferencesDialog::setSettingsValue("General", "language", name);
         installTranslator(m_translatorApp);
