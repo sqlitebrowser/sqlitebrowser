@@ -66,9 +66,14 @@ to compile it yourself using the (simple) instructions in BUILDING.md.
 ## FreeBSD
 
 DB Browser for SQLite works well on FreeBSD, and there is a port for it (thanks
-to [lbartoletti](https://github.com/lbartoletti) :smile:):
+to [lbartoletti](https://github.com/lbartoletti) :smile:).  It can be installed
+using either this:
 
     # make -C /usr/ports/databases/sqlitebrowser install
+
+or this:
+
+    # pkg install sqlitebrowser 
 
 ### Compiling
 
