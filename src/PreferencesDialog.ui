@@ -22,13 +22,89 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout_3">
+       <item row="1" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="locationEdit">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="setLocationButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Default &amp;location</string>
+         </property>
+         <property name="buddy">
+          <cstring>locationEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Language</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="languageComboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>20</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>&amp;Database</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
        <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::ExpandingFieldsGrow</enum>
+        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+       </property>
+       <property name="labelAlignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="formAlignment">
+        <set>Qt::AlignHCenter|Qt::AlignTop</set>
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
@@ -75,54 +151,6 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Default &amp;location</string>
-         </property>
-         <property name="buddy">
-          <cstring>locationEdit</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLineEdit" name="locationEdit">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="setLocationButton">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>&amp;Prefetch block size</string>
-         </property>
-         <property name="buddy">
-          <cstring>spinPrefetchSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="spinPrefetchSize">
-         <property name="minimum">
-          <number>255</number>
-         </property>
-         <property name="maximum">
-          <number>1000000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
           <string>Remove line breaks in schema view</string>
@@ -132,8 +160,41 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="2" column="1">
         <widget class="QCheckBox" name="checkHideSchemaLinebreaks"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>&amp;Prefetch block size</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinPrefetchSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinPrefetchSize">
+         <property name="minimum">
+          <number>255</number>
+         </property>
+         <property name="maximum">
+          <number>1000000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>180</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -420,13 +481,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>encodingComboBox</tabstop>
-  <tabstop>foreignKeysCheckBox</tabstop>
-  <tabstop>locationEdit</tabstop>
-  <tabstop>setLocationButton</tabstop>
-  <tabstop>checkHideSchemaLinebreaks</tabstop>
-  <tabstop>spinPrefetchSize</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
@@ -471,38 +525,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>setLocationButton</sender>
-   <signal>clicked()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>chooseLocation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>568</x>
-     <y>119</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>459</x>
-     <y>62</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeSyntaxHighlighting</sender>
-   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>103</x>
-     <y>53</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>395</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonAddExtension</sender>
    <signal>clicked()</signal>
    <receiver>PreferencesDialog</receiver>
@@ -531,6 +553,22 @@
     <hint type="destinationlabel">
      <x>245</x>
      <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeSyntaxHighlighting</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>

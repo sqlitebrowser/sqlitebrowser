@@ -8,6 +8,7 @@
 
 #include "Application.h"
 #include "MainWindow.h"
+#include "PreferencesDialog.h"
 
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
@@ -25,12 +26,15 @@ Application::Application(int& argc, char** argv) :
 
     // Load translations
     bool ok;
-    QString name = QLocale::system().name();
+    QString name = PreferencesDialog::getSettingsValue("General", "language").toString();
 
     // First of all try to load the application translation file.
     m_translatorApp = new QTranslator(this);
-    ok = m_translatorApp->load("sqlb_" + name, "translations");
+    ok = m_translatorApp->load("sqlb_" + name,
+                               QCoreApplication::applicationDirPath() + "/translations");
+
     if (ok == true) {
+        PreferencesDialog::setSettingsValue("General", "language", name);
         installTranslator(m_translatorApp);
 
         // The application translation file has been found and loaded.
@@ -46,6 +50,12 @@ Application::Application(int& argc, char** argv) :
             ok = m_translatorQt->load("qt_" + name, "translations");
         if (ok == true)
             installTranslator(m_translatorQt);
+    }
+    else {
+        // Set the correct locale so that the program won't erroneously detect
+        // a language change when the user toggles settings for the first time.
+        // (it also prevents the program from always looking for a translation on launch)
+        PreferencesDialog::setSettingsValue("General", "language", "en_US");
     }
 
     // Parse command line

@@ -87,7 +87,7 @@ FORMS += \
     CipherDialog.ui
 
 TRANSLATIONS += \
-    translations/sqlb_cn.ts \
+    translations/sqlb_zh.ts \
     translations/sqlb_de.ts \
     translations/sqlb_fr.ts \
     translations/sqlb_ru.ts
