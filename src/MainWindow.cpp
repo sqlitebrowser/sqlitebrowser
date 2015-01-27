@@ -1462,6 +1462,8 @@ void MainWindow::httpresponse(QNetworkReply *reply)
             }
         }
     }
+
+    reply->deleteLater();
 }
 
 namespace {
