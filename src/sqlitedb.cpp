@@ -565,23 +565,31 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int pk_value) const
     QStringList vals;
     QStringList fields;
     foreach(sqlb::FieldPtr f, t.fields()) {
-        if( f->primaryKey() && f->isInteger() )
-        {
-            fields << f->name();
-
-            if(pk_value != -1)
-                vals << QString::number(pk_value);
-            else
+        if(f->primaryKey()) {
+            if(f->isInteger())
             {
-                if(f->notnull())
-                {
-                    int64_t maxval = this->max(t, f);
-                    vals << QString::number(maxval + 1);
-                }
+                fields << f->name();
+
+                if(pk_value != -1)
+                    vals << QString::number(pk_value);
                 else
                 {
-                    vals << "NULL";
+                    if(f->notnull())
+                    {
+                        int64_t maxval = this->max(t, f);
+                        vals << QString::number(maxval + 1);
+                    }
+                    else
+                    {
+                        vals << "NULL";
+                    }
                 }
+            }
+            else
+            {
+                fields << f->name();
+
+                vals << "''";
             }
         } else if(f->notnull() && f->defaultValue().length() == 0) {
             fields << f->name();
