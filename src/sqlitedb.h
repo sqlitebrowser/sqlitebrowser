@@ -7,6 +7,7 @@
 #include <QMultiMap>
 #include <QByteArray>
 
+class CipherDialog;
 class sqlite3;
 
 enum
@@ -45,6 +46,7 @@ public:
     explicit DBBrowserDB () : _db( 0 ) {}
     virtual ~DBBrowserDB (){}
     bool open ( const QString & db);
+    bool attach(const QString& filename, QString attach_as = "");
     bool create ( const QString & db);
     bool close();
     bool setRestorePoint(const QString& pointname = "RESTOREPOINT");
@@ -130,6 +132,8 @@ private:
     QStringList savepointList;
 
     bool isEncrypted;
+
+    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
 };
 
 #endif

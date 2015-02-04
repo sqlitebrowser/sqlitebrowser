@@ -2020,17 +2020,8 @@ void MainWindow::fileAttach()
     if(!QFile::exists(file))
         return;
 
-    // Ask for name to be given to the attached database
-    QString attachAs = QInputDialog::getText(this,
-                                             qApp->applicationName(),
-                                             tr("Please specify the database name under which you want to access the attached database")
-                                             ).trimmed();
-    if(attachAs.isEmpty())
-        return;
-
-    // Attach database
-    if(!db.executeSQL(QString("ATTACH '%1' AS `%2`").arg(file).arg(attachAs), false))
-        QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
+    // Attach it
+    db.attach(file);
 }
 
 void MainWindow::updateFilter(int column, const QString& value)
