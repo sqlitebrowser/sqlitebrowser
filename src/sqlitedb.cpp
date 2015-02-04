@@ -578,7 +578,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const QString& sTableName, long rowid, QList<QByteArray>& rowdata)
 {
     QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
@@ -625,7 +625,7 @@ int64_t DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
     return ret;
 }
 
-QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int pk_value) const
+QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, long pk_value) const
 {
     QString stmt = QString("INSERT INTO `%1`").arg(t.name());
 
@@ -689,7 +689,7 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int pk_value) const
     return stmt;
 }
 
-int DBBrowserDB::addRecord(const QString& sTableName)
+long DBBrowserDB::addRecord(const QString& sTableName)
 {
     char *errmsg;
     if (!isOpen()) return false;
@@ -699,12 +699,12 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
     // and adding one to it.
     QString sInsertstmt;
-    int pk_value;
+    long pk_value;
     if(table.isWithoutRowidTable())
     {
         SqliteTableModel m(this, this);
         m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(table.rowidColumn()).arg(sTableName));
-        pk_value = m.data(m.index(0, 0)).toInt() + 1;
+        pk_value = m.data(m.index(0, 0)).toLongLong() + 1;
         sInsertstmt = emptyInsertStmt(table, pk_value);
     } else {
         sInsertstmt = emptyInsertStmt(table);
@@ -727,7 +727,7 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     }
 }
 
-bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
+bool DBBrowserDB::deleteRecord(const QString& table, long rowid)
 {
     char * errmsg;
     if (!isOpen()) return false;
@@ -750,7 +750,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int row, const QByteArray& value)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, long row, const QByteArray& value)
 {
     if (!isOpen()) return false;
 

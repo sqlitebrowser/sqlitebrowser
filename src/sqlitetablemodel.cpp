@@ -256,7 +256,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
         if(m_data.at(index.row()).at(index.column()) == value)
             return true;
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toInt(), value.toByteArray()))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toLong(), value.toByteArray()))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
@@ -351,7 +351,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
     for(int i=count-1;i>=0;i--)
     {
-        m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0).toInt());
+        m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0).toLong());
         m_data.removeAt(row + i);
     }
 
