@@ -128,7 +128,7 @@ bool CSVParser::parse(QTextStream& stream, int64_t nMaxRecords)
         }
     }
 
-    if(!fieldbuf.isEmpty())
+    if(!record.isEmpty())
     {
         addColumn(record, fieldbuf, m_bTrimFields);
 
