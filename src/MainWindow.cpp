@@ -327,7 +327,7 @@ void MainWindow::populateStructure()
 void MainWindow::populateTable(const QString & tablename, bool bKeepFilter)
 {
     // Remove the model-view link if the table name is empty in order to remove any data from the view
-    if(tablename.isEmpty())
+    if(ui->comboBrowseTable->model()->rowCount() == 0 && tablename.isEmpty())
     {
         ui->dataTable->setModel(0);
         if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
@@ -585,7 +585,7 @@ void MainWindow::createTable()
         return;
     }
 
-    EditTableDialog dialog(&db, "", this);
+    EditTableDialog dialog(&db, "", true, this);
     if(dialog.exec())
     {
         populateStructure();
@@ -651,7 +651,7 @@ void MainWindow::editTable()
     }
     QString tableToEdit = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
-    EditTableDialog dialog(&db, tableToEdit, this);
+    EditTableDialog dialog(&db, tableToEdit, false, this);
     if(dialog.exec())
     {
         populateStructure();

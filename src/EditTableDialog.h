@@ -18,7 +18,7 @@ class EditTableDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditTableDialog(DBBrowserDB* pdb, const QString& tableName, QWidget* parent = 0);
+    explicit EditTableDialog(DBBrowserDB* pdb, const QString& tableName, bool createTable, QWidget* parent = 0);
     ~EditTableDialog();
 
 protected:

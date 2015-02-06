@@ -10,13 +10,13 @@
 #include <QDateTime>
 #include <QKeyEvent>
 
-EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWidget* parent)
+EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool createTable, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
       pdb(db),
       curTable(tableName),
       m_table(tableName),
-      m_bNewTable(true),
+      m_bNewTable(createTable),
       m_sRestorePointName(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch()))
 {
     // Create UI
@@ -27,10 +27,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, QWid
     m_sqliteSyntaxHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 
     // Editing an existing table?
-    if(curTable != "")
+    if(m_bNewTable == false)
     {
-        m_bNewTable = false; // we are editing an existing table
-
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getObjectByName(curTable).getsql();
         m_table = sqlb::Table::parseSQL(sTablesql).first;
