@@ -320,7 +320,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 
     for(int i=row; i < row + count; ++i)
     {
-        int rowid = m_db->addRecord(m_sTable);
+        qint64 rowid = m_db->addRecord(m_sTable);
         if(rowid < 0)
         {
             endInsertRows();
