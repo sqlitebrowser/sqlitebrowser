@@ -1,6 +1,5 @@
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
-#include "sqlite.h"
 #include "CipherDialog.h"
 
 #include <QFile>
@@ -578,7 +577,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::getRow(const QString& sTableName, long rowid, QList<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const QString& sTableName, sqlite3_int64 rowid, QList<QByteArray>& rowdata)
 {
     QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
@@ -625,7 +624,7 @@ int64_t DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
     return ret;
 }
 
-QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, long pk_value) const
+QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, sqlite3_int64 pk_value) const
 {
     QString stmt = QString("INSERT INTO `%1`").arg(t.name());
 
@@ -727,7 +726,7 @@ long DBBrowserDB::addRecord(const QString& sTableName)
     }
 }
 
-bool DBBrowserDB::deleteRecord(const QString& table, long rowid)
+bool DBBrowserDB::deleteRecord(const QString& table, sqlite3_int64 rowid)
 {
     char * errmsg;
     if (!isOpen()) return false;
@@ -750,7 +749,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, long rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, long row, const QByteArray& value)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, sqlite3_int64 row, const QByteArray& value)
 {
     if (!isOpen()) return false;
 

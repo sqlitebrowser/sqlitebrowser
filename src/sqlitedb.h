@@ -2,13 +2,13 @@
 #define SQLITEDB_H
 
 #include "sqlitetypes.h"
+#include "sqlite.h"
 
 #include <QStringList>
 #include <QMultiMap>
 #include <QByteArray>
 
 class CipherDialog;
-class sqlite3;
 
 enum
 {
@@ -66,7 +66,7 @@ public:
      * @param rowdata A list of QByteArray containing the row data.
      * @return true if statement execution was ok, else false.
      */
-    bool getRow(const QString& sTableName, long rowid, QList<QByteArray>& rowdata);
+    bool getRow(const QString& sTableName, sqlite3_int64 rowid, QList<QByteArray>& rowdata);
 
     /**
      * @brief max Queries the table t for the max value of field.
@@ -84,9 +84,9 @@ public:
      * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
-    QString emptyInsertStmt(const sqlb::Table& t, long pk_value = -1) const;
-    bool deleteRecord(const QString& table, long rowid);
-    bool updateRecord(const QString& table, const QString& column, long row, const QByteArray& value);
+    QString emptyInsertStmt(const sqlb::Table& t, sqlite3_int64 pk_value = -1) const;
+    bool deleteRecord(const QString& table, sqlite3_int64 rowid);
+    bool updateRecord(const QString& table, const QString& column, sqlite3_int64 row, const QByteArray& value);
 
     bool createTable(const QString& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& from_table, const QString& to_table);
