@@ -24,7 +24,7 @@
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
-       <string>General</string>
+       <string>&amp;General</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout_3">
        <item row="1" column="1">
@@ -481,6 +481,13 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>locationEdit</tabstop>
+  <tabstop>setLocationButton</tabstop>
+  <tabstop>languageComboBox</tabstop>
+  <tabstop>encodingComboBox</tabstop>
+  <tabstop>foreignKeysCheckBox</tabstop>
+  <tabstop>checkHideSchemaLinebreaks</tabstop>
+  <tabstop>spinPrefetchSize</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
@@ -531,8 +538,8 @@
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>567</x>
-     <y>88</y>
+     <x>552</x>
+     <y>95</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -547,8 +554,8 @@
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>567</x>
-     <y>117</y>
+     <x>552</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -569,6 +576,22 @@
     <hint type="destinationlabel">
      <x>395</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>setLocationButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>chooseLocation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
