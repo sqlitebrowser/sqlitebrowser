@@ -1,6 +1,6 @@
 #include "sqlitedb.h"
-#include "sqlitetablemodel.h"
 #include "sqlite.h"
+#include "sqlitetablemodel.h"
 #include "CipherDialog.h"
 
 #include <QFile>
@@ -47,14 +47,19 @@ bool DBBrowserDB::getDirty() const
 
 bool DBBrowserDB::open(const QString& db)
 {
-    bool ok=false;
-    int  err;
-
     if (isOpen()) close();
 
     lastErrorMessage = tr("no error");
 
     isEncrypted = false;
+
+    // Get encryption settings for database file
+    CipherDialog* cipher = 0;
+    if(tryEncryptionSettings(db, &isEncrypted, cipher) == false)
+    {
+        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
+        return false;
+    }
 
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
@@ -63,65 +68,22 @@ bool DBBrowserDB::open(const QString& db)
         return false;
     }
 
-    // Try reading from database
-    bool done = false;
-    do
-    {
-        QString statement = "SELECT COUNT(*) FROM sqlite_master;";
-        QByteArray utf8Statement = statement.toUtf8();
-        sqlite3_stmt* vm;
-        const char* tail;
-        err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, &tail);
-        if(sqlite3_step(vm) != SQLITE_ROW)
-        {
-            sqlite3_finalize(vm);
+    // Set encryption details if database is encrypted
 #ifdef ENABLE_SQLCIPHER
-            CipherDialog cipher(0, false);
-            if(cipher.exec())
-            {
-                // Close and reopen database first to be in a clean state after the failed read attempt from above
-                sqlite3_close(_db);
-                if(sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
-                {
-                    lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
-                    return false;
-                }
-
-                // Set key and, if it differs from the default value, the page size
-                sqlite3_key(_db, cipher.password().toUtf8(), cipher.password().toUtf8().length());
-                if(cipher.pageSize() != 1024)
-                    sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher.pageSize()).toUtf8(), NULL, NULL, NULL);
-
-                isEncrypted = true;
-            } else {
-                sqlite3_close(_db);
-                _db = 0;
-                isEncrypted = false;
-                return false;
-            }
-#else
-            sqlite3_close(_db);
-            _db = 0;
-            return false;
-#endif
-        } else {
-            sqlite3_finalize(vm);
-            done = true;
-        }
-    } while(!done);
-
-    // register collation callback
-    sqlite3_collation_needed(_db, NULL, collation_needed);
-
-    if ( err ) {
-        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
-        sqlite3_close(_db);
-        _db = 0;
-        return false;
+    if(isEncrypted && cipher)
+    {
+        sqlite3_key(_db, cipher->password().toUtf8(), cipher->password().toUtf8().length());
+        if(cipher->pageSize() != 1024)
+            sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher->pageSize()).toUtf8(), NULL, NULL, NULL);
     }
+#endif
+    delete cipher;
 
     if (_db)
     {
+        // register collation callback
+        sqlite3_collation_needed(_db, NULL, collation_needed);
+
         // set preference defaults
         QSettings settings(QApplication::organizationName(), QApplication::organizationName());
         settings.sync();
@@ -131,11 +93,116 @@ bool DBBrowserDB::open(const QString& db)
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
 
-        ok = true;
         curDBFilename = db;
+        return true;
+    } else {
+        return false;
     }
+}
 
-    return ok;
+bool DBBrowserDB::attach(const QString& filename, QString attach_as)
+{
+    // Ask for name to be given to the attached database if none was provided
+    if(attach_as.isEmpty())
+        attach_as = QInputDialog::getText(0,
+                                          qApp->applicationName(),
+                                          tr("Please specify the database name under which you want to access the attached database")
+                                          ).trimmed();
+    if(attach_as.isEmpty())
+        return false;
+
+#ifdef ENABLE_SQLCIPHER
+    // Try encryption settings
+    CipherDialog* cipher = 0;
+    bool is_encrypted;
+    if(tryEncryptionSettings(filename, &is_encrypted, cipher) == false)
+        return false;
+
+    // Attach database
+    QString key;
+    if(cipher) key = cipher->password();
+    if(!executeSQL(QString("ATTACH '%1' AS `%2` KEY '%3'").arg(filename).arg(attach_as).arg(key), false))
+    {
+        QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+    if(cipher && cipher->pageSize() != 1024)
+    {
+        if(!executeSQL(QString("PRAGMA `%1`.cipher_page_size = %2").arg(attach_as).arg(cipher->pageSize()), false))
+        {
+            QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+    }
+#else
+    // Attach database
+    if(!executeSQL(QString("ATTACH '%1' AS `%2`").arg(filename).arg(attach_as), false))
+    {
+        QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+#endif
+
+    return true;
+}
+
+bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings)
+{
+    // Open database file
+    sqlite3* dbHandle;
+    if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+        return false;
+
+    // Try reading from database
+    *encrypted = false;
+    cipherSettings = 0;
+    while(true)
+    {
+        QString statement = "SELECT COUNT(*) FROM sqlite_master;";
+        QByteArray utf8Statement = statement.toUtf8();
+        sqlite3_stmt* vm;
+        const char* tail;
+        sqlite3_prepare_v2(dbHandle, utf8Statement, utf8Statement.length(), &vm, &tail);
+        if(sqlite3_step(vm) != SQLITE_ROW)
+        {
+            sqlite3_finalize(vm);
+#ifdef ENABLE_SQLCIPHER
+            delete cipherSettings;
+            cipherSettings = new CipherDialog(0, false);
+            if(cipherSettings->exec())
+            {
+                // Close and reopen database first to be in a clean state after the failed read attempt from above
+                sqlite3_close(dbHandle);
+                if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                {
+                    delete cipherSettings;
+                    cipherSettings = 0;
+                    return false;
+                }
+
+                // Set key and, if it differs from the default value, the page size
+                sqlite3_key(dbHandle, cipherSettings->password().toUtf8(), cipherSettings->password().toUtf8().length());
+                if(cipherSettings->pageSize() != 1024)
+                    sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
+
+                *encrypted = true;
+            } else {
+                sqlite3_close(dbHandle);
+                *encrypted = false;
+                delete cipherSettings;
+                cipherSettings = 0;
+                return false;
+            }
+#else
+            sqlite3_close(dbHandle);
+            return false;
+#endif
+        } else {
+            sqlite3_finalize(vm);
+            sqlite3_close(dbHandle);
+            return true;
+        }
+    }
 }
 
 bool DBBrowserDB::setRestorePoint(const QString& pointname)
@@ -511,7 +578,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::getRow(const QString& sTableName, int rowid, QList<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const QString& sTableName, int64_t rowid, QList<QByteArray>& rowdata)
 {
     QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
@@ -558,7 +625,7 @@ int64_t DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
     return ret;
 }
 
-QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int pk_value) const
+QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int64_t pk_value) const
 {
     QString stmt = QString("INSERT INTO `%1`").arg(t.name());
 
@@ -622,7 +689,7 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int pk_value) const
     return stmt;
 }
 
-int DBBrowserDB::addRecord(const QString& sTableName)
+int64_t DBBrowserDB::addRecord(const QString& sTableName)
 {
     char *errmsg;
     if (!isOpen()) return false;
@@ -632,12 +699,12 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
     // and adding one to it.
     QString sInsertstmt;
-    int pk_value;
+    int64_t pk_value;
     if(table.isWithoutRowidTable())
     {
         SqliteTableModel m(this, this);
         m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(table.rowidColumn()).arg(sTableName));
-        pk_value = m.data(m.index(0, 0)).toInt() + 1;
+        pk_value = m.data(m.index(0, 0)).toLongLong() + 1;
         sInsertstmt = emptyInsertStmt(table, pk_value);
     } else {
         sInsertstmt = emptyInsertStmt(table);
@@ -660,7 +727,7 @@ int DBBrowserDB::addRecord(const QString& sTableName)
     }
 }
 
-bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
+bool DBBrowserDB::deleteRecord(const QString& table, int64_t rowid)
 {
     char * errmsg;
     if (!isOpen()) return false;
@@ -683,7 +750,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, int rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int row, const QByteArray& value)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int64_t row, const QByteArray& value)
 {
     if (!isOpen()) return false;
 

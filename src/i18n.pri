@@ -37,4 +37,12 @@ updateqm.input = TRANSLATIONS
 updateqm.output = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
 updateqm.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
 updateqm.CONFIG += no_link  no_clean target_predeps
+updateqm.variable_out = copytranslations.files
 QMAKE_EXTRA_COMPILERS += updateqm
+
+# Copy translations into the bundle when one is created
+mac:contains(CONFIG, "app_bundle") {
+    copytranslations.path = Contents/MacOS/translations
+    copytranslations.depends = updateqm
+    QMAKE_BUNDLE_DATA += copytranslations
+}

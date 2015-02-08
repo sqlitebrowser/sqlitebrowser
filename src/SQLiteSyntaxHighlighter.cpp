@@ -100,10 +100,13 @@ void SQLiteSyntaxHighlighter::setTableNames(const QStringList &tablenames)
 {
     tableNameRules.clear();
     foreach(const QString& tblname, tablenames) {
-        HighlightingRule rule;
-        rule.pattern = QRegExp(QString("\\b%1\\b").arg(tblname));
-        rule.format = tableFormat;
-        tableNameRules.append(rule);
+        if(!tblname.isEmpty())
+        {
+            HighlightingRule rule;
+            rule.pattern = QRegExp(QString("\\b%1\\b").arg(tblname));
+            rule.format = tableFormat;
+            tableNameRules.append(rule);
+        }
     }
 }
 

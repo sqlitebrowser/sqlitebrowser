@@ -1438,7 +1438,7 @@
   <action name="actionSqlOpenFile">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/open_sql</normaloff>:/icons/open_sql</iconset>
+     <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
    </property>
    <property name="text">
     <string>Open SQL file</string>

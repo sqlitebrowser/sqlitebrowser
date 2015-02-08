@@ -327,7 +327,7 @@ void MainWindow::populateStructure()
 void MainWindow::populateTable(const QString & tablename, bool bKeepFilter)
 {
     // Remove the model-view link if the table name is empty in order to remove any data from the view
-    if(tablename.isEmpty())
+    if(ui->comboBrowseTable->model()->rowCount() == 0 && tablename.isEmpty())
     {
         ui->dataTable->setModel(0);
         if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
@@ -585,7 +585,7 @@ void MainWindow::createTable()
         return;
     }
 
-    EditTableDialog dialog(&db, "", this);
+    EditTableDialog dialog(&db, "", true, this);
     if(dialog.exec())
     {
         populateStructure();
@@ -651,7 +651,7 @@ void MainWindow::editTable()
     }
     QString tableToEdit = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
-    EditTableDialog dialog(&db, tableToEdit, this);
+    EditTableDialog dialog(&db, tableToEdit, false, this);
     if(dialog.exec())
     {
         populateStructure();
@@ -2020,17 +2020,8 @@ void MainWindow::fileAttach()
     if(!QFile::exists(file))
         return;
 
-    // Ask for name to be given to the attached database
-    QString attachAs = QInputDialog::getText(this,
-                                             qApp->applicationName(),
-                                             tr("Please specify the database name under which you want to access the attached database")
-                                             ).trimmed();
-    if(attachAs.isEmpty())
-        return;
-
-    // Attach database
-    if(!db.executeSQL(QString("ATTACH '%1' AS `%2`").arg(file).arg(attachAs), false))
-        QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
+    // Attach it
+    db.attach(file);
 }
 
 void MainWindow::updateFilter(int column, const QString& value)
