@@ -41,5 +41,6 @@
         <file alias="project_open">package_go.png</file>
         <file alias="field_key">page_key.png</file>
         <file alias="encryption">key.png</file>
+        <file alias="document_open">document-open.png</file>
     </qresource>
 </RCC>
