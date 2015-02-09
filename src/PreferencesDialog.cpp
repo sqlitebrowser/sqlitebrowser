@@ -7,7 +7,6 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QMessageBox>
-#include <QSortFilterProxyModel>
 
 QHash<QString, QVariant> PreferencesDialog::m_hCache;
 
@@ -17,15 +16,6 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
-
-    // Model to sort the languages in the language combo box
-    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(ui->languageComboBox);
-    proxy->setSourceModel(ui->languageComboBox->model());
-
-    // Prevent setModel() from deleting the current model (now source of the proxy model)
-    ui->languageComboBox->model()->setParent(proxy);
-
-    ui->languageComboBox->setModel(proxy);
 
     loadSettings();
 }
