@@ -259,19 +259,27 @@ void PreferencesDialog::fillLanguageBox()
     QDir translationsDir(QCoreApplication::applicationDirPath() + "/translations",
                          "sqlb_*.qm");
 
+    QLocale systemLocale = QLocale::system();
+
     // Add default language
-    ui->languageComboBox->addItem("English (United States)", "en_US");
+    if (systemLocale.name() == "en_US")
+        ui->languageComboBox->addItem("English (United States) [System Language]","en_US");
+    else
+        ui->languageComboBox->addItem("English (United States) [Default Language]","en_US");
 
     foreach(const QFileInfo &file, translationsDir.entryInfoList())
     {
         QLocale locale(file.baseName().remove("sqlb_"));
 
-        // Prevent invalid locales from being added to the box
+        // Skip invalid locales
         if(locale.name() == "C")
             continue;
 
         QString language = QLocale::languageToString(locale.language()) + " (" +
                            QLocale::countryToString(locale.country()) + ")";
+
+        if (locale == systemLocale)
+            language += " [System language]";
 
         ui->languageComboBox->addItem(language, locale.name());
     }
@@ -286,5 +294,11 @@ void PreferencesDialog::fillLanguageBox()
     if(index < 0)
         index = ui->languageComboBox->findData("en_US", Qt::UserRole, Qt::MatchExactly);
 
-    ui->languageComboBox->setCurrentIndex(index);
+    QString chosenLanguage = ui->languageComboBox->itemText(index);
+    QVariant chosenLocale = ui->languageComboBox->itemData(index);
+
+    // There's no "move" method, so we remove and add the chosen language again at the top
+    ui->languageComboBox->removeItem(index);
+    ui->languageComboBox->insertItem(0, chosenLanguage, chosenLocale);
+    ui->languageComboBox->setCurrentIndex(0);
 }

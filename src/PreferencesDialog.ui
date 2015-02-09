@@ -42,7 +42,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>200</width>
+             <width>290</width>
              <height>0</height>
             </size>
            </property>
@@ -86,7 +86,7 @@
           <enum>QComboBox::AdjustToMinimumContentsLength</enum>
          </property>
          <property name="minimumContentsLength">
-          <number>20</number>
+          <number>35</number>
          </property>
         </widget>
        </item>
