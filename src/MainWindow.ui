@@ -310,8 +310,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>311</width>
-             <height>531</height>
+             <width>294</width>
+             <height>444</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -796,7 +796,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1252,6 +1252,9 @@
    <property name="shortcut">
     <string>Ctrl+Q</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
   </action>
   <action name="fileImportSQLAction">
    <property name="text">
@@ -1374,6 +1377,9 @@
    <property name="whatsThis">
     <string>Open the preferences window.</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
   <action name="viewDBToolbarAction">
    <property name="checkable">
@@ -1401,6 +1407,9 @@
   <action name="helpAboutAction">
    <property name="text">
     <string>&amp;About...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
   <action name="actionRecent_y_opened">
