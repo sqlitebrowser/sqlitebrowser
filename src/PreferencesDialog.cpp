@@ -255,7 +255,6 @@ void PreferencesDialog::removeExtension()
 
 void PreferencesDialog::fillLanguageBox()
 {
-    // Use the path relative to the main executable
     QDir translationsDir(QCoreApplication::applicationDirPath() + "/translations",
                          "sqlb_*.qm");
 
@@ -263,9 +262,17 @@ void PreferencesDialog::fillLanguageBox()
 
     // Add default language
     if (systemLocale.name() == "en_US")
-        ui->languageComboBox->addItem("English (United States) [System Language]","en_US");
+    {
+        ui->languageComboBox->addItem(QIcon(":/flags/en_US"),
+                                      "English (United States) [System Language]",
+                                      "en_US");
+    }
     else
-        ui->languageComboBox->addItem("English (United States) [Default Language]","en_US");
+    {
+        ui->languageComboBox->addItem(QIcon(":/flags/en_US"),
+                                      "English (United States) [Default Language]",
+                                      "en_US");
+    }
 
     foreach(const QFileInfo &file, translationsDir.entryInfoList())
     {
@@ -281,7 +288,7 @@ void PreferencesDialog::fillLanguageBox()
         if (locale == systemLocale)
             language += " [System language]";
 
-        ui->languageComboBox->addItem(language, locale.name());
+        ui->languageComboBox->addItem(QIcon(":/flags/" + locale.name()), language, locale.name());
     }
 
     ui->languageComboBox->model()->sort(0);
@@ -296,9 +303,10 @@ void PreferencesDialog::fillLanguageBox()
 
     QString chosenLanguage = ui->languageComboBox->itemText(index);
     QVariant chosenLocale = ui->languageComboBox->itemData(index);
+    QIcon chosenIcon = ui->languageComboBox->itemIcon(index);
 
     // There's no "move" method, so we remove and add the chosen language again at the top
     ui->languageComboBox->removeItem(index);
-    ui->languageComboBox->insertItem(0, chosenLanguage, chosenLocale);
+    ui->languageComboBox->insertItem(0, chosenIcon, chosenLanguage, chosenLocale);
     ui->languageComboBox->setCurrentIndex(0);
 }

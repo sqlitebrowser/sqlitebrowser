@@ -71,7 +71,8 @@ SOURCES += \
     Application.cpp \
     CipherDialog.cpp
 
-RESOURCES += icons/icons.qrc
+RESOURCES += icons/icons.qrc \
+             translations/flags/flags.qrc
 
 FORMS += \
     MainWindow.ui \

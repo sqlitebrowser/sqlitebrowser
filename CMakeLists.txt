@@ -101,6 +101,7 @@ set(SQLB_FORMS
 
 set(SQLB_RESOURCES
 	src/icons/icons.qrc
+	src/translations/flags/flags.qrc
 )
 
 set(SQLB_MISC

@@ -42,7 +42,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>290</width>
+             <width>316</width>
              <height>0</height>
             </size>
            </property>
@@ -83,10 +83,16 @@
           </sizepolicy>
          </property>
          <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+          <enum>QComboBox::AdjustToContents</enum>
          </property>
          <property name="minimumContentsLength">
           <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
          </property>
         </widget>
        </item>
