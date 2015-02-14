@@ -377,7 +377,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)))
             sLimitQuery = queryTemp;
         else
-            sLimitQuery = QString("%1 LIMIT %2, %3;").arg(queryTemp).arg(from).arg(to-from);
+            sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(from).arg(to-from);
     }
     m_db->logSQL(sLimitQuery, kLogMsg_App);
     QByteArray utf8Query = sLimitQuery.toUtf8();

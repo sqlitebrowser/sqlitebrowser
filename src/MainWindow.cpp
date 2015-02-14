@@ -773,8 +773,9 @@ void MainWindow::executeQuery()
                 sqlWidget->getModel()->setQuery(queryPart);
                 if(sqlWidget->getModel()->valid())
                 {
-                    statusMessage = tr("%1 Rows returned from: %2 (took %3ms)").arg(
-                                sqlWidget->getModel()->totalRowCount()).arg(queryPart.trimmed()).arg(timer.elapsed());
+                    // The query takes the last placeholder as it may itself contain the sequence '%' + number
+                    statusMessage = tr("%1 Rows returned from: %3 (took %2ms)").arg(
+                                sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
                     sqlWidget->enableSaveButton(true);
                     sql3status = SQLITE_OK;
                 }
