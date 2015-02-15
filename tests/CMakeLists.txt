@@ -35,6 +35,7 @@ set(SQLB_SRC
     ../src/csvparser.cpp
 	../src/grammar/Sqlite3Lexer.cpp
 	../src/grammar/Sqlite3Parser.cpp
+	../src/PreferencesDialog.cpp
 	../src/tests/TestImport.cpp
 	../src/tests/testsqlobjects.cpp
 	../src/tests/TestMain.cpp)
@@ -46,19 +47,27 @@ set(SQLB_HDR
     ../src/csvparser.h
 	../src/sqlitetypes.h)
 
+set(SQLB_FORMS
+	../src/PreferencesDialog.ui)
+
 set(SQLB_MOC_HDR
 	../src/sqlitedb.h
 	../src/sqlitetablemodel.h
+	../src/PreferencesDialog.h
 	../src/tests/TestImport.h
 	../src/tests/testsqlobjects.h)
 
-if(NOT USE_QT5)
+if(USE_QT5)
+    QT5_WRAP_CPP(SQLB_MOC ${SQLB_MOC_HDR})
+    QT5_WRAP_UI(SQLB_FORM_HDR ${SQLB_FORMS})
+else()
     QT4_WRAP_CPP(SQLB_MOC ${SQLB_MOC_HDR})
+    QT4_WRAP_UI(SQLB_FORM_HDR ${SQLB_FORMS})
 endif()
 
-include_directories("${ANTLR_DIR}" ../src)
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${ANTLR_DIR}" ../src)
 
-add_executable(${PROJECT_NAME} ${SQLB_MOC} ${SQLB_HDR} ${SQLB_SRC})
+add_executable(${PROJECT_NAME} ${SQLB_MOC} ${SQLB_HDR} ${SQLB_SRC} ${SQLB_FORM_HDR})
 
 if(USE_QT5)
     qt5_use_modules(${PROJECT_NAME} Test Widgets Gui)
