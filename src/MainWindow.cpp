@@ -1456,7 +1456,7 @@ void MainWindow::httpresponse(QNetworkReply *reply)
                     settings.beginGroup("checkversion");
                     settings.setValue("major", major);
                     settings.setValue("minor", minor);
-                    settings.setValue("patch", minor);
+                    settings.setValue("patch", patch);
                     settings.setValue("disable", true);
                     settings.endGroup();
                 }
