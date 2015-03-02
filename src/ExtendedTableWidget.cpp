@@ -66,9 +66,20 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
 {
     // Call a custom copy method when Ctrl-C is pressed
     if(event->matches(QKeySequence::Copy))
+    {
         copy();
-    else if((event->key() != Qt::Key_Tab && event->key() != Qt::Key_Backtab) || hasFocus()) // This prevents the current selection from being changed when pressing
-        QTableView::keyPressEvent(event);                                                   // tab to move to the next filter
+    } else if(event->key() == Qt::Key_Tab && hasFocus() &&
+              selectedIndexes().count() == 1 &&
+              selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
+        // If the Tab key was pressed while the focus was on the last cell of the last row insert a new row automatically
+        model()->insertRow(model()->rowCount());
+    }
+
+    // This prevents the current selection from being changed when pressing tab to move to the next filter. Note that this is in an 'if' condition,
+    // not in an 'else if' because this way, when the tab key was pressed and the focus was on the last cell, a new row is inserted and then the tab
+    // key press is processed a second time to move the cursor as well
+    if((event->key() != Qt::Key_Tab && event->key() != Qt::Key_Backtab) || hasFocus())
+        QTableView::keyPressEvent(event);
 }
 
 void ExtendedTableWidget::updateGeometries()
