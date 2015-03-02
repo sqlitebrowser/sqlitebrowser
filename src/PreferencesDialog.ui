@@ -70,7 +70,10 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Language</string>
+          <string>Lan&amp;guage</string>
+         </property>
+         <property name="buddy">
+          <cstring>languageComboBox</cstring>
          </property>
         </widget>
        </item>
