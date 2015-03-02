@@ -176,7 +176,7 @@ void MainWindow::init()
     m_NetworkManager = new QNetworkAccessManager(this);
     QObject::connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
 
-    QUrl url("https://raw.github.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
+    QUrl url("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
     m_NetworkManager->get(QNetworkRequest(url));
 #endif
 
