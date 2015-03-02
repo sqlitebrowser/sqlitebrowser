@@ -172,12 +172,16 @@ void MainWindow::init()
     reloadSettings();
 
 #ifdef CHECKNEWVERSION
-    // Check for a new release version, usually only enabled on windows
-    m_NetworkManager = new QNetworkAccessManager(this);
-    QObject::connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
+    // Check for a new version if automatic update check aren't disabled in the settings dialog
+    if(PreferencesDialog::getSettingsValue("checkversion", "enabled").toBool())
+    {
+        // Check for a new release version, usually only enabled on windows
+        m_NetworkManager = new QNetworkAccessManager(this);
+        QObject::connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
 
-    QUrl url("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
-    m_NetworkManager->get(QNetworkRequest(url));
+        QUrl url("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
+        m_NetworkManager->get(QNetworkRequest(url));
+    }
 #endif
 
 #ifndef ENABLE_SQLCIPHER
@@ -1388,8 +1392,6 @@ void MainWindow::reloadSettings()
 
 void MainWindow::httpresponse(QNetworkReply *reply)
 {
-    //QVariant statuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
-
     if(reply->error() == QNetworkReply::NoError)
     {
         // Check for redirect
@@ -1432,13 +1434,12 @@ void MainWindow::httpresponse(QNetworkReply *reply)
         if(newversion)
         {
             QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-            bool disablecheck = settings.value("checkversion/disable", false).toBool();
-            int ignmajor = settings.value("checkversion/major", 999).toInt();
-            int ignminor = settings.value("checkversion/minor", 0).toInt();
-            int ignpatch = settings.value("checkversion/patch", 0).toInt();
+            int ignmajor = settings.value("checkversion/ignmajor", 999).toInt();
+            int ignminor = settings.value("checkversion/ignminor", 0).toInt();
+            int ignpatch = settings.value("checkversion/ignpatch", 0).toInt();
 
             // check if the user doesn't care about the current update
-            if(!(ignmajor == major && ignminor == minor && ignpatch == patch && disablecheck))
+            if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
             {
                 QMessageBox msgBox;
                 QPushButton *idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
@@ -1454,10 +1455,9 @@ void MainWindow::httpresponse(QNetworkReply *reply)
                 {
                     // save that the user don't want to get bothered about this update
                     settings.beginGroup("checkversion");
-                    settings.setValue("major", major);
-                    settings.setValue("minor", minor);
-                    settings.setValue("patch", patch);
-                    settings.setValue("disable", true);
+                    settings.setValue("ignmajor", major);
+                    settings.setValue("ignminor", minor);
+                    settings.setValue("ignpatch", patch);
                     settings.endGroup();
                 }
             }

@@ -17,6 +17,11 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
 
+#ifndef CHECKNEWVERSION
+    ui->labelUpdates->setVisible(false);
+    ui->checkUpdates->setVisible(false);
+#endif
+
     loadSettings();
 }
 
@@ -44,6 +49,7 @@ void PreferencesDialog::loadSettings()
 {
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
+    ui->checkUpdates->setChecked(getSettingsValue("checkversion", "enabled").toBool());
     ui->checkHideSchemaLinebreaks->setChecked(getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
@@ -76,6 +82,8 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
+
+    setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -175,6 +183,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // General/language?
     if(group == "General" && name == "language")
         return QLocale::system().name();
+
+    // checkversion/enabled
+    if(group == "checkversion" && name == "enabled")
+        return true;
 
     // syntaxhighlighter?
     if(group == "syntaxhighlighter")
