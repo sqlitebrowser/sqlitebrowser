@@ -212,13 +212,11 @@ bool DBBrowserDB::setRestorePoint(const QString& pointname)
     if(savepointList.contains(pointname))
         return true;
 
-    if(_db)
-    {
-        QString query = QString("SAVEPOINT %1;").arg(pointname);
-        executeSQL(query, false, false);
-        savepointList.append(pointname);
-        emit dbChanged(getDirty());
-    }
+    QString query = QString("SAVEPOINT %1;").arg(pointname);
+    executeSQL(query, false, false);
+    savepointList.append(pointname);
+    emit dbChanged(getDirty());
+
     return true;
 }
 
@@ -227,13 +225,11 @@ bool DBBrowserDB::save(const QString& pointname)
     if(!isOpen() || savepointList.contains(pointname) == false)
         return false;
 
-    if(_db)
-    {
-        QString query = QString("RELEASE %1;").arg(pointname);
-        executeSQL(query, false, false);
-        savepointList.removeAll(pointname);
-        emit dbChanged(getDirty());
-    }
+    QString query = QString("RELEASE %1;").arg(pointname);
+    executeSQL(query, false, false);
+    savepointList.removeAll(pointname);
+    emit dbChanged(getDirty());
+
     return true;
 }
 
@@ -242,15 +238,13 @@ bool DBBrowserDB::revert(const QString& pointname)
     if(!isOpen() || savepointList.contains(pointname) == false)
         return false;
 
-    if(_db)
-    {
-        QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(pointname);
-        executeSQL(query, false, false);
-        query = QString("RELEASE %1;").arg(pointname);
-        executeSQL(query, false, false);
-        savepointList.removeAll(pointname);
-        emit dbChanged(getDirty());
-    }
+    QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(pointname);
+    executeSQL(query, false, false);
+    query = QString("RELEASE %1;").arg(pointname);
+    executeSQL(query, false, false);
+    savepointList.removeAll(pointname);
+    emit dbChanged(getDirty());
+
     return true;
 }
 
@@ -495,13 +489,10 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
     if (!isOpen())
         return false;
 
-    if (_db)
-    {
-        if (logsql) logSQL(statement, kLogMsg_App);
-        if (dirtyDB) setRestorePoint();
-        if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
-            ok = true;
-    }
+    if (logsql) logSQL(statement, kLogMsg_App);
+    if (dirtyDB) setRestorePoint();
+    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
+        ok = true;
 
     if(ok)
     {
@@ -733,16 +724,11 @@ bool DBBrowserDB::deleteRecord(const QString& table, int64_t rowid)
     lastErrorMessage = QString("no error");
 
     QString statement = QString("DELETE FROM `%1` WHERE `%2`=%3;").arg(table).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
+    if(executeSQL(statement))
+        ok = true;
+    else
+        qWarning() << "deleteRecord: " << lastErrorMessage;
 
-    if (_db)
-    {
-        if(executeSQL(statement))
-        {
-            ok = true;
-        } else {
-            qWarning() << "deleteRecord: " << lastErrorMessage;
-        }
-    }
     return ok;
 }
 
