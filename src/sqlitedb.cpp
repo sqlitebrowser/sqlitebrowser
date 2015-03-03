@@ -496,7 +496,7 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
 
     if(ok)
     {
-        lastErrorMessage.clear();
+        lastErrorMessage = tr("no error");
         return true;
     } else {
         lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
@@ -702,8 +702,6 @@ int64_t DBBrowserDB::addRecord(const QString& sTableName)
     } else {
         sInsertstmt = emptyInsertStmt(table);
     }
-
-    lastErrorMessage = "";
 
     if(!executeSQL(sInsertstmt))
     {
