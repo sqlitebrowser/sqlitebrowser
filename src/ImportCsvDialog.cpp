@@ -54,16 +54,19 @@ void rollback(
         DBBrowserDB* pdb,
         QProgressDialog& progress,
         const QString& savepointName,
-        size_t nRecord)
+        size_t nRecord,
+        const QString& message)
 {
     progress.hide();
     QApplication::restoreOverrideCursor();  // restore original cursor
-    QString sCSVInfo = QObject::tr("Error importing data");
-    if(nRecord)
-        sCSVInfo += QObject::tr(" from record number %1").arg(nRecord);
-    QString error = sCSVInfo + QObject::tr(".\nMessage from database engine:\n%1").arg(
-                pdb->lastErrorMessage);
-    QMessageBox::warning(dialog, QApplication::applicationName(), error);
+    if(!message.isEmpty())
+    {
+        QString sCSVInfo = QObject::tr("Error importing data");
+        if(nRecord)
+            sCSVInfo += QObject::tr(" from record number %1").arg(nRecord);
+        QString error = sCSVInfo + QObject::tr(".\n%1").arg(message);
+        QMessageBox::warning(dialog, QApplication::applicationName(), error);
+    }
     pdb->revert(savepointName);
 }
 }
@@ -198,13 +201,13 @@ void ImportCsvDialog::accept()
     // db needs to be saved or an error will occur
     QString restorepointName = QString("CSVIMPORT_%1").arg(QDateTime::currentMSecsSinceEpoch());
     if(!pdb->setRestorePoint(restorepointName))
-        return rollback(this, pdb, progress, restorepointName, 0);
+        return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastErrorMessage));
 
     // Create table
     if(!importToExistingTable)
     {
         if(!pdb->createTable(ui->editName->text(), fieldList))
-            return rollback(this, pdb, progress, restorepointName, 0);
+            return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastErrorMessage));
     }
 
     // now lets import all data, one row at a time
@@ -235,14 +238,14 @@ void ImportCsvDialog::accept()
         sql.append(");");
 
         if(!pdb->executeSQL(sql, false, false))
-            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1);
+            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, tr("Inserting row failed: %1").arg(pdb->lastErrorMessage));
 
         // Update progress bar and check if cancel button was clicked
         unsigned int prog = std::distance(csv.csv().begin(), it);
         if(prog % 100 == 0)
             progress.setValue(prog);
         if(progress.wasCanceled())
-            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1);
+            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, "");
     }
 
     QApplication::restoreOverrideCursor();  // restore original cursor
