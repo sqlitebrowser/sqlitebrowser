@@ -74,7 +74,7 @@ bool DBBrowserDB::open(const QString& db)
     {
         sqlite3_key(_db, cipher->password().toUtf8(), cipher->password().toUtf8().length());
         if(cipher->pageSize() != 1024)
-            sqlite3_exec(_db, QString("PRAGMA cipher_page_size = %1;").arg(cipher->pageSize()).toUtf8(), NULL, NULL, NULL);
+            executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipher->pageSize()), false, false);
     }
 #endif
     delete cipher;
@@ -215,7 +215,7 @@ bool DBBrowserDB::setRestorePoint(const QString& pointname)
     if(_db)
     {
         QString query = QString("SAVEPOINT %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
+        executeSQL(query, false, false);
         savepointList.append(pointname);
         emit dbChanged(getDirty());
     }
@@ -230,7 +230,7 @@ bool DBBrowserDB::save(const QString& pointname)
     if(_db)
     {
         QString query = QString("RELEASE %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(), NULL,NULL,NULL);
+        executeSQL(query, false, false);
         savepointList.removeAll(pointname);
         emit dbChanged(getDirty());
     }
@@ -245,9 +245,9 @@ bool DBBrowserDB::revert(const QString& pointname)
     if(_db)
     {
         QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
+        executeSQL(query, false, false);
         query = QString("RELEASE %1;").arg(pointname);
-        sqlite3_exec(_db, query.toUtf8(), NULL, NULL, NULL);
+        executeSQL(query, false, false);
         savepointList.removeAll(pointname);
         emit dbChanged(getDirty());
     }
@@ -309,9 +309,9 @@ bool DBBrowserDB::create ( const QString & db)
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
         // with a 0 byte file, if the user cancels the create table dialog
-        sqlite3_exec(_db, "CREATE TABLE notempty (id integer primary key);", NULL, NULL, NULL);
-        sqlite3_exec(_db, "DROP TABLE notempty", NULL, NULL, NULL);
-        sqlite3_exec(_db, "COMMIT;", NULL, NULL, NULL);
+        executeSQL("CREATE TABLE notempty (id integer primary key);", false, false);
+        executeSQL("DROP TABLE notempty;", false, false);
+        executeSQL("COMMIT;", false, false);
 
         ok = true;
         curDBFilename = db;
@@ -492,23 +492,26 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
     char *errmsg;
     bool ok = false;
 
-    if (!isOpen()) return false;
+    if (!isOpen())
+        return false;
 
-    if (_db){
+    if (_db)
+    {
         if (logsql) logSQL(statement, kLogMsg_App);
         if (dirtyDB) setRestorePoint();
-        if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
-                                    NULL,NULL,&errmsg)){
-            ok=true;
-        }
+        if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
+            ok = true;
     }
 
-    if (!ok){
-        lastErrorMessage = QString::fromUtf8(errmsg);
-        qWarning() << "executeSQL: " << statement << "->" << lastErrorMessage;
+    if(ok)
+    {
+        lastErrorMessage.clear();
+        return true;
+    } else {
+        lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
+        qWarning() << "executeSQL: " << statement << "->" << errmsg;
         return false;
     }
-    return true;
 }
 
 bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log)
@@ -691,7 +694,6 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int64_t pk_value) con
 
 int64_t DBBrowserDB::addRecord(const QString& sTableName)
 {
-    char *errmsg;
     if (!isOpen()) return false;
 
     sqlb::Table table = getObjectByName(sTableName).table;
@@ -711,12 +713,9 @@ int64_t DBBrowserDB::addRecord(const QString& sTableName)
     }
 
     lastErrorMessage = "";
-    logSQL(sInsertstmt, kLogMsg_App);
-    setRestorePoint();
 
-    if (SQLITE_OK != sqlite3_exec(_db, sInsertstmt.toUtf8(), NULL, NULL, &errmsg))
+    if(!executeSQL(sInsertstmt))
     {
-        lastErrorMessage = QString::fromUtf8(errmsg);
         qWarning() << "addRecord: " << lastErrorMessage;
         return -1;
     } else {
@@ -729,21 +728,18 @@ int64_t DBBrowserDB::addRecord(const QString& sTableName)
 
 bool DBBrowserDB::deleteRecord(const QString& table, int64_t rowid)
 {
-    char * errmsg;
     if (!isOpen()) return false;
     bool ok = false;
     lastErrorMessage = QString("no error");
 
     QString statement = QString("DELETE FROM `%1` WHERE `%2`=%3;").arg(table).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
 
-    if (_db){
-        logSQL(statement, kLogMsg_App);
-        setRestorePoint();
-        if (SQLITE_OK==sqlite3_exec(_db,statement.toUtf8(),
-                                    NULL,NULL,&errmsg)){
-            ok=true;
+    if (_db)
+    {
+        if(executeSQL(statement))
+        {
+            ok = true;
         } else {
-            lastErrorMessage = QString::fromUtf8(errmsg);
             qWarning() << "deleteRecord: " << lastErrorMessage;
         }
     }
