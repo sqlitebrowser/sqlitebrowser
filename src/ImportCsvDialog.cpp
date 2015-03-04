@@ -125,7 +125,7 @@ void ImportCsvDialog::accept()
 
     // Parse all csv data
     QFile file(csvFilename);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    file.open(QIODevice::ReadOnly);
 
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
     csv.setCSVProgress(new CSVImportProgress(file.size()));
@@ -261,7 +261,7 @@ void ImportCsvDialog::updatePreview()
 
     // Get preview data
     QFile file(csvFilename);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    file.open(QIODevice::ReadOnly);
 
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
 

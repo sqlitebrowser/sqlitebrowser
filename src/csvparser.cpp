@@ -60,10 +60,16 @@ bool CSVParser::parse(QTextStream& stream, int64_t nMaxRecords)
                 }
                 else if(c == '\r')
                 {
-                    // look ahead to check for newline
+                    // look ahead to check for linefeed
                     QString::iterator nit = it + 1;
+
+                    // no linefeed, so assume that CR represents a newline
                     if(nit != sBuffer.end() && *nit != '\n')
-                        fieldbuf.append(c);
+                    {
+                        addColumn(record, fieldbuf, m_bTrimFields);
+
+                        addRow(record);
+                    }
                 }
                 else if(c == '\n')
                 {
@@ -107,6 +113,19 @@ bool CSVParser::parse(QTextStream& stream, int64_t nMaxRecords)
                     addColumn(record, fieldbuf, m_bTrimFields);
 
                     addRow(record);
+                }
+                else if(c == '\r')
+                {
+                    // look ahead to check for linefeed
+                    QString::iterator nit = it + 1;
+
+                    // no linefeed, so assume that CR represents a newline
+                    if(nit != sBuffer.end() && *nit != '\n')
+                    {
+                        addColumn(record, fieldbuf, m_bTrimFields);
+
+                        addRow(record);
+                    }
                 }
                 else
                 {
