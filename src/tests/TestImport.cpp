@@ -96,6 +96,25 @@ void TestImport::csvImport_data()
                                        << "UTF-8"
                                        << 3
                                        << result;
+    QTest::newRow("oldmaclinebreaks")  << "a,b,c\rd,e,f\rg,h,i\r"
+                                       << ','
+                                       << (char)0
+                                       << "UTF-8"
+                                       << 3
+                                       << result;
+
+    result.clear();
+    result.append(QStringList() << "a" << "b" << "");
+    result.append(QStringList() << "c" << "");
+    result.append(QStringList() << "d" << "" << "e");
+    result.append(QStringList() << "");
+    result.append(QStringList() << "" << "" << "f");
+    QTest::newRow("emptyvalues") << "a,b,\nc,\nd,,e\n\n,,f"
+                                     << ','
+                                     << (char)0
+                                     << "UTF-8"
+                                     << 3
+                                     << result;
 
     result.clear();
     result.append(QStringList() << "a" << "b" << "c");
