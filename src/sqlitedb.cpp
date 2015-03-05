@@ -586,7 +586,18 @@ bool DBBrowserDB::getRow(const QString& sTableName, int64_t rowid, QList<QByteAr
         while(sqlite3_step(stmt) == SQLITE_ROW)
         {
             for (int i = 0; i < sqlite3_column_count(stmt); ++i)
-                rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), sqlite3_column_bytes(stmt, i)));
+            {
+                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                {
+                    rowdata.append(QByteArray());
+                } else {
+                    int bytes = sqlite3_column_bytes(stmt, i);
+                    if(bytes)
+                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                    else
+                        rowdata.append(QByteArray(""));
+                }
+            }
             ret = true;
         }
     }
