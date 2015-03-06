@@ -35,6 +35,26 @@ void collation_needed(void* /*pData*/, sqlite3* db, int eTextRep, const char* sC
         sqlite3_create_collation(db, sCollationName, eTextRep, NULL, collCompare);
 }
 
+
+static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
+{
+    // Get arguments and check their values
+    QRegExp arg1((const char*)sqlite3_value_text(argv[0]));
+    QString arg2((const char*)sqlite3_value_text(argv[1]));
+    if(!arg1.isValid() || arg2.isNull())
+        return sqlite3_result_error(ctx, "invalid operand", -1);
+
+    // Set the pattern matching syntax to a Perl-like one. This is the default in Qt 4.x but Qt 5
+    // changes this to a greedy one (QRegExp::RegExp2). To make sure the behaviour of our application
+    // doesn't change depending on the build environment, we make sure to always set the same pattern
+    // matching syntax.
+    arg1.setPatternSyntax(QRegExp::RegExp);
+
+    // Perform the actual matching and return the result. Note that Qt's QRegExp returns -1 if the regex
+    // doesn't match and the position in the string otherwise; SQLite expects a 0 for not found and a 1 for found.
+    sqlite3_result_int(ctx, arg1.indexIn(arg2) >= 0);
+}
+
 bool DBBrowserDB::isOpen ( ) const
 {
     return _db!=0;
@@ -92,6 +112,10 @@ bool DBBrowserDB::open(const QString& db)
 
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
+
+        // Register REGEXP function
+        if(settings.value("/extensions/disableregex", false) == false)
+            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, NULL, regexp, NULL, NULL);
 
         curDBFilename = db;
         return true;

@@ -72,6 +72,7 @@ void PreferencesDialog::loadSettings()
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
+    ui->checkRegexDisabled->setChecked(getSettingsValue("extensions", "disableregex").toBool());
     fillLanguageBox();
 }
 
@@ -100,6 +101,7 @@ void PreferencesDialog::saveSettings()
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
         extList.append(item->text());
     setSettingsValue("extensions", "list", extList);
+    setSettingsValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
 
     // Warn about restarting to change language
     QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
@@ -232,6 +234,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // extensions/list?
     if(group == "extensions" && name == "list")
         return QStringList();
+
+    // extensions/disableregex?
+    if(group == "extension" && name == "disableregex")
+        return false;
 
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
