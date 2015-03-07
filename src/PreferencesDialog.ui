@@ -224,6 +224,11 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>Data &amp;Browser</string>
+      </attribute>
+     </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
        <string>&amp;SQL</string>
