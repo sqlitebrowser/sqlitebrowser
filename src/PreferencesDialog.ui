@@ -388,14 +388,6 @@
            <string>Current line</string>
           </property>
          </item>
-         <item>
-          <property name="text">
-           <string>null</string>
-          </property>
-          <property name="text">
-           <string>Null</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
