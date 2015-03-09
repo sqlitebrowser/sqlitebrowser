@@ -69,6 +69,9 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     QChar sepChar = currentSeparatorChar();
     QString newlineChar = "\r\n";
 
+    // chars that require escaping
+    std::string special_chars = newlineChar.toStdString() + sepChar.toAscii() + quoteChar.toAscii();
+
     // Open file
     QFile file(sFilename);
     if(file.open(QIODevice::WriteOnly))
@@ -88,7 +91,7 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
                 for (int i = 0; i < columns; ++i)
                 {
                     QString content = QString::fromUtf8(sqlite3_column_name(stmt, i));
-                    if(content.contains(quoteChar) || content.contains(newlineChar))
+                    if(content.toStdString().find_first_of(special_chars) != std::string::npos)
                         stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
                     else
                         stream << content;
@@ -108,7 +111,7 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
                     QString content = QString::fromUtf8(
                                 (const char*)sqlite3_column_blob(stmt, i),
                                 sqlite3_column_bytes(stmt, i));
-                    if(content.contains(quoteChar) || content.contains(sepChar) || content.contains('\n'))
+                    if(content.toStdString().find_first_of(special_chars) != std::string::npos)
                         stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
                     else
                         stream << content;
