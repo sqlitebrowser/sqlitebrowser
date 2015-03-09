@@ -70,7 +70,7 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     QString newlineChar = "\r\n";
 
     // chars that require escaping
-    std::string special_chars = newlineChar.toStdString() + sepChar.toAscii() + quoteChar.toAscii();
+    std::string special_chars = newlineChar.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
 
     // Open file
     QFile file(sFilename);
