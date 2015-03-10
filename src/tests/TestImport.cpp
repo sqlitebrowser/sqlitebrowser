@@ -15,12 +15,14 @@ TestImport::TestImport()
     // The app needs to be initialized for the utf8 test
     // to work
     argcount = 1;
-    args[0] = "sqlb-unittests";
+    args[0] = new char[20];
+    strcpy(args[0], "sqlb-unittests");
     app = new QCoreApplication(argcount, args);
 }
 
 TestImport::~TestImport()
 {
+    delete[] args[0];
     delete app;
 }
 
