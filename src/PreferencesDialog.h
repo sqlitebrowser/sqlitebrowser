@@ -38,10 +38,13 @@ private:
     // This works similar to getSettingsValue but returns the default value instead of the value set by the user
     static QVariant getSettingsDefaultValue(const QString& group, const QString& name);
 
-    void fillLanguageBox();
-
     // Cache for storing the settings to avoid repeatedly reading the settings file all the time
     static QHash<QString, QVariant> m_hCache;
+
+    void fillLanguageBox();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 
 #endif

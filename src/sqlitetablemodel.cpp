@@ -231,6 +231,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
         if(role == Qt::DisplayRole && isBinary(index))
             return "BLOB";
+        else if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+            return PreferencesDialog::getSettingsValue("databrowser", "null_text").toString();
         else
             return m_data.at(index.row()).at(index.column());
     } else if(role == Qt::FontRole) {
@@ -240,11 +242,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         return font;
     } else if(role == Qt::TextColorRole) {
         if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
-            return QColor(Qt::gray);
-        return QColor(Qt::black);
+            return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_fg_colour").toString());
+        return QVariant();
     } else if (role == Qt::BackgroundRole) {
         if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
-            return QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "null_colour").toString());
+            return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_bg_colour").toString());
         return QVariant();
     } else {
         return QVariant();

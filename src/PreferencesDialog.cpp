@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 QHash<QString, QVariant> PreferencesDialog::m_hCache;
 
@@ -16,6 +17,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
+
+    ui->frameNullBgColour->installEventFilter(this);
+    ui->frameNullFgColour->installEventFilter(this);
 
 #ifndef CHECKNEWVERSION
     ui->labelUpdates->setVisible(false);
@@ -54,6 +58,18 @@ void PreferencesDialog::loadSettings()
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
 
+    QPalette palette = ui->frameNullBgColour->palette();
+    palette.setColor(ui->frameNullBgColour->backgroundRole(),
+                     QColor(getSettingsValue("databrowser", "null_bg_colour").toString()));
+    ui->frameNullBgColour->setPalette(palette);
+
+    palette = ui->frameNullFgColour->palette();
+    palette.setColor(ui->frameNullFgColour->backgroundRole(),
+                     QColor(getSettingsValue("databrowser", "null_fg_colour").toString()));
+    ui->frameNullFgColour->setPalette(palette);
+
+    ui->txtNull->setText(getSettingsValue("databrowser", "null_text").toString());
+
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
@@ -85,6 +101,12 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
 
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
+
+    setSettingsValue("databrowser", "null_bg_colour",
+                     ui->frameNullBgColour->palette().color(ui->frameNullBgColour->backgroundRole()));
+    setSettingsValue("databrowser", "null_fg_colour",
+                     ui->frameNullFgColour->palette().color(ui->frameNullFgColour->backgroundRole()));
+    setSettingsValue("databrowser", "null_text", ui->txtNull->text());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -190,6 +212,17 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "checkversion" && name == "enabled")
         return true;
 
+    // Data Browser/NULL Fields
+    if(group == "databrowser")
+    {
+        if (name == "null_text")
+            return "NULL";
+        if (name == "null_fg_colour")
+            return QColor(Qt::lightGray).name();
+        if (name == "null_bg_colour")
+            return QColor(Qt::white).name();
+    }
+
     // syntaxhighlighter?
     if(group == "syntaxhighlighter")
     {
@@ -253,6 +286,44 @@ void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
         item->setBackgroundColor(column, colour);
         item->setText(column, colour.name());
     }
+}
+
+bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
+{
+    // Use mouse click and enter press on the frames to pop up a colour dialog
+    if (obj == ui->frameNullBgColour || obj == ui->frameNullFgColour)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent *key = static_cast<QKeyEvent *>(event);
+            // Not interesting, so send to the parent (might be shortcuts)
+            if((key->key() != Qt::Key_Enter) && (key->key() != Qt::Key_Return))
+            {
+                return false;
+            }
+        }
+        else if (event->type() != QEvent::MouseButtonPress)
+        {
+            // Not a key event neither a mouse event, send to the parent
+            return false;
+        }
+
+        QFrame *frame = qobject_cast<QFrame *>(obj);
+        QColor oldColour = frame->palette().color(frame->backgroundRole());
+        QColor colour = QColorDialog::getColor(oldColour, frame);
+
+        if (colour.isValid())
+        {
+            QPalette palette = frame->palette();
+            palette.setColor(frame->backgroundRole(), colour);
+            frame->setPalette(palette);
+        }
+        // Consume
+        return true;
+    }
+
+    // Send any other events to the parent
+    return QDialog::eventFilter(obj, event);
 }
 
 void PreferencesDialog::addExtension()
