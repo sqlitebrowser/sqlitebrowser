@@ -306,6 +306,9 @@ QGroupBox::title {
               <property name="maxLength">
                <number>15</number>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item row="2" column="1">
