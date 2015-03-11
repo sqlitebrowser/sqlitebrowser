@@ -49,25 +49,8 @@
          <property name="margin">
           <number>5</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_versionqt">
-         <property name="text">
-          <string>Qt Version</string>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_versionsqlite">
-         <property name="text">
-          <string>SQLite Version</string>
-         </property>
-         <property name="margin">
-          <number>5</number>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>

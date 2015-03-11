@@ -10,13 +10,14 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(this->width(), this->height());
 
-    ui->label_version->setText(ui->label_version->text() + " " + APP_VERSION);
-    ui->label_versionqt->setText(ui->label_versionqt->text() + " " + QT_VERSION_STR);
+    ui->label_version->setText(tr("Version ") + APP_VERSION + "\n\n" +
+                               tr("Qt Version ") + QT_VERSION_STR + "\n\n" +
 #ifdef ENABLE_SQLCIPHER
-    ui->label_versionsqlite->setText(ui->label_versionsqlite->text().replace("SQLite", "SQLCipher") + " " + SQLITE_VERSION);
+                               tr("SQLCipher Version ") + SQLITE_VERSION
 #else
-    ui->label_versionsqlite->setText(ui->label_versionsqlite->text() + " " + SQLITE_VERSION);
+                               tr("SQLite Version ") + SQLITE_VERSION
 #endif
+                               );
 }
 
 AboutDialog::~AboutDialog()
