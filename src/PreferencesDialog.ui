@@ -712,6 +712,7 @@ QGroupBox::title {
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
+  <tabstop>checkRegexDisabled</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
