@@ -776,11 +776,15 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int6
     logSQL(sql, kLogMsg_App);
     setRestorePoint();
 
+    // If we get a NULL QByteArray we insert a NULL value, and for that
+    // we can pass NULL to sqlite3_bind_text() so that it behaves like sqlite3_bind_null()
+    const char *rawValue = value.isNull() ? NULL : value.constData();
+
     sqlite3_stmt* stmt;
     int success = 1;
     if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
         success = 0;
-    if(success == 1 && sqlite3_bind_text(stmt, 1, value.constData(), value.length(), SQLITE_STATIC) != SQLITE_OK)
+    if(success == 1 && sqlite3_bind_text(stmt, 1, rawValue, value.length(), SQLITE_STATIC) != SQLITE_OK)
         success = -1;
     if(success == 1 && sqlite3_step(stmt) != SQLITE_DONE)
         success = -1;
