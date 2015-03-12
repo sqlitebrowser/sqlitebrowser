@@ -231,7 +231,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
         if(role == Qt::DisplayRole && isBinary(index))
             return "BLOB";
-        else if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+        else if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
             return PreferencesDialog::getSettingsValue("databrowser", "null_text").toString();
         else
             return m_data.at(index.row()).at(index.column());
