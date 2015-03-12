@@ -257,15 +257,19 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
 {
     if(index.isValid() && role == Qt::EditRole)
     {
+        QByteArray newValue = value.toByteArray();
+        QByteArray oldValue = m_data.at(index.row()).at(index.column());
+
         // Don't do anything if the data hasn't changed
-        if(m_data.at(index.row()).at(index.column()) == value)
+        // To differentiate NULL and empty byte arrays, we also compare the NULL flag
+        if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toLongLong(), value.toByteArray()))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toLongLong(), newValue))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
-                m_data[index.row()].replace(index.column(), value.toByteArray());
+                m_data[index.row()].replace(index.column(), newValue);
 
             emit(dataChanged(index, index));
             return true;
