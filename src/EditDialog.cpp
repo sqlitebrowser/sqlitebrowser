@@ -119,6 +119,7 @@ void EditDialog::clearData()
     ui->editorImage->clear();
     hexEdit->setData(QByteArray());
     checkDataType();
+    ui->editorText->setFocus();
 }
 
 void EditDialog::accept()
