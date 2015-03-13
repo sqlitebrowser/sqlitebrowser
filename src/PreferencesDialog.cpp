@@ -299,13 +299,13 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
             // Not interesting, so send to the parent (might be shortcuts)
             if((key->key() != Qt::Key_Enter) && (key->key() != Qt::Key_Return))
             {
-                return false;
+                return QDialog::eventFilter(obj, event);
             }
         }
         else if (event->type() != QEvent::MouseButtonPress)
         {
             // Not a key event neither a mouse event, send to the parent
-            return false;
+            return QDialog::eventFilter(obj, event);
         }
 
         QFrame *frame = qobject_cast<QFrame *>(obj);
