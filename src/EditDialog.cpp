@@ -149,13 +149,20 @@ void EditDialog::checkDataType()
 {
     ui->comboEditor->setVisible(true);
 
+    // Assume NULL type first
+    if (hexEdit->data().isNull())
+        ui->labelType->setText(tr("Type of data currently in cell: Null"));
+
     // Check if data is text only
     if(QString(hexEdit->data()).toUtf8() == hexEdit->data())     // Any proper way??
     {
         ui->editorStack->setCurrentIndex(0);
 
         ui->labelBinayWarning->setVisible(false);
-        ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
+
+        if (!hexEdit->data().isNull())
+            ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
+
         ui->labelSize->setText(tr("%n char(s)", "", hexEdit->data().length()));
     } else {
         // It's not. So it might be an image.
@@ -174,7 +181,10 @@ void EditDialog::checkDataType()
             // It's not. So it's probably some random binary data.
 
             ui->labelBinayWarning->setVisible(true);
-            ui->labelType->setText(tr("Type of data currently in cell: Binary"));
+
+            if (!hexEdit->data().isNull())
+                ui->labelType->setText(tr("Type of data currently in cell: Binary"));
+
             ui->labelSize->setText(tr("%n byte(s)", "", hexEdit->data().length()));
         }
     }
