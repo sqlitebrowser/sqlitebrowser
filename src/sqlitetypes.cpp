@@ -423,6 +423,7 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
     bool unique = false;
     QString defaultvalue;
     QString check;
+    QString foreignKey;
 
     colname = columnname(c);
     c = c->getNextSibling(); //type?
@@ -487,6 +488,12 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
             unique = true;
         }
         break;
+        case sqlite3TokenTypes::REFERENCES:
+        {
+            con = con->getNextSibling();    // REFERENCES
+            foreignKey = concatTextAST(con, true);
+        }
+        break;
         default:
         {
             m_bModifySupported = false;
@@ -498,6 +505,7 @@ void CreateTableWalker::parsecolumn(FieldPtr& f, antlr::RefAST c)
 
     f = FieldPtr( new Field(colname, type, notnull, defaultvalue, check, primarykey, unique));
     f->setAutoIncrement(autoincrement);
+    f->setForeignKey(foreignKey);
 }
 
 } //namespace sqlb
