@@ -91,7 +91,7 @@ int Table::findField(const QString &sname)
 {
     for(int i = 0; i < m_fields.count(); ++i)
     {
-        if(sname == m_fields.at(i)->name())
+        if(m_fields.at(i)->name().compare(sname, Qt::CaseInsensitive) == 0)
             return i;
     }
     return -1;
