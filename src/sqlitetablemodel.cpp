@@ -241,11 +241,13 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             font.setItalic(true);
         return font;
     } else if(role == Qt::TextColorRole) {
-        if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+        if(m_data.at(index.row()).at(index.column()).isNull())
             return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_fg_colour").toString());
+        else if (isBinary(index))
+            return QColor(Qt::gray);
         return QVariant();
     } else if (role == Qt::BackgroundRole) {
-        if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+        if(m_data.at(index.row()).at(index.column()).isNull())
             return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_bg_colour").toString());
         return QVariant();
     } else {
