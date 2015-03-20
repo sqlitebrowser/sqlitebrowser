@@ -1117,6 +1117,8 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSqlOpenFile->setEnabled(enable);
     ui->actionSqlOpenTab->setEnabled(enable);
+    ui->actionSqlSaveFilePopup->setEnabled(enable);
+    ui->actionSqlSaveFileAs->setEnabled(enable);
     ui->actionSqlSaveFile->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable);
