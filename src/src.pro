@@ -11,7 +11,12 @@ CONFIG += warn_on
 
 # create a unittest option
 CONFIG(unittest) {
-  CONFIG += qtestlib
+  greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += testlib
+  } else {
+    CONFIG += qtestlib
+  }
+
   HEADERS += tests/testsqlobjects.h tests/TestImport.h
   SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp
 } else {
