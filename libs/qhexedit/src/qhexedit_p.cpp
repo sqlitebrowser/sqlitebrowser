@@ -16,12 +16,16 @@ QHexEditPrivate::QHexEditPrivate(QScrollArea *parent) : QWidget(parent)
     _undoStack = new QUndoStack(this);
 
     _scrollArea = parent;
+    _asciiArea = true;
+
+    setOverwriteMode(true);
+    setCursorPos(0);
+    setAddressArea(true);
+
     setAddressWidth(4);
     setAddressOffset(0);
-    setAddressArea(true);
     setAsciiArea(true);
     setHighlighting(true);
-    setOverwriteMode(true);
     setReadOnly(false);
     setAddressAreaColor(QColor(0xd4, 0xd4, 0xd4, 0xff));
     setHighlightingColor(QColor(0xff, 0xff, 0x99, 0xff));
