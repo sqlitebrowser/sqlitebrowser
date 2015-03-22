@@ -78,7 +78,7 @@ or this:
 ### Compiling
 
 Instructions for compiling on (at least) Windows, OSX, Linux, and FreeBSD are
-in BUILDING.md.
+in [BUILDING](BUILDING.md).
 
 ## Twitter
 
