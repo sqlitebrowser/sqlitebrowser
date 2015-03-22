@@ -61,7 +61,7 @@ Nightly builds for OSX are available at:
 
 DB Browser for SQLite works well on Linux.  Some Linux distributions, such as
 Arch Linux and Ubuntu, provide a package ready for use.  On others you'll need
-to compile it yourself using the (simple) instructions in BUILDING.md.
+to compile it yourself using the (simple) instructions in [BUILDING](BUILDING.md).
 
 ## FreeBSD
 
