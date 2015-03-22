@@ -1133,7 +1133,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
     curBrowseOrderByIndex = logicalindex;
     curBrowseOrderByMode = curBrowseOrderByMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
+    ui->dataTable->sortByColumn(curBrowseOrderByIndex, curBrowseOrderByMode);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
