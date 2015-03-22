@@ -78,8 +78,11 @@ void EditDialog::importData()
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Choose a file"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
-                tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats));
+                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString()
+#ifndef Q_OS_MAC // Filters on OS X are buggy
+                , tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats)
+#endif
+                );
     if(QFile::exists(fileName))
     {
         QFile file(fileName);
