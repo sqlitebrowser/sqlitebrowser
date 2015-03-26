@@ -252,6 +252,9 @@ install(FILES src/icons/${PROJECT_NAME}.png
 	
 install(FILES distri/${PROJECT_NAME}.desktop
 	DESTINATION share/applications/)
+
+install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
+	DESTINATION share/appdata/)
 endif(UNIX AND NOT APPLE)
 
 #cpack

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>sqlitebrowser.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MPL-2.0 and GPL-3.0+</project_license>
+  <name>DB Browser for SQLite</name>
+  <summary>DB Browser for SQLite is a light GUI editor for SQLite databases</summary>
+  <description>
+    <p>DB Browser for SQLite is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.</p>
+    <p>It is for users and developers wanting to create databases, search, and edit data. It uses a familiar spreadsheet-like interface, and you don't need to learn complicated SQL commands.</p>
+    <p>Controls and wizards are available for users to:</p>
+    <ul>
+      <li>Create and compact database files</li>
+      <li>Create, define, modify and delete tables</li>
+      <li>Create, define and delete indexes</li>
+      <li>Browse, edit, add and delete records</li>
+      <li>Search records</li>
+      <li>Import and export records as text</li>
+      <li>Import and export tables from/to CSV files</li>
+      <li>Import and export databases from/to SQL dump files</li>
+      <li>Issue SQL queries and inspect the results</li>
+      <li>Examine a log of all SQL commands issued by the application</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/sqlitebrowser/db4s-screenshots/master/v3.3/gnome3_2-execute.png</image>
+      <caption>DB Browser for SQLite, executing query</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sqlitebrowser/db4s-screenshots/master/v3.3/gnome3_1-plot.png</image>
+      <caption>DB Browser for SQLite, browsing data with plot</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sqlitebrowser/db4s-screenshots/master/v3.3/kde413_2-blob.png</image>
+      <caption>DB Browser for SQLite, browing a blob field</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sqlitebrowser/db4s-screenshots/master/v3.3/kde413_1-create_table.png</image>
+      <caption>DB Browser for SQLite, creating a table</caption>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">http://sqlitebrowser.org/</url>
+  <url type="bugtracker">https://github.com/sqlitebrowser/sqlitebrowser/issues</url>
+</component>
