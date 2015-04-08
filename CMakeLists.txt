@@ -248,13 +248,13 @@ install(TARGETS ${PROJECT_NAME}
 	
 if(UNIX AND NOT APPLE)
 install(FILES src/icons/${PROJECT_NAME}.png
-	DESTINATION share/icons/hicolor/256x256/apps/)
+	DESTINATION /usr/share/icons/hicolor/256x256/apps/)
 	
 install(FILES distri/${PROJECT_NAME}.desktop
-	DESTINATION share/applications/)
+	DESTINATION /usr/share/applications/)
 
 install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
-	DESTINATION share/appdata/)
+	DESTINATION /usr/share/appdata/)
 endif(UNIX AND NOT APPLE)
 
 #cpack
