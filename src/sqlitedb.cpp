@@ -453,6 +453,12 @@ bool DBBrowserDB::dump(const QString& filename)
                             case SQLITE_NULL:
                                 stream << "NULL";
                             break;
+                            case SQLITE_FLOAT:
+                                if(bcontent.indexOf("Inf") != -1)
+                                    stream << "'" << bcontent << "'";
+                                else
+                                    stream << bcontent;
+                            break;
                             default:
                                 stream << bcontent;
                             }
