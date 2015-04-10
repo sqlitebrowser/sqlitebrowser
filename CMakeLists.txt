@@ -139,31 +139,6 @@ else()
     endif(SQLB_TSS)
 endif()
 
-set(gv "${CMAKE_SOURCE_DIR}/src/gen_version.h")
-
-# get git version hash
-if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-	add_custom_command(OUTPUT "${gv}"
-        COMMAND echo "#ifndef GEN_VERSION_H" > "${gv}"
-        COMMAND echo "#define GEN_VERSION_H" >> "${gv}"
-        COMMAND git log -n1 "--format=#define APP_VERSION \"%h_git\"" >> "${gv}"
-        COMMAND echo "#define MAJOR_VERSION 999" >> "${gv}"
-        COMMAND echo "#define MINOR_VERSION 0" >> "${gv}"
-        COMMAND echo "#define PATCH_VERSION 0" >> "${gv}"
-        COMMAND echo "#endif" >> "${gv}"
-        DEPENDS .git/HEAD
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-        VERBATIM)
-else()
-	file(WRITE "${gv}"
-		 "#ifndef GEN_VERSION_H\n"
-		 "#define GEN_VERSION_H\n"
-		 "#define APP_VERSION \"999.0.0\"\n"
-		 "#define MAJOR_VERSION 999\n"
-		 "#define MINOR_VERSION 0\n"
-		 "#define PATCH_VERSION 0\n"
-		 "#endif\n")
-endif()
 
 #icon and correct libs/subsystem for windows
 if(WIN32)
@@ -263,8 +238,8 @@ set(CPACK_PACKAGE_VENDOR "oldsch00l")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_VERSION_MINOR "5")
+set(CPACK_PACKAGE_VERSION_PATCH "99")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "SqliteBrowser${CPACK_PACKAGE_VERSION_MAJOR}")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSI that does not handle full unix paths properly. Make
