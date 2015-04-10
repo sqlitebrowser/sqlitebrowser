@@ -323,23 +323,21 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
 
 bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 {
-    beginInsertRows(parent, row, row + count - 1);
-
     QByteArrayList blank_data;
     for(int i=0; i < m_headers.size(); ++i)
         blank_data.push_back("");
 
+    DataType tempList;
     for(int i=row; i < row + count; ++i)
     {
         qint64 rowid = m_db->addRecord(m_sTable);
         if(rowid < 0)
         {
-            endInsertRows();
             return false;
         }
         m_rowCount++;
-        m_data.insert(i, blank_data);
-        m_data[i].replace(0, QByteArray::number(rowid));
+        tempList.append(blank_data);
+        tempList[i - row].replace(0, QByteArray::number(rowid));
 
         // update column with default values
         QByteArrayList rowdata;
@@ -347,11 +345,16 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         {
             for(int j=1; j < m_headers.size(); ++j)
             {
-                m_data[i].replace(j, rowdata[j - 1]);
+                tempList[i - row].replace(j, rowdata[j - 1]);
             }
         }
     }
 
+    beginInsertRows(parent, row, row + count - 1);
+    for(int i = 0; i < tempList.size(); ++i)
+    {
+        m_data.insert(i + row, tempList.at(i));
+    }
     endInsertRows();
     return true;
 }
