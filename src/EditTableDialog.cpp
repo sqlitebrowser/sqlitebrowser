@@ -546,13 +546,12 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     {
         // Before setting the without rowid flag, first perform a check to see if the table meets all thr required criteria for without rowid tables
         int pk = m_table.findPk();
-        if(pk == -1 || m_table.fields().at(pk)->isInteger() == false || m_table.fields().at(pk)->autoIncrement())
+        if(pk == -1 || m_table.fields().at(pk)->autoIncrement())
         {
             QMessageBox::information(this, QApplication::applicationName(),
                                      tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
                                         " - Primary key flag set\n"
-                                        " - Auto incremenct disabled\n"
-                                        " - Type INTEGER"));
+                                        " - Auto incremenct disabled"));
             ui->checkWithoutRowid->setChecked(false);
             return;
         }
