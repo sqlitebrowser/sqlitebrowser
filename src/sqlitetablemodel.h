@@ -56,7 +56,8 @@ private:
     DBBrowserDB* m_db;
     int m_rowCount;
     QStringList m_headers;
-    QList<QByteArrayList> m_data;
+    typedef QList<QByteArrayList> DataType;
+    DataType m_data;
 
     QString m_sQuery;
     QString m_sTable;
