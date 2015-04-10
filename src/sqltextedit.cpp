@@ -28,6 +28,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
     setFont(font);
 
+    QFontMetrics fm(font);
+    setTabStopWidth(fm.width(" ") * PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
+
     // Create syntax highlighter
     m_syntaxHighlighter = new SQLiteSyntaxHighlighter(document());
 

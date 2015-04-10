@@ -85,6 +85,7 @@ void PreferencesDialog::loadSettings()
         }
     }
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
+    ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
@@ -117,6 +118,7 @@ void PreferencesDialog::saveSettings()
         setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
     setSettingsValue("editor", "fontsize", ui->spinEditorFontSize->value());
+    setSettingsValue("editor", "tabsize", ui->spinTabSize->value());
     setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
 
     QStringList extList;
@@ -261,6 +263,14 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // editor/fontsize or log/fontsize?
     if((group == "editor" || group == "log") && name == "fontsize")
         return 9;
+
+    if(group == "editor")
+    {
+        if(name == "tabsize")
+        {
+            return 4;
+        }
+    }
 
     // extensions/list?
     if(group == "extensions" && name == "list")
