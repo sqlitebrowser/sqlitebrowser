@@ -17,6 +17,7 @@
 #include "gen_version.h"
 #include "sqlite.h"
 #include "CipherDialog.h"
+#include "ExportSqlDialog.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -897,19 +898,12 @@ void MainWindow::fileRevert()
 
 void MainWindow::exportDatabaseToSQL()
 {
-    QString fileName = QFileDialog::getSaveFileName(
-                this,
-                tr("Choose a filename to export"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
-                tr("Text files(*.sql *.txt)"));
+    QString current_table;
+    if(ui->mainTab->currentIndex() == 1)
+        current_table = ui->comboBrowseTable->currentText();
 
-    if(fileName.size())
-    {
-        if(!db.dump(fileName))
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Export cancelled or failed."));
-        else
-            QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
-    }
+    ExportSqlDialog dialog(&db, this, current_table);
+    dialog.exec();
 }
 
 void MainWindow::importDatabaseFromSQL()

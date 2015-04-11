@@ -54,9 +54,11 @@ public:
     bool revert (const QString& pointname = "RESTOREPOINT");
     bool saveAll();
     bool revertAll();
-    bool dump( const QString & filename);
+    bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+
+    QStringList tableColumns(const QString& tableName);
 
     /**
      * @brief getRow Executes a sqlite statement to get the rowdata(columns)

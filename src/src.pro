@@ -49,7 +49,8 @@ HEADERS += \
     DbStructureModel.h \
     Application.h \
     sqlite.h \
-    CipherDialog.h
+    CipherDialog.h \
+    ExportSqlDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -74,7 +75,8 @@ SOURCES += \
     VacuumDialog.cpp \
     DbStructureModel.cpp \
     Application.cpp \
-    CipherDialog.cpp
+    CipherDialog.cpp \
+    ExportSqlDialog.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc
@@ -90,7 +92,8 @@ FORMS += \
     ImportCsvDialog.ui \
     SqlExecutionArea.ui \
     VacuumDialog.ui \
-    CipherDialog.ui
+    CipherDialog.ui \
+    ExportSqlDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_zh.ts \

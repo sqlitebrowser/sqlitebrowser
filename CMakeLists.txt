@@ -56,6 +56,7 @@ set(SQLB_MOC_HDR
 	src/DbStructureModel.h
 	src/Application.h
 	src/CipherDialog.h
+	src/ExportSqlDialog.h
 )
 
 set(SQLB_SRC
@@ -83,6 +84,7 @@ set(SQLB_SRC
 	src/main.cpp
 	src/Application.cpp
 	src/CipherDialog.cpp
+	src/ExportSqlDialog.cpp
 )
 
 set(SQLB_FORMS
@@ -97,6 +99,7 @@ set(SQLB_FORMS
 	src/SqlExecutionArea.ui
 	src/VacuumDialog.ui
 	src/CipherDialog.ui
+	src/ExportSqlDialog.ui
 )
 
 set(SQLB_RESOURCES
