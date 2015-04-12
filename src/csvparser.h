@@ -4,7 +4,6 @@
 #include <QChar>
 #include <QVector>
 #include <QStringList>
-#include <cstdint>
 
 class QTextStream;
 
@@ -38,7 +37,7 @@ public:
      * \param nMaxRecords Max records too read, -1 if unlimited
      * \return True if parsing worked.
      */
-    bool parse(QTextStream& stream, int64_t nMaxRecords = -1);
+    bool parse(QTextStream& stream, qint64 nMaxRecords = -1);
 
     /*!
      * \brief csv

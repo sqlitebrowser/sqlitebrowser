@@ -28,7 +28,7 @@ inline void addColumn(QStringList& r, QString& field, bool trim)
 }
 }
 
-bool CSVParser::parse(QTextStream& stream, int64_t nMaxRecords)
+bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
 {
     m_vCSVData.clear();
     m_nColumns = 0;

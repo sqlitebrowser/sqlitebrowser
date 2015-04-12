@@ -602,7 +602,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::getRow(const QString& sTableName, int64_t rowid, QList<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const QString& sTableName, qint64 rowid, QList<QByteArray>& rowdata)
 {
     QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
@@ -636,12 +636,12 @@ bool DBBrowserDB::getRow(const QString& sTableName, int64_t rowid, QList<QByteAr
     return ret;
 }
 
-int64_t DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
+qint64 DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
 {
     QString sQuery = QString("SELECT MAX(`%2`) from `%1`;").arg(t.name()).arg(field->name());
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
-    int64_t ret = 0;
+    qint64 ret = 0;
 
     int status = sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL);
     if(SQLITE_OK == status)
@@ -660,7 +660,7 @@ int64_t DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
     return ret;
 }
 
-QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int64_t pk_value) const
+QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, qint64 pk_value) const
 {
     QString stmt = QString("INSERT INTO `%1`").arg(t.name());
 
@@ -678,7 +678,7 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int64_t pk_value) con
                 {
                     if(f->notnull())
                     {
-                        int64_t maxval = this->max(t, f);
+                        qint64 maxval = this->max(t, f);
                         vals << QString::number(maxval + 1);
                     }
                     else
@@ -724,7 +724,7 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, int64_t pk_value) con
     return stmt;
 }
 
-int64_t DBBrowserDB::addRecord(const QString& sTableName)
+qint64 DBBrowserDB::addRecord(const QString& sTableName)
 {
     if (!isOpen()) return false;
 
@@ -733,7 +733,7 @@ int64_t DBBrowserDB::addRecord(const QString& sTableName)
     // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
     // and adding one to it.
     QString sInsertstmt;
-    int64_t pk_value;
+    qint64 pk_value;
     if(table.isWithoutRowidTable())
     {
         SqliteTableModel m(this, this);
@@ -756,7 +756,7 @@ int64_t DBBrowserDB::addRecord(const QString& sTableName)
     }
 }
 
-bool DBBrowserDB::deleteRecord(const QString& table, int64_t rowid)
+bool DBBrowserDB::deleteRecord(const QString& table, qint64 rowid)
 {
     if (!isOpen()) return false;
     bool ok = false;
@@ -771,7 +771,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, int64_t rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, int64_t row, const QByteArray& value)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, qint64 row, const QByteArray& value)
 {
     if (!isOpen()) return false;
 

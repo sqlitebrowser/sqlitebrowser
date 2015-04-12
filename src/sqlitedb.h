@@ -6,7 +6,6 @@
 #include <QStringList>
 #include <QMultiMap>
 #include <QByteArray>
-#include <cstdint>
 
 class sqlite3;
 class CipherDialog;
@@ -67,7 +66,7 @@ public:
      * @param rowdata A list of QByteArray containing the row data.
      * @return true if statement execution was ok, else false.
      */
-    bool getRow(const QString& sTableName, int64_t rowid, QList<QByteArray>& rowdata);
+    bool getRow(const QString& sTableName, qint64 rowid, QList<QByteArray>& rowdata);
 
     /**
      * @brief max Queries the table t for the max value of field.
@@ -75,19 +74,19 @@ public:
      * @param field Field to get the max value
      * @return the max value of the field or 0 on error
      */
-    int64_t max(const sqlb::Table& t, sqlb::FieldPtr field) const;
+    qint64 max(const sqlb::Table& t, sqlb::FieldPtr field) const;
 
     void updateSchema();
-    int64_t addRecord(const QString& sTableName);
+    qint64 addRecord(const QString& sTableName);
 
     /**
      * @brief Creates an empty insert statement.
      * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
-    QString emptyInsertStmt(const sqlb::Table& t, int64_t pk_value = -1) const;
-    bool deleteRecord(const QString& table, int64_t rowid);
-    bool updateRecord(const QString& table, const QString& column, int64_t row, const QByteArray& value);
+    QString emptyInsertStmt(const sqlb::Table& t, qint64 pk_value = -1) const;
+    bool deleteRecord(const QString& table, qint64 rowid);
+    bool updateRecord(const QString& table, const QString& column, qint64 row, const QByteArray& value);
 
     bool createTable(const QString& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& from_table, const QString& to_table);
