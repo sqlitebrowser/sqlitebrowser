@@ -372,7 +372,10 @@ bool DBBrowserDB::close()
     return true;
 }
 
-bool DBBrowserDB::dump(const QString& filename)
+bool DBBrowserDB::dump(const QString& filename,
+    const QStringList & tablesToDump,
+    bool insertColNames,
+    bool insertNewSyntx)
 {
     // Open file
     QFile file(filename);
@@ -414,12 +417,19 @@ bool DBBrowserDB::dump(const QString& filename)
         // Loop through all tables first as they are required to generate views, indices etc. later
         for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
         {
+            if (tablesToDump.indexOf(it->getTableName()) == -1)
+                continue;
+
+            // get columns
+            QStringList cols(tableColumns(it->getTableName()));
+
             // Write the SQL string used to create this table to the output file
             stream << it->getsql() << ";\n";
 
             QString sQuery = QString("SELECT * FROM `%1`;").arg(it->getTableName());
             QByteArray utf8Query = sQuery.toUtf8();
             sqlite3_stmt *stmt;
+            QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
 
             int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
             if(SQLITE_OK == status)
@@ -429,7 +439,20 @@ bool DBBrowserDB::dump(const QString& filename)
                 qApp->processEvents();
                 while(sqlite3_step(stmt) == SQLITE_ROW)
                 {
-                    stream << "INSERT INTO `" << it->getTableName() << "` VALUES (";
+                    if (counter) stream << lineSep;
+
+                    if (!insertNewSyntx || !counter)
+                    {
+                        stream << "INSERT INTO `" << it->getTableName() << '`';
+                        if (insertColNames)
+                            stream << " (" << cols.join(",") << ")";
+                        stream << " VALUES (";
+                    }
+                    else
+                    {
+                        stream << " (";
+                    }
+
                     for (int i = 0; i < columns; ++i)
                     {
                         int fieldsize = sqlite3_column_bytes(stmt, i);
@@ -466,7 +489,6 @@ bool DBBrowserDB::dump(const QString& filename)
                         if(i != columns - 1)
                             stream << ',';
                     }
-                    stream << ");\n";
 
                     progress.setValue(++numRecordsCurrent);
                     if(counter % 5000 == 0)
@@ -482,6 +504,7 @@ bool DBBrowserDB::dump(const QString& filename)
                         return false;
                     }
                 }
+                stream << ");\n";
             }
             sqlite3_finalize(stmt);
         }
@@ -1199,4 +1222,17 @@ bool DBBrowserDB::loadExtension(const QString& filename)
         sqlite3_free(error);
         return false;
     }
+}
+
+QStringList DBBrowserDB::tableColumns(const QString & tableName) {
+    QStringList cols;
+    sqlite3_stmt* stmt = NULL;
+    QString q(QString("PRAGMA table_info('%1');").arg(tableName));
+    int rc = sqlite3_prepare_v2(this->_db, q.toUtf8(), q.toUtf8().length(), &stmt, NULL);
+    if (rc == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW)
+            cols.push_back(QString((const char*)sqlite3_column_text(stmt, 1)));
+        sqlite3_finalize(stmt);
+    }
+    return cols;
 }
