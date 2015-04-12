@@ -12,7 +12,7 @@
 
 static QString sSettingsGroup("exportsql");
 static QString sSettingsInsertColNames("insertcolnames");
-static QString sSettingsInsertMultiply("insertmultiply");
+static QString sSettingsInsertMultiple("insertmultiple");
 
 ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString& selection)
     : QDialog(parent),
@@ -25,7 +25,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.beginGroup(sSettingsGroup);
     ui->checkColNames->setChecked(settings.value(sSettingsInsertColNames, false).toBool());
-    ui->checkMultiply->setChecked(settings.value(sSettingsInsertMultiply, false).toBool());
+    ui->checkMultiple->setChecked(settings.value(sSettingsInsertMultiple, false).toBool());
 
     // Get list of tables to export
     objectMap objects = pdb->getBrowsableObjects();
@@ -75,7 +75,7 @@ void ExportSqlDialog::accept()
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.beginGroup(sSettingsGroup);
     settings.setValue(sSettingsInsertColNames, ui->checkColNames->isChecked());
-    settings.setValue(sSettingsInsertMultiply, ui->checkMultiply->isChecked());
+    settings.setValue(sSettingsInsertMultiple, ui->checkMultiple->isChecked());
     settings.endGroup();
 
     QStringList tables;
@@ -85,7 +85,7 @@ void ExportSqlDialog::accept()
     bool dumpOk = pdb->dump(fileName,
                             tables,
                             ui->checkColNames->isChecked(),
-                            ui->checkMultiply->isChecked());
+                            ui->checkMultiple->isChecked());
     if (dumpOk)
         QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
     else

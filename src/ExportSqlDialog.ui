@@ -66,9 +66,9 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QCheckBox" name="checkMultiply">
+         <widget class="QCheckBox" name="checkMultiple">
           <property name="text">
-           <string>New INSERT INTO syntax (multiply rows in VALUES)</string>
+           <string>New INSERT INTO syntax (multiple rows in VALUES)</string>
           </property>
          </widget>
         </item>
