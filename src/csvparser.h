@@ -4,6 +4,7 @@
 #include <QChar>
 #include <QVector>
 #include <QStringList>
+#include <cstdint>
 
 class QTextStream;
 

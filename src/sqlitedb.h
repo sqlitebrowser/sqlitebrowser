@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QMultiMap>
 #include <QByteArray>
+#include <cstdint>
 
 class sqlite3;
 class CipherDialog;

@@ -7,6 +7,20 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+if(WIN32 AND MSVC)
+	if(CMAKE_CL_64)
+		set(QT5_PATH "E:/Qt64/Qt5.4.1/5.4/msvc2013_64")
+		set(SQLITE3_PATH "E:/libs/sqlite3_x64")
+		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-x64_86-win64")
+	else()
+		set(QT5_PATH "E:/Qt/Qt5.4.1/5.4/msvc2013")
+		set(SQLITE3_PATH "E:/libs/sqlite3")
+		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-i386-win32")
+	endif()
+	set(USE_QT5 TRUE)
+	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
+endif()
+
 set(ANTLR_DIR libs/antlr-2.7.7)
 set(QHEXEDIT_DIR libs/qhexedit)
 set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
@@ -154,7 +168,7 @@ if(WIN32)
 		set(WIN32_STATIC_LINK -Wl,-Bstatic -lssl -lcrypto -lws2_32)
 		set(ADDITIONAL_LIBS lcms lzma)
 	ELSE( MINGW )
-		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_SOURCE_DIR}src/winapp.rc")
+		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
 	ENDIF( MINGW )
 endif(WIN32)
 
@@ -179,6 +193,12 @@ if(EXTRAPATH)
 else(EXTRAPATH)
 	find_library(LIBSQLITE ${LIBSQLITE_NAME})
 endif(EXTRAPATH)
+
+if(WIN32 AND MSVC)
+	find_path(SQLITE3_INCLUDE_DIR sqlite3.h)
+	find_file(SQLITE3_DLL sqlite3.dll)
+	include_directories(${SQLITE3_INCLUDE_DIR})
+endif()
 
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
@@ -217,20 +237,46 @@ target_link_libraries(${PROJECT_NAME}
 		${LIBSQLITE}
 		${ADDITIONAL_LIBS})
 
+if(WIN32 AND MSVC)
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_DEBUG "_CONSOLE")
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:CONSOLE")
+	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_RELWITHDEBINFO "_CONSOLE")
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
+endif()
+
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib)
 	
 if(UNIX AND NOT APPLE)
-install(FILES src/icons/${PROJECT_NAME}.png
-	DESTINATION share/icons/hicolor/256x256/apps/)
+	install(FILES src/icons/${PROJECT_NAME}.png
+		DESTINATION share/icons/hicolor/256x256/apps/)
 	
-install(FILES distri/${PROJECT_NAME}.desktop
-	DESTINATION share/applications/)
+	install(FILES distri/${PROJECT_NAME}.desktop
+		DESTINATION share/applications/)
 
-install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
-	DESTINATION share/appdata/)
+	install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
+		DESTINATION share/appdata/)
 endif(UNIX AND NOT APPLE)
+
+if(WIN32 AND MSVC)
+	set(QT5_BIN_PATH ${QT5_PATH}/bin)
+	install(FILES
+			${QT5_BIN_PATH}/Qt5Core.dll
+			${QT5_BIN_PATH}/Qt5Gui.dll
+			${QT5_BIN_PATH}/Qt5Network.dll
+			${QT5_BIN_PATH}/Qt5PrintSupport.dll
+			${QT5_BIN_PATH}/Qt5Widgets.dll
+			${QT5_BIN_PATH}/icudt53.dll
+			${QT5_BIN_PATH}/icuin53.dll
+			${QT5_BIN_PATH}/icuuc53.dll
+			${SQLITE3_DLL}
+			${OPENSSL_PATH}/libeay32.dll
+			${OPENSSL_PATH}/ssleay32.dll
+		DESTINATION bin)
+endif()
 
 #cpack
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "DB Browser for SQLite")
