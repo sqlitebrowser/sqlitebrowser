@@ -794,7 +794,7 @@ bool DBBrowserDB::deleteRecord(const QString& table, qint64 rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, qint64 row, const QByteArray& value)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, qint64 row, const QByteArray& value, bool itsBlob)
 {
     if (!isOpen()) return false;
 
@@ -813,8 +813,18 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, qint
     int success = 1;
     if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
         success = 0;
-    if(success == 1 && sqlite3_bind_text(stmt, 1, rawValue, value.length(), SQLITE_STATIC) != SQLITE_OK)
-        success = -1;
+    if(success == 1) {
+        if(itsBlob)
+        {
+            if(sqlite3_bind_blob(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
+                success = -1;
+        }
+        else
+        {
+            if(sqlite3_bind_text(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
+                success = -1;
+        }
+    }
     if(success == 1 && sqlite3_step(stmt) != SQLITE_DONE)
         success = -1;
     if(success != 0 && sqlite3_finalize(stmt) != SQLITE_OK)

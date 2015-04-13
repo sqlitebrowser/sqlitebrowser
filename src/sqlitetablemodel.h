@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QStringList>
+#include <QVector>
 
 class DBBrowserDB;
 
@@ -50,7 +51,7 @@ private:
     void clearCache();
 
     void buildQuery();
-    QStringList getColumns(const QString sQuery);
+    QStringList getColumns(const QString& sQuery, QVector<int>& fieldsTypes);
     int getQueryRowCount();
 
     DBBrowserDB* m_db;
@@ -64,6 +65,7 @@ private:
     int m_iSortColumn;
     QString m_sSortOrder;
     QMap<int, QString> m_mWhere;
+    QVector<int> m_vDataTypes;
 
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.
