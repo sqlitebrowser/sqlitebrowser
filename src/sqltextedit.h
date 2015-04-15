@@ -60,6 +60,7 @@ private slots:
     void highlightCurrentLine();
     void updateLineNumberAreaWidth();
     void updateLineNumberArea(const QRect& rect, int dy);
+    void increaseSelectionIndent();
 
 private:
     QCompleter* m_Completer;
