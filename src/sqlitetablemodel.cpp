@@ -23,6 +23,7 @@ void SqliteTableModel::reset()
     m_sSortOrder = "ASC";
     m_headers.clear();
     m_mWhere.clear();
+    m_vDataTypes.clear();
 }
 
 void SqliteTableModel::setChunkSize(size_t chunksize)
@@ -36,25 +37,39 @@ void SqliteTableModel::setTable(const QString& table)
 
     m_sTable = table;
 
-    QString sColumnQuery = QString::fromUtf8("SELECT * FROM `%1`;").arg(table);
+    m_vDataTypes.push_back(SQLITE_INTEGER);
+
+    bool allOk = false;
     if(m_db->getObjectByName(table).gettype() == "table")
     {
         sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql()).first;
         if(t.fields().size()) // parsing was OK
         {
             m_headers.push_back(t.rowidColumn());
-            m_headers.append(m_db->getObjectByName(table).table.fieldNames());
-        }
-        else
-        {
-            m_headers.push_back("rowid");
-            m_headers.append(getColumns(sColumnQuery));
+            m_headers.append(t.fieldNames());
+
+            // parse columns types
+            static QStringList dataTypes = QStringList()
+                    << "INTEGER"
+                    << "REAL"
+                    << "TEXT"
+                    << "BLOB";
+            foreach(const sqlb::FieldPtr fld,  t.fields())
+            {
+                QString name(fld->type().toUpper());
+                int colType = dataTypes.indexOf(name);
+                colType = (colType == -1) ? SQLITE_TEXT : colType + 1;
+                m_vDataTypes.push_back(colType);
+            }
+            allOk = true;
         }
     }
-    else
+
+    if(!allOk)
     {
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM `%1`;").arg(table);
         m_headers.push_back("rowid");
-        m_headers.append(getColumns(sColumnQuery));
+        m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
     }
 
     buildQuery();
@@ -124,7 +139,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     // headers
     if(!dontClearHeaders)
     {
-        m_headers.append(getColumns(sQuery));
+        m_headers.append(getColumns(sQuery, m_vDataTypes));
     }
 
     // now fetch the first entries
@@ -267,7 +282,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toLongLong(), newValue))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toLongLong(), newValue, isBinary(index)))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
@@ -441,7 +456,7 @@ void SqliteTableModel::buildQuery()
     setQuery(sql, true);
 }
 
-QStringList SqliteTableModel::getColumns(const QString sQuery)
+QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fieldsTypes)
 {
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
@@ -452,7 +467,10 @@ QStringList SqliteTableModel::getColumns(const QString sQuery)
         status = sqlite3_step(stmt);
         int columns = sqlite3_data_count(stmt);
         for(int i = 0; i < columns; ++i)
+        {
             listColumns.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
+            fieldsTypes.push_back(sqlite3_column_type(stmt, i));
+        }
     }
     sqlite3_finalize(stmt);
 
@@ -515,6 +533,5 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    QByteArray val = m_data.at(index.row()).at(index.column()).left(1024);
-    return val.contains('\0');     // Cheap BLOB test here...
+    return m_vDataTypes.at(index.column()) == SQLITE_BLOB;
 }
