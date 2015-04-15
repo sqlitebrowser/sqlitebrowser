@@ -292,6 +292,13 @@ void SqlTextEdit::keyPressEvent(QKeyEvent *e)
        }
     }
 
+    // indent on tab
+    if (e->key() == Qt::Key_Tab && textCursor().hasSelection())
+    {
+        increaseSelectionIndent();
+        return;
+    }
+
     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Space); // CTRL+SPACE
     if (!m_Completer || !isShortcut) // do not process the shortcut when we have a completer
         QPlainTextEdit::keyPressEvent(e);
@@ -353,4 +360,39 @@ void SqlTextEdit::keyPressEvent(QKeyEvent *e)
     cr.setWidth(m_Completer->popup()->sizeHintForColumn(0)
                 + m_Completer->popup()->verticalScrollBar()->sizeHint().width());
     m_Completer->complete(cr); // popup it up!
+}
+
+void SqlTextEdit::increaseSelectionIndent()
+{
+    QTextCursor cursor = textCursor();
+    int spos = cursor.anchor();
+    int epos = cursor.position();
+    if (spos > epos) std::swap(spos, epos);
+
+    cursor.setPosition(spos, QTextCursor::MoveAnchor);
+    int sblock = cursor.block().blockNumber();
+
+    cursor.setPosition(epos, QTextCursor::MoveAnchor);
+    int eblock = cursor.block().blockNumber();
+
+    cursor.setPosition(spos, QTextCursor::MoveAnchor);
+    const int diff = eblock - sblock;
+
+    cursor.beginEditBlock();
+    for (int i = 0; i <= diff; ++i)
+    {
+        cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::MoveAnchor);
+        cursor.insertText("    ");
+        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor);
+    }
+    cursor.endEditBlock();
+
+    cursor.setPosition(spos, QTextCursor::MoveAnchor);
+    cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::MoveAnchor);
+
+    while (cursor.block().blockNumber() < eblock)
+        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+
+    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    setTextCursor(cursor);
 }
