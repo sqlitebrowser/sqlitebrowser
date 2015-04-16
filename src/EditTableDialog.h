@@ -6,7 +6,6 @@
 #include <QDialog>
 
 class DBBrowserDB;
-class SQLiteSyntaxHighlighter;
 class QTreeWidgetItem;
 
 namespace Ui {
@@ -63,7 +62,6 @@ private:
     sqlb::Table m_table;
     QStringList types;
     QStringList fields;
-    SQLiteSyntaxHighlighter* m_sqliteSyntaxHighlighter;
     bool m_bNewTable;
     QString m_sRestorePointName;
 };

@@ -15,11 +15,13 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="SqlTextEdit" name="editEditor"/>
+   </item>
+   <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="SqlTextEdit" name="editEditor"/>
      <widget class="ExtendedTableWidget" name="tableResult">
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
@@ -108,12 +110,12 @@
   </customwidget>
   <customwidget>
    <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
+   <extends>QAbstractScrollArea</extends>
    <header>sqltextedit.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>editEditor</tabstop>
   <tabstop>tableResult</tabstop>
   <tabstop>editErrors</tabstop>
   <tabstop>buttonSave</tabstop>

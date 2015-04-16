@@ -1,6 +1,5 @@
 #include "EditTableDialog.h"
 #include "ui_EditTableDialog.h"
-#include "SQLiteSyntaxHighlighter.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 
@@ -23,8 +22,6 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
     ui->setupUi(this);
     ui->widgetExtension->setVisible(false);
     connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
-
-    m_sqliteSyntaxHighlighter = new SQLiteSyntaxHighlighter(ui->sqlTextEdit->document());
 
     // Editing an existing table?
     if(m_bNewTable == false)
@@ -161,8 +158,7 @@ void EditTableDialog::reject()
 
 void EditTableDialog::updateSqlText()
 {
-    ui->sqlTextEdit->clear();
-    ui->sqlTextEdit->insertPlainText(m_table.sql());
+    ui->sqlTextEdit->setText(m_table.sql());
 }
 
 void EditTableDialog::checkInput()

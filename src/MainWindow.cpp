@@ -8,8 +8,6 @@
 #include "ExportCsvDialog.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
-#include "SQLiteSyntaxHighlighter.h"
-#include "sqltextedit.h"
 #include "sqlitetablemodel.h"
 #include "SqlExecutionArea.h"
 #include "VacuumDialog.h"
@@ -18,6 +16,7 @@
 #include "sqlite.h"
 #include "CipherDialog.h"
 #include "ExportSqlDialog.h"
+#include "SqlUiLexer.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -42,7 +41,7 @@
 #include <QXmlStreamWriter>
 #include <QInputDialog>
 #include <QProgressDialog>
-
+#include <QTextEdit>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -191,17 +190,6 @@ void MainWindow::init()
 #endif
 }
 
-void MainWindow::clearCompleterModelsFields()
-{
-    for(SqlTextEdit::FieldCompleterModelMap::iterator it = completerModelsFields.begin();
-        it != completerModelsFields.end();
-        ++it)
-    {
-        delete *it;
-    }
-    completerModelsFields.clear();
-}
-
 bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
 {
     bool retval = false;
@@ -269,9 +257,6 @@ void MainWindow::fileNew()
 
 void MainWindow::populateStructure()
 {
-    completerModelTables.clear();
-    clearCompleterModelsFields();
-
     // Refresh the structure tab
     db.updateSchema();
     dbStructureModel->reloadData(&db);
@@ -281,49 +266,28 @@ void MainWindow::populateStructure()
     if(!db.isOpen())
         return;
 
-    QStringList tblnames = db.getBrowsableObjectNames();
-    ui->editLogUser->syntaxHighlighter()->setTableNames(tblnames);
-    ui->editLogApplication->syntaxHighlighter()->setTableNames(tblnames);
-
-    // setup models for sqltextedit autocomplete
-    completerModelTables.setRowCount(tblnames.count());
-    completerModelTables.setColumnCount(1);
-
+    // Update table and column names for syntax highlighting
     objectMap tab = db.getBrowsableObjects();
-    int row = 0;
-    for(objectMap::ConstIterator it=tab.begin(); it!=tab.end(); ++it, ++row)
+    SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
+    for(objectMap::ConstIterator it=tab.begin(); it!=tab.end(); ++it)
     {
-        QString sName = it.value().getname();
-        QStandardItem* item = new QStandardItem(sName);
-        item->setIcon(QIcon(QString(":icons/%1").arg(it.value().gettype())));
-        completerModelTables.setItem(row, 0, item);
-
-        // If it is a table add the field Nodes
+        // If it is a table or a view add the fields
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
-            QStandardItemModel* tablefieldmodel = new QStandardItemModel();
-            tablefieldmodel->setRowCount((*it).table.fields().count());
-            tablefieldmodel->setColumnCount(1);
+            QString objectname = it.value().getname();
 
-            int fldrow = 0;
-            for(int i=0; i < (*it).table.fields().size(); ++i, ++fldrow)
+            for(int i=0; i < (*it).table.fields().size(); ++i)
             {
                 QString fieldname = (*it).table.fields().at(i)->name();
-                QStandardItem* fldItem = new QStandardItem(fieldname);
-                fldItem->setIcon(QIcon(":/icons/field"));
-                tablefieldmodel->setItem(fldrow, 0, fldItem);
+                tablesToColumnsMap[objectname].append(fieldname);
             }
-            completerModelsFields.insert(sName.toLower(), tablefieldmodel);
         }
-
     }
-    for(int i=0; i < ui->tabSqlAreas->count(); ++i)
-    {
-        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
-        sqlarea->setTableNames(tblnames);
-        sqlarea->getEditor()->setDefaultCompleterModel(&completerModelTables);
-        sqlarea->getEditor()->insertFieldCompleterModels(completerModelsFields);
-    }
+    SqlTextEdit::sqlLexer->setTableNames(tablesToColumnsMap);
+    ui->editLogApplication->reloadKeywords();
+    ui->editLogUser->reloadKeywords();
+    for(int i=0;i<ui->tabSqlAreas->count();i++)
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getEditor()->reloadKeywords();
 
     // Resize SQL column to fit contents
     ui->dbTreeWidget->resizeColumnToContents(3);
@@ -462,7 +426,6 @@ void MainWindow::closeEvent( QCloseEvent* event )
         PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
         PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         PreferencesDialog::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
-        clearCompleterModelsFields();
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -722,7 +685,9 @@ void MainWindow::executeQuery()
     bool singleStep = false;
     if(sender()->objectName() == "actionSqlExecuteLine")
     {
-        query = sqlWidget->getEditor()->document()->toPlainText().mid(sqlWidget->getEditor()->textCursor().block().position());
+        int cursor_line, cursor_index;
+        sqlWidget->getEditor()->getCursorPosition(&cursor_line, &cursor_index);
+        query = sqlWidget->getEditor()->text().mid(cursor_index);
         singleStep = true;
     } else {
         // if a part of the query is selected, we will only execute this part
@@ -1218,10 +1183,10 @@ void MainWindow::logSql(const QString& sql, int msgtype)
 {
     if(msgtype == kLogMsg_User)
     {
-        ui->editLogUser->appendPlainText(sql);
+        ui->editLogUser->append(sql + "\n");
         ui->editLogUser->verticalScrollBar()->setValue(ui->editLogUser->verticalScrollBar()->maximum());
     } else {
-        ui->editLogApplication->appendPlainText(sql);
+        ui->editLogApplication->append(sql + "\n");
         ui->editLogApplication->verticalScrollBar()->setValue(ui->editLogApplication->verticalScrollBar()->maximum());
     }
 }
@@ -1247,9 +1212,6 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
 
     // Create new tab, add it to the tab widget and select it
     SqlExecutionArea* w = new SqlExecutionArea(this, &db);
-    w->setTableNames(db.getBrowsableObjectNames());
-    w->getEditor()->setDefaultCompleterModel(&completerModelTables);
-    w->getEditor()->insertFieldCompleterModels(completerModelsFields);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
     w->getEditor()->setFocus();
@@ -1279,7 +1241,7 @@ void MainWindow::openSqlFile()
             index = openSqlTab();
 
         SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-        sqlarea->getEditor()->setPlainText(f.readAll());
+        sqlarea->getEditor()->setText(f.readAll());
         sqlarea->setFileName(file);
         QFileInfo fileinfo(file);
         ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
@@ -1372,10 +1334,8 @@ void MainWindow::reloadSettings()
 
         QFont font = sqlArea->getEditor()->font();
         font.setPointSize(edit_fontsize);
-        QFontMetrics fm(font);
-        int tabpixelwidth = fm.width(" ") * edit_tabsize;
         sqlArea->getEditor()->setFont(font);
-        sqlArea->getEditor()->setTabStopWidth(tabpixelwidth);
+        sqlArea->getEditor()->setTabWidth(edit_tabsize);
     }
 
     // Set font for SQL logs
@@ -1893,7 +1853,7 @@ bool MainWindow::loadProject(QString filename)
                             // SQL editor tab
                             unsigned int index = openSqlTab();
                             ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
-                            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setPlainText(xml.readElementText());
+                            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(xml.readElementText());
                         } else if(xml.name() == "current_tab") {
                             // Currently selected tab
                             ui->tabSqlAreas->setCurrentIndex(xml.attributes().value("id").toString().toInt());

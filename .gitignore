@@ -24,9 +24,13 @@ src/translations/*.qm
 src/grammar/sqlite3TokenTypes.txt
 
 libs/*/Makefile*
+libs/*/*/Makefile*
 libs/*/debug/
+libs/*/*/debug/
 libs/*/release/
+libs/*/*/release/
 libs/*/*.a
+libs/*/*/*.a
 
 # Ignore .DS_Store files on OSX
 .DS_Store

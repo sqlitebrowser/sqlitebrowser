@@ -2,7 +2,6 @@
 #include "ui_SqlExecutionArea.h"
 #include "sqltextedit.h"
 #include "ExtendedTableWidget.h"
-#include "SQLiteSyntaxHighlighter.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
@@ -42,19 +41,14 @@ SqlExecutionArea::~SqlExecutionArea()
     delete ui;
 }
 
-void SqlExecutionArea::setTableNames(const QStringList& tables)
-{
-    ui->editEditor->syntaxHighlighter()->setTableNames(tables);
-}
-
 QString SqlExecutionArea::getSql() const
 {
-    return ui->editEditor->toPlainText().trimmed();
+    return ui->editEditor->text();
 }
 
 QString SqlExecutionArea::getSelectedSql() const
 {
-    return ui->editEditor->textCursor().selectedText().trimmed().replace(QChar(0x2029), '\n');
+    return ui->editEditor->selectedText().trimmed().replace(QChar(0x2029), '\n');
 }
 
 void SqlExecutionArea::finishExecution(const QString& result)
@@ -70,7 +64,7 @@ void SqlExecutionArea::finishExecution(const QString& result)
     }
 }
 
-SqlTextEdit* SqlExecutionArea::getEditor()
+SqlTextEdit *SqlExecutionArea::getEditor()
 {
     return ui->editEditor;
 }
