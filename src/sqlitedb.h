@@ -54,7 +54,7 @@ public:
     bool revert (const QString& pointname = "RESTOREPOINT");
     bool saveAll();
     bool revertAll();
-    bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew);
+    bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew, bool exportSchemaOnly);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
 
