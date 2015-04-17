@@ -17,6 +17,8 @@ public:
     explicit SqlTextEdit(QWidget *parent = 0);
     virtual ~SqlTextEdit();
 
+    int getErrorIndicatorNumber() const { return errorIndicatorNumber; }
+
     static SqlUiLexer* sqlLexer;
 
 public slots:
@@ -27,6 +29,8 @@ protected:
 
 private:
     void setupSyntaxHighlightingFormat(const QString& settings_name, int style);
+
+    int errorIndicatorNumber;
 
 private slots:
     void updateLineNumberAreaWidth();

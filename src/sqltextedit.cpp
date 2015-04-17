@@ -82,6 +82,10 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 
     // Enable folding
     setFolding(QsciScintilla::BoxedTreeFoldStyle);
+
+    // Create error indicator
+    errorIndicatorNumber = indicatorDefine(QsciScintilla::SquiggleIndicator);
+    setIndicatorForegroundColor(Qt::red, errorIndicatorNumber);
 }
 
 SqlTextEdit::~SqlTextEdit()

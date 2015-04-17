@@ -683,17 +683,24 @@ void MainWindow::executeQuery()
     // Get SQL code to execute. This depends on the button that's been pressed
     QString query;
     bool singleStep = false;
+    int execution_start_line = 0;
+    int execution_start_index = 0;
     if(sender()->objectName() == "actionSqlExecuteLine")
     {
         int cursor_line, cursor_index;
         sqlWidget->getEditor()->getCursorPosition(&cursor_line, &cursor_index);
-        query = sqlWidget->getEditor()->text().mid(cursor_index);
+        execution_start_line = cursor_line;
+        while(cursor_line < sqlWidget->getEditor()->lines())
+            query += sqlWidget->getEditor()->text(cursor_line++);
         singleStep = true;
     } else {
         // if a part of the query is selected, we will only execute this part
         query = sqlWidget->getSelectedSql();
+        int dummy;
         if(query.isEmpty())
             query = sqlWidget->getSql();
+        else
+            sqlWidget->getEditor()->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
     }
     if (query.isEmpty())
         return;
@@ -715,17 +722,25 @@ void MainWindow::executeQuery()
     // gets finalized, see http://www.sqlite.org/lang_transaction.html
     db.setRestorePoint();
 
+    // Remove any error indicators
+    sqlWidget->getEditor()->clearIndicatorRange(0, 0,
+                                                sqlWidget->getEditor()->lines(), sqlWidget->getEditor()->lineLength(sqlWidget->getEditor()->lines()),
+                                                sqlWidget->getEditor()->getErrorIndicatorNumber());
+
     //Accept multi-line queries, by looping until the tail is empty
     QElapsedTimer timer;
     timer.start();
     do
     {
+        int tail_length_before = tail_length;
         const char* qbegin = tail;
-        sql3status = sqlite3_prepare_v2(db._db,tail, tail_length,
-                            &vm, &tail);
+        sql3status = sqlite3_prepare_v2(db._db,tail, tail_length, &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         tail_length -= (tail - qbegin);
-        if (sql3status == SQLITE_OK){
+        int execution_end_index = execution_start_index + tail_length_before - tail_length;
+
+        if (sql3status == SQLITE_OK)
+        {
             sql3status = sqlite3_step(vm);
             sqlite3_finalize(vm);
 
@@ -778,7 +793,11 @@ void MainWindow::executeQuery()
         } else {
             statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                     ": " + queryPart;
+            sqlWidget->getEditor()->fillIndicatorRange(execution_start_line, execution_start_index, execution_start_line, execution_end_index,
+                                                       sqlWidget->getEditor()->getErrorIndicatorNumber());
         }
+
+        execution_start_index = execution_end_index;
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
     sqlWidget->finishExecution(statusMessage);
     updatePlot(sqlWidget->getModel());
