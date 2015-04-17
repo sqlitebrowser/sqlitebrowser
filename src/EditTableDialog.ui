@@ -483,6 +483,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidget</sender>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>fieldSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
