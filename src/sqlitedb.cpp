@@ -375,7 +375,8 @@ bool DBBrowserDB::close()
 bool DBBrowserDB::dump(const QString& filename,
     const QStringList & tablesToDump,
     bool insertColNames,
-    bool insertNewSyntx)
+    bool insertNewSyntx,
+    bool exportSchemaOnly)
 {
     // Open file
     QFile file(filename);
@@ -420,11 +421,14 @@ bool DBBrowserDB::dump(const QString& filename,
             if (tablesToDump.indexOf(it->getTableName()) == -1)
                 continue;
 
-            // get columns
-            QStringList cols(tableColumns(it->getTableName()));
-
             // Write the SQL string used to create this table to the output file
             stream << it->getsql() << ";\n";
+
+            if (exportSchemaOnly)
+                continue;
+
+            // get columns
+            QStringList cols(tableColumns(it->getTableName()));
 
             QString sQuery = QString("SELECT * FROM `%1`;").arg(it->getTableName());
             QByteArray utf8Query = sQuery.toUtf8();

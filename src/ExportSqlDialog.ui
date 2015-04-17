@@ -72,7 +72,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -84,6 +84,13 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="checkSchemaOnly">
+          <property name="text">
+           <string>Export schema only</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

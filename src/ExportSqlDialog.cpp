@@ -85,7 +85,8 @@ void ExportSqlDialog::accept()
     bool dumpOk = pdb->dump(fileName,
                             tables,
                             ui->checkColNames->isChecked(),
-                            ui->checkMultiple->isChecked());
+                            ui->checkMultiple->isChecked(),
+                            ui->checkSchemaOnly->isChecked());
     if (dumpOk)
         QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
     else
