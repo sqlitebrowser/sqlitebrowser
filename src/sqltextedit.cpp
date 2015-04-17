@@ -79,6 +79,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 
     // Set tab width
     setTabWidth(PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
+
+    // Enable folding
+    setFolding(QsciScintilla::BoxedTreeFoldStyle);
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -111,7 +114,6 @@ void SqlTextEdit::dropEvent(QDropEvent* e)
     setText(f.readAll());
     f.close();
 }
-
 
 void SqlTextEdit::setupSyntaxHighlightingFormat(const QString& settings_name, int style)
 {

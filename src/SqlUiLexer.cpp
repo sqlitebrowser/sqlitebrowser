@@ -8,6 +8,10 @@ SqlUiLexer::SqlUiLexer(QObject* parent) :
     autocompleteApi = new QsciAPIs(this);
     setupAutoCompletion();
     autocompleteApi->prepare();
+
+    // Setup folding
+    setFoldComments(true);
+    setFoldCompact(false);
 }
 
 void SqlUiLexer::setupAutoCompletion()
