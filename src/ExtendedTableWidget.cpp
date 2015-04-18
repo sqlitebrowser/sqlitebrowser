@@ -117,3 +117,11 @@ int ExtendedTableWidget::numVisibleRows()
     // Calculate the number of visible rows
     return row_bottom - row_top;
 }
+
+QSet<int> ExtendedTableWidget::selectedCols()
+{
+    QSet<int> selectedCols;
+    foreach(const QModelIndex & idx, selectedIndexes())
+        selectedCols.insert(idx.column());
+    return selectedCols;
+}
