@@ -1782,7 +1782,22 @@ void MainWindow::on_actionWebsite_triggered()
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
 {
-    browseTableColumnWidths[ui->comboBrowseTable->currentText()][section] = new_size;
+    QSet<int> selectedCols(ui->dataTable->selectedCols());
+    QString tableName(ui->comboBrowseTable->currentText());
+    if (!selectedCols.contains(section))
+    {
+        browseTableColumnWidths[tableName][section] = new_size;
+    }
+    else
+    {
+        ui->dataTable->blockSignals(true);
+        foreach (int col, selectedCols)
+        {
+            ui->dataTable->setColumnWidth(col, new_size);
+            browseTableColumnWidths[tableName][col] = new_size;
+        }
+        ui->dataTable->blockSignals(false);
+    }
 }
 
 bool MainWindow::loadProject(QString filename)
