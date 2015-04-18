@@ -3,6 +3,7 @@
 
 #include <QTableView>
 #include "FilterTableHeader.h"
+#include <QSet>
 
 class ExtendedTableWidget : public QTableView
 {
@@ -12,6 +13,9 @@ public:
     explicit ExtendedTableWidget(QWidget* parent = 0);
 
     FilterTableHeader* filterHeader() { return m_tableHeader; }
+
+public:
+    QSet<int> selectedCols();
 
 private:
     void copy();
