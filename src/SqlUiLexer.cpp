@@ -19,6 +19,7 @@ void SqlUiLexer::setupAutoCompletion()
     // Set keywords
     QStringList keywordPatterns;
     keywordPatterns
+            // Keywords
             << "ABORT" << "ACTION" << "ADD" << "AFTER" << "ALL"
             << "ALTER" << "ANALYZE" << "AND" << "AS" << "ASC"
             << "ATTACH" << "AUTOINCREMENT" << "BEFORE" << "BEGIN" << "BETWEEN"
@@ -37,13 +38,15 @@ void SqlUiLexer::setupAutoCompletion()
             << "NATURAL" << "NO" << "NOT" << "NOTNULL" << "NULL"
             << "OF" << "OFFSET" << "ON" << "OR" << "ORDER"
             << "OUTER" << "PLAN" << "PRAGMA" << "PRIMARY" << "QUERY"
-            << "RAISE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
+            << "RAISE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
             << "RENAME" << "REPLACE" << "RESTRICT" << "RIGHT" << "ROLLBACK"
             << "ROW" << "SAVEPOINT" << "SELECT" << "SET" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
             << "VACUUM" << "VALUES" << "VIEW" << "VIRTUAL" << "WHEN"
-            << "WHERE";
+            << "WHERE" << "WITH" << "WITHOUT"
+            // Data types
+            << "INT" << "INTEGER" << "REAL" << "TEXT" << "BLOB" << "NUMERIC" << "CHAR";
     foreach(const QString& keyword, keywordPatterns)
     {
         autocompleteApi->add(keyword + "?" + QString::number(ApiCompleterIconIdKeyword));
