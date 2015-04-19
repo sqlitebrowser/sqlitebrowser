@@ -1335,8 +1335,6 @@ void MainWindow::reloadSettings()
 {
     // Read settings
     int prefetch_size = PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt();
-    int edit_fontsize = PreferencesDialog::getSettingsValue("editor", "fontsize").toInt();
-    int edit_tabsize = PreferencesDialog::getSettingsValue("editor", "tabsize").toInt();
     int log_fontsize = PreferencesDialog::getSettingsValue("log", "fontsize").toInt();
 
     QFont logfont("Monospace");
@@ -1350,14 +1348,12 @@ void MainWindow::reloadSettings()
         SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
         sqlArea->getModel()->setChunkSize(prefetch_size);
         sqlArea->getResultView()->setFont(logfont);
-
-        QFont font = sqlArea->getEditor()->font();
-        font.setPointSize(edit_fontsize);
-        sqlArea->getEditor()->setFont(font);
-        sqlArea->getEditor()->setTabWidth(edit_tabsize);
+        sqlArea->getEditor()->reloadSettings();
     }
 
     // Set font for SQL logs
+    ui->editLogApplication->reloadSettings();
+    ui->editLogUser->reloadSettings();
     ui->editLogApplication->setFont(logfont);
     ui->editLogUser->setFont(logfont);
 

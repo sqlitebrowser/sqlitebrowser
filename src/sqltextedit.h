@@ -23,6 +23,7 @@ public:
 
 public slots:
     void reloadKeywords();
+    void reloadSettings();
 
 protected:
     void dropEvent(QDropEvent* e);

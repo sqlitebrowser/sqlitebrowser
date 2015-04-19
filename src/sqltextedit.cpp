@@ -13,51 +13,12 @@ SqlUiLexer* SqlTextEdit::sqlLexer = 0;
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
     QsciScintilla(parent)
 {
-    // Initialise lexer if not done yet
+    // Create lexer object if not done yet
     if(sqlLexer == 0)
-    {
-        // Create lexer object
         sqlLexer = new SqlUiLexer(this);
-
-        // Set syntax highlighting settings
-        sqlLexer->setDefaultColor(Qt::black);
-        QFont defaultfont("Monospace");
-        defaultfont.setStyleHint(QFont::TypeWriter);
-        defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
-        sqlLexer->setDefaultFont(defaultfont);
-        setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
-        setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
-        setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
-        setupSyntaxHighlightingFormat("keyword", QsciLexerSQL::Keyword);
-        setupSyntaxHighlightingFormat("table", QsciLexerSQL::KeywordSet6);
-        setupSyntaxHighlightingFormat("function", QsciLexerSQL::KeywordSet7);
-        setupSyntaxHighlightingFormat("string", QsciLexerSQL::DoubleQuotedString);
-        setupSyntaxHighlightingFormat("string", QsciLexerSQL::SingleQuotedString);
-        setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::Identifier);
-        setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
-    }
 
     // Set the lexer
     setLexer(sqlLexer);
-
-    // Set font
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
-    setFont(font);
-
-    // Show line numbers
-    QFont marginsfont(QFont("Monospace"));
-    marginsfont.setPointSize(font.pointSize());
-    setMarginsFont(marginsfont);
-    setMarginLineNumbers(0, true);
-    setMarginsBackgroundColor(Qt::lightGray);
-    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
-    updateLineNumberAreaWidth();
-
-    // Highlight current line
-    setCaretLineVisible(true);
-    setCaretLineBackgroundColor(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
 
     // Enable auto completion
     setAutoCompletionThreshold(3);
@@ -77,15 +38,15 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     // Enable auto indentation
     setAutoIndent(true);
 
-    // Set tab width
-    setTabWidth(PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
-
     // Enable folding
     setFolding(QsciScintilla::BoxedTreeFoldStyle);
 
     // Create error indicator
     errorIndicatorNumber = indicatorDefine(QsciScintilla::SquiggleIndicator);
     setIndicatorForegroundColor(Qt::red, errorIndicatorNumber);
+
+    // Do rest of initialisation
+    reloadSettings();
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -135,4 +96,46 @@ void SqlTextEdit::reloadKeywords()
 {
     // Set lexer again to reload the updated keywords list
     setLexer(lexer());
+}
+
+void SqlTextEdit::reloadSettings()
+{
+    // Set syntax highlighting settings
+    sqlLexer->setDefaultColor(Qt::black);
+    QFont defaultfont("Monospace");
+    defaultfont.setStyleHint(QFont::TypeWriter);
+    defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+    sqlLexer->setDefaultFont(defaultfont);
+    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
+    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
+    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
+    setupSyntaxHighlightingFormat("keyword", QsciLexerSQL::Keyword);
+    setupSyntaxHighlightingFormat("table", QsciLexerSQL::KeywordSet6);
+    setupSyntaxHighlightingFormat("function", QsciLexerSQL::KeywordSet7);
+    setupSyntaxHighlightingFormat("string", QsciLexerSQL::DoubleQuotedString);
+    setupSyntaxHighlightingFormat("string", QsciLexerSQL::SingleQuotedString);
+    setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::Identifier);
+    setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
+
+    // Set font
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+    setFont(font);
+
+    // Show line numbers
+    QFont marginsfont(QFont("Monospace"));
+    marginsfont.setPointSize(font.pointSize());
+    setMarginsFont(marginsfont);
+    setMarginLineNumbers(0, true);
+    setMarginsBackgroundColor(Qt::lightGray);
+    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
+    updateLineNumberAreaWidth();
+
+    // Highlight current line
+    setCaretLineVisible(true);
+    setCaretLineBackgroundColor(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
+
+    // Set tab width
+    setTabWidth(PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
 }
