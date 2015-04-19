@@ -60,10 +60,10 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     setCaretLineBackgroundColor(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
 
     // Enable auto completion
-    setAutoCompletionThreshold(1);
+    setAutoCompletionThreshold(3);
     setAutoCompletionCaseSensitivity(false);
     setAutoCompletionShowSingle(true);
-    setAutoCompletionSource(QsciScintilla::AcsAll);
+    setAutoCompletionSource(QsciScintilla::AcsAPIs);
 
     // Set icons for auto completion
     registerImage(SqlUiLexer::ApiCompleterIconIdKeyword, QImage(":/icons/keyword"));
