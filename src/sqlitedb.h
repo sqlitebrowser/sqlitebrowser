@@ -58,8 +58,6 @@ public:
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
 
-    QStringList tableColumns(const QString& tableName);
-
     /**
      * @brief getRow Executes a sqlite statement to get the rowdata(columns)
      *        for the given rowid.

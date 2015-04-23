@@ -428,7 +428,7 @@ bool DBBrowserDB::dump(const QString& filename,
                 continue;
 
             // get columns
-            QStringList cols(tableColumns(it->getTableName()));
+            QStringList cols(it->table.fieldNames());
 
             QString sQuery = QString("SELECT * FROM `%1`;").arg(it->getTableName());
             QByteArray utf8Query = sQuery.toUtf8();
@@ -1236,17 +1236,4 @@ bool DBBrowserDB::loadExtension(const QString& filename)
         sqlite3_free(error);
         return false;
     }
-}
-
-QStringList DBBrowserDB::tableColumns(const QString & tableName) {
-    QStringList cols;
-    sqlite3_stmt* stmt = NULL;
-    QString q(QString("PRAGMA table_info('%1');").arg(tableName));
-    int rc = sqlite3_prepare_v2(this->_db, q.toUtf8(), q.toUtf8().length(), &stmt, NULL);
-    if (rc == SQLITE_OK) {
-        while (sqlite3_step(stmt) == SQLITE_ROW)
-            cols.push_back(QString((const char*)sqlite3_column_text(stmt, 1)));
-        sqlite3_finalize(stmt);
-    }
-    return cols;
 }
