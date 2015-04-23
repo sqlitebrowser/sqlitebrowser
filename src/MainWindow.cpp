@@ -2097,6 +2097,6 @@ void MainWindow::switchToBrowseDataTab()
     QString tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
     ui->mainTab->setCurrentIndex(1);
-    ui->comboBrowseTable->setCurrentText(tableToBrowse);
-    ui->comboBrowseTable->activated(tableToBrowse);
+    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
+    populateTable(tableToBrowse);
 }
