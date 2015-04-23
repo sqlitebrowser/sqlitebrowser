@@ -103,6 +103,7 @@ void MainWindow::init()
 
     // Create popup menus
     popupTableMenu = new QMenu(this);
+    popupTableMenu->addAction(ui->actionEditBrowseTable);
     popupTableMenu->addAction(ui->editModifyTableAction);
     popupTableMenu->addAction(ui->editDeleteObjectAction);
     popupTableMenu->addSeparator();
@@ -980,6 +981,7 @@ void MainWindow::changeTreeSelection()
     // Just assume first that something's selected that can not be edited at all
     ui->editDeleteObjectAction->setEnabled(false);
     ui->editModifyTableAction->setEnabled(false);
+    ui->actionEditBrowseTable->setEnabled(false);
 
     if(!ui->dbTreeWidget->currentIndex().isValid())
         return;
@@ -1004,7 +1006,11 @@ void MainWindow::changeTreeSelection()
     } else if(type == "view" || type == "trigger" || type == "index") {
         ui->editDeleteObjectAction->setEnabled(true);
     }
-    ui->actionExportCsvPopup->setEnabled(type == "table" || type == "view");
+    if(type == "table" || type == "view")
+    {
+        ui->actionEditBrowseTable->setEnabled(true);
+        ui->actionExportCsvPopup->setEnabled(true);
+    }
 }
 
 void MainWindow::openRecentFile()
@@ -2081,4 +2087,16 @@ void MainWindow::editEncryption()
         }
     }
 #endif
+}
+
+void MainWindow::switchToBrowseDataTab()
+{
+    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+        return;
+
+    QString tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+
+    ui->mainTab->setCurrentIndex(1);
+    ui->comboBrowseTable->setCurrentText(tableToBrowse);
+    ui->comboBrowseTable->activated(tableToBrowse);
 }

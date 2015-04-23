@@ -310,8 +310,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>294</width>
-             <height>444</height>
+             <width>575</width>
+             <height>458</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -1598,6 +1598,15 @@
     <string>Save SQL file</string>
    </property>
   </action>
+  <action name="actionEditBrowseTable">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table</normaloff>:/icons/table</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Browse Table</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2469,6 +2478,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionEditBrowseTable</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>switchToBrowseDataTab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2522,5 +2547,6 @@
   <slot>fileAttach()</slot>
   <slot>editEncryption()</slot>
   <slot>saveSqlFileAs()</slot>
+  <slot>switchToBrowseDataTab()</slot>
  </slots>
 </ui>

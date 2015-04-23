@@ -174,6 +174,7 @@ private slots:
     void fileAttach();
     void updateFilter(int column, const QString& value);
     void editEncryption();
+    void switchToBrowseDataTab();
 };
 
 #endif
