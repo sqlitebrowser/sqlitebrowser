@@ -200,7 +200,11 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
         wFile = QFileDialog::getOpenFileName(
                     this,
                     tr("Choose a database file"),
-                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
+                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString()
+#ifndef Q_OS_MAC // Filters on OS X are buggy
+                    , tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)")
+#endif
+                    );
     }
     if(QFile::exists(wFile) )
     {
