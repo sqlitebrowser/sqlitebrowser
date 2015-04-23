@@ -275,7 +275,7 @@
              </property>
             </column>
            </widget>
-           <widget class="QTextEdit" name="sqlTextEdit">
+           <widget class="SqlTextEdit" name="sqlTextEdit">
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -300,6 +300,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QAbstractScrollArea</extends>
+   <header>sqltextedit.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>editTableName</tabstop>
   <tabstop>buttonMore</tabstop>

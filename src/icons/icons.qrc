@@ -42,5 +42,7 @@
         <file alias="field_key">page_key.png</file>
         <file alias="encryption">key.png</file>
         <file alias="document_open">document-open.png</file>
+        <file alias="function">chart_curve.png</file>
+        <file alias="keyword">cog.png</file>
     </qresource>
 </RCC>

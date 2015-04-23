@@ -5,12 +5,10 @@
 #include "sqlitedb.h"
 
 #include <QMainWindow>
-#include <QStandardItemModel>
 #include <QMap>
 
 class QDragEnterEvent;
 class EditDialog;
-class QStandardItemModel;
 class QIntValidator;
 class QLabel;
 class QModelIndex;
@@ -89,9 +87,6 @@ private:
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
-
-    QStandardItemModel completerModelTables;
-    SqlTextEdit::FieldCompleterModelMap completerModelsFields;
 
     QNetworkAccessManager* m_NetworkManager;
 

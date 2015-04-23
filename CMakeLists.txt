@@ -24,10 +24,12 @@ endif()
 set(ANTLR_DIR libs/antlr-2.7.7)
 set(QHEXEDIT_DIR libs/qhexedit)
 set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
+set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
 
 add_subdirectory(${ANTLR_DIR})
 add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
+add_subdirectory(${QSCINTILLA_DIR})
 
 if(USE_QT5)
 	find_package(Qt5Widgets REQUIRED)
@@ -62,7 +64,6 @@ set(SQLB_MOC_HDR
 	src/ImportCsvDialog.h
 	src/MainWindow.h
 	src/PreferencesDialog.h
-	src/SQLiteSyntaxHighlighter.h
 	src/SqlExecutionArea.h
 	src/VacuumDialog.h
 	src/sqlitetablemodel.h
@@ -71,6 +72,7 @@ set(SQLB_MOC_HDR
 	src/Application.h
 	src/CipherDialog.h
 	src/ExportSqlDialog.h
+	src/SqlUiLexer.h
 )
 
 set(SQLB_SRC
@@ -84,7 +86,6 @@ set(SQLB_SRC
 	src/ImportCsvDialog.cpp
 	src/MainWindow.cpp
 	src/PreferencesDialog.cpp
-	src/SQLiteSyntaxHighlighter.cpp
 	src/SqlExecutionArea.cpp
 	src/VacuumDialog.cpp
 	src/sqlitedb.cpp
@@ -99,6 +100,7 @@ set(SQLB_SRC
 	src/Application.cpp
 	src/CipherDialog.cpp
 	src/ExportSqlDialog.cpp
+	src/SqlUiLexer.cpp
 )
 
 set(SQLB_FORMS
@@ -208,6 +210,7 @@ include_directories(
 		${ANTLR_DIR}
 		${QHEXEDIT_DIR}
 		${QCUSTOMPLOT_DIR}
+		${QSCINTILLA_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
 
@@ -224,17 +227,19 @@ if(USE_QT5)
     qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
     set(QT_LIBRARIES "")
 endif()
-add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot)
+add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot qscintilla2)
 
 link_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}"
 		"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
-		"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
+		"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}"
+		"${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
 
 target_link_libraries(${PROJECT_NAME}
 		antlr
 		qhexedit
 		qcustomplot
+		qscintilla2
 		${QT_LIBRARIES}
 		${WIN32_STATIC_LINK}
 		${LIBSQLITE}

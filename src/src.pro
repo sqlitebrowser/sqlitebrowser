@@ -26,7 +26,6 @@ CONFIG(unittest) {
 HEADERS += \
     sqlitedb.h \
     MainWindow.h \
-    SQLiteSyntaxHighlighter.h \
     CreateIndexDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
@@ -50,12 +49,12 @@ HEADERS += \
     Application.h \
     sqlite.h \
     CipherDialog.h \
-    ExportSqlDialog.h
+    ExportSqlDialog.h \
+    SqlUiLexer.h
 
 SOURCES += \
     sqlitedb.cpp \
     MainWindow.cpp \
-    SQLiteSyntaxHighlighter.cpp \
     CreateIndexDialog.cpp \
     EditTableDialog.cpp \
     PreferencesDialog.cpp \
@@ -76,7 +75,8 @@ SOURCES += \
     DbStructureModel.cpp \
     Application.cpp \
     CipherDialog.cpp \
-    ExportSqlDialog.cpp
+    ExportSqlDialog.cpp \
+    SqlUiLexer.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc
@@ -111,6 +111,7 @@ CONFIG(sqlcipher) {
 LIBPATH_QHEXEDIT=$$OUT_PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$OUT_PWD/../libs/antlr-2.7.7
 LIBPATH_QCUSTOMPLOT=$$OUT_PWD/../libs/qcustomplot-source
+LIBPATH_QSCINTILLA=$$OUT_PWD/../libs/qscintilla/Qt4Qt5
 unix {
     LIBS += -ldl
 }
@@ -124,11 +125,13 @@ win32 {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/debug
+	LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/debug
     }
     CONFIG(release,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/release
+	LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
     }
 }
 mac {
@@ -143,9 +146,9 @@ mac {
 }
 
 UI_DIR = .ui
-INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/..
-LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -lantlr -lqhexedit -lqcustomplot
-DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source
+INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/..
+LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPATH_QSCINTILLA -lantlr -lqhexedit -lqcustomplot -lqscintilla2
+DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5
 
 # Rules for creating/updating {ts|qm}-files
 include(i18n.pri)
