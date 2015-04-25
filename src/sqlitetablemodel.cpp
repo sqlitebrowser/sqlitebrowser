@@ -282,7 +282,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0).toLongLong(), newValue, isBinary(index)))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBinary(index)))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
@@ -345,14 +345,14 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     DataType tempList;
     for(int i=row; i < row + count; ++i)
     {
-        qint64 rowid = m_db->addRecord(m_sTable);
-        if(rowid < 0)
+        QString rowid = m_db->addRecord(m_sTable);
+        if(rowid.isNull())
         {
             return false;
         }
         m_rowCount++;
         tempList.append(blank_data);
-        tempList[i - row].replace(0, QByteArray::number(rowid));
+        tempList[i - row].replace(0, rowid.toUtf8());
 
         // update column with default values
         QByteArrayList rowdata;
@@ -380,7 +380,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
     for(int i=count-1;i>=0;i--)
     {
-        m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0).toLongLong());
+        m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0));
         m_data.removeAt(row + i);
     }
 

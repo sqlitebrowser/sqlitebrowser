@@ -629,9 +629,9 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::getRow(const QString& sTableName, qint64 rowid, QList<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const QString& sTableName, const QString& rowid, QList<QByteArray>& rowdata)
 {
-    QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`=%3;").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
+    QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`='%3';").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
     bool ret = false;
@@ -663,12 +663,12 @@ bool DBBrowserDB::getRow(const QString& sTableName, qint64 rowid, QList<QByteArr
     return ret;
 }
 
-qint64 DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
+QString DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
 {
-    QString sQuery = QString("SELECT MAX(`%2`) from `%1`;").arg(t.name()).arg(field->name());
+    QString sQuery = QString("SELECT MAX(CAST(`%2` AS INTEGER)) FROM `%1`;").arg(t.name()).arg(field->name());
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
-    qint64 ret = 0;
+    QString ret = "0";
 
     int status = sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL);
     if(SQLITE_OK == status)
@@ -678,7 +678,7 @@ qint64 DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
         {
             if(sqlite3_column_count(stmt) == 1)
             {
-                ret = sqlite3_column_int64(stmt, 0);
+                ret = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
             }
         }
     }
@@ -687,7 +687,7 @@ qint64 DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
     return ret;
 }
 
-QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, qint64 pk_value) const
+QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_value) const
 {
     QString stmt = QString("INSERT INTO `%1`").arg(t.name());
 
@@ -695,30 +695,21 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, qint64 pk_value) cons
     QStringList fields;
     foreach(sqlb::FieldPtr f, t.fields()) {
         if(f->primaryKey()) {
-            if(f->isInteger())
-            {
-                fields << f->name();
+            fields << f->name();
 
-                if(pk_value != -1)
-                    vals << QString::number(pk_value);
+            if(!pk_value.isNull())
+            {
+                vals << pk_value;
+            } else {
+                if(f->notnull())
+                {
+                    QString maxval = this->max(t, f);
+                    vals << QString::number(maxval.toLongLong() + 1);
+                }
                 else
                 {
-                    if(f->notnull())
-                    {
-                        qint64 maxval = this->max(t, f);
-                        vals << QString::number(maxval + 1);
-                    }
-                    else
-                    {
-                        vals << "NULL";
-                    }
+                    vals << "NULL";
                 }
-            }
-            else
-            {
-                fields << f->name();
-
-                vals << "''";
             }
         } else if(f->notnull() && f->defaultValue().length() == 0) {
             fields << f->name();
@@ -751,21 +742,19 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, qint64 pk_value) cons
     return stmt;
 }
 
-qint64 DBBrowserDB::addRecord(const QString& sTableName)
+QString DBBrowserDB::addRecord(const QString& sTableName)
 {
-    if (!isOpen()) return false;
+    if (!isOpen()) return QString();
 
     sqlb::Table table = getObjectByName(sTableName).table;
 
     // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
     // and adding one to it.
     QString sInsertstmt;
-    qint64 pk_value;
+    QString pk_value;
     if(table.isWithoutRowidTable())
     {
-        SqliteTableModel m(this, this);
-        m.setQuery(QString("SELECT MAX(`%1`) FROM `%2`;").arg(table.rowidColumn()).arg(sTableName));
-        pk_value = m.data(m.index(0, 0)).toLongLong() + 1;
+        pk_value = QString::number(max(table, table.fields().at(table.findField(table.rowidColumn()))).toLongLong() + 1);
         sInsertstmt = emptyInsertStmt(table, pk_value);
     } else {
         sInsertstmt = emptyInsertStmt(table);
@@ -774,22 +763,22 @@ qint64 DBBrowserDB::addRecord(const QString& sTableName)
     if(!executeSQL(sInsertstmt))
     {
         qWarning() << "addRecord: " << lastErrorMessage;
-        return -1;
+        return QString();
     } else {
         if(table.isWithoutRowidTable())
             return pk_value;
         else
-            return sqlite3_last_insert_rowid(_db);
+            return QString::number(sqlite3_last_insert_rowid(_db));
     }
 }
 
-bool DBBrowserDB::deleteRecord(const QString& table, qint64 rowid)
+bool DBBrowserDB::deleteRecord(const QString& table, const QString& rowid)
 {
     if (!isOpen()) return false;
     bool ok = false;
     lastErrorMessage = QString("no error");
 
-    QString statement = QString("DELETE FROM `%1` WHERE `%2`=%3;").arg(table).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
+    QString statement = QString("DELETE FROM `%1` WHERE `%2`='%3';").arg(table).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
     if(executeSQL(statement))
         ok = true;
     else
@@ -798,13 +787,13 @@ bool DBBrowserDB::deleteRecord(const QString& table, qint64 rowid)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, qint64 row, const QByteArray& value, bool itsBlob)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob)
 {
     if (!isOpen()) return false;
 
     lastErrorMessage = QString("no error");
 
-    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE `%3`=%4;").arg(table).arg(column).arg(getObjectByName(table).table.rowidColumn()).arg(row);
+    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE `%3`='%4';").arg(table).arg(column).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
 
     logSQL(sql, kLogMsg_App);
     setRestorePoint();
