@@ -284,6 +284,9 @@ if(WIN32 AND MSVC)
 			${OPENSSL_PATH}/libeay32.dll
 			${OPENSSL_PATH}/ssleay32.dll
 		DESTINATION bin)
+	install(FILES
+		${QT5_PATH}/plugins/platforms/qwindows.dll
+		DESTINATION bin/platforms)
 endif()
 
 #cpack
