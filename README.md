@@ -39,7 +39,8 @@ Windows binaries can be downloaded from here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
 
-Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are available at:
+Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are
+available at:
 
 * http://rp.oldsch00l.com/sqlitebrowser/
 
@@ -59,9 +60,14 @@ Nightly builds for OSX are available at:
 
 ## Linux
 
-DB Browser for SQLite works well on Linux.  Some Linux distributions, such as
-Arch Linux and Ubuntu, provide a package ready for use.  On others you'll need
-to compile it yourself using the (simple) instructions in [BUILDING](BUILDING.md).
+DB Browser for SQLite works well on Linux.
+* Arch Linux provides a package through pacman
+* For Ubuntu and derivaties, [@deepsidhu1313](https://github.com/deepsidhu1313)
+  provides a PPA with our latest release here:
+  * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser-testing
+ 
+On others you'll need to compile it yourself using the (simple) instructions
+in [BUILDING](BUILDING.md).
 
 ## FreeBSD
 
