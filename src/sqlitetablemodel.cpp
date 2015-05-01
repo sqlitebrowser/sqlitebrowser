@@ -244,7 +244,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         while(index.row() >= m_data.size() && canFetchMore())
             const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
 
-        if(role == Qt::DisplayRole && isBinary(index))
+        if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).left(1024).contains('\0'))
             return "BLOB";
         else if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
             return PreferencesDialog::getSettingsValue("databrowser", "null_text").toString();
