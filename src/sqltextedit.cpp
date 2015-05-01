@@ -32,6 +32,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     registerImage(SqlUiLexer::ApiCompleterIconIdTable, QImage(":/icons/table"));
     registerImage(SqlUiLexer::ApiCompleterIconIdColumn, QImage(":/icons/field"));
 
+    // Enable UTF8
+    setUtf8(true);
+
     // Enable brace matching
     setBraceMatching(QsciScintilla::SloppyBraceMatch);
 
