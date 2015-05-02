@@ -5,7 +5,66 @@ else()
     add_definitions(${QT_DEFINITIONS})
 endif()
 
-set(SQLB_UNITTESTS_SRC
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${ANTLR_DIR}" ..)
+
+# test-sqlobjects
+
+set(TESTSQLOBJECTS_SRC
+	../sqlitedb.cpp
+	../sqlitetablemodel.cpp
+	../sqlitetypes.cpp
+	../csvparser.cpp
+	../grammar/Sqlite3Lexer.cpp
+	../grammar/Sqlite3Parser.cpp
+	../PreferencesDialog.cpp
+	testsqlobjects.cpp
+	../FileDialog.cpp
+)
+
+set(TESTSQLOBJECTS_HDR
+	../grammar/sqlite3TokenTypes.hpp
+	../grammar/Sqlite3Lexer.hpp
+	../grammar/Sqlite3Parser.hpp
+	../sqlitetypes.h)
+
+set(TESTSQLOBJECTS_FORMS
+	../PreferencesDialog.ui)
+
+set(TESTSQLOBJECTS_MOC_HDR
+	../sqlitedb.h
+	../sqlitetablemodel.h
+	../PreferencesDialog.h
+	testsqlobjects.h
+	../FileDialog.h
+)
+
+if(sqlcipher)
+    list(APPEND TESTSQLOBJECTS_SRC ../CipherDialog.cpp)
+    list(APPEND TESTSQLOBJECTS_FORMS ../CipherDialog.ui)
+    list(APPEND TESTSQLOBJECTS_MOC_HDR ../CipherDialog.h)
+endif()
+
+if(USE_QT5)
+    QT5_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
+else()
+    QT4_WRAP_CPP(TESTSQLOBJECTS_MOC ${TESTSQLOBJECTS_MOC_HDR})
+    QT4_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
+endif()
+
+add_executable(test-sqlobjects ${TESTSQLOBJECTS_MOC} ${TESTSQLOBJECTS_HDR} ${TESTSQLOBJECTS_SRC} ${TESTSQLOBJECTS_FORM_HDR})
+
+if(USE_QT5)
+    qt5_use_modules(test-sqlobjects Test Widgets Gui)
+    set(QT_LIBRARIES "")
+endif()
+
+add_dependencies(test-sqlobjects antlr)
+target_link_libraries(test-sqlobjects antlr ${QT_LIBRARIES} ${LIBSQLITE})
+add_test(test-sqlobjects test-sqlobjects)
+
+# test-import
+
+set(TESTIMPORT_SRC
 	../sqlitedb.cpp
 	../sqlitetablemodel.cpp
 	../sqlitetypes.cpp
@@ -14,52 +73,47 @@ set(SQLB_UNITTESTS_SRC
 	../grammar/Sqlite3Parser.cpp
 	../PreferencesDialog.cpp
 	TestImport.cpp
-	testsqlobjects.cpp
-	TestMain.cpp
 	../FileDialog.cpp
 )
 
-set(SQLB_UNITTESTS_HDR
+set(TESTIMPORT_HDR
 	../grammar/sqlite3TokenTypes.hpp
 	../grammar/Sqlite3Lexer.hpp
 	../grammar/Sqlite3Parser.hpp
 	../csvparser.h
 	../sqlitetypes.h)
 
-set(SQLB_UNITTESTS_FORMS
+set(TESTIMPORT_FORMS
 	../PreferencesDialog.ui)
 
-set(SQLB_UNITTESTS_MOC_HDR
+set(TESTIMPORT_MOC_HDR
 	../sqlitedb.h
 	../sqlitetablemodel.h
 	../PreferencesDialog.h
 	TestImport.h
-	testsqlobjects.h
 	../FileDialog.h
 )
 
 if(sqlcipher)
-    list(APPEND SQLB_UNITTESTS_SRC ../CipherDialog.cpp)
-    list(APPEND SQLB_UNITTESTS_FORMS ../CipherDialog.ui)
-    list(APPEND SQLB_UNITTESTS_MOC_HDR ../CipherDialog.h)
+    list(APPEND TESTIMPORT_SRC ../CipherDialog.cpp)
+    list(APPEND TESTIMPORT_FORMS ../CipherDialog.ui)
+    list(APPEND TESTIMPORT_MOC_HDR ../CipherDialog.h)
 endif()
 
 if(USE_QT5)
-    QT5_WRAP_UI(SQLB_UNITTESTS_FORM_HDR ${SQLB_UNITTESTS_FORMS})
+    QT5_WRAP_UI(TESTIMPORT_FORM_HDR ${TESTIMPORT_FORMS})
 else()
-    QT4_WRAP_CPP(SQLB_UNITTESTS_MOC ${SQLB_UNITTESTS_MOC_HDR})
-    QT4_WRAP_UI(SQLB_UNITTESTS_FORM_HDR ${SQLB_UNITTESTS_FORMS})
+    QT4_WRAP_CPP(TESTIMPORT_MOC ${TESTIMPORT_MOC_HDR})
+    QT4_WRAP_UI(TESTIMPORT_FORM_HDR ${TESTIMPORT_FORMS})
 endif()
 
-include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${ANTLR_DIR}" ..)
-
-add_executable(sqlb-unittests ${SQLB_UNITTESTS_MOC} ${SQLB_UNITTESTS_HDR} ${SQLB_UNITTESTS_SRC} ${SQLB_UNITTESTS_FORM_HDR})
+add_executable(test-import ${TESTIMPORT_MOC} ${TESTIMPORT_HDR} ${TESTIMPORT_SRC} ${TESTIMPORT_FORM_HDR})
 
 if(USE_QT5)
-    qt5_use_modules(sqlb-unittests Test Widgets Gui)
+    qt5_use_modules(test-import Test Widgets Gui)
     set(QT_LIBRARIES "")
 endif()
 
-add_dependencies(sqlb-unittests antlr)
-target_link_libraries(sqlb-unittests antlr ${QT_LIBRARIES} ${LIBSQLITE})
-add_test(sqlb-unittests sqlb-unittests)
+add_dependencies(test-import antlr)
+target_link_libraries(test-import antlr ${QT_LIBRARIES} ${LIBSQLITE})
+add_test(test-import test-import)
