@@ -7,7 +7,6 @@
 
 #include "csvparser.h"
 #include "TestImport.h"
-#include "../sqlitedb.h"
 
 QTEST_MAIN(TestImport)
 
@@ -40,9 +39,6 @@ void TestImport::csvImport()
     out << csv;
     }
     file.flush();
-
-    // Call decodeCSV function
-    DBBrowserDB db;
 
     CSVParser csvparser(true, separator, quote);
     file.seek(0);

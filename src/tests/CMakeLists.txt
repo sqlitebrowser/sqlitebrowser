@@ -65,55 +65,25 @@ add_test(test-sqlobjects test-sqlobjects)
 # test-import
 
 set(TESTIMPORT_SRC
-	../sqlitedb.cpp
-	../sqlitetablemodel.cpp
-	../sqlitetypes.cpp
 	../csvparser.cpp
-	../grammar/Sqlite3Lexer.cpp
-	../grammar/Sqlite3Parser.cpp
-	../PreferencesDialog.cpp
 	TestImport.cpp
-	../FileDialog.cpp
 )
-
-set(TESTIMPORT_HDR
-	../grammar/sqlite3TokenTypes.hpp
-	../grammar/Sqlite3Lexer.hpp
-	../grammar/Sqlite3Parser.hpp
-	../csvparser.h
-	../sqlitetypes.h)
-
-set(TESTIMPORT_FORMS
-	../PreferencesDialog.ui)
 
 set(TESTIMPORT_MOC_HDR
-	../sqlitedb.h
-	../sqlitetablemodel.h
-	../PreferencesDialog.h
 	TestImport.h
-	../FileDialog.h
 )
 
-if(sqlcipher)
-    list(APPEND TESTIMPORT_SRC ../CipherDialog.cpp)
-    list(APPEND TESTIMPORT_FORMS ../CipherDialog.ui)
-    list(APPEND TESTIMPORT_MOC_HDR ../CipherDialog.h)
-endif()
-
 if(USE_QT5)
-    QT5_WRAP_UI(TESTIMPORT_FORM_HDR ${TESTIMPORT_FORMS})
 else()
     QT4_WRAP_CPP(TESTIMPORT_MOC ${TESTIMPORT_MOC_HDR})
-    QT4_WRAP_UI(TESTIMPORT_FORM_HDR ${TESTIMPORT_FORMS})
 endif()
 
-add_executable(test-import ${TESTIMPORT_MOC} ${TESTIMPORT_HDR} ${TESTIMPORT_SRC} ${TESTIMPORT_FORM_HDR})
+add_executable(test-import ${TESTIMPORT_MOC} ${TESTIMPORT_SRC})
 
 if(USE_QT5)
-    qt5_use_modules(test-import Test Widgets Gui)
+    qt5_use_modules(test-import Test Core)
     set(QT_LIBRARIES "")
 endif()
 
-add_dependencies(test-import antlr)
-target_link_libraries(test-import antlr ${QT_LIBRARIES} ${LIBSQLITE})
+target_link_libraries(test-import ${QT_LIBRARIES})
 add_test(test-import test-import)
