@@ -39,7 +39,11 @@ void TestImport::csvImport()
     // Create temporary CSV file
     QTemporaryFile file;
     QVERIFY(file.open());
-    file.write(csv.toUtf8());
+    {
+    QTextStream out(&file);
+    out.setCodec(encoding.toUtf8());
+    out << csv;
+    }
     file.flush();
 
     // Call decodeCSV function
@@ -48,6 +52,7 @@ void TestImport::csvImport()
     CSVParser csvparser(true, separator, quote);
     file.seek(0);
     QTextStream tstream(&file);
+    tstream.setCodec(encoding.toUtf8());
     csvparser.parse(tstream);
 
     // Check return values
@@ -138,12 +143,22 @@ void TestImport::csvImport_data()
                                 << result;
 
     result.clear();
-    result.append(QStringList() << QString::fromUtf8("\u4E18") << QString::fromUtf8("\u4E26") << QString::fromUtf8("\u4E4B"));
-    QString csv = QString::fromUtf8("\u4E18") + "," + QString::fromUtf8("\u4E26") + "," + QString::fromUtf8("\u4E4B") + "\n";
+    result.append(QStringList() << QString::fromUtf8("\xC2\xAE") << QString::fromUtf8("\xC9\x85") << QString::fromUtf8("\xC6\x89"));
+    QString csv = QString::fromUtf8("\xC2\xAE") + "," + QString::fromUtf8("\xC9\x85") + "," + QString::fromUtf8("\xC6\x89") + "\n";
     QTest::newRow("utf8chars") << csv
                                << ','
                                << (char)0
                                << "UTF-8"
+                               << 3
+                               << result;
+
+    result.clear();
+    result.append(QStringList() << QString::fromUtf8("\u4E18") << QString::fromUtf8("\u4E26") << QString::fromUtf8("\u4E4B"));
+    QString csv2 = QString::fromUtf8("\u4E18") + "," + QString::fromUtf8("\u4E26") + "," + QString::fromUtf8("\u4E4B") + "\n";
+    QTest::newRow("utf16chars") << csv2
+                               << ','
+                               << (char)0
+                               << "UTF-16"
                                << 3
                                << result;
 }
