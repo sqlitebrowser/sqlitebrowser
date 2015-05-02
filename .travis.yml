@@ -9,19 +9,16 @@ before_install:
   - sudo apt-get install -qq libqt4-dev libsqlite3-dev libsqlcipher-dev
 
 script:
-  - mkdir tests/build
   - mkdir build
   - mkdir build_cipher
-  - cd tests/build
-  - cmake ..
+  - cd build
+  - cmake -DENABLE_TESTING=ON ..
   - make
-  - ./sqlb-unittests
-  - cd ../../build
-  - cmake ..
-  - make
+  - ctest -V
   - cd ../build_cipher
-  - cmake -Dsqlcipher=1 ..
+  - cmake -DENABLE_TESTING=ON -Dsqlcipher=1 ..
   - make
+  - ctest -V
 
 matrix:
   fast_finish: true
