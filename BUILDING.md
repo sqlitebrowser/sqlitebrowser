@@ -172,46 +172,82 @@ qmake				qmake CONFIG+=sqlcipher
 
 ## Building and running the Unit Tests
 
-DB Browser for SQLite has unit tests in the "tests" subdirectory.
+DB Browser for SQLite has unit tests in the "src/tests" subdirectory.
 
 ### Build the unit tests
 
-Compile them like this:
+The unit tests are enabled using the cmake variable `ENABLE_TESTING`;
+it can be passed when running `cmake` to configure sqlitebrowser,
+for example like this:
 
-```
-$ cd tests
+```bash
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake -DENABLE_TESTING=ON ..
 $ make
 ```
 
 ### Run the unit tests
 
-Then run them like this:
+Tests can be then run using `make test` or invoking `ctest` directly,
+for example like this:
 
 ```
-$ ./sqlb-unittests
-********* Start testing of TestTable *********
-Config: Using QTest library 4.8.6, Qt 4.8.6
-PASS   : TestTable::initTestCase()
-PASS   : TestTable::sqlOutput()
-PASS   : TestTable::autoincrement()
-PASS   : TestTable::notnull()
-PASS   : TestTable::withoutRowid()
-PASS   : TestTable::parseSQL()
-PASS   : TestTable::parseSQLdefaultexpr()
-PASS   : TestTable::parseSQLMultiPk()
-PASS   : TestTable::parseSQLForeignKey()
-PASS   : TestTable::parseSQLSingleQuotes()
-PASS   : TestTable::parseSQLKeywordInIdentifier()
-PASS   : TestTable::parseSQLWithoutRowid()
-PASS   : TestTable::parseNonASCIIChars()
-PASS   : TestTable::createTableWithIn()
-PASS   : TestTable::createTableWithNotLikeConstraint()
-PASS   : TestTable::cleanupTestCase()
-Totals: 16 passed, 0 failed, 0 skipped
-********* Finished testing of TestTable *********
+$ ctest -V
+UpdateCTestConfiguration  from :SRCDIR/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :SRCDIR/build/DartConfiguration.tcl
+Test project SRCDIR/build
+Constructing a list of tests
+Done constructing a list of tests
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: test-sqlobjects
+
+1: Test command: SRCDIR/build/src/tests/test-sqlobjects
+1: Test timeout computed to be: 9.99988e+06
+1: ********* Start testing of TestTable *********
+1: Config: Using QTest library 4.8.6, Qt 4.8.6
+1: PASS   : TestTable::initTestCase()
+1: PASS   : TestTable::sqlOutput()
+1: PASS   : TestTable::autoincrement()
+1: PASS   : TestTable::notnull()
+1: PASS   : TestTable::withoutRowid()
+1: PASS   : TestTable::foreignKeys()
+1: PASS   : TestTable::parseSQL()
+1: PASS   : TestTable::parseSQLdefaultexpr()
+1: PASS   : TestTable::parseSQLMultiPk()
+1: PASS   : TestTable::parseSQLForeignKey()
+1: PASS   : TestTable::parseSQLSingleQuotes()
+1: PASS   : TestTable::parseSQLKeywordInIdentifier()
+1: PASS   : TestTable::parseSQLWithoutRowid()
+1: PASS   : TestTable::parseNonASCIIChars()
+1: PASS   : TestTable::parseSQLEscapedQuotes()
+1: PASS   : TestTable::parseSQLForeignKeys()
+1: PASS   : TestTable::parseSQLCheckConstraint()
+1: PASS   : TestTable::createTableWithIn()
+1: PASS   : TestTable::createTableWithNotLikeConstraint()
+1: PASS   : TestTable::cleanupTestCase()
+1: Totals: 20 passed, 0 failed, 0 skipped
+1: ********* Finished testing of TestTable *********
+1/2 Test #1: test-sqlobjects ..................   Passed    0.02 sec
+test 2
+    Start 2: test-import
+
+2: Test command: SRCDIR/build/src/tests/test-import
+2: Test timeout computed to be: 9.99988e+06
+2: ********* Start testing of TestImport *********
+2: Config: Using QTest library 4.8.6, Qt 4.8.6
+2: PASS   : TestImport::initTestCase()
+2: PASS   : TestImport::csvImport()
+2: PASS   : TestImport::cleanupTestCase()
+2: Totals: 3 passed, 0 failed, 0 skipped
+2: ********* Finished testing of TestImport *********
+2/2 Test #2: test-import ......................   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.04 sec
 ```
 
 Everything should PASS, with no failures, and nothing skipped.
