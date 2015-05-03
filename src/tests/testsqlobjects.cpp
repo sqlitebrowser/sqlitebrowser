@@ -3,6 +3,8 @@
 
 #include <QtTest/QtTest>
 
+QTEST_APPLESS_MAIN(TestTable)
+
 using namespace sqlb;
 
 void TestTable::sqlOutput()

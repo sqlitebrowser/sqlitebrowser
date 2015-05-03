@@ -1,3 +1,5 @@
+// force QtCore-only main application by QTEST_MAIN
+#undef QT_GUI_LIB
 #include <QTemporaryFile>
 #include <QtTest/QTest>
 #include <QCoreApplication>
@@ -5,25 +7,17 @@
 
 #include "csvparser.h"
 #include "TestImport.h"
-#include "../sqlitedb.h"
+
+QTEST_MAIN(TestImport)
 
 Q_DECLARE_METATYPE(CSVParser::TCSVResult)
 
 TestImport::TestImport()
 {
-    // Init basic application
-    // The app needs to be initialized for the utf8 test
-    // to work
-    argcount = 1;
-    args[0] = new char[20];
-    strcpy(args[0], "sqlb-unittests");
-    app = new QCoreApplication(argcount, args);
 }
 
 TestImport::~TestImport()
 {
-    delete[] args[0];
-    delete app;
 }
 
 void TestImport::csvImport()
@@ -45,9 +39,6 @@ void TestImport::csvImport()
     out << csv;
     }
     file.flush();
-
-    // Call decodeCSV function
-    DBBrowserDB db;
 
     CSVParser csvparser(true, separator, quote);
     file.seek(0);

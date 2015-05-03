@@ -2,6 +2,7 @@ project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.8.7)
 
 OPTION(USE_QT5 FALSE "Build with qt5")
+OPTION(ENABLE_TESTING FALSE "Enable the unit tests")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -40,6 +41,10 @@ else()
     find_package(Qt4 COMPONENTS QtCore QtGui QtNetwork REQUIRED)
     include("${QT_USE_FILE}")
     add_definitions(${QT_DEFINITIONS})
+endif()
+
+if(ENABLE_TESTING)
+    enable_testing()
 endif()
 
 set(SQLB_HDR
@@ -260,6 +265,11 @@ install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib)
 	
+
+if(ENABLE_TESTING)
+	add_subdirectory(src/tests)
+endif()
+
 if(UNIX AND NOT APPLE)
 	install(FILES src/icons/${PROJECT_NAME}.png
 		DESTINATION share/icons/hicolor/256x256/apps/)
