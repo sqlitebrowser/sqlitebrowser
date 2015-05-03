@@ -32,19 +32,21 @@ set(SQLB_SRC
 	../src/sqlitedb.cpp
 	../src/sqlitetablemodel.cpp
 	../src/sqlitetypes.cpp
-    ../src/csvparser.cpp
+	../src/csvparser.cpp
 	../src/grammar/Sqlite3Lexer.cpp
 	../src/grammar/Sqlite3Parser.cpp
 	../src/PreferencesDialog.cpp
 	../src/tests/TestImport.cpp
 	../src/tests/testsqlobjects.cpp
-	../src/tests/TestMain.cpp)
+	../src/tests/TestMain.cpp
+	../src/FileDialog.cpp
+)
 
 set(SQLB_HDR
 	../src/grammar/sqlite3TokenTypes.hpp
 	../src/grammar/Sqlite3Lexer.hpp
 	../src/grammar/Sqlite3Parser.hpp
-    ../src/csvparser.h
+	../src/csvparser.h
 	../src/sqlitetypes.h)
 
 set(SQLB_FORMS
@@ -55,7 +57,9 @@ set(SQLB_MOC_HDR
 	../src/sqlitetablemodel.h
 	../src/PreferencesDialog.h
 	../src/tests/TestImport.h
-	../src/tests/testsqlobjects.h)
+	../src/tests/testsqlobjects.h
+	../src/FileDialog.h
+)
 
 if(USE_QT5)
     QT5_WRAP_CPP(SQLB_MOC ${SQLB_MOC_HDR})
