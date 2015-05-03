@@ -28,32 +28,55 @@
       </attribute>
       <layout class="QFormLayout" name="formLayout_3">
        <item row="1" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QLineEdit" name="locationEdit">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>316</width>
-             <height>0</height>
-            </size>
-           </property>
+          <widget class="QComboBox" name="comboDefaultLocation">
+           <item>
+            <property name="text">
+             <string>Remember last location</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Always use this location</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Remember last location for session only</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="setLocationButton">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLineEdit" name="locationEdit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>316</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="setLocationButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>

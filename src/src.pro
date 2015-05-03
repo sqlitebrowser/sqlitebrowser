@@ -50,7 +50,8 @@ HEADERS += \
     sqlite.h \
     CipherDialog.h \
     ExportSqlDialog.h \
-    SqlUiLexer.h
+    SqlUiLexer.h \
+    FileDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -76,7 +77,8 @@ SOURCES += \
     Application.cpp \
     CipherDialog.cpp \
     ExportSqlDialog.cpp \
-    SqlUiLexer.cpp
+    SqlUiLexer.cpp \
+    FileDialog.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc

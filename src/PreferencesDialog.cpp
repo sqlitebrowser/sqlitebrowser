@@ -1,10 +1,10 @@
 #include "PreferencesDialog.h"
 #include "ui_PreferencesDialog.h"
 #include "sqlitedb.h"
+#include "FileDialog.h"
 
 #include <QDir>
 #include <QSettings>
-#include <QFileDialog>
 #include <QColorDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
@@ -39,10 +39,9 @@ PreferencesDialog::~PreferencesDialog()
 
 void PreferencesDialog::chooseLocation()
 {
-    QString s = QFileDialog::getExistingDirectory(
+    QString s = FileDialog::getExistingDirectory(
                 this,
                 tr("Choose a directory"),
-                getSettingsValue("db", "defaultlocation").toString(),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if(!s.isEmpty())
@@ -52,6 +51,7 @@ void PreferencesDialog::chooseLocation()
 void PreferencesDialog::loadSettings()
 {
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
+    ui->comboDefaultLocation->setCurrentIndex(getSettingsValue("db", "savedefaultlocation").toInt());
     ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
     ui->checkUpdates->setChecked(getSettingsValue("checkversion", "enabled").toBool());
     ui->checkHideSchemaLinebreaks->setChecked(getSettingsValue("db", "hideschemalinebreaks").toBool());
@@ -97,6 +97,7 @@ void PreferencesDialog::saveSettings()
 {
     setSettingsValue("db", "defaultencoding", ui->encodingComboBox->currentText());
     setSettingsValue("db", "defaultlocation", ui->locationEdit->text());
+    setSettingsValue("db", "savedefaultlocation", ui->comboDefaultLocation->currentIndex());
     setSettingsValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
@@ -156,13 +157,18 @@ QVariant PreferencesDialog::getSettingsValue(const QString& group, const QString
     }
 }
 
-void PreferencesDialog::setSettingsValue(const QString& group, const QString& name, const QVariant& value)
+void PreferencesDialog::setSettingsValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk)
 {
-    // Set the group and save the given value
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup(group);
-    settings.setValue(name, value);
-    settings.endGroup();
+    // Sometime the value has to be saved for the current session only but get discarded when the application exits.
+    // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
+    if(dont_save_to_disk == false)
+    {
+        // Set the group and save the given value
+        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+        settings.beginGroup(group);
+        settings.setValue(name, value);
+        settings.endGroup();
+    }
 
     // Also change it in the cache
     m_hCache[group + name] = value;
@@ -174,9 +180,17 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "db" && name == "defaultencoding")
         return "UTF-8";
 
+    // db/savedefaultlocation?
+    if(group == "db" && name == "savedefaultlocation")
+        return 2;
+
     // db/defaultlocation?
     if(group == "db" && name == "defaultlocation")
         return QDir::homePath();
+
+    // db/lastlocation?
+    if(group == "db" && name == "lastlocation")
+        return getSettingsValue("db", "defaultlocation");
 
     // db/hideschemalinebreaks?
     if(group == "db" && name == "hideschemalinebreaks")
@@ -338,10 +352,9 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 
 void PreferencesDialog::addExtension()
 {
-    QString file = QFileDialog::getOpenFileName(
+    QString file = FileDialog::getOpenFileName(
                 this,
                 tr("Select extension file"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Extensions(*.so *.dll);;All files(*)"));
 
     if(QFile::exists(file))

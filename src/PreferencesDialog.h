@@ -21,7 +21,7 @@ public:
 
     // Use these methods to access the application settings.
     static QVariant getSettingsValue(const QString& group, const QString& name);
-    static void setSettingsValue(const QString& group, const QString& name, const QVariant& value);
+    static void setSettingsValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk = false);
 
 private slots:
     virtual void loadSettings();

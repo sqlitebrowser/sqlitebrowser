@@ -3,8 +3,8 @@
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
 #include "src/qhexedit.h"
+#include "FileDialog.h"
 
-#include <QFileDialog>
 #include <QKeySequence>
 #include <QShortcut>
 
@@ -75,10 +75,9 @@ void EditDialog::importData()
     for(int i=0;i<image_formats_list.size();++i)
         image_formats.append(QString("*.%1 ").arg(QString::fromUtf8(image_formats_list.at(i))));
 
-    QString fileName = QFileDialog::getOpenFileName(
+    QString fileName = FileDialog::getOpenFileName(
                 this,
-                tr("Choose a file"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString()
+                tr("Choose a file")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
                 , tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats)
 #endif
@@ -99,10 +98,9 @@ void EditDialog::importData()
 
 void EditDialog::exportData()
 {
-    QString fileName = QFileDialog::getSaveFileName(
+    QString fileName = FileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.txt);;All files(*)"));
 
     if(fileName.size() > 0)

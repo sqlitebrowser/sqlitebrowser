@@ -73,6 +73,7 @@ set(SQLB_MOC_HDR
 	src/CipherDialog.h
 	src/ExportSqlDialog.h
 	src/SqlUiLexer.h
+	src/FileDialog.h
 )
 
 set(SQLB_SRC
@@ -101,6 +102,7 @@ set(SQLB_SRC
 	src/CipherDialog.cpp
 	src/ExportSqlDialog.cpp
 	src/SqlUiLexer.cpp
+	src/FileDialog.cpp
 )
 
 set(SQLB_FORMS

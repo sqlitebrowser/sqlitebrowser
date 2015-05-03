@@ -17,8 +17,8 @@
 #include "CipherDialog.h"
 #include "ExportSqlDialog.h"
 #include "SqlUiLexer.h"
+#include "FileDialog.h"
 
-#include <QFileDialog>
 #include <QFile>
 #include <QApplication>
 #include <QTextStream>
@@ -198,10 +198,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
     QString wFile = fileName;
     if (!QFile::exists(wFile))
     {
-        wFile = QFileDialog::getOpenFileName(
+        wFile = FileDialog::getOpenFileName(
                     this,
-                    tr("Choose a database file"),
-                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString()
+                    tr("Choose a database file")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
                     , tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)")
 #endif
@@ -243,7 +242,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
 
 void MainWindow::fileNew()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Choose a filename to save under"), PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
+    QString fileName = FileDialog::getSaveFileName(this, tr("Choose a filename to save under"));
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -826,10 +825,9 @@ void MainWindow::mainTabSelected(int tabindex)
 
 void MainWindow::importTableFromCSV()
 {
-    QString wFile = QFileDialog::getOpenFileName(
+    QString wFile = FileDialog::getOpenFileName(
                 this,
                 tr("Choose a text file"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.csv *.txt);;All files(*)"));
 
     if (QFile::exists(wFile) )
@@ -898,10 +896,9 @@ void MainWindow::exportDatabaseToSQL()
 void MainWindow::importDatabaseFromSQL()
 {
     // Get file name to import
-    QString fileName = QFileDialog::getOpenFileName(
+    QString fileName = FileDialog::getOpenFileName(
                 this,
                 tr("Choose a file to import"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
     // Cancel when file doesn't exist
@@ -916,10 +913,9 @@ void MainWindow::importDatabaseFromSQL()
                                                "If you answer no we will attempt to import the data in the SQL file to the current database."),
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
-        newDbFile = QFileDialog::getSaveFileName(
+        newDbFile = FileDialog::getSaveFileName(
                     this,
-                    tr("Choose a filename to save under"),
-                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
+                    tr("Choose a filename to save under"));
         if(QFile::exists(newDbFile))
         {
             QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
@@ -1250,10 +1246,9 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
 
 void MainWindow::openSqlFile()
 {
-    QString file = QFileDialog::getOpenFileName(
+    QString file = FileDialog::getOpenFileName(
                 this,
                 tr("Select SQL file to open"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
     if(QFile::exists(file))
@@ -1297,10 +1292,9 @@ void MainWindow::saveSqlFile()
 
 void MainWindow::saveSqlFileAs()
 {
-    QString file = QFileDialog::getSaveFileName(
+    QString file = FileDialog::getSaveFileName(
                 this,
                 tr("Select file name"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
     if(!file.isEmpty())
@@ -1313,10 +1307,9 @@ void MainWindow::saveSqlFileAs()
 
 void MainWindow::loadExtension()
 {
-    QString file = QFileDialog::getOpenFileName(
+    QString file = FileDialog::getOpenFileName(
                 this,
                 tr("Select extension file"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Extensions(*.so *.dll);;All files(*)"));
 
     if(file.isEmpty())
@@ -1719,9 +1712,8 @@ void MainWindow::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int
 
 void MainWindow::on_butSavePlot_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
+    QString fileName = FileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
-                                                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                                                     tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
                                                     );
     if(!fileName.isEmpty())
@@ -1790,9 +1782,8 @@ bool MainWindow::loadProject(QString filename)
     // Show the open file dialog when no filename was passed as parameter
     if(filename.isEmpty())
     {
-        filename = QFileDialog::getOpenFileName(this,
+        filename = FileDialog::getOpenFileName(this,
                                                 tr("Choose a file to open"),
-                                                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                                                 tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
@@ -1930,9 +1921,8 @@ static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModel
 
 void MainWindow::saveProject()
 {
-    QString filename = QFileDialog::getSaveFileName(this,
+    QString filename = FileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
-                                                    PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                                                     tr("DB Browser for SQLite project file (*.sqbpro)")
                                                     );
     if(!filename.isEmpty())
@@ -2014,10 +2004,9 @@ void MainWindow::saveProject()
 void MainWindow::fileAttach()
 {
     // Get file name of database to attach
-    QString file = QFileDialog::getOpenFileName(
+    QString file = FileDialog::getOpenFileName(
                 this,
-                tr("Choose a database file"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString());
+                tr("Choose a database file"));
     if(!QFile::exists(file))
         return;
 

@@ -4,10 +4,10 @@
 #include "PreferencesDialog.h"
 #include "sqlitetablemodel.h"
 #include "sqlite.h"
+#include "FileDialog.h"
 
 #include <QFile>
 #include <QMessageBox>
-#include <QFileDialog>
 #include <QSettings>
 
 static QString sSettingsGroup("exportsql");
@@ -62,10 +62,9 @@ void ExportSqlDialog::accept()
                              tr("Please select at least 1 table."));
         return;
     }
-    QString fileName = QFileDialog::getSaveFileName(
+    QString fileName = FileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export"),
-                PreferencesDialog::getSettingsValue("db", "defaultlocation").toString(),
                 tr("Text files(*.sql *.txt)"));
 
     if(fileName.isEmpty())
