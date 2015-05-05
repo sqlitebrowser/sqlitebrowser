@@ -67,7 +67,7 @@ DB Browser for SQLite works well on Linux.
   * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser
  
 On others you'll need to compile it yourself using the (simple) instructions
-in [BUILDING](BUILDING.md).
+in [BUILDING.md](BUILDING.md).
 
 ## FreeBSD
 
