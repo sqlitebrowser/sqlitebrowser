@@ -1,6 +1,8 @@
 project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.8.7)
 
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
+
 OPTION(USE_QT5 FALSE "Build with qt5")
 OPTION(ENABLE_TESTING FALSE "Enable the unit tests")
 
@@ -22,12 +24,17 @@ if(WIN32 AND MSVC)
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
 endif()
 
-set(ANTLR_DIR libs/antlr-2.7.7)
+find_package(Antlr2)
+
 set(QHEXEDIT_DIR libs/qhexedit)
 set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
 set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
 
-add_subdirectory(${ANTLR_DIR})
+if(ANTLR2_FOUND)
+else()
+    set(ANTLR_DIR libs/antlr-2.7.7)
+    add_subdirectory(${ANTLR_DIR})
+endif()
 add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
 add_subdirectory(${QSCINTILLA_DIR})
@@ -214,12 +221,16 @@ endif()
 
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
-		${ANTLR_DIR}
 		${QHEXEDIT_DIR}
 		${QCUSTOMPLOT_DIR}
 		${QSCINTILLA_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
+if(ANTLR2_FOUND)
+    include_directories(${ANTLR2_INCLUDE_DIRS})
+else()
+    include_directories(${ANTLR_DIR})
+endif()
 
 add_executable(${PROJECT_NAME}
 		${SQLB_HDR}
@@ -234,16 +245,23 @@ if(USE_QT5)
     qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
     set(QT_LIBRARIES "")
 endif()
-add_dependencies(${PROJECT_NAME} antlr qhexedit qcustomplot qscintilla2)
+add_dependencies(${PROJECT_NAME} qhexedit qcustomplot qscintilla2)
+if(ANTLR2_FOUND)
+else()
+    add_dependencies(${PROJECT_NAME} antlr)
+endif()
 
 link_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}"
 		"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
 		"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}"
 		"${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
+if(ANTLR2_FOUND)
+else()
+    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}")
+endif()
 
 target_link_libraries(${PROJECT_NAME}
-		antlr
 		qhexedit
 		qcustomplot
 		qscintilla2
@@ -251,6 +269,11 @@ target_link_libraries(${PROJECT_NAME}
 		${WIN32_STATIC_LINK}
 		${LIBSQLITE}
 		${ADDITIONAL_LIBS})
+if(ANTLR2_FOUND)
+    target_link_libraries(${PROJECT_NAME} ${ANTLR2_LIBRARIES})
+else()
+    target_link_libraries(${PROJECT_NAME} antlr)
+endif()
 
 if(WIN32 AND MSVC)
 	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
