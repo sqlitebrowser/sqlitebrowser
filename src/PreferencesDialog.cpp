@@ -84,7 +84,7 @@ void PreferencesDialog::loadSettings()
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
         }
     }
-    ui->comboEditorFont->setCurrentText(getSettingsValue("editor", "font").toString());
+    ui->comboEditorFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("editor", "font").toString()));
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
