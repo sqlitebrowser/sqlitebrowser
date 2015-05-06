@@ -87,7 +87,7 @@ void SqlTextEdit::setupSyntaxHighlightingFormat(const QString& settings_name, in
 {
     sqlLexer->setColor(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
 
-    QFont font("Monospace");
+    QFont font(PreferencesDialog::getSettingsValue("editor", "font").toString());
     font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
     font.setBold(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_bold").toBool());
     font.setItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_italic").toBool());
@@ -105,7 +105,7 @@ void SqlTextEdit::reloadSettings()
 {
     // Set syntax highlighting settings
     sqlLexer->setDefaultColor(Qt::black);
-    QFont defaultfont("Monospace");
+    QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
     sqlLexer->setDefaultFont(defaultfont);
@@ -121,13 +121,13 @@ void SqlTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
 
     // Set font
-    QFont font("Monospace");
+    QFont font(PreferencesDialog::getSettingsValue("editor", "font").toString());
     font.setStyleHint(QFont::TypeWriter);
     font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
     setFont(font);
 
     // Show line numbers
-    QFont marginsfont(QFont("Monospace"));
+    QFont marginsfont(QFont(PreferencesDialog::getSettingsValue("editor", "font").toString()));
     marginsfont.setPointSize(font.pointSize());
     setMarginsFont(marginsfont);
     setMarginLineNumbers(0, true);

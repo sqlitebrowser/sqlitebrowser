@@ -591,7 +591,7 @@ QGroupBox::title {
        </item>
        <item>
         <layout class="QFormLayout" name="formLayout_2">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>SQL &amp;editor font size</string>
@@ -601,14 +601,14 @@ QGroupBox::title {
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="1" column="1">
           <widget class="QSpinBox" name="spinEditorFontSize">
            <property name="minimum">
             <number>1</number>
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>SQL &amp;log font size</string>
@@ -618,21 +618,24 @@ QGroupBox::title {
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QSpinBox" name="spinLogFontSize">
            <property name="minimum">
             <number>1</number>
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_13">
            <property name="text">
             <string>Tab size:</string>
            </property>
+           <property name="buddy">
+            <cstring>spinTabSize</cstring>
+           </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QSpinBox" name="spinTabSize">
            <property name="minimum">
             <number>1</number>
@@ -644,6 +647,19 @@ QGroupBox::title {
             <number>4</number>
            </property>
           </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>SQL editor &amp;font</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboEditorFont</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QFontComboBox" name="comboEditorFont"/>
          </item>
         </layout>
        </item>
@@ -741,6 +757,8 @@ QGroupBox::title {
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>comboDefaultLocation</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
@@ -753,13 +771,14 @@ QGroupBox::title {
   <tabstop>frameNullFgColour</tabstop>
   <tabstop>frameNullBgColour</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
+  <tabstop>comboEditorFont</tabstop>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
+  <tabstop>spinTabSize</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
   <tabstop>checkRegexDisabled</tabstop>
-  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -805,7 +824,7 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>119</x>
-     <y>82</y>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -821,7 +840,7 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>119</x>
-     <y>82</y>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -852,8 +871,8 @@ QGroupBox::title {
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>568</x>
-     <y>71</y>
+     <x>567</x>
+     <y>100</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>

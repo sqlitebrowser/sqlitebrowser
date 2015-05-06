@@ -20,7 +20,7 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     ui->setupUi(this);
 
     // Set font
-    QFont logfont("Monospace");
+    QFont logfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     logfont.setStyleHint(QFont::TypeWriter);
     logfont.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
     ui->editErrors->setFont(logfont);

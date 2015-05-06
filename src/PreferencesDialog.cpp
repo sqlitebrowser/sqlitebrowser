@@ -84,6 +84,7 @@ void PreferencesDialog::loadSettings()
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
         }
     }
+    ui->comboEditorFont->setCurrentText(getSettingsValue("editor", "font").toString());
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
@@ -118,6 +119,7 @@ void PreferencesDialog::saveSettings()
         setSettingsValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
         setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
+    setSettingsValue("editor", "font", ui->comboEditorFont->currentText());
     setSettingsValue("editor", "fontsize", ui->spinEditorFontSize->value());
     setSettingsValue("editor", "tabsize", ui->spinTabSize->value());
     setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
@@ -273,6 +275,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
                 return QColor(236, 236, 245).name();
         }
     }
+
+    // editor/font?
+    if(group == "editor" && name == "font")
+        return "Monospace";
 
     // editor/fontsize or log/fontsize?
     if((group == "editor" || group == "log") && name == "fontsize")
