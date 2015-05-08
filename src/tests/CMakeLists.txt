@@ -5,7 +5,7 @@ else()
     add_definitions(${QT_DEFINITIONS})
 endif()
 
-include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${ANTLR_DIR}" ..)
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" ..)
 
 # test-sqlobjects
 
@@ -58,8 +58,15 @@ if(USE_QT5)
     set(QT_LIBRARIES "")
 endif()
 
-add_dependencies(test-sqlobjects antlr)
-target_link_libraries(test-sqlobjects antlr ${QT_LIBRARIES} ${LIBSQLITE})
+if(NOT ANTLR2_FOUND)
+    add_dependencies(test-sqlobjects antlr)
+endif()
+target_link_libraries(test-sqlobjects ${QT_LIBRARIES} ${LIBSQLITE})
+if(ANTLR2_FOUND)
+    target_link_libraries(test-sqlobjects ${ANTLR2_LIBRARIES})
+else()
+    target_link_libraries(test-sqlobjects antlr)
+endif()
 add_test(test-sqlobjects test-sqlobjects)
 
 # test-import
