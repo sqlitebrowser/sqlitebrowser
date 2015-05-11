@@ -175,6 +175,7 @@ private slots:
     void updateFilter(int column, const QString& value);
     void editEncryption();
     void switchToBrowseDataTab();
+    void on_buttonClearFilters_clicked();
 };
 
 #endif
