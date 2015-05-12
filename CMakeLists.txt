@@ -30,8 +30,7 @@ set(QHEXEDIT_DIR libs/qhexedit)
 set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
 set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
 
-if(ANTLR2_FOUND)
-else()
+if(NOT ANTLR2_FOUND)
     set(ANTLR_DIR libs/antlr-2.7.7)
     add_subdirectory(${ANTLR_DIR})
 endif()
@@ -246,8 +245,7 @@ if(USE_QT5)
     set(QT_LIBRARIES "")
 endif()
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot qscintilla2)
-if(ANTLR2_FOUND)
-else()
+if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)
 endif()
 
@@ -256,8 +254,7 @@ link_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
 		"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}"
 		"${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
-if(ANTLR2_FOUND)
-else()
+if(NOT ANTLR2_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}")
 endif()
 
