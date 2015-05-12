@@ -128,6 +128,7 @@ set(SQLB_FORMS
 set(SQLB_RESOURCES
 	src/icons/icons.qrc
 	src/translations/flags/flags.qrc
+	src/translations/translations.qrc
 )
 
 set(SQLB_MISC
@@ -144,25 +145,25 @@ set(SQLB_TSS
 
 if(USE_QT5)
     qt5_wrap_ui(SQLB_FORM_HDR ${SQLB_FORMS})
-    qt5_add_resources(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
     if(SQLB_TSS)
         # add translations
         foreach(SQLB_TS ${SQLB_TSS})
-            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_BINARY_DIR}/translations")
+            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/src/translations")
         endforeach(SQLB_TS ${SQLB_TSS})
         qt5_add_translation(SQLB_QMS ${SQLB_TSS})
     endif(SQLB_TSS)
+    qt5_add_resources(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
 else()
     QT4_WRAP_CPP(SQLB_MOC ${SQLB_MOC_HDR})
     QT4_WRAP_UI(SQLB_FORM_HDR ${SQLB_FORMS})
-    QT4_ADD_RESOURCES(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
     if(SQLB_TSS)
         # add translations
         foreach(SQLB_TS ${SQLB_TSS})
-            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_BINARY_DIR}/translations")
+            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/src/translations")
         endforeach(SQLB_TS ${SQLB_TSS})
         QT4_ADD_TRANSLATION(SQLB_QMS ${SQLB_TSS})
     endif(SQLB_TSS)
+    QT4_ADD_RESOURCES(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
 endif()
 
 
@@ -227,8 +228,7 @@ add_executable(${PROJECT_NAME}
 		${SQLB_FORM_HDR}
 		${SQLB_MOC}
 		${SQLB_RESOURCES_RCC}
-                ${SQLB_QMS}
-                ${SQLB_MISC})
+		${SQLB_MISC})
 
 if(USE_QT5)
     qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
