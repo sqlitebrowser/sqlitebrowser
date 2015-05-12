@@ -81,7 +81,8 @@ SOURCES += \
     FileDialog.cpp
 
 RESOURCES += icons/icons.qrc \
-             translations/flags/flags.qrc
+             translations/flags/flags.qrc \
+             translations/translations.qrc
 
 FORMS += \
     MainWindow.ui \

@@ -32,6 +32,10 @@ Application::Application(int& argc, char** argv) :
     m_translatorApp = new QTranslator(this);
     ok = m_translatorApp->load("sqlb_" + name,
                                QCoreApplication::applicationDirPath() + "/translations");
+    // If failed then try to load .qm file from resources
+    if (ok == false) {
+        ok = m_translatorApp->load("sqlb_" + name, ":/translations");
+    }
 
     if (ok == true) {
         PreferencesDialog::setSettingsValue("General", "language", name);
