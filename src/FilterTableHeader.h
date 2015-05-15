@@ -19,6 +19,7 @@ public:
 public slots:
     void generateFilters(int number, bool bKeepValues = false);
     void adjustPositions();
+    void clearFilters();
 
 signals:
     void filterChanged(int column, QString value);

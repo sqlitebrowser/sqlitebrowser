@@ -126,6 +126,20 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="buttonClearFilters">
+            <property name="toolTip">
+             <string>Clear all filters</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/clear_filters</normaloff>:/icons/clear_filters</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -310,8 +324,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>575</width>
-             <height>458</height>
+             <width>311</width>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -796,7 +810,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>19</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">

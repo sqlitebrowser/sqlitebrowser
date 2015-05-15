@@ -388,7 +388,7 @@ void MainWindow::resetBrowser()
     curBrowseOrderByIndex = 0;
     curBrowseOrderByMode = Qt::AscendingOrder;
     m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
-    populateTable(ui->comboBrowseTable->currentText());
+    populateTable(ui->comboBrowseTable->currentText(), true);
 }
 
 void MainWindow::fileClose()
@@ -1106,6 +1106,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlSaveFile->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable);
+    ui->buttonClearFilters->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -2088,4 +2089,9 @@ void MainWindow::switchToBrowseDataTab()
     ui->mainTab->setCurrentIndex(1);
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
     populateTable(tableToBrowse);
+}
+
+void MainWindow::on_buttonClearFilters_clicked()
+{
+    ui->dataTable->filterHeader()->clearFilters();
 }

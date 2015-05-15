@@ -44,5 +44,6 @@
         <file alias="document_open">document-open.png</file>
         <file alias="function">chart_curve.png</file>
         <file alias="keyword">cog.png</file>
+        <file alias="clear_filters">clear_filters.png</file>
     </qresource>
 </RCC>

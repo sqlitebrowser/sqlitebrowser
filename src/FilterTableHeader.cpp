@@ -75,7 +75,7 @@ void FilterTableHeader::generateFilters(int number, bool bKeepValues)
         FilterLineEdit* l = new FilterLineEdit(this, &filterWidgets, i);
         l->setVisible(i>0);                     // This hides the first input widget which belongs to the hidden rowid column
         connect(l, SIGNAL(textChanged(QString)), this, SLOT(inputChanged(QString)));
-        if(bKeepValues && !oldvalues[i].isEmpty())  // restore old values
+        if(bKeepValues && oldvalues.size() > i && !oldvalues[i].isEmpty())  // restore old values
             l->setText(oldvalues[i]);
         filterWidgets.push_back(l);
     }
@@ -122,4 +122,10 @@ void FilterTableHeader::inputChanged(const QString& new_value)
 {
     // Just get the column number and the new value and send them to anybody interested in filter changes
     emit filterChanged(sender()->property("column").toInt(), new_value);
+}
+
+void FilterTableHeader::clearFilters()
+{
+    foreach (FilterLineEdit* filterLineEdit, filterWidgets)
+        filterLineEdit->clear();
 }
