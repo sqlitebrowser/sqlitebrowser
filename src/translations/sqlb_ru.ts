@@ -42,48 +42,48 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="71"/>
+        <location filename="../Application.cpp" line="75"/>
         <source>Usage: %1 [options] [db]
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="72"/>
+        <location filename="../Application.cpp" line="76"/>
         <source>Possible command line arguments:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="73"/>
+        <location filename="../Application.cpp" line="77"/>
         <source>  -h, --help		Show command line options</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="74"/>
+        <location filename="../Application.cpp" line="78"/>
         <source>  -s, --sql  [file]	Execute this SQL file after opening the DB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="75"/>
+        <location filename="../Application.cpp" line="79"/>
         <source>  -q, --quit		Exit application after running scripts</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="76"/>
+        <location filename="../Application.cpp" line="80"/>
         <source>  [file]		Open this SQLite database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="81"/>
+        <location filename="../Application.cpp" line="85"/>
         <source>The -s/--sql option requires an argument</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="83"/>
+        <location filename="../Application.cpp" line="87"/>
         <source>The file %1 does not exist</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="93"/>
+        <location filename="../Application.cpp" line="97"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation></translation>
     </message>
@@ -979,18 +979,18 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="29"/>
         <source>Database &amp;Structure</source>
-        <translation>С&amp;труктура базы данных</translation>
+        <translation>С&amp;труктура БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="35"/>
-        <location filename="../MainWindow.ui" line="764"/>
+        <location filename="../MainWindow.ui" line="778"/>
         <source>toolBar1</source>
         <translation>панельИнструментов1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="71"/>
         <source>&amp;Browse Data</source>
-        <translation>Пр&amp;осмотр данных</translation>
+        <translation>&amp;Данные</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="79"/>
@@ -1019,776 +1019,781 @@ All data currently stored in this field will be lost.</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="124"/>
-        <location filename="../MainWindow.ui" line="1444"/>
+        <location filename="../MainWindow.ui" line="1458"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="144"/>
+        <location filename="../MainWindow.ui" line="158"/>
         <source>Insert a new record in the current table</source>
         <translation>Добавить новую запись в текущую таблицу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="147"/>
+        <location filename="../MainWindow.ui" line="161"/>
         <source>This button creates a new, empty record in the database</source>
         <translation>Эта кнопка создаёт новую, пустую запись в таблице</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="150"/>
+        <location filename="../MainWindow.ui" line="164"/>
         <source>New Record</source>
         <translation>Добавить запись</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="157"/>
+        <location filename="../MainWindow.ui" line="171"/>
         <source>Delete the current record</source>
         <translation>Удалить текущую запись</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="160"/>
+        <location filename="../MainWindow.ui" line="174"/>
         <source>This button deletes the record currently selected in the database</source>
         <translation>Эта кнопка удаляет выбранную запись</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="163"/>
+        <location filename="../MainWindow.ui" line="177"/>
         <source>Delete Record</source>
         <translation>Удалить запись</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="172"/>
+        <location filename="../MainWindow.ui" line="186"/>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
         <translation>Это представление базы данных. Сделайте двойной щелчок по любой записи, чтобы отредактировать её содержимое.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="190"/>
+        <location filename="../MainWindow.ui" line="204"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прокрутить к началу&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="193"/>
+        <location filename="../MainWindow.ui" line="207"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки переводит к началу в таблице выше.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="196"/>
+        <location filename="../MainWindow.ui" line="210"/>
         <source>|&lt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="206"/>
+        <location filename="../MainWindow.ui" line="220"/>
         <source>Scroll 100 records upwards</source>
         <translation>Прокрутить на 100 записей вверх</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="209"/>
+        <location filename="../MainWindow.ui" line="223"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки к перемещению на 100 записей вверх в табличном представлении выше&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="212"/>
+        <location filename="../MainWindow.ui" line="226"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="219"/>
+        <location filename="../MainWindow.ui" line="233"/>
         <source>0 - 0 of 0</source>
         <translation>0 - 0 из 0</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="229"/>
+        <location filename="../MainWindow.ui" line="243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прокрутить на 100 записей вниз&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="232"/>
+        <location filename="../MainWindow.ui" line="246"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки к перемещению на 100 записей вниз в табличном представлении выше&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="235"/>
+        <location filename="../MainWindow.ui" line="249"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="245"/>
+        <location filename="../MainWindow.ui" line="259"/>
         <source>Scroll to the end</source>
         <translation>Прокрутить к концу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="248"/>
+        <location filename="../MainWindow.ui" line="262"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Нажатие этой кнопки перемещает в конец таблицы выше.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="251"/>
+        <location filename="../MainWindow.ui" line="265"/>
         <source>&gt;|</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="271"/>
+        <location filename="../MainWindow.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажмите здесь, чтобы перейти к указанной записи&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="274"/>
+        <location filename="../MainWindow.ui" line="288"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка используется, чтобы переместиться к записи, номер которой указан в области Перейти к&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="277"/>
+        <location filename="../MainWindow.ui" line="291"/>
         <source>Go to:</source>
         <translation>Перейти к:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="284"/>
+        <location filename="../MainWindow.ui" line="298"/>
         <source>Enter record number to browse</source>
         <translation>Введите номер записи для просмотра</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="287"/>
+        <location filename="../MainWindow.ui" line="301"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
         <translation>Напечатайте номер записи в этой области и нажмите кнопку Перейти к:, чтобы отобразить запись в представлении базы данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="290"/>
+        <location filename="../MainWindow.ui" line="304"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="300"/>
+        <location filename="../MainWindow.ui" line="314"/>
         <source>Edit &amp;Pragmas</source>
-        <translation>Р&amp;едактирование PRAGMAS</translation>
+        <translation>&amp;Pragmas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="324"/>
+        <location filename="../MainWindow.ui" line="338"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="341"/>
+        <location filename="../MainWindow.ui" line="355"/>
         <source>None</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="346"/>
-        <location filename="../MainWindow.ui" line="663"/>
+        <location filename="../MainWindow.ui" line="360"/>
+        <location filename="../MainWindow.ui" line="677"/>
         <source>Full</source>
         <translatorcomment>Полный, целый</translatorcomment>
         <translation>Full</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="351"/>
+        <location filename="../MainWindow.ui" line="365"/>
         <source>Incremental</source>
         <translation>Incremental</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="359"/>
+        <location filename="../MainWindow.ui" line="373"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="379"/>
+        <location filename="../MainWindow.ui" line="393"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="399"/>
+        <location filename="../MainWindow.ui" line="413"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="419"/>
+        <location filename="../MainWindow.ui" line="433"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="439"/>
+        <location filename="../MainWindow.ui" line="453"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="459"/>
+        <location filename="../MainWindow.ui" line="473"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="473"/>
+        <location filename="../MainWindow.ui" line="487"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="478"/>
+        <location filename="../MainWindow.ui" line="492"/>
         <source>Truncate</source>
         <translation>Truncate</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="483"/>
+        <location filename="../MainWindow.ui" line="497"/>
         <source>Persist</source>
         <translation>Persist</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="488"/>
-        <location filename="../MainWindow.ui" line="695"/>
+        <location filename="../MainWindow.ui" line="502"/>
+        <location filename="../MainWindow.ui" line="709"/>
         <source>Memory</source>
         <translation>Memory</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="493"/>
+        <location filename="../MainWindow.ui" line="507"/>
         <source>WAL</source>
         <translation>WAL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="498"/>
-        <location filename="../MainWindow.ui" line="653"/>
+        <location filename="../MainWindow.ui" line="512"/>
+        <location filename="../MainWindow.ui" line="667"/>
         <source>Off</source>
         <translation>Off</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="506"/>
+        <location filename="../MainWindow.ui" line="520"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="529"/>
+        <location filename="../MainWindow.ui" line="543"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="543"/>
-        <location filename="../MainWindow.ui" line="658"/>
+        <location filename="../MainWindow.ui" line="557"/>
+        <location filename="../MainWindow.ui" line="672"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="548"/>
+        <location filename="../MainWindow.ui" line="562"/>
         <source>Exclusive</source>
         <translation>Exclusive</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="556"/>
+        <location filename="../MainWindow.ui" line="570"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="576"/>
+        <location filename="../MainWindow.ui" line="590"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="599"/>
+        <location filename="../MainWindow.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="619"/>
+        <location filename="../MainWindow.ui" line="633"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="639"/>
+        <location filename="../MainWindow.ui" line="653"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="671"/>
+        <location filename="../MainWindow.ui" line="685"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="685"/>
+        <location filename="../MainWindow.ui" line="699"/>
         <source>Default</source>
         <translation>Default</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="690"/>
+        <location filename="../MainWindow.ui" line="704"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="703"/>
+        <location filename="../MainWindow.ui" line="717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="723"/>
+        <location filename="../MainWindow.ui" line="737"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="758"/>
+        <location filename="../MainWindow.ui" line="772"/>
         <source>E&amp;xecute SQL</source>
-        <translation>&amp;Выполнение кода SQL</translation>
+        <translation>&amp;Выполнение SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="804"/>
+        <location filename="../MainWindow.ui" line="818"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="808"/>
+        <location filename="../MainWindow.ui" line="822"/>
         <source>&amp;Import</source>
         <translation>&amp;Импорт</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="815"/>
+        <location filename="../MainWindow.ui" line="829"/>
         <source>&amp;Export</source>
         <translation>&amp;Экспорт</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="841"/>
+        <location filename="../MainWindow.ui" line="855"/>
         <source>&amp;Edit</source>
         <translation>&amp;Редактирование</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="851"/>
+        <location filename="../MainWindow.ui" line="865"/>
         <source>&amp;View</source>
         <translation>&amp;Просмотр</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="859"/>
+        <location filename="../MainWindow.ui" line="873"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="875"/>
+        <location filename="../MainWindow.ui" line="889"/>
         <source>DB Toolbar</source>
         <translation>Панель инструментов БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1294"/>
+        <location filename="../MainWindow.ui" line="1308"/>
         <source>Table(s) as CSV file...</source>
-        <translation>Таблица как файл CSV...</translation>
+        <translation>Таблицу в файл CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1565"/>
+        <location filename="../MainWindow.ui" line="1579"/>
         <source>&amp;Attach Database</source>
         <translation>&amp;Прикрепить базу данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1574"/>
+        <location filename="../MainWindow.ui" line="1588"/>
         <source>Set Encryption</source>
         <translation>Шифрование</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1583"/>
-        <location filename="../MainWindow.ui" line="1586"/>
+        <location filename="../MainWindow.ui" line="1597"/>
+        <location filename="../MainWindow.ui" line="1600"/>
         <source>Save SQL file as</source>
         <translation>Сохранить файл SQL как</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1607"/>
+        <location filename="../MainWindow.ui" line="1621"/>
         <source>&amp;Browse Table</source>
         <translation>Пр&amp;осмотр данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="897"/>
+        <location filename="../MainWindow.ui" line="911"/>
         <source>SQL Log</source>
         <translation>Журнал SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="909"/>
+        <location filename="../MainWindow.ui" line="131"/>
+        <source>Clear all filters</source>
+        <translation>Очистить все фильтры</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="923"/>
         <source>&amp;Show SQL submitted by</source>
         <translation>По&amp;казывать SQL, предоставленный</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="920"/>
+        <location filename="../MainWindow.ui" line="934"/>
         <source>User</source>
         <translation>Пользователем</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="925"/>
+        <location filename="../MainWindow.ui" line="939"/>
         <source>Application</source>
         <translation>Приложением</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="946"/>
+        <location filename="../MainWindow.ui" line="960"/>
         <source>&amp;Clear</source>
         <translation>О&amp;чистить</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="989"/>
+        <location filename="../MainWindow.ui" line="1003"/>
         <source>Plot</source>
         <translation>График</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1019"/>
+        <location filename="../MainWindow.ui" line="1033"/>
         <source>Columns</source>
         <translation>Столбцы</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1024"/>
+        <location filename="../MainWindow.ui" line="1038"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1029"/>
+        <location filename="../MainWindow.ui" line="1043"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1034"/>
+        <location filename="../MainWindow.ui" line="1048"/>
         <source>_</source>
         <translation>_</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1079"/>
+        <location filename="../MainWindow.ui" line="1093"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Сохранить текущий график...&lt;/p&gt;&lt;p&gt;Формат файла выбирается расширением (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1082"/>
+        <location filename="../MainWindow.ui" line="1096"/>
         <source>Save current plot...</source>
         <translation>Сохранить текущий график...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1116"/>
+        <location filename="../MainWindow.ui" line="1130"/>
         <source>DB Schema</source>
         <translation>Схема БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1145"/>
+        <location filename="../MainWindow.ui" line="1159"/>
         <source>&amp;New Database...</source>
         <translation>&amp;Новая база данных...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1148"/>
-        <location filename="../MainWindow.ui" line="1151"/>
+        <location filename="../MainWindow.ui" line="1162"/>
+        <location filename="../MainWindow.ui" line="1165"/>
         <source>Create a new database file</source>
         <translation>Создать новый файл базы данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1154"/>
+        <location filename="../MainWindow.ui" line="1168"/>
         <source>This option is used to create a new database file.</source>
         <translation>Эта опция используется, чтобы создать новый файл базы данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1157"/>
+        <location filename="../MainWindow.ui" line="1171"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1166"/>
+        <location filename="../MainWindow.ui" line="1180"/>
         <source>&amp;Open Database...</source>
         <translation>&amp;Открыть базу данных...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1169"/>
-        <location filename="../MainWindow.ui" line="1172"/>
+        <location filename="../MainWindow.ui" line="1183"/>
+        <location filename="../MainWindow.ui" line="1186"/>
         <source>Open an existing database file</source>
         <translation>Открыть существующий файл базы данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1175"/>
+        <location filename="../MainWindow.ui" line="1189"/>
         <source>This option is used to open an existing database file.</source>
         <translation>Эта опция используется, чтобы открыть существующий файл базы данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1178"/>
+        <location filename="../MainWindow.ui" line="1192"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1186"/>
+        <location filename="../MainWindow.ui" line="1200"/>
         <source>&amp;Close Database</source>
         <translation>&amp;Закрыть базу данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1189"/>
+        <location filename="../MainWindow.ui" line="1203"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1201"/>
+        <location filename="../MainWindow.ui" line="1215"/>
         <source>Revert Changes</source>
         <translation>Отменить изменения</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1204"/>
+        <location filename="../MainWindow.ui" line="1218"/>
         <source>Revert database to last saved state</source>
         <translation>Вернуть базу данных в последнее сохранённое состояние</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1207"/>
+        <location filename="../MainWindow.ui" line="1221"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>Эта опция используется, чтобы вернуть текущий файл базы данных в его последнее сохранённое состояние. Все изменения, сделаные с последней операции сохранения теряются.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1219"/>
+        <location filename="../MainWindow.ui" line="1233"/>
         <source>Write Changes</source>
         <translation>Записать изменения</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1222"/>
+        <location filename="../MainWindow.ui" line="1236"/>
         <source>Write changes to the database file</source>
         <translation>Записать изменения в файл базы данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1225"/>
+        <location filename="../MainWindow.ui" line="1239"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>Эта опция используется, чтобы сохранить изменения в файле базы данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1228"/>
+        <location filename="../MainWindow.ui" line="1242"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1236"/>
+        <location filename="../MainWindow.ui" line="1250"/>
         <source>Compact Database</source>
         <translation>Уплотнить базу данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1239"/>
+        <location filename="../MainWindow.ui" line="1253"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>Уплотнить базу данных, удаляя пространство, занимаемое удалёнными записями</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1242"/>
-        <location filename="../MainWindow.ui" line="1245"/>
+        <location filename="../MainWindow.ui" line="1256"/>
+        <location filename="../MainWindow.ui" line="1259"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
         <translation>Уплотнить базу данных, удаляя пространство, занимаемое удалёнными записями.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1250"/>
+        <location filename="../MainWindow.ui" line="1264"/>
         <source>E&amp;xit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1253"/>
+        <location filename="../MainWindow.ui" line="1267"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1261"/>
+        <location filename="../MainWindow.ui" line="1275"/>
         <source>Database from SQL file...</source>
         <translation>База данных из файла SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1264"/>
+        <location filename="../MainWindow.ui" line="1278"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>Импортировать данные из текстового файла sql в новую или существующую базу данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1267"/>
+        <location filename="../MainWindow.ui" line="1281"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Эта опция позволяет импортировать данные из текстового файла sql в новую или существующую базу данных. Файл SQL может быть создан на большинстве движков баз данных, включая MySQL и PostgreSQL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1272"/>
+        <location filename="../MainWindow.ui" line="1286"/>
         <source>Table from CSV file...</source>
-        <translation>Таблица из файла CSV...</translation>
+        <translation>Таблицy из файла CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1275"/>
+        <location filename="../MainWindow.ui" line="1289"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>Открыть мастер, который позволяет импортировать данные из файла CSV в таблицу базы данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1278"/>
+        <location filename="../MainWindow.ui" line="1292"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>Открыть мастер, который позволяет импортировать данные из файла CSV в таблицу базы данных. Файлы CSV могут быть созданы в большинстве приложений баз данных и  электронных таблиц.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1283"/>
+        <location filename="../MainWindow.ui" line="1297"/>
         <source>Database to SQL file...</source>
-        <translation>База данных в файл SQL...</translation>
+        <translation>Базу данных в файл SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1286"/>
+        <location filename="../MainWindow.ui" line="1300"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>Экспортировать базу данных в текстовый файл .sql.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1289"/>
+        <location filename="../MainWindow.ui" line="1303"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Эта опция позволяет экспортировать базу данных в текстовый файл .sql. Файлы SQL содержат все данные, необходимые для создания базы данных в большистве движков баз данных, включая MySQL и PostgreSQL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1297"/>
+        <location filename="../MainWindow.ui" line="1311"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>Экспортировать таблицу базы данных как CSV текстовый файл.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1300"/>
+        <location filename="../MainWindow.ui" line="1314"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>Экспортировать таблицу базы данных как CSV текстовый файл, готовый для импортирования в другие базы данных или приложения электронных таблиц.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1312"/>
+        <location filename="../MainWindow.ui" line="1326"/>
         <source>Create Table...</source>
         <translation>Создать таблицу...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1315"/>
+        <location filename="../MainWindow.ui" line="1329"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>Открыть мастер создания таблиц, где возможно определить имя и поля для новой таблиы в базе данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1327"/>
+        <location filename="../MainWindow.ui" line="1341"/>
         <source>Delete Table...</source>
         <translation>Удалить таблицу...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1333"/>
+        <location filename="../MainWindow.ui" line="1347"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>Открыть мастер удаления таблицы, где можно выбрать таблицу базы данных для удаления.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1345"/>
+        <location filename="../MainWindow.ui" line="1359"/>
         <source>Modify Table...</source>
         <translation>Изменить таблицу...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1348"/>
+        <location filename="../MainWindow.ui" line="1362"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>Открыть мастер изменения таблицы, где возможно переименовать существующую таблиц. Можно добавить или удалить поля таблицы, так же изменять имена полей и типы.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1360"/>
+        <location filename="../MainWindow.ui" line="1374"/>
         <source>Create Index...</source>
         <translation>Создать индекс...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1363"/>
+        <location filename="../MainWindow.ui" line="1377"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>Открыть мастер создания интекса, в котором можно определить новый индекс для существующей таблиц базы данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1372"/>
+        <location filename="../MainWindow.ui" line="1386"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1375"/>
-        <location filename="../MainWindow.ui" line="1378"/>
+        <location filename="../MainWindow.ui" line="1389"/>
+        <location filename="../MainWindow.ui" line="1392"/>
         <source>Open the preferences window.</source>
         <translation>Открыть окно настроек.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1389"/>
+        <location filename="../MainWindow.ui" line="1403"/>
         <source>&amp;DB Toolbar</source>
         <translation>&amp;Панель инструментов БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1392"/>
+        <location filename="../MainWindow.ui" line="1406"/>
         <source>Shows or hides the Database toolbar.</source>
         <translation>Показать или скрыть панель инструментов База данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1401"/>
+        <location filename="../MainWindow.ui" line="1415"/>
         <source>What&apos;s This?</source>
         <translation>Что это такое?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1404"/>
+        <location filename="../MainWindow.ui" line="1418"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1409"/>
+        <location filename="../MainWindow.ui" line="1423"/>
         <source>&amp;About...</source>
         <translation>О &amp;программе...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1417"/>
+        <location filename="../MainWindow.ui" line="1431"/>
         <source>&amp;Recently opened</source>
         <translation>&amp;Недавно открываемые</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1426"/>
+        <location filename="../MainWindow.ui" line="1440"/>
         <source>Open &amp;tab</source>
         <translation>Открыть &amp;вкладку</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1429"/>
+        <location filename="../MainWindow.ui" line="1443"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1438"/>
+        <location filename="../MainWindow.ui" line="1452"/>
         <source>&amp;Execute SQL</source>
         <translation>В&amp;ыполнить код SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1441"/>
+        <location filename="../MainWindow.ui" line="1455"/>
         <source>Execute SQL [F5, Ctrl+Return]</source>
         <translation>Выполнить код SQL [F5, Ctrl+Return]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1453"/>
+        <location filename="../MainWindow.ui" line="1467"/>
         <source>Open SQL file</source>
         <translation>Открыть файл SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1462"/>
-        <location filename="../MainWindow.ui" line="1595"/>
-        <location filename="../MainWindow.ui" line="1598"/>
+        <location filename="../MainWindow.ui" line="1476"/>
+        <location filename="../MainWindow.ui" line="1609"/>
+        <location filename="../MainWindow.ui" line="1612"/>
         <source>Save SQL file</source>
         <translation>Сохранить файл SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1474"/>
+        <location filename="../MainWindow.ui" line="1488"/>
         <source>Load extension</source>
         <translation>Загрузить расширение</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1483"/>
+        <location filename="../MainWindow.ui" line="1497"/>
         <source>Execute current line</source>
         <translation>Выполнить текущую строку</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1486"/>
+        <location filename="../MainWindow.ui" line="1500"/>
         <source>Execute current line [Ctrl+E]</source>
         <translation>Выполнить текущую строку [Ctrl+E]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1489"/>
+        <location filename="../MainWindow.ui" line="1503"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1497"/>
+        <location filename="../MainWindow.ui" line="1511"/>
         <source>Export as CSV file</source>
         <translation>Экспортировать в файл CSV</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1500"/>
+        <location filename="../MainWindow.ui" line="1514"/>
         <source>Export table as comma separated values file</source>
         <translation>Экспортировать таблицу как CSV файл</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1509"/>
+        <location filename="../MainWindow.ui" line="1523"/>
         <source>&amp;Wiki...</source>
         <translation>В&amp;ики...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1518"/>
+        <location filename="../MainWindow.ui" line="1532"/>
         <source>Bug &amp;report...</source>
         <translation>&amp;Отчёт об ошибке...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1527"/>
+        <location filename="../MainWindow.ui" line="1541"/>
         <source>Web&amp;site...</source>
         <translation>&amp;Веб-сайт...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1536"/>
+        <location filename="../MainWindow.ui" line="1550"/>
         <source>Save Project</source>
         <translation>Сохранить проект</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1539"/>
-        <location filename="../MainWindow.ui" line="1542"/>
+        <location filename="../MainWindow.ui" line="1553"/>
+        <location filename="../MainWindow.ui" line="1556"/>
         <source>Save the current session to a file</source>
         <translation>Сохранить текущее состояние в файл </translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1551"/>
+        <location filename="../MainWindow.ui" line="1565"/>
         <source>Open Project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1554"/>
-        <location filename="../MainWindow.ui" line="1557"/>
+        <location filename="../MainWindow.ui" line="1568"/>
+        <location filename="../MainWindow.ui" line="1571"/>
         <source>Load a working session from a file</source>
         <translation>Загрузить рабочее состояние из файла</translation>
     </message>
@@ -1829,7 +1834,7 @@ All data currently stored in this field will be lost.</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="203"/>
-        <location filename="../MainWindow.cpp" line="2009"/>
+        <location filename="../MainWindow.cpp" line="2010"/>
         <source>Choose a database file</source>
         <translation>Выбрать файл базы данных</translation>
     </message>
@@ -1841,8 +1846,8 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="245"/>
         <location filename="../MainWindow.cpp" line="918"/>
-        <location filename="../MainWindow.cpp" line="1716"/>
-        <location filename="../MainWindow.cpp" line="1925"/>
+        <location filename="../MainWindow.cpp" line="1717"/>
+        <location filename="../MainWindow.cpp" line="1926"/>
         <source>Choose a filename to save under</source>
         <translation>Выбрать имя, под которым сохранить данные</translation>
     </message>
@@ -1898,13 +1903,13 @@ All data associated with the %1 will be lost.</source>
         <translation>%1 Строки возвращены из: %3 (заняло %2мс)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1427"/>
+        <location filename="../MainWindow.cpp" line="1428"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Вышла новая версия Обозревателя для SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Она доступна для скачивания по адресу &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1787"/>
-        <location filename="../MainWindow.cpp" line="1926"/>
+        <location filename="../MainWindow.cpp" line="1788"/>
+        <location filename="../MainWindow.cpp" line="1927"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Файл проекта Обозревателя для SQLite (*.sqbpro)</translation>
     </message>
@@ -1945,8 +1950,8 @@ All data associated with the %1 will be lost.</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="902"/>
-        <location filename="../MainWindow.cpp" line="1252"/>
-        <location filename="../MainWindow.cpp" line="1298"/>
+        <location filename="../MainWindow.cpp" line="1253"/>
+        <location filename="../MainWindow.cpp" line="1299"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Текстовые файлы(*.sql *.txt);;Все файлы(*)</translation>
     </message>
@@ -1988,7 +1993,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation>Удалить индекс</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1330"/>
+        <location filename="../MainWindow.ui" line="1344"/>
         <location filename="../MainWindow.cpp" line="995"/>
         <source>Delete Table</source>
         <translation>Удалить таблицу</translation>
@@ -1999,64 +2004,64 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1180"/>
+        <location filename="../MainWindow.cpp" line="1181"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>Установка значений PRAGMA завершит текущую транзакцию. Установить значения?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1251"/>
+        <location filename="../MainWindow.cpp" line="1252"/>
         <source>Select SQL file to open</source>
         <translation>Выбрать файл SQL для октрытия</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1297"/>
+        <location filename="../MainWindow.cpp" line="1298"/>
         <source>Select file name</source>
         <translation>Выбрать имя файла</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1312"/>
+        <location filename="../MainWindow.cpp" line="1313"/>
         <source>Select extension file</source>
         <translation>Выбрать расширение файла</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1313"/>
+        <location filename="../MainWindow.cpp" line="1314"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Расширения(*.so *.dll);;Все файлы(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1319"/>
+        <location filename="../MainWindow.cpp" line="1320"/>
         <source>Extension successfully loaded.</source>
         <translation>Расширение успешно загружено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1321"/>
-        <location filename="../MainWindow.cpp" line="1333"/>
+        <location filename="../MainWindow.cpp" line="1322"/>
+        <location filename="../MainWindow.cpp" line="1334"/>
         <source>Error loading extension: %1</source>
         <translation>Ошибка загрузки расширения: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1423"/>
+        <location filename="../MainWindow.cpp" line="1424"/>
         <source>Don&apos;t show again</source>
         <translation>Не показывать снова</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1426"/>
+        <location filename="../MainWindow.cpp" line="1427"/>
         <source>New version available.</source>
         <translation>Доступна новая версия.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1695"/>
+        <location filename="../MainWindow.cpp" line="1696"/>
         <source>Choose a axis color</source>
         <translation>Выбрать цвет осей</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1717"/>
+        <location filename="../MainWindow.cpp" line="1718"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Все файлы(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1786"/>
+        <location filename="../MainWindow.cpp" line="1787"/>
         <source>Choose a file to open</source>
         <translation>Выбрать файл для открытия</translation>
     </message>
@@ -2271,31 +2276,36 @@ Are you sure?</source>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="654"/>
+        <source>SQL editor &amp;font</source>
+        <translation>&amp;Шрифт в редакторе SQL</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="670"/>
         <source>&amp;Extensions</source>
         <translation>Р&amp;асширения</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="660"/>
+        <location filename="../PreferencesDialog.ui" line="676"/>
         <source>Select extensions to load for every database:</source>
         <translation>Выберите расширения, чтобы загружать их для каждой базы данных:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="681"/>
+        <location filename="../PreferencesDialog.ui" line="697"/>
         <source>Add extension</source>
         <translation>Добавить расширение</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="692"/>
+        <location filename="../PreferencesDialog.ui" line="708"/>
         <source>Remove extension</source>
         <translation>Удалить расширение</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="720"/>
+        <location filename="../PreferencesDialog.ui" line="736"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозреватель для SQLite позволяет использовать оператор REGEXP &apos;из коробки&apos;. Но тем &lt;br/&gt;не менее, возможны несколько различных вариантов реализаций данного оператора и вы свободны &lt;br/&gt;в выборе какую именно использовать. Можно отключить нашу реализацию и использовать другую - &lt;br/&gt;путем загрузки соответсвующего расширения. В этом случае требуется перезагрузка приложения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="723"/>
+        <location filename="../PreferencesDialog.ui" line="739"/>
         <source>Disable Regular Expression extension</source>
         <translation>Отключить расширение Регулярных Выражений</translation>
     </message>
@@ -2305,17 +2315,17 @@ Are you sure?</source>
         <translation>Выберать каталог</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="135"/>
+        <location filename="../PreferencesDialog.cpp" line="137"/>
         <source>The language will change after you restart the application.</source>
         <translation>Язык будет применен после перезапуска приложения.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="357"/>
+        <location filename="../PreferencesDialog.cpp" line="363"/>
         <source>Select extension file</source>
         <translation>Выберать файл расширения</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="358"/>
+        <location filename="../PreferencesDialog.cpp" line="364"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Расширения(*.so *.dll);;Все файлы(*)</translation>
     </message>
@@ -2421,197 +2431,197 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="60"/>
         <source>(X) The abs(X) function returns the absolute value of the numeric argument X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция abs(X) возвращает модуль числа аргумента X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="61"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Функция changes() возвращает количество строк в базе данных, которые были изменены, вставлены или удалены после удачного выполнения INSERT, DELETE или UPDATE.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="62"/>
         <source>(X1,X2,...) The char(X1,X2,...,XN) function returns a string composed of characters having the unicode code point values of integers X1 through XN, respectively. </source>
-        <translation type="unfinished"></translation>
+        <translation>(X1,X2,...) Функция char(X1,X2,...,XN) возвращает строку составленную из символов, переданных в качестве аргументов. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="63"/>
         <source>(X,Y,...) The coalesce() function returns a copy of its first non-NULL argument, or NULL if all arguments are NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,...) Функция coalesce() возвращает копию первого аргумента не равного NULL иначе если такого нет то возвращается NULL</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="64"/>
         <source>(X,Y) The glob(X,Y) function is equivalent to the expression &quot;Y GLOB X&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция glob(X,Y) эквивалент выражению &quot;Y GLOB X&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="65"/>
         <source>(X,Y) The ifnull() function returns a copy of its first non-NULL argument, or NULL if both arguments are NULL.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция ifnull() возвращает копию первого аргумента не равного NULL иначе если оба аргумента равны NULL то возвращает NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="66"/>
         <source>(X,Y) The instr(X,Y) function finds the first occurrence of string Y within string X and returns the number of prior characters plus 1, or 0 if Y is nowhere found within X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция instr(X,Y) возвращает количество символов, начиная с которого в строке X найденна подстрока Y или 0 если таковая не обнаружена.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="67"/>
         <source>(X) The hex() function interprets its argument as a BLOB and returns a string which is the upper-case hexadecimal rendering of the content of that blob.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция hex() интерпретирует аргумент как BLOB и возвращает строку в 16-ричной системе счисления с содержимым аргумента.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
         <source>() The last_insert_rowid() function returns the ROWID of the last row insert from the database connection which invoked the function.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Функция last_insert_rowid() возвращает ROWID последней вставленной строки.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="69"/>
         <source>(X) For a string value X, the length(X) function returns the number of characters (not bytes) in X prior to the first NUL character.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Для строкового значения X, функция length(X) возвращает количество символов (не байт) от начала строки до первого символа &apos;\0&apos;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="70"/>
         <source>(X,Y) The like() function is used to implement the &quot;Y LIKE X&quot; expression.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Фукнция like() эквивалент выражению &quot;Y LIKE X&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="71"/>
         <source>(X,Y,Z) The like() function is used to implement the &quot;Y LIKE X ESCAPE Z&quot; expression.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,Z) Функция like() эквивалент выражения &quot;Y LIKE X ESCAPE Z&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="72"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция load_extension(X) загружает расширение SQLite из файла библиотеки динамической компоновки X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="73"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция load_extension(X,Y) загружает расширение SQLite из файла библиотеки динамической компоновки X, используя точку входа Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="74"/>
         <source>(X) The lower(X) function returns a copy of string X with all ASCII characters converted to lower case.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция lower(X) возвращает копию строки X, в которой все ACSII символы переведены в нижний регистр.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="75"/>
         <source>(X) ltrim(X) removes spaces from the left side of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) ltrim(X) удаляет символы пробелов слева для строки X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="76"/>
         <source>(X,Y) The ltrim(X,Y) function returns a string formed by removing any and all characters that appear in Y from the left side of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция ltrim(X,Y) возвращает новую строку путем удаления из строки X слева любого символа из Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="77"/>
         <source>(X,Y,...) The multi-argument max() function returns the argument with the maximum value, or return NULL if any argument is NULL.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,...) Функция max() возвращает аргумент с максимальным значением, либо NULL если хотябы один аргумент равен NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="78"/>
         <source>(X,Y,...) The multi-argument min() function returns the argument with the minimum value.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,...) Функция min() возвращает аргумент с минимальным значением.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X,Y) The nullif(X,Y) function returns its first argument if the arguments are different and NULL if the arguments are the same.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция nullif(X,Y) возвращает первый аргумент если аргументы различны либо NULL если они одинаковы.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>(FORMAT,...) The printf(FORMAT,...) SQL function works like the sqlite3_mprintf() C-language function and the printf() function from the standard C library.</source>
-        <translation type="unfinished"></translation>
+        <translation>(FORMAT,...) Функция printf(FORMAT,...) работает так же как printf() из стандартной библиотеки языка программирования Си.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция quote(X) возвращает измененную строку X, которую можно использовать в SQL выражениях.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="82"/>
         <source>() The random() function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Функция random() возвращает псевдо случайное целочисленное значение из диапозона от-9223372036854775808 до +9223372036854775807.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="83"/>
         <source>(N) The randomblob(N) function return an N-byte blob containing pseudo-random bytes.</source>
-        <translation type="unfinished"></translation>
+        <translation>(N) Функция randomblob(N) возвращает N-байтный BLOB, содержащий псевдо случайные байты.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="84"/>
         <source>(X,Y,Z) The replace(X,Y,Z) function returns a string formed by substituting string Z for every occurrence of string Y in string X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,Z) Функция replace(X,Y,Z) возвращает новую строку на основе строки X, заменой всех подстрок Y на Z.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="85"/>
         <source>(X) The round(X) function returns a floating-point value X rounded to zero digits to the right of the decimal point.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция round(X) округляет X до целого значения.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="86"/>
         <source>(X,Y) The round(X,Y) function returns a floating-point value X rounded to Y digits to the right of the decimal point.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция round(X,Y) округляет X до Y чисел после запятой справа.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
         <source>(X) rtrim(X) removes spaces from the right side of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) rtrim(X) удаляет символы пробела справа строки X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
         <source>(X,Y) The rtrim(X,Y) function returns a string formed by removing any and all characters that appear in Y from the right side of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция rtrim(X,Y) возвращает новую строку путем удаления из строки X справа любого символа из строки Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="89"/>
         <source>(X) The soundex(X) function returns a string that is the soundex encoding of the string X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция soundex(X) возвращает копию строки X, кодированную в формате soundex.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="90"/>
         <source>(X,Y) substr(X,Y) returns all characters through the end of the string X beginning with the Y-th.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) substr(X,Y) возвращает подстроку из строки X, начиная с Y-го символа.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="91"/>
         <source>(X,Y,Z) The substr(X,Y,Z) function returns a substring of input string X that begins with the Y-th character and which is Z characters long.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,Z) Функция substr(X,Y,Z) возвращает подстроку из строки X, начиная с Y-го символа, длинной Z-символов.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="92"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Функция total_changes() возвращает количество строк измененных с помощью INSERT, UPDATE или DELETE, начиная с того момента как текущее подключение к базе данных было открыто.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="93"/>
         <source>(X) trim(X) removes spaces from both ends of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) trim(X) удаляет пробелы с обоих сторон строки X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="94"/>
         <source>(X,Y) The trim(X,Y) function returns a string formed by removing any and all characters that appear in Y from both ends of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция trim(X,Y) создает новую строку из X, путем удаления с обоих концов символов, которые присутсвуют в строке Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="95"/>
         <source>(X) The typeof(X) function returns a string that indicates the datatype of the expression X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция typeof(X) возвращает строку с типом данных выражения X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="96"/>
         <source>(X) The unicode(X) function returns the numeric unicode code point corresponding to the first character of the string X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция unicode(X) возвращает числовое значение UNICODE кода символа.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="97"/>
         <source>(X) The upper(X) function returns a copy of input string X in which all lower-case ASCII characters are converted to their upper-case equivalent.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция upper(X) возвращает копию строки X, в которой для каждого ASCII символа регистр будет перобразован из нижнего в верхний.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="98"/>
         <source>(N) The zeroblob(N) function returns a BLOB consisting of N bytes of 0x00.</source>
-        <translation type="unfinished"></translation>
+        <translation>(N) Функция zeroblob(N) возвращает BLOB размером N байт со значениями 0x00.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="100"/>
@@ -2619,48 +2629,48 @@ Create a backup!</source>
         <location filename="../SqlUiLexer.cpp" line="102"/>
         <location filename="../SqlUiLexer.cpp" line="103"/>
         <source>(timestring,modifier,modifier,...)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="104"/>
         <source>(format,timestring,modifier,modifier,...)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="106"/>
         <source>(X) The avg() function returns the average value of all non-NULL X within a group.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция avg() возвращает среднее значение для всех не равных NULL значений группы.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="107"/>
         <source>(X) The count(X) function returns a count of the number of times that X is not NULL in a group.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция count(X) возвращает количесвто строк, в которых X не равно NULL в группе.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="108"/>
         <source>(X) The group_concat() function returns a string which is the concatenation of all non-NULL values of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция group_concat() возвращает строку из всех значений X не равных NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="109"/>
         <source>(X,Y) The group_concat() function returns a string which is the concatenation of all non-NULL values of X. If parameter Y is present then it is used as the separator between instances of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция group_concat() возвращает строку из всех значений X не равных NULL. Y - разделитель между значениями X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="110"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Аггрегатная функция max() возвращает максимальное значение для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="111"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Аггрегатная функция min() возвращает минимальное значение для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
         <location filename="../SqlUiLexer.cpp" line="113"/>
         <source>(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Аггрегатные функции sum() и total() возвращают сумму всех не NULL значений для X.</translation>
     </message>
 </context>
 <context>
