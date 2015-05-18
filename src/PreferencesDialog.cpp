@@ -394,8 +394,10 @@ void PreferencesDialog::fillLanguageBox()
                                       "en_US");
     }
 
-    // append availeble *.qm files from translation dir near executable
-    foreach(const QFileInfo &file, translationsDir.entryInfoList())
+    // Get available *.qm files from translation dir near executable as well as from resources
+    QFileInfoList file_infos = translationsDir.entryInfoList();
+    file_infos += QDir(":/translations").entryInfoList();
+    foreach(const QFileInfo &file, file_infos)
     {
         QLocale locale(file.baseName().remove("sqlb_"));
 
@@ -403,25 +405,7 @@ void PreferencesDialog::fillLanguageBox()
         if(locale.name() == "C")
             continue;
 
-        QString language = QLocale::languageToString(locale.language()) + " (" +
-                           QLocale::countryToString(locale.country()) + ")";
-
-        if (locale == systemLocale)
-            language += " [System language]";
-
-        ui->languageComboBox->addItem(QIcon(":/flags/" + locale.name()), language, locale.name());
-    }
-
-    // append *.qm files from resources
-    foreach (const QFileInfo &file, QDir(":/translations").entryInfoList())
-    {
-        QLocale locale(file.baseName().remove("sqlb_"));
-
-        // Skip invalid locales
-        if(locale.name() == "C")
-            continue;
-
-        // Translation for this locale already loaded in previous foreach
+        // Skip translations that were already loaded
         if (ui->languageComboBox->findData(locale.name(), Qt::UserRole, Qt::MatchExactly) != -1)
             continue;
 
