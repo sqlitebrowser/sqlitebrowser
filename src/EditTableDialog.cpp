@@ -105,7 +105,15 @@ void EditTableDialog::populateFields()
         tbitem->setCheckState(kPrimaryKey, f->primaryKey() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kUnique, f->unique() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setText(kDefault, f->defaultValue());
+
+        // For the default value check if it is surrounded by parantheses and if that's the case
+        // add a '=' character before the entire string to match the input format we're expecting
+        // from the user when using functions in the default value field.
+        if(f->defaultValue().startsWith('(') && f->defaultValue().endsWith(')'))
+            tbitem->setText(kDefault, "=" + f->defaultValue());
+        else
+            tbitem->setText(kDefault, f->defaultValue());
+
         tbitem->setText(kCheck, f->check());
         tbitem->setText(kForeignKey, f->foreignKey());
         ui->treeWidget->addTopLevelItem(tbitem);
