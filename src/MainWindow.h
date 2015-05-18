@@ -176,6 +176,7 @@ private slots:
     void editEncryption();
     void switchToBrowseDataTab();
     void on_buttonClearFilters_clicked();
+    void copyCurrentCreateStatement();
 };
 
 #endif

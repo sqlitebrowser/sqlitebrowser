@@ -107,6 +107,7 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->editModifyTableAction);
     popupTableMenu->addAction(ui->editDeleteObjectAction);
     popupTableMenu->addSeparator();
+    popupTableMenu->addAction(ui->actionEditCopyCreateStatement);
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
     popupSaveSqlFileMenu = new QMenu(this);
@@ -2094,4 +2095,17 @@ void MainWindow::switchToBrowseDataTab()
 void MainWindow::on_buttonClearFilters_clicked()
 {
     ui->dataTable->filterHeader()->clearFilters();
+}
+
+void MainWindow::copyCurrentCreateStatement()
+{
+    // Cancel if no field is currently selected
+    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+        return;
+
+    // Get the CREATE statement from the Schema column
+    QString stmt = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 3)).toString();
+
+    // Copy the statement to the global application clipboard
+    QApplication::clipboard()->setText(stmt);
 }

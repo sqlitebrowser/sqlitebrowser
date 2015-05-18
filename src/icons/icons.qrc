@@ -45,5 +45,6 @@
         <file alias="function">chart_curve.png</file>
         <file alias="keyword">cog.png</file>
         <file alias="clear_filters">clear_filters.png</file>
+        <file alias="copy">page_copy.png</file>
     </qresource>
 </RCC>
