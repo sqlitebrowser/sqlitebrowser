@@ -42,6 +42,7 @@
 #include <QInputDialog>
 #include <QProgressDialog>
 #include <QTextEdit>
+#include <QClipboard>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
