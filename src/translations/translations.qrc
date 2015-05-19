@@ -4,5 +4,6 @@
         <file alias="sqlb_de">sqlb_de.qm</file>
         <file alias="sqlb_fr">sqlb_fr.qm</file>
         <file alias="sqlb_zh">sqlb_zh.qm</file>
+        <file alias="sqlb_pt_BR">sqlb_pt_BR.qm</file>
     </qresource>
 </RCC>
