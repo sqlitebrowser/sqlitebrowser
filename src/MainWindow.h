@@ -177,6 +177,8 @@ private slots:
     void switchToBrowseDataTab();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();
+    void on_comboLineType_currentIndexChanged(int index);
+    void on_comboPointShape_currentIndexChanged(int index);
 };
 
 #endif
