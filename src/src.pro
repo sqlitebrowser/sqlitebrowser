@@ -102,7 +102,8 @@ TRANSLATIONS += \
     translations/sqlb_zh.ts \
     translations/sqlb_de.ts \
     translations/sqlb_fr.ts \
-    translations/sqlb_ru.ts
+    translations/sqlb_ru.ts \
+    translations/sqlb_pt_BR.ts
 
 CONFIG(sqlcipher) {
 	QMAKE_CXXFLAGS += -DENABLE_SQLCIPHER
