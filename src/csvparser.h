@@ -10,8 +10,7 @@ class QTextStream;
 /*!
  * \brief The CSVProgress class
  *
- * This is an abstract class you can provide overriden provde
- * to the CSVParser to get progress updates.
+ * This is an abstract class, an implementation of which you can pass to the CSVParser to get progress updates.
  */
 class CSVProgress
 {

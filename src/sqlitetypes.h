@@ -103,7 +103,7 @@ public:
      * @brief findField Finds a field and returns the index.
      * @param sname
      * @return The field index if the field was found.
-     *         -1 if field coulnd't be found.
+     *         -1 if field couldn't be found.
      */
     int findField(const QString& sname);
 

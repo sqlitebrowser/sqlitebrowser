@@ -34,7 +34,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     }
 
     // Sort list of tables and select the table specified in the
-    // selection parameter or all tables if table not specifed
+    // selection parameter or all tables if table not specified
     ui->listTables->model()->sort(0);
     if(selection.isEmpty())
     {

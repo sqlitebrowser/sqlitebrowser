@@ -106,7 +106,7 @@ void EditTableDialog::populateFields()
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kUnique, f->unique() ? Qt::Checked : Qt::Unchecked);
 
-        // For the default value check if it is surrounded by parantheses and if that's the case
+        // For the default value check if it is surrounded by parentheses and if that's the case
         // add a '=' character before the entire string to match the input format we're expecting
         // from the user when using functions in the default value field.
         if(f->defaultValue().startsWith('(') && f->defaultValue().endsWith(')'))
@@ -548,14 +548,14 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
 {
     if(without_rowid)
     {
-        // Before setting the without rowid flag, first perform a check to see if the table meets all thr required criteria for without rowid tables
+        // Before setting the without rowid flag, first perform a check to see if the table meets all the required criteria for without rowid tables
         int pk = m_table.findPk();
         if(pk == -1 || m_table.fields().at(pk)->autoIncrement())
         {
             QMessageBox::information(this, QApplication::applicationName(),
                                      tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
                                         " - Primary key flag set\n"
-                                        " - Auto incremenct disabled"));
+                                        " - Auto increment disabled"));
             ui->checkWithoutRowid->setChecked(false);
             return;
         }

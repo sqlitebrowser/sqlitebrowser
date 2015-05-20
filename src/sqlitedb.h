@@ -98,7 +98,7 @@ public:
      * @param name Name of the column to edit
      * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
      * @param move Set this to a value != 0 to move the new column to a different position
-     * @return true if renaming was successfull, false if not. In the latter case also lastErrorMessage is set
+     * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
     bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move = 0);
 

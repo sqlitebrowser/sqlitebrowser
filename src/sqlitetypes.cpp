@@ -33,7 +33,7 @@ bool Field::isText() const
             || norm.startsWith("varchar")
             || norm.startsWith("varying character")
             || norm.startsWith("nchar")
-            || norm.startsWith("native charactar")
+            || norm.startsWith("native character")
             || norm.startsWith("nvarchar")
             || norm == "text"
             || norm == "clob";

@@ -17,7 +17,7 @@ public:
     explicit CipherDialog(QWidget* parent, bool encrypt);
     ~CipherDialog();
 
-    // Allow read access  tothe input fields
+    // Allow read access to the input fields
     QString password() const;
     int pageSize() const;
 
