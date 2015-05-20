@@ -188,7 +188,7 @@ void MainWindow::init()
 #endif
 
 #ifndef ENABLE_SQLCIPHER
-    // Only show encrpytion menu action when SQLCipher support is enabled
+    // Only show encryption menu action when SQLCipher support is enabled
     ui->actionEncryption->setVisible(false);
 #endif
 }
@@ -1259,7 +1259,7 @@ void MainWindow::openSqlFile()
         QFile f(file);
         f.open(QIODevice::ReadOnly);
 
-        // Decide wether to open a new tab or take the current one
+        // Decide whether to open a new tab or take the current one
         unsigned int index;
         SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
         if(current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)

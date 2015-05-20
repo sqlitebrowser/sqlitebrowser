@@ -167,7 +167,7 @@ const char* SqlUiLexer::keywords(int set) const
 
 QStringList SqlUiLexer::autoCompletionWordSeparators() const
 {
-    // The only word seperator for auto completion in SQL is "." as in "tablename.columnname".
+    // The only word separator for auto completion in SQL is "." as in "tablename.columnname".
     // Because this isn't implemented in the default QScintilla SQL lexer for some reason we add it here.
 
     QStringList wl;

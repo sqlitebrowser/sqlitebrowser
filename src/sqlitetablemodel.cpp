@@ -89,7 +89,7 @@ QString removeComments(QString s)
     // a 'simple' regular expression. I know there're better ways to do this...
 
     // This function removes any single line comments (starting with '--') from a given string. It does
-    // so by going through the string character by character and trying to keep track of wether we currently
+    // so by going through the string character by character and trying to keep track of whether we currently
     // are in a string or identifier and only removing those parts starting with '--' which are in neither.
 
     QChar lastChar = 0;
