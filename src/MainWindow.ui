@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1037</width>
     <height>630</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="structure">
        <attribute name="title">
@@ -324,8 +324,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>294</width>
-             <height>444</height>
+             <width>472</width>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -809,8 +809,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
-     <height>19</height>
+     <width>1037</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1074,6 +1074,144 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Line type:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboLineType">
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Line</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>StepLeft</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>StepRight</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>StepCenter</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Impulse</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Point shape:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboPointShape">
+             <property name="currentIndex">
+              <number>5</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Dot</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Cross</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Plus</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Circle</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Disc</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Square</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Diamond</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Star</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Triangle</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>TriangleInverted</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>CrossSquare</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>PlusSquare</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>CrossCircle</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>PlusCircle</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Peace</string>
+              </property>
+             </item>
+            </widget>
+           </item>
            <item>
             <spacer name="horizontalSpacer_4">
              <property name="orientation">
@@ -1656,6 +1794,7 @@
   <tabstop>dbTreeWidget</tabstop>
   <tabstop>comboBrowseTable</tabstop>
   <tabstop>buttonRefresh</tabstop>
+  <tabstop>buttonClearFilters</tabstop>
   <tabstop>buttonNewRecord</tabstop>
   <tabstop>buttonDeleteRecord</tabstop>
   <tabstop>dataTable</tabstop>

@@ -163,6 +163,8 @@ void MainWindow::init()
     restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
     ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
+    ui->comboLineType->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "lineType").toInt());
+    ui->comboPointShape->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "pointShape").toInt());
 
     // plot widgets
     ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
@@ -432,6 +434,8 @@ void MainWindow::closeEvent( QCloseEvent* event )
         PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
         PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         PreferencesDialog::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
+        PreferencesDialog::setSettingsValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
+        PreferencesDialog::setSettingsValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -1624,8 +1628,8 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                 // set some graph styles, this could also be improved to let the user choose
                 // some styling
                 graph->setData(xdata, ydata);
-                graph->setLineStyle(QCPGraph::lsLine);
-                graph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
+                graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
+                graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)ui->comboPointShape->currentIndex(), 5));
 
                 // gather Y label column names
                 yAxisLabels << model->headerData(y, Qt::Horizontal).toString();
@@ -2109,4 +2113,32 @@ void MainWindow::copyCurrentCreateStatement()
 
     // Copy the statement to the global application clipboard
     QApplication::clipboard()->setText(stmt);
+}
+
+void MainWindow::on_comboLineType_currentIndexChanged(int index)
+{
+    Q_ASSERT(index >= QCPGraph::lsNone &&
+             index <= QCPGraph::lsImpulse);
+    QCPGraph::LineStyle lineStyle = (QCPGraph::LineStyle) index;
+    for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
+    {
+        QCPGraph * graph = ui->plotWidget->graph(i);
+        if (graph)
+            graph->setLineStyle(lineStyle);
+    }
+    ui->plotWidget->replot();
+}
+
+void MainWindow::on_comboPointShape_currentIndexChanged(int index)
+{
+    Q_ASSERT(index >= QCPScatterStyle::ssNone &&
+             index <  QCPScatterStyle::ssPixmap);
+    QCPScatterStyle::ScatterShape shape = (QCPScatterStyle::ScatterShape) index;
+    for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
+    {
+        QCPGraph * graph = ui->plotWidget->graph(i);
+        if (graph)
+            graph->setScatterStyle(QCPScatterStyle(shape, 5));
+    }
+    ui->plotWidget->replot();
 }

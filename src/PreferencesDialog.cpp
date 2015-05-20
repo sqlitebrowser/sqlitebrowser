@@ -300,6 +300,18 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "extension" && name == "disableregex")
         return false;
 
+    // PlotDock/lineType or pointShape?
+    if(group == "PlotDock")
+    {
+        // QCPGraph::lsLine
+        if(name == "lineType")
+            return 1;
+
+        // QCPScatterStyle::ssDisk
+        if(name == "pointShape")
+            return 5;
+    }
+
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
 }
