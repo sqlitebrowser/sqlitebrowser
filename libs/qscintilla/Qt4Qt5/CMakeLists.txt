@@ -75,27 +75,15 @@ set(QSCINTILLA_SRC
 )
 
 set(QSCINTILLA_HDR
-)
-
-set(QSCINTILLA_MOC_HDR
 	./Qsci/qsciglobal.h
-	./Qsci/qsciscintilla.h
-	./Qsci/qsciscintillabase.h
-	./Qsci/qsciabstractapis.h
-	./Qsci/qsciapis.h
 	./Qsci/qscicommand.h
 	./Qsci/qscicommandset.h
 	./Qsci/qscidocument.h
-	./Qsci/qscilexer.h
-	./Qsci/qscilexersql.h
-	./Qsci/qscimacro.h
 	./Qsci/qsciprinter.h
 	./Qsci/qscistyle.h
 	./Qsci/qscistyledtext.h
 	ListBoxQt.h
-	SciClasses.h
 	SciNamespace.h
-	ScintillaQt.h
 	../include/ILexer.h
 	../include/Platform.h
 	../include/SciLexer.h
@@ -143,6 +131,18 @@ set(QSCINTILLA_MOC_HDR
 	../src/UniConversion.h
 	../src/ViewStyle.h
 	../src/XPM.h
+)
+
+set(QSCINTILLA_MOC_HDR
+	./Qsci/qsciscintilla.h
+	./Qsci/qsciscintillabase.h
+	./Qsci/qsciabstractapis.h
+	./Qsci/qsciapis.h
+	./Qsci/qscilexer.h
+	./Qsci/qscilexersql.h
+	./Qsci/qscimacro.h
+	SciClasses.h
+	ScintillaQt.h
 )
 
 if(NOT USE_QT5)
