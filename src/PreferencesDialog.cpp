@@ -309,7 +309,7 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
 
         // QCPScatterStyle::ssDisk
         if(name == "pointShape")
-            return 5;
+            return 4;
     }
 
     // Unknown combination of group and name? Return an invalid QVariant!

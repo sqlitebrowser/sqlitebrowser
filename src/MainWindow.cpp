@@ -1629,7 +1629,10 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                 // some styling
                 graph->setData(xdata, ydata);
                 graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
-                graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)ui->comboPointShape->currentIndex(), 5));
+                // WARN: ssDot is removed
+                int shapeIdx = ui->comboPointShape->currentIndex();
+                if (shapeIdx > 0) shapeIdx += 1;
+                graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)shapeIdx, 5));
 
                 // gather Y label column names
                 yAxisLabels << model->headerData(y, Qt::Horizontal).toString();
@@ -2131,6 +2134,8 @@ void MainWindow::on_comboLineType_currentIndexChanged(int index)
 
 void MainWindow::on_comboPointShape_currentIndexChanged(int index)
 {
+    // WARN: because ssDot point shape is removed
+    if (index > 0) index += 1;
     Q_ASSERT(index >= QCPScatterStyle::ssNone &&
              index <  QCPScatterStyle::ssPixmap);
     QCPScatterStyle::ScatterShape shape = (QCPScatterStyle::ScatterShape) index;
