@@ -15,10 +15,12 @@ if(WIN32 AND MSVC)
 		set(QT5_PATH "E:/Qt64/Qt5.4.1/5.4/msvc2013_64")
 		set(SQLITE3_PATH "E:/libs/sqlite3_x64")
 		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-x64_86-win64")
+		set(VSREDIST "vcredist_x64.exe")
 	else()
 		set(QT5_PATH "E:/Qt/Qt5.4.1/5.4/msvc2013")
 		set(SQLITE3_PATH "E:/libs/sqlite3")
 		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-i386-win32")
+		set(VSREDIST "vcredist_x86.exe")
 	endif()
 	set(USE_QT5 TRUE)
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
@@ -321,6 +323,8 @@ if(WIN32 AND MSVC)
 	install(FILES
 		${QT5_PATH}/plugins/platforms/qwindows.dll
 		DESTINATION bin/platforms)
+
+	install(PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/deps/${VSREDIST} DESTINATION tmp)
 endif()
 
 #cpack
@@ -343,6 +347,12 @@ if(WIN32 AND NOT UNIX)
 	set(CPACK_NSIS_CONTACT "peinthor@gmail.com")
 	set(CPACK_NSIS_MODIFY_PATH OFF)
 	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "sqlitebrowser.exe")
+
+	# VS redist
+	list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
+               ExecWait '$INSTDIR\\\\tmp\\\\${VSREDIST} /install /passive /quiet'
+               Delete '$INSTDIR\\\\tmp\\\\${VSREDIST}'
+               ")
 else(WIN32 AND NOT UNIX)
 	set(CPACK_STRIP_FILES "bin/sqlitebrowser")
 	set(CPACK_SOURCE_STRIP_FILES "")
