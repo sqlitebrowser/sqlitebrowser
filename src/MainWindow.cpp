@@ -12,7 +12,7 @@
 #include "SqlExecutionArea.h"
 #include "VacuumDialog.h"
 #include "DbStructureModel.h"
-#include "gen_version.h"
+#include "version.h"
 #include "sqlite.h"
 #include "CipherDialog.h"
 #include "ExportSqlDialog.h"

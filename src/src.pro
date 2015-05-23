@@ -42,7 +42,7 @@ HEADERS += \
     grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
     FilterTableHeader.h \
-    gen_version.h \
+    version.h \
     SqlExecutionArea.h \
     VacuumDialog.h \
     DbStructureModel.h \

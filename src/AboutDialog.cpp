@@ -1,6 +1,6 @@
 #include "AboutDialog.h"
 #include "ui_AboutDialog.h"
-#include "gen_version.h"
+#include "version.h"
 #include "sqlite.h"
 
 AboutDialog::AboutDialog(QWidget *parent) :

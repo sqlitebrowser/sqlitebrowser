@@ -54,7 +54,7 @@ if(ENABLE_TESTING)
 endif()
 
 set(SQLB_HDR
-	src/gen_version.h
+	src/version.h
 	src/sqlitetypes.h
 	src/csvparser.h
 	src/sqlite.h
