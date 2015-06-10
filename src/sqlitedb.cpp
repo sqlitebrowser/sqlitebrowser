@@ -508,7 +508,7 @@ bool DBBrowserDB::dump(const QString& filename,
                         return false;
                     }
                 }
-                stream << ");\n";
+                if (counter > 0) stream << ");\n";
             }
             sqlite3_finalize(stmt);
         }
