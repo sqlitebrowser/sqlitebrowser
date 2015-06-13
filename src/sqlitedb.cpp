@@ -41,7 +41,7 @@ static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
     // Get arguments and check their values
     QRegExp arg1((const char*)sqlite3_value_text(argv[0]));
     QString arg2((const char*)sqlite3_value_text(argv[1]));
-    if(!arg1.isValid() || arg2.isNull())
+    if(!arg1.isValid())
         return sqlite3_result_error(ctx, "invalid operand", -1);
 
     // Set the pattern matching syntax to a Perl-like one. This is the default in Qt 4.x but Qt 5
