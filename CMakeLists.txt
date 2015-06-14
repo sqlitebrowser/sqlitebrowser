@@ -347,6 +347,7 @@ if(WIN32 AND NOT UNIX)
 	set(CPACK_NSIS_URL_INFO_ABOUT "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
 	set(CPACK_NSIS_CONTACT "peinthor@gmail.com")
 	set(CPACK_NSIS_MODIFY_PATH OFF)
+	set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
 	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "sqlitebrowser.exe")
 
 	# VS redist
