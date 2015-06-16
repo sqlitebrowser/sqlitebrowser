@@ -206,7 +206,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                     this,
                     tr("Choose a database file")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
-                    , tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)")
+                    , FileDialog::getSqlDatabaseFileFilter()
 #endif
                     );
     }
@@ -246,7 +246,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
 
 void MainWindow::fileNew()
 {
-    QString fileName = FileDialog::getSaveFileName(this, tr("Choose a filename to save under"));
+    QString fileName = FileDialog::getSaveFileName(this,
+                                                   tr("Choose a filename to save under"),
+                                                   FileDialog::getSqlDatabaseFileFilter());
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -921,7 +923,8 @@ void MainWindow::importDatabaseFromSQL()
     {
         newDbFile = FileDialog::getSaveFileName(
                     this,
-                    tr("Choose a filename to save under"));
+                    tr("Choose a filename to save under"),
+                    FileDialog::getSqlDatabaseFileFilter());
         if(QFile::exists(newDbFile))
         {
             QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
@@ -2016,7 +2019,8 @@ void MainWindow::fileAttach()
     // Get file name of database to attach
     QString file = FileDialog::getOpenFileName(
                 this,
-                tr("Choose a database file"));
+                tr("Choose a database file"),
+                FileDialog::getSqlDatabaseFileFilter());
     if(!QFile::exists(file))
         return;
 

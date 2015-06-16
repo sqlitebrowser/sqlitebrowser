@@ -15,6 +15,11 @@ public:
     static QString getExistingDirectory(QWidget* parent = 0, const QString& caption = QString(),
                                         Options options = 0);
 
+    static QString getSqlDatabaseFileFilter()
+    {
+        return tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
+    }
+
 private:
     static QString getFileDialogPath();
     static void setFileDialogPath(const QString& new_path);
