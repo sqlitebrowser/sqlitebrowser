@@ -1052,9 +1052,10 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
     // Replace binary log messages by a placeholder text instead of printing gibberish
     for(int i=0;i<statement.size();i++)
     {
-        if(statement.at(i) < 32 && statement.at(i) != '\n')
+        QChar ch = statement[i];
+        if(ch < 32 && ch != '\n' && ch != '\r' && ch != '\t')
         {
-            statement.truncate(32);
+            statement.truncate(i>0?i-1:0);
             statement.append(tr("... <string can not be logged, contains binary data> ..."));
 
             // early exit if we detect a binary character,
