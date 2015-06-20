@@ -931,18 +931,20 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // Create the new table
     if(!executeSQL(newSchema.sql()))
     {
-        lastErrorMessage = tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
+        QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
+        qWarning() << error;
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        lastErrorMessage = error;
         return false;
     }
 
     // Copy the data from the old table to the new one
     if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM `%2`;").arg(select_cols).arg(tablename)))
     {
-        lastErrorMessage = tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
+        QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
+        qWarning() << error;
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        lastErrorMessage = error;
         return false;
     }
 
@@ -958,9 +960,10 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // Delete the old table
     if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename)))
     {
-        lastErrorMessage = tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
+        QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
+        qWarning() << error;
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        lastErrorMessage = error;
         return false;
     }
 
