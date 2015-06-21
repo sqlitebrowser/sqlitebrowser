@@ -321,6 +321,12 @@ bool DBBrowserDB::create ( const QString & db)
 
     if (_db)
     {
+        // set preference defaults
+        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+        settings.sync();
+        bool foreignkeys = settings.value( "/db/foreignkeys", false ).toBool();
+        setPragma("foreign_keys", foreignkeys ? "1" : "0");
+
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
 
