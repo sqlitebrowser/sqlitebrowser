@@ -216,6 +216,26 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         switch(column)
         {
         case kName:
+            // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
+            if(!m_bNewTable)
+            {
+                foreach(const DBBrowserObject& fkobj, pdb->getBrowsableObjects())
+                {
+                    foreach(const sqlb::FieldPtr& fkfield, fkobj.table.fields())
+                    {
+                        if(fkfield->foreignKey().table() == m_table.name())
+                        {
+                            if(fkfield->foreignKey().columns().contains(field->name()) || field->primaryKey())
+                            {
+                                QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1, column %2 and thus "
+                                                                                       "its name cannot be changed.").arg(fkobj.getname()).arg(fkfield->name()));
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
             field->setName(item->text(column));
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
             if(!m_bNewTable)
