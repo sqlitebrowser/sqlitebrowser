@@ -12,6 +12,38 @@
 
 namespace sqlb {
 
+class ForeignKeyClause
+{
+public:
+    ForeignKeyClause(const QString& table = QString(), const QStringList& columns = QStringList(), const QString& constraint = QString())
+        : m_table(table),
+          m_columns(columns),
+          m_constraint(constraint),
+          m_override(QString())
+    {
+    }
+
+    bool isSet() const;
+    QString toString() const;
+    void setFromString(const QString& fk);
+
+    void setTable(const QString& table) { m_override = QString(); m_table = table; }
+    const QString& table() const { return m_table; }
+
+    void setColumns(const QStringList& columns) { m_columns = columns; }
+    const QStringList& columns() const { return m_columns; }
+
+    void setConstraint(const QString& constraint) { m_constraint = constraint; }
+    const QString& constraint() const { return m_constraint; }
+
+private:
+    QString m_table;
+    QStringList m_columns;
+    QString m_constraint;
+
+    QString m_override;
+};
+
 class Field
 {
 public:
@@ -42,7 +74,7 @@ public:
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
     void setPrimaryKey(bool pk) { m_primaryKey = pk; }
     void setUnique(bool u) { m_unique = u; }
-    void setForeignKey(const QString& key) { m_foreignKey = key; }
+    void setForeignKey(const ForeignKeyClause& key) { m_foreignKey = key; }
 
     bool isText() const;
     bool isInteger() const;
@@ -55,7 +87,7 @@ public:
     bool autoIncrement() const { return m_autoincrement; }
     bool primaryKey() const { return m_primaryKey; }
     bool unique() const { return m_unique; }
-    const QString& foreignKey() const { return m_foreignKey; }
+    const ForeignKeyClause& foreignKey() const { return m_foreignKey; }
 
     static QStringList Datatypes;
 private:
@@ -64,7 +96,7 @@ private:
     bool m_notnull;
     QString m_check;
     QString m_defaultvalue;
-    QString m_foreignKey;   // Even though this information is a table constraint easier for accessing and processing to store it here
+    ForeignKeyClause m_foreignKey;   // Even though this information is a table constraint it's easier for accessing and processing to store it here
     bool m_autoincrement; //! this is stored here for simplification
     bool m_primaryKey;
     bool m_unique;

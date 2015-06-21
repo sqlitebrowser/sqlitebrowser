@@ -115,7 +115,7 @@ void EditTableDialog::populateFields()
             tbitem->setText(kDefault, f->defaultValue());
 
         tbitem->setText(kCheck, f->check());
-        tbitem->setText(kForeignKey, f->foreignKey());
+        tbitem->setText(kForeignKey, f->foreignKey().toString());
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
@@ -374,7 +374,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 callRenameColumn = true;
             break;
         case kForeignKey:
-            field->setForeignKey(item->text(column));
+            sqlb::ForeignKeyClause fk;
+            fk.setFromString(item->text(column));
+            field->setForeignKey(fk);
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;
