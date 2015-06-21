@@ -963,6 +963,10 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
             otherObjectsSql += (*it).getsql() + "\n";
     }
 
+    // Store the current foreign key settings and then disable the foreign keys being enforced to make sure the table can be dropped without errors
+    QString foreignKeysOldSettings = getPragma("foreign_keys");
+    setPragma("foreign_keys", "0");
+
     // Delete the old table
     if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename)))
     {
@@ -979,6 +983,9 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
         return false;
     }
+
+    // Restore the former foreign key settings
+    setPragma("foreign_keys", foreignKeysOldSettings);
 
     // Restore the saved triggers, views and indices
     if(!executeMultiSQL(otherObjectsSql, true, true))
