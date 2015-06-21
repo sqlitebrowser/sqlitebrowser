@@ -6,6 +6,7 @@
 #include <QVector>
 
 class DBBrowserDB;
+namespace sqlb { class ForeignKeyClause; }
 
 class SqliteTableModel : public QAbstractTableModel
 {
@@ -40,6 +41,8 @@ public:
     bool isBinary(const QModelIndex& index) const;
 
     typedef QList<QByteArray> QByteArrayList;
+
+    sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 
 signals:
     

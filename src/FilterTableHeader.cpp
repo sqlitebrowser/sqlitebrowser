@@ -129,3 +129,9 @@ void FilterTableHeader::clearFilters()
     foreach (FilterLineEdit* filterLineEdit, filterWidgets)
         filterLineEdit->clear();
 }
+
+void FilterTableHeader::setFilter(int column, const QString& value)
+{
+    if(column < filterWidgets.size())
+        filterWidgets.at(column)->setText(value);
+}

@@ -324,8 +324,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>311</width>
-             <height>531</height>
+             <width>509</width>
+             <height>458</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -810,7 +810,7 @@
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1766,6 +1766,9 @@
    <class>ExtendedTableWidget</class>
    <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
+   <slots>
+    <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+   </slots>
   </customwidget>
   <customwidget>
    <class>SqlTextEdit</class>
@@ -2664,6 +2667,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>jumpToRow(QString,QString,QByteArray)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2719,5 +2738,6 @@
   <slot>saveSqlFileAs()</slot>
   <slot>switchToBrowseDataTab()</slot>
   <slot>copyCurrentCreateStatement()</slot>
+  <slot>jumpToRow(QString,QString,QByteArray)</slot>
  </slots>
 </ui>

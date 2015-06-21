@@ -20,6 +20,7 @@ public slots:
     void generateFilters(int number, bool bKeepValues = false);
     void adjustPositions();
     void clearFilters();
+    void setFilter(int column, const QString& value);
 
 signals:
     void filterChanged(int column, QString value);

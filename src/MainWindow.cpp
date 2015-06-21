@@ -2151,3 +2151,27 @@ void MainWindow::on_comboPointShape_currentIndexChanged(int index)
     }
     ui->plotWidget->replot();
 }
+
+void MainWindow::jumpToRow(const QString& table, QString column, const QByteArray& value)
+{
+    // First check if table exists
+    DBBrowserObject obj = db.getObjectByName(table);
+    if(obj.getname().size() == 0)
+        return;
+
+    // If no column name is set, assume the primary key is meant
+    if(!column.size())
+        column = obj.table.fields().at(obj.table.findPk())->name();
+
+    // If column doesn't exist don't do anything
+    int column_index = obj.table.findField(column);
+    if(column_index == -1)
+        return;
+
+    // Jump to table
+    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(table));
+    populateTable(table);
+
+    // Set filter
+    ui->dataTable->filterHeader()->setFilter(column_index+1, value);
+}

@@ -1,6 +1,7 @@
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
+#include "sqlitetypes.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -15,6 +16,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
 
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
+    connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(cellClicked(QModelIndex)));
 
     // Set up filter row
     m_tableHeader = new FilterTableHeader(this);
@@ -124,4 +126,17 @@ QSet<int> ExtendedTableWidget::selectedCols()
     foreach(const QModelIndex & idx, selectedIndexes())
         selectedCols.insert(idx.column());
     return selectedCols;
+}
+
+void ExtendedTableWidget::cellClicked(const QModelIndex& index)
+{
+    // If Alt key is pressed try to jump to the row referenced by the foreign key of the clicked cell
+    if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier) && model())
+    {
+        SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+
+        if(fk.isSet())
+            emit foreignKeyClicked(fk.table(), fk.columns().size() ? fk.columns().at(0) : "", m->data(index, Qt::EditRole).toByteArray());
+    }
 }

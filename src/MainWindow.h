@@ -110,6 +110,7 @@ public slots:
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void browseRefresh();
+    void jumpToRow(const QString& table, QString column, const QByteArray& value);
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);

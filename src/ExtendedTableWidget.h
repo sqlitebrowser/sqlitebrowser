@@ -17,12 +17,16 @@ public:
 public:
     QSet<int> selectedCols();
 
+signals:
+    void foreignKeyClicked(const QString& table, const QString& column, const QByteArray& value);
+
 private:
     void copy();
     int numVisibleRows();
 
 private slots:
     void vscrollbarChanged(int value);
+    void cellClicked(const QModelIndex& index);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* event);

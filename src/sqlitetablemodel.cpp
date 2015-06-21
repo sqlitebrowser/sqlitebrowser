@@ -265,9 +265,24 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(m_data.at(index.row()).at(index.column()).isNull())
             return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_bg_colour").toString());
         return QVariant();
+    } else if(role == Qt::ToolTipRole) {
+        sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
+        if(fk.isSet())
+            return tr("References %1(%2)\nHold Ctrl+Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(','));
+        else
+            return QString();
     } else {
         return QVariant();
     }
+}
+
+sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
+{
+    DBBrowserObject obj = m_db->getObjectByName(m_sTable);
+    if(obj.getname().size())
+        return obj.table.fields().at(column)->foreignKey();
+    else
+        return sqlb::ForeignKeyClause();
 }
 
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
