@@ -108,7 +108,7 @@ void SqlTextEdit::reloadSettings()
     QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
-    sqlLexer->setDefaultFont(defaultfont);
+    sqlLexer->setFont(defaultfont);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
