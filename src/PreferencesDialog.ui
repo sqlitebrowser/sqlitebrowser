@@ -661,6 +661,26 @@ QGroupBox::title {
          <item row="0" column="1">
           <widget class="QFontComboBox" name="comboEditorFont"/>
          </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Error indicators</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkErrorIndicators</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="checkErrorIndicators">
+           <property name="toolTip">
+            <string>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -775,6 +795,7 @@ QGroupBox::title {
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
   <tabstop>spinTabSize</tabstop>
+  <tabstop>checkErrorIndicators</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
@@ -823,8 +844,8 @@ QGroupBox::title {
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>79</y>
+     <x>567</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -839,8 +860,8 @@ QGroupBox::title {
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>79</y>
+     <x>567</x>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>

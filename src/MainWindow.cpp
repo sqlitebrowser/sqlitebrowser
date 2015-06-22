@@ -735,9 +735,7 @@ void MainWindow::executeQuery()
     db.setRestorePoint();
 
     // Remove any error indicators
-    sqlWidget->getEditor()->clearIndicatorRange(0, 0,
-                                                sqlWidget->getEditor()->lines(), sqlWidget->getEditor()->lineLength(sqlWidget->getEditor()->lines()),
-                                                sqlWidget->getEditor()->getErrorIndicatorNumber());
+    sqlWidget->getEditor()->clearErrorIndicators();
 
     //Accept multi-line queries, by looping until the tail is empty
     QElapsedTimer timer;
@@ -805,8 +803,7 @@ void MainWindow::executeQuery()
         } else {
             statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                     ": " + queryPart;
-            sqlWidget->getEditor()->fillIndicatorRange(execution_start_line, execution_start_index, execution_start_line, execution_end_index,
-                                                       sqlWidget->getEditor()->getErrorIndicatorNumber());
+            sqlWidget->getEditor()->setErrorIndicator(execution_start_line, execution_start_index, execution_start_line, execution_end_index);
         }
 
         execution_start_index = execution_end_index;

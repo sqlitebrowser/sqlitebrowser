@@ -17,13 +17,13 @@ public:
     explicit SqlTextEdit(QWidget *parent = 0);
     virtual ~SqlTextEdit();
 
-    int getErrorIndicatorNumber() const { return errorIndicatorNumber; }
-
     static SqlUiLexer* sqlLexer;
 
 public slots:
     void reloadKeywords();
     void reloadSettings();
+    void clearErrorIndicators();
+    void setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex);
 
 protected:
     void dropEvent(QDropEvent* e);
@@ -32,6 +32,7 @@ private:
     void setupSyntaxHighlightingFormat(const QString& settings_name, int style);
 
     int errorIndicatorNumber;
+    bool showErrorIndicators;
 
 private slots:
     void updateLineNumberAreaWidth();

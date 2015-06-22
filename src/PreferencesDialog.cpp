@@ -88,6 +88,7 @@ void PreferencesDialog::loadSettings()
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
+    ui->checkErrorIndicators->setChecked(getSettingsValue("editor", "error_indicators").toBool());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(getSettingsValue("extensions", "disableregex").toBool());
@@ -123,6 +124,7 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("editor", "fontsize", ui->spinEditorFontSize->value());
     setSettingsValue("editor", "tabsize", ui->spinTabSize->value());
     setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
+    setSettingsValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
 
     QStringList extList;
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
@@ -291,6 +293,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
             return 4;
         }
     }
+
+    // editor/error_indicators?
+    if(group == "editor" && name == "error_indicators")
+        return true;
 
     // extensions/list?
     if(group == "extensions" && name == "list")

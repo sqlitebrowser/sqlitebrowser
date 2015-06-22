@@ -141,4 +141,22 @@ void SqlTextEdit::reloadSettings()
 
     // Set tab width
     setTabWidth(PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
+
+    // Check if error indicators are enabled and clear them if they just got disabled
+    showErrorIndicators = PreferencesDialog::getSettingsValue("editor", "error_indicators").toBool();
+    if(!showErrorIndicators)
+        clearErrorIndicators();
+}
+
+void SqlTextEdit::clearErrorIndicators()
+{
+    // Clear any error indicators from position (0,0) to the last column of the last line
+    clearIndicatorRange(0, 0, lines(), lineLength(lines()), errorIndicatorNumber);
+}
+
+void SqlTextEdit::setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex)
+{
+    // Set error indicator for the specified range but only if they're enabled
+    if(showErrorIndicators)
+        fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, errorIndicatorNumber);
 }
