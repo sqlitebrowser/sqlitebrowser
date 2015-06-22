@@ -1065,6 +1065,9 @@ DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
 
 void DBBrowserDB::logSQL(QString statement, int msgtype)
 {
+    // Remove any leading and trailing spaces, tabs, or line breaks first
+    statement = statement.trimmed();
+
     // Replace binary log messages by a placeholder text instead of printing gibberish
     for(int i=0;i<statement.size();i++)
     {
