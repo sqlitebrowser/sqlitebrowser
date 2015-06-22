@@ -104,10 +104,10 @@ void SqlTextEdit::reloadKeywords()
 void SqlTextEdit::reloadSettings()
 {
     // Set syntax highlighting settings
-    sqlLexer->setDefaultColor(Qt::black);
     QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+    sqlLexer->setColor(Qt::black, QsciLexerSQL::Default);
     sqlLexer->setFont(defaultfont);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
