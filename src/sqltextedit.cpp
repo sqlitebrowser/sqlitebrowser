@@ -63,7 +63,7 @@ void SqlTextEdit::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
-    QFont font = lexer()->defaultFont(QsciLexerSQL::Default);
+    QFont font = lexer()->font(QsciLexerSQL::Default);
     setMarginWidth(0, QFontMetrics(font).width(QString("0").repeated(digits)) + 5);
 }
 
