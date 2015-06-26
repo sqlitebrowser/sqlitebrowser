@@ -735,15 +735,16 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_val
         }
     }
 
-    if(!fields.empty())
+    if(fields.empty())
+        stmt.append(" DEFAULT VALUES;");
+    else
     {
         stmt.append("(`");
         stmt.append(fields.join("`,`"));
-        stmt.append("`)");
+        stmt.append("`) VALUES (");
+        stmt.append(vals.join(","));
+        stmt.append(");");
     }
-    stmt.append(" VALUES (");
-    stmt.append(vals.join(","));
-    stmt.append(");");
 
     return stmt;
 }
