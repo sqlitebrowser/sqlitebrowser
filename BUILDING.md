@@ -19,7 +19,7 @@ followed by:
     $ make
 
 in the main directory. This will generate the sqlitebrowser (or
-sqlitebrowser.exe, or sqlitebrowser.app) application in the src subdirectory.
+`sqlitebrowser.exe`, or `sqlitebrowser.app`) application in the src subdirectory.
 On some distributions you can then install this in the correct places by
 running:
 
@@ -30,7 +30,7 @@ The same process works for building the code in any platform supported by Qt
 
 ### Ubuntu Linux
 
-**1**. Make sure the build-essential, cmake, libqt4-dev and libsqlite3-dev
+**1**. Make sure the `build-essential`, `cmake`, `libqt4-dev` and `libsqlite3-dev`
        packages are installed.<br />
 **2**. Download the DB Browser for SQLite source code.<br />
 **3**. Open a terminal in the source code directory.<br />
