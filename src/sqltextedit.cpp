@@ -63,7 +63,7 @@ void SqlTextEdit::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
-    QFont font = lexer()->defaultFont(QsciLexerSQL::Default);
+    QFont font = lexer()->font(QsciLexerSQL::Default);
     setMarginWidth(0, QFontMetrics(font).width(QString("0").repeated(digits)) + 5);
 }
 
@@ -104,11 +104,11 @@ void SqlTextEdit::reloadKeywords()
 void SqlTextEdit::reloadSettings()
 {
     // Set syntax highlighting settings
-    sqlLexer->setDefaultColor(Qt::black);
     QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
-    sqlLexer->setDefaultFont(defaultfont);
+    sqlLexer->setColor(Qt::black, QsciLexerSQL::Default);
+    sqlLexer->setFont(defaultfont);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
