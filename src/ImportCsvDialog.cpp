@@ -15,6 +15,7 @@
 #include <QTextStream>
 #include <QSettings>
 #include <QDebug>
+#include <QFileInfo>
 #include <memory>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
@@ -25,6 +26,11 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
 {
     ui->setupUi(this);
 
+    // Get the actual file name out of the provided path and use it as the default table name for import
+    QFileInfo file(filename);
+    ui->editName->setText(file.baseName());
+
+    // Create a list of all available encodings and create an auto completion list from them
     QStringList encodingList;
     foreach(QString enc, QTextCodec::availableCodecs())
         encodingList.push_back(enc);
@@ -32,6 +38,7 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->editCustomEncoding->setCompleter(encodingCompleter);
 
+    // Load last used settings and apply them
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
     ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
@@ -39,6 +46,7 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
     setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
 
+    // Initialise user interface
     checkInput();
     updatePreview();
 }
