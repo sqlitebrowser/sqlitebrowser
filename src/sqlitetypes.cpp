@@ -146,7 +146,7 @@ QStringList Table::fieldList() const
 {
     QStringList sl;
 
-    foreach(FieldPtr f, m_fields) {
+    foreach(const FieldPtr& f, m_fields) {
         sl << f->toString();
     }
 
