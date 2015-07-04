@@ -32,6 +32,35 @@ public:
 
     DBBrowserDB* getDb() { return &db; }
 
+    struct BrowseDataTableSettings
+    {
+        int sortOrderIndex;
+        Qt::SortOrder sortOrderMode;
+        QMap<int, int> columnWidths;
+        QMap<int, QString> filterValues;
+
+        friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
+        {
+            stream << object.sortOrderIndex;
+            stream << static_cast<int>(object.sortOrderMode);
+            stream << object.columnWidths;
+            stream << object.filterValues;
+
+            return stream;
+        }
+        friend QDataStream& operator>>(QDataStream& stream, MainWindow::BrowseDataTableSettings& object)
+        {
+            stream >> object.sortOrderIndex;
+            int sortordermode;
+            stream >> sortordermode;
+            object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+            stream >> object.columnWidths;
+            stream >> object.filterValues;
+
+            return stream;
+        }
+    };
+
 private:
     struct PragmaValues
     {
@@ -79,9 +108,7 @@ private:
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
-    int curBrowseOrderByIndex;
-    Qt::SortOrder curBrowseOrderByMode;
-    QMap<QString, QMap<int, int> > browseTableColumnWidths;
+    QMap<QString, BrowseDataTableSettings> browseTableSettings;
 
     EditDialog* editWin;
     QIntValidator* gotoValidator;
@@ -117,7 +144,7 @@ private slots:
     void changeTreeSelection();
     void fileNew();
     void populateStructure();
-    void populateTable(const QString& tablename, bool bKeepFilter = false);
+    void populateTable(const QString& tablename);
     void resetBrowser();
     void fileClose();
     void addRecord();

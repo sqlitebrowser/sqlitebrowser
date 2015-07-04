@@ -303,7 +303,7 @@ void MainWindow::populateStructure()
     ui->dbTreeWidget->resizeColumnToContents(3);
 }
 
-void MainWindow::populateTable(const QString & tablename, bool bKeepFilter)
+void MainWindow::populateTable(const QString& tablename)
 {
     // Remove the model-view link if the table name is empty in order to remove any data from the view
     if(ui->comboBrowseTable->model()->rowCount() == 0 && tablename.isEmpty())
@@ -323,27 +323,40 @@ void MainWindow::populateTable(const QString & tablename, bool bKeepFilter)
     m_browseTableModel->setTable(tablename);
     ui->dataTable->setColumnHidden(0, true);
 
-    // Restore column widths
-    QMap<QString, QMap<int, int> >::ConstIterator colWidthsIt;
-    if((colWidthsIt = browseTableColumnWidths.constFind(tablename)) != browseTableColumnWidths.constEnd())
+    // Update the filter row
+    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
+
+    // Restore table settings
+    QMap<QString, BrowseDataTableSettings>::ConstIterator tableIt;
+    if((tableIt = browseTableSettings.constFind(tablename)) != browseTableSettings.constEnd())
     {
-        // There are some column widths stored for this table
-        for(QMap<int, int>::ConstIterator it=colWidthsIt.value().constBegin();it!=colWidthsIt.value().constEnd();++it)
-            ui->dataTable->setColumnWidth(it.key(), it.value());
+        // There is information stored for this table, so extract it and apply it
+
+        // Column widths
+        for(QMap<int, int>::ConstIterator widthIt=tableIt.value().columnWidths.constBegin();widthIt!=tableIt.value().columnWidths.constEnd();++widthIt)
+            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+
+        // Sorting
+        m_browseTableModel->sort(tableIt.value().sortOrderIndex, tableIt.value().sortOrderMode);
+        ui->dataTable->filterHeader()->setSortIndicator(tableIt.value().sortOrderIndex, tableIt.value().sortOrderMode);
+
+        // Filters
+        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        for(QMap<int, QString>::ConstIterator filterIt=tableIt.value().filterValues.constBegin();filterIt!=tableIt.value().filterValues.constEnd();++filterIt)
+            filterHeader->setFilter(filterIt.key(), filterIt.value());
     } else {
-        // There aren't any column widths stored for this table yet, so set default widths
+        // There aren't any information stored for this table yet, so use some default values
+
+        // Column widths
         for(int i=1;i<m_browseTableModel->columnCount();i++)
             ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
+
+        // Sorting
+        m_browseTableModel->sort(0, Qt::AscendingOrder);
+        ui->dataTable->filterHeader()->setSortIndicator(0, Qt::AscendingOrder);
+
+        // The filters can be left empty as they are
     }
-
-    // Reset sorting
-    curBrowseOrderByIndex = 0;
-    curBrowseOrderByMode = Qt::AscendingOrder;
-    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
-    ui->dataTable->filterHeader()->setSortIndicator(curBrowseOrderByIndex, curBrowseOrderByMode);
-
-    // Update the filter row
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), bKeepFilter);
 
     // Activate the add and delete record buttons and editing only if a table has been selected
     bool is_table = db.getObjectByName(tablename).gettype() == "table";
@@ -391,10 +404,7 @@ void MainWindow::resetBrowser()
     int pos = ui->comboBrowseTable->findText(sCurrentTable);
     pos = pos == -1 ? 0 : pos;
     ui->comboBrowseTable->setCurrentIndex(pos);
-    curBrowseOrderByIndex = 0;
-    curBrowseOrderByMode = Qt::AscendingOrder;
-    m_browseTableModel->sort(curBrowseOrderByIndex, curBrowseOrderByMode);
-    populateTable(ui->comboBrowseTable->currentText(), true);
+    populateTable(ui->comboBrowseTable->currentText());
 }
 
 void MainWindow::fileClose()
@@ -413,8 +423,8 @@ void MainWindow::fileClose()
     m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
 
-    // Remove all stored column widths for the browse data table
-    browseTableColumnWidths.clear();
+    // Remove all stored table information browse data tab
+    browseTableSettings.clear();
 
     // Manually update the recordset label inside the Browse tab now
     setRecordsetLabel();
@@ -555,7 +565,7 @@ void MainWindow::setRecordsetLabel()
 
 void MainWindow::browseRefresh()
 {
-    populateTable(ui->comboBrowseTable->currentText(), true);
+    populateTable(ui->comboBrowseTable->currentText());
 }
 
 void MainWindow::createTable()
@@ -1122,9 +1132,10 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
         return;
 
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
-    curBrowseOrderByIndex = logicalindex;
-    curBrowseOrderByMode = curBrowseOrderByMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-    ui->dataTable->sortByColumn(curBrowseOrderByIndex, curBrowseOrderByMode);
+    BrowseDataTableSettings& settings = browseTableSettings[ui->comboBrowseTable->currentText()];
+    settings.sortOrderIndex = logicalindex;
+    settings.sortOrderMode = settings.sortOrderMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+    ui->dataTable->sortByColumn(settings.sortOrderIndex, settings.sortOrderMode);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
@@ -1773,7 +1784,7 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
     QString tableName(ui->comboBrowseTable->currentText());
     if (!selectedCols.contains(section))
     {
-        browseTableColumnWidths[tableName][section] = new_size;
+        browseTableSettings[tableName].columnWidths[section] = new_size;
     }
     else
     {
@@ -1781,7 +1792,7 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
         foreach (int col, selectedCols)
         {
             ui->dataTable->setColumnWidth(col, new_size);
-            browseTableColumnWidths[tableName][col] = new_size;
+            browseTableSettings[tableName].columnWidths[col] = new_size;
         }
         ui->dataTable->blockSignals(false);
     }
@@ -1865,18 +1876,14 @@ bool MainWindow::loadProject(QString filename)
                             // Currently selected table
                             ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(xml.attributes().value("name").toString()));
                             xml.skipCurrentElement();
-                        } else if(xml.name() == "column_widths") {
-                            // Column widths
+                        } else if(xml.name() == "browsetable_info") {
                             QString attrData = xml.attributes().value("data").toString();
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
                             QDataStream stream(temp);
-                            stream >> browseTableColumnWidths;
+                            stream >> browseTableSettings;
                             populateTable(ui->comboBrowseTable->currentText());     // Refresh view
-                            xml.skipCurrentElement();
-                        } else if(xml.name() == "sort") {
-                            // Sort order
-                            ui->dataTable->sortByColumn(xml.attributes().value("column").toString().toInt(),
-                                                        static_cast<Qt::SortOrder>(xml.attributes().value("order").toString().toInt()));
+                            ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
+                                                        browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
                             xml.skipCurrentElement();
                         }
                     }
@@ -1976,18 +1983,14 @@ void MainWindow::saveProject()
         xml.writeStartElement("current_table");     // Currently selected table
         xml.writeAttribute("name", ui->comboBrowseTable->currentText());
         xml.writeEndElement();
-        {                                           // Column widths
+        {                                           // Table browser information
             QByteArray temp;
             QDataStream stream(&temp, QIODevice::WriteOnly);
-            stream << browseTableColumnWidths;
-            xml.writeStartElement("column_widths");
+            stream << browseTableSettings;
+            xml.writeStartElement("browsetable_info");
             xml.writeAttribute("data", temp.toBase64());
             xml.writeEndElement();
         }
-        xml.writeStartElement("sort");       // Sort order
-        xml.writeAttribute("column", QString::number(curBrowseOrderByIndex));
-        xml.writeAttribute("order", QString::number(curBrowseOrderByMode));
-        xml.writeEndElement();
         xml.writeEndElement();
 
         // Execute SQL tab data
@@ -2027,7 +2030,8 @@ void MainWindow::fileAttach()
 
 void MainWindow::updateFilter(int column, const QString& value)
 {
-    m_browseTableModel->updateFilter(column ,value);
+    m_browseTableModel->updateFilter(column, value);
+    browseTableSettings[ui->comboBrowseTable->currentText()].filterValues[column] = value;
     setRecordsetLabel();
 }
 
