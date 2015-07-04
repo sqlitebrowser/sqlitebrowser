@@ -69,8 +69,6 @@ bool DBBrowserDB::open(const QString& db)
 {
     if (isOpen()) close();
 
-    lastErrorMessage = tr("no error");
-
     isEncrypted = false;
 
     // Get encryption settings for database file
@@ -297,8 +295,6 @@ bool DBBrowserDB::create ( const QString & db)
     bool ok=false;
 
     if (isOpen()) close();
-
-    lastErrorMessage = tr("no error");
 
     // read encoding from settings and open with sqlite3_open for utf8
     // and sqlite3_open16 for utf16
@@ -547,19 +543,15 @@ bool DBBrowserDB::dump(const QString& filename,
 bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool logsql)
 {
     char *errmsg;
-    bool ok = false;
 
     if (!isOpen())
         return false;
 
     if (logsql) logSQL(statement, kLogMsg_App);
     if (dirtyDB) setRestorePoint();
-    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
-        ok = true;
 
-    if(ok)
+    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
     {
-        lastErrorMessage = tr("no error");
         return true;
     } else {
         lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
@@ -783,7 +775,6 @@ bool DBBrowserDB::deleteRecord(const QString& table, const QString& rowid)
 {
     if (!isOpen()) return false;
     bool ok = false;
-    lastErrorMessage = QString("no error");
 
     QString statement = QString("DELETE FROM `%1` WHERE `%2`='%3';").arg(table).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
     if(executeSQL(statement))
@@ -797,8 +788,6 @@ bool DBBrowserDB::deleteRecord(const QString& table, const QString& rowid)
 bool DBBrowserDB::updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob)
 {
     if (!isOpen()) return false;
-
-    lastErrorMessage = QString("no error");
 
     QString sql = QString("UPDATE `%1` SET `%2`=? WHERE `%3`='%4';").arg(table).arg(column).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
 
@@ -1092,7 +1081,6 @@ void DBBrowserDB::updateSchema( )
     sqlite3_stmt *vm;
     const char *tail;
     int err=0;
-    lastErrorMessage = tr("no error");
 
     objMap.clear();
 
