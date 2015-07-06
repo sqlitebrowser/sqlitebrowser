@@ -478,7 +478,14 @@ void SqliteTableModel::buildQuery()
         where = "WHERE 1=1";
 
         for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
-            where.append(QString(" AND `%1` %2").arg(m_headers.at(i.key())).arg(i.value()));
+        {
+            QString column;
+            if(m_vDisplayFormat.size())
+                column = QString("col%1").arg(i.key());
+            else
+                column = m_headers.at(i.key());
+            where.append(QString(" AND `%1` %2").arg(column).arg(i.value()));
+        }
     }
 
     QString selector;
@@ -487,7 +494,7 @@ void SqliteTableModel::buildQuery()
         selector = "*";
     } else {
         for(int i=0;i<m_vDisplayFormat.size();i++)
-            selector += m_vDisplayFormat.at(i) + ",";
+            selector += m_vDisplayFormat.at(i) + " AS " + QString("col%1").arg(i+1) + ",";
         selector.chop(1);
     }
 
