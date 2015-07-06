@@ -87,6 +87,7 @@ set(SQLB_MOC_HDR
 	src/ExportSqlDialog.h
 	src/SqlUiLexer.h
 	src/FileDialog.h
+	src/ColumnDisplayFormatDialog.h
 )
 
 set(SQLB_SRC
@@ -116,6 +117,7 @@ set(SQLB_SRC
 	src/ExportSqlDialog.cpp
 	src/SqlUiLexer.cpp
 	src/FileDialog.cpp
+	src/ColumnDisplayFormatDialog.cpp
 )
 
 set(SQLB_FORMS
@@ -131,6 +133,7 @@ set(SQLB_FORMS
 	src/VacuumDialog.ui
 	src/CipherDialog.ui
 	src/ExportSqlDialog.ui
+	src/ColumnDisplayFormatDialog.ui
 )
 
 set(SQLB_RESOURCES

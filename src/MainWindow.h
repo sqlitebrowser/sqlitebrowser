@@ -38,6 +38,7 @@ public:
         Qt::SortOrder sortOrderMode;
         QMap<int, int> columnWidths;
         QMap<int, QString> filterValues;
+        QMap<int, QString> displayFormats;
 
         friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
         {
@@ -45,6 +46,7 @@ public:
             stream << static_cast<int>(object.sortOrderMode);
             stream << object.columnWidths;
             stream << object.filterValues;
+            stream << object.displayFormats;
 
             return stream;
         }
@@ -56,6 +58,7 @@ public:
             object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
             stream >> object.columnWidths;
             stream >> object.filterValues;
+            stream >> object.displayFormats;
 
             return stream;
         }
@@ -98,6 +101,7 @@ private:
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
     QMenu *popupSaveSqlFileMenu;
+    QMenu* popupBrowseDataHeaderMenu;
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
@@ -207,6 +211,8 @@ private slots:
     void copyCurrentCreateStatement();
     void on_comboLineType_currentIndexChanged(int index);
     void on_comboPointShape_currentIndexChanged(int index);
+    void showDataColumnPopupMenu(const QPoint& pos);
+    void editDataColumnDisplayFormat();
 };
 
 #endif

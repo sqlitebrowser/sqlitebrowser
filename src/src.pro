@@ -51,7 +51,8 @@ HEADERS += \
     CipherDialog.h \
     ExportSqlDialog.h \
     SqlUiLexer.h \
-    FileDialog.h
+    FileDialog.h \
+    ColumnDisplayFormatDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -78,7 +79,8 @@ SOURCES += \
     CipherDialog.cpp \
     ExportSqlDialog.cpp \
     SqlUiLexer.cpp \
-    FileDialog.cpp
+    FileDialog.cpp \
+    ColumnDisplayFormatDialog.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -96,7 +98,8 @@ FORMS += \
     SqlExecutionArea.ui \
     VacuumDialog.ui \
     CipherDialog.ui \
-    ExportSqlDialog.ui
+    ExportSqlDialog.ui \
+    ColumnDisplayFormatDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_zh.ts \

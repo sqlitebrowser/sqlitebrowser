@@ -18,6 +18,7 @@
 #include "ExportSqlDialog.h"
 #include "SqlUiLexer.h"
 #include "FileDialog.h"
+#include "ColumnDisplayFormatDialog.h"
 
 #include <QFile>
 #include <QApplication>
@@ -116,6 +117,9 @@ void MainWindow::init()
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFileAs);
     ui->actionSqlSaveFilePopup->setMenu(popupSaveSqlFileMenu);
 
+    popupBrowseDataHeaderMenu = new QMenu(this);
+    popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
+
     // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
     ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
@@ -155,6 +159,7 @@ void MainWindow::init()
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
+    connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
 
     // Load window settings
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
@@ -319,16 +324,41 @@ void MainWindow::populateTable(const QString& tablename)
     // Set model
     ui->dataTable->setModel(m_browseTableModel);
 
+    // Search stored table settings for this table
+    QMap<QString, BrowseDataTableSettings>::ConstIterator tableIt;
+    tableIt = browseTableSettings.constFind(tablename);
+    bool storedDataFound = tableIt != browseTableSettings.constEnd();
+
     // Set new table
-    m_browseTableModel->setTable(tablename);
+    if(!storedDataFound)
+    {
+        m_browseTableModel->setTable(tablename);
+    } else {
+        QVector<QString> v;
+        bool only_defaults = true;
+        for(int i=0;i<db.getObjectByName(tablename).table.fields().size();i++)
+        {
+            QString format = tableIt.value().displayFormats[i+1];
+            if(format.size())
+            {
+                v.push_back(format);
+                only_defaults = false;
+            } else {
+                v.push_back("`" + db.getObjectByName(tablename).table.fields().at(i)->name() + "`");
+            }
+        }
+        if(only_defaults)
+            m_browseTableModel->setTable(tablename);
+        else
+            m_browseTableModel->setTable(tablename, v);
+    }
     ui->dataTable->setColumnHidden(0, true);
 
     // Update the filter row
     qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
 
     // Restore table settings
-    QMap<QString, BrowseDataTableSettings>::ConstIterator tableIt;
-    if((tableIt = browseTableSettings.constFind(tablename)) != browseTableSettings.constEnd())
+    if(storedDataFound)
     {
         // There is information stored for this table, so extract it and apply it
 
@@ -2175,4 +2205,42 @@ void MainWindow::jumpToRow(const QString& table, QString column, const QByteArra
 
     // Set filter
     ui->dataTable->filterHeader()->setFilter(column_index+1, value);
+}
+
+void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
+{
+    // Get the index of the column which the user has clicked on and store it in the action. This is sort of hack-ish and it might be the heat in my room
+    // but I haven't come up with a better solution so far
+    ui->actionBrowseTableEditDisplayFormat->setProperty("clicked_column", ui->dataTable->horizontalHeader()->logicalIndexAt(pos));
+
+    // Calculate the proper position for the context menu and display it
+    popupBrowseDataHeaderMenu->exec(ui->dataTable->horizontalHeader()->mapToGlobal(pos));
+}
+
+void MainWindow::editDataColumnDisplayFormat()
+{
+    // Get the current table name and fetch its table object, then retrieve the fields of that table and look up the index of the clicked table header
+    // section using it as the table field array index. Subtract one from the header index to get the column index because in the the first (though hidden)
+    // column is always the rowid column. Ultimately, get the column name from the column object
+    QString current_table = ui->comboBrowseTable->currentText();
+    int field_number = sender()->property("clicked_column").toInt();
+    QString field_name = db.getObjectByName(current_table).table.fields().at(field_number-1)->name();
+
+    // Get the current display format of the field
+    QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
+
+    // Open the dialog
+    ColumnDisplayFormatDialog dialog(field_name, current_displayformat, this);
+    if(dialog.exec())
+    {
+        // Set the newly selected display format
+        QString new_format = dialog.selectedDisplayFormat();
+        if(new_format.size())
+            browseTableSettings[current_table].displayFormats[field_number] = new_format;
+        else
+            browseTableSettings[current_table].displayFormats.remove(field_number);
+
+        // Refresh view
+        populateTable(current_table);
+    }
 }

@@ -58,6 +58,9 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     connect(this, SIGNAL(sectionResized(int,int,int)), this, SLOT(adjustPositions()));
     connect(parent->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(adjustPositions()));
     connect(parent->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(adjustPositions()));
+
+    // Set custom context menu handling
+    setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void FilterTableHeader::generateFilters(int number)

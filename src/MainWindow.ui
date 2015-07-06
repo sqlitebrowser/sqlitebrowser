@@ -1760,6 +1760,14 @@
     <string>Copy the CREATE statement of the item to the clipboard</string>
    </property>
   </action>
+  <action name="actionBrowseTableEditDisplayFormat">
+   <property name="text">
+    <string>Edit display format</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit the display format of the data in this column</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2683,6 +2691,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionBrowseTableEditDisplayFormat</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editDataColumnDisplayFormat()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2739,5 +2763,6 @@
   <slot>switchToBrowseDataTab()</slot>
   <slot>copyCurrentCreateStatement()</slot>
   <slot>jumpToRow(QString,QString,QByteArray)</slot>
+  <slot>editDataColumnDisplayFormat()</slot>
  </slots>
 </ui>

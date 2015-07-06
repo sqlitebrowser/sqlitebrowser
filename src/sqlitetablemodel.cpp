@@ -24,6 +24,7 @@ void SqliteTableModel::reset()
     m_headers.clear();
     m_mWhere.clear();
     m_vDataTypes.clear();
+    m_vDisplayFormat.clear();
 }
 
 void SqliteTableModel::setChunkSize(size_t chunksize)
@@ -31,11 +32,12 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const QString& table)
+void SqliteTableModel::setTable(const QString& table, const QVector<QString>& display_format)
 {
     reset();
 
     m_sTable = table;
+    m_vDisplayFormat = display_format;
 
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
@@ -333,7 +335,17 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
         return Qt::ItemIsEnabled;
 
     Qt::ItemFlags ret = QAbstractTableModel::flags(index);
-    if(!isBinary(index))
+
+    // Custom display format set?
+    bool custom_display_format = false;
+    if(m_vDisplayFormat.size())
+    {
+        // NOTE: This assumes that custom display formats never start and end with a backtick
+        if(index.column() > 0)
+            custom_display_format = !(m_vDisplayFormat.at(index.column()-1).startsWith("`") && m_vDisplayFormat.at(index.column()-1).endsWith("`"));
+    }
+
+    if(!isBinary(index) && !custom_display_format)
         ret |= Qt::ItemIsEditable;
     return ret;
 }
@@ -469,7 +481,17 @@ void SqliteTableModel::buildQuery()
             where.append(QString(" AND `%1` %2").arg(m_headers.at(i.key())).arg(i.value()));
     }
 
-    QString sql = QString("SELECT `%1`,* FROM `%2` %3 ORDER BY `%4` %5").arg(m_headers.at(0)).arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
+    QString selector;
+    if(m_vDisplayFormat.empty())
+    {
+        selector = "*";
+    } else {
+        for(int i=0;i<m_vDisplayFormat.size();i++)
+            selector += m_vDisplayFormat.at(i) + ",";
+        selector.chop(1);
+    }
+
+    QString sql = QString("SELECT `%1`,%2 FROM `%3` %4 ORDER BY `%5` %6").arg(m_headers.at(0)).arg(selector).arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
     setQuery(sql, true);
 }
 

@@ -30,7 +30,7 @@ public:
 
     void setQuery(const QString& sQuery, bool dontClearHeaders = false);
     QString query() const { return m_sQuery; }
-    void setTable(const QString& table);
+    void setTable(const QString& table, const QVector<QString> &display_format = QVector<QString>());
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
@@ -68,6 +68,7 @@ private:
     int m_iSortColumn;
     QString m_sSortOrder;
     QMap<int, QString> m_mWhere;
+    QVector<QString> m_vDisplayFormat;
     QVector<int> m_vDataTypes;
 
     /**
