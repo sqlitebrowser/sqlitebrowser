@@ -35,7 +35,11 @@ ColumnDisplayFormatDialog::~ColumnDisplayFormatDialog()
 
 QString ColumnDisplayFormatDialog::selectedDisplayFormat() const
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
     if(ui->comboDisplayFormat->currentData().toString() == "default")
+#else
+    if(ui->comboDisplayFormat->itemData(ui->comboDisplayFormat->currentIndex()).toString() == "default")
+#endif
         return QString();
     else
         return ui->editDisplayFormat->text();
@@ -43,7 +47,11 @@ QString ColumnDisplayFormatDialog::selectedDisplayFormat() const
 
 void ColumnDisplayFormatDialog::updateSqlCode()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
     QString format = ui->comboDisplayFormat->currentData().toString();
+#else
+    QString format = ui->comboDisplayFormat->itemData(ui->comboDisplayFormat->currentIndex()).toString();
+#endif
     if(format == "default")
         ui->editDisplayFormat->setText("`" + column_name + "`");
     else if(format == "lower")
