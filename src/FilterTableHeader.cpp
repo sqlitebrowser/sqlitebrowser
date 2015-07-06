@@ -12,6 +12,9 @@ public:
     explicit FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
     {
         setPlaceholderText(tr("Filter"));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
+        setClearButtonEnabled(true);
+#endif
         setProperty("column", columnnum);            // Store the column number for later use
     }
 
