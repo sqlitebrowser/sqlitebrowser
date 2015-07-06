@@ -14,6 +14,9 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Round number"), "round");
+    ui->comboDisplayFormat->addItem(tr("Hex number"), "hex");
+    ui->comboDisplayFormat->addItem(tr("Octal number"), "octal");
+    ui->comboDisplayFormat->addItem(tr("Exponent notation"), "exponent");
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
 
     // Set the current format, if it's empty set the default format
@@ -64,4 +67,10 @@ void ColumnDisplayFormatDialog::updateSqlCode()
         ui->editDisplayFormat->setText("datetime(`" + column_name + "`)");
     else if(format == "round")
         ui->editDisplayFormat->setText("round(`" + column_name + "`)");
+    else if(format == "hex")
+        ui->editDisplayFormat->setText("printf('%x', `" + column_name + "`)");
+    else if(format == "octal")
+        ui->editDisplayFormat->setText("printf('%o', `" + column_name + "`)");
+    else if(format == "exponent")
+        ui->editDisplayFormat->setText("printf('%e', `" + column_name + "`)");
 }
