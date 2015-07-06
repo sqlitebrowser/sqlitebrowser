@@ -1015,20 +1015,6 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
     }
 }
 
-QStringList DBBrowserDB::getBrowsableObjectNames() const
-{
-    objectMap::ConstIterator it;
-    QStringList res;
-
-    for(it=objMap.begin();it!=objMap.end();++it)
-    {
-        if(it.key() == "table" || it.key() == "view")
-            res.append(it.value().getname());
-    }
-
-    return res;
-}
-
 objectMap DBBrowserDB::getBrowsableObjects() const
 {
     objectMap::ConstIterator it;

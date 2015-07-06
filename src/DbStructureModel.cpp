@@ -9,7 +9,8 @@
 #include <QApplication>
 
 DbStructureModel::DbStructureModel(QObject* parent)
-    : QAbstractItemModel(parent)
+    : QAbstractItemModel(parent),
+      m_db(0)
 {
     // Create root item and use its columns to store the header strings
     QStringList header;

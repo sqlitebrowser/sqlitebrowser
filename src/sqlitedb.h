@@ -43,7 +43,7 @@ class DBBrowserDB : public QObject
     Q_OBJECT
 
 public:
-    explicit DBBrowserDB () : _db( 0 ) {}
+    explicit DBBrowserDB () : _db(0), isEncrypted(false) {}
     virtual ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool attach(const QString& filename, QString attach_as = "");
@@ -102,7 +102,6 @@ public:
      */
     bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move = 0);
 
-    QStringList getBrowsableObjectNames() const;
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
     bool isOpen() const;

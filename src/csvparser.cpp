@@ -8,6 +8,7 @@ CSVParser::CSVParser(bool trimfields, const QChar& fieldseparator, const QChar& 
     , m_cFieldSeparator(fieldseparator)
     , m_cQuoteChar(quotechar)
     , m_pCSVProgress(0)
+    , m_nColumns(0)
     , m_nBufferSize(4096)
 {
 }

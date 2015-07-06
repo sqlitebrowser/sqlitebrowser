@@ -510,7 +510,7 @@ QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fi
     QStringList listColumns;
     if(SQLITE_OK == status)
     {
-        status = sqlite3_step(stmt);
+        sqlite3_step(stmt);
         int columns = sqlite3_data_count(stmt);
         for(int i = 0; i < columns; ++i)
         {

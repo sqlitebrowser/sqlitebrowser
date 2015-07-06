@@ -107,7 +107,7 @@ typedef QVector< FieldPtr > FieldVector;
 class Table
 {
 public:
-    Table(const QString& name): m_name(name), m_rowidColumn("_rowid_") {}
+    explicit Table(const QString& name): m_name(name), m_rowidColumn("_rowid_") {}
     virtual ~Table();
 
     void setName(const QString& name) { m_name = name; }
@@ -167,7 +167,7 @@ private:
 class CreateTableWalker
 {
 public:
-    CreateTableWalker(antlr::RefAST r)
+    explicit CreateTableWalker(antlr::RefAST r)
         : m_root(r)
         , m_bModifySupported(true)
     {}

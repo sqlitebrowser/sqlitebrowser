@@ -82,7 +82,7 @@ void rollback(
 class CSVImportProgress : public CSVProgress
 {
 public:
-    CSVImportProgress(size_t filesize)
+    explicit CSVImportProgress(size_t filesize)
     {
         m_pProgressDlg = new QProgressDialog(
                     QObject::tr("Decoding CSV file..."),
