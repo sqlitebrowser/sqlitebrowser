@@ -38,6 +38,7 @@ public slots:
     virtual void enableSaveButton(bool enable);
     virtual void saveAsCsv();
     virtual void saveAsView();
+    virtual void reloadSettings();
 
 private:
     DBBrowserDB* db;

@@ -1413,9 +1413,9 @@ void MainWindow::reloadSettings()
     for(int i=0; i < ui->tabSqlAreas->count(); ++i)
     {
         SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+        sqlArea->reloadSettings();
         sqlArea->getModel()->setChunkSize(prefetch_size);
         sqlArea->getResultView()->setFont(logfont);
-        sqlArea->getEditor()->reloadSettings();
     }
 
     // Set font for SQL logs

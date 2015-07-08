@@ -90,6 +90,7 @@ void PreferencesDialog::loadSettings()
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
     ui->checkErrorIndicators->setChecked(getSettingsValue("editor", "error_indicators").toBool());
+    ui->checkHorizontalTiling->setChecked(getSettingsValue("editor", "horizontal_tiling").toBool());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(getSettingsValue("extensions", "disableregex").toBool());
@@ -128,6 +129,7 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("editor", "tabsize", ui->spinTabSize->value());
     setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
     setSettingsValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
+    setSettingsValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
 
     QStringList extList;
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
@@ -308,6 +310,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // editor/error_indicators?
     if(group == "editor" && name == "error_indicators")
         return true;
+
+    // editor/horizontal_tiling?
+    if(group == "editor" && name == "horizontal_tiling")
+        return false;
 
     // extensions/list?
     if(group == "extensions" && name == "list")
