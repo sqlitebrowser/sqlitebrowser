@@ -1064,7 +1064,23 @@ void MainWindow::openRecentFile()
 
 void MainWindow::updateRecentFileActions()
 {
+    // Get recent files list from settings
     QStringList files = PreferencesDialog::getSettingsValue("General", "recentFileList").toStringList();
+
+    // Check if files still exist and remove any non-existant file
+    for(int i=0;i<files.size();i++)
+    {
+        QFileInfo fi(files.at(i));
+        if(!fi.exists())
+        {
+            files.removeAt(i);
+            i--;
+        }
+    }
+
+    // Store updated list
+    PreferencesDialog::setSettingsValue("General", "recentFileList", files);
+
     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i) {
