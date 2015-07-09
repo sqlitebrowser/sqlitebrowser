@@ -809,7 +809,7 @@ void MainWindow::executeQuery()
                 if(sqlWidget->getModel()->valid())
                 {
                     // The query takes the last placeholder as it may itself contain the sequence '%' + number
-                    statusMessage = tr("%1 Rows returned from: %3 (took %2ms)").arg(
+                    statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
                                 sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
                     sqlWidget->enableSaveButton(true);
                     sql3status = SQLITE_OK;
