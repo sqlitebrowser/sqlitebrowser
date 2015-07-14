@@ -10,6 +10,10 @@ else()
     add_definitions(${QT_DEFINITIONS})
 endif()
 
+if(APPLE AND USE_QT5)
+    find_package(Qt5MacExtras)
+endif()
+
 add_definitions(-DSCINTILLA_QT)
 add_definitions(-DSCI_LEXER)
 
@@ -154,5 +158,9 @@ include_directories(. ../include ../lexlib ../src)
 add_library(qscintilla2 ${QSCINTILLA_SRC} ${QSCINTILLA_HDR} ${QSCINTILLA_MOC_HDR} ${QSCINTILLA_MOC})
 
 if(USE_QT5)
-    qt5_use_modules(qscintilla2 Widgets PrintSupport)
+    if (APPLE)
+        qt5_use_modules(qscintilla2 Widgets PrintSupport MacExtras)
+    else()
+        qt5_use_modules(qscintilla2 Widgets PrintSupport)
+    endif()
 endif()
