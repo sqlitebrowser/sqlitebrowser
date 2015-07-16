@@ -826,7 +826,16 @@ void MainWindow::executeQuery()
                 if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) )
                 {
                     modified = true;
-                    statusMessage = tr("Query executed successfully: %1 (took %2ms)").arg(queryPart.trimmed()).arg(timer.elapsed());
+
+                    QString stmtHasChangedDatabase;
+                    if(queryPart.trimmed().startsWith("INSERT", Qt::CaseInsensitive) ||
+                            queryPart.trimmed().startsWith("UPDATE", Qt::CaseInsensitive) ||
+                            queryPart.trimmed().startsWith("DELETE", Qt::CaseInsensitive))
+                    {
+                        stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
+                    }
+
+                    statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
                 }
                 break;
             }
