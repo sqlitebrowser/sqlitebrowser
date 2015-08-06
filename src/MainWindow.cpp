@@ -44,6 +44,7 @@
 #include <QProgressDialog>
 #include <QTextEdit>
 #include <QClipboard>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -92,6 +93,9 @@ void MainWindow::init()
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
     shortcuts.push_back(QKeySequence(tr("Ctrl+Return")));
     ui->actionExecuteSql->setShortcuts(shortcuts);
+
+    QShortcut* shortcutBrowseRefresh = new QShortcut(QKeySequence("Ctrl+R"), this);
+    QObject::connect(shortcutBrowseRefresh, SIGNAL(activated()), ui->buttonRefresh, SLOT(click()));
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
