@@ -906,7 +906,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Create savepoint to be able to go back to it in case of any error
-    if(!executeSQL("SAVEPOINT sqlitebrowser_rename_column"))
+    if(!executeSQL("SAVEPOINT sqlitebrowser_rename_column", false))
     {
         lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
@@ -1008,7 +1008,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Release the savepoint - everything went fine
-    if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_rename_column;"))
+    if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_rename_column;", false))
     {
         lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
