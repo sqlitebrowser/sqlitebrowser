@@ -7,7 +7,7 @@
 #include <QMultiMap>
 #include <QByteArray>
 
-class sqlite3;
+struct sqlite3;
 class CipherDialog;
 
 enum
