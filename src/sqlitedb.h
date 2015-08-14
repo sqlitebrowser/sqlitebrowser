@@ -49,10 +49,10 @@ public:
     bool attach(const QString& filename, QString attach_as = "");
     bool create ( const QString & db);
     bool close();
-    bool setRestorePoint(const QString& pointname = "RESTOREPOINT");
-    bool save (const QString& pointname = "RESTOREPOINT");
-    bool revert (const QString& pointname = "RESTOREPOINT");
-    bool saveAll();
+    bool setSavepoint(const QString& pointname = "RESTOREPOINT");
+    bool releaseSavepoint (const QString& pointname = "RESTOREPOINT");
+    bool revertToSavepoint (const QString& pointname = "RESTOREPOINT");
+    bool releaseAllSavepoints();
     bool revertAll();
     bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew, bool exportSchemaOnly);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);

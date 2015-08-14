@@ -34,7 +34,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
     }
 
     // And create a savepoint
-    pdb->setRestorePoint(m_sRestorePointName);
+    pdb->setSavepoint(m_sRestorePointName);
 
     // Update UI
     ui->editTableName->setText(curTable);
@@ -158,7 +158,7 @@ void EditTableDialog::accept()
 void EditTableDialog::reject()
 {    
     // Then rollback to our savepoint
-    pdb->revert(m_sRestorePointName);
+    pdb->revertToSavepoint(m_sRestorePointName);
     pdb->updateSchema();
 
     QDialog::reject();
