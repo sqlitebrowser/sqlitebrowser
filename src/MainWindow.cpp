@@ -2109,7 +2109,7 @@ void MainWindow::editEncryption()
         qApp->processEvents();
 
         // Apply all unsaved changes
-        bool ok = db.saveAll();
+        bool ok = db.executeSQL("COMMIT;");
         qApp->processEvents();
 
         // Create the new file first or it won't work
