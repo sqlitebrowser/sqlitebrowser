@@ -1,5 +1,6 @@
 #include "ColumnDisplayFormatDialog.h"
 #include "ui_ColumnDisplayFormatDialog.h"
+#include "sqlitetypes.h"
 
 ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QString current_format, QWidget* parent)
     : QDialog(parent),
@@ -56,21 +57,21 @@ void ColumnDisplayFormatDialog::updateSqlCode()
     QString format = ui->comboDisplayFormat->itemData(ui->comboDisplayFormat->currentIndex()).toString();
 #endif
     if(format == "default")
-        ui->editDisplayFormat->setText("`" + column_name + "`");
+        ui->editDisplayFormat->setText(sqlb::escapeIdentifier(column_name));
     else if(format == "lower")
-        ui->editDisplayFormat->setText("lower(`" + column_name + "`)");
+        ui->editDisplayFormat->setText("lower(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "upper")
-        ui->editDisplayFormat->setText("upper(`" + column_name + "`)");
+        ui->editDisplayFormat->setText("upper(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "epoch")
-        ui->editDisplayFormat->setText("datetime(`" + column_name + "`, 'unixepoch')");
+        ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')");
     else if(format == "julian")
-        ui->editDisplayFormat->setText("datetime(`" + column_name + "`)");
+        ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "round")
-        ui->editDisplayFormat->setText("round(`" + column_name + "`)");
+        ui->editDisplayFormat->setText("round(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "hex")
-        ui->editDisplayFormat->setText("printf('%x', `" + column_name + "`)");
+        ui->editDisplayFormat->setText("printf('%x', " + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "octal")
-        ui->editDisplayFormat->setText("printf('%o', `" + column_name + "`)");
+        ui->editDisplayFormat->setText("printf('%o', " + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "exponent")
-        ui->editDisplayFormat->setText("printf('%e', `" + column_name + "`)");
+        ui->editDisplayFormat->setText("printf('%e', " + sqlb::escapeIdentifier(column_name) + ")");
 }

@@ -164,14 +164,14 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     // Attach database
     QString key;
     if(cipher) key = cipher->password();
-    if(!executeSQL(QString("ATTACH '%1' AS `%2` KEY '%3'").arg(filename).arg(attach_as).arg(key), false))
+    if(!executeSQL(QString("ATTACH '%1' AS %2 KEY '%3'").arg(filename).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
         return false;
     }
     if(cipher && cipher->pageSize() != 1024)
     {
-        if(!executeSQL(QString("PRAGMA `%1`.cipher_page_size = %2").arg(attach_as).arg(cipher->pageSize()), false))
+        if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipher->pageSize()), false))
         {
             QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
             return false;
@@ -179,7 +179,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     }
 #else
     // Attach database
-    if(!executeSQL(QString("ATTACH '%1' AS `%2`").arg(filename).arg(attach_as), false))
+    if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filename).arg(sqlb::escapeIdentifier(attach_as)), false))
     {
         QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -453,7 +453,7 @@ bool DBBrowserDB::dump(const QString& filename,
             // get columns
             QStringList cols(it->table.fieldNames());
 
-            QString sQuery = QString("SELECT * FROM `%1`;").arg(it->getTableName());
+            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(it->getTableName()));
             QByteArray utf8Query = sQuery.toUtf8();
             sqlite3_stmt *stmt;
             QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
@@ -470,7 +470,7 @@ bool DBBrowserDB::dump(const QString& filename,
 
                     if (!insertNewSyntx || !counter)
                     {
-                        stream << "INSERT INTO `" << it->getTableName() << '`';
+                        stream << "INSERT INTO " << sqlb::escapeIdentifier(it->getTableName());
                         if (insertColNames)
                             stream << " (" << cols.join(",") << ")";
                         stream << " VALUES (";
@@ -650,7 +650,11 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
 bool DBBrowserDB::getRow(const QString& sTableName, const QString& rowid, QList<QByteArray>& rowdata)
 {
-    QString sQuery = QString("SELECT * FROM `%1` WHERE `%2`='%3';").arg(sTableName).arg(getObjectByName(sTableName).table.rowidColumn()).arg(rowid);
+    QString sQuery = QString("SELECT * FROM %1 WHERE %2='%3';")
+            .arg(sqlb::escapeIdentifier(sTableName))
+            .arg(sqlb::escapeIdentifier(getObjectByName(sTableName).table.rowidColumn()))
+            .arg(rowid);
+
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
     bool ret = false;
@@ -684,7 +688,7 @@ bool DBBrowserDB::getRow(const QString& sTableName, const QString& rowid, QList<
 
 QString DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
 {
-    QString sQuery = QString("SELECT MAX(CAST(`%2` AS INTEGER)) FROM `%1`;").arg(t.name()).arg(field->name());
+    QString sQuery = QString("SELECT MAX(CAST(%2 AS INTEGER)) FROM %1;").arg(sqlb::escapeIdentifier(t.name())).arg(sqlb::escapeIdentifier(field->name()));
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
     QString ret = "0";
@@ -708,7 +712,7 @@ QString DBBrowserDB::max(const sqlb::Table& t, sqlb::FieldPtr field) const
 
 QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_value) const
 {
-    QString stmt = QString("INSERT INTO `%1`").arg(t.name());
+    QString stmt = QString("INSERT INTO %1").arg(sqlb::escapeIdentifier(t.name()));
 
     QStringList vals;
     QStringList fields;
@@ -749,12 +753,14 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_val
     }
 
     if(fields.empty())
-        stmt.append(" DEFAULT VALUES;");
-    else
     {
-        stmt.append("(`");
-        stmt.append(fields.join("`,`"));
-        stmt.append("`) VALUES (");
+        stmt.append(" DEFAULT VALUES;");
+    } else {
+        stmt.append("(");
+        foreach(const QString& f, fields)
+            stmt.append(sqlb::escapeIdentifier(f) + ",");
+        stmt.chop(1);
+        stmt.append(") VALUES (");
         stmt.append(vals.join(","));
         stmt.append(");");
     }
@@ -797,7 +803,10 @@ bool DBBrowserDB::deleteRecord(const QString& table, const QString& rowid)
     if (!isOpen()) return false;
     bool ok = false;
 
-    QString statement = QString("DELETE FROM `%1` WHERE `%2`='%3';").arg(table).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
+    QString statement = QString("DELETE FROM %1 WHERE %2='%3';")
+            .arg(sqlb::escapeIdentifier(table))
+            .arg(sqlb::escapeIdentifier(getObjectByName(table).table.rowidColumn()))
+            .arg(rowid);
     if(executeSQL(statement))
         ok = true;
     else
@@ -810,7 +819,11 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, cons
 {
     if (!isOpen()) return false;
 
-    QString sql = QString("UPDATE `%1` SET `%2`=? WHERE `%3`='%4';").arg(table).arg(column).arg(getObjectByName(table).table.rowidColumn()).arg(rowid);
+    QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
+            .arg(sqlb::escapeIdentifier(table))
+            .arg(sqlb::escapeIdentifier(column))
+            .arg(sqlb::escapeIdentifier(getObjectByName(table).table.rowidColumn()))
+            .arg(rowid);
 
     logSQL(sql, kLogMsg_App);
     setRestorePoint();
@@ -865,7 +878,7 @@ bool DBBrowserDB::createTable(const QString& name, const sqlb::FieldVector& stru
 
 bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& field)
 {
-    QString sql = QString("ALTER TABLE `%1` ADD COLUMN %2").arg(tablename).arg(field->toString());
+    QString sql = QString("ALTER TABLE %1 ADD COLUMN %2").arg(sqlb::escapeIdentifier(tablename)).arg(field->toString());
 
     // Execute it and update the schema
     bool result = executeSQL(sql);
@@ -880,9 +893,9 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // function can be changed to executing something like this:
     //QString sql;
     //if(to.isNull())
-    //    sql = QString("ALTER TABLE `%1` DROP COLUMN `%2`;").arg(table).arg(column);
+    //    sql = QString("ALTER TABLE %1 DROP COLUMN %2;").arg(sqlb::escapeIdentifier(table)).arg(sqlb::escapeIdentifier(column));
     //else
-    //    sql = QString("ALTER TABLE `%1` MODIFY `%2` %3").arg(tablename).arg(to).arg(type);    // This is wrong...
+    //    sql = QString("ALTER TABLE %1 MODIFY %2 %3").arg(sqlb::escapeIdentifier(tablename)).arg(sqlb::escapeIdentifier(to)).arg(type);    // This is wrong...
     //return executeSQL(sql);
 
     // Collect information on the current DB layout
@@ -925,7 +938,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         newSchema.removeField(name);
 
         for(int i=0;i<newSchema.fields().count();++i)
-            select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
+            select_cols.append(sqlb::escapeIdentifier(newSchema.fields().at(i)->name()) + ',');
         select_cols.chop(1);    // remove last comma
     } else {
         // We want to modify it
@@ -938,7 +951,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
 
         // Get names of fields to select from old table now - after the field has been moved and before it might be renamed
         for(int i=0;i<newSchema.fields().count();++i)
-            select_cols.append(QString("`%1`,").arg(newSchema.fields().at(i)->name()));
+            select_cols.append(sqlb::escapeIdentifier(newSchema.fields().at(i)->name()) + ',');
         select_cols.chop(1);    // remove last comma
 
         // Modify field
@@ -956,7 +969,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM `%2`;").arg(select_cols).arg(tablename)))
+    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM %2;").arg(select_cols).arg(sqlb::escapeIdentifier(tablename))))
     {
         QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         qWarning() << error;
@@ -979,7 +992,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     setPragma("foreign_keys", "0");
 
     // Delete the old table
-    if(!executeSQL(QString("DROP TABLE `%1`;").arg(tablename)))
+    if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(tablename))))
     {
         QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
         qWarning() << error;
@@ -1022,7 +1035,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
 
 bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table)
 {
-    QString sql = QString("ALTER TABLE `%1` RENAME TO `%2`").arg(from_table, to_table);
+    QString sql = QString("ALTER TABLE %1 RENAME TO %2").arg(sqlb::escapeIdentifier(from_table)).arg(sqlb::escapeIdentifier(to_table));
     if(!executeSQL(sql))
     {
         QString error = tr("Error renaming table '%1' to '%2'."
@@ -1129,7 +1142,7 @@ void DBBrowserDB::updateSchema( )
         {
             (*it).table = sqlb::Table::parseSQL((*it).getsql()).first;
         } else if((*it).gettype() == "view") {
-            statement = QString("PRAGMA TABLE_INFO(`%1`);").arg((*it).getname());
+            statement = QString("PRAGMA TABLE_INFO(%1);").arg(sqlb::escapeIdentifier((*it).getname()));
             logSQL(statement, kLogMsg_App);
             err=sqlite3_prepare_v2(_db,statement.toUtf8(),statement.length(),
                                 &vm, &tail);

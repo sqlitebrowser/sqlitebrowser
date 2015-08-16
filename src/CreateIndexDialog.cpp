@@ -57,7 +57,7 @@ void CreateIndexDialog::tableChanged(const QString& new_table)
 void CreateIndexDialog::checkInput()
 {
     bool valid = true;
-    if(ui->editIndexName->text().isEmpty() || ui->editIndexName->text().contains("`"))
+    if(ui->editIndexName->text().isEmpty())
         valid = false;
 
     int num_columns = 0;
@@ -74,17 +74,17 @@ void CreateIndexDialog::checkInput()
 
 void CreateIndexDialog::accept()
 {
-    QString sql = QString("CREATE %1 INDEX `%2` ON `%3` (")
+    QString sql = QString("CREATE %1 INDEX %2 ON %3 (")
             .arg(ui->checkIndexUnique->isChecked() ? "UNIQUE" : "")
-            .arg(ui->editIndexName->text())
-            .arg(ui->comboTableName->currentText());
+            .arg(sqlb::escapeIdentifier(ui->editIndexName->text()))
+            .arg(sqlb::escapeIdentifier(ui->comboTableName->currentText()));
 
     for(int i=0; i < ui->tableIndexColumns->rowCount(); ++i)
     {
         if(ui->tableIndexColumns->item(i, 1)->data(Qt::CheckStateRole) == Qt::Checked)
         {
-            sql.append(QString("`%1` %2,")
-                       .arg(ui->tableIndexColumns->item(i, 0)->text())
+            sql.append(QString("%1 %2,")
+                       .arg(sqlb::escapeIdentifier(ui->tableIndexColumns->item(i, 0)->text()))
                        .arg(qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText()));
         }
     }

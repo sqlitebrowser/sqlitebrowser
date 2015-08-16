@@ -210,7 +210,7 @@ void ExportCsvDialog::accept()
         {
             // if we are called from execute sql tab, query is already set
             // and we only export 1 select
-            QString sQuery = QString("SELECT * from `%1`;").arg(selectedItems.at(i)->text());
+            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(selectedItems.at(i)->text()));
 
             exportQuery(sQuery, filenames.at(i));
         }

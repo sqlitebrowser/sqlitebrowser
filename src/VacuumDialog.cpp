@@ -55,7 +55,7 @@ void VacuumDialog::accept()
         // No, so execute a vacuum command for each selected object individually
         QList<QTreeWidgetItem*> selection = ui->treeSelectedObjects->selectedItems();
         foreach(QTreeWidgetItem* item, selection)
-            db->executeSQL(QString("VACUUM `%1`;").arg(item->text(0)), false);
+            db->executeSQL(QString("VACUUM %1;").arg(sqlb::escapeIdentifier(item->text(0))), false);
     }
 
     QApplication::restoreOverrideCursor();

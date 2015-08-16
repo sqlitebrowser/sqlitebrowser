@@ -69,7 +69,7 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
 
     if(!allOk)
     {
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM `%1`;").arg(table);
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(table));
         m_headers.push_back("rowid");
         m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
     }
@@ -484,7 +484,7 @@ void SqliteTableModel::buildQuery()
                 column = QString("col%1").arg(i.key());
             else
                 column = m_headers.at(i.key());
-            where.append(QString(" AND `%1` %2").arg(column).arg(i.value()));
+            where.append(QString(" AND %1 %2").arg(sqlb::escapeIdentifier(column)).arg(i.value()));
         }
     }
 
@@ -498,7 +498,13 @@ void SqliteTableModel::buildQuery()
         selector.chop(1);
     }
 
-    QString sql = QString("SELECT `%1`,%2 FROM `%3` %4 ORDER BY `%5` %6").arg(m_headers.at(0)).arg(selector).arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
+    QString sql = QString("SELECT %1,%2 FROM %3 %4 ORDER BY %5 %6")
+            .arg(sqlb::escapeIdentifier(m_headers.at(0)))
+            .arg(selector)
+            .arg(sqlb::escapeIdentifier(m_sTable))
+            .arg(where)
+            .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
+            .arg(m_sSortOrder);
     setQuery(sql, true);
 }
 

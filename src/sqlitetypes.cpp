@@ -9,6 +9,11 @@ namespace sqlb {
 
 QStringList Field::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
+QString escapeIdentifier(QString id)
+{
+    return '`' + id.replace('`', "``") + '`';
+}
+
 bool ForeignKeyClause::isSet() const
 {
     return m_override.size() || m_table.size();
@@ -22,13 +27,13 @@ QString ForeignKeyClause::toString() const
     if(m_override.size())
         return m_override;
 
-    QString result = "`" + m_table + "`";
+    QString result = escapeIdentifier(m_table);
 
     if(m_columns.size())
     {
         result += "(";
         foreach(const QString& column, m_columns)
-            result += "`" + column + "`,";
+            result += escapeIdentifier(column) + ',';
         result.chop(1); // Remove last comma
         result += ")";
     }
@@ -46,7 +51,7 @@ void ForeignKeyClause::setFromString(const QString& fk)
 
 QString Field::toString(const QString& indent, const QString& sep) const
 {
-    QString str = indent + '`' + m_name + '`' + sep + m_type;
+    QString str = indent + escapeIdentifier(m_name) + sep + m_type;
     if(m_notnull)
         str += " NOT NULL";
     if(!m_defaultvalue.isEmpty())
@@ -204,7 +209,7 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
 
 QString Table::sql() const
 {
-    QString sql = QString("CREATE TABLE `%1` (\n").arg(m_name);
+    QString sql = QString("CREATE TABLE %1 (\n").arg(escapeIdentifier(m_name));
 
     sql += fieldList().join(",\n");
 
@@ -230,7 +235,7 @@ QString Table::sql() const
     foreach(FieldPtr f, m_fields)
     {
         if(f->foreignKey().isSet())
-            sql += QString(",\n\tFOREIGN KEY(`%1`) REFERENCES %2").arg(f->name()).arg(f->foreignKey().toString());
+            sql += QString(",\n\tFOREIGN KEY(%1) REFERENCES %2").arg(escapeIdentifier(f->name())).arg(f->foreignKey().toString());
     }
 
     sql += "\n)";

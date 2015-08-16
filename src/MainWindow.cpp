@@ -348,7 +348,7 @@ void MainWindow::populateTable(const QString& tablename)
                 v.push_back(format);
                 only_defaults = false;
             } else {
-                v.push_back("`" + db.getObjectByName(tablename).table.fields().at(i)->name() + "`");
+                v.push_back(sqlb::escapeIdentifier(db.getObjectByName(tablename).table.fields().at(i)->name()));
             }
         }
         if(only_defaults)
@@ -652,7 +652,7 @@ void MainWindow::deleteObject()
                             QMessageBox::Yes, QMessageBox::No | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Yes)
     {
         // Delete the table
-        QString statement = QString("DROP %1 `%2`;").arg(type.toUpper()).arg(table);
+        QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(sqlb::escapeIdentifier(table));
         if(!db.executeSQL( statement))
         {
             QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);

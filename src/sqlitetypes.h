@@ -12,6 +12,8 @@
 
 namespace sqlb {
 
+QString escapeIdentifier(QString id);
+
 class ForeignKeyClause
 {
 public:

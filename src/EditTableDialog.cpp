@@ -16,7 +16,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
       curTable(tableName),
       m_table(tableName),
       m_bNewTable(createTable),
-      m_sRestorePointName(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch()))
+      m_sRestorePointName(sqlb::escapeIdentifier(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch())))
 {
     // Create UI
     ui->setupUi(this);
@@ -173,7 +173,7 @@ void EditTableDialog::checkInput()
 {
     QString normTableName = ui->editTableName->text().trimmed();
     bool valid = true;
-    if(normTableName.isEmpty() || normTableName.contains("`"))
+    if(normTableName.isEmpty())
         valid = false;
     if(ui->treeWidget->topLevelItemCount() == 0)
         valid = false;
@@ -272,7 +272,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(this, pdb);
-                m.setQuery(QString("SELECT COUNT(`%1`) FROM `%2` WHERE `%3` IS NULL;").arg(pdb->getObjectByName(curTable).table.rowidColumn()).arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
+                           .arg(sqlb::escapeIdentifier(pdb->getObjectByName(curTable).table.rowidColumn()))
+                           .arg(sqlb::escapeIdentifier(curTable))
+                           .arg(sqlb::escapeIdentifier(field->name())));
                 if(m.data(m.index(0, 0)).toInt() > 0)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
@@ -296,7 +299,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 if(!m_bNewTable)
                 {
                     SqliteTableModel m(this, pdb);
-                    m.setQuery(QString("SELECT COUNT(*) FROM `%1` WHERE `%2` <> CAST(`%3` AS INTEGER);").arg(curTable).arg(field->name()).arg(field->name()));
+                    m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);")
+                               .arg(sqlb::escapeIdentifier(curTable))
+                               .arg(sqlb::escapeIdentifier(field->name()))
+                               .arg(sqlb::escapeIdentifier(field->name())));
                     if(m.data(m.index(0, 0)).toInt() > 0)
                     {
                         // There is a non-integer value, so print an error message, uncheck the combobox, and return here
@@ -337,14 +343,14 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             {
                 // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
                 SqliteTableModel m(this, pdb);
-                m.setQuery(QString("SELECT COUNT(`%2`) FROM `%1`;").arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(sqlb::escapeIdentifier(curTable)).arg(sqlb::escapeIdentifier(field->name())));
                 int rowcount = m.data(m.index(0, 0)).toInt();
-                m.setQuery(QString("SELECT COUNT(distinct `%2`) FROM `%1`;").arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(sqlb::escapeIdentifier(curTable)).arg(sqlb::escapeIdentifier(field->name())));
                 int uniquecount = m.data(m.index(0, 0)).toInt();
                 if(rowcount != uniquecount)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
-                    QMessageBox::information(this, qApp->applicationName(), tr("Column `%1` has no unique data.\n").arg(field->name())
+                    QMessageBox::information(this, qApp->applicationName(), tr("Column '%1'' has no unique data.\n").arg(field->name())
                                              + tr("This makes it impossible to set this flag. Please change the table data first."));
                     item->setCheckState(column, Qt::Unchecked);
                     return;

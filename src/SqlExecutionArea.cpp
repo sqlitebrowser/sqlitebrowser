@@ -100,7 +100,7 @@ void SqlExecutionArea::saveAsView()
         return;
 
     // Create the view
-    if(db->executeSQL(QString("CREATE VIEW `%1` AS %2;").arg(name).arg(model->query())))
+    if(db->executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(model->query())))
         QMessageBox::information(this, qApp->applicationName(), tr("View successfully created."));
     else
         QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db->lastErrorMessage));

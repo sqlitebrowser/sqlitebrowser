@@ -223,7 +223,7 @@ void ImportCsvDialog::accept()
         it != csv.csv().end();
         ++it)
     {
-        QString sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
+        QString sql = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(ui->editName->text()));
 
         QStringList insertlist;
         for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
@@ -321,7 +321,7 @@ void ImportCsvDialog::updatePreview()
 void ImportCsvDialog::checkInput()
 {
     bool valid = true;
-    if(ui->editName->text().isEmpty() || ui->editName->text().contains("`"))
+    if(ui->editName->text().isEmpty())
         valid = false;
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
