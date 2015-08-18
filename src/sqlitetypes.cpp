@@ -256,9 +256,20 @@ QString identifier(antlr::RefAST ident)
        ident->getType() == Sqlite3Lexer::QUOTEDLITERAL ||
        ident->getType() == sqlite3TokenTypes::STRINGLITERAL)
     {
+        // Remember the way the identifier is quoted
+        QChar quoteChar = sident.at(0);
+
+        // Remove first and final character, i.e. the quotes
         sident.remove(0, 1);
-        sident.remove(sident.length() - 1, 1);
+        sident.chop(1);
+
+        // Replace all remaining occurences of two succeeding quote characters and replace them
+        // by a single instance. This is done because two quotes can be used as a means of escaping
+        // the quote character, thus only the visual representation has its two quotes, the actual
+        // name contains only one.
+        sident.replace(QString(quoteChar) + quoteChar, quoteChar);
     }
+
     return sident;
 }
 
