@@ -25,8 +25,11 @@ public slots:
     virtual void reset();
     virtual void loadText(const QByteArray& data, int row, int col);
 
+protected:
+    virtual void closeEvent(QCloseEvent* ev);
+    virtual void showEvent(QShowEvent* ev);
+
 private slots:
-    virtual void closeEvent(QCloseEvent*);
     virtual void importData();
     virtual void exportData();
     virtual void clearData();

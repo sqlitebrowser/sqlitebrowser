@@ -49,6 +49,18 @@ void EditDialog::closeEvent(QCloseEvent*)
     emit goingAway();
 }
 
+void EditDialog::showEvent(QShowEvent*)
+{
+    // Whenever the dialog is shown, position it at the center of the parent dialog
+    QPoint center = mapToGlobal(rect().center());
+    QDialog* parentDialog = qobject_cast<QDialog*>(parent());
+    if(parentDialog)
+    {
+        QPoint parentCenter = parentDialog->window()->mapToGlobal(parentDialog->window()->rect().center());
+        move(parentCenter - center);
+    }
+}
+
 void EditDialog::loadText(const QByteArray& data, int row, int col)
 {
     curRow = row;
