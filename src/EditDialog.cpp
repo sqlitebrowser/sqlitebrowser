@@ -53,7 +53,7 @@ void EditDialog::showEvent(QShowEvent*)
 {
     // Whenever the dialog is shown, position it at the center of the parent dialog
     QPoint center = mapToGlobal(rect().center());
-    QDialog* parentDialog = qobject_cast<QDialog*>(parent());
+    QMainWindow* parentDialog = qobject_cast<QMainWindow*>(parent());
     if(parentDialog)
     {
         QPoint parentCenter = parentDialog->window()->mapToGlobal(parentDialog->window()->rect().center());
