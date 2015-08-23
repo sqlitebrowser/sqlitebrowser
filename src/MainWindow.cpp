@@ -1421,6 +1421,11 @@ void MainWindow::reloadSettings()
     logfont.setStyleHint(QFont::TypeWriter);
     logfont.setPointSize(log_fontsize);
 
+    // Set data browser font
+    QFont dataBrowserFont(PreferencesDialog::getSettingsValue("databrowser", "font").toString());
+    dataBrowserFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
+    ui->dataTable->setFont(dataBrowserFont);
+
     // Set prefetch sizes for lazy population of table models
     m_browseTableModel->setChunkSize(prefetch_size);
     for(int i=0; i < ui->tabSqlAreas->count(); ++i)

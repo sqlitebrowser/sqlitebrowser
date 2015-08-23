@@ -62,6 +62,8 @@ void PreferencesDialog::loadSettings()
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
 
+    ui->comboDataBrowserFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("databrowser", "font").toString()));
+    ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
     loadColorSetting(ui->fr_null_bg, "null_bg");
     loadColorSetting(ui->fr_reg_fg, "reg_fg");
@@ -108,6 +110,8 @@ void PreferencesDialog::saveSettings()
 
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
+    setSettingsValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
+    setSettingsValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
     saveColorSetting(ui->fr_null_fg, "null_fg");
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");
@@ -240,6 +244,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // Data Browser/NULL Fields
     if(group == "databrowser")
     {
+        if(name == "font")
+            return "Sans Serif";
+        if(name == "fontsize")
+            return 10;
         if (name == "null_text")
             return "NULL";
         if (name == "null_fg_colour")

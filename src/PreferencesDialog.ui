@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>405</height>
+    <height>426</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -202,7 +202,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Remove line breaks in schema view</string>
+          <string>Remove line breaks in schema &amp;view</string>
          </property>
          <property name="buddy">
           <cstring>checkHideSchemaLinebreaks</cstring>
@@ -215,7 +215,7 @@
        <item row="3" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>&amp;Prefetch block size</string>
+          <string>Prefetch block si&amp;ze</string>
          </property>
          <property name="buddy">
           <cstring>spinPrefetchSize</cstring>
@@ -252,66 +252,49 @@
        <string>Data &amp;Browser</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="3">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1" rowspan="2" colspan="2">
+       <item row="0" column="0" rowspan="2" colspan="2">
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string>Font</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_4">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>&amp;Font</string>
+              </property>
+              <property name="buddy">
+               <cstring>comboDataBrowserFont</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QFontComboBox" name="comboDataBrowserFont"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Font si&amp;ze:</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinDataBrowserFontSize</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinDataBrowserFontSize"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="groupBox">
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    border-radius: 4px;
-    margin-top: 1ex;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    subcontrol-position: top left;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-           </property>
            <property name="title">
             <string>NULL fields</string>
            </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-           <layout class="QGridLayout" name="gridLayout">
-            <property name="leftMargin">
-             <number>50</number>
-            </property>
-            <property name="rightMargin">
-             <number>50</number>
-            </property>
+           <layout class="QFormLayout" name="gridLayout">
             <item row="0" column="1">
              <widget class="QLineEdit" name="txtNull">
               <property name="text">
@@ -343,25 +326,8 @@ QGroupBox::title {
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox_2">
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    border-radius: 4px;
-    margin-top: 1ex;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    subcontrol-position: top left;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-           </property>
            <property name="title">
-            <string>Fields colors</string>
+            <string>Field colors</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="2" column="0">
@@ -521,19 +487,6 @@ QGroupBox::title {
           </widget>
          </item>
         </layout>
-       </item>
-       <item row="2" column="1">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>274</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -793,7 +746,7 @@ QGroupBox::title {
          <item row="5" column="0">
           <widget class="QLabel" name="label_10">
            <property name="text">
-            <string>Horizontal tiling</string>
+            <string>Hori&amp;zontal tiling</string>
            </property>
            <property name="buddy">
             <cstring>checkHorizontalTiling</cstring>
@@ -916,6 +869,8 @@ QGroupBox::title {
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
+  <tabstop>comboDataBrowserFont</tabstop>
+  <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>txtNull</tabstop>
   <tabstop>fr_null_fg</tabstop>
   <tabstop>fr_null_bg</tabstop>
@@ -978,8 +933,8 @@ QGroupBox::title {
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>79</y>
+     <x>571</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -994,8 +949,8 @@ QGroupBox::title {
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>79</y>
+     <x>571</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1010,8 +965,8 @@ QGroupBox::title {
    <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>101</x>
-     <y>46</y>
+     <x>111</x>
+     <y>87</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
