@@ -105,6 +105,7 @@ private:
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
+    QLabel* statusReadOnlyLabel;
 
     DbStructureModel* dbStructureModel;
 

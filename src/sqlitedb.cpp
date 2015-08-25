@@ -10,6 +10,8 @@
 #include <QSettings>
 #include <QDebug>
 #include <QInputDialog>
+#include <QFileInfo>
+#include <QDir>
 
 // collation callbacks
 int collCompare(void* /*pArg*/, int /*eTextRepA*/, const void* sA, int /*eTextRepB*/, const void* sB)
@@ -135,6 +137,11 @@ bool DBBrowserDB::open(const QString& db)
         // Register REGEXP function
         if(settings.value("/extensions/disableregex", false) == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, NULL, regexp, NULL, NULL);
+
+        // Check if file is read only
+        QFileInfo fi(db);
+        QFileInfo fid(fi.absoluteDir().absolutePath());
+        isReadOnly = !fi.isWritable() || !fid.isWritable();
 
         curDBFilename = db;
         return true;
@@ -313,8 +320,6 @@ bool DBBrowserDB::revertAll()
 
 bool DBBrowserDB::create ( const QString & db)
 {
-    bool ok=false;
-
     if (isOpen()) close();
 
     // read encoding from settings and open with sqlite3_open for utf8
@@ -354,11 +359,13 @@ bool DBBrowserDB::create ( const QString & db)
         executeSQL("DROP TABLE notempty;", false, false);
         executeSQL("COMMIT;", false, false);
 
-        ok = true;
         curDBFilename = db;
+        isEncrypted = false;
+        isReadOnly = false;
+        return true;
+    } else {
+        return false;
     }
-
-    return ok;
 }
 
 

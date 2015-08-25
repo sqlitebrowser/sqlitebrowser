@@ -143,18 +143,25 @@ void MainWindow::init()
     ui->viewMenu->actions().at(2)->setIcon(QIcon(":/icons/log_dock"));
 
     // Set statusbar fields
+    statusEncryptionLabel = new QLabel(ui->statusbar);
+    statusEncryptionLabel->setEnabled(false);
+    statusEncryptionLabel->setVisible(false);
+    statusEncryptionLabel->setText(tr("Encrypted"));
+    statusEncryptionLabel->setToolTip(tr("Database is encrypted using SQLCipher"));
+    ui->statusbar->addPermanentWidget(statusEncryptionLabel);
+
+    statusReadOnlyLabel = new QLabel(ui->statusbar);
+    statusReadOnlyLabel->setEnabled(false);
+    statusReadOnlyLabel->setVisible(false);
+    statusReadOnlyLabel->setText(tr("Read only"));
+    statusReadOnlyLabel->setToolTip(tr("Database file is read only. Editing the database is disabled."));
+    ui->statusbar->addPermanentWidget(statusReadOnlyLabel);
+
     statusEncodingLabel = new QLabel(ui->statusbar);
     statusEncodingLabel->setEnabled(false);
     statusEncodingLabel->setText("UTF-8");
     statusEncodingLabel->setToolTip(tr("Database encoding"));
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
-
-    statusEncryptionLabel = new QLabel(ui->statusbar);
-    statusEncryptionLabel->setEnabled(false);
-    statusEncryptionLabel->setVisible(false);
-    statusEncryptionLabel->setText("Encrypted");
-    statusEncryptionLabel->setToolTip(tr("Database is encrypted using SQLCipher"));
-    ui->statusbar->addPermanentWidget(statusEncryptionLabel);
 
     // Connect some more signals and slots
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
@@ -233,6 +240,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
             {
                 statusEncodingLabel->setText(db.getPragma("encoding"));
                 statusEncryptionLabel->setVisible(db.encrypted());
+                statusReadOnlyLabel->setVisible(db.readOnly());
                 setCurrentFile(wFile);
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
@@ -266,6 +274,8 @@ void MainWindow::fileNew()
         setCurrentFile(fileName);
         addToRecentFilesMenu(fileName);
         statusEncodingLabel->setText(db.getPragma("encoding"));
+        statusEncryptionLabel->setVisible(false);
+        statusReadOnlyLabel->setVisible(false);
         loadExtensionsFromSettings();
         populateStructure();
         resetBrowser();
@@ -393,10 +403,10 @@ void MainWindow::populateTable(const QString& tablename)
     }
 
     // Activate the add and delete record buttons and editing only if a table has been selected
-    bool is_table = db.getObjectByName(tablename).gettype() == "table";
-    ui->buttonNewRecord->setEnabled(is_table);
-    ui->buttonDeleteRecord->setEnabled(is_table);
-    ui->dataTable->setEditTriggers(is_table ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+    bool editable = db.getObjectByName(tablename).gettype() == "table" && !db.readOnly();
+    ui->buttonNewRecord->setEnabled(editable);
+    ui->buttonDeleteRecord->setEnabled(editable);
+    ui->dataTable->setEditTriggers(editable ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
 
     // Set the recordset label
     setRecordsetLabel();
@@ -451,6 +461,7 @@ void MainWindow::fileClose()
     populateStructure();
     loadPragmas();
     statusEncryptionLabel->setVisible(false);
+    statusReadOnlyLabel->setVisible(false);
 
     // Delete the model for the Browse tab and create a new one
     delete m_browseTableModel;
@@ -1015,10 +1026,6 @@ void MainWindow::openPreferences()
         reloadSettings();
 }
 
-//******************************************************************
-//** Tree Events
-//******************************************************************
-
 //** Db Tree Context Menu
 void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 {
@@ -1056,14 +1063,14 @@ void MainWindow::changeTreeSelection()
     // Activate actions
     if(type == "table")
     {
-        ui->editDeleteObjectAction->setEnabled(true);
-        ui->editModifyTableAction->setEnabled(true);
+        ui->editDeleteObjectAction->setEnabled(!db.readOnly());
+        ui->editModifyTableAction->setEnabled(!db.readOnly());
     } else if(type == "view" || type == "trigger" || type == "index") {
-        ui->editDeleteObjectAction->setEnabled(true);
+        ui->editDeleteObjectAction->setEnabled(!db.readOnly());
     }
     if(type == "table" || type == "view")
     {
-        ui->actionEditBrowseTable->setEnabled(true);
+        ui->actionEditBrowseTable->setEnabled(!db.readOnly());
         ui->actionExportCsvPopup->setEnabled(true);
     }
 }
@@ -1153,24 +1160,26 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::activateFields(bool enable)
 {
+    bool write = !db.readOnly();
+
     ui->fileCloseAction->setEnabled(enable);
-    ui->fileCompactAction->setEnabled(enable);
+    ui->fileCompactAction->setEnabled(enable && write);
     ui->fileExportCSVAction->setEnabled(enable);
     ui->fileExportSQLAction->setEnabled(enable);
-    ui->fileImportCSVAction->setEnabled(enable);
-    ui->editCreateTableAction->setEnabled(enable);
-    ui->editCreateIndexAction->setEnabled(enable);
+    ui->fileImportCSVAction->setEnabled(enable && write);
+    ui->editCreateTableAction->setEnabled(enable && write);
+    ui->editCreateIndexAction->setEnabled(enable && write);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->buttonBegin->setEnabled(enable);
     ui->buttonEnd->setEnabled(enable);
     ui->scrollAreaWidgetContents->setEnabled(enable);
-    ui->buttonBoxPragmas->setEnabled(enable);
+    ui->buttonBoxPragmas->setEnabled(enable && write);
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
-    ui->buttonDeleteRecord->setEnabled(enable);
-    ui->buttonNewRecord->setEnabled(enable);
+    ui->buttonDeleteRecord->setEnabled(enable && write);
+    ui->buttonNewRecord->setEnabled(enable && write);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
@@ -1180,7 +1189,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlSaveFileAs->setEnabled(enable);
     ui->actionSqlSaveFile->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable);
-    ui->actionEncryption->setEnabled(enable);
+    ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
 }
 

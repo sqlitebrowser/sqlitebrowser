@@ -43,7 +43,7 @@ class DBBrowserDB : public QObject
     Q_OBJECT
 
 public:
-    explicit DBBrowserDB () : _db(0), isEncrypted(false) {}
+    explicit DBBrowserDB () : _db(0), isEncrypted(false), isReadOnly(false) {}
     virtual ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool attach(const QString& filename, QString attach_as = "");
@@ -106,6 +106,7 @@ public:
     DBBrowserObject getObjectByName(const QString& name) const;
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
+    bool readOnly() const { return isReadOnly; }
     bool getDirty() const;
     void logSQL(QString statement, int msgtype);
 
@@ -131,6 +132,7 @@ private:
     QStringList savepointList;
 
     bool isEncrypted;
+    bool isReadOnly;
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
 };
