@@ -63,7 +63,7 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-void FilterTableHeader::generateFilters(int number)
+void FilterTableHeader::generateFilters(int number, bool showFirst)
 {
     // Delete all the current filter widgets
     for(int i=0;i < filterWidgets.size(); ++i)
@@ -74,7 +74,10 @@ void FilterTableHeader::generateFilters(int number)
     for(int i=0;i < number; ++i)
     {
         FilterLineEdit* l = new FilterLineEdit(this, &filterWidgets, i);
-        l->setVisible(i>0);                     // This hides the first input widget which belongs to the hidden rowid column
+        if(!showFirst && i == 0)        // This hides the first input widget which belongs to the hidden rowid column
+            l->setVisible(false);
+        else
+            l->setVisible(true);
         connect(l, SIGNAL(textChanged(QString)), this, SLOT(inputChanged(QString)));
         filterWidgets.push_back(l);
     }

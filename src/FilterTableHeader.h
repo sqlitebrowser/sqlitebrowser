@@ -17,7 +17,7 @@ public:
     virtual QSize sizeHint() const;
     
 public slots:
-    void generateFilters(int number);
+    void generateFilters(int number, bool showFirst = false);
     void adjustPositions();
     void clearFilters();
     void setFilter(int column, const QString& value);

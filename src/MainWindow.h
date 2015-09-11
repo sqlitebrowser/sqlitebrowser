@@ -39,6 +39,7 @@ public:
         QMap<int, int> columnWidths;
         QMap<int, QString> filterValues;
         QMap<int, QString> displayFormats;
+        bool showRowid;
 
         friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
         {
@@ -47,6 +48,7 @@ public:
             stream << object.columnWidths;
             stream << object.filterValues;
             stream << object.displayFormats;
+            stream << object.showRowid;
 
             return stream;
         }
@@ -59,6 +61,7 @@ public:
             stream >> object.columnWidths;
             stream >> object.filterValues;
             stream >> object.displayFormats;
+            stream >> object.showRowid;
 
             return stream;
         }
@@ -214,6 +217,7 @@ private slots:
     void on_comboPointShape_currentIndexChanged(int index);
     void showDataColumnPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
+    void showRowidColumn(bool show);
 };
 
 #endif

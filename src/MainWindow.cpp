@@ -122,6 +122,7 @@ void MainWindow::init()
     ui->actionSqlSaveFilePopup->setMenu(popupSaveSqlFileMenu);
 
     popupBrowseDataHeaderMenu = new QMenu(this);
+    popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
 
     // Add menu item for log dock
@@ -366,15 +367,15 @@ void MainWindow::populateTable(const QString& tablename)
         else
             m_browseTableModel->setTable(tablename, v);
     }
-    ui->dataTable->setColumnHidden(0, true);
-
-    // Update the filter row
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount());
 
     // Restore table settings
     if(storedDataFound)
     {
         // There is information stored for this table, so extract it and apply it
+
+        // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
+        // because of the filter row generation.
+        showRowidColumn(tableIt.value().showRowid);
 
         // Column widths
         for(QMap<int, int>::ConstIterator widthIt=tableIt.value().columnWidths.constBegin();widthIt!=tableIt.value().columnWidths.constEnd();++widthIt)
@@ -390,6 +391,9 @@ void MainWindow::populateTable(const QString& tablename)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
     } else {
         // There aren't any information stored for this table yet, so use some default values
+
+        // Hide rowid column. Needs to be done before the column widths setting because of the workaround in there
+        showRowidColumn(false);
 
         // Column widths
         for(int i=1;i<m_browseTableModel->columnCount();i++)
@@ -1957,6 +1961,7 @@ bool MainWindow::loadProject(QString filename)
                             populateTable(ui->comboBrowseTable->currentText());     // Refresh view
                             ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
                                                         browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
+                            showRowidColumn(browseTableSettings[ui->comboBrowseTable->currentText()].showRowid);
                             xml.skipCurrentElement();
                         }
                     }
@@ -2286,4 +2291,24 @@ void MainWindow::editDataColumnDisplayFormat()
         // Refresh view
         populateTable(current_table);
     }
+}
+
+void MainWindow::showRowidColumn(bool show)
+{
+    // FIXME: Workaround for actually getting the next line to work reliably
+    //ui->dataTable->setModel(0);
+    //ui->dataTable->setModel(m_browseTableModel);
+
+    // Show/hide rowid column
+    ui->dataTable->setColumnHidden(0, !show);
+
+    // Update checked status of the popup menu action
+    ui->actionShowRowidColumn->setChecked(show);
+
+    // Save settings for this table
+    QString current_table = ui->comboBrowseTable->currentText();
+    browseTableSettings[current_table].showRowid = show;
+
+    // Update the filter row
+    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
 }
