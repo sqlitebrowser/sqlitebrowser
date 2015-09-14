@@ -324,8 +324,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>514</width>
-             <height>579</height>
+             <width>506</width>
+             <height>558</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -1779,6 +1779,14 @@
     <string>Toggle the visibility of the rowid column</string>
    </property>
   </action>
+  <action name="actionSetTableEncoding">
+   <property name="text">
+    <string>Set encoding</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the encoding of the text in the table cells</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2734,6 +2742,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSetTableEncoding</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseDataSetTableEncoding()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2792,5 +2816,6 @@
   <slot>jumpToRow(QString,QString,QByteArray)</slot>
   <slot>editDataColumnDisplayFormat()</slot>
   <slot>showRowidColumn(bool)</slot>
+  <slot>browseDataSetTableEncoding()</slot>
  </slots>
 </ui>

@@ -12,7 +12,7 @@ class SqliteTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit SqliteTableModel(QObject *parent = 0, DBBrowserDB* db = 0, size_t chunkSize = 50000);
+    explicit SqliteTableModel(QObject *parent = 0, DBBrowserDB* db = 0, size_t chunkSize = 50000, const QString& encoding = QString());
     void reset();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -40,12 +40,13 @@ public:
 
     bool isBinary(const QModelIndex& index) const;
 
+    void setEncoding(QString encoding) { m_encoding = encoding; }
+    QString encoding() const { return m_encoding; }
+
     typedef QList<QByteArray> QByteArrayList;
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 
-signals:
-    
 public slots:
     void updateFilter(int column, const QString& value);
 
@@ -56,6 +57,9 @@ private:
     void buildQuery();
     QStringList getColumns(const QString& sQuery, QVector<int>& fieldsTypes);
     int getQueryRowCount();
+
+    QByteArray encode(const QByteArray& str) const;
+    QByteArray decode(const QByteArray& str) const;
 
     DBBrowserDB* m_db;
     int m_rowCount;
@@ -82,6 +86,8 @@ private:
     size_t m_chunkSize;
 
     bool m_valid; //! tells if the current query is valid.
+
+    QString m_encoding;
 };
 
 #endif // SQLITETABLEMODEL_H

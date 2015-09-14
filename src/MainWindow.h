@@ -40,6 +40,7 @@ public:
         QMap<int, QString> filterValues;
         QMap<int, QString> displayFormats;
         bool showRowid;
+        QString encoding;
 
         friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
         {
@@ -49,6 +50,7 @@ public:
             stream << object.filterValues;
             stream << object.displayFormats;
             stream << object.showRowid;
+            stream << object.encoding;
 
             return stream;
         }
@@ -62,6 +64,7 @@ public:
             stream >> object.filterValues;
             stream >> object.displayFormats;
             stream >> object.showRowid;
+            stream >> object.encoding;
 
             return stream;
         }
@@ -218,6 +221,7 @@ private slots:
     void showDataColumnPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
     void showRowidColumn(bool show);
+    void browseDataSetTableEncoding();
 };
 
 #endif

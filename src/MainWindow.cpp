@@ -124,6 +124,7 @@ void MainWindow::init()
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
+    popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
 
     // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
@@ -389,6 +390,9 @@ void MainWindow::populateTable(const QString& tablename)
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
         for(QMap<int, QString>::ConstIterator filterIt=tableIt.value().filterValues.constBegin();filterIt!=tableIt.value().filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
+
+        // Encoding
+        m_browseTableModel->setEncoding(tableIt.value().encoding);
     } else {
         // There aren't any information stored for this table yet, so use some default values
 
@@ -402,6 +406,9 @@ void MainWindow::populateTable(const QString& tablename)
         // Sorting
         m_browseTableModel->sort(0, Qt::AscendingOrder);
         ui->dataTable->filterHeader()->setSortIndicator(0, Qt::AscendingOrder);
+
+        // Encoding
+        m_browseTableModel->setEncoding(QString());
 
         // The filters can be left empty as they are
     }
@@ -2311,4 +2318,29 @@ void MainWindow::showRowidColumn(bool show)
 
     // Update the filter row
     qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
+}
+
+void MainWindow::browseDataSetTableEncoding()
+{
+    // Get the old encoding
+    QString encoding = m_browseTableModel->encoding();
+
+    // Ask the user for a new encoding
+    bool ok;
+    encoding = QInputDialog::getText(this,
+                                     tr("Set encoding"),
+                                     tr("Please choose a new encoding for this table. Leave the field empty for using the database encoding."),
+                                     QLineEdit::Normal,
+                                     encoding,
+                                     &ok);
+
+    // Only set the new encoding if the user clicked the OK button
+    if(ok)
+    {
+        // Set encoding
+        m_browseTableModel->setEncoding(encoding);
+
+        // Save encoding for this table
+        browseTableSettings[ui->comboBrowseTable->currentText()].encoding = encoding;
+    }
 }

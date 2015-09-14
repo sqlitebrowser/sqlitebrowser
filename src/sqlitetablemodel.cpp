@@ -6,13 +6,15 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
+#include <QTextCodec>
 
-SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize)
+SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_rowCount(0)
     , m_chunkSize(chunkSize)
     , m_valid(false)
+    , m_encoding(encoding)
 {
     reset();
 }
@@ -251,7 +253,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         else if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
             return PreferencesDialog::getSettingsValue("databrowser", "null_text").toString();
         else
-            return m_data.at(index.row()).at(index.column());
+            return decode(m_data.at(index.row()).at(index.column()));
     } else if(role == Qt::FontRole) {
         QFont font;
         if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
@@ -293,7 +295,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
 {
     if(index.isValid() && role == Qt::EditRole)
     {
-        QByteArray newValue = value.toByteArray();
+        QByteArray newValue = encode(value.toByteArray());
         QByteArray oldValue = m_data.at(index.row()).at(index.column());
 
         // Don't do anything if the data hasn't changed
@@ -570,7 +572,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     if(val == "''")
         m_mWhere.remove(column);
     else
-        m_mWhere.insert(column, QString("%1 %2").arg(op).arg(val));
+        m_mWhere.insert(column, QString("%1 %2").arg(op).arg(QString(encode(val.toUtf8()))));
 
     // Build the new query
     buildQuery();
@@ -586,4 +588,20 @@ void SqliteTableModel::clearCache()
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
     return m_vDataTypes.at(index.column()) == SQLITE_BLOB;
+}
+
+QByteArray SqliteTableModel::encode(const QByteArray& str) const
+{
+    if(m_encoding.isEmpty())
+        return str;
+    else
+        return QTextCodec::codecForName(m_encoding.toUtf8())->fromUnicode(str);
+}
+
+QByteArray SqliteTableModel::decode(const QByteArray& str) const
+{
+    if(m_encoding.isEmpty())
+        return str;
+    else
+        return QTextCodec::codecForName(m_encoding.toUtf8())->toUnicode(str).toUtf8();
 }
