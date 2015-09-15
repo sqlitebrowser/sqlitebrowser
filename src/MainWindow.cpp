@@ -125,6 +125,8 @@ void MainWindow::init()
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
     popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
+    popupBrowseDataHeaderMenu->addSeparator();
+    popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
     // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
@@ -408,7 +410,7 @@ void MainWindow::populateTable(const QString& tablename)
         ui->dataTable->filterHeader()->setSortIndicator(0, Qt::AscendingOrder);
 
         // Encoding
-        m_browseTableModel->setEncoding(QString());
+        m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
         // The filters can be left empty as they are
     }
@@ -481,6 +483,7 @@ void MainWindow::fileClose()
 
     // Remove all stored table information browse data tab
     browseTableSettings.clear();
+    defaultBrowseTableEncoding = QString();
 
     // Manually update the recordset label inside the Browse tab now
     setRecordsetLabel();
@@ -1960,6 +1963,10 @@ bool MainWindow::loadProject(QString filename)
                             // Currently selected table
                             ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(xml.attributes().value("name").toString()));
                             xml.skipCurrentElement();
+                        } else if(xml.name() == "default_encoding") {
+                            // Default text encoding
+                            defaultBrowseTableEncoding = xml.attributes().value("codec").toString();
+                            xml.skipCurrentElement();
                         } else if(xml.name() == "browsetable_info") {
                             QString attrData = xml.attributes().value("data").toString();
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
@@ -2067,6 +2074,9 @@ void MainWindow::saveProject()
         xml.writeStartElement("tab_browse");
         xml.writeStartElement("current_table");     // Currently selected table
         xml.writeAttribute("name", ui->comboBrowseTable->currentText());
+        xml.writeEndElement();
+        xml.writeStartElement("default_encoding");  // Default encoding for text stored in tables
+        xml.writeAttribute("codec", defaultBrowseTableEncoding);
         xml.writeEndElement();
         {                                           // Table browser information
             QByteArray temp;
@@ -2320,16 +2330,21 @@ void MainWindow::showRowidColumn(bool show)
     qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
 }
 
-void MainWindow::browseDataSetTableEncoding()
+void MainWindow::browseDataSetTableEncoding(bool forAllTables)
 {
     // Get the old encoding
     QString encoding = m_browseTableModel->encoding();
 
     // Ask the user for a new encoding
     bool ok;
+    QString question;
+    if(forAllTables)
+        question = tr("Please choose a new encoding for this table.");
+    else
+        question = tr("Please choose a new encoding for all table.");
     encoding = QInputDialog::getText(this,
                                      tr("Set encoding"),
-                                     tr("Please choose a new encoding for this table. Leave the field empty for using the database encoding."),
+                                     tr("%1\nLeave the field empty for using the database encoding.").arg(question),
                                      QLineEdit::Normal,
                                      encoding,
                                      &ok);
@@ -2337,10 +2352,31 @@ void MainWindow::browseDataSetTableEncoding()
     // Only set the new encoding if the user clicked the OK button
     if(ok)
     {
-        // Set encoding
+        // Check if encoding is valid
+        if(!QTextCodec::codecForName(encoding.toUtf8()))
+        {
+            QMessageBox::warning(this, qApp->applicationName(), tr("This encoding is either not valid or not supported."));
+            return;
+        }
+
+        // Set encoding for current table
         m_browseTableModel->setEncoding(encoding);
 
         // Save encoding for this table
         browseTableSettings[ui->comboBrowseTable->currentText()].encoding = encoding;
+
+        // Set default encoding if requested to and change all stored table encodings
+        if(forAllTables)
+        {
+            defaultBrowseTableEncoding = encoding;
+
+            for(QMap<QString, BrowseDataTableSettings>::Iterator it=browseTableSettings.begin();it!=browseTableSettings.end();++it)
+                it.value().encoding = encoding;
+        }
     }
+}
+
+void MainWindow::browseDataSetDefaultTableEncoding()
+{
+    browseDataSetTableEncoding(true);
 }

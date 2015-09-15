@@ -125,6 +125,7 @@ private:
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
+    QString defaultBrowseTableEncoding;
 
     QNetworkAccessManager* m_NetworkManager;
 
@@ -221,7 +222,8 @@ private slots:
     void showDataColumnPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
     void showRowidColumn(bool show);
-    void browseDataSetTableEncoding();
+    void browseDataSetTableEncoding(bool forAllTables = false);
+    void browseDataSetDefaultTableEncoding();
 };
 
 #endif

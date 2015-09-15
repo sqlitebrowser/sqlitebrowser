@@ -1787,6 +1787,14 @@
     <string>Change the encoding of the text in the table cells</string>
    </property>
   </action>
+  <action name="actionSetAllTablesEncoding">
+   <property name="text">
+    <string>Set encoding for all tables</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the default encoding assumed for all tables in the database</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2758,6 +2766,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSetAllTablesEncoding</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseDataSetDefaultTableEncoding()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2817,5 +2841,6 @@
   <slot>editDataColumnDisplayFormat()</slot>
   <slot>showRowidColumn(bool)</slot>
   <slot>browseDataSetTableEncoding()</slot>
+  <slot>browseDataSetDefaultTableEncoding()</slot>
  </slots>
 </ui>
