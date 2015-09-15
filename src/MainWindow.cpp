@@ -45,6 +45,7 @@
 #include <QTextEdit>
 #include <QClipboard>
 #include <QShortcut>
+#include <QTextCodec>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
