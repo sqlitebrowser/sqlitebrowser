@@ -72,6 +72,7 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
 
     ui->txtNull->setText(getSettingsValue("databrowser", "null_text").toString());
+    ui->editFilterEscape->setText(getSettingsValue("databrowser", "filter_escape").toString());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -119,6 +120,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     setSettingsValue("databrowser", "null_text", ui->txtNull->text());
+    setSettingsValue("databrowser", "filter_escape", ui->editFilterEscape->text());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -250,6 +252,8 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
             return 10;
         if (name == "null_text")
             return "NULL";
+        if (name == "filter_escape")
+            return "\\";
         if (name == "null_fg_colour")
             return QColor(Qt::lightGray).name();
         if (name == "null_bg_colour")

@@ -536,6 +536,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
     QString op = "LIKE";
     QString val;
+    QString escape;
     bool numeric = false;
     if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
     {
@@ -556,12 +557,16 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
             val = value.mid(1);
             numeric = true;
         }
+    } else if(value.left(1) == "=") {
+        op = "=";
+        val = value.mid(1);
     } else {
-        if(value.left(1) == "=")
-        {
-            op = "=";
-            val = value.mid(1);
-        }
+        // Keep the default LIKE operator
+
+        QString escape_character = PreferencesDialog::getSettingsValue("databrowser", "filter_escape").toString();
+        if(escape_character == "'") escape_character = "''";
+        if(escape_character.length())
+            escape = QString("ESCAPE '%1'").arg(escape_character);
     }
     if(val.isEmpty())
         val = value;
@@ -572,7 +577,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     if(val == "''")
         m_mWhere.remove(column);
     else
-        m_mWhere.insert(column, QString("%1 %2").arg(op).arg(QString(encode(val.toUtf8()))));
+        m_mWhere.insert(column, QString("%1 %2 %3").arg(op).arg(QString(encode(val.toUtf8()))).arg(escape));
 
     // Build the new query
     buildQuery();

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>426</height>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -480,6 +480,32 @@
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string>Filters</string>
+           </property>
+           <layout class="QFormLayout" name="gridLayout_4">
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="editFilterEscape">
+              <property name="maxLength">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Escape character</string>
+              </property>
+              <property name="buddy">
+               <cstring>editFilterEscape</cstring>
               </property>
              </widget>
             </item>
