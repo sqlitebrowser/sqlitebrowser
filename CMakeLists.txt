@@ -149,6 +149,7 @@ set(SQLB_MISC
 # Translation files
 set(SQLB_TSS
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_zh.ts"
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_zh_TW.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_de.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_fr.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ru.ts"
