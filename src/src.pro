@@ -103,6 +103,7 @@ FORMS += \
 
 TRANSLATIONS += \
     translations/sqlb_zh.ts \
+    translations/sqlb_zh_TW.ts \
     translations/sqlb_de.ts \
     translations/sqlb_fr.ts \
     translations/sqlb_ru.ts \
