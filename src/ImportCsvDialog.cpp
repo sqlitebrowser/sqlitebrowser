@@ -75,7 +75,7 @@ void rollback(
         QString error = sCSVInfo + QObject::tr(".\n%1").arg(message);
         QMessageBox::warning(dialog, QApplication::applicationName(), error);
     }
-    pdb->revert(savepointName);
+    pdb->revertToSavepoint(savepointName);
 }
 }
 
@@ -208,7 +208,7 @@ void ImportCsvDialog::accept()
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
     QString restorepointName = QString("CSVIMPORT_%1").arg(QDateTime::currentMSecsSinceEpoch());
-    if(!pdb->setRestorePoint(restorepointName))
+    if(!pdb->setSavepoint(restorepointName))
         return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastErrorMessage));
 
     // Create table
