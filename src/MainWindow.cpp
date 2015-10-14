@@ -802,7 +802,7 @@ void MainWindow::executeQuery()
     // we create the prepared statement, otherwise every executed
     // statement will get committed after the prepared statement
     // gets finalized, see http://www.sqlite.org/lang_transaction.html
-    db.setRestorePoint();
+    db.setSavepoint();
 
     // Remove any error indicators
     sqlWidget->getEditor()->clearErrorIndicators();
@@ -891,7 +891,7 @@ void MainWindow::executeQuery()
     updatePlot(sqlWidget->getModel());
 
     if(!modified && !wasdirty)
-        db.revert(); // better rollback, if the logic is not enough we can tune it.
+        db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
 }
 
 void MainWindow::mainTabSelected(int tabindex)
@@ -951,7 +951,7 @@ void MainWindow::dbState( bool dirty )
 void MainWindow::fileSave()
 {
     if(db.isOpen())
-        db.saveAll();
+        db.releaseAllSavepoints();
 }
 
 void MainWindow::fileRevert()
@@ -2146,7 +2146,7 @@ void MainWindow::editEncryption()
         qApp->processEvents();
 
         // Apply all unsaved changes
-        bool ok = db.saveAll();
+        bool ok = db.executeSQL("COMMIT;");
         qApp->processEvents();
 
         // Create the new file first or it won't work

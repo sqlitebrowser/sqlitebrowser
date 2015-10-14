@@ -44,7 +44,7 @@ void VacuumDialog::accept()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // Commit all changes first
-    db->saveAll();
+    db->executeSQL("COMMIT;");
 
     // All items selected?
     if(ui->treeSelectedObjects->selectedItems().count() ==  ui->treeSelectedObjects->topLevelItemCount())

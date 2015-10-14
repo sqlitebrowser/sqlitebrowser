@@ -255,7 +255,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
     }
 }
 
-bool DBBrowserDB::setRestorePoint(const QString& pointname)
+bool DBBrowserDB::setSavepoint(const QString& pointname)
 {
     if(!isOpen())
         return false;
@@ -270,7 +270,7 @@ bool DBBrowserDB::setRestorePoint(const QString& pointname)
     return true;
 }
 
-bool DBBrowserDB::save(const QString& pointname)
+bool DBBrowserDB::releaseSavepoint(const QString& pointname)
 {
     if(!isOpen() || savepointList.contains(pointname) == false)
         return false;
@@ -283,7 +283,7 @@ bool DBBrowserDB::save(const QString& pointname)
     return true;
 }
 
-bool DBBrowserDB::revert(const QString& pointname)
+bool DBBrowserDB::revertToSavepoint(const QString& pointname)
 {
     if(!isOpen() || savepointList.contains(pointname) == false)
         return false;
@@ -298,11 +298,11 @@ bool DBBrowserDB::revert(const QString& pointname)
     return true;
 }
 
-bool DBBrowserDB::saveAll()
+bool DBBrowserDB::releaseAllSavepoints()
 {
     foreach(const QString& point, savepointList)
     {
-        if(!save(point))
+        if(!releaseSavepoint(point))
             return false;
     }
     return true;
@@ -312,7 +312,7 @@ bool DBBrowserDB::revertAll()
 {
     foreach(const QString& point, savepointList)
     {
-        if(!revert(point))
+        if(!revertToSavepoint(point))
             return false;
     }
     return true;
@@ -387,7 +387,7 @@ bool DBBrowserDB::close()
 
             // If he didn't it was either yes or no
             if(reply == QMessageBox::Yes)
-                saveAll();
+                releaseAllSavepoints();
             else
                 revertAll(); //not really necessary, I think... but will not hurt.
         }
@@ -576,7 +576,7 @@ bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool log
         return false;
 
     if (logsql) logSQL(statement, kLogMsg_App);
-    if (dirtyDB) setRestorePoint();
+    if (dirtyDB) setSavepoint();
 
     if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
     {
@@ -600,7 +600,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
     // Set DB to dirty/create restore point if necessary
     if(dirty)
-        setRestorePoint();
+        setSavepoint();
 
     // Show progress dialog
     int statement_size = statement.size();
@@ -833,7 +833,7 @@ bool DBBrowserDB::updateRecord(const QString& table, const QString& column, cons
             .arg(rowid);
 
     logSQL(sql, kLogMsg_App);
-    setRestorePoint();
+    setSavepoint();
 
     // If we get a NULL QByteArray we insert a NULL value, and for that
     // we can pass NULL to sqlite3_bind_text() so that it behaves like sqlite3_bind_null()
@@ -926,7 +926,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Create savepoint to be able to go back to it in case of any error
-    if(!executeSQL("SAVEPOINT sqlitebrowser_rename_column", false))
+    if(!setSavepoint("sqlitebrowser_rename_column"))
     {
         lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
@@ -970,7 +970,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
         qWarning() << error;
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
         return false;
     }
@@ -980,10 +980,11 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         qWarning() << error;
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
         return false;
     }
+
 
     // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
     QString otherObjectsSql;
@@ -1003,7 +1004,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
         qWarning() << error;
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
         return false;
     }
@@ -1011,7 +1012,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     // Rename the temporary table
     if(!renameTable("sqlitebrowser_rename_column_new_table", tablename))
     {
-        executeSQL("ROLLBACK TO SAVEPOINT sqlitebrowser_rename_column;");
+        revertToSavepoint("sqlitebrowser_rename_column");
         return false;
     }
 
@@ -1028,7 +1029,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Release the savepoint - everything went fine
-    if(!executeSQL("RELEASE SAVEPOINT sqlitebrowser_rename_column;", false))
+    if(!releaseSavepoint("sqlitebrowser_rename_column"))
     {
         lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
@@ -1205,7 +1206,7 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     // Set the pragma value
     QString sql = QString("PRAGMA %1 = \"%2\";").arg(pragma).arg(value);
 
-    save();
+    releaseSavepoint();
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
         qWarning() << tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage);
