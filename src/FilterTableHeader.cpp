@@ -1,46 +1,8 @@
 #include "FilterTableHeader.h"
+#include "FilterLineEdit.h"
 
-#include <QLineEdit>
 #include <QTableView>
 #include <QScrollBar>
-#include <QKeyEvent>
-#include <QDebug>
-
-class FilterLineEdit : public QLineEdit
-{
-public:
-    explicit FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
-    {
-        setPlaceholderText(tr("Filter"));
-#if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
-        setClearButtonEnabled(true);
-#endif
-        setProperty("column", columnnum);            // Store the column number for later use
-    }
-
-protected:
-    void keyReleaseEvent(QKeyEvent* event)
-    {
-        if(event->key() == Qt::Key_Tab)
-        {
-            if(columnNumber < filterList->size() - 1)
-            {
-                filterList->at(columnNumber + 1)->setFocus();
-                event->accept();
-            }
-        } else if(event->key() == Qt::Key_Backtab) {
-            if(columnNumber > 0)
-            {
-                filterList->at(columnNumber - 1)->setFocus();
-                event->accept();
-            }
-        }
-    }
-
-private:
-    QList<FilterLineEdit*>* filterList;
-    int columnNumber;
-};
 
 FilterTableHeader::FilterTableHeader(QTableView* parent) :
     QHeaderView(Qt::Horizontal, parent)
@@ -78,7 +40,7 @@ void FilterTableHeader::generateFilters(int number, bool showFirst)
             l->setVisible(false);
         else
             l->setVisible(true);
-        connect(l, SIGNAL(textChanged(QString)), this, SLOT(inputChanged(QString)));
+        connect(l, SIGNAL(delayedTextChanged(QString)), this, SLOT(inputChanged(QString)));
         filterWidgets.push_back(l);
     }
 

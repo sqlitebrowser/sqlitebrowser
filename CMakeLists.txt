@@ -88,6 +88,7 @@ set(SQLB_MOC_HDR
 	src/SqlUiLexer.h
 	src/FileDialog.h
 	src/ColumnDisplayFormatDialog.h
+	src/FilterLineEdit.h
 )
 
 set(SQLB_SRC
@@ -118,6 +119,7 @@ set(SQLB_SRC
 	src/SqlUiLexer.cpp
 	src/FileDialog.cpp
 	src/ColumnDisplayFormatDialog.cpp
+	src/FilterLineEdit.cpp
 )
 
 set(SQLB_FORMS
