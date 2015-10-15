@@ -563,10 +563,21 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     } else {
         // Keep the default LIKE operator
 
+        // Set the escape character if one has been specified in the settings dialog
         QString escape_character = PreferencesDialog::getSettingsValue("databrowser", "filter_escape").toString();
         if(escape_character == "'") escape_character = "''";
         if(escape_character.length())
             escape = QString("ESCAPE '%1'").arg(escape_character);
+
+        // Add % wildcards at the start and at the beginning of the filter query, but only if there weren't set any
+        // wildcards manually. The idea is to assume that a user who's just typing characters expects the wildcards to
+        // be added but a user who adds them herself knows what she's doing and doesn't want us to mess up her query.
+        if(!value.contains("%"))
+        {
+            val = value;
+            val.prepend('%');
+            val.append('%');
+        }
     }
     if(val.isEmpty())
         val = value;
@@ -574,7 +585,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
         val = QString("'%1'").arg(val.replace("'", "''"));
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(val == "''")
+    if(val == "''" || val == "'%'" || val == "'%%'")
         m_mWhere.remove(column);
     else
         m_mWhere.insert(column, QString("%1 %2 %3").arg(op).arg(QString(encode(val.toUtf8()))).arg(escape));
