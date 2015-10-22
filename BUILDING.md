@@ -47,6 +47,20 @@ $ sudo make install
 
 Done. :)
 
+### CentOS / Fedora Linux
+
+**1**. Make sure the `qt-devel`, `ant-antlr`, and `antlr-C++` packages are installed.<br />
+```
+$ sudo yum install qt-devel ant-antlr antlr-C++
+```
+**2**. Download the DB Browser for SQLite source code.<br />
+**3**. Open a terminal in the source code directory.<br />
+**4**. Run these commands:<br />
+```bash
+$ cmake . && make && sudo make install
+```
+**5**. This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
+
 ### MacOS X
 
 The application can be compiled to a single executable binary file, similar to
