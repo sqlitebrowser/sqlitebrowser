@@ -132,7 +132,9 @@ void EditDialog::editTextChanged()
 {
     if(ui->editorText->hasFocus())
     {
+        hexEdit->blockSignals(true);
         hexEdit->setData(ui->editorText->toPlainText().toUtf8());
+        hexEdit->blockSignals(false);
         checkDataType();
     }
 }
@@ -140,7 +142,9 @@ void EditDialog::editTextChanged()
 void EditDialog::hexDataChanged()
 {
     // Update the text editor accordingly
+    ui->editorText->blockSignals(true);
     ui->editorText->setPlainText(QString::fromUtf8(hexEdit->data().constData(), hexEdit->data().size()));
+    ui->editorText->blockSignals(false);
 }
 
 void EditDialog::checkDataType()
