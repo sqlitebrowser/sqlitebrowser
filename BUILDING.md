@@ -38,7 +38,7 @@ The same process works for building the code in any platform supported by Qt
 ```bash
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake .
 $ make
 $ sudo make install
 ```
