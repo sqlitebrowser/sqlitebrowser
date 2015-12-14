@@ -305,7 +305,7 @@ bool DBBrowserDB::releaseAllSavepoints()
         if(!releaseSavepoint(point))
             return false;
     }
-    executeSQL("COMMIT;");  // Just to be sure
+    executeSQL("COMMIT;", false, false);  // Just to be sure
     return true;
 }
 
