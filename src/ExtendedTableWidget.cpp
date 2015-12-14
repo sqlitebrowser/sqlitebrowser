@@ -75,6 +75,17 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
         // If the Tab key was pressed while the focus was on the last cell of the last row insert a new row automatically
         model()->insertRow(model()->rowCount());
+    } else if(event->key() == Qt::Key_Delete) {
+        if(event->modifiers().testFlag(Qt::AltModifier))
+        {
+            // When pressing Alt+Delete set the value to NULL
+            foreach(const QModelIndex& index, selectedIndexes())
+                model()->setData(index, QString());
+        } else {
+            // When pressing Delete only set the value to empty string
+            foreach(const QModelIndex& index, selectedIndexes())
+                model()->setData(index, "");
+        }
     }
 
     // This prevents the current selection from being changed when pressing tab to move to the next filter. Note that this is in an 'if' condition,
