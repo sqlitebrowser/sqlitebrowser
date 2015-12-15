@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
       editWin(new EditDialog(this)),
+      editDock(new EditDialog(this, true)),
       gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
@@ -89,6 +90,10 @@ void MainWindow::init()
     ui->treeSchemaDock->setModel(dbStructureModel);
     ui->treeSchemaDock->setColumnHidden(1, true);
     ui->treeSchemaDock->setColumnWidth(0, 300);
+
+    // Edit dock
+    ui->dockEditWindow->setWidget(editDock);
+    ui->dockEditWindow->hide();     // Hidden by default
 
     // Add keyboard shortcuts
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
@@ -147,6 +152,10 @@ void MainWindow::init()
     ui->viewMenu->actions().at(2)->setShortcut(QKeySequence(tr("Ctrl+I")));
     ui->viewMenu->actions().at(2)->setIcon(QIcon(":/icons/log_dock"));
 
+    // Add menu item for edit dock
+    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockEditWindow->toggleViewAction());
+    ui->viewMenu->actions().at(3)->setIcon(QIcon(":/icons/log_dock"));
+
     // Set statusbar fields
     statusEncryptionLabel = new QLabel(ui->statusbar);
     statusEncryptionLabel->setEnabled(false);
@@ -174,6 +183,8 @@ void MainWindow::init()
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
     connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
     connect(editWin, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
+    connect(editDock, SIGNAL(goingAway()), this, SLOT(editWinAway()));
+    connect(editDock, SIGNAL(updateRecordText(int, int, QByteArray)), this, SLOT(updateRecordText(int, int, QByteArray)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
 
@@ -426,8 +437,8 @@ void MainWindow::populateTable(const QString& tablename)
     setRecordsetLabel();
 
     // Reset the edit dialog
-    if(editWin)
-        editWin->reset();
+    editWin->reset();
+    editDock->reset();
 
     // update plot
     updatePlot(m_browseTableModel);
@@ -727,19 +738,20 @@ void MainWindow::updateRecordText(int row, int col, const QByteArray& newtext)
 
 void MainWindow::editWinAway()
 {
-    editWin->hide();
-    activateWindow();
-    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(editWin->getCurrentRow(), editWin->getCurrentCol()));
-}
+    // Get the sender
+    EditDialog* sendingEditDialog = qobject_cast<EditDialog*>(sender());
 
-void MainWindow::editText(const QModelIndex& index)
-{
-    editWin->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
-    editWin->show();
+    // Only hide the edit window, not the edit dock
+    editWin->hide();
+
+    // Update main window
+    activateWindow();
+    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(sendingEditDialog->getCurrentRow(), sendingEditDialog->getCurrentCol()));
 }
 
 void MainWindow::doubleClickTable(const QModelIndex& index)
 {
+    // Cancel on invalid index
     if(!index.isValid())
         return;
 
@@ -747,7 +759,28 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
         return;
 
-    editText(index);
+    // Load the current value into both, edit window and edit dock
+    editWin->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+    editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+
+    // If the edit dock is visible don't open the edit window. If it's invisible open the edit window.
+    // The edit dock obviously doesn't need to be opened when it's already visible
+    if(!ui->dockEditWindow->isVisible())
+        editWin->show();
+}
+
+void MainWindow::clickTable(const QModelIndex& index)
+{
+    // Cancel on invalid index
+    if(!index.isValid())
+        return;
+
+    // Don't allow editing of other objects than tables
+    if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
+        return;
+
+    // Load the current value into the edit dock only
+    editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
 }
 
 /*
@@ -1206,6 +1239,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
+    ui->dockEditWindow->setEnabled(enable && write);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)

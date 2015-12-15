@@ -14,7 +14,7 @@ class EditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditDialog(QWidget* parent = 0);
+    explicit EditDialog(QWidget* parent = 0, bool forUseInDockWidget = false);
     ~EditDialog();
 
 public:
@@ -45,6 +45,7 @@ signals:
 
 private:
     Ui::EditDialog* ui;
+    bool useInDock;
     QHexEdit* hexEdit;
     QByteArray oldData;
     int curCol;

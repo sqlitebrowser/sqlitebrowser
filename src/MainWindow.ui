@@ -324,7 +324,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>506</width>
+             <width>280</width>
              <height>558</height>
             </rect>
            </property>
@@ -1276,6 +1276,15 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockEditWindow">
+   <property name="windowTitle">
+    <string>Edit cell</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
@@ -2782,6 +2791,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clickTable(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2842,5 +2867,6 @@
   <slot>showRowidColumn(bool)</slot>
   <slot>browseDataSetTableEncoding()</slot>
   <slot>browseDataSetDefaultTableEncoding()</slot>
+  <slot>clickTable(QModelIndex)</slot>
  </slots>
 </ui>

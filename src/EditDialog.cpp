@@ -8,12 +8,14 @@
 #include <QKeySequence>
 #include <QShortcut>
 
-EditDialog::EditDialog(QWidget* parent)
+EditDialog::EditDialog(QWidget* parent, bool forUseInDockWidget)
     : QDialog(parent),
-      ui(new Ui::EditDialog)
+      ui(new Ui::EditDialog),
+      useInDock(forUseInDockWidget)
 {
     ui->setupUi(this);
     ui->buttonBox->button(QDialogButtonBox::Ok)->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setVisible(!forUseInDockWidget);
 
     QHBoxLayout* hexLayout = new QHBoxLayout(ui->editorBinary);
     hexEdit = new QHexEdit(this);
