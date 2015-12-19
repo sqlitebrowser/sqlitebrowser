@@ -17,13 +17,13 @@ public:
     explicit EditDialog(QWidget* parent = 0, bool forUseInDockWidget = false);
     ~EditDialog();
 
-public:
     int getCurrentCol() { return curCol; }
     int getCurrentRow() { return curRow; }
 
 public slots:
     virtual void reset();
     virtual void loadText(const QByteArray& data, int row, int col);
+    virtual void setFocus();
 
 protected:
     virtual void closeEvent(QCloseEvent* ev);

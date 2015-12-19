@@ -86,6 +86,10 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
             foreach(const QModelIndex& index, selectedIndexes())
                 model()->setData(index, "");
         }
+    } else if(event->key() == Qt::Key_Return && selectedIndexes().count() == 1) {
+        // When hitting the return key simulate a double click. This way you can change the focus to the editor dock when pressing the
+        // return key for advanced editing, just like a double click would open the edit dialog
+        emit doubleClicked(selectedIndexes().at(0));
     }
 
     // This prevents the current selection from being changed when pressing tab to move to the next filter. Note that this is in an 'if' condition,

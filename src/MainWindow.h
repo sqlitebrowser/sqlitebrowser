@@ -178,7 +178,7 @@ private slots:
     void helpAbout();
     void updateRecordText(int row, int col, const QByteArray& newtext);
     void editWinAway();
-    void clickTable(const QModelIndex& index);
+    void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);
     void executeQuery();
     void importTableFromCSV();

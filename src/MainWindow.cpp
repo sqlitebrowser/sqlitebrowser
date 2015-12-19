@@ -352,7 +352,12 @@ void MainWindow::populateTable(const QString& tablename)
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // Set model
+    bool reconnectSelectionSignals = false;
+    if(ui->dataTable->model() == 0)
+        reconnectSelectionSignals = true;
     ui->dataTable->setModel(m_browseTableModel);
+    if(reconnectSelectionSignals)
+        connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Search stored table settings for this table
     QMap<QString, BrowseDataTableSettings>::ConstIterator tableIt;
@@ -764,12 +769,14 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
 
     // If the edit dock is visible don't open the edit window. If it's invisible open the edit window.
-    // The edit dock obviously doesn't need to be opened when it's already visible
+    // The edit dock obviously doesn't need to be opened when it's already visible but setting focus to it makes sense.
     if(!ui->dockEditWindow->isVisible())
         editWin->show();
+    else
+        editDock->setFocus();
 }
 
-void MainWindow::clickTable(const QModelIndex& index)
+void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
 {
     // Cancel on invalid index
     if(!index.isValid())

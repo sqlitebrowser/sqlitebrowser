@@ -69,11 +69,17 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
     curCol = col;
     oldData = data;
 
+    // Load data
     QString textData = QString::fromUtf8(data.constData(), data.size());
     ui->editorText->setPlainText(textData);
-    ui->editorText->setFocus();
-    ui->editorText->selectAll();
     hexEdit->setData(data);
+
+    // If we're in window mode (not in dock mode) focus the editor widget
+    if(!useInDock)
+    {
+        ui->editorText->setFocus();
+        ui->editorText->selectAll();
+    }
 
     // Assume it's binary data and only call checkDatyType afterwards. This means the correct input widget is selected here in all cases
     // but once the user changed it to text input it will stay there.
@@ -217,4 +223,18 @@ void EditDialog::toggleOverwriteMode()
 
     hexEdit->setOverwriteMode(currentMode);
     ui->editorText->setOverwriteMode(currentMode);
+}
+
+void EditDialog::setFocus()
+{
+    QDialog::setFocus();
+
+    // When in dock mode set the focus to the editor widget. The idea here is that setting focus to the
+    // dock itself doesn't make much sense as it's just a frame; you'd have to tab to the editor which is what you
+    // most likely want to use. So in order to save the user from doing this we explicitly set the focus to the editor.
+    if(useInDock)
+    {
+        ui->editorText->setFocus();
+        ui->editorText->selectAll();
+    }
 }
