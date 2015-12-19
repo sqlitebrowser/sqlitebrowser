@@ -50,6 +50,10 @@ public:
 public slots:
     void updateFilter(int column, const QString& value);
 
+protected:
+    virtual Qt::DropActions supportedDropActions() const;
+    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+
 private:
     void fetchData(unsigned int from, unsigned to);
     void clearCache();

@@ -7,6 +7,9 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QTextCodec>
+#include <QMimeData>
+#include <QFile>
+#include <QUrl>
 
 SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
@@ -336,7 +339,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(!index.isValid())
         return Qt::ItemIsEnabled;
 
-    Qt::ItemFlags ret = QAbstractTableModel::flags(index);
+    Qt::ItemFlags ret = QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
 
     // Custom display format set?
     bool custom_display_format = false;
@@ -620,4 +623,30 @@ QByteArray SqliteTableModel::decode(const QByteArray& str) const
         return str;
     else
         return QTextCodec::codecForName(m_encoding.toUtf8())->toUnicode(str).toUtf8();
+}
+
+Qt::DropActions SqliteTableModel::supportedDropActions() const
+{
+    return Qt::CopyAction;
+}
+
+bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int row, int column, const QModelIndex& parent)
+{
+    // What has been dropped on the widget?
+    if(data->hasUrls())
+    {
+        // If it's a URL, open the file and paste the content in the current cell
+        QList<QUrl> urls = data->urls();
+        QFile file(urls.first().toLocalFile());
+        if(file.exists() && file.open(QFile::ReadOnly))
+        {
+            setData(index(row, column, parent), file.readAll());
+            return true;
+        }
+    } else if(data->hasText()) {
+        // If it's just text we can set the cell data directly
+        setData(index(row, column, parent), data->text());
+    }
+
+    return false;
 }

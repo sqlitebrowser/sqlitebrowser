@@ -155,3 +155,20 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
             emit foreignKeyClicked(fk.table(), fk.columns().size() ? fk.columns().at(0) : "", m->data(index, Qt::EditRole).toByteArray());
     }
 }
+
+void ExtendedTableWidget::dragEnterEvent(QDragEnterEvent* event)
+{
+    event->accept();
+}
+
+void ExtendedTableWidget::dragMoveEvent(QDragMoveEvent* event)
+{
+    event->accept();
+}
+
+void ExtendedTableWidget::dropEvent(QDropEvent* event)
+{
+    QModelIndex index = indexAt(event->pos());
+    model()->dropMimeData(event->mimeData(), Qt::CopyAction, index.row(), index.column(), QModelIndex());
+    event->acceptProposedAction();
+}

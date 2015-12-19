@@ -182,11 +182,20 @@
         </item>
         <item>
          <widget class="ExtendedTableWidget" name="dataTable">
+          <property name="acceptDrops">
+           <bool>true</bool>
+          </property>
           <property name="whatsThis">
            <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
           </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::CopyAction</enum>
           </property>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
            <bool>true</bool>
