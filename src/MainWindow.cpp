@@ -751,6 +751,7 @@ void MainWindow::editWinAway()
 
     // Update main window
     activateWindow();
+    ui->dataTable->setFocus();
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(sendingEditDialog->getCurrentRow(), sendingEditDialog->getCurrentCol()));
 }
 

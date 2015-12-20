@@ -24,6 +24,7 @@ public slots:
     virtual void reset();
     virtual void loadText(const QByteArray& data, int row, int col);
     virtual void setFocus();
+    virtual void reject();
 
 protected:
     virtual void closeEvent(QCloseEvent* ev);
