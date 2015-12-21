@@ -1164,6 +1164,11 @@ void MainWindow::updateRecentFileActions()
         recentFileActs[i]->setText(text);
         recentFileActs[i]->setData(files[i]);
         recentFileActs[i]->setVisible(true);
+
+        // Add shortcut for opening the file using the keyboard. However, if the application is configured to store
+        // more than nine recently opened files don't set shortcuts for the later ones which wouldn't be single digit anymore.
+        if(i < 9)
+            recentFileActs[i]->setShortcut(QKeySequence(Qt::CTRL + (Qt::Key_1+i)));
     }
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
         recentFileActs[j]->setVisible(false);
