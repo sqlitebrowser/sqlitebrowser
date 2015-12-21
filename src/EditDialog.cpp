@@ -250,3 +250,10 @@ void EditDialog::setFocus()
         ui->editorText->selectAll();
     }
 }
+
+void EditDialog::allowEditing(bool on)
+{
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(on);
+    ui->buttonClear->setEnabled(on);
+    ui->buttomImport->setEnabled(on);
+}

@@ -25,6 +25,7 @@ public slots:
     virtual void loadText(const QByteArray& data, int row, int col);
     virtual void setFocus();
     virtual void reject();
+    virtual void allowEditing(bool on);
 
 protected:
     virtual void closeEvent(QCloseEvent* ev);

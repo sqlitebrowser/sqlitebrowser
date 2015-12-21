@@ -762,8 +762,9 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
         return;
 
     // Don't allow editing of other objects than tables
-    if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
-        return;
+    bool allowEditing = db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table";
+    editDock->allowEditing(allowEditing);
+    editWin->allowEditing(allowEditing);
 
     // Load the current value into both, edit window and edit dock
     editWin->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
@@ -784,8 +785,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
         return;
 
     // Don't allow editing of other objects than tables
-    if(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() != "table")
-        return;
+    editDock->allowEditing(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
     // Load the current value into the edit dock only
     editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
