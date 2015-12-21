@@ -480,7 +480,7 @@ void SqliteTableModel::buildQuery()
 
     if(m_mWhere.size())
     {
-        where = "WHERE 1=1";
+        where = "WHERE ";
 
         for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
         {
@@ -489,8 +489,11 @@ void SqliteTableModel::buildQuery()
                 column = QString("col%1").arg(i.key());
             else
                 column = m_headers.at(i.key());
-            where.append(QString(" AND %1 %2").arg(sqlb::escapeIdentifier(column)).arg(i.value()));
+            where.append(QString("%1 %2 AND ").arg(sqlb::escapeIdentifier(column)).arg(i.value()));
         }
+
+        // Remove last 'AND '
+        where.chop(4);
     }
 
     QString selector;
@@ -512,7 +515,7 @@ void SqliteTableModel::buildQuery()
             .arg(selector)
             .arg(sqlb::escapeIdentifier(m_sTable))
             + where
-            + QString(" ORDER BY %5 %6")
+            + QString("ORDER BY %1 %2")
             .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
             .arg(m_sSortOrder);
     setQuery(sql, true);
