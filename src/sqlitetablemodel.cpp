@@ -503,11 +503,16 @@ void SqliteTableModel::buildQuery()
         selector.chop(1);
     }
 
-    QString sql = QString("SELECT %1,%2 FROM %3 %4 ORDER BY %5 %6")
+    // Note: Building the SQL string is intentionally split into several parts here instead of arg()'ing it all together as one.
+    // The reason is that we're adding '%' characters automatically around search terms (and even if we didn't the user could add
+    // them manually) which means that e.g. searching for '1' results in another '%1' in the string which then totally confuses
+    // the QString::arg() function, resulting in an invalid SQL.
+    QString sql = QString("SELECT %1,%2 FROM %3 ")
             .arg(sqlb::escapeIdentifier(m_headers.at(0)))
             .arg(selector)
             .arg(sqlb::escapeIdentifier(m_sTable))
-            .arg(where)
+            + where
+            + QString(" ORDER BY %5 %6")
             .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
             .arg(m_sSortOrder);
     setQuery(sql, true);
@@ -591,7 +596,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     if(val == "''" || val == "'%'" || val == "'%%'")
         m_mWhere.remove(column);
     else
-        m_mWhere.insert(column, QString("%1 %2 %3").arg(op).arg(QString(encode(val.toUtf8()))).arg(escape));
+        m_mWhere.insert(column, op + " " + QString(encode(val.toUtf8())) + " " + escape);
 
     // Build the new query
     buildQuery();
