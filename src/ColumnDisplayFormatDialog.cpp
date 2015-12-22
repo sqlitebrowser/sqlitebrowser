@@ -69,7 +69,7 @@ void ColumnDisplayFormatDialog::updateSqlCode()
     else if(format == "round")
         ui->editDisplayFormat->setText("round(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "hex")
-        ui->editDisplayFormat->setText("printf('%x', " + sqlb::escapeIdentifier(column_name) + ")");
+        ui->editDisplayFormat->setText("printf('0x%x', " + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "octal")
         ui->editDisplayFormat->setText("printf('%o', " + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "exponent")
