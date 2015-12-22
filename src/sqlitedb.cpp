@@ -2,7 +2,6 @@
 #include "sqlite.h"
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
-#include "PreferencesDialog.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -147,7 +146,7 @@ bool DBBrowserDB::open(const QString& db)
         // Execute default SQL
         if(!isReadOnly)
         {
-            QString default_sql = PreferencesDialog::getSettingsValue("db", "defaultsqltext").toString();
+            QString default_sql = settings.value( "/db/defaultsqltext", "").toString();
             if(!default_sql.isEmpty())
                 executeMultiSQL(default_sql, false, true);
         }
@@ -370,7 +369,7 @@ bool DBBrowserDB::create ( const QString & db)
         executeSQL("COMMIT;", false, false);
 
         // Execute default SQL
-        QString default_sql = PreferencesDialog::getSettingsValue("db", "defaultsqltext").toString();
+        QString default_sql = settings.value( "/db/defaultsqltext", "").toString();
         if(!default_sql.isEmpty())
             executeMultiSQL(default_sql, false, true);
 
