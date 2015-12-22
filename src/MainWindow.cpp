@@ -2360,9 +2360,8 @@ void MainWindow::editDataColumnDisplayFormat()
 
 void MainWindow::showRowidColumn(bool show)
 {
-    // FIXME: Workaround for actually getting the next line to work reliably
-    //ui->dataTable->setModel(0);
-    //ui->dataTable->setModel(m_browseTableModel);
+    // Block all signals from the horizontal header. Otherwise the QHeaderView::sectionResized signal causes us trouble
+    ui->dataTable->horizontalHeader()->blockSignals(true);
 
     // Show/hide rowid column
     ui->dataTable->setColumnHidden(0, !show);
@@ -2376,6 +2375,9 @@ void MainWindow::showRowidColumn(bool show)
 
     // Update the filter row
     qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
+
+    // Re-enable signals
+    ui->dataTable->horizontalHeader()->blockSignals(false);
 }
 
 void MainWindow::browseDataSetTableEncoding(bool forAllTables)
