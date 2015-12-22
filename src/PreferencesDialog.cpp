@@ -17,6 +17,8 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
+    ui->labelDatabaseDefaultSqlText->setVisible(false);
+    ui->editDatabaseDefaultSqlText->setVisible(false);
 
     ui->fr_bin_bg->installEventFilter(this);
     ui->fr_bin_fg->installEventFilter(this);
@@ -61,6 +63,7 @@ void PreferencesDialog::loadSettings()
     ui->checkHideSchemaLinebreaks->setChecked(getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
+    ui->editDatabaseDefaultSqlText->setText(getSettingsValue("db", "defaultsqltext").toString());
 
     ui->comboDataBrowserFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("databrowser", "font").toString()));
     ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
@@ -108,6 +111,7 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
+    setSettingsValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
 
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
@@ -218,6 +222,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // db/prefetchsize?
     if(group == "db" && name == "prefetchsize")
         return 50000;
+
+    // db/defaultsqltext?
+    if(group == "db" && name == "defaultsqltext")
+        return "";
 
     // MainWindow/geometry?
     if(group == "MainWindow" && name == "geometry")

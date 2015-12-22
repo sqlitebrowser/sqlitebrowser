@@ -233,6 +233,46 @@
         </widget>
        </item>
        <item row="4" column="1">
+        <widget class="QPushButton" name="buttonDatabaseAdvanced">
+         <property name="text">
+          <string>Advanced</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelDatabaseDefaultSqlText">
+         <property name="text">
+          <string>SQL to execute after opening database</string>
+         </property>
+         <property name="buddy">
+          <cstring>editDatabaseDefaultSqlText</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -884,6 +924,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QWidget</extends>
+   <header>sqltextedit.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>comboDefaultLocation</tabstop>
@@ -927,8 +975,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
-     <y>395</y>
+     <x>275</x>
+     <y>488</y>
     </hint>
     <hint type="destinationlabel">
      <x>155</x>
@@ -943,8 +991,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>337</x>
-     <y>395</y>
+     <x>343</x>
+     <y>488</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -960,7 +1008,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>571</x>
-     <y>103</y>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -976,7 +1024,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>571</x>
-     <y>141</y>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1013,6 +1061,38 @@
     <hint type="destinationlabel">
      <x>294</x>
      <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDatabaseAdvanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>labelDatabaseDefaultSqlText</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>367</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>205</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDatabaseAdvanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>editDatabaseDefaultSqlText</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>376</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>219</y>
     </hint>
    </hints>
   </connection>
