@@ -67,12 +67,15 @@ void EditDialog::reject()
 {
     // This is called when pressing the cancel button or hitting the escape key
 
-    // If we're in dock mode, move the cursor back to the table view.
+    // If we're in dock mode, reset all fields and move the cursor back to the table view.
     // If we're in window mode, call the default implementation to just close the window normally.
     if(useInDock)
+    {
+        loadText(oldData, curRow, curCol);
         emit goingAway();
-    else
+    } else {
         QDialog::reject();
+    }
 }
 
 void EditDialog::loadText(const QByteArray& data, int row, int col)
