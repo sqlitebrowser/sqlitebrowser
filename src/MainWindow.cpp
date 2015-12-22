@@ -2391,7 +2391,7 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
     if(forAllTables)
         question = tr("Please choose a new encoding for this table.");
     else
-        question = tr("Please choose a new encoding for all table.");
+        question = tr("Please choose a new encoding for all tables.");
     encoding = QInputDialog::getText(this,
                                      tr("Set encoding"),
                                      tr("%1\nLeave the field empty for using the database encoding.").arg(question),
