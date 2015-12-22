@@ -101,7 +101,7 @@ void MainWindow::init()
     ui->actionExecuteSql->setShortcuts(shortcuts);
 
     QShortcut* shortcutBrowseRefresh = new QShortcut(QKeySequence("Ctrl+R"), this);
-    QObject::connect(shortcutBrowseRefresh, SIGNAL(activated()), ui->buttonRefresh, SLOT(click()));
+    connect(shortcutBrowseRefresh, SIGNAL(activated()), ui->buttonRefresh, SLOT(click()));
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -214,7 +214,7 @@ void MainWindow::init()
     {
         // Check for a new release version, usually only enabled on windows
         m_NetworkManager = new QNetworkAccessManager(this);
-        QObject::connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
+        connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
 
         QUrl url("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
         m_NetworkManager->get(QNetworkRequest(url));

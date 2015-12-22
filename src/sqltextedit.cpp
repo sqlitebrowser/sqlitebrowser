@@ -50,6 +50,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 
     // Do rest of initialisation
     reloadSettings();
+
+    // Connect signals
+    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -132,7 +135,6 @@ void SqlTextEdit::reloadSettings()
     setMarginsFont(marginsfont);
     setMarginLineNumbers(0, true);
     setMarginsBackgroundColor(Qt::lightGray);
-    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
     updateLineNumberAreaWidth();
 
     // Highlight current line
