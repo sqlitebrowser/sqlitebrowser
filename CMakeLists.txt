@@ -12,12 +12,12 @@ endif()
 
 if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
-		set(QT5_PATH "E:/Qt64/Qt5.4.1/5.4/msvc2013_64")
+		set(QT5_PATH "E:/Qt64/Qt5.5.1/5.5/msvc2013_64")
 		set(SQLITE3_PATH "E:/libs/sqlite3_x64")
 		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-x64_86-win64")
 		set(VSREDIST "vcredist_x64.exe")
 	else()
-		set(QT5_PATH "E:/Qt/Qt5.4.1/5.4/msvc2013")
+		set(QT5_PATH "E:/Qt/Qt5.5.1/5.5/msvc2013")
 		set(SQLITE3_PATH "E:/libs/sqlite3")
 		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-i386-win32")
 		set(VSREDIST "vcredist_x86.exe")
@@ -320,9 +320,9 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5Network.dll
 			${QT5_BIN_PATH}/Qt5PrintSupport.dll
 			${QT5_BIN_PATH}/Qt5Widgets.dll
-			${QT5_BIN_PATH}/icudt53.dll
-			${QT5_BIN_PATH}/icuin53.dll
-			${QT5_BIN_PATH}/icuuc53.dll
+			${QT5_BIN_PATH}/icudt54.dll
+			${QT5_BIN_PATH}/icuin54.dll
+			${QT5_BIN_PATH}/icuuc54.dll
 			${SQLITE3_DLL}
 			${OPENSSL_PATH}/libeay32.dll
 			${OPENSSL_PATH}/ssleay32.dll
@@ -340,8 +340,8 @@ set(CPACK_PACKAGE_VENDOR "oldsch00l")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
-set(CPACK_PACKAGE_VERSION_MINOR "7")
-set(CPACK_PACKAGE_VERSION_PATCH "99")
+set(CPACK_PACKAGE_VERSION_MINOR "8")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "SqliteBrowser${CPACK_PACKAGE_VERSION_MAJOR}")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSI that does not handle full unix paths properly. Make
