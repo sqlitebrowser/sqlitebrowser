@@ -9,6 +9,7 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 #include <QHeaderView>
+#include <QMessageBox>
 
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
@@ -64,12 +65,127 @@ void ExtendedTableWidget::copy()
     qApp->clipboard()->setText(result);
 }
 
+void ExtendedTableWidget::paste()
+{
+    QString clipboard = qApp->clipboard()->text();
+
+    // Get list of selected items
+    QItemSelectionModel* selection = selectionModel();
+    QModelIndexList indices = selection->selectedIndexes();
+
+    // Abort if there's nowhere to paste
+    if(indices.size() == 0)
+    {
+        return;
+    }
+
+
+    // Find out end of line character
+    QString endOfLine;
+    if(clipboard.endsWith('\n'))
+    {
+        if(clipboard.endsWith("\r\n"))
+        {
+            endOfLine = "\r\n";
+        }
+        else
+        {
+            endOfLine = "\n";
+        }
+    }
+    else if(clipboard.endsWith('\r'))
+    {
+        endOfLine = "\r";
+    }
+    else
+    {
+        // Have only one cell, so there is no line break at end
+        endOfLine = "\n";
+    }
+
+    // Unpack cliboard, assuming that it is rectangular
+    QList<QStringList> clipboardTable;
+    QStringList cr = clipboard.split(endOfLine);
+    foreach(const QString& r, cr)
+    {
+        // Usually last splited line is empty
+        if(!r.isEmpty())
+        {
+            clipboardTable.push_back(r.split("\t"));
+        }
+    }
+
+    int clipboardRows = clipboardTable.size();
+    int clipboardColumns = clipboardTable.front().size();
+
+
+    // Sort the items by row, then by column
+    qSort(indices);
+
+    // Starting from assumption that selection is rectangular, and then first index is upper-left corner and last is lower-right.
+    int firstRow = indices.front().row();
+    int selectedRows = indices.back().row() - firstRow + 1;
+    int firstColumn = indices.front().column();
+    int selectedColumns = indices.back().column() - firstColumn + 1;
+
+
+    // If not selected only one cell then check does selection match cliboard dimensions
+    if(selectedRows != 1 || selectedColumns != 1)
+    {
+        if(selectedRows != clipboardRows || selectedColumns != clipboardColumns)
+        {
+            // Ask user is it sure about this
+            QMessageBox::StandardButton reply = QMessageBox::question(this, QApplication::applicationName(),
+                tr("The content of clipboard is bigger than the range selected.\nDo you want to insert it anyway?"),
+                QMessageBox::Yes|QMessageBox::No);
+            if(reply != QMessageBox::Yes)
+            {
+                return;
+            }
+        }
+    }
+    // Here we have positive answer even if cliboard is bigger than selection
+
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+    // If last row and column are after table size clamp it
+    int lastRow = qMin(firstRow + clipboardRows - 1, m->rowCount() - 1);
+    int lastColumn = qMin(firstColumn + clipboardColumns - 1, m->columnCount() - 1);
+
+    int row = firstRow;
+    foreach(const QStringList& clipboardRow, clipboardTable)
+    {
+        int column = firstColumn;
+        foreach(const QString& cell, clipboardRow)
+        {
+            m->setData(m->index(row, column), cell);
+
+            column++;
+            if(column> lastColumn)
+            {
+                break;
+            }
+        }
+
+        row++;
+        if(row > lastRow)
+        {
+            break;
+        }
+    }
+
+}
+
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
 {
     // Call a custom copy method when Ctrl-C is pressed
     if(event->matches(QKeySequence::Copy))
     {
         copy();
+    // Call a custom paste method when Ctrl-P is pressed
+    } else if(event->matches(QKeySequence::Paste))
+    {
+        paste();
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
