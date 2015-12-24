@@ -244,7 +244,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
     }
     if(QFile::exists(wFile) )
     {
-        fileClose();
+        // Close the database. If the user didn't want to close it, though, stop here
+        if(!fileClose())
+            return false;
 
         // Try opening it as a project file first
         if(loadProject(wFile))
@@ -481,10 +483,11 @@ void MainWindow::resetBrowser()
     populateTable(ui->comboBrowseTable->currentText());
 }
 
-void MainWindow::fileClose()
+bool MainWindow::fileClose()
 {
+    // Close the database but stop the closing process here if the user pressed the cancel button in there
     if(!db.close())
-        return;
+        return false;
 
     setWindowTitle(QApplication::applicationName());
     resetBrowser();
@@ -512,6 +515,8 @@ void MainWindow::fileClose()
     ui->buttonLogClear->click();
     for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
         closeSqlTab(i, true);
+
+    return true;
 }
 
 void MainWindow::closeEvent( QCloseEvent* event )

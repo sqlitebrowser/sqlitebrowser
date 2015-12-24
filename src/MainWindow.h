@@ -159,7 +159,7 @@ private slots:
     void populateStructure();
     void populateTable(const QString& tablename);
     void resetBrowser();
-    void fileClose();
+    bool fileClose();
     void addRecord();
     void deleteRecord();
     void selectTableLine( int lineToSelect );
