@@ -216,6 +216,18 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         switch(column)
         {
         case kName:
+            // When a field of that name already exists, show a warning to the user and don't apply the new name
+            if(fieldNameExists(item->text(column)))
+            {
+                QMessageBox::warning(this, qApp->applicationName(), tr("There already is a field with that name. Please rename it first or choose a different "
+                                                                       "name for this field."));
+                // Reset the name to the old value but avoid calling this method again for that automatic change
+                ui->treeWidget->blockSignals(true);
+                item->setText(column, oldFieldName);
+                ui->treeWidget->blockSignals(false);
+                return;
+            }
+
             // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
             if(!m_bNewTable)
             {
@@ -229,6 +241,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1, column %2 and thus "
                                                                                        "its name cannot be changed.").arg(fkobj.getname()).arg(fkfield->name()));
+                                // Reset the name to the old value but avoid calling this method again for that automatic change
+                                ui->treeWidget->blockSignals(true);
+                                item->setText(column, oldFieldName);
+                                ui->treeWidget->blockSignals(false);
                                 return;
                             }
                         }
