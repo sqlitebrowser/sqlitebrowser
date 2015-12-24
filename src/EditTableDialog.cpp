@@ -419,7 +419,20 @@ void EditTableDialog::addField()
 {
     QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
     tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
-    tbitem->setText(kName, "Field" + QString::number(ui->treeWidget->topLevelItemCount()));
+
+    // Find an unused name for the field by starting with 'Fieldx' where x is the number of fields + 1.
+    // If this name happens to exist already, increase x by one until we find an unused name.
+    {
+        unsigned int field_number = ui->treeWidget->topLevelItemCount();
+        QString field_name;
+        do
+        {
+            field_name = "Field" + QString::number(field_number);
+            field_number++;
+        } while(fieldNameExists(field_name));
+        tbitem->setText(kName, field_name);
+    }
+
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
     typeBox->setEditable(true);
@@ -599,4 +612,15 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     updateSqlText();
 
     // TODO: Update table if we're editing an existing table
+}
+
+bool EditTableDialog::fieldNameExists(const QString& name)
+{
+    foreach(const sqlb::FieldPtr& ptr, m_table.fields())
+    {
+        if(ptr->name() == name)
+            return true;
+    }
+
+    return false;
 }
