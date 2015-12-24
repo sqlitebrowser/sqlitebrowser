@@ -158,7 +158,15 @@ void ExtendedTableWidget::paste()
         int column = firstColumn;
         foreach(const QString& cell, clipboardRow)
         {
-            m->setData(m->index(row, column), cell);
+            if(cell.startsWith('"') && cell.endsWith('"'))
+            {
+                QString unquatedCell = cell.mid(1, cell.length()-2);
+                m->setData(m->index(row, column), unquatedCell);
+            }
+            else
+            {
+                m->setData(m->index(row, column), cell);
+            }
 
             column++;
             if(column> lastColumn)
