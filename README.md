@@ -67,7 +67,7 @@ DB Browser for SQLite works well on Linux.
   * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser
 * For Fedora version 21, 22, 23 and rawhide (i386 and x86_64), [@logocomune](https://github.com/logocomune)
   provides rpm with our latest release here:
-  * https://copr.fedoraproject.org/coprs/logocomune/sqlitebrowser/ 
+  * https://copr.fedoraproject.org/coprs/logocomune/sqlitebrowser/
 
 On others you'll need to compile it yourself using the (simple) instructions
 in [BUILDING.md](BUILDING.md).
@@ -82,7 +82,7 @@ using either this:
 
 or this:
 
-    # pkg install sqlitebrowser 
+    # pkg install sqlitebrowser
 
 ### Compiling
 
@@ -103,6 +103,7 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## Releases
 
+* [Version 3.8.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.8.0) - 2015-12-25
 * [Version 3.7.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.7.0) - 2015-06-14
 * [Version 3.6.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.6.0) - 2015-04-27
 * [Version 3.5.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.5.1) - 2015-02-08
