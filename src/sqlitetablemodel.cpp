@@ -607,9 +607,12 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 
 void SqliteTableModel::clearCache()
 {
-    beginRemoveRows(QModelIndex(), 0, m_data.size()-1);
-    m_data.clear();
-    endRemoveRows();
+	if(!m_data.empty())
+	{
+		beginRemoveRows(QModelIndex(), 0, m_data.size() - 1);
+		m_data.clear();
+		endRemoveRows();
+	}
 }
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
