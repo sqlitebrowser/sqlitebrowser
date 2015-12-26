@@ -362,7 +362,8 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
         return;
 
     // Save sort order
-    m_iSortColumn = column;
+	if (column >= 0 && column < m_headers.size())
+		m_iSortColumn = column;
     m_sSortOrder = (order == Qt::AscendingOrder ? "ASC" : "DESC");
 
     // Set the new query (but only if a table has already been set
