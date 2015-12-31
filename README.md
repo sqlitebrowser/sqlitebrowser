@@ -65,9 +65,10 @@ DB Browser for SQLite works well on Linux.
 * For Ubuntu and derivaties, [@deepsidhu1313](https://github.com/deepsidhu1313)
   provides a PPA with our latest release here:
   * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser
-* For Fedora version 21, 22, 23 and rawhide (i386 and x86_64), [@logocomune](https://github.com/logocomune)
-  provides rpm with our latest release here:
-  * https://copr.fedoraproject.org/coprs/logocomune/sqlitebrowser/
+* For Fedora version 21, 22, 23 and rawhide (i386 and x86_64) you can install by issuing
+```
+$ sudo dnf install sqlitebrowser
+```
 
 On others you'll need to compile it yourself using the (simple) instructions
 in [BUILDING.md](BUILDING.md).
