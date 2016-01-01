@@ -142,12 +142,12 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../CreateIndexDialog.ui" line="39"/>
         <source>&amp;Columns</source>
-        <translation type="unfinished">열(&amp;C)</translation>
+        <translation type="unfinished">필드(&amp;C)</translation>
     </message>
     <message>
         <location filename="../CreateIndexDialog.ui" line="71"/>
         <source>Column</source>
-        <translation type="unfinished">열</translation>
+        <translation type="unfinished">필드</translation>
     </message>
     <message>
         <location filename="../CreateIndexDialog.ui" line="76"/>
@@ -167,7 +167,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../CreateIndexDialog.ui" line="102"/>
         <source>&amp;Unique</source>
-        <translation type="unfinished">유니크(&amp;U)</translation>
+        <translation type="unfinished">&amp;Unique</translation>
     </message>
     <message>
         <location filename="../CreateIndexDialog.cpp" line="97"/>
@@ -1336,7 +1336,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="865"/>
         <source>&amp;View</source>
-        <translation type="unfinished">보기(&amp;V)</translation>
+        <translation type="unfinished">뷰(&amp;V)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="873"/>
@@ -1381,7 +1381,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="1030"/>
         <source>Columns</source>
-        <translation type="unfinished">열</translation>
+        <translation type="unfinished">필드</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1035"/>
