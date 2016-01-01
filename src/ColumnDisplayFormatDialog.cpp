@@ -13,6 +13,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
+    ui->comboDisplayFormat->addItem(tr("Windows DATE to date"), "winDate");
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Round number"), "round");
     ui->comboDisplayFormat->addItem(tr("Hex number"), "hex");
@@ -64,6 +65,8 @@ void ColumnDisplayFormatDialog::updateSqlCode()
         ui->editDisplayFormat->setText("upper(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "epoch")
         ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')");
+    else if(format == "winDate")
+        ui->editDisplayFormat->setText("datetime ('1899-12-30', " + sqlb::escapeIdentifier(column_name) + " || \" days\" )");
     else if(format == "julian")
         ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "round")
