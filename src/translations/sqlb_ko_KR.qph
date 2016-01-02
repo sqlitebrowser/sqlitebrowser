@@ -122,7 +122,7 @@
 </phrase>
 <phrase>
     <source>unique</source>
-    <target>unique</target>
+    <target>유니크</target>
 </phrase>
 <phrase>
     <source>name</source>
@@ -367,5 +367,73 @@
 <phrase>
     <source>columns</source>
     <target>필드</target>
+</phrase>
+<phrase>
+    <source>DB Browser for SQLite</source>
+    <target>DB Browser for SQLite</target>
+</phrase>
+<phrase>
+    <source>usage</source>
+    <target>사용법</target>
+</phrase>
+<phrase>
+    <source>db</source>
+    <target>데이터베이스</target>
+</phrase>
+<phrase>
+    <source>command line</source>
+    <target>커맨드라인</target>
+</phrase>
+<phrase>
+    <source>arguments</source>
+    <target>옵션</target>
+</phrase>
+<phrase>
+    <source>argument</source>
+    <target>옵션</target>
+</phrase>
+<phrase>
+    <source>page</source>
+    <target>페이지</target>
+</phrase>
+<phrase>
+    <source>encryption</source>
+    <target>암호화</target>
+</phrase>
+<phrase>
+    <source>SQLCipher</source>
+    <target>SQLCipher</target>
+</phrase>
+<phrase>
+    <source>process</source>
+    <target>작업</target>
+</phrase>
+<phrase>
+    <source>savepoint</source>
+    <target>세이브포인트</target>
+</phrase>
+<phrase>
+    <source>failed</source>
+    <target>실패했습니다</target>
+</phrase>
+<phrase>
+    <source>aborting</source>
+    <target>취소</target>
+</phrase>
+<phrase>
+    <source>attache</source>
+    <target>합치다</target>
+</phrase>
+<phrase>
+    <source>associated</source>
+    <target>연관된</target>
+</phrase>
+<phrase>
+    <source>cell</source>
+    <target>데이터 값</target>
+</phrase>
+<phrase>
+    <source>name</source>
+    <target>필드명</target>
 </phrase>
 </QPH>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh">
+<TS version="2.0" language="ko">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../AboutDialog.ui" line="14"/>
         <source>About SqliteBrowser</source>
-        <translation>关于 SqliteBrowser</translation>
+        <translation>SqliteBrowser 소개</translation>
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="47"/>
