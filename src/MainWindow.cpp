@@ -502,6 +502,10 @@ bool MainWindow::fileClose()
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
+    // Reset the edit dialog/dock
+    editDock->reset();
+    editWin->reset();
+
     // Remove all stored table information browse data tab
     browseTableSettings.clear();
     defaultBrowseTableEncoding = QString();
