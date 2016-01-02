@@ -1,0 +1,439 @@
+<!DOCTYPE QPH>
+<QPH language="ko_KR">
+<phrase>
+    <source>file</source>
+    <target>파일</target>
+</phrase>
+<phrase>
+    <source>version</source>
+    <target>버전</target>
+</phrase>
+<phrase>
+    <source>invalid</source>
+    <target>잘못된</target>
+</phrase>
+<phrase>
+    <source>option</source>
+    <target>옵션</target>
+</phrase>
+<phrase>
+    <source>argument</source>
+    <target>매개변수</target>
+</phrase>
+<phrase>
+    <source>filter</source>
+    <target>필터</target>
+</phrase>
+<phrase>
+    <source>import</source>
+    <target>가져오기</target>
+</phrase>
+<phrase>
+    <source>export</source>
+    <target>내보내기</target>
+</phrase>
+<phrase>
+    <source>column</source>
+    <target>필드</target>
+</phrase>
+<phrase>
+    <source>first</source>
+    <target>최초, 처음</target>
+</phrase>
+<phrase>
+    <source>line</source>
+    <target>행</target>
+</phrase>
+<phrase>
+    <source>field</source>
+    <target>필드</target>
+</phrase>
+<phrase>
+    <source>separator</source>
+    <target>구분자</target>
+</phrase>
+<phrase>
+    <source>tab</source>
+    <target>탭</target>
+</phrase>
+<phrase>
+    <source>encoding</source>
+    <target>인코딩</target>
+</phrase>
+<phrase>
+    <source>trim</source>
+    <target>앞뒤 공백제거</target>
+</phrase>
+<phrase>
+    <source>insert</source>
+    <target>추가하기</target>
+</phrase>
+<phrase>
+    <source>data</source>
+    <target>데이터</target>
+</phrase>
+<phrase>
+    <source>cancel</source>
+    <target>취소</target>
+</phrase>
+<phrase>
+    <source>already</source>
+    <target>이미</target>
+</phrase>
+<phrase>
+    <source>table</source>
+    <target>테이블</target>
+</phrase>
+<phrase>
+    <source>record</source>
+    <target>레코드</target>
+</phrase>
+<phrase>
+    <source>row</source>
+    <target>행</target>
+</phrase>
+<phrase>
+    <source>execute</source>
+    <target>실행하다</target>
+</phrase>
+<phrase>
+    <source>browse</source>
+    <target>보다</target>
+</phrase>
+<phrase>
+    <source>view</source>
+    <target>뷰</target>
+</phrase>
+<phrase>
+    <source>index</source>
+    <target>인덱스</target>
+</phrase>
+<phrase>
+    <source>indice</source>
+    <target>인덱스</target>
+</phrase>
+<phrase>
+    <source>application</source>
+    <target>애플리케이션</target>
+</phrase>
+<phrase>
+    <source>order</source>
+    <target>정렬순서</target>
+</phrase>
+<phrase>
+    <source>unique</source>
+    <target>유니크</target>
+</phrase>
+<phrase>
+    <source>name</source>
+    <target>이름</target>
+</phrase>
+<phrase>
+    <source>create</source>
+    <target>생성하기</target>
+</phrase>
+<phrase>
+    <source>error</source>
+    <target>에러</target>
+</phrase>
+<phrase>
+    <source>pragma</source>
+    <target>pragma</target>
+</phrase>
+<phrase>
+    <source>executing</source>
+    <target>실행중</target>
+</phrase>
+<phrase>
+    <source>unknown</source>
+    <target>알 수 없는</target>
+</phrase>
+<phrase>
+    <source>object</source>
+    <target>객체</target>
+</phrase>
+<phrase>
+    <source>type</source>
+    <target>타입</target>
+</phrase>
+<phrase>
+    <source>SQL</source>
+    <target>SQL</target>
+</phrase>
+<phrase>
+    <source>action</source>
+    <target>실행</target>
+</phrase>
+<phrase>
+    <source>database</source>
+    <target>데이터베이스</target>
+</phrase>
+<phrase>
+    <source>warning</source>
+    <target>주의</target>
+</phrase>
+<phrase>
+    <source>compact</source>
+    <target>용량 줄이기</target>
+</phrase>
+<phrase>
+    <source>preferences</source>
+    <target>환경설정</target>
+</phrase>
+<phrase>
+    <source>enable</source>
+    <target>사용하기</target>
+</phrase>
+<phrase>
+    <source>language</source>
+    <target>언어</target>
+</phrase>
+<phrase>
+    <source>automatic</source>
+    <target>자동</target>
+</phrase>
+<phrase>
+    <source>update</source>
+    <target>업데이트</target>
+</phrase>
+<phrase>
+    <source>default</source>
+    <target>기본</target>
+</phrase>
+<phrase>
+    <source>default</source>
+    <target>기본값</target>
+</phrase>
+<phrase>
+    <source>location</source>
+    <target>위치</target>
+</phrase>
+<phrase>
+    <source>foreign key</source>
+    <target>외래키</target>
+</phrase>
+<phrase>
+    <source>colour</source>
+    <target>색깔</target>
+</phrase>
+<phrase>
+    <source>general</source>
+    <target>일반</target>
+</phrase>
+<phrase>
+    <source>open</source>
+    <target>열다</target>
+</phrase>
+<phrase>
+    <source>setting</source>
+    <target>설정</target>
+</phrase>
+<phrase>
+    <source>bold</source>
+    <target>볼드</target>
+</phrase>
+<phrase>
+    <source>italic</source>
+    <target>이탤릭</target>
+</phrase>
+<phrase>
+    <source>underline</source>
+    <target>밑줄</target>
+</phrase>
+<phrase>
+    <source>enabled</source>
+    <target>사용하기</target>
+</phrase>
+<phrase>
+    <source>setting</source>
+    <target>설정</target>
+</phrase>
+<phrase>
+    <source>tables</source>
+    <target>테이블</target>
+</phrase>
+<phrase>
+    <source>updates</source>
+    <target>업데이트</target>
+</phrase>
+<phrase>
+    <source>update</source>
+    <target>업데이트</target>
+</phrase>
+<phrase>
+    <source>browser</source>
+    <target>보기</target>
+</phrase>
+<phrase>
+    <source>log</source>
+    <target>로그</target>
+</phrase>
+<phrase>
+    <source>logs</source>
+    <target>로그</target>
+</phrase>
+<phrase>
+    <source>editor</source>
+    <target>편집기</target>
+</phrase>
+<phrase>
+    <source>font</source>
+    <target>폰트</target>
+</phrase>
+<phrase>
+    <source>size</source>
+    <target>크기</target>
+</phrase>
+<phrase>
+    <source>string</source>
+    <target>문자열</target>
+</phrase>
+<phrase>
+    <source>comment</source>
+    <target>주석</target>
+</phrase>
+<phrase>
+    <source>current</source>
+    <target>현재</target>
+</phrase>
+<phrase>
+    <source>identifier</source>
+    <target>식별자</target>
+</phrase>
+<phrase>
+    <source>function</source>
+    <target>함수</target>
+</phrase>
+<phrase>
+    <source>function</source>
+    <target>기능</target>
+</phrase>
+<phrase>
+    <source>keyword</source>
+    <target>키워드</target>
+</phrase>
+<phrase>
+    <source>extension</source>
+    <target>확장기능</target>
+</phrase>
+<phrase>
+    <source>select</source>
+    <target>선택하다</target>
+</phrase>
+<phrase>
+    <source>choice</source>
+    <target>고르다</target>
+</phrase>
+<phrase>
+    <source>disable</source>
+    <target>사용하지않기</target>
+</phrase>
+<phrase>
+    <source>directory</source>
+    <target>디렉토리</target>
+</phrase>
+<phrase>
+    <source>all files</source>
+    <target>모든 파일</target>
+</phrase>
+<phrase>
+    <source>information</source>
+    <target>정보</target>
+</phrase>
+<phrase>
+    <source>view</source>
+    <target>뷰</target>
+</phrase>
+<phrase>
+    <source>show</source>
+    <target>보기</target>
+</phrase>
+<phrase>
+    <source>user</source>
+    <target>사용자</target>
+</phrase>
+<phrase>
+    <source>clear</source>
+    <target>지우기</target>
+</phrase>
+<phrase>
+    <source>edit</source>
+    <target>편집</target>
+</phrase>
+<phrase>
+    <source>help</source>
+    <target>도움말</target>
+</phrase>
+<phrase>
+    <source>columns</source>
+    <target>필드</target>
+</phrase>
+<phrase>
+    <source>DB Browser for SQLite</source>
+    <target>DB Browser for SQLite</target>
+</phrase>
+<phrase>
+    <source>usage</source>
+    <target>사용법</target>
+</phrase>
+<phrase>
+    <source>db</source>
+    <target>데이터베이스</target>
+</phrase>
+<phrase>
+    <source>command line</source>
+    <target>커맨드라인</target>
+</phrase>
+<phrase>
+    <source>arguments</source>
+    <target>옵션</target>
+</phrase>
+<phrase>
+    <source>argument</source>
+    <target>옵션</target>
+</phrase>
+<phrase>
+    <source>page</source>
+    <target>페이지</target>
+</phrase>
+<phrase>
+    <source>encryption</source>
+    <target>암호화</target>
+</phrase>
+<phrase>
+    <source>SQLCipher</source>
+    <target>SQLCipher</target>
+</phrase>
+<phrase>
+    <source>process</source>
+    <target>작업</target>
+</phrase>
+<phrase>
+    <source>savepoint</source>
+    <target>세이브포인트</target>
+</phrase>
+<phrase>
+    <source>failed</source>
+    <target>실패했습니다</target>
+</phrase>
+<phrase>
+    <source>aborting</source>
+    <target>취소</target>
+</phrase>
+<phrase>
+    <source>attache</source>
+    <target>합치다</target>
+</phrase>
+<phrase>
+    <source>associated</source>
+    <target>연관된</target>
+</phrase>
+<phrase>
+    <source>cell</source>
+    <target>데이터 값</target>
+</phrase>
+<phrase>
+    <source>name</source>
+    <target>필드명</target>
+</phrase>
+</QPH>
