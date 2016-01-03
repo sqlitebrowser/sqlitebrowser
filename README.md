@@ -56,7 +56,7 @@ OSX binaries can be downloaded from here:
 
 Nightly builds for OSX are available at:
 
-* http://mirror.salasaga.org/sqlitebrowser/nightly/
+* http://nightlies.sqlitebrowser.org/osx/
 
 ## Linux
 
