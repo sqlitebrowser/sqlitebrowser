@@ -84,15 +84,15 @@ provides a PPA with our latest release here:
 
 To add this ppa just type in these commands in terminal:
 
-    $ sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser
+    sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser
 
 Then update the cache using:
 
-    $ sudo apt-get update
+    sudo apt-get update
 
 Install the package using:
 
-    $ sudo apt-get install sqlitebrowser
+    sudo apt-get install sqlitebrowser
 
 Ubuntu 14.04.X, 15.04.X, 15.10.X and 16.04.X are supported for now (until
 Launchpad decides to discontinue build for any series).
@@ -111,15 +111,15 @@ Nightly builds are available here:
 
 To add this ppa just type in these commands in terminal:
 
-    $ sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser-testing
+    sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser-testing
 
 Then update the cache using:
 
-    $ sudo apt-get update
+    sudo apt-get update
 
 Install the package using:
 
-    $ sudo apt-get install sqlitebrowser
+    sudo apt-get install sqlitebrowser
 
 ### Other Linux
 
