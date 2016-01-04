@@ -49,11 +49,6 @@ Done. :)
 
 ### CentOS / Fedora Linux
 
-For Fedora 22 and 23 the RPM is available via DNF. 
-```
-$ sudo dnf install sqlitebrowser
-```
-
 **1**. Make sure the `qt-devel`, `ant-antlr`, and `antlr-C++` packages are installed.<br />
 ```
 $ sudo yum install qt-devel ant-antlr antlr-C++
