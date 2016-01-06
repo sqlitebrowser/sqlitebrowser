@@ -210,7 +210,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
             foreach(const QModelIndex& index, selectedIndexes())
                 model()->setData(index, "");
         }
-    } else if(event->key() == Qt::Key_Return && selectedIndexes().count() == 1) {
+    } else if(event->key() == Qt::Key_Return && selectedIndexes().count() == 1 && state() != QTableView::EditingState) {
         // When hitting the return key simulate a double click. This way you can change the focus to the editor dock when pressing the
         // return key for advanced editing, just like a double click would open the edit dialog
         emit doubleClicked(selectedIndexes().at(0));
