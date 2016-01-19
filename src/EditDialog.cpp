@@ -163,7 +163,11 @@ void EditDialog::accept()
     // Don't update if the data hasn't changed
     // To differentiate NULL and empty byte arrays, we also compare the NULL flag
     if(hexEdit->data() != oldData || hexEdit->data().isNull() != oldData.isNull())
-        emit updateRecordText(curRow, curCol, hexEdit->data());
+    {
+        const QString dataType = ui->comboEditor->currentText();
+        bool isBlob = dataType == tr("Binary") || !ui->comboEditor->isVisible();
+        emit updateRecordText(curRow, curCol, isBlob, hexEdit->data());
+    }
     emit goingAway();
 }
 

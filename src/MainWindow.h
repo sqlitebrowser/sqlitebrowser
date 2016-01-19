@@ -176,7 +176,7 @@ private slots:
     void editTable();
     void helpWhatsThis();
     void helpAbout();
-    void updateRecordText(int row, int col, const QByteArray& newtext);
+    void updateRecordText(int row, int col, bool type, const QByteArray& newtext);
     void editWinAway();
     void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);
