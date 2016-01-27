@@ -176,7 +176,8 @@ void ExportCsvDialog::accept()
             QString fileName = FileDialog::getSaveFileName(
                     this,
                     tr("Choose a filename to export data"),
-                    tr("Text files(*.csv *.txt)"));
+                    tr("Text files(*.csv *.txt)"),
+                    selectedItems.at(0)->text() + ".csv");
             if(fileName.isEmpty())
             {
                 close();

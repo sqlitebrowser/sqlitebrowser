@@ -2115,8 +2115,8 @@ void MainWindow::saveProject()
 {
     QString filename = FileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
-                                                    tr("DB Browser for SQLite project file (*.sqbpro)")
-                                                    );
+                                                    tr("DB Browser for SQLite project file (*.sqbpro)"),
+                                                    db.curDBFilename);
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
