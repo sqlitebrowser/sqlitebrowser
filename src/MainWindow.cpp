@@ -2358,7 +2358,10 @@ void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
 {
     // Get the index of the column which the user has clicked on and store it in the action. This is sort of hack-ish and it might be the heat in my room
     // but I haven't come up with a better solution so far
-    ui->actionBrowseTableEditDisplayFormat->setProperty("clicked_column", ui->dataTable->horizontalHeader()->logicalIndexAt(pos));
+    int logical_index = ui->dataTable->horizontalHeader()->logicalIndexAt(pos);
+    if(logical_index == -1)     // Don't open the popup menu if the user hasn't clicked on a column header
+            return;
+    ui->actionBrowseTableEditDisplayFormat->setProperty("clicked_column", logical_index);
 
     // Calculate the proper position for the context menu and display it
     popupBrowseDataHeaderMenu->exec(ui->dataTable->horizontalHeader()->mapToGlobal(pos));
