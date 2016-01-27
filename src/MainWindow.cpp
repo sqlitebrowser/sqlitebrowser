@@ -663,6 +663,7 @@ void MainWindow::setRecordsetLabel()
 
 void MainWindow::browseRefresh()
 {
+    db.updateSchema();
     populateTable(ui->comboBrowseTable->currentText());
 }
 
