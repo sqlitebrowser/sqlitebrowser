@@ -1682,6 +1682,10 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
         if(model)
         {
+            // Make sure all data is loaded before trying to plot anything
+            while(model->canFetchMore())
+                model->fetchMore();
+
             for(int i = 0; i < model->columnCount(); ++i)
             {
                 QVariant::Type columntype = guessdatatype(model, i);
