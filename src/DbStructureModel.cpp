@@ -231,7 +231,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 
     // Create the MIME data object
     QMimeData* mime = new QMimeData();
-    mime->setProperty("db_file", m_db->curDBFilename);      // Also save the file name to avoid dropping an object on the same database as it comes from
+    mime->setProperty("db_file", m_db->currentFile());      // Also save the file name to avoid dropping an object on the same database as it comes from
     mime->setData("text/plain", d);
     return mime;
 }
@@ -244,7 +244,7 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     if(!data->hasFormat("text/plain"))
         return false;
 
-    if(data->property("db_file") == m_db->curDBFilename)
+    if(data->property("db_file") == m_db->currentFile())
         return false;
 
     // Get data

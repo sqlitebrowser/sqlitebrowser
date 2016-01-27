@@ -1030,7 +1030,7 @@ void MainWindow::fileSave()
 void MainWindow::fileRevert()
 {
     if (db.isOpen()){
-        QString msg = tr("Are you sure you want to undo all changes made to the database file '%1' since the last save?").arg(db.curDBFilename);
+        QString msg = tr("Are you sure you want to undo all changes made to the database file '%1' since the last save?").arg(db.currentFile());
         if(QMessageBox::question(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
         {
             db.revertAll();
@@ -2116,7 +2116,7 @@ void MainWindow::saveProject()
     QString filename = FileDialog::getSaveFileName(this,
                                                     tr("Choose a filename to save under"),
                                                     tr("DB Browser for SQLite project file (*.sqbpro)"),
-                                                    db.curDBFilename);
+                                                    db.currentFile());
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
@@ -2131,7 +2131,7 @@ void MainWindow::saveProject()
 
         // Database file name
         xml.writeStartElement("db");
-        xml.writeAttribute("path", db.curDBFilename);
+        xml.writeAttribute("path", db.currentFile());
         xml.writeEndElement();
 
         // Window settings

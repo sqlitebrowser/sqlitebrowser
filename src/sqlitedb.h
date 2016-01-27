@@ -108,6 +108,7 @@ public:
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
     bool getDirty() const;
+    QString currentFile() const { return curDBFilename; }
     void logSQL(QString statement, int msgtype);
 
     QString getPragma(const QString& pragma);
@@ -122,13 +123,14 @@ public:
     objectMap objMap;
 
     QString lastErrorMessage;
-    QString curDBFilename;
 
 signals:
     void sqlExecuted(QString sql, int msgtype);
     void dbChanged(bool dirty);
 
 private:
+    QString curDBFilename;
+
     QStringList savepointList;
 
     bool isEncrypted;

@@ -69,7 +69,7 @@ void ExportSqlDialog::accept()
     if(selectedItems.count() == 1)  // One table -> Suggest table name
         defaultFileName = selectedItems.at(0)->text() + ".sql";
     else if(selectedItems.count() == ui->listTables->count())   // All tables -> Suggest database name
-        defaultFileName = pdb->curDBFilename + ".sql";;
+        defaultFileName = pdb->currentFile() + ".sql";;
 
     QString fileName = FileDialog::getSaveFileName(
                 this,
