@@ -1148,7 +1148,7 @@ void MainWindow::changeTreeSelection()
     }
     if(type == "table" || type == "view")
     {
-        ui->actionEditBrowseTable->setEnabled(!db.readOnly());
+        ui->actionEditBrowseTable->setEnabled(true);
         ui->actionExportCsvPopup->setEnabled(true);
     }
 }
