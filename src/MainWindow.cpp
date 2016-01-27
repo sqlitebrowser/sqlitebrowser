@@ -2234,7 +2234,7 @@ void MainWindow::editEncryption()
         // Create the new file first or it won't work
         if(ok)
         {
-            QFile file(db.curDBFilename + ".enctemp");
+            QFile file(db.currentFile() + ".enctemp");
             file.open(QFile::WriteOnly);
             file.close();
         }
@@ -2242,7 +2242,7 @@ void MainWindow::editEncryption()
         // Attach a new database using the new settings
         qApp->processEvents();
         if(ok)
-            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY '%2';").arg(db.curDBFilename + ".enctemp").arg(dialog.password()),
+            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY '%2';").arg(db.currentFile() + ".enctemp").arg(dialog.password()),
                                false, false);
         qApp->processEvents();
         if(ok)
@@ -2260,10 +2260,10 @@ void MainWindow::editEncryption()
             // No errors: Then close the current database, switch names, open the new one and if that succeeded delete the old one
 
             fileClose();
-            QFile::rename(db.curDBFilename, db.curDBFilename + ".enctempold");
-            QFile::rename(db.curDBFilename + ".enctemp", db.curDBFilename);
-            if(fileOpen(db.curDBFilename))
-                QFile::remove(db.curDBFilename + ".enctempold");
+            QFile::rename(db.currentFile(), db.currentFile() + ".enctempold");
+            QFile::rename(db.currentFile() + ".enctemp", db.currentFile());
+            if(fileOpen(db.currentFile()))
+                QFile::remove(db.currentFile() + ".enctempold");
         } else {
             QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
         }
