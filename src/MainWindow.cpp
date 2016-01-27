@@ -265,8 +265,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                 openSqlTab(true);
                 loadExtensionsFromSettings();
                 populateStructure();
-                resetBrowser();
-                if(ui->mainTab->currentIndex() == 2)
+                if(ui->mainTab->currentIndex() == 1)
+                    resetBrowser();
+                else if(ui->mainTab->currentIndex() == 2)
                     loadPragmas();
                 retval = true;
             } else {
@@ -340,7 +341,7 @@ void MainWindow::populateStructure()
     ui->dbTreeWidget->resizeColumnToContents(3);
 }
 
-void MainWindow::populateTable(const QString& tablename)
+void MainWindow::populateTable(QString tablename)
 {
     // Remove the model-view link if the table name is empty in order to remove any data from the view
     if(ui->comboBrowseTable->model()->rowCount() == 0 && tablename.isEmpty())
@@ -352,6 +353,19 @@ void MainWindow::populateTable(const QString& tablename)
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // Update combo box
+    if(ui->comboBrowseTable->currentText() != tablename)
+    {
+        int pos = ui->comboBrowseTable->findText(tablename);
+        if(pos == -1)
+        {
+            ui->comboBrowseTable->setCurrentIndex(0);
+            tablename = ui->comboBrowseTable->currentText();
+        } else {
+            ui->comboBrowseTable->setCurrentIndex(pos);
+        }
+    }
 
     // Set model
     bool reconnectSelectionSignals = false;
@@ -453,7 +467,7 @@ void MainWindow::populateTable(const QString& tablename)
     QApplication::restoreOverrideCursor();
 }
 
-void MainWindow::resetBrowser()
+void MainWindow::resetBrowser(bool reloadTable)
 {
     const QString sCurrentTable = ui->comboBrowseTable->currentText();
     ui->comboBrowseTable->clear();
@@ -463,7 +477,7 @@ void MainWindow::resetBrowser()
     QMap<QString, DBBrowserObject> objmap;
     for(objectMap::ConstIterator i=tab.begin();i!=tab.end();++i)
     {
-        objmap[i.value().getname()] = i.value();;
+        objmap[i.value().getname()] = i.value();
     }
 
     // Finally fill the combobox in sorted order
@@ -477,10 +491,8 @@ void MainWindow::resetBrowser()
     }
 
     setRecordsetLabel();
-    int pos = ui->comboBrowseTable->findText(sCurrentTable);
-    pos = pos == -1 ? 0 : pos;
-    ui->comboBrowseTable->setCurrentIndex(pos);
-    populateTable(ui->comboBrowseTable->currentText());
+    if(reloadTable)
+        populateTable(sCurrentTable);
 }
 
 bool MainWindow::fileClose()
@@ -2253,9 +2265,9 @@ void MainWindow::switchToBrowseDataTab()
 
     QString tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
-    ui->mainTab->setCurrentIndex(1);
+    resetBrowser(false);
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
-    populateTable(tableToBrowse);
+    ui->mainTab->setCurrentIndex(1);
 }
 
 void MainWindow::on_buttonClearFilters_clicked()
@@ -2323,7 +2335,6 @@ void MainWindow::jumpToRow(const QString& table, QString column, const QByteArra
         return;
 
     // Jump to table
-    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(table));
     populateTable(table);
 
     // Set filter

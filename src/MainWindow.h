@@ -157,8 +157,8 @@ private slots:
     void changeTreeSelection();
     void fileNew();
     void populateStructure();
-    void populateTable(const QString& tablename);
-    void resetBrowser();
+    void populateTable(QString tablename);
+    void resetBrowser(bool reloadTable = true);
     bool fileClose();
     void addRecord();
     void deleteRecord();
