@@ -1632,7 +1632,7 @@ QVariant::Type guessdatatype(SqliteTableModel* model, int column)
     QVariant::Type type = QVariant::Invalid;
     for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
     {
-        QVariant data = model->data(model->index(i, column));
+        QVariant data = model->data(model->index(i, column), Qt::EditRole);
         if(data.convert(QVariant::Double))
         {
             type = QVariant::Double;
@@ -1797,8 +1797,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                     ydata[i] = model->data(model->index(i, y)).toDouble();
                 }
 
-                // set some graph styles, this could also be improved to let the user choose
-                // some styling
+                // set some graph styles
                 graph->setData(xdata, ydata);
                 graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
                 // WARN: ssDot is removed
