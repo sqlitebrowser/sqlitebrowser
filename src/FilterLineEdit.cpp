@@ -1,4 +1,5 @@
 #include "FilterLineEdit.h"
+#include "PreferencesDialog.h"
 
 #include <QTimer>
 #include <QKeyEvent>
@@ -17,7 +18,7 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters,
     // is (re)started. As soon as the user stops typing the timer has a chance to trigger and call the
     // delayedSignalTimerTriggered() method which then stops the timer and emits the delayed signal.
     delaySignalTimer = new QTimer(this);
-    delaySignalTimer->setInterval(300);         // This is the milliseconds of not-typing we want to wait before triggering
+    delaySignalTimer->setInterval(PreferencesDialog::getSettingsValue("databrowser", "filter_delay").toInt());  // This is the milliseconds of not-typing we want to wait before triggering
     connect(this, SIGNAL(textChanged(QString)), delaySignalTimer, SLOT(start()));
     connect(delaySignalTimer, SIGNAL(timeout()), this, SLOT(delayedSignalTimerTriggered()));
 

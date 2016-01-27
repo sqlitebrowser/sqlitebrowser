@@ -247,7 +247,7 @@
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText" native="true">
+        <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
          <property name="minimumSize">
           <size>
            <width>20</width>
@@ -532,20 +532,40 @@
             <string>Filters</string>
            </property>
            <layout class="QFormLayout" name="gridLayout_4">
-            <item row="0" column="1">
+            <item row="1" column="1">
              <widget class="QLineEdit" name="editFilterEscape">
               <property name="maxLength">
                <number>1</number>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
+            <item row="1" column="0">
              <widget class="QLabel" name="label_18">
               <property name="text">
                <string>Escape character</string>
               </property>
               <property name="buddy">
                <cstring>editFilterEscape</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Delay time (&amp;ms)</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinFilterDelay</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="spinFilterDelay">
+              <property name="toolTip">
+               <string>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</string>
+              </property>
+              <property name="maximum">
+               <number>5000</number>
               </property>
              </widget>
             </item>
@@ -927,7 +947,7 @@
  <customwidgets>
   <customwidget>
    <class>SqlTextEdit</class>
-   <extends>QWidget</extends>
+   <extends>QTextEdit</extends>
    <header>sqltextedit.h</header>
    <container>1</container>
   </customwidget>
@@ -1007,8 +1027,8 @@
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>99</y>
+     <x>115</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1023,8 +1043,8 @@
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>137</y>
+     <x>115</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1039,8 +1059,8 @@
    <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>87</y>
+     <x>103</x>
+     <y>48</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1071,12 +1091,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>367</x>
-     <y>189</y>
+     <x>103</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>205</x>
-     <y>220</y>
+     <x>15</x>
+     <y>61</y>
     </hint>
    </hints>
   </connection>
@@ -1087,12 +1107,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>376</x>
-     <y>191</y>
+     <x>103</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>331</x>
-     <y>219</y>
+     <x>103</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>

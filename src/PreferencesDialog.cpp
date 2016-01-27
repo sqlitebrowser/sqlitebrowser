@@ -76,6 +76,7 @@ void PreferencesDialog::loadSettings()
 
     ui->txtNull->setText(getSettingsValue("databrowser", "null_text").toString());
     ui->editFilterEscape->setText(getSettingsValue("databrowser", "filter_escape").toString());
+    ui->spinFilterDelay->setValue(getSettingsValue("databrowser", "filter_delay").toInt());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -125,6 +126,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     setSettingsValue("databrowser", "null_text", ui->txtNull->text());
     setSettingsValue("databrowser", "filter_escape", ui->editFilterEscape->text());
+    setSettingsValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -258,21 +260,23 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
             return "Sans Serif";
         if(name == "fontsize")
             return 10;
-        if (name == "null_text")
+        if(name == "null_text")
             return "NULL";
-        if (name == "filter_escape")
+        if(name == "filter_escape")
             return "\\";
-        if (name == "null_fg_colour")
+        if(name == "filter_delay")
+            return 200;
+        if(name == "null_fg_colour")
             return QColor(Qt::lightGray).name();
-        if (name == "null_bg_colour")
+        if(name == "null_bg_colour")
             return QColor(Qt::white).name();
-        if (name == "reg_fg_colour")
+        if(name == "reg_fg_colour")
             return QColor(Qt::black).name();
-        if (name == "reg_bg_colour")
+        if(name == "reg_bg_colour")
             return QColor(Qt::white).name();
-        if (name == "bin_fg_colour")
+        if(name == "bin_fg_colour")
             return QColor(Qt::lightGray).name();
-        if (name == "bin_bg_colour")
+        if(name == "bin_bg_colour")
             return QColor(Qt::white).name();
     }
 
