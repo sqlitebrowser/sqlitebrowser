@@ -417,7 +417,7 @@ subexpr
   ( MINUS | PLUS | TILDE | NOT)?
   ( literalvalue
 //  | bindparameter TODO
-  | ((databasename DOT)? tablename)? columnname
+  | ((databasename DOT)? tablename DOT)? columnname
   | functionname LPAREN (expr (COMMA expr)* )? RPAREN //TODO
   | castexpr
   | (EXISTS)? LPAREN (expr | selectstmt) RPAREN
