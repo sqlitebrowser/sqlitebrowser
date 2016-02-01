@@ -48,7 +48,7 @@ available at:
 
 DB Browser for SQLite works well on MacOS X.
 
-* OSX 10.7 (Lion) - 10.10 (Yosemite) are tested and known to work
+* OSX 10.7 (Lion) - 10.11 (El Capitan) are tested and known to work
 
 OSX binaries can be downloaded from here:
 
