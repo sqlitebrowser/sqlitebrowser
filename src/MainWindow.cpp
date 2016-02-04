@@ -2271,12 +2271,17 @@ void MainWindow::editEncryption()
 #endif
 }
 
-void MainWindow::switchToBrowseDataTab()
+void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
 {
-    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
-        return;
+    // If no table name was provided get the currently selected table fromt he structure tab
+    if(tableToBrowse.isEmpty())
+    {
+        // Cancel here if there is no selection
+        if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+            return;
 
-    QString tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+        tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+    }
 
     resetBrowser(false);
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));

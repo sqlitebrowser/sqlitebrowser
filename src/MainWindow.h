@@ -151,6 +151,7 @@ public slots:
     void dbState(bool dirty);
     void browseRefresh();
     void jumpToRow(const QString& table, QString column, const QByteArray& value);
+    void switchToBrowseDataTab(QString tableToBrowse = QString());
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -215,7 +216,6 @@ private slots:
     void fileAttach();
     void updateFilter(int column, const QString& value);
     void editEncryption();
-    void switchToBrowseDataTab();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();
     void on_comboLineType_currentIndexChanged(int index);
