@@ -19,12 +19,6 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     // Create UI
     ui->setupUi(this);
 
-    // Set font
-    QFont logfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
-    logfont.setStyleHint(QFont::TypeWriter);
-    logfont.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
-    ui->editErrors->setFont(logfont);
-
     // Create model
     model = new SqliteTableModel(this, db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
@@ -34,6 +28,9 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     menuPopupSave->addAction(ui->actionExportCsv);
     menuPopupSave->addAction(ui->actionSaveAsView);
     ui->buttonSave->setMenu(menuPopupSave);
+
+    // Load settings
+    reloadSettings();
 }
 
 SqlExecutionArea::~SqlExecutionArea()
@@ -103,8 +100,26 @@ void SqlExecutionArea::saveAsView()
         return;
 
     // Create the view
-    if(db->executeSQL(QString("CREATE VIEW `%1` AS %2;").arg(name).arg(model->query())))
+    if(db->executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(model->query())))
         QMessageBox::information(this, qApp->applicationName(), tr("View successfully created."));
     else
         QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db->lastErrorMessage));
+}
+
+void SqlExecutionArea::reloadSettings()
+{
+    // Reload editor settings
+    ui->editEditor->reloadSettings();
+
+    // Set font
+    QFont logfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
+    logfont.setStyleHint(QFont::TypeWriter);
+    logfont.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
+    ui->editErrors->setFont(logfont);
+
+    // Apply horizontal/vertical tiling option
+    if(PreferencesDialog::getSettingsValue("editor", "horizontal_tiling").toBool())
+        ui->splitter->setOrientation(Qt::Horizontal);
+    else
+        ui->splitter->setOrientation(Qt::Vertical);
 }

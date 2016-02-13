@@ -27,10 +27,48 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = 0);
+    explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
     DBBrowserDB* getDb() { return &db; }
+
+    struct BrowseDataTableSettings
+    {
+        int sortOrderIndex;
+        Qt::SortOrder sortOrderMode;
+        QMap<int, int> columnWidths;
+        QMap<int, QString> filterValues;
+        QMap<int, QString> displayFormats;
+        bool showRowid;
+        QString encoding;
+
+        friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
+        {
+            stream << object.sortOrderIndex;
+            stream << static_cast<int>(object.sortOrderMode);
+            stream << object.columnWidths;
+            stream << object.filterValues;
+            stream << object.displayFormats;
+            stream << object.showRowid;
+            stream << object.encoding;
+
+            return stream;
+        }
+        friend QDataStream& operator>>(QDataStream& stream, MainWindow::BrowseDataTableSettings& object)
+        {
+            stream >> object.sortOrderIndex;
+            int sortordermode;
+            stream >> sortordermode;
+            object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+            stream >> object.columnWidths;
+            stream >> object.filterValues;
+            stream >> object.displayFormats;
+            stream >> object.showRowid;
+            stream >> object.encoding;
+
+            return stream;
+        }
+    };
 
 private:
     struct PragmaValues
@@ -69,9 +107,11 @@ private:
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
     QMenu *popupSaveSqlFileMenu;
+    QMenu* popupBrowseDataHeaderMenu;
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
+    QLabel* statusReadOnlyLabel;
 
     DbStructureModel* dbStructureModel;
 
@@ -79,14 +119,14 @@ private:
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
-    int curBrowseOrderByIndex;
-    Qt::SortOrder curBrowseOrderByMode;
-    QMap<QString, QMap<int, int> > browseTableColumnWidths;
+    QMap<QString, BrowseDataTableSettings> browseTableSettings;
 
     EditDialog* editWin;
+    EditDialog* editDock;
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
+    QString defaultBrowseTableEncoding;
 
     QNetworkAccessManager* m_NetworkManager;
 
@@ -110,15 +150,17 @@ public slots:
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void browseRefresh();
+    void jumpToRow(const QString& table, QString column, const QByteArray& value);
+    void switchToBrowseDataTab(QString tableToBrowse = QString());
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
     void populateStructure();
-    void populateTable(const QString& tablename, bool bKeepFilter = false);
-    void resetBrowser();
-    void fileClose();
+    void populateTable(QString tablename);
+    void resetBrowser(bool reloadTable = true);
+    bool fileClose();
     void addRecord();
     void deleteRecord();
     void selectTableLine( int lineToSelect );
@@ -135,9 +177,9 @@ private slots:
     void editTable();
     void helpWhatsThis();
     void helpAbout();
-    void updateRecordText(int row, int col, const QByteArray& newtext);
+    void updateRecordText(int row, int col, bool type, const QByteArray& newtext);
     void editWinAway();
-    void editText(const QModelIndex& index);
+    void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);
     void executeQuery();
     void importTableFromCSV();
@@ -174,11 +216,15 @@ private slots:
     void fileAttach();
     void updateFilter(int column, const QString& value);
     void editEncryption();
-    void switchToBrowseDataTab();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();
     void on_comboLineType_currentIndexChanged(int index);
     void on_comboPointShape_currentIndexChanged(int index);
+    void showDataColumnPopupMenu(const QPoint& pos);
+    void editDataColumnDisplayFormat();
+    void showRowidColumn(bool show);
+    void browseDataSetTableEncoding(bool forAllTables = false);
+    void browseDataSetDefaultTableEncoding();
 };
 
 #endif

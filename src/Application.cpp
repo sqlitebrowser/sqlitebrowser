@@ -64,6 +64,7 @@ Application::Application(int& argc, char** argv) :
 
     // Parse command line
     QString fileToOpen;
+    QString tableToBrowse;
     QStringList sqlToExecute;
     m_dontShowMainWindow = false;
     for(int i=1;i<arguments().size();i++)
@@ -75,7 +76,8 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("Usage: %1 [options] [db]\n").arg(argv[0]));
             qWarning() << qPrintable(tr("Possible command line arguments:"));
             qWarning() << qPrintable(tr("  -h, --help\t\tShow command line options"));
-            qWarning() << qPrintable(tr("  -s, --sql  [file]\tExecute this SQL file after opening the DB"));
+            qWarning() << qPrintable(tr("  -s, --sql [file]\tExecute this SQL file after opening the DB"));
+            qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
             qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
@@ -87,6 +89,11 @@ Application::Application(int& argc, char** argv) :
                 qWarning() << qPrintable(tr("The file %1 does not exist").arg(arguments().at(i)));
             else
                 sqlToExecute.append(arguments().at(i));
+        } else if(arguments().at(i) == "-t" || arguments().at(i) == "--table") {
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(tr("The -t/--table option requires an argument"));
+            else
+                tableToBrowse = arguments().at(i);
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
             m_dontShowMainWindow = true;
         } else {
@@ -120,6 +127,10 @@ Application::Application(int& argc, char** argv) :
             }
             if(!sqlToExecute.isEmpty())
                 m_mainWindow->browseRefresh();
+
+            // Jump to table if the -t/--table parameter was set
+            if(!tableToBrowse.isEmpty())
+                m_mainWindow->switchToBrowseDataTab(tableToBrowse);
         }
     }
 }

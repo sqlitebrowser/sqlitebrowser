@@ -472,17 +472,23 @@ void Sqlite3Lexer::mQUOTEDID(bool _createToken) {
 		match(L'`' /* charlit */ );
 		{ // ( ... )*
 		for (;;) {
-			if ((_tokenSet_0.member(LA(1)))) {
+			if ((LA(1) == 0x60 /* '`' */ ) && (LA(2) == 0x60 /* '`' */ )) {
+				{
+				match(L'`' /* charlit */ );
+				match(L'`' /* charlit */ );
+				}
+			}
+			else if ((_tokenSet_0.member(LA(1)))) {
 				{
 				match(_tokenSet_0);
 				}
 			}
 			else {
-				goto _loop10;
+				goto _loop11;
 			}
 			
 		}
-		_loop10:;
+		_loop11:;
 		} // ( ... )*
 		match(L'`' /* charlit */ );
 		break;
@@ -498,11 +504,11 @@ void Sqlite3Lexer::mQUOTEDID(bool _createToken) {
 				}
 			}
 			else {
-				goto _loop13;
+				goto _loop14;
 			}
 			
 		}
-		_loop13:;
+		_loop14:;
 		} // ( ... )*
 		match(L']' /* charlit */ );
 		break;
@@ -538,11 +544,11 @@ void Sqlite3Lexer::mQUOTEDLITERAL(bool _createToken) {
 			matchNot(L'\"' /* charlit */ );
 		}
 		else {
-			goto _loop17;
+			goto _loop18;
 		}
 		
 	}
-	_loop17:;
+	_loop18:;
 	} // ( ... )*
 	match(L'\"' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -572,18 +578,18 @@ void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 	case 0x39 /* '9' */ :
 	{
 		{ // ( ... )+
-		int _cnt21=0;
+		int _cnt22=0;
 		for (;;) {
 			if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
 				mDIGIT(false);
 			}
 			else {
-				if ( _cnt21>=1 ) { goto _loop21; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt22>=1 ) { goto _loop22; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
 			}
 			
-			_cnt21++;
+			_cnt22++;
 		}
-		_loop21:;
+		_loop22:;
 		}  // ( ... )+
 		{
 		if ((LA(1) == 0x2e /* '.' */ )) {
@@ -594,11 +600,11 @@ void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 					mDIGIT(false);
 				}
 				else {
-					goto _loop24;
+					goto _loop25;
 				}
 				
 			}
-			_loop24:;
+			_loop25:;
 			} // ( ... )*
 		}
 		else {
@@ -612,18 +618,18 @@ void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 		match(L'.' /* charlit */ );
 		_ttype=DOT;
 		{ // ( ... )+
-		int _cnt26=0;
+		int _cnt27=0;
 		for (;;) {
 			if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
 				mDIGIT(false);
 			}
 			else {
-				if ( _cnt26>=1 ) { goto _loop26; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt27>=1 ) { goto _loop27; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
 			}
 			
-			_cnt26++;
+			_cnt27++;
 		}
-		_loop26:;
+		_loop27:;
 		}  // ( ... )+
 		break;
 	}
@@ -668,18 +674,18 @@ void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 		}
 		}
 		{ // ( ... )+
-		int _cnt30=0;
+		int _cnt31=0;
 		for (;;) {
 			if (((LA(1) >= 0x30 /* '0' */  && LA(1) <= 0x39 /* '9' */ ))) {
 				mDIGIT(false);
 			}
 			else {
-				if ( _cnt30>=1 ) { goto _loop30; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt31>=1 ) { goto _loop31; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
 			}
 			
-			_cnt30++;
+			_cnt31++;
 		}
-		_loop30:;
+		_loop31:;
 		}  // ( ... )+
 	}
 	else {
@@ -773,11 +779,11 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 				}
 			}
 			else {
-				goto _loop37;
+				goto _loop38;
 			}
 			
 		}
-		_loop37:;
+		_loop38:;
 		} // ( ... )*
 		mNL(false);
 		newline();
@@ -790,7 +796,7 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 		{ // ( ... )*
 		for (;;) {
 			// nongreedy exit test
-			if ((LA(1) == 0x2a /* '*' */ ) && (LA(2) == 0x2f /* '/' */ )) goto _loop40;
+			if ((LA(1) == 0x2a /* '*' */ ) && (LA(2) == 0x2f /* '/' */ )) goto _loop41;
 			if ((_tokenSet_3.member(LA(1))) && ((LA(2) >= 0x0 /* '\0' */  && LA(2) <= 0xfffe))) {
 				{
 				match(_tokenSet_3);
@@ -801,11 +807,11 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 				newline();
 			}
 			else {
-				goto _loop40;
+				goto _loop41;
 			}
 			
 		}
-		_loop40:;
+		_loop41:;
 		} // ( ... )*
 		match(L'*' /* charlit */ );
 		match(L'/' /* charlit */ );
@@ -887,11 +893,11 @@ void Sqlite3Lexer::mSTRINGLITERAL(bool _createToken) {
 			matchNot(L'\'' /* charlit */ );
 		}
 		else {
-			goto _loop46;
+			goto _loop47;
 		}
 		
 	}
-	_loop46:;
+	_loop47:;
 	} // ( ... )*
 	match(L'\'' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {

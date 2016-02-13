@@ -182,11 +182,20 @@
         </item>
         <item>
          <widget class="ExtendedTableWidget" name="dataTable">
+          <property name="acceptDrops">
+           <bool>true</bool>
+          </property>
           <property name="whatsThis">
            <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
           </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::CopyAction</enum>
           </property>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
            <bool>true</bool>
@@ -324,8 +333,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>311</width>
-             <height>531</height>
+             <width>280</width>
+             <height>558</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -727,7 +736,7 @@
             <item row="15" column="1">
              <widget class="QSpinBox" name="spinPragmaUserVersion">
               <property name="maximum">
-               <number>10000</number>
+               <number>2147483647</number>
               </property>
              </widget>
             </item>
@@ -810,7 +819,7 @@
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -908,7 +917,7 @@
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
-    <string>SQL Log</string>
+    <string>SQL &amp;Log</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -920,7 +929,7 @@
        <item>
         <widget class="QLabel" name="labelLogSubmittedBy">
          <property name="text">
-          <string>&amp;Show SQL submitted by</string>
+          <string>Show S&amp;QL submitted by</string>
          </property>
          <property name="buddy">
           <cstring>comboLogSubmittedBy</cstring>
@@ -1000,7 +1009,7 @@
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
-    <string>Plot</string>
+    <string>&amp;Plot</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -1254,7 +1263,7 @@
   </widget>
   <widget class="QDockWidget" name="dockSchema">
    <property name="windowTitle">
-    <string>DB Schema</string>
+    <string>DB Sche&amp;ma</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -1276,6 +1285,15 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockEditWindow">
+   <property name="windowTitle">
+    <string>Edit &amp;cell</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
@@ -1339,7 +1357,7 @@
      <normaloff>:/icons/db_revert</normaloff>:/icons/db_revert</iconset>
    </property>
    <property name="text">
-    <string>Revert Changes</string>
+    <string>&amp;Revert Changes</string>
    </property>
    <property name="toolTip">
     <string>Revert database to last saved state</string>
@@ -1357,7 +1375,7 @@
      <normaloff>:/icons/db_save</normaloff>:/icons/db_save</iconset>
    </property>
    <property name="text">
-    <string>Write Changes</string>
+    <string>&amp;Write Changes</string>
    </property>
    <property name="toolTip">
     <string>Write changes to the database file</string>
@@ -1374,7 +1392,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Compact Database</string>
+    <string>Compact &amp;Database</string>
    </property>
    <property name="toolTip">
     <string>Compact the database file, removing space wasted by deleted records</string>
@@ -1399,7 +1417,7 @@
   </action>
   <action name="fileImportSQLAction">
    <property name="text">
-    <string>Database from SQL file...</string>
+    <string>&amp;Database from SQL file...</string>
    </property>
    <property name="toolTip">
     <string>Import data from an .sql dump text file into a new or existing database.</string>
@@ -1410,7 +1428,7 @@
   </action>
   <action name="fileImportCSVAction">
    <property name="text">
-    <string>Table from CSV file...</string>
+    <string>&amp;Table from CSV file...</string>
    </property>
    <property name="toolTip">
     <string>Open a wizard that lets you import data from a comma separated text file into a database table.</string>
@@ -1421,7 +1439,7 @@
   </action>
   <action name="fileExportSQLAction">
    <property name="text">
-    <string>Database to SQL file...</string>
+    <string>&amp;Database to SQL file...</string>
    </property>
    <property name="toolTip">
     <string>Export a database to a .sql dump text file.</string>
@@ -1432,7 +1450,7 @@
   </action>
   <action name="fileExportCSVAction">
    <property name="text">
-    <string>Table(s) as CSV file...</string>
+    <string>&amp;Table(s) as CSV file...</string>
    </property>
    <property name="toolTip">
     <string>Export a database table as a comma separated text file.</string>
@@ -1450,7 +1468,7 @@
      <normaloff>:/icons/table_create</normaloff>:/icons/table_create</iconset>
    </property>
    <property name="text">
-    <string>Create Table...</string>
+    <string>&amp;Create Table...</string>
    </property>
    <property name="whatsThis">
     <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
@@ -1465,7 +1483,7 @@
      <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
    </property>
    <property name="text">
-    <string>Delete Table...</string>
+    <string>&amp;Delete Table...</string>
    </property>
    <property name="toolTip">
     <string>Delete Table</string>
@@ -1483,7 +1501,7 @@
      <normaloff>:/icons/table_modify</normaloff>:/icons/table_modify</iconset>
    </property>
    <property name="text">
-    <string>Modify Table...</string>
+    <string>&amp;Modify Table...</string>
    </property>
    <property name="whatsThis">
     <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
@@ -1498,7 +1516,7 @@
      <normaloff>:/icons/index_create</normaloff>:/icons/index_create</iconset>
    </property>
    <property name="text">
-    <string>Create Index...</string>
+    <string>Create &amp;Index...</string>
    </property>
    <property name="whatsThis">
     <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
@@ -1539,7 +1557,7 @@
      <normaloff>:/icons/whatis</normaloff>:/icons/whatis</iconset>
    </property>
    <property name="text">
-    <string>What's This?</string>
+    <string>W&amp;hat's This?</string>
    </property>
    <property name="shortcut">
     <string>Shift+F1</string>
@@ -1612,7 +1630,7 @@
      <normaloff>:/icons/load_extension</normaloff>:/icons/load_extension</iconset>
    </property>
    <property name="text">
-    <string>Load extension</string>
+    <string>&amp;Load extension</string>
    </property>
   </action>
   <action name="actionSqlExecuteLine">
@@ -1674,7 +1692,7 @@
      <normaloff>:/icons/project_save</normaloff>:/icons/project_save</iconset>
    </property>
    <property name="text">
-    <string>Save Project</string>
+    <string>Sa&amp;ve Project</string>
    </property>
    <property name="toolTip">
     <string>Save the current session to a file</string>
@@ -1689,7 +1707,7 @@
      <normaloff>:/icons/project_open</normaloff>:/icons/project_open</iconset>
    </property>
    <property name="text">
-    <string>Open Project</string>
+    <string>Open &amp;Project</string>
    </property>
    <property name="toolTip">
     <string>Load a working session from a file</string>
@@ -1712,7 +1730,7 @@
      <normaloff>:/icons/encryption</normaloff>:/icons/encryption</iconset>
    </property>
    <property name="text">
-    <string>Set Encryption</string>
+    <string>&amp;Set Encryption</string>
    </property>
   </action>
   <action name="actionSqlSaveFileAs">
@@ -1760,12 +1778,50 @@
     <string>Copy the CREATE statement of the item to the clipboard</string>
    </property>
   </action>
+  <action name="actionBrowseTableEditDisplayFormat">
+   <property name="text">
+    <string>Edit display format</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit the display format of the data in this column</string>
+   </property>
+  </action>
+  <action name="actionShowRowidColumn">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show rowid column</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle the visibility of the rowid column</string>
+   </property>
+  </action>
+  <action name="actionSetTableEncoding">
+   <property name="text">
+    <string>Set encoding</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the encoding of the text in the table cells</string>
+   </property>
+  </action>
+  <action name="actionSetAllTablesEncoding">
+   <property name="text">
+    <string>Set encoding for all tables</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the default encoding assumed for all tables in the database</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>ExtendedTableWidget</class>
    <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
+   <slots>
+    <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+   </slots>
   </customwidget>
   <customwidget>
    <class>SqlTextEdit</class>
@@ -2664,6 +2720,86 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>jumpToRow(QString,QString,QByteArray)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBrowseTableEditDisplayFormat</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editDataColumnDisplayFormat()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowRowidColumn</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showRowidColumn(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetTableEncoding</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseDataSetTableEncoding()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetAllTablesEncoding</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseDataSetDefaultTableEncoding()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2719,5 +2855,10 @@
   <slot>saveSqlFileAs()</slot>
   <slot>switchToBrowseDataTab()</slot>
   <slot>copyCurrentCreateStatement()</slot>
+  <slot>jumpToRow(QString,QString,QByteArray)</slot>
+  <slot>editDataColumnDisplayFormat()</slot>
+  <slot>showRowidColumn(bool)</slot>
+  <slot>browseDataSetTableEncoding()</slot>
+  <slot>browseDataSetDefaultTableEncoding()</slot>
  </slots>
 </ui>

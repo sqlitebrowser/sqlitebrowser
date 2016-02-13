@@ -9,9 +9,13 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, con
     return result;
 }
 
-QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, const QString& filter, QString* selectedFilter, Options options)
+QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, const QString& filter, const QString& defaultFileName, QString* selectedFilter, Options options)
 {
-    QString result = QFileDialog::getSaveFileName(parent, caption, getFileDialogPath(), filter, selectedFilter, options);
+    QString dir = getFileDialogPath();
+    if(!defaultFileName.isEmpty())
+        dir += "/" + defaultFileName;
+
+    QString result = QFileDialog::getSaveFileName(parent, caption, defaultFileName, filter, selectedFilter, options);
     if(!result.isEmpty())
         setFileDialogPath(result);
     return result;

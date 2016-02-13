@@ -56,17 +56,26 @@ ExportSqlDialog::~ExportSqlDialog()
 
 void ExportSqlDialog::accept()
 {
-    if(ui->listTables->selectedItems().isEmpty())
+    QList<QListWidgetItem*> selectedItems = ui->listTables->selectedItems();
+    if(selectedItems.isEmpty())
     {
         QMessageBox::warning(this, QApplication::applicationName(),
                              tr("Please select at least 1 table."));
         return;
     }
+
+    // Try to find a default file name
+    QString defaultFileName;
+    if(selectedItems.count() == 1)  // One table -> Suggest table name
+        defaultFileName = selectedItems.at(0)->text() + ".sql";
+    else if(selectedItems.count() == ui->listTables->count())   // All tables -> Suggest database name
+        defaultFileName = pdb->currentFile() + ".sql";;
+
     QString fileName = FileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export"),
-                tr("Text files(*.sql *.txt)"));
-
+                tr("Text files(*.sql *.txt)"),
+                defaultFileName);
     if(fileName.isEmpty())
         return;
 

@@ -9,7 +9,8 @@
 #include <QApplication>
 
 DbStructureModel::DbStructureModel(QObject* parent)
-    : QAbstractItemModel(parent)
+    : QAbstractItemModel(parent),
+      m_db(0)
 {
     // Create root item and use its columns to store the header strings
     QStringList header;
@@ -217,7 +218,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                 tableModel.setTable(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString());
                 for(int i=0; i < tableModel.rowCount(); ++i)
                 {
-                    QString insertStatement = "INSERT INTO `" + data(index.sibling(index.row(), 0), Qt::DisplayRole).toString() + "` VALUES(";
+                    QString insertStatement = "INSERT INTO " + sqlb::escapeIdentifier(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString()) + " VALUES(";
                     for(int j=1; j < tableModel.columnCount(); ++j)
                         insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
                     insertStatement.chop(1);
@@ -230,7 +231,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 
     // Create the MIME data object
     QMimeData* mime = new QMimeData();
-    mime->setProperty("db_file", m_db->curDBFilename);      // Also save the file name to avoid dropping an object on the same database as it comes from
+    mime->setProperty("db_file", m_db->currentFile());      // Also save the file name to avoid dropping an object on the same database as it comes from
     mime->setData("text/plain", d);
     return mime;
 }
@@ -243,7 +244,7 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     if(!data->hasFormat("text/plain"))
         return false;
 
-    if(data->property("db_file") == m_db->curDBFilename)
+    if(data->property("db_file") == m_db->currentFile())
         return false;
 
     // Get data

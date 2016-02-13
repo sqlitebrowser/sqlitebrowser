@@ -15,6 +15,7 @@
 #include <QTextStream>
 #include <QSettings>
 #include <QDebug>
+#include <QFileInfo>
 #include <memory>
 
 ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
@@ -25,6 +26,11 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
 {
     ui->setupUi(this);
 
+    // Get the actual file name out of the provided path and use it as the default table name for import
+    QFileInfo file(filename);
+    ui->editName->setText(file.baseName());
+
+    // Create a list of all available encodings and create an auto completion list from them
     QStringList encodingList;
     foreach(QString enc, QTextCodec::availableCodecs())
         encodingList.push_back(enc);
@@ -32,6 +38,7 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->editCustomEncoding->setCompleter(encodingCompleter);
 
+    // Load last used settings and apply them
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
     ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
@@ -39,6 +46,7 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
     setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
 
+    // Initialise user interface
     checkInput();
     updatePreview();
 }
@@ -67,14 +75,14 @@ void rollback(
         QString error = sCSVInfo + QObject::tr(".\n%1").arg(message);
         QMessageBox::warning(dialog, QApplication::applicationName(), error);
     }
-    pdb->revert(savepointName);
+    pdb->revertToSavepoint(savepointName);
 }
 }
 
 class CSVImportProgress : public CSVProgress
 {
 public:
-    CSVImportProgress(size_t filesize)
+    explicit CSVImportProgress(size_t filesize)
     {
         m_pProgressDlg = new QProgressDialog(
                     QObject::tr("Decoding CSV file..."),
@@ -200,7 +208,7 @@ void ImportCsvDialog::accept()
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
     QString restorepointName = QString("CSVIMPORT_%1").arg(QDateTime::currentMSecsSinceEpoch());
-    if(!pdb->setRestorePoint(restorepointName))
+    if(!pdb->setSavepoint(restorepointName))
         return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastErrorMessage));
 
     // Create table
@@ -215,7 +223,7 @@ void ImportCsvDialog::accept()
         it != csv.csv().end();
         ++it)
     {
-        QString sql = QString("INSERT INTO `%1` VALUES(").arg(ui->editName->text());
+        QString sql = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(ui->editName->text()));
 
         QStringList insertlist;
         for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
@@ -313,7 +321,7 @@ void ImportCsvDialog::updatePreview()
 void ImportCsvDialog::checkInput()
 {
     bool valid = true;
-    if(ui->editName->text().isEmpty() || ui->editName->text().contains("`"))
+    if(ui->editName->text().isEmpty())
         valid = false;
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);

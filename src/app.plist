@@ -64,11 +64,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.4.99</string>
+	<string>3.8.99</string>
 	<key>CFBundleSignature</key>
 	<string>SqLB</string>
 	<key>CFBundleVersion</key>
-	<string>3.4.99</string>
+	<string>3.8.99</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>

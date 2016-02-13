@@ -6,13 +6,18 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
+#include <QTextCodec>
+#include <QMimeData>
+#include <QFile>
+#include <QUrl>
 
-SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize)
+SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_rowCount(0)
     , m_chunkSize(chunkSize)
     , m_valid(false)
+    , m_encoding(encoding)
 {
     reset();
 }
@@ -24,6 +29,7 @@ void SqliteTableModel::reset()
     m_headers.clear();
     m_mWhere.clear();
     m_vDataTypes.clear();
+    m_vDisplayFormat.clear();
 }
 
 void SqliteTableModel::setChunkSize(size_t chunksize)
@@ -31,11 +37,12 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const QString& table)
+void SqliteTableModel::setTable(const QString& table, const QVector<QString>& display_format)
 {
     reset();
 
     m_sTable = table;
+    m_vDisplayFormat = display_format;
 
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
@@ -67,7 +74,7 @@ void SqliteTableModel::setTable(const QString& table)
 
     if(!allOk)
     {
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM `%1`;").arg(table);
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(table));
         m_headers.push_back("rowid");
         m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
     }
@@ -249,7 +256,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         else if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
             return PreferencesDialog::getSettingsValue("databrowser", "null_text").toString();
         else
-            return m_data.at(index.row()).at(index.column());
+            return decode(m_data.at(index.row()).at(index.column()));
     } else if(role == Qt::FontRole) {
         QFont font;
         if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
@@ -259,22 +266,46 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(m_data.at(index.row()).at(index.column()).isNull())
             return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_fg_colour").toString());
         else if (isBinary(index))
-            return QColor(Qt::gray);
-        return QVariant();
+            return QColor(PreferencesDialog::getSettingsValue("databrowser", "bin_fg_colour").toString());
+        return QColor(PreferencesDialog::getSettingsValue("databrowser", "reg_fg_colour").toString());
     } else if (role == Qt::BackgroundRole) {
         if(m_data.at(index.row()).at(index.column()).isNull())
             return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_bg_colour").toString());
-        return QVariant();
+        else if (isBinary(index))
+            return QColor(PreferencesDialog::getSettingsValue("databrowser", "bin_bg_colour").toString());
+        return QColor(PreferencesDialog::getSettingsValue("databrowser", "reg_bg_colour").toString());
+    } else if(role == Qt::ToolTipRole) {
+        sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
+        if(fk.isSet())
+            return tr("References %1(%2)\nHold Ctrl+Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","));
+        else
+            return QString();
     } else {
         return QVariant();
     }
 }
 
+sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
+{
+    DBBrowserObject obj = m_db->getObjectByName(m_sTable);
+    if(obj.getname().size())
+        return obj.table.fields().at(column)->foreignKey();
+    else
+        return sqlb::ForeignKeyClause();
+}
+
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    // This function is for in-place editing.
+    // So, BLOB flag is false every times.
+    return setTypedData(index, false, value, role);
+}
+
+bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const QVariant& value, int role)
 {
     if(index.isValid() && role == Qt::EditRole)
     {
-        QByteArray newValue = value.toByteArray();
+        QByteArray newValue = encode(value.toByteArray());
         QByteArray oldValue = m_data.at(index.row()).at(index.column());
 
         // Don't do anything if the data hasn't changed
@@ -282,7 +313,7 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBinary(index)))
+        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBlob))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
@@ -315,8 +346,18 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(!index.isValid())
         return Qt::ItemIsEnabled;
 
-    Qt::ItemFlags ret = QAbstractTableModel::flags(index);
-    if(!isBinary(index))
+    Qt::ItemFlags ret = QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
+
+    // Custom display format set?
+    bool custom_display_format = false;
+    if(m_vDisplayFormat.size())
+    {
+        // NOTE: This assumes that custom display formats never start and end with a backtick
+        if(index.column() > 0)
+            custom_display_format = !(m_vDisplayFormat.at(index.column()-1).startsWith("`") && m_vDisplayFormat.at(index.column()-1).endsWith("`"));
+    }
+
+    if(!isBinary(index) && !custom_display_format)
         ret |= Qt::ItemIsEditable;
     return ret;
 }
@@ -328,7 +369,8 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
         return;
 
     // Save sort order
-    m_iSortColumn = column;
+	if (column >= 0 && column < m_headers.size())
+		m_iSortColumn = column;
     m_sSortOrder = (order == Qt::AscendingOrder ? "ASC" : "DESC");
 
     // Set the new query (but only if a table has already been set
@@ -446,13 +488,44 @@ void SqliteTableModel::buildQuery()
 
     if(m_mWhere.size())
     {
-        where = "WHERE 1=1";
+        where = "WHERE ";
 
         for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
-            where.append(QString(" AND `%1` %2").arg(m_headers.at(i.key())).arg(i.value()));
+        {
+            QString column;
+            if(m_vDisplayFormat.size())
+                column = QString("col%1").arg(i.key());
+            else
+                column = m_headers.at(i.key());
+            where.append(QString("%1 %2 AND ").arg(sqlb::escapeIdentifier(column)).arg(i.value()));
+        }
+
+        // Remove last 'AND '
+        where.chop(4);
     }
 
-    QString sql = QString("SELECT `%1`,* FROM `%2` %3 ORDER BY `%4` %5").arg(m_headers.at(0)).arg(m_sTable).arg(where).arg(m_headers.at(m_iSortColumn)).arg(m_sSortOrder);
+    QString selector;
+    if(m_vDisplayFormat.empty())
+    {
+        selector = "*";
+    } else {
+        for(int i=0;i<m_vDisplayFormat.size();i++)
+            selector += m_vDisplayFormat.at(i) + " AS " + QString("col%1").arg(i+1) + ",";
+        selector.chop(1);
+    }
+
+    // Note: Building the SQL string is intentionally split into several parts here instead of arg()'ing it all together as one.
+    // The reason is that we're adding '%' characters automatically around search terms (and even if we didn't the user could add
+    // them manually) which means that e.g. searching for '1' results in another '%1' in the string which then totally confuses
+    // the QString::arg() function, resulting in an invalid SQL.
+    QString sql = QString("SELECT %1,%2 FROM %3 ")
+            .arg(sqlb::escapeIdentifier(m_headers.at(0)))
+            .arg(selector)
+            .arg(sqlb::escapeIdentifier(m_sTable))
+            + where
+            + QString("ORDER BY %1 %2")
+            .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
+            .arg(m_sSortOrder);
     setQuery(sql, true);
 }
 
@@ -464,7 +537,7 @@ QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fi
     QStringList listColumns;
     if(SQLITE_OK == status)
     {
-        status = sqlite3_step(stmt);
+        sqlite3_step(stmt);
         int columns = sqlite3_data_count(stmt);
         for(int i = 0; i < columns; ++i)
         {
@@ -482,6 +555,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
     QString op = "LIKE";
     QString val;
+    QString escape;
     bool numeric = false;
     if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
     {
@@ -502,11 +576,26 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
             val = value.mid(1);
             numeric = true;
         }
+    } else if(value.left(1) == "=") {
+        op = "=";
+        val = value.mid(1);
     } else {
-        if(value.left(1) == "=")
+        // Keep the default LIKE operator
+
+        // Set the escape character if one has been specified in the settings dialog
+        QString escape_character = PreferencesDialog::getSettingsValue("databrowser", "filter_escape").toString();
+        if(escape_character == "'") escape_character = "''";
+        if(escape_character.length())
+            escape = QString("ESCAPE '%1'").arg(escape_character);
+
+        // Add % wildcards at the start and at the beginning of the filter query, but only if there weren't set any
+        // wildcards manually. The idea is to assume that a user who's just typing characters expects the wildcards to
+        // be added but a user who adds them herself knows what she's doing and doesn't want us to mess up her query.
+        if(!value.contains("%"))
         {
-            op = "=";
-            val = value.mid(1);
+            val = value;
+            val.prepend('%');
+            val.append('%');
         }
     }
     if(val.isEmpty())
@@ -515,10 +604,10 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
         val = QString("'%1'").arg(val.replace("'", "''"));
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(val == "''")
+    if(val == "''" || val == "'%'" || val == "'%%'")
         m_mWhere.remove(column);
     else
-        m_mWhere.insert(column, QString("%1 %2").arg(op).arg(val));
+        m_mWhere.insert(column, op + " " + QString(encode(val.toUtf8())) + " " + escape);
 
     // Build the new query
     buildQuery();
@@ -526,12 +615,57 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 
 void SqliteTableModel::clearCache()
 {
-    beginRemoveRows(QModelIndex(), 0, m_data.size()-1);
-    m_data.clear();
-    endRemoveRows();
+	if(!m_data.empty())
+	{
+		beginRemoveRows(QModelIndex(), 0, m_data.size() - 1);
+		m_data.clear();
+		endRemoveRows();
+	}
 }
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
     return m_vDataTypes.at(index.column()) == SQLITE_BLOB;
+}
+
+QByteArray SqliteTableModel::encode(const QByteArray& str) const
+{
+    if(m_encoding.isEmpty())
+        return str;
+    else
+        return QTextCodec::codecForName(m_encoding.toUtf8())->fromUnicode(str);
+}
+
+QByteArray SqliteTableModel::decode(const QByteArray& str) const
+{
+    if(m_encoding.isEmpty())
+        return str;
+    else
+        return QTextCodec::codecForName(m_encoding.toUtf8())->toUnicode(str).toUtf8();
+}
+
+Qt::DropActions SqliteTableModel::supportedDropActions() const
+{
+    return Qt::CopyAction;
+}
+
+bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int row, int column, const QModelIndex& parent)
+{
+    // What has been dropped on the widget?
+    if(data->hasUrls())
+    {
+        // If it's a URL, open the file and paste the content in the current cell
+        QList<QUrl> urls = data->urls();
+        QFile file(urls.first().toLocalFile());
+        if(file.exists() && file.open(QFile::ReadOnly))
+        {
+            setData(index(row, column, parent), file.readAll());
+            return true;
+        }
+    } else if(data->hasText()) {
+        // If it's just text we can set the cell data directly
+        setData(index(row, column, parent), data->text());
+    }
+
+    return false;
 }

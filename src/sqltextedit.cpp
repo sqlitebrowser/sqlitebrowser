@@ -50,6 +50,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 
     // Do rest of initialisation
     reloadSettings();
+
+    // Connect signals
+    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -63,7 +66,7 @@ void SqlTextEdit::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
-    QFont font = lexer()->defaultFont(QsciLexerSQL::Default);
+    QFont font = lexer()->font(QsciLexerSQL::Default);
     setMarginWidth(0, QFontMetrics(font).width(QString("0").repeated(digits)) + 5);
 }
 
@@ -104,11 +107,11 @@ void SqlTextEdit::reloadKeywords()
 void SqlTextEdit::reloadSettings()
 {
     // Set syntax highlighting settings
-    sqlLexer->setDefaultColor(Qt::black);
     QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
-    sqlLexer->setDefaultFont(defaultfont);
+    sqlLexer->setColor(Qt::black, QsciLexerSQL::Default);
+    sqlLexer->setFont(defaultfont);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
@@ -132,7 +135,6 @@ void SqlTextEdit::reloadSettings()
     setMarginsFont(marginsfont);
     setMarginLineNumbers(0, true);
     setMarginsBackgroundColor(Qt::lightGray);
-    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
     updateLineNumberAreaWidth();
 
     // Highlight current line
@@ -141,4 +143,22 @@ void SqlTextEdit::reloadSettings()
 
     // Set tab width
     setTabWidth(PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
+
+    // Check if error indicators are enabled and clear them if they just got disabled
+    showErrorIndicators = PreferencesDialog::getSettingsValue("editor", "error_indicators").toBool();
+    if(!showErrorIndicators)
+        clearErrorIndicators();
+}
+
+void SqlTextEdit::clearErrorIndicators()
+{
+    // Clear any error indicators from position (0,0) to the last column of the last line
+    clearIndicatorRange(0, 0, lines(), lineLength(lines()), errorIndicatorNumber);
+}
+
+void SqlTextEdit::setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex)
+{
+    // Set error indicator for the specified range but only if they're enabled
+    if(showErrorIndicators)
+        fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, errorIndicatorNumber);
 }

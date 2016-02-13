@@ -19,6 +19,8 @@ set(TESTSQLOBJECTS_SRC
 	../PreferencesDialog.cpp
 	testsqlobjects.cpp
 	../FileDialog.cpp
+	../sqltextedit.cpp
+	../SqlUiLexer.cpp
 )
 
 set(TESTSQLOBJECTS_HDR
@@ -36,6 +38,8 @@ set(TESTSQLOBJECTS_MOC_HDR
 	../PreferencesDialog.h
 	testsqlobjects.h
 	../FileDialog.h
+	../sqltextedit.h
+	../SqlUiLexer.h
 )
 
 if(sqlcipher)
@@ -68,6 +72,10 @@ if(ANTLR2_FOUND)
 else()
     target_link_libraries(test-sqlobjects antlr)
 endif()
+link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
+add_dependencies(test-sqlobjects qscintilla2)
+target_link_libraries(test-sqlobjects
+		qscintilla2)
 add_test(test-sqlobjects test-sqlobjects)
 
 # test-import

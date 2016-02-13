@@ -6,6 +6,7 @@
 #include <QHash>
 
 class QTreeWidgetItem;
+class QFrame;
 
 namespace Ui {
 class PreferencesDialog;
@@ -42,6 +43,8 @@ private:
     static QHash<QString, QVariant> m_hCache;
 
     void fillLanguageBox();
+    void loadColorSetting(QFrame *frame, const QString &name);
+    void saveColorSetting(QFrame *frame, const QString &name);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

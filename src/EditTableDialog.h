@@ -41,6 +41,9 @@ private:
 
     void moveCurrentField(bool down);
 
+    // Returns true if there already is a field of that name
+    bool fieldNameExists(const QString& name);
+
 private slots:
     virtual void populateFields();
     virtual void addField();

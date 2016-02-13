@@ -1,7 +1,7 @@
 #ifndef GEN_VERSION_H
 #define GEN_VERSION_H
 #define MAJOR_VERSION 3
-#define MINOR_VERSION 6
+#define MINOR_VERSION 8
 #define PATCH_VERSION 99
 
 #define str(s) #s

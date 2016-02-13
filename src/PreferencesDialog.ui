@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>405</height>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -202,7 +202,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Remove line breaks in schema view</string>
+          <string>Remove line breaks in schema &amp;view</string>
          </property>
          <property name="buddy">
           <cstring>checkHideSchemaLinebreaks</cstring>
@@ -215,7 +215,7 @@
        <item row="3" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>&amp;Prefetch block size</string>
+          <string>Prefetch block si&amp;ze</string>
          </property>
          <property name="buddy">
           <cstring>spinPrefetchSize</cstring>
@@ -233,6 +233,46 @@
         </widget>
        </item>
        <item row="4" column="1">
+        <widget class="QPushButton" name="buttonDatabaseAdvanced">
+         <property name="text">
+          <string>Advanced</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelDatabaseDefaultSqlText">
+         <property name="text">
+          <string>SQL to execute after opening database</string>
+         </property>
+         <property name="buddy">
+          <cstring>editDatabaseDefaultSqlText</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -251,76 +291,50 @@
       <attribute name="title">
        <string>Data &amp;Browser</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" rowspan="2" colspan="2">
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QGroupBox" name="groupBox">
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    border-radius: 4px;
-    margin-top: 1ex;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    subcontrol-position: top left;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-           </property>
+          <widget class="QGroupBox" name="groupBox_3">
            <property name="title">
-            <string>NULL fields</string>
+            <string>Font</string>
            </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-           <layout class="QGridLayout" name="gridLayout">
-            <property name="leftMargin">
-             <number>50</number>
-            </property>
-            <property name="rightMargin">
-             <number>50</number>
-            </property>
-            <item row="1" column="1">
-             <widget class="QFrame" name="frameNullFgColour">
-              <property name="minimumSize">
-               <size>
-                <width>70</width>
-                <height>20</height>
-               </size>
+           <layout class="QFormLayout" name="formLayout_4">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>&amp;Font</string>
               </property>
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
-              </property>
-              <property name="autoFillBackground">
-               <bool>true</bool>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::Box</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+              <property name="buddy">
+               <cstring>comboDataBrowserFont</cstring>
               </property>
              </widget>
             </item>
+            <item row="0" column="1">
+             <widget class="QFontComboBox" name="comboDataBrowserFont"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Font si&amp;ze:</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinDataBrowserFontSize</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinDataBrowserFontSize"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox">
+           <property name="title">
+            <string>NULL fields</string>
+           </property>
+           <layout class="QFormLayout" name="gridLayout">
             <item row="0" column="1">
              <widget class="QLineEdit" name="txtNull">
               <property name="text">
@@ -331,41 +345,6 @@ QGroupBox::title {
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QFrame" name="frameNullBgColour">
-              <property name="minimumSize">
-               <size>
-                <width>70</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
-              </property>
-              <property name="autoFillBackground">
-               <bool>true</bool>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::Box</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>Text &amp;colour</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>frameNullFgColour</cstring>
               </property>
              </widget>
             </item>
@@ -382,16 +361,165 @@ QGroupBox::title {
               </property>
              </widget>
             </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="title">
+            <string>Field colors</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
             <item row="2" column="0">
-             <widget class="QLabel" name="label_11">
+             <widget class="QLabel" name="lb_null">
               <property name="text">
-               <string>Bac&amp;kground colour</string>
+               <string>NULL</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
-              <property name="buddy">
-               <cstring>frameNullBgColour</cstring>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="lb_regular">
+              <property name="text">
+               <string>Regular</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QFrame" name="fr_reg_fg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="lb_text">
+              <property name="text">
+               <string>Text</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="lb_binary">
+              <property name="text">
+               <string>Binary</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QFrame" name="fr_null_fg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="lb_background">
+              <property name="text">
+               <string>Background</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QFrame" name="fr_bin_fg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QFrame" name="fr_null_bg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QFrame" name="fr_bin_bg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QFrame" name="fr_reg_bg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
              </widget>
             </item>
@@ -399,32 +527,52 @@ QGroupBox::title {
           </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string>Filters</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
+           <layout class="QFormLayout" name="gridLayout_4">
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="editFilterEscape">
+              <property name="maxLength">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Escape character</string>
+              </property>
+              <property name="buddy">
+               <cstring>editFilterEscape</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Delay time (&amp;ms)</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinFilterDelay</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="spinFilterDelay">
+              <property name="toolTip">
+               <string>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</string>
+              </property>
+              <property name="maximum">
+               <number>5000</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -628,7 +776,7 @@ QGroupBox::title {
          <item row="3" column="0">
           <widget class="QLabel" name="label_13">
            <property name="text">
-            <string>Tab size:</string>
+            <string>Tab size</string>
            </property>
            <property name="buddy">
             <cstring>spinTabSize</cstring>
@@ -660,6 +808,46 @@ QGroupBox::title {
          </item>
          <item row="0" column="1">
           <widget class="QFontComboBox" name="comboEditorFont"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Error indicators</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkErrorIndicators</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="checkErrorIndicators">
+           <property name="toolTip">
+            <string>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Hori&amp;zontal tiling</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkHorizontalTiling</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QCheckBox" name="checkHorizontalTiling">
+           <property name="toolTip">
+            <string>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -756,6 +944,14 @@ QGroupBox::title {
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>comboDefaultLocation</tabstop>
@@ -767,14 +963,22 @@ QGroupBox::title {
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
+  <tabstop>comboDataBrowserFont</tabstop>
+  <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>txtNull</tabstop>
-  <tabstop>frameNullFgColour</tabstop>
-  <tabstop>frameNullBgColour</tabstop>
+  <tabstop>fr_null_fg</tabstop>
+  <tabstop>fr_null_bg</tabstop>
+  <tabstop>fr_bin_fg</tabstop>
+  <tabstop>fr_bin_bg</tabstop>
+  <tabstop>fr_reg_fg</tabstop>
+  <tabstop>fr_reg_bg</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>comboEditorFont</tabstop>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
   <tabstop>spinTabSize</tabstop>
+  <tabstop>checkErrorIndicators</tabstop>
+  <tabstop>checkHorizontalTiling</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
@@ -791,8 +995,8 @@ QGroupBox::title {
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
-     <y>395</y>
+     <x>275</x>
+     <y>488</y>
     </hint>
     <hint type="destinationlabel">
      <x>155</x>
@@ -807,8 +1011,8 @@ QGroupBox::title {
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>337</x>
-     <y>395</y>
+     <x>343</x>
+     <y>488</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -823,8 +1027,8 @@ QGroupBox::title {
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>79</y>
+     <x>115</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -839,8 +1043,8 @@ QGroupBox::title {
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>79</y>
+     <x>115</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -855,8 +1059,8 @@ QGroupBox::title {
    <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>101</x>
-     <y>46</y>
+     <x>103</x>
+     <y>48</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -877,6 +1081,38 @@ QGroupBox::title {
     <hint type="destinationlabel">
      <x>294</x>
      <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDatabaseAdvanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>labelDatabaseDefaultSqlText</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>15</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDatabaseAdvanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>editDatabaseDefaultSqlText</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>103</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>

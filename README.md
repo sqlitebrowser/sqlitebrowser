@@ -48,7 +48,7 @@ available at:
 
 DB Browser for SQLite works well on MacOS X.
 
-* OSX 10.6 (Snow Leopard) - 10.10 (Yosemite) are tested and known to work
+* OSX 10.7 (Lion) - 10.11 (El Capitan) are tested and known to work
 
 OSX binaries can be downloaded from here:
 
@@ -56,16 +56,73 @@ OSX binaries can be downloaded from here:
 
 Nightly builds for OSX are available at:
 
-* http://mirror.salasaga.org/sqlitebrowser/nightly/
+* http://nightlies.sqlitebrowser.org/osx/
 
 ## Linux
 
 DB Browser for SQLite works well on Linux.
-* Arch Linux provides a package through pacman
-* For Ubuntu and derivaties, [@deepsidhu1313](https://github.com/deepsidhu1313)
-  provides a PPA with our latest release here:
-  * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser
- 
+
+### Arch Linux
+
+Arch Linux provides a package through pacman.
+
+### Fedora
+
+For Fedora version 21, 22, 23 and rawhide (i386 and x86_64) you can install
+by issuing:
+
+    $ sudo dnf install sqlitebrowser
+
+### Ubuntu and Derivatives
+
+#### Stable release
+
+For Ubuntu and derivaties, [@deepsidhu1313](https://github.com/deepsidhu1313)
+provides a PPA with our latest release here:
+
+* https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser
+
+To add this ppa just type in these commands in terminal:
+
+    sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser
+
+Then update the cache using:
+
+    sudo apt-get update
+
+Install the package using:
+
+    sudo apt-get install sqlitebrowser
+
+Ubuntu 14.04.X, 15.04.X, 15.10.X and 16.04.X are supported for now (until
+Launchpad decides to discontinue build for any series).
+
+Ubuntu Precise (12.04) and Utopic (14.10) are not supported:
+* Precise doesn't have a Qt 5.2 package in its repository by default, which is
+  a dependency
+* Launchpad doesn't support Utopic any more, as that has reached its End of
+  Life
+
+#### Nightly builds
+
+Nightly builds are available here:
+
+* https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser-testing
+
+To add this ppa just type in these commands in terminal:
+
+    sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser-testing
+
+Then update the cache using:
+
+    sudo apt-get update
+
+Install the package using:
+
+    sudo apt-get install sqlitebrowser
+
+### Other Linux
+
 On others you'll need to compile it yourself using the (simple) instructions
 in [BUILDING.md](BUILDING.md).
 
@@ -79,7 +136,7 @@ using either this:
 
 or this:
 
-    # pkg install sqlitebrowser 
+    # pkg install sqlitebrowser
 
 ### Compiling
 
@@ -100,6 +157,8 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## Releases
 
+* [Version 3.8.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.8.0) - 2015-12-25
+* [Version 3.7.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.7.0) - 2015-06-14
 * [Version 3.6.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.6.0) - 2015-04-27
 * [Version 3.5.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.5.1) - 2015-02-08
 * [Version 3.5.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.5.0) - 2015-01-31

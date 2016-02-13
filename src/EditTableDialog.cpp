@@ -16,7 +16,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
       curTable(tableName),
       m_table(tableName),
       m_bNewTable(createTable),
-      m_sRestorePointName(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch()))
+      m_sRestorePointName(sqlb::escapeIdentifier(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch())))
 {
     // Create UI
     ui->setupUi(this);
@@ -34,7 +34,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
     }
 
     // And create a savepoint
-    pdb->setRestorePoint(m_sRestorePointName);
+    pdb->setSavepoint(m_sRestorePointName);
 
     // Update UI
     ui->editTableName->setText(curTable);
@@ -115,7 +115,7 @@ void EditTableDialog::populateFields()
             tbitem->setText(kDefault, f->defaultValue());
 
         tbitem->setText(kCheck, f->check());
-        tbitem->setText(kForeignKey, f->foreignKey());
+        tbitem->setText(kForeignKey, f->foreignKey().toString());
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
@@ -158,7 +158,7 @@ void EditTableDialog::accept()
 void EditTableDialog::reject()
 {    
     // Then rollback to our savepoint
-    pdb->revert(m_sRestorePointName);
+    pdb->revertToSavepoint(m_sRestorePointName);
     pdb->updateSchema();
 
     QDialog::reject();
@@ -173,7 +173,7 @@ void EditTableDialog::checkInput()
 {
     QString normTableName = ui->editTableName->text().trimmed();
     bool valid = true;
-    if(normTableName.isEmpty() || normTableName.contains("`"))
+    if(normTableName.isEmpty())
         valid = false;
     if(ui->treeWidget->topLevelItemCount() == 0)
         valid = false;
@@ -216,6 +216,42 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         switch(column)
         {
         case kName:
+            // When a field of that name already exists, show a warning to the user and don't apply the new name
+            if(fieldNameExists(item->text(column)))
+            {
+                QMessageBox::warning(this, qApp->applicationName(), tr("There already is a field with that name. Please rename it first or choose a different "
+                                                                       "name for this field."));
+                // Reset the name to the old value but avoid calling this method again for that automatic change
+                ui->treeWidget->blockSignals(true);
+                item->setText(column, oldFieldName);
+                ui->treeWidget->blockSignals(false);
+                return;
+            }
+
+            // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
+            if(!m_bNewTable)
+            {
+                foreach(const DBBrowserObject& fkobj, pdb->getBrowsableObjects())
+                {
+                    foreach(const sqlb::FieldPtr& fkfield, fkobj.table.fields())
+                    {
+                        if(fkfield->foreignKey().table() == m_table.name())
+                        {
+                            if(fkfield->foreignKey().columns().contains(field->name()) || field->primaryKey())
+                            {
+                                QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1, column %2 and thus "
+                                                                                       "its name cannot be changed.").arg(fkobj.getname()).arg(fkfield->name()));
+                                // Reset the name to the old value but avoid calling this method again for that automatic change
+                                ui->treeWidget->blockSignals(true);
+                                item->setText(column, oldFieldName);
+                                ui->treeWidget->blockSignals(false);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
             field->setName(item->text(column));
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
             if(!m_bNewTable)
@@ -252,7 +288,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(this, pdb);
-                m.setQuery(QString("SELECT COUNT(`%1`) FROM `%2` WHERE `%3` IS NULL;").arg(pdb->getObjectByName(curTable).table.rowidColumn()).arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
+                           .arg(sqlb::escapeIdentifier(pdb->getObjectByName(curTable).table.rowidColumn()))
+                           .arg(sqlb::escapeIdentifier(curTable))
+                           .arg(sqlb::escapeIdentifier(field->name())));
                 if(m.data(m.index(0, 0)).toInt() > 0)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
@@ -276,7 +315,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 if(!m_bNewTable)
                 {
                     SqliteTableModel m(this, pdb);
-                    m.setQuery(QString("SELECT COUNT(*) FROM `%1` WHERE `%2` <> CAST(`%3` AS INTEGER);").arg(curTable).arg(field->name()).arg(field->name()));
+                    m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);")
+                               .arg(sqlb::escapeIdentifier(curTable))
+                               .arg(sqlb::escapeIdentifier(field->name()))
+                               .arg(sqlb::escapeIdentifier(field->name())));
                     if(m.data(m.index(0, 0)).toInt() > 0)
                     {
                         // There is a non-integer value, so print an error message, uncheck the combobox, and return here
@@ -317,14 +359,14 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             {
                 // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
                 SqliteTableModel m(this, pdb);
-                m.setQuery(QString("SELECT COUNT(`%2`) FROM `%1`;").arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(sqlb::escapeIdentifier(curTable)).arg(sqlb::escapeIdentifier(field->name())));
                 int rowcount = m.data(m.index(0, 0)).toInt();
-                m.setQuery(QString("SELECT COUNT(distinct `%2`) FROM `%1`;").arg(curTable).arg(field->name()));
+                m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(sqlb::escapeIdentifier(curTable)).arg(sqlb::escapeIdentifier(field->name())));
                 int uniquecount = m.data(m.index(0, 0)).toInt();
                 if(rowcount != uniquecount)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
-                    QMessageBox::information(this, qApp->applicationName(), tr("Column `%1` has no unique data.\n").arg(field->name())
+                    QMessageBox::information(this, qApp->applicationName(), tr("Column '%1'' has no unique data.\n").arg(field->name())
                                              + tr("This makes it impossible to set this flag. Please change the table data first."));
                     item->setCheckState(column, Qt::Unchecked);
                     return;
@@ -374,7 +416,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 callRenameColumn = true;
             break;
         case kForeignKey:
-            field->setForeignKey(item->text(column));
+            sqlb::ForeignKeyClause fk;
+            fk.setFromString(item->text(column));
+            field->setForeignKey(fk);
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;
@@ -391,7 +435,20 @@ void EditTableDialog::addField()
 {
     QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
     tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
-    tbitem->setText(kName, "Field" + QString::number(ui->treeWidget->topLevelItemCount()));
+
+    // Find an unused name for the field by starting with 'Fieldx' where x is the number of fields + 1.
+    // If this name happens to exist already, increase x by one until we find an unused name.
+    {
+        unsigned int field_number = ui->treeWidget->topLevelItemCount();
+        QString field_name;
+        do
+        {
+            field_name = "Field" + QString::number(field_number);
+            field_number++;
+        } while(fieldNameExists(field_name));
+        tbitem->setText(kName, field_name);
+    }
+
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
     typeBox->setEditable(true);
@@ -571,4 +628,15 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     updateSqlText();
 
     // TODO: Update table if we're editing an existing table
+}
+
+bool EditTableDialog::fieldNameExists(const QString& name)
+{
+    foreach(const sqlb::FieldPtr& ptr, m_table.fields())
+    {
+        if(ptr->name() == name)
+            return true;
+    }
+
+    return false;
 }

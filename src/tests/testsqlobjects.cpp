@@ -82,12 +82,12 @@ void TestTable::foreignKeys()
 {
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("a", "integer"));
-    f->setForeignKey("b(c)");
+    f->setForeignKey(sqlb::ForeignKeyClause("b", QStringList("c")));
     tt.addField(f);
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
                                "\t`a`\tinteger,\n"
-                               "\tFOREIGN KEY(`a`) REFERENCES b(c)\n"
+                               "\tFOREIGN KEY(`a`) REFERENCES `b`(`c`)\n"
                                ");"));
 }
 
@@ -241,17 +241,17 @@ void TestTable::parseSQLEscapedQuotes()
 
 void TestTable::parseSQLForeignKeys()
 {
-    QString sql = "CREATE TABLE foreign_key_test(a int, b int, foreign key (a) references x, foreign key (b) references w(z) on delete set null);";
+    QString sql = "CREATE TABLE foreign_key_test(a int, b int, foreign key (a) references x, foreign key (b) references w(y,z) on delete set null);";
 
     Table tab = Table::parseSQL(sql).first;
 
     QCOMPARE(tab.name(), QString("foreign_key_test"));
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->type(), QString("int"));
-    QCOMPARE(tab.fields().at(0)->foreignKey(), QString("x"));
+    QCOMPARE(tab.fields().at(0)->foreignKey().table(), QString("x"));
     QCOMPARE(tab.fields().at(1)->name(), QString("b"));
     QCOMPARE(tab.fields().at(1)->type(), QString("int"));
-    QCOMPARE(tab.fields().at(1)->foreignKey(), QString("w ( z ) on delete set null"));
+    QCOMPARE(tab.fields().at(1)->foreignKey().toString(), QString("`w`(`y`,`z`) on delete set null"));
 }
 
 void TestTable::parseSQLCheckConstraint()

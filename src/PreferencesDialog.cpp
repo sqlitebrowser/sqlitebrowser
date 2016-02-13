@@ -17,9 +17,15 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
+    ui->labelDatabaseDefaultSqlText->setVisible(false);
+    ui->editDatabaseDefaultSqlText->setVisible(false);
 
-    ui->frameNullBgColour->installEventFilter(this);
-    ui->frameNullFgColour->installEventFilter(this);
+    ui->fr_bin_bg->installEventFilter(this);
+    ui->fr_bin_fg->installEventFilter(this);
+    ui->fr_reg_bg->installEventFilter(this);
+    ui->fr_reg_fg->installEventFilter(this);
+    ui->fr_null_bg->installEventFilter(this);
+    ui->fr_null_fg->installEventFilter(this);
 
 #ifndef CHECKNEWVERSION
     ui->labelUpdates->setVisible(false);
@@ -57,18 +63,20 @@ void PreferencesDialog::loadSettings()
     ui->checkHideSchemaLinebreaks->setChecked(getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
+    ui->editDatabaseDefaultSqlText->setText(getSettingsValue("db", "defaultsqltext").toString());
 
-    QPalette palette = ui->frameNullBgColour->palette();
-    palette.setColor(ui->frameNullBgColour->backgroundRole(),
-                     QColor(getSettingsValue("databrowser", "null_bg_colour").toString()));
-    ui->frameNullBgColour->setPalette(palette);
-
-    palette = ui->frameNullFgColour->palette();
-    palette.setColor(ui->frameNullFgColour->backgroundRole(),
-                     QColor(getSettingsValue("databrowser", "null_fg_colour").toString()));
-    ui->frameNullFgColour->setPalette(palette);
+    ui->comboDataBrowserFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("databrowser", "font").toString()));
+    ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
+    loadColorSetting(ui->fr_null_fg, "null_fg");
+    loadColorSetting(ui->fr_null_bg, "null_bg");
+    loadColorSetting(ui->fr_reg_fg, "reg_fg");
+    loadColorSetting(ui->fr_reg_bg, "reg_bg");
+    loadColorSetting(ui->fr_bin_fg, "bin_fg");
+    loadColorSetting(ui->fr_bin_bg, "bin_bg");
 
     ui->txtNull->setText(getSettingsValue("databrowser", "null_text").toString());
+    ui->editFilterEscape->setText(getSettingsValue("databrowser", "filter_escape").toString());
+    ui->spinFilterDelay->setValue(getSettingsValue("databrowser", "filter_delay").toInt());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -88,6 +96,8 @@ void PreferencesDialog::loadSettings()
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
+    ui->checkErrorIndicators->setChecked(getSettingsValue("editor", "error_indicators").toBool());
+    ui->checkHorizontalTiling->setChecked(getSettingsValue("editor", "horizontal_tiling").toBool());
 
     ui->listExtensions->addItems(getSettingsValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(getSettingsValue("extensions", "disableregex").toBool());
@@ -102,14 +112,21 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
+    setSettingsValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
 
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
-    setSettingsValue("databrowser", "null_bg_colour",
-                     ui->frameNullBgColour->palette().color(ui->frameNullBgColour->backgroundRole()));
-    setSettingsValue("databrowser", "null_fg_colour",
-                     ui->frameNullFgColour->palette().color(ui->frameNullFgColour->backgroundRole()));
+    setSettingsValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
+    setSettingsValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
+    saveColorSetting(ui->fr_null_fg, "null_fg");
+    saveColorSetting(ui->fr_null_bg, "null_bg");
+    saveColorSetting(ui->fr_reg_fg, "reg_fg");
+    saveColorSetting(ui->fr_reg_bg, "reg_bg");
+    saveColorSetting(ui->fr_bin_fg, "bin_fg");
+    saveColorSetting(ui->fr_bin_bg, "bin_bg");
     setSettingsValue("databrowser", "null_text", ui->txtNull->text());
+    setSettingsValue("databrowser", "filter_escape", ui->editFilterEscape->text());
+    setSettingsValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -123,6 +140,8 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("editor", "fontsize", ui->spinEditorFontSize->value());
     setSettingsValue("editor", "tabsize", ui->spinTabSize->value());
     setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
+    setSettingsValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
+    setSettingsValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
 
     QStringList extList;
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
@@ -206,6 +225,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "db" && name == "prefetchsize")
         return 50000;
 
+    // db/defaultsqltext?
+    if(group == "db" && name == "defaultsqltext")
+        return "";
+
     // MainWindow/geometry?
     if(group == "MainWindow" && name == "geometry")
         return "";
@@ -233,11 +256,27 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // Data Browser/NULL Fields
     if(group == "databrowser")
     {
-        if (name == "null_text")
+        if(name == "font")
+            return "Sans Serif";
+        if(name == "fontsize")
+            return 10;
+        if(name == "null_text")
             return "NULL";
-        if (name == "null_fg_colour")
+        if(name == "filter_escape")
+            return "\\";
+        if(name == "filter_delay")
+            return 200;
+        if(name == "null_fg_colour")
             return QColor(Qt::lightGray).name();
-        if (name == "null_bg_colour")
+        if(name == "null_bg_colour")
+            return QColor(Qt::white).name();
+        if(name == "reg_fg_colour")
+            return QColor(Qt::black).name();
+        if(name == "reg_bg_colour")
+            return QColor(Qt::white).name();
+        if(name == "bin_fg_colour")
+            return QColor(Qt::lightGray).name();
+        if(name == "bin_bg_colour")
             return QColor(Qt::white).name();
     }
 
@@ -292,6 +331,14 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
         }
     }
 
+    // editor/error_indicators?
+    if(group == "editor" && name == "error_indicators")
+        return true;
+
+    // editor/horizontal_tiling?
+    if(group == "editor" && name == "horizontal_tiling")
+        return false;
+
     // extensions/list?
     if(group == "extensions" && name == "list")
         return QStringList();
@@ -333,7 +380,9 @@ void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
 bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 {
     // Use mouse click and enter press on the frames to pop up a colour dialog
-    if (obj == ui->frameNullBgColour || obj == ui->frameNullFgColour)
+    if (obj == ui->fr_bin_bg  || obj == ui->fr_bin_fg ||
+        obj == ui->fr_reg_bg  || obj == ui->fr_reg_fg ||
+        obj == ui->fr_null_bg || obj == ui->fr_null_fg)
     {
         if (event->type() == QEvent::KeyPress)
         {
@@ -448,4 +497,18 @@ void PreferencesDialog::fillLanguageBox()
     ui->languageComboBox->removeItem(index);
     ui->languageComboBox->insertItem(0, chosenIcon, chosenLanguage, chosenLocale);
     ui->languageComboBox->setCurrentIndex(0);
+}
+
+void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingName)
+{
+    QPalette palette = frame->palette();
+    palette.setColor(frame->backgroundRole(),
+        QColor(getSettingsValue("databrowser", settingName + "_colour").toString()));
+    frame->setPalette(palette);
+}
+
+void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
+{
+    setSettingsValue("databrowser", settingName + "_colour",
+        frame->palette().color(frame->backgroundRole()));
 }

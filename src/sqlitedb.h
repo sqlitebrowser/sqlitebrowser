@@ -7,7 +7,7 @@
 #include <QMultiMap>
 #include <QByteArray>
 
-class sqlite3;
+struct sqlite3;
 class CipherDialog;
 
 enum
@@ -43,16 +43,16 @@ class DBBrowserDB : public QObject
     Q_OBJECT
 
 public:
-    explicit DBBrowserDB () : _db( 0 ) {}
+    explicit DBBrowserDB () : _db(0), isEncrypted(false), isReadOnly(false) {}
     virtual ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool attach(const QString& filename, QString attach_as = "");
     bool create ( const QString & db);
     bool close();
-    bool setRestorePoint(const QString& pointname = "RESTOREPOINT");
-    bool save (const QString& pointname = "RESTOREPOINT");
-    bool revert (const QString& pointname = "RESTOREPOINT");
-    bool saveAll();
+    bool setSavepoint(const QString& pointname = "RESTOREPOINT");
+    bool releaseSavepoint(const QString& pointname = "RESTOREPOINT");
+    bool revertToSavepoint(const QString& pointname = "RESTOREPOINT");
+    bool releaseAllSavepoints();
     bool revertAll();
     bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew, bool exportSchemaOnly);
     bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
@@ -102,12 +102,13 @@ public:
      */
     bool renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move = 0);
 
-    QStringList getBrowsableObjectNames() const;
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
+    bool readOnly() const { return isReadOnly; }
     bool getDirty() const;
+    QString currentFile() const { return curDBFilename; }
     void logSQL(QString statement, int msgtype);
 
     QString getPragma(const QString& pragma);
@@ -122,16 +123,18 @@ public:
     objectMap objMap;
 
     QString lastErrorMessage;
-    QString curDBFilename;
 
 signals:
     void sqlExecuted(QString sql, int msgtype);
     void dbChanged(bool dirty);
 
 private:
+    QString curDBFilename;
+
     QStringList savepointList;
 
     bool isEncrypted;
+    bool isReadOnly;
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
 };

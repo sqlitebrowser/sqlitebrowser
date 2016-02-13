@@ -176,7 +176,8 @@ void ExportCsvDialog::accept()
             QString fileName = FileDialog::getSaveFileName(
                     this,
                     tr("Choose a filename to export data"),
-                    tr("Text files(*.csv *.txt)"));
+                    tr("Text files(*.csv *.txt)"),
+                    selectedItems.at(0)->text() + ".csv");
             if(fileName.isEmpty())
             {
                 close();
@@ -210,7 +211,7 @@ void ExportCsvDialog::accept()
         {
             // if we are called from execute sql tab, query is already set
             // and we only export 1 select
-            QString sQuery = QString("SELECT * from `%1`;").arg(selectedItems.at(i)->text());
+            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(selectedItems.at(i)->text()));
 
             exportQuery(sQuery, filenames.at(i));
         }
