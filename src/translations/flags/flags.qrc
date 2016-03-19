@@ -9,5 +9,6 @@
         <file alias="en_GB">gb.png</file>
         <file alias="zh_TW">roc.png</file>
         <file alias="ko_KR">kr.png</file>
+        <file alias="tr-TR">tr.png</file>
     </qresource>
 </RCC>
