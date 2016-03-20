@@ -2042,7 +2042,7 @@ All data associated with the %1 will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="837"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation>Metin dosyaları(*.csv *.txt);;Tüm dosyalar files(*)</translation>
+        <translation>Metin dosyaları(*.csv *.txt);;Tüm dosyalar(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="846"/>
