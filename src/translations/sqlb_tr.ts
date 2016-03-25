@@ -21,22 +21,22 @@
     <message>
         <location filename="../AboutDialog.cpp" line="13"/>
         <source>Version </source>
-        <translation>Versiyon</translation>
+        <translation>Versiyon </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="14"/>
         <source>Qt Version </source>
-        <translation>Qt Versiyonu</translation>
+        <translation>Qt Versiyonu </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="16"/>
         <source>SQLCipher Version </source>
-        <translation>SQLCipher Versiyonu</translation>
+        <translation>SQLCipher Versiyonu </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="18"/>
         <source>SQLite Version </source>
-        <translation>SQLite Versiyonu</translation>
+        <translation>SQLite Versiyonu </translation>
     </message>
 </context>
 <context>
@@ -570,7 +570,7 @@ Aborting execution.</source>
         <location filename="../EditTableDialog.ui" line="226"/>
         <location filename="../EditTableDialog.ui" line="229"/>
         <source>Not null</source>
-        <translation>NULL olamaz</translation>
+        <translation>NULL Olamaz</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="234"/>
@@ -1156,7 +1156,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="314"/>
         <source>Edit &amp;Pragmas</source>
-        <translation>&amp;Pragmaları düzenleyin</translation>
+        <translation>&amp;Pragmaları Düzenleyin</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="338"/>
@@ -1246,7 +1246,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="520"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="543"/>
@@ -1317,7 +1317,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../MainWindow.ui" line="772"/>
         <source>E&amp;xecute SQL</source>
-        <translation>SQL kodunu &amp;çalıştır</translation>
+        <translation>SQL Kodunu &amp;Çalıştır</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="818"/>
@@ -2269,7 +2269,7 @@ Bunu yapmak istediğinize emin misiniz?</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="252"/>
         <source>Data &amp;Browser</source>
-        <translation>Veri &amp;Tarayıcısı</translation>
+        <translation>Veri &amp;Görüntüleyici</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="290"/>
@@ -2304,7 +2304,7 @@ Bunu yapmak istediğinize emin misiniz?</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="451"/>
         <source>Context</source>
-        <translation>Bağlam</translation>
+        <translation>Özellik</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="456"/>
