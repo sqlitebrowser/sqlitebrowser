@@ -54,6 +54,18 @@ ExportSqlDialog::~ExportSqlDialog()
     delete ui;
 }
 
+void ExportSqlDialog::doSelectAll()
+{
+	for (int i = 0; i < ui->listTables->count(); ++i)
+		ui->listTables->item(i)->setSelected(true);
+}
+
+void ExportSqlDialog::doDeselectAll()
+{
+	for (int i = 0; i < ui->listTables->count(); ++i)
+		ui->listTables->item(i)->setSelected(false);
+}
+
 void ExportSqlDialog::accept()
 {
     QList<QListWidgetItem*> selectedItems = ui->listTables->selectedItems();
@@ -102,3 +114,6 @@ void ExportSqlDialog::accept()
 
     QDialog::accept();
 }
+
+
+
