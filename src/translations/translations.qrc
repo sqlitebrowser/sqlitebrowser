@@ -7,6 +7,7 @@
         <file alias="sqlb_zh_TW">sqlb_zh_TW.qm</file>
         <file alias="sqlb_pt_BR">sqlb_pt_BR.qm</file>
         <file alias="sqlb_en_GB">sqlb_en_GB.qm</file>
+        <file alias="sqlb_es_ES">sqlb_es_ES.qm</file>
         <file alias="sqlb_ko_KR">sqlb_ko_KR.qm</file>
         <file alias="sqlb_tr">sqlb_tr.qm</file>
     </qresource>
