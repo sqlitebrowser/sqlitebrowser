@@ -2,7 +2,7 @@
     <qresource prefix="/translations">
         <file alias="sqlb_ru">sqlb_ru.qm</file>
         <file alias="sqlb_de">sqlb_de.qm</file>
-        <file alias="sqlb_de">sqlb_es.qm</file>
+        <file alias="sqlb_es">sqlb_es.qm</file>
         <file alias="sqlb_fr">sqlb_fr.qm</file>
         <file alias="sqlb_zh">sqlb_zh.qm</file>
         <file alias="sqlb_zh_TW">sqlb_zh_TW.qm</file>
