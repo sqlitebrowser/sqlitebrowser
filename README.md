@@ -44,6 +44,10 @@ available at:
 
 * http://rp.oldsch00l.com/sqlitebrowser/
 
+**Note** - If for some reason the standard Windows release doesn't work for
+you (eg it gives an error), try the nightly build.  It's made using a
+different process, and is often a good fallback. :D
+
 ## MacOS X
 
 DB Browser for SQLite works well on MacOS X.
