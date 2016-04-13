@@ -58,6 +58,10 @@ OSX binaries can be downloaded from here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
 
+Latest OSX binary can be installed via [Homebrew](http://brew.sh/ "Homebrew"):
+
+```brew cask install sqlitebrowser```
+
 Nightly builds for OSX are available at:
 
 * http://nightlies.sqlitebrowser.org/osx/
