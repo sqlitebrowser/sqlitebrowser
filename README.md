@@ -60,7 +60,9 @@ OSX binaries can be downloaded from here:
 
 Latest OSX binary can be installed via [Homebrew](http://brew.sh/ "Homebrew"):
 
-```brew cask install sqlitebrowser```
+```
+brew cask install sqlitebrowser
+```
 
 Nightly builds for OSX are available at:
 
