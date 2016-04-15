@@ -19,6 +19,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Hex number"), "hex");
     ui->comboDisplayFormat->addItem(tr("Octal number"), "octal");
     ui->comboDisplayFormat->addItem(tr("Exponent notation"), "exponent");
+    ui->comboDisplayFormat->addItem(tr("Hex blob"), "hexblob");
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
 
     // Set the current format, if it's empty set the default format
@@ -77,4 +78,6 @@ void ColumnDisplayFormatDialog::updateSqlCode()
         ui->editDisplayFormat->setText("printf('%o', " + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "exponent")
         ui->editDisplayFormat->setText("printf('%e', " + sqlb::escapeIdentifier(column_name) + ")");
+    else if(format == "hexblob")
+        ui->editDisplayFormat->setText("hex(" + sqlb::escapeIdentifier(column_name) + ")");
 }
