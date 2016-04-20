@@ -103,7 +103,7 @@ private:
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;
-	SqliteTableModel* m_currentTabTableModel;
+    SqliteTableModel* m_currentTabTableModel;
     SqliteTableModel* m_currentPlotModel;
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;

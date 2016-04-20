@@ -34,8 +34,8 @@ public:
     SqliteTableModel* getModel() { return model; }
     QTextEdit* getResultView();
     SqlTextEdit* getEditor();
-	ExtendedTableWidget *getTableResult();
-	
+    ExtendedTableWidget *getTableResult();
+    
 public slots:
     virtual void finishExecution(const QString& result);
     virtual void enableSaveButton(bool enable);

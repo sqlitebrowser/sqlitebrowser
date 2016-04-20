@@ -68,7 +68,7 @@ SqlTextEdit *SqlExecutionArea::getEditor()
 
 ExtendedTableWidget *SqlExecutionArea::getTableResult()
 {
-	return ui->tableResult;
+    return ui->tableResult;
 }
 
 

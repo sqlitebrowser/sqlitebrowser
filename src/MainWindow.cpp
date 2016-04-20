@@ -817,8 +817,8 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     if(!index.isValid())
         return;
 
-	bool edit = (m_currentTabTableModel == m_browseTableModel) &&
-	(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+    bool edit = (m_currentTabTableModel == m_browseTableModel) &&
+    (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
     // Don't allow editing of other objects than tables
     editDock->allowEditing(edit);
@@ -975,22 +975,22 @@ void MainWindow::executeQuery()
 
 void MainWindow::mainTabSelected(int tabindex)
 {
-	editDock->allowEditing(false);
+    editDock->allowEditing(false);
 
-	if(tabindex == 0)
+    if(tabindex == 0)
     {
         populateStructure();
     } else if(tabindex == 1) {
-		m_currentTabTableModel = m_browseTableModel;
+        m_currentTabTableModel = m_browseTableModel;
         populateStructure();
         resetBrowser();
     } else if(tabindex == 2) {
         loadPragmas();
-	} else if(tabindex == 3) {
-		SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    } else if(tabindex == 3) {
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
-		m_currentTabTableModel = sqlWidget->getModel();
-	}
+        m_currentTabTableModel = sqlWidget->getModel();
+    }
 }
 
 void MainWindow::importTableFromCSV()
