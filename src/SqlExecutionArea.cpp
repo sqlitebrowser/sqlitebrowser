@@ -66,6 +66,12 @@ SqlTextEdit *SqlExecutionArea::getEditor()
     return ui->editEditor;
 }
 
+ExtendedTableWidget *SqlExecutionArea::getTableResult()
+{
+	return ui->tableResult;
+}
+
+
 QTextEdit* SqlExecutionArea::getResultView()
 {
     return ui->editErrors;
