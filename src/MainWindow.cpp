@@ -989,7 +989,8 @@ void MainWindow::mainTabSelected(int tabindex)
     } else if(tabindex == 3) {
         SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
-        m_currentTabTableModel = sqlWidget->getModel();
+        if (sqlWidget)
+            m_currentTabTableModel = sqlWidget->getModel();
     }
 }
 
