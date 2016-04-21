@@ -794,8 +794,10 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     if(!index.isValid())
         return;
 
-    // Don't allow editing of other objects than tables
-    bool allowEditing = db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table";
+	// Don't allow editing of other objects than tables (on the browse table)
+
+	bool allowEditing = (m_currentTabTableModel == m_browseTableModel) && (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+
     editDock->allowEditing(allowEditing);
     editWin->allowEditing(allowEditing);
 
@@ -968,6 +970,9 @@ void MainWindow::executeQuery()
     updatePlot(sqlWidget->getModel());
 
     connect(sqlWidget->getTableResult(), SIGNAL(clicked(QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+
+	connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this,
+			SLOT(doubleClickTable(QModelIndex)));
 
     if(!modified && !wasdirty)
         db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
