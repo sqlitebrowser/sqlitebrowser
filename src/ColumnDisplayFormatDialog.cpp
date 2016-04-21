@@ -82,5 +82,5 @@ void ColumnDisplayFormatDialog::updateSqlCode()
     else if(format == "hexblob")
         ui->editDisplayFormat->setText("hex(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "decimal")
-        ui->editDisplayFormat->setText("printf('0x%d', " + sqlb::escapeIdentifier(column_name) + ")");
+        ui->editDisplayFormat->setText("printf('%d', " + sqlb::escapeIdentifier(column_name) + ")");
 }
