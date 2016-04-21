@@ -49,9 +49,9 @@ Done. :)
 
 ### CentOS / Fedora Linux
 
-**1**. Make sure the `qt-devel`, `ant-antlr`, and `antlr-C++` packages are installed.<br />
+**1**. Make sure the `qt-devel`, `ant-antlr`, `sqlite-devel`, and `antlr-C++` packages are installed.<br />
 ```
-$ sudo yum install qt-devel ant-antlr antlr-C++
+$ sudo yum install qt-devel ant-antlr sqlite-devel antlr-C++
 ```
 **2**. Download the DB Browser for SQLite source code.<br />
 **3**. Open a terminal in the source code directory.<br />
