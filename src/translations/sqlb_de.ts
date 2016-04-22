@@ -279,7 +279,7 @@
         <source>Type of data currently in cell: Text / Numeric</source>
         <translation type="unfinished">Art der Daten in dieser Zelle: Text / Numerisch</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <location filename="../EditDialog.cpp" line="157"/>
         <source>%n char(s)</source>
         <translation type="unfinished">%n Zeichen</translation>
