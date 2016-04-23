@@ -478,8 +478,12 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
     }
     sqlite3_finalize(stmt);
 
-    beginInsertRows(QModelIndex(), currentsize, m_data.size()-1);
-    endInsertRows();
+    // Check if there was any new data
+    if(m_data.size() > currentsize)
+    {
+        beginInsertRows(QModelIndex(), currentsize, m_data.size()-1);
+        endInsertRows();
+    }
 }
 
 void SqliteTableModel::buildQuery()
