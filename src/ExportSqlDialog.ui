@@ -110,10 +110,22 @@
          </spacer>
         </item>
         <item row="2" column="0">
-         <widget class="QCheckBox" name="checkSchemaOnly">
-          <property name="text">
-           <string>Export schema only</string>
-          </property>
+         <widget class="QComboBox" name="comboWhat">
+          <item>
+           <property name="text">
+            <string>Export everything</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Export schema only</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Export data only</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -135,8 +147,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>136</y>
+     <x>258</x>
+     <y>331</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -151,8 +163,8 @@
    <slot>doDeselectAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>298</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -167,8 +179,8 @@
    <slot>doSelectAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>80</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

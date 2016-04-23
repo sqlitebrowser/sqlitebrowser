@@ -102,11 +102,17 @@ void ExportSqlDialog::accept()
     foreach (const QListWidgetItem * item, ui->listTables->selectedItems())
         tables.push_back(item->text());
 
+    // Check what to export. The indices here depend on the order of the items in the combobox in the ui file
+    bool exportSchema = ui->comboWhat->currentIndex() == 0 || ui->comboWhat->currentIndex() == 1;
+    bool exportData = ui->comboWhat->currentIndex() == 0 || ui->comboWhat->currentIndex() == 2;
+
+    // Perform actual export
     bool dumpOk = pdb->dump(fileName,
                             tables,
                             ui->checkColNames->isChecked(),
                             ui->checkMultiple->isChecked(),
-                            ui->checkSchemaOnly->isChecked());
+                            exportSchema,
+                            exportData);
     if (dumpOk)
         QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
     else
