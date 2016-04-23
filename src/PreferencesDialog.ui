@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>495</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -809,7 +809,7 @@
          <item row="0" column="1">
           <widget class="QFontComboBox" name="comboEditorFont"/>
          </item>
-         <item row="4" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="label_15">
            <property name="text">
             <string>Error indicators</string>
@@ -819,7 +819,7 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QCheckBox" name="checkErrorIndicators">
            <property name="toolTip">
             <string>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</string>
@@ -829,7 +829,7 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="label_10">
            <property name="text">
             <string>Hori&amp;zontal tiling</string>
@@ -839,11 +839,28 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="6" column="1">
           <widget class="QCheckBox" name="checkHorizontalTiling">
            <property name="toolTip">
             <string>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</string>
            </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_20">
+           <property name="text">
+            <string>Code co&amp;mpletion</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkAutoCompletion</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="checkAutoCompletion">
            <property name="text">
             <string>enabled</string>
            </property>
@@ -963,6 +980,8 @@
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
+  <tabstop>buttonDatabaseAdvanced</tabstop>
+  <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>txtNull</tabstop>
@@ -972,11 +991,14 @@
   <tabstop>fr_bin_bg</tabstop>
   <tabstop>fr_reg_fg</tabstop>
   <tabstop>fr_reg_bg</tabstop>
+  <tabstop>spinFilterDelay</tabstop>
+  <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
   <tabstop>comboEditorFont</tabstop>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
   <tabstop>spinTabSize</tabstop>
+  <tabstop>checkAutoCompletion</tabstop>
   <tabstop>checkErrorIndicators</tabstop>
   <tabstop>checkHorizontalTiling</tabstop>
   <tabstop>listExtensions</tabstop>
@@ -995,8 +1017,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>275</x>
-     <y>488</y>
+     <x>281</x>
+     <y>525</y>
     </hint>
     <hint type="destinationlabel">
      <x>155</x>
@@ -1011,8 +1033,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>343</x>
-     <y>488</y>
+     <x>349</x>
+     <y>525</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -1027,8 +1049,8 @@
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>115</x>
-     <y>80</y>
+     <x>571</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1043,8 +1065,8 @@
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>115</x>
-     <y>80</y>
+     <x>571</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1064,7 +1086,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>-1</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -1091,12 +1113,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>53</y>
+     <x>375</x>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
-     <x>15</x>
-     <y>61</y>
+     <x>64</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -1107,12 +1129,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>53</y>
+     <x>375</x>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
-     <x>103</x>
-     <y>63</y>
+     <x>375</x>
+     <y>251</y>
     </hint>
    </hints>
   </connection>
