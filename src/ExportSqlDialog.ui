@@ -32,7 +32,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="labelTable">
        <property name="text">
-        <string>&amp;Table(s)</string>
+        <string>Tab&amp;le(s)</string>
        </property>
        <property name="buddy">
         <cstring>listTables</cstring>
@@ -92,7 +92,7 @@
         <item row="1" column="0">
          <widget class="QCheckBox" name="checkMultiple">
           <property name="text">
-           <string>New INSERT INTO syntax (multiple rows in VALUES)</string>
+           <string>Multiple rows (VALUES) per INSERT statement</string>
           </property>
          </widget>
         </item>
