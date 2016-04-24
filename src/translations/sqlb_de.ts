@@ -5,8 +5,8 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../AboutDialog.ui" line="14"/>
-        <source>About SqliteBrowser</source>
-        <translation type="unfinished">Über SQLiteBrowser</translation>
+        <source>About DB Browser for SQLite</source>
+        <translation type="unfinished">Über DB-Browser für SQLite</translation>
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="47"/>
