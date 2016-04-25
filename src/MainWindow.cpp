@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
+      m_currentTabTableModel(m_browseTableModel),
       editWin(new EditDialog(this)),
       editDock(new EditDialog(this, true)),
       gotoValidator(new QIntValidator(0, 0, this))
@@ -770,7 +771,7 @@ void MainWindow::helpAbout()
 
 void MainWindow::updateRecordText(int row, int col, bool isBlob, const QByteArray& newtext)
 {
-    m_browseTableModel->setTypedData(m_browseTableModel->index(row, col), isBlob, newtext);
+    m_currentTabTableModel->setTypedData(m_currentTabTableModel->index(row, col), isBlob, newtext);
 }
 
 void MainWindow::editWinAway()
@@ -793,8 +794,10 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     if(!index.isValid())
         return;
 
-    // Don't allow editing of other objects than tables
-    bool allowEditing = db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table";
+	// Don't allow editing of other objects than tables (on the browse table)
+
+    bool allowEditing = (m_currentTabTableModel == m_browseTableModel) && (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+
     editDock->allowEditing(allowEditing);
     editWin->allowEditing(allowEditing);
 
@@ -816,8 +819,11 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     if(!index.isValid())
         return;
 
+    bool edit = (m_currentTabTableModel == m_browseTableModel) &&
+    (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+
     // Don't allow editing of other objects than tables
-    editDock->allowEditing(db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+    editDock->allowEditing(edit);
 
     // Load the current value into the edit dock only
     editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
@@ -963,20 +969,35 @@ void MainWindow::executeQuery()
     sqlWidget->finishExecution(statusMessage);
     updatePlot(sqlWidget->getModel());
 
+    connect(sqlWidget->getTableResult(), SIGNAL(clicked(QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+
+    connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
+
     if(!modified && !wasdirty)
         db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
 }
 
 void MainWindow::mainTabSelected(int tabindex)
 {
+    editDock->allowEditing(false);
+
     if(tabindex == 0)
     {
         populateStructure();
     } else if(tabindex == 1) {
+        m_currentTabTableModel = m_browseTableModel;
         populateStructure();
         resetBrowser();
     } else if(tabindex == 2) {
         loadPragmas();
+    } else if(tabindex == 3) {
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+
+        if (sqlWidget) {
+            m_currentTabTableModel = sqlWidget->getModel();
+
+            dataTableSelectionChanged(sqlWidget->getTableResult()->currentIndex());
+        }
     }
 }
 
