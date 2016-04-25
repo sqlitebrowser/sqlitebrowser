@@ -796,7 +796,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
 	// Don't allow editing of other objects than tables (on the browse table)
 
-	bool allowEditing = (m_currentTabTableModel == m_browseTableModel) && (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+    bool allowEditing = (m_currentTabTableModel == m_browseTableModel) && (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
     editDock->allowEditing(allowEditing);
     editWin->allowEditing(allowEditing);
@@ -971,8 +971,7 @@ void MainWindow::executeQuery()
 
     connect(sqlWidget->getTableResult(), SIGNAL(clicked(QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
-	connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this,
-			SLOT(doubleClickTable(QModelIndex)));
+    connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
 
     if(!modified && !wasdirty)
         db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
@@ -994,8 +993,11 @@ void MainWindow::mainTabSelected(int tabindex)
     } else if(tabindex == 3) {
         SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
-        if (sqlWidget)
+        if (sqlWidget) {
             m_currentTabTableModel = sqlWidget->getModel();
+
+            dataTableSelectionChanged(sqlWidget->getTableResult()->currentIndex());
+        }
     }
 }
 

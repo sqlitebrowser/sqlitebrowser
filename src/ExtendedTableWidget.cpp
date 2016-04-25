@@ -270,8 +270,7 @@ QSet<int> ExtendedTableWidget::selectedCols()
 void ExtendedTableWidget::cellClicked(const QModelIndex& index)
 {
     // If Alt key is pressed try to jump to the row referenced by the foreign key of the clicked cell
-    if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier)
-       && model())
+    if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier) && model())
     {
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
         sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
