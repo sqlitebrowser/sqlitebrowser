@@ -175,7 +175,7 @@ EditView::EditView() {
 	ldTabstops = NULL;
 	hideSelection = false;
 	drawOverstrikeCaret = true;
-	bufferedDraw = true;
+	bufferedDraw = false;
 	phasesDraw = phasesTwo;
 	lineWidthMaxSeen = 0;
 	additionalCaretsBlink = true;
