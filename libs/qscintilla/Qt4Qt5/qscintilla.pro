@@ -29,7 +29,7 @@
 
 TEMPLATE = lib
 TARGET = qscintilla2
-CONFIG += qt warn_off release thread exceptions staticlib debug_and_release
+CONFIG += qt warn_off thread exceptions staticlib debug_and_release
 INCLUDEPATH += . ../include ../lexlib ../src
 
 DEFINES += QSCINTILLA_MAKE_DLL SCINTILLA_QT SCI_LEXER
