@@ -168,3 +168,8 @@ DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcu
 
 # Rules for creating/updating {ts|qm}-files
 include(i18n.pri)
+
+win32: LIBS += -L$$PWD/../../../dev/SQLite/ -lsqlite3
+
+INCLUDEPATH += $$PWD/../../../dev/SQLite
+DEPENDPATH += $$PWD/../../../dev/SQLite
