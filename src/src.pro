@@ -107,11 +107,13 @@ TRANSLATIONS += \
     translations/sqlb_zh.ts \
     translations/sqlb_zh_TW.ts \
     translations/sqlb_de.ts \
+    translations/sqlb_es_ES.ts \
     translations/sqlb_fr.ts \
     translations/sqlb_ru.ts \
     translations/sqlb_pt_BR.ts \
     translations/sqlb_en_GB.ts \
-    translations/sqlb_ko_KR.ts
+    translations/sqlb_ko_KR.ts \
+    translations/sqlb_tr.ts
 
 CONFIG(sqlcipher) {
 	QMAKE_CXXFLAGS += -DENABLE_SQLCIPHER
@@ -146,6 +148,11 @@ win32 {
 	LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
     }
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
+
+    # Added SQLite installation path variables, matching our setup guide
+    LIBS += -L$$PWD/../../../dev/SQLite/ -lsqlite3
+    INCLUDEPATH += $$PWD/../../../dev/SQLite
+    DEPENDPATH += $$PWD/../../../dev/SQLite
 }
 mac {
     RC_FILE = macapp.icns

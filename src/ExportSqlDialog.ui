@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>497</width>
-    <height>300</height>
+    <height>338</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="labelTable">
        <property name="text">
-        <string>&amp;Table(s)</string>
+        <string>Tab&amp;le(s)</string>
        </property>
        <property name="buddy">
         <cstring>listTables</cstring>
@@ -49,7 +49,31 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="buttonSelectAll">
+         <property name="text">
+          <string>Select All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonDeselectAll">
+         <property name="text">
+          <string>Deselect All</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0" colspan="2">
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
         <string>&amp;Options</string>
@@ -68,7 +92,7 @@
         <item row="1" column="0">
          <widget class="QCheckBox" name="checkMultiple">
           <property name="text">
-           <string>New INSERT INTO syntax (multiple rows in VALUES)</string>
+           <string>Multiple rows (VALUES) per INSERT statement</string>
           </property>
          </widget>
         </item>
@@ -86,10 +110,22 @@
          </spacer>
         </item>
         <item row="2" column="0">
-         <widget class="QCheckBox" name="checkSchemaOnly">
-          <property name="text">
-           <string>Export schema only</string>
-          </property>
+         <widget class="QComboBox" name="comboWhat">
+          <item>
+           <property name="text">
+            <string>Export everything</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Export schema only</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Export data only</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -111,8 +147,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>136</y>
+     <x>258</x>
+     <y>331</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -121,18 +157,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
+   <sender>buttonDeselectAll</sender>
+   <signal>clicked()</signal>
    <receiver>ExportSqlDialog</receiver>
-   <slot>reject()</slot>
+   <slot>doDeselectAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>136</y>
+     <x>298</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
-     <x>286</x>
-     <y>140</y>
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonSelectAll</sender>
+   <signal>clicked()</signal>
+   <receiver>ExportSqlDialog</receiver>
+   <slot>doSelectAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>

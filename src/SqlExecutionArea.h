@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+#include "ExtendedTableWidget.h"
+
 class SqlTextEdit;
 class SqliteTableModel;
 class DBBrowserDB;
@@ -32,7 +34,8 @@ public:
     SqliteTableModel* getModel() { return model; }
     QTextEdit* getResultView();
     SqlTextEdit* getEditor();
-
+    ExtendedTableWidget *getTableResult();
+    
 public slots:
     virtual void finishExecution(const QString& result);
     virtual void enableSaveButton(bool enable);

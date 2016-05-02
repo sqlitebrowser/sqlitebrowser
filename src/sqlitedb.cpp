@@ -420,7 +420,8 @@ bool DBBrowserDB::dump(const QString& filename,
     const QStringList & tablesToDump,
     bool insertColNames,
     bool insertNewSyntx,
-    bool exportSchemaOnly)
+    bool exportSchema,
+    bool exportData)
 {
     // Open file
     QFile file(filename);
@@ -466,9 +467,11 @@ bool DBBrowserDB::dump(const QString& filename,
                 continue;
 
             // Write the SQL string used to create this table to the output file
-            stream << it->getsql() << ";\n";
+            if(exportSchema)
+                stream << it->getsql() << ";\n";
 
-            if (exportSchemaOnly)
+            // If the user doesn't want the data to be exported skip the rest of the loop block here
+            if(!exportData)
                 continue;
 
             // get columns
@@ -557,17 +560,18 @@ bool DBBrowserDB::dump(const QString& filename,
             sqlite3_finalize(stmt);
         }
 
-        // Now dump all the other objects
-        for(objectMap::ConstIterator it=objMap.begin();it!=objMap.end();++it)
+        // Now dump all the other objects (but only if we are exporting the schema)
+        if(exportSchema)
         {
-            // Make sure it's not a table again
-            if(it.value().gettype() == "table")
-                continue;
-
-            // Write the SQL string used to create this object to the output file
-            if(!it->getsql().isEmpty())
+            for(objectMap::ConstIterator it=objMap.begin();it!=objMap.end();++it)
             {
-                stream << it->getsql() << ";\n";
+                // Make sure it's not a table again
+                if(it.value().gettype() == "table")
+                    continue;
+
+                // Write the SQL string used to create this object to the output file
+                if(!it->getsql().isEmpty())
+                    stream << it->getsql() << ";\n";
             }
         }
 

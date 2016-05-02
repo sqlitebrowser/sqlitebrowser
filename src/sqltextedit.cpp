@@ -20,12 +20,6 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     // Set the lexer
     setLexer(sqlLexer);
 
-    // Enable auto completion
-    setAutoCompletionThreshold(3);
-    setAutoCompletionCaseSensitivity(false);
-    setAutoCompletionShowSingle(true);
-    setAutoCompletionSource(QsciScintilla::AcsAPIs);
-
     // Set icons for auto completion
     registerImage(SqlUiLexer::ApiCompleterIconIdKeyword, QImage(":/icons/keyword"));
     registerImage(SqlUiLexer::ApiCompleterIconIdFunction, QImage(":/icons/function"));
@@ -106,6 +100,17 @@ void SqlTextEdit::reloadKeywords()
 
 void SqlTextEdit::reloadSettings()
 {
+    // Enable auto completion if it hasn't been disabled
+    if(PreferencesDialog::getSettingsValue("editor", "auto_completion").toBool())
+    {
+        setAutoCompletionThreshold(3);
+        setAutoCompletionCaseSensitivity(false);
+        setAutoCompletionShowSingle(true);
+        setAutoCompletionSource(QsciScintilla::AcsAPIs);
+    } else {
+        setAutoCompletionThreshold(0);
+    }
+
     // Set syntax highlighting settings
     QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
