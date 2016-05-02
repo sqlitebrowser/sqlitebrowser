@@ -40,10 +40,12 @@ greaterThan(QT_MAJOR_VERSION, 3) {
 }
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-	QT += widgets printsupport
+        # Qt5 requires widgets and printsupport defined
+        QT += widgets printsupport
 
     greaterThan(QT_MINOR_VERSION, 1) {
-	    macx:QT += macextras
+        # Qt5 5.2 and above on OSX require macextras
+        macx:QT += macextras
     }
 
     # Work around QTBUG-39300.
