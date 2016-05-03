@@ -117,6 +117,13 @@ or:
 
 (before the 'make' step)
 
+### Compiling on Windows with MSVC
+
+Complete setup, build, and packaging instructions with MSVC 2013 x64 are online
+here:
+
+&nbsp; &nbsp; https://github.com/sqlitebrowser/sqlitebrowser/wiki/Setting-up-a-Win64-development-environment-for-DB4S
+
 ### Cross compiling for Windows
 
 These are instructions to cross compile within a Linux system a Windows binary
