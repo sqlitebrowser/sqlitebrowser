@@ -1,10 +1,12 @@
 ## BUILD INSTRUCTIONS AND REQUIREMENTS
 
+DB Browser for SQLite requires Qt as well as SQLite. For more information on Qt
+please consult http://www.qt.io and for SQLite please see https://sqlite.org/. 
+
 ### Generic Linux and FreeBSD
 
-DB Browser for SQLite requires Trolltech's Qt, version 4.6 or newer. For more
-information on Qt please consult http://www.qt.io. The GPL version of
-Qt is available in almost all Linux distributions as a default package.
+The GPL version of Qt is available in almost all Linux distributions as a
+default package.
 
 The only requirements for building this code are the presence of Qt and
 sqlite3. Qt can be included as a static or shared library, depending on the
