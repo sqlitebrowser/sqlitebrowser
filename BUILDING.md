@@ -1,7 +1,7 @@
 ## BUILD INSTRUCTIONS AND REQUIREMENTS
 
-DB Browser for SQLite requires Qt version 5.5 or newer as well as SQLite 3.9 or
-higher. For more information on Qt please consult http://www.qt.io. 
+DB Browser for SQLite requires Qt as well as SQLite. For more information on Qt
+please consult http://www.qt.io and for SQLite please see https://sqlite.org/. 
 
 ### Generic Linux and FreeBSD
 
