@@ -1713,10 +1713,6 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
 
         if(model)
         {
-            // Make sure all data is loaded before trying to plot anything
-            while(model->canFetchMore())
-                model->fetchMore();
-
             for(int i = 0; i < model->columnCount(); ++i)
             {
                 QVariant::Type columntype = guessdatatype(model, i);
@@ -2492,4 +2488,17 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
 void MainWindow::browseDataSetDefaultTableEncoding()
 {
     browseDataSetTableEncoding(true);
+}
+
+void MainWindow::browseDataFetchAllData()
+{
+    if(m_browseTableModel)
+    {
+        // Make sure all data is loaded
+        while(m_browseTableModel->canFetchMore())
+            m_browseTableModel->fetchMore();
+
+        // Update plot
+        updatePlot(m_browseTableModel);
+    }
 }

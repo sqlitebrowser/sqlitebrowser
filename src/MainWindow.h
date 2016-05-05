@@ -226,6 +226,7 @@ private slots:
     void showRowidColumn(bool show);
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
+    void browseDataFetchAllData();
 };
 
 #endif
