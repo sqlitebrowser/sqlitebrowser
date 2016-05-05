@@ -313,7 +313,11 @@ bool DBBrowserDB::releaseAllSavepoints()
         if(!releaseSavepoint(point))
             return false;
     }
-    executeSQL("COMMIT;", false, false);  // Just to be sure
+
+    // When still in a transaction, commit that too
+    if(sqlite3_get_autocommit(_db) == 0)
+        executeSQL("COMMIT;", false, false);
+
     return true;
 }
 
