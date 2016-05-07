@@ -765,7 +765,7 @@ void MainWindow::helpWhatsThis()
 
 void MainWindow::helpAbout()
 {
-    AboutDialog dialog(this);
+    AboutDialog dialog(&db, this);
     dialog.exec();
 }
 
