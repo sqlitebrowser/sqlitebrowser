@@ -55,6 +55,9 @@ Done. :)
 ```
 $ sudo dnf install qt-devel ant-antlr sqlite-devel antlr-C++
 ```
+
+**Note** - If on CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`
+
 **2**. Download the DB Browser for SQLite source code.<br />
 **3**. Open a terminal in the source code directory.<br />
 **4**. Run these commands:<br />
