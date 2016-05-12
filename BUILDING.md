@@ -53,7 +53,7 @@ Done. :)
 
 **1**. Make sure the `qt-devel`, `ant-antlr`, `sqlite-devel`, and `antlr-C++` packages are installed.<br />
 ```
-$ sudo yum install qt-devel ant-antlr sqlite-devel antlr-C++
+$ sudo dnf install qt-devel ant-antlr sqlite-devel antlr-C++
 ```
 **2**. Download the DB Browser for SQLite source code.<br />
 **3**. Open a terminal in the source code directory.<br />
