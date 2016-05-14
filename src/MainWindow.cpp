@@ -577,6 +577,10 @@ void MainWindow::deleteRecord()
 {
     if(ui->dataTable->selectionModel()->hasSelection())
     {
+        // If only filter header is selected
+        if(ui->dataTable->selectionModel()->selectedIndexes().isEmpty())
+            return;
+
         int old_row = ui->dataTable->currentIndex().row();
         while(ui->dataTable->selectionModel()->hasSelection())
         {
