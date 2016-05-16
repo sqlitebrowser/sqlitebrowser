@@ -115,11 +115,24 @@ TRANSLATIONS += \
     translations/sqlb_ko_KR.ts \
     translations/sqlb_tr.ts
 
+# SQLite / SQLCipher switch pieces
 CONFIG(sqlcipher) {
-	QMAKE_CXXFLAGS += -DENABLE_SQLCIPHER
-	LIBS += -lsqlcipher
+    QMAKE_CXXFLAGS += -DENABLE_SQLCIPHER
+    LIBS += -lsqlcipher
+
+    # Add the paths for Homebrew installed SQLCipher
+    mac {
+        INCLUDEPATH += /usr/local/opt/sqlcipher/include
+        LIBS += -L/usr/local/opt/sqlcipher/lib
+    }
 } else {
-	LIBS += -lsqlite3
+    LIBS += -lsqlite3
+
+    # Add the paths for Homebrew installed SQLite
+    mac {
+        INCLUDEPATH += /usr/local/opt/sqlite/include
+        LIBS += -L/usr/local/opt/sqlite/lib
+    }
 }
 
 LIBPATH_QHEXEDIT=$$OUT_PWD/../libs/qhexedit
@@ -140,13 +153,13 @@ win32 {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/debug
-	LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/debug
+    LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/debug
     }
     CONFIG(release,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/release
-	LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
+    LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
     }
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
 
@@ -159,11 +172,8 @@ mac {
     TARGET = "DB Browser for SQLite"
     RC_FILE = macapp.icns
     QT+= macextras
-    INCLUDEPATH += /usr/local/include \
-                   /usr/local/opt/sqlite/include
-    LIBS += -L/usr/local/lib \
-            -L/usr/local/opt/sqlite/lib \
-            -framework Carbon
+    INCLUDEPATH += /usr/local/include
+    LIBS += -L/usr/local/lib -framework Carbon
     QMAKE_INFO_PLIST = app.plist
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
 }
