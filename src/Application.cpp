@@ -54,8 +54,7 @@ Application::Application(int& argc, char** argv) :
             ok = m_translatorQt->load("qt_" + name, "translations");
         if (ok == true)
             installTranslator(m_translatorQt);
-    }
-    else {
+    } else {
         // Set the correct locale so that the program won't erroneously detect
         // a language change when the user toggles settings for the first time.
         // (it also prevents the program from always looking for a translation on launch)
