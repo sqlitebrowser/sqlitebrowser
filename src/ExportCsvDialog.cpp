@@ -67,7 +67,13 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     QChar quoteChar = currentQuoteChar();
     QString quotequoteChar = QString(quoteChar) + quoteChar;
     QChar sepChar = currentSeparatorChar();
+
+    // Choose appropriate newline character for the platform
+#ifdef Q_OS_WIN
     QString newlineChar = "\r\n";
+#else
+    QString newlineChar = "\n";
+#endif
 
     // chars that require escaping
     std::string special_chars = newlineChar.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
