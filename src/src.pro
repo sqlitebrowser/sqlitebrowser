@@ -133,6 +133,7 @@ os2 {
     RC_FILE = os2app.rc
 }
 win32 {
+    TARGET = "DB Browser for SQLite"
     RC_FILE = winapp.rc
     INCLUDEPATH += $$PWD
     CONFIG(debug,debug|release) {
@@ -155,6 +156,7 @@ win32 {
     DEPENDPATH += $$PWD/../../../dev/SQLite
 }
 mac {
+    TARGET = "DB Browser for SQLite"
     RC_FILE = macapp.icns
     QT+= macextras
     INCLUDEPATH += /usr/local/include \
