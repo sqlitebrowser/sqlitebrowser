@@ -29,6 +29,8 @@ public:
     bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
 
+    QModelIndex dittoRecord(int old_row);
+
     void setQuery(const QString& sQuery, bool dontClearHeaders = false);
     QString query() const { return m_sQuery; }
     void setTable(const QString& table, const QVector<QString> &display_format = QVector<QString>());
