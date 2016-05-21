@@ -734,6 +734,7 @@ void MainWindow::deleteObject()
         } else {
             populateStructure();
             resetBrowser();
+            changeTreeSelection();
         }
     }
 }
