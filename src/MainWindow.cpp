@@ -135,6 +135,11 @@ void MainWindow::init()
     popupBrowseDataHeaderMenu->addSeparator();
     popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
+    popupRecordMenu = new QMenu(this);
+    popupRecordMenu->addAction(ui->actionDittoRecord);
+    QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
+    connect(dittoRecordShortcut, SIGNAL(activated()), this, SLOT(dittoRecord()));
+
     // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
     ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
@@ -188,6 +193,7 @@ void MainWindow::init()
     connect(editDock, SIGNAL(updateRecordText(int, int, bool, QByteArray)), this, SLOT(updateRecordText(int, int, bool, QByteArray)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
+    connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
 
     // Load window settings
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
@@ -597,6 +603,26 @@ void MainWindow::deleteRecord()
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
+}
+
+void MainWindow::dittoRecord()
+{
+    const QString sCurrentTable = ui->comboBrowseTable->currentText();
+    if (!(db.getObjectByName(sCurrentTable).gettype() == "table" && !db.readOnly()))
+        return;
+
+    int row;
+    if (qobject_cast<QShortcut*>(sender()))
+        row = ui->dataTable->currentIndex().row();
+    else
+        row = ui->actionDittoRecord->property("current_row").toInt();
+
+    if (row == -1)
+        return;
+
+    addRecord();
+    QModelIndex idx = m_browseTableModel->dittoRecord(row);
+    ui->dataTable->setCurrentIndex(idx);
 }
 
 void MainWindow::selectTableLine(int lineToSelect)
@@ -2392,6 +2418,20 @@ void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
 
     // Calculate the proper position for the context menu and display it
     popupBrowseDataHeaderMenu->exec(ui->dataTable->horizontalHeader()->mapToGlobal(pos));
+}
+
+void MainWindow::showRecordPopupMenu(const QPoint& pos)
+{
+    const QString sCurrentTable = ui->comboBrowseTable->currentText();
+    if (!(db.getObjectByName(sCurrentTable).gettype() == "table" && !db.readOnly()))
+        return;
+
+    int row = ui->dataTable->verticalHeader()->logicalIndexAt(pos);
+    if (row == -1)
+        return;
+
+    ui->actionDittoRecord->setProperty("current_row", row);
+    popupRecordMenu->exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
 }
 
 void MainWindow::editDataColumnDisplayFormat()

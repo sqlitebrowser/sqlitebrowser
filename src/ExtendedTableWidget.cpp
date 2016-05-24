@@ -22,6 +22,8 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // Set up filter row
     m_tableHeader = new FilterTableHeader(this);
     setHorizontalHeader(m_tableHeader);
+
+    verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void ExtendedTableWidget::copy()

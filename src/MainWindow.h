@@ -109,6 +109,7 @@ private:
     QMenu *recentFilesMenu;
     QMenu *popupSaveSqlFileMenu;
     QMenu* popupBrowseDataHeaderMenu;
+    QMenu* popupRecordMenu;
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
@@ -164,6 +165,7 @@ private slots:
     bool fileClose();
     void addRecord();
     void deleteRecord();
+    void dittoRecord();
     void selectTableLine( int lineToSelect );
     void navigatePrevious();
     void navigateNext();
@@ -222,6 +224,7 @@ private slots:
     void on_comboLineType_currentIndexChanged(int index);
     void on_comboPointShape_currentIndexChanged(int index);
     void showDataColumnPopupMenu(const QPoint& pos);
+    void showRecordPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
     void showRowidColumn(bool show);
     void browseDataSetTableEncoding(bool forAllTables = false);

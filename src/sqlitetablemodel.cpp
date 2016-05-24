@@ -432,6 +432,26 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
+QModelIndex SqliteTableModel::dittoRecord(int old_row)
+{
+    int firstEditedColumn = 0;
+    int new_row = rowCount() - 1;
+
+    sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(m_sTable).getsql()).first;
+
+    for (int col = 0; col < t.fields().size(); ++col) {
+        if (!t.fields().at(col)->primaryKey()) {
+            if (!firstEditedColumn)
+                firstEditedColumn = col + 1;
+
+            QVariant value = data(index(old_row, col + 1), Qt::EditRole);
+            setData(index(new_row, col + 1), value);
+        }
+    }
+
+    return index(new_row, firstEditedColumn);
+}
+
 void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 {
     int currentsize = m_data.size();
