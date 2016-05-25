@@ -20,11 +20,17 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString
     // Create UI
     ui->setupUi(this);
 
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    ui->checkHeader->setChecked(settings.value("exportcsv/firstrowheader", true).toBool());
-    setSeparatorChar(QChar(settings.value("exportcsv/separator", ',').toInt()));
-    setQuoteChar(QChar(settings.value("exportcsv/quotecharacter", '"').toInt()));
+    // Retrieve the saved dialog preferences
+    bool firstRow = PreferencesDialog::getSettingsValue("exportcsv", "firstrowheader").toBool();
+    int separatorChar = PreferencesDialog::getSettingsValue("exportcsv", "separator").toInt();
+    int quoteChar = PreferencesDialog::getSettingsValue("exportcsv", "quotecharacter").toInt();
 
+    // Set the widget values using the retrieved preferences
+    ui->checkHeader->setChecked(firstRow);
+    setSeparatorChar(separatorChar);
+    setQuoteChar(quoteChar);
+
+    // Update the visible/hidden status of the "Other" line edit fields
     showCustomCharEdits();
 
     // If a SQL query was specified hide the table combo box. If not fill it with tables to export
@@ -223,15 +229,12 @@ void ExportCsvDialog::accept()
         }
     }
 
-    // save settings
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup("exportcsv");
-    settings.setValue("firstrowheader", ui->checkHeader->isChecked());
-    settings.setValue("separator", currentSeparatorChar());
-    settings.setValue("quotecharacter", currentQuoteChar());
-    settings.endGroup();
+    // Save the dialog preferences for future use
+    PreferencesDialog::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked(), false);
+    PreferencesDialog::setSettingsValue("exportcsv", "separator", currentSeparatorChar(), false);
+    PreferencesDialog::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar(), false);
 
-
+    // Notify the user the export has completed
     QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
     QDialog::accept();
 }

@@ -231,6 +231,18 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "db" && name == "defaultsqltext")
         return "";
 
+    // exportcsv/firstrowheader?
+    if(group == "exportcsv" && name == "firstrowheader")
+        return true;
+
+    // exportcsv/separator?
+    if(group == "exportcsv" && name == "separator")
+        return ',';
+
+    // exportcsv/quotecharacter?
+    if(group == "exportcsv" && name == "quotecharacter")
+        return '"';
+
     // MainWindow/geometry?
     if(group == "MainWindow" && name == "geometry")
         return "";
