@@ -249,7 +249,7 @@ void ExportCsvDialog::setQuoteChar(const QChar& c)
     int index = combo->findText(c);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
+        combo->setCurrentIndex(combo->count() - 1);
         ui->editCustomQuote->setText(c);
     }
     else
@@ -277,7 +277,7 @@ void ExportCsvDialog::setSeparatorChar(const QChar& c)
     int index = combo->findText(sText);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
+        combo->setCurrentIndex(combo->count() - 1);
         ui->editCustomSeparator->setText(c);
     }
     else
