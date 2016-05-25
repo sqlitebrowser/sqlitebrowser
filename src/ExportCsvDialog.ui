@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>300</height>
+    <width>579</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,12 @@
      </item>
      <item row="0" column="1">
       <widget class="QListWidget" name="listTables">
+       <property name="minimumSize">
+        <size>
+         <width>360</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::MultiSelection</enum>
        </property>
@@ -70,6 +76,18 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QComboBox" name="comboFieldSeparator">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <item>
           <property name="text">
            <string>,</string>
@@ -133,6 +151,18 @@
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QComboBox" name="comboQuoteCharacter">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <item>
           <property name="text">
            <string>&quot;</string>
@@ -164,6 +194,68 @@
        </item>
        <item>
         <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="labelNewLineCharacters">
+       <property name="text">
+        <string>New line characters</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
+       <item>
+        <widget class="QComboBox" name="comboNewLineString">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Windows: CR+LF (\r\n)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Unix: LF (\n)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Other</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editCustomNewLine">
+         <property name="maxLength">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -262,6 +354,22 @@
     <hint type="destinationlabel">
      <x>270</x>
      <y>85</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboNewLineString</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ExportCsvDialog</receiver>
+   <slot>showCustomCharEdits()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>248</y>
     </hint>
    </hints>
   </connection>

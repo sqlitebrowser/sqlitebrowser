@@ -28,6 +28,9 @@ private:
     void setSeparatorChar(const QChar& c);
     char currentSeparatorChar() const;
 
+    void setNewLineString(const QString& s);
+    QString currentNewLineString() const;
+
     bool exportQuery(const QString& sQuery, const QString& sFilename);
 
 private:

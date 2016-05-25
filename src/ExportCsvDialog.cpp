@@ -24,11 +24,13 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString
     bool firstRow = PreferencesDialog::getSettingsValue("exportcsv", "firstrowheader").toBool();
     int separatorChar = PreferencesDialog::getSettingsValue("exportcsv", "separator").toInt();
     int quoteChar = PreferencesDialog::getSettingsValue("exportcsv", "quotecharacter").toInt();
+    QString newLineString = PreferencesDialog::getSettingsValue("exportcsv", "newlinecharacters").toString();
 
     // Set the widget values using the retrieved preferences
     ui->checkHeader->setChecked(firstRow);
     setSeparatorChar(separatorChar);
     setQuoteChar(quoteChar);
+    setNewLineString(newLineString);
 
     // Update the visible/hidden status of the "Other" line edit fields
     showCustomCharEdits();
@@ -73,16 +75,10 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     QChar quoteChar = currentQuoteChar();
     QString quotequoteChar = QString(quoteChar) + quoteChar;
     QChar sepChar = currentSeparatorChar();
+    QString newlineStr = currentNewLineString();
 
-    // Choose appropriate newline character for the platform
-#ifdef Q_OS_WIN
-    QString newlineChar = "\r\n";
-#else
-    QString newlineChar = "\n";
-#endif
-
-    // chars that require escaping
-    std::string special_chars = newlineChar.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
+    // Chars that require escaping
+    std::string special_chars = newlineStr.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
 
     // Open file
     QFile file(sFilename);
@@ -110,7 +106,7 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
                     if(i != columns - 1)
                         stream << sepChar;
                 }
-                stream << newlineChar;
+                stream << newlineStr;
             }
 
             QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -130,7 +126,7 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
                     if(i != columns - 1)
                         stream << sepChar;
                 }
-                stream << newlineChar;
+                stream << newlineStr;
                 if(counter % 1000 == 0)
                     qApp->processEvents();
                 counter++;
@@ -233,6 +229,7 @@ void ExportCsvDialog::accept()
     PreferencesDialog::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked(), false);
     PreferencesDialog::setSettingsValue("exportcsv", "separator", currentSeparatorChar(), false);
     PreferencesDialog::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar(), false);
+    PreferencesDialog::setSettingsValue("exportcsv", "newlinecharacters", currentNewLineString(), false);
 
     // Notify the user the export has completed
     QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
@@ -244,6 +241,7 @@ void ExportCsvDialog::showCustomCharEdits()
     // Show/hide custom quote/separator input fields
     ui->editCustomQuote->setVisible(ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1);
     ui->editCustomSeparator->setVisible(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1);
+    ui->editCustomNewLine->setVisible(ui->comboNewLineString->currentIndex() == ui->comboNewLineString->count()-1);
 }
 
 void ExportCsvDialog::setQuoteChar(const QChar& c)
@@ -296,4 +294,42 @@ char ExportCsvDialog::currentSeparatorChar() const
         return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
 
     return ui->comboFieldSeparator->currentText() == tr("Tab") ? '\t' : ui->comboFieldSeparator->currentText().at(0).toLatin1();
+}
+
+void ExportCsvDialog::setNewLineString(const QString& s)
+{
+    QComboBox* combo = ui->comboNewLineString;
+
+    // Set the combo and/or Other box to the correct selection
+    if (s == "\r\n") {
+        // For Windows style newlines, set the combo box to option 0
+        combo->setCurrentIndex(0);
+    } else if (s == "\n") {
+        // For Unix style newlines, set the combo box to option 1
+        combo->setCurrentIndex(1);
+    } else {
+        // For everything else, set the combo box to option 2 ('Other') and
+        // place the desired string into the matching edit line box
+        combo->setCurrentIndex(2);
+        ui->editCustomNewLine->setText(s);
+    }
+}
+
+QString ExportCsvDialog::currentNewLineString() const
+{
+    QComboBox* combo = ui->comboNewLineString;
+
+    switch (combo->currentIndex()) {
+    case 0:
+        // Windows style newlines
+        return QString("\r\n");
+
+    case 1:
+        // Unix style newlines
+        return QString("\n");
+
+    default:
+        // Return the text from the 'Other' box
+        return QString(ui->editCustomNewLine->text().toLatin1());
+    }
 }
