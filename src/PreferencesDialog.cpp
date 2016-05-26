@@ -65,6 +65,31 @@ void PreferencesDialog::loadSettings()
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
     ui->editDatabaseDefaultSqlText->setText(getSettingsValue("db", "defaultsqltext").toString());
 
+    QMap<QString, QVariant> databasePasswords = getSettingsValue("db", "databasepasswords").toMap();
+    QMapIterator<QString, QVariant> databasePasswordsIterator(databasePasswords);
+
+    while (databasePasswordsIterator.hasNext())
+    {
+        databasePasswordsIterator.next();
+
+        QString fileName = databasePasswordsIterator.key();
+        QVariantList value = databasePasswordsIterator.value().toList();
+        QString password = value.at(0).toString();
+        int pageSize = value.at(1).toInt();
+
+        QTableWidgetItem *fileNameItem = new QTableWidgetItem(fileName);
+        QTableWidgetItem *passwordItem = new QTableWidgetItem(password);
+        QTableWidgetItem *pageSizeItem = new QTableWidgetItem(QString::number(pageSize));
+
+        int newRowIndex = ui->tableWidgetDatabasePasswords->rowCount();
+
+        ui->tableWidgetDatabasePasswords->insertRow(newRowIndex);
+
+        ui->tableWidgetDatabasePasswords->setItem(newRowIndex, 0, fileNameItem);
+        ui->tableWidgetDatabasePasswords->setItem(newRowIndex, 1, passwordItem);
+        ui->tableWidgetDatabasePasswords->setItem(newRowIndex, 2, pageSizeItem);
+    }
+
     ui->comboDataBrowserFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("databrowser", "font").toString()));
     ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
@@ -114,6 +139,50 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
     setSettingsValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
+
+    ui->tableWidgetDatabasePasswords->setCurrentIndex(QModelIndex()); // saves the current editing QTableWidgetItem
+
+    QMap<QString, QVariant> databasePasswords;
+
+    for(int rowIndex = 0; rowIndex < ui->tableWidgetDatabasePasswords->rowCount(); ++rowIndex)
+    {
+        QTableWidgetItem *fileNameItem = ui->tableWidgetDatabasePasswords->item(rowIndex, 0);
+        QTableWidgetItem *passwordItem = ui->tableWidgetDatabasePasswords->item(rowIndex, 1);
+        QTableWidgetItem *pageSizeItem = ui->tableWidgetDatabasePasswords->item(rowIndex, 2);
+
+        if (!fileNameItem) {
+            continue;
+        }
+
+        if (!passwordItem) {
+            continue;
+        }
+
+        if (!pageSizeItem) {
+            continue;
+        }
+
+        QString fileName = fileNameItem->text();
+        QString password = passwordItem->text();
+        int pageSize = pageSizeItem->text().toInt();
+
+        if (fileName == NULL || fileName.isEmpty()) {
+            continue;
+        }
+
+        if (password == NULL || password.isEmpty()) {
+            continue;
+        }
+
+        QVariantList value;
+
+        value.append(QVariant(password));
+        value.append(QVariant(pageSize));
+
+        databasePasswords.insert(fileName, value);
+    }
+
+    setSettingsValue("db", "databasepasswords", QVariant(databasePasswords));
 
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
@@ -438,6 +507,29 @@ void PreferencesDialog::removeExtension()
 {
     if(ui->listExtensions->currentIndex().isValid())
         ui->listExtensions->takeItem(ui->listExtensions->currentIndex().row());
+}
+
+void PreferencesDialog::on_buttonAddPassword_clicked()
+{
+    int newRowIndex = ui->tableWidgetDatabasePasswords->rowCount();
+
+    ui->tableWidgetDatabasePasswords->insertRow(newRowIndex);
+
+    QTableWidgetItem *defaultPageSizeItem = new QTableWidgetItem("1024");
+
+    ui->tableWidgetDatabasePasswords->setItem(newRowIndex, 2, defaultPageSizeItem);
+}
+
+void PreferencesDialog::on_buttonDeletePassword_clicked()
+{
+    QList<QTableWidgetItem *> selectedRowItems = ui->tableWidgetDatabasePasswords->selectedItems();
+
+    for (int index = 0; index < selectedRowItems.size(); ++index)
+    {
+        int selectedRowIndex = selectedRowItems.at(index)->row();
+
+        ui->tableWidgetDatabasePasswords->removeRow(selectedRowIndex);
+    }
 }
 
 void PreferencesDialog::fillLanguageBox()

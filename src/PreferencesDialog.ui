@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>532</height>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -272,7 +272,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="10" column="1">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -284,6 +284,46 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>Password to use for crypted databases</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QTableWidget" name="tableWidgetDatabasePasswords">
+         <column>
+          <property name="text">
+           <string>File name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Password</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Page size</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QPushButton" name="buttonAddPassword">
+         <property name="text">
+          <string>Add password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QPushButton" name="buttonDeletePassword">
+         <property name="text">
+          <string>Delete password</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
