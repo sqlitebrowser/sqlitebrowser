@@ -22,7 +22,7 @@ void TestTable::sqlOutput()
                                "\t`id`\tinteger,\n"
                                "\t`car`\ttext,\n"
                                "\t`km`\tinteger CHECK(km > 1000),\n"
-                               "\tPRIMARY KEY(id,km)\n"
+                               "\tPRIMARY KEY(`id`,`km`)\n"
                                ");"));
 }
 
@@ -156,7 +156,7 @@ void TestTable::parseSQLMultiPk()
             "\tid1 integer,\n"
             "\tid2 integer,\n"
             "\tnonpkfield blob,\n"
-            "PRIMARY KEY(id1,id2)\n"
+            "PRIMARY KEY(`id1`,`id2`)\n"
             ");";
 
     Table tab = Table::parseSQL(sSQL).first;
@@ -219,7 +219,7 @@ void TestTable::parseNonASCIIChars()
 {
     QString sSQL = "CREATE TABLE `lösung` ("
             "`Fieldöäüß`	INTEGER,"
-            "PRIMARY KEY(Fieldöäüß)"
+            "PRIMARY KEY(`Fieldöäüß`)"
             ");";
 
     Table tab = Table::parseSQL(sSQL).first;

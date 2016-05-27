@@ -222,7 +222,7 @@ QString Table::sql() const
         {
             if(f->primaryKey())
             {
-                pk += f->name() + ",";
+                pk += escapeIdentifier(f->name()) + ",";
                 pks_found = true;
             }
         }
