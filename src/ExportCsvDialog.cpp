@@ -104,7 +104,12 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
                     else
                         stream << content;
                     if(i != columns - 1)
-                        stream << sepChar;
+                        // Only output the separator value if sepChar isn't 0,
+                        // as that's used to indicate no separator character
+                        // should be used
+                        if (sepChar != 0) {
+                            stream << sepChar;
+                        }
                 }
                 stream << newlineStr;
             }
@@ -124,7 +129,12 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
                     else
                         stream << content;
                     if(i != columns - 1)
-                        stream << sepChar;
+                        // Only output the separator value if sepChar isn't 0,
+                        // as that's used to indicate no separator character
+                        // should be used
+                        if (sepChar != 0) {
+                            stream << sepChar;
+                        }
                 }
                 stream << newlineStr;
                 if(counter % 1000 == 0)
@@ -238,62 +248,150 @@ void ExportCsvDialog::accept()
 
 void ExportCsvDialog::showCustomCharEdits()
 {
-    // Show/hide custom quote/separator input fields
-    ui->editCustomQuote->setVisible(ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1);
-    ui->editCustomSeparator->setVisible(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1);
-    ui->editCustomNewLine->setVisible(ui->comboNewLineString->currentIndex() == ui->comboNewLineString->count()-1);
+    // Retrieve selection info for the quote, seperator, and newline widgets
+    int quoteIndex = ui->comboQuoteCharacter->currentIndex();
+    int quoteCount = ui->comboQuoteCharacter->count();
+    int sepIndex = ui->comboFieldSeparator->currentIndex();
+    int sepCount = ui->comboFieldSeparator->count();
+    int newLineIndex = ui->comboNewLineString->currentIndex();
+    int newLineCount = ui->comboNewLineString->count();
+
+    // Determine which will have their 'Other' line edit widget visible
+    bool quoteVisible = quoteIndex == (quoteCount - 1);
+    bool sepVisible = sepIndex == (sepCount - 1);
+    bool newLineVisible = newLineIndex == (newLineCount - 1);
+
+    // Update the visibility of the 'Other' line edit widgets
+    ui->editCustomQuote->setVisible(quoteVisible);
+    ui->editCustomSeparator->setVisible(sepVisible);
+    ui->editCustomNewLine->setVisible(newLineVisible);
 }
 
 void ExportCsvDialog::setQuoteChar(const QChar& c)
 {
     QComboBox* combo = ui->comboQuoteCharacter;
-    int index = combo->findText(c);
-    if(index == -1)
-    {
-        combo->setCurrentIndex(combo->count() - 1);
-        ui->editCustomQuote->setText(c);
-    }
-    else
-    {
-        combo->setCurrentIndex(index);
+
+    // Set the combo and/or Other box to the correct selection
+    switch (c.toLatin1()) {
+    case '"':
+        combo->setCurrentIndex(0);  // First option is a quote character
+        break;
+
+    case '\'':
+        combo->setCurrentIndex(1);  // Second option is a single quote character
+        break;
+
+    case 0:
+        combo->setCurrentIndex(2);  // Third option is blank (no character)
+        break;
+
+    default:
+        // For everything else, set the combo box to option 3 ('Other') and
+        // place the desired string into the matching edit line box
+        combo->setCurrentIndex(3);
+        if (c != 0) {
+            // Don't set it if/when it's the 0 flag value
+            ui->editCustomQuote->setText(c);
+        }
+        break;
     }
 }
 
 char ExportCsvDialog::currentQuoteChar() const
 {
-    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
-    if(ui->comboQuoteCharacter->currentIndex() == ui->comboQuoteCharacter->count()-1)
-        return ui->editCustomQuote->text().length() ? ui->editCustomQuote->text().at(0).toLatin1() : 0;
+    QComboBox* combo = ui->comboQuoteCharacter;
 
-    if(ui->comboQuoteCharacter->currentText().length())
-        return ui->comboQuoteCharacter->currentText().at(0).toLatin1();
-    else
-        return 0;
+    switch (combo->currentIndex()) {
+    case 0:
+        return '"';  // First option is a quote character
+
+    case 1:
+        return '\'';  // Second option is a single quote character
+
+    case 2:
+        return 0;  // Third option is a blank (no character)
+
+    default:
+        // The 'Other' option was selected, so check if the matching edit
+        // line widget contains something
+        int customQuoteLength = ui->editCustomQuote->text().length();
+        if (customQuoteLength > 0) {
+            // Yes it does.  Return its first character
+            char customQuoteChar = ui->editCustomQuote->text().at(0).toLatin1();
+            return customQuoteChar;
+        } else {
+            // No it doesn't, so return 0 to indicate it was empty
+            return 0;
+        }
+    }
 }
 
 void ExportCsvDialog::setSeparatorChar(const QChar& c)
 {
     QComboBox* combo = ui->comboFieldSeparator;
-    QString sText = c == '\t' ? QString("Tab") : QString(c);
-    int index = combo->findText(sText);
-    if(index == -1)
-    {
-        combo->setCurrentIndex(combo->count() - 1);
-        ui->editCustomSeparator->setText(c);
-    }
-    else
-    {
-        combo->setCurrentIndex(index);
+
+    // Set the combo and/or Other box to the correct selection
+    switch (c.toLatin1()) {
+    case ',':
+        combo->setCurrentIndex(0);  // First option is a comma character
+        break;
+
+    case ';':
+        combo->setCurrentIndex(1);  // Second option is a semi-colon character
+        break;
+
+    case '\t':
+        combo->setCurrentIndex(2);  // Third option is a tab character
+        break;
+
+    case '|':
+        combo->setCurrentIndex(3);  // Fourth option is a pipe symbol
+        break;
+
+    default:
+        // For everything else, set the combo box to option 3 ('Other') and
+        // place the desired string into the matching edit line box
+        combo->setCurrentIndex(4);
+
+        // Only put the separator character in the matching line edit box if
+        // it's not the flag value of 0, which is for indicating its empty
+        if (c != 0) {
+            ui->editCustomSeparator->setText(c);
+        }
+        break;
     }
 }
 
 char ExportCsvDialog::currentSeparatorChar() const
 {
-    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
-    if(ui->comboFieldSeparator->currentIndex() == ui->comboFieldSeparator->count()-1)
-        return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
+    QComboBox* combo = ui->comboFieldSeparator;
 
-    return ui->comboFieldSeparator->currentText() == tr("Tab") ? '\t' : ui->comboFieldSeparator->currentText().at(0).toLatin1();
+    switch (combo->currentIndex()) {
+    case 0:
+        return ',';  // First option is a comma character
+
+    case 1:
+        return ';';  // Second option is a semi-colon character
+
+    case 2:
+        return '\t';  // Third option is a tab character
+
+    case 3:
+        return '|';  // Fourth option is a pipe character
+
+    default:
+        // The 'Other' option was selected, so check if the matching edit
+        // line widget contains something
+        int customSeparatorLength = ui->editCustomSeparator->text().length();
+        if (customSeparatorLength > 0) {
+            // Yes it does.  Return its first character
+            char customSeparatorChar = ui->editCustomSeparator->text().at(0).toLatin1();
+            return customSeparatorChar;
+        } else {
+            // No it doesn't, so return 0 to indicate it was empty
+            return 0;
+        }
+    }
 }
 
 void ExportCsvDialog::setNewLineString(const QString& s)
