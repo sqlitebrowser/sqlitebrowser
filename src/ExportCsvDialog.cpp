@@ -248,7 +248,7 @@ void ExportCsvDialog::accept()
 
 void ExportCsvDialog::showCustomCharEdits()
 {
-    // Retrieve selection info for the quote, seperator, and newline widgets
+    // Retrieve selection info for the quote, separator, and newline widgets
     int quoteIndex = ui->comboQuoteCharacter->currentIndex();
     int quoteCount = ui->comboQuoteCharacter->count();
     int sepIndex = ui->comboFieldSeparator->currentIndex();
