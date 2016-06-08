@@ -498,7 +498,7 @@ void EditTableDialog::removeField()
 
         // Ask user whether he really wants to delete that column
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
-        if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+        if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
             if(!pdb->renameColumn(curTable, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
