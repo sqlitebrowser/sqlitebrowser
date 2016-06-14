@@ -33,6 +33,9 @@ private slots:
     virtual void addExtension();
     virtual void removeExtension();
 
+    virtual void on_buttonAddPassword_clicked();
+    virtual void on_buttonDeletePassword_clicked();
+
 private:
     Ui::PreferencesDialog *ui;
 

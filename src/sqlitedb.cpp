@@ -2,6 +2,7 @@
 #include "sqlite.h"
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
+#include "PreferencesDialog.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -204,11 +205,11 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings)
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherDialog*& cipherSettings)
 {
     // Open database file
     sqlite3* dbHandle;
-    if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
         return false;
 
     // Try reading from database
@@ -225,31 +226,73 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
         {
             sqlite3_finalize(vm);
 #ifdef ENABLE_SQLCIPHER
-            delete cipherSettings;
-            cipherSettings = new CipherDialog(0, false);
-            if(cipherSettings->exec())
+            QMap<QString, QVariant> databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
+
+            if (databasePasswords.count() > 0)
             {
-                // Close and reopen database first to be in a clean state after the failed read attempt from above
-                sqlite3_close(dbHandle);
-                if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                QFile databaseFile(filePath);
+                QFileInfo databaseFileInfo(databaseFile);
+                QString databaseFileName(databaseFileInfo.baseName());
+
+                if (databasePasswords.contains(databaseFileName))
                 {
+                    QVariantList value = databasePasswords.value(databaseFileName).toList();
+                    QString password = value.at(0).toString();
+                    int pageSize = value.at(1).toInt();
+
+                    // Close and reopen database first to be in a clean state after the failed read attempt from above
+                    sqlite3_close(dbHandle);
+                    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                    {
+                        return false;
+                    }
+
+                    // Set key and, if it differs from the default value, the page size
+                    sqlite3_key(dbHandle, password.toUtf8(), password.toUtf8().length());
+                    if(pageSize != 1024) {
+                        sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(pageSize).toUtf8(), NULL, NULL, NULL);
+                    }
+
+                    cipherSettings = new CipherDialog(0, false);
+
+                    cipherSettings->savedPassword = password;
+                    cipherSettings->savedPageSize = pageSize;
+
+                    *encrypted = true;
+                } else {
+                    sqlite3_close(dbHandle);
+                    *encrypted = false;
                     delete cipherSettings;
                     cipherSettings = 0;
                     return false;
                 }
-
-                // Set key and, if it differs from the default value, the page size
-                sqlite3_key(dbHandle, cipherSettings->password().toUtf8(), cipherSettings->password().toUtf8().length());
-                if(cipherSettings->pageSize() != 1024)
-                    sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
-
-                *encrypted = true;
             } else {
-                sqlite3_close(dbHandle);
-                *encrypted = false;
                 delete cipherSettings;
-                cipherSettings = 0;
-                return false;
+                cipherSettings = new CipherDialog(0, false);
+                if(cipherSettings->exec())
+                {
+                    // Close and reopen database first to be in a clean state after the failed read attempt from above
+                    sqlite3_close(dbHandle);
+                    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                    {
+                        delete cipherSettings;
+                        cipherSettings = 0;
+                        return false;
+                    }
+
+                    // Set key and, if it differs from the default value, the page size
+                    sqlite3_key(dbHandle, cipherSettings->password().toUtf8(), cipherSettings->password().toUtf8().length());
+                    if(cipherSettings->pageSize() != 1024)
+                        sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
+
+                    *encrypted = true;
+                } else {
+                    sqlite3_close(dbHandle);
+                    *encrypted = false;
+                    delete cipherSettings;
+                    cipherSettings = 0;
+                    return false;
+                }
             }
 #else
             sqlite3_close(dbHandle);
