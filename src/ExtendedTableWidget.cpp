@@ -107,15 +107,9 @@ void ExtendedTableWidget::paste()
 
     // Unpack cliboard, assuming that it is rectangular
     QList<QStringList> clipboardTable;
-    QStringList cr = clipboard.split(endOfLine);
+    QStringList cr = clipboard.trimmed().split(endOfLine);
     foreach(const QString& r, cr)
-    {
-        // Usually last splited line is empty
-        if(!r.isEmpty())
-        {
-            clipboardTable.push_back(r.split("\t"));
-        }
-    }
+        clipboardTable.push_back(r.split("\t"));
 
     int clipboardRows = clipboardTable.size();
     int clipboardColumns = clipboardTable.front().size();
