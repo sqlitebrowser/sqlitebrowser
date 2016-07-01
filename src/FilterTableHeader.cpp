@@ -77,8 +77,8 @@ void FilterTableHeader::adjustPositions()
     {
         // Get the current widget, move it and resize it
         QWidget* w = filterWidgets.at(i);
-        w->move(sectionPosition(i) - offset(), filterWidgets.at(i)->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
-        w->resize(sectionSize(i), filterWidgets.at(i)->sizeHint().height());
+        w->move(sectionPosition(i) - offset(), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+        w->resize(sectionSize(i), w->sizeHint().height());
     }
 }
 
