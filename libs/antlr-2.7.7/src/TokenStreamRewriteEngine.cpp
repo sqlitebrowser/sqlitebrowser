@@ -132,26 +132,26 @@ void TokenStreamRewriteEngine::toStream( std::ostream& out,
 	if( lastToken > (tokens.size() - 1) )
 		lastToken = tokens.size() - 1;
 
-		while ( tokenCursor <= lastToken )
-		{
-//			std::cout << "tokenCursor = " << tokenCursor << " first prog index = " << (*rewriteOpIndex)->getIndex() << std::endl;
+    while ( tokenCursor <= lastToken )
+    {
+        // std::cout << "tokenCursor = " << tokenCursor << " first prog index = " << (*rewriteOpIndex)->getIndex() << std::endl;
 
-			if( rewriteOpIndex != rewriteOpEnd )
-			{
-				size_t up_to_here = std::min(lastToken,(*rewriteOpIndex)->getIndex());
-				while( tokenCursor < up_to_here )
-					out << tokens[tokenCursor++]->getText();
-			}
-			while ( rewriteOpIndex != rewriteOpEnd &&
-					  tokenCursor == (*rewriteOpIndex)->getIndex() &&
-					  tokenCursor <= lastToken )
-			{
-				tokenCursor = (*rewriteOpIndex)->execute(out);
-				++rewriteOpIndex;
-			}
-			if( tokenCursor <= lastToken )
-				out << tokens[tokenCursor++]->getText();
-		}
+        if( rewriteOpIndex != rewriteOpEnd )
+        {
+            size_t up_to_here = std::min(lastToken,(*rewriteOpIndex)->getIndex());
+            while( tokenCursor < up_to_here )
+                out << tokens[tokenCursor++]->getText();
+        }
+        while ( rewriteOpIndex != rewriteOpEnd &&
+                tokenCursor == (*rewriteOpIndex)->getIndex() &&
+                tokenCursor <= lastToken )
+        {
+            tokenCursor = (*rewriteOpIndex)->execute(out);
+            ++rewriteOpIndex;
+        }
+        if( tokenCursor <= lastToken )
+            out << tokens[tokenCursor++]->getText();
+    }
 	// std::cout << "Handling tail operations # left = " << std::distance(rewriteOpIndex,rewriteOpEnd) << std::endl;
 	// now see if there are operations (append) beyond last token index
 	std::for_each( rewriteOpIndex, rewriteOpEnd, executeOperation(out) );
