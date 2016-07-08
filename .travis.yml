@@ -6,7 +6,7 @@ compiler:
 before_install:
   - sudo add-apt-repository ppa:likemartinma/devel -y
   - sudo apt-get update -qq
-  - sudo apt-get install -qq libqt4-dev libsqlite3-dev libsqlcipher-dev libantlr-dev
+  - sudo apt-get --force-yes install -qq libqt4-dev libsqlite3-dev libsqlcipher-dev libantlr-dev
 
 script:
   - mkdir build
