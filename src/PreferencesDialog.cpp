@@ -65,7 +65,7 @@ void PreferencesDialog::loadSettings()
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
     ui->editDatabaseDefaultSqlText->setText(getSettingsValue("db", "defaultsqltext").toString());
 
-    QMap<QString, QVariant> databasePasswords = getSettingsValue("db", "databasepasswords").toMap();
+    DatabasePasswordsMap databasePasswords = getSettingsValue("db", "databasepasswords").toMap();
     QMapIterator<QString, QVariant> databasePasswordsIterator(databasePasswords);
 
     while (databasePasswordsIterator.hasNext())
@@ -144,7 +144,7 @@ void PreferencesDialog::saveSettings()
 
     ui->tableWidgetDatabasePasswords->setCurrentIndex(QModelIndex()); // saves the current editing QTableWidgetItem
 
-    QMap<QString, QVariant> databasePasswords;
+    DatabasePasswordsMap databasePasswords;
 
     for(int rowIndex = 0; rowIndex < ui->tableWidgetDatabasePasswords->rowCount(); ++rowIndex)
     {

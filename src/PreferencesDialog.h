@@ -5,6 +5,9 @@
 #include <QVariant>
 #include <QHash>
 
+typedef QMultiMap<QString, QVariant> DatabasePasswordsMap;
+Q_DECLARE_METATYPE(DatabasePasswordsMap)
+
 class QTreeWidgetItem;
 class QFrame;
 

@@ -216,6 +216,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
 #ifdef ENABLE_SQLCIPHER
     bool isDatabasePasswordChecked = false;
+    int currentDatabasePasswordsIndex = 0;
 #endif
 
     *encrypted = false;
@@ -234,9 +235,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 #ifdef ENABLE_SQLCIPHER
             if (!isDatabasePasswordChecked)
             {
-                isDatabasePasswordChecked = true;
-
-                QMap<QString, QVariant> databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
+                DatabasePasswordsMap databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
 
                 if (databasePasswords.count() > 0)
                 {
@@ -246,32 +245,42 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                     if (databasePasswords.contains(databaseFileName))
                     {
-                        QVariantList value = databasePasswords.value(databaseFileName).toList();
-                        QString password = value.at(0).toString();
-                        int pageSize = value.at(1).toInt();
+                        QList<QVariant> values = databasePasswords.values(databaseFileName);
 
-                        // Close and reopen database first to be in a clean state after the failed read attempt from above
-                        sqlite3_close(dbHandle);
-                        if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                        if (currentDatabasePasswordsIndex < values.count())
                         {
-                            return false;
+                            QVariantList value = values.at(currentDatabasePasswordsIndex).toList();
+
+                            QString password = value.at(0).toString();
+                            int pageSize = value.at(1).toInt();
+
+                            // Close and reopen database first to be in a clean state after the failed read attempt from above
+                            sqlite3_close(dbHandle);
+                            if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                            {
+                                return false;
+                            }
+
+                            // Set key and, if it differs from the default value, the page size
+                            sqlite3_key(dbHandle, password.toUtf8(), password.toUtf8().length());
+                            if(pageSize != 1024)
+                            {
+                                sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(pageSize).toUtf8(), NULL, NULL, NULL);
+                            }
+
+                            cipherSettings = new CipherDialog(0, false);
+
+                            cipherSettings->savedPassword = password;
+                            cipherSettings->savedPageSize = pageSize;
+
+                            *encrypted = true;
+
+                            currentDatabasePasswordsIndex++;
+
+                            continue; // skip the CipherDialog prompt for now to test if the saved password was correct
+                        } else {
+                            isDatabasePasswordChecked = true;
                         }
-
-                        // Set key and, if it differs from the default value, the page size
-                        sqlite3_key(dbHandle, password.toUtf8(), password.toUtf8().length());
-                        if(pageSize != 1024)
-                        {
-                            sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(pageSize).toUtf8(), NULL, NULL, NULL);
-                        }
-
-                        cipherSettings = new CipherDialog(0, false);
-
-                        cipherSettings->savedPassword = password;
-                        cipherSettings->savedPageSize = pageSize;
-
-                        *encrypted = true;
-
-                        continue; // skip the CipherDialog prompt for now to test if the saved password was correct
                     } else {
                         sqlite3_close(dbHandle);
                         *encrypted = false;
