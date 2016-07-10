@@ -213,7 +213,11 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         return false;
 
     // Try reading from database
+
+#ifdef ENABLE_SQLCIPHER
     bool isDatabasePasswordChecked = false;
+#endif
+
     *encrypted = false;
     cipherSettings = 0;
 
