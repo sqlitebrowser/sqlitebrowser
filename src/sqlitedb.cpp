@@ -259,7 +259,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                         // Set key and, if it differs from the default value, the page size
                         sqlite3_key(dbHandle, password.toUtf8(), password.toUtf8().length());
-                        if(pageSize != 1024) {
+                        if(pageSize != 1024)
+                        {
                             sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(pageSize).toUtf8(), NULL, NULL, NULL);
                         }
 
@@ -294,7 +295,9 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 // Set key and, if it differs from the default value, the page size
                 sqlite3_key(dbHandle, cipherSettings->password().toUtf8(), cipherSettings->password().toUtf8().length());
                 if(cipherSettings->pageSize() != 1024)
+                {
                     sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
+                }
 
                 *encrypted = true;
             } else {

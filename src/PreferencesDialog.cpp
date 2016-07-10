@@ -73,7 +73,9 @@ void PreferencesDialog::loadSettings()
         databasePasswordsIterator.next();
 
         QString fileName = databasePasswordsIterator.key();
+
         QVariantList value = databasePasswordsIterator.value().toList();
+
         QString password = value.at(0).toString();
         int pageSize = value.at(1).toInt();
 
@@ -150,15 +152,18 @@ void PreferencesDialog::saveSettings()
         QTableWidgetItem *passwordItem = ui->tableWidgetDatabasePasswords->item(rowIndex, 1);
         QTableWidgetItem *pageSizeItem = ui->tableWidgetDatabasePasswords->item(rowIndex, 2);
 
-        if (!fileNameItem) {
+        if (!fileNameItem)
+        {
             continue;
         }
 
-        if (!passwordItem) {
+        if (!passwordItem)
+        {
             continue;
         }
 
-        if (!pageSizeItem) {
+        if (!pageSizeItem)
+        {
             continue;
         }
 
@@ -166,11 +171,13 @@ void PreferencesDialog::saveSettings()
         QString password = passwordItem->text();
         int pageSize = pageSizeItem->text().toInt();
 
-        if (fileName == NULL || fileName.isEmpty()) {
+        if (fileName == NULL || fileName.isEmpty())
+        {
             continue;
         }
 
-        if (password == NULL || password.isEmpty()) {
+        if (password == NULL || password.isEmpty())
+        {
             continue;
         }
 
