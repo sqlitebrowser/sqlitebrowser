@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/translations">
+        <file alias="sqlb_ar">sqlb_ar.qm</file>
         <file alias="sqlb_ru">sqlb_ru.qm</file>
         <file alias="sqlb_de">sqlb_de.qm</file>
         <file alias="sqlb_fr">sqlb_fr.qm</file>
