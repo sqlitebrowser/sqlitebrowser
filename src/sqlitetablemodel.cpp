@@ -289,7 +289,12 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
     DBBrowserObject obj = m_db->getObjectByName(m_sTable);
     if(obj.getname().size())
-        return obj.table.fields().at(column)->foreignKey();
+        if (column > 0 && column < obj.table.fields().count())
+        {
+            return obj.table.fields().at(column)->foreignKey();
+        } else {
+            return sqlb::ForeignKeyClause();
+        }
     else
         return sqlb::ForeignKeyClause();
 }
