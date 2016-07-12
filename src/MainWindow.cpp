@@ -2482,6 +2482,8 @@ void MainWindow::showRowidColumn(bool show)
 
     // Re-enable signals
     ui->dataTable->horizontalHeader()->blockSignals(false);
+
+    ui->dataTable->update();
 }
 
 void MainWindow::browseDataSetTableEncoding(bool forAllTables)
