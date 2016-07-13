@@ -261,5 +261,5 @@ void EditDialog::allowEditing(bool on)
 {
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(on);
     ui->buttonClear->setEnabled(on);
-    ui->buttomImport->setEnabled(on);
+    ui->buttonImport->setEnabled(on);
 }

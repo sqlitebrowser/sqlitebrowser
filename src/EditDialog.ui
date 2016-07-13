@@ -17,7 +17,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="buttomImport">
+      <widget class="QPushButton" name="buttonImport">
        <property name="toolTip">
         <string>Import text</string>
        </property>
@@ -125,8 +125,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>76</width>
-         <height>29</height>
+         <width>98</width>
+         <height>40</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -177,7 +177,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>buttomImport</tabstop>
+  <tabstop>buttonImport</tabstop>
   <tabstop>buttonExport</tabstop>
   <tabstop>comboEditor</tabstop>
   <tabstop>buttonClear</tabstop>
@@ -218,7 +218,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttomImport</sender>
+   <sender>buttonImport</sender>
    <signal>clicked()</signal>
    <receiver>EditDialog</receiver>
    <slot>importData()</slot>
