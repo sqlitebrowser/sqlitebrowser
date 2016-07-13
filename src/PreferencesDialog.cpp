@@ -525,6 +525,22 @@ void PreferencesDialog::on_buttonAddPassword_clicked()
     QTableWidgetItem *defaultPageSizeItem = new QTableWidgetItem("1024");
 
     ui->tableWidgetDatabasePasswords->setItem(newRowIndex, 2, defaultPageSizeItem);
+
+    QString filePath = FileDialog::getOpenFileName(
+                this,
+                tr("Choose a database file")
+#ifndef Q_OS_MAC // Filters on OS X are buggy
+                , FileDialog::getSqlDatabaseFileFilter()
+#endif
+                );
+
+    QFile databaseFile(filePath);
+    QFileInfo databaseFileInfo(databaseFile);
+    QString databaseFileName(databaseFileInfo.fileName());
+
+    QTableWidgetItem *databaseFileNameItem = new QTableWidgetItem(databaseFileName);
+
+    ui->tableWidgetDatabasePasswords->setItem(newRowIndex, 0, databaseFileNameItem);
 }
 
 void PreferencesDialog::on_buttonDeletePassword_clicked()

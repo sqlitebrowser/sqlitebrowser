@@ -241,7 +241,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 {
                     QFile databaseFile(filePath);
                     QFileInfo databaseFileInfo(databaseFile);
-                    QString databaseFileName(databaseFileInfo.baseName());
+                    QString databaseFileName(databaseFileInfo.fileName());
 
                     if (databasePasswords.contains(databaseFileName))
                     {
@@ -327,7 +327,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                 QFile databaseFile(filePath);
                 QFileInfo databaseFileInfo(databaseFile);
-                QString databaseFileName(databaseFileInfo.baseName());
+                QString databaseFileName(databaseFileInfo.fileName());
 
                 QVariantList value;
 
