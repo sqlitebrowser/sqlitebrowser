@@ -51,6 +51,11 @@ int CipherDialog::pageSize() const
     return ui->spinPageSize->value();
 }
 
+bool CipherDialog::isSavePasswordEnabled() const
+{
+    return ui->savePasswordCheckBox->isChecked();
+}
+
 void CipherDialog::checkInputFields()
 {
     bool valid = true;

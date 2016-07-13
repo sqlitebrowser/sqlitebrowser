@@ -321,6 +321,24 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             return false;
 #endif
         } else {
+            if (cipherSettings->isSavePasswordEnabled())
+            {
+                DatabasePasswordsMap databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
+
+                QFile databaseFile(filePath);
+                QFileInfo databaseFileInfo(databaseFile);
+                QString databaseFileName(databaseFileInfo.baseName());
+
+                QVariantList value;
+
+                value.append(QVariant(cipherSettings->password()));
+                value.append(QVariant(cipherSettings->pageSize()));
+
+                databasePasswords.insert(databaseFileName, value);
+
+                PreferencesDialog::setSettingsValue("db", "databasepasswords", databasePasswords);
+            }
+
             sqlite3_finalize(vm);
             sqlite3_close(dbHandle);
             return true;
