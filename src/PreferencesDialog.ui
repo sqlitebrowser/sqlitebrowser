@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
-    <height>555</height>
+    <width>651</width>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -145,57 +145,11 @@
       <attribute name="title">
        <string>&amp;Database</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-       </property>
-       <property name="labelAlignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="formAlignment">
-        <set>Qt::AlignHCenter|Qt::AlignTop</set>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_21">
          <property name="text">
-          <string>Database &amp;encoding</string>
-         </property>
-         <property name="buddy">
-          <cstring>encodingComboBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="encodingComboBox">
-         <item>
-          <property name="text">
-           <string notr="true">UTF-8</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">UTF-16</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="toolTip">
-          <string>Open databases with foreign keys enabled.</string>
-         </property>
-         <property name="text">
-          <string>&amp;Foreign keys</string>
-         </property>
-         <property name="buddy">
-          <cstring>foreignKeysCheckBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="foreignKeysCheckBox">
-         <property name="text">
-          <string>enabled</string>
+          <string>Password to use for crypted databases</string>
          </property>
         </widget>
        </item>
@@ -212,15 +166,109 @@
        <item row="2" column="1">
         <widget class="QCheckBox" name="checkHideSchemaLinebreaks"/>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
+       <item row="0" column="1">
+        <widget class="QComboBox" name="encodingComboBox">
+         <item>
+          <property name="text">
+           <string notr="true">UTF-8</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">UTF-16</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="buttonDatabaseAdvanced">
          <property name="text">
-          <string>Prefetch block si&amp;ze</string>
+          <string>Advanced</string>
          </property>
-         <property name="buddy">
-          <cstring>spinPrefetchSize</cstring>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="8" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QTableWidget" name="tableWidgetDatabasePasswords">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollPerPixel</enum>
+           </property>
+           <column>
+            <property name="text">
+             <string>File name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Password</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Page size</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="buttonAddPassword">
+             <property name="text">
+              <string>Add password</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonDeletePassword">
+             <property name="text">
+              <string>Delete password</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="9" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>180</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="3" column="1">
         <widget class="QSpinBox" name="spinPrefetchSize">
@@ -232,17 +280,53 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QPushButton" name="buttonDatabaseAdvanced">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
          <property name="text">
-          <string>Advanced</string>
+          <string>Database &amp;encoding</string>
          </property>
-         <property name="icon">
-          <iconset resource="icons/icons.qrc">
-           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+         <property name="buddy">
+          <cstring>encodingComboBox</cstring>
          </property>
-         <property name="checkable">
-          <bool>true</bool>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="toolTip">
+          <string>Open databases with foreign keys enabled.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Foreign keys</string>
+         </property>
+         <property name="buddy">
+          <cstring>foreignKeysCheckBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Prefetch block si&amp;ze</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinPrefetchSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="foreignKeysCheckBox">
+         <property name="text">
+          <string>enabled</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelDatabaseDefaultSqlText">
+         <property name="text">
+          <string>SQL to execute after opening database</string>
+         </property>
+         <property name="buddy">
+          <cstring>editDatabaseDefaultSqlText</cstring>
          </property>
         </widget>
        </item>
@@ -259,69 +343,6 @@
            <width>16777215</width>
            <height>200</height>
           </size>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="labelDatabaseDefaultSqlText">
-         <property name="text">
-          <string>SQL to execute after opening database</string>
-         </property>
-         <property name="buddy">
-          <cstring>editDatabaseDefaultSqlText</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>180</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_21">
-         <property name="text">
-          <string>Password to use for crypted databases</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QTableWidget" name="tableWidgetDatabasePasswords">
-         <column>
-          <property name="text">
-           <string>File name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Password</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Page size</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QPushButton" name="buttonAddPassword">
-         <property name="text">
-          <string>Add password</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QPushButton" name="buttonDeletePassword">
-         <property name="text">
-          <string>Delete password</string>
          </property>
         </widget>
        </item>
@@ -988,6 +1009,19 @@
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
