@@ -5,6 +5,9 @@
 #include <QVariant>
 #include <QHash>
 
+typedef QMultiMap<QString, QVariant> DatabasePasswordsMap;
+Q_DECLARE_METATYPE(DatabasePasswordsMap)
+
 class QTreeWidgetItem;
 class QFrame;
 
@@ -32,6 +35,9 @@ private slots:
     virtual void showColourDialog(QTreeWidgetItem* item, int column);
     virtual void addExtension();
     virtual void removeExtension();
+
+    virtual void on_buttonAddPassword_clicked();
+    virtual void on_buttonDeletePassword_clicked();
 
 private:
     Ui::PreferencesDialog *ui;

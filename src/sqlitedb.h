@@ -136,7 +136,7 @@ private:
     bool isEncrypted;
     bool isReadOnly;
 
-    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
+    bool tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherDialog*& cipherSettings);
 };
 
 #endif

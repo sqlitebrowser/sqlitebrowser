@@ -2,6 +2,7 @@
 #include "sqlite.h"
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
+#include "PreferencesDialog.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -121,7 +122,7 @@ bool DBBrowserDB::open(const QString& db)
         sqlite3_create_collation(_db, "UTF16", SQLITE_UTF16, 0, sqlite_compare_utf16);
         // add UTF16CI (case insensitive) collation (comparison is performed by QString functions)
         sqlite3_create_collation(_db, "UTF16CI", SQLITE_UTF16, 0, sqlite_compare_utf16ci);
-       
+
         // register collation callback
         sqlite3_collation_needed(_db, NULL, collation_needed);
 
@@ -204,16 +205,23 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings)
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherDialog*& cipherSettings)
 {
     // Open database file
     sqlite3* dbHandle;
-    if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
         return false;
 
     // Try reading from database
+
+#ifdef ENABLE_SQLCIPHER
+    bool isDatabasePasswordChecked = false;
+    int currentDatabasePasswordsIndex = 0;
+#endif
+
     *encrypted = false;
     cipherSettings = 0;
+
     while(true)
     {
         QString statement = "SELECT COUNT(*) FROM sqlite_master;";
@@ -225,13 +233,68 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
         {
             sqlite3_finalize(vm);
 #ifdef ENABLE_SQLCIPHER
+            if (!isDatabasePasswordChecked)
+            {
+                DatabasePasswordsMap databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
+
+                if (databasePasswords.count() > 0)
+                {
+                    QFile databaseFile(filePath);
+                    QFileInfo databaseFileInfo(databaseFile);
+                    QString databaseFileName(databaseFileInfo.fileName());
+
+                    if (databasePasswords.contains(databaseFileName))
+                    {
+                        QList<QVariant> values = databasePasswords.values(databaseFileName);
+
+                        if (currentDatabasePasswordsIndex < values.count())
+                        {
+                            QVariantList value = values.at(currentDatabasePasswordsIndex).toList();
+
+                            QString password = value.at(0).toString();
+                            int pageSize = value.at(1).toInt();
+
+                            // Close and reopen database first to be in a clean state after the failed read attempt from above
+                            sqlite3_close(dbHandle);
+                            if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                            {
+                                return false;
+                            }
+
+                            // Set key and, if it differs from the default value, the page size
+                            sqlite3_key(dbHandle, password.toUtf8(), password.toUtf8().length());
+                            if(pageSize != 1024)
+                            {
+                                sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(pageSize).toUtf8(), NULL, NULL, NULL);
+                            }
+
+                            cipherSettings = new CipherDialog(0, false);
+
+                            cipherSettings->savedPassword = password;
+                            cipherSettings->savedPageSize = pageSize;
+
+                            *encrypted = true;
+
+                            currentDatabasePasswordsIndex++;
+
+                            continue; // skip the CipherDialog prompt for now to test if the saved password was correct
+                        } else {
+                            isDatabasePasswordChecked = true;
+                        }
+                    } else {
+                        sqlite3_close(dbHandle);
+                        *encrypted = false;
+                    }
+                }
+            }
+
             delete cipherSettings;
             cipherSettings = new CipherDialog(0, false);
             if(cipherSettings->exec())
             {
                 // Close and reopen database first to be in a clean state after the failed read attempt from above
                 sqlite3_close(dbHandle);
-                if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+                if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
                 {
                     delete cipherSettings;
                     cipherSettings = 0;
@@ -241,7 +304,9 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
                 // Set key and, if it differs from the default value, the page size
                 sqlite3_key(dbHandle, cipherSettings->password().toUtf8(), cipherSettings->password().toUtf8().length());
                 if(cipherSettings->pageSize() != 1024)
+                {
                     sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
+                }
 
                 *encrypted = true;
             } else {
@@ -256,6 +321,26 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
             return false;
 #endif
         } else {
+#ifdef ENABLE_SQLCIPHER
+            if (cipherSettings->isSavePasswordEnabled())
+            {
+                DatabasePasswordsMap databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
+
+                QFile databaseFile(filePath);
+                QFileInfo databaseFileInfo(databaseFile);
+                QString databaseFileName(databaseFileInfo.fileName());
+
+                QVariantList value;
+
+                value.append(QVariant(cipherSettings->password()));
+                value.append(QVariant(cipherSettings->pageSize()));
+
+                databasePasswords.insert(databaseFileName, value);
+
+                PreferencesDialog::setSettingsValue("db", "databasepasswords", databasePasswords);
+            }
+#endif
+
             sqlite3_finalize(vm);
             sqlite3_close(dbHandle);
             return true;

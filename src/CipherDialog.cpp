@@ -10,6 +10,8 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
 {
     ui->setupUi(this);
 
+    savedPageSize = 0;
+
     if(encrypt)
     {
         ui->labelDialogDescription->setText(tr("Please set a key to encrypt the database.\nNote that if you change any of the other, optional, settings you'll need "
@@ -31,12 +33,27 @@ CipherDialog::~CipherDialog()
 
 QString CipherDialog::password() const
 {
+    if (savedPassword != NULL)
+    {
+        return savedPassword;
+    }
+
     return ui->editPassword->text();
 }
 
 int CipherDialog::pageSize() const
 {
+    if (savedPageSize > 0)
+    {
+        return savedPageSize;
+    }
+
     return ui->spinPageSize->value();
+}
+
+bool CipherDialog::isSavePasswordEnabled() const
+{
+    return ui->savePasswordCheckBox->isChecked();
 }
 
 void CipherDialog::checkInputFields()

@@ -17,9 +17,14 @@ public:
     explicit CipherDialog(QWidget* parent, bool encrypt);
     ~CipherDialog();
 
+    // Set these to the values from the preferences settings
+    QString savedPassword;
+    int savedPageSize;
+
     // Allow read access to the input fields
     QString password() const;
     int pageSize() const;
+    bool isSavePasswordEnabled() const;
 
 private:
     Ui::CipherDialog* ui;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>712</width>
-    <height>147</height>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,6 +78,16 @@
         <number>1024</number>
        </property>
       </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="savePasswordLabel">
+       <property name="text">
+        <string>Save password</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="savePasswordCheckBox"/>
      </item>
     </layout>
    </item>
