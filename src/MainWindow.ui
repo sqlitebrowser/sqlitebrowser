@@ -1565,6 +1565,9 @@
    <property name="whatsThis">
     <string>Shows or hides the Database toolbar.</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
   </action>
   <action name="helpWhatsThisAction">
    <property name="icon">
