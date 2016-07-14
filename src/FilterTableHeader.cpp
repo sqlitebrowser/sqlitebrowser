@@ -28,8 +28,7 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
 void FilterTableHeader::generateFilters(int number, bool showFirst)
 {
     // Delete all the current filter widgets
-    for(int i=0;i < filterWidgets.size(); ++i)
-        delete filterWidgets.at(i);
+    qDeleteAll(filterWidgets);
     filterWidgets.clear();
 
     // And generate a bunch of new ones
