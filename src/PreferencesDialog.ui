@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>590</width>
-    <height>532</height>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -232,7 +232,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QPushButton" name="buttonDatabaseAdvanced">
          <property name="text">
           <string>Advanced</string>
@@ -246,7 +246,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
          <property name="minimumSize">
           <size>
@@ -262,7 +262,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="labelDatabaseDefaultSqlText">
          <property name="text">
           <string>SQL to execute after opening database</string>
@@ -272,7 +272,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="8" column="1">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -284,6 +284,16 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="defaultFieldTypeComboBox"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="defaultFieldTypeLabel">
+         <property name="text">
+          <string>Default field type</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
