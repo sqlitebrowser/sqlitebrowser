@@ -375,8 +375,8 @@ if(WIN32 AND NOT UNIX)
 
 	# VS redist
 	list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-               ExecWait '$INSTDIR\\\\tmp\\\\${VSREDIST} /install /passive /quiet'
-               Delete '$INSTDIR\\\\tmp\\\\${VSREDIST}'
+               ExecWait '\\\"$INSTDIR\\\\tmp\\\\${VSREDIST}\\\" /install /passive /quiet'
+               Delete '\\\"$INSTDIR\\\\tmp\\\\${VSREDIST}\\\"'
                ")
 else(WIN32 AND NOT UNIX)
 	set(CPACK_STRIP_FILES "bin/sqlitebrowser")
