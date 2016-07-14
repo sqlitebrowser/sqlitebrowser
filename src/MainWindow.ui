@@ -1555,6 +1555,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/log_dock</normaloff>:/icons/log_dock</iconset>
+   </property>
    <property name="text">
     <string>&amp;DB Toolbar</string>
    </property>
