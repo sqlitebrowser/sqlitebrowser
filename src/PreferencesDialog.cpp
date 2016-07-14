@@ -65,6 +65,15 @@ void PreferencesDialog::loadSettings()
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
     ui->editDatabaseDefaultSqlText->setText(getSettingsValue("db", "defaultsqltext").toString());
 
+    ui->defaultFieldTypeComboBox->addItems(sqlb::Field::Datatypes);
+
+    int defaultFieldTypeIndex = getSettingsValue("db", "defaultfieldtype").toInt();
+
+    if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
+    {
+        ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
+    }
+
     ui->comboDataBrowserFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("databrowser", "font").toString()));
     ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
@@ -114,6 +123,8 @@ void PreferencesDialog::saveSettings()
     setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
     setSettingsValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
+
+    setSettingsValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
 
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
