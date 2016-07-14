@@ -321,6 +321,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             return false;
 #endif
         } else {
+#ifdef ENABLE_SQLCIPHER
             if (cipherSettings->isSavePasswordEnabled())
             {
                 DatabasePasswordsMap databasePasswords = PreferencesDialog::getSettingsValue("db", "databasepasswords").toMap();
@@ -338,6 +339,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                 PreferencesDialog::setSettingsValue("db", "databasepasswords", databasePasswords);
             }
+#endif
 
             sqlite3_finalize(vm);
             sqlite3_close(dbHandle);
