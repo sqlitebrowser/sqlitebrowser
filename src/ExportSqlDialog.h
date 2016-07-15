@@ -19,6 +19,8 @@ public:
 
 private slots:
     virtual void accept();
+    virtual void reject();
+
     void doSelectAll();
     void doDeselectAll();
 
