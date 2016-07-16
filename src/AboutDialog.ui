@@ -50,7 +50,7 @@
           <number>5</number>
          </property>
          <property name="textInteractionFlags">
-          <set>Qt::NoTextInteraction</set>
+          <set>Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
