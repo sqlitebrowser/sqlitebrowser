@@ -200,7 +200,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
         {
             // When pressing Alt+Delete set the value to NULL
             foreach(const QModelIndex& index, selectedIndexes())
-                model()->setData(index, QString());
+                model()->setData(index, QVariant());
         } else {
             // When pressing Delete only set the value to empty string
             foreach(const QModelIndex& index, selectedIndexes())
