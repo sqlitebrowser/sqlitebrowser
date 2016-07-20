@@ -202,7 +202,7 @@ void EditDialog::checkDataType()
     {
         ui->editorStack->setCurrentIndex(0);
 
-        ui->labelBinayWarning->setVisible(false);
+        ui->labelBinaryWarning->setVisible(false);
 
         if (!hexEdit->data().isNull())
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
@@ -224,7 +224,7 @@ void EditDialog::checkDataType()
         } else {
             // It's not. So it's probably some random binary data.
 
-            ui->labelBinayWarning->setVisible(true);
+            ui->labelBinaryWarning->setVisible(true);
 
             if (!hexEdit->data().isNull())
                 ui->labelType->setText(tr("Type of data currently in cell: Binary"));
