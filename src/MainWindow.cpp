@@ -162,6 +162,9 @@ void MainWindow::init()
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockEditWindow->toggleViewAction());
     ui->viewMenu->actions().at(3)->setIcon(QIcon(":/icons/log_dock"));
 
+    // Add keyboard shortcut for "Edit Cell" dock
+    ui->viewMenu->actions().at(3)->setShortcut(QKeySequence(tr("Ctrl+E")));
+
     // Set statusbar fields
     statusEncryptionLabel = new QLabel(ui->statusbar);
     statusEncryptionLabel->setEnabled(false);
