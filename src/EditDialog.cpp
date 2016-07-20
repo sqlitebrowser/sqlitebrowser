@@ -88,16 +88,10 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
     ui->editorText->setPlainText(textData);
     hexEdit->setData(data);
 
-    // If we're in window mode (not in dock mode) focus the editor widget
-    if(!useInDock)
-    {
-        ui->editorText->setFocus();
-        ui->editorText->selectAll();
-    }
+    // Ensure the newly loaded data is all selected in the Edit Cell dock/win
+    ui->editorText->selectAll();
 
-    // Assume it's binary data and only call checkDatyType afterwards. This means the correct input widget is selected here in all cases
-    // but once the user changed it to text input it will stay there.
-    ui->editorStack->setCurrentIndex(1);
+    // Update the cell data information
     checkDataType();
 }
 
@@ -200,8 +194,6 @@ void EditDialog::checkDataType()
     // Check if data is text only
     if(QString(hexEdit->data()).toUtf8() == hexEdit->data())     // Any proper way??
     {
-        ui->editorStack->setCurrentIndex(0);
-
         ui->labelBinaryWarning->setVisible(false);
 
         if (!hexEdit->data().isNull())
@@ -215,7 +207,6 @@ void EditDialog::checkDataType()
         {
             // It is.
             ui->editorImage->setPixmap(QPixmap::fromImage(img));
-            ui->editorStack->setCurrentIndex(2);
 
             ui->labelType->setText(tr("Type of data currently in cell: Image"));
             ui->labelSize->setText(tr("%1x%2 pixel").arg(ui->editorImage->pixmap()->size().width()).arg(ui->editorImage->pixmap()->size().height()));
