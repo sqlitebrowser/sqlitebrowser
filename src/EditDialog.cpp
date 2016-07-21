@@ -8,14 +8,13 @@
 #include <QKeySequence>
 #include <QShortcut>
 
-EditDialog::EditDialog(QWidget* parent, bool forUseInDockWidget)
+EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::EditDialog),
-      useInDock(forUseInDockWidget)
+      ui(new Ui::EditDialog)
 {
     ui->setupUi(this);
     ui->buttonBox->button(QDialogButtonBox::Ok)->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
-    ui->buttonBox->button(QDialogButtonBox::Cancel)->setVisible(!forUseInDockWidget);
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setVisible(true);
 
     QHBoxLayout* hexLayout = new QHBoxLayout(ui->editorBinary);
     hexEdit = new QHexEdit(this);
@@ -66,15 +65,9 @@ void EditDialog::reject()
 {
     // This is called when pressing the cancel button or hitting the escape key
 
-    // If we're in dock mode, reset all fields and move the cursor back to the table view.
-    // If we're in window mode, call the default implementation to just close the window normally.
-    if(useInDock)
-    {
-        loadText(oldData, curRow, curCol);
-        emit goingAway();
-    } else {
-        QDialog::reject();
-    }
+    // Reset all fields and move the cursor back to the table view
+    loadText(oldData, curRow, curCol);
+    emit goingAway();
 }
 
 void EditDialog::loadText(const QByteArray& data, int row, int col)
@@ -238,16 +231,16 @@ void EditDialog::setFocus()
 {
     QDialog::setFocus();
 
-    // When in dock mode set the focus to the editor widget. The idea here is that setting focus to the
-    // dock itself doesn't make much sense as it's just a frame; you'd have to tab to the editor which is what you
-    // most likely want to use. So in order to save the user from doing this we explicitly set the focus to the editor.
-    if(useInDock)
-    {
-        ui->editorText->setFocus();
-        ui->editorText->selectAll();
-    }
+    // Set the focus to the editor widget. The idea here is that setting focus
+    // to the dock itself doesn't make much sense as it's just a frame; you'd
+    // have to tab to the editor which is what you most likely want to use. So
+    // in order to save the user from doing this we explicitly set the focus
+    // to the editor.
+    ui->editorText->setFocus();
+    ui->editorText->selectAll();
 }
 
+// Enables or disables the OK/Clear/Import buttons in the Edit Cell dock
 void EditDialog::allowEditing(bool on)
 {
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(on);

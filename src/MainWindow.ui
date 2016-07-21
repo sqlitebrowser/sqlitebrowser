@@ -1274,7 +1274,7 @@
   </widget>
   <widget class="QDockWidget" name="dockSchema">
    <property name="windowTitle">
-    <string>DB Sche&amp;ma</string>
+    <string>DB Schema</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -1297,9 +1297,9 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockEditWindow">
+  <widget class="QDockWidget" name="dockEdit">
    <property name="windowTitle">
-    <string>Edit &amp;cell</string>
+    <string>Edit Database Cell</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
