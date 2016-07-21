@@ -123,7 +123,6 @@ private:
 
     QMap<QString, BrowseDataTableSettings> browseTableSettings;
 
-    EditDialog* editWin;
     EditDialog* editDock;
     QIntValidator* gotoValidator;
 
@@ -181,7 +180,7 @@ private slots:
     void helpWhatsThis();
     void helpAbout();
     void updateRecordText(int row, int col, bool type, const QByteArray& newtext);
-    void editWinAway();
+    void editDockAway();
     void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);
     void executeQuery();
