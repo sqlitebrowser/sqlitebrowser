@@ -71,6 +71,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+    // Load window settings
+    tabifyDockWidget(ui->dockLog, ui->dockPlot);
+    tabifyDockWidget(ui->dockLog, ui->dockSchema);
+    restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
+    restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
+    ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
+    ui->comboLineType->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "lineType").toInt());
+    ui->comboPointShape->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "pointShape").toInt());
+
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
     connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
@@ -197,16 +207,6 @@ void MainWindow::init()
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
-
-    // Load window settings
-    tabifyDockWidget(ui->dockLog, ui->dockPlot);
-    tabifyDockWidget(ui->dockLog, ui->dockSchema);
-    restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
-    restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
-    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
-    ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
-    ui->comboLineType->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "lineType").toInt());
-    ui->comboPointShape->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "pointShape").toInt());
 
     // plot widgets
     ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
