@@ -1058,8 +1058,11 @@ void MainWindow::exportTableToCSV()
 {
     // Get the current table name if we are in the Browse Data tab
     QString current_table;
-    if(ui->mainTab->currentIndex() == 0)
-        current_table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+    if(ui->mainTab->currentIndex() == 0) {
+        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
+        if(type == "table" || type == "view")
+            current_table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+    }
     else if(ui->mainTab->currentIndex() == 1)
         current_table = ui->comboBrowseTable->currentText();
 
