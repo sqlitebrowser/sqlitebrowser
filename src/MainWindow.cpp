@@ -52,8 +52,7 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
-      editWin(new EditDialog(this)),
-      editDock(new EditDialog(this, true)),
+      editDock(new EditDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
@@ -74,12 +73,6 @@ void MainWindow::init()
     // Load window settings
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
-    restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
-    restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
-    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
-    ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
-    ui->comboLineType->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "lineType").toInt());
-    ui->comboPointShape->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "pointShape").toInt());
 
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
@@ -103,8 +96,17 @@ void MainWindow::init()
     ui->treeSchemaDock->setColumnWidth(0, 300);
 
     // Edit dock
-    ui->dockEditWindow->setWidget(editDock);
-    ui->dockEditWindow->hide();     // Hidden by default
+    ui->dockEdit->setWidget(editDock);
+
+    // Restore window geometry
+    restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
+    restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
+
+    // Restore various dock state settings
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
+    ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
+    ui->comboLineType->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "lineType").toInt());
+    ui->comboPointShape->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "pointShape").toInt());
 
     // Add keyboard shortcuts
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
@@ -169,7 +171,7 @@ void MainWindow::init()
     ui->viewMenu->actions().at(2)->setIcon(QIcon(":/icons/log_dock"));
 
     // Add menu item for edit dock
-    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockEditWindow->toggleViewAction());
+    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockEdit->toggleViewAction());
     ui->viewMenu->actions().at(3)->setIcon(QIcon(":/icons/log_dock"));
 
     // Add keyboard shortcut for "Edit Cell" dock
@@ -200,9 +202,7 @@ void MainWindow::init()
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
-    connect(editWin, SIGNAL(goingAway()), this, SLOT(editWinAway()));
-    connect(editWin, SIGNAL(updateRecordText(int, int, bool, QByteArray)), this, SLOT(updateRecordText(int, int, bool, QByteArray)));
-    connect(editDock, SIGNAL(goingAway()), this, SLOT(editWinAway()));
+    connect(editDock, SIGNAL(goingAway()), this, SLOT(editDockAway()));
     connect(editDock, SIGNAL(updateRecordText(int, int, bool, QByteArray)), this, SLOT(updateRecordText(int, int, bool, QByteArray)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
@@ -239,7 +239,7 @@ void MainWindow::init()
 #ifdef Q_OS_WIN
     // On Windows remove all the & signs from the dock titles. Windows (or Qt on Windows) doesn't seem
     // to support them properly, so they end up being visible instead of creating a keyboard shortcut.
-    ui->dockEditWindow->setWindowTitle(ui->dockEditWindow->windowTitle().remove('&'));
+    ui->dockEdit->setWindowTitle(ui->dockEdit->windowTitle().remove('&'));
     ui->dockLog->setWindowTitle(ui->dockLog->windowTitle().remove('&'));
     ui->dockPlot->setWindowTitle(ui->dockPlot->windowTitle().remove('&'));
     ui->dockSchema->setWindowTitle(ui->dockSchema->windowTitle().remove('&'));
@@ -476,8 +476,7 @@ void MainWindow::populateTable(QString tablename)
     // Set the recordset label
     setRecordsetLabel();
 
-    // Reset the edit dialog
-    editWin->reset();
+    // Reset the edit cell dock
     editDock->reset();
 
     // update plot
@@ -533,9 +532,8 @@ bool MainWindow::fileClose()
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
-    // Reset the edit dialog/dock
+    // Reset the edit cell dock
     editDock->reset();
-    editWin->reset();
 
     // Remove all stored table information browse data tab
     browseTableSettings.clear();
@@ -808,13 +806,13 @@ void MainWindow::updateRecordText(int row, int col, bool isBlob, const QByteArra
     m_currentTabTableModel->setTypedData(m_currentTabTableModel->index(row, col), isBlob, newtext);
 }
 
-void MainWindow::editWinAway()
+void MainWindow::editDockAway()
 {
     // Get the sender
     EditDialog* sendingEditDialog = qobject_cast<EditDialog*>(sender());
 
-    // Only hide the edit window, not the edit dock
-    editWin->hide();
+    // Hide the edit dock
+    ui->dockEdit->setVisible(false);
 
     // Update main window
     activateWindow();
@@ -825,26 +823,26 @@ void MainWindow::editWinAway()
 void MainWindow::doubleClickTable(const QModelIndex& index)
 {
     // Cancel on invalid index
-    if(!index.isValid())
+    if (!index.isValid()) {
         return;
+    }
 
-	// Don't allow editing of other objects than tables (on the browse table)
+    // * Don't allow editing of other objects than tables (on the browse table) *
+    bool allowEditing = (m_currentTabTableModel == m_browseTableModel) &&
+            (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
-    bool allowEditing = (m_currentTabTableModel == m_browseTableModel) && (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
-
+    // Enable or disable the OK, Clear, & Import buttons in the Edit Cell dock
+    // depending on the value of the "allowEditing" bool above
     editDock->allowEditing(allowEditing);
-    editWin->allowEditing(allowEditing);
 
-    // Load the current value into both, edit window and edit dock
-    editWin->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+    // Load the current value into the edit dock
     editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
 
-    // If the edit dock is visible don't open the edit window. If it's invisible open the edit window.
-    // The edit dock obviously doesn't need to be opened when it's already visible but setting focus to it makes sense.
-    if(!ui->dockEditWindow->isVisible())
-        editWin->show();
-    else
-        editDock->setFocus();
+    // Show the edit dock
+    ui->dockEdit->setVisible(true);
+
+    // Set focus on the edit dock
+    editDock->setFocus();
 }
 
 void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
@@ -1339,7 +1337,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
-    ui->dockEditWindow->setEnabled(enable && write);
+    ui->dockEdit->setEnabled(enable && write);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
