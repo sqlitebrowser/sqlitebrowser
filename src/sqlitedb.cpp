@@ -616,6 +616,8 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     if(!isOpen())
         return false;
 
+    statement = statement.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
+
     // Log the statement if needed
     if(log)
         logSQL(statement, kLogMsg_App);
