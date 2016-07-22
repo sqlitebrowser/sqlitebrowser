@@ -616,18 +616,18 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     if(!isOpen())
         return false;
 
-    statement = statement.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
+    QString query = statement.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
 
     // Log the statement if needed
     if(log)
-        logSQL(statement, kLogMsg_App);
+        logSQL(query, kLogMsg_App);
 
     // Set DB to dirty/create restore point if necessary
     if(dirty)
         setSavepoint();
 
     // Show progress dialog
-    int statement_size = statement.size();
+    int statement_size = query.size();
     QProgressDialog progress(tr("Executing SQL..."),
                              tr("Cancel"), 0, statement_size);
     progress.setWindowModality(Qt::ApplicationModal);
@@ -635,7 +635,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
     // Execute the statement by looping until SQLite stops giving back a tail string
     sqlite3_stmt* vm;
-    QByteArray utf8Query = statement.toUtf8();
+    QByteArray utf8Query = query.toUtf8();
     const char *tail = utf8Query.data();
     int res = 0;
     unsigned int line = 0;
