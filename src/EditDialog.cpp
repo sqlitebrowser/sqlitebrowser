@@ -154,7 +154,6 @@ void EditDialog::accept()
         bool isBlob = dataType == tr("Binary") || !ui->comboEditor->isVisible();
         emit updateRecordText(curRow, curCol, isBlob, hexEdit->data());
     }
-    emit goingAway();
 }
 
 void EditDialog::editTextChanged()
