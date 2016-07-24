@@ -898,6 +898,8 @@ void MainWindow::executeQuery()
     if (query.isEmpty())
         return;
 
+    query = query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
+
     //log the query
     db.logSQL(query, kLogMsg_User);
     sqlite3_stmt *vm;
