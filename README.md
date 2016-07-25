@@ -78,8 +78,7 @@ Arch Linux provides a package through pacman.
 
 ### Fedora
 
-For Fedora version 21, 22, 23 and rawhide (i386 and x86_64) you can install
-by issuing:
+For Fedora (i386 and x86_64) you can install by issuing:
 
     $ sudo dnf install sqlitebrowser
 
