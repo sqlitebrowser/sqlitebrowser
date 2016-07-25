@@ -98,10 +98,65 @@
 
 <p>DB Browser for SQLite works well on Linux.</p>
 
-<ul><li>Arch Linux provides a package through pacman.</li>
-<li>For Ubuntu and derivaties, <a href="https://github.com/deepsidhu1313">@deepsidhu1313</a>
-provides a PPA with our latest release here:<br /><br />
-&nbsp; &nbsp; &nbsp; &nbsp;<a href="https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser">https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser</a></li></ul>
+<h3><a name="arch" class="anchor" href="#arch"><span class="octicon octicon-link"></span></a>Arch Linux</h3>
+
+<p>Arch Linux provides a package through pacman.</p>
+
+<h3><a name="fedora" class="anchor" href="#fedora"><span class="octicon octicon-link"></span></a>Fedora</h3>
+
+<p>For Fedora (i386 and x86_64) you can install by issuing:</p>
+
+<p>&nbsp; &nbsp;<code>$ sudo dnf install sqlitebrowser</code></p>
+
+<h3><a name="ubuntu" class="anchor" href="#ubuntu"><span class="octicon octicon-link"></span></a>Ubuntu and Derivatives</h3>
+
+<h4><a name="ubuntu-stable" class="anchor" href="#ubuntu-stable"><span class="octicon octicon-link"></span></a>Stable release</h4>
+
+<p>For Ubuntu and derivaties, <a href="https://github.com/deepsidhu1313">@deepsidhu1313</a>
+provides a PPA with our latest release here:</p>
+
+<ul><li><a href="https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser">https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser</a></li></ul>
+
+<p>To add this ppa just type in these commands in terminal:</p>
+
+<p>&nbsp; &nbsp;<code>sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser</code></p>
+
+<p>Then update the cache using:</p>
+
+<p>&nbsp; &nbsp;<code>sudo apt-get update</code></p>
+
+<p>Install the package using:</p>
+
+<p>&nbsp; &nbsp;<code>sudo apt-get install sqlitebrowser</code></p>
+
+<p>Ubuntu 14.04.X, 15.04.X, 15.10.X and 16.04.X are supported for now (until
+Launchpad decides to discontinue build for any series).</p>
+
+<p>Ubuntu Precise (12.04) and Utopic (14.10) are not supported:</p>
+<ul><li>Precise doesn't have a Qt 5.2 package in its repository by default, which is
+  a dependency</li>
+<li>Launchpad doesn't support Utopic any more, as that has reached its End of
+  Life</li></ul>
+
+<h4><a name="ubuntu-nightly" class="anchor" href="#ubuntu-nightly"><span class="octicon octicon-link"></span></a>Nightly builds</h4>
+
+<p>Nightly builds are available here:</p>
+
+<ul><li><a href="https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser-testing">https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser-testing</a></li></ul>
+
+<p>To add this ppa just type in these commands in terminal:</p>
+
+<p>&nbsp; &nbsp;<code>sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser-testing</code></p>
+
+<p>Then update the cache using:</p>
+
+<p>&nbsp; &nbsp;<code>sudo apt-get update</code></p>
+
+<p>Install the package using:</p>
+
+<p>&nbsp; &nbsp;<code>sudo apt-get install sqlitebrowser</code></p>
+
+<h3><a name="linux-other" class="anchor" href="#linux-other"><span class="octicon octicon-link"></span></a>Other Linux</h3>
 
 <p>On others you'll need to compile it yourself using the (simple) instructions
 in <a href="https://github.com/sqlitebrowser/sqlitebrowser/blob/master/BUILDING.md">BUILDING.md</a>.</p>
