@@ -20,7 +20,7 @@
       <enum>Qt::Vertical</enum>
      </property>
      <widget class="SqlTextEdit" name="editEditor"/>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="ExtendedTableWidget" name="tableResult">
@@ -108,22 +108,18 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ExtendedTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>ExtendedTableWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>SqlTextEdit</class>
    <extends>QTextEdit</extends>
    <header>sqltextedit.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>ExtendedTableWidget</class>
-   <extends>QTableWidget</extends>
-   <header>ExtendedTableWidget.h</header>
-   <slots>
-    <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
-   </slots>
-  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>editEditor</tabstop>
   <tabstop>tableResult</tabstop>
   <tabstop>editErrors</tabstop>
   <tabstop>buttonSave</tabstop>

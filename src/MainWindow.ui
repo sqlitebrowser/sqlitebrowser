@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="structure">
        <attribute name="title">
@@ -333,8 +333,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>552</width>
-             <height>423</height>
+             <width>468</width>
+             <height>558</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -819,7 +819,7 @@
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>21</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1575,7 +1575,7 @@
      <normaloff>:/icons/whatis</normaloff>:/icons/whatis</iconset>
    </property>
    <property name="text">
-    <string>W&amp;hat&apos;s This?</string>
+    <string>W&amp;hat's This?</string>
    </property>
    <property name="shortcut">
     <string>Shift+F1</string>
@@ -1842,18 +1842,17 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>sqltextedit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ExtendedTableWidget</class>
    <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
    <slots>
     <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>SqlTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>sqltextedit.h</header>
   </customwidget>
   <customwidget>
    <class>QCustomPlot</class>
@@ -1863,26 +1862,15 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>mainTab</tabstop>
   <tabstop>dbTreeWidget</tabstop>
-  <tabstop>comboLogSubmittedBy</tabstop>
-  <tabstop>buttonLogClear</tabstop>
-  <tabstop>treePlotColumns</tabstop>
-  <tabstop>comboLineType</tabstop>
-  <tabstop>comboPointShape</tabstop>
-  <tabstop>butSavePlot</tabstop>
-  <tabstop>buttonLoadAllData</tabstop>
-  <tabstop>treeSchemaDock</tabstop>
   <tabstop>comboBrowseTable</tabstop>
   <tabstop>buttonRefresh</tabstop>
   <tabstop>buttonClearFilters</tabstop>
   <tabstop>buttonNewRecord</tabstop>
   <tabstop>buttonDeleteRecord</tabstop>
   <tabstop>dataTable</tabstop>
-  <tabstop>buttonBegin</tabstop>
   <tabstop>buttonPrevious</tabstop>
   <tabstop>buttonNext</tabstop>
-  <tabstop>buttonEnd</tabstop>
   <tabstop>buttonGoto</tabstop>
   <tabstop>editGoto</tabstop>
   <tabstop>scrollareaPragmas</tabstop>
@@ -1897,13 +1885,24 @@
   <tabstop>comboboxPragmaLockingMode</tabstop>
   <tabstop>spinPragmaMaxPageCount</tabstop>
   <tabstop>spinPragmaPageSize</tabstop>
-  <tabstop>checkboxPragmaSecureDelete</tabstop>
   <tabstop>checkboxPragmaRecursiveTriggers</tabstop>
+  <tabstop>checkboxPragmaSecureDelete</tabstop>
   <tabstop>comboboxPragmaSynchronous</tabstop>
   <tabstop>comboboxPragmaTempStore</tabstop>
   <tabstop>spinPragmaUserVersion</tabstop>
   <tabstop>spinPragmaWalAutoCheckpoint</tabstop>
+  <tabstop>comboLogSubmittedBy</tabstop>
+  <tabstop>buttonLogClear</tabstop>
+  <tabstop>mainTab</tabstop>
+  <tabstop>buttonBegin</tabstop>
+  <tabstop>buttonEnd</tabstop>
   <tabstop>tabSqlAreas</tabstop>
+  <tabstop>treePlotColumns</tabstop>
+  <tabstop>comboLineType</tabstop>
+  <tabstop>comboPointShape</tabstop>
+  <tabstop>butSavePlot</tabstop>
+  <tabstop>buttonLoadAllData</tabstop>
+  <tabstop>treeSchemaDock</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
