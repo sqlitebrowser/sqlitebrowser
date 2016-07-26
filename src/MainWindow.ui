@@ -928,6 +928,12 @@
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QLabel" name="labelLogSubmittedBy">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>Show S&amp;QL submitted by</string>
          </property>
@@ -938,6 +944,12 @@
        </item>
        <item>
         <widget class="QComboBox" name="comboLogSubmittedBy">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <item>
           <property name="text">
            <string>User</string>
@@ -965,6 +977,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="buttonLogClear">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="text">
           <string>&amp;Clear</string>
          </property>
