@@ -236,14 +236,14 @@ void MainWindow::init()
     ui->actionEncryption->setVisible(false);
 #endif
 
-#ifdef Q_OS_WIN
-    // On Windows remove all the & signs from the dock titles. Windows (or Qt on Windows) doesn't seem
-    // to support them properly, so they end up being visible instead of creating a keyboard shortcut.
+    /* Remove all the '&' signs from the dock titles. On at least Windows and
+     * OSX, Qt doesn't seem to support them properly, so they end up being
+     * visible instead of creating a keyboard shortcut
+     */
     ui->dockEdit->setWindowTitle(ui->dockEdit->windowTitle().remove('&'));
     ui->dockLog->setWindowTitle(ui->dockLog->windowTitle().remove('&'));
     ui->dockPlot->setWindowTitle(ui->dockPlot->windowTitle().remove('&'));
     ui->dockSchema->setWindowTitle(ui->dockSchema->windowTitle().remove('&'));
-#endif
 }
 
 bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
