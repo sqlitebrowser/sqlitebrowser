@@ -35,6 +35,12 @@ EditDialog::~EditDialog()
 
 void EditDialog::reset()
 {
+    // Set the font for the text and hex editors
+    QFont editorFont(PreferencesDialog::getSettingsValue("databrowser", "font").toString());
+    editorFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
+    ui->editorText->setFont(editorFont);
+    hexEdit->setFont(editorFont);
+
     curRow = -1;
     curCol = -1;
     ui->editorText->clear();
