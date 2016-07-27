@@ -326,7 +326,7 @@ void EditDialog::updateCellInfo(int cellType)
 
         // Display the image dimensions
         QSize imageSize = image.size();
-        ui->labelSize->setText(tr("%1x%2 pixel").arg(imageSize.width()).arg(imageSize.height()));
+        ui->labelSize->setText(tr("%1x%2 pixel(s)").arg(imageSize.width()).arg(imageSize.height()));
         return;
     }
 
