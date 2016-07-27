@@ -34,12 +34,15 @@ protected:
 private slots:
     virtual void importData();
     virtual void exportData();
-    virtual void clearData();
+    virtual void setNull();
     virtual void accept();
     virtual void editTextChanged();
     virtual void hexDataChanged();
-    virtual void checkDataType();
+    virtual int checkDataType();
     virtual void toggleOverwriteMode();
+    virtual void editModeChanged(int editMode);
+    virtual void updateBinaryEditWarning(int editMode, int dataType);
+    virtual void updateCellInfo(int cellType);
 
 signals:
     void goingAway();
@@ -51,6 +54,13 @@ private:
     QByteArray oldData;
     int curCol;
     int curRow;
+
+    enum DataType {
+        Binary,
+        Image,
+        Null,
+        Text
+    };
 };
 
 #endif
