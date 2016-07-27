@@ -831,8 +831,8 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     bool allowEditing = (m_currentTabTableModel == m_browseTableModel) &&
             (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
-    // Enable or disable the Apply & Import buttons in the Edit Cell dock
-    // depending on the value of the "allowEditing" bool above
+    // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
+    // dock depending on the value of the "allowEditing" bool above
     editDock->allowEditing(allowEditing);
 
     // Load the current value into the edit dock
