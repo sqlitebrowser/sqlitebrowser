@@ -341,19 +341,20 @@ dl dd {
 }
 
 footer {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
-  margin-top: 40px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-  font-size: 13px;
-  color: #aaa;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  background: #2e7bcf 0 0 repeat-x;
+  border-bottom: solid 1px #275da1;
 }
 
-footer a {
-  color: #666;
+.footer-area {
+  text-align:center;
+  display:inline;
 }
-footer a:hover {
-  color: #444;
+
+.hosting-provider {
+  color: #9ddcff;
 }
 
 /* MISC */
