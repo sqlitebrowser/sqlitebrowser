@@ -1,5 +1,7 @@
 # DB Browser for SQLite
 
+[![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser](https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg)](https://gitter.im/sqlitebrowser/sqlitebrowser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/sqlitebrowser/sqlitebrowser.svg?branch=master)](https://travis-ci.org/sqlitebrowser/sqlitebrowser)
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
