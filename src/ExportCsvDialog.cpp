@@ -9,7 +9,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
-#include <QSettings>
 
 ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
