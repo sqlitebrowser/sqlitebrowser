@@ -11,20 +11,19 @@ else()
 endif()
 
 set(QHEXEDIT_SRC
-    src/commands.cpp
     src/qhexedit.cpp
-    src/qhexedit_p.cpp
-    src/xbytearray.cpp
+    src/chunks.cpp
+    src/commands.cpp
 )
 
 set(QHEXEDIT_HDR
+    src/chunks.h
     src/commands.h
-    src/xbytearray.h
 )
 
 set(QHEXEDIT_MOC_HDR
 	src/qhexedit.h
-	src/qhexedit_p.h
+	src/commands.h
 )
 
 if(NOT USE_QT5)

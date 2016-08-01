@@ -5,6 +5,7 @@
 #include "src/qhexedit.h"
 #include "FileDialog.h"
 
+#include <QMainWindow>
 #include <QKeySequence>
 #include <QShortcut>
 #include <QImageReader>
