@@ -228,7 +228,7 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
 
     // db/hideschemalinebreaks?
     if(group == "db" && name == "hideschemalinebreaks")
-        return false;
+        return true;
 
     // db/foreignkeys?
     if(group == "db" && name == "foreignkeys")
