@@ -912,6 +912,15 @@
    <addaction name="fileSaveAction"/>
    <addaction name="fileRevertAction"/>
   </widget>
+  <widget class="QDockWidget" name="dockEdit">
+   <property name="windowTitle">
+    <string>Edit Database Cell</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4"/>
+  </widget>
   <widget class="QDockWidget" name="dockLog">
    <property name="features">
     <set>QDockWidget::AllDockWidgetFeatures</set>
@@ -1314,15 +1323,6 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QDockWidget" name="dockEdit">
-   <property name="windowTitle">
-    <string>Edit Database Cell</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
