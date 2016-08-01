@@ -11,14 +11,14 @@ else()
 endif()
 
 set(QHEXEDIT_SRC
+    src/commands.cpp
     src/qhexedit.cpp
     src/chunks.cpp
-    src/commands.cpp
 )
 
 set(QHEXEDIT_HDR
-    src/chunks.h
     src/commands.h
+    src/chunks.h
 )
 
 set(QHEXEDIT_MOC_HDR
