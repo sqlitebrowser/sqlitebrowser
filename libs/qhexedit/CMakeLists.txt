@@ -23,6 +23,7 @@ set(QHEXEDIT_HDR
 
 set(QHEXEDIT_MOC_HDR
 	src/qhexedit.h
+	src/commands.h
 )
 
 if(NOT USE_QT5)
