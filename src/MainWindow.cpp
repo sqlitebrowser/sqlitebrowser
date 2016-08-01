@@ -546,7 +546,11 @@ bool MainWindow::fileClose()
     updatePlot(0);
 
     activateFields(false);
-    ui->buttonLogClear->click();
+
+    // Clear the SQL Log
+    ui->editLogApplication->clear();
+    ui->editLogUser->clear();
+
     for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
         closeSqlTab(i, true);
 
