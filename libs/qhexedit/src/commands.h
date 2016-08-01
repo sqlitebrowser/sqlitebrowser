@@ -3,66 +3,43 @@
 
 /** \cond docNever */
 
-#include <QUndoCommand>
+#include <QUndoStack>
 
-#include "xbytearray.h"
+#include "chunks.h"
 
-/*! CharCommand is a class to prived undo/redo functionality in QHexEdit.
+/*! CharCommand is a class to provid undo/redo functionality in QHexEdit.
 A QUndoCommand represents a single editing action on a document. CharCommand
-is responsable for manipulations on single chars. It can insert. replace and
-remove characters. A manipulation stores allways to actions
+is responsable for manipulations on single chars. It can insert. overwrite and
+remove characters. A manipulation stores allways two actions
 1. redo (or do) action
 2. undo action.
 
 CharCommand also supports command compression via mergeWidht(). This allows
 the user to execute a undo command contation e.g. 3 steps in a single command.
 If you for example insert a new byt "34" this means for the editor doing 3
-steps: insert a "00", replace it with "03" and the replace it with "34". These
+steps: insert a "00", overwrite it with "03" and the overwrite it with "34". These
 3 steps are combined into a single step, insert a "34".
+
+The byte array oriented commands are just put into a set of single byte commands,
+which are pooled together with the macroBegin() and macroEnd() functionality of
+Qt's QUndoStack.
 */
-class CharCommand : public QUndoCommand
+
+class UndoStack : public QUndoStack
 {
+    Q_OBJECT
+
 public:
-    enum { Id = 1234 };
-    enum Cmd {insert, remove, replace};
-
-    CharCommand(XByteArray * xData, Cmd cmd, int charPos, char newChar,
-                       QUndoCommand *parent=0);
-
-    void undo();
-    void redo();
-    bool mergeWith(const QUndoCommand *command);
-    int id() const { return Id; }
+    UndoStack(Chunks *chunks, QObject * parent=0);
+    void insert(qint64 pos, char c);
+    void insert(qint64 pos, const QByteArray &ba);
+    void removeAt(qint64 pos, qint64 len=1);
+    void overwrite(qint64 pos, char c);
+    void overwrite(qint64 pos, int len, const QByteArray &ba);
 
 private:
-    XByteArray * _xData;
-    int _charPos;
-    bool _wasChanged;
-    char _newChar;
-    char _oldChar;
-    Cmd _cmd;
-};
-
-/*! ArrayCommand provides undo/redo functionality for handling binary strings. It
-can undo/redo insert, replace and remove binary strins (QByteArrays).
-*/
-class ArrayCommand : public QUndoCommand
-{
-public:
-    enum Cmd {insert, remove, replace};
-    ArrayCommand(XByteArray * xData, Cmd cmd, int baPos, QByteArray newBa=QByteArray(), int len=0,
-                 QUndoCommand *parent=0);
-    void undo();
-    void redo();
-
-private:
-    Cmd _cmd;
-    XByteArray * _xData;
-    int _baPos;
-    int _len;
-    QByteArray _wasChanged;
-    QByteArray _newBa;
-    QByteArray _oldBa;
+    Chunks * _chunks;
+    QObject * _parent;
 };
 
 /** \endcond docNever */
