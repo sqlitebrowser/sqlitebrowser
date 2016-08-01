@@ -487,7 +487,6 @@ void MainWindow::populateTable(QString tablename)
 
 void MainWindow::resetBrowser(bool reloadTable)
 {
-    const QString sCurrentTable = ui->comboBrowseTable->currentText();
     ui->comboBrowseTable->clear();
     const objectMap& tab = db.getBrowsableObjects();
 
@@ -510,7 +509,7 @@ void MainWindow::resetBrowser(bool reloadTable)
 
     setRecordsetLabel();
     if(reloadTable)
-        populateTable(sCurrentTable);
+        populateTable(ui->comboBrowseTable->currentText());
 }
 
 bool MainWindow::fileClose()
