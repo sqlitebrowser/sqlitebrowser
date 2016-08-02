@@ -1,6 +1,7 @@
 #include "FilterTableHeader.h"
 #include "FilterLineEdit.h"
 
+#include <QApplication>
 #include <QTableView>
 #include <QScrollBar>
 
@@ -76,7 +77,7 @@ void FilterTableHeader::adjustPositions()
     {
         // Get the current widget, move it and resize it
         QWidget* w = filterWidgets.at(i);
-        if (layoutDirection() == Qt::RightToLeft)
+        if (QApplication::layoutDirection() == Qt::RightToLeft)
             w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
         else
             w->move(sectionPosition(i) - offset(), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
