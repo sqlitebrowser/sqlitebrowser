@@ -87,7 +87,7 @@ Building an .app bundle version takes a bit more effort, but isn't too hard.
 It requires SQLite and Qt 4.x/5.x to be installed first.  These are the
 [Homebrew](http://brew.sh) steps, though other package managers should work:
 
-    $ brew install sqlite --with-functions --without-readline
+    $ brew install sqlite --with-functions --with-json1 --without-readline
     $ brew install qt
     $ brew link sqlite3 --force
 
