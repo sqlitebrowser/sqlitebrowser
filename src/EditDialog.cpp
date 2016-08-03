@@ -319,19 +319,25 @@ void EditDialog::updateCellInfo(int cellType)
     // Image data needs special treatment
     if (cellType == Image) {
         QBuffer imageBuffer(&cellData);
-        QImageReader image(&imageBuffer);
+        QImageReader imageReader(&imageBuffer);
 
         // Display the image format
-        QString imageFormat = image.format();
+        QString imageFormat = imageReader.format();
+
         ui->labelType->setText(tr("Type of data currently in cell: %1 Image").arg(imageFormat.toUpper()));
 
-        // Display the image dimensions
-        QSize imageSize = image.size();
-        ui->labelSize->setText(tr("%1x%2 pixel(s)").arg(imageSize.width()).arg(imageSize.height()));
+        // Display the image dimensions and size
+        QSize imageDimensions = imageReader.size();
+        int imageSize = cellData.size();
+
+        QString labelSizeText = tr("%1x%2 pixel(s)").arg(imageDimensions.width()).arg(imageDimensions.height()) + ", " + humanReadableSize(imageSize);
+
+        ui->labelSize->setText(labelSizeText);
+
         return;
     }
 
-    // Determine the legth of the cell data
+    // Determine the length of the cell data
     int dataLength = cellData.length();
 
     // Use a switch statement for the other data types to keep things neat :)
@@ -354,4 +360,28 @@ void EditDialog::updateCellInfo(int cellType)
         ui->labelSize->setText(tr("%n byte(s)", "", dataLength));
         break;
     }
+}
+
+QString EditDialog::humanReadableSize(double byteCount)
+{
+    QList<QString> units;
+
+    units<<""<<"Ki"<<"Mi"<<"Gi"<<"Ti"<<"Pi"<<"Ei"<<"Zi";
+
+    foreach (QString unit, units)
+    {
+        if (fabs(byteCount) < 1024.0)
+        {
+            QString size = QString::number(byteCount, 'f', 2);
+
+            return size + " " + unit + "B";
+        }
+
+        byteCount /= 1024.0;
+    }
+
+    QString yiUnit = "Yi";
+    QString size = QString::number(byteCount, 'f', 2);
+
+    return size + " " + yiUnit + "B";
 }
