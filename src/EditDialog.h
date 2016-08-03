@@ -43,6 +43,7 @@ private slots:
     virtual void editModeChanged(int editMode);
     virtual void updateBinaryEditWarning(int editMode, int dataType);
     virtual void updateCellInfo(int cellType);
+    virtual QString humanReadableSize(double byteCount);
 
 signals:
     void goingAway();
