@@ -89,39 +89,6 @@ QString rtrimChar(const QString& s, QChar c) {
         r.chop(1);
     return r;
 }
-
-QString removeComments(QString s)
-{
-    // Feel free to fix all the bugs this probably contains or just replace this function entirely by
-    // a 'simple' regular expression. I know there're better ways to do this...
-
-    // This function removes any single line comments (starting with '--') from a given string. It does
-    // so by going through the string character by character and trying to keep track of whether we currently
-    // are in a string or identifier and only removing those parts starting with '--' which are in neither.
-
-    QChar lastChar = 0;
-    QList<QChar> stringChars;
-    for(int i=0; i < s.length(); ++i)
-    {
-        if(lastChar != '\\' && (s.at(i) == '\'' || s.at(i) == '"' || s.at(i) == '`'))
-        {
-            if(!stringChars.empty() && stringChars.last() == s.at(i))
-                stringChars.removeLast();
-            else if(!(!stringChars.empty() && (stringChars.last() != '\'' || stringChars.last() != '"')) || stringChars.empty())
-                stringChars.push_back(s.at(i));
-        } else if(stringChars.empty() && s.at(i) == '-' && lastChar == '-') {
-            int nextNL = s.indexOf('\n', i);
-            if(nextNL >= 0)
-                return removeComments(s.remove(i-1, nextNL - i + 2));
-            else
-                return s.left(i-1);
-        }
-
-        lastChar = s.at(i);
-    }
-
-    return s;
-}
 }
 
 void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
@@ -133,7 +100,9 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     if(!m_db->isOpen())
         return;
 
-    m_sQuery = removeComments(sQuery).trimmed();
+    m_sQuery = sQuery.trimmed();
+
+    m_sQuery.remove(QRegExp("(?=\\s*[-]{2})[^'\"\n]*$"));
 
     // do a count query to get the full row count in a fast manner
     m_rowCount = getQueryRowCount();
