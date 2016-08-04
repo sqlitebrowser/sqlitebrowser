@@ -2120,7 +2120,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1424"/>
         <source>Compact &amp;Database</source>
-        <translation type="unfinished"></translation>
+        <translation>ضعط قاعدة البيانات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1449"/>
