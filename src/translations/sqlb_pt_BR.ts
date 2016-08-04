@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>  -s, --sql  [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, -sql  [arquivo]	Executar esse arquivo de SQL após abrir o BD</translation>
+        <translation type="obsolete">  -s, -sql  [arquivo]	Executar esse arquivo de SQL após abrir o BD</translation>
     </message>
     <message>
         <source>  -q, --quit		Exit application after running scripts</source>
@@ -70,6 +70,18 @@
     <message>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Opção inválida/arquivo inexistente: %1</translation>
+    </message>
+    <message>
+        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>  -t, --table [table]	Browse this table after opening the DB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The -t/--table option requires an argument</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -95,7 +107,7 @@
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
 The encrpytion process might take some time and you should have a backup copy of you database! Unsaved changes are applied before modifying the encryption.</source>
-        <translation>Por favor, selecione uma chave para encriptar o banco de dados.
+        <translation type="obsolete">Por favor, selecione uma chave para encriptar o banco de dados.
 Note que se você alterar quaisquer configurações opcionais você terá de entrá-las todas as vezes que você abrir o arquivo do banco de dados.
 Deixe os campos de senha em branco para desativar a encriptação.
 O processo de encriptação pode demorar alguns minutos e você deve ter um backup do seu banco de dados! Alterações não salvas são aplicadas antes de se modificar a encriptação.</translation>
@@ -105,6 +117,80 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
         <translation>Por favor, entre a chave usada para encriptar o banco de dados.
 Se quaisquer das outras configurações foram alteradas você terá de prover essas informações também.</translation>
+    </message>
+    <message>
+        <source>Please set a key to encrypt the database.
+Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
+Leave the password fields empty to disable the encryption.
+The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ColumnDisplayFormatDialog</name>
+    <message>
+        <source>Choose display format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decimal number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent notation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hex blob</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hex number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Julian day to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Octal number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Round number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unix epoch to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Windows DATE to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -152,7 +238,7 @@ Se quaisquer das outras configurações foram alteradas você terá de prover es
     <name>DBBrowserDB</name>
     <message>
         <source>no error</source>
-        <translation>Nenhum erro</translation>
+        <translation type="obsolete">Nenhum erro</translation>
     </message>
     <message>
         <source>Please specify the database name under which you want to access the attached database</source>
@@ -335,7 +421,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>Clear cell data</source>
-        <translation>Limpar dados de célula</translation>
+        <translation type="obsolete">Limpar dados de célula</translation>
     </message>
     <message>
         <source>Erases the contents of the cell</source>
@@ -343,7 +429,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>&amp;Clear</source>
-        <translation>&amp;Limpar</translation>
+        <translation type="obsolete">&amp;Limpar</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Warning: Editing binary content in text mode may result in corrupted data!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -379,7 +465,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Null</source>
-        <translation>Tipo de dados atualmente na célula: Null</translation>
+        <translation type="obsolete">Tipo de dados atualmente na célula: Null</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Text / Numeric</source>
@@ -394,11 +480,11 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Image</source>
-        <translation>Tipo de dados atualmente na célula: Imagem</translation>
+        <translation type="obsolete">Tipo de dados atualmente na célula: Imagem</translation>
     </message>
     <message>
         <source>%1x%2 pixel</source>
-        <translation>%1x%2 pixel</translation>
+        <translation type="obsolete">%1x%2 pixel</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Binary</source>
@@ -410,6 +496,38 @@ Abortando execução.</translation>
             <numerusform>%n byte</numerusform>
             <numerusform>%n bytes</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set this cell to NULL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set as &amp;NULL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type of data currently in cell: %1 Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1x%2 pixel(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type of data currently in cell: NULL</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -527,7 +645,7 @@ Abortando execução.</translation>
     <message>
         <source>Column `%1` has no unique data.
 </source>
-        <translation>Coluna `%1` não possui dados únicos.</translation>
+        <translation type="obsolete">Coluna `%1` não possui dados únicos.</translation>
     </message>
     <message>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
@@ -543,9 +661,28 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto incremenct disabled</source>
-        <translation>Por favor adicione um campo que cumpre os seguintes requerimentos antes de definir a flag without rowid:
+        <translation type="obsolete">Por favor adicione um campo que cumpre os seguintes requerimentos antes de definir a flag without rowid:
  - Primare key flag definida
  - Auto increment desativado</translation>
+    </message>
+    <message>
+        <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Column &apos;%1&apos;&apos; has no unique data.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please add a field which meets the following criteria before setting the without rowid flag:
+ - Primary key flag set
+ - Auto increment disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -622,6 +759,18 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
         <source>Export completed.</source>
         <translation>Exportação completa.</translation>
     </message>
+    <message>
+        <source>New line characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Windows: CR+LF (\r\n)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unix: LF (\n)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportSqlDialog</name>
@@ -631,7 +780,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>&amp;Table(s)</source>
-        <translation>&amp;Tabela(s)</translation>
+        <translation type="obsolete">&amp;Tabela(s)</translation>
     </message>
     <message>
         <source>&amp;Options</source>
@@ -643,7 +792,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>New INSERT INTO syntax (multiple rows in VALUES)</source>
-        <translation>Nova sintaxe de INSERT INTO (múltiplas linhas em VALUES)</translation>
+        <translation type="obsolete">Nova sintaxe de INSERT INTO (múltiplas linhas em VALUES)</translation>
     </message>
     <message>
         <source>Export schema only</source>
@@ -668,6 +817,45 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     <message>
         <source>Export cancelled or failed.</source>
         <translation>Exportação falhou ou foi cancelada.</translation>
+    </message>
+    <message>
+        <source>Tab&amp;le(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple rows (VALUES) per INSERT statement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export everything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export data only</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ExtendedTableWidget</name>
+    <message>
+        <source>The content of clipboard is bigger than the range selected.
+Do you want to insert it anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FileDialog</name>
+    <message>
+        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
+        <translation type="unfinished">Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
     </message>
 </context>
 <context>
@@ -1088,11 +1276,11 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>SQL Log</source>
-        <translation>Log do SQL</translation>
+        <translation type="obsolete">Log do SQL</translation>
     </message>
     <message>
         <source>&amp;Show SQL submitted by</source>
-        <translation>E&amp;xibir SQL enviado por</translation>
+        <translation type="obsolete">E&amp;xibir SQL enviado por</translation>
     </message>
     <message>
         <source>User</source>
@@ -1108,7 +1296,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Plot</source>
-        <translation>Plot</translation>
+        <translation type="obsolete">Plot</translation>
     </message>
     <message>
         <source>Columns</source>
@@ -1180,7 +1368,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Revert Changes</source>
-        <translation>Reverter mudanças</translation>
+        <translation type="obsolete">Reverter mudanças</translation>
     </message>
     <message>
         <source>Revert database to last saved state</source>
@@ -1192,7 +1380,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Write Changes</source>
-        <translation>Escrever Alterações</translation>
+        <translation type="obsolete">Escrever Alterações</translation>
     </message>
     <message>
         <source>Write changes to the database file</source>
@@ -1208,7 +1396,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Compact Database</source>
-        <translation>Compactar Banco de Dados</translation>
+        <translation type="obsolete">Compactar Banco de Dados</translation>
     </message>
     <message>
         <source>Compact the database file, removing space wasted by deleted records</source>
@@ -1228,7 +1416,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Database from SQL file...</source>
-        <translation>Banco de dados a partir de um arquivo SQL...</translation>
+        <translation type="obsolete">Banco de dados a partir de um arquivo SQL...</translation>
     </message>
     <message>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
@@ -1240,7 +1428,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Table from CSV file...</source>
-        <translation>Tabela a partir de um arquivo CSV...</translation>
+        <translation type="obsolete">Tabela a partir de um arquivo CSV...</translation>
     </message>
     <message>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
@@ -1252,7 +1440,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Database to SQL file...</source>
-        <translation>Banco de dados para arquivo SQL...</translation>
+        <translation type="obsolete">Banco de dados para arquivo SQL...</translation>
     </message>
     <message>
         <source>Export a database to a .sql dump text file.</source>
@@ -1264,7 +1452,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Table(s) as CSV file...</source>
-        <translation>Tabela(s) como arquivo CSV...</translation>
+        <translation type="obsolete">Tabela(s) como arquivo CSV...</translation>
     </message>
     <message>
         <source>Export a database table as a comma separated text file.</source>
@@ -1276,7 +1464,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Create Table...</source>
-        <translation>Criar Tabela...</translation>
+        <translation type="obsolete">Criar Tabela...</translation>
     </message>
     <message>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
@@ -1284,7 +1472,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Delete Table...</source>
-        <translation>Deletar Tabela...</translation>
+        <translation type="obsolete">Deletar Tabela...</translation>
     </message>
     <message>
         <source>Delete Table</source>
@@ -1296,7 +1484,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Modify Table...</source>
-        <translation>Modificar Tabela...</translation>
+        <translation type="obsolete">Modificar Tabela...</translation>
     </message>
     <message>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
@@ -1304,7 +1492,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Create Index...</source>
-        <translation>Criar Índice...</translation>
+        <translation type="obsolete">Criar Índice...</translation>
     </message>
     <message>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
@@ -1328,7 +1516,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
-        <translation>O que é isso?</translation>
+        <translation type="obsolete">O que é isso?</translation>
     </message>
     <message>
         <source>Shift+F1</source>
@@ -1368,7 +1556,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Load extension</source>
-        <translation>Carregar extensão</translation>
+        <translation type="obsolete">Carregar extensão</translation>
     </message>
     <message>
         <source>Execute current line</source>
@@ -1404,7 +1592,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Save Project</source>
-        <translation>Salvar Projeto</translation>
+        <translation type="obsolete">Salvar Projeto</translation>
     </message>
     <message>
         <source>Save the current session to a file</source>
@@ -1412,7 +1600,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Abrir Projeto</translation>
+        <translation type="obsolete">Abrir Projeto</translation>
     </message>
     <message>
         <source>Load a working session from a file</source>
@@ -1425,7 +1613,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Set Encryption</source>
-        <translation>Definir encriptação</translation>
+        <translation type="obsolete">Definir encriptação</translation>
     </message>
     <message>
         <source>Save SQL file as</source>
@@ -1477,7 +1665,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation>Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
+        <translation type="obsolete">Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
     </message>
     <message>
         <source>Invalid file format.</source>
@@ -1527,7 +1715,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>%1 Rows returned from: %3 (took %2ms)</source>
-        <translation>%1 Entradas retornadas de %3 (levou %2 ms)</translation>
+        <translation type="obsolete">%1 Entradas retornadas de %3 (levou %2 ms)</translation>
     </message>
     <message>
         <source>Error executing query: %1</source>
@@ -1535,7 +1723,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms)</source>
-        <translation>Requisição executada com sucesso: %1 (levou %2ms)</translation>
+        <translation type="obsolete">Requisição executada com sucesso: %1 (levou %2ms)</translation>
     </message>
     <message>
         <source>Choose a text file</source>
@@ -1653,6 +1841,251 @@ Você tem certeza?</translation>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Arquivo de projeto DB Browser para SQLite (*.sqbpro)</translation>
     </message>
+    <message>
+        <source>Edit Database Cell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQL &amp;Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show S&amp;QL submitted by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Plot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>StepLeft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>StepRight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>StepCenter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point shape:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diamond</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TriangleInverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CrossSquare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PlusSquare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CrossCircle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PlusCircle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Revert Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Write Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compact &amp;Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Database from SQL file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Table from CSV file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Database to SQL file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Table(s) as CSV file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Create Table...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Delete Table...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Modify Table...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create &amp;Index...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>W&amp;hat&apos;s This?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Load extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open &amp;Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Set Encryption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit display format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit the display format of the data in this column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show rowid column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle the visibility of the rowid column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set encoding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the encoding of the text in the table cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set encoding for all tables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the default encoding assumed for all tables in the database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encrypted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database file is read only. Editing the database is disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 rows returned in %2ms from: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, %1 rows affected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Query executed successfully: %1 (took %2ms%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a new encoding for this table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a new encoding for all tables.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1
+Leave the field empty for using the database encoding.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This encoding is either not valid or not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -1714,11 +2147,11 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Remove line breaks in schema view</source>
-        <translation>Remove line breaks in schema view</translation>
+        <translation type="obsolete">Remove line breaks in schema view</translation>
     </message>
     <message>
         <source>&amp;Prefetch block size</source>
-        <translation>&amp;Prefetch block size</translation>
+        <translation type="obsolete">&amp;Prefetch block size</translation>
     </message>
     <message>
         <source>Data &amp;Browser</source>
@@ -1730,7 +2163,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Text &amp;colour</source>
-        <translation>&amp;Cor do texto</translation>
+        <translation type="obsolete">&amp;Cor do texto</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -1738,7 +2171,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Bac&amp;kground colour</source>
-        <translation>Cor de &amp;fundo</translation>
+        <translation type="obsolete">Cor de &amp;fundo</translation>
     </message>
     <message>
         <source>&amp;SQL</source>
@@ -1814,7 +2247,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Tab size:</source>
-        <translation>Tab size:</translation>
+        <translation type="obsolete">Tab size:</translation>
     </message>
     <message>
         <source>SQL editor &amp;font</source>
@@ -1859,6 +2292,102 @@ Você tem certeza?</translation>
     <message>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Extensões(*.so *.dll);;Todos os arquivos(*)</translation>
+    </message>
+    <message>
+        <source>Remove line breaks in schema &amp;view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefetch block si&amp;ze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished">Avançado</translation>
+    </message>
+    <message>
+        <source>SQL to execute after opening database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default field type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font si&amp;ze:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NULL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">Texto</translation>
+    </message>
+    <message>
+        <source>Binary</source>
+        <translation type="unfinished">Binário</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Escape character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delay time (&amp;ms)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tab size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hori&amp;zontal tiling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code co&amp;mpletion</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2143,6 +2672,11 @@ Crie um backup!</translation>
 %1</source>
         <translation>Erro modificando dados:
 %1</translation>
+    </message>
+    <message>
+        <source>References %1(%2)
+Hold Ctrl+Shift and click to jump there</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
