@@ -1209,8 +1209,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="29"/>
-        <source>Database &amp;Structure</source>
-        <translation>بناء قاعدة البيانات(&amp;)</translation>
+        <source>Database Structure</source>
+        <translation>بناء قاعدة البيانات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="35"/>
@@ -1220,8 +1220,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="71"/>
-        <source>&amp;Browse Data</source>
-        <translation>تصفح البيانات(&amp;)</translation>
+        <source>Browse Data</source>
+        <translation>تصفح البيانات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="79"/>
@@ -1396,8 +1396,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="323"/>
-        <source>Edit &amp;Pragmas</source>
-        <translation>تعديل الPragmas(&amp;)</translation>
+        <source>Edit Pragmas</source>
+        <translation>تعديل الPragmas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="347"/>
@@ -1589,6 +1589,11 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="882"/>
         <source>&amp;Help</source>
         <translation>مساعدة(&amp;H)</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1389"/>
+        <source>&amp;Revert Changes</source>
+        <translation>إعادة التغيرات(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1731"/>
@@ -1894,16 +1899,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1374"/>
         <source>&amp;Close Database</source>
-        <translation>إغلاق قاعدة البيانات(&amp;C)</translation>
+        <translation>إغلاق قاعدة البيانات(&amp;W)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1377"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <source>Revert Changes</source>
-        <translation type="obsolete">إعادة التغيرات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1392"/>
@@ -1914,10 +1915,6 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1395"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>هذا الخيار يستعمل لإعادة ملف قاعدة البيانات الحالية إلى حالتها المحفوظة. كل التغيرات عن الحالة المحفوظة ستضيع.</translation>
-    </message>
-    <message>
-        <source>Write Changes</source>
-        <translation type="obsolete">كتابة التغيرات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1410"/>
@@ -2016,17 +2013,13 @@ Do you want to insert it anyway?</source>
         <translation>تصدير جدول قاعدة بيانات بشكل ملف نصي مفصول بفاصلة, جاهز ليتم إستيراده إلى معظم تطبيقات قواعد البيانات و الجداول.</translation>
     </message>
     <message>
-        <source>Create Table...</source>
-        <translation type="obsolete">إنشاء جدول...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1503"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>فتح ساحر لإنشاء جدول, حيث يمكن تحديد الإسم و الخانات للجدول الجديد في قاعدة البيانات</translation>
     </message>
     <message>
-        <source>Delete Table...</source>
-        <translation type="obsolete">حذف الجدول...</translation>
+        <source>&amp;Delete Table...</source>
+        <translation>حذف الجدول(&amp;D)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1521"/>
@@ -2034,17 +2027,9 @@ Do you want to insert it anyway?</source>
         <translation>فتح الساحر لحذف الجدول, حيث يمكن تحديد قاعدة البيانات التي ستحذف.</translation>
     </message>
     <message>
-        <source>Modify Table...</source>
-        <translation type="obsolete">تعديل الجدول...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1536"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>فتح الساحر لتعديل الجدول, حيث يمكن تعديل جدول حالي. و يمكن أيضا إضافة أو حذف خانات جديدة من الجدول, كما يمكننا تعديل إسم و نوع الخانة.</translation>
-    </message>
-    <message>
-        <source>Create Index...</source>
-        <translation type="obsolete">إنشاء فهرس...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
@@ -2128,14 +2113,9 @@ Do you want to insert it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1389"/>
-        <source>&amp;Revert Changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1407"/>
         <source>&amp;Write Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>كتابة التغيرات(&amp;S)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1424"/>
@@ -2165,22 +2145,17 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1500"/>
         <source>&amp;Create Table...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="1515"/>
-        <source>&amp;Delete Table...</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء جدول(&amp;C)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1533"/>
         <source>&amp;Modify Table...</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل الجدول(&amp;M)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1548"/>
         <source>Create &amp;Index...</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء فهرس...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1596"/>
@@ -2189,8 +2164,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1633"/>
-        <source>&amp;Execute SQL</source>
-        <translation>تنفيذ SQL(&amp;E)</translation>
+        <source>Execute SQL</source>
+        <translation>تنفيذ SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1636"/>
