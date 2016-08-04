@@ -970,7 +970,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="35"/>
         <source>Tab&amp;le(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>جداول</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="63"/>
@@ -1030,7 +1030,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="117"/>
         <source>Export completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>إنتهاء التصدير</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="119"/>
