@@ -854,17 +854,17 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportCsvDialog.ui" line="22"/>
         <source>&amp;Table(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>جداول</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.ui" line="48"/>
         <source>&amp;Column names in first line</source>
-        <translation>إسم العواميد في السطر الأول(&amp;)</translation>
+        <translation>إسم العواميد في السطر الأول</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.ui" line="68"/>
         <source>Field &amp;separator</source>
-        <translation>فاصل الحقل(&amp;)</translation>
+        <translation>فاصل الحقل</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.ui" line="93"/>
@@ -896,7 +896,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportCsvDialog.ui" line="143"/>
         <source>&amp;Quote character</source>
-        <translation>حرف الإقتباس(&amp;)</translation>
+        <translation>حرف الإقتباس</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.ui" line="168"/>
