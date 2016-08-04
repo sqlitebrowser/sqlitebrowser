@@ -26,7 +26,7 @@
       </property>
       <widget class="QWidget" name="structure">
        <attribute name="title">
-        <string>Database &amp;Structure</string>
+        <string>Database Structure</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -68,7 +68,7 @@
       </widget>
       <widget class="QWidget" name="browser">
        <attribute name="title">
-        <string>&amp;Browse Data</string>
+        <string>Browse Data</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -320,7 +320,7 @@
       </widget>
       <widget class="QWidget" name="pragmas">
        <attribute name="title">
-        <string>Edit &amp;Pragmas</string>
+        <string>Edit Pragmas</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
@@ -778,7 +778,7 @@
       </widget>
       <widget class="QWidget" name="query">
        <attribute name="title">
-        <string>E&amp;xecute SQL</string>
+        <string>Execute SQL</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
