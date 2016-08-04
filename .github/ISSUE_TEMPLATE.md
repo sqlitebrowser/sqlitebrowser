@@ -26,8 +26,5 @@
 
 ### I have also:
 
-- [ ] Tried out the [nightly version][1]
-- [ ] [Searched][2] for an existing similar issue
-
-  [1]: https://github.com/sqlitebrowser/sqlitebrowser#windows
-  [2]: https://github.com/sqlitebrowser/sqlitebrowser/issues?utf8=%E2%9C%93&q=is%3Aissue%20
+- [ ] Tried out the nightly version: https://github.com/sqlitebrowser/sqlitebrowser#windows
+- [ ] Searched for an existing similar issue: https://github.com/sqlitebrowser/sqlitebrowser/issues?utf8=%E2%9C%93&q=is%3Aissue%20
