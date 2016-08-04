@@ -2682,10 +2682,6 @@ Are you sure?</source>
         <translation>...</translation>
     </message>
     <message>
-        <source>&amp;Prefetch block size</source>
-        <translation type="obsolete">حجم البيانات المحملة مسبقا(&amp;P)</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="205"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation type="unfinished"></translation>
@@ -2693,7 +2689,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="218"/>
         <source>Prefetch block si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم البيانات المحملة مسبقا(&amp;P)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="238"/>
