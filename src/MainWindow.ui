@@ -38,6 +38,7 @@
            <enum>Qt::ToolButtonTextBesideIcon</enum>
           </property>
           <addaction name="editCreateTableAction"/>
+          <addaction name="editCreateIndexAction"/>
           <addaction name="editModifyTableAction"/>
           <addaction name="editDeleteObjectAction"/>
          </widget>

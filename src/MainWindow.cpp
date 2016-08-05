@@ -732,6 +732,7 @@ void MainWindow::createIndex()
         QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
         return;
     }
+
     CreateIndexDialog dialog(&db, this);
     if(dialog.exec())
     {
@@ -1199,7 +1200,14 @@ void MainWindow::changeTreeSelection()
 
     // Change the text of the actions
     QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
-    ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(type)));
+
+    if (type.isEmpty())
+    {
+        ui->editDeleteObjectAction->setIcon(QIcon(":icons/table_delete"));
+    } else {
+        ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(type)));
+    }
+
     if(type == "view")
         ui->editDeleteObjectAction->setText(tr("Delete View"));
     else if(type == "trigger")
