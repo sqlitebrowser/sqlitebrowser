@@ -28,42 +28,55 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
 void ExtendedTableWidget::copy()
 {
-    // Get list of selected items
-    QItemSelectionModel* selection = selectionModel();
-    QModelIndexList indices = selection->selectedIndexes();
+    QModelIndexList indices = selectionModel()->selectedIndexes();
 
     // Abort if there's nothing to copy
-    if(indices.size() == 0)
-    {
+    if (indices.isEmpty())
         return;
-    } else if(indices.size() == 1) {
-        qApp->clipboard()->setText(indices.front().data().toString());
+    qSort(indices);
+
+    // Check whether selection is rectangular
+    QItemSelection rect(indices.first(), indices.last());
+    bool correct = true;
+
+    foreach (const QModelIndex& index, indices)
+        if (!rect.contains(index)) {
+            correct = false;
+            break;
+        }
+
+    foreach (const QModelIndex& index, rect.indexes())
+        if (!indices.contains(index)) {
+            correct = false;
+            break;
+        }
+
+    if (!correct) {
+        QMessageBox::warning(this, QApplication::applicationName(),
+                             tr("This function cannot be used with multiple independent selections."));
         return;
     }
 
-    // Sort the items by row, then by column
-    qSort(indices);
-
-    // Go through all the items...
+    QModelIndex first = indices.first();
     QString result;
-    QModelIndex prev = indices.front();
-    indices.removeFirst();
-    foreach(QModelIndex index, indices)
-    {
-        // Add the content of this cell to the clipboard string
-        result.append(QString("\"%1\"").arg(prev.data().toString()));
+    int currentRow = 0;
 
-        // If this is a new row add a line break, if not add a tab for cell separation
-        if(index.row() != prev.row())
+    foreach(const QModelIndex& index, indices) {
+        if (first == index) { /* first index */ }
+        else if (index.row() != currentRow)
             result.append("\r\n");
         else
             result.append("\t");
 
-        prev = index;
-    }
-    result.append(QString("\"%1\"\r\n").arg(indices.last().data().toString()));      // And the last cell
+        currentRow = index.row();
+        QVariant text = index.data(Qt::EditRole);
 
-    // And finally add it to the clipboard
+        // non-NULL data is enquoted, whilst NULL isn't
+        if (!text.isNull())
+            result.append(QString("\"%1\"").arg(text.toString()));
+    }
+    result.append("\r\n");
+
     qApp->clipboard()->setText(result);
 }
 
@@ -76,11 +89,8 @@ void ExtendedTableWidget::paste()
     QModelIndexList indices = selection->selectedIndexes();
 
     // Abort if there's nowhere to paste
-    if(indices.size() == 0)
-    {
+    if(indices.isEmpty())
         return;
-    }
-
 
     // Find out end of line character
     QString endOfLine;
@@ -107,13 +117,15 @@ void ExtendedTableWidget::paste()
 
     // Unpack cliboard, assuming that it is rectangular
     QList<QStringList> clipboardTable;
-    QStringList cr = clipboard.trimmed().split(endOfLine);
+    if (clipboard.endsWith(endOfLine))
+        clipboard.chop(endOfLine.length());
+    QStringList cr = clipboard.split(endOfLine);
+
     foreach(const QString& r, cr)
         clipboardTable.push_back(r.split("\t"));
 
     int clipboardRows = clipboardTable.size();
     int clipboardColumns = clipboardTable.front().size();
-
 
     // Sort the items by row, then by column
     qSort(indices);
@@ -154,7 +166,9 @@ void ExtendedTableWidget::paste()
         int column = firstColumn;
         foreach(const QString& cell, clipboardRow)
         {
-            if(cell.startsWith('"') && cell.endsWith('"'))
+            if (cell.isEmpty())
+                m->setData(m->index(row, column), QVariant());
+            else if(cell.startsWith('"') && cell.endsWith('"'))
             {
                 QString unquatedCell = cell.mid(1, cell.length()-2);
                 m->setData(m->index(row, column), unquatedCell);
@@ -186,6 +200,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     if(event->matches(QKeySequence::Copy))
     {
         copy();
+        return;
     // Call a custom paste method when Ctrl-P is pressed
     } else if(event->matches(QKeySequence::Paste))
     {
