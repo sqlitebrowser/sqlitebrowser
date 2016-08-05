@@ -195,7 +195,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
         // If the Tab key was pressed while the focus was on the last cell of the last row insert a new row automatically
         model()->insertRow(model()->rowCount());
-    } else if(event->key() == Qt::Key_Delete) {
+    } else if ((event->key() == Qt::Key_Delete) || (event->key() == Qt::Key_Backspace)) {
         if(event->modifiers().testFlag(Qt::AltModifier))
         {
             // When pressing Alt+Delete set the value to NULL
