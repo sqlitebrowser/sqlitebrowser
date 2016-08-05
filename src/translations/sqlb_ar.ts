@@ -1155,8 +1155,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="29"/>
-        <source>Database &amp;Structure</source>
-        <translation>ب&amp;نية قاعدة البيانات</translation>
+        <source>Database Structure</source>
+        <translation>بنية قاعدة البيانات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="35"/>
@@ -1166,8 +1166,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="71"/>
-        <source>&amp;Browse Data</source>
-        <translation>ت&amp;صفّح البيانات</translation>
+        <source>Browse Data</source>
+        <translation>تصفّح البيانات</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="79"/>
@@ -1337,8 +1337,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="323"/>
-        <source>Edit &amp;Pragmas</source>
-        <translation>&amp;حرّر Pragmas</translation>
+        <source>Edit Pragmas</source>
+        <translation>حرّر Pragmas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="347"/>
@@ -1989,8 +1989,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1633"/>
-        <source>&amp;Execute SQL</source>
-        <translation>&amp;نفّذ SQL</translation>
+        <source>Execute SQL</source>
+        <translation>نفّذ SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1636"/>
