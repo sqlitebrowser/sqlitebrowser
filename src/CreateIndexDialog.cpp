@@ -20,6 +20,10 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
         dbobjs.insert((*it).getname(), (*it));
     for(QMultiMap<QString, DBBrowserObject>::ConstIterator it=dbobjs.begin(); it != dbobjs.end(); ++it)
         ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it).getname());
+
+    QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
+
+    tableHeaderView->setSectionResizeMode(0, QHeaderView::Stretch);
 }
 
 CreateIndexDialog::~CreateIndexDialog()
