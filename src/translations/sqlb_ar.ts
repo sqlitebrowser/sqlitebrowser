@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;«متصفّح قواعد بيانات SQLite» أداة رسوميّة مفتوحة المصدر ومجّانيّة، تُستخدم لإنشاء ملفّات قواعد بيانات SQLite وتصميمها وتحريرها.&lt;/p&gt;&lt;p&gt;الأداة مرخّصة برخصتين، الإصدارة الثّانية من رخصة موزيلا العموميّة، والإصدارة الثّالثة وما بعدها من رخصة غنو العموميّة. يمكنك تعديل الأداة أو إعادة توزيعها بشروط تلك الرّخص.
+        <translation>&lt;html dir=&quot;rtl&quot;&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;«متصفّح قواعد بيانات SQLite» أداة رسوميّة مفتوحة المصدر ومجّانيّة، تُستخدم لإنشاء ملفّات قواعد بيانات SQLite وتصميمها وتحريرها.&lt;/p&gt;&lt;p&gt;الأداة مرخّصة برخصتين، الإصدارة الثّانية من رخصة موزيلا العموميّة، والإصدارة الثّالثة وما بعدها من رخصة غنو العموميّة. يمكنك تعديل الأداة أو إعادة توزيعها بشروط تلك الرّخص.
 &lt;/p&gt;&lt;p&gt;طالع &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; و&lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; للتّفاصيل.&lt;/p&gt;&lt;p&gt;لمعلومات أكثر عن البرمجيّة، فضلًا زُر موقع الوبّ هذا: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;تستخدم هذه البرمجيّة عدّة أدوات كيوت المرخّصة تحت GPL/LGPL وذلك من &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;طالع &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; لشروط التّرخيص والمعلومات.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;تستخدم البرمجيّة أيضًا طقم أيقونات الحرير/Silk ل‍ Mark James المرخّصة برخصة المشاع الإبداعي - النّسبة 2.5 و 3.0.&lt;br/&gt;طالع &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; للتّفاصيل.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -558,7 +558,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="146"/>
         <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
-        <translation>الملفّات النّصّيّة(‎*.txt);;ملفّات الصّور(%1);;كلّ الملفّات(*)</translation>
+        <translation>الملفّات النّصّيّة(*.txt);;ملفّات الصّور(%1);;كلّ الملفّات(*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="170"/>
@@ -568,7 +568,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="171"/>
         <source>Text files(*.txt);;All files(*)</source>
-        <translation>الملفّات النّصّيّة(‎*.txt);;كلّ الملفّات(*)</translation>
+        <translation>الملفّات النّصّيّة(*.txt);;كلّ الملفّات(*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="325"/>
@@ -893,7 +893,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportCsvDialog.cpp" line="170"/>
         <location filename="../ExportCsvDialog.cpp" line="198"/>
         <source>Text files(*.csv *.txt)</source>
-        <translation>الملفّات النّصّيّة(‎*.csv *.txt)</translation>
+        <translation>الملفّات النّصّيّة(*.csv *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.cpp" line="187"/>
@@ -976,7 +976,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="89"/>
         <source>Text files(*.sql *.txt)</source>
-        <translation>الملفّات النّصّيّة(‎*.sql *.txt)</translation>
+        <translation>الملفّات النّصّيّة(*.sql *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="117"/>
@@ -1004,7 +1004,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FileDialog.h" line="20"/>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation>ملفّات قواعد بيانات SQLite ‏(‎*.db *.sqlite *.sqlite3 *.db3);;كلّ الملفّات (*)</translation>
+        <translation>ملفّات قواعد بيانات SQLite ‏(*.db *.sqlite *.sqlite3 *.db3);;كلّ الملفّات (*)</translation>
     </message>
 </context>
 <context>
@@ -2301,7 +2301,7 @@ All data associated with the %1 will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="1043"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation>الملفّات النّصّيّة(‎*.csv *.txt);;كلّ الملفّات(*)</translation>
+        <translation>الملفّات النّصّيّة(*.csv *.txt);;كلّ الملفّات(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1052"/>
@@ -2323,7 +2323,7 @@ All data associated with the %1 will be lost.</source>
         <location filename="../MainWindow.cpp" line="1490"/>
         <location filename="../MainWindow.cpp" line="1536"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
-        <translation>الملفّات النّصّيّة(‎*.sql *.txt);;كلّ الملفّات(*)</translation>
+        <translation>الملفّات النّصّيّة(*.sql *.txt);;كلّ الملفّات(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1127"/>
@@ -2392,7 +2392,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1551"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>الامتدادات(‎*.so *.dll);;كلّ الملفّات(*)</translation>
+        <translation>الامتدادات(*.so *.dll);;كلّ الملفّات(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1557"/>
@@ -2439,7 +2439,7 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="2032"/>
         <location filename="../MainWindow.cpp" line="2172"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
-        <translation>ملفّ مشروع «متصفّح قواعد بيانات SQLite» ‏(‎*.sqbpro)</translation>
+        <translation>ملفّ مشروع «متصفّح قواعد بيانات SQLite» ‏(*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2504"/>
@@ -2818,7 +2818,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="454"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>الامتدادات(‎*.so *.dll);;كلّ الملفّات(*)</translation>
+        <translation>الامتدادات(*.so *.dll);;كلّ الملفّات(*)</translation>
     </message>
 </context>
 <context>
