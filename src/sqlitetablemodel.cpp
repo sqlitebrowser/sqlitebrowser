@@ -623,7 +623,7 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    return m_vDataTypes.at(index.column()) == SQLITE_BLOB;
+    return m_data.at(index.row()).at(index.column()).left(1024).contains('\0');
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const
