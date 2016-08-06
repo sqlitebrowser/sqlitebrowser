@@ -57,6 +57,33 @@ void ExtendedTableWidget::copy()
         return;
     }
 
+    m_buffer.clear();
+
+    // If any of the cells contain binary data - we use inner buffer
+    bool containsBinary = false;
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+    foreach (const QModelIndex& index, indices)
+        if (m->isBinary(index)) {
+            containsBinary = true;
+            break;
+        }
+
+    if (containsBinary) {
+        qApp->clipboard()->clear();
+        // Copy selected data into inner buffer
+        int columns = indices.last().column() - indices.first().column() + 1;
+        while (!indices.isEmpty()) {
+            QByteArrayList lst;
+            for (int i = 0; i < columns; ++i) {
+                lst << indices.first().data(Qt::EditRole).toByteArray();
+                indices.pop_front();
+            }
+            m_buffer.push_back(lst);
+        }
+
+        return;
+    }
+
     QModelIndex first = indices.first();
     QString result;
     int currentRow = 0;
@@ -82,8 +109,6 @@ void ExtendedTableWidget::copy()
 
 void ExtendedTableWidget::paste()
 {
-    QString clipboard = qApp->clipboard()->text();
-
     // Get list of selected items
     QItemSelectionModel* selection = selectionModel();
     QModelIndexList indices = selection->selectedIndexes();
@@ -91,6 +116,42 @@ void ExtendedTableWidget::paste()
     // Abort if there's nowhere to paste
     if(indices.isEmpty())
         return;
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    if (qApp->clipboard()->text().isEmpty() && !m_buffer.isEmpty()) {
+        // If buffer contains something - use it instead of clipboard
+        int rows = m_buffer.size();
+        int columns = m_buffer.first().size();
+
+        int firstRow = indices.front().row();
+        int firstColumn = indices.front().column();
+
+        int lastRow = qMin(firstRow + rows - 1, m->rowCount() - 1);
+        int lastColumn = qMin(firstColumn + columns - 1, m->columnCount() - 1);
+
+        int row = firstRow;
+
+        foreach(const QByteArrayList& lst, m_buffer) {
+            int column = firstColumn;
+            foreach(const QByteArray& ba, lst) {
+                m->setData(m->index(row, column), ba);
+
+                column++;
+                if (column > lastColumn)
+                    break;
+            }
+
+            row++;
+            if (row > lastRow)
+                break;
+        }
+
+        return;
+    }
+
+
+    QString clipboard = qApp->clipboard()->text();
 
     // Find out end of line character
     QString endOfLine;
@@ -155,7 +216,6 @@ void ExtendedTableWidget::paste()
     // Here we have positive answer even if cliboard is bigger than selection
 
 
-    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
     // If last row and column are after table size clamp it
     int lastRow = qMin(firstRow + clipboardRows - 1, m->rowCount() - 1);
     int lastColumn = qMin(firstColumn + clipboardColumns - 1, m->columnCount() - 1);
