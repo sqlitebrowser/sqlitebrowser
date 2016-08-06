@@ -27,6 +27,9 @@ private:
     void paste();
     int numVisibleRows();
 
+    typedef QList<QByteArray> QByteArrayList;
+    QList<QByteArrayList> m_buffer;
+
 private slots:
     void vscrollbarChanged(int value);
     void cellClicked(const QModelIndex& index);
