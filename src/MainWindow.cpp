@@ -861,8 +861,10 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     // Don't allow editing of other objects than tables
     editDock->allowEditing(edit);
 
-    // Load the current value into the edit dock only
-    editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+    // If the Edit Cell dock is visible, load the new value into it
+    if (editDock->isVisible()) {
+        editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+    }
 }
 
 /*
