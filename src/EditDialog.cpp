@@ -90,10 +90,18 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
     curCol = col;
     oldData = data;
 
-    // Load data
-    QString textData = QString::fromUtf8(data.constData(), data.size());
-    ui->editorText->setPlainText(textData);
+    // Always load the data into the hex editor, as other methods in this class
+    // rely on it being there
     hexEdit->setData(data);
+
+    // Get the current editor mode (eg text, hex, or image mode)
+    int editMode = ui->editorStack->currentIndex();
+
+    // Only load the data into the text editor if that's the active edit mode
+    if (editMode == 0) {
+        QString textData = QString::fromUtf8(data.constData(), data.size());
+        ui->editorText->setPlainText(textData);
+    }
 
     // Determine the data type in the cell
     int dataType = checkDataType();
@@ -102,8 +110,11 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
     QImage img;
     switch (dataType) {
     case Text:
-        // For text, ensure it's all selected in the Edit Cell
-        ui->editorText->selectAll();
+        // If in text editor mode, select all of the text by default
+        if (editMode == 0) {
+
+            ui->editorText->selectAll();
+        }
 
         // Clear any image from the image viewing widget
         ui->editorImage->setPixmap(QPixmap(0,0));
@@ -111,7 +122,7 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
 
     case Image:
         // For images, load the image into the image viewing widget
-        if (img.loadFromData(hexEdit->data())) {
+        if (img.loadFromData(data)) {
             ui->editorImage->setPixmap(QPixmap::fromImage(img));
         }
         break;
@@ -121,9 +132,6 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
         ui->editorImage->setPixmap(QPixmap(0,0));
         break;
     }
-
-    // Get the current editor mode (eg text, hex, or image mode)
-    int editMode = ui->editorStack->currentIndex();
 
     // Show or hide the warning about editing binary data in text mode
     updateBinaryEditWarning(editMode, dataType);
@@ -210,6 +218,13 @@ void EditDialog::accept()
 // Called when the user manually changes the "Mode" drop down combobox
 void EditDialog::editModeChanged(int editMode)
 {
+    // If the new editor mode is "text editor", load the data into it
+    if (editMode == 0) {
+        QByteArray data = hexEdit->data();
+        QString textData = QString::fromUtf8(data, data.size());
+        ui->editorText->setPlainText(textData);
+    }
+
     // Switch to the selected editor
     ui->editorStack->setCurrentIndex(editMode);
 
