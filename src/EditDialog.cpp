@@ -112,7 +112,6 @@ void EditDialog::loadText(const QByteArray& data, int row, int col)
     case Text:
         // If in text editor mode, select all of the text by default
         if (editMode == 0) {
-
             ui->editorText->selectAll();
         }
 
