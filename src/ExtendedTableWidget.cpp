@@ -10,6 +10,7 @@
 #include <QScrollBar>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QBuffer>
 
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
@@ -34,6 +35,17 @@ void ExtendedTableWidget::copy()
     if (indices.isEmpty())
         return;
     qSort(indices);
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // If single image cell selected - copy it to clipboard
+    if (indices.size() == 1) {
+        QImage img;
+        if (img.loadFromData(m->data(indices.first(), Qt::EditRole).toByteArray())) {
+            qApp->clipboard()->setImage(img);
+            return;
+        }
+    }
 
     // Check whether selection is rectangular
     QItemSelection rect(indices.first(), indices.last());
@@ -61,7 +73,6 @@ void ExtendedTableWidget::copy()
 
     // If any of the cells contain binary data - we use inner buffer
     bool containsBinary = false;
-    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
     foreach (const QModelIndex& index, indices)
         if (m->isBinary(index)) {
             containsBinary = true;
@@ -118,6 +129,19 @@ void ExtendedTableWidget::paste()
         return;
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // If clipboard contains image - just insert it
+    QImage img = qApp->clipboard()->image();
+    if (!img.isNull()) {
+        QByteArray ba;
+        QBuffer buffer(&ba);
+        buffer.open(QIODevice::WriteOnly);
+        img.save(&buffer, "PNG");
+        buffer.close();
+
+        m->setData(indices.first(), ba);
+        return;
+    }
 
     if (qApp->clipboard()->text().isEmpty() && !m_buffer.isEmpty()) {
         // If buffer contains something - use it instead of clipboard
