@@ -134,13 +134,6 @@
      <widget class="QWidget" name="verticalLayout_4">
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="labelBinaryWarning">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Warning: Editing binary content in text mode may result in corrupted data!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QTextEdit" name="editorText">
          <property name="font">
           <font>
@@ -266,22 +259,6 @@
     <hint type="destinationlabel">
      <x>162</x>
      <y>17</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editorText</sender>
-   <signal>textChanged()</signal>
-   <receiver>EditDialog</receiver>
-   <slot>editTextChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>234</x>
-     <y>218</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>362</x>
-     <y>309</y>
     </hint>
    </hints>
   </connection>

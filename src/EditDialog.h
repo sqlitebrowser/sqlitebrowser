@@ -22,7 +22,7 @@ public:
 
 public slots:
     virtual void reset();
-    virtual void loadText(const QByteArray& data, int row, int col);
+    virtual void loadDataFromCell(const QByteArray& data, int row, int col);
     virtual void setFocus();
     virtual void reject();
     virtual void allowEditing(bool on);
@@ -36,18 +36,16 @@ private slots:
     virtual void exportData();
     virtual void setNull();
     virtual void accept();
-    virtual void editTextChanged();
-    virtual void hexDataChanged();
-    virtual int checkDataType();
+    virtual int checkDataType(const QByteArray& data);
+    virtual void loadData(const QByteArray& data);
     virtual void toggleOverwriteMode();
-    virtual void editModeChanged(int editMode);
-    virtual void updateBinaryEditWarning(int editMode, int dataType);
-    virtual void updateCellInfo(int cellType);
+    virtual void editModeChanged(int newMode);
+    virtual void updateCellInfo(const QByteArray& data);
     virtual QString humanReadableSize(double byteCount);
 
 signals:
     void goingAway();
-    void updateRecordText(int row, int col, bool isBlob, const QByteArray& data);
+    void recordTextUpdated(int row, int col, bool isBlob, const QByteArray& data);
 
 private:
     Ui::EditDialog* ui;
@@ -55,12 +53,25 @@ private:
     QByteArray oldData;
     int curCol;
     int curRow;
+    int dataSource;
+    int dataType;
 
-    enum DataType {
+    enum DataSources {
+        TextBuffer,
+        HexBuffer
+    };
+
+    enum DataTypes {
         Binary,
         Image,
         Null,
         Text
+    };
+
+    enum EditModes {
+        TextEditor = 0,
+        HexEditor = 1,
+        ImageViewer = 2
     };
 };
 
