@@ -99,7 +99,6 @@ void EditTableDialog::populateFields()
         }
         typeBox->setCurrentIndex(index);
         connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-        //connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
@@ -464,7 +463,6 @@ void EditTableDialog::addField()
 
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
     connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-    //connect(typeBox, SIGNAL(editTextChanged(QString)), this, SLOT(updateTypes()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);

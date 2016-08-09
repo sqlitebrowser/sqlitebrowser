@@ -203,7 +203,7 @@ void MainWindow::init()
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
     connect(editDock, SIGNAL(goingAway()), this, SLOT(editDockAway()));
-    connect(editDock, SIGNAL(updateRecordText(int, int, bool, QByteArray)), this, SLOT(updateRecordText(int, int, bool, QByteArray)));
+    connect(editDock, SIGNAL(recordTextUpdated(int, int, bool, QByteArray)), this, SLOT(updateRecordText(int, int, bool, QByteArray)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
@@ -840,7 +840,10 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     editDock->allowEditing(allowEditing);
 
     // Load the current value into the edit dock
-    editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+    QByteArray cellData = index.data(Qt::EditRole).toByteArray();
+    int cellRow = index.row();
+    int cellColumn = index.column();
+    editDock->loadDataFromCell(cellData, cellRow, cellColumn);
 
     // Show the edit dock
     ui->dockEdit->setVisible(true);
@@ -863,7 +866,10 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
 
     // If the Edit Cell dock is visible, load the new value into it
     if (editDock->isVisible()) {
-        editDock->loadText(index.data(Qt::EditRole).toByteArray(), index.row(), index.column());
+        QByteArray cellData = index.data(Qt::EditRole).toByteArray();
+        int cellRow = index.row();
+        int cellColumn = index.column();
+        editDock->loadDataFromCell(cellData, cellRow, cellColumn);
     }
 }
 
