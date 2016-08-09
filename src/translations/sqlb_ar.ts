@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ar">
+<TS version="2.1" language="ar">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -572,12 +572,12 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="191"/>
         <source>Image data can&apos;t be viewed with the text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن عرض البيانات الصّوريّة داخل محرّر النّصوص</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="219"/>
         <source>Binary data can&apos;t be viewed with the text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن عرض البيانات الثّنائيّة داخل محرّر النّصوص</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="460"/>
@@ -2003,7 +2003,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1634"/>
         <source>&amp;Execute SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>ن&amp;فّذ SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
