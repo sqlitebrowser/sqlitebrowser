@@ -247,42 +247,42 @@ If any of the other settings were altered for this database file you need to pro
         <translation>创建新索引</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="26"/>
+        <location filename="../CreateIndexDialog.ui" line="32"/>
         <source>&amp;Name</source>
         <translation>名称(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="39"/>
+        <location filename="../CreateIndexDialog.ui" line="45"/>
         <source>&amp;Columns</source>
         <translation>列(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="71"/>
+        <location filename="../CreateIndexDialog.ui" line="83"/>
         <source>Column</source>
         <translation>列</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="76"/>
+        <location filename="../CreateIndexDialog.ui" line="88"/>
         <source>Use in Index</source>
         <translation>在索引中使用</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="81"/>
+        <location filename="../CreateIndexDialog.ui" line="93"/>
         <source>Order</source>
         <translation>顺序</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="89"/>
+        <location filename="../CreateIndexDialog.ui" line="101"/>
         <source>&amp;Table</source>
         <translation>表(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="102"/>
+        <location filename="../CreateIndexDialog.ui" line="114"/>
         <source>&amp;Unique</source>
         <translation>唯一(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.cpp" line="97"/>
+        <location filename="../CreateIndexDialog.cpp" line="105"/>
         <source>Creating the index failed:
 %1</source>
         <translation>创建索引时失败:
@@ -481,6 +481,7 @@ Aborting execution.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="52"/>
+        <location filename="../EditDialog.cpp" line="290"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -525,7 +526,7 @@ Aborting execution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="223"/>
+        <location filename="../EditDialog.ui" line="216"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -536,7 +537,6 @@ Aborting execution.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="47"/>
-        <location filename="../EditDialog.cpp" line="205"/>
         <source>Binary</source>
         <translation>二进制</translation>
     </message>
@@ -554,67 +554,76 @@ Aborting execution.</source>
         <translation type="obsolete">清除(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="139"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Warning: Editing binary content in text mode may result in corrupted data!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;警告: 在文本模式中编辑二进制内容可能会导致数据损坏!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;警告: 在文本模式中编辑二进制内容可能会导致数据损坏!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="151"/>
+        <location filename="../EditDialog.ui" line="144"/>
         <source>This area displays information about the data present in this database cell</source>
         <translation>这个区域显示存在于这个数据库单元格中的数据的相关信息</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="194"/>
+        <location filename="../EditDialog.ui" line="187"/>
         <source>Type of data currently in cell</source>
         <translation>当前在单元格中的数据的类型</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="201"/>
+        <location filename="../EditDialog.ui" line="194"/>
         <source>Size of data currently in table</source>
         <translation>当前在表中的数据的大小</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="145"/>
+        <location filename="../EditDialog.cpp" line="260"/>
         <source>Choose a file</source>
         <translation>选择一个文件</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="147"/>
+        <location filename="../EditDialog.cpp" line="262"/>
         <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
         <translation>文本文件(*.txt);;图像文件(%1);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="171"/>
+        <location filename="../EditDialog.cpp" line="297"/>
         <source>Choose a filename to export data</source>
         <translation>选择一个导出数据的文件名</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="172"/>
+        <location filename="../EditDialog.cpp" line="292"/>
         <source>Text files(*.txt);;All files(*)</source>
         <translation>文本文件(*.txt);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="327"/>
+        <location filename="../EditDialog.cpp" line="191"/>
+        <source>Image data can&apos;t be viewed with the text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="219"/>
+        <source>Binary data can&apos;t be viewed with the text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="460"/>
         <source>Type of data currently in cell: %1 Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="333"/>
+        <location filename="../EditDialog.cpp" line="466"/>
         <source>%1x%2 pixel(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="347"/>
+        <location filename="../EditDialog.cpp" line="480"/>
         <source>Type of data currently in cell: NULL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="353"/>
+        <location filename="../EditDialog.cpp" line="486"/>
         <source>Type of data currently in cell: Text / Numeric</source>
         <translation>当前在单元格中的数据的类型: Text 文本/ Numeric 数值</translation>
     </message>
     <message numerus="yes">
-        <location filename="../EditDialog.cpp" line="354"/>
+        <location filename="../EditDialog.cpp" line="487"/>
         <source>%n char(s)</source>
         <translation>
             <numerusform>%n 个字符</numerusform>
@@ -629,13 +638,13 @@ Aborting execution.</source>
         <translation type="obsolete">%1x%2 像素</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="359"/>
+        <location filename="../EditDialog.cpp" line="492"/>
         <source>Type of data currently in cell: Binary</source>
         <translation>当前在单元格中的数据的类型: Binary 二进制</translation>
     </message>
     <message numerus="yes">
-        <location filename="../EditDialog.cpp" line="348"/>
-        <location filename="../EditDialog.cpp" line="360"/>
+        <location filename="../EditDialog.cpp" line="481"/>
+        <location filename="../EditDialog.cpp" line="493"/>
         <source>%n byte(s)</source>
         <translation>
             <numerusform>%n 字节</numerusform>
@@ -766,52 +775,52 @@ Aborting execution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="139"/>
+        <location filename="../EditTableDialog.cpp" line="138"/>
         <source>Error creating table. Message from database engine:
 %1</source>
         <translation>创建表时出错。来自数据库引擎的消息:
 %1</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="223"/>
+        <location filename="../EditTableDialog.cpp" line="222"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="243"/>
+        <location filename="../EditTableDialog.cpp" line="242"/>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="299"/>
+        <location filename="../EditTableDialog.cpp" line="298"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
         <translation>至少有一行带本字段的记录被设为空。这使得它不可能设置这个标志。请首先更改表数据。</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="326"/>
+        <location filename="../EditTableDialog.cpp" line="325"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
         <translation>在这个字段中至少有一行带有一个非整数的值。这使得它不可能设置 AI 标志。请首先更改表数据。</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="370"/>
+        <location filename="../EditTableDialog.cpp" line="369"/>
         <source>Column &apos;%1&apos;&apos; has no unique data.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="371"/>
+        <location filename="../EditTableDialog.cpp" line="370"/>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="509"/>
+        <location filename="../EditTableDialog.cpp" line="507"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
         <translation>您是否确认您想删除字段 &apos;%1&apos;?
 当前存储在这个字段中的所有数据将会丢失。</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="622"/>
+        <location filename="../EditTableDialog.cpp" line="620"/>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto increment disabled</source>
@@ -1186,104 +1195,102 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">SQLiteBrowser</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="29"/>
         <source>Database &amp;Structure</source>
-        <translation>数据库结构(&amp;S)</translation>
+        <translation type="obsolete">数据库结构(&amp;S)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="35"/>
-        <location filename="../MainWindow.ui" line="787"/>
+        <location filename="../MainWindow.ui" line="788"/>
         <source>toolBar1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="71"/>
         <source>&amp;Browse Data</source>
-        <translation>浏览数据(&amp;B)</translation>
+        <translation type="obsolete">浏览数据(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="79"/>
+        <location filename="../MainWindow.ui" line="80"/>
         <source>Table:</source>
         <translation>表:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="101"/>
+        <location filename="../MainWindow.ui" line="102"/>
         <source>Select a table to browse data</source>
         <translation>选择一个表以浏览数据</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="104"/>
+        <location filename="../MainWindow.ui" line="105"/>
         <source>Use this list to select a table to be displayed in the database view</source>
         <translation>使用这个列表选择一个要显示在数据库视图中的表</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="111"/>
+        <location filename="../MainWindow.ui" line="112"/>
         <source>Refresh the data in the selected table.</source>
         <translation>刷新选择的表中的数据。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="114"/>
+        <location filename="../MainWindow.ui" line="115"/>
         <source>This button refreshes the data in the currently selected table.</source>
         <translation>这个按钮刷新在当前选择的表中的数据。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="124"/>
-        <location filename="../MainWindow.ui" line="1639"/>
+        <location filename="../MainWindow.ui" line="125"/>
+        <location filename="../MainWindow.ui" line="1640"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="158"/>
+        <location filename="../MainWindow.ui" line="159"/>
         <source>Insert a new record in the current table</source>
         <translation>在当前表中插入一条新记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="161"/>
+        <location filename="../MainWindow.ui" line="162"/>
         <source>This button creates a new, empty record in the database</source>
         <translation>这个按钮在数据库中创建一条新的空白记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="164"/>
+        <location filename="../MainWindow.ui" line="165"/>
         <source>New Record</source>
         <translation>新建记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="171"/>
+        <location filename="../MainWindow.ui" line="172"/>
         <source>Delete the current record</source>
         <translation>删除当前记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="174"/>
+        <location filename="../MainWindow.ui" line="175"/>
         <source>This button deletes the record currently selected in the database</source>
         <translation>这个按钮删除在数据库中当前选择的记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="177"/>
+        <location filename="../MainWindow.ui" line="178"/>
         <source>Delete Record</source>
         <translation>删除记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="189"/>
+        <location filename="../MainWindow.ui" line="190"/>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
         <translation>这是数据库视图。您可以双击任何记录，在单元格编辑器窗口中编辑记录内容。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="235"/>
+        <location filename="../MainWindow.ui" line="236"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="242"/>
+        <location filename="../MainWindow.ui" line="243"/>
         <source>0 - 0 of 0</source>
         <translation>0 - 0 / 0</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="258"/>
+        <location filename="../MainWindow.ui" line="259"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="229"/>
+        <location filename="../MainWindow.ui" line="230"/>
         <source>Scroll 100 records upwards</source>
         <translation>上滚 100 条记录</translation>
     </message>
@@ -1293,366 +1300,364 @@ Do you want to insert it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="131"/>
+        <location filename="../MainWindow.ui" line="132"/>
         <source>Clear all filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="213"/>
+        <location filename="../MainWindow.ui" line="214"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="216"/>
+        <location filename="../MainWindow.ui" line="217"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="219"/>
+        <location filename="../MainWindow.ui" line="220"/>
         <source>|&lt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="232"/>
+        <location filename="../MainWindow.ui" line="233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;点击这个按钮在上面的表视图中向上导航 100 条记录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="252"/>
+        <location filename="../MainWindow.ui" line="253"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;下滚 100 条记录&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="255"/>
+        <location filename="../MainWindow.ui" line="256"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;点击这个按钮在上面的表视图中向下导航 100 条记录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="268"/>
+        <location filename="../MainWindow.ui" line="269"/>
         <source>Scroll to the end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="271"/>
+        <location filename="../MainWindow.ui" line="272"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="274"/>
+        <location filename="../MainWindow.ui" line="275"/>
         <source>&gt;|</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="294"/>
+        <location filename="../MainWindow.ui" line="295"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;点击这里跳到指定的记录&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="297"/>
+        <location filename="../MainWindow.ui" line="298"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这个按钮用于导航到在“转到”区域中指定的记录号。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="300"/>
+        <location filename="../MainWindow.ui" line="301"/>
         <source>Go to:</source>
         <translation>转到:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="307"/>
+        <location filename="../MainWindow.ui" line="308"/>
         <source>Enter record number to browse</source>
         <translation>输入要浏览的记录号</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="310"/>
+        <location filename="../MainWindow.ui" line="311"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
         <translation>在这个区域中输入一个记录号，并点击“转到:”按钮以在数据库视图中显示记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="313"/>
+        <location filename="../MainWindow.ui" line="314"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="323"/>
         <source>Edit &amp;Pragmas</source>
-        <translation>编辑杂注(&amp;P)</translation>
+        <translation type="obsolete">编辑杂注(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="347"/>
+        <location filename="../MainWindow.ui" line="348"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;自动真空&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="364"/>
-        <location filename="../MainWindow.ui" line="1124"/>
-        <location filename="../MainWindow.ui" line="1168"/>
+        <location filename="../MainWindow.ui" line="365"/>
+        <location filename="../MainWindow.ui" line="1125"/>
+        <location filename="../MainWindow.ui" line="1169"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="369"/>
-        <location filename="../MainWindow.ui" line="686"/>
+        <location filename="../MainWindow.ui" line="370"/>
+        <location filename="../MainWindow.ui" line="687"/>
         <source>Full</source>
         <translation>完整</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="374"/>
+        <location filename="../MainWindow.ui" line="375"/>
         <source>Incremental</source>
         <translation>增加</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="382"/>
+        <location filename="../MainWindow.ui" line="383"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;自动化索引&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="402"/>
+        <location filename="../MainWindow.ui" line="403"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;检查点完全 FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="422"/>
+        <location filename="../MainWindow.ui" line="423"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;外键&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="442"/>
+        <location filename="../MainWindow.ui" line="443"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;完全 FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="462"/>
+        <location filename="../MainWindow.ui" line="463"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;忽略检查约束&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="482"/>
+        <location filename="../MainWindow.ui" line="483"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;日志模式&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="496"/>
+        <location filename="../MainWindow.ui" line="497"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="501"/>
+        <location filename="../MainWindow.ui" line="502"/>
         <source>Truncate</source>
         <translation>裁截</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="506"/>
+        <location filename="../MainWindow.ui" line="507"/>
         <source>Persist</source>
         <translation>永久</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="511"/>
-        <location filename="../MainWindow.ui" line="718"/>
+        <location filename="../MainWindow.ui" line="512"/>
+        <location filename="../MainWindow.ui" line="719"/>
         <source>Memory</source>
         <translation>内存</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="516"/>
+        <location filename="../MainWindow.ui" line="517"/>
         <source>WAL</source>
         <translation>WAL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="521"/>
-        <location filename="../MainWindow.ui" line="676"/>
+        <location filename="../MainWindow.ui" line="522"/>
+        <location filename="../MainWindow.ui" line="677"/>
         <source>Off</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="529"/>
+        <location filename="../MainWindow.ui" line="530"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;日志大小限制&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="552"/>
+        <location filename="../MainWindow.ui" line="553"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;锁定模式&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="566"/>
-        <location filename="../MainWindow.ui" line="681"/>
+        <location filename="../MainWindow.ui" line="567"/>
+        <location filename="../MainWindow.ui" line="682"/>
         <source>Normal</source>
         <translation>正常</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="571"/>
+        <location filename="../MainWindow.ui" line="572"/>
         <source>Exclusive</source>
         <translation>独占</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="579"/>
+        <location filename="../MainWindow.ui" line="580"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;最大页数&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="599"/>
+        <location filename="../MainWindow.ui" line="600"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;页面大小&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="622"/>
+        <location filename="../MainWindow.ui" line="623"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;递归触发器&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="642"/>
+        <location filename="../MainWindow.ui" line="643"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;安全删除&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="662"/>
+        <location filename="../MainWindow.ui" line="663"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;同步&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="694"/>
+        <location filename="../MainWindow.ui" line="695"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;临时存储&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="708"/>
+        <location filename="../MainWindow.ui" line="709"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="713"/>
+        <location filename="../MainWindow.ui" line="714"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="726"/>
+        <location filename="../MainWindow.ui" line="727"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;用户版本&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="746"/>
+        <location filename="../MainWindow.ui" line="747"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL 自动检查点&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="781"/>
         <source>E&amp;xecute SQL</source>
-        <translation>执行 SQL(&amp;X)</translation>
+        <translation type="obsolete">执行 SQL(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="827"/>
+        <location filename="../MainWindow.ui" line="828"/>
         <source>&amp;File</source>
         <translation>文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="831"/>
+        <location filename="../MainWindow.ui" line="832"/>
         <source>&amp;Import</source>
         <translation>导入(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="838"/>
+        <location filename="../MainWindow.ui" line="839"/>
         <source>&amp;Export</source>
         <translation>导出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="864"/>
+        <location filename="../MainWindow.ui" line="865"/>
         <source>&amp;Edit</source>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="874"/>
+        <location filename="../MainWindow.ui" line="875"/>
         <source>&amp;View</source>
         <translation>查看(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="882"/>
+        <location filename="../MainWindow.ui" line="883"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1731"/>
+        <location filename="../MainWindow.ui" line="1732"/>
         <source>Sa&amp;ve Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1746"/>
+        <location filename="../MainWindow.ui" line="1747"/>
         <source>Open &amp;Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1760"/>
+        <location filename="../MainWindow.ui" line="1761"/>
         <source>&amp;Attach Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1769"/>
+        <location filename="../MainWindow.ui" line="1770"/>
         <source>&amp;Set Encryption</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1778"/>
-        <location filename="../MainWindow.ui" line="1781"/>
+        <location filename="../MainWindow.ui" line="1779"/>
+        <location filename="../MainWindow.ui" line="1782"/>
         <source>Save SQL file as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1802"/>
+        <location filename="../MainWindow.ui" line="1803"/>
         <source>&amp;Browse Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1811"/>
+        <location filename="../MainWindow.ui" line="1812"/>
         <source>Copy Create statement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1814"/>
+        <location filename="../MainWindow.ui" line="1815"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1819"/>
+        <location filename="../MainWindow.ui" line="1820"/>
         <source>Edit display format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1822"/>
+        <location filename="../MainWindow.ui" line="1823"/>
         <source>Edit the display format of the data in this column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1830"/>
+        <location filename="../MainWindow.ui" line="1831"/>
         <source>Show rowid column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1833"/>
+        <location filename="../MainWindow.ui" line="1834"/>
         <source>Toggle the visibility of the rowid column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1838"/>
-        <location filename="../MainWindow.cpp" line="2511"/>
+        <location filename="../MainWindow.ui" line="1839"/>
+        <location filename="../MainWindow.cpp" line="2527"/>
         <source>Set encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1841"/>
+        <location filename="../MainWindow.ui" line="1842"/>
         <source>Change the encoding of the text in the table cells</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1846"/>
+        <location filename="../MainWindow.ui" line="1847"/>
         <source>Set encoding for all tables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1849"/>
+        <location filename="../MainWindow.ui" line="1850"/>
         <source>Change the default encoding assumed for all tables in the database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1854"/>
-        <location filename="../MainWindow.ui" line="1857"/>
+        <location filename="../MainWindow.ui" line="1855"/>
+        <location filename="../MainWindow.ui" line="1858"/>
         <source>Duplicate record</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1669,17 +1674,17 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">显示 SQL 提交自(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="964"/>
+        <location filename="../MainWindow.ui" line="965"/>
         <source>User</source>
         <translation>用户</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="969"/>
+        <location filename="../MainWindow.ui" line="970"/>
         <source>Application</source>
         <translation>应用程序</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="996"/>
+        <location filename="../MainWindow.ui" line="997"/>
         <source>&amp;Clear</source>
         <translation>清除(&amp;C)</translation>
     </message>
@@ -1688,194 +1693,194 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">图表</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1066"/>
+        <location filename="../MainWindow.ui" line="1067"/>
         <source>Columns</source>
         <translation>列列</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1071"/>
+        <location filename="../MainWindow.ui" line="1072"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1076"/>
+        <location filename="../MainWindow.ui" line="1077"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1081"/>
+        <location filename="../MainWindow.ui" line="1082"/>
         <source>_</source>
         <translation>_</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1113"/>
+        <location filename="../MainWindow.ui" line="1114"/>
         <source>Line type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1129"/>
+        <location filename="../MainWindow.ui" line="1130"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1134"/>
+        <location filename="../MainWindow.ui" line="1135"/>
         <source>StepLeft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1139"/>
+        <location filename="../MainWindow.ui" line="1140"/>
         <source>StepRight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1144"/>
+        <location filename="../MainWindow.ui" line="1145"/>
         <source>StepCenter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1149"/>
+        <location filename="../MainWindow.ui" line="1150"/>
         <source>Impulse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1157"/>
+        <location filename="../MainWindow.ui" line="1158"/>
         <source>Point shape:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1173"/>
+        <location filename="../MainWindow.ui" line="1174"/>
         <source>Cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1178"/>
+        <location filename="../MainWindow.ui" line="1179"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1183"/>
+        <location filename="../MainWindow.ui" line="1184"/>
         <source>Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1188"/>
+        <location filename="../MainWindow.ui" line="1189"/>
         <source>Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1193"/>
+        <location filename="../MainWindow.ui" line="1194"/>
         <source>Square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1198"/>
+        <location filename="../MainWindow.ui" line="1199"/>
         <source>Diamond</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1203"/>
+        <location filename="../MainWindow.ui" line="1204"/>
         <source>Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1208"/>
+        <location filename="../MainWindow.ui" line="1209"/>
         <source>Triangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1213"/>
+        <location filename="../MainWindow.ui" line="1214"/>
         <source>TriangleInverted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1218"/>
+        <location filename="../MainWindow.ui" line="1219"/>
         <source>CrossSquare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1223"/>
+        <location filename="../MainWindow.ui" line="1224"/>
         <source>PlusSquare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1228"/>
+        <location filename="../MainWindow.ui" line="1229"/>
         <source>CrossCircle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1233"/>
+        <location filename="../MainWindow.ui" line="1234"/>
         <source>PlusCircle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1238"/>
+        <location filename="../MainWindow.ui" line="1239"/>
         <source>Peace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1262"/>
+        <location filename="../MainWindow.ui" line="1263"/>
         <source>Save current plot...</source>
         <translation>保存当前图表...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1288"/>
+        <location filename="../MainWindow.ui" line="1289"/>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1304"/>
+        <location filename="../MainWindow.ui" line="1305"/>
         <source>DB Schema</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1333"/>
+        <location filename="../MainWindow.ui" line="1334"/>
         <source>&amp;New Database...</source>
         <translation>新建数据库(&amp;N)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1336"/>
-        <location filename="../MainWindow.ui" line="1339"/>
+        <location filename="../MainWindow.ui" line="1337"/>
+        <location filename="../MainWindow.ui" line="1340"/>
         <source>Create a new database file</source>
         <translation>创建一个新的数据库文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1342"/>
+        <location filename="../MainWindow.ui" line="1343"/>
         <source>This option is used to create a new database file.</source>
         <translation>这个选项用于创建一个新的数据库文件。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1345"/>
+        <location filename="../MainWindow.ui" line="1346"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1354"/>
+        <location filename="../MainWindow.ui" line="1355"/>
         <source>&amp;Open Database...</source>
         <translation>打开数据库(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1357"/>
-        <location filename="../MainWindow.ui" line="1360"/>
+        <location filename="../MainWindow.ui" line="1358"/>
+        <location filename="../MainWindow.ui" line="1361"/>
         <source>Open an existing database file</source>
         <translation>打开一个现有的数据库文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1363"/>
+        <location filename="../MainWindow.ui" line="1364"/>
         <source>This option is used to open an existing database file.</source>
         <translation>这个选项用于打开一个现有的数据库文件。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1366"/>
+        <location filename="../MainWindow.ui" line="1367"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1374"/>
+        <location filename="../MainWindow.ui" line="1375"/>
         <source>&amp;Close Database</source>
         <translation>关闭数据库(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1377"/>
+        <location filename="../MainWindow.ui" line="1378"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -1884,12 +1889,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">倒退更改</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1392"/>
+        <location filename="../MainWindow.ui" line="1393"/>
         <source>Revert database to last saved state</source>
         <translation>把数据库会退到先前保存的状态</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1395"/>
+        <location filename="../MainWindow.ui" line="1396"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>这个选项用于倒退当前的数据库文件为它最后的保存状态。从最后保存操作开始做出的所有更改将会丢失。</translation>
     </message>
@@ -1898,17 +1903,17 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">写入更改</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1410"/>
+        <location filename="../MainWindow.ui" line="1411"/>
         <source>Write changes to the database file</source>
         <translation>把更改写入到数据库文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1413"/>
+        <location filename="../MainWindow.ui" line="1414"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>这个选项用于保存更改到数据库文件。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1416"/>
+        <location filename="../MainWindow.ui" line="1417"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -1917,23 +1922,23 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">压缩数据库</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1427"/>
+        <location filename="../MainWindow.ui" line="1428"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>压缩数据库文件，通过删除记录去掉浪费的空间</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1430"/>
-        <location filename="../MainWindow.ui" line="1433"/>
+        <location filename="../MainWindow.ui" line="1431"/>
+        <location filename="../MainWindow.ui" line="1434"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
         <translation>压缩数据库文件，通过删除记录去掉浪费的空间。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1438"/>
+        <location filename="../MainWindow.ui" line="1439"/>
         <source>E&amp;xit</source>
         <translation>退出(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1441"/>
+        <location filename="../MainWindow.ui" line="1442"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -1942,12 +1947,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">来自 SQL 文件的数据库...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1452"/>
+        <location filename="../MainWindow.ui" line="1453"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>从一个 .sql 转储文本文件中导入数据到一个新的或已有的数据库。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1455"/>
+        <location filename="../MainWindow.ui" line="1456"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>这个选项让你从一个 .sql 转储文本文件中导入数据到一个新的或现有的数据库。SQL 转储文件可以在大多数数据库引擎上创建，包括 MySQL 和 PostgreSQL。</translation>
     </message>
@@ -1956,12 +1961,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">表来自 CSV 文件...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1463"/>
+        <location filename="../MainWindow.ui" line="1464"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>打开一个向导让您从一个逗号间隔的文本文件导入数据到一个数据库表中。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1466"/>
+        <location filename="../MainWindow.ui" line="1467"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>打开一个向导让您从一个逗号间隔的文本文件导入数据到一个数据库表中。CSV 文件可以在大多数数据库和电子表格应用程序上创建。</translation>
     </message>
@@ -1970,12 +1975,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">数据库到 SQL 文件...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1474"/>
+        <location filename="../MainWindow.ui" line="1475"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>导出一个数据库导一个 .sql 转储文本文件。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1477"/>
+        <location filename="../MainWindow.ui" line="1478"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>这个选项让你导出一个数据库导一个 .sql 转储文本文件。SQL 转储文件包含在大多数数据库引擎上(包括 MySQL 和 PostgreSQL)重新创建数据库所需的所有数据。</translation>
     </message>
@@ -1984,12 +1989,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">表为 CSV 文件...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1485"/>
+        <location filename="../MainWindow.ui" line="1486"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>导出一个数据库表为逗号间隔的文本文件。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1488"/>
+        <location filename="../MainWindow.ui" line="1489"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>导出一个数据库表为逗号间隔的文本文件，准备好被导入到其他数据库或电子表格应用程序。</translation>
     </message>
@@ -1998,7 +2003,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">创建表...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1503"/>
+        <location filename="../MainWindow.ui" line="1504"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>打开“创建表”向导，在那里可以定义在数据库中的一个新表的名称和字段</translation>
     </message>
@@ -2007,7 +2012,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">删除表...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1521"/>
+        <location filename="../MainWindow.ui" line="1522"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>打开“删除表”向导，在那里你可以选择要丢弃的一个数据库表。</translation>
     </message>
@@ -2016,7 +2021,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">修改表...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1536"/>
+        <location filename="../MainWindow.ui" line="1537"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>打开“修改表”向导，在其中可以重命名一个现有的表。也可以从一个表中添加或删除字段，以及修改字段名称和类型。</translation>
     </message>
@@ -2025,28 +2030,28 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">创建索引...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1551"/>
+        <location filename="../MainWindow.ui" line="1552"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>打开“创建索引”向导，在那里可以在一个现有的数据库表上定义一个新索引。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1560"/>
+        <location filename="../MainWindow.ui" line="1561"/>
         <source>&amp;Preferences...</source>
         <translation>首选项(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1563"/>
-        <location filename="../MainWindow.ui" line="1566"/>
+        <location filename="../MainWindow.ui" line="1564"/>
+        <location filename="../MainWindow.ui" line="1567"/>
         <source>Open the preferences window.</source>
         <translation>打开首选项窗口。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1581"/>
+        <location filename="../MainWindow.ui" line="1582"/>
         <source>&amp;DB Toolbar</source>
         <translation>数据库工具栏(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1584"/>
+        <location filename="../MainWindow.ui" line="1585"/>
         <source>Shows or hides the Database toolbar.</source>
         <translation>显示或隐藏数据库工具栏。</translation>
     </message>
@@ -2055,143 +2060,163 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">这是什么?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1599"/>
+        <location filename="../MainWindow.ui" line="1600"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1604"/>
+        <location filename="../MainWindow.ui" line="1605"/>
         <source>&amp;About...</source>
         <translation>关于(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1612"/>
+        <location filename="../MainWindow.ui" line="1613"/>
         <source>&amp;Recently opened</source>
         <translation>最近打开(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1621"/>
+        <location filename="../MainWindow.ui" line="1622"/>
         <source>Open &amp;tab</source>
         <translation>打开标签页(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1587"/>
-        <location filename="../MainWindow.ui" line="1624"/>
+        <location filename="../MainWindow.ui" line="1588"/>
+        <location filename="../MainWindow.ui" line="1625"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="898"/>
+        <location filename="../MainWindow.ui" line="29"/>
+        <source>Database Structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="72"/>
+        <source>Browse Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="324"/>
+        <source>Edit Pragmas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="782"/>
+        <source>Execute SQL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="899"/>
         <source>DB Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="917"/>
+        <location filename="../MainWindow.ui" line="918"/>
         <source>Edit Database Cell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="929"/>
+        <location filename="../MainWindow.ui" line="930"/>
         <source>SQL &amp;Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="947"/>
+        <location filename="../MainWindow.ui" line="948"/>
         <source>Show S&amp;QL submitted by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1039"/>
+        <location filename="../MainWindow.ui" line="1040"/>
         <source>&amp;Plot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1389"/>
+        <location filename="../MainWindow.ui" line="1390"/>
         <source>&amp;Revert Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1407"/>
+        <location filename="../MainWindow.ui" line="1408"/>
         <source>&amp;Write Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1424"/>
+        <location filename="../MainWindow.ui" line="1425"/>
         <source>Compact &amp;Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1449"/>
+        <location filename="../MainWindow.ui" line="1450"/>
         <source>&amp;Database from SQL file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1460"/>
+        <location filename="../MainWindow.ui" line="1461"/>
         <source>&amp;Table from CSV file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1471"/>
+        <location filename="../MainWindow.ui" line="1472"/>
         <source>&amp;Database to SQL file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1482"/>
+        <location filename="../MainWindow.ui" line="1483"/>
         <source>&amp;Table(s) as CSV file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1500"/>
+        <location filename="../MainWindow.ui" line="1501"/>
         <source>&amp;Create Table...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1515"/>
+        <location filename="../MainWindow.ui" line="1516"/>
         <source>&amp;Delete Table...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1533"/>
+        <location filename="../MainWindow.ui" line="1534"/>
         <source>&amp;Modify Table...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1548"/>
+        <location filename="../MainWindow.ui" line="1549"/>
         <source>Create &amp;Index...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1596"/>
+        <location filename="../MainWindow.ui" line="1597"/>
         <source>W&amp;hat&apos;s This?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1633"/>
+        <location filename="../MainWindow.ui" line="1634"/>
         <source>&amp;Execute SQL</source>
         <translation>执行 SQL(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1636"/>
+        <location filename="../MainWindow.ui" line="1637"/>
         <source>Execute SQL [F5, Ctrl+Return]</source>
         <translation>执行 SQL [F5, Ctrl+回车]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1669"/>
+        <location filename="../MainWindow.ui" line="1670"/>
         <source>&amp;Load extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1704"/>
+        <location filename="../MainWindow.ui" line="1705"/>
         <source>&amp;Wiki...</source>
         <translation>维基(&amp;W)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1713"/>
+        <location filename="../MainWindow.ui" line="1714"/>
         <source>Bug &amp;report...</source>
         <translation>错误报告(&amp;R)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1722"/>
+        <location filename="../MainWindow.ui" line="1723"/>
         <source>Web&amp;site...</source>
         <translation>网站(&amp;S)...</translation>
     </message>
@@ -2200,8 +2225,8 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">保存工程</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1734"/>
-        <location filename="../MainWindow.ui" line="1737"/>
+        <location filename="../MainWindow.ui" line="1735"/>
+        <location filename="../MainWindow.ui" line="1738"/>
         <source>Save the current session to a file</source>
         <translation>保存当前会话到一个文件</translation>
     </message>
@@ -2210,25 +2235,25 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">打开工程</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1749"/>
-        <location filename="../MainWindow.ui" line="1752"/>
+        <location filename="../MainWindow.ui" line="1750"/>
+        <location filename="../MainWindow.ui" line="1753"/>
         <source>Load a working session from a file</source>
         <translation>从一个文件加载工作会话</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1648"/>
+        <location filename="../MainWindow.ui" line="1649"/>
         <source>Open SQL file</source>
         <translation>打开 SQL 文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1259"/>
+        <location filename="../MainWindow.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存当前图表...&lt;/p&gt;&lt;p&gt;文件格式按扩展名选择(png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1657"/>
-        <location filename="../MainWindow.ui" line="1790"/>
-        <location filename="../MainWindow.ui" line="1793"/>
+        <location filename="../MainWindow.ui" line="1658"/>
+        <location filename="../MainWindow.ui" line="1791"/>
+        <location filename="../MainWindow.ui" line="1794"/>
         <source>Save SQL file</source>
         <translation>保存 SQL 文件</translation>
     </message>
@@ -2237,28 +2262,28 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">加载扩展</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1678"/>
+        <location filename="../MainWindow.ui" line="1679"/>
         <source>Execute current line</source>
         <translation>执行当前行</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1681"/>
+        <location filename="../MainWindow.ui" line="1682"/>
         <source>Execute current line [Ctrl+E]</source>
         <translation>执行当前行 [Ctrl+E]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1684"/>
+        <location filename="../MainWindow.ui" line="1685"/>
         <location filename="../MainWindow.cpp" line="178"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1692"/>
+        <location filename="../MainWindow.ui" line="1693"/>
         <source>Export as CSV file</source>
         <translation>导出为 CSV 文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1695"/>
+        <location filename="../MainWindow.ui" line="1696"/>
         <source>Export table as comma separated values file</source>
         <translation>导出表为逗号间隔值文件</translation>
     </message>
@@ -2279,7 +2304,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="258"/>
-        <location filename="../MainWindow.cpp" line="2257"/>
+        <location filename="../MainWindow.cpp" line="2273"/>
         <source>Choose a database file</source>
         <translation>选择一个数据库文件</translation>
     </message>
@@ -2320,9 +2345,9 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="305"/>
-        <location filename="../MainWindow.cpp" line="1136"/>
-        <location filename="../MainWindow.cpp" line="1964"/>
-        <location filename="../MainWindow.cpp" line="2174"/>
+        <location filename="../MainWindow.cpp" line="1145"/>
+        <location filename="../MainWindow.cpp" line="1980"/>
+        <location filename="../MainWindow.cpp" line="2190"/>
         <source>Choose a filename to save under</source>
         <translation>选择一个文件名保存</translation>
     </message>
@@ -2357,68 +2382,68 @@ Do you want to insert it anyway?</source>
         <translation>没有打开数据库。请打开或创建一个新的数据库文件。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="760"/>
+        <location filename="../MainWindow.cpp" line="761"/>
         <source>Are you sure you want to delete the %1 &apos;%2&apos;?
 All data associated with the %1 will be lost.</source>
         <translation>您是否确认您想删除 %1 &apos;%2&apos;?
 所有和 %1 关联的数据将会丢失。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="767"/>
+        <location filename="../MainWindow.cpp" line="768"/>
         <source>Error: could not delete the %1. Message from database engine:
 %2</source>
         <translation>错误: 不能删除 %1。消息来自数据库引擎:
 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="780"/>
+        <location filename="../MainWindow.cpp" line="781"/>
         <source>There is no database opened.</source>
         <translation>没有数据库打开。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="958"/>
+        <location filename="../MainWindow.cpp" line="967"/>
         <source>%1 rows returned in %2ms from: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="981"/>
+        <location filename="../MainWindow.cpp" line="990"/>
         <source>, %1 rows affected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="984"/>
+        <location filename="../MainWindow.cpp" line="993"/>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1673"/>
+        <location filename="../MainWindow.cpp" line="1689"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2035"/>
-        <location filename="../MainWindow.cpp" line="2175"/>
+        <location filename="../MainWindow.cpp" line="2051"/>
+        <location filename="../MainWindow.cpp" line="2191"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2507"/>
+        <location filename="../MainWindow.cpp" line="2523"/>
         <source>Please choose a new encoding for this table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2509"/>
+        <location filename="../MainWindow.cpp" line="2525"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2512"/>
+        <location filename="../MainWindow.cpp" line="2528"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2523"/>
+        <location filename="../MainWindow.cpp" line="2539"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2427,7 +2452,7 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">%1 行返回自: %2 (耗时 %3毫秒)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="965"/>
+        <location filename="../MainWindow.cpp" line="974"/>
         <source>Error executing query: %1</source>
         <translation>执行查询时出错: %1</translation>
     </message>
@@ -2436,22 +2461,22 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">查询执行成功: %1 (耗时 %2毫秒)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1045"/>
+        <location filename="../MainWindow.cpp" line="1054"/>
         <source>Choose a text file</source>
         <translation>选择一个文本文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1046"/>
+        <location filename="../MainWindow.cpp" line="1055"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>文本文件(*.csv *.txt);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1055"/>
+        <location filename="../MainWindow.cpp" line="1064"/>
         <source>Import completed</source>
         <translation>导入完成</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1094"/>
+        <location filename="../MainWindow.cpp" line="1103"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>您是否确认您想撤销从上次保存以来对数据库文件‘%1’做出的所有更改。?</translation>
     </message>
@@ -2472,110 +2497,110 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">导出完成。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1119"/>
+        <location filename="../MainWindow.cpp" line="1128"/>
         <source>Choose a file to import</source>
         <translation>选择要导入的一个文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1120"/>
-        <location filename="../MainWindow.cpp" line="1493"/>
-        <location filename="../MainWindow.cpp" line="1539"/>
+        <location filename="../MainWindow.cpp" line="1129"/>
+        <location filename="../MainWindow.cpp" line="1509"/>
+        <location filename="../MainWindow.cpp" line="1555"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>文本文件(*.sql *.txt);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1130"/>
+        <location filename="../MainWindow.cpp" line="1139"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>您是否确认您想创建一个新的数据库文件用来存放导入的数据?
 如果您会到“否”的话，我们将尝试导入 SQL 文件中的数据到当前数据库。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1140"/>
+        <location filename="../MainWindow.cpp" line="1149"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>文件 %1 已存在。请选择一个不同的名称。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1155"/>
+        <location filename="../MainWindow.cpp" line="1164"/>
         <source>Error importing data: %1</source>
         <translation>导入数据时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1157"/>
+        <location filename="../MainWindow.cpp" line="1166"/>
         <source>Import completed.</source>
         <translation>导入完成。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1204"/>
+        <location filename="../MainWindow.cpp" line="1220"/>
         <source>Delete View</source>
         <translation>删除视图</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1206"/>
+        <location filename="../MainWindow.cpp" line="1222"/>
         <source>Delete Trigger</source>
         <translation>删除触发器</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1208"/>
+        <location filename="../MainWindow.cpp" line="1224"/>
         <source>Delete Index</source>
         <translation>删除索引</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1518"/>
-        <location filename="../MainWindow.cpp" line="1210"/>
+        <location filename="../MainWindow.ui" line="1519"/>
+        <location filename="../MainWindow.cpp" line="1226"/>
         <source>Delete Table</source>
         <translation>删除表</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1256"/>
+        <location filename="../MainWindow.cpp" line="1272"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1421"/>
+        <location filename="../MainWindow.cpp" line="1437"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>设置 PRAGMA 值将会提交您的当前事务。.
 您确认吗?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1492"/>
+        <location filename="../MainWindow.cpp" line="1508"/>
         <source>Select SQL file to open</source>
         <translation>选择要打开的 SQL 文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1538"/>
+        <location filename="../MainWindow.cpp" line="1554"/>
         <source>Select file name</source>
         <translation>选择文件名</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1553"/>
+        <location filename="../MainWindow.cpp" line="1569"/>
         <source>Select extension file</source>
         <translation>选择扩展文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1554"/>
+        <location filename="../MainWindow.cpp" line="1570"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>扩展(*.so *.dll);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1560"/>
+        <location filename="../MainWindow.cpp" line="1576"/>
         <source>Extension successfully loaded.</source>
         <translation>扩展成功加载。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1562"/>
-        <location filename="../MainWindow.cpp" line="1574"/>
+        <location filename="../MainWindow.cpp" line="1578"/>
+        <location filename="../MainWindow.cpp" line="1590"/>
         <source>Error loading extension: %1</source>
         <translation>加载扩展时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1669"/>
+        <location filename="../MainWindow.cpp" line="1685"/>
         <source>Don&apos;t show again</source>
         <translation>不再显示</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1672"/>
+        <location filename="../MainWindow.cpp" line="1688"/>
         <source>New version available.</source>
         <translation>新版本可用。</translation>
     </message>
@@ -2584,17 +2609,17 @@ Are you sure?</source>
         <translation type="obsolete">有新版本的 sqlitebrowser (%1.%2.%3)可用。&lt;br/&gt;&lt;br/&gt;请从 &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt; 下载。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1943"/>
+        <location filename="../MainWindow.cpp" line="1959"/>
         <source>Choose a axis color</source>
         <translation>选择一个轴的颜色</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1965"/>
+        <location filename="../MainWindow.cpp" line="1981"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2034"/>
+        <location filename="../MainWindow.cpp" line="2050"/>
         <source>Choose a file to open</source>
         <translation>选择要打开的一个文件</translation>
     </message>

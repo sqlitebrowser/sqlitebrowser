@@ -433,7 +433,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Warning: Editing binary content in text mode may result in corrupted data!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Aviso: editar conteúdo binário em modo de texto pode corromper dados!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Aviso: editar conteúdo binário em modo de texto pode corromper dados!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>This area displays information about the data present in this database cell</source>
@@ -527,6 +527,14 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>Type of data currently in cell: NULL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image data can&apos;t be viewed with the text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Binary data can&apos;t be viewed with the text editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -976,7 +984,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Database &amp;Structure</source>
-        <translation>&amp;Estrutura do banco de dados</translation>
+        <translation type="obsolete">&amp;Estrutura do banco de dados</translation>
     </message>
     <message>
         <source>toolBar1</source>
@@ -984,7 +992,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>&amp;Browse Data</source>
-        <translation>&amp;Navegar dados</translation>
+        <translation type="obsolete">&amp;Navegar dados</translation>
     </message>
     <message>
         <source>Table:</source>
@@ -1120,7 +1128,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Edit &amp;Pragmas</source>
-        <translation>Editar &amp;Pragmas</translation>
+        <translation type="obsolete">Editar &amp;Pragmas</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1244,7 +1252,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>E&amp;xecute SQL</source>
-        <translation>&amp;Executar SQL</translation>
+        <translation type="obsolete">&amp;Executar SQL</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -2084,6 +2092,22 @@ Leave the field empty for using the database encoding.</source>
     </message>
     <message>
         <source>This encoding is either not valid or not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database Structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Pragmas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Execute SQL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
