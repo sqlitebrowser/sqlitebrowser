@@ -20,7 +20,7 @@ below with an "x", then click the "Submit new issue" button at the bottom
 - [ ] DB4S is crashing
 - [ ] DB4S has a bug
 - [ ] DB4S needs a feature
-- [ ] DB4S has another problem: ___
+- [ ] DB4S has another problem
 
 #### I'm using DB4S on:
 
