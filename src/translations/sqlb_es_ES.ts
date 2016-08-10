@@ -526,7 +526,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditDialog.ui" line="123"/>
         <source>Set as &amp;NULL</source>
-        <translation>Poner a &amp;NULL</translation>
+        <translation>Borrar a &amp;NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="216"/>
@@ -608,7 +608,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="460"/>
         <source>Type of data currently in cell: %1 Image</source>
-        <translation>El tipo de datos en la celda es: %1 Imagen</translation>
+        <translation>El tipo de datos en la celda es: Imagen %1</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="466"/>
@@ -618,7 +618,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="480"/>
         <source>Type of data currently in cell: NULL</source>
-        <translation>El tipo de datos en la celda es: %1 NULL</translation>
+        <translation>El tipo de datos en la celda es: NULL</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Null</source>
@@ -761,7 +761,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="258"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>Por defecto</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="261"/>
@@ -1156,7 +1156,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="230"/>
         <source>Trim fields?</source>
-        <translation>¿&amp;Recortar campos?</translation>
+        <translation>¿Recortar campos?</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="180"/>
@@ -2283,7 +2283,7 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1779"/>
         <location filename="../MainWindow.ui" line="1782"/>
         <source>Save SQL file as</source>
-        <translation>Guardar fichero SQL como</translation>
+        <translation>Guardar archivo SQL como</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1803"/>
@@ -2713,7 +2713,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="345"/>
         <source>NULL fields</source>
-        <translation>Campos NULOS</translation>
+        <translation>Campos NULL</translation>
     </message>
     <message>
         <source>Text &amp;colour</source>
@@ -2856,7 +2856,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="637"/>
         <source>Keyword</source>
-        <translation>palabra clave</translation>
+        <translation>Palabra clave</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="654"/>
