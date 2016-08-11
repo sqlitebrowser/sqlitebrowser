@@ -22,3 +22,10 @@ script:
 
 matrix:
   fast_finish: true
+
+notifications:
+  email:
+    recipients:
+      - justin@postgresql.org
+    on_success: never
+    on_failure: always
