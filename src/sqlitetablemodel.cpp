@@ -231,7 +231,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
             font.setItalic(true);
         return font;
-    } else if(role == Qt::TextColorRole) {
+    } else if(role == Qt::ForegroundRole) {
         if(m_data.at(index.row()).at(index.column()).isNull())
             return QColor(PreferencesDialog::getSettingsValue("databrowser", "null_fg_colour").toString());
         else if (isBinary(index))
