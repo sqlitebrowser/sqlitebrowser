@@ -202,11 +202,11 @@ void MainWindow::init()
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
-    connect(editDock, SIGNAL(goingAway()), this, SLOT(editDockAway()));
-    connect(editDock, SIGNAL(recordTextUpdated(int, int, bool, QByteArray)), this, SLOT(updateRecordText(int, int, bool, QByteArray)));
+    connect(editDock, SIGNAL(recordTextUpdated(QPersistentModelIndex, QByteArray, bool)), this, SLOT(updateRecordText(QPersistentModelIndex, QByteArray, bool)));
     connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
+    connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
 
     // plot widgets
     ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
@@ -476,9 +476,6 @@ void MainWindow::populateTable(QString tablename)
     // Set the recordset label
     setRecordsetLabel();
 
-    // Reset the edit cell dock
-    editDock->reset();
-
     // update plot
     updatePlot(m_browseTableModel);
 
@@ -530,9 +527,6 @@ bool MainWindow::fileClose()
     m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
-
-    // Reset the edit cell dock
-    editDock->reset();
 
     // Remove all stored table information browse data tab
     browseTableSettings.clear();
@@ -805,23 +799,21 @@ void MainWindow::helpAbout()
     dialog.exec();
 }
 
-void MainWindow::updateRecordText(int row, int col, bool isBlob, const QByteArray& newtext)
+void MainWindow::updateRecordText(const QPersistentModelIndex& idx, const QByteArray& text, bool isBlob)
 {
-    m_currentTabTableModel->setTypedData(m_currentTabTableModel->index(row, col), isBlob, newtext);
+    m_currentTabTableModel->setTypedData(idx, isBlob, text);
 }
 
-void MainWindow::editDockAway()
+void MainWindow::toggleEditDock(bool visible)
 {
-    // Get the sender
-    EditDialog* sendingEditDialog = qobject_cast<EditDialog*>(sender());
-
-    // Hide the edit dock
-    ui->dockEdit->setVisible(false);
-
-    // Update main window
-    activateWindow();
-    ui->dataTable->setFocus();
-    ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(sendingEditDialog->getCurrentRow(), sendingEditDialog->getCurrentCol()));
+    if (!visible) {
+        // Update main window
+        activateWindow();
+        ui->dataTable->setFocus();
+    } else {
+        // fill edit dock with actual data
+        editDock->setCurrentIndex(ui->dataTable->currentIndex());
+    }
 }
 
 void MainWindow::doubleClickTable(const QModelIndex& index)
@@ -832,18 +824,14 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     }
 
     // * Don't allow editing of other objects than tables (on the browse table) *
-    bool allowEditing = (m_currentTabTableModel == m_browseTableModel) &&
+    bool isEditingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
             (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
-    // dock depending on the value of the "allowEditing" bool above
-    editDock->allowEditing(allowEditing);
+    // dock depending on the value of the "isEditingAllowed" bool above
+    editDock->allowEditing(isEditingAllowed);
 
-    // Load the current value into the edit dock
-    QByteArray cellData = index.data(Qt::EditRole).toByteArray();
-    int cellRow = index.row();
-    int cellColumn = index.column();
-    editDock->loadDataFromCell(cellData, cellRow, cellColumn);
+    editDock->setCurrentIndex(index);
 
     // Show the edit dock
     ui->dockEdit->setVisible(true);
@@ -855,21 +843,20 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
 {
     // Cancel on invalid index
-    if(!index.isValid())
+    if(!index.isValid()) {
+        editDock->setCurrentIndex(QModelIndex());
         return;
+    }
 
-    bool edit = (m_currentTabTableModel == m_browseTableModel) &&
-    (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+    bool editingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
+            (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
     // Don't allow editing of other objects than tables
-    editDock->allowEditing(edit);
+    editDock->allowEditing(editingAllowed);
 
     // If the Edit Cell dock is visible, load the new value into it
     if (editDock->isVisible()) {
-        QByteArray cellData = index.data(Qt::EditRole).toByteArray();
-        int cellRow = index.row();
-        int cellColumn = index.column();
-        editDock->loadDataFromCell(cellData, cellRow, cellColumn);
+        editDock->setCurrentIndex(index);
     }
 }
 

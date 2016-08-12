@@ -11,10 +11,12 @@
 #include <QImageReader>
 #include <QBuffer>
 //#include <QStringBuilder>
+#include <QModelIndex>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog),
+      currentIndex(QModelIndex()),
       dataType(Null)
 {
     ui->setupUi(this);
@@ -30,7 +32,11 @@ EditDialog::EditDialog(QWidget* parent)
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
 
-    reset();
+    // Set the font for the text and hex editors
+    QFont editorFont(PreferencesDialog::getSettingsValue("databrowser", "font").toString());
+    editorFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
+    ui->editorText->setFont(editorFont);
+    hexEdit->setFont(editorFont);
 }
 
 EditDialog::~EditDialog()
@@ -38,30 +44,13 @@ EditDialog::~EditDialog()
     delete ui;
 }
 
-void EditDialog::reset()
+void EditDialog::setCurrentIndex(const QModelIndex& idx)
 {
-    // Set the font for the text and hex editors
-    QFont editorFont(PreferencesDialog::getSettingsValue("databrowser", "font").toString());
-    editorFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
-    ui->editorText->setFont(editorFont);
-    hexEdit->setFont(editorFont);
+    currentIndex = QPersistentModelIndex(idx);
 
-    curRow = -1;
-    curCol = -1;
-    ui->editorText->clear();
-    ui->editorText->setFocus();
-    ui->editorImage->clear();
-    hexEdit->setData(QByteArray());
-    oldData = "";
-    dataType = Null;
-
-    // Update the cell data info in the bottom left of the Edit Cell
-    updateCellInfo(hexEdit->data());
-}
-
-void EditDialog::closeEvent(QCloseEvent*)
-{
-    emit goingAway();
+    QByteArray data = idx.data(Qt::EditRole).toByteArray();
+    loadData(data);
+    updateCellInfo(data);
 }
 
 void EditDialog::showEvent(QShowEvent*)
@@ -143,6 +132,7 @@ void EditDialog::loadData(const QByteArray& data)
 
             // The text widget buffer is now the main data source
             dataSource = TextBuffer;
+
             break;
 
         case HexEditor:
@@ -169,6 +159,7 @@ void EditDialog::loadData(const QByteArray& data)
 
             // The text widget buffer is now the main data source
             dataSource = TextBuffer;
+
             break;
         }
         break;
@@ -227,24 +218,6 @@ void EditDialog::loadData(const QByteArray& data)
             break;
         }
     }
-}
-
-// Loads data from a cell into the Edit Cell window
-void EditDialog::loadDataFromCell(const QByteArray& data, int row, int col)
-{
-    // Store the position of the being edited
-    curRow = row;
-    curCol = col;
-
-    // Store a copy of the data, so we can check if it has changed when the
-    // accept() method is called
-    oldData = data;
-
-    // Load the data into the cell
-    loadData(data);
-
-    // Update the cell data info in the bottom left of the Edit Cell
-    updateCellInfo(data);
 }
 
 void EditDialog::importData()
@@ -328,21 +301,21 @@ void EditDialog::setNull()
 
 void EditDialog::accept()
 {
-    // Check if the current cell data is different from the original cell data
+    if(!currentIndex.isValid())
+        return;
+
     if (dataSource == TextBuffer) {
+        QString oldData = currentIndex.data(Qt::EditRole).toString();
         QString newData = ui->editorText->toPlainText();
-        if ((newData != oldData) || (newData.isNull() != oldData.isNull())) {
+        if (oldData != newData)
             // The data is different, so commit it back to the database
-            QByteArray convertedText = newData.toUtf8();
-            emit recordTextUpdated(curRow, curCol, false, convertedText);
-        }
+            emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
     } else {
         // The data source is the hex widget buffer, thus binary data
+        QByteArray oldData = currentIndex.data(Qt::EditRole).toByteArray();
         QByteArray newData = hexEdit->data();
-        if ((newData != oldData) || (newData.isNull() != oldData.isNull())) {
-            // The data is different, so commit it back to the database
-            emit recordTextUpdated(curRow, curCol, true, newData);
-        }
+        if (newData != oldData)
+            emit recordTextUpdated(currentIndex, newData, true);
     }
 }
 

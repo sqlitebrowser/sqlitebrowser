@@ -2,6 +2,7 @@
 #define EDITDIALOG_H
 
 #include <QDialog>
+#include <QPersistentModelIndex>
 
 class QHexEdit;
 
@@ -17,18 +18,14 @@ public:
     explicit EditDialog(QWidget* parent = 0);
     ~EditDialog();
 
-    int getCurrentCol() { return curCol; }
-    int getCurrentRow() { return curRow; }
+    void setCurrentIndex(const QModelIndex& idx);
 
 public slots:
-    virtual void reset();
-    virtual void loadDataFromCell(const QByteArray& data, int row, int col);
     virtual void setFocus();
     virtual void reject();
     virtual void allowEditing(bool on);
 
 protected:
-    virtual void closeEvent(QCloseEvent* ev);
     virtual void showEvent(QShowEvent* ev);
 
 private slots:
@@ -44,15 +41,12 @@ private slots:
     virtual QString humanReadableSize(double byteCount);
 
 signals:
-    void goingAway();
-    void recordTextUpdated(int row, int col, bool isBlob, const QByteArray& data);
+    void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
 
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
-    QByteArray oldData;
-    int curCol;
-    int curRow;
+    QPersistentModelIndex currentIndex;
     int dataSource;
     int dataType;
 
