@@ -198,6 +198,9 @@
           <property name="defaultDropAction">
            <enum>Qt::CopyAction</enum>
           </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::ContiguousSelection</enum>
+          </property>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
            <bool>true</bool>
           </attribute>
