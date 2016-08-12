@@ -10,6 +10,56 @@
 #include <QScrollBar>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QBuffer>
+
+namespace
+{
+
+QList<QStringList> parseClipboard(const QString& clipboard)
+{
+    QList<QStringList> result;
+    result.push_back(QStringList());
+
+    QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
+    int offset = 0;
+    int whitespace_offset = 0;
+
+    while (offset >= 0) {
+        QString text;
+        int pos = re.indexIn(clipboard, offset);
+        if (pos < 0) {
+            // insert everything that left
+            text = clipboard.mid(whitespace_offset);
+            result.last().push_back(text);
+            offset = -1;
+            break;
+        }
+
+        if (re.pos(2) < 0) {
+            offset = pos + re.cap(1).length() + 1;
+            continue;
+        }
+
+        QString ws = re.cap(2);
+        // if two whitespaces in row - that's an empty cell
+        if (!(pos - whitespace_offset)) {
+            result.last().push_back(QString());
+        } else {
+            text = clipboard.mid(whitespace_offset, pos - whitespace_offset);
+            result.last().push_back(text);
+        }
+
+        if (ws.endsWith("\n"))
+            // create new row
+            result.push_back(QStringList());
+
+        whitespace_offset = offset = pos + ws.length();
+    }
+
+    return result;
+}
+
+}
 
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
@@ -28,92 +78,137 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
 void ExtendedTableWidget::copy()
 {
-    // Get list of selected items
-    QItemSelectionModel* selection = selectionModel();
-    QModelIndexList indices = selection->selectedIndexes();
+    QModelIndexList indices = selectionModel()->selectedIndexes();
 
     // Abort if there's nothing to copy
-    if(indices.size() == 0)
-    {
+    if (indices.isEmpty())
         return;
-    } else if(indices.size() == 1) {
-        qApp->clipboard()->setText(indices.front().data().toString());
+    qSort(indices);
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // If single image cell selected - copy it to clipboard
+    if (indices.size() == 1) {
+        QImage img;
+        if (img.loadFromData(m->data(indices.first(), Qt::EditRole).toByteArray())) {
+            qApp->clipboard()->setImage(img);
+            return;
+        }
+    }
+
+    m_buffer.clear();
+
+    // If any of the cells contain binary data - we use inner buffer
+    bool containsBinary = false;
+    foreach (const QModelIndex& index, indices)
+        if (m->isBinary(index)) {
+            containsBinary = true;
+            break;
+        }
+
+    if (containsBinary) {
+        qApp->clipboard()->clear();
+        // Copy selected data into inner buffer
+        int columns = indices.last().column() - indices.first().column() + 1;
+        while (!indices.isEmpty()) {
+            QByteArrayList lst;
+            for (int i = 0; i < columns; ++i) {
+                lst << indices.first().data(Qt::EditRole).toByteArray();
+                indices.pop_front();
+            }
+            m_buffer.push_back(lst);
+        }
+
         return;
     }
 
-    // Sort the items by row, then by column
-    qSort(indices);
-
-    // Go through all the items...
+    QModelIndex first = indices.first();
     QString result;
-    QModelIndex prev = indices.front();
-    indices.removeFirst();
-    foreach(QModelIndex index, indices)
-    {
-        // Add the content of this cell to the clipboard string
-        result.append(QString("\"%1\"").arg(prev.data().toString()));
+    int currentRow = 0;
 
-        // If this is a new row add a line break, if not add a tab for cell separation
-        if(index.row() != prev.row())
+    foreach(const QModelIndex& index, indices) {
+        if (first == index) { /* first index */ }
+        else if (index.row() != currentRow)
             result.append("\r\n");
         else
             result.append("\t");
 
-        prev = index;
-    }
-    result.append(QString("\"%1\"\r\n").arg(indices.last().data().toString()));      // And the last cell
+        currentRow = index.row();
+        QVariant data = index.data(Qt::EditRole);
 
-    // And finally add it to the clipboard
+        // non-NULL data is enquoted, whilst NULL isn't
+        if (!data.isNull()) {
+            QString text = data.toString();
+            text.replace("\"", "\"\"");
+            result.append(QString("\"%1\"").arg(text));
+        }
+    }
+
     qApp->clipboard()->setText(result);
 }
 
 void ExtendedTableWidget::paste()
 {
-    QString clipboard = qApp->clipboard()->text();
-
     // Get list of selected items
     QItemSelectionModel* selection = selectionModel();
     QModelIndexList indices = selection->selectedIndexes();
 
     // Abort if there's nowhere to paste
-    if(indices.size() == 0)
-    {
+    if(indices.isEmpty())
+        return;
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // If clipboard contains image - just insert it
+    QImage img = qApp->clipboard()->image();
+    if (!img.isNull()) {
+        QByteArray ba;
+        QBuffer buffer(&ba);
+        buffer.open(QIODevice::WriteOnly);
+        img.save(&buffer, "PNG");
+        buffer.close();
+
+        m->setData(indices.first(), ba);
         return;
     }
 
+    QString clipboard = qApp->clipboard()->text();
 
-    // Find out end of line character
-    QString endOfLine;
-    if(clipboard.endsWith('\n'))
-    {
-        if(clipboard.endsWith("\r\n"))
-        {
-            endOfLine = "\r\n";
+    if (clipboard.isEmpty() && !m_buffer.isEmpty()) {
+        // If buffer contains something - use it instead of clipboard
+        int rows = m_buffer.size();
+        int columns = m_buffer.first().size();
+
+        int firstRow = indices.front().row();
+        int firstColumn = indices.front().column();
+
+        int lastRow = qMin(firstRow + rows - 1, m->rowCount() - 1);
+        int lastColumn = qMin(firstColumn + columns - 1, m->columnCount() - 1);
+
+        int row = firstRow;
+
+        foreach(const QByteArrayList& lst, m_buffer) {
+            int column = firstColumn;
+            foreach(const QByteArray& ba, lst) {
+                m->setData(m->index(row, column), ba);
+
+                column++;
+                if (column > lastColumn)
+                    break;
+            }
+
+            row++;
+            if (row > lastRow)
+                break;
         }
-        else
-        {
-            endOfLine = "\n";
-        }
-    }
-    else if(clipboard.endsWith('\r'))
-    {
-        endOfLine = "\r";
-    }
-    else
-    {
-        // Have only one cell, so there is no line break at end
-        endOfLine = "\n";
+
+        return;
     }
 
-    // Unpack cliboard, assuming that it is rectangular
-    QList<QStringList> clipboardTable;
-    QStringList cr = clipboard.trimmed().split(endOfLine);
-    foreach(const QString& r, cr)
-        clipboardTable.push_back(r.split("\t"));
+    QList<QStringList> clipboardTable = parseClipboard(clipboard);
 
     int clipboardRows = clipboardTable.size();
     int clipboardColumns = clipboardTable.front().size();
-
 
     // Sort the items by row, then by column
     qSort(indices);
@@ -143,7 +238,6 @@ void ExtendedTableWidget::paste()
     // Here we have positive answer even if cliboard is bigger than selection
 
 
-    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
     // If last row and column are after table size clamp it
     int lastRow = qMin(firstRow + clipboardRows - 1, m->rowCount() - 1);
     int lastColumn = qMin(firstColumn + clipboardColumns - 1, m->columnCount() - 1);
@@ -154,14 +248,15 @@ void ExtendedTableWidget::paste()
         int column = firstColumn;
         foreach(const QString& cell, clipboardRow)
         {
-            if(cell.startsWith('"') && cell.endsWith('"'))
-            {
-                QString unquatedCell = cell.mid(1, cell.length()-2);
-                m->setData(m->index(row, column), unquatedCell);
-            }
+            if (cell.isEmpty())
+                m->setData(m->index(row, column), QVariant());
             else
             {
-                m->setData(m->index(row, column), cell);
+                QString text = cell;
+                if (QRegExp("\".*\"").exactMatch(text))
+                    text = text.mid(1, cell.length() - 2);
+                text.replace("\"\"", "\"");
+                m->setData(m->index(row, column), text);
             }
 
             column++;
@@ -186,6 +281,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     if(event->matches(QKeySequence::Copy))
     {
         copy();
+        return;
     // Call a custom paste method when Ctrl-P is pressed
     } else if(event->matches(QKeySequence::Paste))
     {
