@@ -12,6 +12,55 @@
 #include <QMessageBox>
 #include <QBuffer>
 
+namespace
+{
+
+QList<QStringList> parseClipboard(const QString& clipboard)
+{
+    QList<QStringList> result;
+    result.push_back(QStringList());
+
+    QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
+    int offset = 0;
+    int whitespace_offset = 0;
+
+    while (offset >= 0) {
+        QString text;
+        int pos = re.indexIn(clipboard, offset);
+        if (pos < 0) {
+            // insert everything that left
+            text = clipboard.mid(whitespace_offset);
+            result.last().push_back(text);
+            offset = -1;
+            break;
+        }
+
+        if (re.pos(2) < 0) {
+            offset = pos + re.cap(1).length() + 1;
+            continue;
+        }
+
+        QString ws = re.cap(2);
+        // if two whitespaces in row - that's an empty cell
+        if (!(pos - whitespace_offset)) {
+            result.last().push_back(QString());
+        } else {
+            text = clipboard.mid(whitespace_offset, pos - whitespace_offset);
+            result.last().push_back(text);
+        }
+
+        if (ws.endsWith("\n"))
+            // create new row
+            result.push_back(QStringList());
+
+        whitespace_offset = offset = pos + ws.length();
+    }
+
+    return result;
+}
+
+}
+
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
 {
@@ -107,13 +156,15 @@ void ExtendedTableWidget::copy()
             result.append("\t");
 
         currentRow = index.row();
-        QVariant text = index.data(Qt::EditRole);
+        QVariant data = index.data(Qt::EditRole);
 
         // non-NULL data is enquoted, whilst NULL isn't
-        if (!text.isNull())
-            result.append(QString("\"%1\"").arg(text.toString()));
+        if (!data.isNull()) {
+            QString text = data.toString();
+            text.replace("\"", "\"\"");
+            result.append(QString("\"%1\"").arg(text));
+        }
     }
-    result.append("\r\n");
 
     qApp->clipboard()->setText(result);
 }
@@ -143,7 +194,9 @@ void ExtendedTableWidget::paste()
         return;
     }
 
-    if (qApp->clipboard()->text().isEmpty() && !m_buffer.isEmpty()) {
+    QString clipboard = qApp->clipboard()->text();
+
+    if (clipboard.isEmpty() && !m_buffer.isEmpty()) {
         // If buffer contains something - use it instead of clipboard
         int rows = m_buffer.size();
         int columns = m_buffer.first().size();
@@ -174,40 +227,7 @@ void ExtendedTableWidget::paste()
         return;
     }
 
-
-    QString clipboard = qApp->clipboard()->text();
-
-    // Find out end of line character
-    QString endOfLine;
-    if(clipboard.endsWith('\n'))
-    {
-        if(clipboard.endsWith("\r\n"))
-        {
-            endOfLine = "\r\n";
-        }
-        else
-        {
-            endOfLine = "\n";
-        }
-    }
-    else if(clipboard.endsWith('\r'))
-    {
-        endOfLine = "\r";
-    }
-    else
-    {
-        // Have only one cell, so there is no line break at end
-        endOfLine = "\n";
-    }
-
-    // Unpack cliboard, assuming that it is rectangular
-    QList<QStringList> clipboardTable;
-    if (clipboard.endsWith(endOfLine))
-        clipboard.chop(endOfLine.length());
-    QStringList cr = clipboard.split(endOfLine);
-
-    foreach(const QString& r, cr)
-        clipboardTable.push_back(r.split("\t"));
+    QList<QStringList> clipboardTable = parseClipboard(clipboard);
 
     int clipboardRows = clipboardTable.size();
     int clipboardColumns = clipboardTable.front().size();
@@ -252,14 +272,13 @@ void ExtendedTableWidget::paste()
         {
             if (cell.isEmpty())
                 m->setData(m->index(row, column), QVariant());
-            else if(cell.startsWith('"') && cell.endsWith('"'))
-            {
-                QString unquatedCell = cell.mid(1, cell.length()-2);
-                m->setData(m->index(row, column), unquatedCell);
-            }
             else
             {
-                m->setData(m->index(row, column), cell);
+                QString text = cell;
+                if (QRegExp("\".*\"").exactMatch(text))
+                    text = text.mid(1, cell.length() - 2);
+                text.replace("\"\"", "\"");
+                m->setData(m->index(row, column), text);
             }
 
             column++;
