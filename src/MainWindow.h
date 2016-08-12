@@ -179,8 +179,8 @@ private slots:
     void editTable();
     void helpWhatsThis();
     void helpAbout();
-    void updateRecordText(int row, int col, bool type, const QByteArray& newtext);
-    void editDockAway();
+    void updateRecordText(const QPersistentModelIndex& idx, const QByteArray& text, bool isBlob);
+    void toggleEditDock(bool visible);
     void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);
     void executeQuery();
