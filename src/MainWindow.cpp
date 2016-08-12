@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QUrl>
 #include <QStandardItemModel>
+#include <QPersistentModelIndex>
 #include <QDragEnterEvent>
 #include <QScrollBar>
 #include <QSortFilterProxyModel>

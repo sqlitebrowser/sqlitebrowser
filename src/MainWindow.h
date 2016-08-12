@@ -12,6 +12,7 @@ class EditDialog;
 class QIntValidator;
 class QLabel;
 class QModelIndex;
+class QPersistentModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
 class QNetworkReply;
