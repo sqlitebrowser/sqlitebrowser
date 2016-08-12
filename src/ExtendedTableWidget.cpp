@@ -96,28 +96,6 @@ void ExtendedTableWidget::copy()
         }
     }
 
-    // Check whether selection is rectangular
-    QItemSelection rect(indices.first(), indices.last());
-    bool correct = true;
-
-    foreach (const QModelIndex& index, indices)
-        if (!rect.contains(index)) {
-            correct = false;
-            break;
-        }
-
-    foreach (const QModelIndex& index, rect.indexes())
-        if (!indices.contains(index)) {
-            correct = false;
-            break;
-        }
-
-    if (!correct) {
-        QMessageBox::warning(this, QApplication::applicationName(),
-                             tr("This function cannot be used with multiple independent selections."));
-        return;
-    }
-
     m_buffer.clear();
 
     // If any of the cells contain binary data - we use inner buffer
