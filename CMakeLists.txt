@@ -1,4 +1,4 @@
-project(sqlitebrowser)
+project("DB Browser for SQLite")
 cmake_minimum_required(VERSION 2.8.7)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
@@ -12,18 +12,35 @@ endif()
 
 if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
-		set(SQLITE3_PATH "C:/dev/SQLite")
-		set(QT5_PATH "C:/dev/Qt/5.6/msvc2013_64")
+		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013_64")
 		set(VSREDIST "vcredist_x64.exe")
+
+                # Choose between SQLCipher or SQLite, depending whether
+                # -Dsqlcipher=1 is passed on the command line
+                if(sqlcipher)
+                        set(SQLITE3_PATH "C:/git_repos/sqlcipher")
+                else()
+                        set(SQLITE3_PATH "C:/dev/SQLite-Win64")
+                endif()
 	else()
-		set(QT5_PATH "E:/Qt/Qt5.5.1/5.5/msvc2013")
-		set(SQLITE3_PATH "E:/libs/sqlite3")
-		set(OPENSSL_PATH "E:/libs/openssl-1.0.2a-i386-win32")
+		# Paths for 32-bit windows builds
+		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013")
 		set(VSREDIST "vcredist_x86.exe")
+
+                # Choose between SQLCipher or SQLite, depending whether
+                # -Dsqlcipher=1 is passed on the command line
+                if(sqlcipher)
+                        set(SQLITE3_PATH "C:/git_repos/sqlcipher")
+                else()
+                        set(SQLITE3_PATH "C:/dev/SQLite-Win32")
+                endif()
 	endif()
-	set(USE_QT5 TRUE)
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
+	set(USE_QT5 TRUE)
+	set(VSREDIST_DIR "C:/dev/dependencies")
 endif()
 
 find_package(Antlr2)
@@ -229,7 +246,11 @@ endif(EXTRAPATH)
 
 if(WIN32 AND MSVC)
 	find_path(SQLITE3_INCLUDE_DIR sqlite3.h)
-	find_file(SQLITE3_DLL sqlite3.dll)
+	if(sqlcipher)
+		find_file(SQLITE3_DLL sqlcipher.dll)
+	else(sqlcipher)
+		find_file(SQLITE3_DLL sqlite3.dll)
+	endif(sqlcipher)
 	include_directories(${SQLITE3_INCLUDE_DIR})
 endif()
 
@@ -338,17 +359,16 @@ if(WIN32 AND MSVC)
 		CONFIGURATIONS Release)
 	# The files below are common to all configurations
 	install(FILES
-			${QT5_BIN_PATH}/icudt54.dll
-			${QT5_BIN_PATH}/icuin54.dll
-			${QT5_BIN_PATH}/icuuc54.dll
+
 			${SQLITE3_DLL}
+
 			${OPENSSL_PATH}/libeay32.dll
 			${OPENSSL_PATH}/ssleay32.dll
 		DESTINATION bin)
 	install(FILES
 		${QT5_PATH}/plugins/platforms/qwindows.dll
 		DESTINATION bin/platforms)
-	install(PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/deps/${VSREDIST} DESTINATION tmp)
+	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION tmp)
 endif()
 
 #cpack
@@ -359,19 +379,19 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
 set(CPACK_PACKAGE_VERSION_MINOR "9")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "SqliteBrowser${CPACK_PACKAGE_VERSION_MAJOR}")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSI that does not handle full unix paths properly. Make
 	# sure there is at least one set of four (4) backlasshes.
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}\\\\${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
-	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\sqlitebrowser.exe")
+	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DB Browser for SQLite.exe")
 	set(CPACK_NSIS_DISPLAY_NAME "DB Browser for SQLite")
 	set(CPACK_NSIS_HELP_LINK "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
 	set(CPACK_NSIS_URL_INFO_ABOUT "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
 	set(CPACK_NSIS_CONTACT "justin@postgresql.org")
 	set(CPACK_NSIS_MODIFY_PATH OFF)
 	set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
-	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "sqlitebrowser.exe")
+	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "DB Browser for SQLite.exe")
 
 	# VS redist
 	list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
