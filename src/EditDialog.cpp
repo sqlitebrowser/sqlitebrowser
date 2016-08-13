@@ -293,6 +293,20 @@ void EditDialog::setNull()
     hexEdit->setData(QByteArray());
     dataType = Null;
 
+    // Check if in text editor mode
+    int editMode = ui->editorStack->currentIndex();
+    if (editMode == TextEditor) {
+        // Setting NULL in the text editor switches the data source to it
+        dataSource = TextBuffer;
+
+        // Ensure the text editor is enabled
+        ui->editorText->setEnabled(true);
+
+        // The text editor doesn't know the difference between an empty string
+        // and a NULL, so we need to record NULL outside of that
+        textNullSet = true;
+    }
+
     // Update the cell data info in the bottom left of the Edit Cell
     updateCellInfo(hexEdit->data());
 
@@ -305,11 +319,17 @@ void EditDialog::accept()
         return;
 
     if (dataSource == TextBuffer) {
-        QString oldData = currentIndex.data(Qt::EditRole).toString();
-        QString newData = ui->editorText->toPlainText();
-        if (oldData != newData)
-            // The data is different, so commit it back to the database
-            emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
+        // Check if a NULL is set in the text editor
+        if (textNullSet) {
+            emit recordTextUpdated(currentIndex, hexEdit->data(), true);
+        } else {
+            // It's not NULL, so proceed with normal text string checking
+            QString oldData = currentIndex.data(Qt::EditRole).toString();
+            QString newData = ui->editorText->toPlainText();
+            if (oldData != newData)
+                // The data is different, so commit it back to the database
+                emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
+        }
     } else {
         // The data source is the hex widget buffer, thus binary data
         QByteArray oldData = currentIndex.data(Qt::EditRole).toByteArray();
@@ -357,6 +377,22 @@ void EditDialog::editModeChanged(int newMode)
 
         // Load the data into the appropriate widget, as done by loadData()
         loadData(hexEdit->data());
+    }
+}
+
+// Called for every keystroke in the text editor (only)
+void EditDialog::editTextChanged()
+{
+    if (dataSource == TextBuffer) {
+        // Data has been changed in the text editor, so it can't be a NULL
+        // any more
+        textNullSet = false;
+
+        // Update the cell info in the bottom left manually.  This is because
+        // updateCellInfo() only works with QByteArray's (for now)
+        int dataLength = ui->editorText->toPlainText().length();
+        ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
+        ui->labelSize->setText(tr("%n char(s)", "", dataLength));
     }
 }
 
