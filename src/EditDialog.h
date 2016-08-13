@@ -37,6 +37,7 @@ private slots:
     virtual void loadData(const QByteArray& data);
     virtual void toggleOverwriteMode();
     virtual void editModeChanged(int newMode);
+    virtual void editTextChanged();
     virtual void updateCellInfo(const QByteArray& data);
     virtual QString humanReadableSize(double byteCount);
 
@@ -49,6 +50,7 @@ private:
     QPersistentModelIndex currentIndex;
     int dataSource;
     int dataType;
+    bool textNullSet;
 
     enum DataSources {
         TextBuffer,

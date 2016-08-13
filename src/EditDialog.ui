@@ -326,6 +326,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>editorText</sender>
+   <signal>textChanged()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>editTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>importData()</slot>
