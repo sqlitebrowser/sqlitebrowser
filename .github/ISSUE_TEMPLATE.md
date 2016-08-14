@@ -31,7 +31,7 @@ below with an "x", then click the "Submit new issue" button at the bottom
 
 #### I'm using DB4S version:
 
-- [ ] 3.7.0
+- [ ] 3.9.0 beta1
 - [ ] 3.8.0
 - [ ] Other: ___
 
