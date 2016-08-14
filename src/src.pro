@@ -104,7 +104,7 @@ FORMS += \
     ColumnDisplayFormatDialog.ui
 
 TRANSLATIONS += \
-    translations/sqlb_ar.ts \
+    translations/sqlb_ar_SA.ts \
     translations/sqlb_zh.ts \
     translations/sqlb_zh_TW.ts \
     translations/sqlb_de.ts \
