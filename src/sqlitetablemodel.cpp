@@ -394,16 +394,21 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
+    bool ok = true;
+
     for(int i=count-1;i>=0;i--)
     {
-        m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0));
-        m_data.removeAt(row + i);
+        if(m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0)))
+        {
+            m_data.removeAt(row + i);
+            --m_rowCount;
+        } else {
+            ok = false;
+        }
     }
 
-    m_rowCount -= count;
-
     endRemoveRows();
-    return true;
+    return ok;
 }
 
 QModelIndex SqliteTableModel::dittoRecord(int old_row)

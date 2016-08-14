@@ -595,7 +595,7 @@ void MainWindow::deleteRecord()
                 break;
             }
         }
-        populateTable(ui->comboBrowseTable->currentText());
+
         if(old_row > m_browseTableModel->totalRowCount())
             old_row = m_browseTableModel->totalRowCount();
         selectTableLine(old_row);
