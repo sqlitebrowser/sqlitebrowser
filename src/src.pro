@@ -126,6 +126,13 @@ CONFIG(sqlcipher) {
         INCLUDEPATH += /usr/local/opt/sqlcipher/include
         LIBS += -L/usr/local/opt/sqlcipher/lib
     }
+
+    win32 {
+        # Added SQLCipher installation path variables, matching our setup guide
+        LIBS += -L"C:\git_repos\sqlcipher" -L"C:\dev\OpenSSL-Win64"
+        INCLUDEPATH += "C:\git_repos\sqlcipher" -L"C:\dev\OpenSSL-Win64"
+        DEPENDPATH += "C:\git_repos\sqlcipher" -L"C:\dev\OpenSSL-Win64"
+    }
 } else {
     LIBS += -lsqlite3
 
@@ -133,6 +140,13 @@ CONFIG(sqlcipher) {
     mac {
         INCLUDEPATH += /usr/local/opt/sqlite/include
         LIBS += -L/usr/local/opt/sqlite/lib
+    }
+
+    win32 {
+        # Added SQLite installation path variables, matching our setup guide
+        LIBS += -L"C:\dev\SQLite-Win64"
+        INCLUDEPATH += "C:\dev\SQLite-Win64"
+        DEPENDPATH += "C:\dev\SQLite-Win64"
     }
 }
 
@@ -163,11 +177,6 @@ win32 {
     LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
     }
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
-
-    # Added SQLite installation path variables, matching our setup guide
-    LIBS += -L$$PWD/../../../dev/SQLite/ -lsqlite3
-    INCLUDEPATH += $$PWD/../../../dev/SQLite
-    DEPENDPATH += $$PWD/../../../dev/SQLite
 }
 mac {
     TARGET = "DB Browser for SQLite"
