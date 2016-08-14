@@ -258,7 +258,9 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
     DBBrowserObject obj = m_db->getObjectByName(m_sTable);
     if(obj.getname().size())
-        if (column > 0 && column < obj.table.fields().count())
+        // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
+        // foreign key on that column.
+        if (column >= 0 && column < obj.table.fields().count())
         {
             return obj.table.fields().at(column)->foreignKey();
         } else {
