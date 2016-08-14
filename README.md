@@ -1,8 +1,8 @@
 # DB Browser for SQLite
 
-[![Build Status][travis-img]](travis)
-[![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]](gitter)
-[![Download][download-img]](download)
+[![Build Status][travis-img]][travis]
+[![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
+[![Download][download-img]][download]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
