@@ -1,4 +1,4 @@
-/* $ANTLR 2.7.7 (20141010): "sqlite3.g" -> "Sqlite3Lexer.cpp"$ */
+/* $ANTLR 2.7.7 (20160127): "sqlite3.g" -> "Sqlite3Lexer.cpp"$ */
 #include "Sqlite3Lexer.hpp"
 #include <antlr/CharBuffer.hpp>
 #include <antlr/TokenStreamException.hpp>
@@ -616,7 +616,6 @@ void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 	case 0x2e /* '.' */ :
 	{
 		match(L'.' /* charlit */ );
-		_ttype=DOT;
 		{ // ( ... )+
 		int _cnt27=0;
 		for (;;) {

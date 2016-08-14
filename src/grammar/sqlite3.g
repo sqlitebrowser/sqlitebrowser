@@ -110,7 +110,7 @@ QUOTEDLITERAL
 
 NUMERIC
     : ( (DIGIT)+ ( '.' (DIGIT)* )?
-      | '.' { _ttype=DOT; } (DIGIT)+)
+      | '.' (DIGIT)+)
       ( 'e' (PLUS|MINUS)? (DIGIT)+ )?
 	;
 

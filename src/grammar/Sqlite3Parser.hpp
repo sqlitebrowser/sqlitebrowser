@@ -2,7 +2,7 @@
 #define INC_Sqlite3Parser_hpp_
 
 #include <antlr/config.hpp>
-/* $ANTLR 2.7.7 (20141010): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
+/* $ANTLR 2.7.7 (20160127): "sqlite3.g" -> "Sqlite3Parser.hpp"$ */
 #include <antlr/TokenStream.hpp>
 #include <antlr/TokenBuffer.hpp>
 #include "sqlite3TokenTypes.hpp"
