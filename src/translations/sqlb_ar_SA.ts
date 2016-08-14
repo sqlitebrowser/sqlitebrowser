@@ -782,7 +782,7 @@ Aborting execution.</source>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="369"/>
-        <source>Column &apos;%1&apos;&apos; has no unique data.
+        <source>Column &apos;%1&apos; has no unique data.
 </source>
         <translation>ليس للعمود &apos;%1&apos; بيانات فريدة.</translation>
     </message>

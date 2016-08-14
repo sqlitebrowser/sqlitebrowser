@@ -766,7 +766,7 @@ Aborting execution.</source>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="369"/>
-        <source>Column &apos;%1&apos;&apos; has no unique data.
+        <source>Column &apos;%1&apos; has no unique data.
 </source>
         <translation>Столбец &apos;%1&quot; содержит не уникальные данные.</translation>
     </message>
