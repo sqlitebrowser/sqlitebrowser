@@ -812,7 +812,7 @@ Abortando ejecución.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="369"/>
-        <source>Column &apos;%1&apos;&apos; has no unique data.
+        <source>Column &apos;%1&apos; has no unique data.
 </source>
         <translation>La columna &apos;%1&apos; no tiene datos únicos.</translation>
     </message>
