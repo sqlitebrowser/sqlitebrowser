@@ -136,21 +136,37 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
         return;
     }
 
-    // Create the nodes for tables, indices, views and triggers
+    // Create the nodes for browsables and for tables, indices, views and triggers. The idea here is to basically have two trees in one model:
+    // In the root node there are two nodes: 'browsables' and 'all'. The first node contains a list of a all browsable objects, i.e. views and tables.
+    // The seconds node contains four sub-nodes (tables, indices, views and triggers), each containing a list of objects of that type.
+    // This way we only have to have and only have to update one model and can use it in all sorts of places, just by setting a different root node.
     QMap<QString, QTreeWidgetItem*> typeToParentItem;
-    QTreeWidgetItem* itemTables = new QTreeWidgetItem(rootItem);
+
+    QTreeWidgetItem* itemBrowsables = new QTreeWidgetItem(rootItem);
+    itemBrowsables->setIcon(0, QIcon(QString(":/icons/view")));
+    itemBrowsables->setText(0, tr("Browsables (%1)").arg(db->objMap.values("table").count() + db->objMap.values("view").count()));
+    typeToParentItem.insert("browsable", itemBrowsables);
+
+    QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
+    itemAll->setIcon(0, QIcon(QString(":/icons/view")));
+    itemAll->setText(0, tr("All"));
+
+    QTreeWidgetItem* itemTables = new QTreeWidgetItem(itemAll);
     itemTables->setIcon(0, QIcon(QString(":/icons/table")));
     itemTables->setText(0, tr("Tables (%1)").arg(db->objMap.values("table").count()));
     typeToParentItem.insert("table", itemTables);
-    QTreeWidgetItem* itemIndices = new QTreeWidgetItem(rootItem);
+
+    QTreeWidgetItem* itemIndices = new QTreeWidgetItem(itemAll);
     itemIndices->setIcon(0, QIcon(QString(":/icons/index")));
     itemIndices->setText(0, tr("Indices (%1)").arg(db->objMap.values("index").count()));
     typeToParentItem.insert("index", itemIndices);
-    QTreeWidgetItem* itemViews = new QTreeWidgetItem(rootItem);
+
+    QTreeWidgetItem* itemViews = new QTreeWidgetItem(itemAll);
     itemViews->setIcon(0, QIcon(QString(":/icons/view")));
     itemViews->setText(0, tr("Views (%1)").arg(db->objMap.values("view").count()));
     typeToParentItem.insert("view", itemViews);
-    QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(rootItem);
+
+    QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(itemAll);
     itemTriggers->setIcon(0, QIcon(QString(":/icons/trigger")));
     itemTriggers->setText(0, tr("Triggers (%1)").arg(db->objMap.values("trigger").count()));
     typeToParentItem.insert("trigger", itemTriggers);
@@ -164,18 +180,18 @@ void DbStructureModel::reloadData(DBBrowserDB* db)
     for(QMultiMap<QString, DBBrowserObject>::ConstIterator it=dbobjs.begin(); it != dbobjs.end(); ++it)
     {
         // Object node
-        QTreeWidgetItem *tableItem = new QTreeWidgetItem(typeToParentItem.value((*it).gettype()));
-        tableItem->setIcon(0, QIcon(QString(":/icons/%1").arg((*it).gettype())));
-        tableItem->setText(0, (*it).getname());
-        tableItem->setText(1, (*it).gettype());
-        tableItem->setText(3, (*it).getsql());
+        QTreeWidgetItem* item = addNode(typeToParentItem.value((*it).gettype()), *it);
 
-        // If it is a table or view add the field Nodes
+        // If it is a table or view add the field nodes
         if((*it).gettype() == "table" || (*it).gettype() == "view")
         {
+            // Add extra node for browsable section
+            addNode(typeToParentItem.value("browsable"), *it);
+
+            // Add field nodes
             for(int i=0; i < (*it).table.fields().size(); ++i)
             {
-                QTreeWidgetItem *fldItem = new QTreeWidgetItem(tableItem);
+                QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
                 fldItem->setText(0, (*it).table.fields().at(i)->name());
                 fldItem->setText(1, "field");
                 fldItem->setText(2, (*it).table.fields().at(i)->type());
@@ -260,4 +276,15 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
         QMessageBox::warning(0, QApplication::applicationName(), m_db->lastErrorMessage);
         return false;
     }
+}
+
+QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const DBBrowserObject& object)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+    item->setIcon(0, QIcon(QString(":/icons/%1").arg(object.gettype())));
+    item->setText(0, object.getname());
+    item->setText(1, object.gettype());
+    item->setText(3, object.getsql());
+
+    return item;
 }

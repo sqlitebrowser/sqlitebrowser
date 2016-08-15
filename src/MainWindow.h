@@ -161,7 +161,6 @@ private slots:
     void fileNew();
     void populateStructure();
     void populateTable(QString tablename);
-    void resetBrowser(bool reloadTable = true);
     bool fileClose();
     void addRecord();
     void deleteRecord();

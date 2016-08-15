@@ -100,6 +100,9 @@ void MainWindow::init()
     ui->treeSchemaDock->setColumnHidden(1, true);
     ui->treeSchemaDock->setColumnWidth(0, 300);
 
+    // Set up the table combo box in the Browse Data tab
+    ui->comboBrowseTable->setModel(dbStructureModel);
+
     // Edit dock
     ui->dockEdit->setWidget(editDock);
 
@@ -290,7 +293,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                 loadExtensionsFromSettings();
                 populateStructure();
                 if(ui->mainTab->currentIndex() == 1)
-                    resetBrowser();
+                    populateTable(ui->comboBrowseTable->currentText());
                 else if(ui->mainTab->currentIndex() == 2)
                     loadPragmas();
                 retval = true;
@@ -321,7 +324,7 @@ void MainWindow::fileNew()
         statusReadOnlyLabel->setVisible(false);
         loadExtensionsFromSettings();
         populateStructure();
-        resetBrowser();
+        populateTable(ui->comboBrowseTable->currentText());
         openSqlTab(true);
         createTable();
     }
@@ -329,12 +332,27 @@ void MainWindow::fileNew()
 
 void MainWindow::populateStructure()
 {
+    QString old_table = ui->comboBrowseTable->currentText();
+
     // Refresh the structure tab
     db.updateSchema();
     dbStructureModel->reloadData(&db);
+    ui->dbTreeWidget->setRootIndex(dbStructureModel->index(1, 0));      // Show the 'All' part of the db structure
     ui->dbTreeWidget->expandToDepth(0);
+    ui->treeSchemaDock->setRootIndex(dbStructureModel->index(1, 0));    // Show the 'All' part of the db structure
     ui->treeSchemaDock->expandToDepth(0);
 
+    // Refresh the browse data tab
+    ui->comboBrowseTable->setRootModelIndex(dbStructureModel->index(0, 0)); // Show the 'browsable' section of the db structure tree
+    int old_table_index = ui->comboBrowseTable->findText(old_table);
+    if(old_table_index == -1 && ui->comboBrowseTable->count())      // If the old table couldn't be found anymore but there is another table, select that
+        ui->comboBrowseTable->setCurrentIndex(0);
+    else if(old_table_index == -1)                                  // If there aren't any tables to be selected anymore, clear the table view
+        populateTable("");
+    else                                                            // Under normal circumstances just select the old table again
+        ui->comboBrowseTable->setCurrentIndex(old_table_index);
+
+    // Cancel here if no database is opened
     if(!db.isOpen())
         return;
 
@@ -368,7 +386,7 @@ void MainWindow::populateStructure()
 void MainWindow::populateTable(QString tablename)
 {
     // Remove the model-view link if the table name is empty in order to remove any data from the view
-    if(ui->comboBrowseTable->model()->rowCount() == 0 && tablename.isEmpty())
+    if(ui->comboBrowseTable->model()->rowCount(ui->comboBrowseTable->rootModelIndex()) == 0 && tablename.isEmpty())
     {
         if (!ui->dataTable->model())
             return;
@@ -380,19 +398,6 @@ void MainWindow::populateTable(QString tablename)
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    // Update combo box
-    if(ui->comboBrowseTable->currentText() != tablename)
-    {
-        int pos = ui->comboBrowseTable->findText(tablename);
-        if(pos == -1)
-        {
-            ui->comboBrowseTable->setCurrentIndex(0);
-            tablename = ui->comboBrowseTable->currentText();
-        } else {
-            ui->comboBrowseTable->setCurrentIndex(pos);
-        }
-    }
 
     // Set model
     bool reconnectSelectionSignals = false;
@@ -490,33 +495,6 @@ void MainWindow::populateTable(QString tablename)
     QApplication::restoreOverrideCursor();
 }
 
-void MainWindow::resetBrowser(bool reloadTable)
-{
-    ui->comboBrowseTable->clear();
-    const objectMap& tab = db.getBrowsableObjects();
-
-    // fill a objmap which is sorted by table/view names
-    QMap<QString, DBBrowserObject> objmap;
-    for(objectMap::ConstIterator i=tab.begin();i!=tab.end();++i)
-    {
-        objmap[i.value().getname()] = i.value();
-    }
-
-    // Finally fill the combobox in sorted order
-    for(QMap<QString, DBBrowserObject>::ConstIterator it=objmap.constBegin();
-        it!=objmap.constEnd();
-        ++it)
-    {
-        ui->comboBrowseTable->addItem(
-                    QIcon(QString(":icons/%1").arg((*it).gettype())),
-                    (*it).getname());
-    }
-
-    setRecordsetLabel();
-    if(reloadTable)
-        populateTable(ui->comboBrowseTable->currentText());
-}
-
 bool MainWindow::fileClose()
 {
     // Close the database but stop the closing process here if the user pressed the cancel button in there
@@ -524,7 +502,6 @@ bool MainWindow::fileClose()
         return false;
 
     setWindowTitle(QApplication::applicationName());
-    resetBrowser();
     populateStructure();
     loadPragmas();
     statusEncryptionLabel->setVisible(false);
@@ -721,7 +698,7 @@ void MainWindow::createTable()
     if(dialog.exec())
     {
         populateStructure();
-        resetBrowser();
+        populateTable(ui->comboBrowseTable->currentText());
     }
 }
 
@@ -763,7 +740,7 @@ void MainWindow::deleteObject()
             QMessageBox::warning(this, QApplication::applicationName(), error);
         } else {
             populateStructure();
-            resetBrowser();
+            populateTable(ui->comboBrowseTable->currentText());
             changeTreeSelection();
         }
     }
@@ -784,7 +761,7 @@ void MainWindow::editTable()
     if(dialog.exec())
     {
         populateStructure();
-        resetBrowser();
+        populateTable(ui->comboBrowseTable->currentText());
     }
 }
 
@@ -1020,7 +997,7 @@ void MainWindow::mainTabSelected(int tabindex)
     } else if(tabindex == 1) {
         m_currentTabTableModel = m_browseTableModel;
         populateStructure();
-        resetBrowser();
+        populateTable(ui->comboBrowseTable->currentText());
     } else if(tabindex == 2) {
         loadPragmas();
     } else if(tabindex == 3) {
@@ -1047,7 +1024,7 @@ void MainWindow::importTableFromCSV()
         if(dialog.exec())
         {
             populateStructure();
-            resetBrowser();
+            populateTable(ui->comboBrowseTable->currentText());
             QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
         }
     }
@@ -1092,7 +1069,7 @@ void MainWindow::fileRevert()
         {
             db.revertAll();
             populateStructure();
-            resetBrowser();
+            populateTable(ui->comboBrowseTable->currentText());
         }
     }
 }
@@ -1160,7 +1137,7 @@ void MainWindow::importDatabaseFromSQL()
         fileOpen(newDbFile);
     } else {
         populateStructure();
-        resetBrowser();
+        populateTable(ui->comboBrowseTable->currentText());
     }
 }
 
@@ -1614,7 +1591,7 @@ void MainWindow::reloadSettings()
 
     // Refresh view
     populateStructure();
-    resetBrowser();
+    populateTable(ui->comboBrowseTable->currentText());
 }
 
 void MainWindow::httpresponse(QNetworkReply *reply)
@@ -2343,7 +2320,6 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
         tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
     }
 
-    resetBrowser(false);
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
     ui->mainTab->setCurrentIndex(1);
 }

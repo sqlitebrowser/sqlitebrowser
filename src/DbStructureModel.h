@@ -4,6 +4,7 @@
 #include <QAbstractItemModel>
 
 class DBBrowserDB;
+class DBBrowserObject;
 class QTreeWidgetItem;
 
 class DbStructureModel : public QAbstractItemModel
@@ -31,6 +32,8 @@ public:
 private:
     QTreeWidgetItem* rootItem;
     DBBrowserDB* m_db;
+
+    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const DBBrowserObject& object);
 };
 
 #endif
