@@ -366,6 +366,9 @@ void MainWindow::populateTable(QString tablename)
     // Remove the model-view link if the table name is empty in order to remove any data from the view
     if(ui->comboBrowseTable->model()->rowCount() == 0 && tablename.isEmpty())
     {
+        if (!ui->dataTable->model())
+            return;
+
         ui->dataTable->setModel(0);
         if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
             qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
