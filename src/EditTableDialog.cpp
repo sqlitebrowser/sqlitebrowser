@@ -231,7 +231,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
             if(!m_bNewTable)
             {
-                foreach(const DBBrowserObject& fkobj, pdb->getBrowsableObjects())
+                foreach(const DBBrowserObject& fkobj, pdb->objMap.values("table"))
                 {
                     foreach(const sqlb::FieldPtr& fkfield, fkobj.table.fields())
                     {
