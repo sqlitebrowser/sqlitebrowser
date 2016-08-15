@@ -1348,6 +1348,9 @@
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="fileOpenAction">
    <property name="icon">
@@ -1369,6 +1372,9 @@
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="fileCloseAction">
    <property name="enabled">
@@ -1379,6 +1385,9 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="fileRevertAction">
@@ -1397,6 +1406,9 @@
    </property>
    <property name="whatsThis">
     <string>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="fileSaveAction">
@@ -1419,6 +1431,9 @@
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="fileCompactAction">
    <property name="enabled">
@@ -1435,6 +1450,9 @@
    </property>
    <property name="whatsThis">
     <string>Compact the database file, removing space wasted by deleted records.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="fileExitAction">
@@ -1458,6 +1476,9 @@
    <property name="whatsThis">
     <string>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="fileImportCSVAction">
    <property name="text">
@@ -1468,6 +1489,9 @@
    </property>
    <property name="whatsThis">
     <string>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="fileExportSQLAction">
@@ -1480,6 +1504,9 @@
    <property name="whatsThis">
     <string>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="fileExportCSVAction">
    <property name="text">
@@ -1490,6 +1517,9 @@
    </property>
    <property name="whatsThis">
     <string>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="editCreateTableAction">
@@ -1505,6 +1535,9 @@
    </property>
    <property name="whatsThis">
     <string>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="editDeleteObjectAction">
@@ -1524,6 +1557,9 @@
    <property name="whatsThis">
     <string>Open the Delete Table wizard, where you can select a database table to be dropped.</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="editModifyTableAction">
    <property name="enabled">
@@ -1539,6 +1575,9 @@
    <property name="whatsThis">
     <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="editCreateIndexAction">
    <property name="enabled">
@@ -1553,6 +1592,9 @@
    </property>
    <property name="whatsThis">
     <string>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="viewPreferencesAction">
@@ -1590,6 +1632,9 @@
    <property name="shortcut">
     <string>Ctrl+T</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="helpWhatsThisAction">
    <property name="icon">
@@ -1601,6 +1646,9 @@
    </property>
    <property name="shortcut">
     <string>Shift+F1</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="helpAboutAction">
@@ -1672,6 +1720,9 @@
    <property name="text">
     <string>&amp;Load extension</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionSqlExecuteLine">
    <property name="icon">
@@ -1707,6 +1758,9 @@
    <property name="text">
     <string>&amp;Wiki...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionBug_report">
    <property name="icon">
@@ -1716,6 +1770,9 @@
    <property name="text">
     <string>Bug &amp;report...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionWebsite">
    <property name="icon">
@@ -1724,6 +1781,9 @@
    </property>
    <property name="text">
     <string>Web&amp;site...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionSaveProject">
@@ -1740,6 +1800,9 @@
    <property name="statusTip">
     <string>Save the current session to a file</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionOpenProject">
    <property name="icon">
@@ -1755,6 +1818,9 @@
    <property name="statusTip">
     <string>Load a working session from a file</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="fileAttachAction">
    <property name="enabled">
@@ -1762,6 +1828,9 @@
    </property>
    <property name="text">
     <string>&amp;Attach Database</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionEncryption">
@@ -1771,6 +1840,9 @@
    </property>
    <property name="text">
     <string>&amp;Set Encryption</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionSqlSaveFileAs">
