@@ -85,6 +85,10 @@ void MainWindow::init()
     // Set up DB models
     ui->dataTable->setModel(m_browseTableModel);
 
+    // Set up filters
+    connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
+    connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(ui->dbTreeWidget);
     ui->dbTreeWidget->setModel(dbStructureModel);
@@ -526,11 +530,8 @@ bool MainWindow::fileClose()
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
 
-    // Delete the model for the Browse tab and create a new one
-    delete m_browseTableModel;
-    m_browseTableModel = new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
-    connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
-    connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+    // Reset the model for the Browse tab
+    m_browseTableModel->reset();
 
     // Remove all stored table information browse data tab
     browseTableSettings.clear();
