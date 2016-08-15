@@ -361,16 +361,12 @@ void MainWindow::populateStructure()
     SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
     for(objectMap::ConstIterator it=tab.begin(); it!=tab.end(); ++it)
     {
-        // If it is a table or a view add the fields
-        if((*it).gettype() == "table" || (*it).gettype() == "view")
-        {
-            QString objectname = it.value().getname();
+        QString objectname = it.value().getname();
 
-            for(int i=0; i < (*it).table.fields().size(); ++i)
-            {
-                QString fieldname = (*it).table.fields().at(i)->name();
-                tablesToColumnsMap[objectname].append(fieldname);
-            }
+        for(int i=0; i < (*it).table.fields().size(); ++i)
+        {
+            QString fieldname = (*it).table.fields().at(i)->name();
+            tablesToColumnsMap[objectname].append(fieldname);
         }
     }
     SqlTextEdit::sqlLexer->setTableNames(tablesToColumnsMap);
