@@ -736,18 +736,13 @@ void MainWindow::createIndex()
     if(dialog.exec())
     {
         populateStructure();
-        resetBrowser();
     }
 }
 
 void MainWindow::compact()
 {
     VacuumDialog dialog(&db, this);
-    if(dialog.exec())
-    {
-        populateStructure();
-        resetBrowser();
-    }
+    dialog.exec();
 }
 
 void MainWindow::deleteObject()
