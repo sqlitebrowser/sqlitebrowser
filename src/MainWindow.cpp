@@ -293,7 +293,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                 loadExtensionsFromSettings();
                 populateStructure();
                 if(ui->mainTab->currentIndex() == 1)
-                    populateTable(ui->comboBrowseTable->currentText());
+                    populateTable();
                 else if(ui->mainTab->currentIndex() == 2)
                     loadPragmas();
                 retval = true;
@@ -324,7 +324,7 @@ void MainWindow::fileNew()
         statusReadOnlyLabel->setVisible(false);
         loadExtensionsFromSettings();
         populateStructure();
-        populateTable(ui->comboBrowseTable->currentText());
+        populateTable();
         openSqlTab(true);
         createTable();
     }
@@ -348,7 +348,7 @@ void MainWindow::populateStructure()
     if(old_table_index == -1 && ui->comboBrowseTable->count())      // If the old table couldn't be found anymore but there is another table, select that
         ui->comboBrowseTable->setCurrentIndex(0);
     else if(old_table_index == -1)                                  // If there aren't any tables to be selected anymore, clear the table view
-        populateTable("");
+        clearTableBrowser();
     else                                                            // Under normal circumstances just select the old table again
         ui->comboBrowseTable->setCurrentIndex(old_table_index);
 
@@ -379,6 +379,16 @@ void MainWindow::populateStructure()
     ui->dbTreeWidget->resizeColumnToContents(3);
 }
 
+void MainWindow::clearTableBrowser()
+{
+    if (!ui->dataTable->model())
+        return;
+
+    ui->dataTable->setModel(0);
+    if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
+        qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
+}
+
 void MainWindow::populateTable(QString tablename)
 {
     // Early exit if the Browse Data tab isn't visible as there is no need to update it in this case
@@ -388,16 +398,15 @@ void MainWindow::populateTable(QString tablename)
     // Remove the model-view link if the table name is empty in order to remove any data from the view
     if(ui->comboBrowseTable->model()->rowCount(ui->comboBrowseTable->rootModelIndex()) == 0 && tablename.isEmpty())
     {
-        if (!ui->dataTable->model())
-            return;
-
-        ui->dataTable->setModel(0);
-        if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
-            qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
+        clearTableBrowser();
         return;
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // Default parameter -> use current table name
+    if(tablename.isNull())
+        tablename = ui->comboBrowseTable->currentText();
 
     // Set model
     bool reconnectSelectionSignals = false;
@@ -684,7 +693,7 @@ void MainWindow::setRecordsetLabel()
 void MainWindow::browseRefresh()
 {
     db.updateSchema();
-    populateTable(ui->comboBrowseTable->currentText());
+    populateTable();
 }
 
 void MainWindow::createTable()
@@ -698,7 +707,7 @@ void MainWindow::createTable()
     if(dialog.exec())
     {
         populateStructure();
-        populateTable(ui->comboBrowseTable->currentText());
+        populateTable();
     }
 }
 
@@ -740,7 +749,7 @@ void MainWindow::deleteObject()
             QMessageBox::warning(this, QApplication::applicationName(), error);
         } else {
             populateStructure();
-            populateTable(ui->comboBrowseTable->currentText());
+            populateTable();
             changeTreeSelection();
         }
     }
@@ -761,7 +770,7 @@ void MainWindow::editTable()
     if(dialog.exec())
     {
         populateStructure();
-        populateTable(ui->comboBrowseTable->currentText());
+        populateTable();
     }
 }
 
@@ -997,7 +1006,7 @@ void MainWindow::mainTabSelected(int tabindex)
     } else if(tabindex == 1) {
         m_currentTabTableModel = m_browseTableModel;
         populateStructure();
-        populateTable(ui->comboBrowseTable->currentText());
+        populateTable();
     } else if(tabindex == 2) {
         loadPragmas();
     } else if(tabindex == 3) {
@@ -1024,7 +1033,7 @@ void MainWindow::importTableFromCSV()
         if(dialog.exec())
         {
             populateStructure();
-            populateTable(ui->comboBrowseTable->currentText());
+            populateTable();
             QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
         }
     }
@@ -1069,7 +1078,7 @@ void MainWindow::fileRevert()
         {
             db.revertAll();
             populateStructure();
-            populateTable(ui->comboBrowseTable->currentText());
+            populateTable();
         }
     }
 }
@@ -1137,7 +1146,7 @@ void MainWindow::importDatabaseFromSQL()
         fileOpen(newDbFile);
     } else {
         populateStructure();
-        populateTable(ui->comboBrowseTable->currentText());
+        populateTable();
     }
 }
 
@@ -1591,7 +1600,7 @@ void MainWindow::reloadSettings()
 
     // Refresh view
     populateStructure();
-    populateTable(ui->comboBrowseTable->currentText());
+    populateTable();
 }
 
 void MainWindow::httpresponse(QNetworkReply *reply)
@@ -2092,7 +2101,7 @@ bool MainWindow::loadProject(QString filename)
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
                             QDataStream stream(temp);
                             stream >> browseTableSettings;
-                            populateTable(ui->comboBrowseTable->currentText());     // Refresh view
+                            populateTable();     // Refresh view
                             ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
                                                         browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
                             showRowidColumn(browseTableSettings[ui->comboBrowseTable->currentText()].showRowid);
@@ -2446,7 +2455,7 @@ void MainWindow::editDataColumnDisplayFormat()
             browseTableSettings[current_table].displayFormats.remove(field_number);
 
         // Refresh view
-        populateTable(current_table);
+        populateTable();
     }
 }
 
