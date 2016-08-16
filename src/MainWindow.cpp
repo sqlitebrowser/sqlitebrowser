@@ -2398,7 +2398,8 @@ void MainWindow::jumpToRow(const QString& table, QString column, const QByteArra
         return;
 
     // Jump to table
-    populateTable(table);
+    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(table));
+    populateTable();
 
     // Set filter
     ui->dataTable->filterHeader()->setFilter(column_index+1, value);
