@@ -381,6 +381,10 @@ void MainWindow::populateStructure()
 
 void MainWindow::populateTable(QString tablename)
 {
+    // Early exit if the Browse Data tab isn't visible as there is no need to update it in this case
+    if(ui->mainTab->currentIndex() != 1)
+        return;
+
     // Remove the model-view link if the table name is empty in order to remove any data from the view
     if(ui->comboBrowseTable->model()->rowCount(ui->comboBrowseTable->rootModelIndex()) == 0 && tablename.isEmpty())
     {
