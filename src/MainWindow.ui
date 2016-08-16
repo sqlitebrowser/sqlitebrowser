@@ -1733,10 +1733,10 @@
     <string>Execute current line</string>
    </property>
    <property name="toolTip">
-    <string>Execute current line [Ctrl+E]</string>
+    <string>Execute current line [Shift+F5]</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E</string>
+    <string>Shift+F5</string>
    </property>
   </action>
   <action name="actionExportCsvPopup">
