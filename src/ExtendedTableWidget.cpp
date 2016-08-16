@@ -31,7 +31,6 @@ QList<QStringList> parseClipboard(const QString& clipboard)
             // insert everything that left
             text = clipboard.mid(whitespace_offset);
             result.last().push_back(text);
-            offset = -1;
             break;
         }
 
