@@ -82,9 +82,6 @@ void MainWindow::init()
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
 
-    // Set up DB models
-    ui->dataTable->setModel(m_browseTableModel);
-
     // Set up filters
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
