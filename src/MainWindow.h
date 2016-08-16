@@ -160,7 +160,7 @@ private slots:
     void changeTreeSelection();
     void fileNew();
     void populateStructure();
-    void populateTable(QString tablename = QString());
+    void populateTable();
     void clearTableBrowser();
     bool fileClose();
     void addRecord();

@@ -389,14 +389,14 @@ void MainWindow::clearTableBrowser()
         qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
 }
 
-void MainWindow::populateTable(QString tablename)
+void MainWindow::populateTable()
 {
     // Early exit if the Browse Data tab isn't visible as there is no need to update it in this case
     if(ui->mainTab->currentIndex() != 1)
         return;
 
     // Remove the model-view link if the table name is empty in order to remove any data from the view
-    if(ui->comboBrowseTable->model()->rowCount(ui->comboBrowseTable->rootModelIndex()) == 0 && tablename.isEmpty())
+    if(ui->comboBrowseTable->model()->rowCount(ui->comboBrowseTable->rootModelIndex()) == 0)
     {
         clearTableBrowser();
         return;
@@ -404,9 +404,8 @@ void MainWindow::populateTable(QString tablename)
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // Default parameter -> use current table name
-    if(tablename.isNull())
-        tablename = ui->comboBrowseTable->currentText();
+    // Get current table name
+    QString tablename = ui->comboBrowseTable->currentText();
 
     // Set model
     bool reconnectSelectionSignals = false;

@@ -2071,7 +2071,7 @@
    <sender>comboBrowseTable</sender>
    <signal>activated(QString)</signal>
    <receiver>MainWindow</receiver>
-   <slot>populateTable(QString)</slot>
+   <slot>populateTable()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>118</x>
@@ -2967,7 +2967,7 @@
  <slots>
   <slot>fileOpen()</slot>
   <slot>fileClose()</slot>
-  <slot>populateTable(QString)</slot>
+  <slot>populateTable()</slot>
   <slot>addRecord()</slot>
   <slot>deleteRecord()</slot>
   <slot>navigatePrevious()</slot>
