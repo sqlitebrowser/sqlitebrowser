@@ -289,9 +289,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                 openSqlTab(true);
                 loadExtensionsFromSettings();
                 populateStructure();
-                if(ui->mainTab->currentIndex() == 1)
+                if(ui->mainTab->currentIndex() == BrowseTab)
                     populateTable();
-                else if(ui->mainTab->currentIndex() == 2)
+                else if(ui->mainTab->currentIndex() == PragmaTab)
                     loadPragmas();
                 retval = true;
             } else {
@@ -389,7 +389,7 @@ void MainWindow::clearTableBrowser()
 void MainWindow::populateTable()
 {
     // Early exit if the Browse Data tab isn't visible as there is no need to update it in this case
-    if(ui->mainTab->currentIndex() != 1)
+    if(ui->mainTab->currentIndex() != BrowseTab)
         return;
 
     // Remove the model-view link if the table name is empty in order to remove any data from the view
@@ -1039,12 +1039,12 @@ void MainWindow::exportTableToCSV()
 {
     // Get the current table name if we are in the Browse Data tab
     QString current_table;
-    if(ui->mainTab->currentIndex() == 0) {
+    if(ui->mainTab->currentIndex() == StructureTab) {
         QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
         if(type == "table" || type == "view")
             current_table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
     }
-    else if(ui->mainTab->currentIndex() == 1)
+    else if(ui->mainTab->currentIndex() == BrowseTab)
         current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
@@ -1082,7 +1082,7 @@ void MainWindow::fileRevert()
 void MainWindow::exportDatabaseToSQL()
 {
     QString current_table;
-    if(ui->mainTab->currentIndex() == 1)
+    if(ui->mainTab->currentIndex() == BrowseTab)
         current_table = ui->comboBrowseTable->currentText();
 
     ExportSqlDialog dialog(&db, this, current_table);
@@ -2326,7 +2326,7 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
     }
 
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
-    ui->mainTab->setCurrentIndex(1);
+    ui->mainTab->setCurrentIndex(BrowseTab);
 }
 
 void MainWindow::on_buttonClearFilters_clicked()

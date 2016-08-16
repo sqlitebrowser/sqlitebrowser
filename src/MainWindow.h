@@ -71,6 +71,14 @@ public:
         }
     };
 
+    enum Tabs
+    {
+        StructureTab,
+        BrowseTab,
+        PragmaTab,
+        ExecuteTab
+    };
+
 private:
     struct PragmaValues
     {
