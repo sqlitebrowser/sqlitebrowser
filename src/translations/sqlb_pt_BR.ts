@@ -73,15 +73,15 @@
     </message>
     <message>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -s, -sql  [arquivo]	Executar esse arquivo de SQL após abrir o BD</translation>
     </message>
     <message>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -t, --table [tabela]	Navegar essa tabela após abrir o BD</translation>
     </message>
     <message>
         <source>The -t/--table option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>A opção -t/--table requer um argumento</translation>
     </message>
 </context>
 <context>
@@ -123,74 +123,77 @@ Se quaisquer das outras configurações foram alteradas você terá de prover es
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
 The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, selecione uma chave para encriptar o banco de dados.
+Note que se você alterar quaisquer configurações opcionais você terá de entrá-las todas as vezes que você abrir o arquivo do banco de dados.
+Deixe os campos de senha em branco para desativar a encriptação.
+O processo de encriptação pode demorar alguns minutos e você deve ter um backup do seu banco de dados! Alterações não salvas são aplicadas antes de se modificar a encriptação.</translation>
     </message>
 </context>
 <context>
     <name>ColumnDisplayFormatDialog</name>
     <message>
         <source>Choose display format</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um formato de exibição</translation>
     </message>
     <message>
         <source>Display format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de exibição</translation>
     </message>
     <message>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um formato de exibição para a coluna &apos;%1&apos; que será aplicado a cada valor antes de exibí-lo.</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrão</translation>
     </message>
     <message>
         <source>Decimal number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número decimal</translation>
     </message>
     <message>
         <source>Exponent notation</source>
-        <translation type="unfinished"></translation>
+        <translation>Notação exponencial</translation>
     </message>
     <message>
         <source>Hex blob</source>
-        <translation type="unfinished"></translation>
+        <translation>BLOB hexadecimal</translation>
     </message>
     <message>
         <source>Hex number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número hexadecimal</translation>
     </message>
     <message>
         <source>Julian day to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Dia juliano para data</translation>
     </message>
     <message>
         <source>Lower case</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa baixa</translation>
     </message>
     <message>
         <source>Octal number</source>
-        <translation type="unfinished"></translation>
+        <translation>Octal</translation>
     </message>
     <message>
         <source>Round number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número arredondado</translation>
     </message>
     <message>
         <source>Unix epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Era unix para data</translation>
     </message>
     <message>
         <source>Upper case</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa alta</translation>
     </message>
     <message>
         <source>Windows DATE to date</source>
-        <translation type="unfinished"></translation>
+        <translation>DATE do Windows para data</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Personalizado</translation>
     </message>
 </context>
 <context>
@@ -499,43 +502,43 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo:</translation>
     </message>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagem</translation>
     </message>
     <message>
         <source>Set this cell to NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir esta célula como NULL</translation>
     </message>
     <message>
         <source>Set as &amp;NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir como &amp;NULL</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <source>Type of data currently in cell: %1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de dado atualmente na célula: %1 Imagem</translation>
     </message>
     <message>
         <source>%1x%2 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2 pixel(s)</translation>
     </message>
     <message>
         <source>Type of data currently in cell: NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de dado atualmente na célula: NULL</translation>
     </message>
     <message>
         <source>Image data can&apos;t be viewed with the text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dados de imagem não podem ser exibidos pelo editor de texto</translation>
     </message>
     <message>
         <source>Binary data can&apos;t be viewed with the text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dados binários não podem ser exibidos pelo editor de texto</translation>
     </message>
 </context>
 <context>
@@ -675,22 +678,25 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Já existe um campo com este nome. Por favor, renomeie-o primeiro ou escolha um nome diferente para esse campo.</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Essa coluna é referenciada em uma chave estrangeira na tabela %1, coluna %2 e portanto não pode ter seu nome alterado.</translation>
     </message>
     <message>
-        <source>Column &apos;%1&apos;&apos; has no unique data.
+        <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Coluna &apos;%1&apos; não possui dados únicos.
+</translation>
     </message>
     <message>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto increment disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, adicione um campo que atende aos seguintes critérios antes de definir a flag &quot;without rowid&quot;:
+ - Flag &quot;primary key&quot; definida
+ - Incremento automático desativado</translation>
     </message>
 </context>
 <context>
@@ -769,15 +775,15 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>New line characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Caracteres de nova linha</translation>
     </message>
     <message>
         <source>Windows: CR+LF (\r\n)</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows: CR+LF (\r\n)</translation>
     </message>
     <message>
         <source>Unix: LF (\n)</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix: LF (\n)</translation>
     </message>
 </context>
 <context>
@@ -828,27 +834,27 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Tab&amp;le(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabe&amp;las(s)</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar Tudo</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar Seleção</translation>
     </message>
     <message>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation type="unfinished"></translation>
+        <translation>Múltiplas linhas (VALUES) por INSERT</translation>
     </message>
     <message>
         <source>Export everything</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar tudo</translation>
     </message>
     <message>
         <source>Export data only</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar somente dados</translation>
     </message>
 </context>
 <context>
@@ -856,14 +862,15 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     <message>
         <source>The content of clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>O conteúdo da área de transferência é maior do que a seleção.
+Deseja inserir mesmo assim?</translation>
     </message>
 </context>
 <context>
     <name>FileDialog</name>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="unfinished">Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
+        <translation>Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
     </message>
 </context>
 <context>
@@ -1172,19 +1179,19 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Deletar</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <source>Truncate</source>
-        <translation>Truncar</translation>
+        <translation>Truncate</translation>
     </message>
     <message>
         <source>Persist</source>
-        <translation>Persistir</translation>
+        <translation>Persist</translation>
     </message>
     <message>
         <source>Memory</source>
-        <translation>Memória</translation>
+        <translation>Memory</translation>
     </message>
     <message>
         <source>WAL</source>
@@ -1192,7 +1199,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Off</source>
-        <translation>Desligado</translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1208,11 +1215,11 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Exclusive</source>
-        <translation>Exclusivo</translation>
+        <translation>Exclusive</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1236,11 +1243,11 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Default</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Arquivo</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1851,264 +1858,265 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Edit Database Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar célula do banco de dados</translation>
     </message>
     <message>
         <source>SQL &amp;Log</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL &amp;Log</translation>
     </message>
     <message>
         <source>Show S&amp;QL submitted by</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibir S&amp;QL enviado por</translation>
     </message>
     <message>
         <source>&amp;Plot</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Plotar</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo da linha:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <source>StepLeft</source>
-        <translation type="unfinished"></translation>
+        <translation>StepLeft</translation>
     </message>
     <message>
         <source>StepRight</source>
-        <translation type="unfinished"></translation>
+        <translation>StepRight</translation>
     </message>
     <message>
         <source>StepCenter</source>
-        <translation type="unfinished"></translation>
+        <translation>StepCenter</translation>
     </message>
     <message>
         <source>Impulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Impulso</translation>
     </message>
     <message>
         <source>Point shape:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponto:</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Cruz</translation>
     </message>
     <message>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Mais</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Círculo</translation>
     </message>
     <message>
         <source>Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Disco</translation>
     </message>
     <message>
         <source>Square</source>
-        <translation type="unfinished"></translation>
+        <translation>Quadrado</translation>
     </message>
     <message>
         <source>Diamond</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamante</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation type="unfinished"></translation>
+        <translation>Estrela</translation>
     </message>
     <message>
         <source>Triangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Triângulo</translation>
     </message>
     <message>
         <source>TriangleInverted</source>
-        <translation type="unfinished"></translation>
+        <translation>TriânguloInvertido</translation>
     </message>
     <message>
         <source>CrossSquare</source>
-        <translation type="unfinished"></translation>
+        <translation>CruzQuadrado</translation>
     </message>
     <message>
         <source>PlusSquare</source>
-        <translation type="unfinished"></translation>
+        <translation>MaisQuadrado</translation>
     </message>
     <message>
         <source>CrossCircle</source>
-        <translation type="unfinished"></translation>
+        <translation>CruzCírculo</translation>
     </message>
     <message>
         <source>PlusCircle</source>
-        <translation type="unfinished"></translation>
+        <translation>MaisCírculo</translation>
     </message>
     <message>
         <source>Peace</source>
-        <translation type="unfinished"></translation>
+        <translation>Paz</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar todos os dados. Isso somente tem efeito se nem todos os dados já foram obtidos da tabela devido ao mecanismo de carregamento parcial.</translation>
     </message>
     <message>
         <source>&amp;Revert Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Reverter Modificações</translation>
     </message>
     <message>
         <source>&amp;Write Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Escrever Modificações</translation>
     </message>
     <message>
         <source>Compact &amp;Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Compactar BD</translation>
     </message>
     <message>
         <source>&amp;Database from SQL file...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Banco de dados a partir de arquivo SQL...</translation>
     </message>
     <message>
         <source>&amp;Table from CSV file...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tabela a partir de arquivo CSV...</translation>
     </message>
     <message>
         <source>&amp;Database to SQL file...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Banco de dados para arquivo SQL...</translation>
     </message>
     <message>
         <source>&amp;Table(s) as CSV file...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tabela para arquivo CSV...</translation>
     </message>
     <message>
         <source>&amp;Create Table...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Criar Tabela...</translation>
     </message>
     <message>
         <source>&amp;Delete Table...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deletar Tabela...</translation>
     </message>
     <message>
         <source>&amp;Modify Table...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Modificar Tabela...</translation>
     </message>
     <message>
         <source>Create &amp;Index...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Criar Índice...</translation>
     </message>
     <message>
         <source>W&amp;hat&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>O &amp;que é isso?</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Carregar extensão</translation>
     </message>
     <message>
         <source>Sa&amp;ve Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salvar Projeto</translation>
     </message>
     <message>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir &amp;Projeto</translation>
     </message>
     <message>
         <source>&amp;Set Encryption</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Configurar Encriptação</translation>
     </message>
     <message>
         <source>Edit display format</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar formato de exibição</translation>
     </message>
     <message>
         <source>Edit the display format of the data in this column</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar o formato de exibição dos dados nessa coluna</translation>
     </message>
     <message>
         <source>Show rowid column</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar coluna rowid</translation>
     </message>
     <message>
         <source>Toggle the visibility of the rowid column</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar a visibilidade da coluna rowid</translation>
     </message>
     <message>
         <source>Set encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir codificação</translation>
     </message>
     <message>
         <source>Change the encoding of the text in the table cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar a codificação do texto nas células da tabela</translation>
     </message>
     <message>
         <source>Set encoding for all tables</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar codificação para todas as tabelas</translation>
     </message>
     <message>
         <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar a codificação padrão assumida para todas as tabelas no BD</translation>
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicar registro</translation>
     </message>
     <message>
         <source>Encrypted</source>
-        <translation type="unfinished"></translation>
+        <translation>Encriptado</translation>
     </message>
     <message>
         <source>Read only</source>
-        <translation type="unfinished"></translation>
+        <translation>Somente leitura</translation>
     </message>
     <message>
         <source>Database file is read only. Editing the database is disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo de banco de dados é somente leitura. Edição do banco de dados está desativada.</translation>
     </message>
     <message>
         <source>%1 rows returned in %2ms from: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 linhas retornadas em %2ms de: %3</translation>
     </message>
     <message>
         <source>, %1 rows affected</source>
-        <translation type="unfinished"></translation>
+        <translation>, %1 linhas afetadas</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Consulta executada com sucesso: %1 (durou %2ms%3)</translation>
     </message>
     <message>
         <source>Please choose a new encoding for this table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, escolha uma nova codificação para essa tabela.</translation>
     </message>
     <message>
         <source>Please choose a new encoding for all tables.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, escolha uma nova codificação para todas tabelas.</translation>
     </message>
     <message>
         <source>%1
 Leave the field empty for using the database encoding.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Deixe o campo em branco para usar a codificação do banco de dados.</translation>
     </message>
     <message>
         <source>This encoding is either not valid or not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Essa codificação é inválida ou não é suportada.</translation>
     </message>
     <message>
         <source>Database Structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Estrutura do banco de dados</translation>
     </message>
     <message>
         <source>Browse Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegar dados</translation>
     </message>
     <message>
         <source>Edit Pragmas</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar Pragmas</translation>
     </message>
     <message>
         <source>Execute SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>Executar SQL</translation>
     </message>
 </context>
 <context>
@@ -2319,99 +2327,99 @@ Leave the field empty for using the database encoding.</source>
     </message>
     <message>
         <source>Remove line breaks in schema &amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover quebras de linhas em &amp;vista de esquema</translation>
     </message>
     <message>
         <source>Prefetch block si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tamanho de bloco de prefetch</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished">Avançado</translation>
+        <translation>Avançado</translation>
     </message>
     <message>
         <source>SQL to execute after opening database</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL para executar após abrir o banco de dados</translation>
     </message>
     <message>
         <source>Default field type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo padrão de campo</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonte</translation>
     </message>
     <message>
         <source>&amp;Font</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fonte</translation>
     </message>
     <message>
         <source>Font si&amp;ze:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tamanho da fonte:</translation>
     </message>
     <message>
         <source>Field colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Cores do campo</translation>
     </message>
     <message>
         <source>NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>NULL</translation>
     </message>
     <message>
         <source>Regular</source>
-        <translation type="unfinished"></translation>
+        <translation>Regular</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="unfinished">Texto</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <source>Binary</source>
-        <translation type="unfinished">Binário</translation>
+        <translation>Binário</translation>
     </message>
     <message>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fundo</translation>
     </message>
     <message>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtros</translation>
     </message>
     <message>
         <source>Escape character</source>
-        <translation type="unfinished"></translation>
+        <translation>Caractere de escape</translation>
     </message>
     <message>
         <source>Delay time (&amp;ms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempo de delay (&amp;ms)</translation>
     </message>
     <message>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir o tempo de espera antes de aplicar um novo filtro de valor. Pode ser definido para zero para desativar espera.</translation>
     </message>
     <message>
         <source>Tab size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho de tabulação</translation>
     </message>
     <message>
         <source>Error indicators</source>
-        <translation type="unfinished"></translation>
+        <translation>Indicadores de erro</translation>
     </message>
     <message>
         <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Ativar indicadores de erro destaca as linhas de SQL que causaram erros durante a última execução</translation>
     </message>
     <message>
         <source>Hori&amp;zontal tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposição &amp;horizontal</translation>
     </message>
     <message>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se ativados, o editor de SQL e a tabela de resultados são exibidos lado a lado em vez de um sobre o outro.</translation>
     </message>
     <message>
         <source>Code co&amp;mpletion</source>
-        <translation type="unfinished"></translation>
+        <translation>Co&amp;mpletação de código</translation>
     </message>
 </context>
 <context>
@@ -2700,7 +2708,8 @@ Crie um backup!</translation>
     <message>
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
-        <translation type="unfinished"></translation>
+        <translation>Referencia %1(%2)
+Pressione Ctrl+Shift e clique para ir até lá</translation>
     </message>
 </context>
 <context>
