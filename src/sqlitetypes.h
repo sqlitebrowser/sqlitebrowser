@@ -106,6 +106,7 @@ private:
 
 typedef QSharedPointer<Field> FieldPtr;
 typedef QVector< FieldPtr > FieldVector;
+
 class Table
 {
 public:
@@ -126,12 +127,15 @@ public:
     void addField(const FieldPtr& f);
     bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
-    void setField(int index, FieldPtr f) { m_fields[index] = f; }
+    void setField(int index, FieldPtr f);
+    const FieldPtr& field(int index) { return m_fields[index]; }
     QStringList fieldNames() const;
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
     const QString& rowidColumn() const { return m_rowidColumn; }
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
     void clear();
+
+    void addUniqueConstraint(FieldVector fields);
 
     /**
      * @brief findField Finds a field and returns the index.
@@ -159,6 +163,7 @@ private:
     QString m_name;
     FieldVector m_fields;
     QString m_rowidColumn;
+    QVector<FieldVector> m_uniqueConstraints;
 };
 
 /**

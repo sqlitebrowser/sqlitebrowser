@@ -127,6 +127,27 @@ void Table::setFields(const FieldVector &fields)
     m_fields = fields;
 }
 
+void Table::setField(int index, FieldPtr f)
+{
+    FieldPtr oldField = m_fields[index];
+    m_fields[index] = f;
+
+    // Update unique constraints. If an existing field is updated but was used in a unique constraint, the pointer in the
+    // unique constraint needs to be updated to the new field, too.
+    if(oldField)
+    {
+        for(int i=0;i<m_uniqueConstraints.size();++i)
+        {
+            FieldVector& constraint = m_uniqueConstraints[i];
+            for(int j=0;j<constraint.size();++j)
+            {
+                if(constraint[i] == oldField)
+                    constraint[i] = f;
+            }
+        }
+    }
+}
+
 int Table::findField(const QString &sname)
 {
     for(int i = 0; i < m_fields.count(); ++i)
@@ -231,6 +252,15 @@ QString Table::sql() const
             sql += pk + ")";
     }
 
+    // unique constraints
+    foreach(FieldVector constraint, m_uniqueConstraints)
+    {
+        QStringList fieldnames;
+        foreach(FieldPtr field, constraint)
+            fieldnames.append(escapeIdentifier(field->name()));
+        sql += QString(",\n\tUNIQUE(%1)").arg(fieldnames.join(","));
+    }
+
     // foreign keys
     foreach(FieldPtr f, m_fields)
     {
@@ -245,6 +275,11 @@ QString Table::sql() const
         sql += " WITHOUT ROWID";
 
     return sql + ";";
+}
+
+void Table::addUniqueConstraint(FieldVector fields)
+{
+    m_uniqueConstraints.push_back(fields);
 }
 
 namespace
@@ -386,13 +421,12 @@ Table CreateTableWalker::table()
                 {
                     tc = tc->getNextSibling(); // skip UNIQUE
                     tc = tc->getNextSibling(); // skip LPAREN
-                    QVector<int> uniquefieldsindex;
+                    FieldVector fields;
                     do
                     {
                         QString col = columnname(tc);
-                        int fieldindex = tab.findField(col);
-                        if(fieldindex != -1)
-                            uniquefieldsindex.append(fieldindex);
+                        FieldPtr field = tab.field(tab.findField(col));
+                        fields.push_back(field);
 
                         tc = tc->getNextSibling();
                         if(tc != antlr::nullAST
@@ -410,15 +444,10 @@ Table CreateTableWalker::table()
                         }
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
 
-                    if(uniquefieldsindex.size() == 1)
-                    {
-                        tab.fields().at(uniquefieldsindex[0])->setUnique(true);
-                    }
+                    if(fields.size() == 1)
+                        fields[0]->setUnique(true);
                     else
-                    {
-                        // else save on table a unique with more than one field
-                        m_bModifySupported = false;
-                    }
+                        tab.addUniqueConstraint(fields);
                 }
                 break;
                 case sqlite3TokenTypes::FOREIGN:
