@@ -108,6 +108,13 @@ private:
 typedef QSharedPointer<Field> FieldPtr;
 typedef QVector< FieldPtr > FieldVector;
 
+#if QT_VERSION_MAJOR < 5
+inline bool operator<(const FieldVector&, const FieldVector&)
+{
+    return false;
+}
+#endif
+
 class Table
 {
 public:
