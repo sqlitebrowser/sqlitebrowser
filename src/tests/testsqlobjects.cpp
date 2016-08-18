@@ -91,6 +91,29 @@ void TestTable::foreignKeys()
                                ");"));
 }
 
+void TestTable::uniqueConstraint()
+{
+    Table tt("testtable");
+    FieldPtr f1 = FieldPtr(new Field("a", "integer"));
+    FieldPtr f2 = FieldPtr(new Field("b", "integer"));
+    FieldPtr f3 = FieldPtr(new Field("c", "integer"));
+    f1->setUnique(true);
+    FieldVector uc;
+    uc.push_back(f2);
+    uc.push_back(f3);
+    tt.addField(f1);
+    tt.addField(f2);
+    tt.addField(f3);
+    tt.addUniqueConstraint(uc);
+
+    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
+                               "\t`a`\tinteger UNIQUE,\n"
+                               "\t`b`\tinteger,\n"
+                               "\t`c`\tinteger,\n"
+                               "\tUNIQUE(`b`,`c`)\n"
+                               ");"));
+}
+
 void TestTable::parseSQL()
 {
     QString sSQL = "create TABLE hero (\n"

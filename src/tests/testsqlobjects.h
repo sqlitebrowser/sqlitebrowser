@@ -12,6 +12,7 @@ private slots:
     void notnull();
     void withoutRowid();
     void foreignKeys();
+    void uniqueConstraint();
 
     void parseSQL();
     void parseSQLdefaultexpr();
