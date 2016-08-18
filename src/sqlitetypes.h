@@ -9,6 +9,7 @@
 #include <QVector>
 #include <QStringList>
 #include <QPair>
+#include <QMap>
 
 namespace sqlb {
 
@@ -136,6 +137,7 @@ public:
     void clear();
 
     void addUniqueConstraint(FieldVector fields);
+    void addForeignKey(FieldVector fields, ForeignKeyClause fk);
 
     /**
      * @brief findField Finds a field and returns the index.
@@ -164,6 +166,7 @@ private:
     FieldVector m_fields;
     QString m_rowidColumn;
     QVector<FieldVector> m_uniqueConstraints;
+    QMap<FieldVector, ForeignKeyClause> m_foreignKeyClauses;
 };
 
 /**

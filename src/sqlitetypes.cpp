@@ -14,6 +14,14 @@ QString escapeIdentifier(QString id)
     return '`' + id.replace('`', "``") + '`';
 }
 
+QStringList fieldVectorToFieldNames(const FieldVector& vector)
+{
+    QStringList result;
+    foreach(const FieldPtr& field, vector)
+        result.append(escapeIdentifier(field->name()));
+    return result;
+}
+
 bool ForeignKeyClause::isSet() const
 {
     return m_override.size() || m_table.size();
@@ -99,7 +107,6 @@ void Table::clear()
     m_fields.clear();
     m_rowidColumn = "_rowid_";
 }
-
 Table::~Table()
 {
     clear();
@@ -132,17 +139,48 @@ void Table::setField(int index, FieldPtr f)
     FieldPtr oldField = m_fields[index];
     m_fields[index] = f;
 
-    // Update unique constraints. If an existing field is updated but was used in a unique constraint, the pointer in the
-    // unique constraint needs to be updated to the new field, too.
+    // Update unique constraints and foreign keys. If an existing field is updated but was used in a unique constraint or a foreign key, the pointer in the
+    // unique constraint/foreign key needs to be updated to the new field, too.
     if(oldField)
     {
+        // Unique constraints
         for(int i=0;i<m_uniqueConstraints.size();++i)
         {
+            // Loop through all the fields mentioned in each unique constraint
             FieldVector& constraint = m_uniqueConstraints[i];
             for(int j=0;j<constraint.size();++j)
             {
-                if(constraint[i] == oldField)
-                    constraint[i] = f;
+                // If the field that is being modified is in there update it to the new field
+                if(constraint[j] == oldField)
+                    constraint[j] = f;
+            }
+        }
+
+        // Foreign keys
+        QMap<FieldVector, ForeignKeyClause>::iterator it = m_foreignKeyClauses.begin();
+        while(it != m_foreignKeyClauses.end())
+        {
+            // Loop through all fields mentioned in a foreign key
+            FieldVector fields = it.key();
+            bool modified = false;
+            for(int i=0;i<fields.size();++i)
+            {
+                // If the field that is being modified is in there update it to the new field and set a flag that something has changed.
+                // This is used below to know when to update the map key
+                if(fields[i] == oldField)
+                {
+                    fields[i] = f;
+                    modified = true;
+                }
+            }
+            if(modified)
+            {
+                // When we need to update the map key, we insert a new foreign key clause using the updated field vector and the old
+                // foreign key information, and delete the old one afterwards
+                m_foreignKeyClauses.insert(fields, it.value());
+                it = m_foreignKeyClauses.erase(it);
+            } else {
+                ++it;
             }
         }
     }
@@ -255,9 +293,7 @@ QString Table::sql() const
     // unique constraints
     foreach(FieldVector constraint, m_uniqueConstraints)
     {
-        QStringList fieldnames;
-        foreach(FieldPtr field, constraint)
-            fieldnames.append(escapeIdentifier(field->name()));
+        QStringList fieldnames = fieldVectorToFieldNames(constraint);
         sql += QString(",\n\tUNIQUE(%1)").arg(fieldnames.join(","));
     }
 
@@ -266,6 +302,12 @@ QString Table::sql() const
     {
         if(f->foreignKey().isSet())
             sql += QString(",\n\tFOREIGN KEY(%1) REFERENCES %2").arg(escapeIdentifier(f->name())).arg(f->foreignKey().toString());
+    }
+    QMap<FieldVector, ForeignKeyClause>::const_iterator it = m_foreignKeyClauses.constBegin();
+    while(it != m_foreignKeyClauses.constEnd())
+    {
+        sql += QString(",\n\tFOREIGN KEY(%1) REFERENCES %2").arg(fieldVectorToFieldNames(it.key()).join(",")).arg(it.value().toString());
+        ++it;
     }
 
     sql += "\n)";
@@ -280,6 +322,11 @@ QString Table::sql() const
 void Table::addUniqueConstraint(FieldVector fields)
 {
     m_uniqueConstraints.push_back(fields);
+}
+
+void Table::addForeignKey(FieldVector fields, ForeignKeyClause fk)
+{
+    m_foreignKeyClauses.insert(fields, fk);
 }
 
 namespace
@@ -457,15 +504,21 @@ Table CreateTableWalker::table()
                     tc = tc->getNextSibling();  // FOREIGN
                     tc = tc->getNextSibling();  // KEY
                     tc = tc->getNextSibling();  // LPAREN
-                    QString column_name = columnname(tc);
-                    tc = tc->getNextSibling();  // identifier
-                    if(tc->getType() == sqlite3TokenTypes::COMMA)
+
+                    FieldVector fields;
+                    do
                     {
-                        // No support for composite foreign keys
-                        m_bModifySupported = false;
-                        break;
-                    }
-                    tc = tc->getNextSibling();  // RPAREN
+                        QString col = columnname(tc);
+                        FieldPtr field = tab.field(tab.findField(col));
+                        fields.push_back(field);
+
+                        tc = tc->getNextSibling();
+
+                        while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
+                            tc = tc->getNextSibling(); // skip ident and comma
+                    } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
+
+                    tc = tc->getNextSibling();
                     tc = tc->getNextSibling();  // REFERENCES
 
                     fk.setTable(identifier(tc));
@@ -489,7 +542,10 @@ Table CreateTableWalker::table()
 
                     fk.setConstraint(concatTextAST(tc, true));
 
-                    tab.fields().at(tab.findField(column_name))->setForeignKey(fk);
+                    if(fields.size() == 1)
+                        fields[0]->setForeignKey(fk);
+                    else
+                        tab.addForeignKey(fields, fk);
                 }
                 break;
                 default:
