@@ -82,8 +82,8 @@ void TestTable::foreignKeys()
 {
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("a", "integer"));
-    f->setForeignKey(sqlb::ForeignKeyClause("b", QStringList("c")));
     tt.addField(f);
+    tt.addForeignKey(f, sqlb::ForeignKeyClause("b", QStringList("c")));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
                                "\t`a`\tinteger,\n"
@@ -271,10 +271,10 @@ void TestTable::parseSQLForeignKeys()
     QCOMPARE(tab.name(), QString("foreign_key_test"));
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->type(), QString("int"));
-    QCOMPARE(tab.fields().at(0)->foreignKey().table(), QString("x"));
+    QCOMPARE(tab.foreignKey(tab.fields().at(0)).table(), QString("x"));
     QCOMPARE(tab.fields().at(1)->name(), QString("b"));
     QCOMPARE(tab.fields().at(1)->type(), QString("int"));
-    QCOMPARE(tab.fields().at(1)->foreignKey().toString(), QString("`w`(`y`,`z`) on delete set null"));
+    QCOMPARE(tab.foreignKey(tab.fields().at(1)).toString(), QString("`w`(`y`,`z`) on delete set null"));
 }
 
 void TestTable::parseSQLCheckConstraint()

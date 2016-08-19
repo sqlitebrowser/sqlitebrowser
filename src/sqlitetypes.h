@@ -77,7 +77,6 @@ public:
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
     void setPrimaryKey(bool pk) { m_primaryKey = pk; }
     void setUnique(bool u) { m_unique = u; }
-    void setForeignKey(const ForeignKeyClause& key) { m_foreignKey = key; }
 
     bool isText() const;
     bool isInteger() const;
@@ -90,7 +89,6 @@ public:
     bool autoIncrement() const { return m_autoincrement; }
     bool primaryKey() const { return m_primaryKey; }
     bool unique() const { return m_unique; }
-    const ForeignKeyClause& foreignKey() const { return m_foreignKey; }
 
     static QStringList Datatypes;
 private:
@@ -99,7 +97,6 @@ private:
     bool m_notnull;
     QString m_check;
     QString m_defaultvalue;
-    ForeignKeyClause m_foreignKey;   // Even though this information is a table constraint it's easier for accessing and processing to store it here
     bool m_autoincrement; //! this is stored here for simplification
     bool m_primaryKey;
     bool m_unique;
@@ -107,6 +104,7 @@ private:
 
 typedef QSharedPointer<Field> FieldPtr;
 typedef QVector< FieldPtr > FieldVector;
+typedef QMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
 
 #if QT_VERSION_MAJOR < 5
 inline bool operator<(const FieldVector&, const FieldVector&)
@@ -144,7 +142,12 @@ public:
     void clear();
 
     void addUniqueConstraint(FieldVector fields);
+
+    void addForeignKey(FieldPtr field, ForeignKeyClause fk);
     void addForeignKey(FieldVector fields, ForeignKeyClause fk);
+    const ForeignKeyClause& foreignKey(FieldPtr field) const;
+    const ForeignKeyClause& foreignKey(FieldVector fields) const;
+    const ForeignKeyMap& foreignKeys() const { return m_foreignKeyClauses; }
 
     /**
      * @brief findField Finds a field and returns the index.
@@ -173,7 +176,7 @@ private:
     FieldVector m_fields;
     QString m_rowidColumn;
     QVector<FieldVector> m_uniqueConstraints;
-    QMap<FieldVector, ForeignKeyClause> m_foreignKeyClauses;
+    ForeignKeyMap m_foreignKeyClauses;
 };
 
 /**
@@ -193,12 +196,14 @@ public:
     bool modifysupported() const { return m_bModifySupported; }
 
 private:
-    void parsecolumn(FieldPtr& f, antlr::RefAST c);
+    void parsecolumn(Table& table, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
     bool m_bModifySupported;
 };
+
+QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
 
 } //namespace sqlb
 

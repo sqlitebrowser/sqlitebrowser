@@ -115,7 +115,7 @@ void EditTableDialog::populateFields()
             tbitem->setText(kDefault, f->defaultValue());
 
         tbitem->setText(kCheck, f->check());
-        tbitem->setText(kForeignKey, f->foreignKey().toString());
+        tbitem->setText(kForeignKey, m_table.foreignKey(f).toString());
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
@@ -233,14 +233,19 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             {
                 foreach(const DBBrowserObject& fkobj, pdb->objMap.values("table"))
                 {
-                    foreach(const sqlb::FieldPtr& fkfield, fkobj.table.fields())
+                    sqlb::ForeignKeyMap::ConstIterator it = fkobj.table.foreignKeys().constBegin();
+                    while(it != fkobj.table.foreignKeys().constEnd())
                     {
-                        if(fkfield->foreignKey().table() == m_table.name())
+                        const sqlb::FieldVector& fkfields = it.key();
+                        const sqlb::ForeignKeyClause& fk = it.value();
+                        if(fk.table() == m_table.name())
                         {
-                            if(fkfield->foreignKey().columns().contains(field->name()) || field->primaryKey())
+                            if(fk.columns().contains(field->name()) || field->primaryKey())
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1, column %2 and thus "
-                                                                                       "its name cannot be changed.").arg(fkobj.getname()).arg(fkfield->name()));
+                                                                                       "its name cannot be changed.")
+                                                     .arg(fkobj.getname())
+                                                     .arg(sqlb::fieldVectorToFieldNames(fkfields).join(",")));
                                 // Reset the name to the old value but avoid calling this method again for that automatic change
                                 ui->treeWidget->blockSignals(true);
                                 item->setText(column, oldFieldName);
@@ -248,6 +253,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                                 return;
                             }
                         }
+
+                        ++it;
                     }
                 }
             }
@@ -418,7 +425,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         case kForeignKey:
             sqlb::ForeignKeyClause fk;
             fk.setFromString(item->text(column));
-            field->setForeignKey(fk);
+            m_table.addForeignKey(field, fk);
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;
