@@ -816,7 +816,7 @@ L&apos;exécution est abandonnée.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="369"/>
-        <source>Column &apos;%1&apos;&apos; has no unique data.
+        <source>Column &apos;%1&apos; has no unique data.
 </source>
         <translation>La colonne %1 n&apos;a pas de valeurs uniques.</translation>
     </message>
