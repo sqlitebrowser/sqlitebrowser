@@ -180,7 +180,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="15"/>
         <source>Hex blob</source>
-        <translation>이진 데이터)</translation>
+        <translation>이진 데이터</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="16"/>
@@ -287,7 +287,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="167"/>
         <source>Please specify the database name under which you want to access the attached database</source>
-        <translation>데이터베이스 합치기를 합치기 위해 불러올 데이터베이스의 별명을 지정해주세요</translation>
+        <translation>데이터베이스 연결(attach)을 위해 불러올 데이터베이스의 별명을 지정해주세요</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="398"/>
@@ -841,12 +841,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportCsvDialog.ui" line="22"/>
         <source>&amp;Table(s)</source>
-        <translation>테이블(&amp;T) </translation>
+        <translation>테이블(&amp;T)</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.ui" line="48"/>
         <source>&amp;Column names in first line</source>
-        <translation>첫 행에 필드 이름 포함(&amp;C)</translation>
+        <translation>첫 행에 필드명 포함(&amp;C)</translation>
     </message>
     <message>
         <location filename="../ExportCsvDialog.ui" line="68"/>
@@ -977,7 +977,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="85"/>
         <source>Keep column names in INSERT INTO</source>
-        <translation>INSERT INTO에서 필드명 유지하기</translation>
+        <translation>INSERT INTO문에 필드명 넣기</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
@@ -1069,7 +1069,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="38"/>
         <source>&amp;Column names in first line</source>
-        <translation>첫 행에 필드 이름 포함(&amp;C)</translation>
+        <translation>첫 행에 필드명 포함(&amp;C)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="55"/>
@@ -1142,7 +1142,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="230"/>
         <source>Trim fields?</source>
-        <translation>필드 앞뒤 공백제거(트림)?</translation>
+        <translation>필드 앞뒤 공백 제거(트림)?</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="180"/>
@@ -1373,12 +1373,12 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Edit &amp;Pragmas</source>
-        <translation type="obsolete">Pragmas 수정하기(&amp;P)</translation>
+        <translation type="obsolete">프라그마 수정(&amp;P)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="348"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;자동 정리(Auto Vacuum)&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="365"/>
@@ -1391,7 +1391,7 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="370"/>
         <location filename="../MainWindow.ui" line="687"/>
         <source>Full</source>
-        <translation>Full</translation>
+        <translation>모두(Vacuum Full)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="375"/>
@@ -1406,7 +1406,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="403"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;체크포인트 Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="423"/>
@@ -1992,7 +1992,7 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1519"/>
         <location filename="../MainWindow.cpp" line="1226"/>
         <source>Delete Table</source>
-        <translation>테이블 삭제</translation>
+        <translation>테이블 삭제하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1522"/>
@@ -2141,12 +2141,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1472"/>
         <source>&amp;Database to SQL file...</source>
-        <translation>SQL 파일에서 데이터베이스 가져오기(&amp;D)...</translation>
+        <translation>데이터베이스를 SQL로 내보내기(&amp;D)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1483"/>
         <source>&amp;Table(s) as CSV file...</source>
-        <translation>CSV 파일에서 테이블 가져오기(&amp;T)...</translation>
+        <translation>테이블을 CSV 파일로 내보내기(&amp;T)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1501"/>
@@ -2263,7 +2263,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1761"/>
         <source>&amp;Attach Database</source>
-        <translation>데이터베이스 합치기(&amp;A)</translation>
+        <translation>데이터베이스 연결하기(&amp;Attach)</translation>
     </message>
     <message>
         <source>Set Encryption</source>
@@ -2634,7 +2634,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="46"/>
         <source>Remember last location for session only</source>
-        <translation>같은 세션에서만 마지막 위치를 기 억</translation>
+        <translation>같은 세션에서만 마지막 위치를 기억</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="75"/>
@@ -3178,7 +3178,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="78"/>
         <source>(X,Y,...) The multi-argument min() function returns the argument with the minimum value.</source>
-        <translation>(X,Y,...) 다중 인자를 제공하는 min() 함수는 주어진 인자값 중에서 가장 작은 값을 리턴합니다. </translation>
+        <translation>(X,Y,...) 다중 인자를 제공하는 min() 함수는 주어진 인자값 중에서 가장 작은 값을 리턴합니다.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
