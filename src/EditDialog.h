@@ -32,6 +32,7 @@ private slots:
     virtual void importData();
     virtual void exportData();
     virtual void setNull();
+    void updateApplyButton();
     virtual void accept();
     virtual int checkDataType(const QByteArray& data);
     virtual void loadData(const QByteArray& data);

@@ -38,6 +38,9 @@ EditDialog::EditDialog(QWidget* parent)
     editorFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
     ui->editorText->setFont(editorFont);
     hexEdit->setFont(editorFont);
+
+    connect(ui->editorText, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
+    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(updateApplyButton()));
 }
 
 EditDialog::~EditDialog()
@@ -52,6 +55,8 @@ void EditDialog::setCurrentIndex(const QModelIndex& idx)
     QByteArray data = idx.data(Qt::EditRole).toByteArray();
     loadData(data);
     updateCellInfo(data);
+
+    ui->buttonApply->setDisabled(true);
 }
 
 void EditDialog::showEvent(QShowEvent*)
@@ -312,6 +317,12 @@ void EditDialog::setNull()
     updateCellInfo(hexEdit->data());
 
     ui->editorText->setFocus();
+}
+
+void EditDialog::updateApplyButton()
+{
+    if (!isReadOnly)
+        ui->buttonApply->setEnabled(true);
 }
 
 void EditDialog::accept()
