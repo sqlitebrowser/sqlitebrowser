@@ -976,11 +976,15 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     } else {
         // We want to modify it
 
-        // Move field
         int index = newSchema.findField(name);
-        sqlb::FieldPtr temp = newSchema.fields().at(index);
-        newSchema.setField(index, newSchema.fields().at(index + move));
-        newSchema.setField(index + move, temp);
+
+        // Move field
+        if(move)
+        {
+            sqlb::FieldPtr temp = newSchema.fields().at(index);
+            newSchema.setField(index, newSchema.fields().at(index + move));
+            newSchema.setField(index + move, temp);
+        }
 
         // Get names of fields to select from old table now - after the field has been moved and before it might be renamed
         for(int i=0;i<newSchema.fields().count();++i)
