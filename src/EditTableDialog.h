@@ -45,18 +45,18 @@ private:
     bool fieldNameExists(const QString& name);
 
 private slots:
-    virtual void populateFields();
-    virtual void addField();
-    virtual void removeField();
-    virtual void fieldSelectionChanged();
+    void populateFields();
+    void addField();
+    void removeField();
+    void fieldSelectionChanged();
     virtual void accept();
     virtual void reject();
-    virtual void checkInput();
-    virtual void itemChanged(QTreeWidgetItem* item, int column);
-    virtual void updateTypes();
-    virtual void moveUp();
-    virtual void moveDown();
-    virtual void setWithoutRowid(bool without_rowid);
+    void checkInput();
+    void itemChanged(QTreeWidgetItem* item, int column);
+    void updateTypes();
+    void moveUp();
+    void moveDown();
+    void setWithoutRowid(bool without_rowid);
 
 private:
     Ui::EditTableDialog* ui;

@@ -20,8 +20,8 @@ public:
 
 private slots:
     virtual void accept();
-    virtual void updatePreview();
-    virtual void checkInput();
+    void updatePreview();
+    void checkInput();
 
 private:
     Ui::ImportCsvDialog* ui;

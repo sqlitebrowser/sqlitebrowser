@@ -29,18 +29,18 @@ protected:
     virtual void showEvent(QShowEvent* ev);
 
 private slots:
-    virtual void importData();
-    virtual void exportData();
-    virtual void setNull();
+    void importData();
+    void exportData();
+    void setNull();
     void updateApplyButton();
     virtual void accept();
-    virtual int checkDataType(const QByteArray& data);
-    virtual void loadData(const QByteArray& data);
-    virtual void toggleOverwriteMode();
-    virtual void editModeChanged(int newMode);
-    virtual void editTextChanged();
-    virtual void updateCellInfo(const QByteArray& data);
-    virtual QString humanReadableSize(double byteCount);
+    int checkDataType(const QByteArray& data);
+    void loadData(const QByteArray& data);
+    void toggleOverwriteMode();
+    void editModeChanged(int newMode);
+    void editTextChanged();
+    void updateCellInfo(const QByteArray& data);
+    QString humanReadableSize(double byteCount);
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
