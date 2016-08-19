@@ -182,6 +182,11 @@ void MainWindow::init()
     // Add keyboard shortcut for "Edit Cell" dock
     ui->viewMenu->actions().at(3)->setShortcut(QKeySequence(tr("Ctrl+E")));
 
+    // If we're not compiling in SQLCipher, hide it's FAQ link in the help menu
+#ifndef ENABLE_SQLCIPHER
+    ui->actionSqlCipherFaq->setVisible(false);
+#endif
+
     // Set statusbar fields
     statusEncryptionLabel = new QLabel(ui->statusbar);
     statusEncryptionLabel->setEnabled(false);
@@ -1983,6 +1988,11 @@ void MainWindow::on_actionWiki_triggered()
 void MainWindow::on_actionBug_report_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/issues/new"));
+}
+
+void MainWindow::on_actionSqlCipherFaq_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://discuss.zetetic.net/c/sqlcipher/sqlcipher-faq"));
 }
 
 void MainWindow::on_actionWebsite_triggered()

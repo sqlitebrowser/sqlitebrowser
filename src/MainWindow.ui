@@ -888,6 +888,7 @@
     <addaction name="helpWhatsThisAction"/>
     <addaction name="actionWebsite"/>
     <addaction name="actionWiki"/>
+    <addaction name="actionSqlCipherFaq"/>
     <addaction name="actionBug_report"/>
     <addaction name="helpAboutAction"/>
    </widget>
@@ -1931,6 +1932,18 @@
    </property>
    <property name="toolTip">
     <string>Duplicate record</string>
+   </property>
+  </action>
+  <action name="actionSqlCipherFaq">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>SQLCipher FAQ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the SQLCipher FAQ in a browser window</string>
    </property>
   </action>
  </widget>
