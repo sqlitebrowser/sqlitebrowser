@@ -17,7 +17,8 @@ EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog),
       currentIndex(QModelIndex()),
-      dataType(Null)
+      dataType(Null),
+      isReadOnly(true)
 {
     ui->setupUi(this);
 
@@ -446,11 +447,13 @@ void EditDialog::setFocus()
 }
 
 // Enables or disables the Apply, Null, & Import buttons in the Edit Cell dock
-void EditDialog::allowEditing(bool on)
+void EditDialog::setReadOnly(bool ro)
 {
-    ui->buttonApply->setEnabled(on);
-    ui->buttonNull->setEnabled(on);
-    ui->buttonImport->setEnabled(on);
+    isReadOnly = ro;
+
+    ui->buttonApply->setEnabled(!ro);
+    ui->buttonNull->setEnabled(!ro);
+    ui->buttonImport->setEnabled(!ro);
 }
 
 // Update the information labels in the bottom left corner of the dialog

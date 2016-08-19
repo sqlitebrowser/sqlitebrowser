@@ -23,7 +23,7 @@ public:
 public slots:
     virtual void setFocus();
     virtual void reject();
-    virtual void allowEditing(bool on);
+    void setReadOnly(bool ro);
 
 protected:
     virtual void showEvent(QShowEvent* ev);
@@ -51,6 +51,7 @@ private:
     int dataSource;
     int dataType;
     bool textNullSet;
+    bool isReadOnly;
 
     enum DataSources {
         TextBuffer,

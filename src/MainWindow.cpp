@@ -811,7 +811,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
-    editDock->allowEditing(isEditingAllowed);
+    editDock->setReadOnly(!isEditingAllowed);
 
     editDock->setCurrentIndex(index);
 
@@ -834,7 +834,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
             (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
 
     // Don't allow editing of other objects than tables
-    editDock->allowEditing(editingAllowed);
+    editDock->setReadOnly(!editingAllowed);
 
     // If the Edit Cell dock is visible, load the new value into it
     if (editDock->isVisible()) {
@@ -994,7 +994,7 @@ void MainWindow::executeQuery()
 
 void MainWindow::mainTabSelected(int tabindex)
 {
-    editDock->allowEditing(false);
+    editDock->setReadOnly(true);
 
     if(tabindex == 0)
     {
