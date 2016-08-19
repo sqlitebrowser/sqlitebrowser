@@ -799,9 +799,9 @@ Aborting execution.</source>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="369"/>
-        <source>Column &apos;%1&apos;&apos; has no unique data.
+        <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation>컬럼 &apos;%1&apos;&apos;은(는) 유니크 데이터가 없습니다.</translation>
+        <translation>컬럼 &apos;%1&apos;은(는) 유니크 데이터가 없습니다.</translation>
     </message>
     <message>
         <source>Column `%1` has no unique data.
