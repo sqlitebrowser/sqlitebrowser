@@ -611,7 +611,7 @@ Aborting execution.</source>
     </message>
     <message>
         <source>Type of data currently in cell: Null</source>
-        <translatio type="obsolete">현재 데이터 타입: 널</translation>
+        <translation type="obsolete">현재 데이터 타입: 널</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="486"/>
