@@ -432,6 +432,9 @@ Table CreateTableWalker::table()
             parsecolumn(tab, column->getFirstChild());
             column = column->getNextSibling(); //COMMA or RPAREN
             column = column->getNextSibling(); //null or tableconstraint
+
+            s = s->getNextSibling();            // COLUMNDEF
+            s = s->getNextSibling();            // COMMA or RPAREN
         }
 
         // now we are finished or it is a tableconstraint
