@@ -271,7 +271,9 @@ void TestTable::parseSQLForeignKeys()
     QCOMPARE(tab.name(), QString("foreign_key_test"));
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->type(), QString("int"));
+#if QT_VERSION_MAJOR >= 5
     QCOMPARE(tab.foreignKey(tab.fields().at(0)).table(), QString("x"));
+#endif
     QCOMPARE(tab.fields().at(1)->name(), QString("b"));
     QCOMPARE(tab.fields().at(1)->type(), QString("int"));
     QCOMPARE(tab.foreignKey(tab.fields().at(1)).toString(), QString("`w`(`y`,`z`) on delete set null"));
