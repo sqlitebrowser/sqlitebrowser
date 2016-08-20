@@ -446,9 +446,13 @@ Table CreateTableWalker::table()
                 // It's not, so treat this as table constraints
 
                 antlr::RefAST tc = s->getFirstChild();
+
                 // skip constraint name, if there is any
                 if(tc->getType() == sqlite3TokenTypes::CONSTRAINT)
+                {
+                    m_bModifySupported = false;
                     tc = tc->getNextSibling()->getNextSibling();
+                }
 
                 switch(tc->getType())
                 {
