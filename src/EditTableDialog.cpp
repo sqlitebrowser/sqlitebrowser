@@ -29,9 +29,13 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
     {
         // Existing table, so load and set the current layout
         QString sTablesql = pdb->getObjectByName(curTable).getsql();
-        m_table = sqlb::Table::parseSQL(sTablesql).first;
+        QPair<sqlb::Table, bool> parse_result = sqlb::Table::parseSQL(sTablesql);
+        m_table = parse_result.first;
+        ui->labelEditWarning->setVisible(!parse_result.second);
         ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
         populateFields();
+    } else {
+        ui->labelEditWarning->setVisible(false);
     }
 
     // And create a savepoint
