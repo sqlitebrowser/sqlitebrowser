@@ -1180,7 +1180,7 @@ void MainWindow::changeTreeSelection()
     if(!ui->dbTreeWidget->currentIndex().isValid())
         return;
 
-    // Change the text of the actions
+    // Change the text and tooltips of the actions
     QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
 
     if (type.isEmpty())
@@ -1190,14 +1190,19 @@ void MainWindow::changeTreeSelection()
         ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(type)));
     }
 
-    if(type == "view")
+    if (type == "view") {
         ui->editDeleteObjectAction->setText(tr("Delete View"));
-    else if(type == "trigger")
+        ui->editDeleteObjectAction->setToolTip(tr("Delete View"));
+    } else if(type == "trigger") {
         ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
-    else if(type == "index")
+        ui->editDeleteObjectAction->setToolTip(tr("Delete Trigger"));
+    } else if(type == "index") {
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
-    else
+        ui->editDeleteObjectAction->setToolTip(tr("Delete Index"));
+    } else {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
+        ui->editDeleteObjectAction->setToolTip(tr("Delete Table"));
+    }
 
     // Activate actions
     if(type == "table")
