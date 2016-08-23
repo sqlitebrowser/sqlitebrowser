@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_BR">
+<TS version="2.1" language="pt_BR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -1579,7 +1579,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation>Executar linha atual [Ctrl+E]</translation>
+        <translation type="vanished">Executar linha atual [Ctrl+E]</translation>
     </message>
     <message>
         <source>Ctrl+E</source>
@@ -2117,6 +2117,22 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     <message>
         <source>Execute SQL</source>
         <translation>Executar SQL</translation>
+    </message>
+    <message>
+        <source>Execute current line [Shift+F5]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+F5</source>
+        <translation type="unfinished">Shift+F5</translation>
+    </message>
+    <message>
+        <source>SQLCipher FAQ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens the SQLCipher FAQ in a browser window</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
