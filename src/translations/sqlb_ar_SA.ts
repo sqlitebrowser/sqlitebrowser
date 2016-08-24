@@ -1510,22 +1510,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1737"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>نفّذ السّطر الحاليّ [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1740"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1943"/>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>أسئلة شائعة عن SQLCipher...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1946"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>يفتح الأسئلة الشّائعة عن SQLCipher في نافذة المتصفّح</translation>
     </message>
     <message>
         <source>E&amp;xecute SQL</source>
