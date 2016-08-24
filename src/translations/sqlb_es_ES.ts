@@ -71,12 +71,12 @@
     <message>
         <location filename="../Application.cpp" line="77"/>
         <source>  -h, --help		Show command line options</source>
-        <translation type="unfinished">  -h, --help		Muestra opciones de línea de comandos</translation>
+        <translation>  -h, --help		Muestra opciones de línea de comandos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="78"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="unfinished">  -s, --sql  [archivo]	Ejecuta este archivo de SQL tras abrir la base de datos</translation>
+        <translation>  -s, --sql  [archivo]	Ejecuta este archivo de SQL tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="79"/>
@@ -491,7 +491,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditDialog.ui" line="79"/>
         <source>Import text</source>
-        <translation>Importar texto</translation>
+        <translation>Importa texto</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
@@ -506,7 +506,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditDialog.ui" line="98"/>
         <source>Export text</source>
-        <translation>Exportar texto</translation>
+        <translation>Exporta texto</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="101"/>
@@ -1256,12 +1256,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="132"/>
         <source>Clear all filters</source>
-        <translation>Borrar todos los filtros</translation>
+        <translation>Borra todos los filtros</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="159"/>
         <source>Insert a new record in the current table</source>
-        <translation>Insertar un nuevo registro en la tabla actual</translation>
+        <translation>Inserta un nuevo registro en la tabla actual</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="162"/>
@@ -1531,7 +1531,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="712"/>
         <source>Default</source>
-        <translation></translation>
+        <translation>Por defecto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="717"/>
@@ -1595,7 +1595,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1737"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta la línea actual [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1740"/>
@@ -1689,7 +1689,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Plot</source>
-        <translation type="obsolete">Dibujo</translation>
+        <translation type="obsolete">Gráfica</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1071"/>
@@ -1724,17 +1724,17 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1139"/>
         <source>StepLeft</source>
-        <translation></translation>
+        <translation>EscalónIzquierda</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1144"/>
         <source>StepRight</source>
-        <translation></translation>
+        <translation>EscalónDerecha</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1149"/>
         <source>StepCenter</source>
-        <translation></translation>
+        <translation>EscalónCentrado</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1154"/>
@@ -1819,12 +1819,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1264"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Guradar dibujo actual...&lt;/p&gt;&lt;p&gt;El formato del archivo es elegido por la extensión (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Guarda la gráfica actual...&lt;/p&gt;&lt;p&gt;El formato del archivo es elegido por la extensión (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1267"/>
         <source>Save current plot...</source>
-        <translation>Guardar el dibujo actual...</translation>
+        <translation>Guardar la gráfica actual...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1293"/>
@@ -1866,7 +1866,7 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1365"/>
         <location filename="../MainWindow.ui" line="1368"/>
         <source>Open an existing database file</source>
-        <translation>Abrir un archivo de base de datos</translation>
+        <translation>Abre un archivo de base de datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1371"/>
@@ -1891,12 +1891,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1943"/>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>FAQ de SQLCipher...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1946"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre la FAQ de SQLCipher en una ventana del navegador</translation>
     </message>
     <message>
         <source>Revert Changes</source>
@@ -1905,7 +1905,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1406"/>
         <source>Revert database to last saved state</source>
-        <translation>Deshacer cambios al último estado guardado</translation>
+        <translation>Deshace los cambios al último estado guardado</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1409"/>
@@ -1919,7 +1919,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1427"/>
         <source>Write changes to the database file</source>
-        <translation>Escribir cambios al archivo de la base de datos</translation>
+        <translation>Escribe los cambios al archivo de la base de datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
@@ -2144,7 +2144,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1044"/>
         <source>&amp;Plot</source>
-        <translation>&amp;Dibujo</translation>
+        <translation>&amp;Gráfica</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1403"/>
@@ -2214,7 +2214,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1689"/>
         <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation>Ejecutar SQL [F5, Ctrl+Return]</translation>
+        <translation>Ejecuta SQL [F5, Ctrl+Return]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1701"/>
@@ -2239,7 +2239,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">Ejecutar la línea actual [Ctrl+E]</translation>
+        <translation>Ejecuta la línea actual [Ctrl+E]</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="179"/>
@@ -2428,8 +2428,8 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.cpp" line="761"/>
         <source>Are you sure you want to delete the %1 &apos;%2&apos;?
 All data associated with the %1 will be lost.</source>
-        <translation>¿Está seguro de que quiere borrar %1 &apos;%2&apos;?
-Se perderán todos los datos asociados con %1.</translation>
+        <translation>¿Está seguro de que quiere borrar: %1 &apos;%2&apos;?
+Se perderán todos los datos asociados con: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="768"/>
@@ -3119,7 +3119,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../SqlExecutionArea.cpp" line="110"/>
         <source>View successfully created.</source>
-        <translation>Vista creada satisfactoriamente.</translation>
+        <translation>Vista creada con éxito.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="112"/>
