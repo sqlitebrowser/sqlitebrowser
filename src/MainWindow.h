@@ -195,6 +195,7 @@ private slots:
     void executeQuery();
     void importTableFromCSV();
     void exportTableToCSV();
+    void exportTableToJson();
     void fileSave();
     void fileRevert();
     void exportDatabaseToSQL();

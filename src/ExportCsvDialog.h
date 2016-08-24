@@ -14,7 +14,13 @@ class ExportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExportCsvDialog(DBBrowserDB* db, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
+    enum ExportFormats
+    {
+        ExportFormatCsv,
+        ExportFormatJson,
+    };
+
+    explicit ExportCsvDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
     ~ExportCsvDialog();
 
 private slots:
@@ -32,10 +38,14 @@ private:
     QString currentNewLineString() const;
 
     bool exportQuery(const QString& sQuery, const QString& sFilename);
+    bool exportQueryCsv(const QString& sQuery, const QString& sFilename);
+    bool exportQueryJson(const QString& sQuery, const QString& sFilename);
 
 private:
     Ui::ExportCsvDialog* ui;
     DBBrowserDB* pdb;
+
+    ExportFormats m_format;
 
     QString m_sQuery;
 };

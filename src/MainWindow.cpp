@@ -1053,7 +1053,24 @@ void MainWindow::exportTableToCSV()
         current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
-    ExportCsvDialog dialog(&db, this, "", current_table);
+    ExportCsvDialog dialog(&db, ExportCsvDialog::ExportFormatCsv, this, "", current_table);
+    dialog.exec();
+}
+
+void MainWindow::exportTableToJson()
+{
+    // Get the current table name if we are in the Browse Data tab
+    QString current_table;
+    if(ui->mainTab->currentIndex() == StructureTab) {
+        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
+        if(type == "table" || type == "view")
+            current_table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+    }
+    else if(ui->mainTab->currentIndex() == BrowseTab)
+        current_table = ui->comboBrowseTable->currentText();
+
+    // Open dialog
+    ExportCsvDialog dialog(&db, ExportCsvDialog::ExportFormatJson, this, "", current_table);
     dialog.exec();
 }
 

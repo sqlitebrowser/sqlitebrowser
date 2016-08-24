@@ -84,7 +84,7 @@ void SqlExecutionArea::enableSaveButton(bool enable)
 
 void SqlExecutionArea::saveAsCsv()
 {
-    ExportCsvDialog dialog(db, this, model->query());
+    ExportCsvDialog dialog(db, ExportCsvDialog::ExportFormatCsv, this, model->query());
     dialog.exec();
 }
 

@@ -254,6 +254,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "exportcsv" && name == "quotecharacter")
         return '"';
 
+    // exportjson/prettyprint?
+    if(group == "exportjson" && name == "prettyprint")
+        return true;
+
     // MainWindow/geometry?
     if(group == "MainWindow" && name == "geometry")
         return "";

@@ -9,27 +9,31 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
+#if QT_VERSION_MAJOR >= 5
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#endif
 
-ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString& query, const QString& selection)
+ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
       ui(new Ui::ExportCsvDialog),
       pdb(db),
+      m_format(format),
       m_sQuery(query)
 {
     // Create UI
     ui->setupUi(this);
 
-    // Retrieve the saved dialog preferences
-    bool firstRow = PreferencesDialog::getSettingsValue("exportcsv", "firstrowheader").toBool();
-    int separatorChar = PreferencesDialog::getSettingsValue("exportcsv", "separator").toInt();
-    int quoteChar = PreferencesDialog::getSettingsValue("exportcsv", "quotecharacter").toInt();
-    QString newLineString = PreferencesDialog::getSettingsValue("exportcsv", "newlinecharacters").toString();
+    // Show different option widgets depending on the export format
+    ui->stackFormat->setCurrentIndex(format);
 
-    // Set the widget values using the retrieved preferences
-    ui->checkHeader->setChecked(firstRow);
-    setSeparatorChar(separatorChar);
-    setQuoteChar(quoteChar);
-    setNewLineString(newLineString);
+    // Retrieve the saved dialog preferences
+    ui->checkHeader->setChecked(PreferencesDialog::getSettingsValue("exportcsv", "firstrowheader").toBool());
+    setSeparatorChar(PreferencesDialog::getSettingsValue("exportcsv", "separator").toInt());
+    setQuoteChar(PreferencesDialog::getSettingsValue("exportcsv", "quotecharacter").toInt());
+    setNewLineString(PreferencesDialog::getSettingsValue("exportcsv", "newlinecharacters").toString());
+    ui->checkPrettyPrint->setChecked(PreferencesDialog::getSettingsValue("exportjson", "prettyprint").toBool());
 
     // Update the visible/hidden status of the "Other" line edit fields
     showCustomCharEdits();
@@ -39,21 +43,17 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, QWidget* parent, const QString
     {
         // Get list of tables to export
         objectMap objects = pdb->getBrowsableObjects();
-        for(objectMap::ConstIterator i=objects.begin();i!=objects.end();++i)
-        {
-            ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(i.value().gettype())), i.value().getname()));
-        }
+        foreach(const DBBrowserObject& obj, objects)
+            ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(obj.gettype())), obj.getname()));
 
         // Sort list of tables and select the table specified in the selection parameter or alternatively the first one
         ui->listTables->model()->sort(0);
         if(selection.isEmpty())
         {
             ui->listTables->setCurrentItem(ui->listTables->item(0));
-        }
-        else
-        {
+        } else {
             QList<QListWidgetItem*> items = ui->listTables->findItems(selection, Qt::MatchExactly);
-            if (!items.isEmpty())
+            if(!items.isEmpty())
                 ui->listTables->setCurrentItem(items.first());
         }
     } else {
@@ -70,6 +70,19 @@ ExportCsvDialog::~ExportCsvDialog()
 }
 
 bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilename)
+{
+    switch(m_format)
+    {
+    case ExportFormatCsv:
+        return exportQueryCsv(sQuery, sFilename);
+    case ExportFormatJson:
+        return exportQueryJson(sQuery, sFilename);
+    default:
+        return false;
+    }
+}
+
+bool ExportCsvDialog::exportQueryCsv(const QString& sQuery, const QString& sFilename)
 {
     // Prepare the quote and separating characters
     QChar quoteChar = currentQuoteChar();
@@ -158,15 +171,97 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     return true;
 }
 
+bool ExportCsvDialog::exportQueryJson(const QString& sQuery, const QString& sFilename)
+{
+#if QT_VERSION_MAJOR < 5
+    return false;
+#else
+    // Open file
+    QFile file(sFilename);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        QByteArray utf8Query = sQuery.toUtf8();
+        sqlite3_stmt *stmt;
+        int status = sqlite3_prepare_v2(pdb->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+
+        QJsonArray json_table;
+
+        if(SQLITE_OK == status)
+        {
+            QApplication::setOverrideCursor(Qt::WaitCursor);
+            int columns = sqlite3_column_count(stmt);
+            size_t counter = 0;
+            QList<QString> column_names;
+            while(sqlite3_step(stmt) == SQLITE_ROW)
+            {
+                // Get column names if we didn't do so before
+                if(!column_names.size())
+                {
+                    for(int i=0;i<columns;++i)
+                        column_names.push_back(QString::fromUtf8(sqlite3_column_name(stmt, i)));
+                }
+
+                QJsonObject json_row;
+                for(int i=0;i<columns;++i)
+                {
+                    QString content = QString::fromUtf8(
+                                (const char*)sqlite3_column_blob(stmt, i),
+                                sqlite3_column_bytes(stmt, i));
+                    json_row.insert(column_names[i], content);
+                }
+                json_table.push_back(json_row);
+
+                if(counter % 1000 == 0)
+                    qApp->processEvents();
+                counter++;
+            }
+        }
+
+        sqlite3_finalize(stmt);
+
+        // Create JSON document
+        QJsonDocument json_doc;
+        json_doc.setArray(json_table);
+        file.write(json_doc.toJson(ui->checkPrettyPrint->isChecked() ? QJsonDocument::Indented : QJsonDocument::Compact));
+
+        QApplication::restoreOverrideCursor();
+        qApp->processEvents();
+
+        // Done writing the file
+        file.close();
+    } else {
+        QMessageBox::warning(this, QApplication::applicationName(),
+                             tr("Could not open output file: %1").arg(sFilename));
+        return false;
+    }
+
+    return true;
+#endif
+}
+
 void ExportCsvDialog::accept()
 {
+    QString file_dialog_filter;
+    QString default_file_extension;
+    switch(m_format)
+    {
+    case ExportFormatCsv:
+        file_dialog_filter = tr("Text files(*.csv *.txt)");
+        default_file_extension = ".csv";
+        break;
+    case ExportFormatJson:
+        file_dialog_filter = tr("Text files(*.json *.js *.txt)");
+        default_file_extension = ".json";
+        break;
+    }
+
     if(!m_sQuery.isEmpty())
     {
         // called from sqlexecute query tab
         QString sFilename = FileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
-                tr("Text files(*.csv *.txt)"));
+                file_dialog_filter);
         if(sFilename.isEmpty())
         {
             close();
@@ -174,9 +269,7 @@ void ExportCsvDialog::accept()
         }
 
         exportQuery(m_sQuery, sFilename);
-    }
-    else
-    {
+    } else {
         // called from the File export menu
         QList<QListWidgetItem*> selectedItems = ui->listTables->selectedItems();
 
@@ -194,8 +287,8 @@ void ExportCsvDialog::accept()
             QString fileName = FileDialog::getSaveFileName(
                     this,
                     tr("Choose a filename to export data"),
-                    tr("Text files(*.csv *.txt)"),
-                    selectedItems.at(0)->text() + ".csv");
+                    file_dialog_filter,
+                    selectedItems.at(0)->text() + default_file_extension);
             if(fileName.isEmpty())
             {
                 close();
@@ -203,25 +296,21 @@ void ExportCsvDialog::accept()
             }
 
             filenames << fileName;
-        }
-        else
-        {
+        } else {
             // ask for folder
-            QString csvfolder = FileDialog::getExistingDirectory(
+            QString exportfolder = FileDialog::getExistingDirectory(
                         this,
                         tr("Choose a directory"),
                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-            if(csvfolder.isEmpty())
+            if(exportfolder.isEmpty())
             {
                 close();
                 return;
             }
 
-            for(QList<QListWidgetItem*>::iterator it = selectedItems.begin(); it != selectedItems.end(); ++it)
-            {
-                filenames << QDir(csvfolder).filePath((*it)->text() + ".csv");
-            }
+            foreach(QListWidgetItem* item, selectedItems)
+                filenames << QDir(exportfolder).filePath(item->text() + default_file_extension);
         }
 
         // Only if the user hasn't clicked the cancel button
@@ -236,10 +325,11 @@ void ExportCsvDialog::accept()
     }
 
     // Save the dialog preferences for future use
-    PreferencesDialog::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked(), false);
-    PreferencesDialog::setSettingsValue("exportcsv", "separator", currentSeparatorChar(), false);
-    PreferencesDialog::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar(), false);
-    PreferencesDialog::setSettingsValue("exportcsv", "newlinecharacters", currentNewLineString(), false);
+    PreferencesDialog::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked());
+    PreferencesDialog::setSettingsValue("exportjson", "prettyprint", ui->checkPrettyPrint->isChecked());
+    PreferencesDialog::setSettingsValue("exportcsv", "separator", currentSeparatorChar());
+    PreferencesDialog::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar());
+    PreferencesDialog::setSettingsValue("exportcsv", "newlinecharacters", currentNewLineString());
 
     // Notify the user the export has completed
     QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));

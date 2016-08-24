@@ -337,8 +337,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>552</width>
-             <height>423</height>
+             <width>473</width>
+             <height>558</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -823,7 +823,7 @@
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>21</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -843,6 +843,7 @@
      </property>
      <addaction name="fileExportSQLAction"/>
      <addaction name="fileExportCSVAction"/>
+     <addaction name="fileExportJsonAction"/>
     </widget>
     <addaction name="fileNewAction"/>
     <addaction name="fileOpenAction"/>
@@ -919,7 +920,7 @@
   </widget>
   <widget class="QDockWidget" name="dockEdit">
    <property name="windowTitle">
-    <string>Edit Database Cell</string>
+    <string>Edit Database &amp;Cell</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -1306,7 +1307,7 @@
   </widget>
   <widget class="QDockWidget" name="dockSchema">
    <property name="windowTitle">
-    <string>DB Schema</string>
+    <string>DB Sche&amp;ma</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -1643,7 +1644,7 @@
      <normaloff>:/icons/whatis</normaloff>:/icons/whatis</iconset>
    </property>
    <property name="text">
-    <string>W&amp;hat&apos;s This?</string>
+    <string>W&amp;hat's This?</string>
    </property>
    <property name="shortcut">
     <string>Shift+F1</string>
@@ -1940,10 +1941,21 @@
      <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
    </property>
    <property name="text">
-    <string>SQLCipher FAQ...</string>
+    <string>SQLCipher &amp;FAQ...</string>
    </property>
    <property name="toolTip">
     <string>Opens the SQLCipher FAQ in a browser window</string>
+   </property>
+  </action>
+  <action name="fileExportJsonAction">
+   <property name="text">
+    <string>Table(s) to JSON...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export one or more table(s) to a JSON file</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>
@@ -2976,6 +2988,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>fileExportJsonAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportTableToJson()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -3038,5 +3066,6 @@
   <slot>browseDataSetDefaultTableEncoding()</slot>
   <slot>browseDataFetchAllData()</slot>
   <slot>dittoRecord()</slot>
+  <slot>exportTableToJson()</slot>
  </slots>
 </ui>
