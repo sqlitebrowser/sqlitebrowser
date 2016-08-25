@@ -274,8 +274,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
     if(QFile::exists(wFile) )
     {
         // Close the database. If the user didn't want to close it, though, stop here
-        if(!fileClose())
-            return false;
+        if (db.isOpen())
+            if(!fileClose())
+                return false;
 
         // Try opening it as a project file first
         if(loadProject(wFile))
