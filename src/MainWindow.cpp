@@ -1001,16 +1001,24 @@ void MainWindow::mainTabSelected(int tabindex)
 {
     editDock->setReadOnly(true);
 
-    if(tabindex == 0)
+    switch (tabindex)
     {
+    case StructureTab:
         populateStructure();
-    } else if(tabindex == 1) {
+        break;
+
+    case BrowseTab:
         m_currentTabTableModel = m_browseTableModel;
         populateStructure();
         populateTable();
-    } else if(tabindex == 2) {
+        break;
+
+    case PragmaTab:
         loadPragmas();
-    } else if(tabindex == 3) {
+        break;
+
+    case ExecuteTab:
+    {
         SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
         if (sqlWidget) {
@@ -1018,6 +1026,10 @@ void MainWindow::mainTabSelected(int tabindex)
 
             dataTableSelectionChanged(sqlWidget->getTableResult()->currentIndex());
         }
+        break;
+    }
+
+    default: break;
     }
 }
 
