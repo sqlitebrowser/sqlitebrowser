@@ -5,7 +5,7 @@
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
-#include "ExportCsvDialog.h"
+#include "ExportDataDialog.h"
 
 #include <QMenu>
 #include <QInputDialog>
@@ -84,7 +84,7 @@ void SqlExecutionArea::enableSaveButton(bool enable)
 
 void SqlExecutionArea::saveAsCsv()
 {
-    ExportCsvDialog dialog(db, ExportCsvDialog::ExportFormatCsv, this, model->query());
+    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatCsv, this, model->query());
     dialog.exec();
 }
 

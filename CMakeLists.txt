@@ -71,7 +71,7 @@ set(SQLB_MOC_HDR
 	src/CreateIndexDialog.h
 	src/EditDialog.h
 	src/EditTableDialog.h
-	src/ExportCsvDialog.h
+	src/ExportDataDialog.h
 	src/ExtendedTableWidget.h
 	src/FilterTableHeader.h
 	src/ImportCsvDialog.h
@@ -96,7 +96,7 @@ set(SQLB_SRC
 	src/CreateIndexDialog.cpp
 	src/EditDialog.cpp
 	src/EditTableDialog.cpp
-	src/ExportCsvDialog.cpp
+	src/ExportDataDialog.cpp
 	src/ExtendedTableWidget.cpp
 	src/FilterTableHeader.cpp
 	src/ImportCsvDialog.cpp
@@ -127,7 +127,7 @@ set(SQLB_FORMS
 	src/CreateIndexDialog.ui
 	src/EditDialog.ui
 	src/EditTableDialog.ui
-	src/ExportCsvDialog.ui
+	src/ExportDataDialog.ui
 	src/ImportCsvDialog.ui
 	src/MainWindow.ui
 	src/PreferencesDialog.ui

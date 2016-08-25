@@ -825,113 +825,113 @@ All data currently stored in this field will be lost.</source>
     </message>
 </context>
 <context>
-    <name>ExportCsvDialog</name>
+    <name>ExportDataDialog</name>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="14"/>
+        <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
         <translation>Veriyi CSV olarak dışa aktar</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="22"/>
+        <location filename="../ExportDataDialog.ui" line="22"/>
         <source>&amp;Table(s)</source>
         <translation>&amp;Tablo(lar)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="48"/>
+        <location filename="../ExportDataDialog.ui" line="48"/>
         <source>&amp;Column names in first line</source>
         <translation>&amp;Sütun isimleri ilk satırda</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="68"/>
+        <location filename="../ExportDataDialog.ui" line="68"/>
         <source>Field &amp;separator</source>
         <translation>Alan &amp;ayracı</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="93"/>
+        <location filename="../ExportDataDialog.ui" line="93"/>
         <source>,</source>
         <translation>,</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="98"/>
+        <location filename="../ExportDataDialog.ui" line="98"/>
         <source>;</source>
         <translation>;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="103"/>
+        <location filename="../ExportDataDialog.ui" line="103"/>
         <source>Tab</source>
         <translation>Tab karakteri</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="108"/>
+        <location filename="../ExportDataDialog.ui" line="108"/>
         <source>|</source>
         <translation>|</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="113"/>
-        <location filename="../ExportCsvDialog.ui" line="183"/>
-        <location filename="../ExportCsvDialog.ui" line="245"/>
+        <location filename="../ExportDataDialog.ui" line="113"/>
+        <location filename="../ExportDataDialog.ui" line="183"/>
+        <location filename="../ExportDataDialog.ui" line="245"/>
         <source>Other</source>
         <translation>Diğer...</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="143"/>
+        <location filename="../ExportDataDialog.ui" line="143"/>
         <source>&amp;Quote character</source>
         <translation>&amp; Tırnak karakteri</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="168"/>
+        <location filename="../ExportDataDialog.ui" line="168"/>
         <source>&quot;</source>
         <translation>&quot;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="173"/>
+        <location filename="../ExportDataDialog.ui" line="173"/>
         <source>&apos;</source>
         <translation>&apos;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="213"/>
+        <location filename="../ExportDataDialog.ui" line="213"/>
         <source>New line characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="235"/>
+        <location filename="../ExportDataDialog.ui" line="235"/>
         <source>Windows: CR+LF (\r\n)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="240"/>
+        <location filename="../ExportDataDialog.ui" line="240"/>
         <source>Unix: LF (\n)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="154"/>
+        <location filename="../ExportDataDialog.cpp" line="154"/>
         <source>Could not open output file: %1</source>
         <translation>Oluşturulan dosya açılamadı: %1</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="168"/>
-        <location filename="../ExportCsvDialog.cpp" line="196"/>
+        <location filename="../ExportDataDialog.cpp" line="168"/>
+        <location filename="../ExportDataDialog.cpp" line="196"/>
         <source>Choose a filename to export data</source>
         <translation>Verileri dışarı aktarmak için dosya ismi seçiniz</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="169"/>
-        <location filename="../ExportCsvDialog.cpp" line="197"/>
+        <location filename="../ExportDataDialog.cpp" line="169"/>
+        <location filename="../ExportDataDialog.cpp" line="197"/>
         <source>Text files(*.csv *.txt)</source>
         <translation>Metin dosyaları(*.csv *.txt)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="186"/>
+        <location filename="../ExportDataDialog.cpp" line="186"/>
         <source>Please select at least 1 table.</source>
         <translation>Lütfen en az 1 tablo seçiniz.</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="212"/>
+        <location filename="../ExportDataDialog.cpp" line="212"/>
         <source>Choose a directory</source>
         <translation>Dizin seçiniz</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="245"/>
+        <location filename="../ExportDataDialog.cpp" line="245"/>
         <source>Export completed.</source>
         <translation>Dışa aktarma tamamlandı.</translation>
     </message>
@@ -2945,7 +2945,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="951"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kurallı ifade(REGEXP) operatörü aktif edildiğinde SQLite, herhangi bir kurallı ifade uygulamaz ama şuan da çalışan uygulamayı geri çağırır. &lt;br/&gt;SQLite DB Browser kurallı ifadeyi kutunun dışında kullanmanıza izin vermek için bu algoritmayı uygular. &lt;br/&gt;Birden çok muhtemel uygulama olduğu gibi sizde farklı birini kullanabilirsiniz.&lt;br/&gt;Programın uygulamalarını devre dışı bırakmakta ve kendi eklentinizle kendi uygulamanızı yüklemekte özgürsünüz.&lt;br/&gt;Ayrıca uygulamayı yeniden başlatmak gerekir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kurallı ifade(REGEXP) operatörü aktif edildiğinde SQLite, herhangi bir kurallı ifade uygulamaz ama şuan da çalışan uygulamayı geri çağırır. &lt;br/&gt;SQLite DB Browser kurallı ifadeyi kutunun dışında kullanmanıza izin vermek için bu algoritmayı uygular. &lt;br/&gt;Birden çok muhtemel uygulama olduğu gibi sizde farklı birini kullanabilirsiniz.&lt;br/&gt;Programın uygulamalarını devre dışı bırakmakta ve kendi eklentinizle kendi uygulamanızı yüklemekte özgürsünüz.&lt;br/&gt;Ayrıca uygulamayı yeniden başlatmak gerekir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="954"/>
@@ -3012,7 +3012,7 @@ Leave the field empty for using the database encoding.</source>
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
         <translation>Bu veritabanınındaki bir tablo özel &apos;%1&apos; koleksiyon fonksiyonu gerektirmektedir.
-Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edecekseniz, veritabanınıza kötü şeyler olabileceğinin farkında olun ve yedek oluşturun.</translation>
+Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edecekseniz, veritabanınıza kötü şeyler olabileceğinin farkında olun ve yedek oluşturun.</translation>
     </message>
 </context>
 <context>

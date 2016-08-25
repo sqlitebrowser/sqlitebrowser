@@ -843,9 +843,9 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
     </message>
 </context>
 <context>
-    <name>ExportCsvDialog</name>
+    <name>ExportDataDialog</name>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="14"/>
+        <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
         <translation>Exporter au format CSV</translation>
     </message>
@@ -854,106 +854,106 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
         <translation type="obsolete">&amp;Table</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="22"/>
+        <location filename="../ExportDataDialog.ui" line="22"/>
         <source>&amp;Table(s)</source>
         <translation>&amp;Table(s)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="48"/>
+        <location filename="../ExportDataDialog.ui" line="48"/>
         <source>&amp;Column names in first line</source>
         <translation>Nom des &amp;Col. en 1ère ligne</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="68"/>
+        <location filename="../ExportDataDialog.ui" line="68"/>
         <source>Field &amp;separator</source>
         <translation>&amp;Séparateur de champ</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="93"/>
+        <location filename="../ExportDataDialog.ui" line="93"/>
         <source>,</source>
         <translation>,</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="98"/>
+        <location filename="../ExportDataDialog.ui" line="98"/>
         <source>;</source>
         <translation>;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="103"/>
+        <location filename="../ExportDataDialog.ui" line="103"/>
         <source>Tab</source>
         <translation>Tabulation</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="108"/>
+        <location filename="../ExportDataDialog.ui" line="108"/>
         <source>|</source>
         <translation>|</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="113"/>
-        <location filename="../ExportCsvDialog.ui" line="183"/>
-        <location filename="../ExportCsvDialog.ui" line="245"/>
+        <location filename="../ExportDataDialog.ui" line="113"/>
+        <location filename="../ExportDataDialog.ui" line="183"/>
+        <location filename="../ExportDataDialog.ui" line="245"/>
         <source>Other</source>
         <translation>Autre</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="143"/>
+        <location filename="../ExportDataDialog.ui" line="143"/>
         <source>&amp;Quote character</source>
         <translation>T&amp;ype de guillemet</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="168"/>
+        <location filename="../ExportDataDialog.ui" line="168"/>
         <source>&quot;</source>
         <translation>&quot;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="173"/>
+        <location filename="../ExportDataDialog.ui" line="173"/>
         <source>&apos;</source>
         <translation>&apos;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="213"/>
+        <location filename="../ExportDataDialog.ui" line="213"/>
         <source>New line characters</source>
         <translation>Saut de ligne</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="235"/>
+        <location filename="../ExportDataDialog.ui" line="235"/>
         <source>Windows: CR+LF (\r\n)</source>
         <translation>Windows: CR+LF (\r\n)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="240"/>
+        <location filename="../ExportDataDialog.ui" line="240"/>
         <source>Unix: LF (\n)</source>
         <translation>Unix: LF (\n)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="154"/>
+        <location filename="../ExportDataDialog.cpp" line="154"/>
         <source>Could not open output file: %1</source>
         <translation>Le fichier de destination %1 ne peut être ouvert</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="168"/>
-        <location filename="../ExportCsvDialog.cpp" line="196"/>
+        <location filename="../ExportDataDialog.cpp" line="168"/>
+        <location filename="../ExportDataDialog.cpp" line="196"/>
         <source>Choose a filename to export data</source>
         <translation>Choisir un nom de fichier pour exporter les données</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="169"/>
-        <location filename="../ExportCsvDialog.cpp" line="197"/>
+        <location filename="../ExportDataDialog.cpp" line="169"/>
+        <location filename="../ExportDataDialog.cpp" line="197"/>
         <source>Text files(*.csv *.txt)</source>
         <translation>Fichiers Texte (*.csv *.txt)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="186"/>
+        <location filename="../ExportDataDialog.cpp" line="186"/>
         <source>Please select at least 1 table.</source>
         <translation>Veuillez sélectionner au moins une table.</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="212"/>
+        <location filename="../ExportDataDialog.cpp" line="212"/>
         <source>Choose a directory</source>
         <translation>Choisir un répertoire</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="245"/>
+        <location filename="../ExportDataDialog.cpp" line="245"/>
         <source>Export completed.</source>
         <translation>Export terminé.</translation>
     </message>

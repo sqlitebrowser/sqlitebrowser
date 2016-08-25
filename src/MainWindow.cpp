@@ -5,7 +5,7 @@
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
 #include "ImportCsvDialog.h"
-#include "ExportCsvDialog.h"
+#include "ExportDataDialog.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
 #include "sqlitetablemodel.h"
@@ -1066,7 +1066,7 @@ void MainWindow::exportTableToCSV()
         current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
-    ExportCsvDialog dialog(&db, ExportCsvDialog::ExportFormatCsv, this, "", current_table);
+    ExportDataDialog dialog(&db, ExportDataDialog::ExportFormatCsv, this, "", current_table);
     dialog.exec();
 }
 
@@ -1083,7 +1083,7 @@ void MainWindow::exportTableToJson()
         current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
-    ExportCsvDialog dialog(&db, ExportCsvDialog::ExportFormatJson, this, "", current_table);
+    ExportDataDialog dialog(&db, ExportDataDialog::ExportFormatJson, this, "", current_table);
     dialog.exec();
 }
 

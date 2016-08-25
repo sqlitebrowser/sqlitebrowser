@@ -700,7 +700,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
 </context>
 <context>
-    <name>ExportCsvDialog</name>
+    <name>ExportDataDialog</name>
     <message>
         <source>Export data as CSV</source>
         <translation>Exportar dados como CSV</translation>

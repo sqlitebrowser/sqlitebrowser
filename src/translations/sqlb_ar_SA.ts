@@ -826,113 +826,113 @@ All data currently stored in this field will be lost.</source>
     </message>
 </context>
 <context>
-    <name>ExportCsvDialog</name>
+    <name>ExportDataDialog</name>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="14"/>
+        <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
         <translation>تصدير البيانات كَ‍ CSV</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="22"/>
+        <location filename="../ExportDataDialog.ui" line="22"/>
         <source>&amp;Table(s)</source>
         <translation>ال&amp;جداول</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="48"/>
+        <location filename="../ExportDataDialog.ui" line="48"/>
         <source>&amp;Column names in first line</source>
         <translation>أسماء الأ&amp;عمدة في أوّل سطر</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="68"/>
+        <location filename="../ExportDataDialog.ui" line="68"/>
         <source>Field &amp;separator</source>
         <translation>&amp;فاصل الحقول</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="93"/>
+        <location filename="../ExportDataDialog.ui" line="93"/>
         <source>,</source>
         <translation>,</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="98"/>
+        <location filename="../ExportDataDialog.ui" line="98"/>
         <source>;</source>
         <translation>;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="103"/>
+        <location filename="../ExportDataDialog.ui" line="103"/>
         <source>Tab</source>
         <translation>الجدولات</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="108"/>
+        <location filename="../ExportDataDialog.ui" line="108"/>
         <source>|</source>
         <translation>|</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="113"/>
-        <location filename="../ExportCsvDialog.ui" line="183"/>
-        <location filename="../ExportCsvDialog.ui" line="245"/>
+        <location filename="../ExportDataDialog.ui" line="113"/>
+        <location filename="../ExportDataDialog.ui" line="183"/>
+        <location filename="../ExportDataDialog.ui" line="245"/>
         <source>Other</source>
         <translation>شيء آخر</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="143"/>
+        <location filename="../ExportDataDialog.ui" line="143"/>
         <source>&amp;Quote character</source>
         <translation>محرف ال&amp;تّنصيص</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="168"/>
+        <location filename="../ExportDataDialog.ui" line="168"/>
         <source>&quot;</source>
         <translation>&quot;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="173"/>
+        <location filename="../ExportDataDialog.ui" line="173"/>
         <source>&apos;</source>
         <translation>&apos;</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="213"/>
+        <location filename="../ExportDataDialog.ui" line="213"/>
         <source>New line characters</source>
         <translation>محرف الأسطر الجديدة</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="235"/>
+        <location filename="../ExportDataDialog.ui" line="235"/>
         <source>Windows: CR+LF (\r\n)</source>
         <translation>وندوز: CR+LF ‏(‎\r\n)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.ui" line="240"/>
+        <location filename="../ExportDataDialog.ui" line="240"/>
         <source>Unix: LF (\n)</source>
         <translation>يُنكس: LF ‏(‎\n)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="154"/>
+        <location filename="../ExportDataDialog.cpp" line="154"/>
         <source>Could not open output file: %1</source>
         <translation>تعذّر فتح ملفّ الخرج: %1</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="168"/>
-        <location filename="../ExportCsvDialog.cpp" line="196"/>
+        <location filename="../ExportDataDialog.cpp" line="168"/>
+        <location filename="../ExportDataDialog.cpp" line="196"/>
         <source>Choose a filename to export data</source>
         <translation>اختر اسمًا للملفّ لتصدير البيانات</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="169"/>
-        <location filename="../ExportCsvDialog.cpp" line="197"/>
+        <location filename="../ExportDataDialog.cpp" line="169"/>
+        <location filename="../ExportDataDialog.cpp" line="197"/>
         <source>Text files(*.csv *.txt)</source>
         <translation>الملفّات النّصّيّة(*.csv *.txt)</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="186"/>
+        <location filename="../ExportDataDialog.cpp" line="186"/>
         <source>Please select at least 1 table.</source>
         <translation>فضلًا حدّد جدولًا واحدًا على الأقل.</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="212"/>
+        <location filename="../ExportDataDialog.cpp" line="212"/>
         <source>Choose a directory</source>
         <translation>اختر دليلًا</translation>
     </message>
     <message>
-        <location filename="../ExportCsvDialog.cpp" line="245"/>
+        <location filename="../ExportDataDialog.cpp" line="245"/>
         <source>Export completed.</source>
         <translation>اكتمل التّصدير.</translation>
     </message>

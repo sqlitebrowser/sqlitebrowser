@@ -1,15 +1,15 @@
-#ifndef EXPORTCSVDIALOG_H
-#define EXPORTCSVDIALOG_H
+#ifndef ExportDataDialog_H
+#define ExportDataDialog_H
 
 #include <QDialog>
 
 class DBBrowserDB;
 
 namespace Ui {
-class ExportCsvDialog;
+class ExportDataDialog;
 }
 
-class ExportCsvDialog : public QDialog
+class ExportDataDialog : public QDialog
 {
     Q_OBJECT
 
@@ -20,8 +20,8 @@ public:
         ExportFormatJson,
     };
 
-    explicit ExportCsvDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
-    ~ExportCsvDialog();
+    explicit ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
+    ~ExportDataDialog();
 
 private slots:
     virtual void accept();
@@ -42,7 +42,7 @@ private:
     bool exportQueryJson(const QString& sQuery, const QString& sFilename);
 
 private:
-    Ui::ExportCsvDialog* ui;
+    Ui::ExportDataDialog* ui;
     DBBrowserDB* pdb;
 
     ExportFormats m_format;

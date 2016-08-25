@@ -1,5 +1,5 @@
-#include "ExportCsvDialog.h"
-#include "ui_ExportCsvDialog.h"
+#include "ExportDataDialog.h"
+#include "ui_ExportDataDialog.h"
 #include "sqlitedb.h"
 #include "PreferencesDialog.h"
 #include "sqlitetablemodel.h"
@@ -15,9 +15,9 @@
 #include <QJsonObject>
 #endif
 
-ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
+ExportDataDialog::ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
-      ui(new Ui::ExportCsvDialog),
+      ui(new Ui::ExportDataDialog),
       pdb(db),
       m_format(format),
       m_sQuery(query)
@@ -64,12 +64,12 @@ ExportCsvDialog::ExportCsvDialog(DBBrowserDB* db, ExportFormats format, QWidget*
     }
 }
 
-ExportCsvDialog::~ExportCsvDialog()
+ExportDataDialog::~ExportDataDialog()
 {
     delete ui;
 }
 
-bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilename)
+bool ExportDataDialog::exportQuery(const QString& sQuery, const QString& sFilename)
 {
     switch(m_format)
     {
@@ -82,7 +82,7 @@ bool ExportCsvDialog::exportQuery(const QString& sQuery, const QString& sFilenam
     }
 }
 
-bool ExportCsvDialog::exportQueryCsv(const QString& sQuery, const QString& sFilename)
+bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFilename)
 {
     // Prepare the quote and separating characters
     QChar quoteChar = currentQuoteChar();
@@ -171,7 +171,7 @@ bool ExportCsvDialog::exportQueryCsv(const QString& sQuery, const QString& sFile
     return true;
 }
 
-bool ExportCsvDialog::exportQueryJson(const QString& sQuery, const QString& sFilename)
+bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFilename)
 {
 #if QT_VERSION_MAJOR < 5
     return false;
@@ -239,7 +239,7 @@ bool ExportCsvDialog::exportQueryJson(const QString& sQuery, const QString& sFil
 #endif
 }
 
-void ExportCsvDialog::accept()
+void ExportDataDialog::accept()
 {
     QString file_dialog_filter;
     QString default_file_extension;
@@ -336,7 +336,7 @@ void ExportCsvDialog::accept()
     QDialog::accept();
 }
 
-void ExportCsvDialog::showCustomCharEdits()
+void ExportDataDialog::showCustomCharEdits()
 {
     // Retrieve selection info for the quote, separator, and newline widgets
     int quoteIndex = ui->comboQuoteCharacter->currentIndex();
@@ -357,7 +357,7 @@ void ExportCsvDialog::showCustomCharEdits()
     ui->editCustomNewLine->setVisible(newLineVisible);
 }
 
-void ExportCsvDialog::setQuoteChar(const QChar& c)
+void ExportDataDialog::setQuoteChar(const QChar& c)
 {
     QComboBox* combo = ui->comboQuoteCharacter;
 
@@ -387,7 +387,7 @@ void ExportCsvDialog::setQuoteChar(const QChar& c)
     }
 }
 
-char ExportCsvDialog::currentQuoteChar() const
+char ExportDataDialog::currentQuoteChar() const
 {
     QComboBox* combo = ui->comboQuoteCharacter;
 
@@ -416,7 +416,7 @@ char ExportCsvDialog::currentQuoteChar() const
     }
 }
 
-void ExportCsvDialog::setSeparatorChar(const QChar& c)
+void ExportDataDialog::setSeparatorChar(const QChar& c)
 {
     QComboBox* combo = ui->comboFieldSeparator;
 
@@ -452,7 +452,7 @@ void ExportCsvDialog::setSeparatorChar(const QChar& c)
     }
 }
 
-char ExportCsvDialog::currentSeparatorChar() const
+char ExportDataDialog::currentSeparatorChar() const
 {
     QComboBox* combo = ui->comboFieldSeparator;
 
@@ -484,7 +484,7 @@ char ExportCsvDialog::currentSeparatorChar() const
     }
 }
 
-void ExportCsvDialog::setNewLineString(const QString& s)
+void ExportDataDialog::setNewLineString(const QString& s)
 {
     QComboBox* combo = ui->comboNewLineString;
 
@@ -503,7 +503,7 @@ void ExportCsvDialog::setNewLineString(const QString& s)
     }
 }
 
-QString ExportCsvDialog::currentNewLineString() const
+QString ExportDataDialog::currentNewLineString() const
 {
     QComboBox* combo = ui->comboNewLineString;
 

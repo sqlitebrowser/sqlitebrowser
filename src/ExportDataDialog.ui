@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ExportCsvDialog</class>
- <widget class="QDialog" name="ExportCsvDialog">
+ <class>ExportDataDialog</class>
+ <widget class="QDialog" name="ExportDataDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -324,7 +324,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ExportCsvDialog</receiver>
+   <receiver>ExportDataDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -340,7 +340,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ExportCsvDialog</receiver>
+   <receiver>ExportDataDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -356,7 +356,7 @@
   <connection>
    <sender>comboFieldSeparator</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>ExportCsvDialog</receiver>
+   <receiver>ExportDataDialog</receiver>
    <slot>showCustomCharEdits()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -372,7 +372,7 @@
   <connection>
    <sender>comboQuoteCharacter</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>ExportCsvDialog</receiver>
+   <receiver>ExportDataDialog</receiver>
    <slot>showCustomCharEdits()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -388,7 +388,7 @@
   <connection>
    <sender>comboNewLineString</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>ExportCsvDialog</receiver>
+   <receiver>ExportDataDialog</receiver>
    <slot>showCustomCharEdits()</slot>
    <hints>
     <hint type="sourcelabel">

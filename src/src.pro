@@ -31,7 +31,7 @@ HEADERS += \
     EditTableDialog.h \
     PreferencesDialog.h \
     EditDialog.h \
-    ExportCsvDialog.h \
+    ExportDataDialog.h \
     ImportCsvDialog.h \
     sqltextedit.h \
     sqlitetypes.h \
@@ -63,7 +63,7 @@ SOURCES += \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
     EditDialog.cpp \
-    ExportCsvDialog.cpp \
+    ExportDataDialog.cpp \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
     sqlitetypes.cpp \
@@ -95,7 +95,7 @@ FORMS += \
     EditTableDialog.ui \
     PreferencesDialog.ui \
     EditDialog.ui \
-    ExportCsvDialog.ui \
+    ExportDataDialog.ui \
     ImportCsvDialog.ui \
     SqlExecutionArea.ui \
     VacuumDialog.ui \
