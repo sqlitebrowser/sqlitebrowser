@@ -12,10 +12,10 @@ class DbStructureModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit DbStructureModel(QObject* parent = 0);
+    explicit DbStructureModel(DBBrowserDB& db, QObject* parent = 0);
     ~DbStructureModel();
 
-    void reloadData(DBBrowserDB* db);
+    void reloadData();
 
     QVariant data(const QModelIndex& index, int role) const;
     Qt::ItemFlags flags(const QModelIndex& index) const;
@@ -31,7 +31,7 @@ public:
 
 private:
     QTreeWidgetItem* rootItem;
-    DBBrowserDB* m_db;
+    DBBrowserDB& m_db;
 
     QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const DBBrowserObject& object);
 };

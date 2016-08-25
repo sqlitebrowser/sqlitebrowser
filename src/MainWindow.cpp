@@ -87,7 +87,7 @@ void MainWindow::init()
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Set up DB structure tab
-    dbStructureModel = new DbStructureModel(ui->dbTreeWidget);
+    dbStructureModel = new DbStructureModel(db, this);
     ui->dbTreeWidget->setModel(dbStructureModel);
     ui->dbTreeWidget->setColumnHidden(1, true);
     ui->dbTreeWidget->setColumnWidth(0, 300);
@@ -339,7 +339,7 @@ void MainWindow::populateStructure()
 
     // Refresh the structure tab
     db.updateSchema();
-    dbStructureModel->reloadData(&db);
+    dbStructureModel->reloadData();
     ui->dbTreeWidget->setRootIndex(dbStructureModel->index(1, 0));      // Show the 'All' part of the db structure
     ui->dbTreeWidget->expandToDepth(0);
     ui->treeSchemaDock->setRootIndex(dbStructureModel->index(1, 0));    // Show the 'All' part of the db structure
