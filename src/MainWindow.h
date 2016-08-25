@@ -31,7 +31,7 @@ public:
     explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
-    DBBrowserDB* getDb() { return &db; }
+    DBBrowserDB& getDb() { return db; }
 
     struct BrowseDataTableSettings
     {
