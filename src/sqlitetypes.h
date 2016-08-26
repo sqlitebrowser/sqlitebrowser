@@ -17,10 +17,12 @@ QString escapeIdentifier(QString id);
 
 class Field;
 class ForeignKeyClause;
+class UniqueConstraint;
 
 typedef QSharedPointer<Field> FieldPtr;
 typedef QVector< FieldPtr > FieldVector;
 typedef QMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
+typedef QMap<FieldVector, UniqueConstraint> UniqueMap;
 
 class Constraint
 {
@@ -72,6 +74,14 @@ private:
     QString m_constraint;
 
     QString m_override;
+};
+
+class UniqueConstraint : public Constraint
+{
+public:
+    UniqueConstraint() {}
+
+    virtual QString toSql(const FieldVector& applyOn) const;
 };
 
 class Field
@@ -164,7 +174,7 @@ public:
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
     void clear();
 
-    void addUniqueConstraint(FieldVector fields);
+    void addUniqueConstraint(FieldVector fields, UniqueConstraint unique);
 
     void addForeignKey(FieldPtr field, ForeignKeyClause fk);
     void addForeignKey(FieldVector fields, ForeignKeyClause fk);
@@ -198,7 +208,7 @@ private:
     QString m_name;
     FieldVector m_fields;
     QString m_rowidColumn;
-    QVector<FieldVector> m_uniqueConstraints;
+    UniqueMap m_uniqueConstraints;
     ForeignKeyMap m_foreignKeyClauses;
 };
 
