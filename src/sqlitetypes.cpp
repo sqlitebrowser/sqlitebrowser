@@ -124,8 +124,9 @@ bool Field::isInteger() const
 
 void Table::clear()
 {
-    m_fields.clear();
     m_rowidColumn = "_rowid_";
+    m_fields.clear();
+    m_constraints.clear();
 }
 Table::~Table()
 {
@@ -159,16 +160,15 @@ void Table::setField(int index, FieldPtr f)
     FieldPtr oldField = m_fields[index];
     m_fields[index] = f;
 
-    // Update unique constraints and foreign keys. If an existing field is updated but was used in a unique constraint or a foreign key, the pointer in the
-    // unique constraint/foreign key needs to be updated to the new field, too.
+    // Update all constraints. If an existing field is updated but was used in a constraint, the pointers in the constraint key needs to be updated
+    // to the new field, too.
     if(oldField)
     {
-        // Unique constraints
-        UniqueMap::iterator it1 = m_uniqueConstraints.begin();
-        while(it1 != m_uniqueConstraints.end())
+        ConstraintMap::iterator it = m_constraints.begin();
+        while(it != m_constraints.end())
         {
             // Loop through all fields mentioned in a foreign key
-            FieldVector fields = it1.key();
+            FieldVector fields = it.key();
             bool modified = false;
             for(int i=0;i<fields.size();++i)
             {
@@ -184,38 +184,10 @@ void Table::setField(int index, FieldPtr f)
             {
                 // When we need to update the map key, we insert a new constraint using the updated field vector and the old
                 // constraint information, and delete the old one afterwards
-                m_uniqueConstraints.insert(fields, it1.value());
-                it1 = m_uniqueConstraints.erase(it1);
+                m_constraints.insert(fields, it.value());
+                it = m_constraints.erase(it);
             } else {
-                ++it1;
-            }
-        }
-
-        // Foreign keys
-        ForeignKeyMap::iterator it2 = m_foreignKeyClauses.begin();
-        while(it2 != m_foreignKeyClauses.end())
-        {
-            // Loop through all fields mentioned in a foreign key
-            FieldVector fields = it2.key();
-            bool modified = false;
-            for(int i=0;i<fields.size();++i)
-            {
-                // If the field that is being modified is in there update it to the new field and set a flag that something has changed.
-                // This is used below to know when to update the map key
-                if(fields[i] == oldField)
-                {
-                    fields[i] = f;
-                    modified = true;
-                }
-            }
-            if(modified)
-            {
-                // When we need to update the map key, we insert a new foreign key clause using the updated field vector and the old
-                // foreign key information, and delete the old one afterwards
-                m_foreignKeyClauses.insert(fields, it2.value());
-                it2 = m_foreignKeyClauses.erase(it2);
-            } else {
-                ++it2;
+                ++it;
             }
         }
     }
@@ -325,22 +297,13 @@ QString Table::sql() const
             sql += pk + ")";
     }
 
-    // unique constraints
-    UniqueMap::const_iterator it1 = m_uniqueConstraints.constBegin();
-    while(it1 != m_uniqueConstraints.constEnd())
+    // Constraints
+    ConstraintMap::const_iterator it = m_constraints.constBegin();
+    while(it != m_constraints.constEnd())
     {
         sql += QString(",\n\t");
-        sql += it1.value().toSql(it1.key());
-        ++it1;
-    }
-
-    // foreign keys
-    ForeignKeyMap::const_iterator it2 = m_foreignKeyClauses.constBegin();
-    while(it2 != m_foreignKeyClauses.constEnd())
-    {
-        sql += QString(",\n\t");
-        sql += it2.value().toSql(it2.key());
-        ++it2;
+        sql += it.value()->toSql(it.key());
+        ++it;
     }
 
     sql += "\n)";
@@ -352,39 +315,63 @@ QString Table::sql() const
     return sql + ";";
 }
 
-void Table::addUniqueConstraint(FieldVector fields, UniqueConstraint unique)
-{
-    m_uniqueConstraints.insert(fields, unique);
-}
-
-void Table::addForeignKey(FieldPtr field, ForeignKeyClause fk)
+void Table::addConstraint(FieldPtr field, ConstraintPtr constraint)
 {
     FieldVector v;
     v.push_back(field);
-    addForeignKey(v, fk);
+    addConstraint(v, constraint);
 }
 
-void Table::addForeignKey(FieldVector fields, ForeignKeyClause fk)
+void Table::addConstraint(FieldVector fields, ConstraintPtr constraint)
 {
-    m_foreignKeyClauses.insert(fields, fk);
+    m_constraints.insert(fields, constraint);
 }
 
-const ForeignKeyClause& Table::foreignKey(FieldPtr field) const
+ConstraintPtr Table::constraint(FieldPtr field, Constraint::ConstraintTypes type) const
 {
-    FieldVector v;
-    v.push_back(field);
-    return foreignKey(v);
-}
-
-const ForeignKeyClause& Table::foreignKey(FieldVector fields) const
-{
-    static ForeignKeyClause empty_foreign_key;
-
-    ForeignKeyMap::ConstIterator it = m_foreignKeyClauses.find(fields);
-    if(it != m_foreignKeyClauses.constEnd())
-        return it.value();
+    QList<ConstraintPtr> list = constraints(field, type);
+    if(list.size())
+        return list.at(0);
     else
-        return empty_foreign_key;
+        return ConstraintPtr(0);
+}
+
+ConstraintPtr Table::constraint(FieldVector fields, Constraint::ConstraintTypes type) const
+{
+    QList<ConstraintPtr> list = constraints(fields, type);
+    if(list.size())
+        return list.at(0);
+    else
+        return ConstraintPtr(0);
+}
+
+QList<ConstraintPtr> Table::constraints(FieldPtr field, Constraint::ConstraintTypes type) const
+{
+    FieldVector v;
+    v.push_back(field);
+    return constraints(v, type);
+}
+
+QList<ConstraintPtr> Table::constraints(FieldVector fields, Constraint::ConstraintTypes type) const
+{
+    QList<ConstraintPtr> clist;
+    if(fields.isEmpty())
+        clist = m_constraints.values();
+    else
+        clist = m_constraints.values(fields);
+
+    if(type == Constraint::NoType)
+    {
+        return clist;
+    } else {
+        QList<ConstraintPtr> clist_typed;
+        foreach(const ConstraintPtr& ptr, clist)
+        {
+            if(ptr->type() == type)
+                clist_typed.push_back(ptr);
+        }
+        return clist_typed;
+    }
 }
 
 namespace
@@ -534,8 +521,8 @@ Table CreateTableWalker::table()
                 break;
                 case sqlite3TokenTypes::UNIQUE:
                 {
-                    UniqueConstraint unique;
-                    unique.setName(constraint_name);
+                    UniqueConstraint* unique = new UniqueConstraint;
+                    unique->setName(constraint_name);
 
                     tc = tc->getNextSibling(); // skip UNIQUE
                     tc = tc->getNextSibling(); // skip LPAREN
@@ -565,13 +552,13 @@ Table CreateTableWalker::table()
                     if(fields.size() == 1)
                         fields[0]->setUnique(true);
                     else
-                        tab.addUniqueConstraint(fields, unique);
+                        tab.addConstraint(fields, ConstraintPtr(unique));
                 }
                 break;
                 case sqlite3TokenTypes::FOREIGN:
                 {
-                    sqlb::ForeignKeyClause fk;
-                    fk.setName(constraint_name);
+                    ForeignKeyClause* fk = new ForeignKeyClause;
+                    fk->setName(constraint_name);
 
                     tc = tc->getNextSibling();  // FOREIGN
                     tc = tc->getNextSibling();  // KEY
@@ -593,7 +580,7 @@ Table CreateTableWalker::table()
                     tc = tc->getNextSibling();
                     tc = tc->getNextSibling();  // REFERENCES
 
-                    fk.setTable(identifier(tc));
+                    fk->setTable(identifier(tc));
                     tc = tc->getNextSibling();       // identifier
 
                     if(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::LPAREN)
@@ -607,13 +594,13 @@ Table CreateTableWalker::table()
                                 fk_cols.push_back(identifier(tc));
                             tc = tc->getNextSibling();
                         }
-                        fk.setColumns(fk_cols);
+                        fk->setColumns(fk_cols);
 
                         tc = tc->getNextSibling();  // RPAREN
                     }
 
-                    fk.setConstraint(concatTextAST(tc, true));
-                    tab.addForeignKey(fields, fk);
+                    fk->setConstraint(concatTextAST(tc, true));
+                    tab.addConstraint(fields, ConstraintPtr(fk));
                 }
                 break;
                 default:
@@ -650,7 +637,7 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     bool unique = false;
     QString defaultvalue;
     QString check;
-    sqlb::ForeignKeyClause foreignKey;
+    sqlb::ForeignKeyClause* foreignKey = 0;
 
     colname = columnname(c);
     c = c->getNextSibling(); //type?
@@ -719,7 +706,8 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
         {
             con = con->getNextSibling();    // REFERENCES
 
-            foreignKey.setTable(identifier(con));
+            foreignKey = new ForeignKeyClause;
+            foreignKey->setTable(identifier(con));
             con = con->getNextSibling();    // identifier
 
             if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::LPAREN)
@@ -733,12 +721,12 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
                         fk_cols.push_back(identifier(con));
                     con = con->getNextSibling();
                 }
-                foreignKey.setColumns(fk_cols);
+                foreignKey->setColumns(fk_cols);
 
                 con = con->getNextSibling();    // RPAREN
             }
 
-            foreignKey.setConstraint(concatTextAST(con, true));
+            foreignKey->setConstraint(concatTextAST(con, true));
         }
         break;
         default:
@@ -754,8 +742,8 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     f->setAutoIncrement(autoincrement);
     table.addField(f);
 
-    if(foreignKey.isSet())
-        table.addForeignKey(f, foreignKey);
+    if(foreignKey)
+        table.addConstraint(f, ConstraintPtr(foreignKey));
 }
 
 } //namespace sqlb

@@ -16,22 +16,29 @@ namespace sqlb {
 QString escapeIdentifier(QString id);
 
 class Field;
-class ForeignKeyClause;
-class UniqueConstraint;
-
+class Constraint;
 typedef QSharedPointer<Field> FieldPtr;
-typedef QVector< FieldPtr > FieldVector;
-typedef QMultiMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
-typedef QMultiMap<FieldVector, UniqueConstraint> UniqueMap;
+typedef QSharedPointer<Constraint> ConstraintPtr;
+typedef QVector<FieldPtr> FieldVector;
 
 class Constraint
 {
 public:
+    enum ConstraintTypes
+    {
+        NoType,
+        PrimaryKeyConstraintType,
+        UniqueConstraintType,
+        ForeignKeyConstraintType,
+    };
+
     Constraint(const QString& name = QString())
         : m_name(name)
     {
     }
     virtual ~Constraint() {}
+
+    virtual ConstraintTypes type() const = 0;
 
     void setName(const QString& name) { m_name = name; }
     const QString& name() const { return m_name; }
@@ -68,6 +75,8 @@ public:
 
     virtual QString toSql(const FieldVector& applyOn) const;
 
+    virtual ConstraintTypes type() const { return ForeignKeyConstraintType; }
+
 private:
     QString m_table;
     QStringList m_columns;
@@ -82,6 +91,8 @@ public:
     UniqueConstraint() {}
 
     virtual QString toSql(const FieldVector& applyOn) const;
+
+    virtual ConstraintTypes type() const { return UniqueConstraintType; }
 };
 
 class Field
@@ -139,6 +150,8 @@ private:
     bool m_unique;
 };
 
+typedef QMultiMap<FieldVector, ConstraintPtr> ConstraintMap;
+
 #if QT_VERSION_MAJOR < 5
 inline bool operator<(const FieldVector&, const FieldVector&)
 {
@@ -174,13 +187,12 @@ public:
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
     void clear();
 
-    void addUniqueConstraint(FieldVector fields, UniqueConstraint unique);
-
-    void addForeignKey(FieldPtr field, ForeignKeyClause fk);
-    void addForeignKey(FieldVector fields, ForeignKeyClause fk);
-    const ForeignKeyClause& foreignKey(FieldPtr field) const;
-    const ForeignKeyClause& foreignKey(FieldVector fields) const;
-    const ForeignKeyMap& foreignKeys() const { return m_foreignKeyClauses; }
+    void addConstraint(FieldPtr field, ConstraintPtr constraint);
+    void addConstraint(FieldVector fields, ConstraintPtr constraint);
+    ConstraintPtr constraint(FieldPtr field, Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
+    ConstraintPtr constraint(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
+    QList<ConstraintPtr> constraints(FieldPtr field, Constraint::ConstraintTypes type = Constraint::NoType) const;
+    QList<ConstraintPtr> constraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
 
     /**
      * @brief findField Finds a field and returns the index.
@@ -208,8 +220,7 @@ private:
     QString m_name;
     FieldVector m_fields;
     QString m_rowidColumn;
-    UniqueMap m_uniqueConstraints;
-    ForeignKeyMap m_foreignKeyClauses;
+    ConstraintMap m_constraints;
 };
 
 /**

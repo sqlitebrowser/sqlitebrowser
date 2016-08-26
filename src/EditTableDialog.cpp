@@ -119,7 +119,10 @@ void EditTableDialog::populateFields()
             tbitem->setText(kDefault, f->defaultValue());
 
         tbitem->setText(kCheck, f->check());
-        tbitem->setText(kForeignKey, m_table.foreignKey(f).toString());
+
+        QSharedPointer<sqlb::ForeignKeyClause> fk = m_table.constraint(f, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
+        if(fk)
+            tbitem->setText(kForeignKey, fk->toString());
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
@@ -237,19 +240,17 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             {
                 foreach(const DBBrowserObject& fkobj, pdb->objMap.values("table"))
                 {
-                    sqlb::ForeignKeyMap::ConstIterator it = fkobj.table.foreignKeys().constBegin();
-                    while(it != fkobj.table.foreignKeys().constEnd())
+                    QList<sqlb::ConstraintPtr> fks = fkobj.table.constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
+                    foreach(sqlb::ConstraintPtr fkptr, fks)
                     {
-                        const sqlb::FieldVector& fkfields = it.key();
-                        const sqlb::ForeignKeyClause& fk = it.value();
-                        if(fk.table() == m_table.name())
+                        QSharedPointer<sqlb::ForeignKeyClause> fk = fkptr.dynamicCast<sqlb::ForeignKeyClause>();
+                        if(fk->table() == m_table.name())
                         {
-                            if(fk.columns().contains(field->name()) || field->primaryKey())
+                            if(fk->columns().contains(field->name()) || field->primaryKey())
                             {
-                                QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1, column %2 and thus "
+                                QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1 and thus "
                                                                                        "its name cannot be changed.")
-                                                     .arg(fkobj.getname())
-                                                     .arg(sqlb::fieldVectorToFieldNames(fkfields).join(",")));
+                                                     .arg(fkobj.getname()));
                                 // Reset the name to the old value but avoid calling this method again for that automatic change
                                 ui->treeWidget->blockSignals(true);
                                 item->setText(column, oldFieldName);
@@ -257,8 +258,6 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                                 return;
                             }
                         }
-
-                        ++it;
                     }
                 }
             }
@@ -427,9 +426,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 callRenameColumn = true;
             break;
         case kForeignKey:
-            sqlb::ForeignKeyClause fk;
-            fk.setFromString(item->text(column));
-            m_table.addForeignKey(field, fk);
+            sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
+            fk->setFromString(item->text(column));
+            m_table.addConstraint(field, sqlb::ConstraintPtr(fk));
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;

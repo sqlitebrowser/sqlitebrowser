@@ -257,17 +257,18 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
     DBBrowserObject obj = m_db->getObjectByName(m_sTable);
-    if(obj.getname().size())
+    if(obj.getname().size() && (column >= 0 && column < obj.table.fields().count()))
+    {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
-        if (column >= 0 && column < obj.table.fields().count())
-        {
-            return obj.table.foreignKey(obj.table.fields().at(column));
-        } else {
-            return sqlb::ForeignKeyClause();
-        }
-    else
-        return sqlb::ForeignKeyClause();
+
+        sqlb::ConstraintPtr ptr = obj.table.constraint(obj.table.fields().at(column), sqlb::Constraint::ForeignKeyConstraintType);
+        if(ptr && ptr.data())
+            return *(reinterpret_cast<sqlb::ForeignKeyClause*>(ptr.data()));
+    }
+
+    static const sqlb::ForeignKeyClause empty_foreign_key_clause;
+    return empty_foreign_key_clause;
 }
 
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
