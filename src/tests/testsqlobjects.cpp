@@ -83,7 +83,7 @@ void TestTable::foreignKeys()
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("a", "integer"));
     tt.addField(f);
-    tt.addForeignKey(f, sqlb::ForeignKeyClause("b", QStringList("c")));
+    tt.addConstraint(f, sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", QStringList("c"))));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
                                "\t`a`\tinteger,\n"
@@ -104,7 +104,7 @@ void TestTable::uniqueConstraint()
     tt.addField(f1);
     tt.addField(f2);
     tt.addField(f3);
-    tt.addUniqueConstraint(uc);
+    tt.addConstraint(uc, sqlb::ConstraintPtr(new sqlb::UniqueConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
                                "\t`a`\tinteger UNIQUE,\n"
@@ -272,11 +272,11 @@ void TestTable::parseSQLForeignKeys()
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->type(), QString("int"));
 #if QT_VERSION_MAJOR >= 5
-    QCOMPARE(tab.foreignKey(tab.fields().at(0)).table(), QString("x"));
+    QCOMPARE(tab.constraint(tab.fields().at(0), sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->table(), QString("x"));
 #endif
     QCOMPARE(tab.fields().at(1)->name(), QString("b"));
     QCOMPARE(tab.fields().at(1)->type(), QString("int"));
-    QCOMPARE(tab.foreignKey(tab.fields().at(1)).toString(), QString("`w`(`y`,`z`) on delete set null"));
+    QCOMPARE(tab.constraint(tab.fields().at(1), sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->toString(), QString("`w`(`y`,`z`) on delete set null"));
 }
 
 void TestTable::parseSQLCheckConstraint()
