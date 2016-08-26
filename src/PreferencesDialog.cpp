@@ -282,7 +282,7 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     if(group == "databrowser")
     {
         if(name == "font")
-            return "Sans Serif";
+            return QFont().defaultFamily();
         if(name == "fontsize")
             return 10;
         if(name == "null_text")
