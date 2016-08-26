@@ -9,7 +9,7 @@
 #include <QVector>
 #include <QStringList>
 #include <QPair>
-#include <QMap>
+#include <QMultiMap>
 
 namespace sqlb {
 
@@ -21,8 +21,8 @@ class UniqueConstraint;
 
 typedef QSharedPointer<Field> FieldPtr;
 typedef QVector< FieldPtr > FieldVector;
-typedef QMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
-typedef QMap<FieldVector, UniqueConstraint> UniqueMap;
+typedef QMultiMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
+typedef QMultiMap<FieldVector, UniqueConstraint> UniqueMap;
 
 class Constraint
 {
