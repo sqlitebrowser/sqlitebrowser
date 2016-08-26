@@ -26,6 +26,8 @@ matrix:
 notifications:
   email:
     recipients:
+      - mkleusberg@gmail.com
+      - innermous@gmail.com
       - justin@postgresql.org
     on_success: never
     on_failure: always
