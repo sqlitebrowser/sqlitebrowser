@@ -263,8 +263,8 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
         // foreign key on that column.
 
         sqlb::ConstraintPtr ptr = obj.table.constraint(obj.table.fields().at(column), sqlb::Constraint::ForeignKeyConstraintType);
-        if(ptr && ptr.data())
-            return *(reinterpret_cast<sqlb::ForeignKeyClause*>(ptr.data()));
+        if(ptr)
+            return *(ptr.dynamicCast<sqlb::ForeignKeyClause>());
     }
 
     static const sqlb::ForeignKeyClause empty_foreign_key_clause;
