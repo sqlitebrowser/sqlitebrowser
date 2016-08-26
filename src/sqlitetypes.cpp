@@ -57,6 +57,16 @@ void ForeignKeyClause::setFromString(const QString& fk)
     m_override = fk;
 }
 
+QString ForeignKeyClause::toSql(const FieldVector& applyOn) const
+{
+    QString result;
+    if(!m_name.isNull())
+        result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
+    result += QString("FOREIGN KEY(%1) REFERENCES %2").arg(fieldVectorToFieldNames(applyOn).join(",")).arg(this->toString());
+
+    return result;
+}
+
 QString Field::toString(const QString& indent, const QString& sep) const
 {
     QString str = indent + escapeIdentifier(m_name) + sep + m_type;
@@ -301,7 +311,8 @@ QString Table::sql() const
     ForeignKeyMap::const_iterator it = m_foreignKeyClauses.constBegin();
     while(it != m_foreignKeyClauses.constEnd())
     {
-        sql += QString(",\n\tFOREIGN KEY(%1) REFERENCES %2").arg(fieldVectorToFieldNames(it.key()).join(",")).arg(it.value().toString());
+        sql += QString(",\n\t");
+        sql += it.value().toSql(it.key());
         ++it;
     }
 
@@ -448,16 +459,21 @@ Table CreateTableWalker::table()
                 antlr::RefAST tc = s->getFirstChild();
 
                 // skip constraint name, if there is any
+                QString constraint_name;
                 if(tc->getType() == sqlite3TokenTypes::CONSTRAINT)
                 {
-                    m_bModifySupported = false;
-                    tc = tc->getNextSibling()->getNextSibling();
+                    tc = tc->getNextSibling();          // CONSTRAINT
+                    constraint_name = identifier(tc);
+                    tc = tc->getNextSibling();          // identifier
                 }
 
                 switch(tc->getType())
                 {
                 case sqlite3TokenTypes::PRIMARY:
                 {
+                    if(!constraint_name.isNull())
+                        m_bModifySupported = false;
+
                     tc = tc->getNextSibling()->getNextSibling(); // skip primary and key
                     tc = tc->getNextSibling(); // skip LPAREN
                     do
@@ -491,6 +507,9 @@ Table CreateTableWalker::table()
                 break;
                 case sqlite3TokenTypes::UNIQUE:
                 {
+                    if(!constraint_name.isNull())
+                        m_bModifySupported = false;
+
                     tc = tc->getNextSibling(); // skip UNIQUE
                     tc = tc->getNextSibling(); // skip LPAREN
                     FieldVector fields;
@@ -525,6 +544,7 @@ Table CreateTableWalker::table()
                 case sqlite3TokenTypes::FOREIGN:
                 {
                     sqlb::ForeignKeyClause fk;
+                    fk.setName(constraint_name);
 
                     tc = tc->getNextSibling();  // FOREIGN
                     tc = tc->getNextSibling();  // KEY

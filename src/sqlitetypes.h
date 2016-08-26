@@ -15,7 +15,32 @@ namespace sqlb {
 
 QString escapeIdentifier(QString id);
 
-class ForeignKeyClause
+class Field;
+class ForeignKeyClause;
+
+typedef QSharedPointer<Field> FieldPtr;
+typedef QVector< FieldPtr > FieldVector;
+typedef QMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
+
+class Constraint
+{
+public:
+    Constraint(const QString& name = QString())
+        : m_name(name)
+    {
+    }
+    virtual ~Constraint() {}
+
+    void setName(const QString& name) { m_name = name; }
+    const QString& name() const { return m_name; }
+
+    virtual QString toSql(const FieldVector& applyOn) const = 0;
+
+protected:
+    QString m_name;
+};
+
+class ForeignKeyClause : public Constraint
 {
 public:
     ForeignKeyClause(const QString& table = QString(), const QStringList& columns = QStringList(), const QString& constraint = QString())
@@ -38,6 +63,8 @@ public:
 
     void setConstraint(const QString& constraint) { m_constraint = constraint; }
     const QString& constraint() const { return m_constraint; }
+
+    virtual QString toSql(const FieldVector& applyOn) const;
 
 private:
     QString m_table;
@@ -101,10 +128,6 @@ private:
     bool m_primaryKey;
     bool m_unique;
 };
-
-typedef QSharedPointer<Field> FieldPtr;
-typedef QVector< FieldPtr > FieldVector;
-typedef QMap<FieldVector, ForeignKeyClause> ForeignKeyMap;
 
 #if QT_VERSION_MAJOR < 5
 inline bool operator<(const FieldVector&, const FieldVector&)
