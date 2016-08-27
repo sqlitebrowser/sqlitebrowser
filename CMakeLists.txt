@@ -380,7 +380,7 @@ set(CPACK_PACKAGE_VERSION_MAJOR "3")
 set(CPACK_PACKAGE_VERSION_MINOR "9")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
 if(WIN32 AND NOT UNIX)
-	# There is a bug in NSI that does not handle full unix paths properly. Make
+	# There is a bug in NSIS that does not handle full unix paths properly. Make
 	# sure there is at least one set of four (4) backlasshes.
 	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}\\\\${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
@@ -392,6 +392,7 @@ if(WIN32 AND NOT UNIX)
 	set(CPACK_NSIS_MODIFY_PATH OFF)
 	set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
 	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "DB Browser for SQLite.exe")
+	set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
 
 	# VS redist
 	list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
