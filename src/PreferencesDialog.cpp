@@ -74,7 +74,16 @@ void PreferencesDialog::loadSettings()
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }
 
-    ui->comboDataBrowserFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("databrowser", "font").toString()));
+    // Gracefully handle the preferred Data Browser font not being available
+    int matchingFont = ui->comboDataBrowserFont->findText(getSettingsValue("databrowser", "font").toString());
+    if (matchingFont != -1) {
+        // The requested font is available, so select it in the combo box
+        ui->comboDataBrowserFont->setCurrentIndex(matchingFont);
+    } else {
+        // The requested font isn't available, so fall back to the default one
+        ui->comboDataBrowserFont->setCurrentIndex(ui->comboDataBrowserFont->findText(QFont().defaultFamily()));
+    }
+
     ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
     loadColorSetting(ui->fr_null_bg, "null_bg");
@@ -101,7 +110,17 @@ void PreferencesDialog::loadSettings()
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
         }
     }
-    ui->comboEditorFont->setCurrentIndex(ui->comboEditorFont->findText(getSettingsValue("editor", "font").toString()));
+
+    // Gracefully handle the preferred Editor font not being available
+    matchingFont = ui->comboEditorFont->findText(getSettingsValue("editor", "font").toString());
+    if (matchingFont != -1) {
+        // The requested font is available, so select it in the combo box
+        ui->comboEditorFont->setCurrentIndex(matchingFont);
+    } else {
+        // The requested font isn't available, so fall back to the default one
+        ui->comboEditorFont->setCurrentIndex(ui->comboEditorFont->findText(QFont().defaultFamily()));
+    }
+
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(getSettingsValue("log", "fontsize").toInt());
