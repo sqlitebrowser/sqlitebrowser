@@ -365,7 +365,7 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
 
     // editor/font?
     if(group == "editor" && name == "font")
-        return QFont().defaultFamily();
+        return "Monospace";
 
     // editor/fontsize or log/fontsize?
     if((group == "editor" || group == "log") && name == "fontsize")
