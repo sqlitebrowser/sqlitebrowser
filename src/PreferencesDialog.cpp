@@ -75,14 +75,10 @@ void PreferencesDialog::loadSettings()
     }
 
     // Gracefully handle the preferred Data Browser font not being available
-    int matchingFont = ui->comboDataBrowserFont->findText(getSettingsValue("databrowser", "font").toString());
-    if (matchingFont != -1) {
-        // The requested font is available, so select it in the combo box
-        ui->comboDataBrowserFont->setCurrentIndex(matchingFont);
-    } else {
-        // The requested font isn't available, so fall back to the default one
-        ui->comboDataBrowserFont->setCurrentIndex(ui->comboDataBrowserFont->findText(QFont().defaultFamily()));
-    }
+    int matchingFont = ui->comboDataBrowserFont->findText(getSettingsValue("databrowser", "font").toString(), Qt::MatchExactly);
+    if (matchingFont == -1)
+        matchingFont = ui->comboDataBrowserFont->findText(getSettingsDefaultValue("databrowser", "font").toString());
+    ui->comboDataBrowserFont->setCurrentIndex(matchingFont);
 
     ui->spinDataBrowserFontSize->setValue(getSettingsValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
@@ -112,14 +108,10 @@ void PreferencesDialog::loadSettings()
     }
 
     // Gracefully handle the preferred Editor font not being available
-    matchingFont = ui->comboEditorFont->findText(getSettingsValue("editor", "font").toString());
-    if (matchingFont != -1) {
-        // The requested font is available, so select it in the combo box
-        ui->comboEditorFont->setCurrentIndex(matchingFont);
-    } else {
-        // The requested font isn't available, so fall back to the default one
-        ui->comboEditorFont->setCurrentIndex(ui->comboEditorFont->findText(QFont().defaultFamily()));
-    }
+    matchingFont = ui->comboEditorFont->findText(getSettingsValue("editor", "font").toString(), Qt::MatchExactly);
+    if (matchingFont == -1)
+        matchingFont = ui->comboDataBrowserFont->findText(getSettingsDefaultValue("editor", "font").toString());
+    ui->comboEditorFont->setCurrentIndex(matchingFont);
 
     ui->spinEditorFontSize->setValue(getSettingsValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(getSettingsValue("editor", "tabsize").toInt());
