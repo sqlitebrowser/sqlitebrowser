@@ -452,12 +452,12 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../DbStructureModel.cpp" line="147"/>
         <source>Browsables (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegables (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="152"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="156"/>
@@ -798,7 +798,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="294"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Cuidado: &lt;/span&gt;Hay algo en la definición de esta tabla que nuestro intérprete no entiende del todo. Modificar y guardar esta tabla puede causar problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="142"/>
@@ -1615,7 +1615,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1740"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1796"/>
