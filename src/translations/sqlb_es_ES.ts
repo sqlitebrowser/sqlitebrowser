@@ -798,7 +798,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="294"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Cuidado: &lt;/span&gt;Hay algo en la definici&oacute;n de esta tabla que nuestro inte&acute;rprete no entiende del todo. Modificar y guardar esta tabla puede causar problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Cuidado: &lt;/span&gt;Hay algo en la definición de esta tabla que nuestro intérprete no entiende del todo. Modificar y guardar esta tabla puede causar problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="142"/>
