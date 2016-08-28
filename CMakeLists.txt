@@ -384,6 +384,7 @@ if(WIN32 AND NOT UNIX)
 	# sure there is at least one set of four (4) backlasshes.
 	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}\\\\${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
+	set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
 	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DB Browser for SQLite.exe")
 	set(CPACK_NSIS_DISPLAY_NAME "DB Browser for SQLite")
 	set(CPACK_NSIS_HELP_LINK "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
