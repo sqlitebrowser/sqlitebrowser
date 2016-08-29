@@ -88,6 +88,7 @@ bool DBBrowserDB::open(const QString& db)
     if (isOpen()) close();
 
     isEncrypted = false;
+    dontCheckForStructureUpdates = false;
 
     // Get encryption settings for database file
     CipherDialog* cipher = 0;
@@ -152,6 +153,9 @@ bool DBBrowserDB::open(const QString& db)
         }
 
         curDBFilename = db;
+
+        updateSchema();
+
         return true;
     } else {
         return false;
@@ -368,9 +372,11 @@ bool DBBrowserDB::create ( const QString & db)
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
         // with a 0 byte file, if the user cancels the create table dialog
+        dontCheckForStructureUpdates = true;
         executeSQL("CREATE TABLE notempty (id integer primary key);", false, false);
         executeSQL("DROP TABLE notempty;", false, false);
         executeSQL("COMMIT;", false, false);
+        dontCheckForStructureUpdates = false;
 
         // Execute default SQL
         QString default_sql = settings.value( "/db/defaultsqltext", "").toString();
@@ -380,6 +386,8 @@ bool DBBrowserDB::create ( const QString & db)
         curDBFilename = db;
         isEncrypted = false;
         isReadOnly = false;
+        dontCheckForStructureUpdates = false;
+        updateSchema();
         return true;
     } else {
         return false;
@@ -415,6 +423,7 @@ bool DBBrowserDB::close()
     objMap.clear();
     savepointList.clear();
     emit dbChanged(getDirty());
+    emit structureUpdated();
 
     // Return true to tell the calling function that the closing wasn't cancelled by the user
     return true;
@@ -590,18 +599,27 @@ bool DBBrowserDB::dump(const QString& filename,
     return false;
 }
 
-bool DBBrowserDB::executeSQL ( const QString & statement, bool dirtyDB, bool logsql)
+bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
 {
     char *errmsg;
 
     if (!isOpen())
         return false;
 
+    statement = statement.trimmed();
+
     if (logsql) logSQL(statement, kLogMsg_App);
     if (dirtyDB) setSavepoint();
 
     if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
     {
+        // Update DB structure after executing an SQL statement. But try to avoid doing unnecessary updates.
+        if(!dontCheckForStructureUpdates && (statement.startsWith("ALTER", Qt::CaseInsensitive) ||
+                statement.startsWith("CREATE", Qt::CaseInsensitive) ||
+                statement.startsWith("DROP", Qt::CaseInsensitive) ||
+                statement.startsWith("ROLLBACK", Qt::CaseInsensitive)))
+            updateSchema();
+
         return true;
     } else {
         lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
@@ -616,7 +634,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     if(!isOpen())
         return false;
 
-    QString query = statement;
+    QString query = statement.trimmed();
 
     query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
 
@@ -641,6 +659,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     const char *tail = utf8Query.data();
     int res = 0;
     unsigned int line = 0;
+    bool structure_updated = false;
     do
     {
         line++;
@@ -654,6 +673,14 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
             lastErrorMessage = tr("Action cancelled.");
             return false;
         }
+
+        // Check whether the DB structure is changed by this statement
+        QString qtail = QString(tail);
+        if(!dontCheckForStructureUpdates && !structure_updated && (qtail.startsWith("ALTER", Qt::CaseInsensitive) ||
+                qtail.startsWith("CREATE", Qt::CaseInsensitive) ||
+                qtail.startsWith("DROP", Qt::CaseInsensitive) ||
+                qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
+            structure_updated = true;
 
         // Execute next statement
         res = sqlite3_prepare_v2(_db, tail, tail_length, &vm, &tail);
@@ -676,6 +703,10 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
             return false;
         }
     } while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE));
+
+    // If the DB structure was changed by some command in this SQL script, update our schema representations
+    if(structure_updated)
+        updateSchema();
 
     // Exit
     return true;
@@ -904,9 +935,7 @@ bool DBBrowserDB::createTable(const QString& name, const sqlb::FieldVector& stru
         table.addField(structure.at(i));
 
     // Execute it and update the schema
-    bool result = executeSQL(table.sql());
-    updateSchema();
-    return result;
+    return executeSQL(table.sql());
 }
 
 bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& field)
@@ -914,9 +943,7 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
     QString sql = QString("ALTER TABLE %1 ADD COLUMN %2").arg(sqlb::escapeIdentifier(tablename)).arg(field->toString());
 
     // Execute it and update the schema
-    bool result = executeSQL(sql);
-    updateSchema();
-    return result;
+    return executeSQL(sql);
 }
 
 bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sqlb::FieldPtr to, int move)
@@ -996,12 +1023,14 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Create the new table
-    if(!executeSQL(newSchema.sql()))
+    dontCheckForStructureUpdates = true;
+    if(!executeSQL(newSchema.sql(), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
         qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
+        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1012,6 +1041,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
+        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1029,12 +1059,13 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     setPragma("foreign_keys", "0");
 
     // Delete the old table
-    if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(tablename))))
+    if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(tablename)), true, true))
     {
         QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
         qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
+        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1042,6 +1073,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     if(!renameTable("sqlitebrowser_rename_column_new_table", tablename))
     {
         revertToSavepoint("sqlitebrowser_rename_column");
+        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1062,10 +1094,12 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
+        dontCheckForStructureUpdates = false;
         return false;
     }
 
     // Success, update the DB schema before returning
+    dontCheckForStructureUpdates = true;
     updateSchema();
     return true;
 }
@@ -1081,7 +1115,6 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
         qWarning() << lastErrorMessage;
         return false;
     } else {
-        updateSchema();
         return true;
     }
 }
@@ -1200,6 +1233,8 @@ void DBBrowserDB::updateSchema( )
             }
         }
     }
+
+    emit structureUpdated();
 }
 
 QString DBBrowserDB::getPragma(const QString& pragma)

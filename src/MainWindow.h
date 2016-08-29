@@ -162,12 +162,12 @@ public slots:
     void browseRefresh();
     void jumpToRow(const QString& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
+    void populateStructure();
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
-    void populateStructure();
     void populateTable();
     void clearTableBrowser();
     bool fileClose();

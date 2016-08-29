@@ -43,7 +43,7 @@ class DBBrowserDB : public QObject
     Q_OBJECT
 
 public:
-    explicit DBBrowserDB () : _db(0), isEncrypted(false), isReadOnly(false) {}
+    explicit DBBrowserDB () : _db(0), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
     virtual ~DBBrowserDB (){}
     bool open ( const QString & db);
     bool attach(const QString& filename, QString attach_as = "");
@@ -55,7 +55,7 @@ public:
     bool releaseAllSavepoints();
     bool revertAll();
     bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData);
-    bool executeSQL ( const QString & statement, bool dirtyDB=true, bool logsql=true);
+    bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
 
     /**
@@ -127,6 +127,7 @@ public:
 signals:
     void sqlExecuted(QString sql, int msgtype);
     void dbChanged(bool dirty);
+    void structureUpdated();
 
 private:
     QString curDBFilename;
@@ -137,6 +138,8 @@ private:
     bool isReadOnly;
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
+
+    bool dontCheckForStructureUpdates;
 };
 
 #endif

@@ -78,6 +78,7 @@ void MainWindow::init()
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
     connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
+    connect(&db, SIGNAL(structureUpdated()), this, SLOT(populateStructure()));
 
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
@@ -294,7 +295,6 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
                 loadExtensionsFromSettings();
-                populateStructure();
                 if(ui->mainTab->currentIndex() == BrowseTab)
                     populateTable();
                 else if(ui->mainTab->currentIndex() == PragmaTab)
@@ -326,7 +326,6 @@ void MainWindow::fileNew()
         statusEncryptionLabel->setVisible(false);
         statusReadOnlyLabel->setVisible(false);
         loadExtensionsFromSettings();
-        populateStructure();
         populateTable();
         openSqlTab(true);
         createTable();
@@ -338,7 +337,6 @@ void MainWindow::populateStructure()
     QString old_table = ui->comboBrowseTable->currentText();
 
     // Refresh the structure tab
-    db.updateSchema();
     dbStructureModel->reloadData();
     ui->dbTreeWidget->setRootIndex(dbStructureModel->index(1, 0));      // Show the 'All' part of the db structure
     ui->dbTreeWidget->expandToDepth(0);
@@ -513,7 +511,6 @@ bool MainWindow::fileClose()
         return false;
 
     setWindowTitle(QApplication::applicationName());
-    populateStructure();
     loadPragmas();
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
@@ -708,7 +705,6 @@ void MainWindow::createTable()
     EditTableDialog dialog(&db, "", true, this);
     if(dialog.exec())
     {
-        populateStructure();
         populateTable();
     }
 }
@@ -721,10 +717,7 @@ void MainWindow::createIndex()
     }
 
     CreateIndexDialog dialog(&db, this);
-    if(dialog.exec())
-    {
-        populateStructure();
-    }
+    dialog.exec();
 }
 
 void MainWindow::compact()
@@ -750,7 +743,6 @@ void MainWindow::deleteObject()
             QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);
             QMessageBox::warning(this, QApplication::applicationName(), error);
         } else {
-            populateStructure();
             populateTable();
             changeTreeSelection();
         }
@@ -770,10 +762,7 @@ void MainWindow::editTable()
 
     EditTableDialog dialog(&db, tableToEdit, false, this);
     if(dialog.exec())
-    {
-        populateStructure();
         populateTable();
-    }
 }
 
 void MainWindow::helpWhatsThis()
@@ -885,7 +874,7 @@ void MainWindow::executeQuery()
     if (query.isEmpty())
         return;
 
-    query = query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
+    query = query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$")).trimmed();
 
     //log the query
     db.logSQL(query, kLogMsg_User);
@@ -897,6 +886,7 @@ void MainWindow::executeQuery()
     QString statusMessage;
     bool modified = false;
     bool wasdirty = db.getDirty();
+    bool structure_updated = false;
 
     // there is no choice, we have to start a transaction before
     // we create the prepared statement, otherwise every executed
@@ -912,6 +902,15 @@ void MainWindow::executeQuery()
     timer.start();
     do
     {
+        // Check whether the DB structure is changed by this statement
+        QString qtail = QString(tail);
+        if(!structure_updated && (qtail.startsWith("ALTER", Qt::CaseInsensitive) ||
+                qtail.startsWith("CREATE", Qt::CaseInsensitive) ||
+                qtail.startsWith("DROP", Qt::CaseInsensitive) ||
+                qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
+            structure_updated = true;
+
+        // Execute next statement
         int tail_length_before = tail_length;
         const char* qbegin = tail;
         sql3status = sqlite3_prepare_v2(db._db,tail, tail_length, &vm, &tail);
@@ -996,6 +995,10 @@ void MainWindow::executeQuery()
 
     if(!modified && !wasdirty)
         db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
+
+    // If the DB structure was changed by some command in this SQL script, update our schema representations
+    if(structure_updated)
+        db.updateSchema();
 }
 
 void MainWindow::mainTabSelected(int tabindex)
@@ -1005,12 +1008,10 @@ void MainWindow::mainTabSelected(int tabindex)
     switch (tabindex)
     {
     case StructureTab:
-        populateStructure();
         break;
 
     case BrowseTab:
         m_currentTabTableModel = m_browseTableModel;
-        populateStructure();
         populateTable();
         break;
 
@@ -1046,7 +1047,6 @@ void MainWindow::importTableFromCSV()
         ImportCsvDialog dialog(wFile, &db, this);
         if(dialog.exec())
         {
-            populateStructure();
             populateTable();
             QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
         }
@@ -1108,7 +1108,6 @@ void MainWindow::fileRevert()
         if(QMessageBox::question(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::Default, QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
         {
             db.revertAll();
-            populateStructure();
             populateTable();
         }
     }
@@ -1176,7 +1175,7 @@ void MainWindow::importDatabaseFromSQL()
     {
         fileOpen(newDbFile);
     } else {
-        populateStructure();
+        db.updateSchema();
         populateTable();
     }
 }
