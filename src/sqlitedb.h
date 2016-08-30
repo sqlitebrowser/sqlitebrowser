@@ -140,6 +140,16 @@ private:
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
 
     bool dontCheckForStructureUpdates;
+
+    class NoStructureUpdateChecks
+    {
+    public:
+        NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.dontCheckForStructureUpdates = true; }
+        ~NoStructureUpdateChecks() { m_db.dontCheckForStructureUpdates = false; }
+
+    private:
+          DBBrowserDB& m_db;
+    };
 };
 
 #endif

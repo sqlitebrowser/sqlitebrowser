@@ -372,11 +372,12 @@ bool DBBrowserDB::create ( const QString & db)
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
         // with a 0 byte file, if the user cancels the create table dialog
-        dontCheckForStructureUpdates = true;
-        executeSQL("CREATE TABLE notempty (id integer primary key);", false, false);
-        executeSQL("DROP TABLE notempty;", false, false);
-        executeSQL("COMMIT;", false, false);
-        dontCheckForStructureUpdates = false;
+        {
+            NoStructureUpdateChecks nup(*this);
+            executeSQL("CREATE TABLE notempty (id integer primary key);", false, false);
+            executeSQL("DROP TABLE notempty;", false, false);
+            executeSQL("COMMIT;", false, false);
+        }
 
         // Execute default SQL
         QString default_sql = settings.value( "/db/defaultsqltext", "").toString();
@@ -386,7 +387,6 @@ bool DBBrowserDB::create ( const QString & db)
         curDBFilename = db;
         isEncrypted = false;
         isReadOnly = false;
-        dontCheckForStructureUpdates = false;
         updateSchema();
         return true;
     } else {
@@ -1023,14 +1023,13 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     }
 
     // Create the new table
-    dontCheckForStructureUpdates = true;
+    NoStructureUpdateChecks nup(*this);
     if(!executeSQL(newSchema.sql(), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
         qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
-        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1041,7 +1040,6 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
-        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1065,7 +1063,6 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
         qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
-        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1073,7 +1070,6 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     if(!renameTable("sqlitebrowser_rename_column_new_table", tablename))
     {
         revertToSavepoint("sqlitebrowser_rename_column");
-        dontCheckForStructureUpdates = false;
         return false;
     }
 
@@ -1094,12 +1090,10 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         qWarning() << lastErrorMessage;
-        dontCheckForStructureUpdates = false;
         return false;
     }
 
     // Success, update the DB schema before returning
-    dontCheckForStructureUpdates = true;
     updateSchema();
     return true;
 }
