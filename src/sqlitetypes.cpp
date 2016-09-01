@@ -549,7 +549,7 @@ Table CreateTableWalker::table()
                         }
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
 
-                    if(fields.size() == 1)
+                    if(fields.size() == 1 && constraint_name.isEmpty())
                         fields[0]->setUnique(true);
                     else
                         tab.addConstraint(fields, ConstraintPtr(unique));
