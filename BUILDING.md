@@ -104,9 +104,9 @@ And compiling it:
     $ qmake
     $ make
     $ brew unlink sqlite3
-    $ mv src/sqlitebrowser.app /Applications/
+    $ mv src/DB\ Browser\ for\ SQLite.app /Applications/
 
-An icon for "sqlitebrowser" should now be in your main OSX Applications
+An icon for "DB Browser for SQLite" should now be in your main OSX Applications
 list, ready to launch.
 
 **Note 2** - There have been occasional [reports of compilation problems on OSX
