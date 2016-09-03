@@ -94,6 +94,7 @@ set(SQLB_MOC_HDR
 	src/FilterTableHeader.h
 	src/ImportCsvDialog.h
 	src/MainWindow.h
+	src/Settings.h
 	src/PreferencesDialog.h
 	src/SqlExecutionArea.h
 	src/VacuumDialog.h
@@ -119,6 +120,7 @@ set(SQLB_SRC
 	src/FilterTableHeader.cpp
 	src/ImportCsvDialog.cpp
 	src/MainWindow.cpp
+	src/Settings.cpp
 	src/PreferencesDialog.cpp
 	src/SqlExecutionArea.cpp
 	src/VacuumDialog.cpp

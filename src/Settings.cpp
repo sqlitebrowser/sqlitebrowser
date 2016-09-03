@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QColor>
 #include <QFontInfo>
+#include <QLocale>
 
 QHash<QString, QVariant> Settings::m_hCache;
 
