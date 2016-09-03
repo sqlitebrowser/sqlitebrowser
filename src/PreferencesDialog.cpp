@@ -88,6 +88,7 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_bin_fg, "bin_fg");
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
 
+    ui->spinSymbolLimit->setValue(getSettingsValue("databrowser", "symbol_limit").toInt());
     ui->txtNull->setText(getSettingsValue("databrowser", "null_text").toString());
     ui->editFilterEscape->setText(getSettingsValue("databrowser", "filter_escape").toString());
     ui->spinFilterDelay->setValue(getSettingsValue("databrowser", "filter_delay").toInt());
@@ -147,6 +148,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_reg_bg, "reg_bg");
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
+    setSettingsValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
     setSettingsValue("databrowser", "null_text", ui->txtNull->text());
     setSettingsValue("databrowser", "filter_escape", ui->editFilterEscape->text());
     setSettingsValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
@@ -296,6 +298,8 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
             return QFont().defaultFamily();
         if(name == "fontsize")
             return 10;
+        if(name == "symbol_limit")
+            return 5000;
         if(name == "null_text")
             return "NULL";
         if(name == "filter_escape")
