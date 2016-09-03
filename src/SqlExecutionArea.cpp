@@ -4,7 +4,7 @@
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
-#include "PreferencesDialog.h"
+#include "Settings.h"
 #include "ExportDataDialog.h"
 
 #include <QMenu>
@@ -20,7 +20,7 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(this, db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt());
+    model = new SqliteTableModel(this, db, Settings::getSettingsValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
 
     // Create popup menu for save button
@@ -118,13 +118,13 @@ void SqlExecutionArea::reloadSettings()
     ui->editEditor->reloadSettings();
 
     // Set font
-    QFont logfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
+    QFont logfont(Settings::getSettingsValue("editor", "font").toString());
     logfont.setStyleHint(QFont::TypeWriter);
-    logfont.setPointSize(PreferencesDialog::getSettingsValue("log", "fontsize").toInt());
+    logfont.setPointSize(Settings::getSettingsValue("log", "fontsize").toInt());
     ui->editErrors->setFont(logfont);
 
     // Apply horizontal/vertical tiling option
-    if(PreferencesDialog::getSettingsValue("editor", "horizontal_tiling").toBool())
+    if(Settings::getSettingsValue("editor", "horizontal_tiling").toBool())
         ui->splitter->setOrientation(Qt::Horizontal);
     else
         ui->splitter->setOrientation(Qt::Vertical);

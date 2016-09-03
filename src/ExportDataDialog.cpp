@@ -1,7 +1,7 @@
 #include "ExportDataDialog.h"
 #include "ui_ExportDataDialog.h"
 #include "sqlitedb.h"
-#include "PreferencesDialog.h"
+#include "Settings.h"
 #include "sqlitetablemodel.h"
 #include "sqlite.h"
 #include "FileDialog.h"
@@ -29,11 +29,11 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidge
     ui->stackFormat->setCurrentIndex(format);
 
     // Retrieve the saved dialog preferences
-    ui->checkHeader->setChecked(PreferencesDialog::getSettingsValue("exportcsv", "firstrowheader").toBool());
-    setSeparatorChar(PreferencesDialog::getSettingsValue("exportcsv", "separator").toInt());
-    setQuoteChar(PreferencesDialog::getSettingsValue("exportcsv", "quotecharacter").toInt());
-    setNewLineString(PreferencesDialog::getSettingsValue("exportcsv", "newlinecharacters").toString());
-    ui->checkPrettyPrint->setChecked(PreferencesDialog::getSettingsValue("exportjson", "prettyprint").toBool());
+    ui->checkHeader->setChecked(Settings::getSettingsValue("exportcsv", "firstrowheader").toBool());
+    setSeparatorChar(Settings::getSettingsValue("exportcsv", "separator").toInt());
+    setQuoteChar(Settings::getSettingsValue("exportcsv", "quotecharacter").toInt());
+    setNewLineString(Settings::getSettingsValue("exportcsv", "newlinecharacters").toString());
+    ui->checkPrettyPrint->setChecked(Settings::getSettingsValue("exportjson", "prettyprint").toBool());
 
     // Update the visible/hidden status of the "Other" line edit fields
     showCustomCharEdits();
@@ -325,11 +325,11 @@ void ExportDataDialog::accept()
     }
 
     // Save the dialog preferences for future use
-    PreferencesDialog::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked());
-    PreferencesDialog::setSettingsValue("exportjson", "prettyprint", ui->checkPrettyPrint->isChecked());
-    PreferencesDialog::setSettingsValue("exportcsv", "separator", currentSeparatorChar());
-    PreferencesDialog::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar());
-    PreferencesDialog::setSettingsValue("exportcsv", "newlinecharacters", currentNewLineString());
+    Settings::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked());
+    Settings::setSettingsValue("exportjson", "prettyprint", ui->checkPrettyPrint->isChecked());
+    Settings::setSettingsValue("exportcsv", "separator", currentSeparatorChar());
+    Settings::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar());
+    Settings::setSettingsValue("exportcsv", "newlinecharacters", currentNewLineString());
 
     // Notify the user the export has completed
     QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));

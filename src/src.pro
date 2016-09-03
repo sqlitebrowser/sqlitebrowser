@@ -29,6 +29,7 @@ HEADERS += \
     CreateIndexDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
+    Settings.h \
     PreferencesDialog.h \
     EditDialog.h \
     ExportDataDialog.h \
@@ -60,6 +61,7 @@ SOURCES += \
     MainWindow.cpp \
     CreateIndexDialog.cpp \
     EditTableDialog.cpp \
+    Settings.cpp \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
     EditDialog.cpp \

@@ -1,7 +1,7 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
 #include "sqlitedb.h"
-#include "PreferencesDialog.h"
+#include "Settings.h"
 #include "src/qhexedit.h"
 #include "FileDialog.h"
 
@@ -34,8 +34,8 @@ EditDialog::EditDialog(QWidget* parent)
     connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
 
     // Set the font for the text and hex editors
-    QFont editorFont(PreferencesDialog::getSettingsValue("databrowser", "font").toString());
-    editorFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
+    QFont editorFont(Settings::getSettingsValue("databrowser", "font").toString());
+    editorFont.setPointSize(Settings::getSettingsValue("databrowser", "fontsize").toInt());
     ui->editorText->setFont(editorFont);
     hexEdit->setFont(editorFont);
 

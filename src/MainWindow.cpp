@@ -6,6 +6,7 @@
 #include "EditTableDialog.h"
 #include "ImportCsvDialog.h"
 #include "ExportDataDialog.h"
+#include "Settings.h"
 #include "PreferencesDialog.h"
 #include "EditDialog.h"
 #include "sqlitetablemodel.h"
@@ -51,7 +52,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      m_browseTableModel(new SqliteTableModel(this, &db, PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt())),
+      m_browseTableModel(new SqliteTableModel(this, &db, Settings::getSettingsValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
       editDock(new EditDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this))
@@ -105,14 +106,14 @@ void MainWindow::init()
     ui->dockEdit->setWidget(editDock);
 
     // Restore window geometry
-    restoreGeometry(PreferencesDialog::getSettingsValue("MainWindow", "geometry").toByteArray());
-    restoreState(PreferencesDialog::getSettingsValue("MainWindow", "windowState").toByteArray());
+    restoreGeometry(Settings::getSettingsValue("MainWindow", "geometry").toByteArray());
+    restoreState(Settings::getSettingsValue("MainWindow", "windowState").toByteArray());
 
     // Restore various dock state settings
-    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(PreferencesDialog::getSettingsValue("SQLLogDock", "Log").toString()));
-    ui->splitterForPlot->restoreState(PreferencesDialog::getSettingsValue("PlotDock", "splitterSize").toByteArray());
-    ui->comboLineType->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "lineType").toInt());
-    ui->comboPointShape->setCurrentIndex(PreferencesDialog::getSettingsValue("PlotDock", "pointShape").toInt());
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getSettingsValue("SQLLogDock", "Log").toString()));
+    ui->splitterForPlot->restoreState(Settings::getSettingsValue("PlotDock", "splitterSize").toByteArray());
+    ui->comboLineType->setCurrentIndex(Settings::getSettingsValue("PlotDock", "lineType").toInt());
+    ui->comboPointShape->setCurrentIndex(Settings::getSettingsValue("PlotDock", "pointShape").toInt());
 
     // Add keyboard shortcuts
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
@@ -231,7 +232,7 @@ void MainWindow::init()
 
 #ifdef CHECKNEWVERSION
     // Check for a new version if automatic update check aren't disabled in the settings dialog
-    if(PreferencesDialog::getSettingsValue("checkversion", "enabled").toBool())
+    if(Settings::getSettingsValue("checkversion", "enabled").toBool())
     {
         // Check for a new release version, usually only enabled on windows
         m_NetworkManager = new QNetworkAccessManager(this);
@@ -544,12 +545,12 @@ void MainWindow::closeEvent( QCloseEvent* event )
 {
     if(db.close())
     {
-        PreferencesDialog::setSettingsValue("MainWindow", "geometry", saveGeometry());
-        PreferencesDialog::setSettingsValue("MainWindow", "windowState", saveState());
-        PreferencesDialog::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
-        PreferencesDialog::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
-        PreferencesDialog::setSettingsValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
-        PreferencesDialog::setSettingsValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
+        Settings::setSettingsValue("MainWindow", "geometry", saveGeometry());
+        Settings::setSettingsValue("MainWindow", "windowState", saveState());
+        Settings::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+        Settings::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
+        Settings::setSettingsValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
+        Settings::setSettingsValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -1258,7 +1259,7 @@ void MainWindow::openRecentFile()
 void MainWindow::updateRecentFileActions()
 {
     // Get recent files list from settings
-    QStringList files = PreferencesDialog::getSettingsValue("General", "recentFileList").toStringList();
+    QStringList files = Settings::getSettingsValue("General", "recentFileList").toStringList();
 
     // Check if files still exist and remove any non-existant file
     for(int i=0;i<files.size();i++)
@@ -1272,7 +1273,7 @@ void MainWindow::updateRecentFileActions()
     }
 
     // Store updated list
-    PreferencesDialog::setSettingsValue("General", "recentFileList", files);
+    Settings::setSettingsValue("General", "recentFileList", files);
 
     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
@@ -1302,13 +1303,13 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 void MainWindow::addToRecentFilesMenu(const QString& filename)
 {
-    QStringList files = PreferencesDialog::getSettingsValue("General", "recentFileList").toStringList();
+    QStringList files = Settings::getSettingsValue("General", "recentFileList").toStringList();
     files.removeAll(filename);
     files.prepend(filename);
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
-    PreferencesDialog::setSettingsValue("General", "recentFileList", files);
+    Settings::setSettingsValue("General", "recentFileList", files);
 
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
@@ -1591,7 +1592,7 @@ void MainWindow::loadExtensionsFromSettings()
     if(!db.isOpen())
         return;
 
-    QStringList list = PreferencesDialog::getSettingsValue("extensions", "list").toStringList();
+    QStringList list = Settings::getSettingsValue("extensions", "list").toStringList();
     foreach(QString ext, list)
     {
         if(db.loadExtension(ext) == false)
@@ -1602,16 +1603,16 @@ void MainWindow::loadExtensionsFromSettings()
 void MainWindow::reloadSettings()
 {
     // Read settings
-    int prefetch_size = PreferencesDialog::getSettingsValue("db", "prefetchsize").toInt();
-    int log_fontsize = PreferencesDialog::getSettingsValue("log", "fontsize").toInt();
+    int prefetch_size = Settings::getSettingsValue("db", "prefetchsize").toInt();
+    int log_fontsize = Settings::getSettingsValue("log", "fontsize").toInt();
 
     QFont logfont("Monospace");
     logfont.setStyleHint(QFont::TypeWriter);
     logfont.setPointSize(log_fontsize);
 
     // Set data browser font
-    QFont dataBrowserFont(PreferencesDialog::getSettingsValue("databrowser", "font").toString());
-    dataBrowserFont.setPointSize(PreferencesDialog::getSettingsValue("databrowser", "fontsize").toInt());
+    QFont dataBrowserFont(Settings::getSettingsValue("databrowser", "font").toString());
+    dataBrowserFont.setPointSize(Settings::getSettingsValue("databrowser", "fontsize").toInt());
     ui->dataTable->setFont(dataBrowserFont);
 
     // Set prefetch sizes for lazy population of table models

@@ -1,5 +1,5 @@
 #include "EditTableDialog.h"
-#include "PreferencesDialog.h"
+#include "Settings.h"
 #include "ui_EditTableDialog.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
@@ -463,7 +463,7 @@ void EditTableDialog::addField()
     typeBox->setEditable(true);
     typeBox->addItems(sqlb::Field::Datatypes);
 
-    int defaultFieldTypeIndex = PreferencesDialog::getSettingsValue("db", "defaultfieldtype").toInt();
+    int defaultFieldTypeIndex = Settings::getSettingsValue("db", "defaultfieldtype").toInt();
 
     if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
     {

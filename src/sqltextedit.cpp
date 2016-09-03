@@ -1,5 +1,5 @@
 #include "sqltextedit.h"
-#include "PreferencesDialog.h"
+#include "Settings.h"
 #include "SqlUiLexer.h"
 
 #include <QFile>
@@ -82,13 +82,13 @@ void SqlTextEdit::dropEvent(QDropEvent* e)
 
 void SqlTextEdit::setupSyntaxHighlightingFormat(const QString& settings_name, int style)
 {
-    sqlLexer->setColor(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
+    sqlLexer->setColor(QColor(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
 
-    QFont font(PreferencesDialog::getSettingsValue("editor", "font").toString());
-    font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
-    font.setBold(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_bold").toBool());
-    font.setItalic(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_italic").toBool());
-    font.setUnderline(PreferencesDialog::getSettingsValue("syntaxhighlighter", settings_name + "_underline").toBool());
+    QFont font(Settings::getSettingsValue("editor", "font").toString());
+    font.setPointSize(Settings::getSettingsValue("editor", "fontsize").toInt());
+    font.setBold(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_bold").toBool());
+    font.setItalic(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_italic").toBool());
+    font.setUnderline(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_underline").toBool());
     sqlLexer->setFont(font, style);
 }
 
@@ -101,7 +101,7 @@ void SqlTextEdit::reloadKeywords()
 void SqlTextEdit::reloadSettings()
 {
     // Enable auto completion if it hasn't been disabled
-    if(PreferencesDialog::getSettingsValue("editor", "auto_completion").toBool())
+    if(Settings::getSettingsValue("editor", "auto_completion").toBool())
     {
         setAutoCompletionThreshold(3);
         setAutoCompletionCaseSensitivity(false);
@@ -112,9 +112,9 @@ void SqlTextEdit::reloadSettings()
     }
 
     // Set syntax highlighting settings
-    QFont defaultfont(PreferencesDialog::getSettingsValue("editor", "font").toString());
+    QFont defaultfont(Settings::getSettingsValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
-    defaultfont.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+    defaultfont.setPointSize(Settings::getSettingsValue("editor", "fontsize").toInt());
     sqlLexer->setColor(Qt::black, QsciLexerSQL::Default);
     sqlLexer->setFont(defaultfont);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
@@ -129,13 +129,13 @@ void SqlTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
 
     // Set font
-    QFont font(PreferencesDialog::getSettingsValue("editor", "font").toString());
+    QFont font(Settings::getSettingsValue("editor", "font").toString());
     font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(PreferencesDialog::getSettingsValue("editor", "fontsize").toInt());
+    font.setPointSize(Settings::getSettingsValue("editor", "fontsize").toInt());
     setFont(font);
 
     // Show line numbers
-    QFont marginsfont(QFont(PreferencesDialog::getSettingsValue("editor", "font").toString()));
+    QFont marginsfont(QFont(Settings::getSettingsValue("editor", "font").toString()));
     marginsfont.setPointSize(font.pointSize());
     setMarginsFont(marginsfont);
     setMarginLineNumbers(0, true);
@@ -144,13 +144,13 @@ void SqlTextEdit::reloadSettings()
 
     // Highlight current line
     setCaretLineVisible(true);
-    setCaretLineBackgroundColor(QColor(PreferencesDialog::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
+    setCaretLineBackgroundColor(QColor(Settings::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
 
     // Set tab width
-    setTabWidth(PreferencesDialog::getSettingsValue("editor", "tabsize").toInt());
+    setTabWidth(Settings::getSettingsValue("editor", "tabsize").toInt());
 
     // Check if error indicators are enabled and clear them if they just got disabled
-    showErrorIndicators = PreferencesDialog::getSettingsValue("editor", "error_indicators").toBool();
+    showErrorIndicators = Settings::getSettingsValue("editor", "error_indicators").toBool();
     if(!showErrorIndicators)
         clearErrorIndicators();
 }
