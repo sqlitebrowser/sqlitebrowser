@@ -16,6 +16,7 @@ set(TESTSQLOBJECTS_SRC
 	../csvparser.cpp
 	../grammar/Sqlite3Lexer.cpp
 	../grammar/Sqlite3Parser.cpp
+        ../Settings.cpp
 	../PreferencesDialog.cpp
 	testsqlobjects.cpp
 	../FileDialog.cpp
@@ -35,6 +36,7 @@ set(TESTSQLOBJECTS_FORMS
 set(TESTSQLOBJECTS_MOC_HDR
 	../sqlitedb.h
 	../sqlitetablemodel.h
+        ../Settings.h
 	../PreferencesDialog.h
 	testsqlobjects.h
 	../FileDialog.h
