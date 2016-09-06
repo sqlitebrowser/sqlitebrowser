@@ -280,7 +280,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 #if QT_VERSION_MAJOR >= 5
                 pk.removeAll(field);
 #else
-                pk.remove(field);
+                pk.remove(pk.indexOf(field));
 #endif
 
             if(item->checkState(column) == Qt::Checked)
