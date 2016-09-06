@@ -1,7 +1,25 @@
 language: cpp
-compiler:
-  - gcc
-  - clang
+
+matrix:
+  fast_finish: true
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5 CXX=g++-5
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
 
 before_install:
   - sudo add-apt-repository ppa:likemartinma/devel -y
@@ -19,9 +37,6 @@ script:
   - cmake -DENABLE_TESTING=ON -Dsqlcipher=1 ..
   - make
   - ctest -V
-
-matrix:
-  fast_finish: true
 
 notifications:
   email:

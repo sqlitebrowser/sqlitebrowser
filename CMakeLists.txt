@@ -10,6 +10,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+add_definitions(-std=c++11)
 
 if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
@@ -205,7 +206,6 @@ else()
     endif(SQLB_TSS)
     QT4_ADD_RESOURCES(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
 endif()
-
 
 #icon and correct libs/subsystem for windows
 if(WIN32)
