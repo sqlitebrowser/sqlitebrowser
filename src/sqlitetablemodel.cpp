@@ -426,8 +426,9 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
 
     sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(m_sTable).getsql()).first;
 
+    sqlb::FieldVector pk = t.primaryKey();
     for (int col = 0; col < t.fields().size(); ++col) {
-        if (!t.fields().at(col)->primaryKey()) {
+        if(!pk.contains(t.fields().at(col))) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 

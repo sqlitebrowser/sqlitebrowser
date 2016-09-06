@@ -186,6 +186,7 @@ void DbStructureModel::reloadData()
             addNode(typeToParentItem.value("browsable"), *it);
 
             // Add field nodes
+            sqlb::FieldVector pk = (*it).table.primaryKey();
             for(int i=0; i < (*it).table.fields().size(); ++i)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
@@ -193,7 +194,7 @@ void DbStructureModel::reloadData()
                 fldItem->setText(1, "field");
                 fldItem->setText(2, (*it).table.fields().at(i)->type());
                 fldItem->setText(3, (*it).table.fields().at(i)->toString("  ", " "));
-                if((*it).table.fields().at(i)->primaryKey())
+                if(pk.contains((*it).table.fields().at(i)))
                     fldItem->setIcon(0, QIcon(":/icons/field_key"));
                 else
                     fldItem->setIcon(0, QIcon(":/icons/field"));

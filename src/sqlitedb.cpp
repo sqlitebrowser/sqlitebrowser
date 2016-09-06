@@ -780,8 +780,11 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_val
 
     QStringList vals;
     QStringList fields;
-    foreach(sqlb::FieldPtr f, t.fields()) {
-        if(f->primaryKey()) {
+    foreach(sqlb::FieldPtr f, t.fields())
+    {
+        sqlb::ConstraintPtr pk = t.constraint(f, sqlb::Constraint::PrimaryKeyConstraintType);
+        if(pk)
+        {
             fields << f->name();
 
             if(!pk_value.isNull())
@@ -792,9 +795,7 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_val
                 {
                     QString maxval = this->max(t, f);
                     vals << QString::number(maxval.toLongLong() + 1);
-                }
-                else
-                {
+                } else {
                     vals << "NULL";
                 }
             }

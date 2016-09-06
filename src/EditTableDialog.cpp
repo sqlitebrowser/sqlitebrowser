@@ -85,6 +85,7 @@ void EditTableDialog::populateFields()
 
     ui->treeWidget->clear();
     sqlb::FieldVector fields = m_table.fields();
+    sqlb::FieldVector pk = m_table.primaryKey();
     foreach(sqlb::FieldPtr f, fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
@@ -106,7 +107,7 @@ void EditTableDialog::populateFields()
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f->notnull() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kPrimaryKey, f->primaryKey() ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kPrimaryKey, pk.contains(f) ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kAutoIncrement, f->autoIncrement() ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kUnique, f->unique() ? Qt::Checked : Qt::Unchecked);
 
@@ -237,6 +238,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
             if(!m_bNewTable)
             {
+                sqlb::FieldVector pk = m_table.primaryKey();
                 foreach(const DBBrowserObject& fkobj, pdb->objMap.values("table"))
                 {
                     QList<sqlb::ConstraintPtr> fks = fkobj.table.constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
@@ -245,7 +247,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                         QSharedPointer<sqlb::ForeignKeyClause> fk = fkptr.dynamicCast<sqlb::ForeignKeyClause>();
                         if(fk->table() == m_table.name())
                         {
-                            if(fk->columns().contains(field->name()) || field->primaryKey())
+                            if(fk->columns().contains(field->name()) || pk.contains(field))
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1 and thus "
                                                                                        "its name cannot be changed.")
@@ -271,7 +273,12 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             break;
         case kPrimaryKey:
         {
-            field->setPrimaryKey(item->checkState(column) == Qt::Checked);
+            sqlb::FieldVector& pk = m_table.primaryKeyRef();
+            if(item->checkState(column) == Qt::Checked)
+                pk.push_back(field);
+            else
+                pk.removeAll(field);
+
             if(item->checkState(column) == Qt::Checked)
             {
                 // this will unset any other autoincrement

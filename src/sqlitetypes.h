@@ -95,6 +95,16 @@ public:
     virtual ConstraintTypes type() const { return UniqueConstraintType; }
 };
 
+class PrimaryKeyConstraint : public Constraint
+{
+public:
+    PrimaryKeyConstraint() {}
+
+    virtual QString toSql(const FieldVector& applyOn) const;
+
+    virtual ConstraintTypes type() const { return PrimaryKeyConstraintType; }
+};
+
 class Field
 {
 public:
@@ -103,7 +113,6 @@ public:
           bool notnull = false,
           const QString& defaultvalue = "",
           const QString& check = "",
-          bool pk = false,
           bool unique = false)
         : m_name(name)
         , m_type(type)
@@ -111,7 +120,6 @@ public:
         , m_check(check)
         , m_defaultvalue(defaultvalue)
         , m_autoincrement(false)
-        , m_primaryKey(pk)
         , m_unique(unique)
     {}
 
@@ -123,7 +131,6 @@ public:
     void setCheck(const QString& check) { m_check = check; }
     void setDefaultValue(const QString& defaultvalue) { m_defaultvalue = defaultvalue; }
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
-    void setPrimaryKey(bool pk) { m_primaryKey = pk; }
     void setUnique(bool u) { m_unique = u; }
 
     bool isText() const;
@@ -135,7 +142,6 @@ public:
     const QString& check() const { return m_check; }
     const QString& defaultValue() const { return m_defaultvalue; }
     bool autoIncrement() const { return m_autoincrement; }
-    bool primaryKey() const { return m_primaryKey; }
     bool unique() const { return m_unique; }
 
     static QStringList Datatypes;
@@ -146,7 +152,6 @@ private:
     QString m_check;
     QString m_defaultvalue;
     bool m_autoincrement; //! this is stored here for simplification
-    bool m_primaryKey;
     bool m_unique;
 };
 
@@ -193,6 +198,8 @@ public:
     ConstraintPtr constraint(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     QList<ConstraintPtr> constraints(FieldPtr field, Constraint::ConstraintTypes type = Constraint::NoType) const;
     QList<ConstraintPtr> constraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
+    FieldVector& primaryKeyRef();
+    const FieldVector& primaryKey() const;
 
     /**
      * @brief findField Finds a field and returns the index.
@@ -200,7 +207,7 @@ public:
      * @return The field index if the field was found.
      *         -1 if field couldn't be found.
      */
-    int findField(const QString& sname);
+    int findField(const QString& sname) const;
 
     int findPk() const;
 
