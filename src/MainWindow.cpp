@@ -609,7 +609,6 @@ void MainWindow::dittoRecord()
     if (row == -1)
         return;
 
-    addRecord();
     QModelIndex idx = m_browseTableModel->dittoRecord(row);
     ui->dataTable->setCurrentIndex(idx);
 }
