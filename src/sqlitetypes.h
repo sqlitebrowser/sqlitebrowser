@@ -192,11 +192,8 @@ public:
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
     void clear();
 
-    void addConstraint(FieldPtr field, ConstraintPtr constraint);
     void addConstraint(FieldVector fields, ConstraintPtr constraint);
-    ConstraintPtr constraint(FieldPtr field, Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     ConstraintPtr constraint(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
-    QList<ConstraintPtr> constraints(FieldPtr field, Constraint::ConstraintTypes type = Constraint::NoType) const;
     QList<ConstraintPtr> constraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     FieldVector& primaryKeyRef();
     const FieldVector& primaryKey() const;

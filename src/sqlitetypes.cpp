@@ -312,25 +312,9 @@ QString Table::sql() const
     return sql + ";";
 }
 
-void Table::addConstraint(FieldPtr field, ConstraintPtr constraint)
-{
-    FieldVector v;
-    v.push_back(field);
-    addConstraint(v, constraint);
-}
-
 void Table::addConstraint(FieldVector fields, ConstraintPtr constraint)
 {
     m_constraints.insert(fields, constraint);
-}
-
-ConstraintPtr Table::constraint(FieldPtr field, Constraint::ConstraintTypes type) const
-{
-    QList<ConstraintPtr> list = constraints(field, type);
-    if(list.size())
-        return list.at(0);
-    else
-        return ConstraintPtr(nullptr);
 }
 
 ConstraintPtr Table::constraint(FieldVector fields, Constraint::ConstraintTypes type) const
@@ -340,13 +324,6 @@ ConstraintPtr Table::constraint(FieldVector fields, Constraint::ConstraintTypes 
         return list.at(0);
     else
         return ConstraintPtr(nullptr);
-}
-
-QList<ConstraintPtr> Table::constraints(FieldPtr field, Constraint::ConstraintTypes type) const
-{
-    FieldVector v;
-    v.push_back(field);
-    return constraints(v, type);
 }
 
 QList<ConstraintPtr> Table::constraints(FieldVector fields, Constraint::ConstraintTypes type) const
@@ -762,14 +739,14 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     table.addField(f);
 
     if(foreignKey)
-        table.addConstraint(f, ConstraintPtr(foreignKey));
+        table.addConstraint({f}, ConstraintPtr(foreignKey));
     if(primarykey)
     {
         FieldVector v;
         if(table.constraint(v, Constraint::PrimaryKeyConstraintType))
             table.primaryKeyRef().push_back(f);
         else
-            table.addConstraint(f, ConstraintPtr(new PrimaryKeyConstraint()));
+            table.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
     }
 }
 

@@ -121,7 +121,7 @@ void EditTableDialog::populateFields()
 
         tbitem->setText(kCheck, f->check());
 
-        QSharedPointer<sqlb::ForeignKeyClause> fk = m_table.constraint(f, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
+        QSharedPointer<sqlb::ForeignKeyClause> fk = m_table.constraint({f}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
         if(fk)
             tbitem->setText(kForeignKey, fk->toString());
         ui->treeWidget->addTopLevelItem(tbitem);
@@ -438,7 +438,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         case kForeignKey:
             sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
             fk->setFromString(item->text(column));
-            m_table.addConstraint(field, sqlb::ConstraintPtr(fk));
+            m_table.addConstraint({field}, sqlb::ConstraintPtr(fk));
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;
