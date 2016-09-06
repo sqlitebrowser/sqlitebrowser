@@ -330,7 +330,7 @@ ConstraintPtr Table::constraint(FieldPtr field, Constraint::ConstraintTypes type
     if(list.size())
         return list.at(0);
     else
-        return ConstraintPtr(0);
+        return ConstraintPtr(nullptr);
 }
 
 ConstraintPtr Table::constraint(FieldVector fields, Constraint::ConstraintTypes type) const
@@ -339,7 +339,7 @@ ConstraintPtr Table::constraint(FieldVector fields, Constraint::ConstraintTypes 
     if(list.size())
         return list.at(0);
     else
-        return ConstraintPtr(0);
+        return ConstraintPtr(nullptr);
 }
 
 QList<ConstraintPtr> Table::constraints(FieldPtr field, Constraint::ConstraintTypes type) const

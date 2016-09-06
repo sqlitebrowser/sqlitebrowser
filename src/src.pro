@@ -9,6 +9,8 @@ CONFIG += debug_and_release
 CONFIG += qt
 CONFIG += warn_on
 
+QMAKE_CXXFLAGS += -std=c++14
+
 # create a unittest option
 CONFIG(unittest) {
   greaterThan(QT_MAJOR_VERSION, 4) {
