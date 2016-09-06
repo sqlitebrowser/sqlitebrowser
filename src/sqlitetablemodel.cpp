@@ -421,6 +421,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
 QModelIndex SqliteTableModel::dittoRecord(int old_row)
 {
+    insertRow(rowCount());
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
