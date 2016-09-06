@@ -118,7 +118,6 @@ private:
     QMenu *recentFilesMenu;
     QMenu *popupSaveSqlFileMenu;
     QMenu* popupBrowseDataHeaderMenu;
-    QMenu* popupRecordMenu;
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
@@ -173,7 +172,6 @@ private slots:
     bool fileClose();
     void addRecord();
     void deleteRecord();
-    void dittoRecord();
     void selectTableLine( int lineToSelect );
     void navigatePrevious();
     void navigateNext();
