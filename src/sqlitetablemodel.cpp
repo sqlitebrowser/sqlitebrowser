@@ -221,12 +221,15 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
 
         if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
+        {
             return Settings::getSettingsValue("databrowser", "null_text").toString();
-        else if(role == Qt::DisplayRole && isBinary(index))
+        } else if(role == Qt::DisplayRole && isBinary(index)) {
             return "BLOB";
-        else {
+        } else if(role == Qt::DisplayRole) {
             int limit = Settings::getSettingsValue("databrowser", "symbol_limit").toInt();
             return decode(m_data.at(index.row()).at(index.column()).left(limit));
+        } else {
+            return decode(m_data.at(index.row()).at(index.column()));
         }
     } else if(role == Qt::FontRole) {
         QFont font;
