@@ -859,8 +859,9 @@ void MainWindow::executeQuery()
         int cursor_line, cursor_index;
         sqlWidget->getEditor()->getCursorPosition(&cursor_line, &cursor_index);
         execution_start_line = cursor_line;
-        while(cursor_line < sqlWidget->getEditor()->lines())
-            query += sqlWidget->getEditor()->text(cursor_line++);
+
+        query = sqlWidget->getEditor()->text(cursor_line);
+
         singleStep = true;
     } else {
         // if a part of the query is selected, we will only execute this part
