@@ -20,6 +20,9 @@ src/gen_version.h
 # ignore compiled translation files
 src/translations/*.qm
 
+# ignore compiled macOS app
+src/*.app/
+
 # no one needs the txt file
 src/grammar/sqlite3TokenTypes.txt
 
