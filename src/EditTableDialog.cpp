@@ -468,7 +468,10 @@ void EditTableDialog::addField()
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
     tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
     tbitem->setCheckState(kUnique, Qt::Unchecked);
+
     ui->treeWidget->addTopLevelItem(tbitem);
+    ui->treeWidget->scrollToBottom();
+    ui->treeWidget->editItem(tbitem, 0);
 
     // add field to table object
     sqlb::FieldPtr f(new sqlb::Field(
