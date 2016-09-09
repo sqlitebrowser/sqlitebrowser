@@ -227,7 +227,13 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return "BLOB";
         } else if(role == Qt::DisplayRole) {
             int limit = Settings::getSettingsValue("databrowser", "symbol_limit").toInt();
-            return decode(m_data.at(index.row()).at(index.column()).left(limit));
+            QByteArray displayText = m_data.at(index.row()).at(index.column());
+            if (displayText.length() > limit) {
+                // Add "..." to the end of truncated strings
+                return decode(displayText.left(limit).append(" ..."));
+            } else {
+                return decode(displayText);
+            }
         } else {
             return decode(m_data.at(index.row()).at(index.column()));
         }
