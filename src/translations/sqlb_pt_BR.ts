@@ -73,11 +73,11 @@
     </message>
     <message>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, -sql  [arquivo]	Executar esse arquivo de SQL após abrir o BD</translation>
+        <translation>  -s, -sql  [arquivo]	Executar esse arquivo de SQL após abrir o banco de dados</translation>
     </message>
     <message>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation>  -t, --table [tabela]	Navegar essa tabela após abrir o BD</translation>
+        <translation>  -t, --table [tabela]	Navegar essa tabela após abrir o banco de dados</translation>
     </message>
     <message>
         <source>The -t/--table option requires an argument</source>
@@ -283,20 +283,20 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation>renameColumn: criação de savepoint falhou. DB diz: %1</translation>
+        <translation>renameColumn: criação de savepoint falhou. Banco de dados diz: %1</translation>
     </message>
     <message>
         <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation>renameColumn: criação de nova tabela falhou. DB diz: %1</translation>
+        <translation>renameColumn: criação de nova tabela falhou. Banco de dados diz: %1</translation>
     </message>
     <message>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
-        <translation>renameColumn: cópia de dados para nova tabela falhou. DB diz: %1</translation>
+        <translation>renameColumn: cópia de dados para nova tabela falhou. Banco de dados diz: %1</translation>
     </message>
     <message>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation>renameColumn: deleção de tabela falhou. DB diz: %1</translation>
+        <translation>renameColumn: deleção de tabela falhou. Banco de dados diz: %1</translation>
     </message>
     <message>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
@@ -308,7 +308,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation>renameColumn: liberar savepoint falhou. DB diz: %1</translation>
+        <translation>renameColumn: liberar savepoint falhou. Banco de dados diz: %1</translation>
     </message>
     <message>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
@@ -838,11 +838,11 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Selecionar Tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation>Limpar Seleção</translation>
+        <translation>Limpar seleção</translation>
     </message>
     <message>
         <source>Multiple rows (VALUES) per INSERT statement</source>
@@ -1039,7 +1039,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>New Record</source>
-        <translation>Novo Registro</translation>
+        <translation>Novo registro</translation>
     </message>
     <message>
         <source>Delete the current record</source>
@@ -1051,7 +1051,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Delete Record</source>
-        <translation>Deletar Registro</translation>
+        <translation>Deletar registro</translation>
     </message>
     <message>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
@@ -1279,7 +1279,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Vista</translation>
+        <translation>&amp;Exibir</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -1439,7 +1439,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
-        <translation>Essa opção deixa você importar dados de um arquivo SQL em um banco de dados. Arquivos de SQL podem ser criados na maioria dos bancos de dados, como MySQL e PostgreSQL. </translation>
+        <translation>Essa opção deixa você importar dados de um arquivo SQL em um banco de dados. Arquivos de SQL podem ser criados na maioria dos bancos de dados, como MySQL e PostgreSQL.</translation>
     </message>
     <message>
         <source>Table from CSV file...</source>
@@ -1491,7 +1491,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Delete Table</source>
-        <translation>Deletar Tabela</translation>
+        <translation>Deletar tabela</translation>
     </message>
     <message>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
@@ -1523,11 +1523,11 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>&amp;DB Toolbar</source>
-        <translation>Barra de ferramentas do Banco de &amp;Dados</translation>
+        <translation>Barra de ferramentas do banco de &amp;dados</translation>
     </message>
     <message>
         <source>Shows or hides the Database toolbar.</source>
-        <translation>Exibe ou oculta a barra de ferramentas do Banco de Dados.</translation>
+        <translation>Exibe ou oculta a barra de ferramentas do banco de dados.</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
@@ -1693,7 +1693,8 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <source>Error adding record:
 </source>
-        <translation>Erro adicionando registro:</translation>
+        <translation>Erro adicionando registro:
+</translation>
     </message>
     <message>
         <source>Error deleting record:
@@ -1721,7 +1722,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     <message>
         <source>Error: could not delete the %1. Message from database engine:
 %2</source>
-        <translation>Erro: não pôde deletar %1. Mensagem do BD:
+        <translation>Erro: não pôde deletar %1. Mensagem do banco de dados:
 %2</translation>
     </message>
     <message>
@@ -1962,15 +1963,15 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>&amp;Revert Changes</source>
-        <translation>&amp;Reverter Modificações</translation>
+        <translation>&amp;Reverter modificações</translation>
     </message>
     <message>
         <source>&amp;Write Changes</source>
-        <translation>&amp;Escrever Modificações</translation>
+        <translation>&amp;Escrever modificações</translation>
     </message>
     <message>
         <source>Compact &amp;Database</source>
-        <translation>&amp;Compactar BD</translation>
+        <translation>&amp;Compactar banco de dados</translation>
     </message>
     <message>
         <source>&amp;Database from SQL file...</source>
@@ -1990,19 +1991,19 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>&amp;Create Table...</source>
-        <translation>&amp;Criar Tabela...</translation>
+        <translation>&amp;Criar tabela...</translation>
     </message>
     <message>
         <source>&amp;Delete Table...</source>
-        <translation>&amp;Deletar Tabela...</translation>
+        <translation>&amp;Deletar tabela...</translation>
     </message>
     <message>
         <source>&amp;Modify Table...</source>
-        <translation>&amp;Modificar Tabela...</translation>
+        <translation>&amp;Modificar tabela...</translation>
     </message>
     <message>
         <source>Create &amp;Index...</source>
-        <translation>&amp;Criar Índice...</translation>
+        <translation>&amp;Criar índice...</translation>
     </message>
     <message>
         <source>W&amp;hat&apos;s This?</source>
@@ -2014,15 +2015,15 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Sa&amp;ve Project</source>
-        <translation>&amp;Salvar Projeto</translation>
+        <translation>&amp;Salvar projeto</translation>
     </message>
     <message>
         <source>Open &amp;Project</source>
-        <translation>Abrir &amp;Projeto</translation>
+        <translation>Abrir &amp;projeto</translation>
     </message>
     <message>
         <source>&amp;Set Encryption</source>
-        <translation>&amp;Configurar Encriptação</translation>
+        <translation>&amp;Configurar encriptação</translation>
     </message>
     <message>
         <source>Edit display format</source>
@@ -2054,7 +2055,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Change the default encoding assumed for all tables in the database</source>
-        <translation>Modificar a codificação padrão assumida para todas as tabelas no BD</translation>
+        <translation>Modificar a codificação padrão assumida para todas as tabelas no banco de dados</translation>
     </message>
     <message>
         <source>Duplicate record</source>
@@ -2112,7 +2113,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Edit Pragmas</source>
-        <translation>Editar Pragmas</translation>
+        <translation>Editar pragmas</translation>
     </message>
     <message>
         <source>Execute SQL</source>
@@ -2203,7 +2204,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Data &amp;Browser</source>
-        <translation>Data &amp;Browser</translation>
+        <translation>Navegador de &amp;dados</translation>
     </message>
     <message>
         <source>NULL fields</source>
@@ -2323,7 +2324,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Disable Regular Expression extension</source>
-        <translation>Desativar extensão de Expressões Regulares</translation>
+        <translation>Desativar extensão de expressões regulares</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -2472,7 +2473,7 @@ If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
         <translation>Uma tabela nesse banco de dados requer uma função de comparação especial &apos;%1&apos; que esse aplicativo não pode prover.
 So você optar por proceder, esteja avisado de que coisas ruins podem acontecer para o seu banco de dados.
-Crie um backup!</translation>
+Faça um backup!</translation>
     </message>
 </context>
 <context>
@@ -2732,7 +2733,7 @@ Pressione Ctrl+Shift e clique para ir até lá</translation>
     <name>VacuumDialog</name>
     <message>
         <source>Compact Database</source>
-        <translation>Compactar Banco de Dados</translation>
+        <translation>Compactar banco de dados</translation>
     </message>
     <message>
         <source>Warning: Compacting the database will commit all changes you made.</source>
