@@ -1279,7 +1279,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Vista</translation>
+        <translation>&amp;Exibir</translation>
     </message>
     <message>
         <source>&amp;Help</source>
