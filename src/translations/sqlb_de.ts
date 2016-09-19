@@ -43,7 +43,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="16"/>
         <source>SQLCipher Version </source>
-        <translation>SQLCiper-Version </translation>
+        <translation>SQLCipher-Version </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="18"/>
@@ -120,7 +120,7 @@
     <message>
         <location filename="../CipherDialog.ui" line="14"/>
         <source>SQLCipher encryption</source>
-        <translation>SQLCiper-Verschlüsselung</translation>
+        <translation>SQLCipher-Verschlüsselung</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="28"/>
