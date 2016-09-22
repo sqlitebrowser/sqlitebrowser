@@ -865,13 +865,13 @@ void MainWindow::executeQuery()
         int position = editor->positionFromLineIndex(cursor_line, cursor_index);
 
         QString entireSQL = editor->text();
-        QString firstPartEntireSQL = entireSQL.left(position);
-        QString secondPartEntireSQL = entireSQL.right(entireSQL.length() - position);
+        QStringRef firstPartEntireSQL = entireSQL.leftRef(position);
+        QStringRef secondPartEntireSQL = entireSQL.rightRef(entireSQL.length() - position);
 
-        QString firstPartSQL = firstPartEntireSQL.split(";").last();
-        QString lastPartSQL = secondPartEntireSQL.split(";").first();
+        QStringRef firstPartSQL = firstPartEntireSQL.split(";").last();
+        QStringRef lastPartSQL = secondPartEntireSQL.split(";").first();
 
-        query = firstPartSQL + lastPartSQL;
+        query = firstPartSQL.toString() + lastPartSQL.toString();
     } else {
         // if a part of the query is selected, we will only execute this part
         query = sqlWidget->getSelectedSql();
