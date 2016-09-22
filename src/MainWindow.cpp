@@ -880,18 +880,27 @@ void MainWindow::executeQuery()
 
     // Get SQL code to execute. This depends on the button that's been pressed
     QString query;
-    bool singleStep = false;
     int execution_start_line = 0;
     int execution_start_index = 0;
     if(sender()->objectName() == "actionSqlExecuteLine")
     {
         int cursor_line, cursor_index;
-        sqlWidget->getEditor()->getCursorPosition(&cursor_line, &cursor_index);
+        SqlTextEdit *editor = sqlWidget->getEditor();
+
+        editor->getCursorPosition(&cursor_line, &cursor_index);
+
         execution_start_line = cursor_line;
 
-        query = sqlWidget->getEditor()->text(cursor_line);
+        int position = editor->positionFromLineIndex(cursor_line, cursor_index);
 
-        singleStep = true;
+        QString entireSQL = editor->text();
+        QString firstPartEntireSQL = entireSQL.leftRef(position);
+        QString secondPartEntireSQL = entireSQL.rightRef(entireSQL.length() - position);
+
+        QString firstPartSQL = firstPartEntireSQL.split(";").last();
+        QString lastPartSQL = secondPartEntireSQL.split(";").first();
+
+        query = firstPartSQL + lastPartSQL;
     } else {
         // if a part of the query is selected, we will only execute this part
         query = sqlWidget->getSelectedSql();
@@ -994,10 +1003,6 @@ void MainWindow::executeQuery()
                 break;
             }
             timer.restart();
-
-            // Stop after the first full statement if we're in single step mode
-            if(singleStep)
-                break;
         } else {
             statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                     ": " + queryPart;
