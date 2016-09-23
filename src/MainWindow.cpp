@@ -865,8 +865,8 @@ void MainWindow::executeQuery()
         int position = editor->positionFromLineIndex(cursor_line, cursor_index);
 
         QString entireSQL = editor->text();
-        QString firstPartEntireSQL = entireSQL.leftRef(position);
-        QString secondPartEntireSQL = entireSQL.rightRef(entireSQL.length() - position);
+        QString firstPartEntireSQL = entireSQL.left(position);
+        QString secondPartEntireSQL = entireSQL.right(entireSQL.length() - position);
 
         QString firstPartSQL = firstPartEntireSQL.split(";").last();
         QString lastPartSQL = secondPartEntireSQL.split(";").first();
