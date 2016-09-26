@@ -1400,6 +1400,37 @@ void MainWindow::resizeEvent(QResizeEvent*)
     setRecordsetLabel();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+    int tab = -1;
+
+    if (!(event->modifiers() & Qt::AltModifier))
+        return;
+
+    switch (event->key())
+    {
+    case Qt::Key_1:
+        tab = Tabs::StructureTab;
+        break;
+    case Qt::Key_2:
+        tab = Tabs::BrowseTab;
+        break;
+    case Qt::Key_3:
+        tab = Tabs::PragmaTab;
+        break;
+    case Qt::Key_4:
+        tab = Tabs::ExecuteTab;
+        break;
+    default:
+        break;
+    }
+
+    if (tab != -1)
+        ui->mainTab->setCurrentIndex(tab);
+
+    QMainWindow::keyPressEvent(event);
+}
+
 void MainWindow::loadPragmas()
 {
     pragmaValues.autovacuum = db.getPragma("auto_vacuum").toInt();
