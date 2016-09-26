@@ -1404,9 +1404,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     int tab = -1;
 
-    if (!(event->modifiers() & Qt::AltModifier))
-        return;
-
     switch (event->key())
     {
     case Qt::Key_1:
@@ -1425,7 +1422,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     }
 
-    if (tab != -1)
+    if (event->modifiers() & Qt::AltModifier && tab != -1)
         ui->mainTab->setCurrentIndex(tab);
 
     QMainWindow::keyPressEvent(event);
