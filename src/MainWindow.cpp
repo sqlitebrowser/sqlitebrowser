@@ -949,7 +949,11 @@ void MainWindow::executeQuery()
                 {
                     // The query takes the last placeholder as it may itself contain the sequence '%' + number
                     statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
+#if QT_VERSION < 0x050000
                                 sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(Qt::escape(queryPart.trimmed()));
+#else
+                                sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed().toHtmlEscaped());
+#endif
                     sqlWidget->enableSaveButton(true);
                     sql3status = SQLITE_OK;
                 }
