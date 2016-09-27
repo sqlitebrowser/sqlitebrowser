@@ -225,6 +225,10 @@ support issues.
 In September 2014, the project was renamed to "DB Browser for SQLite", to
 avoid confusion with an existing application called "Database Browser".
 
+## Contributors
+
+You can see the list by going to the [__Contributors__ tab](https://github.com/sqlitebrowser/sqlitebrowser/graphs/contributors).
+
 ## License
 
 DB Browser for SQLite is bi-licensed under the Mozilla Public License
