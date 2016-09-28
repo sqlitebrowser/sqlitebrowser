@@ -1,5 +1,6 @@
 Makefile
 sqlitebrowser.pro.user
+.qmake.stash
 CMakeLists.txt.user
 CMakeFiles
 *.cmake
