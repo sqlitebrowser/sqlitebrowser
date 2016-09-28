@@ -59,6 +59,7 @@ void PreferencesDialog::loadSettings()
     ui->comboDefaultLocation->setCurrentIndex(Settings::getSettingsValue("db", "savedefaultlocation").toInt());
     ui->locationEdit->setText(Settings::getSettingsValue("db", "defaultlocation").toString());
     ui->checkUpdates->setChecked(Settings::getSettingsValue("checkversion", "enabled").toBool());
+    ui->checkUseRemotes->setChecked(Settings::getSettingsValue("MainWindow", "remotemenu").toBool());
     ui->checkHideSchemaLinebreaks->setChecked(Settings::getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(Settings::getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(Settings::getSettingsValue("db", "prefetchsize").toInt());
@@ -137,6 +138,7 @@ void PreferencesDialog::saveSettings()
 
     Settings::setSettingsValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
 
+    Settings::setSettingsValue("MainWindow", "remotemenu", ui->checkUseRemotes->isChecked());
     Settings::setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
     Settings::setSettingsValue("databrowser", "font", ui->comboDataBrowserFont->currentText());

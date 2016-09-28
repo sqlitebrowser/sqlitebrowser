@@ -101,6 +101,10 @@ QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& 
     if(group == "MainWindow" && name == "windowState")
         return "";
 
+    // Enable the File → Remote menu by default
+    if(group == "MainWindow" && name == "remotemenu")
+        return true;
+
     // SQLLogDock/Log?
     if(group == "SQLLogDock" && name == "Log")
         return "Application";
