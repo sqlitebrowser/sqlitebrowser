@@ -37,16 +37,18 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
     QTreeWidgetItem* item = static_cast<QTreeWidgetItem*>(index.internalPointer());
 
     // Depending on the role either return the text or the icon
-    if(role == Qt::DisplayRole)
+    switch(role)
+    {
+    case Qt::DisplayRole:
         return Settings::getSettingsValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
-    else if(role == Qt::EditRole)
+    case Qt::EditRole:
+    case Qt::ToolTipRole:   // Don't modify the text when it's supposed to be shown in a tooltip
         return item->text(index.column());
-    else if(role == Qt::ToolTipRole)
-        return item->text(index.column());  // Don't modify the text when it's supposed to be shown in a tooltip
-    else if(role == Qt::DecorationRole)
+    case Qt::DecorationRole:
         return item->icon(index.column());
-    else
+    default:
         return QVariant();
+    }
 }
 
 Qt::ItemFlags DbStructureModel::flags(const QModelIndex &index) const
