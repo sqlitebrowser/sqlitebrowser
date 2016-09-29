@@ -51,7 +51,8 @@ Done. :)
 
 ### CentOS / Fedora Linux
 
-**1**. Make sure the `qt-devel`, `ant-antlr`, `sqlite-devel`, and `antlr-C++` packages are installed.<br />
+**1**. Make sure the `cmake`, `qt-devel`, `ant-antlr`, `sqlite-devel`, `antlr-C++`,
+and `gcc-c++` packages are installed.<br />
 ```
 $ sudo dnf install cmake qt-devel ant-antlr sqlite-devel antlr-C++ gcc-c++
 ```
