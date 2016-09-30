@@ -921,7 +921,8 @@ void MainWindow::executeQuery()
         else
             sqlWidget->getEditor()->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
     }
-    if (query.isEmpty())
+
+    if (query.trimmed().isEmpty())
         return;
 
     query = query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
