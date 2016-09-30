@@ -86,11 +86,16 @@ void ExtendedTableWidget::copy()
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
-    // If single image cell selected - copy it to clipboard
+    // If a single cell is selected, copy it to clipboard
     if (indices.size() == 1) {
         QImage img;
-        if (img.loadFromData(m->data(indices.first(), Qt::EditRole).toByteArray())) {
+        QVariant data = m->data(indices.first(), Qt::EditRole);
+
+        if (img.loadFromData(data.toByteArray())) { // If it's an image
             qApp->clipboard()->setImage(img);
+            return;
+        } else {
+            qApp->clipboard()->setText(data.toString());
             return;
         }
     }
