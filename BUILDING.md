@@ -1,7 +1,7 @@
 ## BUILD INSTRUCTIONS AND REQUIREMENTS
 
 DB Browser for SQLite requires Qt as well as SQLite. For more information on Qt
-please consult http://www.qt.io and for SQLite please see https://sqlite.org/. 
+please consult http://www.qt.io and for SQLite please see https://sqlite.org/.
 
 ### Generic Linux and FreeBSD
 
@@ -32,15 +32,13 @@ The same process works for building the code in any platform supported by Qt
 
 ### Ubuntu Linux
 
-**1**. Make sure the `build-essential`, `cmake`, `libqt4-dev` and `libsqlite3-dev`
-       packages are installed.<br />
-**2**. Download the DB Browser for SQLite source code.<br />
-**3**. Open a terminal in the source code directory.<br />
-**4**. Run these commands:<br />
 ```bash
+$ sudo apt install build-essential git cmake libsqlite3-dev qt5-default qttools5-dev-tools
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
+$ cd sqlitebrowser
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake -DUSE_QT5=ON -Wno-dev ..
 $ make
 $ sudo make install
 ```
