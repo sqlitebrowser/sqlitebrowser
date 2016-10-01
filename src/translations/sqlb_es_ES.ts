@@ -1595,12 +1595,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation>Ejecuta la línea actual [Shift+F5]</translation>
+        <translation>Ejecuta la línea actual [Mayús.+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1749"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Mayús.+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1805"/>
@@ -1901,12 +1901,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1960"/>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir desde el Remoto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1965"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar al Remoto</translation>
     </message>
     <message>
         <source>Revert Changes</source>
@@ -2093,7 +2093,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1658"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation>Mayús.+F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1666"/>
@@ -2139,7 +2139,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="849"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Remoto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="931"/>
@@ -2705,7 +2705,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="115"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar opciones para el remoto</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="122"/>
@@ -2725,7 +2725,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="186"/>
         <source>Remote server</source>
-        <translation type="unfinished"></translation>
+        <translation>Servidor remoto</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="194"/>
@@ -2826,12 +2826,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenido</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite de símbolos en la celda</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="472"/>
@@ -3422,7 +3422,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
         <translation>Referencias %1(%2)
-Mantenga pulsado Ctrl+Shift y haga click para ir ahí</translation>
+Mantenga pulsado Ctrl+Mayús. y haga click para ir ahí</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="312"/>
