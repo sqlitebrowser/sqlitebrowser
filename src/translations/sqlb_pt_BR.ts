@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<TS version="2.0" language="pt_BR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -1579,7 +1579,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">Executar linha atual [Ctrl+E]</translation>
+        <translation type="obsolete">Executar linha atual [Ctrl+E]</translation>
     </message>
     <message>
         <source>Ctrl+E</source>
@@ -2135,6 +2135,18 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
         <source>Opens the SQLCipher FAQ in a browser window</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open from Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save to Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -2437,6 +2449,26 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     <message>
         <source>Code co&amp;mpletion</source>
         <translation>Co&amp;mpletação de código</translation>
+    </message>
+    <message>
+        <source>Show remote options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dbhub.io</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol limit in cell</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

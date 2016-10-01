@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ko_KR">
+<TS version="2.0" language="ko_KR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -439,22 +439,22 @@ Aborting execution.</source>
         <translation>스키마</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="143"/>
+        <location filename="../DbStructureModel.cpp" line="145"/>
         <source>Tables (%1)</source>
         <translation>테이블 (%1)</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="147"/>
+        <location filename="../DbStructureModel.cpp" line="149"/>
         <source>Indices (%1)</source>
         <translation>인덱스 (%1)</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="151"/>
+        <location filename="../DbStructureModel.cpp" line="153"/>
         <source>Views (%1)</source>
         <translation>뷰 (%1)</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="155"/>
+        <location filename="../DbStructureModel.cpp" line="157"/>
         <source>Triggers (%1)</source>
         <translation>트리거 (%1)</translation>
     </message>
@@ -817,14 +817,14 @@ Aborting execution.</source>
         <translation>이러한 상태에서는 변경이 불가능하니 테이블의 데이터 값을 먼저 변경해주세요.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="507"/>
+        <location filename="../EditTableDialog.cpp" line="510"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
         <translation>정말로 &apos;%1&apos; 필드를 삭제하시려는 건가요?
 이 필드에 저장된 모든 데이터가 같이 삭제됩니다.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="620"/>
+        <location filename="../EditTableDialog.cpp" line="623"/>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto increment disabled</source>
@@ -1034,7 +1034,7 @@ All data currently stored in this field will be lost.</source>
 <context>
     <name>ExtendedTableWidget</name>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="230"/>
+        <location filename="../ExtendedTableWidget.cpp" line="235"/>
         <source>The content of clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
         <translation>클립보드의 내용이 선택범위보다 큽니다. 그래도 추가하시겠습니까?</translation>
@@ -1235,7 +1235,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="125"/>
-        <location filename="../MainWindow.ui" line="1692"/>
+        <location filename="../MainWindow.ui" line="1701"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
@@ -1384,8 +1384,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="368"/>
-        <location filename="../MainWindow.ui" line="1129"/>
-        <location filename="../MainWindow.ui" line="1173"/>
+        <location filename="../MainWindow.ui" line="1138"/>
+        <location filename="../MainWindow.ui" line="1182"/>
         <source>None</source>
         <translation>사용하지 않음</translation>
     </message>
@@ -1553,99 +1553,99 @@ Do you want to insert it anyway?</source>
         <translation>내보내기(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="868"/>
+        <location filename="../MainWindow.ui" line="877"/>
         <source>&amp;Edit</source>
         <translation>편집(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="878"/>
+        <location filename="../MainWindow.ui" line="887"/>
         <source>&amp;View</source>
         <translation>뷰(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="886"/>
+        <location filename="../MainWindow.ui" line="895"/>
         <source>&amp;Help</source>
         <translation>도움말(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="903"/>
+        <location filename="../MainWindow.ui" line="912"/>
         <source>DB Toolbar</source>
         <translation>DB 툴바</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1722"/>
+        <location filename="../MainWindow.ui" line="1731"/>
         <source>&amp;Load extension</source>
         <translation>확장기능 불러오기(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1737"/>
+        <location filename="../MainWindow.ui" line="1746"/>
         <source>Execute current line [Shift+F5]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1740"/>
+        <location filename="../MainWindow.ui" line="1749"/>
         <source>Shift+F5</source>
         <translation type="unfinished">Shift+F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1796"/>
+        <location filename="../MainWindow.ui" line="1805"/>
         <source>Sa&amp;ve Project</source>
         <translation>프로젝트 저장하기(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1814"/>
+        <location filename="../MainWindow.ui" line="1823"/>
         <source>Open &amp;Project</source>
         <translation>프로젝트 열기(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1843"/>
+        <location filename="../MainWindow.ui" line="1852"/>
         <source>&amp;Set Encryption</source>
         <translation>암호화하기(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1896"/>
+        <location filename="../MainWindow.ui" line="1905"/>
         <source>Edit display format</source>
         <translation>표시 형식 변경하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1899"/>
+        <location filename="../MainWindow.ui" line="1908"/>
         <source>Edit the display format of the data in this column</source>
         <translation>이 컬럼에 있는 데이터의 표시 형식을 수정합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1907"/>
+        <location filename="../MainWindow.ui" line="1916"/>
         <source>Show rowid column</source>
         <translation>컬럼의 rowid 표시하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1910"/>
+        <location filename="../MainWindow.ui" line="1919"/>
         <source>Toggle the visibility of the rowid column</source>
         <translation>rowid 컬럼을 표시하거나 감춥니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1915"/>
-        <location filename="../MainWindow.cpp" line="2530"/>
+        <location filename="../MainWindow.ui" line="1924"/>
+        <location filename="../MainWindow.cpp" line="2566"/>
         <source>Set encoding</source>
         <translation>인코딩 지정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1918"/>
+        <location filename="../MainWindow.ui" line="1927"/>
         <source>Change the encoding of the text in the table cells</source>
         <translation>테이블 셀 안의 텍스트 인코딩을 변경합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1923"/>
+        <location filename="../MainWindow.ui" line="1932"/>
         <source>Set encoding for all tables</source>
         <translation>모든 테이블의 인코딩 지정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1926"/>
+        <location filename="../MainWindow.ui" line="1935"/>
         <source>Change the default encoding assumed for all tables in the database</source>
         <translation>데이터베이스 안에 있는 모든 테이블의 기본 인코딩을 변경합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1931"/>
-        <location filename="../MainWindow.ui" line="1934"/>
+        <location filename="../MainWindow.ui" line="1940"/>
+        <location filename="../MainWindow.ui" line="1943"/>
         <source>Duplicate record</source>
         <translation>레코드 복제하기</translation>
     </message>
@@ -1658,17 +1658,17 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">SQL 보기(&amp;S) by</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="969"/>
+        <location filename="../MainWindow.ui" line="978"/>
         <source>User</source>
         <translation>사용자</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="974"/>
+        <location filename="../MainWindow.ui" line="983"/>
         <source>Application</source>
         <translation>애플리케이션</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1001"/>
+        <location filename="../MainWindow.ui" line="1010"/>
         <source>&amp;Clear</source>
         <translation>지우기(&amp;C)</translation>
     </message>
@@ -1677,210 +1677,220 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">플롯</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1071"/>
+        <location filename="../MainWindow.ui" line="1080"/>
         <source>Columns</source>
         <translation>필드</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1076"/>
+        <location filename="../MainWindow.ui" line="1085"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1081"/>
+        <location filename="../MainWindow.ui" line="1090"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1086"/>
+        <location filename="../MainWindow.ui" line="1095"/>
         <source>_</source>
         <translation>_</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1118"/>
+        <location filename="../MainWindow.ui" line="1127"/>
         <source>Line type:</source>
         <translation>행 타입:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1134"/>
+        <location filename="../MainWindow.ui" line="1143"/>
         <source>Line</source>
         <translation>행</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1139"/>
+        <location filename="../MainWindow.ui" line="1148"/>
         <source>StepLeft</source>
         <translation>왼쪽으로</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1144"/>
+        <location filename="../MainWindow.ui" line="1153"/>
         <source>StepRight</source>
         <translation>오른쪽으로</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1149"/>
+        <location filename="../MainWindow.ui" line="1158"/>
         <source>StepCenter</source>
         <translation>중앙으로</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1154"/>
+        <location filename="../MainWindow.ui" line="1163"/>
         <source>Impulse</source>
         <translation>임펄스</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1162"/>
+        <location filename="../MainWindow.ui" line="1171"/>
         <source>Point shape:</source>
         <translation>포인트 모양:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1178"/>
+        <location filename="../MainWindow.ui" line="1187"/>
         <source>Cross</source>
         <translation>십자가</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1183"/>
+        <location filename="../MainWindow.ui" line="1192"/>
         <source>Plus</source>
         <translation>더하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1188"/>
+        <location filename="../MainWindow.ui" line="1197"/>
         <source>Circle</source>
         <translation>원</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1193"/>
+        <location filename="../MainWindow.ui" line="1202"/>
         <source>Disc</source>
         <translation>디스크</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1198"/>
+        <location filename="../MainWindow.ui" line="1207"/>
         <source>Square</source>
         <translation>정사각형</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1203"/>
+        <location filename="../MainWindow.ui" line="1212"/>
         <source>Diamond</source>
         <translation>마름모</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1208"/>
+        <location filename="../MainWindow.ui" line="1217"/>
         <source>Star</source>
         <translation>별</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1213"/>
+        <location filename="../MainWindow.ui" line="1222"/>
         <source>Triangle</source>
         <translation>삼각형</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1218"/>
+        <location filename="../MainWindow.ui" line="1227"/>
         <source>TriangleInverted</source>
         <translation>역삼각형</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1223"/>
+        <location filename="../MainWindow.ui" line="1232"/>
         <source>CrossSquare</source>
         <translation>CrossSquare</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1228"/>
+        <location filename="../MainWindow.ui" line="1237"/>
         <source>PlusSquare</source>
         <translation>PlusSquare</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1233"/>
+        <location filename="../MainWindow.ui" line="1242"/>
         <source>CrossCircle</source>
         <translation>CrossCircle</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1238"/>
+        <location filename="../MainWindow.ui" line="1247"/>
         <source>PlusCircle</source>
         <translation>PlusCircle</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1243"/>
+        <location filename="../MainWindow.ui" line="1252"/>
         <source>Peace</source>
         <translation>Peace</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1264"/>
+        <location filename="../MainWindow.ui" line="1273"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;현재 플롯 저장하기...&lt;/p&gt;&lt;p&gt;파일 포맷 확장자를 고르세요 (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1267"/>
+        <location filename="../MainWindow.ui" line="1276"/>
         <source>Save current plot...</source>
         <translation>현재 플롯 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1293"/>
+        <location filename="../MainWindow.ui" line="1302"/>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
         <translation>모든 데이터를 불러옵니다. 이 기능은 부분만 가져오는 메카니즘으로 인하여 테이블에서 모든 데이터가 가져오지 않았을 때에만 작동합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1309"/>
+        <location filename="../MainWindow.ui" line="1318"/>
         <source>DB Schema</source>
         <translation>DB 스키마</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1338"/>
+        <location filename="../MainWindow.ui" line="1347"/>
         <source>&amp;New Database...</source>
         <translation>새 데이터베이스(&amp;N)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1341"/>
-        <location filename="../MainWindow.ui" line="1344"/>
+        <location filename="../MainWindow.ui" line="1350"/>
+        <location filename="../MainWindow.ui" line="1353"/>
         <source>Create a new database file</source>
         <translation>새 데이터베이스 파일을 생성합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1347"/>
+        <location filename="../MainWindow.ui" line="1356"/>
         <source>This option is used to create a new database file.</source>
         <translation>이 옵션은 새 데이터베이스 파일을 생성하려고 할 때 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1350"/>
+        <location filename="../MainWindow.ui" line="1359"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1362"/>
+        <location filename="../MainWindow.ui" line="1371"/>
         <source>&amp;Open Database...</source>
         <translation>데이터베이스 열기(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1365"/>
-        <location filename="../MainWindow.ui" line="1368"/>
+        <location filename="../MainWindow.ui" line="1374"/>
+        <location filename="../MainWindow.ui" line="1377"/>
         <source>Open an existing database file</source>
         <translation>기존 데이터베이스 파일을 엽니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1371"/>
+        <location filename="../MainWindow.ui" line="1380"/>
         <source>This option is used to open an existing database file.</source>
         <translation>이 옵션은 기존 데이터베이스 파일을 열 때 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1374"/>
+        <location filename="../MainWindow.ui" line="1383"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1385"/>
+        <location filename="../MainWindow.ui" line="1394"/>
         <source>&amp;Close Database</source>
         <translation>데이터베이스 닫기(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1388"/>
+        <location filename="../MainWindow.ui" line="1397"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1943"/>
+        <location filename="../MainWindow.ui" line="1952"/>
         <source>SQLCipher FAQ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1946"/>
+        <location filename="../MainWindow.ui" line="1955"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1960"/>
+        <source>Open from Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1965"/>
+        <source>Save to Remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1888,12 +1898,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">변경사항 되돌리기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1406"/>
+        <location filename="../MainWindow.ui" line="1415"/>
         <source>Revert database to last saved state</source>
         <translation>마지막 저장된 상태로 데이터베이스를 되돌립니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1409"/>
+        <location filename="../MainWindow.ui" line="1418"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>이 옵션은 현재 데이터베이스를 마지막 저장된 상태로 되돌릴 때 사용합니다. 저장 이후에 이루어진 모든 변경 사항을 되돌립니다.</translation>
     </message>
@@ -1902,17 +1912,17 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">변경사항 반영하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1427"/>
+        <location filename="../MainWindow.ui" line="1436"/>
         <source>Write changes to the database file</source>
         <translation>변경 사항을 데이터베이스 파일에 반영합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1430"/>
+        <location filename="../MainWindow.ui" line="1439"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>이 옵션은 데이터베이스 파일에 변경 사항을 저장하기 위해 사용됩니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1433"/>
+        <location filename="../MainWindow.ui" line="1442"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -1921,23 +1931,23 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">데이터베이스 크기 줄이기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1447"/>
+        <location filename="../MainWindow.ui" line="1456"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>삭제된 레코드 등 낭비된 공간을 삭제하여 데이터베이스 파일 크기를 줄입니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1450"/>
-        <location filename="../MainWindow.ui" line="1453"/>
+        <location filename="../MainWindow.ui" line="1459"/>
+        <location filename="../MainWindow.ui" line="1462"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
         <translation>삭제된 레코드 등 낭비된 공간을 삭제하여 데이터베이스 파일 크기를 줄입니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1461"/>
+        <location filename="../MainWindow.ui" line="1470"/>
         <source>E&amp;xit</source>
         <translation>종료(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1464"/>
+        <location filename="../MainWindow.ui" line="1473"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -1946,12 +1956,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">SQL 파일에서 데이터베이스 가져오기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1475"/>
+        <location filename="../MainWindow.ui" line="1484"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>.sql 덤프 문자열 파일에서 데이터를 새 데이터베이스나 기존 데이터베이스로 가져옵니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1478"/>
+        <location filename="../MainWindow.ui" line="1487"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>이 옵션은 .sql 덤프 문자열 파일에서 데이터를 새 데이터베이스나 기존 데이터베이스로 가져옵니다. SQL 덤프 파일은 MySQL이나 PostgreSQL 등 대부분의 데이터베이스 엔진에서 생성할 수 있습니다.</translation>
     </message>
@@ -1960,12 +1970,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">테이블을 CSV 파일로 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1489"/>
+        <location filename="../MainWindow.ui" line="1498"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>마법사를 사용하여 CSV 파일(콤마로 필드가 나누어진 문자열 파일)에서 데이터베이스 테이블로 데이터를 가져올 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1492"/>
+        <location filename="../MainWindow.ui" line="1501"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>마법사를 사용하여 CSV 파일(콤마로 필드가 나누어진 문자열 파일)에서 데이터베이스 테이블로 데이터를 가져올 수 있습니다. CSV 파일은 대부분의 데이터베이스와 스프래드시트 애플리케이션(엑셀 등)에서 생성할 수 있습니다.</translation>
     </message>
@@ -1974,12 +1984,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">데이터베이스를 SQL 파일로 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1503"/>
+        <location filename="../MainWindow.ui" line="1512"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>데이터베이스를 .sql 덤프 문자열 파일로 내보내기.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1506"/>
+        <location filename="../MainWindow.ui" line="1515"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>이 옵션은 데이터베이스를 .sql 덤프 문자열 파일로 내부낼 수 있습니다. SQL 덤프 파일은 MySQL과 PostgreSQL 등 대부분의 데이터베이스 엔진에서 데이터베이스를 재생성하기 위한 모든 필요한 데이터를 포함하고 있습니다.</translation>
     </message>
@@ -1988,12 +1998,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">테이블을 CSV 파일로 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1517"/>
+        <location filename="../MainWindow.ui" line="1526"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>데이터베이스 테이블을 CSV(콤마로 분리된 문자열 파일)로 내보내기.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1520"/>
+        <location filename="../MainWindow.ui" line="1529"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>데이터베이스 테이블을 CSV(콤마로 분리된 문자열 파일)로 내보내기. 다른 데이터베이스나 스프래드시트 애플리케이션(엑셀 등)에서 가져와서 사용할 수 있습니다.</translation>
     </message>
@@ -2002,7 +2012,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">테이블 생성...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1538"/>
+        <location filename="../MainWindow.ui" line="1547"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>테이블 생성 마법사를 사용하여 데이터베이스에서 새 테이블을 위한 이름과 필드를 정의할 수 있습니다</translation>
     </message>
@@ -2011,14 +2021,14 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">테이블을 삭제...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1556"/>
-        <location filename="../MainWindow.cpp" line="1222"/>
-        <location filename="../MainWindow.cpp" line="1223"/>
+        <location filename="../MainWindow.ui" line="1565"/>
+        <location filename="../MainWindow.cpp" line="1244"/>
+        <location filename="../MainWindow.cpp" line="1245"/>
         <source>Delete Table</source>
         <translation>테이블 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1559"/>
+        <location filename="../MainWindow.ui" line="1568"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>테이블 삭제 마법사를 사용하여 선택한 데이터베이스 테이블을 삭제할 수 있습니다.</translation>
     </message>
@@ -2027,7 +2037,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">테이블을 수정...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1577"/>
+        <location filename="../MainWindow.ui" line="1586"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>테이블 편집 마법사를 사용하여 기존 테이블의 이름을 변경하거나 테이블의 필드를 추가, 삭제, 필드명 변경 및 타입 변경을 할 수 있습니다.</translation>
     </message>
@@ -2036,28 +2046,28 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">인덱스 생성하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1595"/>
+        <location filename="../MainWindow.ui" line="1604"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>인덱스 생성 마법사를 사용하여 기존 데이터베이스 테이블에 새 인덱스를 정의할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1607"/>
+        <location filename="../MainWindow.ui" line="1616"/>
         <source>&amp;Preferences...</source>
         <translation>환경설정(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1610"/>
-        <location filename="../MainWindow.ui" line="1613"/>
+        <location filename="../MainWindow.ui" line="1619"/>
+        <location filename="../MainWindow.ui" line="1622"/>
         <source>Open the preferences window.</source>
         <translation>환경설정창을 엽니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1628"/>
+        <location filename="../MainWindow.ui" line="1637"/>
         <source>&amp;DB Toolbar</source>
         <translation>DB 툴바(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1631"/>
+        <location filename="../MainWindow.ui" line="1640"/>
         <source>Shows or hides the Database toolbar.</source>
         <translation>데이터베이스 툴바를 보이거나 숨깁니다.</translation>
     </message>
@@ -2066,28 +2076,28 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">이 프로그램은?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1649"/>
+        <location filename="../MainWindow.ui" line="1658"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1657"/>
+        <location filename="../MainWindow.ui" line="1666"/>
         <source>&amp;About...</source>
         <translation>정보(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1665"/>
+        <location filename="../MainWindow.ui" line="1674"/>
         <source>&amp;Recently opened</source>
         <translation>최근 열었던 파일들(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1674"/>
+        <location filename="../MainWindow.ui" line="1683"/>
         <source>Open &amp;tab</source>
         <translation>탭 열기(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1634"/>
-        <location filename="../MainWindow.ui" line="1677"/>
+        <location filename="../MainWindow.ui" line="1643"/>
+        <location filename="../MainWindow.ui" line="1686"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
@@ -2117,104 +2127,109 @@ Do you want to insert it anyway?</source>
         <translation>SQL 실행</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="922"/>
+        <location filename="../MainWindow.ui" line="849"/>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="931"/>
         <source>Edit Database Cell</source>
         <translation>데이터베이스 셀 수정</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="934"/>
+        <location filename="../MainWindow.ui" line="943"/>
         <source>SQL &amp;Log</source>
         <translation>SQL 로그(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="952"/>
+        <location filename="../MainWindow.ui" line="961"/>
         <source>Show S&amp;QL submitted by</source>
         <translation>실행된 SQL 보기(&amp;) by</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1044"/>
+        <location filename="../MainWindow.ui" line="1053"/>
         <source>&amp;Plot</source>
         <translation>플롯(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1403"/>
+        <location filename="../MainWindow.ui" line="1412"/>
         <source>&amp;Revert Changes</source>
         <translation>변경사항 취소하기(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1424"/>
+        <location filename="../MainWindow.ui" line="1433"/>
         <source>&amp;Write Changes</source>
         <translation>변경사항 저장하기(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1444"/>
+        <location filename="../MainWindow.ui" line="1453"/>
         <source>Compact &amp;Database</source>
         <translation>데이터베이스 용량 줄이기(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1472"/>
+        <location filename="../MainWindow.ui" line="1481"/>
         <source>&amp;Database from SQL file...</source>
         <translation>SQL 파일로부터 데이터베이스 가져오기(&amp;D)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1486"/>
+        <location filename="../MainWindow.ui" line="1495"/>
         <source>&amp;Table from CSV file...</source>
         <translation>CSV 파일에서 테이블 가져오기(&amp;T)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1500"/>
+        <location filename="../MainWindow.ui" line="1509"/>
         <source>&amp;Database to SQL file...</source>
         <translation>데이터베이스를 SQL로 내보내기(&amp;D)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1514"/>
+        <location filename="../MainWindow.ui" line="1523"/>
         <source>&amp;Table(s) as CSV file...</source>
         <translation>테이블을 CSV 파일로 내보내기(&amp;T)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1535"/>
+        <location filename="../MainWindow.ui" line="1544"/>
         <source>&amp;Create Table...</source>
         <translation>테이블 생성하기(&amp;C)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1553"/>
+        <location filename="../MainWindow.ui" line="1562"/>
         <source>&amp;Delete Table...</source>
         <translation>테이블 삭제하기(&amp;D)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1574"/>
+        <location filename="../MainWindow.ui" line="1583"/>
         <source>&amp;Modify Table...</source>
         <translation>테이블 수정하기(&amp;M)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1592"/>
+        <location filename="../MainWindow.ui" line="1601"/>
         <source>Create &amp;Index...</source>
         <translation>인덱스 생성하기(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1646"/>
+        <location filename="../MainWindow.ui" line="1655"/>
         <source>W&amp;hat&apos;s This?</source>
         <translation>이건 무엇인가요?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1686"/>
+        <location filename="../MainWindow.ui" line="1695"/>
         <source>&amp;Execute SQL</source>
         <translation>SQL 실행하기(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1689"/>
+        <location filename="../MainWindow.ui" line="1698"/>
         <source>Execute SQL [F5, Ctrl+Return]</source>
         <translation>SQL 실행하기 [F5, Ctrl+엔터]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1701"/>
+        <location filename="../MainWindow.ui" line="1710"/>
         <source>Open SQL file</source>
         <translation>SQL 파일 열기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1710"/>
-        <location filename="../MainWindow.ui" line="1867"/>
-        <location filename="../MainWindow.ui" line="1870"/>
+        <location filename="../MainWindow.ui" line="1719"/>
+        <location filename="../MainWindow.ui" line="1876"/>
+        <location filename="../MainWindow.ui" line="1879"/>
         <source>Save SQL file</source>
         <translation>SQL 파일 저장하기</translation>
     </message>
@@ -2223,13 +2238,13 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">확장기능 불러오기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1734"/>
+        <location filename="../MainWindow.ui" line="1743"/>
         <source>Execute current line</source>
         <translation>현재 행 실행하기</translation>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">현재 행 실행하기 [Ctrl+E]</translation>
+        <translation type="obsolete">현재 행 실행하기 [Ctrl+E]</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="179"/>
@@ -2237,27 +2252,27 @@ Do you want to insert it anyway?</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1748"/>
+        <location filename="../MainWindow.ui" line="1757"/>
         <source>Export as CSV file</source>
         <translation>CSV 파일로 내보내기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1751"/>
+        <location filename="../MainWindow.ui" line="1760"/>
         <source>Export table as comma separated values file</source>
         <translation>테이블을 CSV 파일로 내보내기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1760"/>
+        <location filename="../MainWindow.ui" line="1769"/>
         <source>&amp;Wiki...</source>
         <translation>위키(&amp;W)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1772"/>
+        <location filename="../MainWindow.ui" line="1781"/>
         <source>Bug &amp;report...</source>
         <translation>버그 신고(&amp;R)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1784"/>
+        <location filename="../MainWindow.ui" line="1793"/>
         <source>Web&amp;site...</source>
         <translation>웹사이트(&amp;S)...</translation>
     </message>
@@ -2266,8 +2281,8 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">프로젝트 저장하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1799"/>
-        <location filename="../MainWindow.ui" line="1802"/>
+        <location filename="../MainWindow.ui" line="1808"/>
+        <location filename="../MainWindow.ui" line="1811"/>
         <source>Save the current session to a file</source>
         <translation>현재 세션을 파일로 저장하기</translation>
     </message>
@@ -2276,13 +2291,13 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">프로젝트 열기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1817"/>
-        <location filename="../MainWindow.ui" line="1820"/>
+        <location filename="../MainWindow.ui" line="1826"/>
+        <location filename="../MainWindow.ui" line="1829"/>
         <source>Load a working session from a file</source>
         <translation>파일에서 작업 세션 불러오기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1831"/>
+        <location filename="../MainWindow.ui" line="1840"/>
         <source>&amp;Attach Database</source>
         <translation>데이터베이스 연결하기(&amp;Attach)</translation>
     </message>
@@ -2291,23 +2306,23 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">암호화</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1855"/>
-        <location filename="../MainWindow.ui" line="1858"/>
+        <location filename="../MainWindow.ui" line="1864"/>
+        <location filename="../MainWindow.ui" line="1867"/>
         <source>Save SQL file as</source>
         <translation>SQL 파일 다름이름으로 저장하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1879"/>
+        <location filename="../MainWindow.ui" line="1888"/>
         <source>&amp;Browse Table</source>
         <translation>테이블 보기(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1888"/>
+        <location filename="../MainWindow.ui" line="1897"/>
         <source>Copy Create statement</source>
         <translation>생성 구문 복사하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1891"/>
+        <location filename="../MainWindow.ui" line="1900"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
         <translation>항목의 생성 구문을 클립보드에 복사합니다</translation>
     </message>
@@ -2363,7 +2378,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="264"/>
-        <location filename="../MainWindow.cpp" line="2276"/>
+        <location filename="../MainWindow.cpp" line="2312"/>
         <source>Choose a database file</source>
         <translation>데이터베이스 파일을 선택하세요</translation>
     </message>
@@ -2378,9 +2393,9 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="311"/>
-        <location filename="../MainWindow.cpp" line="1138"/>
-        <location filename="../MainWindow.cpp" line="1978"/>
-        <location filename="../MainWindow.cpp" line="2193"/>
+        <location filename="../MainWindow.cpp" line="1160"/>
+        <location filename="../MainWindow.cpp" line="2004"/>
+        <location filename="../MainWindow.cpp" line="2229"/>
         <source>Choose a filename to save under</source>
         <translation>저장하려는 파일명을 고르세요</translation>
     </message>
@@ -2437,7 +2452,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="obsolete">%3에서 %1 행이 리턴되었습니다.(%2ms 걸림)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="967"/>
+        <location filename="../MainWindow.cpp" line="993"/>
         <source>Error executing query: %1</source>
         <translation>쿼리 실행 에러: %1</translation>
     </message>
@@ -2446,189 +2461,189 @@ All data associated with the %1 will be lost.</source>
         <translation type="obsolete">쿼리가 성공적으로 실행되었습니다: %1 (%2ms 걸림)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="960"/>
+        <location filename="../MainWindow.cpp" line="982"/>
         <source>%1 rows returned in %2ms from: %3</source>
         <translation>%3에서 %2ms의 시간이 걸려서 %1 행이 리턴되었습니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="983"/>
+        <location filename="../MainWindow.cpp" line="1009"/>
         <source>, %1 rows affected</source>
         <translation>, %1 행이 영향받았습니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="986"/>
+        <location filename="../MainWindow.cpp" line="1012"/>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
         <translation>질의가 성공적으로 실행되었습니다: %1 (%2ms%3 걸렸습니다.)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1047"/>
+        <location filename="../MainWindow.cpp" line="1069"/>
         <source>Choose a text file</source>
         <translation>문자열 파일을 고르세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1048"/>
+        <location filename="../MainWindow.cpp" line="1070"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>문자열 파일(*.csv *.txt);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1057"/>
+        <location filename="../MainWindow.cpp" line="1079"/>
         <source>Import completed</source>
         <translation>가져오기가 완료되었습니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1096"/>
+        <location filename="../MainWindow.cpp" line="1118"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>정말로 데이터베이스 파일 &apos;%1&apos;의 모든 변경 사항을 마지막 저장된 상태로 되돌립니까?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1121"/>
+        <location filename="../MainWindow.cpp" line="1143"/>
         <source>Choose a file to import</source>
         <translation>가져올 파일을 고르세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1122"/>
-        <location filename="../MainWindow.cpp" line="1507"/>
-        <location filename="../MainWindow.cpp" line="1553"/>
+        <location filename="../MainWindow.cpp" line="1144"/>
+        <location filename="../MainWindow.cpp" line="1529"/>
+        <location filename="../MainWindow.cpp" line="1575"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>문자열 파일(*.csv *.txt);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1132"/>
+        <location filename="../MainWindow.cpp" line="1154"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>데이터를 가져와서 새 데이터베이스 파일을 생성하고 싶은가요?
 아니라면 SQL 파일의 데이터를 현재 데이터베이스로 가져오기를 할 것입니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1142"/>
+        <location filename="../MainWindow.cpp" line="1164"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>파일 %1이 이미 존재합니다. 다른 파일명을 고르세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1157"/>
+        <location filename="../MainWindow.cpp" line="1179"/>
         <source>Error importing data: %1</source>
         <translation>데이터 가져오기 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1159"/>
+        <location filename="../MainWindow.cpp" line="1181"/>
         <source>Import completed.</source>
         <translation>가져오기가 완료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1213"/>
-        <location filename="../MainWindow.cpp" line="1214"/>
+        <location filename="../MainWindow.cpp" line="1235"/>
+        <location filename="../MainWindow.cpp" line="1236"/>
         <source>Delete View</source>
         <translation>뷰 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1216"/>
-        <location filename="../MainWindow.cpp" line="1217"/>
+        <location filename="../MainWindow.cpp" line="1238"/>
+        <location filename="../MainWindow.cpp" line="1239"/>
         <source>Delete Trigger</source>
         <translation>트리거 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1219"/>
-        <location filename="../MainWindow.cpp" line="1220"/>
+        <location filename="../MainWindow.cpp" line="1241"/>
+        <location filename="../MainWindow.cpp" line="1242"/>
         <source>Delete Index</source>
         <translation>인덱스 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1270"/>
+        <location filename="../MainWindow.cpp" line="1292"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1435"/>
+        <location filename="../MainWindow.cpp" line="1457"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA 설정을 변경하려면 여러분의 현재 트랜잭션을 커밋해야합니다.
 동의하십니까?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1506"/>
+        <location filename="../MainWindow.cpp" line="1528"/>
         <source>Select SQL file to open</source>
         <translation>열 SQL 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1552"/>
+        <location filename="../MainWindow.cpp" line="1574"/>
         <source>Select file name</source>
         <translation>파일 이름을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1567"/>
+        <location filename="../MainWindow.cpp" line="1589"/>
         <source>Select extension file</source>
         <translation>파일 확장자를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1568"/>
+        <location filename="../MainWindow.cpp" line="1590"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>확장기능 파일들(*.so *.dll);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1574"/>
+        <location filename="../MainWindow.cpp" line="1596"/>
         <source>Extension successfully loaded.</source>
         <translation>확장기능을 성공적으로 불러왔습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1576"/>
-        <location filename="../MainWindow.cpp" line="1588"/>
+        <location filename="../MainWindow.cpp" line="1598"/>
+        <location filename="../MainWindow.cpp" line="1610"/>
         <source>Error loading extension: %1</source>
         <translation>확장기능을 불러오기 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1683"/>
+        <location filename="../MainWindow.cpp" line="1709"/>
         <source>Don&apos;t show again</source>
         <translation>다시 보지 않기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1686"/>
+        <location filename="../MainWindow.cpp" line="1712"/>
         <source>New version available.</source>
         <translation>이용 가능한 새 버전이 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1687"/>
+        <location filename="../MainWindow.cpp" line="1713"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>이용 가능한 새 버전이 있습니다 (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;&lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;에서 다운로드하세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1957"/>
+        <location filename="../MainWindow.cpp" line="1983"/>
         <source>Choose a axis color</source>
         <translation>축의 색깔을 고르세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1979"/>
+        <location filename="../MainWindow.cpp" line="2005"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2053"/>
+        <location filename="../MainWindow.cpp" line="2089"/>
         <source>Choose a file to open</source>
         <translation>불러올 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2054"/>
-        <location filename="../MainWindow.cpp" line="2194"/>
+        <location filename="../MainWindow.cpp" line="2090"/>
+        <location filename="../MainWindow.cpp" line="2230"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser for SQLite 프로젝트 파일 (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2526"/>
+        <location filename="../MainWindow.cpp" line="2562"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>이 테이블에 적용할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2528"/>
+        <location filename="../MainWindow.cpp" line="2564"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>모든 테이블에 설정 할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2531"/>
+        <location filename="../MainWindow.cpp" line="2567"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>데이터베이스 인코딩을 사용하기위해 필드를 비워둡니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2542"/>
+        <location filename="../MainWindow.cpp" line="2578"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>이 인코딩은 올바르지 않거나 지원되지 않습니다.</translation>
     </message>
@@ -2646,66 +2661,82 @@ Leave the field empty for using the database encoding.</source>
         <translation>일반(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="36"/>
+        <location filename="../PreferencesDialog.ui" line="55"/>
         <source>Remember last location</source>
         <translation>마지막 위치를 기억</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="41"/>
+        <location filename="../PreferencesDialog.ui" line="60"/>
         <source>Always use this location</source>
         <translation>항상 이 위치를 사용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="46"/>
+        <location filename="../PreferencesDialog.ui" line="65"/>
         <source>Remember last location for session only</source>
         <translation>같은 세션에서만 마지막 위치를 기억</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="75"/>
+        <location filename="../PreferencesDialog.ui" line="94"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="86"/>
+        <location filename="../PreferencesDialog.ui" line="42"/>
         <source>Default &amp;location</source>
         <translation>기본 위치(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="96"/>
+        <location filename="../PreferencesDialog.ui" line="105"/>
         <source>Lan&amp;guage</source>
         <translation>언어(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="128"/>
+        <location filename="../PreferencesDialog.ui" line="115"/>
+        <source>Show remote options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="122"/>
         <source>Automatic &amp;updates</source>
         <translation>자동 업데이트(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="138"/>
-        <location filename="../PreferencesDialog.ui" line="198"/>
-        <location filename="../PreferencesDialog.ui" line="838"/>
-        <location filename="../PreferencesDialog.ui" line="858"/>
-        <location filename="../PreferencesDialog.ui" line="875"/>
+        <location filename="../PreferencesDialog.ui" line="132"/>
+        <location filename="../PreferencesDialog.ui" line="163"/>
+        <location filename="../PreferencesDialog.ui" line="258"/>
+        <location filename="../PreferencesDialog.ui" line="930"/>
+        <location filename="../PreferencesDialog.ui" line="950"/>
+        <location filename="../PreferencesDialog.ui" line="967"/>
         <source>enabled</source>
         <translation>사용하기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="146"/>
+        <location filename="../PreferencesDialog.ui" line="186"/>
+        <source>Remote server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="194"/>
+        <source>dbhub.io</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="206"/>
         <source>&amp;Database</source>
         <translation>데이터베이스(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="161"/>
+        <location filename="../PreferencesDialog.ui" line="221"/>
         <source>Database &amp;encoding</source>
         <translation>데이터베이스 인코딩(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="185"/>
+        <location filename="../PreferencesDialog.ui" line="245"/>
         <source>Open databases with foreign keys enabled.</source>
         <translation>외래키 기능을 사용하며 데이터베이스를 엽니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="188"/>
+        <location filename="../PreferencesDialog.ui" line="248"/>
         <source>&amp;Foreign keys</source>
         <translation>외래키(&amp;F)</translation>
     </message>
@@ -2718,12 +2749,12 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">프리패치(&amp;Prefetch) 블록 사이즈</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="302"/>
+        <location filename="../PreferencesDialog.ui" line="362"/>
         <source>Data &amp;Browser</source>
         <translation>데이터 보기(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="345"/>
+        <location filename="../PreferencesDialog.ui" line="437"/>
         <source>NULL fields</source>
         <translation>NULL 필드</translation>
     </message>
@@ -2732,7 +2763,7 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">글자색(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="364"/>
+        <location filename="../PreferencesDialog.ui" line="456"/>
         <source>&amp;Text</source>
         <translation>문자열(&amp;T)</translation>
     </message>
@@ -2741,187 +2772,197 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">배경색(&amp;K)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="205"/>
+        <location filename="../PreferencesDialog.ui" line="265"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation>스키마 뷰에서 개행을 제거합니다(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="218"/>
+        <location filename="../PreferencesDialog.ui" line="278"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>프리패치 할 블럭 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="238"/>
+        <location filename="../PreferencesDialog.ui" line="298"/>
         <source>Advanced</source>
         <translation>고급</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="268"/>
+        <location filename="../PreferencesDialog.ui" line="328"/>
         <source>SQL to execute after opening database</source>
         <translation>데이터베이스 파일을 연 후에 실행 할 SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="294"/>
+        <location filename="../PreferencesDialog.ui" line="354"/>
         <source>Default field type</source>
         <translation>기본 필드 타입</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="310"/>
+        <location filename="../PreferencesDialog.ui" line="370"/>
         <source>Font</source>
         <translation>폰트</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="316"/>
+        <location filename="../PreferencesDialog.ui" line="376"/>
         <source>&amp;Font</source>
         <translation>폰트(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="329"/>
+        <location filename="../PreferencesDialog.ui" line="389"/>
         <source>Font si&amp;ze:</source>
         <translation>폰트 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="380"/>
+        <location filename="../PreferencesDialog.ui" line="405"/>
+        <source>Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="411"/>
+        <source>Symbol limit in cell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="472"/>
         <source>Field colors</source>
         <translation>폰트 색깔</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="386"/>
+        <location filename="../PreferencesDialog.ui" line="478"/>
         <source>NULL</source>
         <translation>NULL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="396"/>
+        <location filename="../PreferencesDialog.ui" line="488"/>
         <source>Regular</source>
         <translation>보통</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="429"/>
+        <location filename="../PreferencesDialog.ui" line="521"/>
         <source>Text</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="439"/>
+        <location filename="../PreferencesDialog.ui" line="531"/>
         <source>Binary</source>
         <translation>바이너리</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="465"/>
+        <location filename="../PreferencesDialog.ui" line="557"/>
         <source>Background</source>
         <translation>배경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="542"/>
+        <location filename="../PreferencesDialog.ui" line="634"/>
         <source>Filters</source>
         <translation>필터</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="555"/>
+        <location filename="../PreferencesDialog.ui" line="647"/>
         <source>Escape character</source>
         <translation>이스케이프 문자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="565"/>
+        <location filename="../PreferencesDialog.ui" line="657"/>
         <source>Delay time (&amp;ms)</source>
         <translation>대기 시간</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="575"/>
+        <location filename="../PreferencesDialog.ui" line="667"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>새로운 필터 값을 적용하기 전에 대기할 시간을 설정하세요. 대기 시간을 0으로 하면 대기하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="591"/>
+        <location filename="../PreferencesDialog.ui" line="683"/>
         <source>&amp;SQL</source>
         <translation>&amp;SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="604"/>
+        <location filename="../PreferencesDialog.ui" line="696"/>
         <source>Settings name</source>
         <translation>설정 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="609"/>
+        <location filename="../PreferencesDialog.ui" line="701"/>
         <source>Context</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="614"/>
+        <location filename="../PreferencesDialog.ui" line="706"/>
         <source>Colour</source>
         <translation>색깔</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="619"/>
+        <location filename="../PreferencesDialog.ui" line="711"/>
         <source>Bold</source>
         <translation>볼드</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="624"/>
+        <location filename="../PreferencesDialog.ui" line="716"/>
         <source>Italic</source>
         <translation>이탤릭</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="629"/>
+        <location filename="../PreferencesDialog.ui" line="721"/>
         <source>Underline</source>
         <translation>밑줄</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="637"/>
+        <location filename="../PreferencesDialog.ui" line="729"/>
         <source>Keyword</source>
         <translation>키워드</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="654"/>
+        <location filename="../PreferencesDialog.ui" line="746"/>
         <source>function</source>
         <translation>기능</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="657"/>
+        <location filename="../PreferencesDialog.ui" line="749"/>
         <source>Function</source>
         <translation>함수</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="665"/>
+        <location filename="../PreferencesDialog.ui" line="757"/>
         <source>Table</source>
         <translation>테이블</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="685"/>
+        <location filename="../PreferencesDialog.ui" line="777"/>
         <source>Comment</source>
         <translation>주석</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="705"/>
+        <location filename="../PreferencesDialog.ui" line="797"/>
         <source>Identifier</source>
         <translation>식별자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="725"/>
+        <location filename="../PreferencesDialog.ui" line="817"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="742"/>
+        <location filename="../PreferencesDialog.ui" line="834"/>
         <source>currentline</source>
         <translation>현재행</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="745"/>
+        <location filename="../PreferencesDialog.ui" line="837"/>
         <source>Current line</source>
         <translation>현재 행</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="755"/>
+        <location filename="../PreferencesDialog.ui" line="847"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQL 에디터 폰트 크기(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="772"/>
+        <location filename="../PreferencesDialog.ui" line="864"/>
         <source>SQL &amp;log font size</source>
         <translation>SQL 로그 폰트 크기(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="789"/>
+        <location filename="../PreferencesDialog.ui" line="881"/>
         <source>Tab size</source>
         <translation>탭 크기</translation>
     </message>
@@ -2930,62 +2971,62 @@ Leave the field empty for using the database encoding.</source>
         <translation type="obsolete">탭 크기:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="812"/>
+        <location filename="../PreferencesDialog.ui" line="904"/>
         <source>SQL editor &amp;font</source>
         <translation>SQL 편집기 폰트(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="825"/>
+        <location filename="../PreferencesDialog.ui" line="917"/>
         <source>Error indicators</source>
         <translation>에러 표시</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="835"/>
+        <location filename="../PreferencesDialog.ui" line="927"/>
         <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
         <translation>에러 표시를 사용하면 가장 최근에 실행하여 에러가 난 SQL 코드 행을 하이라이트 해줍니다</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="845"/>
+        <location filename="../PreferencesDialog.ui" line="937"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>화면 수평 나누기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="855"/>
+        <location filename="../PreferencesDialog.ui" line="947"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>SQL 코드 에디터와 결과 테이블 뷰가 나란히 표시됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="865"/>
+        <location filename="../PreferencesDialog.ui" line="957"/>
         <source>Code co&amp;mpletion</source>
         <translation>코드 완성(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="885"/>
+        <location filename="../PreferencesDialog.ui" line="977"/>
         <source>&amp;Extensions</source>
         <translation>확장기능(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="891"/>
+        <location filename="../PreferencesDialog.ui" line="983"/>
         <source>Select extensions to load for every database:</source>
         <translation>불러올 확장기능을 선택하세요(확장기능은 모든 데이터베이스에 반영됩니다):</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="912"/>
+        <location filename="../PreferencesDialog.ui" line="1004"/>
         <source>Add extension</source>
         <translation>확장기능 추가</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="923"/>
+        <location filename="../PreferencesDialog.ui" line="1015"/>
         <source>Remove extension</source>
         <translation>확장기능 제거</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="951"/>
+        <location filename="../PreferencesDialog.ui" line="1043"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite에서는 기본적으로 정규표현식 기능을 제공하지 않습니다만 애플리케이션을 실행하여 호출하는 것은 가능합니다. DB Browser for SQLite에서는 이 알고리즘을 박스 밖에서도 정규표현식을 사용할 수 있도록 이 알고리즘을 구현해줍니다. 하지만 확장기능을 사용하여 외부에서 만든 알고리즘 구현을 사용하고자 한다면 DB Browser for SQLite에서 제공하는 구현 사용을 자유롭게 끌 수 있습니다. 이 기능은 애플리케이션을 재시작해야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="954"/>
+        <location filename="../PreferencesDialog.ui" line="1046"/>
         <source>Disable Regular Expression extension</source>
         <translation>정규식표현식 확장기능 끄기</translation>
     </message>
@@ -2995,17 +3036,17 @@ Leave the field empty for using the database encoding.</source>
         <translation>디렉토리를 정하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="169"/>
+        <location filename="../PreferencesDialog.cpp" line="184"/>
         <source>The language will change after you restart the application.</source>
         <translation>언어 변경은 애플리케이션을 재시작해야 반영됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="453"/>
+        <location filename="../PreferencesDialog.cpp" line="478"/>
         <source>Select extension file</source>
         <translation>확장기능 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="454"/>
+        <location filename="../PreferencesDialog.cpp" line="479"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>확장기능파일(*.so *.dll);;모든 파일(*)</translation>
     </message>
@@ -3357,14 +3398,14 @@ Create a backup!</source>
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="249"/>
+        <location filename="../sqlitetablemodel.cpp" line="260"/>
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
         <translation>참조 %1(%2)
 Ctrl+Shift를 누른 상태에서 점프하고자 하는 곳을 클릭하세요</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="301"/>
+        <location filename="../sqlitetablemodel.cpp" line="312"/>
         <source>Error changing data:
 %1</source>
         <translation>데이터 수정 에러:
