@@ -9,6 +9,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(this->width(), this->height());
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->label_version->setText(tr("Version ") + APP_VERSION + "\n\n" +
                                tr("Qt Version ") + QT_VERSION_STR + "\n\n" +
