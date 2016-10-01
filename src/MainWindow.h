@@ -189,6 +189,8 @@ private slots:
     void exportTableToCSV();
     void fileSave();
     void fileRevert();
+    void on_actionOpen_Remote_triggered();
+    void on_actionSave_Remote_triggered();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
     void openPreferences();

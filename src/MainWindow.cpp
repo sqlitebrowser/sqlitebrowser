@@ -178,7 +178,7 @@ void MainWindow::init()
     // Add keyboard shortcut for "Edit Cell" dock
     ui->viewMenu->actions().at(3)->setShortcut(QKeySequence(tr("Ctrl+E")));
 
-    // If we're not compiling in SQLCipher, hide it's FAQ link in the help menu
+    // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
     ui->actionSqlCipherFaq->setVisible(false);
 #endif
@@ -1647,6 +1647,10 @@ void MainWindow::reloadSettings()
     // Refresh view
     populateStructure();
     resetBrowser();
+
+    // Hide or show the File → Remote menu as needed
+    QAction *remoteMenuAction = ui->menuRemote->menuAction();
+    remoteMenuAction->setVisible(PreferencesDialog::getSettingsValue("MainWindow", "remotemenu").toBool());
 }
 
 void MainWindow::httpresponse(QNetworkReply *reply)
@@ -2023,6 +2027,16 @@ void MainWindow::on_butSavePlot_clicked()
             ui->plotWidget->savePng(fileName);
         }
     }
+}
+
+void MainWindow::on_actionOpen_Remote_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://dbhub.io"));
+}
+
+void MainWindow::on_actionSave_Remote_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://dbhub.io"));
 }
 
 void MainWindow::on_actionWiki_triggered()

@@ -60,6 +60,7 @@ void PreferencesDialog::loadSettings()
     ui->comboDefaultLocation->setCurrentIndex(getSettingsValue("db", "savedefaultlocation").toInt());
     ui->locationEdit->setText(getSettingsValue("db", "defaultlocation").toString());
     ui->checkUpdates->setChecked(getSettingsValue("checkversion", "enabled").toBool());
+    ui->checkUseRemotes->setChecked(getSettingsValue("MainWindow", "remotemenu").toBool());
     ui->checkHideSchemaLinebreaks->setChecked(getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(getSettingsValue("db", "prefetchsize").toInt());
@@ -138,6 +139,7 @@ void PreferencesDialog::saveSettings()
 
     setSettingsValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
 
+    setSettingsValue("MainWindow", "remotemenu", ui->checkUseRemotes->isChecked());
     setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
     setSettingsValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
@@ -274,6 +276,10 @@ QVariant PreferencesDialog::getSettingsDefaultValue(const QString& group, const 
     // MainWindow/windowState?
     if(group == "MainWindow" && name == "windowState")
         return "";
+
+    // Enable the File → Remote menu by default
+    if(group == "MainWindow" && name == "remotemenu")
+        return true;
 
     // SQLLogDock/Log?
     if(group == "SQLLogDock" && name == "Log")

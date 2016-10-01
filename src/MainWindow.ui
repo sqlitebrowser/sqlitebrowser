@@ -844,10 +844,19 @@
      <addaction name="fileExportSQLAction"/>
      <addaction name="fileExportCSVAction"/>
     </widget>
+    <widget class="QMenu" name="menuRemote">
+     <property name="title">
+      <string>Remote</string>
+     </property>
+     <addaction name="actionOpen_Remote"/>
+     <addaction name="actionSave_Remote"/>
+    </widget>
     <addaction name="fileNewAction"/>
     <addaction name="fileOpenAction"/>
     <addaction name="fileAttachAction"/>
     <addaction name="fileCloseAction"/>
+    <addaction name="separator"/>
+    <addaction name="menuRemote"/>
     <addaction name="separator"/>
     <addaction name="fileSaveAction"/>
     <addaction name="fileRevertAction"/>
@@ -1944,6 +1953,16 @@
    </property>
    <property name="toolTip">
     <string>Opens the SQLCipher FAQ in a browser window</string>
+   </property>
+  </action>
+  <action name="actionOpen_Remote">
+   <property name="text">
+    <string>Open from Remote</string>
+   </property>
+  </action>
+  <action name="actionSave_Remote">
+   <property name="text">
+    <string>Save to Remote</string>
    </property>
   </action>
  </widget>
