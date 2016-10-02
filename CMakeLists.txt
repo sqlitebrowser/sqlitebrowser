@@ -314,13 +314,13 @@ if(WIN32 AND MSVC)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_RELWITHDEBINFO "_CONSOLE")
 	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
-	set(CMAKE_GENERATOR_TOOLSET "v120_xp" CACHE STRING "Platform Toolset" FORCE)
 endif()
 
+if(NOT WIN32)
 install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib)
-	
+endif()
 
 if(ENABLE_TESTING)
 	add_subdirectory(src/tests)
@@ -338,6 +338,10 @@ if(UNIX AND NOT APPLE)
 endif(UNIX AND NOT APPLE)
 
 if(WIN32 AND MSVC)
+	install(TARGETS ${PROJECT_NAME}
+		RUNTIME DESTINATION "/"
+		LIBRARY DESTINATION lib)
+
 	set(QT5_BIN_PATH ${QT5_PATH}/bin)
 	# The Qt5 Debug configuration library files have a 'd' postfix
 	install(FILES
@@ -346,7 +350,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5Networkd.dll
 			${QT5_BIN_PATH}/Qt5PrintSupportd.dll
 			${QT5_BIN_PATH}/Qt5Widgetsd.dll
-		DESTINATION bin
+		DESTINATION "/"
 		CONFIGURATIONS Debug)
 	# The Qt5 Release configuration files don't have a postfix
 	install(FILES
@@ -355,7 +359,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5Network.dll
 			${QT5_BIN_PATH}/Qt5PrintSupport.dll
 			${QT5_BIN_PATH}/Qt5Widgets.dll
-		DESTINATION bin
+		DESTINATION "/"
 		CONFIGURATIONS Release)
 	# The files below are common to all configurations
 	install(FILES
@@ -364,11 +368,11 @@ if(WIN32 AND MSVC)
 
 			${OPENSSL_PATH}/libeay32.dll
 			${OPENSSL_PATH}/ssleay32.dll
-		DESTINATION bin)
+		DESTINATION "/")
 	install(FILES
 		${QT5_PATH}/plugins/platforms/qwindows.dll
-		DESTINATION bin/platforms)
-	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION tmp)
+		DESTINATION platforms)
+	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION redist)
 endif()
 
 #cpack
@@ -379,13 +383,14 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
 set(CPACK_PACKAGE_VERSION_MINOR "9")
 set(CPACK_PACKAGE_VERSION_PATCH "1")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "DB Browser for SQLite")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSIS that does not handle full unix paths properly. Make
 	# sure there is at least one set of four (4) backlasshes.
-	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}\\\\${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
-	set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
-	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DB Browser for SQLite.exe")
+        set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
+	set(CPACK_NSIS_EXECUTABLES_DIRECTORY "/")
+	set(CPACK_NSIS_INSTALLED_ICON_NAME "DB Browser for SQLite.exe")
 	set(CPACK_NSIS_DISPLAY_NAME "DB Browser for SQLite")
 	set(CPACK_NSIS_HELP_LINK "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
 	set(CPACK_NSIS_URL_INFO_ABOUT "https:\\\\\\\\github.com\\\\sqlitebrowser\\\\sqlitebrowser")
@@ -397,8 +402,8 @@ if(WIN32 AND NOT UNIX)
 
 	# VS redist
 	list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-               ExecWait '\\\"$INSTDIR\\\\tmp\\\\${VSREDIST}\\\" /install /passive /quiet'
-               Delete '\\\"$INSTDIR\\\\tmp\\\\${VSREDIST}\\\"'
+               ExecWait '\\\"$INSTDIR\\\\redist\\\\${VSREDIST}\\\" /install /passive /quiet'
+               Delete '\\\"$INSTDIR\\\\redist\\\\${VSREDIST}\\\"'
                ")
 else(WIN32 AND NOT UNIX)
 	set(CPACK_STRIP_FILES "bin/DB Browser for SQLite")
