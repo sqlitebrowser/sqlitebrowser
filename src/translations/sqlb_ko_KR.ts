@@ -1580,12 +1580,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Shift+F5]키를 누르면 현재 행을 실행합니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1749"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1805"/>
@@ -1876,22 +1876,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1952"/>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher FAQ...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1955"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>브라우져 창에서 SQLCipher FAQ를 봅니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1960"/>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 서버에서 불러오기</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1965"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 서버로 저장하기</translation>
     </message>
     <message>
         <source>Revert Changes</source>
@@ -2129,7 +2129,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="849"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 서버</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="931"/>
@@ -2693,7 +2693,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="115"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 서버 옵션 보기</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="122"/>
@@ -2713,12 +2713,12 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="186"/>
         <source>Remote server</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 서버</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="194"/>
         <source>dbhub.io</source>
-        <translation type="unfinished"></translation>
+        <translation>dbhub.io</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="206"/>
@@ -2814,12 +2814,12 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>내용</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>셀 안에서 심볼 제한</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="472"/>
