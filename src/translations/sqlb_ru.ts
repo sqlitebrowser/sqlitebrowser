@@ -1490,7 +1490,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="849"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаленный сервер</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="877"/>
@@ -1520,12 +1520,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнить текущую строку [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1749"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1805"/>
@@ -1587,22 +1587,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1952"/>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1955"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть SQLCiphier FAQ в браузере</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1960"/>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить из облака</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1965"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить в облако</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
@@ -2008,7 +2008,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="785"/>
         <source>Execute SQL</source>
-        <translation>SQL</translation>
+        <translation>Выполнить код SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="931"/>
@@ -2594,17 +2594,17 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="115"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Опции &quot;облака&quot;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="186"/>
         <source>Remote server</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервер</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="194"/>
         <source>dbhub.io</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="278"/>
@@ -2644,12 +2644,12 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержимое</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество символов в ячейке</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="472"/>
