@@ -1535,7 +1535,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation></translation>
     </message>
     <message>
         <source>&amp;About...</source>
@@ -2121,31 +2121,31 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>Executar linha atual [Shift+F5]</translation>
     </message>
     <message>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation></translation>
     </message>
     <message>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>FAQ do SQLCipher...</translation>
     </message>
     <message>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre o FAQ do SQLCipher em uma janela do navegador</translation>
     </message>
     <message>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Remoto</translation>
     </message>
     <message>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir remoto</translation>
     </message>
     <message>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar em remoto</translation>
     </message>
 </context>
 <context>
@@ -2452,23 +2452,23 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar opções do remoto</translation>
     </message>
     <message>
         <source>Remote server</source>
-        <translation type="unfinished"></translation>
+        <translation>Servidor remoto</translation>
     </message>
     <message>
         <source>dbhub.io</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Conteúdo</translation>
     </message>
     <message>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite de símbolos na célula</translation>
     </message>
 </context>
 <context>
