@@ -1590,7 +1590,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1731"/>
         <source>&amp;Load extension</source>
-        <translation>&amp;Cargar extension</translation>
+        <translation>&amp;Cargar extensión</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
@@ -2229,7 +2229,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1698"/>
         <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation>Ejecuta SQL [F5, Ctrl+Return]</translation>
+        <translation>Ejecuta SQL [F5, Ctrl+Intro.]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1710"/>
@@ -2339,7 +2339,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.cpp" line="114"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Return</translation>
+        <translation>Ctrl+Intro.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="158"/>
@@ -3422,7 +3422,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
         <translation>Referencias %1(%2)
-Mantenga pulsado Ctrl+Mayús. y haga click para ir ahí</translation>
+Mantenga pulsadas Ctrl+Mayús. y haga click para ir ahí</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="312"/>
