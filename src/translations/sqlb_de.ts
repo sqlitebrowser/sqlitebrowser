@@ -1895,22 +1895,22 @@ Möchten Sie ihn dennoch einfügen?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1952"/>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCiper FAQ...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1955"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnet die SQLCiper FAQ in einem Browserfenster</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1960"/>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernte öffnen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1965"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernte speichern</translation>
     </message>
     <message>
         <source>Revert Changes</source>
@@ -2136,7 +2136,7 @@ Möchten Sie ihn dennoch einfügen?</translation>
     <message>
         <location filename="../MainWindow.ui" line="849"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Fernzugriff</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="912"/>
@@ -2241,12 +2241,12 @@ Möchten Sie ihn dennoch einfügen?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Zeile ausführen [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1749"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1769"/>
@@ -2714,7 +2714,7 @@ Sind Sie sicher?</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="115"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Fernzugriffs-Optionen anzeigen</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="122"/>
@@ -2724,12 +2724,12 @@ Sind Sie sicher?</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="186"/>
         <source>Remote server</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernter Server</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="194"/>
         <source>dbhub.io</source>
-        <translation type="unfinished"></translation>
+        <translation>dbhub.io</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="206"/>
@@ -2823,12 +2823,12 @@ Sind Sie sicher?</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolbegrenzung in Zelle</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="437"/>
