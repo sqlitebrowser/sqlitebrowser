@@ -1590,7 +1590,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1731"/>
         <source>&amp;Load extension</source>
-        <translation>&amp;Cargar extension</translation>
+        <translation>&amp;Cargar extensión</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
