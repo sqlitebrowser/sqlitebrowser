@@ -94,31 +94,34 @@ void EditDialog::loadData(const QByteArray& data)
     case Null:
         switch (editMode) {
         case TextEditor:
+            // The text widget buffer is now the main data source
+            dataSource = TextBuffer;
+
             // Empty the text editor contents, then enable text editing
             ui->editorText->clear();
             ui->editorText->setEnabled(true);
 
-            // The text widget buffer is now the main data source
-            dataSource = TextBuffer;
             break;
 
         case HexEditor:
+            // The hex widget buffer is now the main data source
+            dataSource = HexBuffer;
+
             // Load the Null into the hex editor
             hexEdit->setData(data);
 
-            // The hex widget buffer is now the main data source
-            dataSource = HexBuffer;
             break;
 
         case ImageViewer:
+            // The hex widget buffer is now the main data source
+            dataSource = HexBuffer;
+
             // Clear any image from the image viewing widget
             ui->editorImage->setPixmap(QPixmap(0,0));
 
             // Load the Null into the hex editor
             hexEdit->setData(data);
 
-            // The hex widget buffer is now the main data source
-            dataSource = HexBuffer;
             break;
         }
         break;
@@ -126,6 +129,9 @@ void EditDialog::loadData(const QByteArray& data)
     case Text:
         switch (editMode) {
         case TextEditor:
+            // The text widget buffer is now the main data source
+            dataSource = TextBuffer;
+
             // Load the text into the text editor
             textData = QString::fromUtf8(data.constData(), data.size());
             ui->editorText->setPlainText(textData);
@@ -136,20 +142,21 @@ void EditDialog::loadData(const QByteArray& data)
             // Select all of the text by default
             ui->editorText->selectAll();
 
-            // The text widget buffer is now the main data source
-            dataSource = TextBuffer;
-
             break;
 
         case HexEditor:
+            // The hex widget buffer is now the main data source
+            dataSource = HexBuffer;
+
             // Load the text into the hex editor
             hexEdit->setData(data);
 
-            // The hex widget buffer is now the main data source
-            dataSource = HexBuffer;
             break;
 
         case ImageViewer:
+            // The text widget buffer is now the main data source
+            dataSource = TextBuffer;
+
             // Clear any image from the image viewing widget
             ui->editorImage->setPixmap(QPixmap(0,0));
 
@@ -162,9 +169,6 @@ void EditDialog::loadData(const QByteArray& data)
 
             // Select all of the text by default
             ui->editorText->selectAll();
-
-            // The text widget buffer is now the main data source
-            dataSource = TextBuffer;
 
             break;
         }
@@ -200,14 +204,14 @@ void EditDialog::loadData(const QByteArray& data)
         break;
 
     default:
+        // The hex widget buffer is now the main data source
+        dataSource = HexBuffer;
+
         // The data seems to be general binary data, which is always loaded
         // into the hex widget (the only safe place for it)
 
         // Load the data into the hex editor
         hexEdit->setData(data);
-
-        // The hex widget buffer is now the main data source
-        dataSource = HexBuffer;
 
         switch (editMode) {
         case TextEditor:
