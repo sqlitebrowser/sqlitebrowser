@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr">
+<TS version="2.1" language="fr">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -2060,7 +2060,7 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../MainWindow.ui" line="849"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Système distant</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="912"/>
@@ -2251,12 +2251,12 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1746"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>Exécuter la ligne courante [Maj+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1749"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Maj+F5</translation>
+        <translation>Maj+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1805"/>
@@ -2349,22 +2349,22 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1952"/>
         <source>SQLCipher FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>FAQ SQLCipher...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1955"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvre la FAQ SQLCipher dans une fenêtre de navigation</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1960"/>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir depuis le Système distant</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1965"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder sur le Système distant</translation>
     </message>
     <message>
         <source>Load extension</source>
@@ -2779,7 +2779,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="115"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les options du Syst. Distant</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="122"/>
@@ -2789,12 +2789,12 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="186"/>
         <source>Remote server</source>
-        <translation type="unfinished"></translation>
+        <translation>Système Distant</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="194"/>
         <source>dbhub.io</source>
-        <translation type="unfinished"></translation>
+        <translation>dbhub.io</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="206"/>
@@ -2889,12 +2889,13 @@ de la Base de Données</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Revoir la traduction en fonction du contexte</translatorcomment>
+        <translation>Symbole limite dans la cellule</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="437"/>
