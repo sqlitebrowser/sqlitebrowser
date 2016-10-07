@@ -35,6 +35,7 @@
 #include <QMenu>
 #include <QPoint>
 
+    QPointer<QsciLexer> lex;
 #include "Qsci/qsciabstractapis.h"
 #include "Qsci/qscicommandset.h"
 #include "Qsci/qscilexer.h"
