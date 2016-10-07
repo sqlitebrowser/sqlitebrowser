@@ -45,7 +45,8 @@
         <location filename="../Application.cpp" line="75"/>
         <source>Usage: %1 [options] [db]
 </source>
-        <translation>Kullanım: %1 [options] [db]</translation>
+        <translation>Kullanım: %1 [opsiyon] [db]
+</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="76"/>
@@ -189,7 +190,7 @@ Bu veritabanı için herhangi bir başka ayar daha yapılmışsa, bu bilgileri d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Julian day to date</source>
-        <translation>Bugüne kadarki Julian tarihi</translation>
+        <translation>Julian Tarihi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
@@ -209,17 +210,17 @@ Bu veritabanı için herhangi bir başka ayar daha yapılmışsa, bu bilgileri d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
         <source>Unix epoch to date</source>
-        <translation>Unix epoch </translation>
+        <translation>Unix Tarihi </translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Upper case</source>
-        <translation></translation>
+        <translation>Büyük harf</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Windows DATE to date</source>
-        <translation>Bugüne kadarki Windows Tarihi</translation>
+        <translation>Windows Tarihi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
@@ -777,7 +778,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditTableDialog.cpp" line="222"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
-        <translation>Bu isimde zaten alan mevut. Lütfen ilk önce yeniden adlandırın veya farklı bir isim seçin.</translation>
+        <translation>Bu isimde zaten alan mevut. Lütfen mevcut alanı yeniden adlandırın veya bu alan için farklı bir isim seçin.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="242"/>
@@ -803,7 +804,8 @@ Aborting execution.</source>
     <message>
         <source>Column `%1` has no unique data.
 </source>
-        <translation type="obsolete">`%1` sütunu benzersiz veriye sahip değil.</translation>
+        <translation type="obsolete">`%1` sütunu benzersiz veriye sahip değil. 
+</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="370"/>
@@ -977,7 +979,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation>INSERT ifadesi başına çoklu satır (VALUES)</translation>
+        <translation>INSERT ifadesinde yazılan her değeri yeni bir satır olarak ekle</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
@@ -1880,12 +1882,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1960"/>
         <source>Open from Remote</source>
-        <translation>Uzaktan Aç</translation>
+        <translation>Uzak Sunucudan Aç</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1965"/>
         <source>Save to Remote</source>
-        <translation>Uzağa Kaydet</translation>
+        <translation>Uzak Sunucuya Kaydet</translation>
     </message>
     <message>
         <source>Revert Changes</source>
@@ -2118,7 +2120,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="849"/>
         <source>Remote</source>
-        <translation>Uzaktan</translation>
+        <translation>Uzak Sunucu</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="931"/>
@@ -2158,12 +2160,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1481"/>
         <source>&amp;Database from SQL file...</source>
-        <translation>SQL &amp;dosyasından veritabanı...</translation>
+        <translation>SQL &amp;dosyasından veritabanına...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1495"/>
         <source>&amp;Table from CSV file...</source>
-        <translation>CSV dosyasından &amp;tablo...</translation>
+        <translation>CSV dosyasından &amp;tabloya...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
@@ -2173,7 +2175,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1523"/>
         <source>&amp;Table(s) as CSV file...</source>
-        <translation>&amp;Tablolardan CSV dosyası</translation>
+        <translation>&amp;Tablolardan CSV dosyasına...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1544"/>
@@ -2777,7 +2779,7 @@ Veritabanının kendi kodlamasını kullanması için bu alanı boş bırakın.<
     <message>
         <location filename="../PreferencesDialog.ui" line="328"/>
         <source>SQL to execute after opening database</source>
-        <translation>Veritabanı açıldıktan sonra SQL kodunu işle</translation>
+        <translation>Veritabanı açıldıktan sonra işlenecek SQL kodu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="354"/>
@@ -2961,27 +2963,27 @@ Veritabanının kendi kodlamasını kullanması için bu alanı boş bırakın.<
     <message>
         <location filename="../PreferencesDialog.ui" line="904"/>
         <source>SQL editor &amp;font</source>
-        <translation>SQL Editör &amp;yazı boyutu</translation>
+        <translation>SQL Editör &amp;yazı tipi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="917"/>
         <source>Error indicators</source>
-        <translation>Hata göstergeleri</translation>
+        <translation>Hata vurgulama</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="927"/>
         <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
-        <translation>Önceki kod işleme hatasına sebep olan kod satırlarını hata göstergesinde vurgulama</translation>
+        <translation>Bu seçenek aktifken SQL kod işleme sırasında hataya sebep olan kod satırları vurgulanır</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="937"/>
         <source>Hori&amp;zontal tiling</source>
-        <translation>Yatay döşeme</translation>
+        <translation>Yatay gruplandırma</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="947"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
-        <translation>Eğer SQL kod editörü aktifse sonuş tablo görünümü üst üste yerine yan yana gösterilsin.</translation>
+        <translation>Bu seçenek aktifken sonuş tablo görünümü üst üste yerine yan yana gösterilir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="957"/>
