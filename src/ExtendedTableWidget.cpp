@@ -65,6 +65,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
 {
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
+    setVerticalScrollMode(ExtendedTableWidget::ScrollPerItem);
 
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
     connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(cellClicked(QModelIndex)));
