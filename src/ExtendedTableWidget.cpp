@@ -64,6 +64,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
 {
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
+    // Force ScrollPerItem, so scrolling shows all table rows
     setVerticalScrollMode(ExtendedTableWidget::ScrollPerItem);
 
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
