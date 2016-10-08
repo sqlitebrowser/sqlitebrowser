@@ -624,6 +624,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
     } else {
         lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
         qWarning() << "executeSQL: " << statement << "->" << errmsg;
+        sqlite3_free(errmsg);
         return false;
     }
 }
