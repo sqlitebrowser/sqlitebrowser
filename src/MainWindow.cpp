@@ -538,7 +538,7 @@ bool MainWindow::fileClose()
     browseTableSettings.clear();
     defaultBrowseTableEncoding = QString();
 
-    // Manually update the recordset label inside the Browse tab now
+    // Reset the recordset label inside the Browse tab now
     setRecordsetLabel();
 
     // Reset the plot dock model
@@ -695,8 +695,12 @@ void MainWindow::setRecordsetLabel()
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
     int total = m_browseTableModel->totalRowCount();
+
     if(to == -2)
+    {
+        total = 0;
         to = total;
+    }
 
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
