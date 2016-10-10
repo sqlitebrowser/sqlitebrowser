@@ -24,9 +24,9 @@ below with an "x", then click the "Submit new issue" button at the bottom
 
 #### I'm using DB4S on:
 
-- [ ] Windows
+- [ ] Windows: ( _version:_ ___ )
 - [ ] Linux: ( _distro:_ ___ )
-- [ ] Mac OS
+- [ ] Mac OS: ( _version:_ ___ )
 - [ ] Other: ___
 
 #### I'm using DB4S version:
