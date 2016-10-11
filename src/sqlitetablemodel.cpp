@@ -102,7 +102,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
 
     m_sQuery = sQuery.trimmed();
 
-    m_sQuery.remove(QRegExp("(?=\\s*[-]{2})[^'\"\n]*($|\\n)"));
+    m_sQuery.remove(QRegExp("\\s*--[^\\n]+"));
 
     // do a count query to get the full row count in a fast manner
     m_rowCount = getQueryRowCount();
