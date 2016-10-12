@@ -124,11 +124,8 @@ void DbStructureModel::reloadData()
     beginResetModel();
 
     // Remove all data except for the root item
-    for(int i=rootItem->childCount();i;i--)
-    {
-        delete rootItem->child(i-1);
-        rootItem->removeChild(rootItem->child(i-1));
-    }
+    while(rootItem->childCount())
+        delete rootItem->child(0);
 
     // Return here if no DB is opened
     if(!m_db.isOpen())
