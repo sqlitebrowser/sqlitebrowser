@@ -288,7 +288,8 @@ bool DBBrowserDB::releaseSavepoint(const QString& pointname)
         return false;
 
     QString query = QString("RELEASE %1;").arg(pointname);
-    executeSQL(query, false, false);
+    if(!executeSQL(query, false, false))
+        return false;
     savepointList.removeAll(pointname);
     emit dbChanged(getDirty());
 

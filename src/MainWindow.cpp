@@ -1113,7 +1113,13 @@ void MainWindow::dbState( bool dirty )
 void MainWindow::fileSave()
 {
     if(db.isOpen())
-        db.releaseAllSavepoints();
+    {
+        if(!db.releaseAllSavepoints())
+        {
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Error while saving the database file. This means that not all changes to the database were "
+                                                                           "saved. You need to resolve the following error first.\n\n%1").arg(db.lastErrorMessage));
+        }
+    }
 }
 
 void MainWindow::fileRevert()
