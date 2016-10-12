@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8.7)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
-OPTION(USE_QT5 FALSE "Build with qt5")
-OPTION(ENABLE_TESTING FALSE "Enable the unit tests")
+OPTION(USE_QT5 "Build with qt5" OFF)
+OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
