@@ -470,6 +470,9 @@ void MainWindow::populateTable()
 
         // Encoding
         m_browseTableModel->setEncoding(tableIt.value().encoding);
+
+        // Plot
+        updatePlot(m_browseTableModel, true, false);
     } else {
         // There aren't any information stored for this table yet, so use some default values
 
@@ -487,6 +490,9 @@ void MainWindow::populateTable()
         // Encoding
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
+        // Plot
+        updatePlot(m_browseTableModel);
+
         // The filters can be left empty as they are
     }
 
@@ -498,9 +504,6 @@ void MainWindow::populateTable()
 
     // Set the recordset label
     setRecordsetLabel();
-
-    // update plot
-    updatePlot(m_browseTableModel);
 
     QApplication::restoreOverrideCursor();
 }
@@ -1794,7 +1797,7 @@ QVariant::Type guessdatatype(SqliteTableModel* model, int column)
 }
 }
 
-void MainWindow::updatePlot(SqliteTableModel *model, bool update)
+void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrResetSelection)
 {
     // add columns to x/y selection tree widget
     if(update)
@@ -1808,15 +1811,29 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
         // save current selected columns, so we can restore them after the update
         QString sItemX; // selected X column
         QMap<QString, QColor> mapItemsY; // selected Y columns with color
-        for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
-        {
-            QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            if(item->checkState(PlotColumnX) == Qt::Checked)
-                sItemX = item->text(PlotColumnField);
 
-            if(item->checkState(PlotColumnY) == Qt::Checked)
+        if(keepOrResetSelection)
+        {
+            // Store the currently selected plot columns to restore them later
+            for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
             {
-                mapItemsY[item->text(PlotColumnField)] = item->backgroundColor(PlotColumnY);
+                QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
+                if(item->checkState(PlotColumnX) == Qt::Checked)
+                    sItemX = item->text(PlotColumnField);
+
+                if(item->checkState(PlotColumnY) == Qt::Checked)
+                    mapItemsY[item->text(PlotColumnField)] = item->backgroundColor(PlotColumnY);
+            }
+        } else {
+            // Get the plot columns to select from the stored browse table information
+            sItemX = browseTableSettings[ui->comboBrowseTable->currentText()].plotXAxis;
+
+            QMap<QString, PlotSettings> axesY = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
+            QMap<QString, PlotSettings>::ConstIterator it = axesY.constBegin();
+            while(it != axesY.constEnd())
+            {
+                mapItemsY.insert(it.key(), it.value().colour);
+                ++it;
             }
         }
 
@@ -1964,6 +1981,7 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
                this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
 
     // make sure only 1 X axis is selected
+    QString current_table = ui->comboBrowseTable->currentText();
     if(column == PlotColumnX)
     {
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
@@ -1974,9 +1992,13 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
                 item->setCheckState(column, Qt::Unchecked);
             }
         }
-    }
-    else if(column == PlotColumnY)
-    {
+
+        // Save settings for this table
+        if(changeitem->checkState(column) == Qt::Checked)
+            browseTableSettings[current_table].plotXAxis = changeitem->text(PlotColumnField);
+        else
+            browseTableSettings[current_table].plotXAxis = QString();
+    } else if(column == PlotColumnY) {
         if(changeitem->checkState(column) == Qt::Checked)
         {
             // get a default color
@@ -1985,10 +2007,17 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
             if(color.isValid())
             {
                 changeitem->setBackgroundColor(column, color);
-            }
-            else
-            {
+
+                // Save settings for this table
+                PlotSettings& plot_settings = browseTableSettings[current_table].plotYAxes[changeitem->text(PlotColumnField)];
+                plot_settings.colour = color;
+                plot_settings.lineStyle = ui->comboLineType->currentIndex();
+                plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
+            } else {
                 changeitem->setCheckState(column, Qt::Unchecked);
+
+                // Save settings for this table
+                browseTableSettings[current_table].plotYAxes.remove(changeitem->text(PlotColumnField));
             }
         }
     }
@@ -2012,14 +2041,22 @@ void MainWindow::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int
         QColor curbkcolor = item->backgroundColor(column);
         QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose a axis color"));
+        QString current_table = ui->comboBrowseTable->currentText();
         if(color.isValid())
         {
             item->setCheckState(column, Qt::Checked);
             item->setBackgroundColor(column, color);
-        }
-        else
-        {
+
+            // Save settings for this table
+            PlotSettings& plot_settings = browseTableSettings[current_table].plotYAxes[item->text(PlotColumnField)];
+            plot_settings.colour = color;
+            plot_settings.lineStyle = ui->comboLineType->currentIndex();
+            plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
+        } else {
             item->setCheckState(column, Qt::Unchecked);
+
+            // Save settings for this table
+            browseTableSettings[current_table].plotYAxes.remove(item->text(PlotColumnField));
         }
     }
 
@@ -2460,6 +2497,15 @@ void MainWindow::on_comboLineType_currentIndexChanged(int index)
             graph->setLineStyle(lineStyle);
     }
     ui->plotWidget->replot();
+
+    // Save settings for this table
+    QMap<QString, PlotSettings>& graphs = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
+    QMap<QString, PlotSettings>::Iterator it = graphs.begin();
+    while(it != graphs.end())
+    {
+        it.value().lineStyle = lineStyle;
+        ++it;
+    }
 }
 
 void MainWindow::on_comboPointShape_currentIndexChanged(int index)
@@ -2476,6 +2522,15 @@ void MainWindow::on_comboPointShape_currentIndexChanged(int index)
             graph->setScatterStyle(QCPScatterStyle(shape, 5));
     }
     ui->plotWidget->replot();
+
+    // Save settings for this table
+    QMap<QString, PlotSettings>& graphs = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
+    QMap<QString, PlotSettings>::Iterator it = graphs.begin();
+    while(it != graphs.end())
+    {
+        it.value().pointShape = shape;
+        ++it;
+    }
 }
 
 void MainWindow::jumpToRow(const QString& table, QString column, const QByteArray& value)

@@ -33,6 +33,30 @@ public:
 
     DBBrowserDB& getDb() { return db; }
 
+    struct PlotSettings
+    {
+        int lineStyle;
+        int pointShape;
+        QColor colour;
+
+        friend QDataStream& operator<<(QDataStream& stream, const MainWindow::PlotSettings& object)
+        {
+            stream << object.lineStyle;
+            stream << object.pointShape;
+            stream << object.colour;
+
+            return stream;
+        }
+        friend QDataStream& operator>>(QDataStream& stream, MainWindow::PlotSettings& object)
+        {
+            stream >> object.lineStyle;
+            stream >> object.pointShape;
+            stream >> object.colour;
+
+            return stream;
+        }
+    };
+
     struct BrowseDataTableSettings
     {
         int sortOrderIndex;
@@ -42,6 +66,8 @@ public:
         QMap<int, QString> displayFormats;
         bool showRowid;
         QString encoding;
+        QString plotXAxis;
+        QMap<QString, PlotSettings> plotYAxes;
 
         friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
         {
@@ -52,6 +78,8 @@ public:
             stream << object.displayFormats;
             stream << object.showRowid;
             stream << object.encoding;
+            stream << object.plotXAxis;
+            stream << object.plotYAxes;
 
             return stream;
         }
@@ -66,6 +94,8 @@ public:
             stream >> object.displayFormats;
             stream >> object.showRowid;
             stream >> object.encoding;
+            stream >> object.plotXAxis;
+            stream >> object.plotYAxes;
 
             return stream;
         }
@@ -218,7 +248,7 @@ private slots:
     void loadExtension();
     void reloadSettings();
     void httpresponse(QNetworkReply* reply);
-    void updatePlot(SqliteTableModel* model, bool update = true);
+    void updatePlot(SqliteTableModel* model, bool update = true, bool keepOrResetSelection = true);
     void on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column);
     void on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int column);
     void on_butSavePlot_clicked();
