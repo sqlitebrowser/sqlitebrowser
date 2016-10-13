@@ -1798,12 +1798,10 @@ QVariant::Type guessdatatype(SqliteTableModel* model, int column)
     for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
     {
         QVariant data = model->data(model->index(i, column), Qt::EditRole);
-        if(data.convert(QVariant::Double))
+        if(data.isNull() || data.convert(QVariant::Double))
         {
             type = QVariant::Double;
-        }
-        else
-        {
+        } else {
             QString s = model->data(model->index(i, column)).toString();
             QDate d = QDate::fromString(s, Qt::ISODate);
             if(d.isValid())
@@ -1811,8 +1809,8 @@ QVariant::Type guessdatatype(SqliteTableModel* model, int column)
             else
                 type = QVariant::String;
         }
-
     }
+
     return type;
 }
 }
@@ -1955,7 +1953,11 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update)
                         xdata[i] = model->data(model->index(i, x)).toDouble();
                     }
 
-                    ydata[i] = model->data(model->index(i, y)).toDouble();
+                    QVariant pointdata = model->data(model->index(i, y), Qt::EditRole);
+                    if(pointdata.isNull())
+                        ydata[i] = qQNaN();
+                    else
+                        ydata[i] = pointdata.toDouble();
                 }
 
                 // set some graph styles
