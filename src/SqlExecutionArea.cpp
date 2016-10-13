@@ -50,7 +50,7 @@ QString SqlExecutionArea::getSelectedSql() const
 
 void SqlExecutionArea::finishExecution(const QString& result)
 {
-    ui->editErrors->setText(result);
+    ui->editErrors->setPlainText(result);
 
     // Set column widths according to their contents but make sure they don't exceed a certain size
     ui->tableResult->resizeColumnsToContents();
