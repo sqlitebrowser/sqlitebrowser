@@ -2661,9 +2661,25 @@ void MainWindow::browseDataFetchAllData()
 {
     if(m_browseTableModel)
     {
+        // Show progress dialog because fetching all data might take some time
+        QProgressDialog progress(tr("Fetching all data..."),
+                                 tr("Cancel"), m_browseTableModel->rowCount(), m_browseTableModel->totalRowCount());
+        progress.setWindowModality(Qt::ApplicationModal);
+        progress.show();
+        qApp->processEvents();
+
         // Make sure all data is loaded
         while(m_browseTableModel->canFetchMore())
+        {
+            // Fetch the next bunch of data
             m_browseTableModel->fetchMore();
+
+            // Update the progress dialog and stop loading data when the cancel button was pressed
+            progress.setValue(m_browseTableModel->rowCount());
+            qApp->processEvents();
+            if(progress.wasCanceled())
+                break;
+        }
 
         // Update plot
         updatePlot(m_browseTableModel);
