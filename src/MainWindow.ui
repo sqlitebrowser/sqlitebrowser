@@ -121,9 +121,6 @@
              <iconset resource="icons/icons.qrc">
               <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
             </property>
-            <property name="shortcut">
-             <string>F5</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -1696,10 +1693,7 @@
     <string>&amp;Execute SQL</string>
    </property>
    <property name="toolTip">
-    <string>Execute SQL [F5, Ctrl+Return]</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
+    <string>Execute SQL [F5, Ctrl+Return, Ctrl+R]</string>
    </property>
   </action>
   <action name="actionSqlOpenFile">
@@ -1977,6 +1971,14 @@
     <string>Save to Remote</string>
    </property>
   </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2227,7 +2229,7 @@
    <sender>buttonRefresh</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>browseRefresh()</slot>
+   <slot>refresh()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>245</x>
@@ -3023,6 +3025,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRefresh</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>refresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -3036,7 +3054,7 @@
   <slot>navigateEnd()</slot>
   <slot>navigateGoto()</slot>
   <slot>browseFind(bool)</slot>
-  <slot>browseRefresh()</slot>
+  <slot>refresh()</slot>
   <slot>compact()</slot>
   <slot>helpWhatsThis()</slot>
   <slot>doubleClickTable(QModelIndex)</slot>

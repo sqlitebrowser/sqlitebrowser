@@ -125,7 +125,7 @@ Application::Application(int& argc, char** argv) :
                 }
             }
             if(!sqlToExecute.isEmpty())
-                m_mainWindow->browseRefresh();
+                m_mainWindow->refresh();
 
             // Jump to table if the -t/--table parameter was set
             if(!tableToBrowse.isEmpty())

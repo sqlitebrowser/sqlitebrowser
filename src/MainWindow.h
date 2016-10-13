@@ -160,7 +160,7 @@ public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false);
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
-    void browseRefresh();
+    void refresh();
     void jumpToRow(const QString& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure();

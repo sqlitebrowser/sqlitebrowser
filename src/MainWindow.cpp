@@ -120,8 +120,10 @@ void MainWindow::init()
     shortcuts.push_back(QKeySequence(tr("Ctrl+Return")));
     ui->actionExecuteSql->setShortcuts(shortcuts);
 
-    QShortcut* shortcutBrowseRefresh = new QShortcut(QKeySequence("Ctrl+R"), this);
-    connect(shortcutBrowseRefresh, SIGNAL(activated()), ui->buttonRefresh, SLOT(click()));
+    QShortcut* shortcutBrowseRefreshF5 = new QShortcut(QKeySequence("F5"), this);
+    connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
+    QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
+    connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -693,10 +695,29 @@ void MainWindow::setRecordsetLabel()
     ui->labelRecordset->setText(tr("%1 - %2 of %3").arg(from).arg(to).arg(total));
 }
 
-void MainWindow::browseRefresh()
+void MainWindow::refresh()
 {
-    db.updateSchema();
-    populateTable();
+    // What the Refresh function does depends on the currently active tab. This way the keyboard shortcuts (F5 and Ctrl+R)
+    // always perform some meaningful task; they just happen to be context dependent in the function they trigger.
+    switch(ui->mainTab->currentIndex())
+    {
+    case StructureTab:
+        // Refresh the schema
+        db.updateSchema();
+        break;
+    case BrowseTab:
+        // Refresh the schema and reload the current table
+        db.updateSchema();
+        populateTable();
+        break;
+    case PragmaTab:
+        // Do nothing
+        break;
+    case ExecuteTab:
+        // (Re-)Run the current SQL query
+        executeQuery();
+        break;
+    }
 }
 
 void MainWindow::createTable()
