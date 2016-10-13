@@ -1052,7 +1052,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
     {
         // If this object references the table and it's not the table itself save it's SQL string
         if((*it).getTableName() == tablename && (*it).gettype() != "table")
-            otherObjectsSql += (*it).getsql() + "\n";
+            otherObjectsSql += (*it).getsql().trimmed() + ";\n";
     }
 
     // Store the current foreign key settings and then disable the foreign keys being enforced to make sure the table can be dropped without errors
