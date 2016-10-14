@@ -94,6 +94,13 @@ public:
             stream >> object.displayFormats;
             stream >> object.showRowid;
             stream >> object.encoding;
+
+            // Versions pre 3.10.0 didn't store the following information in their project files.
+            // To be absolutely sure that nothing strange happens when we read past the stream for
+            // those cases, check for the end of the stream here.
+            if(stream.atEnd())
+                return stream;
+
             stream >> object.plotXAxis;
             stream >> object.plotYAxes;
 
