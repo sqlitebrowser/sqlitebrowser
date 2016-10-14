@@ -105,3 +105,62 @@ endif()
 
 target_link_libraries(test-import ${QT_LIBRARIES})
 add_test(test-import test-import)
+
+# test regex
+
+set(TESTREGEX_SRC
+        ../sqlitedb.cpp
+        ../sqlitetablemodel.cpp
+        ../sqlitetypes.cpp
+	../grammar/Sqlite3Lexer.cpp
+	../grammar/Sqlite3Parser.cpp
+        ../Settings.cpp
+        TestRegex.cpp
+)
+
+set(TESTREGEX_HDR
+        ../grammar/sqlite3TokenTypes.hpp
+        ../grammar/Sqlite3Lexer.hpp
+        ../grammar/Sqlite3Parser.hpp
+        ../sqlitetypes.h
+)
+
+set(TESTREGEX_MOC_HDR
+        ../sqlitedb.h
+        ../sqlitetablemodel.h
+        ../Settings.h
+        TestRegex.h
+)
+
+if(sqlcipher)
+    list(APPEND TESTREGEX_SRC ../CipherDialog.cpp)
+    list(APPEND TESTREGEX_MOC_HDR ../CipherDialog.h)
+endif()
+
+if(USE_QT5)
+else()
+    QT4_WRAP_CPP(TESTREGEX_MOC ${TESTREGEX_MOC_HDR})
+endif()
+
+add_executable(test-regex ${TESTREGEX_MOC} ${TESTREGEX_HDR} ${TESTREGEX_SRC})
+
+if(USE_QT5)
+    qt5_use_modules(test-regex Test Core Gui Widgets)
+    set(QT_LIBRARIES "")
+endif()
+
+if(ANTLR2_FOUND)
+else()
+    add_dependencies(test-regex antlr)
+endif()
+target_link_libraries(test-regex ${QT_LIBRARIES} ${LIBSQLITE})
+if(ANTLR2_FOUND)
+    target_link_libraries(test-regex ${ANTLR2_LIBRARIES})
+else()
+    target_link_libraries(test-regex antlr)
+endif()
+link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
+add_dependencies(test-regex qscintilla2)
+target_link_libraries(test-regex
+        qscintilla2)
+add_test(test-regex test-regex)

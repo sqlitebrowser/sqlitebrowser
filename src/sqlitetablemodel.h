@@ -11,6 +11,11 @@ namespace sqlb { class ForeignKeyClause; }
 class SqliteTableModel : public QAbstractTableModel
 {
     Q_OBJECT
+
+#ifdef REGEX_UNIT_TEST
+    friend class TestRegex;
+#endif
+
 public:
     explicit SqliteTableModel(QObject *parent = 0, DBBrowserDB* db = 0, size_t chunkSize = 50000, const QString& encoding = QString());
     void reset();
@@ -62,6 +67,7 @@ private:
     void clearCache();
 
     void buildQuery();
+    void removeCommentsFromQuery(QString& query);
     QStringList getColumns(const QString& sQuery, QVector<int>& fieldsTypes);
     int getQueryRowCount();
 

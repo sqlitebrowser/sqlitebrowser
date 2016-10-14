@@ -102,7 +102,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
 
     m_sQuery = sQuery.trimmed();
 
-    m_sQuery.remove(QRegExp("\\s*--[^\\n]+"));
+    removeCommentsFromQuery(m_sQuery);
 
     // do a count query to get the full row count in a fast manner
     m_rowCount = getQueryRowCount();
@@ -546,6 +546,10 @@ void SqliteTableModel::buildQuery()
             .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
             .arg(m_sSortOrder);
     setQuery(sql, true);
+}
+
+void SqliteTableModel::removeCommentsFromQuery(QString& query) {
+    query.remove(QRegExp("\\s*--[^\\n]+"));
 }
 
 QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fieldsTypes)
