@@ -88,6 +88,8 @@ void ExtendedTableWidget::copy()
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
+    m_buffer.clear();
+
     // If a single cell is selected, copy it to clipboard
     if (indices.size() == 1) {
         QImage img;
@@ -97,12 +99,22 @@ void ExtendedTableWidget::copy()
             qApp->clipboard()->setImage(img);
             return;
         } else {
-            qApp->clipboard()->setText(data.toString());
+            QString text = data.toString();
+            if (text.isEmpty()) {
+                // NULL and empty single-cells are handled via inner buffer
+                qApp->clipboard()->clear();
+                QByteArrayList lst;
+                lst << data.toByteArray();
+                m_buffer.push_back(lst);
+                return;
+            }
+
+            if (text.contains('\n'))
+                text = QString("\"%1\"").arg(text);
+            qApp->clipboard()->setText(text);
             return;
         }
     }
-
-    m_buffer.clear();
 
     // If any of the cells contain binary data - we use inner buffer
     bool containsBinary = false;
