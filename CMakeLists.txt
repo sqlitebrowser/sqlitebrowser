@@ -13,6 +13,7 @@ endif()
 add_definitions(-std=c++11)
 
 if(WIN32 AND MSVC)
+	project("DB Browser for SQLite")
 	if(CMAKE_CL_64)
 		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
@@ -22,7 +23,7 @@ if(WIN32 AND MSVC)
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
                 if(sqlcipher)
-                        set(SQLITE3_PATH "C:/git_repos/sqlcipher")
+                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win64")
                 else()
                         set(SQLITE3_PATH "C:/dev/SQLite-Win64")
                 endif()
@@ -35,7 +36,7 @@ if(WIN32 AND MSVC)
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
                 if(sqlcipher)
-                        set(SQLITE3_PATH "C:/git_repos/sqlcipher")
+                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win32")
                 else()
                         set(SQLITE3_PATH "C:/dev/SQLite-Win32")
                 endif()
@@ -317,7 +318,6 @@ if(WIN32 AND MSVC)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_RELWITHDEBINFO "_CONSOLE")
 	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
-	set(CMAKE_GENERATOR_TOOLSET "v120_xp" CACHE STRING "Platform Toolset" FORCE)
 endif()
 
 if(NOT WIN32)
@@ -325,7 +325,6 @@ install(TARGETS ${PROJECT_NAME}
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib)
 endif()
-	
 
 if(ENABLE_TESTING)
 	add_subdirectory(src/tests)
