@@ -20,7 +20,7 @@ if(WIN32 AND MSVC)
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
                 if(sqlcipher)
-                        set(SQLITE3_PATH "C:/git_repos/sqlcipher")
+                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win64")
                 else()
                         set(SQLITE3_PATH "C:/dev/SQLite-Win64")
                 endif()
@@ -33,7 +33,7 @@ if(WIN32 AND MSVC)
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
                 if(sqlcipher)
-                        set(SQLITE3_PATH "C:/git_repos/sqlcipher")
+                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win32")
                 else()
                         set(SQLITE3_PATH "C:/dev/SQLite-Win32")
                 endif()
