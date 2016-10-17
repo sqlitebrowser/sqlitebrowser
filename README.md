@@ -41,14 +41,14 @@ Windows binaries can be downloaded from here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
 
-Nightly builds (uncompress them with [7-Zip](http://www.7-zip.org)) are
-available at:
+Nightly builds are available at:
 
-* http://rp.oldsch00l.com/sqlitebrowser/
+* http://nightlies.sqlitebrowser.org/win32/
+* http://nightlies.sqlitebrowser.org/win64/
 
 **Note** - If for some reason the standard Windows release doesn't work for
-you (eg it gives an error), try the nightly build.  It's made using a
-different process, and is often a good fallback. :D
+you (eg it gives an error), try the nightly build.  They often fix bugs
+reported after the last release. :D
 
 ## MacOS X
 
