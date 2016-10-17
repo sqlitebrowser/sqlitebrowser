@@ -47,7 +47,7 @@ Nightly builds are available at:
 * http://nightlies.sqlitebrowser.org/win64/
 
 **Note** - If for some reason the standard Windows release doesn't work for
-you (eg it gives an error), try the nightly build.  They often fix bugs
+you (eg it gives an error), try a nightly build.  They often fix bugs
 reported after the last release. :D
 
 ## MacOS X
