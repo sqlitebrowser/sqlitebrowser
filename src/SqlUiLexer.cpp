@@ -132,7 +132,7 @@ void SqlUiLexer::setTableNames(const TablesAndColumnsMap& tables)
     autocompleteApi->clear();
     listTables.clear();
     setupAutoCompletion();
-    for(TablesAndColumnsMap::ConstIterator it=tables.constBegin();it!=tables.constEnd();++it)
+    for(auto it=tables.constBegin();it!=tables.constEnd();++it)
     {
         foreach(const QString& field, it.value())
             autocompleteApi->add(it.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +

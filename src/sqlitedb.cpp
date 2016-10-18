@@ -475,7 +475,7 @@ bool DBBrowserDB::dump(const QString& filename,
         stream << "BEGIN TRANSACTION;\n";
 
         // Loop through all tables first as they are required to generate views, indices etc. later
-        for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
+        for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         {
             if (tablesToDump.indexOf(it->getTableName()) == -1)
                 continue;
@@ -577,7 +577,7 @@ bool DBBrowserDB::dump(const QString& filename,
         // Now dump all the other objects (but only if we are exporting the schema)
         if(exportSchema)
         {
-            for(objectMap::ConstIterator it=objMap.begin();it!=objMap.end();++it)
+            for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
             {
                 // Make sure it's not a table again
                 if(it.value().gettype() == "table")
@@ -1048,7 +1048,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const QString& name, sq
 
     // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
     QString otherObjectsSql;
-    for(objectMap::ConstIterator it=objMap.begin();it!=objMap.end();++it)
+    for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         // If this object references the table and it's not the table itself save it's SQL string
         if((*it).getTableName() == tablename && (*it).gettype() != "table")
@@ -1122,10 +1122,9 @@ bool DBBrowserDB::renameTable(const QString& from_table, const QString& to_table
 
 objectMap DBBrowserDB::getBrowsableObjects() const
 {
-    objectMap::ConstIterator it;
     objectMap res;
 
-    for(it=objMap.begin();it!=objMap.end();++it)
+    for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         if(it.key() == "table" || it.key() == "view")
             res.insert(it.key(), it.value());
@@ -1136,7 +1135,7 @@ objectMap DBBrowserDB::getBrowsableObjects() const
 
 DBBrowserObject DBBrowserDB::getObjectByName(const QString& name) const
 {
-    for (objectMap::ConstIterator it = objMap.begin(); it != objMap.end(); ++it )
+    for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         if((*it).getname() == name)
             return *it;

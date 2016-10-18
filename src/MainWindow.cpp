@@ -365,7 +365,7 @@ void MainWindow::populateStructure()
     // Update table and column names for syntax highlighting
     objectMap tab = db.getBrowsableObjects();
     SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
-    for(objectMap::ConstIterator it=tab.begin(); it!=tab.end(); ++it)
+    for(auto it=tab.constBegin();it!=tab.constEnd();++it)
     {
         QString objectname = it.value().getname();
 
@@ -422,8 +422,7 @@ void MainWindow::populateTable()
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Search stored table settings for this table
-    QMap<QString, BrowseDataTableSettings>::ConstIterator tableIt;
-    tableIt = browseTableSettings.constFind(tablename);
+    auto tableIt = browseTableSettings.constFind(tablename);
     bool storedDataFound = tableIt != browseTableSettings.constEnd();
 
     // Set new table
@@ -460,7 +459,7 @@ void MainWindow::populateTable()
         showRowidColumn(tableIt.value().showRowid);
 
         // Column widths
-        for(QMap<int, int>::ConstIterator widthIt=tableIt.value().columnWidths.constBegin();widthIt!=tableIt.value().columnWidths.constEnd();++widthIt)
+        for(auto widthIt=tableIt.value().columnWidths.constBegin();widthIt!=tableIt.value().columnWidths.constEnd();++widthIt)
             ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
 
         // Sorting
@@ -469,7 +468,7 @@ void MainWindow::populateTable()
 
         // Filters
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
-        for(QMap<int, QString>::ConstIterator filterIt=tableIt.value().filterValues.constBegin();filterIt!=tableIt.value().filterValues.constEnd();++filterIt)
+        for(auto filterIt=tableIt.value().filterValues.constBegin();filterIt!=tableIt.value().filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
 
         // Encoding
@@ -1833,7 +1832,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
             sItemX = browseTableSettings[ui->comboBrowseTable->currentText()].plotXAxis;
 
             QMap<QString, PlotSettings> axesY = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
-            QMap<QString, PlotSettings>::ConstIterator it = axesY.constBegin();
+            auto it = axesY.constBegin();
             while(it != axesY.constEnd())
             {
                 mapItemsY.insert(it.key(), it.value().colour);
@@ -2508,7 +2507,7 @@ void MainWindow::on_comboLineType_currentIndexChanged(int index)
 
     // Save settings for this table
     QMap<QString, PlotSettings>& graphs = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
-    QMap<QString, PlotSettings>::Iterator it = graphs.begin();
+    auto it = graphs.begin();
     while(it != graphs.end())
     {
         it.value().lineStyle = lineStyle;
@@ -2533,7 +2532,7 @@ void MainWindow::on_comboPointShape_currentIndexChanged(int index)
 
     // Save settings for this table
     QMap<QString, PlotSettings>& graphs = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
-    QMap<QString, PlotSettings>::Iterator it = graphs.begin();
+    auto it = graphs.begin();
     while(it != graphs.end())
     {
         it.value().pointShape = shape;
@@ -2691,7 +2690,7 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
         {
             defaultBrowseTableEncoding = encoding;
 
-            for(QMap<QString, BrowseDataTableSettings>::Iterator it=browseTableSettings.begin();it!=browseTableSettings.end();++it)
+            for(auto it=browseTableSettings.begin();it!=browseTableSettings.end();++it)
                 it.value().encoding = encoding;
         }
     }

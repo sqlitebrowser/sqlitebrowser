@@ -11,7 +11,7 @@ QHash<QString, QVariant> Settings::m_hCache;
 QVariant Settings::getSettingsValue(const QString& group, const QString& name)
 {
     // Have a look in the cache first
-    QHash<QString, QVariant>::iterator cacheIndex = m_hCache.find(group + name);
+    auto cacheIndex = m_hCache.find(group + name);
     if(cacheIndex != m_hCache.end())
     {
         return cacheIndex.value();

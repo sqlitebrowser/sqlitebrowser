@@ -16,9 +16,9 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
     // Get list of tables, sort it alphabetically and fill the combobox
     QMultiMap<QString, DBBrowserObject> dbobjs;
     QList<DBBrowserObject> tables = pdb->objMap.values("table");
-    for(QList<DBBrowserObject>::ConstIterator it=tables.begin();it!=tables.end();++it)
+    for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         dbobjs.insert((*it).getname(), (*it));
-    for(QMultiMap<QString, DBBrowserObject>::ConstIterator it=dbobjs.begin(); it != dbobjs.end(); ++it)
+    for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
         ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it).getname());
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();

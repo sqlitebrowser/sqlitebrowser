@@ -355,7 +355,7 @@ FieldVector& Table::primaryKeyRef()
 
 const FieldVector& Table::primaryKey() const
 {
-    ConstraintMap::ConstIterator it = m_constraints.constBegin();
+    auto it = m_constraints.constBegin();
     while(it != m_constraints.constEnd())
     {
         if(it.value()->type() == Constraint::PrimaryKeyConstraintType)

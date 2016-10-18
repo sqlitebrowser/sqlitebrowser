@@ -184,11 +184,11 @@ void ImportCsvDialog::accept()
     // Are we importing into an existing table?
     bool importToExistingTable = false;
     objectMap objects = pdb->getBrowsableObjects();
-    for(objectMap::ConstIterator i=objects.begin();i!=objects.end();++i)
+    for(auto it=objects.constBegin();it!=objects.constEnd();++it)
     {
-        if(i.value().gettype() == "table" && i.value().getname() == ui->editName->text())
+        if(it.value().gettype() == "table" && it.value().getname() == ui->editName->text())
         {
-            if((size_t)i.value().table.fields().size() != csv.columns())
+            if((size_t)it.value().table.fields().size() != csv.columns())
             {
                 QMessageBox::warning(this, QApplication::applicationName(),
                                      tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));

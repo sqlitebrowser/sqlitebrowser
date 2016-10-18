@@ -171,11 +171,11 @@ void DbStructureModel::reloadData()
 
     // Get all database objects and sort them by their name
     QMultiMap<QString, DBBrowserObject> dbobjs;
-    for(objectMap::ConstIterator it=m_db.objMap.begin(); it != m_db.objMap.end(); ++it)
+    for(auto it=m_db.objMap.constBegin(); it != m_db.objMap.constEnd(); ++it)
         dbobjs.insert((*it).getname(), (*it));
 
     // Add the actual table objects
-    for(QMultiMap<QString, DBBrowserObject>::ConstIterator it=dbobjs.begin(); it != dbobjs.end(); ++it)
+    for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
     {
         // Object node
         QTreeWidgetItem* item = addNode(typeToParentItem.value((*it).gettype()), *it);
