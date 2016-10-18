@@ -10,7 +10,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="14"/>
         <source>About DB Browser for SQLite</source>
-        <translation type="unfinished"></translation>
+        <translation>关于 DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="47"/>
@@ -37,22 +37,22 @@
     <message>
         <location filename="../AboutDialog.cpp" line="13"/>
         <source>Version </source>
-        <translation type="unfinished"></translation>
+        <translation>版本 </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="14"/>
         <source>Qt Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Qt 版本 </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="16"/>
         <source>SQLCipher Version </source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher 版本 </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="18"/>
         <source>SQLite Version </source>
-        <translation type="unfinished"></translation>
+        <translation>SQLite 版本 </translation>
     </message>
 </context>
 <context>
@@ -1885,8 +1885,8 @@ Do you want to insert it anyway?</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <source>Revert Changes</source>
-        <translation type="obsolete">倒退更改</translation>
+        <source>&amp;Revert Changes</source>
+        <translation>倒退更改(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1393"/>
@@ -1899,8 +1899,8 @@ Do you want to insert it anyway?</source>
         <translation>这个选项用于倒退当前的数据库文件为它最后的保存状态。从最后保存操作开始做出的所有更改将会丢失。</translation>
     </message>
     <message>
-        <source>Write Changes</source>
-        <translation type="obsolete">写入更改</translation>
+        <source>&amp;Write Changes</source>
+        <translation>写入更改(&amp;W)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1411"/>
@@ -1918,8 +1918,8 @@ Do you want to insert it anyway?</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>Compact Database</source>
-        <translation type="obsolete">压缩数据库</translation>
+        <source>Compact &amp;Database</source>
+        <translation>压缩数据库(&amp;D)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1428"/>
@@ -1943,8 +1943,8 @@ Do you want to insert it anyway?</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <source>Database from SQL file...</source>
-        <translation type="obsolete">来自 SQL 文件的数据库...</translation>
+        <source>&amp;Database from SQL file...</source>
+        <translation>来自 SQL 文件的数据库(&amp;D)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1453"/>
@@ -1957,8 +1957,8 @@ Do you want to insert it anyway?</source>
         <translation>这个选项让你从一个 .sql 转储文本文件中导入数据到一个新的或现有的数据库。SQL 转储文件可以在大多数数据库引擎上创建，包括 MySQL 和 PostgreSQL。</translation>
     </message>
     <message>
-        <source>Table from CSV file...</source>
-        <translation type="obsolete">表来自 CSV 文件...</translation>
+        <source>&amp;Table from CSV file...</source>
+        <translation>表来自 CSV 文件(&amp;T)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1464"/>
@@ -1971,8 +1971,8 @@ Do you want to insert it anyway?</source>
         <translation>打开一个向导让您从一个逗号间隔的文本文件导入数据到一个数据库表中。CSV 文件可以在大多数数据库和电子表格应用程序上创建。</translation>
     </message>
     <message>
-        <source>Database to SQL file...</source>
-        <translation type="obsolete">数据库到 SQL 文件...</translation>
+        <source>&amp;Database to SQL file...</source>
+        <translation>数据库到 SQL 文件(&amp;D)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1475"/>
@@ -1985,8 +1985,8 @@ Do you want to insert it anyway?</source>
         <translation>这个选项让你导出一个数据库导一个 .sql 转储文本文件。SQL 转储文件包含在大多数数据库引擎上(包括 MySQL 和 PostgreSQL)重新创建数据库所需的所有数据。</translation>
     </message>
     <message>
-        <source>Table as CSV file...</source>
-        <translation type="obsolete">表为 CSV 文件...</translation>
+        <source>&amp;Table(s) CSV file...</source>
+        <translation>表为 CSV 文件(&amp;T)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1486"/>
@@ -1999,8 +1999,8 @@ Do you want to insert it anyway?</source>
         <translation>导出一个数据库表为逗号间隔的文本文件，准备好被导入到其他数据库或电子表格应用程序。</translation>
     </message>
     <message>
-        <source>Create Table...</source>
-        <translation type="obsolete">创建表...</translation>
+        <source>&amp;Create Table...</source>
+        <translation>创建表(&amp;C)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1504"/>
@@ -2008,8 +2008,8 @@ Do you want to insert it anyway?</source>
         <translation>打开“创建表”向导，在那里可以定义在数据库中的一个新表的名称和字段</translation>
     </message>
     <message>
-        <source>Delete Table...</source>
-        <translation type="obsolete">删除表...</translation>
+        <source>&amp;Delete Table...</source>
+        <translation>删除表(&amp;D)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1522"/>
@@ -2017,8 +2017,8 @@ Do you want to insert it anyway?</source>
         <translation>打开“删除表”向导，在那里你可以选择要丢弃的一个数据库表。</translation>
     </message>
     <message>
-        <source>Modify Table...</source>
-        <translation type="obsolete">修改表...</translation>
+        <source>&amp;Modify Table...</source>
+        <translation>修改表(&amp;M)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1537"/>
@@ -2026,8 +2026,8 @@ Do you want to insert it anyway?</source>
         <translation>打开“修改表”向导，在其中可以重命名一个现有的表。也可以从一个表中添加或删除字段，以及修改字段名称和类型。</translation>
     </message>
     <message>
-        <source>Create Index...</source>
-        <translation type="obsolete">创建索引...</translation>
+        <source>Create &amp;Index...</source>
+        <translation>创建索引(&amp;I)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1552"/>
@@ -2056,8 +2056,8 @@ Do you want to insert it anyway?</source>
         <translation>显示或隐藏数据库工具栏。</translation>
     </message>
     <message>
-        <source>What&apos;s This?</source>
-        <translation type="obsolete">这是什么?</translation>
+        <source>W&amp;hat's This?</source>
+        <translation>这是什么(&amp;W)?</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1600"/>
@@ -2088,47 +2088,47 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="29"/>
         <source>Database Structure</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库结构</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="72"/>
         <source>Browse Data</source>
-        <translation type="unfinished"></translation>
+        <translation>浏览数据</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="324"/>
         <source>Edit Pragmas</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑杂注</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="782"/>
         <source>Execute SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>执行 SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="899"/>
         <source>DB Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库工具栏</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="918"/>
-        <source>Edit Database Cell</source>
-        <translation type="unfinished"></translation>
+        <source>Edit Database &amp;Cell</source>
+        <translation>编辑数据库单元格(&amp;C)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="930"/>
         <source>SQL &amp;Log</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL 日志(&amp;L)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="948"/>
         <source>Show S&amp;QL submitted by</source>
-        <translation type="unfinished"></translation>
+        <translation>显示 SQL 提交自(&amp;Q)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1040"/>
         <source>&amp;Plot</source>
-        <translation type="unfinished"></translation>
+        <translation>图表(&amp;P)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1390"/>
@@ -2221,8 +2221,8 @@ Do you want to insert it anyway?</source>
         <translation>网站(&amp;S)...</translation>
     </message>
     <message>
-        <source>Save Project</source>
-        <translation type="obsolete">保存工程</translation>
+        <source>Sa&amp;ve Project</source>
+        <translation>保存工程(&amp;V)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1735"/>
@@ -2231,8 +2231,8 @@ Do you want to insert it anyway?</source>
         <translation>保存当前会话到一个文件</translation>
     </message>
     <message>
-        <source>Open Project</source>
-        <translation type="obsolete">打开工程</translation>
+        <source>Open &amp;Project</source>
+        <translation>打开工程(&amp;P)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1750"/>
@@ -2258,8 +2258,8 @@ Do you want to insert it anyway?</source>
         <translation>保存 SQL 文件</translation>
     </message>
     <message>
-        <source>Load extension</source>
-        <translation type="obsolete">加载扩展</translation>
+        <source>&amp;Load extension</source>
+        <translation>加载扩展(&amp;L)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1679"/>
@@ -2457,8 +2457,8 @@ Leave the field empty for using the database encoding.</source>
         <translation>执行查询时出错: %1</translation>
     </message>
     <message>
-        <source>Query executed successfully: %1 (took %2ms)</source>
-        <translation type="obsolete">查询执行成功: %1 (耗时 %2毫秒)</translation>
+        <source>Query executed successfully: %1 (took %2ms%3)</source>
+        <translation>查询执行成功: %1 (耗时 %2毫秒%3)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1054"/>
@@ -2605,8 +2605,8 @@ Are you sure?</source>
         <translation>新版本可用。</translation>
     </message>
     <message>
-        <source>A new sqlitebrowser version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
-        <translation type="obsolete">有新版本的 sqlitebrowser (%1.%2.%3)可用。&lt;br/&gt;&lt;br/&gt;请从 &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt; 下载。</translation>
+        <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
+        <translation>有新版本的 DB Browser for SQLite (%1.%2.%3)可用。&lt;br/&gt;&lt;br/&gt;请从 &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt; 下载。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1959"/>
