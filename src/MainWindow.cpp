@@ -156,10 +156,12 @@ void MainWindow::init()
     popupBrowseDataHeaderMenu->addSeparator();
     popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
-    popupRecordMenu = new QMenu(this);
-    popupRecordMenu->addAction(ui->actionDittoRecord);
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
-    connect(dittoRecordShortcut, SIGNAL(activated()), this, SLOT(dittoRecord()));
+    connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
+        int currentRow = ui->dataTable->currentIndex().row();
+        auto row = m_browseTableModel->dittoRecord(currentRow);
+        ui->dataTable->setCurrentIndex(row);
+    });
 
     // Add menu item for log dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
@@ -597,25 +599,6 @@ void MainWindow::deleteRecord()
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
-}
-
-void MainWindow::dittoRecord()
-{
-    const QString sCurrentTable = ui->comboBrowseTable->currentText();
-    if (!(db.getObjectByName(sCurrentTable).gettype() == "table" && !db.readOnly()))
-        return;
-
-    int row;
-    if (qobject_cast<QShortcut*>(sender()))
-        row = ui->dataTable->currentIndex().row();
-    else
-        row = ui->actionDittoRecord->property("current_row").toInt();
-
-    if (row == -1)
-        return;
-
-    QModelIndex idx = m_browseTableModel->dittoRecord(row);
-    ui->dataTable->setCurrentIndex(idx);
 }
 
 void MainWindow::selectTableLine(int lineToSelect)
@@ -2605,8 +2588,15 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
     if (row == -1)
         return;
 
-    ui->actionDittoRecord->setProperty("current_row", row);
-    popupRecordMenu->exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
+    QMenu popupRecordMenu(this);
+    QAction* action = new QAction("Duplicate record", &popupRecordMenu);
+    popupRecordMenu.addAction(action);
+
+    connect(action, &QAction::triggered, [&]() {
+       m_browseTableModel->dittoRecord(row);
+    });
+
+    popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
 }
 
 void MainWindow::editDataColumnDisplayFormat()

@@ -1930,14 +1930,6 @@
     <string>Change the default encoding assumed for all tables in the database</string>
    </property>
   </action>
-  <action name="actionDittoRecord">
-   <property name="text">
-    <string>Duplicate record</string>
-   </property>
-   <property name="toolTip">
-    <string>Duplicate record</string>
-   </property>
-  </action>
   <action name="actionSqlCipherFaq">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -2994,22 +2986,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionDittoRecord</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>dittoRecord()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>fileExportJsonAction</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -3102,7 +3078,6 @@
   <slot>browseDataSetTableEncoding()</slot>
   <slot>browseDataSetDefaultTableEncoding()</slot>
   <slot>browseDataFetchAllData()</slot>
-  <slot>dittoRecord()</slot>
   <slot>exportTableToJson()</slot>
  </slots>
 </ui>

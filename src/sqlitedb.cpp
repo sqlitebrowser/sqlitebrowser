@@ -784,7 +784,7 @@ QString DBBrowserDB::emptyInsertStmt(const sqlb::Table& t, const QString& pk_val
     QStringList fields;
     foreach(sqlb::FieldPtr f, t.fields())
     {
-        sqlb::ConstraintPtr pk = t.constraint(f, sqlb::Constraint::PrimaryKeyConstraintType);
+        sqlb::ConstraintPtr pk = t.constraint({f}, sqlb::Constraint::PrimaryKeyConstraintType);
         if(pk)
         {
             fields << f->name();

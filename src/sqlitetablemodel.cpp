@@ -273,7 +273,7 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = obj.table.constraint(obj.table.fields().at(column), sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = obj.table.constraint({obj.table.fields().at(column)}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(ptr.dynamicCast<sqlb::ForeignKeyClause>());
     }
