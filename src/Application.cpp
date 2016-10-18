@@ -19,10 +19,6 @@ Application::Application(int& argc, char** argv) :
 
     // Set character encoding to UTF8
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-#if QT_VERSION < 0x050000
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
 
     // Load translations
     bool ok;

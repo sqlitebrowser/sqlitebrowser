@@ -38,7 +38,7 @@ $ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
 $ cd sqlitebrowser
 $ mkdir build
 $ cd build
-$ cmake -DUSE_QT5=ON -Wno-dev ..
+$ cmake -Wno-dev ..
 $ make
 $ sudo make install
 ```

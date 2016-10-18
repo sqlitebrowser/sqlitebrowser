@@ -157,13 +157,6 @@ private:
 
 typedef QMultiMap<FieldVector, ConstraintPtr> ConstraintMap;
 
-#if QT_VERSION_MAJOR < 5
-inline bool operator<(const FieldVector&, const FieldVector&)
-{
-    return false;
-}
-#endif
-
 class Table
 {
 public:

@@ -1,9 +1,3 @@
-if(NOT USE_QT5)
-    find_package(Qt4 COMPONENTS QtTest REQUIRED)
-    include("${QT_USE_FILE}")
-    add_definitions(${QT_DEFINITIONS})
-endif()
-
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" ..)
 
 # test-sqlobjects
@@ -51,19 +45,12 @@ if(sqlcipher)
     list(APPEND TESTSQLOBJECTS_MOC_HDR ../CipherDialog.h)
 endif()
 
-if(USE_QT5)
-    QT5_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
-else()
-    QT4_WRAP_CPP(TESTSQLOBJECTS_MOC ${TESTSQLOBJECTS_MOC_HDR})
-    QT4_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
-endif()
+QT5_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
 
 add_executable(test-sqlobjects ${TESTSQLOBJECTS_MOC} ${TESTSQLOBJECTS_HDR} ${TESTSQLOBJECTS_SRC} ${TESTSQLOBJECTS_FORM_HDR})
 
-if(USE_QT5)
-    qt5_use_modules(test-sqlobjects Test Widgets Gui)
-    set(QT_LIBRARIES "")
-endif()
+qt5_use_modules(test-sqlobjects Test Widgets Gui)
+set(QT_LIBRARIES "")
 
 if(NOT ANTLR2_FOUND)
     add_dependencies(test-sqlobjects antlr)
@@ -90,16 +77,10 @@ set(TESTIMPORT_MOC_HDR
     TestImport.h
 )
 
-if(NOT USE_QT5)
-    QT4_WRAP_CPP(TESTIMPORT_MOC ${TESTIMPORT_MOC_HDR})
-endif()
-
 add_executable(test-import ${TESTIMPORT_MOC} ${TESTIMPORT_SRC})
 
-if(USE_QT5)
-    qt5_use_modules(test-import Test Core)
-    set(QT_LIBRARIES "")
-endif()
+qt5_use_modules(test-import Test Core)
+set(QT_LIBRARIES "")
 
 target_link_libraries(test-import ${QT_LIBRARIES})
 add_test(test-import test-import)
@@ -135,16 +116,10 @@ if(sqlcipher)
     list(APPEND TESTREGEX_MOC_HDR ../CipherDialog.h)
 endif()
 
-if(NOT USE_QT5)
-    QT4_WRAP_CPP(TESTREGEX_MOC ${TESTREGEX_MOC_HDR})
-endif()
-
 add_executable(test-regex ${TESTREGEX_MOC} ${TESTREGEX_HDR} ${TESTREGEX_SRC})
 
-if(USE_QT5)
-    qt5_use_modules(test-regex Test Core Gui Widgets)
-    set(QT_LIBRARIES "")
-endif()
+qt5_use_modules(test-regex Test Core Gui Widgets)
+set(QT_LIBRARIES "")
 
 if(NOT ANTLR2_FOUND)
     add_dependencies(test-regex antlr)

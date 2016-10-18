@@ -1,16 +1,10 @@
 cmake_minimum_required(VERSION 2.8.7)
 
-if(USE_QT5)
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
-    find_package(Qt5Widgets REQUIRED)
-else()
-    find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-    include("${QT_USE_FILE}")
-    add_definitions(${QT_DEFINITIONS})
-endif()
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+find_package(Qt5Widgets REQUIRED)
 
-if(APPLE AND USE_QT5)
+if(APPLE)
     find_package(Qt5MacExtras)
 endif()
 
@@ -149,18 +143,12 @@ set(QSCINTILLA_MOC_HDR
 	ScintillaQt.h
 )
 
-if(NOT USE_QT5)
-    QT4_WRAP_CPP(QSCINTILLA_MOC ${QSCINTILLA_MOC_HDR})
-endif()
-
 include_directories(. ../include ../lexlib ../src)
 
 add_library(qscintilla2 ${QSCINTILLA_SRC} ${QSCINTILLA_HDR} ${QSCINTILLA_MOC_HDR} ${QSCINTILLA_MOC})
 
-if(USE_QT5)
-    if (APPLE)
-        qt5_use_modules(qscintilla2 Widgets PrintSupport MacExtras)
-    else()
-        qt5_use_modules(qscintilla2 Widgets PrintSupport)
-    endif()
+if (APPLE)
+	qt5_use_modules(qscintilla2 Widgets PrintSupport MacExtras)
+else()
+	qt5_use_modules(qscintilla2 Widgets PrintSupport)
 endif()

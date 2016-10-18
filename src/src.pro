@@ -1,7 +1,6 @@
 TEMPLATE = app
 
-QT += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+QT += core gui network widgets printsupport
 
 TARGET = sqlitebrowser
 
@@ -13,11 +12,7 @@ QMAKE_CXXFLAGS += -std=c++11
 
 # create a unittest option
 CONFIG(unittest) {
-  greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += testlib
-  } else {
-    CONFIG += qtestlib
-  }
+  QT += testlib
 
   HEADERS += tests/testsqlobjects.h tests/TestImport.h
   SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp

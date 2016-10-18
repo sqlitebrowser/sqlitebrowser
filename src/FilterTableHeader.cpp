@@ -9,12 +9,7 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     QHeaderView(Qt::Horizontal, parent)
 {
     // Activate the click signals to allow sorting
-#if QT_VERSION >= 0x050000
     setSectionsClickable(true);
-#else
-    setClickable(true);
-#endif
-
     setSortIndicatorShown(true);
 
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes

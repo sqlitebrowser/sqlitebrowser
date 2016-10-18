@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 2.8.7)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
-OPTION(USE_QT5 "Build with qt5" OFF)
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -42,7 +41,6 @@ if(WIN32 AND MSVC)
                 endif()
 	endif()
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
-	set(USE_QT5 TRUE)
 	set(VSREDIST_DIR "C:/dev/dependencies")
 endif()
 
@@ -60,16 +58,10 @@ add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
 add_subdirectory(${QSCINTILLA_DIR})
 
-if(USE_QT5)
-	find_package(Qt5Widgets REQUIRED)
-	find_package(Qt5LinguistTools REQUIRED)
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
-else()
-    find_package(Qt4 COMPONENTS QtCore QtGui QtNetwork REQUIRED)
-    include("${QT_USE_FILE}")
-    add_definitions(${QT_DEFINITIONS})
-endif()
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 if(ENABLE_TESTING)
     enable_testing()
@@ -185,28 +177,16 @@ set(SQLB_TSS
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_tr.ts"
 )
 
-if(USE_QT5)
-    qt5_wrap_ui(SQLB_FORM_HDR ${SQLB_FORMS})
-    if(SQLB_TSS)
-        # add translations
-        foreach(SQLB_TS ${SQLB_TSS})
-            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/src/translations")
-        endforeach(SQLB_TS ${SQLB_TSS})
-        qt5_add_translation(SQLB_QMS ${SQLB_TSS})
-    endif(SQLB_TSS)
-    qt5_add_resources(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
-else()
-    QT4_WRAP_CPP(SQLB_MOC ${SQLB_MOC_HDR})
-    QT4_WRAP_UI(SQLB_FORM_HDR ${SQLB_FORMS})
-    if(SQLB_TSS)
-        # add translations
-        foreach(SQLB_TS ${SQLB_TSS})
-            SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/src/translations")
-        endforeach(SQLB_TS ${SQLB_TSS})
-        QT4_ADD_TRANSLATION(SQLB_QMS ${SQLB_TSS})
-    endif(SQLB_TSS)
-    QT4_ADD_RESOURCES(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
-endif()
+
+qt5_wrap_ui(SQLB_FORM_HDR ${SQLB_FORMS})
+if(SQLB_TSS)
+	# add translations
+	foreach(SQLB_TS ${SQLB_TSS})
+		SET_SOURCE_FILES_PROPERTIES("${SQLB_TS}" PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/src/translations")
+	endforeach(SQLB_TS ${SQLB_TSS})
+	qt5_add_translation(SQLB_QMS ${SQLB_TSS})
+endif(SQLB_TSS)
+qt5_add_resources(SQLB_RESOURCES_RCC ${SQLB_RESOURCES})
 
 #icon and correct libs/subsystem for windows
 if(WIN32)
@@ -279,10 +259,9 @@ add_executable(${PROJECT_NAME}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
 
-if(USE_QT5)
-    qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
-    set(QT_LIBRARIES "")
-endif()
+qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
+set(QT_LIBRARIES "")
+
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot qscintilla2)
 if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)
@@ -321,9 +300,9 @@ if(WIN32 AND MSVC)
 endif()
 
 if(NOT WIN32)
-install(TARGETS ${PROJECT_NAME}
-	RUNTIME DESTINATION bin
-	LIBRARY DESTINATION lib)
+	install(TARGETS ${PROJECT_NAME}
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib)
 endif()
 
 if(ENABLE_TESTING)

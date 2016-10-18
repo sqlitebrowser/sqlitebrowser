@@ -22,12 +22,7 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
         ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it).getname());
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
-
-#if QT_VERSION < 0x050000
-    tableHeaderView->setResizeMode(0, QHeaderView::Stretch);
-#else
     tableHeaderView->setSectionResizeMode(0, QHeaderView::Stretch);
-#endif
 }
 
 CreateIndexDialog::~CreateIndexDialog()

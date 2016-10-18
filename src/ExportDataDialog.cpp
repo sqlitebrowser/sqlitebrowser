@@ -9,11 +9,9 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
-#if QT_VERSION_MAJOR >= 5
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
-#endif
 
 ExportDataDialog::ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
@@ -173,9 +171,6 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
 
 bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFilename)
 {
-#if QT_VERSION_MAJOR < 5
-    return false;
-#else
     // Open file
     QFile file(sFilename);
     if(file.open(QIODevice::WriteOnly))
@@ -236,7 +231,6 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
     }
 
     return true;
-#endif
 }
 
 void ExportDataDialog::accept()
