@@ -43,8 +43,8 @@ Windows binaries can be downloaded from here:
 
 Nightly builds are available at:
 
-* http://nightlies.sqlitebrowser.org/win32/
-* http://nightlies.sqlitebrowser.org/win64/
+* https://nightlies.sqlitebrowser.org/win32/
+* https://nightlies.sqlitebrowser.org/win64/
 
 **Note** - If for some reason the standard Windows release doesn't work for
 you (eg it gives an error), try a nightly build.  They often fix bugs
@@ -68,7 +68,7 @@ brew cask install sqlitebrowser
 
 Nightly builds for OSX are available at:
 
-* http://nightlies.sqlitebrowser.org/osx/
+* https://nightlies.sqlitebrowser.org/osx/
 
 ## Linux
 
