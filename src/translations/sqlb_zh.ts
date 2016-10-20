@@ -114,7 +114,7 @@
     <message>
         <location filename="../CipherDialog.ui" line="45"/>
         <source>&amp;Reenter password</source>
-        <translation>重试密码(&amp;R)</translation>
+        <translation>确认密码(&amp;R)</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="62"/>
@@ -1527,8 +1527,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1770"/>
-        <source>Set Encryption</source>
-        <translation>设置加密</translation>
+        <source>&amp;Set Encryption</source>
+        <translation>设置加密(&amp;S)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1779"/>
@@ -2103,9 +2103,9 @@ Do you want to insert it anyway?</source>
         <translation>执行 SQL(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1637"/>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation>执行 SQL [F5, Ctrl+回车]</translation>
+        <location filename="../MainWindow.ui" line="1696"/>
+        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
+        <translation>执行 SQL [F5, Ctrl+回车, Ctrl+R]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1670"/>
@@ -2162,9 +2162,9 @@ Do you want to insert it anyway?</source>
         <translation>执行当前行</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1682"/>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation>执行当前行 [Ctrl+E]</translation>
+        <location filename="../MainWindow.ui" line="1741"/>
+        <source>Execute current line [Shift+F5]</source>
+        <translation>执行当前行 [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1685"/>
