@@ -223,6 +223,7 @@ void MainWindow::init()
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
     connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
+    connect(&m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
 
     // plot widgets
     ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
@@ -2107,7 +2108,11 @@ void MainWindow::on_butSavePlot_clicked()
 
 void MainWindow::on_actionOpen_Remote_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://dbhub.io"));
+    QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to open."));
+    if(!url.isEmpty())
+    {
+        m_remoteDb.fetchDatabase(url);
+    }
 }
 
 void MainWindow::on_actionSave_Remote_triggered()

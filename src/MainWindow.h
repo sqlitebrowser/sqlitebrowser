@@ -3,6 +3,7 @@
 
 #include "sqltextedit.h"
 #include "sqlitedb.h"
+#include "RemoteDatabase.h"
 
 #include <QMainWindow>
 #include <QMap>
@@ -173,6 +174,7 @@ private:
 
     DBBrowserDB db;
     QString defaultBrowseTableEncoding;
+    RemoteDatabase m_remoteDb;
 
     QNetworkAccessManager* m_NetworkManager;
 

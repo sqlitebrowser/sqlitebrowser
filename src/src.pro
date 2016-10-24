@@ -51,7 +51,8 @@ HEADERS += \
     SqlUiLexer.h \
     FileDialog.h \
     ColumnDisplayFormatDialog.h \
-    FilterLineEdit.h
+    FilterLineEdit.h \
+    RemoteDatabase.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -81,7 +82,8 @@ SOURCES += \
     SqlUiLexer.cpp \
     FileDialog.cpp \
     ColumnDisplayFormatDialog.cpp \
-    FilterLineEdit.cpp
+    FilterLineEdit.cpp \
+    RemoteDatabase.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

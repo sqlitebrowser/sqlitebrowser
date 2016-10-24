@@ -75,6 +75,7 @@ set(SQLB_HDR
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
+	src/RemoteDatabase.h
 )
 
 set(SQLB_MOC_HDR
@@ -134,6 +135,7 @@ set(SQLB_SRC
 	src/FileDialog.cpp
 	src/ColumnDisplayFormatDialog.cpp
 	src/FilterLineEdit.cpp
+	src/RemoteDatabase.cpp
 )
 
 set(SQLB_FORMS
