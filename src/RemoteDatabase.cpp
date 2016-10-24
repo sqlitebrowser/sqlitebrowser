@@ -9,7 +9,8 @@
 #include "FileDialog.h"
 
 RemoteDatabase::RemoteDatabase() :
-    m_manager(new QNetworkAccessManager)
+    m_manager(new QNetworkAccessManager),
+    m_currentReply(nullptr)
 {
     // TODO Set up SSL configuration here
 
@@ -42,10 +43,16 @@ void RemoteDatabase::fetchDatabase(const QString& url)
 
     // TODO Set SSL configuration here
 
-    // Fetch database
-    m_manager->get(request);
+    // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
+    m_currentReply = m_manager->get(request);
 
-    // TODO Monitor and show download progress. Also add option to cancel running downloads
+    // Initialise the progress dialog for this request
+    m_progress.setWindowModality(Qt::ApplicationModal);
+    m_progress.setCancelButtonText(tr("Cancel"));
+    m_progress.setLabelText(tr("Downloading remote database from\n%1.").arg(url));
+    m_progress.show();
+    qApp->processEvents();
+    connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
 }
 
 void RemoteDatabase::gotEncrypted(QNetworkReply* /*reply*/)
@@ -79,6 +86,8 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     }
 
     // Delete reply later, i.e. after returning from this slot function
+    m_currentReply = nullptr;
+    m_progress.hide();
     reply->deleteLater();
 }
 
@@ -89,5 +98,34 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
     QMessageBox::warning(0, qApp->applicationName(), message);
 
     // Delete reply later, i.e. after returning from this slot function
+    m_progress.hide();
     reply->deleteLater();
+}
+
+void RemoteDatabase::updateProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    // Update progress dialog
+    if(bytesTotal == -1)
+    {
+        // We don't know anything about the current progress, but it's still downloading
+        m_progress.setMinimum(0);
+        m_progress.setMaximum(0);
+        m_progress.setValue(0);
+    } else if(bytesReceived == bytesTotal) {
+        // The download has finished
+        m_progress.hide();
+    } else {
+        // It's still downloading and we know the current progress
+        m_progress.setMinimum(0);
+        m_progress.setMaximum(bytesTotal);
+        m_progress.setValue(bytesReceived);
+    }
+
+    // Check if the Cancel button has been pressed
+    qApp->processEvents();
+    if(m_currentReply && m_progress.wasCanceled())
+    {
+        m_currentReply->abort();
+        m_progress.hide();
+    }
 }
