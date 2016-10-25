@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QProgressDialog>
+#include <QSslConfiguration>
 
 class QNetworkAccessManager;
 class QString;
@@ -16,6 +17,8 @@ class RemoteDatabase : public QObject
 public:
     RemoteDatabase();
     virtual ~RemoteDatabase();
+
+    void reloadSettings();
 
     void fetchDatabase(const QString& url);
 
@@ -31,6 +34,7 @@ private:
     QNetworkAccessManager* m_manager;
     QProgressDialog m_progress;
     QNetworkReply* m_currentReply;
+    QSslConfiguration m_sslConfiguration;
 };
 
 #endif

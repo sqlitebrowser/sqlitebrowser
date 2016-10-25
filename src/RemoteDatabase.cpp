@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QNetworkReply>
 #include <QFile>
+#include <QSslKey>
 
 #include "RemoteDatabase.h"
 #include "version.h"
@@ -12,7 +13,8 @@ RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
     m_currentReply(nullptr)
 {
-    // TODO Set up SSL configuration here
+    // Load settings and set up some more stuff while doing so
+    reloadSettings();
 
     // TODO Add support for proxies here
 
@@ -25,6 +27,40 @@ RemoteDatabase::RemoteDatabase() :
 RemoteDatabase::~RemoteDatabase()
 {
     delete m_manager;
+}
+
+void RemoteDatabase::reloadSettings()
+{
+    // Set up SSL configuration
+    m_sslConfiguration = QSslConfiguration::defaultConfiguration();
+    m_sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyPeer);
+
+    // Load CA certs from resource file
+    QDir dirCaCerts(":/certs");
+    QStringList caCertsList = dirCaCerts.entryList();
+    QList<QSslCertificate> caCerts;
+    foreach(const QString& caCertName, caCertsList)
+    {
+        QFile fileCaCert(":/certs/" + caCertName);
+        fileCaCert.open(QFile::ReadOnly);
+        caCerts.push_back(QSslCertificate(&fileCaCert));
+        fileCaCert.close();
+    }
+    m_sslConfiguration.setCaCertificates(caCerts);
+
+    // Load client cert
+    QFile fileClientCert("client.crt");
+    fileClientCert.open(QFile::ReadOnly);
+    QSslCertificate clientCert(&fileClientCert);
+    fileClientCert.close();
+    m_sslConfiguration.setLocalCertificate(clientCert);
+
+    // Load private key
+    QFile fileClientKey("client.key");
+    fileClientKey.open(QFile::ReadOnly);
+    QSslKey clientKey(&fileClientKey, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, "password");
+    fileClientKey.close();
+    m_sslConfiguration.setPrivateKey(clientKey);
 }
 
 void RemoteDatabase::fetchDatabase(const QString& url)
@@ -41,7 +77,10 @@ void RemoteDatabase::fetchDatabase(const QString& url)
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
 
-    // TODO Set SSL configuration here
+    // Set SSL configuration when trying to access a file via the HTTPS protocol
+    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
+    if(https)
+        request.setSslConfiguration(m_sslConfiguration);
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);
@@ -55,9 +94,12 @@ void RemoteDatabase::fetchDatabase(const QString& url)
     connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
 }
 
-void RemoteDatabase::gotEncrypted(QNetworkReply* /*reply*/)
+void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
 {
-    // TODO Check SSL configuration here and abort reply if it's not good
+    // Verify the server's certificate using our CA certs. If it's not good, abort the reply here
+    auto verificationErrors = reply->sslConfiguration().peerCertificate().verify(m_sslConfiguration.caCertificates());
+    if(!(verificationErrors.size() == 0 || (verificationErrors.size() == 1 && verificationErrors.at(0).error() == QSslError::SelfSignedCertificate)))
+        reply->abort();
 }
 
 void RemoteDatabase::gotReply(QNetworkReply* reply)
@@ -93,6 +135,25 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 
 void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& errors)
 {
+    // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
+    // TODO What about the hostname mismatch? Can we remove that from the list of ignored errors later?
+    bool serious_errors = false;
+    foreach(const QSslError& error, errors)
+    {
+        if(error.error() != QSslError::SelfSignedCertificate && error.error() != QSslError::HostNameMismatch)
+        {
+            serious_errors = true;
+            break;
+        }
+    }
+
+    // Just stop the error checking here and accept the reply if there were no 'serious' errors
+    if(!serious_errors)
+    {
+        reply->ignoreSslErrors(errors);
+        return;
+    }
+
     // Build an error message and short it to the user
     QString message = tr("Error opening remote database file from %1.\n%2").arg(reply->url().toString()).arg(errors.at(0).errorString());
     QMessageBox::warning(0, qApp->applicationName(), message);

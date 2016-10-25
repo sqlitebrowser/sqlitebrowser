@@ -87,7 +87,8 @@ SOURCES += \
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
-             translations/translations.qrc
+             translations/translations.qrc \
+             certs/CaCerts.qrc
 
 FORMS += \
     MainWindow.ui \

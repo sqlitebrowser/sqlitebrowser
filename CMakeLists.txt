@@ -158,6 +158,7 @@ set(SQLB_RESOURCES
 	src/icons/icons.qrc
 	src/translations/flags/flags.qrc
 	src/translations/translations.qrc
+	src/certs/CaCerts.qrc
 )
 
 set(SQLB_MISC
