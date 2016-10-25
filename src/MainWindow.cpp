@@ -2445,6 +2445,11 @@ void MainWindow::editEncryption()
         if(ok)
             ok = db.executeSQL("SELECT sqlcipher_export('sqlitebrowser_edit_encryption');", false, false);
 
+        // Set user version of the new database
+        qApp->processEvents();
+        if (ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.user_version = %1;").arg(db.getPragma("user_version").toInt()), false, false);
+
         // Check for errors
         qApp->processEvents();
         if(ok)
