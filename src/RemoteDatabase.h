@@ -2,13 +2,13 @@
 #define REMOTEDATABASE_H
 
 #include <QObject>
-#include <QProgressDialog>
 #include <QSslConfiguration>
 
 class QNetworkAccessManager;
 class QString;
 class QNetworkReply;
 class QSslError;
+class QProgressDialog;
 
 class RemoteDatabase : public QObject
 {
@@ -32,7 +32,7 @@ private:
     void updateProgress(qint64 bytesReceived, qint64 bytesTotal);
 
     QNetworkAccessManager* m_manager;
-    QProgressDialog m_progress;
+    QProgressDialog* m_progress;
     QNetworkReply* m_currentReply;
     QSslConfiguration m_sslConfiguration;
 };
