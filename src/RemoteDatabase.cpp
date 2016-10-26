@@ -96,9 +96,20 @@ void RemoteDatabase::fetchDatabase(const QString& url)
 
 void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
 {
-    // Verify the server's certificate using our CA certs. If it's not good, abort the reply here
+    // Verify the server's certificate using our CA certs
     auto verificationErrors = reply->sslConfiguration().peerCertificate().verify(m_sslConfiguration.caCertificates());
-    if(!(verificationErrors.size() == 0 || (verificationErrors.size() == 1 && verificationErrors.at(0).error() == QSslError::SelfSignedCertificate)))
+    bool good = false;
+    if(verificationErrors.size() == 0)
+    {
+        good = true;
+    } else if(verificationErrors.size() == 1) {
+        // Ignore any self signed certificate errors
+        if(verificationErrors.at(0).error() == QSslError::SelfSignedCertificate || verificationErrors.at(0).error() == QSslError::SelfSignedCertificateInChain)
+            good = true;
+    }
+
+    // If the server certificate didn't turn out to be good, abort the reply here
+    if(!good)
         reply->abort();
 }
 
