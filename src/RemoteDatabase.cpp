@@ -43,12 +43,7 @@ void RemoteDatabase::reloadSettings()
     QStringList caCertsList = dirCaCerts.entryList();
     QList<QSslCertificate> caCerts;
     foreach(const QString& caCertName, caCertsList)
-    {
-        QFile fileCaCert(":/certs/" + caCertName);
-        fileCaCert.open(QFile::ReadOnly);
-        caCerts.push_back(QSslCertificate(&fileCaCert));
-        fileCaCert.close();
-    }
+        caCerts += QSslCertificate::fromPath(":/certs/" + caCertName);
     m_sslConfiguration.setCaCertificates(caCerts);
 
     // Load client cert
