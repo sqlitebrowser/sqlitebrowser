@@ -89,6 +89,14 @@ QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& 
     if(group == "exportcsv" && name == "quotecharacter")
         return '"';
 
+    // newline character
+    if (group == "exportcsv" && name == "newlinecharacters")
+#ifdef Q_OS_WIN
+        return "\r\n";
+#else
+        return "\n";
+#endif
+
     // exportjson/prettyprint?
     if(group == "exportjson" && name == "prettyprint")
         return true;
