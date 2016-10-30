@@ -409,7 +409,8 @@ functionname
 
 expr
   :
-  subexpr ((binaryoperator | AND | OR) subexpr )*
+  ( LPAREN subexpr (COMMA subexpr)+ RPAREN binaryoperator LPAREN subexpr (COMMA subexpr)+ RPAREN )
+  | ( subexpr ((binaryoperator | AND | OR) subexpr )* )
   ;
 
 subexpr
