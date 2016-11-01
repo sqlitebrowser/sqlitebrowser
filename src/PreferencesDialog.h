@@ -28,6 +28,7 @@ private slots:
     virtual void showColourDialog(QTreeWidgetItem* item, int column);
     virtual void addExtension();
     virtual void removeExtension();
+    virtual void activateRemoteTab(bool active);
 
 private:
     Ui::PreferencesDialog *ui;

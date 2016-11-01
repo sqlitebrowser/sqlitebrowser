@@ -1691,7 +1691,7 @@ void MainWindow::reloadSettings()
 
     // Hide or show the File → Remote menu as needed
     QAction *remoteMenuAction = ui->menuRemote->menuAction();
-    remoteMenuAction->setVisible(Settings::getSettingsValue("MainWindow", "remotemenu").toBool());
+    remoteMenuAction->setVisible(Settings::getSettingsValue("remote", "active").toBool());
 
     // Update the remote database connection settings
     m_remoteDb.reloadSettings();

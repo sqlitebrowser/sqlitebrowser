@@ -20,6 +20,8 @@ public:
 
     void reloadSettings();
 
+    const QList<QSslCertificate>& caCertificates() const;
+
     void fetchDatabase(const QString& url);
 
 signals:

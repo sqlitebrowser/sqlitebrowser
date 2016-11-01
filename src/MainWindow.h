@@ -33,6 +33,7 @@ public:
     ~MainWindow();
 
     DBBrowserDB& getDb() { return db; }
+    const RemoteDatabase& getRemote() const { return m_remoteDb; }
 
     struct PlotSettings
     {

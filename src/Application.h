@@ -16,6 +16,8 @@ public:
 
     bool dontShowMainWindow() { return m_dontShowMainWindow; }
 
+    MainWindow* mainWindow() { return m_mainWindow; }
+
 protected:
     bool event(QEvent* event);
 

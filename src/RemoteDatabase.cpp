@@ -15,25 +15,6 @@ RemoteDatabase::RemoteDatabase() :
     m_progress(nullptr),
     m_currentReply(nullptr)
 {
-    // Load settings and set up some more stuff while doing so
-    reloadSettings();
-
-    // TODO Add support for proxies here
-
-    // Set up signals
-    connect(m_manager, &QNetworkAccessManager::finished, this, &RemoteDatabase::gotReply);
-    connect(m_manager, &QNetworkAccessManager::encrypted, this, &RemoteDatabase::gotEncrypted);
-    connect(m_manager, &QNetworkAccessManager::sslErrors, this, &RemoteDatabase::gotError);
-}
-
-RemoteDatabase::~RemoteDatabase()
-{
-    delete m_manager;
-    delete m_progress;
-}
-
-void RemoteDatabase::reloadSettings()
-{
     // Set up SSL configuration
     m_sslConfiguration = QSslConfiguration::defaultConfiguration();
     m_sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyPeer);
@@ -59,6 +40,25 @@ void RemoteDatabase::reloadSettings()
     QSslKey clientKey(&fileClientKey, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, "password");
     fileClientKey.close();
     m_sslConfiguration.setPrivateKey(clientKey);
+
+    // Load settings and set up some more stuff while doing so
+    reloadSettings();
+
+    // Set up signals
+    connect(m_manager, &QNetworkAccessManager::finished, this, &RemoteDatabase::gotReply);
+    connect(m_manager, &QNetworkAccessManager::encrypted, this, &RemoteDatabase::gotEncrypted);
+    connect(m_manager, &QNetworkAccessManager::sslErrors, this, &RemoteDatabase::gotError);
+}
+
+RemoteDatabase::~RemoteDatabase()
+{
+    delete m_manager;
+    delete m_progress;
+}
+
+void RemoteDatabase::reloadSettings()
+{
+    // TODO Add support for proxies here
 }
 
 void RemoteDatabase::fetchDatabase(const QString& url)
@@ -200,4 +200,10 @@ void RemoteDatabase::updateProgress(qint64 bytesReceived, qint64 bytesTotal)
         m_currentReply->abort();
         m_progress->hide();
     }
+}
+
+const QList<QSslCertificate>& RemoteDatabase::caCertificates() const
+{
+    static QList<QSslCertificate> certs = m_sslConfiguration.caCertificates();
+    return certs;
 }

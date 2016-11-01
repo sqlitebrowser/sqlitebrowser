@@ -3,6 +3,8 @@
 #include "sqlitedb.h"
 #include "FileDialog.h"
 #include "Settings.h"
+#include "Application.h"
+#include "MainWindow.h"
 
 #include <QDir>
 #include <QSettings>
@@ -59,7 +61,7 @@ void PreferencesDialog::loadSettings()
     ui->comboDefaultLocation->setCurrentIndex(Settings::getSettingsValue("db", "savedefaultlocation").toInt());
     ui->locationEdit->setText(Settings::getSettingsValue("db", "defaultlocation").toString());
     ui->checkUpdates->setChecked(Settings::getSettingsValue("checkversion", "enabled").toBool());
-    ui->checkUseRemotes->setChecked(Settings::getSettingsValue("MainWindow", "remotemenu").toBool());
+
     ui->checkHideSchemaLinebreaks->setChecked(Settings::getSettingsValue("db", "hideschemalinebreaks").toBool());
     ui->foreignKeysCheckBox->setChecked(Settings::getSettingsValue("db", "foreignkeys").toBool());
     ui->spinPrefetchSize->setValue(Settings::getSettingsValue("db", "prefetchsize").toInt());
@@ -108,6 +110,35 @@ void PreferencesDialog::loadSettings()
         }
     }
 
+    // Remote settings
+    ui->checkUseRemotes->setChecked(Settings::getSettingsValue("remote", "active").toBool());
+    auto ca_certs = static_cast<Application*>(qApp)->mainWindow()->getRemote().caCertificates();
+    ui->tableCaCerts->setRowCount(ca_certs.size());
+    for(int i=0;i<ca_certs.size();i++)
+    {
+        QSslCertificate cert = ca_certs.at(i);
+
+        QTableWidgetItem* cert_cn = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::CommonName).at(0));
+        cert_cn->setFlags(Qt::ItemIsSelectable);
+        ui->tableCaCerts->setItem(i, 0, cert_cn);
+
+        QTableWidgetItem* cert_o = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::Organization).at(0));
+        cert_o->setFlags(Qt::ItemIsSelectable);
+        ui->tableCaCerts->setItem(i, 1, cert_o);
+
+        QTableWidgetItem* cert_from = new QTableWidgetItem(cert.effectiveDate().toString());
+        cert_from->setFlags(Qt::ItemIsSelectable);
+        ui->tableCaCerts->setItem(i, 2, cert_from);
+
+        QTableWidgetItem* cert_to = new QTableWidgetItem(cert.expiryDate().toString());
+        cert_to->setFlags(Qt::ItemIsSelectable);
+        ui->tableCaCerts->setItem(i, 3, cert_to);
+
+        QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
+        cert_serialno->setFlags(Qt::ItemIsSelectable);
+        ui->tableCaCerts->setItem(i, 4, cert_serialno);
+    }
+
     // Gracefully handle the preferred Editor font not being available
     matchingFont = ui->comboEditorFont->findText(Settings::getSettingsValue("editor", "font").toString(), Qt::MatchExactly);
     if (matchingFont == -1)
@@ -138,7 +169,6 @@ void PreferencesDialog::saveSettings()
 
     Settings::setSettingsValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
 
-    Settings::setSettingsValue("MainWindow", "remotemenu", ui->checkUseRemotes->isChecked());
     Settings::setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
     Settings::setSettingsValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
@@ -175,6 +205,8 @@ void PreferencesDialog::saveSettings()
         extList.append(item->text());
     Settings::setSettingsValue("extensions", "list", extList);
     Settings::setSettingsValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
+
+    Settings::setSettingsValue("remote", "active", ui->checkUseRemotes->isChecked());
 
     // Warn about restarting to change language
     QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
@@ -335,4 +367,9 @@ void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingN
 {
     Settings::setSettingsValue("databrowser", settingName + "_colour",
         frame->palette().color(frame->backgroundRole()));
+}
+
+void PreferencesDialog::activateRemoteTab(bool active)
+{
+    ui->tabWidget->setTabEnabled(ui->tabWidget->indexOf(ui->tabRemote), active);
 }

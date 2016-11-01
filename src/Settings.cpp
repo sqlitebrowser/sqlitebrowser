@@ -109,10 +109,6 @@ QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& 
     if(group == "MainWindow" && name == "windowState")
         return "";
 
-    // Enable the File → Remote menu by default
-    if(group == "MainWindow" && name == "remotemenu")
-        return true;
-
     // SQLLogDock/Log?
     if(group == "SQLLogDock" && name == "Log")
         return "Application";
@@ -249,6 +245,10 @@ QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& 
         if(name == "pointShape")
             return 4;
     }
+
+    // Enable the File → Remote menu by default
+    if(group == "remote" && name == "active")
+        return true;
 
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
