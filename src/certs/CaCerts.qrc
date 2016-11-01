@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/certs">
-        <file>mlnt.crt</file>
+        <file>test.crt</file>
     </qresource>
 </RCC>
