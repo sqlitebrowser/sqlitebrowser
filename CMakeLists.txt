@@ -60,6 +60,7 @@ add_subdirectory(${QSCINTILLA_DIR})
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
+find_package(Qt5Network REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -75,7 +76,6 @@ set(SQLB_HDR
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
-	src/RemoteDatabase.h
 )
 
 set(SQLB_MOC_HDR
@@ -103,6 +103,7 @@ set(SQLB_MOC_HDR
 	src/FileDialog.h
 	src/ColumnDisplayFormatDialog.h
 	src/FilterLineEdit.h
+	src/RemoteDatabase.h
 )
 
 set(SQLB_SRC

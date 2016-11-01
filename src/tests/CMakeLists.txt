@@ -10,11 +10,7 @@ set(TESTSQLOBJECTS_SRC
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
-    ../PreferencesDialog.cpp
     testsqlobjects.cpp
-    ../FileDialog.cpp
-    ../sqltextedit.cpp
-    ../SqlUiLexer.cpp
 )
 
 set(TESTSQLOBJECTS_HDR
@@ -24,19 +20,11 @@ set(TESTSQLOBJECTS_HDR
     ../sqlitetypes.h
 )
 
-set(TESTSQLOBJECTS_FORMS
-    ../PreferencesDialog.ui
-)
-
 set(TESTSQLOBJECTS_MOC_HDR
     ../sqlitedb.h
     ../sqlitetablemodel.h
     ../Settings.h
-    ../PreferencesDialog.h
     testsqlobjects.h
-    ../FileDialog.h
-    ../sqltextedit.h
-    ../SqlUiLexer.h
 )
 
 if(sqlcipher)
