@@ -7,6 +7,8 @@
 
 class QTreeWidgetItem;
 class QFrame;
+class QTableWidget;
+class QSslCertificate;
 
 namespace Ui {
 class PreferencesDialog;
@@ -29,6 +31,8 @@ private slots:
     virtual void addExtension();
     virtual void removeExtension();
     virtual void activateRemoteTab(bool active);
+    virtual void addClientCertificate();
+    virtual void removeClientCertificate();
 
 private:
     Ui::PreferencesDialog *ui;
@@ -36,6 +40,7 @@ private:
     void fillLanguageBox();
     void loadColorSetting(QFrame *frame, const QString &name);
     void saveColorSetting(QFrame *frame, const QString &name);
+    void addClientCertToTable(const QString& path, const QSslCertificate& cert);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

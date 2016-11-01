@@ -21,6 +21,7 @@ public:
     void reloadSettings();
 
     const QList<QSslCertificate>& caCertificates() const;
+    const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
 
     void fetchDatabase(const QString& url);
 
@@ -37,6 +38,7 @@ private:
     QProgressDialog* m_progress;
     QNetworkReply* m_currentReply;
     QSslConfiguration m_sslConfiguration;
+    QMap<QString, QSslCertificate> m_clientCertFiles;
 };
 
 #endif

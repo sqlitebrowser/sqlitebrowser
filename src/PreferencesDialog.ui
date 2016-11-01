@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
+    <width>597</width>
     <height>614</height>
    </rect>
   </property>
@@ -282,7 +282,7 @@
        <item row="7" column="0">
         <widget class="QLabel" name="labelDatabaseDefaultSqlText">
          <property name="text">
-          <string>SQL to execute after opening database</string>
+          <string>SQ&amp;L to execute after opening database</string>
          </property>
          <property name="buddy">
           <cstring>editDatabaseDefaultSqlText</cstring>
@@ -1020,6 +1020,15 @@
        </item>
        <item row="0" column="1">
         <widget class="QTableWidget" name="tableCaCerts">
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
          <column>
           <property name="text">
            <string>Subject CN</string>
@@ -1052,6 +1061,102 @@
           </property>
          </column>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_22">
+         <property name="text">
+          <string>Your certificates</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QTableWidget" name="tableClientCerts">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::ExtendedSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollPerPixel</enum>
+           </property>
+           <column>
+            <property name="text">
+             <string>File</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Subject CN</string>
+            </property>
+            <property name="toolTip">
+             <string>Subject Common Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Issuer CN</string>
+            </property>
+            <property name="toolTip">
+             <string>Issuer Common Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Valid from</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Valid to</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Serial number</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QToolButton" name="buttonClientCertAdd">
+             <property name="icon">
+              <iconset resource="icons/icons.qrc">
+               <normaloff>:/icons/trigger_create</normaloff>:/icons/trigger_create</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="buttonClientCertRemove">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons/icons.qrc">
+               <normaloff>:/icons/trigger_delete</normaloff>:/icons/trigger_delete</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -1224,8 +1329,8 @@
      <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>55</x>
-     <y>252</y>
+     <x>108</x>
+     <y>280</y>
     </hint>
    </hints>
   </connection>
@@ -1261,6 +1366,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonClientCertAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>addClientCertificate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>563</x>
+     <y>257</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>596</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonClientCertRemove</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>removeClientCertificate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>561</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>597</x>
+     <y>295</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>saveSettings()</slot>
@@ -1269,5 +1406,7 @@
   <slot>addExtension()</slot>
   <slot>removeExtension()</slot>
   <slot>activateRemoteTab(bool)</slot>
+  <slot>addClientCertificate()</slot>
+  <slot>removeClientCertificate()</slot>
  </slots>
 </ui>

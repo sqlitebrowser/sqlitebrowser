@@ -9,6 +9,7 @@
 #include "RemoteDatabase.h"
 #include "version.h"
 #include "FileDialog.h"
+#include "Settings.h"
 
 RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
@@ -27,18 +28,14 @@ RemoteDatabase::RemoteDatabase() :
         caCerts += QSslCertificate::fromPath(":/certs/" + caCertName);
     m_sslConfiguration.setCaCertificates(caCerts);
 
-    // Load client cert
-    QFile fileClientCert("client.crt");
+    // Load client cert and private key
+    QFile fileClientCert("client.cert.pem");
     fileClientCert.open(QFile::ReadOnly);
     QSslCertificate clientCert(&fileClientCert);
+    fileClientCert.seek(0);
+    QSslKey clientKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
     fileClientCert.close();
     m_sslConfiguration.setLocalCertificate(clientCert);
-
-    // Load private key
-    QFile fileClientKey("client.key");
-    fileClientKey.open(QFile::ReadOnly);
-    QSslKey clientKey(&fileClientKey, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, "password");
-    fileClientKey.close();
     m_sslConfiguration.setPrivateKey(clientKey);
 
     // Load settings and set up some more stuff while doing so
@@ -58,6 +55,18 @@ RemoteDatabase::~RemoteDatabase()
 
 void RemoteDatabase::reloadSettings()
 {
+    // Load all configured client certificates
+    m_clientCertFiles.clear();
+    auto client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+    foreach(const QString& path, client_certs)
+    {
+        QFile file(path);
+        file.open(QFile::ReadOnly);
+        QSslCertificate cert(&file);
+        file.close();
+        m_clientCertFiles.insert(path, cert);
+    }
+
     // TODO Add support for proxies here
 }
 

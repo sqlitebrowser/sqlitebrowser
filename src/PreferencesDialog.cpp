@@ -11,6 +11,7 @@
 #include <QColorDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QStandardPaths>
 
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
@@ -20,6 +21,7 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
     ui->labelDatabaseDefaultSqlText->setVisible(false);
     ui->editDatabaseDefaultSqlText->setVisible(false);
+    ui->tableClientCerts->setColumnHidden(0, true);
 
     ui->fr_bin_bg->installEventFilter(this);
     ui->fr_bin_fg->installEventFilter(this);
@@ -112,31 +114,42 @@ void PreferencesDialog::loadSettings()
 
     // Remote settings
     ui->checkUseRemotes->setChecked(Settings::getSettingsValue("remote", "active").toBool());
-    auto ca_certs = static_cast<Application*>(qApp)->mainWindow()->getRemote().caCertificates();
-    ui->tableCaCerts->setRowCount(ca_certs.size());
-    for(int i=0;i<ca_certs.size();i++)
     {
-        QSslCertificate cert = ca_certs.at(i);
+        auto ca_certs = static_cast<Application*>(qApp)->mainWindow()->getRemote().caCertificates();
+        ui->tableCaCerts->setRowCount(ca_certs.size());
+        for(int i=0;i<ca_certs.size();i++)
+        {
+            QSslCertificate cert = ca_certs.at(i);
 
-        QTableWidgetItem* cert_cn = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::CommonName).at(0));
-        cert_cn->setFlags(Qt::ItemIsSelectable);
-        ui->tableCaCerts->setItem(i, 0, cert_cn);
+            QTableWidgetItem* cert_cn = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::CommonName).at(0));
+            cert_cn->setFlags(Qt::ItemIsSelectable);
+            ui->tableCaCerts->setItem(i, 0, cert_cn);
 
-        QTableWidgetItem* cert_o = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::Organization).at(0));
-        cert_o->setFlags(Qt::ItemIsSelectable);
-        ui->tableCaCerts->setItem(i, 1, cert_o);
+            QTableWidgetItem* cert_o = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::Organization).at(0));
+            cert_o->setFlags(Qt::ItemIsSelectable);
+            ui->tableCaCerts->setItem(i, 1, cert_o);
 
-        QTableWidgetItem* cert_from = new QTableWidgetItem(cert.effectiveDate().toString());
-        cert_from->setFlags(Qt::ItemIsSelectable);
-        ui->tableCaCerts->setItem(i, 2, cert_from);
+            QTableWidgetItem* cert_from = new QTableWidgetItem(cert.effectiveDate().toString());
+            cert_from->setFlags(Qt::ItemIsSelectable);
+            ui->tableCaCerts->setItem(i, 2, cert_from);
 
-        QTableWidgetItem* cert_to = new QTableWidgetItem(cert.expiryDate().toString());
-        cert_to->setFlags(Qt::ItemIsSelectable);
-        ui->tableCaCerts->setItem(i, 3, cert_to);
+            QTableWidgetItem* cert_to = new QTableWidgetItem(cert.expiryDate().toString());
+            cert_to->setFlags(Qt::ItemIsSelectable);
+            ui->tableCaCerts->setItem(i, 3, cert_to);
 
-        QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
-        cert_serialno->setFlags(Qt::ItemIsSelectable);
-        ui->tableCaCerts->setItem(i, 4, cert_serialno);
+            QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
+            cert_serialno->setFlags(Qt::ItemIsSelectable);
+            ui->tableCaCerts->setItem(i, 4, cert_serialno);
+        }
+    }
+    {
+        QStringList client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+        foreach(const QString& file, client_certs)
+        {
+            auto certs = QSslCertificate::fromPath(file);
+            foreach(const QSslCertificate& cert, certs)
+                addClientCertToTable(file, cert);
+        }
     }
 
     // Gracefully handle the preferred Editor font not being available
@@ -206,7 +219,47 @@ void PreferencesDialog::saveSettings()
     Settings::setSettingsValue("extensions", "list", extList);
     Settings::setSettingsValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
 
+    // Save remote settings
     Settings::setSettingsValue("remote", "active", ui->checkUseRemotes->isChecked());
+    QStringList old_client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+    QStringList new_client_certs;
+    for(int i=0;i<ui->tableClientCerts->rowCount();i++)
+    {
+        // Loop through the new list of client certs
+
+        // If this certificate was already imported, remove it from the list of old certificates. All remaining certificates on this
+        // list will be deleted later on.
+        QString path = ui->tableClientCerts->item(i, 0)->text();
+        if(old_client_certs.contains(path))
+        {
+            // This is a cert that is already imported
+            old_client_certs.removeAll(path);
+            new_client_certs.push_back(path);
+        } else {
+            // This is a new certificate. Copy file to a safe place.
+
+            // Generate unique destination file name
+            QString copy_to = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/").append(QFileInfo(path).fileName());
+            int suffix = 0;
+            do
+            {
+                suffix++;
+            } while(QFile::exists(copy_to + QString::number(suffix)));
+
+            // Copy file
+            copy_to.append(QString::number(suffix));
+            QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+            QFile::copy(path, copy_to);
+
+            new_client_certs.push_back(copy_to);
+        }
+    }
+    foreach(const QString& file, old_client_certs)
+    {
+        // Now only the deleted client certs are still in the old list. Delete the cert files associated with them.
+        QFile::remove(file);
+    }
+    Settings::setSettingsValue("remote", "client_certificates", new_client_certs);
 
     // Warn about restarting to change language
     QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
@@ -372,4 +425,77 @@ void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingN
 void PreferencesDialog::activateRemoteTab(bool active)
 {
     ui->tabWidget->setTabEnabled(ui->tabWidget->indexOf(ui->tabRemote), active);
+}
+
+void PreferencesDialog::addClientCertificate()
+{
+    // Get certificate file to import and abort here if no file gets selected
+    // NOTE: We assume here that this file contains both, certificate and private key!
+    QString path = FileDialog::getOpenFileName(this, tr("Import certificate file"), "*.pem");
+    if(path.isEmpty())
+        return;
+
+    // Open file and check if any certificates were imported
+    auto certs = QSslCertificate::fromPath(path);
+    if(certs.size() == 0)
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("No certificates found in this file."));
+        return;
+    }
+
+    // Add certificates to list
+    for(int i=0;i<certs.size();i++)
+        addClientCertToTable(path, certs.at(i));
+}
+
+void PreferencesDialog::removeClientCertificate()
+{
+    // Any row selected?
+    int row = ui->tableClientCerts->currentRow();
+    if(row == -1)
+        return;
+
+    // Double check
+    if(QMessageBox::question(this, qApp->applicationName(), tr("Are you sure you want do remove this certificate? All certificate "
+                                                               "data will be deleted from the application settings!"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    {
+        ui->tableClientCerts->removeRow(row);
+    }
+}
+
+void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCertificate& cert)
+{
+    // Do nothing if the file doesn't even exist
+    if(!QFile::exists(path))
+        return;
+
+    // Add new row
+    int row = ui->tableClientCerts->rowCount();
+    ui->tableClientCerts->setRowCount(row + 1);
+
+    // Fill row with data
+    QTableWidgetItem* cert_file = new QTableWidgetItem(path);
+    cert_file->setFlags(Qt::ItemIsSelectable);
+    ui->tableClientCerts->setItem(row, 0, cert_file);
+
+    QTableWidgetItem* cert_subject_cn = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::CommonName).at(0));
+    cert_subject_cn->setFlags(Qt::ItemIsSelectable);
+    ui->tableClientCerts->setItem(row, 1, cert_subject_cn);
+
+    QTableWidgetItem* cert_issuer_cn = new QTableWidgetItem(cert.issuerInfo(QSslCertificate::CommonName).at(0));
+    cert_issuer_cn->setFlags(Qt::ItemIsSelectable);
+    ui->tableClientCerts->setItem(row, 2, cert_issuer_cn);
+
+    QTableWidgetItem* cert_from = new QTableWidgetItem(cert.effectiveDate().toString());
+    cert_from->setFlags(Qt::ItemIsSelectable);
+    ui->tableClientCerts->setItem(row, 3, cert_from);
+
+    QTableWidgetItem* cert_to = new QTableWidgetItem(cert.expiryDate().toString());
+    cert_to->setFlags(Qt::ItemIsSelectable);
+    ui->tableClientCerts->setItem(row, 4, cert_to);
+
+    QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
+    cert_serialno->setFlags(Qt::ItemIsSelectable);
+    ui->tableClientCerts->setItem(row, 5, cert_serialno);
 }
