@@ -2716,7 +2716,7 @@ void MainWindow::browseDataSetDefaultTableEncoding()
 
 void MainWindow::browseDataFetchAllData()
 {
-    if(m_browseTableModel)
+    if(m_currentPlotModel)
     {
         // Show progress dialog because fetching all data might take some time
         QProgressDialog progress(tr("Fetching all data..."),
@@ -2726,19 +2726,19 @@ void MainWindow::browseDataFetchAllData()
         qApp->processEvents();
 
         // Make sure all data is loaded
-        while(m_browseTableModel->canFetchMore())
+        while(m_currentPlotModel->canFetchMore())
         {
             // Fetch the next bunch of data
-            m_browseTableModel->fetchMore();
+            m_currentPlotModel->fetchMore();
 
             // Update the progress dialog and stop loading data when the cancel button was pressed
-            progress.setValue(m_browseTableModel->rowCount());
+            progress.setValue(m_currentPlotModel->rowCount());
             qApp->processEvents();
             if(progress.wasCanceled())
                 break;
         }
 
         // Update plot
-        updatePlot(m_browseTableModel);
+        updatePlot(m_currentPlotModel);
     }
 }
