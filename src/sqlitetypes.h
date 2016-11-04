@@ -9,7 +9,7 @@
 #include <QVector>
 #include <QStringList>
 #include <QPair>
-#include <QMultiMap>
+#include <QMultiHash>
 
 namespace sqlb {
 
@@ -155,7 +155,7 @@ private:
     bool m_unique;
 };
 
-typedef QMultiMap<FieldVector, ConstraintPtr> ConstraintMap;
+typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
 
 class Table
 {
