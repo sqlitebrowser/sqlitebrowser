@@ -1848,7 +1848,8 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
 
         if(model)
         {
-            for(int i = 0; i < model->columnCount(); ++i)
+            // Add each column with a supported data type to the column selection view
+            for(int i=0;i<model->columnCount();++i)
             {
                 QVariant::Type columntype = guessdatatype(model, i);
                 if(columntype != QVariant::String && columntype != QVariant::Invalid)
@@ -1875,16 +1876,40 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
                         columnitem->setCheckState(PlotColumnX, Qt::Checked);
                     else
                         columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
-
-                    ui->treePlotColumns->addTopLevelItem(columnitem);
                 }
+            }
+
+            // Add a row number column at the beginning of the column list, but only when there were (other) columns added
+            if(ui->treePlotColumns->topLevelItemCount())
+            {
+                QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
+
+                // Just set all bits in the user role information field here to somehow indicate what column this is
+                uint itemdata = -1;
+                columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
+                columnitem->setText(PlotColumnField, tr("Row #"));
+
+                // restore previous check state
+                if(mapItemsY.contains(columnitem->text(PlotColumnField)))
+                {
+                    columnitem->setCheckState(PlotColumnY, Qt::Checked);
+                    columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)]);
+                } else {
+                    columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
+                }
+                if(sItemX == columnitem->text(PlotColumnField))
+                    columnitem->setCheckState(PlotColumnX, Qt::Checked);
+                else
+                    columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
+
+                ui->treePlotColumns->takeTopLevelItem(ui->treePlotColumns->indexOfTopLevelItem(columnitem));
+                ui->treePlotColumns->insertTopLevelItem(0, columnitem);
             }
         }
 
         ui->plotWidget->yAxis->setLabel("Y");
         ui->plotWidget->xAxis->setLabel("X");
-        connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-                this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+        connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &MainWindow::on_treePlotColumns_itemChanged);
     }
 
     // search for the x axis select
@@ -1910,15 +1935,12 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
         int x = xitemdata >> 16;
         int xtype = xitemdata & (uint)0xFF;
 
-
         // check if we have a x axis with datetime data
         if(xtype == QVariant::DateTime)
         {
             ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
             ui->plotWidget->xAxis->setDateTimeFormat("yyyy-MM-dd");
-        }
-        else
-        {
+        } else {
             ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltNumber);
         }
 
@@ -1934,8 +1956,6 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
                 int column = itemdata >> 16;
                 QCPGraph* graph = ui->plotWidget->addGraph();
 
-                int y = column;
-
                 graph->setPen(QPen(item->backgroundColor(PlotColumnY)));
 
                 // prepare the data vectors for qcustomplot
@@ -1950,13 +1970,24 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
                         QString s = model->data(model->index(i, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
                         xdata[i] = d.toTime_t();
-                    }
-                    else
-                    {
-                        xdata[i] = model->data(model->index(i, x)).toDouble();
+                    } else {
+                        // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
+                        // instead of retrieving some value from the model.
+                        if(x == 0xFFFF)
+                            xdata[i] = i+1;
+
+                        else
+                            xdata[i] = model->data(model->index(i, x)).toDouble();
                     }
 
-                    QVariant pointdata = model->data(model->index(i, y), Qt::EditRole);
+                    // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
+                    // instead of retrieving some value from the model.
+                    QVariant pointdata;
+                    if(column == 0xFFFF)
+                        pointdata = i+1;
+                    else
+                        pointdata = model->data(model->index(i, column), Qt::EditRole);
+
                     if(pointdata.isNull())
                         ydata[i] = qQNaN();
                     else
@@ -1972,7 +2003,7 @@ void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrRes
                 graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)shapeIdx, 5));
 
                 // gather Y label column names
-                yAxisLabels << model->headerData(y, Qt::Horizontal).toString();
+                yAxisLabels << model->headerData(column, Qt::Horizontal).toString();
             }
         }
 
