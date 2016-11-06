@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QSslKey>
 #include <QProgressDialog>
+#include <QInputDialog>
 
 #include "RemoteDatabase.h"
 #include "version.h"
@@ -27,16 +28,6 @@ RemoteDatabase::RemoteDatabase() :
     foreach(const QString& caCertName, caCertsList)
         caCerts += QSslCertificate::fromPath(":/certs/" + caCertName);
     m_sslConfiguration.setCaCertificates(caCerts);
-
-    // Load client cert and private key
-    QFile fileClientCert("client.cert.pem");
-    fileClientCert.open(QFile::ReadOnly);
-    QSslCertificate clientCert(&fileClientCert);
-    fileClientCert.seek(0);
-    QSslKey clientKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
-    fileClientCert.close();
-    m_sslConfiguration.setLocalCertificate(clientCert);
-    m_sslConfiguration.setPrivateKey(clientKey);
 
     // Load settings and set up some more stuff while doing so
     reloadSettings();
@@ -70,12 +61,21 @@ void RemoteDatabase::reloadSettings()
     // TODO Add support for proxies here
 }
 
-void RemoteDatabase::fetchDatabase(const QString& url)
+void RemoteDatabase::fetchDatabase(const QString& url, const QString& clientCert)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
     {
         QMessageBox::warning(0, qApp->applicationName(), tr("Error: The network is not accessible."));
+        return;
+    }
+
+    // Check if client cert exists
+    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
+    const QSslCertificate& cert = m_clientCertFiles[clientCert];
+    if(https && cert.isNull())
+    {
+        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Invalid client certificate speicified."));
         return;
     }
 
@@ -85,9 +85,30 @@ void RemoteDatabase::fetchDatabase(const QString& url)
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
-    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
     if(https)
+    {
+        // Load private key for the client certificate
+        QFile fileClientCert(clientCert);
+        fileClientCert.open(QFile::ReadOnly);
+        QSslKey clientKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
+        while(clientKey.isNull())
+        {
+            // If the private key couldn't be read, we assume it's password protected. So ask the user for the correct password and try reading it
+            // again. If the user cancels the password dialog, abort the whole process.
+            QString password = QInputDialog::getText(0, qApp->applicationName(), tr("Please enter the passphrase for this client certificate in order to authenticate."));
+            if(password.isEmpty())
+                return;
+            clientKey = QSslKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, password.toUtf8());
+        }
+        fileClientCert.close();
+
+        // Set client certificate (from the cache) and private key (just loaded)
+        m_sslConfiguration.setLocalCertificate(cert);
+        m_sslConfiguration.setPrivateKey(clientKey);
+
+        // Apply SSL configuration
         request.setSslConfiguration(m_sslConfiguration);
+    }
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);

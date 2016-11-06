@@ -2145,7 +2145,8 @@ void MainWindow::on_actionOpen_Remote_triggered()
     QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to open."));
     if(!url.isEmpty())
     {
-        m_remoteDb.fetchDatabase(url);
+        QStringList certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+        m_remoteDb.fetchDatabase(url, (certs.size() ? certs.at(0) : ""));
     }
 }
 

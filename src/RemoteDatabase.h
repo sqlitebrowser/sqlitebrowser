@@ -23,7 +23,7 @@ public:
     const QList<QSslCertificate>& caCertificates() const;
     const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
 
-    void fetchDatabase(const QString& url);
+    void fetchDatabase(const QString& url, const QString& clientCert);
 
 signals:
     void openFile(QString path);
