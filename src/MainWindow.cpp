@@ -1394,6 +1394,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
     ui->dockEdit->setEnabled(enable && write);
+    ui->actionSave_Remote->setEnabled(enable);
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -2152,7 +2153,12 @@ void MainWindow::on_actionOpen_Remote_triggered()
 
 void MainWindow::on_actionSave_Remote_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://dbhub.io"));
+    QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to save."));
+    if(!url.isEmpty())
+    {
+        QStringList certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+        m_remoteDb.pushDatabase(db.currentFile(), url, (certs.size() ? certs.at(0) : ""));
+    }
 }
 
 void MainWindow::on_actionWiki_triggered()

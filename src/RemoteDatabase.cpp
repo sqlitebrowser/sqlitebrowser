@@ -61,69 +61,6 @@ void RemoteDatabase::reloadSettings()
     // TODO Add support for proxies here
 }
 
-void RemoteDatabase::fetchDatabase(const QString& url, const QString& clientCert)
-{
-    // Check if network is accessible. If not, abort right here
-    if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
-    {
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: The network is not accessible."));
-        return;
-    }
-
-    // Check if client cert exists
-    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
-    const QSslCertificate& cert = m_clientCertFiles[clientCert];
-    if(https && cert.isNull())
-    {
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Invalid client certificate speicified."));
-        return;
-    }
-
-    // Build network request
-    QNetworkRequest request;
-    request.setUrl(url);
-    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
-
-    // Set SSL configuration when trying to access a file via the HTTPS protocol
-    if(https)
-    {
-        // Load private key for the client certificate
-        QFile fileClientCert(clientCert);
-        fileClientCert.open(QFile::ReadOnly);
-        QSslKey clientKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
-        while(clientKey.isNull())
-        {
-            // If the private key couldn't be read, we assume it's password protected. So ask the user for the correct password and try reading it
-            // again. If the user cancels the password dialog, abort the whole process.
-            QString password = QInputDialog::getText(0, qApp->applicationName(), tr("Please enter the passphrase for this client certificate in order to authenticate."));
-            if(password.isEmpty())
-                return;
-            clientKey = QSslKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, password.toUtf8());
-        }
-        fileClientCert.close();
-
-        // Set client certificate (from the cache) and private key (just loaded)
-        m_sslConfiguration.setLocalCertificate(cert);
-        m_sslConfiguration.setPrivateKey(clientKey);
-
-        // Apply SSL configuration
-        request.setSslConfiguration(m_sslConfiguration);
-    }
-
-    // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
-    m_currentReply = m_manager->get(request);
-
-    // Initialise the progress dialog for this request
-    if(!m_progress)
-        m_progress = new QProgressDialog();
-    m_progress->setWindowModality(Qt::ApplicationModal);
-    m_progress->setCancelButtonText(tr("Cancel"));
-    m_progress->setLabelText(tr("Downloading remote database from\n%1.").arg(url));
-    m_progress->show();
-    qApp->processEvents();
-    connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
-}
-
 void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
 {
     // Verify the server's certificate using our CA certs
@@ -204,7 +141,7 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
     reply->deleteLater();
 }
 
-void RemoteDatabase::updateProgress(qint64 bytesReceived, qint64 bytesTotal)
+void RemoteDatabase::updateProgress(qint64 bytesTransmitted, qint64 bytesTotal)
 {
     // Update progress dialog
     if(bytesTotal == -1)
@@ -213,14 +150,14 @@ void RemoteDatabase::updateProgress(qint64 bytesReceived, qint64 bytesTotal)
         m_progress->setMinimum(0);
         m_progress->setMaximum(0);
         m_progress->setValue(0);
-    } else if(bytesReceived == bytesTotal) {
+    } else if(bytesTransmitted == bytesTotal) {
         // The download has finished
         m_progress->hide();
     } else {
         // It's still downloading and we know the current progress
         m_progress->setMinimum(0);
         m_progress->setMaximum(bytesTotal);
-        m_progress->setValue(bytesReceived);
+        m_progress->setValue(bytesTransmitted);
     }
 
     // Check if the Cancel button has been pressed
@@ -236,4 +173,138 @@ const QList<QSslCertificate>& RemoteDatabase::caCertificates() const
 {
     static QList<QSslCertificate> certs = m_sslConfiguration.caCertificates();
     return certs;
+}
+
+bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientCert)
+{
+    // Check if client cert exists
+    const QSslCertificate& cert = m_clientCertFiles[clientCert];
+    if(cert.isNull())
+    {
+        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Invalid client certificate speicified."));
+        return false;
+    }
+
+    // Load private key for the client certificate
+    QFile fileClientCert(clientCert);
+    fileClientCert.open(QFile::ReadOnly);
+    QSslKey clientKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
+    while(clientKey.isNull())
+    {
+        // If the private key couldn't be read, we assume it's password protected. So ask the user for the correct password and try reading it
+        // again. If the user cancels the password dialog, abort the whole process.
+        QString password = QInputDialog::getText(0, qApp->applicationName(), tr("Please enter the passphrase for this client certificate in order to authenticate."));
+        if(password.isEmpty())
+            return false;
+        clientKey = QSslKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, password.toUtf8());
+    }
+    fileClientCert.close();
+
+    // Set client certificate (from the cache) and private key (just loaded)
+    m_sslConfiguration.setLocalCertificate(cert);
+    m_sslConfiguration.setPrivateKey(clientKey);
+
+    // Apply SSL configuration
+    request->setSslConfiguration(m_sslConfiguration);
+
+    return true;
+}
+
+void RemoteDatabase::prepareProgressDialog(bool upload, const QString& url)
+{
+    // Instantiate progress dialog and apply some basic settings
+    if(!m_progress)
+        m_progress = new QProgressDialog();
+    m_progress->setWindowModality(Qt::ApplicationModal);
+    m_progress->setCancelButtonText(tr("Cancel"));
+
+    // Set dialog text
+    if(upload)
+        m_progress->setLabelText(tr("Uploading remote database to\n%1.").arg(url));
+    else
+        m_progress->setLabelText(tr("Downloading remote database from\n%1.").arg(url));
+
+    // Show dialog
+    m_progress->show();
+    qApp->processEvents();
+
+    // Make sure the dialog is updated
+    if(upload)
+        connect(m_currentReply, &QNetworkReply::uploadProgress, this, &RemoteDatabase::updateProgress);
+    else
+        connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
+}
+
+void RemoteDatabase::fetchDatabase(const QString& url, const QString& clientCert)
+{
+    // Check if network is accessible. If not, abort right here
+    if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
+    {
+        QMessageBox::warning(0, qApp->applicationName(), tr("Error: The network is not accessible."));
+        return;
+    }
+
+    // Build network request
+    QNetworkRequest request;
+    request.setUrl(url);
+    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
+
+    // Set SSL configuration when trying to access a file via the HTTPS protocol
+    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
+    if(https)
+    {
+        // If configuring the SSL connection fails, abort the request here
+        if(!prepareSsl(&request, clientCert))
+            return;
+    }
+
+    // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
+    m_currentReply = m_manager->get(request);
+
+    // Initialise the progress dialog for this request
+    prepareProgressDialog(false, url);
+}
+
+void RemoteDatabase::pushDatabase(const QString& filename, const QString& url, const QString& clientCert)
+{
+    // Check if network is accessible. If not, abort right here
+    if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
+    {
+        QMessageBox::warning(0, qApp->applicationName(), tr("Error: The network is not accessible."));
+        return;
+    }
+
+    // Open the file to send and check if it exists
+    QFile file(filename);
+    if(!file.open(QFile::ReadOnly))
+    {
+        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Cannot open the file for sending."));
+        return;
+    }
+
+    // Build network request
+    QNetworkRequest request;
+    request.setUrl(url);
+    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
+
+    // Set SSL configuration when trying to access a file via the HTTPS protocol
+    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
+    if(https)
+    {
+        // If configuring the SSL connection fails, abort the request here
+        if(!prepareSsl(&request, clientCert))
+            return;
+    }
+
+    // Get file data
+    // TODO: Don't read the entire file here but directly pass the file handle to the put() call below in order
+    // to read larger files chunk by chunk.
+    QByteArray file_data = file.readAll();
+    file.close();
+
+    // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
+    m_currentReply = m_manager->put(request, file_data);
+
+    // Initialise the progress dialog for this request
+    prepareProgressDialog(true, url);
 }
