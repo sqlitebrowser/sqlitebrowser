@@ -181,7 +181,7 @@ bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientC
     const QSslCertificate& cert = m_clientCertFiles[clientCert];
     if(cert.isNull())
     {
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Invalid client certificate speicified."));
+        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Invalid client certificate specified."));
         return false;
     }
 
