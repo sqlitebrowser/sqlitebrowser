@@ -585,8 +585,11 @@ void MainWindow::deleteRecord()
 
         int old_row = ui->dataTable->currentIndex().row();
         while(ui->dataTable->selectionModel()->hasSelection())
-        {
-            if(!m_browseTableModel->removeRow(ui->dataTable->selectionModel()->selectedIndexes().first().row()))
+	{
+	    int first_selected_row = ui->dataTable->selectionModel()->selectedIndexes().first().row();
+	    int last_selected_row = ui->dataTable->selectionModel()->selectedIndexes().last().row();
+	    int selected_rows_count = last_selected_row - first_selected_row + 1;
+	    if(!m_browseTableModel->removeRows(first_selected_row, selected_rows_count))
             {
                 QMessageBox::warning(this, QApplication::applicationName(), tr("Error deleting record:\n%1").arg(db.lastErrorMessage));
                 break;

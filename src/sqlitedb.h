@@ -85,7 +85,7 @@ public:
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
     QString emptyInsertStmt(const sqlb::Table& t, const QString& pk_value = QString()) const;
-    bool deleteRecord(const QString& table, const QString& rowid);
+    bool deleteRecords(const QString& table, const QStringList& rowids);
     bool updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob);
 
     bool createTable(const QString& name, const sqlb::FieldVector& structure);

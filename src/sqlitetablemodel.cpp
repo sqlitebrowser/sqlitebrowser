@@ -410,15 +410,16 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
     bool ok = true;
 
+    QStringList rowids;
     for(int i=count-1;i>=0;i--)
     {
-        if(m_db->deleteRecord(m_sTable, m_data.at(row + i).at(0)))
-        {
-            m_data.removeAt(row + i);
-            --m_rowCount;
-        } else {
-            ok = false;
-        }
+        rowids.append(m_data.at(row + i).at(0));
+        m_data.removeAt(row + i);
+        --m_rowCount;
+    }
+    if(!m_db->deleteRecords(m_sTable, rowids))
+    {
+	ok = false;
     }
 
     endRemoveRows();
