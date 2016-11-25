@@ -865,15 +865,20 @@ QString DBBrowserDB::addRecord(const QString& sTableName)
     }
 }
 
-bool DBBrowserDB::deleteRecord(const QString& table, const QString& rowid)
+bool DBBrowserDB::deleteRecords(const QString& table, const QStringList& rowids)
 {
     if (!isOpen()) return false;
     bool ok = false;
 
-    QString statement = QString("DELETE FROM %1 WHERE %2='%3';")
+    QStringList quoted_rowids;
+    foreach(QString rowid, rowids)
+    {
+        quoted_rowids.append("'" + rowid + "'");
+    }
+    QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
             .arg(sqlb::escapeIdentifier(table))
             .arg(sqlb::escapeIdentifier(getObjectByName(table).table.rowidColumn()))
-            .arg(rowid);
+            .arg(quoted_rowids.join(", "));
     if(executeSQL(statement))
         ok = true;
     else

@@ -27,8 +27,8 @@ before_install:
   - sudo add-apt-repository ppa:likemartinma/devel -y
   - sudo add-apt-repository --yes ppa:beineri/opt-qt57-trusty
   - sudo apt-get update -qq
-  - sudo apt-get --force-yes install -qq qt57-meta-full
-  - sudo apt-get --force-yes install -qq libsqlite3-dev libsqlcipher-dev libantlr-dev
+  - sudo apt-get --force-yes install qt57-meta-full
+  - sudo apt-get --force-yes install libsqlite3-dev libsqlcipher-dev libantlr-dev
   - QT_ENV_SCRIPT=$(find /opt -name 'qt*-env.sh')
   - source $QT_ENV_SCRIPT
 
