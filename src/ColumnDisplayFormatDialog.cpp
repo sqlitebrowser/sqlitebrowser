@@ -14,6 +14,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Exponent notation"), "exponent");
     ui->comboDisplayFormat->addItem(tr("Hex blob"), "hexblob");
     ui->comboDisplayFormat->addItem(tr("Hex number"), "hex");
+    ui->comboDisplayFormat->addItem(tr("Apple NSDate to date"), "appleDate");
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Octal number"), "octal");
@@ -62,6 +63,8 @@ void ColumnDisplayFormatDialog::updateSqlCode()
         ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')");
     else if(format == "winDate")
         ui->editDisplayFormat->setText("datetime ('1899-12-30', " + sqlb::escapeIdentifier(column_name) + " || \" days\" )");
+    else if(format == "appleDate")
+        ui->editDisplayFormat->setText("datetime ('2001-01-01', " + sqlb::escapeIdentifier(column_name) + " || \" seconds\" )");
     else if(format == "julian")
         ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "round")
