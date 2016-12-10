@@ -284,13 +284,22 @@ bool DBBrowserDB::setSavepoint(const QString& pointname)
 
 bool DBBrowserDB::releaseSavepoint(const QString& pointname)
 {
-    if(!isOpen() || savepointList.contains(pointname) == false)
+    if(!isOpen())
         return false;
+    if(savepointList.contains(pointname) == false)
+        // If there is no such savepoint in the list,
+        // we have already released it, so in this case
+        // the operation should be successfull
+        return true;
 
     QString query = QString("RELEASE %1;").arg(pointname);
     if(!executeSQL(query, false, false))
         return false;
-    savepointList.removeAll(pointname);
+    // SQLite releases all savepoints that were created between
+    // creation of given savepoint and releasing of it,
+    // so we should too
+    int point_index = savepointList.lastIndexOf(pointname);
+    savepointList.erase(savepointList.begin()+point_index, savepointList.end());
     emit dbChanged(getDirty());
 
     return true;
@@ -305,7 +314,11 @@ bool DBBrowserDB::revertToSavepoint(const QString& pointname)
     executeSQL(query, false, false);
     query = QString("RELEASE %1;").arg(pointname);
     executeSQL(query, false, false);
-    savepointList.removeAll(pointname);
+    // SQLite releases all savepoints that were created between
+    // creation of given savepoint and releasing of it,
+    // so we should too
+    int point_index = savepointList.lastIndexOf(pointname);
+    savepointList.erase(savepointList.begin()+point_index, savepointList.end());
     emit dbChanged(getDirty());
 
     return true;
