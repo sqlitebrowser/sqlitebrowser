@@ -24,6 +24,7 @@ public slots:
     virtual void setFocus();
     virtual void reject();
     void setReadOnly(bool ro);
+    void reloadSettings();
 
 protected:
     virtual void showEvent(QShowEvent* ev);

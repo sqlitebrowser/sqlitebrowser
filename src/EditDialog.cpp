@@ -33,14 +33,10 @@ EditDialog::EditDialog(QWidget* parent)
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
 
-    // Set the font for the text and hex editors
-    QFont editorFont(Settings::getSettingsValue("databrowser", "font").toString());
-    editorFont.setPointSize(Settings::getSettingsValue("databrowser", "fontsize").toInt());
-    ui->editorText->setFont(editorFont);
-    hexEdit->setFont(editorFont);
-
     connect(ui->editorText, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(updateApplyButton()));
+
+    reloadSettings();
 }
 
 EditDialog::~EditDialog()
@@ -544,4 +540,13 @@ QString EditDialog::humanReadableSize(double byteCount)
     QString size = QString::number(byteCount, 'f', 2);
 
     return size + " " + yiUnit + "B";
+}
+
+void EditDialog::reloadSettings()
+{
+    // Set the font for the text and hex editors
+    QFont editorFont(Settings::getSettingsValue("databrowser", "font").toString());
+    editorFont.setPointSize(Settings::getSettingsValue("databrowser", "fontsize").toInt());
+    ui->editorText->setFont(editorFont);
+    hexEdit->setFont(editorFont);
 }

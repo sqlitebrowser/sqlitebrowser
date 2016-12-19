@@ -1681,11 +1681,12 @@ void MainWindow::reloadSettings()
         sqlArea->getResultView()->setFont(logfont);
     }
 
-    // Set font for SQL logs
+    // Set font for SQL logs and edit dialog
     ui->editLogApplication->reloadSettings();
     ui->editLogUser->reloadSettings();
     ui->editLogApplication->setFont(logfont);
     ui->editLogUser->setFont(logfont);
+    editDock->reloadSettings();
 
     // Load extensions
     loadExtensionsFromSettings();
