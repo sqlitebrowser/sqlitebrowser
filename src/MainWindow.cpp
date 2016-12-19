@@ -700,7 +700,8 @@ void MainWindow::refresh()
         populateTable();
         break;
     case PragmaTab:
-        // Do nothing
+        // Reload pragma values
+        loadPragmas();
         break;
     case ExecuteTab:
         // (Re-)Run the current SQL query
