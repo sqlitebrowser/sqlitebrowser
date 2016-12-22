@@ -419,7 +419,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     }
     if(!m_db->deleteRecords(m_sTable, rowids))
     {
-	ok = false;
+        ok = false;
     }
 
     endRemoveRows();
