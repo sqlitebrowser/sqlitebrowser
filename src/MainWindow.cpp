@@ -668,14 +668,10 @@ void MainWindow::setRecordsetLabel()
 {
     // Get all the numbers, i.e. the number of the first row and the last row as well as the total number of rows
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
-    int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
     int total = m_browseTableModel->totalRowCount();
-
-    if(to == -2)
-    {
-        total = 0;
+    int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
+    if (to == -2)
         to = total;
-    }
 
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
