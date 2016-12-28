@@ -77,7 +77,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>Table:</string>
+             <string>&amp;Table:</string>
             </property>
             <property name="buddy">
              <cstring>comboBrowseTable</cstring>
