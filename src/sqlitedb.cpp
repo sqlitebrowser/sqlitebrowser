@@ -469,7 +469,7 @@ bool DBBrowserDB::dump(const QString& filename,
                 it.remove();
             } else {
                 // Otherwise get the number of records in this table
-                SqliteTableModel tableModel(0, this);
+                SqliteTableModel tableModel(*this);
                 tableModel.setTable(it.value().getname());
                 numRecordsTotal += tableModel.totalRowCount();
             }

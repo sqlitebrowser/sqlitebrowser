@@ -22,7 +22,7 @@ class SqlExecutionArea : public QWidget
     Q_OBJECT
 
 public:
-    explicit SqlExecutionArea(QWidget* parent, DBBrowserDB* _db);
+    explicit SqlExecutionArea(DBBrowserDB& _db, QWidget* parent = Q_NULLPTR);
     ~SqlExecutionArea();
 
     QString getSql() const;
@@ -44,7 +44,7 @@ public slots:
     virtual void reloadSettings();
 
 private:
-    DBBrowserDB* db;
+    DBBrowserDB& db;
     SqliteTableModel* model;
     QMenu* menuPopupSave;
     QString sqlFileName;

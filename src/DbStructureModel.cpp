@@ -229,7 +229,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
             // If it is a table also add the content
             if(data(index.sibling(index.row(), 1), Qt::DisplayRole).toString() == "table")
             {
-                SqliteTableModel tableModel(0, &m_db);
+                SqliteTableModel tableModel(m_db);
                 tableModel.setTable(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString());
                 for(int i=0; i < tableModel.rowCount(); ++i)
                 {

@@ -17,7 +17,7 @@ class SqliteTableModel : public QAbstractTableModel
 #endif
 
 public:
-    explicit SqliteTableModel(QObject *parent = 0, DBBrowserDB* db = 0, size_t chunkSize = 50000, const QString& encoding = QString());
+    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = 0, size_t chunkSize = 50000, const QString& encoding = QString());
     void reset();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -74,7 +74,7 @@ private:
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;
 
-    DBBrowserDB* m_db;
+    DBBrowserDB& m_db;
     int m_rowCount;
     QStringList m_headers;
     typedef QList<QByteArrayList> DataType;

@@ -20,7 +20,7 @@ public:
         ExportFormatJson,
     };
 
-    explicit ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
+    explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
     ~ExportDataDialog();
 
 private slots:
@@ -43,7 +43,7 @@ private:
 
 private:
     Ui::ExportDataDialog* ui;
-    DBBrowserDB* pdb;
+    DBBrowserDB& pdb;
 
     ExportFormats m_format;
 

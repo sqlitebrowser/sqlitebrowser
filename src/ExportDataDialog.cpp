@@ -13,7 +13,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-ExportDataDialog::ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
+ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
     : QDialog(parent),
       ui(new Ui::ExportDataDialog),
       pdb(db),
@@ -40,7 +40,7 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB* db, ExportFormats format, QWidge
     if(query.isEmpty())
     {
         // Get list of tables to export
-        objectMap objects = pdb->getBrowsableObjects();
+        objectMap objects = pdb.getBrowsableObjects();
         foreach(const DBBrowserObject& obj, objects)
             ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(obj.gettype())), obj.getname()));
 
@@ -101,7 +101,7 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
         QByteArray utf8Query = sQuery.toUtf8();
         sqlite3_stmt *stmt;
 
-        int status = sqlite3_prepare_v2(pdb->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
         if(SQLITE_OK == status)
         {
             if(ui->checkHeader->isChecked())
@@ -177,7 +177,7 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
     {
         QByteArray utf8Query = sQuery.toUtf8();
         sqlite3_stmt *stmt;
-        int status = sqlite3_prepare_v2(pdb->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
 
         QJsonArray json_table;
 

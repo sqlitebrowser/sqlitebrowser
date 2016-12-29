@@ -11,7 +11,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
+SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
     db(_db),
     ui(new Ui::SqlExecutionArea)
@@ -20,7 +20,7 @@ SqlExecutionArea::SqlExecutionArea(QWidget* parent, DBBrowserDB* _db) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(this, db, Settings::getSettingsValue("db", "prefetchsize").toInt());
+    model = new SqliteTableModel(db, this, Settings::getSettingsValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
 
     // Create popup menu for save button
@@ -97,7 +97,7 @@ void SqlExecutionArea::saveAsView()
         name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
         if(name.isEmpty())
             break;
-        if(!db->getObjectByName(name).getname().isEmpty())
+        if(!db.getObjectByName(name).getname().isEmpty())
             QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
         else
             break;
@@ -106,10 +106,10 @@ void SqlExecutionArea::saveAsView()
         return;
 
     // Create the view
-    if(db->executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(model->query())))
+    if(db.executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(model->query())))
         QMessageBox::information(this, qApp->applicationName(), tr("View successfully created."));
     else
-        QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db->lastErrorMessage));
+        QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db.lastErrorMessage));
 }
 
 void SqlExecutionArea::reloadSettings()

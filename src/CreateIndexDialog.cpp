@@ -5,7 +5,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
+CreateIndexDialog::CreateIndexDialog(DBBrowserDB& db, QWidget* parent)
     : QDialog(parent),
       pdb(db),
       ui(new Ui::CreateIndexDialog)
@@ -15,7 +15,7 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB* db, QWidget* parent)
 
     // Get list of tables, sort it alphabetically and fill the combobox
     QMultiMap<QString, DBBrowserObject> dbobjs;
-    QList<DBBrowserObject> tables = pdb->objMap.values("table");
+    QList<DBBrowserObject> tables = pdb.objMap.values("table");
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         dbobjs.insert((*it).getname(), (*it));
     for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
@@ -33,7 +33,7 @@ CreateIndexDialog::~CreateIndexDialog()
 void CreateIndexDialog::tableChanged(const QString& new_table)
 {
     // And fill the table again
-    QStringList fields = pdb->getObjectByName(new_table).table.fieldNames();
+    QStringList fields = pdb.getObjectByName(new_table).table.fieldNames();
     ui->tableIndexColumns->setRowCount(fields.size());
     for(int i=0; i < fields.size(); ++i)
     {
@@ -94,8 +94,8 @@ void CreateIndexDialog::accept()
     sql.chop(1);    // Remove last comma
     sql.append(");");
 
-    if(pdb->executeSQL(sql))
+    if(pdb.executeSQL(sql))
         QDialog::accept();
     else
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb->lastErrorMessage));
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastErrorMessage));
 }

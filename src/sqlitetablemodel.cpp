@@ -11,7 +11,7 @@
 #include <QFile>
 #include <QUrl>
 
-SqliteTableModel::SqliteTableModel(QObject* parent, DBBrowserDB* db, size_t chunkSize, const QString& encoding)
+SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_rowCount(0)
@@ -47,9 +47,9 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
     bool allOk = false;
-    if(m_db->getObjectByName(table).gettype() == "table")
+    if(m_db.getObjectByName(table).gettype() == "table")
     {
-        sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(table).getsql()).first;
+        sqlb::Table t = sqlb::Table::parseSQL(m_db.getObjectByName(table).getsql()).first;
         if(t.fields().size()) // parsing was OK
         {
             m_headers.push_back(t.rowidColumn());
@@ -97,7 +97,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     if(!dontClearHeaders)
         reset();
 
-    if(!m_db->isOpen())
+    if(!m_db.isOpen())
         return;
 
     m_sQuery = sQuery.trimmed();
@@ -137,7 +137,7 @@ int SqliteTableModel::getQueryRowCount()
         // So just execute the statement as it is and fetch all results counting the rows
         sqlite3_stmt* stmt;
         QByteArray utf8Query = m_sQuery.toUtf8();
-        if(sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+        if(sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
         {
             retval = 0;
             while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -152,11 +152,11 @@ int SqliteTableModel::getQueryRowCount()
     } else {
         // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
         QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(m_sQuery, ';'));
-        m_db->logSQL(sCountQuery, kLogMsg_App);
+        m_db.logSQL(sCountQuery, kLogMsg_App);
         QByteArray utf8Query = sCountQuery.toUtf8();
 
         sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
         if(status == SQLITE_OK)
         {
             status = sqlite3_step(stmt);
@@ -267,7 +267,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
 sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
-    DBBrowserObject obj = m_db->getObjectByName(m_sTable);
+    DBBrowserObject obj = m_db.getObjectByName(m_sTable);
     if(obj.getname().size() && (column >= 0 && column < obj.table.fields().count()))
     {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
@@ -301,7 +301,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db->updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBlob))
+        if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBlob))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
@@ -310,7 +310,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
             emit(dataChanged(index, index));
             return true;
         } else {
-            QMessageBox::warning(0, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db->lastErrorMessage));
+            QMessageBox::warning(0, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db.lastErrorMessage));
             return false;
         }
     }
@@ -375,7 +375,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     DataType tempList;
     for(int i=row; i < row + count; ++i)
     {
-        QString rowid = m_db->addRecord(m_sTable);
+        QString rowid = m_db.addRecord(m_sTable);
         if(rowid.isNull())
         {
             return false;
@@ -386,7 +386,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 
         // update column with default values
         QByteArrayList rowdata;
-        if( m_db->getRow(m_sTable, rowid, rowdata) )
+        if( m_db.getRow(m_sTable, rowid, rowdata) )
         {
             for(int j=1; j < m_headers.size(); ++j)
             {
@@ -417,7 +417,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         m_data.removeAt(row + i);
         --m_rowCount;
     }
-    if(!m_db->deleteRecords(m_sTable, rowids))
+    if(!m_db.deleteRecords(m_sTable, rowids))
     {
         ok = false;
     }
@@ -432,7 +432,7 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    sqlb::Table t = sqlb::Table::parseSQL(m_db->getObjectByName(m_sTable).getsql()).first;
+    sqlb::Table t = sqlb::Table::parseSQL(m_db.getObjectByName(m_sTable).getsql()).first;
 
     sqlb::FieldVector pk = t.primaryKey();
     for (int col = 0; col < t.fields().size(); ++col) {
@@ -466,10 +466,10 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         else
             sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(from).arg(to-from);
     }
-    m_db->logSQL(sLimitQuery, kLogMsg_App);
+    m_db.logSQL(sLimitQuery, kLogMsg_App);
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
-    int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
 
     if(SQLITE_OK == status)
     {
@@ -557,7 +557,7 @@ QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fi
 {
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
-    int status = sqlite3_prepare_v2(m_db->_db, utf8Query, utf8Query.size(), &stmt, NULL);
+    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
     QStringList listColumns;
     if(SQLITE_OK == status)
     {

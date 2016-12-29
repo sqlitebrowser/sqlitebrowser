@@ -10,7 +10,7 @@
 #include <QDateTime>
 #include <QKeyEvent>
 
-EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool createTable, QWidget* parent)
+EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool createTable, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
       pdb(db),
@@ -28,7 +28,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
     if(m_bNewTable == false)
     {
         // Existing table, so load and set the current layout
-        QString sTablesql = pdb->getObjectByName(curTable).getsql();
+        QString sTablesql = pdb.getObjectByName(curTable).getsql();
         QPair<sqlb::Table, bool> parse_result = sqlb::Table::parseSQL(sTablesql);
         m_table = parse_result.first;
         ui->labelEditWarning->setVisible(!parse_result.second);
@@ -39,7 +39,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB* db, const QString& tableName, bool
     }
 
     // And create a savepoint
-    pdb->setSavepoint(m_sRestorePointName);
+    pdb.setSavepoint(m_sRestorePointName);
 
     // Update UI
     ui->editTableName->setText(curTable);
@@ -138,12 +138,12 @@ void EditTableDialog::accept()
     if(m_bNewTable)
     {
         // Creation of new table
-        if(!pdb->executeSQL(m_table.sql()))
+        if(!pdb.executeSQL(m_table.sql()))
         {
             QMessageBox::warning(
                 this,
                 QApplication::applicationName(),
-                tr("Error creating table. Message from database engine:\n%1").arg(pdb->lastErrorMessage));
+                tr("Error creating table. Message from database engine:\n%1").arg(pdb.lastErrorMessage));
             return;
         }
     } else {
@@ -152,9 +152,9 @@ void EditTableDialog::accept()
         // Rename table if necessary
         if(ui->editTableName->text() != curTable)
         {
-            if(!pdb->renameTable(curTable, ui->editTableName->text()))
+            if(!pdb.renameTable(curTable, ui->editTableName->text()))
             {
-                QMessageBox::warning(this, QApplication::applicationName(), pdb->lastErrorMessage);
+                QMessageBox::warning(this, QApplication::applicationName(), pdb.lastErrorMessage);
                 return;
             }
         }
@@ -166,7 +166,7 @@ void EditTableDialog::accept()
 void EditTableDialog::reject()
 {    
     // Then rollback to our savepoint
-    pdb->revertToSavepoint(m_sRestorePointName);
+    pdb.revertToSavepoint(m_sRestorePointName);
 
     QDialog::reject();
 }
@@ -206,7 +206,7 @@ void EditTableDialog::updateTypes()
 
         m_table.fields().at(index)->setType(type);
         if(!m_bNewTable)
-            pdb->renameColumn(curTable, column, m_table.fields().at(index));
+            pdb.renameColumn(curTable, column, m_table.fields().at(index));
         checkInput();
     }
 }
@@ -239,7 +239,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 sqlb::FieldVector pk = m_table.primaryKey();
-                foreach(const DBBrowserObject& fkobj, pdb->objMap.values("table"))
+                foreach(const DBBrowserObject& fkobj, pdb.objMap.values("table"))
                 {
                     QList<sqlb::ConstraintPtr> fks = fkobj.table.constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
                     foreach(sqlb::ConstraintPtr fkptr, fks)
@@ -303,9 +303,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // Because our renameColumn() function fails when setting a column to Not Null when it already contains some NULL values
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
-                SqliteTableModel m(this, pdb);
+                SqliteTableModel m(pdb, this);
                 m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
-                           .arg(sqlb::escapeIdentifier(pdb->getObjectByName(curTable).table.rowidColumn()))
+                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName(curTable).table.rowidColumn()))
                            .arg(sqlb::escapeIdentifier(curTable))
                            .arg(sqlb::escapeIdentifier(field->name())));
                 if(m.data(m.index(0, 0)).toInt() > 0)
@@ -330,7 +330,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // First check if the contents of this column are all integers. If not this field cannot be set to AI
                 if(!m_bNewTable)
                 {
-                    SqliteTableModel m(this, pdb);
+                    SqliteTableModel m(pdb, this);
                     m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);")
                                .arg(sqlb::escapeIdentifier(curTable))
                                .arg(sqlb::escapeIdentifier(field->name()))
@@ -374,7 +374,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable && item->checkState(column) == Qt::Checked)
             {
                 // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
-                SqliteTableModel m(this, pdb);
+                SqliteTableModel m(pdb, this);
                 m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(sqlb::escapeIdentifier(curTable)).arg(sqlb::escapeIdentifier(field->name())));
                 int rowcount = m.data(m.index(0, 0)).toInt();
                 m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(sqlb::escapeIdentifier(curTable)).arg(sqlb::escapeIdentifier(field->name())));
@@ -441,7 +441,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
 
         if(callRenameColumn)
-            pdb->renameColumn(curTable, oldFieldName, field);
+            pdb.renameColumn(curTable, oldFieldName, field);
     }
 
     checkInput();
@@ -498,7 +498,7 @@ void EditTableDialog::addField()
 
     // Actually add the new column to the table if we're editing an existing table
     if(!m_bNewTable)
-        pdb->addColumn(curTable, f);
+        pdb.addColumn(curTable, f);
 
     checkInput();
 }
@@ -526,12 +526,12 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            if(!pdb->renameColumn(curTable, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
+            if(!pdb.renameColumn(curTable, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
-                QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
+                QMessageBox::warning(0, QApplication::applicationName(), pdb.lastErrorMessage);
             } else {
                 //relayout
-                QString sTablesql = pdb->getObjectByName(curTable).getsql();
+                QString sTablesql = pdb.getObjectByName(curTable).getsql();
                 m_table = sqlb::Table::parseSQL(sTablesql).first;
                 populateFields();
             }
@@ -604,17 +604,17 @@ void EditTableDialog::moveCurrentField(bool down)
         // Editing an old one
 
         // Move the actual column
-        if(!pdb->renameColumn(
+        if(!pdb.renameColumn(
                     curTable,
                     ui->treeWidget->currentItem()->text(0),
                     m_table.fields().at(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())),
                     (down ? 1 : -1)
                 ))
         {
-            QMessageBox::warning(0, QApplication::applicationName(), pdb->lastErrorMessage);
+            QMessageBox::warning(0, QApplication::applicationName(), pdb.lastErrorMessage);
         } else {
             // Reload table SQL
-            QString sTablesql = pdb->getObjectByName(curTable).getsql();
+            QString sTablesql = pdb.getObjectByName(curTable).getsql();
             m_table = sqlb::Table::parseSQL(sTablesql).first;
             populateFields();
 

@@ -52,7 +52,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      m_browseTableModel(new SqliteTableModel(this, &db, Settings::getSettingsValue("db", "prefetchsize").toInt())),
+      m_browseTableModel(new SqliteTableModel(db, this, Settings::getSettingsValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
       editDock(new EditDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this))
@@ -713,7 +713,7 @@ void MainWindow::createTable()
         return;
     }
 
-    EditTableDialog dialog(&db, "", true, this);
+    EditTableDialog dialog(db, "", true, this);
     if(dialog.exec())
     {
         populateTable();
@@ -727,7 +727,7 @@ void MainWindow::createIndex()
         return;
     }
 
-    CreateIndexDialog dialog(&db, this);
+    CreateIndexDialog dialog(db, this);
     dialog.exec();
 }
 
@@ -771,7 +771,7 @@ void MainWindow::editTable()
     }
     QString tableToEdit = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
-    EditTableDialog dialog(&db, tableToEdit, false, this);
+    EditTableDialog dialog(db, tableToEdit, false, this);
     if(dialog.exec())
         populateTable();
 }
@@ -1084,7 +1084,7 @@ void MainWindow::exportTableToCSV()
         current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
-    ExportDataDialog dialog(&db, ExportDataDialog::ExportFormatCsv, this, "", current_table);
+    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatCsv, this, "", current_table);
     dialog.exec();
 }
 
@@ -1101,7 +1101,7 @@ void MainWindow::exportTableToJson()
         current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
-    ExportDataDialog dialog(&db, ExportDataDialog::ExportFormatJson, this, "", current_table);
+    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatJson, this, "", current_table);
     dialog.exec();
 }
 
@@ -1554,7 +1554,7 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
         tabNumber = 0;
 
     // Create new tab, add it to the tab widget and select it
-    SqlExecutionArea* w = new SqlExecutionArea(this, &db);
+    SqlExecutionArea* w = new SqlExecutionArea(db, this);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
     w->getEditor()->setFocus();
