@@ -46,6 +46,7 @@ HEADERS += \
     DbStructureModel.h \
     DiagramTablesListModel.h \
     DiagramObjects.h \
+    DiagramScene.h \
     Application.h \
     sqlite.h \
     CipherDialog.h \
@@ -80,6 +81,7 @@ SOURCES += \
     DbStructureModel.cpp \
     DiagramTablesListModel.cpp \
     DiagramObjects.cpp \
+    DiagramScene.cpp \
     Application.cpp \
     CipherDialog.cpp \
     ExportSqlDialog.cpp \
