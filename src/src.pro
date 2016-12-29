@@ -44,6 +44,7 @@ HEADERS += \
     SqlExecutionArea.h \
     VacuumDialog.h \
     DbStructureModel.h \
+    DiagramTablesListModel.h \
     Application.h \
     sqlite.h \
     CipherDialog.h \
@@ -76,6 +77,7 @@ SOURCES += \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \
     DbStructureModel.cpp \
+    DiagramTablesListModel.cpp \
     Application.cpp \
     CipherDialog.cpp \
     ExportSqlDialog.cpp \
