@@ -45,6 +45,7 @@ HEADERS += \
     VacuumDialog.h \
     DbStructureModel.h \
     DiagramTablesListModel.h \
+    DiagramObjects.h \
     Application.h \
     sqlite.h \
     CipherDialog.h \
@@ -78,6 +79,7 @@ SOURCES += \
     VacuumDialog.cpp \
     DbStructureModel.cpp \
     DiagramTablesListModel.cpp \
+    DiagramObjects.cpp \
     Application.cpp \
     CipherDialog.cpp \
     ExportSqlDialog.cpp \
