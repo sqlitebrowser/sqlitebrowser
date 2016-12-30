@@ -317,6 +317,15 @@ void Table::addConstraint(FieldVector fields, ConstraintPtr constraint)
     m_constraints.insert(fields, constraint);
 }
 
+void Table::removeConstraints(FieldVector fields, Constraint::ConstraintTypes type)
+{
+    QList<ConstraintPtr> list = constraints(fields, type);
+
+    for (ConstraintPtr c : list) {
+        m_constraints.remove(fields, c);
+    }
+}
+
 ConstraintPtr Table::constraint(FieldVector fields, Constraint::ConstraintTypes type) const
 {
     QList<ConstraintPtr> list = constraints(fields, type);
