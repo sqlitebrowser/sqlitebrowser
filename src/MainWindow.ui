@@ -104,6 +104,12 @@
             <property name="whatsThis">
              <string>Use this list to select a table to be displayed in the database view</string>
             </property>
+            <property name="maxVisibleItems">
+             <number>30</number>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
            </widget>
           </item>
           <item>
