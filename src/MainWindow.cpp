@@ -2048,21 +2048,15 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
             // get a default color
             QColor curbkcolor = changeitem->backgroundColor(column);
             QColor color = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
-            if(color.isValid())
-            {
-                changeitem->setBackgroundColor(column, color);
 
-                // Save settings for this table
-                PlotSettings& plot_settings = browseTableSettings[current_table].plotYAxes[changeitem->text(PlotColumnField)];
-                plot_settings.colour = color;
-                plot_settings.lineStyle = ui->comboLineType->currentIndex();
-                plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
-            } else {
-                changeitem->setCheckState(column, Qt::Unchecked);
+            // Set colour
+            changeitem->setBackgroundColor(column, color);
 
-                // Save settings for this table
-                browseTableSettings[current_table].plotYAxes.remove(changeitem->text(PlotColumnField));
-            }
+            // Save settings for this table
+            PlotSettings& plot_settings = browseTableSettings[current_table].plotYAxes[changeitem->text(PlotColumnField)];
+            plot_settings.colour = color;
+            plot_settings.lineStyle = ui->comboLineType->currentIndex();
+            plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
         }
     }
 
