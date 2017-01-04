@@ -295,7 +295,7 @@ QString Table::sql() const
     bool autoincrement = hasAutoIncrement();
     while(it != m_constraints.constEnd())
     {
-        if(!autoincrement || it.value()->type() != Constraint::PrimaryKeyConstraintType)
+        if((!autoincrement || it.value()->type() != Constraint::PrimaryKeyConstraintType) && !it.key().isEmpty())
         {
             sql += QString(",\n\t");
             sql += it.value()->toSql(it.key());
