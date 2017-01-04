@@ -2045,7 +2045,7 @@ void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int
     } else if(column == PlotColumnY) {
         if(changeitem->checkState(column) == Qt::Checked)
         {
-            // Getget a default colour
+            // Generate a default colour if none isn't set yet
             QColor colour = changeitem->backgroundColor(column);
             if(!colour.isValid())
             {
