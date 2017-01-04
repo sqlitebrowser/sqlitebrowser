@@ -273,11 +273,19 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             break;
         case kPrimaryKey:
         {
-            sqlb::FieldVector& pk = m_table.primaryKeyRef();
-            if(item->checkState(column) == Qt::Checked)
-                pk.push_back(field);
-            else
-                pk.removeAll(field);
+            // Check if there already is a primary key
+            if(m_table.constraint(sqlb::FieldVector(), sqlb::Constraint::PrimaryKeyConstraintType))
+            {
+                // There already is a primary key for this table. So edit that one as there always can only be one primary key anyway.
+                sqlb::FieldVector& pk = m_table.primaryKeyRef();
+                if(item->checkState(column) == Qt::Checked)
+                    pk.push_back(field);
+                else
+                    pk.removeAll(field);
+            } else if(item->checkState(column) == Qt::Checked) {
+                // There is no primary key in the table yet. This means we need to add a default one.
+                m_table.addConstraint({field}, sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint()));
+            }
 
             if(item->checkState(column) == Qt::Checked)
             {
