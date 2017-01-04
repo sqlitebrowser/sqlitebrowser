@@ -449,7 +449,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
 
         if(callRenameColumn)
-            pdb.renameColumn(m_table, oldFieldName, field);
+        {
+            if(!pdb.renameColumn(m_table, oldFieldName, field))
+                QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastErrorMessage));
+        }
     }
 
     checkInput();

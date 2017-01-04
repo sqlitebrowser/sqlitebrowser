@@ -990,7 +990,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(tableSql.isEmpty())
     {
         lastErrorMessage = tr("renameColumn: cannot find table %1.").arg(table.name());
-        qWarning() << lastErrorMessage;
         return false;
     }
 
@@ -1001,7 +1000,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(oldSchema.findField(name) == -1)
     {
         lastErrorMessage = tr("renameColumn: cannot find column %1.").arg(name);
-        qWarning() << lastErrorMessage;
         return false;
     }
 
@@ -1009,7 +1007,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(!setSavepoint("sqlitebrowser_rename_column"))
     {
         lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
         return false;
     }
 
@@ -1055,7 +1052,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(!executeSQL(newSchema.sql(), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
-        qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
         return false;
@@ -1065,7 +1061,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM %2;").arg(select_cols).arg(sqlb::escapeIdentifier(table.name()))))
     {
         QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
-        qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
         return false;
@@ -1092,7 +1087,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(table.name())), true, true))
     {
         QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
-        qWarning() << error;
         revertToSavepoint("sqlitebrowser_rename_column");
         lastErrorMessage = error;
         return false;
@@ -1121,7 +1115,6 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     if(!releaseSavepoint("sqlitebrowser_rename_column"))
     {
         lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
-        qWarning() << lastErrorMessage;
         return false;
     }
 
