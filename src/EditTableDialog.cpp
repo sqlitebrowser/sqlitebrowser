@@ -440,9 +440,16 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 callRenameColumn = true;
             break;
         case kForeignKey:
-            sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
-            fk->setFromString(item->text(column));
-            m_table.addConstraint({field}, sqlb::ConstraintPtr(fk));
+            if(item->text(column).trimmed().isEmpty())
+            {
+                // Remove the foreign key
+                m_table.removeConstraints({field}, sqlb::Constraint::ConstraintTypes::ForeignKeyConstraintType);
+            } else {
+                // Set the foreign key
+                sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
+                fk->setFromString(item->text(column));
+                m_table.setConstraint({field}, sqlb::ConstraintPtr(fk));
+            }
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;

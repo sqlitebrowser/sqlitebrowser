@@ -188,6 +188,7 @@ public:
     void clear();
 
     void addConstraint(FieldVector fields, ConstraintPtr constraint);
+    void setConstraint(FieldVector fields, ConstraintPtr constraint);
     void removeConstraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
     ConstraintPtr constraint(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     QList<ConstraintPtr> constraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;

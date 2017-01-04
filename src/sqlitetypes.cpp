@@ -317,6 +317,15 @@ void Table::addConstraint(FieldVector fields, ConstraintPtr constraint)
     m_constraints.insert(fields, constraint);
 }
 
+void Table::setConstraint(FieldVector fields, ConstraintPtr constraint)
+{
+    // Delete any old constraints of this type for these fields
+    removeConstraints(fields, constraint->type());
+
+    // Add the new constraint to the table, effectively overwriting all old constraints for that fields/type combination
+    addConstraint(fields, constraint);
+}
+
 void Table::removeConstraints(FieldVector fields, Constraint::ConstraintTypes type)
 {
     QList<ConstraintPtr> list = constraints(fields, type);
