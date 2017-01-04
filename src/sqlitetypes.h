@@ -180,15 +180,19 @@ public:
     void setField(int index, FieldPtr f);
     const FieldPtr& field(int index) { return m_fields[index]; }
     QStringList fieldNames() const;
+
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
     const QString& rowidColumn() const { return m_rowidColumn; }
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
+
     void clear();
 
     void addConstraint(FieldVector fields, ConstraintPtr constraint);
     void removeConstraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
     ConstraintPtr constraint(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     QList<ConstraintPtr> constraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
+    ConstraintMap allConstraints() const { return m_constraints; }
+    void setConstraints(const ConstraintMap& constraints);
     FieldVector& primaryKeyRef();
     const FieldVector& primaryKey() const;
 

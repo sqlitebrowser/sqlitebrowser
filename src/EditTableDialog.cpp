@@ -206,7 +206,7 @@ void EditTableDialog::updateTypes()
 
         m_table.fields().at(index)->setType(type);
         if(!m_bNewTable)
-            pdb.renameColumn(curTable, column, m_table.fields().at(index));
+            pdb.renameColumn(m_table, column, m_table.fields().at(index));
         checkInput();
     }
 }
@@ -441,7 +441,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
 
         if(callRenameColumn)
-            pdb.renameColumn(curTable, oldFieldName, field);
+            pdb.renameColumn(m_table, oldFieldName, field);
     }
 
     checkInput();
@@ -526,7 +526,7 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            if(!pdb.renameColumn(curTable, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
+            if(!pdb.renameColumn(m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
                 QMessageBox::warning(0, QApplication::applicationName(), pdb.lastErrorMessage);
             } else {
@@ -605,7 +605,7 @@ void EditTableDialog::moveCurrentField(bool down)
 
         // Move the actual column
         if(!pdb.renameColumn(
-                    curTable,
+                    m_table,
                     ui->treeWidget->currentItem()->text(0),
                     m_table.fields().at(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())),
                     (down ? 1 : -1)

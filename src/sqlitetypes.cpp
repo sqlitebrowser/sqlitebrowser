@@ -357,6 +357,11 @@ QList<ConstraintPtr> Table::constraints(FieldVector fields, Constraint::Constrai
     }
 }
 
+void Table::setConstraints(const ConstraintMap& constraints)
+{
+    m_constraints = constraints;
+}
+
 FieldVector& Table::primaryKeyRef()
 {
     return const_cast<FieldVector&>(static_cast<const Table*>(this)->primaryKey());
