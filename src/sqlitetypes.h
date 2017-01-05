@@ -185,6 +185,10 @@ public:
     const QString& rowidColumn() const { return m_rowidColumn; }
     bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
 
+    void setVirtualUsing(const QString& virt_using) { m_virtual = virt_using; }
+    QString virtualUsing() const { return m_virtual; }
+    bool isVirtual() const { return !m_virtual.isEmpty(); }
+
     void clear();
 
     void addConstraint(FieldVector fields, ConstraintPtr constraint);
@@ -224,6 +228,7 @@ private:
     FieldVector m_fields;
     QString m_rowidColumn;
     ConstraintMap m_constraints;
+    QString m_virtual;
 };
 
 /**

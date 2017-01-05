@@ -137,6 +137,7 @@ void Table::clear()
     m_rowidColumn = "_rowid_";
     m_fields.clear();
     m_constraints.clear();
+    m_virtual = QString();
 }
 Table::~Table()
 {
@@ -286,6 +287,11 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
 
 QString Table::sql() const
 {
+    // Special handling for virtual tables: just build an easy create statement and copy the using part in there
+    if(isVirtual())
+        return QString("CREATE VIRTUAL TABLE %1 USING %2;").arg(escapeIdentifier(m_name)).arg(m_virtual);
+
+    // This is a normal table, not a virtual one
     QString sql = QString("CREATE TABLE %1 (\n").arg(escapeIdentifier(m_name));
 
     sql += fieldList().join(",\n");
@@ -452,18 +458,43 @@ Table CreateTableWalker::table()
     if( m_root ) //CREATE TABLE
     {
         antlr::RefAST s = m_root->getFirstChild();
-        //skip to tablename
+
+        // If the primary tree isn't filled, this isn't a normal CREATE TABLE statement. Switch to the next alternative tree.
+        if(s == 0)
+            s = m_root->getNextSibling();
+
+        // Skip to table name
+        bool is_virtual_table = false;
         while(s->getType() != Sqlite3Lexer::ID &&
               s->getType() != Sqlite3Lexer::QUOTEDID &&
               s->getType() != Sqlite3Lexer::QUOTEDLITERAL &&
               s->getType() != Sqlite3Lexer::STRINGLITERAL &&
               s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
         {
+            // Is this one of these virtual tables?
+            if(s->getType() == Sqlite3Lexer::VIRTUAL)
+                is_virtual_table = true;
+
             s = s->getNextSibling();
         }
 
+        // Extract and set table name
         tab.setName(tablename(s));
 
+        // Special handling for virtual tables. If this is a virtual table, extract the USING part and skip all the
+        // rest of this function because virtual tables don't have column definitons
+        if(is_virtual_table)
+        {
+            s = s->getNextSibling(); // USING
+            tab.setVirtualUsing(concatTextAST(s, true));
+            m_bModifySupported = false;
+
+            // TODO Maybe get the column list using the 'pragma table_info()' approach we're using for views
+
+            return tab;
+        }
+
+        // This is a normal table, not a virtual one
         s = s->getNextSibling(); // LPAREN
         s = s->getNextSibling(); // first column name
         antlr::RefAST column = s;

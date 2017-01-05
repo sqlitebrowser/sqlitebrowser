@@ -73,6 +73,8 @@ tokens {
   THEN="THEN";
   UNIQUE="UNIQUE";
   UPDATE="UPDATE";
+  USING="USING";
+  VIRTUAL="VIRTUAL";
   WHEN="WHEN";
   WITHOUT="WITHOUT";
 
@@ -94,7 +96,7 @@ protected DOT:;
 
 ID
   :
-  // 00C0 - 02B8 load of good looking unicode chars
+  // 0080 - 02B8 load of good looking unicode chars
   // there might be more allowed characters
   ('a'..'z'|'_') ('a'..'z'|'0'..'9'|'_'|'\u0080'..'\u02B8')*
   ;
@@ -258,11 +260,15 @@ keywordastablename
 
 createtable
   :
-  CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
-  ( LPAREN columndef (COMMA columndef)* ((COMMA)? tableconstraint)* RPAREN (WITHOUT ROWID)?
-  | AS selectstmt
+  (CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
+    ( LPAREN columndef (COMMA columndef)* ((COMMA)? tableconstraint)* RPAREN (WITHOUT ROWID)?
+    | AS selectstmt
+    )
+    {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
   )
-  {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
+  |(CREATE VIRTUAL TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
+    USING name (LPAREN (expr (COMMA expr)*)? RPAREN)?		// TODO: Not sure about using "expr" here
+   )
   ;
 
 keywordascolumnname

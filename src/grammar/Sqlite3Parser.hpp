@@ -49,13 +49,13 @@ public:
 	public: void columndef();
 	public: void tableconstraint();
 	public: void selectstmt();
+	public: void name();
+	public: void expr();
 	public: void keywordascolumnname();
 	public: void columnname();
 	public: void type_name();
 	public: void columnconstraint();
-	public: void name();
 	public: void conflictclause();
-	public: void expr();
 	public: void literalvalue();
 	public: void foreignkeyclause();
 	public: void indexedcolumn();
@@ -79,10 +79,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 107;
+	static const int NUM_TOKENS = 109;
 #else
 	enum {
-		NUM_TOKENS = 107
+		NUM_TOKENS = 109
 	};
 #endif
 	
