@@ -739,6 +739,11 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
             notnull = true;
         }
         break;
+        case sqlite3TokenTypes::NULL_T:
+        {
+            notnull = false;
+        }
+        break;
         case sqlite3TokenTypes::CHECK:
         {
             con = con->getNextSibling(); //LPAREN
