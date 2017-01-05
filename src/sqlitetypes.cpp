@@ -524,7 +524,7 @@ Table CreateTableWalker::table()
 
                 antlr::RefAST tc = s->getFirstChild();
 
-                // skip constraint name, if there is any
+                // Extract constraint name, if there is any
                 QString constraint_name;
                 if(tc->getType() == sqlite3TokenTypes::CONSTRAINT)
                 {
@@ -711,17 +711,23 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     {
         antlr::RefAST con = c->getFirstChild();
 
-        // skip constraint name, if there is any
+        // Extract constraint name, if there is any
+        QString constraint_name;
         if(con->getType() == sqlite3TokenTypes::CONSTRAINT)
         {
-            m_bModifySupported = false;
-            con = con->getNextSibling()->getNextSibling();
+            con = con->getNextSibling();          // CONSTRAINT
+            constraint_name = identifier(con);
+            con = con->getNextSibling();          // identifier
         }
 
         switch(con->getType())
         {
         case sqlite3TokenTypes::PRIMARY:
         {
+            // TODO Support constraint names here
+            if(!constraint_name.isEmpty())
+                m_bModifySupported = false;
+
             primarykey = true;
             con = con->getNextSibling()->getNextSibling(); // skip KEY
             if(con != antlr::nullAST && (con->getType() == sqlite3TokenTypes::ASC
@@ -736,6 +742,10 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
         break;
         case sqlite3TokenTypes::NOT:
         {
+            // TODO Support constraint names here
+            if(!constraint_name.isEmpty())
+                m_bModifySupported = false;
+
             notnull = true;
         }
         break;
@@ -746,6 +756,10 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
         break;
         case sqlite3TokenTypes::CHECK:
         {
+            // TODO Support constraint names here
+            if(!constraint_name.isEmpty())
+                m_bModifySupported = false;
+
             con = con->getNextSibling(); //LPAREN
             check = concatTextAST(con, true);
             // remove parenthesis
@@ -756,12 +770,20 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
         break;
         case sqlite3TokenTypes::DEFAULT:
         {
+            // TODO Support constraint names here
+            if(!constraint_name.isEmpty())
+                m_bModifySupported = false;
+
             con = con->getNextSibling(); //SIGNEDNUMBER,STRING,LPAREN
             defaultvalue = concatTextAST(con);
         }
         break;
         case sqlite3TokenTypes::UNIQUE:
         {
+            // TODO Support constraint names here
+            if(!constraint_name.isEmpty())
+                m_bModifySupported = false;
+
             unique = true;
         }
         break;
@@ -771,6 +793,7 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
 
             foreignKey = new ForeignKeyClause;
             foreignKey->setTable(identifier(con));
+            foreignKey->setName(constraint_name);
             con = con->getNextSibling();    // identifier
 
             if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::LPAREN)
