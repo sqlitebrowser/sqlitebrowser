@@ -32,7 +32,13 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
         QPair<sqlb::Table, bool> parse_result = sqlb::Table::parseSQL(sTablesql);
         m_table = parse_result.first;
         ui->labelEditWarning->setVisible(!parse_result.second);
+
+        // Set without rowid checkbox. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
+        // for error checking etc.
+        ui->checkWithoutRowid->blockSignals(true);
         ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
+        ui->checkWithoutRowid->blockSignals(false);
+
         populateFields();
     } else {
         ui->labelEditWarning->setVisible(false);
@@ -657,7 +663,12 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
                                      tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
                                         " - Primary key flag set\n"
                                         " - Auto increment disabled"));
+
+            // Reset checkbox state to unchecked. Block any signals while doing this in order to avoid an extra call to
+            // this function being triggered.
+            ui->checkWithoutRowid->blockSignals(true);
             ui->checkWithoutRowid->setChecked(false);
+            ui->checkWithoutRowid->blockSignals(false);
             return;
         }
 
@@ -671,7 +682,15 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     // Update the SQL preview
     updateSqlText();
 
-    // TODO: Update table if we're editing an existing table
+    // Update table if we're editing an existing table
+    if(!m_bNewTable)
+    {
+        if(!pdb.renameColumn(m_table, QString(), sqlb::FieldPtr(), 0))
+        {
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastErrorMessage));
+        }
+    }
 }
 
 bool EditTableDialog::fieldNameExists(const QString& name)

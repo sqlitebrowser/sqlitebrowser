@@ -969,6 +969,14 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
 
 bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move)
 {
+    /*
+     * USE CASES:
+     * 1) Set table; unset name, to and move: Change table constraints only.
+     * 2) Set table and name; unset to and move: Change table constraints and remove column.
+     * 3) Set table, name and to; unset move: Change table constraints and rename/edit column.
+     * 4) Set table, name, to and move: Change table constraints, rename/edit column and move it.
+     */
+
     // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
     // If SQLite should fully support this command one day, this entire
     // function can be changed to executing something like this:
@@ -981,9 +989,9 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
 
     // TODO: This function needs to be cleaned up. It might make sense to split it up in several parts than can be reused
     // more easily. Besides that, it might make sense to support some potential use cases in a more sophisticated way. These include:
-    // 1) Skip the entire column editing part when only the table constraints are changed.
-    // 2) Allow modifying multiple columns at once in order to only have to call this function (including all its overhead) once instead of once per change.
-    // 3) Include the addColumn() use case in here, so the calling side doesn't need to know anything about how this class handles table modifications.
+    // 1) Allow modifying multiple columns at once in order to only have to call this function (including all its overhead) once instead of once per change.
+    // 2) Include the addColumn() use case in here, so the calling side doesn't need to know anything about how this class handles table modifications.
+    // 3) Maybe rename this function to alterTable() or something
 
     // Collect information on the current DB layout
     QString tableSql = getObjectByName(table.name()).getsql();
@@ -997,7 +1005,7 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     sqlb::Table oldSchema = sqlb::Table::parseSQL(tableSql).first;
 
     // Check if field actually exists
-    if(oldSchema.findField(name) == -1)
+    if(!name.isNull() && oldSchema.findField(name) == -1)
     {
         lastErrorMessage = tr("renameColumn: cannot find column %1.").arg(name);
         return false;
@@ -1016,11 +1024,14 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     sqlb::Table newSchema = oldSchema;
     newSchema.setName("sqlitebrowser_rename_column_new_table");
     newSchema.setConstraints(table.allConstraints());
+    newSchema.setRowidColumn(table.rowidColumn());
     QString select_cols;
     if(to.isNull())
     {
-        // We want drop the column - so just remove the field
-        newSchema.removeField(name);
+        // We want drop the column - so just remove the field. If the name is set to null, skip this step. This effectively leaves all fields as they are,
+        // thus only changing the table constraints.
+        if(!name.isNull())
+            newSchema.removeField(name);
 
         for(int i=0;i<newSchema.fields().count();++i)
             select_cols.append(sqlb::escapeIdentifier(newSchema.fields().at(i)->name()) + ',');
