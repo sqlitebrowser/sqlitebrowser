@@ -271,7 +271,12 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
     {
         parser.createtable();
         CreateTableWalker ctw(parser.getAST());
-        return qMakePair(ctw.table(), ctw.modifysupported());
+
+        // Note: this needs to be done in two separate lines because otherwise the optimiser might decide to
+        // fetch the value for the second part of the pair (the modify supported flag) first. If it does so it will
+        // always be set to true because the table() method hasn't run yet and it's only set to false in there.
+        sqlb::Table tab = ctw.table();
+        return qMakePair(tab, ctw.modifysupported());
     }
     catch(antlr::ANTLRException& ex)
     {
