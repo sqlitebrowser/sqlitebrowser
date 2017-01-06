@@ -530,6 +530,9 @@ bool MainWindow::fileClose()
     browseTableSettings.clear();
     defaultBrowseTableEncoding = QString();
 
+    // Clear edit dock
+    editDock->setCurrentIndex(QModelIndex());
+
     // Reset the recordset label inside the Browse tab now
     setRecordsetLabel();
 
