@@ -225,6 +225,10 @@
             <property name="text">
              <string>|&lt;</string>
             </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/resultset_first.png</normaloff>:/icons/resultset_first.png</iconset>
+            </property>
            </widget>
           </item>
           <item>
@@ -240,6 +244,10 @@
             </property>
             <property name="text">
              <string>&lt;</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/resultset_previous.png</normaloff>:/icons/resultset_previous.png</iconset>
             </property>
            </widget>
           </item>
@@ -264,6 +272,10 @@
             <property name="text">
              <string>&gt;</string>
             </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/run</normaloff>:/icons/run</iconset>
+            </property>
            </widget>
           </item>
           <item>
@@ -279,6 +291,10 @@
             </property>
             <property name="text">
              <string>&gt;|</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/run_line</normaloff>:/icons/run_line</iconset>
             </property>
            </widget>
           </item>
