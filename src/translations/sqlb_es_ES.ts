@@ -2333,8 +2333,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1891"/>
-        <source>Copy the CREATE statement of the ítem to the clipboard</source>
-        <translation>Copia el comando CREATE del item al portapapeles</translation>
+        <source>Copy the CREATE statement of the item to the clipboard</source>
+        <translation>Copia el comando CREATE del ítem al portapapeles</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="118"/>
