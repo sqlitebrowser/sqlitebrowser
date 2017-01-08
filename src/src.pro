@@ -52,7 +52,8 @@ HEADERS += \
     FileDialog.h \
     ColumnDisplayFormatDialog.h \
     FilterLineEdit.h \
-    RemoteDatabase.h
+    RemoteDatabase.h \
+    PlotDock.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -83,7 +84,8 @@ SOURCES += \
     FileDialog.cpp \
     ColumnDisplayFormatDialog.cpp \
     FilterLineEdit.cpp \
-    RemoteDatabase.cpp
+    RemoteDatabase.cpp \
+    PlotDock.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -103,7 +105,8 @@ FORMS += \
     VacuumDialog.ui \
     CipherDialog.ui \
     ExportSqlDialog.ui \
-    ColumnDisplayFormatDialog.ui
+    ColumnDisplayFormatDialog.ui \
+    PlotDock.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

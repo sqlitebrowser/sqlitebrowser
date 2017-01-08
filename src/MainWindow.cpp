@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget* parent)
       m_browseTableModel(new SqliteTableModel(db, this, Settings::getSettingsValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
       editDock(new EditDialog(this)),
+      plotDock(new PlotDock(this)),
       gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
@@ -102,18 +103,16 @@ void MainWindow::init()
     // Set up the table combo box in the Browse Data tab
     ui->comboBrowseTable->setModel(dbStructureModel);
 
-    // Edit dock
+    // Create docks
     ui->dockEdit->setWidget(editDock);
+    ui->dockPlot->setWidget(plotDock);
 
     // Restore window geometry
     restoreGeometry(Settings::getSettingsValue("MainWindow", "geometry").toByteArray());
     restoreState(Settings::getSettingsValue("MainWindow", "windowState").toByteArray());
 
-    // Restore various dock state settings
+    // Restore dock state settings
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getSettingsValue("SQLLogDock", "Log").toString()));
-    ui->splitterForPlot->restoreState(Settings::getSettingsValue("PlotDock", "splitterSize").toByteArray());
-    ui->comboLineType->setCurrentIndex(Settings::getSettingsValue("PlotDock", "lineType").toInt());
-    ui->comboPointShape->setCurrentIndex(Settings::getSettingsValue("PlotDock", "pointShape").toInt());
 
     // Add keyboard shortcuts
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
@@ -224,9 +223,6 @@ void MainWindow::init()
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
     connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
     connect(&m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
-
-    // plot widgets
-    ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
 
     // Set other window settings
     setAcceptDrops(true);
@@ -476,7 +472,7 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(tableIt.value().encoding);
 
         // Plot
-        updatePlot(m_browseTableModel, true, false);
+        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()], true, false);
     } else {
         // There aren't any information stored for this table yet, so use some default values
 
@@ -495,7 +491,7 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
         // Plot
-        updatePlot(m_browseTableModel);
+        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()]);
 
         // The filters can be left empty as they are
     }
@@ -537,7 +533,7 @@ bool MainWindow::fileClose()
     setRecordsetLabel();
 
     // Reset the plot dock model
-    updatePlot(0);
+    plotDock->updatePlot(0);
 
     activateFields(false);
 
@@ -558,9 +554,6 @@ void MainWindow::closeEvent( QCloseEvent* event )
         Settings::setSettingsValue("MainWindow", "geometry", saveGeometry());
         Settings::setSettingsValue("MainWindow", "windowState", saveState());
         Settings::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
-        Settings::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
-        Settings::setSettingsValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
-        Settings::setSettingsValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -1008,7 +1001,7 @@ void MainWindow::executeQuery()
         execution_start_index = execution_end_index;
     } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
     sqlWidget->finishExecution(statusMessage);
-    updatePlot(sqlWidget->getModel());
+    plotDock->updatePlot(sqlWidget->getModel());
 
     connect(sqlWidget->getTableResult(), SIGNAL(clicked(QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
@@ -1397,6 +1390,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
     ui->dockEdit->setEnabled(enable && write);
+    ui->dockPlot->setEnabled(enable);
     ui->actionSave_Remote->setEnabled(enable);
 }
 
@@ -1777,416 +1771,6 @@ void MainWindow::httpresponse(QNetworkReply *reply)
     }
 
     reply->deleteLater();
-}
-
-namespace {
-/*!
- * \brief guessdatatype try to parse the first 10 rows and decide the datatype
- * \param model model to check the data
- * \param column index of the column to check
- * \return the guessed datatype
- */
-QVariant::Type guessdatatype(SqliteTableModel* model, int column)
-{
-    QVariant::Type type = QVariant::Invalid;
-    for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
-    {
-        QVariant data = model->data(model->index(i, column), Qt::EditRole);
-        if(data.isNull() || data.convert(QVariant::Double))
-        {
-            type = QVariant::Double;
-        } else {
-            QString s = model->data(model->index(i, column)).toString();
-            QDate d = QDate::fromString(s, Qt::ISODate);
-            if(d.isValid())
-                type = QVariant::DateTime;
-            else
-                type = QVariant::String;
-        }
-    }
-
-    return type;
-}
-}
-
-void MainWindow::updatePlot(SqliteTableModel *model, bool update, bool keepOrResetSelection)
-{
-    // add columns to x/y selection tree widget
-    if(update)
-    {
-        // disconnect treeplotcolumns item changed updates
-        disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-                   this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
-
-        m_currentPlotModel = model;
-
-        // save current selected columns, so we can restore them after the update
-        QString sItemX; // selected X column
-        QMap<QString, QColor> mapItemsY; // selected Y columns with color
-
-        if(keepOrResetSelection)
-        {
-            // Store the currently selected plot columns to restore them later
-            for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
-            {
-                QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-                if(item->checkState(PlotColumnX) == Qt::Checked)
-                    sItemX = item->text(PlotColumnField);
-
-                if(item->checkState(PlotColumnY) == Qt::Checked)
-                    mapItemsY[item->text(PlotColumnField)] = item->backgroundColor(PlotColumnY);
-            }
-        } else {
-            // Get the plot columns to select from the stored browse table information
-            sItemX = browseTableSettings[ui->comboBrowseTable->currentText()].plotXAxis;
-
-            QMap<QString, PlotSettings> axesY = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
-            auto it = axesY.constBegin();
-            while(it != axesY.constEnd())
-            {
-                mapItemsY.insert(it.key(), it.value().colour);
-                ++it;
-            }
-        }
-
-        ui->treePlotColumns->clear();
-
-        if(model)
-        {
-            // Add each column with a supported data type to the column selection view
-            for(int i=0;i<model->columnCount();++i)
-            {
-                QVariant::Type columntype = guessdatatype(model, i);
-                if(columntype != QVariant::String && columntype != QVariant::Invalid)
-                {
-                    QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
-                    // maybe i make this more complicated than i should
-                    // but store the model column index in the first 16 bit and the type
-                    // in the other 16 bits
-                    uint itemdata = 0;
-                    itemdata = i << 16;
-                    itemdata |= columntype;
-                    columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
-                    columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
-
-                    // restore previous check state
-                    if(mapItemsY.contains(columnitem->text(PlotColumnField)))
-                    {
-                        columnitem->setCheckState(PlotColumnY, Qt::Checked);
-                        columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)]);
-                    }
-                    else
-                        columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
-                    if(sItemX == columnitem->text(PlotColumnField))
-                        columnitem->setCheckState(PlotColumnX, Qt::Checked);
-                    else
-                        columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
-                }
-            }
-
-            // Add a row number column at the beginning of the column list, but only when there were (other) columns added
-            if(ui->treePlotColumns->topLevelItemCount())
-            {
-                QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
-
-                // Just set all bits in the user role information field here to somehow indicate what column this is
-                uint itemdata = -1;
-                columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
-                columnitem->setText(PlotColumnField, tr("Row #"));
-
-                // restore previous check state
-                if(mapItemsY.contains(columnitem->text(PlotColumnField)))
-                {
-                    columnitem->setCheckState(PlotColumnY, Qt::Checked);
-                    columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)]);
-                } else {
-                    columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
-                }
-                if(sItemX == columnitem->text(PlotColumnField))
-                    columnitem->setCheckState(PlotColumnX, Qt::Checked);
-                else
-                    columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
-
-                ui->treePlotColumns->takeTopLevelItem(ui->treePlotColumns->indexOfTopLevelItem(columnitem));
-                ui->treePlotColumns->insertTopLevelItem(0, columnitem);
-            }
-        }
-
-        ui->plotWidget->yAxis->setLabel("Y");
-        ui->plotWidget->xAxis->setLabel("X");
-        connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &MainWindow::on_treePlotColumns_itemChanged);
-    }
-
-    // search for the x axis select
-    QTreeWidgetItem* xitem = 0;
-    for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
-    {
-        xitem = ui->treePlotColumns->topLevelItem(i);
-        if(xitem->checkState(PlotColumnX) == Qt::Checked)
-            break;
-
-        xitem = 0;
-    }
-
-    QStringList yAxisLabels;
-
-    ui->plotWidget->clearGraphs();
-    if(xitem)
-    {
-        // regain the model column index and the datatype
-        // leading 16 bit are column index, the other 16 bit are the datatype
-        // right now datatype is only important for X axis (date, non date)
-        uint xitemdata = xitem->data(PlotColumnField, Qt::UserRole).toUInt();
-        int x = xitemdata >> 16;
-        int xtype = xitemdata & (uint)0xFF;
-
-        // check if we have a x axis with datetime data
-        if(xtype == QVariant::DateTime)
-        {
-            ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
-            ui->plotWidget->xAxis->setDateTimeFormat("yyyy-MM-dd");
-        } else {
-            ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltNumber);
-        }
-
-        // add graph for each selected y axis
-        for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
-        {
-            QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            if(item->checkState((PlotColumnY)) == Qt::Checked)
-            {
-                // regain the model column index and the datatype
-                // leading 16 bit are column index
-                uint itemdata = item->data(0, Qt::UserRole).toUInt();
-                int column = itemdata >> 16;
-                QCPGraph* graph = ui->plotWidget->addGraph();
-
-                graph->setPen(QPen(item->backgroundColor(PlotColumnY)));
-
-                // prepare the data vectors for qcustomplot
-                // possible improvement might be a QVector subclass that directly
-                // access the model data, to save memory, we are copying here
-                QVector<double> xdata(model->rowCount()), ydata(model->rowCount());
-                for(int i = 0; i < model->rowCount(); ++i)
-                {
-                    // convert x type axis if it's datetime
-                    if(xtype == QVariant::DateTime)
-                    {
-                        QString s = model->data(model->index(i, x)).toString();
-                        QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[i] = d.toTime_t();
-                    } else {
-                        // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
-                        // instead of retrieving some value from the model.
-                        if(x == 0xFFFF)
-                            xdata[i] = i+1;
-
-                        else
-                            xdata[i] = model->data(model->index(i, x)).toDouble();
-                    }
-
-                    // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
-                    // instead of retrieving some value from the model.
-                    QVariant pointdata;
-                    if(column == 0xFFFF)
-                        pointdata = i+1;
-                    else
-                        pointdata = model->data(model->index(i, column), Qt::EditRole);
-
-                    if(pointdata.isNull())
-                        ydata[i] = qQNaN();
-                    else
-                        ydata[i] = pointdata.toDouble();
-                }
-
-                // set some graph styles
-                graph->setData(xdata, ydata);
-                graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
-                // WARN: ssDot is removed
-                int shapeIdx = ui->comboPointShape->currentIndex();
-                if (shapeIdx > 0) shapeIdx += 1;
-                graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)shapeIdx, 5));
-
-                // gather Y label column names
-                yAxisLabels << model->headerData(column, Qt::Horizontal).toString();
-            }
-        }
-
-        ui->plotWidget->rescaleAxes(true);
-
-        // set axis labels
-        ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
-        ui->plotWidget->yAxis->setLabel(yAxisLabels.join("|"));
-    }
-    ui->plotWidget->replot();
-}
-
-void MainWindow::on_treePlotColumns_itemChanged(QTreeWidgetItem *changeitem, int column)
-{
-    // disable change updates, or we get unwanted redrawing and weird behavior
-    disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
-
-    // make sure only 1 X axis is selected
-    QString current_table = ui->comboBrowseTable->currentText();
-    if(column == PlotColumnX)
-    {
-        for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
-        {
-            QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            if(item->checkState(column) == Qt::Checked && item != changeitem)
-            {
-                item->setCheckState(column, Qt::Unchecked);
-            }
-        }
-
-        // Save settings for this table
-        if(changeitem->checkState(column) == Qt::Checked)
-            browseTableSettings[current_table].plotXAxis = changeitem->text(PlotColumnField);
-        else
-            browseTableSettings[current_table].plotXAxis = QString();
-    } else if(column == PlotColumnY) {
-        if(changeitem->checkState(column) == Qt::Checked)
-        {
-            // Generate a default colour if none isn't set yet
-            QColor colour = changeitem->backgroundColor(column);
-            if(!colour.isValid())
-            {
-                static int last_colour_index = 0;
-                switch(last_colour_index++)
-                {
-                case 0:
-                    colour = QColor(0, 69, 134);
-                    break;
-                case 1:
-                    colour = QColor(255, 66, 14);
-                    break;
-                case 2:
-                    colour = QColor(255, 211, 32);
-                    break;
-                case 3:
-                    colour = QColor(87, 157, 28);
-                    break;
-                case 4:
-                    colour = QColor(126, 0, 33);
-                    break;
-                case 5:
-                    colour = QColor(131, 202, 255);
-                    break;
-                case 6:
-                    colour = QColor(49, 64, 4);
-                    break;
-                case 7:
-                    colour = QColor(174, 207, 0);
-                    break;
-                case 8:
-                    colour = QColor(75, 31, 111);
-                    break;
-                case 9:
-                    colour = QColor(255, 149, 14);
-                    break;
-                case 10:
-                    colour = QColor(197, 00, 11);
-                    break;
-                case 11:
-                    colour = QColor(0, 132, 209);
-
-                    // Since this is the last colour in our table, reset the counter back
-                    // to the first colour
-                    last_colour_index = 0;
-                    break;
-                default:
-                    // NOTE: This shouldn't happen!
-                    colour = QColor(0, 0, 0);
-                    break;
-                }
-            }
-
-            // Set colour
-            changeitem->setBackgroundColor(column, colour);
-
-            // Save settings for this table
-            PlotSettings& plot_settings = browseTableSettings[current_table].plotYAxes[changeitem->text(PlotColumnField)];
-            plot_settings.colour = colour;
-            plot_settings.lineStyle = ui->comboLineType->currentIndex();
-            plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
-        }
-    }
-
-    connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
-
-    updatePlot(m_currentPlotModel, false);
-}
-
-void MainWindow::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int column)
-{
-    // disable change updates, or we get unwanted redrawing and weird behavior
-    disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
-
-    if(column == PlotColumnY)
-    {
-        // On double click open the colordialog
-        QColorDialog colordialog(this);
-        QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
-        QColor color = colordialog.getColor(precolor, this, tr("Choose a axis color"));
-        QString current_table = ui->comboBrowseTable->currentText();
-        if(color.isValid())
-        {
-            item->setCheckState(column, Qt::Checked);
-            item->setBackgroundColor(column, color);
-
-            // Save settings for this table
-            PlotSettings& plot_settings = browseTableSettings[current_table].plotYAxes[item->text(PlotColumnField)];
-            plot_settings.colour = color;
-            plot_settings.lineStyle = ui->comboLineType->currentIndex();
-            plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
-        } else {
-            item->setCheckState(column, Qt::Unchecked);
-
-            // Save settings for this table
-            browseTableSettings[current_table].plotYAxes.remove(item->text(PlotColumnField));
-        }
-    }
-
-    connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
-
-    updatePlot(m_currentPlotModel, false);
-}
-
-void MainWindow::on_butSavePlot_clicked()
-{
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
-                                                    );
-    if(!fileName.isEmpty())
-    {
-        if(fileName.endsWith(".png", Qt::CaseInsensitive))
-        {
-            ui->plotWidget->savePng(fileName);
-        }
-        else if(fileName.endsWith(".jpg", Qt::CaseInsensitive))
-        {
-            ui->plotWidget->saveJpg(fileName);
-        }
-        else if(fileName.endsWith(".pdf", Qt::CaseInsensitive))
-        {
-            ui->plotWidget->savePdf(fileName);
-        }
-        else if(fileName.endsWith(".bmp", Qt::CaseInsensitive))
-        {
-            ui->plotWidget->saveBmp(fileName);
-        }
-        else
-        {
-            fileName += ".png";
-            ui->plotWidget->savePng(fileName);
-        }
-    }
 }
 
 void MainWindow::on_actionOpen_Remote_triggered()
@@ -2591,54 +2175,6 @@ void MainWindow::copyCurrentCreateStatement()
     QApplication::clipboard()->setText(stmt);
 }
 
-void MainWindow::on_comboLineType_currentIndexChanged(int index)
-{
-    Q_ASSERT(index >= QCPGraph::lsNone &&
-             index <= QCPGraph::lsImpulse);
-    QCPGraph::LineStyle lineStyle = (QCPGraph::LineStyle) index;
-    for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
-    {
-        QCPGraph * graph = ui->plotWidget->graph(i);
-        if (graph)
-            graph->setLineStyle(lineStyle);
-    }
-    ui->plotWidget->replot();
-
-    // Save settings for this table
-    QMap<QString, PlotSettings>& graphs = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
-    auto it = graphs.begin();
-    while(it != graphs.end())
-    {
-        it.value().lineStyle = lineStyle;
-        ++it;
-    }
-}
-
-void MainWindow::on_comboPointShape_currentIndexChanged(int index)
-{
-    // WARN: because ssDot point shape is removed
-    if (index > 0) index += 1;
-    Q_ASSERT(index >= QCPScatterStyle::ssNone &&
-             index <  QCPScatterStyle::ssPixmap);
-    QCPScatterStyle::ScatterShape shape = (QCPScatterStyle::ScatterShape) index;
-    for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
-    {
-        QCPGraph * graph = ui->plotWidget->graph(i);
-        if (graph)
-            graph->setScatterStyle(QCPScatterStyle(shape, 5));
-    }
-    ui->plotWidget->replot();
-
-    // Save settings for this table
-    QMap<QString, PlotSettings>& graphs = browseTableSettings[ui->comboBrowseTable->currentText()].plotYAxes;
-    auto it = graphs.begin();
-    while(it != graphs.end())
-    {
-        it.value().pointShape = shape;
-        ++it;
-    }
-}
-
 void MainWindow::jumpToRow(const QString& table, QString column, const QByteArray& value)
 {
     // First check if table exists
@@ -2798,33 +2334,4 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
 void MainWindow::browseDataSetDefaultTableEncoding()
 {
     browseDataSetTableEncoding(true);
-}
-
-void MainWindow::browseDataFetchAllData()
-{
-    if(m_currentPlotModel)
-    {
-        // Show progress dialog because fetching all data might take some time
-        QProgressDialog progress(tr("Fetching all data..."),
-                                 tr("Cancel"), m_browseTableModel->rowCount(), m_browseTableModel->totalRowCount());
-        progress.setWindowModality(Qt::ApplicationModal);
-        progress.show();
-        qApp->processEvents();
-
-        // Make sure all data is loaded
-        while(m_currentPlotModel->canFetchMore())
-        {
-            // Fetch the next bunch of data
-            m_currentPlotModel->fetchMore();
-
-            // Update the progress dialog and stop loading data when the cancel button was pressed
-            progress.setValue(m_currentPlotModel->rowCount());
-            qApp->processEvents();
-            if(progress.wasCanceled())
-                break;
-        }
-
-        // Update plot
-        updatePlot(m_currentPlotModel);
-    }
 }

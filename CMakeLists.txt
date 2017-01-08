@@ -104,6 +104,7 @@ set(SQLB_MOC_HDR
 	src/ColumnDisplayFormatDialog.h
 	src/FilterLineEdit.h
 	src/RemoteDatabase.h
+	src/PlotDock.h
 )
 
 set(SQLB_SRC
@@ -137,6 +138,7 @@ set(SQLB_SRC
 	src/ColumnDisplayFormatDialog.cpp
 	src/FilterLineEdit.cpp
 	src/RemoteDatabase.cpp
+	src/PlotDock.cpp
 )
 
 set(SQLB_FORMS
@@ -153,6 +155,7 @@ set(SQLB_FORMS
 	src/CipherDialog.ui
 	src/ExportSqlDialog.ui
 	src/ColumnDisplayFormatDialog.ui
+	src/PlotDock.ui
 )
 
 set(SQLB_RESOURCES

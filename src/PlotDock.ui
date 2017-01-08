@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlotDock</class>
+ <widget class="QDialog" name="PlotDock">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>478</width>
+    <height>553</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Plot</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QSplitter" name="splitterForPlot">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QTreeWidget" name="treePlotColumns">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>2</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="columnCount">
+       <number>4</number>
+      </property>
+      <attribute name="headerDefaultSectionSize">
+       <number>100</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Columns</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>X</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>_</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QCustomPlot" name="plotWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>8</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Line type:</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboLineType</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QComboBox" name="comboLineType">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>None</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Line</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>StepLeft</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>StepRight</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>StepCenter</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Impulse</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Point shape:</string>
+          </property>
+          <property name="buddy">
+           <cstring>comboPointShape</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboPointShape">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>None</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Cross</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Plus</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Circle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Disc</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Square</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Diamond</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Star</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Triangle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>TriangleInverted</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>CrossSquare</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>PlusSquare</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>CrossCircle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>PlusCircle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Peace</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="butSavePlot">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="statusTip">
+           <string>Save current plot...</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons.qrc">
+            <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="buttonLoadAllData">
+          <property name="toolTip">
+           <string>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons.qrc">
+            <normaloff>:/icons/keyword</normaloff>:/icons/keyword</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonLoadAllData</sender>
+   <signal>clicked()</signal>
+   <receiver>PlotDock</receiver>
+   <slot>fetchAllData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>463</x>
+     <y>526</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>477</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>fetchAllData()</slot>
+ </slots>
+</ui>
