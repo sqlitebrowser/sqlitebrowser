@@ -491,6 +491,7 @@ Table CreateTableWalker::table()
         if(is_virtual_table)
         {
             s = s->getNextSibling(); // USING
+            s = s->getNextSibling(); // module name
             tab.setVirtualUsing(concatTextAST(s, true));
             m_bModifySupported = false;
 
