@@ -691,11 +691,11 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     QString colname;
     QString type = "TEXT";
     bool autoincrement = false;
-    bool primarykey = false;
     bool notnull = false;
     bool unique = false;
     QString defaultvalue;
     QString check;
+    sqlb::PrimaryKeyConstraint* primaryKey = 0;
     sqlb::ForeignKeyClause* foreignKey = 0;
 
     colname = columnname(c);
@@ -725,11 +725,9 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
         {
         case sqlite3TokenTypes::PRIMARY:
         {
-            // TODO Support constraint names here
-            if(!constraint_name.isEmpty())
-                m_bModifySupported = false;
+            primaryKey = new PrimaryKeyConstraint;
+            primaryKey->setName(constraint_name);
 
-            primarykey = true;
             con = con->getNextSibling()->getNextSibling(); // skip KEY
             if(con != antlr::nullAST && (con->getType() == sqlite3TokenTypes::ASC
                                          || con->getType() == sqlite3TokenTypes::DESC))
@@ -831,13 +829,13 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
 
     if(foreignKey)
         table.addConstraint({f}, ConstraintPtr(foreignKey));
-    if(primarykey)
+    if(primaryKey)
     {
         FieldVector v;
         if(table.constraint(v, Constraint::PrimaryKeyConstraintType))
             table.primaryKeyRef().push_back(f);
         else
-            table.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
+            table.addConstraint({f}, ConstraintPtr(primaryKey));
     }
 }
 
