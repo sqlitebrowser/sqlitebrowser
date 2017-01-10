@@ -151,7 +151,7 @@ El proceso de cifrado puede llevar algún tiempo y ¡debería hacer una copia de
         <location filename="../CipherDialog.cpp" line="20"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
-        <translation>Por favor, introduzca la clave a usar en el cifrardo de la base de datos.
+        <translation>Por favor, introduzca la clave a usar en el cifrado de la base de datos.
 Si se modificaron cualquiera de los otros ajustes para este archivo de base de datos, también tendrá que proporcionar esta información.</translation>
     </message>
 </context>
@@ -170,7 +170,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="26"/>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation>Elija el formato para la columna &apos;%1&apos; el cual se aplicará a cada valor antes de mostralo.</translation>
+        <translation>Elija el formato para la columna &apos;%1&apos; el cual se aplicará a cada valor antes de mostrarlo.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
@@ -1100,7 +1100,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="38"/>
         <source>&amp;Column names in first line</source>
-        <translation>Nombres de &amp;columa en la primera línea</translation>
+        <translation>Nombres de &amp;columna en la primera línea</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="55"/>
@@ -1844,7 +1844,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1293"/>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Carga todos los datos. Es efectivo sólo si no se han leido ya todos los datos de la tabla porque el mecanismo de lectura ha hecho una lectura parcial.</translation>
+        <translation>Carga todos los datos. Es efectivo sólo si no se han leído ya todos los datos de la tabla porque el mecanismo de lectura ha hecho una lectura parcial.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1309"/>
@@ -2294,7 +2294,7 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1799"/>
         <location filename="../MainWindow.ui" line="1802"/>
         <source>Save the current session to a file</source>
-        <translation>Guardar la sesion actual en un archivo</translation>
+        <translation>Guardar la sesión actual en un archivo</translation>
     </message>
     <message>
         <source>Open Project</source>
@@ -2304,7 +2304,7 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1817"/>
         <location filename="../MainWindow.ui" line="1820"/>
         <source>Load a working session from a file</source>
-        <translation>Carga una sesion de trabajo de un archivo</translation>
+        <translation>Carga una sesión de trabajo de un archivo</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1831"/>
@@ -2334,7 +2334,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1891"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
-        <translation>Copia el comando CREATE del item al portapapeles</translation>
+        <translation>Copia el comando CREATE del ítem al portapapeles</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="118"/>
@@ -2374,7 +2374,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.cpp" line="202"/>
         <source>Database file is read only. Editing the database is disabled.</source>
-        <translation>El archivo de la base de datos es de sólo lectura. La edición de la base de datos está deshabilitada.</translation>
+        <translation>El archivo de la base de datos es de sólo lectura. La edición de la base de datos está desactivada.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="208"/>
@@ -2614,7 +2614,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1668"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
-        <translation>Hay diponible una nueva version de DB Browser para SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Por favor, descárguela de &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
+        <translation>Hay disponible una nueva versión de DB Browser para SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Por favor, descárguela de &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1938"/>
@@ -2855,7 +2855,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="575"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
-        <translation>Define el tiempo de espera antes de que se aplique un nuevo valor de filtro. Se puede poner a 0 para dehabilitar la espera.</translation>
+        <translation>Define el tiempo de espera antes de que se aplique un nuevo valor de filtro. Se puede poner a 0 para desactivar la espera.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="591"/>
@@ -2969,7 +2969,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="835"/>
         <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
-        <translation>Habilitando los indicadores de error se resaltan las líneas del código SQL que han causado errores durante la última ejecución</translation>
+        <translation>Activando los indicadores de error se resaltan las líneas del código SQL que han causado errores durante la última ejecución</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="845"/>
@@ -2979,7 +2979,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="855"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
-        <translation>Si se habilita, el editor de código SQL y la vista de la tabla de resultados se muestran de lado a lado en lugar de una sobre la otra.</translation>
+        <translation>Si se activa, el editor de código SQL y la vista de la tabla de resultados se muestran de lado a lado en lugar de una sobre la otra.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="865"/>
@@ -3083,7 +3083,7 @@ usando una extensión. Necesitará reiniciar la aplicación.&lt;/p&gt;
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation>Una tabla en esta base de datos necesita una función de comparación especial &apos;%1&apos; que esta aplicacion no puede proporcionar sin más información.
+        <translation>Una tabla en esta base de datos necesita una función de comparación especial &apos;%1&apos; que esta aplicación no puede proporcionar sin más información.
 Si decide continuar, está avisado de que la base de datos se puede dañar.
 ¡Cree un backup!
 </translation>
@@ -3177,7 +3177,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../SqlUiLexer.cpp" line="66"/>
         <source>(X,Y) The instr(X,Y) function finds the first occurrence of string Y within string X and returns the number of prior characters plus 1, or 0 if Y is nowhere found within X.</source>
-        <translation>(X,Y) La función instr(X,Y) busca la primera coincidencia de la cadena Y en la cadena X y devuelve el número de caracteres precendentes más 1, ó 0 si Y no se encuentra en X.</translation>
+        <translation>(X,Y) La función instr(X,Y) busca la primera coincidencia de la cadena Y en la cadena X y devuelve el número de caracteres precedentes más 1, ó 0 si Y no se encuentra en X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="67"/>
@@ -3192,7 +3192,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../SqlUiLexer.cpp" line="69"/>
         <source>(X) For a string value X, the length(X) function returns the number of characters (not bytes) in X prior to the first NUL character.</source>
-        <translation>(X) La función length(X) devuelve el número de caracteres (no bytes) en X anteriores al primer caracter NUL.</translation>
+        <translation>(X) La función length(X) devuelve el número de caracteres (no bytes) en X anteriores al primer carácter NUL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="70"/>
@@ -3247,7 +3247,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>(FORMAT,...) The printf(FORMAT,...) SQL function works like the sqlite3_mprintf() C-language function and the printf() function from the standard C library.</source>
-        <translation>(FORMAT,...) La función SQL printf(FORMAT,...) funciona como la función de lenguaje C sqlite3_mprintf() y la función printf() de la biblioteca C estandar.</translation>
+        <translation>(FORMAT,...) La función SQL printf(FORMAT,...) funciona como la función de lenguaje C sqlite3_mprintf() y la función printf() de la biblioteca C estándar.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
@@ -3327,7 +3327,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../SqlUiLexer.cpp" line="96"/>
         <source>(X) The unicode(X) function returns the numeric unicode code point corresponding to the first character of the string X.</source>
-        <translation>(X) La función unicode(X) devuelve el valor numérico del código de punto unicode correspondiente al primer caracter de la cadena X.</translation>
+        <translation>(X) La función unicode(X) devuelve el valor numérico del código de punto unicode correspondiente al primer carácter de la cadena X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="97"/>
