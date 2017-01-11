@@ -200,7 +200,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Apple NSDate to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Fecha de Apple NSDate a fecha</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
@@ -824,7 +824,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../EditTableDialog.cpp" line="258"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta columna está referenciada en una foreign key en la tabla %1 y por tanto no se le puede cambiar el nombre.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="328"/>
@@ -846,7 +846,8 @@ Abortando ejecución.</translation>
         <location filename="../EditTableDialog.cpp" line="691"/>
         <source>Setting the rowid column for the table failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El ajuste de la columna rowid para la tabla falló. Mensaje de error:
+%1</translation>
     </message>
     <message>
         <source>Column `%1` has no unique data.
@@ -863,7 +864,8 @@ Abortando ejecución.</translation>
         <location filename="../EditTableDialog.cpp" line="467"/>
         <source>Modifying this column failed. Error returned from database:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>La modificación de esta columna falló. Error devuelto por la base de datos:
+%1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="550"/>
@@ -904,17 +906,17 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
         <source>Tab&amp;le(s)</source>
-        <translation type="unfinished">Tab&amp;la(s)</translation>
+        <translation>Tab&amp;la(s)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="57"/>
         <source>Colu&amp;mn names in first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombres de las &amp;columnas en la primera línea</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="77"/>
         <source>Fie&amp;ld separator</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Separador de campos</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="102"/>
@@ -976,7 +978,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation type="unfinished"></translation>
+        <translation>Impresión formateada</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="165"/>
@@ -998,7 +1000,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExportDataDialog.cpp" line="247"/>
         <source>Text files(*.json *.js *.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de texto(*.json *.js *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="273"/>
@@ -1307,32 +1309,32 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1961"/>
         <source>SQLCipher &amp;FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>FAQ de SQLCipher...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1969"/>
         <source>Table(s) to JSON...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabla(s) a JSON...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1972"/>
         <source>Export one or more table(s) to a JSON file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar una o más tabla(s) a un archivo JSON</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1980"/>
         <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir desde el Remoto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1985"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar al Remoto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1990"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Refrescar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1993"/>
@@ -1347,7 +1349,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="80"/>
         <source>&amp;Table:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tabla:</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="162"/>
@@ -1661,7 +1663,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="869"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Remoto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="897"/>
@@ -1686,17 +1688,17 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="951"/>
         <source>Edit Database &amp;Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar &amp;Celda de la Base de Datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1338"/>
         <source>DB Sche&amp;ma</source>
-        <translation type="unfinished"></translation>
+        <translation>Esquema de la base de datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1718"/>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta SQL [F5, Ctrl+Intro, Ctrl+R]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1748"/>
@@ -2596,7 +2598,8 @@ Se perderán todos los datos asociados con: %1</translation>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error mientras se guardaba el archivo de la base de datos. Esto significa que no todos lo cambios hechos a la base de datos se han guardado. Antes tiene que solucionar el siguiente error.
+%1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1134"/>
@@ -2716,7 +2719,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1895"/>
         <source>Row #</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea #</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2134"/>
@@ -2731,12 +2734,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2194"/>
         <source>Please enter the URL of the database file to open.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor introduzca la URL del archivo de la base de datos a abrir.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2204"/>
         <source>Please enter the URL of the database file to save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor introduzca la URL del archivo de la base de datos a guardar.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2258"/>
@@ -2774,12 +2777,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../MainWindow.cpp" line="2808"/>
         <source>Fetching all data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Trayendo todos los datos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2809"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2843,7 +2846,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="128"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar opciones del remoto</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="163"/>
@@ -2913,12 +2916,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     </message>
     <message>
         <source>SQL to execute after opening database</source>
-        <translation type="vanished">SQL a ejecutar trar abrir la base de datos</translation>
+        <translation type="vanished">SQL a ejecutar tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="285"/>
         <source>SQ&amp;L to execute after opening database</source>
-        <translation type="unfinished"></translation>
+        <translation>SQ&amp;L a ejecutar tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="311"/>
@@ -2943,12 +2946,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="362"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenido</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="368"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite de símbolos en la celda</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="429"/>
@@ -3098,76 +3101,76 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="1011"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Remoto</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1017"/>
         <source>CA certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Certificados CA</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1034"/>
         <location filename="../PreferencesDialog.ui" line="1092"/>
         <source>Subject CN</source>
-        <translation type="unfinished"></translation>
+        <translation>Sujeto CN</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1037"/>
         <source>Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre Común</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1042"/>
         <source>Subject O</source>
-        <translation type="unfinished"></translation>
+        <translation>Sujeto O</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1045"/>
         <source>Organization</source>
-        <translation type="unfinished"></translation>
+        <translation>Organización</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1050"/>
         <location filename="../PreferencesDialog.ui" line="1108"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Válido desde</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1055"/>
         <location filename="../PreferencesDialog.ui" line="1113"/>
         <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <translation>Válido hasta</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1060"/>
         <location filename="../PreferencesDialog.ui" line="1118"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de serie</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1068"/>
         <source>Your certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sus certificados</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1087"/>
         <source>File</source>
-        <translation type="unfinished">Archivo</translation>
+        <translation>Archivo</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1095"/>
         <source>Subject Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre Común del Sujeto</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1100"/>
         <source>Issuer CN</source>
-        <translation type="unfinished"></translation>
+        <translation>Emisor CN</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1103"/>
         <source>Issuer Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre Común del Emisor</translation>
     </message>
     <message>
         <source>Tab size:</source>
@@ -3263,17 +3266,17 @@ usando una extensión. Necesitará reiniciar la aplicación.&lt;/p&gt;
     <message>
         <location filename="../PreferencesDialog.cpp" line="434"/>
         <source>Import certificate file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar archivo de certificado</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="442"/>
         <source>No certificates found in this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay certificados en este archivo.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="459"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de que quiere eliminar este certificado? ¡Todos los datos del certificado se borrarán de los ajustes de la aplicación!</translation>
     </message>
 </context>
 <context>
@@ -3328,45 +3331,48 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
         <location filename="../RemoteDatabase.cpp" line="136"/>
         <source>Error opening remote database file from %1.
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Error abriendo el archivo de base de datos remoto de %1.
+%2</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="184"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: El certificado del cliente es inválido.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="196"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor introduzca la clave de este certificado del cliente para autentificarse.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="219"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="223"/>
         <source>Uploading remote database to
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Subiendo base de datos remota a
+%1.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="225"/>
         <source>Downloading remote database from
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargando base de datos remota desde
+%1.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="243"/>
         <location filename="../RemoteDatabase.cpp" line="273"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: La red no es accesible.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="281"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error: No se puede abrir el archivo para enviar.</translation>
     </message>
 </context>
 <context>
