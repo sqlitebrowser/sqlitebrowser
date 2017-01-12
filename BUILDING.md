@@ -3,6 +3,13 @@
 DB Browser for SQLite requires Qt as well as SQLite. For more information on Qt
 please consult http://www.qt.io and for SQLite please see https://sqlite.org/.
 
+Please note that all versions after 3.9.1 will require:
+* Qt 5.6 or later
+* A C++ compiler with support for C++11 or later
+Without these or with older versions you won't be able to compile DB Browser for
+Sqlite anymore. This applies to all platforms. However, most likely you won't
+have to worry about these as most systems meet these requirements today.
+
 ### Generic Linux and FreeBSD
 
 The GPL version of Qt is available in almost all Linux distributions as a
