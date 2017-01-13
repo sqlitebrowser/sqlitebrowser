@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_BR">
+<TS version="2.1" language="pt_BR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -195,6 +195,10 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
         <source>Custom</source>
         <translation>Personalizado</translation>
     </message>
+    <message>
+        <source>Apple NSDate to date</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateIndexDialog</name>
@@ -382,6 +386,14 @@ Abortando execução.</translation>
     <message>
         <source>Triggers (%1)</source>
         <translation>Gatilhos (%1)</translation>
+    </message>
+    <message>
+        <source>Browsables (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -682,7 +694,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
-        <translation>Essa coluna é referenciada em uma chave estrangeira na tabela %1, coluna %2 e portanto não pode ter seu nome alterado.</translation>
+        <translation type="vanished">Essa coluna é referenciada em uma chave estrangeira na tabela %1, coluna %2 e portanto não pode ter seu nome alterado.</translation>
     </message>
     <message>
         <source>Column &apos;%1&apos; has no unique data.
@@ -698,6 +710,24 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
  - Flag &quot;primary key&quot; definida
  - Incremento automático desativado</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifying this column failed. Error returned from database:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setting the rowid column for the table failed. Error message:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportDataDialog</name>
@@ -707,15 +737,15 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>&amp;Table(s)</source>
-        <translation>&amp;Tabela(s)</translation>
+        <translation type="vanished">&amp;Tabela(s)</translation>
     </message>
     <message>
         <source>&amp;Column names in first line</source>
-        <translation>Nomes das &amp;colunas na primeira linha</translation>
+        <translation type="vanished">Nomes das &amp;colunas na primeira linha</translation>
     </message>
     <message>
         <source>Field &amp;separator</source>
-        <translation>&amp;Separador de campos</translation>
+        <translation type="vanished">&amp;Separador de campos</translation>
     </message>
     <message>
         <source>,</source>
@@ -784,6 +814,26 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     <message>
         <source>Unix: LF (\n)</source>
         <translation>Unix: LF (\n)</translation>
+    </message>
+    <message>
+        <source>Tab&amp;le(s)</source>
+        <translation type="unfinished">Tabe&amp;las(s)</translation>
+    </message>
+    <message>
+        <source>Colu&amp;mn names in first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fie&amp;ld separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pretty print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text files(*.json *.js *.txt)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1003,7 +1053,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Table:</source>
-        <translation>Tabela:</translation>
+        <translation type="vanished">Tabela:</translation>
     </message>
     <message>
         <source>Select a table to browse data</source>
@@ -1339,7 +1389,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>DB Schema</source>
-        <translation>Esquema do banco de dados</translation>
+        <translation type="vanished">Esquema do banco de dados</translation>
     </message>
     <message>
         <source>&amp;New Database...</source>
@@ -1559,7 +1609,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation>Executar SQL [F5, Ctrl+Return]</translation>
+        <translation type="vanished">Executar SQL [F5, Ctrl+Return]</translation>
     </message>
     <message>
         <source>Open SQL file</source>
@@ -1579,7 +1629,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation>Executar linha atual [Ctrl+E]</translation>
+        <translation type="vanished">Executar linha atual [Ctrl+E]</translation>
     </message>
     <message>
         <source>Ctrl+E</source>
@@ -1859,7 +1909,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Edit Database Cell</source>
-        <translation>Editar célula do banco de dados</translation>
+        <translation type="vanished">Editar célula do banco de dados</translation>
     </message>
     <message>
         <source>SQL &amp;Log</source>
@@ -2059,7 +2109,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation>Duplicar registro</translation>
+        <translation type="vanished">Duplicar registro</translation>
     </message>
     <message>
         <source>Encrypted</source>
@@ -2118,6 +2168,88 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     <message>
         <source>Execute SQL</source>
         <translation>Executar SQL</translation>
+    </message>
+    <message>
+        <source>&amp;Table:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Database &amp;Cell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DB Sche&amp;ma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Execute current line [Shift+F5]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+F5</source>
+        <translation type="unfinished">Shift+F5</translation>
+    </message>
+    <message>
+        <source>SQLCipher &amp;FAQ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens the SQLCipher FAQ in a browser window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Table(s) to JSON...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export one or more table(s) to a JSON file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open from Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save to Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Row #</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the URL of the database file to open.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the URL of the database file to save.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fetching all data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2340,7 +2472,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>SQL to execute after opening database</source>
-        <translation>SQL para executar após abrir o banco de dados</translation>
+        <translation type="vanished">SQL para executar após abrir o banco de dados</translation>
     </message>
     <message>
         <source>Default field type</source>
@@ -2422,6 +2554,90 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
         <source>Code co&amp;mpletion</source>
         <translation>Co&amp;mpletação de código</translation>
     </message>
+    <message>
+        <source>Show remote options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQ&amp;L to execute after opening database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol limit in cell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CA certificates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject CN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Common Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Organization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your certificates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">File</translation>
+    </message>
+    <message>
+        <source>Subject Common Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issuer CN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issuer Common Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import certificate file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No certificates found in this file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2458,6 +2674,44 @@ Create a backup!</source>
         <translation>Uma tabela nesse banco de dados requer uma função de comparação especial &apos;%1&apos; que esse aplicativo não pode prover.
 So você optar por proceder, esteja avisado de que coisas ruins podem acontecer para o seu banco de dados.
 Faça um backup!</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDatabase</name>
+    <message>
+        <source>Error opening remote database file from %1.
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Invalid client certificate specified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Uploading remote database to
+%1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading remote database from
+%1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: The network is not accessible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Cannot open the file for sending.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
