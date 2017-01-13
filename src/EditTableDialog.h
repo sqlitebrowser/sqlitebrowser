@@ -7,6 +7,7 @@
 
 class DBBrowserDB;
 class QTreeWidgetItem;
+class ForeignKeyEditorDelegate;
 
 namespace Ui {
 class EditTableDialog;
@@ -61,6 +62,7 @@ private slots:
 private:
     Ui::EditTableDialog* ui;
     DBBrowserDB& pdb;
+    ForeignKeyEditorDelegate* m_fkEditorDelegate;
     QString curTable;
     sqlb::Table m_table;
     QStringList types;
