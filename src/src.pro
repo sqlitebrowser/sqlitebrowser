@@ -52,7 +52,8 @@ HEADERS += \
     FileDialog.h \
     ColumnDisplayFormatDialog.h \
     FilterLineEdit.h \
-    RemoteDatabase.h
+    RemoteDatabase.h \
+    ForeignKeyEditorDelegate.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -83,7 +84,8 @@ SOURCES += \
     FileDialog.cpp \
     ColumnDisplayFormatDialog.cpp \
     FilterLineEdit.cpp \
-    RemoteDatabase.cpp
+    RemoteDatabase.cpp \
+    ForeignKeyEditorDelegate.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

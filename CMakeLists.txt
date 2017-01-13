@@ -104,6 +104,7 @@ set(SQLB_MOC_HDR
 	src/ColumnDisplayFormatDialog.h
 	src/FilterLineEdit.h
 	src/RemoteDatabase.h
+	src/ForeignKeyEditorDelegate.h
 )
 
 set(SQLB_SRC
@@ -137,6 +138,7 @@ set(SQLB_SRC
 	src/ColumnDisplayFormatDialog.cpp
 	src/FilterLineEdit.cpp
 	src/RemoteDatabase.cpp
+	src/ForeignKeyEditorDelegate.cpp
 )
 
 set(SQLB_FORMS

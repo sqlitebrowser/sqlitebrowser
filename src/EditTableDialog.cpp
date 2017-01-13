@@ -1,5 +1,6 @@
 #include "EditTableDialog.h"
 #include "Settings.h"
+#include "ForeignKeyEditorDelegate.h"
 #include "ui_EditTableDialog.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
@@ -24,6 +25,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
     ui->widgetExtension->setVisible(false);
     connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
 
+    // Set item delegate for foreign key column
+    ui->treeWidget->setItemDelegateForColumn(kForeignKey, new ForeignKeyEditorDelegate(db, m_table, this));
     // Editing an existing table?
     if(m_bNewTable == false)
     {
@@ -80,6 +83,7 @@ void EditTableDialog::updateColumnWidth()
     ui->treeWidget->setColumnWidth(kPrimaryKey, 30);
     ui->treeWidget->setColumnWidth(kAutoIncrement, 30);
     ui->treeWidget->setColumnWidth(kUnique, 30);
+    ui->treeWidget->setColumnWidth(kForeignKey, 500);
 }
 
 void EditTableDialog::populateFields()
@@ -446,16 +450,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 callRenameColumn = true;
             break;
         case kForeignKey:
-            if(item->text(column).trimmed().isEmpty())
-            {
-                // Remove the foreign key
-                m_table.removeConstraints({field}, sqlb::Constraint::ConstraintTypes::ForeignKeyConstraintType);
-            } else {
-                // Set the foreign key
-                sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
-                fk->setFromString(item->text(column));
-                m_table.setConstraint({field}, sqlb::ConstraintPtr(fk));
-            }
+            // handled in delegate
+
             if(!m_bNewTable)
                 callRenameColumn = true;
             break;
