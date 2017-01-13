@@ -26,7 +26,9 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
     connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
 
     // Set item delegate for foreign key column
-    ui->treeWidget->setItemDelegateForColumn(kForeignKey, new ForeignKeyEditorDelegate(db, m_table, this));
+    m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
+    ui->treeWidget->setItemDelegateForColumn(kForeignKey, m_fkEditorDelegate);
+
     // Editing an existing table?
     if(m_bNewTable == false)
     {
@@ -194,7 +196,29 @@ void EditTableDialog::checkInput()
         valid = false;
     if(ui->treeWidget->topLevelItemCount() == 0)
         valid = false;
-    m_table.setName(normTableName);
+    if (normTableName != m_table.name()) {
+        const QString oldTableName = m_table.name();
+        m_table.setName(normTableName);
+        m_fkEditorDelegate->updateTablesList(oldTableName);
+
+        bool fksEnabled = (pdb.getPragma("foreign_keys") == "1");
+
+        // update fk's that refer to table itself recursively
+        sqlb::FieldVector fields = m_table.fields();
+        foreach(sqlb::FieldPtr f, fields) {
+            QSharedPointer<sqlb::ForeignKeyClause> fk = m_table.constraint({f}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
+            if(!fk.isNull()) {
+                if (oldTableName == fk->table()) {
+                    fk->setTable(normTableName);
+                    if(!fksEnabled)
+                        pdb.renameColumn(curTable, m_table, f->name(), f, 0);
+                }
+            }
+        }
+
+        populateFields();
+    }
+
     updateSqlText();
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }

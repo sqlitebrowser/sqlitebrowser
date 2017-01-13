@@ -78,7 +78,13 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
     , m_db(db)
     , m_table(table)
 {
-
+    const auto objects = m_db.getBrowsableObjects();
+    for (auto obj : objects) {
+        if ("table" == obj.gettype()) {
+            QString tableName = obj.table.name();
+            m_tablesIds.insert(tableName, obj.table.fieldNames());
+        }
+    }
 }
 
 QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
@@ -99,23 +105,15 @@ QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOpt
         box->setCurrentIndex(0);
     });
 
+    editor->tablesComboBox->clear();
+    editor->tablesComboBox->addItems(m_tablesIds.keys());
+
     return editor;
 }
 
 void ForeignKeyEditorDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
     ForeignKeyEditor* fkEditor = static_cast<ForeignKeyEditor*>(editor);
-
-    m_tablesIds.clear();
-    const auto objects = m_db.getBrowsableObjects();
-    for (auto obj : objects) {
-        if ("table" == obj.gettype()) {
-            QString tableName = obj.table.name();
-            m_tablesIds.insert(tableName, obj.table.fieldNames());
-        }
-    }
-
-    fkEditor->tablesComboBox->addItems(m_tablesIds.keys());
 
     int column = index.row(); // weird? I know right
     sqlb::FieldPtr field = m_table.fields().at(column);
@@ -168,6 +166,14 @@ void ForeignKeyEditorDelegate::updateEditorGeometry(QWidget* editor, const QStyl
     Q_UNUSED(index)
 
     editor->setGeometry(option.rect);
+}
+
+void ForeignKeyEditorDelegate::updateTablesList(const QString& oldTableName)
+{
+    // this is used for recursive table constraints when
+    // table column references column within same table
+    m_tablesIds.remove(oldTableName);
+    m_tablesIds.insert(m_table.name(), m_table.fieldNames());
 }
 
 #include "ForeignKeyEditorDelegate.moc"

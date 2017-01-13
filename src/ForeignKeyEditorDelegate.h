@@ -25,6 +25,8 @@ public:
     void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const Q_DECL_OVERRIDE;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
 
+    void updateTablesList(const QString& oldTableName);
+
 private:
     const DBBrowserDB& m_db;
     sqlb::Table& m_table;
