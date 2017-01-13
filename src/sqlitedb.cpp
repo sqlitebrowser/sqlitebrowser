@@ -967,7 +967,7 @@ bool DBBrowserDB::addColumn(const QString& tablename, const sqlb::FieldPtr& fiel
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move)
+bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move)
 {
     /*
      * USE CASES:
@@ -994,10 +994,10 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     // 3) Maybe rename this function to alterTable() or something
 
     // Collect information on the current DB layout
-    QString tableSql = getObjectByName(table.name()).getsql();
+    QString tableSql = getObjectByName(tablename).getsql();
     if(tableSql.isEmpty())
     {
-        lastErrorMessage = tr("renameColumn: cannot find table %1.").arg(table.name());
+        lastErrorMessage = tr("renameColumn: cannot find table %1.").arg(tablename);
         return false;
     }
 
@@ -1069,7 +1069,7 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM %2;").arg(select_cols).arg(sqlb::escapeIdentifier(table.name()))))
+    if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM %2;").arg(select_cols).arg(sqlb::escapeIdentifier(tablename))))
     {
         QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         revertToSavepoint("sqlitebrowser_rename_column");
@@ -1082,7 +1082,7 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         // If this object references the table and it's not the table itself save it's SQL string
-        if((*it).getTableName() == table.name() && (*it).gettype() != "table")
+        if((*it).getTableName() == tablename && (*it).gettype() != "table")
             otherObjectsSql += (*it).getsql().trimmed() + ";\n";
     }
 
@@ -1095,7 +1095,7 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     setPragma("defer_foreign_keys", "1");
 
     // Delete the old table
-    if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(table.name())), true, true))
+    if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(tablename)), true, true))
     {
         QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint("sqlitebrowser_rename_column");
@@ -1104,7 +1104,7 @@ bool DBBrowserDB::renameColumn(const sqlb::Table& table, const QString& name, sq
     }
 
     // Rename the temporary table
-    if(!renameTable("sqlitebrowser_rename_column_new_table", table.name()))
+    if(!renameTable("sqlitebrowser_rename_column_new_table", tablename))
     {
         revertToSavepoint("sqlitebrowser_rename_column");
         return false;

@@ -216,7 +216,7 @@ void EditTableDialog::updateTypes()
 
         m_table.fields().at(index)->setType(type);
         if(!m_bNewTable)
-            pdb.renameColumn(m_table, column, m_table.fields().at(index));
+            pdb.renameColumn(curTable, m_table, column, m_table.fields().at(index));
         checkInput();
     }
 }
@@ -459,7 +459,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 
         if(callRenameColumn)
         {
-            if(!pdb.renameColumn(m_table, oldFieldName, field))
+            if(!pdb.renameColumn(curTable, m_table, oldFieldName, field))
                 QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastErrorMessage));
         }
     }
@@ -546,7 +546,7 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            if(!pdb.renameColumn(m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
+            if(!pdb.renameColumn(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
                 QMessageBox::warning(0, QApplication::applicationName(), pdb.lastErrorMessage);
             } else {
@@ -625,6 +625,7 @@ void EditTableDialog::moveCurrentField(bool down)
 
         // Move the actual column
         if(!pdb.renameColumn(
+                    curTable,
                     m_table,
                     ui->treeWidget->currentItem()->text(0),
                     m_table.fields().at(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())),
@@ -681,7 +682,7 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(m_table, QString(), sqlb::FieldPtr(), 0))
+        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastErrorMessage));

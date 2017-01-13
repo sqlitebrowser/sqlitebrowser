@@ -94,13 +94,14 @@ public:
 
     /**
      * @brief renameColumn Can be used to rename, modify or drop an existing column of a given table
-     * @param table Specifies the table to edit. The table name and the table constraints are used from this but not the columns
+     * @param table_name Specifies the name of the table to edit
+     * @param table Specifies the table to edit. The table constraints are used from this but not the columns
      * @param name Name of the column to edit
      * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
      * @param move Set this to a value != 0 to move the new column to a different position
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool renameColumn(const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0);
+    bool renameColumn(const QString& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0);
 
     objectMap getBrowsableObjects() const;
     DBBrowserObject getObjectByName(const QString& name) const;
