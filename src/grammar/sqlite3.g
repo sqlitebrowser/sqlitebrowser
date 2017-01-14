@@ -311,6 +311,7 @@ keywordascolumnname
   | NULL_T
   | MATCH
   | EXISTS
+  | NO
   | ON
   | RAISE
   | REFERENCES
