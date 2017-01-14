@@ -1242,6 +1242,34 @@ void Sqlite3Parser::columndef() {
 	}
 	{
 	switch ( LA(1)) {
+	case ABORT:
+	case ACTION:
+	case ASC:
+	case CASCADE:
+	case CAST:
+	case CONFLICT:
+	case CURRENT_TIME:
+	case CURRENT_DATE:
+	case CURRENT_TIMESTAMP:
+	case DEFERRED:
+	case DESC:
+	case END:
+	case FAIL:
+	case GLOB:
+	case KEY:
+	case LIKE:
+	case IGNORE:
+	case INITIALLY:
+	case IMMEDIATE:
+	case NO:
+	case MATCH:
+	case RAISE:
+	case REGEXP:
+	case REPLACE:
+	case RESTRICT:
+	case ROLLBACK:
+	case TEMPORARY:
+	case TEMP:
 	case ID:
 	case QUOTEDID:
 	case QUOTEDLITERAL:
@@ -2495,16 +2523,58 @@ void Sqlite3Parser::type_name() {
 	{ // ( ... )+
 	int _cnt117=0;
 	for (;;) {
-		if ((_tokenSet_1.member(LA(1)))) {
+		switch ( LA(1)) {
+		case ID:
+		case QUOTEDID:
+		case QUOTEDLITERAL:
+		case STRINGLITERAL:
+		{
 			name();
 			if (inputState->guessing==0) {
 				astFactory->addASTChild( currentAST, returnAST );
 			}
+			break;
 		}
-		else {
+		case ABORT:
+		case ACTION:
+		case ASC:
+		case CASCADE:
+		case CAST:
+		case CONFLICT:
+		case CURRENT_TIME:
+		case CURRENT_DATE:
+		case CURRENT_TIMESTAMP:
+		case DEFERRED:
+		case DESC:
+		case END:
+		case FAIL:
+		case GLOB:
+		case KEY:
+		case LIKE:
+		case IGNORE:
+		case INITIALLY:
+		case IMMEDIATE:
+		case NO:
+		case MATCH:
+		case RAISE:
+		case REGEXP:
+		case REPLACE:
+		case RESTRICT:
+		case ROLLBACK:
+		case TEMPORARY:
+		case TEMP:
+		{
+			keywordastablename();
+			if (inputState->guessing==0) {
+				astFactory->addASTChild( currentAST, returnAST );
+			}
+			break;
+		}
+		default:
+		{
 			if ( _cnt117>=1 ) { goto _loop117; } else {throw ANTLR_USE_NAMESPACE(antlr)NoViableAltException(LT(1), getFilename());}
 		}
-		
+		}
 		_cnt117++;
 	}
 	_loop117:;

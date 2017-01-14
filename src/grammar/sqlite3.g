@@ -348,7 +348,7 @@ name : ID | QUOTEDID | QUOTEDLITERAL | STRINGLITERAL;
 
 type_name
   :
-  (name)+
+  (name | keywordastablename)+
   (LPAREN signednumber (COMMA signednumber)? RPAREN)?
   {#type_name = #([TYPE_NAME, "TYPE_NAME"], #type_name);}
   ;

@@ -429,15 +429,16 @@ QString identifier(antlr::RefAST ident)
 
 QString concatTextAST(antlr::RefAST t, bool withspace = false)
 {
-    // When this is called for a KEYWORDASTABLENAME token, we must take the child's content to get the actual value
-    // instead of 'KEYWORDASTABLENAME' as a string. The same applies for  KEYWORDASCOLUMNNAME tokens.
-    if(t != antlr::nullAST && (t->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME || t->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME))
-            return concatTextAST(t->getFirstChild());
-
     QStringList stext;
     while(t != antlr::nullAST)
     {
-        stext.append(t->getText().c_str());
+        // When this is called for a KEYWORDASTABLENAME token, we must take the child's content to get the actual value
+        // instead of 'KEYWORDASTABLENAME' as a string. The same applies for  KEYWORDASCOLUMNNAME tokens.
+        if(t != antlr::nullAST && (t->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME || t->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME))
+            stext.append(t->getFirstChild()->getText().c_str());
+        else
+            stext.append(t->getText().c_str());
+
         t = t->getNextSibling();
     }
     return stext.join(withspace ? " " : "");
@@ -707,7 +708,7 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     c = c->getNextSibling(); //type?
     if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::TYPE_NAME)
     {
-        type = concatTextAST(c->getFirstChild());
+        type = concatTextAST(c->getFirstChild(), true);
         c = c->getNextSibling();
     }
 
