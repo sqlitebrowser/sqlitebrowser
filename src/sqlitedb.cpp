@@ -2,12 +2,12 @@
 #include "sqlite.h"
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
+#include "Settings.h"
 
 #include <QFile>
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QApplication>
-#include <QSettings>
 #include <QDebug>
 #include <QInputDialog>
 #include <QFileInfo>
@@ -126,17 +126,15 @@ bool DBBrowserDB::open(const QString& db)
         // register collation callback
         sqlite3_collation_needed(_db, NULL, collation_needed);
 
-        // set preference defaults
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        settings.sync();
-        bool foreignkeys = settings.value( "/db/foreignkeys", false ).toBool();
+        // Set foreign key settings as requested in the preferences
+        bool foreignkeys = Settings::getSettingsValue("db", "foreignkeys").toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
 
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
 
         // Register REGEXP function
-        if(settings.value("/extensions/disableregex", false) == false)
+        if(Settings::getSettingsValue("extensions", "disableregex").toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, NULL, regexp, NULL, NULL);
 
         // Check if file is read only
@@ -147,7 +145,7 @@ bool DBBrowserDB::open(const QString& db)
         // Execute default SQL
         if(!isReadOnly)
         {
-            QString default_sql = settings.value( "/db/defaultsqltext", "").toString();
+            QString default_sql = Settings::getSettingsValue("db", "defaultsqltext").toString();
             if(!default_sql.isEmpty())
                 executeMultiSQL(default_sql, false, true);
         }
@@ -353,10 +351,8 @@ bool DBBrowserDB::create ( const QString & db)
 {
     if (isOpen()) close();
 
-    // read encoding from settings and open with sqlite3_open for utf8
-    // and sqlite3_open16 for utf16
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    QString sEncoding = settings.value("/db/defaultencoding", "UTF-8").toString();
+    // read encoding from settings and open with sqlite3_open for utf8 and sqlite3_open16 for utf16
+    QString sEncoding = Settings::getSettingsValue("db", "defaultencoding").toString();
 
     int openresult = SQLITE_OK;
 
@@ -374,10 +370,8 @@ bool DBBrowserDB::create ( const QString & db)
 
     if (_db)
     {
-        // set preference defaults
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        settings.sync();
-        bool foreignkeys = settings.value( "/db/foreignkeys", false ).toBool();
+        // Set foreign key settings as requested in the preferences
+        bool foreignkeys = Settings::getSettingsValue("db", "foreignkeys").toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
 
         // Enable extension loading
@@ -394,7 +388,7 @@ bool DBBrowserDB::create ( const QString & db)
         }
 
         // Execute default SQL
-        QString default_sql = settings.value( "/db/defaultsqltext", "").toString();
+        QString default_sql = Settings::getSettingsValue("db", "defaultsqltext").toString();
         if(!default_sql.isEmpty())
             executeMultiSQL(default_sql, false, true);
 
