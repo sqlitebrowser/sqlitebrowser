@@ -7,7 +7,6 @@
 #include "MainWindow.h"
 
 #include <QDir>
-#include <QSettings>
 #include <QColorDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
