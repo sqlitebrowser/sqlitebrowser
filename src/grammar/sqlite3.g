@@ -247,6 +247,7 @@ keywordastablename
   | INITIALLY
   | IMMEDIATE
   | MATCH
+  | NO
   | RAISE
   | REGEXP
   | REPLACE
