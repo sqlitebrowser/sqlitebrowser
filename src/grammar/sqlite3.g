@@ -360,7 +360,7 @@ columnconstraint
   | (NOT)? NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
-  | DEFAULT (QUOTEDLITERAL | LPAREN expr RPAREN | literalvalue | ID)
+  | DEFAULT (QUOTEDLITERAL | LPAREN expr RPAREN | literalvalue | ID | keywordastablename)
   | COLLATE collationname
   | foreignkeyclause)
   {#columnconstraint = #([COLUMNCONSTRAINT, "COLUMNCONSTRAINT"], #columnconstraint);}

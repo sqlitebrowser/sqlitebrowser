@@ -429,6 +429,11 @@ QString identifier(antlr::RefAST ident)
 
 QString concatTextAST(antlr::RefAST t, bool withspace = false)
 {
+    // When this is called for a KEYWORDASTABLENAME token, we must take the child's content to get the actual value
+    // instead of 'KEYWORDASTABLENAME' as a string. The same applies for  KEYWORDASCOLUMNNAME tokens.
+    if(t != antlr::nullAST && (t->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME || t->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME))
+            return concatTextAST(t->getFirstChild());
+
     QStringList stext;
     while(t != antlr::nullAST)
     {
