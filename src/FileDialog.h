@@ -5,6 +5,8 @@
 
 class FileDialog : public QFileDialog
 {
+    Q_OBJECT
+
 public:
     static QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(),
                                    const QString& filter = QString(), QString* selectedFilter = 0,
@@ -17,7 +19,7 @@ public:
 
     static QString getSqlDatabaseFileFilter()
     {
-        return tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
+        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
     }
 
 private:
