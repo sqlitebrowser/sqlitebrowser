@@ -196,7 +196,7 @@ protected:
     void keyPressEvent(QKeyEvent* event);
 
 public slots:
-    bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false);
+    bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void refresh();
@@ -265,7 +265,7 @@ private slots:
     void on_actionSqlCipherFaq_triggered();
     void on_actionWebsite_triggered();
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
-    bool loadProject(QString filename = QString());
+    bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void fileAttach();
     void updateFilter(int column, const QString& value);
@@ -281,6 +281,7 @@ private slots:
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
     void browseDataFetchAllData();
+    void fileOpenReadOnly();
 };
 
 #endif

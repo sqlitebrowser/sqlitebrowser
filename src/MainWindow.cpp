@@ -263,7 +263,7 @@ void MainWindow::init()
     ui->dockSchema->setWindowTitle(ui->dockSchema->windowTitle().remove('&'));
 }
 
-bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
+bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bool readOnly)
 {
     bool retval = false;
 
@@ -286,12 +286,12 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles)
                 return false;
 
         // Try opening it as a project file first
-        if(loadProject(wFile))
+        if(loadProject(wFile, readOnly))
         {
             retval = true;
         } else {
             // No project file; so it should be a database file
-            if(db.open(wFile))
+            if(db.open(wFile, readOnly))
             {
                 statusEncodingLabel->setText(db.getPragma("encoding"));
                 statusEncryptionLabel->setVisible(db.encrypted());
@@ -2249,7 +2249,7 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
     }
 }
 
-bool MainWindow::loadProject(QString filename)
+bool MainWindow::loadProject(QString filename, bool readOnly)
 {
     // Show the open file dialog when no filename was passed as parameter
     if(filename.isEmpty())
@@ -2286,7 +2286,7 @@ bool MainWindow::loadProject(QString filename)
                     QString dbfilename = xml.attributes().value("path").toString();
                     if(!QFile::exists(dbfilename))
                         dbfilename = QFileInfo(filename).absolutePath() + QDir::separator() + dbfilename;
-                    fileOpen(dbfilename, true);
+                    fileOpen(dbfilename, true, readOnly);
                     ui->dbTreeWidget->collapseAll();
                 } else if(xml.name() == "window") {
                     // Window settings
@@ -2827,4 +2827,10 @@ void MainWindow::browseDataFetchAllData()
         // Update plot
         updatePlot(m_currentPlotModel);
     }
+}
+
+void MainWindow::fileOpenReadOnly()
+{
+    // Redirect to 'standard' fileOpen(), with the read only flag set
+    fileOpen(QString(), false, true);
 }

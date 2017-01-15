@@ -45,7 +45,7 @@ class DBBrowserDB : public QObject
 public:
     explicit DBBrowserDB () : _db(0), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
     virtual ~DBBrowserDB (){}
-    bool open ( const QString & db);
+    bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = "");
     bool create ( const QString & db);
     bool close();

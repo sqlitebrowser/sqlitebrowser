@@ -83,7 +83,7 @@ bool DBBrowserDB::getDirty() const
     return !savepointList.empty();
 }
 
-bool DBBrowserDB::open(const QString& db)
+bool DBBrowserDB::open(const QString& db, bool readOnly)
 {
     if (isOpen()) close();
 
@@ -99,7 +99,7 @@ bool DBBrowserDB::open(const QString& db)
     }
 
     // Open database file
-    if(sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+    if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
     {
         lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         return false;
@@ -140,7 +140,7 @@ bool DBBrowserDB::open(const QString& db)
         // Check if file is read only
         QFileInfo fi(db);
         QFileInfo fid(fi.absoluteDir().absolutePath());
-        isReadOnly = !fi.isWritable() || !fid.isWritable();
+        isReadOnly = readOnly || !fi.isWritable() || !fid.isWritable();
 
         // Execute default SQL
         if(!isReadOnly)
