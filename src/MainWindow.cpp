@@ -307,7 +307,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                     loadPragmas();
                 retval = true;
             } else {
-                QMessageBox::warning(this, qApp->applicationName(), tr("Invalid file format."));
+                QMessageBox::warning(this, qApp->applicationName(), tr("Could not open database file.\nReason: %1").arg(db.lastErrorMessage));
                 return false;
             }
         }

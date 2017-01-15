@@ -93,10 +93,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     // Get encryption settings for database file
     CipherDialog* cipher = 0;
     if(tryEncryptionSettings(db, &isEncrypted, cipher) == false)
-    {
-        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         return false;
-    }
 
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
@@ -208,6 +205,8 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
 
 bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings)
 {
+    lastErrorMessage = tr("Invalid file format");
+
     // Open database file
     sqlite3* dbHandle;
     if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
@@ -222,7 +221,14 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
         QByteArray utf8Statement = statement.toUtf8();
         sqlite3_stmt* vm;
         const char* tail;
-        sqlite3_prepare_v2(dbHandle, utf8Statement, utf8Statement.length(), &vm, &tail);
+        int err = sqlite3_prepare_v2(dbHandle, utf8Statement, utf8Statement.length(), &vm, &tail);
+        if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN)
+        {
+            lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(dbHandle));
+            sqlite3_close(dbHandle);
+            return false;
+        }
+
         if(sqlite3_step(vm) != SQLITE_ROW)
         {
             sqlite3_finalize(vm);
@@ -254,6 +260,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
                 return false;
             }
 #else
+            lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(dbHandle));
             sqlite3_close(dbHandle);
             return false;
 #endif
