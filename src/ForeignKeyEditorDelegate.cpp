@@ -79,7 +79,7 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
     , m_table(table)
 {
     const auto objects = m_db.getBrowsableObjects();
-    for (auto obj : objects) {
+    for (auto& obj : objects) {
         if ("table" == obj.gettype()) {
             QString tableName = obj.table.name();
             m_tablesIds.insert(tableName, obj.table.fieldNames());
