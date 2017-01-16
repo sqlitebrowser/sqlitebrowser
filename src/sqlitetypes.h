@@ -306,10 +306,11 @@ public:
 
     void setColumns(const IndexedColumnVector& columns);
     const IndexedColumnVector& columns() const { return m_columns; }
+    void clearColumns() { m_columns.clear(); }
     void addColumn(const IndexedColumnPtr& c) { m_columns.append(c); }
     bool removeColumn(const QString& name);
     void setColumn(int index, IndexedColumnPtr c) { m_columns[index] = c; }
-    const IndexedColumnPtr& column(int index) const { return m_columns[index]; }
+    IndexedColumnPtr& column(int index) { return m_columns[index]; }
     int findColumn(const QString& name) const;
     QStringList columnSqlList() const;
 

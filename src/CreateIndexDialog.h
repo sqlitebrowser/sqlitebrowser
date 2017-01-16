@@ -1,6 +1,8 @@
 #ifndef CREATEINDEXDIALOG_H
 #define CREATEINDEXDIALOG_H
 
+#include "sqlitetypes.h"
+
 #include <QDialog>
 
 class DBBrowserDB;
@@ -25,6 +27,9 @@ private slots:
 private:
     DBBrowserDB& pdb;
     Ui::CreateIndexDialog* ui;
+    sqlb::Index index;
+
+    void updateSqlText();
 };
 
 #endif
