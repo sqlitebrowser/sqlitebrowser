@@ -33,9 +33,11 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
     if(m_bNewTable == false)
     {
         // Existing table, so load and set the current layout
-        QString sTablesql = pdb.getObjectByName(curTable).getsql();
+        DBBrowserObject obj = pdb.getObjectByName(curTable);
+        QString sTablesql = obj.getsql();
         QPair<sqlb::Table, bool> parse_result = sqlb::Table::parseSQL(sTablesql);
         m_table = parse_result.first;
+        m_table.setTemporary(obj.isTemporary());
         ui->labelEditWarning->setVisible(!parse_result.second);
 
         // Set without rowid checkbox. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need

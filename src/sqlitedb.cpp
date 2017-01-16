@@ -1208,7 +1208,7 @@ void DBBrowserDB::updateSchema( )
     if(!isOpen())
         return;
 
-    QString statement = "SELECT type,name,sql,tbl_name FROM sqlite_master UNION SELECT type,name,sql,tbl_name FROM sqlite_temp_master;";
+    QString statement = "SELECT type,name,sql,tbl_name,'0' AS temp FROM sqlite_master UNION SELECT type,name,sql,tbl_name,'1' AS temp FROM sqlite_temp_master;";
 
     QByteArray utf8Statement = statement.toUtf8();
     err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
@@ -1216,16 +1216,17 @@ void DBBrowserDB::updateSchema( )
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
         while ( sqlite3_step(vm) == SQLITE_ROW ){
-            QString val1 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
-            QString val2 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
-            QString val3 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
-            QString val4 = QString::fromUtf8((const char*)sqlite3_column_text(vm, 3));
-            val3.replace("\r", "");
+            QString val_type = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
+            QString val_name = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
+            QString val_sql = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
+            QString val_tblname = QString::fromUtf8((const char*)sqlite3_column_text(vm, 3));
+            QString val_temp = QString::fromUtf8((const char*)sqlite3_column_text(vm, 4));
+            val_sql.replace("\r", "");
 
-            if(val1 == "table" || val1 == "index" || val1 == "view" || val1 == "trigger")
-                objMap.insert(val1, DBBrowserObject(val2, val3, val1, val4));
+            if(val_type == "table" || val_type == "index" || val_type == "view" || val_type == "trigger")
+                objMap.insert(val_type, DBBrowserObject(val_name, val_sql, val_type, val_tblname, (val_temp == "1")));
             else
-                qWarning() << tr("unknown object type %1").arg(val1);
+                qWarning() << tr("unknown object type %1").arg(val_type);
         }
         sqlite3_finalize(vm);
     }else{

@@ -160,7 +160,7 @@ typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
 class Table
 {
 public:
-    explicit Table(const QString& name): m_name(name), m_rowidColumn("_rowid_") {}
+    explicit Table(const QString& name): m_name(name), m_rowidColumn("_rowid_"), m_temporary(false) {}
     virtual ~Table();
 
     void setName(const QString& name) { m_name = name; }
@@ -188,6 +188,9 @@ public:
     void setVirtualUsing(const QString& virt_using) { m_virtual = virt_using; }
     QString virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.isEmpty(); }
+
+    void setTemporary(bool temp) { m_temporary = temp; }
+    bool isTemporary() const { return m_temporary; }
 
     void clear();
 
@@ -229,6 +232,7 @@ private:
     QString m_rowidColumn;
     ConstraintMap m_constraints;
     QString m_virtual;
+    bool m_temporary;
 };
 
 /**
