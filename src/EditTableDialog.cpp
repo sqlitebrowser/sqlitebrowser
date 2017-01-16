@@ -158,7 +158,7 @@ void EditTableDialog::accept()
             QMessageBox::warning(
                 this,
                 QApplication::applicationName(),
-                tr("Error creating table. Message from database engine:\n%1").arg(pdb.lastErrorMessage));
+                tr("Error creating table. Message from database engine:\n%1").arg(pdb.lastError()));
             return;
         }
     } else {
@@ -169,7 +169,7 @@ void EditTableDialog::accept()
         {
             if(!pdb.renameTable(curTable, ui->editTableName->text()))
             {
-                QMessageBox::warning(this, QApplication::applicationName(), pdb.lastErrorMessage);
+                QMessageBox::warning(this, QApplication::applicationName(), pdb.lastError());
                 return;
             }
         }
@@ -487,7 +487,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         if(callRenameColumn)
         {
             if(!pdb.renameColumn(curTable, m_table, oldFieldName, field))
-                QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastErrorMessage));
+                QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastError()));
         }
     }
 
@@ -575,7 +575,7 @@ void EditTableDialog::removeField()
         {
             if(!pdb.renameColumn(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
-                QMessageBox::warning(0, QApplication::applicationName(), pdb.lastErrorMessage);
+                QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
             } else {
                 //relayout
                 QString sTablesql = pdb.getObjectByName(curTable).getsql();
@@ -659,7 +659,7 @@ void EditTableDialog::moveCurrentField(bool down)
                     (down ? 1 : -1)
                 ))
         {
-            QMessageBox::warning(0, QApplication::applicationName(), pdb.lastErrorMessage);
+            QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
         } else {
             // Reload table SQL
             QString sTablesql = pdb.getObjectByName(curTable).getsql();
@@ -712,7 +712,7 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
         if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
-                                 tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastErrorMessage));
+                                 tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastError()));
         }
     }
 }
@@ -731,7 +731,7 @@ void EditTableDialog::setTemporary(bool is_temp)
         if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
-                                 tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastErrorMessage));
+                                 tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastError()));
         }
     }
 }

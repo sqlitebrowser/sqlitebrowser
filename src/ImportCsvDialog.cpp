@@ -209,13 +209,13 @@ void ImportCsvDialog::accept()
     // db needs to be saved or an error will occur
     QString restorepointName = QString("CSVIMPORT_%1").arg(QDateTime::currentMSecsSinceEpoch());
     if(!pdb->setSavepoint(restorepointName))
-        return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastErrorMessage));
+        return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
 
     // Create table
     if(!importToExistingTable)
     {
         if(!pdb->createTable(ui->editName->text(), fieldList))
-            return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastErrorMessage));
+            return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
     }
 
     // now lets import all data, one row at a time
@@ -246,7 +246,7 @@ void ImportCsvDialog::accept()
         sql.append(");");
 
         if(!pdb->executeSQL(sql, false, false))
-            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, tr("Inserting row failed: %1").arg(pdb->lastErrorMessage));
+            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, tr("Inserting row failed: %1").arg(pdb->lastError()));
 
         // Update progress bar and check if cancel button was clicked
         unsigned int prog = std::distance(csv.csv().begin(), it);

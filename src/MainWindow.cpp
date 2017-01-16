@@ -303,7 +303,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                     loadPragmas();
                 retval = true;
             } else {
-                QMessageBox::warning(this, qApp->applicationName(), tr("Could not open database file.\nReason: %1").arg(db.lastErrorMessage));
+                QMessageBox::warning(this, qApp->applicationName(), tr("Could not open database file.\nReason: %1").arg(db.lastError()));
                 return false;
             }
         }
@@ -567,7 +567,7 @@ void MainWindow::addRecord()
     {
         selectTableLine(row);
     } else {
-        QMessageBox::warning( this, QApplication::applicationName(), tr("Error adding record:\n") + db.lastErrorMessage);
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Error adding record:\n") + db.lastError());
     }
 }
 
@@ -587,7 +587,7 @@ void MainWindow::deleteRecord()
             int selected_rows_count = last_selected_row - first_selected_row + 1;
             if(!m_browseTableModel->removeRows(first_selected_row, selected_rows_count))
             {
-                QMessageBox::warning(this, QApplication::applicationName(), tr("Error deleting record:\n%1").arg(db.lastErrorMessage));
+                QMessageBox::warning(this, QApplication::applicationName(), tr("Error deleting record:\n%1").arg(db.lastError()));
                 break;
             }
         }
@@ -747,7 +747,7 @@ void MainWindow::deleteObject()
         QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(sqlb::escapeIdentifier(table));
         if(!db.executeSQL( statement))
         {
-            QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastErrorMessage);
+            QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastError());
             QMessageBox::warning(this, QApplication::applicationName(), error);
         } else {
             populateTable();
@@ -1116,7 +1116,7 @@ void MainWindow::fileSave()
         if(!db.releaseAllSavepoints())
         {
             QMessageBox::warning(this, QApplication::applicationName(), tr("Error while saving the database file. This means that not all changes to the database were "
-                                                                           "saved. You need to resolve the following error first.\n\n%1").arg(db.lastErrorMessage));
+                                                                           "saved. You need to resolve the following error first.\n\n%1").arg(db.lastError()));
         }
     }
 }
@@ -1184,7 +1184,7 @@ void MainWindow::importDatabaseFromSQL()
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
     if(!db.executeMultiSQL(f.readAll(), newDbFile.size() == 0))
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastErrorMessage));
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
     f.close();
@@ -1633,7 +1633,7 @@ void MainWindow::loadExtension()
     if(db.loadExtension(file))
         QMessageBox::information(this, QApplication::applicationName(), tr("Extension successfully loaded."));
     else
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastErrorMessage));
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
 }
 
 void MainWindow::loadExtensionsFromSettings()
@@ -1645,7 +1645,7 @@ void MainWindow::loadExtensionsFromSettings()
     foreach(QString ext, list)
     {
         if(db.loadExtension(ext) == false)
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastErrorMessage));
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
     }
 }
 

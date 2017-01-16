@@ -97,5 +97,5 @@ void CreateIndexDialog::accept()
     if(pdb.executeSQL(sql))
         QDialog::accept();
     else
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastErrorMessage));
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));
 }

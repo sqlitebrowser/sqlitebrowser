@@ -272,7 +272,7 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
         reloadData();
         return true;
     } else {
-        QMessageBox::warning(0, QApplication::applicationName(), m_db.lastErrorMessage);
+        QMessageBox::warning(0, QApplication::applicationName(), m_db.lastError());
         return false;
     }
 }

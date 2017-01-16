@@ -60,6 +60,7 @@ public:
     bool dump(const QString & filename, const QStringList &tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData);
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    const QString& lastError() const { return lastErrorMessage; }
 
     /**
      * @brief getRow Executes a sqlite statement to get the rowdata(columns)
@@ -126,8 +127,6 @@ public:
 
     objectMap objMap;
 
-    QString lastErrorMessage;
-
 signals:
     void sqlExecuted(QString sql, int msgtype);
     void dbChanged(bool dirty);
@@ -135,9 +134,8 @@ signals:
 
 private:
     QString curDBFilename;
-
+    QString lastErrorMessage;
     QStringList savepointList;
-
     bool isEncrypted;
     bool isReadOnly;
 
