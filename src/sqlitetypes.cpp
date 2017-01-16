@@ -846,4 +846,81 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
     }
 }
 
+
+
+QString IndexedColumn::toString(const QString& indent, const QString& sep) const
+{
+    return indent + escapeIdentifier(m_name) + sep + m_order;
+}
+
+Index::~Index()
+{
+    clear();
+}
+
+void Index::clear()
+{
+    m_name.clear();
+    m_unique = false;
+    m_table.clear();
+    m_whereExpr.clear();
+    m_columns.clear();
+}
+
+bool Index::removeColumn(const QString& name)
+{
+    int index = findColumn(name);
+    if(index != -1)
+    {
+        m_columns.remove(index);
+        return true;
+    }
+    return false;
+}
+
+void Index::setColumns(const IndexedColumnVector& columns)
+{
+    clear();
+    m_columns = columns;
+}
+
+int Index::findColumn(const QString& name) const
+{
+    for(int i=0;i<m_columns.count();++i)
+    {
+        if(m_columns.at(i)->name().compare(name, Qt::CaseInsensitive) == 0)
+            return i;
+    }
+    return -1;
+}
+
+QStringList Index::columnSqlList() const
+{
+    QStringList sl;
+
+    foreach(const IndexedColumnPtr& c, m_columns)
+        sl << c->toString();
+
+    return sl;
+}
+
+QString Index::sql() const
+{
+    // Start CREATE (UNIQUE) INDEX statement
+    QString sql = QString("CREATE %1INDEX %2 ON %3 (\n")
+            .arg(m_unique ? QString("UNIQUE ") : QString(""))
+            .arg(escapeIdentifier(m_name))
+            .arg(escapeIdentifier(m_table));
+
+    // Add column list
+    sql += columnSqlList().join(",\n");
+
+    // Add partial index bit
+    sql += QString("\n)");
+    if(!m_whereExpr.isEmpty())
+        sql += QString(" WHERE ") + m_whereExpr;
+
+    return sql + ";";
+}
+
 } //namespace sqlb

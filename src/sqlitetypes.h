@@ -17,9 +17,12 @@ QString escapeIdentifier(QString id);
 
 class Field;
 class Constraint;
+class IndexedColumn;
 typedef QSharedPointer<Field> FieldPtr;
 typedef QSharedPointer<Constraint> ConstraintPtr;
 typedef QVector<FieldPtr> FieldVector;
+typedef QSharedPointer<IndexedColumn> IndexedColumnPtr;
+typedef QVector<IndexedColumnPtr> IndexedColumnVector;
 
 class Constraint
 {
@@ -260,6 +263,71 @@ private:
 };
 
 QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
+
+class IndexedColumn
+{
+public:
+    IndexedColumn(const QString& name, const QString& order = QString())
+        : m_name(name),
+          m_order(order)
+    {
+    }
+
+    void setName(const QString& name) { m_name = name; }
+    QString name() const { return m_name; }
+
+    void setOrder(const QString& order) { m_order = order; }
+    QString order() const { return m_order; }
+
+    QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
+
+private:
+    QString m_name;
+    QString m_order;
+};
+
+class Index
+{
+public:
+    explicit Index(const QString& name): m_name(name), m_unique(false) {}
+    virtual ~Index();
+
+    void setName(const QString& name) { m_name = name; }
+    const QString& name() const { return m_name; }
+
+    void setUnique(bool unique) { m_unique = unique; }
+    bool unique() const { return m_unique; }
+
+    void setTable(const QString& table) { m_table = table; }
+    const QString& table() const { return m_table; }
+
+    void setWhereExpr(const QString& expr) { m_whereExpr = expr; }
+    const QString& whereExpr() const { return m_whereExpr; }
+
+    void setColumns(const IndexedColumnVector& columns);
+    const IndexedColumnVector& columns() const { return m_columns; }
+    void addColumn(const IndexedColumnPtr& c) { m_columns.append(c); }
+    bool removeColumn(const QString& name);
+    void setColumn(int index, IndexedColumnPtr c) { m_columns[index] = c; }
+    const IndexedColumnPtr& column(int index) const { return m_columns[index]; }
+    int findColumn(const QString& name) const;
+    QStringList columnSqlList() const;
+
+    void clear();
+
+    /**
+     * @brief Returns the CREATE INDEX statement for this index object
+     * @return A QString with the CREATE INDEX object.
+     */
+    QString sql() const;
+
+private:
+    QString m_name;
+    bool m_unique;
+    QString m_table;
+    QString m_whereExpr;
+    IndexedColumnVector m_columns;
+};
 
 } //namespace sqlb
 

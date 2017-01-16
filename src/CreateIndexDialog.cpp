@@ -1,6 +1,7 @@
 #include "CreateIndexDialog.h"
 #include "ui_CreateIndexDialog.h"
 #include "sqlitedb.h"
+#include "sqlitetypes.h"
 
 #include <QMessageBox>
 #include <QPushButton>
@@ -77,24 +78,21 @@ void CreateIndexDialog::checkInput()
 
 void CreateIndexDialog::accept()
 {
-    QString sql = QString("CREATE %1 INDEX %2 ON %3 (")
-            .arg(ui->checkIndexUnique->isChecked() ? "UNIQUE" : "")
-            .arg(sqlb::escapeIdentifier(ui->editIndexName->text()))
-            .arg(sqlb::escapeIdentifier(ui->comboTableName->currentText()));
+    sqlb::Index index(ui->editIndexName->text());
+    index.setUnique(ui->checkIndexUnique->isChecked());
+    index.setTable(ui->comboTableName->currentText());
 
     for(int i=0; i < ui->tableIndexColumns->rowCount(); ++i)
     {
         if(ui->tableIndexColumns->item(i, 1)->data(Qt::CheckStateRole) == Qt::Checked)
         {
-            sql.append(QString("%1 %2,")
-                       .arg(sqlb::escapeIdentifier(ui->tableIndexColumns->item(i, 0)->text()))
-                       .arg(qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText()));
+            index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
+                                                       ui->tableIndexColumns->item(i, 0)->text(),
+                                                       qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText())));
         }
     }
-    sql.chop(1);    // Remove last comma
-    sql.append(");");
 
-    if(pdb.executeSQL(sql))
+    if(pdb.executeSQL(index.sql()))
         QDialog::accept();
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));
