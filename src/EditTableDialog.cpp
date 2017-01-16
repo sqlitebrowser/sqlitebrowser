@@ -40,10 +40,11 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
         m_table.setTemporary(obj.isTemporary());
         ui->labelEditWarning->setVisible(!parse_result.second);
 
-        // Set without rowid checkbox. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
+        // Set without rowid and temporary checkboxex. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
         // for error checking etc.
         ui->checkWithoutRowid->blockSignals(true);
         ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
+        ui->checkTemporary->setChecked(m_table.isTemporary());
         ui->checkWithoutRowid->blockSignals(false);
 
         populateFields();
@@ -712,6 +713,25 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastErrorMessage));
+        }
+    }
+}
+
+void EditTableDialog::setTemporary(bool is_temp)
+{
+    // Set the temporary flag in the table definition
+    m_table.setTemporary(is_temp);
+
+    // Update the SQL preview
+    updateSqlText();
+
+    // Update table if we're editing an existing table
+    if(!m_bNewTable)
+    {
+        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
+        {
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastErrorMessage));
         }
     }
 }

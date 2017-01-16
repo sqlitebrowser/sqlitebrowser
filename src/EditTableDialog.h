@@ -58,6 +58,7 @@ private slots:
     void moveUp();
     void moveDown();
     void setWithoutRowid(bool without_rowid);
+    void setTemporary(bool is_temp);
 
 private:
     Ui::EditTableDialog* ui;

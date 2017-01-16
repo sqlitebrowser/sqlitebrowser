@@ -1026,6 +1026,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     newSchema.setName("sqlitebrowser_rename_column_new_table");
     newSchema.setConstraints(table.allConstraints());
     newSchema.setRowidColumn(table.rowidColumn());
+    newSchema.setTemporary(table.isTemporary());
     QString select_cols;
     if(to.isNull())
     {

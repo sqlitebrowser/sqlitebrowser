@@ -66,6 +66,16 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QCheckBox" name="checkTemporary">
+           <property name="toolTip">
+            <string>Set this to create a temporary table that is deleted when closing the database.</string>
+           </property>
+           <property name="text">
+            <string>Temporary table</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -322,6 +332,7 @@
   <tabstop>editTableName</tabstop>
   <tabstop>buttonMore</tabstop>
   <tabstop>checkWithoutRowid</tabstop>
+  <tabstop>checkTemporary</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
   <tabstop>buttonMoveUp</tabstop>
@@ -388,8 +399,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>79</x>
-     <y>203</y>
+     <x>94</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -404,8 +415,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>203</y>
+     <x>222</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -436,8 +447,8 @@
    <slot>moveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>356</x>
-     <y>203</y>
+     <x>343</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -452,8 +463,8 @@
    <slot>moveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>497</x>
-     <y>203</y>
+     <x>481</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -472,8 +483,8 @@
      <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>103</x>
-     <y>98</y>
+     <x>117</x>
+     <y>176</y>
     </hint>
    </hints>
   </connection>
@@ -484,8 +495,8 @@
    <slot>setWithoutRowid(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>113</y>
+     <x>344</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -509,6 +520,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkTemporary</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>setTemporary(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>647</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
@@ -520,5 +547,6 @@
   <slot>moveUp()</slot>
   <slot>moveDown()</slot>
   <slot>setWithoutRowid(bool)</slot>
+  <slot>setTemporary(bool)</slot>
  </slots>
 </ui>
