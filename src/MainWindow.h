@@ -4,12 +4,14 @@
 #include "sqltextedit.h"
 #include "sqlitedb.h"
 #include "RemoteDatabase.h"
+#include "PlotDock.h"
 
 #include <QMainWindow>
 #include <QMap>
 
 class QDragEnterEvent;
 class EditDialog;
+class PlotDock;
 class QIntValidator;
 class QLabel;
 class QModelIndex;
@@ -18,11 +20,61 @@ class SqliteTableModel;
 class DbStructureModel;
 class QNetworkReply;
 class QNetworkAccessManager;
-class QTreeWidgetItem;
 
 namespace Ui {
 class MainWindow;
 }
+
+struct BrowseDataTableSettings
+{
+    int sortOrderIndex;
+    Qt::SortOrder sortOrderMode;
+    QMap<int, int> columnWidths;
+    QMap<int, QString> filterValues;
+    QMap<int, QString> displayFormats;
+    bool showRowid;
+    QString encoding;
+    QString plotXAxis;
+    QMap<QString, PlotDock::PlotSettings> plotYAxes;
+
+    friend QDataStream& operator<<(QDataStream& stream, const BrowseDataTableSettings& object)
+    {
+        stream << object.sortOrderIndex;
+        stream << static_cast<int>(object.sortOrderMode);
+        stream << object.columnWidths;
+        stream << object.filterValues;
+        stream << object.displayFormats;
+        stream << object.showRowid;
+        stream << object.encoding;
+        stream << object.plotXAxis;
+        stream << object.plotYAxes;
+
+        return stream;
+    }
+    friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
+    {
+        stream >> object.sortOrderIndex;
+        int sortordermode;
+        stream >> sortordermode;
+        object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+        stream >> object.columnWidths;
+        stream >> object.filterValues;
+        stream >> object.displayFormats;
+        stream >> object.showRowid;
+        stream >> object.encoding;
+
+        // Versions pre 3.10.0 didn't store the following information in their project files.
+        // To be absolutely sure that nothing strange happens when we read past the stream for
+        // those cases, check for the end of the stream here.
+        if(stream.atEnd())
+            return stream;
+
+        stream >> object.plotXAxis;
+        stream >> object.plotYAxes;
+
+        return stream;
+    }
+};
 
 class MainWindow : public QMainWindow
 {
@@ -34,81 +86,6 @@ public:
 
     DBBrowserDB& getDb() { return db; }
     const RemoteDatabase& getRemote() const { return m_remoteDb; }
-
-    struct PlotSettings
-    {
-        int lineStyle;
-        int pointShape;
-        QColor colour;
-
-        friend QDataStream& operator<<(QDataStream& stream, const MainWindow::PlotSettings& object)
-        {
-            stream << object.lineStyle;
-            stream << object.pointShape;
-            stream << object.colour;
-
-            return stream;
-        }
-        friend QDataStream& operator>>(QDataStream& stream, MainWindow::PlotSettings& object)
-        {
-            stream >> object.lineStyle;
-            stream >> object.pointShape;
-            stream >> object.colour;
-
-            return stream;
-        }
-    };
-
-    struct BrowseDataTableSettings
-    {
-        int sortOrderIndex;
-        Qt::SortOrder sortOrderMode;
-        QMap<int, int> columnWidths;
-        QMap<int, QString> filterValues;
-        QMap<int, QString> displayFormats;
-        bool showRowid;
-        QString encoding;
-        QString plotXAxis;
-        QMap<QString, PlotSettings> plotYAxes;
-
-        friend QDataStream& operator<<(QDataStream& stream, const MainWindow::BrowseDataTableSettings& object)
-        {
-            stream << object.sortOrderIndex;
-            stream << static_cast<int>(object.sortOrderMode);
-            stream << object.columnWidths;
-            stream << object.filterValues;
-            stream << object.displayFormats;
-            stream << object.showRowid;
-            stream << object.encoding;
-            stream << object.plotXAxis;
-            stream << object.plotYAxes;
-
-            return stream;
-        }
-        friend QDataStream& operator>>(QDataStream& stream, MainWindow::BrowseDataTableSettings& object)
-        {
-            stream >> object.sortOrderIndex;
-            int sortordermode;
-            stream >> sortordermode;
-            object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
-            stream >> object.columnWidths;
-            stream >> object.filterValues;
-            stream >> object.displayFormats;
-            stream >> object.showRowid;
-            stream >> object.encoding;
-
-            // Versions pre 3.10.0 didn't store the following information in their project files.
-            // To be absolutely sure that nothing strange happens when we read past the stream for
-            // those cases, check for the end of the stream here.
-            if(stream.atEnd())
-                return stream;
-
-            stream >> object.plotXAxis;
-            stream >> object.plotYAxes;
-
-            return stream;
-        }
-    };
 
     enum Tabs
     {
@@ -140,19 +117,11 @@ private:
         int wal_autocheckpoint;
     } pragmaValues;
 
-    enum PlotColumns
-    {
-        PlotColumnField = 0,
-        PlotColumnX = 1,
-        PlotColumnY = 2,
-        PlotColumnDummy = 3
-    };
-
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;
     SqliteTableModel* m_currentTabTableModel;
-    SqliteTableModel* m_currentPlotModel;
+
     QMenu *popupTableMenu;
     QMenu *recentFilesMenu;
     QMenu *popupSaveSqlFileMenu;
@@ -171,6 +140,7 @@ private:
     QMap<QString, BrowseDataTableSettings> browseTableSettings;
 
     EditDialog* editDock;
+    PlotDock* plotDock;
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
@@ -256,10 +226,6 @@ private slots:
     void loadExtension();
     void reloadSettings();
     void httpresponse(QNetworkReply* reply);
-    void updatePlot(SqliteTableModel* model, bool update = true, bool keepOrResetSelection = true);
-    void on_treePlotColumns_itemChanged(QTreeWidgetItem *item, int column);
-    void on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem *item, int column);
-    void on_butSavePlot_clicked();
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
     void on_actionSqlCipherFaq_triggered();
@@ -272,15 +238,12 @@ private slots:
     void editEncryption();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();
-    void on_comboLineType_currentIndexChanged(int index);
-    void on_comboPointShape_currentIndexChanged(int index);
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
     void showRowidColumn(bool show);
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
-    void browseDataFetchAllData();
     void fileOpenReadOnly();
 };
 

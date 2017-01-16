@@ -105,6 +105,7 @@ set(SQLB_MOC_HDR
 	src/FilterLineEdit.h
 	src/RemoteDatabase.h
 	src/ForeignKeyEditorDelegate.h
+	src/PlotDock.h
 )
 
 set(SQLB_SRC
@@ -139,6 +140,7 @@ set(SQLB_SRC
 	src/FilterLineEdit.cpp
 	src/RemoteDatabase.cpp
 	src/ForeignKeyEditorDelegate.cpp
+	src/PlotDock.cpp
 )
 
 set(SQLB_FORMS
@@ -155,6 +157,7 @@ set(SQLB_FORMS
 	src/CipherDialog.ui
 	src/ExportSqlDialog.ui
 	src/ColumnDisplayFormatDialog.ui
+	src/PlotDock.ui
 )
 
 set(SQLB_RESOURCES

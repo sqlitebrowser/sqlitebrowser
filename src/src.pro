@@ -53,7 +53,8 @@ HEADERS += \
     ColumnDisplayFormatDialog.h \
     FilterLineEdit.h \
     RemoteDatabase.h \
-    ForeignKeyEditorDelegate.h
+    ForeignKeyEditorDelegate.h \
+    PlotDock.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -85,7 +86,8 @@ SOURCES += \
     ColumnDisplayFormatDialog.cpp \
     FilterLineEdit.cpp \
     RemoteDatabase.cpp \
-    ForeignKeyEditorDelegate.cpp
+    ForeignKeyEditorDelegate.cpp \
+    PlotDock.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -105,7 +107,8 @@ FORMS += \
     VacuumDialog.ui \
     CipherDialog.ui \
     ExportSqlDialog.ui \
-    ColumnDisplayFormatDialog.ui
+    ColumnDisplayFormatDialog.ui \
+    PlotDock.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \
