@@ -2135,7 +2135,7 @@ void MainWindow::editEncryption()
             if(fileOpen(db.currentFile()))
                 QFile::remove(db.currentFile() + ".enctempold");
         } else {
-            QMessageBox::warning(this, qApp->applicationName(), db.lastErrorMessage);
+            QMessageBox::warning(this, qApp->applicationName(), db.lastError());
         }
     }
 #endif
