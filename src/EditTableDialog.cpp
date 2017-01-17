@@ -193,7 +193,7 @@ void EditTableDialog::updateSqlText()
 
 void EditTableDialog::checkInput()
 {
-    QString normTableName = ui->editTableName->text().trimmed();
+    QString normTableName = ui->editTableName->text();
     bool valid = true;
     if(normTableName.isEmpty())
         valid = false;
