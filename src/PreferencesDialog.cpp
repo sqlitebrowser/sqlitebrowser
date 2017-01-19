@@ -1,6 +1,5 @@
 #include "PreferencesDialog.h"
 #include "ui_PreferencesDialog.h"
-#include "sqlitedb.h"
 #include "FileDialog.h"
 #include "Settings.h"
 #include "Application.h"
