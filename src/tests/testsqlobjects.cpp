@@ -118,7 +118,7 @@ void TestTable::parseSQL()
             "\tinfo VARCHAR(255) CHECK (info == 'x')\n"
             ");";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.name() == "hero");
     QVERIFY(tab.rowidColumn() == "_rowid_");
@@ -147,7 +147,7 @@ void TestTable::parseSQLdefaultexpr()
             "date datetime default CURRENT_TIMESTAMP,"
             "zoi integer)";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QCOMPARE(tab.name(), QString("chtest"));
     QCOMPARE(tab.fields().at(0)->name(), QString("id"));
@@ -180,7 +180,7 @@ void TestTable::parseSQLMultiPk()
             "PRIMARY KEY(`id1`,`id2`)\n"
             ");";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.name() == "hero");
     QVERIFY(tab.fields().at(0)->name() == "id1");
@@ -197,7 +197,7 @@ void TestTable::parseSQLForeignKey()
 {
     QString sSQL = "CREATE TABLE grammar_test(id, test, FOREIGN KEY(test) REFERENCES other_table);";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.name() == "grammar_test");
     QVERIFY(tab.fields().at(0)->name() == "id");
@@ -208,7 +208,7 @@ void TestTable::parseSQLSingleQuotes()
 {
     QString sSQL = "CREATE TABLE 'test'('id','test');";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.name() == "test");
     QVERIFY(tab.fields().at(0)->name() == "id");
@@ -219,7 +219,7 @@ void TestTable::parseSQLKeywordInIdentifier()
 {
     QString sSQL = "CREATE TABLE deffered(key integer primary key, if text);";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.name() == "deffered");
     QVERIFY(tab.fields().at(0)->name() == "key");
@@ -230,7 +230,7 @@ void TestTable::parseSQLWithoutRowid()
 {
     QString sSQL = "CREATE TABLE test(a integer primary key, b integer) WITHOUT ROWID;";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.fields().at(tab.findPk())->name() == "a");
     QVERIFY(tab.rowidColumn() == "a");
@@ -243,7 +243,7 @@ void TestTable::parseNonASCIIChars()
             "PRIMARY KEY(`Fieldöäüß`)"
             ");";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
 
     QVERIFY(tab.name() == "lösung");
     QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
@@ -253,7 +253,7 @@ void TestTable::parseSQLEscapedQuotes()
 {
     QString sSql = "CREATE TABLE double_quotes(a text default 'a''a');";
 
-    Table tab = Table::parseSQL(sSql).first;
+    Table tab = *(Table::parseSQL(sSql).first.dynamicCast<sqlb::Table>());
 
     QCOMPARE(tab.name(), QString("double_quotes"));
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
@@ -264,7 +264,7 @@ void TestTable::parseSQLForeignKeys()
 {
     QString sql = "CREATE TABLE foreign_key_test(a int, b int, foreign key (a) references x, foreign key (b) references w(y,z) on delete set null);";
 
-    Table tab = Table::parseSQL(sql).first;
+    Table tab = *(Table::parseSQL(sql).first.dynamicCast<sqlb::Table>());
 
     QCOMPARE(tab.name(), QString("foreign_key_test"));
     QCOMPARE(tab.fields().at(0)->name(), QString("a"));
@@ -279,7 +279,7 @@ void TestTable::parseSQLCheckConstraint()
 {
     QString sql = "CREATE TABLE a (`b` text CHECK(`b`='A' or `b`='B'));";
 
-    Table tab = Table::parseSQL(sql).first;
+    Table tab = *(Table::parseSQL(sql).first.dynamicCast<sqlb::Table>());
 
     QCOMPARE(tab.name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->name(), QString("b"));
@@ -294,7 +294,7 @@ void TestTable::createTableWithIn()
             "value NVARCHAR(5) CHECK (value IN ('a', 'b', 'c'))"
             ");";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
     QVERIFY(tab.name() == "not_working");
 
     QVERIFY(tab.fields().at(1)->check() == "value IN ( 'a' , 'b' , 'c' )");
@@ -312,7 +312,7 @@ void TestTable::createTableWithNotLikeConstraint()
             "value7 INTEGER CONSTRAINT 'value' CHECK(NOT EXISTS (1))\n"
             ");";
 
-    Table tab = Table::parseSQL(sSQL).first;
+    Table tab = *(Table::parseSQL(sSQL).first.dynamicCast<sqlb::Table>());
     QVERIFY(tab.name() == "hopefully_working");
 
     QVERIFY(tab.fields().at(0)->check() == "value NOT LIKE 'prefix%'");
