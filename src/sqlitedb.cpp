@@ -1179,7 +1179,7 @@ objectMap DBBrowserDB::getBrowsableObjects() const
     return res;
 }
 
-sqlb::ObjectPtr DBBrowserDB::getObjectByName(const QString& name) const
+const sqlb::ObjectPtr DBBrowserDB::getObjectByName(const QString& name) const
 {
     for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {

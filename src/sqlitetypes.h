@@ -236,7 +236,7 @@ public:
     bool removeField(const QString& sFieldName);
     void setFields(const FieldVector& fields);
     void setField(int index, FieldPtr f);
-    const FieldPtr& field(int index) { return m_fields[index]; }
+    const FieldPtr& field(int index) const { return m_fields[index]; }
     QStringList fieldNames() const;
 
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }

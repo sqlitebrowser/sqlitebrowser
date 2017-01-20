@@ -106,7 +106,7 @@ public:
     bool renameColumn(const QString& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0);
 
     objectMap getBrowsableObjects() const;
-    sqlb::ObjectPtr getObjectByName(const QString& name) const;
+    const sqlb::ObjectPtr getObjectByName(const QString& name) const;
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
