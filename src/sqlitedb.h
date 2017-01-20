@@ -121,6 +121,8 @@ public:
 
     bool loadExtension(const QString& filename);
 
+    QVector<QPair<QString, QString>> queryColumnInformation(const QString& object_name);
+
     sqlite3 * _db;
 
     objectMap objMap;

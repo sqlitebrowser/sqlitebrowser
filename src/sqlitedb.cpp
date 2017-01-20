@@ -1229,7 +1229,7 @@ void DBBrowserDB::updateSchema( )
     QByteArray utf8Statement = statement.toUtf8();
     err=sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(),
                         &vm, &tail);
-    QVector<QString> temporary_objects;
+
     if (err == SQLITE_OK){
         logSQL(statement, kLogMsg_App);
         while ( sqlite3_step(vm) == SQLITE_ROW ){
@@ -1258,44 +1258,19 @@ void DBBrowserDB::updateSchema( )
                 obj.object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
                         obj.object->setTemporary(true);
+            } else if(type == sqlb::Object::ObjectTypes::View) {
+                // For views we currently can't rely on our grammar parser to get the column list. Use the pragma offered by SQLite instead
+                auto columns = queryColumnInformation(val_name);
+                sqlb::Table* view_dummy = new sqlb::Table("");
+                foreach(const auto& column, columns)
+                    view_dummy->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
+                obj.object = sqlb::TablePtr(view_dummy);
             }
             objMap.insert(val_type, obj);
         }
         sqlite3_finalize(vm);
     }else{
         qWarning() << tr("could not get list of db objects: %1, %2").arg(err).arg(sqlite3_errmsg(_db));
-    }
-
-    //now get the field list for views
-    objectMap::Iterator it;
-    for ( it = objMap.begin(); it != objMap.end(); ++it )
-    {
-        // Use our SQL parser to generate the field list for tables. For views we currently have to fall back to the
-        // pragma SQLite offers.
-        if((*it).gettype() == sqlb::Object::ObjectTypes::View)
-        {
-            statement = QString("PRAGMA TABLE_INFO(%1);").arg(sqlb::escapeIdentifier((*it).getname()));
-            logSQL(statement, kLogMsg_App);
-            err=sqlite3_prepare_v2(_db,statement.toUtf8(),statement.length(),
-                                &vm, &tail);
-            sqlb::Table* view_dummy = new sqlb::Table("");
-            if (err == SQLITE_OK){
-                while ( sqlite3_step(vm) == SQLITE_ROW ){
-                    if (sqlite3_column_count(vm)==6)
-                    {
-                        QString val_name = QString::fromUtf8((const char *)sqlite3_column_text(vm, 1));
-                        QString val_type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
-
-                        sqlb::FieldPtr f(new sqlb::Field(val_name, val_type));
-                        view_dummy->addField(f);
-                    }
-                }
-                sqlite3_finalize(vm);
-            } else{
-                lastErrorMessage = tr("could not get types");
-            }
-            (*it).object = sqlb::TablePtr(view_dummy);
-        }
     }
 
     emit structureUpdated();
@@ -1390,4 +1365,30 @@ bool DBBrowserDB::loadExtension(const QString& filename)
         sqlite3_free(error);
         return false;
     }
+}
+
+QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QString& object_name)
+{
+    QVector<QPair<QString, QString>> result;
+    QString statement = QString("PRAGMA TABLE_INFO(%1);").arg(sqlb::escapeIdentifier(object_name));
+    logSQL(statement, kLogMsg_App);
+
+    sqlite3_stmt* vm;
+    const char* tail;
+    int err = sqlite3_prepare_v2(_db, statement.toUtf8(), statement.length(), &vm, &tail);
+    if(err == SQLITE_OK)
+    {
+        while(sqlite3_step(vm) == SQLITE_ROW)
+        {
+            QString name = QString::fromUtf8((const char *)sqlite3_column_text(vm, 1));
+            QString type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
+
+            result.push_back(qMakePair(name, type));
+        }
+        sqlite3_finalize(vm);
+    } else{
+        lastErrorMessage = tr("could not get column information");
+    }
+
+    return result;
 }
