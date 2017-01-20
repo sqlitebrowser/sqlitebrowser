@@ -2,7 +2,6 @@
 #include "ui_ExportDataDialog.h"
 #include "sqlitedb.h"
 #include "Settings.h"
-#include "sqlitetablemodel.h"
 #include "sqlite.h"
 #include "FileDialog.h"
 

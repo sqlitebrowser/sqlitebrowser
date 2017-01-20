@@ -1,17 +1,14 @@
 #ifndef SQLEXECUTIONAREA_H
 #define SQLEXECUTIONAREA_H
 
-#include "sqltextedit.h"
-
 #include <QWidget>
-
-#include "ExtendedTableWidget.h"
 
 class SqlTextEdit;
 class SqliteTableModel;
 class DBBrowserDB;
 class QMenu;
 class QTextEdit;
+class ExtendedTableWidget;
 
 namespace Ui {
 class SqlExecutionArea;

@@ -20,6 +20,7 @@
 #include "SqlUiLexer.h"
 #include "FileDialog.h"
 #include "ColumnDisplayFormatDialog.h"
+#include "FilterTableHeader.h"
 
 #include <QFile>
 #include <QApplication>

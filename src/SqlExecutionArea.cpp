@@ -1,7 +1,6 @@
 #include "SqlExecutionArea.h"
 #include "ui_SqlExecutionArea.h"
 #include "sqltextedit.h"
-#include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "Settings.h"

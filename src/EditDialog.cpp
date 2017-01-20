@@ -10,7 +10,6 @@
 #include <QShortcut>
 #include <QImageReader>
 #include <QBuffer>
-//#include <QStringBuilder>
 #include <QModelIndex>
 
 EditDialog::EditDialog(QWidget* parent)

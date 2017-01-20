@@ -1,9 +1,6 @@
 #include "ExportSqlDialog.h"
 #include "ui_ExportSqlDialog.h"
 #include "sqlitedb.h"
-#include "PreferencesDialog.h"
-#include "sqlitetablemodel.h"
-#include "sqlite.h"
 #include "FileDialog.h"
 
 #include <QFile>

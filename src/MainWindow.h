@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "sqltextedit.h"
 #include "sqlitedb.h"
 #include "RemoteDatabase.h"
 #include "PlotDock.h"
@@ -11,7 +10,6 @@
 
 class QDragEnterEvent;
 class EditDialog;
-class PlotDock;
 class QIntValidator;
 class QLabel;
 class QModelIndex;

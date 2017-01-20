@@ -2,10 +2,11 @@
 #define EXTENDEDTABLEWIDGET_H
 
 #include <QTableView>
-#include "FilterTableHeader.h"
 #include <QSet>
 #include <QDropEvent>
 #include <QDragMoveEvent>
+
+class FilterTableHeader;
 
 class ExtendedTableWidget : public QTableView
 {
