@@ -1085,7 +1085,24 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     {
         // If this object references the table and it's not the table itself save it's SQL string
         if((*it).getTableName() == tablename && (*it).gettype() != "table")
-            otherObjectsSql += (*it).getsql().trimmed() + ";\n";
+        {
+            // If this is an index, update the fields first. This highly increases the chance that the SQL statement won't throw an
+            // error later on when we try to recreate it.
+            if((*it).gettype() == "index")
+            {
+                sqlb::Index idx = (*it).index;
+                for(int i=0;i<idx.columns().size();i++)
+                {
+                    if(idx.column(i)->name() == name)
+                        idx.column(i)->setName(to->name());
+                }
+                otherObjectsSql += idx.sql() + "\n";
+            } else {
+                // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
+                // hope for the best.
+                otherObjectsSql += (*it).getsql().trimmed() + ";\n";
+            }
+        }
     }
 
     // We need to disable foreign keys here. The reason is that in the next step the entire table will be dropped and there might be foreign keys
