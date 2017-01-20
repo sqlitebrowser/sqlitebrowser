@@ -45,18 +45,21 @@ if(WIN32 AND MSVC)
 endif()
 
 find_package(Antlr2)
+find_package(QScintilla)
 
 set(QHEXEDIT_DIR libs/qhexedit)
 set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
-set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
 
 if(NOT ANTLR2_FOUND)
     set(ANTLR_DIR libs/antlr-2.7.7)
     add_subdirectory(${ANTLR_DIR})
 endif()
+if(NOT QSCINTILLA_FOUND)
+    set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
+    add_subdirectory(${QSCINTILLA_DIR})
+endif()
 add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
-add_subdirectory(${QSCINTILLA_DIR})
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
@@ -251,13 +254,17 @@ include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
 		${QHEXEDIT_DIR}
 		${QCUSTOMPLOT_DIR}
-		${QSCINTILLA_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
 if(ANTLR2_FOUND)
     include_directories(${ANTLR2_INCLUDE_DIRS})
 else()
     include_directories(${ANTLR_DIR})
+endif()
+if(QSCINTILLA_FOUND)
+    include_directories(${QSCINTILLA_INCLUDE_DIR})
+else()
+    include_directories(${QSCINTILLA_DIR})
 endif()
 
 add_executable(${PROJECT_NAME}
@@ -271,24 +278,28 @@ add_executable(${PROJECT_NAME}
 qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
 set(QT_LIBRARIES "")
 
-add_dependencies(${PROJECT_NAME} qhexedit qcustomplot qscintilla2)
+add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
 if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)
 endif()
+if(NOT QSCINTILLA_FOUND)
+    add_dependencies(${PROJECT_NAME} qscintilla2)
+endif()
 
 link_directories(
-		"${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}"
-		"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
-		"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}"
-		"${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
+	"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
+	"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}"
+)
 if(NOT ANTLR2_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}")
+endif()
+if(NOT QSCINTILLA_FOUND)
+    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
 endif()
 
 target_link_libraries(${PROJECT_NAME}
 		qhexedit
 		qcustomplot
-		qscintilla2
 		${QT_LIBRARIES}
 		${WIN32_STATIC_LINK}
 		${LIBSQLITE}
@@ -297,6 +308,11 @@ if(ANTLR2_FOUND)
     target_link_libraries(${PROJECT_NAME} ${ANTLR2_LIBRARIES})
 else()
     target_link_libraries(${PROJECT_NAME} antlr)
+endif()
+if(QSCINTILLA_FOUND)
+    target_link_libraries(${PROJECT_NAME} ${QSCINTILLA_LIBRARIES})
+else()
+    target_link_libraries(${PROJECT_NAME} qscintilla2)
 endif()
 
 if(WIN32 AND MSVC)
