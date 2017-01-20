@@ -430,7 +430,7 @@ void MainWindow::populateTable()
         QVector<QString> v;
         bool only_defaults = true;
         const sqlb::FieldVector& tablefields = db.getObjectByName(tablename).table.fields();
-        for(int i=0; tablefields.size(); ++i)
+        for(int i=0; i<tablefields.size(); ++i)
         {
             QString format = tableIt.value().displayFormats[i+1];
             if(format.size())
