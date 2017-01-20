@@ -1258,6 +1258,15 @@ void DBBrowserDB::updateSchema( )
                 obj.object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
                         obj.object->setTemporary(true);
+
+                // For virtual tables query the column list using the SQLite pragma
+                if(type == sqlb::Object::ObjectTypes::Table && obj.object.dynamicCast<sqlb::Table>()->isVirtual())
+                {
+                    sqlb::TablePtr tab = obj.object.dynamicCast<sqlb::Table>();
+                    auto columns = queryColumnInformation(val_name);
+                    foreach(const auto& column, columns)
+                        tab->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
+                }
             } else if(type == sqlb::Object::ObjectTypes::View) {
                 // For views we currently can't rely on our grammar parser to get the column list. Use the pragma offered by SQLite instead
                 auto columns = queryColumnInformation(val_name);

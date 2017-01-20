@@ -520,8 +520,6 @@ TablePtr CreateTableWalker::table()
             tab->setVirtualUsing(concatTextAST(s, true));
             tab->setFullyParsed(false);
 
-            // TODO Maybe get the column list using the 'pragma table_info()' approach we're using for views
-
             return TablePtr(tab);
         }
 
