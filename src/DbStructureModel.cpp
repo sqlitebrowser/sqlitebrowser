@@ -178,24 +178,32 @@ void DbStructureModel::reloadData()
     for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
     {
         // Object node
-        QTreeWidgetItem* item = addNode(typeToParentItem.value((*it).gettype()), *it);
+        QString type;
+        switch((*it).gettype())
+        {
+        case sqlb::Object::ObjectTypes::Table: type = "table"; break;
+        case sqlb::Object::ObjectTypes::Index: type = "index"; break;
+        case sqlb::Object::ObjectTypes::Trigger: type = "trigger"; break;
+        case sqlb::Object::ObjectTypes::View: type = "view"; break;
+        }
+        QTreeWidgetItem* item = addNode(typeToParentItem.value(type), *it);
 
         // If it is a table or view add the field nodes
-        if((*it).gettype() == "table" || (*it).gettype() == "view")
+        if((*it).gettype() == sqlb::Object::ObjectTypes::Table || (*it).gettype() == sqlb::Object::ObjectTypes::View)
         {
             // Add extra node for browsable section
             addNode(typeToParentItem.value("browsable"), *it);
 
             // Add field nodes
-            sqlb::FieldVector pk = (*it).table.primaryKey();
-            for(int i=0; i < (*it).table.fields().size(); ++i)
+            sqlb::FieldVector pk = (*it).object.dynamicCast<sqlb::Table>()->primaryKey();
+            for(int i=0; i < (*it).object.dynamicCast<sqlb::Table>()->fields().size(); ++i)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
-                fldItem->setText(0, (*it).table.fields().at(i)->name());
+                fldItem->setText(0, (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->name());
                 fldItem->setText(1, "field");
-                fldItem->setText(2, (*it).table.fields().at(i)->type());
-                fldItem->setText(3, (*it).table.fields().at(i)->toString("  ", " "));
-                if(pk.contains((*it).table.fields().at(i)))
+                fldItem->setText(2, (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->type());
+                fldItem->setText(3, (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->toString("  ", " "));
+                if(pk.contains((*it).object.dynamicCast<sqlb::Table>()->fields().at(i)))
                     fldItem->setIcon(0, QIcon(":/icons/field_key"));
                 else
                     fldItem->setIcon(0, QIcon(":/icons/field"));
@@ -279,10 +287,19 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
 
 QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const DBBrowserObject& object)
 {
+    QString type;
+    switch(object.gettype())
+    {
+    case sqlb::Object::ObjectTypes::Table: type = "table"; break;
+    case sqlb::Object::ObjectTypes::Index: type = "index"; break;
+    case sqlb::Object::ObjectTypes::Trigger: type = "trigger"; break;
+    case sqlb::Object::ObjectTypes::View: type = "view"; break;
+    }
+
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-    item->setIcon(0, QIcon(QString(":/icons/%1").arg(object.gettype())));
+    item->setIcon(0, QIcon(QString(":/icons/%1").arg(type)));
     item->setText(0, object.getname());
-    item->setText(1, object.gettype());
+    item->setText(1, type);
     item->setText(3, object.getsql());
 
     return item;

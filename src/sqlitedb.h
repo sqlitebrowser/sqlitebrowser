@@ -21,25 +21,22 @@ typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 class DBBrowserObject
 {
 public:
-    DBBrowserObject() : table(""), index(""), name( "" ) { }
-    DBBrowserObject(const QString& wname, const QString& wsql, const QString& wtype, const QString& tbl_name, bool temp)
-        : table(wname), index(wname), name( wname), sql( wsql ), type(wtype), table_name(tbl_name), temporary(temp)
+    DBBrowserObject() : name( "" ) { }
+    DBBrowserObject(const QString& wname, const QString& wsql, sqlb::Object::ObjectTypes wtype, const QString& tbl_name)
+        : name( wname), sql( wsql ), type(wtype), table_name(tbl_name)
     { }
 
     QString getname() const { return name; }
     QString getsql() const { return sql; }
-    QString gettype() const { return type; }
+    sqlb::Object::ObjectTypes gettype() const { return type; }
     QString getTableName() const { return table_name; }
-    bool isTemporary() const { return temporary; }
 
-    sqlb::Table table;
-    sqlb::Index index;
+    sqlb::ObjectPtr object;
 private:
     QString name;
     QString sql;
-    QString type;
+    sqlb::Object::ObjectTypes type;
     QString table_name;     // The name of the table this object references, interesting for views, triggers and indices
-    bool temporary;
 };
 
 class DBBrowserDB : public QObject
@@ -109,7 +106,7 @@ public:
     bool renameColumn(const QString& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0);
 
     objectMap getBrowsableObjects() const;
-    DBBrowserObject getObjectByName(const QString& name) const;
+    sqlb::ObjectPtr getObjectByName(const QString& name) const;
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }

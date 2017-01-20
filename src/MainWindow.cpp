@@ -366,9 +366,9 @@ void MainWindow::populateStructure()
     {
         QString objectname = it.value().getname();
 
-        for(int i=0; i < (*it).table.fields().size(); ++i)
+        for(int i=0; i < (*it).object.dynamicCast<sqlb::Table>()->fields().size(); ++i)
         {
-            QString fieldname = (*it).table.fields().at(i)->name();
+            QString fieldname = (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->name();
             tablesToColumnsMap[objectname].append(fieldname);
         }
     }
@@ -429,7 +429,7 @@ void MainWindow::populateTable()
     } else {
         QVector<QString> v;
         bool only_defaults = true;
-        const sqlb::FieldVector& tablefields = db.getObjectByName(tablename).table.fields();
+        const sqlb::FieldVector& tablefields = db.getObjectByName(tablename).dynamicCast<sqlb::Table>()->fields();
         for(int i=0; i<tablefields.size(); ++i)
         {
             QString format = tableIt.value().displayFormats[i+1];
@@ -498,7 +498,7 @@ void MainWindow::populateTable()
     }
 
     // Activate the add and delete record buttons and editing only if a table has been selected
-    bool editable = db.getObjectByName(tablename).gettype() == "table" && !db.readOnly();
+    bool editable = db.getObjectByName(tablename)->type() == sqlb::Object::ObjectTypes::Table && !db.readOnly();
     ui->buttonNewRecord->setEnabled(editable);
     ui->buttonDeleteRecord->setEnabled(editable);
     ui->dataTable->setEditTriggers(editable ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
@@ -816,7 +816,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // * Don't allow editing of other objects than tables (on the browse table) *
     bool isEditingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::ObjectTypes::Table);
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
@@ -840,7 +840,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 
     bool editingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(ui->comboBrowseTable->currentText()).gettype() == "table");
+            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::ObjectTypes::Table);
 
     // Don't allow editing of other objects than tables
     editDock->setReadOnly(!editingAllowed);
@@ -2195,16 +2195,16 @@ void MainWindow::copyCurrentCreateStatement()
 void MainWindow::jumpToRow(const QString& table, QString column, const QByteArray& value)
 {
     // First check if table exists
-    DBBrowserObject obj = db.getObjectByName(table);
-    if(obj.getname().size() == 0)
+    sqlb::TablePtr obj = db.getObjectByName(table).dynamicCast<sqlb::Table>();
+    if(!obj)
         return;
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = obj.table.fields().at(obj.table.findPk())->name();
+        column = obj->fields().at(obj->findPk())->name();
 
     // If column doesn't exist don't do anything
-    int column_index = obj.table.findField(column);
+    int column_index = obj->findField(column);
     if(column_index == -1)
         return;
 
@@ -2232,7 +2232,7 @@ void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
 void MainWindow::showRecordPopupMenu(const QPoint& pos)
 {
     const QString sCurrentTable = ui->comboBrowseTable->currentText();
-    if (!(db.getObjectByName(sCurrentTable).gettype() == "table" && !db.readOnly()))
+    if(!(db.getObjectByName(sCurrentTable)->type() == sqlb::Object::ObjectTypes::Table && !db.readOnly()))
         return;
 
     int row = ui->dataTable->verticalHeader()->logicalIndexAt(pos);
@@ -2257,7 +2257,7 @@ void MainWindow::editDataColumnDisplayFormat()
     // column is always the rowid column. Ultimately, get the column name from the column object
     QString current_table = ui->comboBrowseTable->currentText();
     int field_number = sender()->property("clicked_column").toInt();
-    QString field_name = db.getObjectByName(current_table).table.fields().at(field_number-1)->name();
+    QString field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
 
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];

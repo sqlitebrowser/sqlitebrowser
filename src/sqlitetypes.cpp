@@ -22,6 +22,27 @@ QStringList fieldVectorToFieldNames(const FieldVector& vector)
     return result;
 }
 
+QPair<ObjectPtr, bool> Object::parseSQL(Object::ObjectTypes type, const QString& sSQL)
+{
+    // Parse SQL statement according to type
+    QPair<ObjectPtr, bool> result;
+    switch(type)
+    {
+    case Object::ObjectTypes::Table:
+        result = Table::parseSQL(sSQL);
+        break;
+    case Object::ObjectTypes::Index:
+        result = Index::parseSQL(sSQL);
+        break;
+    default:
+        return QPair<ObjectPtr, bool>(ObjectPtr(nullptr), false);
+    }
+
+    // Strore the original SQL statement and return the result
+    result.first->setOriginalSql(sSQL);
+    return result;
+}
+
 bool ForeignKeyClause::isSet() const
 {
     return m_override.size() || m_table.size();
@@ -256,7 +277,7 @@ bool Table::hasAutoIncrement() const
     return false;
 }
 
-QPair<Table, bool> Table::parseSQL(const QString &sSQL)
+QPair<ObjectPtr, bool> Table::parseSQL(const QString &sSQL)
 {
     std::stringstream s;
     s << sSQL.toStdString();
@@ -276,7 +297,7 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
         // Note: this needs to be done in two separate lines because otherwise the optimiser might decide to
         // fetch the value for the second part of the pair (the modify supported flag) first. If it does so it will
         // always be set to true because the table() method hasn't run yet and it's only set to false in there.
-        sqlb::Table tab = ctw.table();
+        sqlb::TablePtr tab = ctw.table();
         return qMakePair(tab, ctw.modifysupported());
     }
     catch(antlr::ANTLRException& ex)
@@ -288,7 +309,7 @@ QPair<Table, bool> Table::parseSQL(const QString &sSQL)
         qCritical() << "Sqlite parse error: " << sSQL; //TODO
     }
 
-    return qMakePair(Table(""), false);
+    return qMakePair(TablePtr(new Table("")), false);
 }
 
 QString Table::sql() const
@@ -463,9 +484,9 @@ QString columnname(const antlr::RefAST& n)
 }
 }
 
-Table CreateTableWalker::table()
+TablePtr CreateTableWalker::table()
 {
-    Table tab("");
+    Table* tab = new Table("");
 
     if( m_root ) //CREATE TABLE
     {
@@ -491,7 +512,7 @@ Table CreateTableWalker::table()
         }
 
         // Extract and set table name
-        tab.setName(tablename(s));
+        tab->setName(tablename(s));
 
         // Special handling for virtual tables. If this is a virtual table, extract the USING part and skip all the
         // rest of this function because virtual tables don't have column definitons
@@ -499,12 +520,12 @@ Table CreateTableWalker::table()
         {
             s = s->getNextSibling(); // USING
             s = s->getNextSibling(); // module name
-            tab.setVirtualUsing(concatTextAST(s, true));
+            tab->setVirtualUsing(concatTextAST(s, true));
             m_bModifySupported = false;
 
             // TODO Maybe get the column list using the 'pragma table_info()' approach we're using for views
 
-            return tab;
+            return TablePtr(tab);
         }
 
         // This is a normal table, not a virtual one
@@ -555,7 +576,7 @@ Table CreateTableWalker::table()
                     do
                     {
                         QString col = columnname(tc);
-                        FieldPtr field = tab.field(tab.findField(col));
+                        FieldPtr field = tab->field(tab->findField(col));
                         fields.push_back(field);
 
                         tc = tc->getNextSibling();
@@ -579,7 +600,7 @@ Table CreateTableWalker::table()
                         }
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
 
-                    tab.addConstraint(fields, ConstraintPtr(pk));
+                    tab->addConstraint(fields, ConstraintPtr(pk));
                 }
                 break;
                 case sqlite3TokenTypes::UNIQUE:
@@ -593,7 +614,7 @@ Table CreateTableWalker::table()
                     do
                     {
                         QString col = columnname(tc);
-                        FieldPtr field = tab.field(tab.findField(col));
+                        FieldPtr field = tab->field(tab->findField(col));
                         fields.push_back(field);
 
                         tc = tc->getNextSibling();
@@ -617,7 +638,7 @@ Table CreateTableWalker::table()
                         fields[0]->setUnique(true);
                         delete unique;
                     } else {
-                        tab.addConstraint(fields, ConstraintPtr(unique));
+                        tab->addConstraint(fields, ConstraintPtr(unique));
                     }
                 }
                 break;
@@ -634,7 +655,7 @@ Table CreateTableWalker::table()
                     do
                     {
                         QString col = columnname(tc);
-                        FieldPtr field = tab.field(tab.findField(col));
+                        FieldPtr field = tab->field(tab->findField(col));
                         fields.push_back(field);
 
                         tc = tc->getNextSibling();
@@ -666,7 +687,7 @@ Table CreateTableWalker::table()
                     }
 
                     fk->setConstraint(concatTextAST(tc, true));
-                    tab.addConstraint(fields, ConstraintPtr(fk));
+                    tab->addConstraint(fields, ConstraintPtr(fk));
                 }
                 break;
                 default:
@@ -685,15 +706,15 @@ Table CreateTableWalker::table()
                 s = s->getNextSibling();    // WITHOUT
                 s = s->getNextSibling();    // ROWID
 
-                tab.setRowidColumn(tab.fields().at(tab.findPk())->name());
+                tab->setRowidColumn(tab->fields().at(tab->findPk())->name());
             }
         }
     }
 
-    return tab;
+    return TablePtr(tab);
 }
 
-void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
+void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
 {
     QString colname;
     QString type = "TEXT";
@@ -832,17 +853,17 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
 
     FieldPtr f = FieldPtr(new Field(colname, type, notnull, defaultvalue, check, unique));
     f->setAutoIncrement(autoincrement);
-    table.addField(f);
+    table->addField(f);
 
     if(foreignKey)
-        table.addConstraint({f}, ConstraintPtr(foreignKey));
+        table->addConstraint({f}, ConstraintPtr(foreignKey));
     if(primaryKey)
     {
         FieldVector v;
-        if(table.constraint(v, Constraint::PrimaryKeyConstraintType))
-            table.primaryKeyRef().push_back(f);
+        if(table->constraint(v, Constraint::PrimaryKeyConstraintType))
+            table->primaryKeyRef().push_back(f);
         else
-            table.addConstraint({f}, ConstraintPtr(primaryKey));
+            table->addConstraint({f}, ConstraintPtr(primaryKey));
     }
 }
 
@@ -923,7 +944,7 @@ QString Index::sql() const
     return sql + ";";
 }
 
-QPair<Index, bool> Index::parseSQL(const QString& sSQL)
+QPair<ObjectPtr, bool> Index::parseSQL(const QString& sSQL)
 {
     std::stringstream s;
     s << sSQL.toStdString();
@@ -943,7 +964,7 @@ QPair<Index, bool> Index::parseSQL(const QString& sSQL)
         // Note: this needs to be done in two separate lines because otherwise the optimiser might decide to
         // fetch the value for the second part of the pair (the modify supported flag) first. If it does so it will
         // always be set to true because the table() method hasn't run yet and it's only set to false in there.
-        sqlb::Index index = ctw.index();
+        sqlb::IndexPtr index = ctw.index();
         return qMakePair(index, ctw.modifysupported());
     }
     catch(antlr::ANTLRException& ex)
@@ -955,12 +976,12 @@ QPair<Index, bool> Index::parseSQL(const QString& sSQL)
         qCritical() << "Sqlite parse error: " << sSQL; //TODO
     }
 
-    return qMakePair(Index(""), false);
+    return qMakePair(IndexPtr(new Index("")), false);
 }
 
-Index CreateIndexWalker::index()
+IndexPtr CreateIndexWalker::index()
 {
-    Index index("");
+    Index* index = new Index("");
 
     if(m_root)  // CREATE INDEX
     {
@@ -975,18 +996,18 @@ Index CreateIndexWalker::index()
         {
             // Is this a unique index?
             if(s->getType() == Sqlite3Lexer::UNIQUE)
-                index.setUnique(true);
+                index->setUnique(true);
 
             s = s->getNextSibling();
         }
 
         // Extract and set index name
-        index.setName(tablename(s));
+        index->setName(tablename(s));
 
         // Get table name
         s = s->getNextSibling(); // ON
         s = s->getNextSibling(); // table name
-        index.setTable(tablename(s));
+        index->setTable(tablename(s));
 
         s = s->getNextSibling(); // LPAREN
         s = s->getNextSibling(); // first column name
@@ -1012,15 +1033,15 @@ Index CreateIndexWalker::index()
                 m_bModifySupported = false;
             } else {
                 s = s->getNextSibling();        // expr
-                index.setWhereExpr(concatTextAST(s, true));
+                index->setWhereExpr(concatTextAST(s, true));
             }
         }
     }
 
-    return index;
+    return IndexPtr(index);
 }
 
-void CreateIndexWalker::parsecolumn(Index& index, antlr::RefAST c)
+void CreateIndexWalker::parsecolumn(Index* index, antlr::RefAST c)
 {
     QString name;
     bool isExpression;
@@ -1074,7 +1095,7 @@ void CreateIndexWalker::parsecolumn(Index& index, antlr::RefAST c)
         c = c->getNextSibling();
     }
 
-    index.addColumn(IndexedColumnPtr(new IndexedColumn(name, isExpression, order)));
+    index->addColumn(IndexedColumnPtr(new IndexedColumn(name, isExpression, order)));
 }
 
 } //namespace sqlb

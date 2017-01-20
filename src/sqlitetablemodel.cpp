@@ -47,13 +47,13 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
     bool allOk = false;
-    if(m_db.getObjectByName(table).gettype() == "table")
+    if(m_db.getObjectByName(table)->type() == sqlb::Object::ObjectTypes::Table)
     {
-        sqlb::Table t = sqlb::Table::parseSQL(m_db.getObjectByName(table).getsql()).first;
-        if(t.fields().size()) // parsing was OK
+        sqlb::TablePtr t = sqlb::Table::parseSQL(m_db.getObjectByName(table)->originalSql()).first.dynamicCast<sqlb::Table>();
+        if(t->fields().size()) // parsing was OK
         {
-            m_headers.push_back(t.rowidColumn());
-            m_headers.append(t.fieldNames());
+            m_headers.push_back(t->rowidColumn());
+            m_headers.append(t->fieldNames());
 
             // parse columns types
             static QStringList dataTypes = QStringList()
@@ -61,7 +61,7 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
                     << "REAL"
                     << "TEXT"
                     << "BLOB";
-            foreach(const sqlb::FieldPtr fld,  t.fields())
+            foreach(const sqlb::FieldPtr fld,  t->fields())
             {
                 QString name(fld->type().toUpper());
                 int colType = dataTypes.indexOf(name);
@@ -267,13 +267,13 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
 sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
-    DBBrowserObject obj = m_db.getObjectByName(m_sTable);
-    if(obj.getname().size() && (column >= 0 && column < obj.table.fields().count()))
+    sqlb::TablePtr obj = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
+    if(obj->name().size() && (column >= 0 && column < obj->fields().count()))
     {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = obj.table.constraint({obj.table.fields().at(column)}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = obj->constraint({obj->fields().at(column)}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(ptr.dynamicCast<sqlb::ForeignKeyClause>());
     }
@@ -432,11 +432,11 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    sqlb::Table t = sqlb::Table::parseSQL(m_db.getObjectByName(m_sTable).getsql()).first;
+    sqlb::TablePtr t = sqlb::Table::parseSQL(m_db.getObjectByName(m_sTable)->originalSql()).first.dynamicCast<sqlb::Table>();
 
-    sqlb::FieldVector pk = t.primaryKey();
-    for (int col = 0; col < t.fields().size(); ++col) {
-        if(!pk.contains(t.fields().at(col))) {
+    sqlb::FieldVector pk = t->primaryKey();
+    for (int col = 0; col < t->fields().size(); ++col) {
+        if(!pk.contains(t->fields().at(col))) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 

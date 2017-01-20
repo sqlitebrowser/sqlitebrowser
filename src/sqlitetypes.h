@@ -15,14 +15,70 @@ namespace sqlb {
 
 QString escapeIdentifier(QString id);
 
+class Object;
+class Table;
+class Index;
 class Field;
 class Constraint;
 class IndexedColumn;
+typedef QSharedPointer<Object> ObjectPtr;
+typedef QSharedPointer<Table> TablePtr;
+typedef QSharedPointer<Index> IndexPtr;
 typedef QSharedPointer<Field> FieldPtr;
 typedef QSharedPointer<Constraint> ConstraintPtr;
 typedef QVector<FieldPtr> FieldVector;
 typedef QSharedPointer<IndexedColumn> IndexedColumnPtr;
 typedef QVector<IndexedColumnPtr> IndexedColumnVector;
+
+class Object
+{
+public:
+    enum ObjectTypes
+    {
+        Table,
+        Index,
+        View,
+        Trigger
+    };
+
+    explicit Object(const QString& name): m_name(name), m_temporary(false) {}
+    virtual ~Object() {}
+
+    virtual ObjectTypes type() const = 0;
+
+    void setName(const QString& name) { m_name = name; }
+    const QString& name() const { return m_name; }
+
+    void setOriginalSql(const QString& original_sql) { m_originalSql = original_sql; }
+    QString originalSql() const { return m_originalSql; }
+
+    void setTemporary(bool temp) { m_temporary = temp; }
+    bool isTemporary() const { return m_temporary; }
+
+    virtual QString baseTable() const { return QString(); }
+
+    virtual void clear() {}
+
+    /**
+     * @brief Returns the CREATE statement for this object
+     * @return A QString with the CREATE statement.
+     */
+    virtual QString sql() const = 0;
+
+    /**
+     * @brief parseSQL Parses the CREATE statement in sSQL.
+     * @param sSQL The type of the object.
+     * @param sSQL The create statement.
+     * @return A pair. The first part is the parsed database object, the second a bool indicating if our
+     *         parser fully understood the statement. The object may be empty if parsing failed.
+     */
+    static QPair<ObjectPtr, bool> parseSQL(Object::ObjectTypes type, const QString& sSQL);
+
+protected:
+    QString m_name;
+    QString m_originalSql;
+    bool m_temporary;
+};
 
 class Constraint
 {
@@ -160,15 +216,14 @@ private:
 
 typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
 
-class Table
+class Table : public Object
 {
 public:
-    explicit Table(const QString& name): m_name(name), m_rowidColumn("_rowid_"), m_temporary(false) {}
+    explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
     virtual ~Table();
 
-    void setName(const QString& name) { m_name = name; }
+    virtual ObjectTypes type() const { return Object::Table; }
 
-    const QString& name() const { return m_name; }
     const FieldVector& fields() const { return m_fields; }
 
     /**
@@ -191,9 +246,6 @@ public:
     void setVirtualUsing(const QString& virt_using) { m_virtual = virt_using; }
     QString virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.isEmpty(); }
-
-    void setTemporary(bool temp) { m_temporary = temp; }
-    bool isTemporary() const { return m_temporary; }
 
     void clear();
 
@@ -224,18 +276,16 @@ public:
      *         if our modify dialog supports the table.
      *         The table object may be a empty table if parsing failed.
      */
-    static QPair<Table, bool> parseSQL(const QString& sSQL);
+    static QPair<ObjectPtr, bool> parseSQL(const QString& sSQL);
 private:
     QStringList fieldList() const;
     bool hasAutoIncrement() const;
 
 private:
-    QString m_name;
     FieldVector m_fields;
     QString m_rowidColumn;
     ConstraintMap m_constraints;
     QString m_virtual;
-    bool m_temporary;
 };
 
 /**
@@ -251,11 +301,11 @@ public:
         , m_bModifySupported(true)
     {}
 
-    Table table();
+    TablePtr table();
     bool modifysupported() const { return m_bModifySupported; }
 
 private:
-    void parsecolumn(Table& table, antlr::RefAST c);
+    void parsecolumn(Table* table, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
@@ -291,14 +341,15 @@ private:
     QString m_order;
 };
 
-class Index
+class Index : public Object
 {
 public:
-    explicit Index(const QString& name): m_name(name), m_unique(false) {}
+    explicit Index(const QString& name): Object(name), m_unique(false) {}
     virtual ~Index();
 
-    void setName(const QString& name) { m_name = name; }
-    const QString& name() const { return m_name; }
+    virtual ObjectTypes type() const { return Object::Index; }
+
+    virtual QString baseTable() const { return m_table; }
 
     void setUnique(bool unique) { m_unique = unique; }
     bool unique() const { return m_unique; }
@@ -334,10 +385,9 @@ public:
      *         if our parser fully understood the statement.
      *         The index object may be if parsing failed.
      */
-    static QPair<Index, bool> parseSQL(const QString& sSQL);
+    static QPair<ObjectPtr, bool> parseSQL(const QString& sSQL);
 
 private:
-    QString m_name;
     bool m_unique;
     QString m_table;
     QString m_whereExpr;
@@ -357,11 +407,11 @@ public:
         , m_bModifySupported(true)
     {}
 
-    Index index();
+    IndexPtr index();
     bool modifysupported() const { return m_bModifySupported; }
 
 private:
-    void parsecolumn(Index& index, antlr::RefAST c);
+    void parsecolumn(Index* index, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;

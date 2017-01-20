@@ -33,11 +33,11 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
     if(m_bNewTable == false)
     {
         // Existing table, so load and set the current layout
-        DBBrowserObject obj = pdb.getObjectByName(curTable);
-        QString sTablesql = obj.getsql();
-        QPair<sqlb::Table, bool> parse_result = sqlb::Table::parseSQL(sTablesql);
-        m_table = parse_result.first;
-        m_table.setTemporary(obj.isTemporary());
+        sqlb::TablePtr obj = pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>();
+        QString sTablesql = obj->originalSql();
+        QPair<sqlb::ObjectPtr, bool> parse_result = sqlb::Table::parseSQL(sTablesql);
+        m_table = *(parse_result.first.dynamicCast<sqlb::Table>());
+        m_table.setTemporary(obj->isTemporary());
         ui->labelEditWarning->setVisible(!parse_result.second);
 
         // Set without rowid and temporary checkboxex. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
@@ -278,7 +278,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 sqlb::FieldVector pk = m_table.primaryKey();
                 foreach(const DBBrowserObject& fkobj, pdb.objMap.values("table"))
                 {
-                    QList<sqlb::ConstraintPtr> fks = fkobj.table.constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
+                    QList<sqlb::ConstraintPtr> fks = fkobj.object.dynamicCast<sqlb::Table>()->constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
                     foreach(sqlb::ConstraintPtr fkptr, fks)
                     {
                         QSharedPointer<sqlb::ForeignKeyClause> fk = fkptr.dynamicCast<sqlb::ForeignKeyClause>();
@@ -350,7 +350,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
                 m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
-                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName(curTable).table.rowidColumn()))
+                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>()->rowidColumn()))
                            .arg(sqlb::escapeIdentifier(curTable))
                            .arg(sqlb::escapeIdentifier(field->name())));
                 if(m.data(m.index(0, 0)).toInt() > 0)
@@ -578,8 +578,7 @@ void EditTableDialog::removeField()
                 QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
             } else {
                 //relayout
-                QString sTablesql = pdb.getObjectByName(curTable).getsql();
-                m_table = sqlb::Table::parseSQL(sTablesql).first;
+                m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
                 populateFields();
             }
         }
@@ -662,8 +661,7 @@ void EditTableDialog::moveCurrentField(bool down)
             QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
         } else {
             // Reload table SQL
-            QString sTablesql = pdb.getObjectByName(curTable).getsql();
-            m_table = sqlb::Table::parseSQL(sTablesql).first;
+            m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
             populateFields();
 
             // Select old item at new position

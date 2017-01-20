@@ -96,14 +96,12 @@ void SqlExecutionArea::saveAsView()
     {
         name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
         if(name.isEmpty())
-            break;
-        if(!db.getObjectByName(name).getname().isEmpty())
+            return;
+        if(db.getObjectByName(name) != nullptr)
             QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
         else
             break;
     }
-    if(name.isEmpty())
-        return;
 
     // Create the view
     if(db.executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(model->query())))

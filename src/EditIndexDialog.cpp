@@ -33,7 +33,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     if(!newIndex)
     {
         // Load the current layour and fill in the dialog fields
-        index = pdb.getObjectByName(curIndex).index;
+        index = *(pdb.getObjectByName(curIndex).dynamicCast<sqlb::Index>());
 
         ui->editIndexName->blockSignals(true);
         ui->editIndexName->setText(index.name());
@@ -69,7 +69,7 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
     }
 
     // And fill the table again
-    QStringList fields = pdb.getObjectByName(new_table).table.fieldNames();
+    QStringList fields = pdb.getObjectByName(new_table).dynamicCast<sqlb::Table>()->fieldNames();
     ui->tableIndexColumns->setRowCount(fields.size());
     for(int i=0; i < fields.size(); ++i)
     {
