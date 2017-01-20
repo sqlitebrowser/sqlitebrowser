@@ -1080,7 +1080,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     }
 
     // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
-    QString otherObjectsSql;
+    QStringList otherObjectsSql;
     for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         // If this object references the table and it's not the table itself save it's SQL string
@@ -1096,11 +1096,11 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
                     if(idx.column(i)->name() == name)
                         idx.column(i)->setName(to->name());
                 }
-                otherObjectsSql += idx.sql() + "\n";
+                otherObjectsSql << idx.sql();
             } else {
                 // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
                 // hope for the best.
-                otherObjectsSql += (*it).getsql().trimmed() + ";\n";
+                otherObjectsSql << (*it).getsql().trimmed() + ";";
             }
         }
     }
@@ -1133,12 +1133,18 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     setPragma("defer_foreign_keys", foreignKeysOldSettings);
 
     // Restore the saved triggers, views and indices
-    if(!executeMultiSQL(otherObjectsSql, true, true))
+    QString errored_sqls;
+    foreach(const QString& sql, otherObjectsSql)
+    {
+        if(!executeSQL(sql, true, true))
+            errored_sqls += sql + "\n";
+    }
+    if(!errored_sqls.isEmpty())
     {
         QMessageBox::information(0, qApp->applicationName(), tr("Restoring some of the objects associated with this table failed. "
                                                                 "This is most likely because some column names changed. "
                                                                 "Here's the SQL statement which you might want to fix and execute manually:\n\n")
-                                 + otherObjectsSql);
+                                 + errored_sqls);
     }
 
     // Release the savepoint - everything went fine
