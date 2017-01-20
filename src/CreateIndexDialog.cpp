@@ -5,11 +5,13 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-CreateIndexDialog::CreateIndexDialog(DBBrowserDB& db, QWidget* parent)
+CreateIndexDialog::CreateIndexDialog(DBBrowserDB& db, const QString& indexName, bool createIndex, QWidget* parent)
     : QDialog(parent),
       pdb(db),
-      ui(new Ui::CreateIndexDialog),
-      index(sqlb::Index(QString("")))
+      curIndex(indexName),
+      index(indexName),
+      newIndex(createIndex),
+      ui(new Ui::CreateIndexDialog)
 {
     // Create UI
     ui->setupUi(this);
@@ -19,12 +21,36 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB& db, QWidget* parent)
     QList<DBBrowserObject> tables = pdb.objMap.values("table");
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         dbobjs.insert((*it).getname(), (*it));
+    ui->comboTableName->blockSignals(true);
     for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
         ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it).getname());
+    ui->comboTableName->blockSignals(false);
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
     tableHeaderView->setSectionResizeMode(0, QHeaderView::Stretch);
 
+    // Editing an existing index?
+    if(!newIndex)
+    {
+        // Load the current layour and fill in the dialog fields
+        index = pdb.getObjectByName(curIndex).index;
+
+        ui->editIndexName->blockSignals(true);
+        ui->editIndexName->setText(index.name());
+        ui->editIndexName->blockSignals(false);
+        ui->checkIndexUnique->blockSignals(true);
+        ui->checkIndexUnique->setChecked(index.unique());
+        ui->checkIndexUnique->blockSignals(false);
+        ui->comboTableName->blockSignals(true);
+        ui->comboTableName->setCurrentText(index.table());
+        ui->comboTableName->blockSignals(false);
+
+        tableChanged(index.table(), true);
+    } else {
+        tableChanged(ui->comboTableName->currentText(), false);
+    }
+
+    // Refresh SQL preview
     updateSqlText();
 }
 
@@ -33,11 +59,14 @@ CreateIndexDialog::~CreateIndexDialog()
     delete ui;
 }
 
-void CreateIndexDialog::tableChanged(const QString& new_table)
+void CreateIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 {
     // Set the table name and clear all index columns
-    index.setTable(new_table);
-    index.clearColumns();
+    if(!initialLoad)
+    {
+        index.setTable(new_table);
+        index.clearColumns();
+    }
 
     // And fill the table again
     QStringList fields = pdb.getObjectByName(new_table).table.fieldNames();
@@ -50,16 +79,36 @@ void CreateIndexDialog::tableChanged(const QString& new_table)
         ui->tableIndexColumns->setItem(i, 0, name);
 
         // Put a checkbox to enable usage in the index of this field in the second column
-        QTableWidgetItem* enabled = new QTableWidgetItem("");
-        enabled->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
-        enabled->setCheckState(Qt::Unchecked);
-        ui->tableIndexColumns->setItem(i, 1, enabled);
+        QCheckBox* enabled = new QCheckBox(this);
+        if(initialLoad && index.findColumn(fields.at(i)) != -1)
+            enabled->setCheckState(Qt::Checked);
+        else
+            enabled->setCheckState(Qt::Unchecked);
+        ui->tableIndexColumns->setCellWidget(i, 1, enabled);
+        connect(enabled, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::toggled),
+                [=](bool use_in_index)
+        {
+            if(use_in_index)
+            {
+                index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
+                                                           ui->tableIndexColumns->item(i, 0)->text(),
+                                                           false,
+                                                           qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText())));
+            } else {
+                index.removeColumn(ui->tableIndexColumns->item(i, 0)->text());
+            }
+
+            checkInput();
+            updateSqlText();
+        });
 
         // And put a combobox to select the order in which to index the field in the last column
         QComboBox* order = new QComboBox(this);
         order->addItem("");
         order->addItem("ASC");
         order->addItem("DESC");
+        if(initialLoad && index.findColumn(fields.at(i)) != -1)
+            order->setCurrentText(index.column(index.findColumn(fields.at(i)))->order());
         ui->tableIndexColumns->setCellWidget(i, 2, order);
         connect(order, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::currentTextChanged),
                 [=](QString new_order)
@@ -84,17 +133,6 @@ void CreateIndexDialog::checkInput()
         valid = false;
 
     // Check if index has any columns
-    index.clearColumns();
-    for(int i=0; i < ui->tableIndexColumns->rowCount(); ++i)
-    {
-        if(ui->tableIndexColumns->item(i, 1) && ui->tableIndexColumns->item(i, 1)->data(Qt::CheckStateRole) == Qt::Checked)
-        {
-            index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
-                                                       ui->tableIndexColumns->item(i, 0)->text(),
-                                                       false,
-                                                       qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText())));
-        }
-    }
     if(index.columns().size() == 0)
         valid = false;
 
@@ -109,6 +147,17 @@ void CreateIndexDialog::checkInput()
 
 void CreateIndexDialog::accept()
 {
+    // When editing an index, delete the old one first
+    if(!newIndex)
+    {
+        if(!pdb.executeSQL(QString("DROP INDEX %1;").arg(sqlb::escapeIdentifier(curIndex))))
+        {
+            QMessageBox::warning(this, qApp->applicationName(), tr("Deleting the old index failed:\n%1").arg(pdb.lastError()));
+            return;
+        }
+    }
+
+    // Create the new index
     if(pdb.executeSQL(index.sql()))
         QDialog::accept();
     else

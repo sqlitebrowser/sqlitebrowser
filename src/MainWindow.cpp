@@ -137,7 +137,7 @@ void MainWindow::init()
     // Create popup menus
     popupTableMenu = new QMenu(this);
     popupTableMenu->addAction(ui->actionEditBrowseTable);
-    popupTableMenu->addAction(ui->editModifyTableAction);
+    popupTableMenu->addAction(ui->editModifyObjectAction);
     popupTableMenu->addAction(ui->editDeleteObjectAction);
     popupTableMenu->addSeparator();
     popupTableMenu->addAction(ui->actionEditCopyCreateStatement);
@@ -724,8 +724,9 @@ void MainWindow::createIndex()
         return;
     }
 
-    CreateIndexDialog dialog(db, this);
-    dialog.exec();
+    CreateIndexDialog dialog(db, "", true, this);
+    if(dialog.exec())
+        populateTable();
 }
 
 void MainWindow::compact()
@@ -757,20 +758,25 @@ void MainWindow::deleteObject()
     }
 }
 
-void MainWindow::editTable()
+void MainWindow::editObject()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened."));
+    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
         return;
-    }
-    if(!ui->dbTreeWidget->selectionModel()->hasSelection()){
-        return;
-    }
-    QString tableToEdit = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
 
-    EditTableDialog dialog(db, tableToEdit, false, this);
-    if(dialog.exec())
-        populateTable();
+    // Get name and type of the object to edit
+    QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0), Qt::EditRole).toString();
+    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1), Qt::EditRole).toString();
+
+    if(type == "table")
+    {
+        EditTableDialog dialog(db, name, false, this);
+        if(dialog.exec())
+            populateTable();
+    } else if(type == "index") {
+        CreateIndexDialog dialog(db, name, false, this);
+        if(dialog.exec())
+            populateTable();
+    }
 }
 
 void MainWindow::helpWhatsThis()
@@ -1224,7 +1230,7 @@ void MainWindow::changeTreeSelection()
 {
     // Just assume first that something's selected that can not be edited at all
     ui->editDeleteObjectAction->setEnabled(false);
-    ui->editModifyTableAction->setEnabled(false);
+    ui->editModifyObjectAction->setEnabled(false);
     ui->actionEditBrowseTable->setEnabled(false);
 
     if(!ui->dbTreeWidget->currentIndex().isValid())
@@ -1236,30 +1242,40 @@ void MainWindow::changeTreeSelection()
     if (type.isEmpty())
     {
         ui->editDeleteObjectAction->setIcon(QIcon(":icons/table_delete"));
+        ui->editModifyObjectAction->setIcon(QIcon(":icons/table_modify"));
     } else {
         ui->editDeleteObjectAction->setIcon(QIcon(QString(":icons/%1_delete").arg(type)));
+        ui->editModifyObjectAction->setIcon(QIcon(QString(":icons/%1_modify").arg(type)));
     }
 
     if (type == "view") {
         ui->editDeleteObjectAction->setText(tr("Delete View"));
         ui->editDeleteObjectAction->setToolTip(tr("Delete View"));
+        ui->editModifyObjectAction->setText(tr("Modify View"));
+        ui->editModifyObjectAction->setToolTip(tr("Modify View"));
     } else if(type == "trigger") {
         ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
         ui->editDeleteObjectAction->setToolTip(tr("Delete Trigger"));
+        ui->editModifyObjectAction->setText(tr("Modify Trigger"));
+        ui->editModifyObjectAction->setToolTip(tr("Modify Trigger"));
     } else if(type == "index") {
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
         ui->editDeleteObjectAction->setToolTip(tr("Delete Index"));
+        ui->editModifyObjectAction->setText(tr("Modify Index"));
+        ui->editModifyObjectAction->setToolTip(tr("Modify Index"));
     } else {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
         ui->editDeleteObjectAction->setToolTip(tr("Delete Table"));
+        ui->editModifyObjectAction->setText(tr("Modify Table"));
+        ui->editModifyObjectAction->setToolTip(tr("Modify Table"));
     }
 
     // Activate actions
-    if(type == "table")
+    if(type == "table" || type == "index")
     {
         ui->editDeleteObjectAction->setEnabled(!db.readOnly());
-        ui->editModifyTableAction->setEnabled(!db.readOnly());
-    } else if(type == "view" || type == "trigger" || type == "index") {
+        ui->editModifyObjectAction->setEnabled(!db.readOnly());
+    } else if(type == "view" || type == "trigger") {
         ui->editDeleteObjectAction->setEnabled(!db.readOnly());
     }
     if(type == "table" || type == "view")

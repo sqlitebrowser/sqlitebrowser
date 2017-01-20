@@ -280,7 +280,7 @@ public:
     void setExpression(bool expr) { m_isExpression = expr; }
     bool expression() const { return m_isExpression; }
 
-    void setOrder(const QString& order) { m_order = order; }
+    void setOrder(const QString& order) { m_order = order.toUpper(); }
     QString order() const { return m_order; }
 
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;

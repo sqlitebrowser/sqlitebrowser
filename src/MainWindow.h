@@ -194,7 +194,7 @@ private slots:
     void createIndex();
     void compact();
     void deleteObject();
-    void editTable();
+    void editObject();
     void helpWhatsThis();
     void helpAbout();
     void updateRecordText(const QPersistentModelIndex& idx, const QByteArray& text, bool isBlob);
