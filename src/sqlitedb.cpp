@@ -1243,6 +1243,8 @@ void DBBrowserDB::updateSchema( )
         if((*it).gettype() == "table")
         {
             (*it).table = sqlb::Table::parseSQL((*it).getsql()).first;
+        } else if((*it).gettype() == "index" && !(*it).getsql().isEmpty()) {
+            (*it).index = sqlb::Index::parseSQL((*it).getsql()).first;
         } else if((*it).gettype() == "view") {
             statement = QString("PRAGMA TABLE_INFO(%1);").arg(sqlb::escapeIdentifier((*it).getname()));
             logSQL(statement, kLogMsg_App);

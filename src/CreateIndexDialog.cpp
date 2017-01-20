@@ -91,6 +91,7 @@ void CreateIndexDialog::checkInput()
         {
             index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
                                                        ui->tableIndexColumns->item(i, 0)->text(),
+                                                       false,
                                                        qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText())));
         }
     }

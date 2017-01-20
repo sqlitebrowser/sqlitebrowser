@@ -49,6 +49,7 @@ tokens {
   IF_T="IF";
   IGNORE="IGNORE";
   IN="IN";
+  INDEX="INDEX";
   INITIALLY="INITIALLY";
   INSERT="INSERT";
   IMMEDIATE="IMMEDIATE";
@@ -76,6 +77,7 @@ tokens {
   USING="USING";
   VIRTUAL="VIRTUAL";
   WHEN="WHEN";
+  WHERE="WHERE";
   WITHOUT="WITHOUT";
 
 //ast
@@ -85,6 +87,8 @@ tokens {
   COLUMNCONSTRAINT;
   TABLECONSTRAINT;
   CREATETABLE;
+  CREATEINDEX;
+  INDEXCOLUMN;
   KEYWORDASTABLENAME;
   KEYWORDASCOLUMNNAME;
 }
@@ -218,11 +222,13 @@ statementlist
 statement
   :
   createtable
+  | createindex
   ;
 
 create_statements
   :
   createtable
+  | createindex
   ;
 
 keywordastablename
@@ -270,6 +276,23 @@ createtable
   |(CREATE VIRTUAL TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
     USING name (LPAREN (expr (COMMA expr)*)? RPAREN)?		// TODO: Not sure about using "expr" here
    )
+  ;
+
+createindex
+  :
+  CREATE (UNIQUE)? INDEX (IF_T NOT EXISTS)? (tablename | keywordastablename) ON (tablename | keywordastablename)
+    ( LPAREN indexcolumn (COMMA indexcolumn)* RPAREN (WHERE expr)? )
+    {#createindex = #([CREATEINDEX, "CREATEINDEX"], #createindex);}
+  ;
+
+indexcolumn
+  :
+  //((columnname | keywordascolumnname)
+  // | expr)
+  expr
+  (COLLATE collationname)?
+  (ASC | DESC)?
+  {#indexcolumn = #([INDEXCOLUMN, "INDEXCOLUMN"], #indexcolumn);}
   ;
 
 keywordascolumnname

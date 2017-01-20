@@ -44,6 +44,7 @@ public:
 	public: void statementlist();
 	public: void statement();
 	public: void createtable();
+	public: void createindex();
 	public: void create_statements();
 	public: void keywordastablename();
 	public: void columndef();
@@ -51,6 +52,7 @@ public:
 	public: void selectstmt();
 	public: void name();
 	public: void expr();
+	public: void indexcolumn();
 	public: void keywordascolumnname();
 	public: void columnname();
 	public: void type_name();
@@ -79,10 +81,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 109;
+	static const int NUM_TOKENS = 113;
 #else
 	enum {
-		NUM_TOKENS = 109
+		NUM_TOKENS = 113
 	};
 #endif
 	
@@ -130,6 +132,8 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_20;
 	static const unsigned long _tokenSet_21_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_21;
+	static const unsigned long _tokenSet_22_data_[];
+	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_22;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/

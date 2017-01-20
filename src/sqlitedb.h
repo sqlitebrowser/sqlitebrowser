@@ -21,9 +21,9 @@ typedef QMultiMap<QString, class DBBrowserObject> objectMap;
 class DBBrowserObject
 {
 public:
-    DBBrowserObject() : table(""), name( "" ) { }
+    DBBrowserObject() : table(""), index(""), name( "" ) { }
     DBBrowserObject(const QString& wname, const QString& wsql, const QString& wtype, const QString& tbl_name, bool temp)
-        : table(wname), name( wname), sql( wsql ), type(wtype), table_name(tbl_name), temporary(temp)
+        : table(wname), index(wname), name( wname), sql( wsql ), type(wtype), table_name(tbl_name), temporary(temp)
     { }
 
     QString getname() const { return name; }
@@ -33,6 +33,7 @@ public:
     bool isTemporary() const { return temporary; }
 
     sqlb::Table table;
+    sqlb::Index index;
 private:
     QString name;
     QString sql;

@@ -267,14 +267,18 @@ QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
 class IndexedColumn
 {
 public:
-    IndexedColumn(const QString& name, const QString& order = QString())
+    IndexedColumn(const QString& name, bool expr, const QString& order = QString())
         : m_name(name),
+          m_isExpression(expr),
           m_order(order)
     {
     }
 
     void setName(const QString& name) { m_name = name; }
     QString name() const { return m_name; }
+
+    void setExpression(bool expr) { m_isExpression = expr; }
+    bool expression() const { return m_isExpression; }
 
     void setOrder(const QString& order) { m_order = order; }
     QString order() const { return m_order; }
@@ -283,6 +287,7 @@ public:
 
 private:
     QString m_name;
+    bool m_isExpression;
     QString m_order;
 };
 
@@ -322,12 +327,45 @@ public:
      */
     QString sql() const;
 
+    /**
+     * @brief parseSQL Parses the CREATE INDEX statement in sSQL.
+     * @param sSQL The create index statement.
+     * @return A pair. The first part is an index object, the second a bool indicating
+     *         if our parser fully understood the statement.
+     *         The index object may be if parsing failed.
+     */
+    static QPair<Index, bool> parseSQL(const QString& sSQL);
+
 private:
     QString m_name;
     bool m_unique;
     QString m_table;
     QString m_whereExpr;
     IndexedColumnVector m_columns;
+};
+
+/**
+ * @brief The CreateIndexWalker class
+ * Goes trough the createtable AST and returns
+ * Index object.
+ */
+class CreateIndexWalker
+{
+public:
+    explicit CreateIndexWalker(antlr::RefAST r)
+        : m_root(r)
+        , m_bModifySupported(true)
+    {}
+
+    Index index();
+    bool modifysupported() const { return m_bModifySupported; }
+
+private:
+    void parsecolumn(Index& index, antlr::RefAST c);
+
+private:
+    antlr::RefAST m_root;
+    bool m_bModifySupported;
 };
 
 } //namespace sqlb

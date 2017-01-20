@@ -850,7 +850,7 @@ void CreateTableWalker::parsecolumn(Table& table, antlr::RefAST c)
 
 QString IndexedColumn::toString(const QString& indent, const QString& sep) const
 {
-    return indent + escapeIdentifier(m_name) + sep + m_order;
+    return indent + (m_isExpression ? m_name : escapeIdentifier(m_name)) + sep + m_order;
 }
 
 Index::~Index()
@@ -921,6 +921,160 @@ QString Index::sql() const
         sql += QString(" WHERE ") + m_whereExpr;
 
     return sql + ";";
+}
+
+QPair<Index, bool> Index::parseSQL(const QString& sSQL)
+{
+    std::stringstream s;
+    s << sSQL.toStdString();
+    Sqlite3Lexer lex(s);
+
+    Sqlite3Parser parser(lex);
+
+    antlr::ASTFactory ast_factory;
+    parser.initializeASTFactory(ast_factory);
+    parser.setASTFactory(&ast_factory);
+
+    try
+    {
+        parser.createindex();
+        CreateIndexWalker ctw(parser.getAST());
+
+        // Note: this needs to be done in two separate lines because otherwise the optimiser might decide to
+        // fetch the value for the second part of the pair (the modify supported flag) first. If it does so it will
+        // always be set to true because the table() method hasn't run yet and it's only set to false in there.
+        sqlb::Index index = ctw.index();
+        return qMakePair(index, ctw.modifysupported());
+    }
+    catch(antlr::ANTLRException& ex)
+    {
+        qCritical() << "Sqlite parse error: " << QString::fromStdString(ex.toString()) << "(" << sSQL << ")";
+    }
+    catch(...)
+    {
+        qCritical() << "Sqlite parse error: " << sSQL; //TODO
+    }
+
+    return qMakePair(Index(""), false);
+}
+
+Index CreateIndexWalker::index()
+{
+    Index index("");
+
+    if(m_root)  // CREATE INDEX
+    {
+        antlr::RefAST s = m_root->getFirstChild();
+
+        // Skip to index name
+        while(s->getType() != Sqlite3Lexer::ID &&
+              s->getType() != Sqlite3Lexer::QUOTEDID &&
+              s->getType() != Sqlite3Lexer::QUOTEDLITERAL &&
+              s->getType() != Sqlite3Lexer::STRINGLITERAL &&
+              s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
+        {
+            // Is this a unique index?
+            if(s->getType() == Sqlite3Lexer::UNIQUE)
+                index.setUnique(true);
+
+            s = s->getNextSibling();
+        }
+
+        // Extract and set index name
+        index.setName(tablename(s));
+
+        // Get table name
+        s = s->getNextSibling(); // ON
+        s = s->getNextSibling(); // table name
+        index.setTable(tablename(s));
+
+        s = s->getNextSibling(); // LPAREN
+        s = s->getNextSibling(); // first column name
+        antlr::RefAST column = s;
+        // loop columndefs
+        while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::INDEXCOLUMN)
+        {
+            parsecolumn(index, column->getFirstChild());
+            column = column->getNextSibling(); // COMMA or RPAREN
+            column = column->getNextSibling(); // null or WHERE
+
+            s = s->getNextSibling();            // COLUMNDEF
+            s = s->getNextSibling();            // COMMA or RPAREN
+        }
+
+        // Now we are finished or it is a partial index
+        if(s != antlr::nullAST)
+        {
+            // This should be a 'where' then
+            if(s->getType() != sqlite3TokenTypes::WHERE)
+            {
+                // It is something else
+                m_bModifySupported = false;
+            } else {
+                s = s->getNextSibling();        // expr
+                index.setWhereExpr(concatTextAST(s, true));
+            }
+        }
+    }
+
+    return index;
+}
+
+void CreateIndexWalker::parsecolumn(Index& index, antlr::RefAST c)
+{
+    QString name;
+    bool isExpression;
+    QString order;
+
+    // First count the number of nodes used for the name or the expression. We reach the end of the name nodes list when we either
+    // get to the end of the list, get to a COMMA or a RPAREN, or get to the COLLATE keyword or get to the ASC/DESC keywords.
+    // Then see how many items there are: if it's one it's a normal index column with only a column name. In this case get the identifier.
+    // If it's more than one item it's an expression. In this case get all the items as they are.
+    int number_of_name_items = 0;
+    antlr::RefAST n = c;
+    while(n != antlr::nullAST
+          && n->getType() != sqlite3TokenTypes::COLLATE
+          && n->getType() != sqlite3TokenTypes::ASC
+          && n->getType() != sqlite3TokenTypes::DESC
+          && n->getType() != sqlite3TokenTypes::COMMA
+          && n->getType() != sqlite3TokenTypes::RPAREN)
+    {
+        number_of_name_items++;
+        n = n->getNextSibling();
+    }
+    if(number_of_name_items == 1)
+    {
+        name = identifier(c);
+        isExpression = false;
+        c = c->getNextSibling();
+    } else {
+        for(int i=0;i<number_of_name_items;i++)
+        {
+            name += c->getText().c_str() + QString(" ");
+            c = c->getNextSibling();
+        }
+        name.chop(1);
+        isExpression = true;
+    }
+
+    // Parse the rest of the column definition
+    while(c != antlr::nullAST)
+    {
+        switch(c->getType())
+        {
+        case sqlite3TokenTypes::ASC:
+        case sqlite3TokenTypes::DESC:
+            order = c->getText().c_str();
+            break;
+        default:
+            // TODO Add support for COLLATE
+            m_bModifySupported = false;
+        }
+
+        c = c->getNextSibling();
+    }
+
+    index.addColumn(IndexedColumnPtr(new IndexedColumn(name, isExpression, order)));
 }
 
 } //namespace sqlb
