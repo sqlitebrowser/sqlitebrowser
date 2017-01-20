@@ -41,7 +41,7 @@ public:
         Trigger
     };
 
-    explicit Object(const QString& name): m_name(name), m_temporary(false) {}
+    explicit Object(const QString& name): m_name(name), m_temporary(false), m_fullyParsed(false) {}
     virtual ~Object() {}
 
     virtual ObjectTypes type() const = 0;
@@ -57,6 +57,9 @@ public:
 
     virtual QString baseTable() const { return QString(); }
 
+    void setFullyParsed(bool fully_parsed) { m_fullyParsed = fully_parsed; }
+    bool fullyParsed() const { return m_fullyParsed; }
+
     virtual void clear() {}
 
     /**
@@ -69,15 +72,15 @@ public:
      * @brief parseSQL Parses the CREATE statement in sSQL.
      * @param sSQL The type of the object.
      * @param sSQL The create statement.
-     * @return A pair. The first part is the parsed database object, the second a bool indicating if our
-     *         parser fully understood the statement. The object may be empty if parsing failed.
+     * @return The parsed database object. The object may be empty if parsing failed.
      */
-    static QPair<ObjectPtr, bool> parseSQL(Object::ObjectTypes type, const QString& sSQL);
+    static ObjectPtr parseSQL(Object::ObjectTypes type, const QString& sSQL);
 
 protected:
     QString m_name;
     QString m_originalSql;
     bool m_temporary;
+    bool m_fullyParsed;
 };
 
 class Constraint
@@ -272,11 +275,9 @@ public:
     /**
      * @brief parseSQL Parses the create Table statement in sSQL.
      * @param sSQL The create table statement.
-     * @return A pair first is a table object, second is a bool indicating
-     *         if our modify dialog supports the table.
-     *         The table object may be a empty table if parsing failed.
+     * @return The table object. The table object may be empty if parsing failed.
      */
-    static QPair<ObjectPtr, bool> parseSQL(const QString& sSQL);
+    static ObjectPtr parseSQL(const QString& sSQL);
 private:
     QStringList fieldList() const;
     bool hasAutoIncrement() const;
@@ -298,18 +299,15 @@ class CreateTableWalker
 public:
     explicit CreateTableWalker(antlr::RefAST r)
         : m_root(r)
-        , m_bModifySupported(true)
     {}
 
     TablePtr table();
-    bool modifysupported() const { return m_bModifySupported; }
 
 private:
     void parsecolumn(Table* table, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
-    bool m_bModifySupported;
 };
 
 QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
@@ -381,11 +379,9 @@ public:
     /**
      * @brief parseSQL Parses the CREATE INDEX statement in sSQL.
      * @param sSQL The create index statement.
-     * @return A pair. The first part is an index object, the second a bool indicating
-     *         if our parser fully understood the statement.
-     *         The index object may be if parsing failed.
+     * @return The index object. The index object may be empty if the parsing failed.
      */
-    static QPair<ObjectPtr, bool> parseSQL(const QString& sSQL);
+    static ObjectPtr parseSQL(const QString& sSQL);
 
 private:
     bool m_unique;
@@ -404,18 +400,15 @@ class CreateIndexWalker
 public:
     explicit CreateIndexWalker(antlr::RefAST r)
         : m_root(r)
-        , m_bModifySupported(true)
     {}
 
     IndexPtr index();
-    bool modifysupported() const { return m_bModifySupported; }
 
 private:
     void parsecolumn(Index* index, antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
-    bool m_bModifySupported;
 };
 
 } //namespace sqlb

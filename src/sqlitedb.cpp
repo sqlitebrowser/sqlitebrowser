@@ -1255,7 +1255,7 @@ void DBBrowserDB::updateSchema( )
             DBBrowserObject obj(val_name, val_sql, type, val_tblname);
             if((type == sqlb::Object::ObjectTypes::Table || type == sqlb::Object::ObjectTypes::Index) && !val_sql.isEmpty())
             {
-                obj.object = sqlb::Object::parseSQL(type, val_sql).first;
+                obj.object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
                         obj.object->setTemporary(true);
             }

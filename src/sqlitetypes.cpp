@@ -22,10 +22,10 @@ QStringList fieldVectorToFieldNames(const FieldVector& vector)
     return result;
 }
 
-QPair<ObjectPtr, bool> Object::parseSQL(Object::ObjectTypes type, const QString& sSQL)
+ObjectPtr Object::parseSQL(Object::ObjectTypes type, const QString& sSQL)
 {
     // Parse SQL statement according to type
-    QPair<ObjectPtr, bool> result;
+    ObjectPtr result;
     switch(type)
     {
     case Object::ObjectTypes::Table:
@@ -35,11 +35,11 @@ QPair<ObjectPtr, bool> Object::parseSQL(Object::ObjectTypes type, const QString&
         result = Index::parseSQL(sSQL);
         break;
     default:
-        return QPair<ObjectPtr, bool>(ObjectPtr(nullptr), false);
+        return ObjectPtr(nullptr);
     }
 
     // Strore the original SQL statement and return the result
-    result.first->setOriginalSql(sSQL);
+    result->setOriginalSql(sSQL);
     return result;
 }
 
@@ -277,7 +277,7 @@ bool Table::hasAutoIncrement() const
     return false;
 }
 
-QPair<ObjectPtr, bool> Table::parseSQL(const QString &sSQL)
+ObjectPtr Table::parseSQL(const QString &sSQL)
 {
     std::stringstream s;
     s << sSQL.toStdString();
@@ -294,11 +294,7 @@ QPair<ObjectPtr, bool> Table::parseSQL(const QString &sSQL)
         parser.createtable();
         CreateTableWalker ctw(parser.getAST());
 
-        // Note: this needs to be done in two separate lines because otherwise the optimiser might decide to
-        // fetch the value for the second part of the pair (the modify supported flag) first. If it does so it will
-        // always be set to true because the table() method hasn't run yet and it's only set to false in there.
-        sqlb::TablePtr tab = ctw.table();
-        return qMakePair(tab, ctw.modifysupported());
+        return ctw.table();
     }
     catch(antlr::ANTLRException& ex)
     {
@@ -309,7 +305,7 @@ QPair<ObjectPtr, bool> Table::parseSQL(const QString &sSQL)
         qCritical() << "Sqlite parse error: " << sSQL; //TODO
     }
 
-    return qMakePair(TablePtr(new Table("")), false);
+    return TablePtr(new Table(""));
 }
 
 QString Table::sql() const
@@ -487,6 +483,7 @@ QString columnname(const antlr::RefAST& n)
 TablePtr CreateTableWalker::table()
 {
     Table* tab = new Table("");
+    tab->setFullyParsed(true);
 
     if( m_root ) //CREATE TABLE
     {
@@ -521,7 +518,7 @@ TablePtr CreateTableWalker::table()
             s = s->getNextSibling(); // USING
             s = s->getNextSibling(); // module name
             tab->setVirtualUsing(concatTextAST(s, true));
-            m_bModifySupported = false;
+            tab->setFullyParsed(false);
 
             // TODO Maybe get the column list using the 'pragma table_info()' approach we're using for views
 
@@ -585,7 +582,7 @@ TablePtr CreateTableWalker::table()
                                     || tc->getType() == sqlite3TokenTypes::DESC))
                         {
                             // TODO save ASC / DESC information?
-                            m_bModifySupported = false;
+                            tab->setFullyParsed(false);
                             tc = tc->getNextSibling();
                         }
 
@@ -623,7 +620,7 @@ TablePtr CreateTableWalker::table()
                                     || tc->getType() == sqlite3TokenTypes::DESC))
                         {
                             // TODO save ASC / DESC information?
-                            m_bModifySupported = false;
+                            tab->setFullyParsed(false);
                             tc = tc->getNextSibling();
                         }
 
@@ -692,7 +689,7 @@ TablePtr CreateTableWalker::table()
                 break;
                 default:
                 {
-                    m_bModifySupported = false;
+                    tab->setFullyParsed(false);
                 }
                     break;
                 }
@@ -760,7 +757,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             if(con != antlr::nullAST && (con->getType() == sqlite3TokenTypes::ASC
                                          || con->getType() == sqlite3TokenTypes::DESC))
             {
-                m_bModifySupported = false;
+                table->setFullyParsed(false);
                 con = con->getNextSibling(); //skip
             }
             if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::AUTOINCREMENT)
@@ -771,7 +768,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         {
             // TODO Support constraint names here
             if(!constraint_name.isEmpty())
-                m_bModifySupported = false;
+                table->setFullyParsed(false);
 
             notnull = true;
         }
@@ -785,7 +782,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         {
             // TODO Support constraint names here
             if(!constraint_name.isEmpty())
-                m_bModifySupported = false;
+                table->setFullyParsed(false);
 
             con = con->getNextSibling(); //LPAREN
             check = concatTextAST(con, true);
@@ -799,7 +796,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         {
             // TODO Support constraint names here
             if(!constraint_name.isEmpty())
-                m_bModifySupported = false;
+                table->setFullyParsed(false);
 
             con = con->getNextSibling(); //SIGNEDNUMBER,STRING,LPAREN
             defaultvalue = concatTextAST(con);
@@ -809,7 +806,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         {
             // TODO Support constraint names here
             if(!constraint_name.isEmpty())
-                m_bModifySupported = false;
+                table->setFullyParsed(false);
 
             unique = true;
         }
@@ -844,7 +841,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         break;
         default:
         {
-            m_bModifySupported = false;
+            table->setFullyParsed(false);
         }
         break;
         }
@@ -944,7 +941,7 @@ QString Index::sql() const
     return sql + ";";
 }
 
-QPair<ObjectPtr, bool> Index::parseSQL(const QString& sSQL)
+ObjectPtr Index::parseSQL(const QString& sSQL)
 {
     std::stringstream s;
     s << sSQL.toStdString();
@@ -961,11 +958,7 @@ QPair<ObjectPtr, bool> Index::parseSQL(const QString& sSQL)
         parser.createindex();
         CreateIndexWalker ctw(parser.getAST());
 
-        // Note: this needs to be done in two separate lines because otherwise the optimiser might decide to
-        // fetch the value for the second part of the pair (the modify supported flag) first. If it does so it will
-        // always be set to true because the table() method hasn't run yet and it's only set to false in there.
-        sqlb::IndexPtr index = ctw.index();
-        return qMakePair(index, ctw.modifysupported());
+        return ctw.index();
     }
     catch(antlr::ANTLRException& ex)
     {
@@ -976,12 +969,13 @@ QPair<ObjectPtr, bool> Index::parseSQL(const QString& sSQL)
         qCritical() << "Sqlite parse error: " << sSQL; //TODO
     }
 
-    return qMakePair(IndexPtr(new Index("")), false);
+    return IndexPtr(new Index(""));
 }
 
 IndexPtr CreateIndexWalker::index()
 {
     Index* index = new Index("");
+    index->setFullyParsed(true);
 
     if(m_root)  // CREATE INDEX
     {
@@ -1030,7 +1024,7 @@ IndexPtr CreateIndexWalker::index()
             if(s->getType() != sqlite3TokenTypes::WHERE)
             {
                 // It is something else
-                m_bModifySupported = false;
+                index->setFullyParsed(false);
             } else {
                 s = s->getNextSibling();        // expr
                 index->setWhereExpr(concatTextAST(s, true));
@@ -1089,7 +1083,7 @@ void CreateIndexWalker::parsecolumn(Index* index, antlr::RefAST c)
             break;
         default:
             // TODO Add support for COLLATE
-            m_bModifySupported = false;
+            index->setFullyParsed(false);
         }
 
         c = c->getNextSibling();

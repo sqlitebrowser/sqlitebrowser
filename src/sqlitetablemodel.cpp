@@ -49,8 +49,8 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
     bool allOk = false;
     if(m_db.getObjectByName(table)->type() == sqlb::Object::ObjectTypes::Table)
     {
-        sqlb::TablePtr t = sqlb::Table::parseSQL(m_db.getObjectByName(table)->originalSql()).first.dynamicCast<sqlb::Table>();
-        if(t->fields().size()) // parsing was OK
+        sqlb::TablePtr t = m_db.getObjectByName(table).dynamicCast<sqlb::Table>();
+        if(t && t->fields().size()) // parsing was OK
         {
             m_headers.push_back(t->rowidColumn());
             m_headers.append(t->fieldNames());
@@ -432,7 +432,7 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    sqlb::TablePtr t = sqlb::Table::parseSQL(m_db.getObjectByName(m_sTable)->originalSql()).first.dynamicCast<sqlb::Table>();
+    sqlb::TablePtr t = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
 
     sqlb::FieldVector pk = t->primaryKey();
     for (int col = 0; col < t->fields().size(); ++col) {
