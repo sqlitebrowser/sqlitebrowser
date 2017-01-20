@@ -201,7 +201,7 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     </message>
 </context>
 <context>
-    <name>CreateIndexDialog</name>
+    <name>EditIndexDialog</name>
     <message>
         <source>Create New Index</source>
         <translation>Criar novo índice</translation>

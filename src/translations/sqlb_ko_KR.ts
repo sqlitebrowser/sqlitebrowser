@@ -234,49 +234,49 @@ If any of the other settings were altered for this database file you need to pro
     </message>
 </context>
 <context>
-    <name>CreateIndexDialog</name>
+    <name>EditIndexDialog</name>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="14"/>
+        <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Create New Index</source>
         <translation>새 인덱스 생성하기</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="32"/>
+        <location filename="../EditIndexDialog.ui" line="32"/>
         <source>&amp;Name</source>
         <translation>이름(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="45"/>
+        <location filename="../EditIndexDialog.ui" line="45"/>
         <source>&amp;Columns</source>
         <translation>필드(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="83"/>
+        <location filename="../EditIndexDialog.ui" line="83"/>
         <source>Column</source>
         <translation>필드</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="88"/>
+        <location filename="../EditIndexDialog.ui" line="88"/>
         <source>Use in Index</source>
         <translation>인덱스 사용</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="93"/>
+        <location filename="../EditIndexDialog.ui" line="93"/>
         <source>Order</source>
         <translation>정렬순서</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="101"/>
+        <location filename="../EditIndexDialog.ui" line="101"/>
         <source>&amp;Table</source>
         <translation>테이블(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="114"/>
+        <location filename="../EditIndexDialog.ui" line="114"/>
         <source>&amp;Unique</source>
         <translation>유니크(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.cpp" line="100"/>
+        <location filename="../EditIndexDialog.cpp" line="100"/>
         <source>Creating the index failed:
 %1</source>
         <translation>인덱스 생성에 실패했습니다:

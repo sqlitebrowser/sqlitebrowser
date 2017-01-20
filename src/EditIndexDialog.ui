@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateIndexDialog</class>
- <widget class="QDialog" name="CreateIndexDialog">
+ <class>EditIndexDialog</class>
+ <widget class="QDialog" name="EditIndexDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Create New Index</string>
+   <string>Edit Index Schema</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons/icons.qrc">
@@ -177,7 +177,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>CreateIndexDialog</receiver>
+   <receiver>EditIndexDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -193,7 +193,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CreateIndexDialog</receiver>
+   <receiver>EditIndexDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -209,7 +209,7 @@
   <connection>
    <sender>comboTableName</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>CreateIndexDialog</receiver>
+   <receiver>EditIndexDialog</receiver>
    <slot>tableChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -225,7 +225,7 @@
   <connection>
    <sender>editIndexName</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>CreateIndexDialog</receiver>
+   <receiver>EditIndexDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -241,7 +241,7 @@
   <connection>
    <sender>tableIndexColumns</sender>
    <signal>cellChanged(int,int)</signal>
-   <receiver>CreateIndexDialog</receiver>
+   <receiver>EditIndexDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -257,7 +257,7 @@
   <connection>
    <sender>checkIndexUnique</sender>
    <signal>toggled(bool)</signal>
-   <receiver>CreateIndexDialog</receiver>
+   <receiver>EditIndexDialog</receiver>
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">

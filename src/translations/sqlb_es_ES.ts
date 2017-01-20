@@ -244,49 +244,49 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     </message>
 </context>
 <context>
-    <name>CreateIndexDialog</name>
+    <name>EditIndexDialog</name>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="14"/>
+        <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Create New Index</source>
         <translation>Crear un Índice Nuevo</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="32"/>
+        <location filename="../EditIndexDialog.ui" line="32"/>
         <source>&amp;Name</source>
         <translation>&amp;Nombre</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="45"/>
+        <location filename="../EditIndexDialog.ui" line="45"/>
         <source>&amp;Columns</source>
         <translation>&amp;Columnas</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="83"/>
+        <location filename="../EditIndexDialog.ui" line="83"/>
         <source>Column</source>
         <translation>Columna</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="88"/>
+        <location filename="../EditIndexDialog.ui" line="88"/>
         <source>Use in Index</source>
         <translation>Usar como Índice</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="93"/>
+        <location filename="../EditIndexDialog.ui" line="93"/>
         <source>Order</source>
         <translation>Orden</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="101"/>
+        <location filename="../EditIndexDialog.ui" line="101"/>
         <source>&amp;Table</source>
         <translation>&amp;Tabla</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.ui" line="114"/>
+        <location filename="../EditIndexDialog.ui" line="114"/>
         <source>&amp;Unique</source>
         <translation>&amp;Único</translation>
     </message>
     <message>
-        <location filename="../CreateIndexDialog.cpp" line="100"/>
+        <location filename="../EditIndexDialog.cpp" line="100"/>
         <source>Creating the index failed:
 %1</source>
         <translation>Creación de índice fallida:

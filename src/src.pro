@@ -23,7 +23,7 @@ CONFIG(unittest) {
 HEADERS += \
     sqlitedb.h \
     MainWindow.h \
-    CreateIndexDialog.h \
+    EditIndexDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
     Settings.h \
@@ -59,7 +59,7 @@ HEADERS += \
 SOURCES += \
     sqlitedb.cpp \
     MainWindow.cpp \
-    CreateIndexDialog.cpp \
+    EditIndexDialog.cpp \
     EditTableDialog.cpp \
     Settings.cpp \
     PreferencesDialog.cpp \
@@ -96,7 +96,7 @@ RESOURCES += icons/icons.qrc \
 
 FORMS += \
     MainWindow.ui \
-    CreateIndexDialog.ui \
+    EditIndexDialog.ui \
     AboutDialog.ui \
     EditTableDialog.ui \
     PreferencesDialog.ui \

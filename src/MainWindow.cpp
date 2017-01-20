@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include "CreateIndexDialog.h"
+#include "EditIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
 #include "ImportCsvDialog.h"
@@ -724,7 +724,7 @@ void MainWindow::createIndex()
         return;
     }
 
-    CreateIndexDialog dialog(db, "", true, this);
+    EditIndexDialog dialog(db, "", true, this);
     if(dialog.exec())
         populateTable();
 }
@@ -773,7 +773,7 @@ void MainWindow::editObject()
         if(dialog.exec())
             populateTable();
     } else if(type == "index") {
-        CreateIndexDialog dialog(db, name, false, this);
+        EditIndexDialog dialog(db, name, false, this);
         if(dialog.exec())
             populateTable();
     }

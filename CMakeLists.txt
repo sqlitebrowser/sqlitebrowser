@@ -81,7 +81,7 @@ set(SQLB_HDR
 set(SQLB_MOC_HDR
 	src/sqlitedb.h
 	src/AboutDialog.h
-	src/CreateIndexDialog.h
+	src/EditIndexDialog.h
 	src/EditDialog.h
 	src/EditTableDialog.h
 	src/ExportDataDialog.h
@@ -110,7 +110,7 @@ set(SQLB_MOC_HDR
 
 set(SQLB_SRC
 	src/AboutDialog.cpp
-	src/CreateIndexDialog.cpp
+	src/EditIndexDialog.cpp
 	src/EditDialog.cpp
 	src/EditTableDialog.cpp
 	src/ExportDataDialog.cpp
@@ -145,7 +145,7 @@ set(SQLB_SRC
 
 set(SQLB_FORMS
 	src/AboutDialog.ui
-	src/CreateIndexDialog.ui
+	src/EditIndexDialog.ui
 	src/EditDialog.ui
 	src/EditTableDialog.ui
 	src/ExportDataDialog.ui

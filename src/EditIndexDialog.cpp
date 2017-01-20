@@ -1,17 +1,17 @@
-#include "CreateIndexDialog.h"
-#include "ui_CreateIndexDialog.h"
+#include "EditIndexDialog.h"
+#include "ui_EditIndexDialog.h"
 #include "sqlitedb.h"
 
 #include <QMessageBox>
 #include <QPushButton>
 
-CreateIndexDialog::CreateIndexDialog(DBBrowserDB& db, const QString& indexName, bool createIndex, QWidget* parent)
+EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool createIndex, QWidget* parent)
     : QDialog(parent),
       pdb(db),
       curIndex(indexName),
       index(indexName),
       newIndex(createIndex),
-      ui(new Ui::CreateIndexDialog)
+      ui(new Ui::EditIndexDialog)
 {
     // Create UI
     ui->setupUi(this);
@@ -54,12 +54,12 @@ CreateIndexDialog::CreateIndexDialog(DBBrowserDB& db, const QString& indexName, 
     updateSqlText();
 }
 
-CreateIndexDialog::~CreateIndexDialog()
+EditIndexDialog::~EditIndexDialog()
 {
     delete ui;
 }
 
-void CreateIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
+void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 {
     // Set the table name and clear all index columns
     if(!initialLoad)
@@ -125,7 +125,7 @@ void CreateIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
     updateSqlText();
 }
 
-void CreateIndexDialog::checkInput()
+void EditIndexDialog::checkInput()
 {
     // Check if index name is set
     bool valid = true;
@@ -145,7 +145,7 @@ void CreateIndexDialog::checkInput()
     updateSqlText();
 }
 
-void CreateIndexDialog::accept()
+void EditIndexDialog::accept()
 {
     // When editing an index, delete the old one first
     if(!newIndex)
@@ -164,7 +164,7 @@ void CreateIndexDialog::accept()
         QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));
 }
 
-void CreateIndexDialog::updateSqlText()
+void EditIndexDialog::updateSqlText()
 {
     ui->sqlTextEdit->setText(index.sql());
 }
