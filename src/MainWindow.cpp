@@ -1890,6 +1890,10 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         dbfilename = QFileInfo(filename).absolutePath() + QDir::separator() + dbfilename;
                     fileOpen(dbfilename, true, readOnly);
                     ui->dbTreeWidget->collapseAll();
+
+                    // PRAGMAs
+                    if(xml.attributes().hasAttribute("foreign_keys"))
+                        db.setPragma("foreign_keys", xml.attributes().value("foreign_keys").toString());
                 } else if(xml.name() == "window") {
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
@@ -2015,6 +2019,7 @@ void MainWindow::saveProject()
         // Database file name
         xml.writeStartElement("db");
         xml.writeAttribute("path", db.currentFile());
+        xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
         xml.writeEndElement();
 
         // Window settings
