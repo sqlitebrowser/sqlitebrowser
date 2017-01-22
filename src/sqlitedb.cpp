@@ -106,7 +106,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 #ifdef ENABLE_SQLCIPHER
     if(isEncrypted && cipher)
     {
-        sqlite3_key(_db, cipher->password().toUtf8(), cipher->password().toUtf8().length());
+        executeSQL(QString("PRAGMA key = %1").arg(cipher->password()), false, false);
         if(cipher->pageSize() != 1024)
             executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipher->pageSize()), false, false);
     }
@@ -178,7 +178,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     // Attach database
     QString key;
     if(cipher) key = cipher->password();
-    if(!executeSQL(QString("ATTACH '%1' AS %2 KEY '%3'").arg(filename).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
+    if(!executeSQL(QString("ATTACH '%1' AS %2 KEY %3").arg(filename).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -247,7 +247,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
                 }
 
                 // Set key and, if it differs from the default value, the page size
-                sqlite3_key(dbHandle, cipherSettings->password().toUtf8(), cipherSettings->password().toUtf8().length());
+                sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->password()).toUtf8(), NULL, NULL, NULL);
                 if(cipherSettings->pageSize() != 1024)
                     sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
 

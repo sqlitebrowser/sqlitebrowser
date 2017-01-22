@@ -2,11 +2,13 @@
 #include "ui_CipherDialog.h"
 
 #include <QPushButton>
+#include <QRegExpValidator>
 
 CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     QDialog(parent),
     ui(new Ui::CipherDialog),
-    encryptMode(encrypt)
+    encryptMode(encrypt),
+    rawKeyValidator(new QRegExpValidator(QRegExp("0x[a-fA-F0-9]+")))
 {
     ui->setupUi(this);
 
@@ -26,12 +28,21 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
 
 CipherDialog::~CipherDialog()
 {
+    delete rawKeyValidator;
     delete ui;
+}
+
+CipherDialog::KeyFormats CipherDialog::keyFormat() const
+{
+    return static_cast<CipherDialog::KeyFormats>(ui->comboKeyFormat->currentIndex());
 }
 
 QString CipherDialog::password() const
 {
-    return ui->editPassword->text();
+    if(keyFormat() == KeyFormats::Passphrase)
+        return QString("'%1'").arg(ui->editPassword->text());
+    else
+        return QString("\"x'%1'\"").arg(ui->editPassword->text().mid(2));   // Remove the '0x' part at the beginning
 }
 
 int CipherDialog::pageSize() const
@@ -41,6 +52,23 @@ int CipherDialog::pageSize() const
 
 void CipherDialog::checkInputFields()
 {
+    if(sender() == ui->comboKeyFormat)
+    {
+        if(keyFormat() == KeyFormats::Passphrase)
+        {
+            ui->editPassword->setValidator(0);
+            ui->editPassword2->setValidator(0);
+            ui->editPassword->setPlaceholderText("");
+        } else if(keyFormat() == KeyFormats::RawKey) {
+            ui->editPassword->setValidator(rawKeyValidator);
+            ui->editPassword2->setValidator(rawKeyValidator);
+            ui->editPassword->setPlaceholderText("0x...");
+        }
+
+        ui->editPassword->setText("");
+        ui->editPassword2->setText("");
+    }
+
     bool valid = true;
     if(encryptMode)
         valid = ui->editPassword->text() == ui->editPassword2->text();

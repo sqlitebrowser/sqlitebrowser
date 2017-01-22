@@ -2130,7 +2130,7 @@ void MainWindow::editEncryption()
         // Attach a new database using the new settings
         qApp->processEvents();
         if(ok)
-            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY '%2';").arg(db.currentFile() + ".enctemp").arg(dialog.password()),
+            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY %2;").arg(db.currentFile() + ".enctemp").arg(dialog.password()),
                                false, false);
         qApp->processEvents();
         if(ok)
