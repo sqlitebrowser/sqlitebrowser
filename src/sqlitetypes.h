@@ -15,20 +15,31 @@ QString escapeIdentifier(QString id);
 class Object;
 class Table;
 class Index;
+class View;
 class Field;
 class Constraint;
 class IndexedColumn;
+struct FieldInfo;
 typedef QSharedPointer<Object> ObjectPtr;
 typedef QSharedPointer<Table> TablePtr;
 typedef QSharedPointer<Index> IndexPtr;
+typedef QSharedPointer<View> ViewPtr;
 typedef QSharedPointer<Field> FieldPtr;
 typedef QSharedPointer<Constraint> ConstraintPtr;
 typedef QVector<FieldPtr> FieldVector;
 typedef QSharedPointer<IndexedColumn> IndexedColumnPtr;
 typedef QVector<IndexedColumnPtr> IndexedColumnVector;
 typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
+typedef QList<FieldInfo> FieldInfoList;
 
 QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
+
+struct FieldInfo
+{
+    QString name;
+    QString type;
+    QString sql;
+};
 
 class Object
 {
@@ -59,6 +70,8 @@ public:
 
     void setFullyParsed(bool fully_parsed) { m_fullyParsed = fully_parsed; }
     bool fullyParsed() const { return m_fullyParsed; }
+
+    virtual FieldInfoList fieldInformation() const { return FieldInfoList(); }
 
     virtual void clear() {}
 
@@ -250,6 +263,8 @@ public:
 
     void clear();
 
+    virtual FieldInfoList fieldInformation() const;
+
     void addConstraint(FieldVector fields, ConstraintPtr constraint);
     void setConstraint(FieldVector fields, ConstraintPtr constraint);
     void removeConstraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
@@ -363,6 +378,31 @@ private:
     QString m_table;
     QString m_whereExpr;
     IndexedColumnVector m_columns;
+};
+
+class View : public Object
+{
+public:
+    explicit View(const QString& name): Object(name) {}
+    virtual ~View();
+
+    virtual Types type() const { return Object::View; }
+
+    QString sql() const { /* TODO */ return m_originalSql; }
+
+    static ObjectPtr parseSQL(const QString& sSQL);
+
+    void clear();
+
+    void addField(const FieldPtr& f);
+    void setFields(const FieldVector& fields);
+    const FieldPtr& field(int index) const { return m_fields[index]; }
+    QStringList fieldNames() const;
+
+    virtual FieldInfoList fieldInformation() const;
+
+private:
+    FieldVector m_fields;
 };
 
 } //namespace sqlb

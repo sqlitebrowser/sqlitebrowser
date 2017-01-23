@@ -76,6 +76,9 @@ ObjectPtr Object::parseSQL(Object::Types type, const QString& sSQL)
     case Object::Types::Index:
         result = Index::parseSQL(sSQL);
         break;
+    case Object::Types::View:
+        result = View::parseSQL(sSQL);
+        break;
     default:
         return ObjectPtr(nullptr);
     }
@@ -308,6 +311,14 @@ QStringList Table::fieldNames() const
         sl << f->name();
 
     return sl;
+}
+
+FieldInfoList Table::fieldInformation() const
+{
+    FieldInfoList result;
+    foreach(FieldPtr f, m_fields)
+        result.append({f->name(), f->type(), f->toString("  ", " ")});
+    return result;
 }
 
 bool Table::hasAutoIncrement() const
@@ -1130,6 +1141,54 @@ void CreateIndexWalker::parsecolumn(Index* index, antlr::RefAST c)
     }
 
     index->addColumn(IndexedColumnPtr(new IndexedColumn(name, isExpression, order)));
+}
+
+
+
+View::~View()
+{
+    clear();
+}
+
+ObjectPtr View::parseSQL(const QString& /*sSQL*/)
+{
+    // TODO
+
+    return ViewPtr(new View(""));
+}
+
+void View::clear()
+{
+    m_fields.clear();
+}
+
+void View::addField(const FieldPtr& f)
+{
+    m_fields.append(FieldPtr(f));
+}
+
+void View::setFields(const FieldVector& fields)
+{
+    clear();
+    m_fields = fields;
+}
+
+QStringList View::fieldNames() const
+{
+    QStringList sl;
+
+    foreach(FieldPtr f, m_fields)
+        sl << f->name();
+
+    return sl;
+}
+
+FieldInfoList View::fieldInformation() const
+{
+    FieldInfoList result;
+    foreach(FieldPtr f, m_fields)
+        result.append({f->name(), f->type(), f->toString("  ", " ")});
+    return result;
 }
 
 } //namespace sqlb

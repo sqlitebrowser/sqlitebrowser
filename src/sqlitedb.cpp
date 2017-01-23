@@ -1253,27 +1253,28 @@ void DBBrowserDB::updateSchema( )
                 continue;
 
             DBBrowserObject obj(val_name, val_sql, type, val_tblname);
-            if((type == sqlb::Object::Types::Table || type == sqlb::Object::Types::Index) && !val_sql.isEmpty())
+            if((type == sqlb::Object::Types::Table || type == sqlb::Object::Types::Index || type == sqlb::Object::Types::View) && !val_sql.isEmpty())
             {
                 obj.object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
                         obj.object->setTemporary(true);
 
-                // For virtual tables query the column list using the SQLite pragma
-                if(type == sqlb::Object::Types::Table && obj.object.dynamicCast<sqlb::Table>()->isVirtual())
+                // For virtual tables and views query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
+                if((type == sqlb::Object::Types::Table && obj.object.dynamicCast<sqlb::Table>()->isVirtual()) || type == sqlb::Object::Types::View)
                 {
-                    sqlb::TablePtr tab = obj.object.dynamicCast<sqlb::Table>();
                     auto columns = queryColumnInformation(val_name);
-                    foreach(const auto& column, columns)
-                        tab->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
+
+                    if(type == sqlb::Object::Types::Table)
+                    {
+                        sqlb::TablePtr tab = obj.object.dynamicCast<sqlb::Table>();
+                        foreach(const auto& column, columns)
+                            tab->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
+                    } else {
+                        sqlb::ViewPtr view = obj.object.dynamicCast<sqlb::View>();
+                        foreach(const auto& column, columns)
+                            view->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
+                    }
                 }
-            } else if(type == sqlb::Object::Types::View) {
-                // For views we currently can't rely on our grammar parser to get the column list. Use the pragma offered by SQLite instead
-                auto columns = queryColumnInformation(val_name);
-                sqlb::Table* view_dummy = new sqlb::Table("");
-                foreach(const auto& column, columns)
-                    view_dummy->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
-                obj.object = sqlb::TablePtr(view_dummy);
             }
             objMap.insert(val_type, obj);
         }

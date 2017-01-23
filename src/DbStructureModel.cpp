@@ -195,15 +195,23 @@ void DbStructureModel::reloadData()
             addNode(typeToParentItem.value("browsable"), *it);
 
             // Add field nodes
-            sqlb::FieldVector pk = (*it).object.dynamicCast<sqlb::Table>()->primaryKey();
-            for(int i=0; i < (*it).object.dynamicCast<sqlb::Table>()->fields().size(); ++i)
+            QStringList pk_columns;
+            if(it->gettype() == sqlb::Object::Types::Table)
+            {
+                sqlb::FieldVector pk = it->object.dynamicCast<sqlb::Table>()->primaryKey();
+                foreach(sqlb::FieldPtr pk_col, pk)
+                    pk_columns.push_back(pk_col->name());
+
+            }
+            sqlb::FieldInfoList fieldList = it->object->fieldInformation();
+            foreach(const sqlb::FieldInfo& field, fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
-                fldItem->setText(0, (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->name());
+                fldItem->setText(0, field.name);
                 fldItem->setText(1, "field");
-                fldItem->setText(2, (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->type());
-                fldItem->setText(3, (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->toString("  ", " "));
-                if(pk.contains((*it).object.dynamicCast<sqlb::Table>()->fields().at(i)))
+                fldItem->setText(2, field.type);
+                fldItem->setText(3, field.sql);
+                if(pk_columns.contains(field.name))
                     fldItem->setIcon(0, QIcon(":/icons/field_key"));
                 else
                     fldItem->setIcon(0, QIcon(":/icons/field"));

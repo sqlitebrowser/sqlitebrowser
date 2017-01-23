@@ -367,11 +367,9 @@ void MainWindow::populateStructure()
     {
         QString objectname = it.value().getname();
 
-        for(int i=0; i < (*it).object.dynamicCast<sqlb::Table>()->fields().size(); ++i)
-        {
-            QString fieldname = (*it).object.dynamicCast<sqlb::Table>()->fields().at(i)->name();
-            tablesToColumnsMap[objectname].append(fieldname);
-        }
+        sqlb::FieldInfoList fi = it->object->fieldInformation();
+        foreach(const sqlb::FieldInfo& f, fi)
+            tablesToColumnsMap[objectname].append(f.name);
     }
     SqlTextEdit::sqlLexer->setTableNames(tablesToColumnsMap);
     ui->editLogApplication->reloadKeywords();
