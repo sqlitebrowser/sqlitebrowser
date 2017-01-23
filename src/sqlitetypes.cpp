@@ -64,16 +64,16 @@ private:
     antlr::RefAST m_root;
 };
 
-ObjectPtr Object::parseSQL(Object::ObjectTypes type, const QString& sSQL)
+ObjectPtr Object::parseSQL(Object::Types type, const QString& sSQL)
 {
     // Parse SQL statement according to type
     ObjectPtr result;
     switch(type)
     {
-    case Object::ObjectTypes::Table:
+    case Object::Types::Table:
         result = Table::parseSQL(sSQL);
         break;
-    case Object::ObjectTypes::Index:
+    case Object::Types::Index:
         result = Index::parseSQL(sSQL);
         break;
     default:

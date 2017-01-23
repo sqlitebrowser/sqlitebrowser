@@ -47,7 +47,7 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
     bool allOk = false;
-    if(m_db.getObjectByName(table)->type() == sqlb::Object::ObjectTypes::Table)
+    if(m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
     {
         sqlb::TablePtr t = m_db.getObjectByName(table).dynamicCast<sqlb::Table>();
         if(t && t->fields().size()) // parsing was OK

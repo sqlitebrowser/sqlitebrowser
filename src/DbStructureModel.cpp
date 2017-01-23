@@ -181,15 +181,15 @@ void DbStructureModel::reloadData()
         QString type;
         switch((*it).gettype())
         {
-        case sqlb::Object::ObjectTypes::Table: type = "table"; break;
-        case sqlb::Object::ObjectTypes::Index: type = "index"; break;
-        case sqlb::Object::ObjectTypes::Trigger: type = "trigger"; break;
-        case sqlb::Object::ObjectTypes::View: type = "view"; break;
+        case sqlb::Object::Types::Table: type = "table"; break;
+        case sqlb::Object::Types::Index: type = "index"; break;
+        case sqlb::Object::Types::Trigger: type = "trigger"; break;
+        case sqlb::Object::Types::View: type = "view"; break;
         }
         QTreeWidgetItem* item = addNode(typeToParentItem.value(type), *it);
 
         // If it is a table or view add the field nodes
-        if((*it).gettype() == sqlb::Object::ObjectTypes::Table || (*it).gettype() == sqlb::Object::ObjectTypes::View)
+        if((*it).gettype() == sqlb::Object::Types::Table || (*it).gettype() == sqlb::Object::Types::View)
         {
             // Add extra node for browsable section
             addNode(typeToParentItem.value("browsable"), *it);
@@ -290,10 +290,10 @@ QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const DBBrow
     QString type;
     switch(object.gettype())
     {
-    case sqlb::Object::ObjectTypes::Table: type = "table"; break;
-    case sqlb::Object::ObjectTypes::Index: type = "index"; break;
-    case sqlb::Object::ObjectTypes::Trigger: type = "trigger"; break;
-    case sqlb::Object::ObjectTypes::View: type = "view"; break;
+    case sqlb::Object::Types::Table: type = "table"; break;
+    case sqlb::Object::Types::Index: type = "index"; break;
+    case sqlb::Object::Types::Trigger: type = "trigger"; break;
+    case sqlb::Object::Types::View: type = "view"; break;
     }
 
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);

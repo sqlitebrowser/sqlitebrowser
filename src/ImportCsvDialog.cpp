@@ -186,7 +186,7 @@ void ImportCsvDialog::accept()
     objectMap objects = pdb->getBrowsableObjects();
     for(auto it=objects.constBegin();it!=objects.constEnd();++it)
     {
-        if(it.value().gettype() == sqlb::Object::ObjectTypes::Table && it.value().getname() == ui->editName->text())
+        if(it.value().gettype() == sqlb::Object::Types::Table && it.value().getname() == ui->editName->text())
         {
             if((size_t)it.value().object.dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
             {

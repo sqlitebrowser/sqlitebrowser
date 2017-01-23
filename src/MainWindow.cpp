@@ -499,7 +499,7 @@ void MainWindow::populateTable()
     }
 
     // Activate the add and delete record buttons and editing only if a table has been selected
-    bool editable = db.getObjectByName(tablename)->type() == sqlb::Object::ObjectTypes::Table && !db.readOnly();
+    bool editable = db.getObjectByName(tablename)->type() == sqlb::Object::Types::Table && !db.readOnly();
     ui->buttonNewRecord->setEnabled(editable);
     ui->buttonDeleteRecord->setEnabled(editable);
     ui->dataTable->setEditTriggers(editable ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
@@ -817,7 +817,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // * Don't allow editing of other objects than tables (on the browse table) *
     bool isEditingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::ObjectTypes::Table);
+            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::Types::Table);
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
@@ -841,7 +841,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 
     bool editingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::ObjectTypes::Table);
+            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::Types::Table);
 
     // Don't allow editing of other objects than tables
     editDock->setReadOnly(!editingAllowed);
@@ -2238,7 +2238,7 @@ void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
 void MainWindow::showRecordPopupMenu(const QPoint& pos)
 {
     const QString sCurrentTable = ui->comboBrowseTable->currentText();
-    if(!(db.getObjectByName(sCurrentTable)->type() == sqlb::Object::ObjectTypes::Table && !db.readOnly()))
+    if(!(db.getObjectByName(sCurrentTable)->type() == sqlb::Object::Types::Table && !db.readOnly()))
         return;
 
     int row = ui->dataTable->verticalHeader()->logicalIndexAt(pos);

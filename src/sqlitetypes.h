@@ -33,7 +33,7 @@ QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
 class Object
 {
 public:
-    enum ObjectTypes
+    enum Types
     {
         Table,
         Index,
@@ -44,7 +44,7 @@ public:
     explicit Object(const QString& name): m_name(name), m_temporary(false), m_fullyParsed(false) {}
     virtual ~Object() {}
 
-    virtual ObjectTypes type() const = 0;
+    virtual Types type() const = 0;
 
     void setName(const QString& name) { m_name = name; }
     const QString& name() const { return m_name; }
@@ -74,7 +74,7 @@ public:
      * @param sSQL The create statement.
      * @return The parsed database object. The object may be empty if parsing failed.
      */
-    static ObjectPtr parseSQL(Object::ObjectTypes type, const QString& sSQL);
+    static ObjectPtr parseSQL(Object::Types type, const QString& sSQL);
 
 protected:
     QString m_name;
@@ -223,7 +223,7 @@ public:
     explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
     virtual ~Table();
 
-    virtual ObjectTypes type() const { return Object::Table; }
+    virtual Types type() const { return Object::Table; }
 
     const FieldVector& fields() const { return m_fields; }
 
@@ -320,7 +320,7 @@ public:
     explicit Index(const QString& name): Object(name), m_unique(false) {}
     virtual ~Index();
 
-    virtual ObjectTypes type() const { return Object::Index; }
+    virtual Types type() const { return Object::Index; }
 
     virtual QString baseTable() const { return m_table; }
 

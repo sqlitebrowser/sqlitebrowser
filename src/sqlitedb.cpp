@@ -594,7 +594,7 @@ bool DBBrowserDB::dump(const QString& filename,
             for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
             {
                 // Make sure it's not a table again
-                if(it.value().gettype() == sqlb::Object::ObjectTypes::Table)
+                if(it.value().gettype() == sqlb::Object::Types::Table)
                     continue;
 
                 // Write the SQL string used to create this object to the output file
@@ -1076,11 +1076,11 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         // If this object references the table and it's not the table itself save it's SQL string
-        if((*it).getTableName() == tablename && (*it).gettype() != sqlb::Object::ObjectTypes::Table)
+        if((*it).getTableName() == tablename && (*it).gettype() != sqlb::Object::Types::Table)
         {
             // If this is an index, update the fields first. This highly increases the chance that the SQL statement won't throw an
             // error later on when we try to recreate it.
-            if((*it).gettype() == sqlb::Object::ObjectTypes::Index)
+            if((*it).gettype() == sqlb::Object::Types::Index)
             {
                 sqlb::IndexPtr idx = (*it).object.dynamicCast<sqlb::Index>();
                 for(int i=0;i<idx->columns().size();i++)
@@ -1240,34 +1240,34 @@ void DBBrowserDB::updateSchema( )
             QString val_temp = QString::fromUtf8((const char*)sqlite3_column_text(vm, 4));
             val_sql.replace("\r", "");
 
-            sqlb::Object::ObjectTypes type;
+            sqlb::Object::Types type;
             if(val_type == "table")
-                type = sqlb::Object::ObjectTypes::Table;
+                type = sqlb::Object::Types::Table;
             else if(val_type == "index")
-                type = sqlb::Object::ObjectTypes::Index;
+                type = sqlb::Object::Types::Index;
             else if(val_type == "trigger")
-                type = sqlb::Object::ObjectTypes::Trigger;
+                type = sqlb::Object::Types::Trigger;
             else if(val_type == "view")
-                type = sqlb::Object::ObjectTypes::View;
+                type = sqlb::Object::Types::View;
             else
                 continue;
 
             DBBrowserObject obj(val_name, val_sql, type, val_tblname);
-            if((type == sqlb::Object::ObjectTypes::Table || type == sqlb::Object::ObjectTypes::Index) && !val_sql.isEmpty())
+            if((type == sqlb::Object::Types::Table || type == sqlb::Object::Types::Index) && !val_sql.isEmpty())
             {
                 obj.object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
                         obj.object->setTemporary(true);
 
                 // For virtual tables query the column list using the SQLite pragma
-                if(type == sqlb::Object::ObjectTypes::Table && obj.object.dynamicCast<sqlb::Table>()->isVirtual())
+                if(type == sqlb::Object::Types::Table && obj.object.dynamicCast<sqlb::Table>()->isVirtual())
                 {
                     sqlb::TablePtr tab = obj.object.dynamicCast<sqlb::Table>();
                     auto columns = queryColumnInformation(val_name);
                     foreach(const auto& column, columns)
                         tab->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
                 }
-            } else if(type == sqlb::Object::ObjectTypes::View) {
+            } else if(type == sqlb::Object::Types::View) {
                 // For views we currently can't rely on our grammar parser to get the column list. Use the pragma offered by SQLite instead
                 auto columns = queryColumnInformation(val_name);
                 sqlb::Table* view_dummy = new sqlb::Table("");
