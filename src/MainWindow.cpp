@@ -365,9 +365,9 @@ void MainWindow::populateStructure()
     SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
     for(auto it=tab.constBegin();it!=tab.constEnd();++it)
     {
-        QString objectname = it.value().getname();
+        QString objectname = (*it)->name();
 
-        sqlb::FieldInfoList fi = it->object->fieldInformation();
+        sqlb::FieldInfoList fi = (*it)->fieldInformation();
         foreach(const sqlb::FieldInfo& f, fi)
             tablesToColumnsMap[objectname].append(f.name);
     }

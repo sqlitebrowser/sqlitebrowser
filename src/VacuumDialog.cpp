@@ -16,13 +16,13 @@ VacuumDialog::VacuumDialog(DBBrowserDB* _db, QWidget* parent) :
     ui->labelSavepointWarning->setVisible(db->getDirty());
 
     // Populate list of objects to compact
-    QList<DBBrowserObject> objects = db->objMap.values("table");
+    QList<sqlb::ObjectPtr> objects = db->objMap.values("table");
     objects.append(db->objMap.values("index"));
-    for(QList<DBBrowserObject>::const_iterator i=objects.constBegin();i!=objects.constEnd();++i)
+    for(QList<sqlb::ObjectPtr>::const_iterator i=objects.constBegin();i!=objects.constEnd();++i)
     {
         QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeSelectedObjects);
-        item->setText(0, (*i).getname());
-        item->setIcon(0, QIcon(QString(":icons/%1").arg((*i).gettype())));
+        item->setText(0, (*i)->name());
+        item->setIcon(0, QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString((*i)->type()))));
         ui->treeSelectedObjects->addTopLevelItem(item);
     }
 

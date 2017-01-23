@@ -20,7 +20,7 @@ class Trigger;
 class Field;
 class Constraint;
 class IndexedColumn;
-struct FieldInfo;
+class FieldInfo;
 typedef QSharedPointer<Object> ObjectPtr;
 typedef QSharedPointer<Table> TablePtr;
 typedef QSharedPointer<Index> IndexPtr;
@@ -58,6 +58,7 @@ public:
     virtual ~Object() {}
 
     virtual Types type() const = 0;
+    static QString typeToString(Types type);
 
     void setName(const QString& name) { m_name = name; }
     const QString& name() const { return m_name; }

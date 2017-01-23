@@ -272,9 +272,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 sqlb::FieldVector pk = m_table.primaryKey();
-                foreach(const DBBrowserObject& fkobj, pdb.objMap.values("table"))
+                foreach(const sqlb::ObjectPtr& fkobj, pdb.objMap.values("table"))
                 {
-                    QList<sqlb::ConstraintPtr> fks = fkobj.object.dynamicCast<sqlb::Table>()->constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
+                    QList<sqlb::ConstraintPtr> fks = fkobj.dynamicCast<sqlb::Table>()->constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
                     foreach(sqlb::ConstraintPtr fkptr, fks)
                     {
                         QSharedPointer<sqlb::ForeignKeyClause> fk = fkptr.dynamicCast<sqlb::ForeignKeyClause>();
@@ -284,7 +284,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1 and thus "
                                                                                        "its name cannot be changed.")
-                                                     .arg(fkobj.getname()));
+                                                     .arg(fkobj->name()));
                                 // Reset the name to the old value but avoid calling this method again for that automatic change
                                 ui->treeWidget->blockSignals(true);
                                 item->setText(column, oldFieldName);

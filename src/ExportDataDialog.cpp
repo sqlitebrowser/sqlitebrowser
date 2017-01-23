@@ -40,8 +40,8 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     {
         // Get list of tables to export
         objectMap objects = pdb.getBrowsableObjects();
-        foreach(const DBBrowserObject& obj, objects)
-            ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(obj.gettype())), obj.getname()));
+        foreach(const sqlb::ObjectPtr& obj, objects)
+            ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString(obj->type()))), obj->name()));
 
         // Sort list of tables and select the table specified in the selection parameter or alternatively the first one
         ui->listTables->model()->sort(0);

@@ -17,13 +17,13 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     ui->setupUi(this);
 
     // Get list of tables, sort it alphabetically and fill the combobox
-    QMultiMap<QString, DBBrowserObject> dbobjs;
-    QList<DBBrowserObject> tables = pdb.objMap.values("table");
+    objectMap dbobjs;
+    QList<sqlb::ObjectPtr> tables = pdb.objMap.values("table");
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
-        dbobjs.insert((*it).getname(), (*it));
+        dbobjs.insert((*it)->name(), (*it));
     ui->comboTableName->blockSignals(true);
     for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
-        ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it).getname());
+        ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it)->name());
     ui->comboTableName->blockSignals(false);
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();

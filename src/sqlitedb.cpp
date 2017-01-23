@@ -458,20 +458,20 @@ bool DBBrowserDB::dump(const QString& filename,
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         size_t numRecordsTotal = 0, numRecordsCurrent = 0;
-        QList<DBBrowserObject> tables = objMap.values("table");
-        QMutableListIterator<DBBrowserObject> it(tables);
+        QList<sqlb::ObjectPtr> tables = objMap.values("table");
+        QMutableListIterator<sqlb::ObjectPtr> it(tables);
         while(it.hasNext())
         {
             it.next();
 
             // Remove the sqlite_stat1 table if there is one
-            if(it.value().getname() == "sqlite_stat1" || it.value().getname() == "sqlite_sequence")
+            if(it.value()->name() == "sqlite_stat1" || it.value()->name() == "sqlite_sequence")
             {
                 it.remove();
             } else {
                 // Otherwise get the number of records in this table
                 SqliteTableModel tableModel(*this);
-                tableModel.setTable(it.value().getname());
+                tableModel.setTable(it.value()->name());
                 numRecordsTotal += tableModel.totalRowCount();
             }
         }
@@ -491,21 +491,21 @@ bool DBBrowserDB::dump(const QString& filename,
         // Loop through all tables first as they are required to generate views, indices etc. later
         for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         {
-            if (tablesToDump.indexOf(it->getname()) == -1)
+            if (tablesToDump.indexOf((*it)->name()) == -1)
                 continue;
 
             // Write the SQL string used to create this table to the output file
             if(exportSchema)
-                stream << it->getsql() << ";\n";
+                stream << (*it)->originalSql() << ";\n";
 
             // If the user doesn't want the data to be exported skip the rest of the loop block here
             if(!exportData)
                 continue;
 
             // get columns
-            QStringList cols(it->object.dynamicCast<sqlb::Table>()->fieldNames());
+            QStringList cols((*it).dynamicCast<sqlb::Table>()->fieldNames());
 
-            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(it->getname()));
+            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier((*it)->name()));
             QByteArray utf8Query = sQuery.toUtf8();
             sqlite3_stmt *stmt;
             QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
@@ -522,7 +522,7 @@ bool DBBrowserDB::dump(const QString& filename,
 
                     if (!insertNewSyntx || !counter)
                     {
-                        stream << "INSERT INTO " << sqlb::escapeIdentifier(it->getname());
+                        stream << "INSERT INTO " << sqlb::escapeIdentifier((*it)->name());
                         if (insertColNames)
                             stream << " (" << cols.join(",") << ")";
                         stream << " VALUES (";
@@ -594,12 +594,12 @@ bool DBBrowserDB::dump(const QString& filename,
             for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
             {
                 // Make sure it's not a table again
-                if(it.value().gettype() == sqlb::Object::Types::Table)
+                if(it.value()->type() == sqlb::Object::Types::Table)
                     continue;
 
                 // Write the SQL string used to create this object to the output file
-                if(!it->getsql().isEmpty())
-                    stream << it->getsql() << ";\n";
+                if(!(*it)->originalSql().isEmpty())
+                    stream << (*it)->originalSql() << ";\n";
             }
         }
 
@@ -1076,13 +1076,13 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
         // If this object references the table and it's not the table itself save it's SQL string
-        if((*it).getTableName() == tablename && (*it).gettype() != sqlb::Object::Types::Table)
+        if((*it)->baseTable() == tablename && (*it)->type() != sqlb::Object::Types::Table)
         {
             // If this is an index, update the fields first. This highly increases the chance that the SQL statement won't throw an
             // error later on when we try to recreate it.
-            if((*it).gettype() == sqlb::Object::Types::Index)
+            if((*it)->type() == sqlb::Object::Types::Index)
             {
-                sqlb::IndexPtr idx = (*it).object.dynamicCast<sqlb::Index>();
+                sqlb::IndexPtr idx = (*it).dynamicCast<sqlb::Index>();
                 for(int i=0;i<idx->columns().size();i++)
                 {
                     if(idx->column(i)->name() == name)
@@ -1092,7 +1092,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
             } else {
                 // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
                 // hope for the best.
-                otherObjectsSql << (*it).getsql().trimmed() + ";";
+                otherObjectsSql << (*it)->originalSql().trimmed() + ";";
             }
         }
     }
@@ -1183,8 +1183,8 @@ const sqlb::ObjectPtr DBBrowserDB::getObjectByName(const QString& name) const
 {
     for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
     {
-        if((*it).getname() == name)
-            return it->object;
+        if((*it)->name() == name)
+            return *it;
     }
     return sqlb::ObjectPtr(nullptr);
 }
@@ -1252,35 +1252,39 @@ void DBBrowserDB::updateSchema( )
             else
                 continue;
 
-            DBBrowserObject obj(val_name, val_sql, type, val_tblname);
             if(!val_sql.isEmpty())
             {
-                obj.object = sqlb::Object::parseSQL(type, val_sql);
+                sqlb::ObjectPtr object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
-                        obj.object->setTemporary(true);
+                        object->setTemporary(true);
+
+                // If parsing wasn't successful set the object name manually, so that at least the name is going to be correct
+                if(!object->fullyParsed())
+                    object->setName(val_name);
 
                 // For virtual tables and views query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
-                if((type == sqlb::Object::Types::Table && obj.object.dynamicCast<sqlb::Table>()->isVirtual()) || type == sqlb::Object::Types::View)
+                if((type == sqlb::Object::Types::Table && object.dynamicCast<sqlb::Table>()->isVirtual()) || type == sqlb::Object::Types::View)
                 {
                     auto columns = queryColumnInformation(val_name);
 
                     if(type == sqlb::Object::Types::Table)
                     {
-                        sqlb::TablePtr tab = obj.object.dynamicCast<sqlb::Table>();
+                        sqlb::TablePtr tab = object.dynamicCast<sqlb::Table>();
                         foreach(const auto& column, columns)
                             tab->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
                     } else {
-                        sqlb::ViewPtr view = obj.object.dynamicCast<sqlb::View>();
+                        sqlb::ViewPtr view = object.dynamicCast<sqlb::View>();
                         foreach(const auto& column, columns)
                             view->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
                     }
                 } else if(type == sqlb::Object::Types::Trigger) {
                     // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
-                    sqlb::TriggerPtr trg = obj.object.dynamicCast<sqlb::Trigger>();
+                    sqlb::TriggerPtr trg = object.dynamicCast<sqlb::Trigger>();
                     trg->setTable(val_tblname);
                 }
+
+                objMap.insert(val_type, object);
             }
-            objMap.insert(val_type, obj);
         }
         sqlite3_finalize(vm);
     }else{

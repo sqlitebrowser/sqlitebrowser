@@ -27,7 +27,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     // Get list of tables to export
     objectMap objects = pdb->getBrowsableObjects();
     for(auto it=objects.constBegin();it!=objects.constEnd();++it) {
-        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(it.value().gettype())), it.value().getname()));
+        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg((*it)->type())), (*it)->name()));
     }
 
     // Sort list of tables and select the table specified in the

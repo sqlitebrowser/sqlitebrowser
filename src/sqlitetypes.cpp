@@ -91,6 +91,18 @@ ObjectPtr Object::parseSQL(Object::Types type, const QString& sSQL)
     return result;
 }
 
+QString Object::typeToString(Types type)
+{
+    switch(type)
+    {
+    case Types::Table: return "table";
+    case Types::Index: return "index";
+    case Types::View: return "view";
+    case Types::Trigger: return "trigger";
+    }
+    return QString();
+}
+
 bool ForeignKeyClause::isSet() const
 {
     return m_override.size() || m_table.size();

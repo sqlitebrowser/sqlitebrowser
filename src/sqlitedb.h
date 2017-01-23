@@ -16,28 +16,7 @@ enum
     kLogMsg_App
 };
 
-typedef QMultiMap<QString, class DBBrowserObject> objectMap;
-
-class DBBrowserObject
-{
-public:
-    DBBrowserObject() : name( "" ) { }
-    DBBrowserObject(const QString& wname, const QString& wsql, sqlb::Object::Types wtype, const QString& tbl_name)
-        : name( wname), sql( wsql ), type(wtype), table_name(tbl_name)
-    { }
-
-    QString getname() const { return name; }
-    QString getsql() const { return sql; }
-    sqlb::Object::Types gettype() const { return type; }
-    QString getTableName() const { return table_name; }
-
-    sqlb::ObjectPtr object;
-private:
-    QString name;
-    QString sql;
-    sqlb::Object::Types type;
-    QString table_name;     // The name of the table this object references, interesting for views, triggers and indices
-};
+typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;
 
 class DBBrowserDB : public QObject
 {

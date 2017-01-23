@@ -186,9 +186,9 @@ void ImportCsvDialog::accept()
     objectMap objects = pdb->getBrowsableObjects();
     for(auto it=objects.constBegin();it!=objects.constEnd();++it)
     {
-        if(it.value().gettype() == sqlb::Object::Types::Table && it.value().getname() == ui->editName->text())
+        if((*it)->type() == sqlb::Object::Types::Table && (*it)->name() == ui->editName->text())
         {
-            if((size_t)it.value().object.dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
+            if((size_t)(*it).dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
             {
                 QMessageBox::warning(this, QApplication::applicationName(),
                                      tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));

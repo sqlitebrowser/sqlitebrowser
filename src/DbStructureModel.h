@@ -4,8 +4,8 @@
 #include <QAbstractItemModel>
 
 class DBBrowserDB;
-class DBBrowserObject;
 class QTreeWidgetItem;
+namespace sqlb { class Object; typedef QSharedPointer<Object> ObjectPtr; }
 
 class DbStructureModel : public QAbstractItemModel
 {
@@ -33,7 +33,7 @@ private:
     QTreeWidgetItem* rootItem;
     DBBrowserDB& m_db;
 
-    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const DBBrowserObject& object);
+    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object);
 };
 
 #endif
