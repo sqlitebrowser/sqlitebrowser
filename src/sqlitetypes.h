@@ -16,6 +16,7 @@ class Object;
 class Table;
 class Index;
 class View;
+class Trigger;
 class Field;
 class Constraint;
 class IndexedColumn;
@@ -24,6 +25,7 @@ typedef QSharedPointer<Object> ObjectPtr;
 typedef QSharedPointer<Table> TablePtr;
 typedef QSharedPointer<Index> IndexPtr;
 typedef QSharedPointer<View> ViewPtr;
+typedef QSharedPointer<Trigger> TriggerPtr;
 typedef QSharedPointer<Field> FieldPtr;
 typedef QSharedPointer<Constraint> ConstraintPtr;
 typedef QVector<FieldPtr> FieldVector;
@@ -404,6 +406,27 @@ public:
 
 private:
     FieldVector m_fields;
+};
+
+class Trigger : public Object
+{
+public:
+    explicit Trigger(const QString& name): Object(name) {}
+    virtual ~Trigger() {}
+
+    virtual Types type() const { return Object::Trigger; }
+
+    QString sql() const { /* TODO */ return m_originalSql; }
+
+    static ObjectPtr parseSQL(const QString& sSQL);
+
+    virtual QString baseTable() const { return m_table; }
+
+    void setTable(const QString& table) { m_table = table; }
+    QString table() const { return m_table; }
+
+private:
+    QString m_table;
 };
 
 } //namespace sqlb

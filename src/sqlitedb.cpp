@@ -1253,7 +1253,7 @@ void DBBrowserDB::updateSchema( )
                 continue;
 
             DBBrowserObject obj(val_name, val_sql, type, val_tblname);
-            if((type == sqlb::Object::Types::Table || type == sqlb::Object::Types::Index || type == sqlb::Object::Types::View) && !val_sql.isEmpty())
+            if(!val_sql.isEmpty())
             {
                 obj.object = sqlb::Object::parseSQL(type, val_sql);
                 if(val_temp == "1")
@@ -1274,6 +1274,10 @@ void DBBrowserDB::updateSchema( )
                         foreach(const auto& column, columns)
                             view->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
                     }
+                } else if(type == sqlb::Object::Types::Trigger) {
+                    // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
+                    sqlb::TriggerPtr trg = obj.object.dynamicCast<sqlb::Trigger>();
+                    trg->setTable(val_tblname);
                 }
             }
             objMap.insert(val_type, obj);

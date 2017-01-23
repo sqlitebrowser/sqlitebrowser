@@ -79,6 +79,9 @@ ObjectPtr Object::parseSQL(Object::Types type, const QString& sSQL)
     case Object::Types::View:
         result = View::parseSQL(sSQL);
         break;
+    case Object::Types::Trigger:
+        result = Trigger::parseSQL(sSQL);
+        break;
     default:
         return ObjectPtr(nullptr);
     }
@@ -1189,6 +1192,15 @@ FieldInfoList View::fieldInformation() const
     foreach(FieldPtr f, m_fields)
         result.append({f->name(), f->type(), f->toString("  ", " ")});
     return result;
+}
+
+
+
+ObjectPtr Trigger::parseSQL(const QString& /*sSQL*/)
+{
+    // TODO
+
+    return TriggerPtr(new Trigger(""));
 }
 
 } //namespace sqlb
