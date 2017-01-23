@@ -356,7 +356,6 @@ public:
     void setColumn(int index, IndexedColumnPtr c) { m_columns[index] = c; }
     IndexedColumnPtr& column(int index) { return m_columns[index]; }
     int findColumn(const QString& name) const;
-    QStringList columnSqlList() const;
 
     void clear();
 
@@ -374,6 +373,8 @@ public:
     static ObjectPtr parseSQL(const QString& sSQL);
 
 private:
+    QStringList columnSqlList() const;
+
     bool m_unique;
     QString m_table;
     QString m_whereExpr;
