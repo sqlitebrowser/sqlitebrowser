@@ -238,6 +238,7 @@ class Table : public Object
 public:
     explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
     virtual ~Table();
+    Table& operator=(const Table& rhs);
 
     virtual Types type() const { return Object::Table; }
 
@@ -337,6 +338,7 @@ class Index : public Object
 public:
     explicit Index(const QString& name): Object(name), m_unique(false) {}
     virtual ~Index();
+    Index& operator=(const Index& rhs);
 
     virtual Types type() const { return Object::Index; }
 

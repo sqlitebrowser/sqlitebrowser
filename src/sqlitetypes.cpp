@@ -226,6 +226,37 @@ Table::~Table()
     clear();
 }
 
+Table& Table::operator=(const Table& rhs)
+{
+    // Base class
+    Object::operator=(rhs);
+
+    // Just assign the strings
+    m_rowidColumn = rhs.m_rowidColumn;
+    m_virtual = rhs.m_virtual;
+
+    // Make copies of the fields and the constraints. This is necessary in order to avoid any unwanted changes to the application's main database
+    // schema representation just modifying a reference to the fields or constraints and thinking it operates on a copy.
+    foreach(FieldPtr f, rhs.m_fields)
+        addField(FieldPtr(new Field(*f)));
+    for(auto it=rhs.m_constraints.constBegin();it!=rhs.m_constraints.constEnd();++it)   // TODO This is so ugly, it should be replaced really by anything else
+    {
+        FieldVector key;
+        ConstraintPtr constraint;
+        foreach(FieldPtr f, it.key())
+            key.push_back(m_fields.at(findField(f->name())));
+        if(it.value()->type() == Constraint::ConstraintTypes::PrimaryKeyConstraintType)
+            constraint = ConstraintPtr(new PrimaryKeyConstraint(*(it.value().dynamicCast<PrimaryKeyConstraint>())));
+        else if(it.value()->type() == Constraint::ConstraintTypes::UniqueConstraintType)
+            constraint = ConstraintPtr(new UniqueConstraint(*(it.value().dynamicCast<UniqueConstraint>())));
+        else if(it.value()->type() == Constraint::ConstraintTypes::ForeignKeyConstraintType)
+            constraint = ConstraintPtr(new ForeignKeyClause(*(it.value().dynamicCast<ForeignKeyClause>())));
+        addConstraint(key, constraint);
+    }
+
+    return *this;
+}
+
 void Table::addField(const FieldPtr& f)
 {
     m_fields.append(FieldPtr(f));
@@ -940,6 +971,23 @@ QString IndexedColumn::toString(const QString& indent, const QString& sep) const
 Index::~Index()
 {
     clear();
+}
+
+Index& Index::operator=(const Index& rhs)
+{
+    // Base class
+    Object::operator=(rhs);
+
+    // Just assign the easy stuff
+    m_unique = rhs.m_unique;
+    m_table = rhs.m_table;
+    m_whereExpr = rhs.m_whereExpr;
+
+    // Make copies of the column
+    foreach(IndexedColumnPtr c, rhs.m_columns)
+        addColumn(IndexedColumnPtr(new IndexedColumn(*c)));
+
+    return *this;
 }
 
 void Index::clear()
