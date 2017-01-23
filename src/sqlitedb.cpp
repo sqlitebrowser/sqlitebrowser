@@ -491,7 +491,7 @@ bool DBBrowserDB::dump(const QString& filename,
         // Loop through all tables first as they are required to generate views, indices etc. later
         for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         {
-            if (tablesToDump.indexOf(it->getTableName()) == -1)
+            if (tablesToDump.indexOf(it->getname()) == -1)
                 continue;
 
             // Write the SQL string used to create this table to the output file
@@ -505,7 +505,7 @@ bool DBBrowserDB::dump(const QString& filename,
             // get columns
             QStringList cols(it->object.dynamicCast<sqlb::Table>()->fieldNames());
 
-            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(it->getTableName()));
+            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(it->getname()));
             QByteArray utf8Query = sQuery.toUtf8();
             sqlite3_stmt *stmt;
             QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
