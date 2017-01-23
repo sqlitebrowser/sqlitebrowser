@@ -2,13 +2,10 @@
 #ifndef SQLITETYPES_H
 #define SQLITETYPES_H
 
-#include "antlr/ASTRefCount.hpp"
-
 #include <QString>
 #include <QSharedPointer>
 #include <QVector>
 #include <QStringList>
-#include <QPair>
 #include <QMultiHash>
 
 namespace sqlb {
@@ -29,6 +26,9 @@ typedef QSharedPointer<Constraint> ConstraintPtr;
 typedef QVector<FieldPtr> FieldVector;
 typedef QSharedPointer<IndexedColumn> IndexedColumnPtr;
 typedef QVector<IndexedColumnPtr> IndexedColumnVector;
+typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
+
+QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
 
 class Object
 {
@@ -217,8 +217,6 @@ private:
     bool m_unique;
 };
 
-typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
-
 class Table : public Object
 {
 public:
@@ -288,29 +286,6 @@ private:
     ConstraintMap m_constraints;
     QString m_virtual;
 };
-
-/**
- * @brief The CreateTableWalker class
- * Goes trough the createtable AST and returns
- * Table object.
- */
-class CreateTableWalker
-{
-public:
-    explicit CreateTableWalker(antlr::RefAST r)
-        : m_root(r)
-    {}
-
-    TablePtr table();
-
-private:
-    void parsecolumn(Table* table, antlr::RefAST c);
-
-private:
-    antlr::RefAST m_root;
-};
-
-QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
 
 class IndexedColumn
 {
@@ -388,27 +363,6 @@ private:
     QString m_table;
     QString m_whereExpr;
     IndexedColumnVector m_columns;
-};
-
-/**
- * @brief The CreateIndexWalker class
- * Goes trough the createtable AST and returns
- * Index object.
- */
-class CreateIndexWalker
-{
-public:
-    explicit CreateIndexWalker(antlr::RefAST r)
-        : m_root(r)
-    {}
-
-    IndexPtr index();
-
-private:
-    void parsecolumn(Index* index, antlr::RefAST c);
-
-private:
-    antlr::RefAST m_root;
 };
 
 } //namespace sqlb

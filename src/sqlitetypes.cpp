@@ -22,6 +22,48 @@ QStringList fieldVectorToFieldNames(const FieldVector& vector)
     return result;
 }
 
+/**
+ * @brief The CreateTableWalker class
+ * Goes trough the createtable AST and returns
+ * Table object.
+ */
+class CreateTableWalker
+{
+public:
+    explicit CreateTableWalker(antlr::RefAST r)
+        : m_root(r)
+    {}
+
+    TablePtr table();
+
+private:
+    void parsecolumn(Table* table, antlr::RefAST c);
+
+private:
+    antlr::RefAST m_root;
+};
+
+/**
+ * @brief The CreateIndexWalker class
+ * Goes trough the createtable AST and returns
+ * Index object.
+ */
+class CreateIndexWalker
+{
+public:
+    explicit CreateIndexWalker(antlr::RefAST r)
+        : m_root(r)
+    {}
+
+    IndexPtr index();
+
+private:
+    void parsecolumn(Index* index, antlr::RefAST c);
+
+private:
+    antlr::RefAST m_root;
+};
+
 ObjectPtr Object::parseSQL(Object::ObjectTypes type, const QString& sSQL)
 {
     // Parse SQL statement according to type
