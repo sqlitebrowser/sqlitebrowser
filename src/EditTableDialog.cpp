@@ -257,7 +257,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         {
         case kName:
             // When a field of that name already exists, show a warning to the user and don't apply the new name
-            if(fieldNameExists(item->text(column)))
+            if(m_table.findField(item->text(column)))
             {
                 QMessageBox::warning(this, qApp->applicationName(), tr("There already is a field with that name. Please rename it first or choose a different "
                                                                        "name for this field."));
@@ -504,7 +504,7 @@ void EditTableDialog::addField()
         {
             field_name = "Field" + QString::number(field_number);
             field_number++;
-        } while(fieldNameExists(field_name));
+        } while(m_table.findField(field_name));
         tbitem->setText(kName, field_name);
     }
 
@@ -728,15 +728,4 @@ void EditTableDialog::setTemporary(bool is_temp)
                                  tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastError()));
         }
     }
-}
-
-bool EditTableDialog::fieldNameExists(const QString& name)
-{
-    foreach(const sqlb::FieldPtr& ptr, m_table.fields())
-    {
-        if(ptr->name() == name)
-            return true;
-    }
-
-    return false;
 }
