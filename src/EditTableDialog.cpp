@@ -504,7 +504,7 @@ void EditTableDialog::addField()
         {
             field_name = "Field" + QString::number(field_number);
             field_number++;
-        } while(m_table.findField(field_name));
+        } while(m_table.findField(field_name) != -1);
         tbitem->setText(kName, field_name);
     }
 
