@@ -267,6 +267,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
 sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
+    static const sqlb::ForeignKeyClause empty_foreign_key_clause;
+
+    if (m_sTable.isEmpty())
+        return empty_foreign_key_clause;
+
     sqlb::TablePtr obj = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
     if(obj->name().size() && (column >= 0 && column < obj->fields().count()))
     {
@@ -278,7 +283,6 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
             return *(ptr.dynamicCast<sqlb::ForeignKeyClause>());
     }
 
-    static const sqlb::ForeignKeyClause empty_foreign_key_clause;
     return empty_foreign_key_clause;
 }
 
