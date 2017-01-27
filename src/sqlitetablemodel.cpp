@@ -582,48 +582,66 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 {
     // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
     QString op = "LIKE";
-    QString val;
+    QString val, val2;
     QString escape;
-    bool numeric = false;
-    if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
-    {
-        bool ok;
-        value.mid(2).toFloat(&ok);
-        if(ok)
-        {
-            op = value.left(2);
-            val = value.mid(2);
-            numeric = true;
+    bool numeric = false, ok = false;
+    // range/BETWEEN operator
+    if (value.contains("~")) {
+        int sepIdx = value.indexOf('~');
+        val  = value.mid(0, sepIdx);
+        val2 = value.mid(sepIdx+1);
+        val.toFloat(&ok);
+        if (ok) {
+            val2.toFloat(&ok);
+            ok = ok && (val.toFloat() < val2.toFloat());
         }
-    } else if(value.left(1) == ">" || value.left(1) == "<") {
-        bool ok;
-        value.mid(1).toFloat(&ok);
-        if(ok)
-        {
-            op = value.left(1);
-            val = value.mid(1);
-            numeric = true;
-        }
-    } else if(value.left(1) == "=") {
-        op = "=";
-        val = value.mid(1);
+    }
+    if (ok) {
+        op = "BETWEEN";
+        numeric = true;
     } else {
-        // Keep the default LIKE operator
-
-        // Set the escape character if one has been specified in the settings dialog
-        QString escape_character = Settings::getSettingsValue("databrowser", "filter_escape").toString();
-        if(escape_character == "'") escape_character = "''";
-        if(escape_character.length())
-            escape = QString("ESCAPE '%1'").arg(escape_character);
-
-        // Add % wildcards at the start and at the beginning of the filter query, but only if there weren't set any
-        // wildcards manually. The idea is to assume that a user who's just typing characters expects the wildcards to
-        // be added but a user who adds them herself knows what she's doing and doesn't want us to mess up her query.
-        if(!value.contains("%"))
+        val.clear();
+        val2.clear();
+        if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
         {
-            val = value;
-            val.prepend('%');
-            val.append('%');
+            bool ok;
+            value.mid(2).toFloat(&ok);
+            if(ok)
+            {
+                op = value.left(2);
+                val = value.mid(2);
+                numeric = true;
+            }
+        } else if(value.left(1) == ">" || value.left(1) == "<") {
+            bool ok;
+            value.mid(1).toFloat(&ok);
+            if(ok)
+            {
+                op = value.left(1);
+                val = value.mid(1);
+                numeric = true;
+            }
+        } else if(value.left(1) == "=") {
+            op = "=";
+            val = value.mid(1);
+        } else {
+            // Keep the default LIKE operator
+
+            // Set the escape character if one has been specified in the settings dialog
+            QString escape_character = Settings::getSettingsValue("databrowser", "filter_escape").toString();
+            if(escape_character == "'") escape_character = "''";
+            if(escape_character.length())
+                escape = QString("ESCAPE '%1'").arg(escape_character);
+
+            // Add % wildcards at the start and at the beginning of the filter query, but only if there weren't set any
+            // wildcards manually. The idea is to assume that a user who's just typing characters expects the wildcards to
+            // be added but a user who adds them herself knows what she's doing and doesn't want us to mess up her query.
+            if(!value.contains("%"))
+            {
+                val = value;
+                val.prepend('%');
+                val.append('%');
+            }
         }
     }
     if(val.isEmpty())
@@ -634,8 +652,13 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
     if(val == "''" || val == "'%'" || val == "'%%'")
         m_mWhere.remove(column);
-    else
-        m_mWhere.insert(column, op + " " + QString(encode(val.toUtf8())) + " " + escape);
+    else {
+        QString whereClause(op + " " + QString(encode(val.toUtf8())));
+        if (!val2.isEmpty())
+            whereClause += " AND " + QString(encode(val2.toUtf8()));
+        whereClause += " " + escape;
+        m_mWhere.insert(column, whereClause);
+    }
 
     // Build the new query
     buildQuery();
