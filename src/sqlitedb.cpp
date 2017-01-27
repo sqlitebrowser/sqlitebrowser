@@ -496,7 +496,12 @@ bool DBBrowserDB::dump(const QString& filename,
 
             // Write the SQL string used to create this table to the output file
             if(exportSchema)
-                stream << (*it)->originalSql() << ";\n";
+            {
+                if((*it)->fullyParsed())
+                    stream << (*it)->sql() << "\n";
+                else
+                    stream << (*it)->originalSql() << ";\n";
+            }
 
             // If the user doesn't want the data to be exported skip the rest of the loop block here
             if(!exportData)
@@ -599,7 +604,12 @@ bool DBBrowserDB::dump(const QString& filename,
 
                 // Write the SQL string used to create this object to the output file
                 if(!(*it)->originalSql().isEmpty())
-                    stream << (*it)->originalSql() << ";\n";
+                {
+                    if((*it)->fullyParsed())
+                        stream << (*it)->sql() << "\n";
+                    else
+                        stream << (*it)->originalSql() << ";\n";
+                }
             }
         }
 
