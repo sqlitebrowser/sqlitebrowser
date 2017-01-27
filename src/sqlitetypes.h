@@ -377,6 +377,8 @@ public:
      */
     static ObjectPtr parseSQL(const QString& sSQL);
 
+    virtual FieldInfoList fieldInformation() const;
+
 private:
     QStringList columnSqlList() const;
 

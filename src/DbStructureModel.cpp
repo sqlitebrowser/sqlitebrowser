@@ -180,13 +180,14 @@ void DbStructureModel::reloadData()
         // Object node
         QTreeWidgetItem* item = addNode(typeToParentItem.value(sqlb::Object::typeToString((*it)->type())), *it);
 
-        // If it is a table or view add the field nodes
+        // If it is a table or view add the field nodes, add an extra node for the browsable section
         if((*it)->type() == sqlb::Object::Types::Table || (*it)->type() == sqlb::Object::Types::View)
-        {
-            // Add extra node for browsable section
             addNode(typeToParentItem.value("browsable"), *it);
 
-            // Add field nodes
+        // Add field nodes if there are any
+        sqlb::FieldInfoList fieldList = (*it)->fieldInformation();
+        if(!fieldList.empty())
+        {
             QStringList pk_columns;
             if((*it)->type() == sqlb::Object::Types::Table)
             {
@@ -195,7 +196,6 @@ void DbStructureModel::reloadData()
                     pk_columns.push_back(pk_col->name());
 
             }
-            sqlb::FieldInfoList fieldList = (*it)->fieldInformation();
             foreach(const sqlb::FieldInfo& field, fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);

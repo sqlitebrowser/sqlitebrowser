@@ -1055,6 +1055,14 @@ QString Index::sql() const
     return sql + ";";
 }
 
+FieldInfoList Index::fieldInformation() const
+{
+    FieldInfoList result;
+    foreach(IndexedColumnPtr c, m_columns)
+        result.append({c->name(), c->order(), c->toString("  ", " ")});
+    return result;
+}
+
 ObjectPtr Index::parseSQL(const QString& sSQL)
 {
     std::stringstream s;
