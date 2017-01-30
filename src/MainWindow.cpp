@@ -428,7 +428,7 @@ void MainWindow::populateTable()
     } else {
         QVector<QString> v;
         bool only_defaults = true;
-        const sqlb::FieldVector& tablefields = db.getObjectByName(tablename).dynamicCast<sqlb::Table>()->fields();
+        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
         for(int i=0; i<tablefields.size(); ++i)
         {
             QString format = tableIt.value().displayFormats[i+1];
@@ -437,7 +437,7 @@ void MainWindow::populateTable()
                 v.push_back(format);
                 only_defaults = false;
             } else {
-                v.push_back(sqlb::escapeIdentifier(tablefields.at(i)->name()));
+                v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
             }
         }
         if(only_defaults)
