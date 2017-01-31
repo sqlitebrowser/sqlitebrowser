@@ -102,6 +102,8 @@ public:
 
     QVector<QPair<QString, QString>> queryColumnInformation(const QString& object_name);
 
+    QString generateSavepointName(const QString& identifier = QString()) const;
+
     sqlite3 * _db;
 
     objectMap objMap;

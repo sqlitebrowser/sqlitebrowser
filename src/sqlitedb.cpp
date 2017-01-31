@@ -12,6 +12,7 @@
 #include <QInputDialog>
 #include <QFileInfo>
 #include <QDir>
+#include <QDateTime>
 
 // collation callbacks
 int collCompare(void* /*pArg*/, int /*eTextRepA*/, const void* sA, int /*eTextRepB*/, const void* sB)
@@ -666,15 +667,26 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
     QString query = statement.trimmed();
 
-    query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$"));
+    // Check if this SQL containts any transaction statements
+    QRegExp transactionRegex("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$");
+    if(query.contains(transactionRegex))
+    {
+        // If so remove them anc create a savepoint instead by overriding the dirty parameter
+        query.remove(transactionRegex);
+        dirty = true;
+    }
 
     // Log the statement if needed
     if(log)
         logSQL(query, kLogMsg_App);
 
     // Set DB to dirty/create restore point if necessary
+    QString savepoint_name;
     if(dirty)
-        setSavepoint();
+    {
+        savepoint_name = sqlb::escapeIdentifier(generateSavepointName("execmultisql"));
+        setSavepoint(savepoint_name);
+    }
 
     // Show progress dialog
     int statement_size = query.size();
@@ -716,19 +728,32 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
         res = sqlite3_prepare_v2(_db, tail, tail_length, &vm, &tail);
         if(res == SQLITE_OK)
         {
-            if(sqlite3_step(vm) == SQLITE_ERROR)
+            switch(sqlite3_step(vm))
             {
+            case SQLITE_OK:
+            case SQLITE_ROW:
+            case SQLITE_DONE:
                 sqlite3_finalize(vm);
-                lastErrorMessage = tr("Error in statement #%1: %2.\n"
-                    "Aborting execution.").arg(line).arg(sqlite3_errmsg(_db));
+                break;
+            default:
+                // In case of *any* error abort the execution and roll back the transaction
+                sqlite3_finalize(vm);
+                if(dirty)
+                    revertToSavepoint(savepoint_name);
+                lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.")
+                        .arg(line)
+                        .arg(sqlite3_errmsg(_db))
+                        .arg(dirty ? tr(" and rolling back") : "");
                 qWarning() << lastErrorMessage;
                 return false;
-            } else {
-                sqlite3_finalize(vm);
             }
         } else {
-            lastErrorMessage = tr("Error in statement #%1: %2.\n"
-                "Aborting execution.").arg(line).arg(sqlite3_errmsg(_db));
+            if(dirty)
+                revertToSavepoint(savepoint_name);
+            lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.")
+                    .arg(line)
+                    .arg(sqlite3_errmsg(_db))
+                    .arg(dirty ? tr(" and rolling back") : "");
             qWarning() << lastErrorMessage;
             return false;
         }
@@ -1423,4 +1448,10 @@ QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QStri
     }
 
     return result;
+}
+
+QString DBBrowserDB::generateSavepointName(const QString& identifier) const
+{
+    // Generate some sort of unique name for a savepoint for internal use.
+    return QString("db4s_%1_%2").arg(identifier).arg(QDateTime::currentMSecsSinceEpoch());
 }
