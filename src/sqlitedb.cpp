@@ -384,6 +384,10 @@ bool DBBrowserDB::create ( const QString & db)
         // Enable extension loading
         sqlite3_enable_load_extension(_db, 1);
 
+        // Register REGEXP function
+        if(Settings::getSettingsValue("extensions", "disableregex").toBool() == false)
+            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, NULL, regexp, NULL, NULL);
+
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
         // with a 0 byte file, if the user cancels the create table dialog
