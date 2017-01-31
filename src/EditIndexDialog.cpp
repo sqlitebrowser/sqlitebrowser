@@ -68,6 +68,14 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
         index.clearColumns();
     }
 
+    // Stop here if table name is empty
+    if(new_table.isEmpty())
+    {
+        // Call checkInput() before to make sure the OK button is disabled
+        checkInput();
+        return;
+    }
+
     // And fill the table again
     QStringList fields = pdb.getObjectByName(new_table).dynamicCast<sqlb::Table>()->fieldNames();
     ui->tableIndexColumns->setRowCount(fields.size());
