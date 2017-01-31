@@ -280,7 +280,7 @@ bool DBBrowserDB::setSavepoint(const QString& pointname)
     if(savepointList.contains(pointname))
         return true;
 
-    QString query = QString("SAVEPOINT %1;").arg(pointname);
+    QString query = QString("SAVEPOINT %1;").arg(sqlb::escapeIdentifier(pointname));
     executeSQL(query, false, false);
     savepointList.append(pointname);
     emit dbChanged(getDirty());
@@ -298,7 +298,7 @@ bool DBBrowserDB::releaseSavepoint(const QString& pointname)
         // the operation should be successfull
         return true;
 
-    QString query = QString("RELEASE %1;").arg(pointname);
+    QString query = QString("RELEASE %1;").arg(sqlb::escapeIdentifier(pointname));
     if(!executeSQL(query, false, false))
         return false;
     // SQLite releases all savepoints that were created between
@@ -316,9 +316,9 @@ bool DBBrowserDB::revertToSavepoint(const QString& pointname)
     if(!isOpen() || savepointList.contains(pointname) == false)
         return false;
 
-    QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(pointname);
+    QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(sqlb::escapeIdentifier(pointname));
     executeSQL(query, false, false);
-    query = QString("RELEASE %1;").arg(pointname);
+    query = QString("RELEASE %1;").arg(sqlb::escapeIdentifier(pointname));
     executeSQL(query, false, false);
     // SQLite releases all savepoints that were created between
     // creation of given savepoint and releasing of it,
@@ -684,7 +684,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     QString savepoint_name;
     if(dirty)
     {
-        savepoint_name = sqlb::escapeIdentifier(generateSavepointName("execmultisql"));
+        savepoint_name = generateSavepointName("execmultisql");
         setSavepoint(savepoint_name);
     }
 
@@ -1044,7 +1044,8 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     }
 
     // Create savepoint to be able to go back to it in case of any error
-    if(!setSavepoint("sqlitebrowser_rename_column"))
+    QString savepointName = generateSavepointName("renamecolumn");
+    if(!setSavepoint(savepointName))
     {
         lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
         return false;
@@ -1096,7 +1097,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     if(!executeSQL(newSchema.sql(), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
-        revertToSavepoint("sqlitebrowser_rename_column");
+        revertToSavepoint(savepointName);
         lastErrorMessage = error;
         return false;
     }
@@ -1105,7 +1106,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     if(!executeSQL(QString("INSERT INTO sqlitebrowser_rename_column_new_table SELECT %1 FROM %2;").arg(select_cols).arg(sqlb::escapeIdentifier(tablename))))
     {
         QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
-        revertToSavepoint("sqlitebrowser_rename_column");
+        revertToSavepoint(savepointName);
         lastErrorMessage = error;
         return false;
     }
@@ -1148,7 +1149,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     if(!executeSQL(QString("DROP TABLE %1;").arg(sqlb::escapeIdentifier(tablename)), true, true))
     {
         QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
-        revertToSavepoint("sqlitebrowser_rename_column");
+        revertToSavepoint(savepointName);
         lastErrorMessage = error;
         return false;
     }
@@ -1156,7 +1157,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     // Rename the temporary table
     if(!renameTable("sqlitebrowser_rename_column_new_table", tablename))
     {
-        revertToSavepoint("sqlitebrowser_rename_column");
+        revertToSavepoint(savepointName);
         return false;
     }
 
@@ -1179,7 +1180,7 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
     }
 
     // Release the savepoint - everything went fine
-    if(!releaseSavepoint("sqlitebrowser_rename_column"))
+    if(!releaseSavepoint(savepointName))
     {
         lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         return false;

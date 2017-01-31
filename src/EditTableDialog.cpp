@@ -18,7 +18,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
       curTable(tableName),
       m_table(tableName),
       m_bNewTable(createTable),
-      m_sRestorePointName(sqlb::escapeIdentifier(QString("edittable_%1_save_%2").arg(curTable).arg(QDateTime::currentMSecsSinceEpoch())))
+      m_sRestorePointName(pdb.generateSavepointName("edittable"))
 {
     // Create UI
     ui->setupUi(this);
