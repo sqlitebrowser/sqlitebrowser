@@ -699,10 +699,10 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     sqlite3_stmt* vm;
     QByteArray utf8Query = query.toUtf8();
     const char *tail = utf8Query.data();
-    int res = 0;
+    int res = SQLITE_OK;
     unsigned int line = 0;
     bool structure_updated = false;
-    do
+    while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE))
     {
         line++;
         size_t tail_length = strlen(tail);
@@ -733,6 +733,8 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
             case SQLITE_OK:
             case SQLITE_ROW:
             case SQLITE_DONE:
+            case SQLITE_MISUSE:             // This is a workaround around problematic user scripts. If they lead to empty commands,
+                                            // SQLite will return a misuse error which we hereby ignore.
                 sqlite3_finalize(vm);
                 break;
             default:
@@ -757,7 +759,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
             qWarning() << lastErrorMessage;
             return false;
         }
-    } while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE));
+    }
 
     // If the DB structure was changed by some command in this SQL script, update our schema representations
     if(structure_updated)
