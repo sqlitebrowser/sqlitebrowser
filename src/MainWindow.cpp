@@ -895,7 +895,7 @@ void MainWindow::executeQuery()
             sqlWidget->getEditor()->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
     }
 
-    if (query.trimmed().isEmpty())
+    if (query.trimmed().isEmpty() || query.trimmed() == ";")
         return;
 
     query = query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$")).trimmed();
@@ -905,7 +905,7 @@ void MainWindow::executeQuery()
     sqlite3_stmt *vm;
     QByteArray utf8Query = query.toUtf8();
     const char *tail = utf8Query.data();
-    int sql3status = 0;
+    int sql3status = SQLITE_OK;
     int tail_length = utf8Query.length();
     QString statusMessage;
     bool modified = false;
@@ -924,7 +924,7 @@ void MainWindow::executeQuery()
     //Accept multi-line queries, by looping until the tail is empty
     QElapsedTimer timer;
     timer.start();
-    do
+    while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
     {
         // Check whether the DB structure is changed by this statement
         QString qtail = QString(tail);
@@ -992,6 +992,8 @@ void MainWindow::executeQuery()
                 }
                 break;
             }
+            case SQLITE_MISUSE:
+                continue;
             default:
                 statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
                         ": " + queryPart;
@@ -1005,7 +1007,7 @@ void MainWindow::executeQuery()
         }
 
         execution_start_index = execution_end_index;
-    } while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE));
+    }
     sqlWidget->finishExecution(statusMessage);
     plotDock->updatePlot(sqlWidget->getModel());
 
