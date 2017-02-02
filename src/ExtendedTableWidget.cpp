@@ -300,9 +300,8 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     {
         copy();
         return;
-    // Call a custom paste method when Ctrl-P is pressed
-    } else if(event->matches(QKeySequence::Paste))
-    {
+    } else if(event->matches(QKeySequence::Paste)) {
+        // Call a custom paste method when Ctrl-P is pressed
         paste();
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
@@ -320,6 +319,10 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
             foreach(const QModelIndex& index, selectedIndexes())
                 model()->setData(index, "");
         }
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown)) {
+        // When pressing Ctrl + Page up/down send a signal indicating the user wants to change the current table
+        emit switchTable(event->key() == Qt::Key_PageDown);
+        return;
     }
 
     // This prevents the current selection from being changed when pressing tab to move to the next filter. Note that this is in an 'if' condition,

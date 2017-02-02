@@ -225,6 +225,22 @@ void MainWindow::init()
     connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
     connect(&m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
 
+    // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
+    connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
+        int index = ui->comboBrowseTable->currentIndex();
+        int num_items = ui->comboBrowseTable->count();
+        if(next)
+        {
+            if(++index >= num_items)
+                index = 0;
+        } else {
+            if(--index < 0)
+                index = num_items - 1;
+        }
+        ui->comboBrowseTable->setCurrentIndex(index);
+        populateTable();
+    });
+
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
