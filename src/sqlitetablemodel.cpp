@@ -622,8 +622,19 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
                 numeric = true;
             }
         } else if(value.left(1) == "=") {
-            op = "=";
             val = value.mid(1);
+
+            // Check if value to compare with is 'NULL'
+            if(val != "NULL")
+            {
+                // It's not, so just compare normally to the value, whatever it is.
+                op = "=";
+            } else {
+                // It is NULL. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
+                // in order to avoid putting quotes around it.
+                op = "IS";
+                numeric = true;
+            }
         } else {
             // Keep the default LIKE operator
 
