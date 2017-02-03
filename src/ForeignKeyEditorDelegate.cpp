@@ -26,6 +26,8 @@ public:
         layout->addWidget(idsComboBox);
         layout->addWidget(clauseEdit);
         layout->addWidget(m_btnReset);
+        layout->setSpacing(0);
+        layout->setMargin(0);
         setLayout(layout);
 
         connect(m_btnReset, &QPushButton::clicked, [&]
