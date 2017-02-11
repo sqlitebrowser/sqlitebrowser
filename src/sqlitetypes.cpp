@@ -955,9 +955,15 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     {
         FieldVector v;
         if(table->constraint(v, Constraint::PrimaryKeyConstraintType))
+        {
             table->primaryKeyRef().push_back(f);
-        else
+
+            // Delete useless primary key constraint. There already is a primary key object for this table, we
+            // don't need another one.
+            delete primaryKey;
+        } else {
             table->addConstraint({f}, ConstraintPtr(primaryKey));
+        }
     }
 }
 
