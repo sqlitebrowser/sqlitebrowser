@@ -4,6 +4,7 @@
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
+[![Coverity][coverity-img]][coverity]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
@@ -249,3 +250,6 @@ You can modify or redistribute it under the conditions of these licenses.
 
   [qt-img]: https://img.shields.io/badge/Qt-qmake-green.svg
   [qt]: https://www.qt.io
+
+  [coverity-img]: https://img.shields.io/coverity/scan/11712.svg
+  [coverity]: https://scan.coverity.com/projects/sqlitebrowser-sqlitebrowser
