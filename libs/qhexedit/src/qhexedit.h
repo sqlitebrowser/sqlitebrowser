@@ -8,10 +8,18 @@
 #include "chunks.h"
 #include "commands.h"
 
+#ifdef QHEXEDIT_EXPORTS
+#define QHEXEDIT_API Q_DECL_EXPORT
+#elif QHEXEDIT_IMPORTS
+#define QHEXEDIT_API Q_DECL_IMPORT
+#else
+#define QHEXEDIT_API
+#endif
+
 /** \mainpage
 QHexEdit is a binary editor widget for Qt.
 
-\version Version 0.7.8
+\version Version 0.8.3
 \image html qhexedit.png
 */
 
@@ -48,7 +56,7 @@ QHexEdit is based on QIODevice, that's why QHexEdit can handle big amounts of
 data. The size of edited data can be more then two gigabytes without any
 restrictions.
 */
-class QHexEdit : public QAbstractScrollArea
+class QHEXEDIT_API QHexEdit : public QAbstractScrollArea
 {
     Q_OBJECT
 
@@ -77,6 +85,9 @@ class QHexEdit : public QAbstractScrollArea
     */
     Q_PROPERTY(bool asciiArea READ asciiArea WRITE setAsciiArea)
 
+    /*! Set and get bytes number per line.*/
+    Q_PROPERTY(int bytesPerLine READ bytesPerLine WRITE setBytesPerLine)
+
     /*! Porperty cursorPosition sets or gets the position of the editor cursor
     in QHexEdit. Every byte in data has to cursor positions: the lower and upper
     Nibble. Maximum cursor position is factor two of data.size().
@@ -89,6 +100,15 @@ class QHexEdit : public QAbstractScrollArea
     If you want to edit big files please use setData(), based on QIODevice.
     */
     Q_PROPERTY(QByteArray data READ data WRITE setData NOTIFY dataChanged)
+
+    /*! That property defines if the hex values looks as a-f if the value is false(default)
+    or A-F if value is true.
+    */
+    Q_PROPERTY(bool hexCaps READ hexCaps WRITE setHexCaps)
+
+    /*! Property defines the dynamic calculation of bytesPerLine parameter depends of width of widget. 
+    set this property true to avoid horizontal scrollbars and show the maximal possible data. defalut value is false*/
+    Q_PROPERTY(bool dynamicBytesPerLine READ dynamicBytesPerLine WRITE setDynamicBytesPerLine)
 
     /*! Switch the highlighting feature on or of: true (show it), false (hide it).
     */
@@ -142,8 +162,8 @@ public:
     */
     QByteArray dataAt(qint64 pos, qint64 count=-1);
 
-    /*! Givs back the data into a \param iODevice starting at position \param pos 
-    and delivering \param count bytes. 
+    /*! Givs back the data into a \param iODevice starting at position \param pos
+    and delivering \param count bytes.
     */
     bool write(QIODevice &iODevice, qint64 pos=0, qint64 count=-1);
 
@@ -226,7 +246,7 @@ public:
     /*! Set Font of QHexEdit
      * \param font
      */
-    virtual void setFont(const QFont &font);
+    void setFont(const QFont &font);
 
     /*! Gives back a formatted image of the content of QHexEdit
     */
@@ -279,11 +299,20 @@ public:
     bool asciiArea();
     void setAsciiArea(bool asciiArea);
 
+    int bytesPerLine();
+    void setBytesPerLine(int count);
+
     qint64 cursorPosition();
     void setCursorPosition(qint64 position);
 
     QByteArray data();
     void setData(const QByteArray &ba);
+
+    void setHexCaps(const bool isCaps);
+    bool hexCaps();
+
+    void setDynamicBytesPerLine(const bool isDynamic);
+    bool dynamicBytesPerLine();
 
     bool highlighting();
     void setHighlighting(bool mode);
@@ -307,7 +336,7 @@ protected:
     void mousePressEvent(QMouseEvent * event);
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *);
-
+    virtual bool focusNextPrevChild(bool next);
 private:
     // Handle selections
     void resetSelection(qint64 pos);            // set selectionStart and selectionEnd to pos
@@ -355,6 +384,8 @@ private:
     int _addressWidth;
     bool _asciiArea;
     qint64 _addressOffset;
+    int _bytesPerLine;
+    int _hexCharsInLine;
     bool _highlighting;
     bool _overwriteMode;
     QBrush _brushSelection;
@@ -362,8 +393,11 @@ private:
     QBrush _brushHighlighted;
     QPen _penHighlighted;
     bool _readOnly;
+    bool _hexCaps;
+    bool _dynamicBytesPerLine;
 
     // other variables
+    bool _editAreaIsAscii;                      // flag about the ascii mode edited
     int _addrDigits;                            // real no of addressdigits, may be > addressWidth
     bool _blink;                                // help get cursor blinking
     QBuffer _bData;                             // buffer, when setup with QByteArray

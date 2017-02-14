@@ -10,13 +10,13 @@
 
 // ***************************************** Constructors and file settings
 
-Chunks::Chunks()
+Chunks::Chunks(QObject *parent): QObject(parent)
 {
-    QBuffer *buf = new QBuffer();
+    QBuffer *buf = new QBuffer(this);
     setIODevice(*buf);
 }
 
-Chunks::Chunks(QIODevice &ioDevice)
+Chunks::Chunks(QIODevice &ioDevice, QObject *parent): QObject(parent)
 {
     setIODevice(ioDevice);
 }
@@ -32,7 +32,7 @@ bool Chunks::setIODevice(QIODevice &ioDevice)
     }
     else                                        // Fallback is an empty buffer
     {
-        QBuffer *buf = new QBuffer();
+        QBuffer *buf = new QBuffer(this);
         _ioDevice = buf;
         _size = 0;
     }

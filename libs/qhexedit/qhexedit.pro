@@ -1,7 +1,6 @@
 TEMPLATE = lib
 
-QT += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+QT += core gui widgets
 
 CONFIG += staticlib
 CONFIG += debug_and_release
