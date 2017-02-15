@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 2.8.7)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
+OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if there is one" OFF)
+OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -44,8 +46,12 @@ if(WIN32 AND MSVC)
 	set(VSREDIST_DIR "C:/dev/dependencies")
 endif()
 
-find_package(Antlr2)
-find_package(QScintilla)
+if(NOT FORCE_INTERNAL_ANTLR)
+    find_package(Antlr2)
+endif()
+if(NOT FORCE_INTERNAL_QSCINTILLA)
+    find_package(QScintilla)
+endif()
 
 set(QHEXEDIT_DIR libs/qhexedit)
 set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
