@@ -300,6 +300,19 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         QByteArray newValue = encode(value.toByteArray());
         QByteArray oldValue = m_data.at(index.row()).at(index.column());
 
+        // Special handling for integer columns: instead of setting an integer column to an empty string, set it to '0' when it is also
+        // used in a primary key. Otherwise SQLite will always output an 'datatype mismatch' error.
+        if(newValue == "" && !newValue.isNull())
+        {
+            sqlb::TablePtr table = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
+            if(table)
+            {
+                sqlb::FieldPtr field = table->field(table->findField(m_headers.at(index.column())));
+                if(table->primaryKey().contains(field) && field->isInteger())
+                    newValue = "0";
+            }
+        }
+
         // Don't do anything if the data hasn't changed
         // To differentiate NULL and empty byte arrays, we also compare the NULL flag
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
