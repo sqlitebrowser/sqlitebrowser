@@ -88,7 +88,7 @@ tokens {
   TABLECONSTRAINT;
   CREATETABLE;
   CREATEINDEX;
-  INDEXCOLUMN;
+  INDEXEDCOLUMN;
   KEYWORDASTABLENAME;
   KEYWORDASCOLUMNNAME;
 }
@@ -281,18 +281,8 @@ createtable
 createindex
   :
   CREATE (UNIQUE)? INDEX (IF_T NOT EXISTS)? (tablename | keywordastablename) ON (tablename | keywordastablename)
-    ( LPAREN indexcolumn (COMMA indexcolumn)* RPAREN (WHERE expr)? )
+    ( LPAREN indexedcolumn (COMMA indexedcolumn)* RPAREN (WHERE expr)? )
     {#createindex = #([CREATEINDEX, "CREATEINDEX"], #createindex);}
-  ;
-
-indexcolumn
-  :
-  //((columnname | keywordascolumnname)
-  // | expr)
-  expr
-  (COLLATE collationname)?
-  (ASC | DESC)?
-  {#indexcolumn = #([INDEXCOLUMN, "INDEXCOLUMN"], #indexcolumn);}
   ;
 
 keywordascolumnname
@@ -402,7 +392,8 @@ tableconstraint
 
 indexedcolumn
   :
-  columnname (COLLATE collationname)? (ASC|DESC)? (AUTOINCREMENT)?
+  expr (COLLATE collationname)? (ASC|DESC)? (AUTOINCREMENT)?
+  {#indexedcolumn = #([INDEXEDCOLUMN, "INDEXEDCOLUMN"], #indexedcolumn);}
   ;
 
 conflictclause

@@ -574,6 +574,8 @@ QString columnname(const antlr::RefAST& n)
 {
     if(n->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME)
         return concatTextAST(n->getFirstChild());
+    else if(n->getType() == sqlite3TokenTypes::INDEXEDCOLUMN)
+        return columnname(n->getFirstChild());
     else
         return identifier(n);
 }
@@ -1135,7 +1137,7 @@ IndexPtr CreateIndexWalker::index()
         s = s->getNextSibling(); // first column name
         antlr::RefAST column = s;
         // loop columndefs
-        while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::INDEXCOLUMN)
+        while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::INDEXEDCOLUMN)
         {
             parsecolumn(index, column->getFirstChild());
             column = column->getNextSibling(); // COMMA or RPAREN

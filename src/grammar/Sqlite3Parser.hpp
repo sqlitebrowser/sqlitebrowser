@@ -52,7 +52,7 @@ public:
 	public: void selectstmt();
 	public: void name();
 	public: void expr();
-	public: void indexcolumn();
+	public: void indexedcolumn();
 	public: void keywordascolumnname();
 	public: void columnname();
 	public: void type_name();
@@ -60,7 +60,6 @@ public:
 	public: void conflictclause();
 	public: void literalvalue();
 	public: void foreignkeyclause();
-	public: void indexedcolumn();
 	public: void functionname();
 	public: void subexpr();
 	public: void binaryoperator();
