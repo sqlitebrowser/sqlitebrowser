@@ -191,7 +191,8 @@ public:
           bool notnull = false,
           const QString& defaultvalue = "",
           const QString& check = "",
-          bool unique = false)
+          bool unique = false,
+          const QString& collation = QString())
         : m_name(name)
         , m_type(type)
         , m_notnull(notnull)
@@ -199,6 +200,7 @@ public:
         , m_defaultvalue(defaultvalue)
         , m_autoincrement(false)
         , m_unique(unique)
+        , m_collation(collation)
     {}
 
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
@@ -210,6 +212,7 @@ public:
     void setDefaultValue(const QString& defaultvalue) { m_defaultvalue = defaultvalue; }
     void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
     void setUnique(bool u) { m_unique = u; }
+    void setCollation(const QString& collation) { m_collation = collation; }
 
     bool isText() const;
     bool isInteger() const;
@@ -221,6 +224,7 @@ public:
     const QString& defaultValue() const { return m_defaultvalue; }
     bool autoIncrement() const { return m_autoincrement; }
     bool unique() const { return m_unique; }
+    const QString& collation() const { return m_collation; }
 
     static QStringList Datatypes;
 private:
@@ -231,6 +235,7 @@ private:
     QString m_defaultvalue;
     bool m_autoincrement; //! this is stored here for simplification
     bool m_unique;
+    QString m_collation;
 };
 
 class Table : public Object

@@ -181,6 +181,8 @@ QString Field::toString(const QString& indent, const QString& sep) const
         str += " PRIMARY KEY AUTOINCREMENT";
     if(m_unique)
         str += " UNIQUE";
+    if(!m_collation.isEmpty())
+        str += " COLLATE " + m_collation;
     return str;
 }
 
@@ -819,6 +821,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     bool unique = false;
     QString defaultvalue;
     QString check;
+    QString collation;
     sqlb::PrimaryKeyConstraint* primaryKey = 0;
     sqlb::ForeignKeyClause* foreignKey = 0;
 
@@ -938,6 +941,13 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             foreignKey->setConstraint(concatTextAST(con, true));
         }
         break;
+        case sqlite3TokenTypes::COLLATE:
+        {
+            con = con->getNextSibling();    // COLLATE
+            collation = identifier(con);
+            con = con->getNextSibling();    // collation name
+        }
+        break;
         default:
         {
             table->setFullyParsed(false);
@@ -947,7 +957,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         c = c->getNextSibling();
     }
 
-    FieldPtr f = FieldPtr(new Field(colname, type, notnull, defaultvalue, check, unique));
+    FieldPtr f = FieldPtr(new Field(colname, type, notnull, defaultvalue, check, unique, collation));
     f->setAutoIncrement(autoincrement);
     table->addField(f);
 
