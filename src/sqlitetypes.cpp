@@ -673,25 +673,38 @@ TablePtr CreateTableWalker::table()
                     FieldVector fields;
                     do
                     {
-                        QString col = columnname(tc);
+                        antlr::RefAST indexed_column = tc->getFirstChild();
+
+                        QString col = columnname(indexed_column);
                         FieldPtr field = tab->field(tab->findField(col));
                         fields.push_back(field);
 
-                        tc = tc->getNextSibling();
-                        if(tc != antlr::nullAST
-                                && (tc->getType() == sqlite3TokenTypes::ASC
-                                    || tc->getType() == sqlite3TokenTypes::DESC))
+                        indexed_column = indexed_column->getNextSibling();
+                        if(indexed_column != antlr::nullAST
+                                && (indexed_column->getType() == sqlite3TokenTypes::ASC
+                                    || indexed_column->getType() == sqlite3TokenTypes::DESC))
                         {
                             // TODO save ASC / DESC information?
                             tab->setFullyParsed(false);
-                            tc = tc->getNextSibling();
+                            indexed_column = indexed_column->getNextSibling();
                         }
 
-                        if(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::AUTOINCREMENT)
+                        if(indexed_column != antlr::nullAST && indexed_column->getType() == sqlite3TokenTypes::COLLATE)
+                        {
+                            indexed_column = indexed_column->getNextSibling();      // COLLATE
+                            // TODO save collation name
+                            tab->setFullyParsed(false);
+                            indexed_column = indexed_column->getNextSibling();      // collation name
+                        }
+
+                        if(indexed_column != antlr::nullAST && indexed_column->getType() == sqlite3TokenTypes::AUTOINCREMENT)
                         {
                             field->setAutoIncrement(true);
-                            tc = tc->getNextSibling();
+                            indexed_column = indexed_column->getNextSibling();
                         }
+
+                        tc = tc->getNextSibling();      // indexed column
+
                         while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
                         {
                             tc = tc->getNextSibling(); // skip ident and comma
@@ -711,19 +724,31 @@ TablePtr CreateTableWalker::table()
                     FieldVector fields;
                     do
                     {
-                        QString col = columnname(tc);
+                        antlr::RefAST indexed_column = tc->getFirstChild();
+
+                        QString col = columnname(indexed_column);
                         FieldPtr field = tab->field(tab->findField(col));
                         fields.push_back(field);
 
-                        tc = tc->getNextSibling();
-                        if(tc != antlr::nullAST
-                                && (tc->getType() == sqlite3TokenTypes::ASC
-                                    || tc->getType() == sqlite3TokenTypes::DESC))
+                        indexed_column = indexed_column->getNextSibling();
+                        if(indexed_column != antlr::nullAST
+                                && (indexed_column->getType() == sqlite3TokenTypes::ASC
+                                    || indexed_column->getType() == sqlite3TokenTypes::DESC))
                         {
                             // TODO save ASC / DESC information?
                             tab->setFullyParsed(false);
-                            tc = tc->getNextSibling();
+                            indexed_column = indexed_column->getNextSibling();
                         }
+
+                        if(indexed_column != antlr::nullAST && indexed_column->getType() == sqlite3TokenTypes::COLLATE)
+                        {
+                            indexed_column = indexed_column->getNextSibling();      // COLLATE
+                            // TODO save collation name
+                            tab->setFullyParsed(false);
+                            indexed_column = indexed_column->getNextSibling();      // collation name
+                        }
+
+                        tc = tc->getNextSibling();      // indexed column
 
                         while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
                         {
