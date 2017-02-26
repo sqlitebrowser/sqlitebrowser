@@ -53,13 +53,8 @@ script:
   - sudo checkinstall --pkgname=app --pkgversion="1" --pkgrelease="1" --backup=no --fstrans=no --default --deldoc 
   - mkdir appdir ; cd appdir
   - dpkg -x ../app_1-1_amd64.deb . ; find .
-  - cp ../distri/sqlitebrowser.desktop .
-  - mkdir -p ./usr/share/{metainfo,applications}
-  - cp ../distri/sqlitebrowser.desktop ./usr/share/applications/
-  - cp ../distri/sqlitebrowser.xml ./usr/share/metainfo/
-  - cp ../images/sqlitebrowser.svg .
-  - mkdir -p ./usr/share/icons/hicolor/scalable/apps/
-  - cp ../images/sqlitebrowser.svg ./usr/share/icons/hicolor/scalable/apps/
+  - cp ./usr/local/share/applications/sqlitebrowser.desktop .
+  - cp ./usr/local/share/icons/hicolor/256x256/apps/sqlitebrowser.png .
   - cd .. 
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/3/linuxdeployqt-3-x86_64.AppImage" 
   - chmod a+x linuxdeployqt*.AppImage
