@@ -1357,8 +1357,10 @@ void MainWindow::setCurrentFile(const QString &fileName)
 void MainWindow::addToRecentFilesMenu(const QString& filename)
 {
     QStringList files = Settings::getSettingsValue("General", "recentFileList").toStringList();
-    files.removeAll(filename);
-    files.prepend(filename);
+    QFileInfo info(filename);
+
+    files.removeAll(info.absoluteFilePath());
+    files.prepend(info.absoluteFilePath());
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
