@@ -40,11 +40,11 @@ script:
   - mkdir build
   - mkdir build_cipher
   - cd build
-  - cmake -DENABLE_TESTING=ON ..
+  - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON ..
   - make
   - ctest -V
   - cd ../build_cipher
-  - cmake -DENABLE_TESTING=ON -Dsqlcipher=1 ..
+  - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 ..
   - make
   - ctest -V
   - # AppImage generation
