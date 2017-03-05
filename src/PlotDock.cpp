@@ -201,7 +201,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     {
                         QString s = model->data(model->index(i, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[i] = d.toTime_t();
+                        xdata[i] = d.toMSecsSinceEpoch() / 1000.0;
                     } else {
                         // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                         // instead of retrieving some value from the model.
