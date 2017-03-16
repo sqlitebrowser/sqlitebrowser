@@ -7,7 +7,6 @@ class SqlTextEdit;
 class SqliteTableModel;
 class DBBrowserDB;
 class QMenu;
-class QTextEdit;
 class ExtendedTableWidget;
 
 namespace Ui {
@@ -29,7 +28,6 @@ public:
     void setFileName(const QString& filename) { sqlFileName = filename; }
 
     SqliteTableModel* getModel() { return model; }
-    QTextEdit* getResultView();
     SqlTextEdit* getEditor();
     ExtendedTableWidget *getTableResult();
     

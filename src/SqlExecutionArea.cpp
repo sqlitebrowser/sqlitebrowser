@@ -70,12 +70,6 @@ ExtendedTableWidget *SqlExecutionArea::getTableResult()
     return ui->tableResult;
 }
 
-
-QTextEdit* SqlExecutionArea::getResultView()
-{
-    return ui->editErrors;
-}
-
 void SqlExecutionArea::enableSaveButton(bool enable)
 {
     ui->buttonSave->setEnabled(enable);
@@ -125,4 +119,7 @@ void SqlExecutionArea::reloadSettings()
         ui->splitter->setOrientation(Qt::Horizontal);
     else
         ui->splitter->setOrientation(Qt::Vertical);
+
+    // Set prefetch settings
+    model->setChunkSize(Settings::getSettingsValue("db", "prefetchsize").toInt());
 }
