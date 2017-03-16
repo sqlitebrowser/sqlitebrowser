@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/certs">
         <file>test.crt</file>
+        <file>dev2.ca.cert.pem</file>
     </qresource>
 </RCC>
