@@ -237,6 +237,10 @@ Table& Table::operator=(const Table& rhs)
     m_rowidColumn = rhs.m_rowidColumn;
     m_virtual = rhs.m_virtual;
 
+    // Clear the fields and the constraints first in order to avoid duplicates and/or old data in the next step
+    m_fields.clear();
+    m_constraints.clear();
+
     // Make copies of the fields and the constraints. This is necessary in order to avoid any unwanted changes to the application's main database
     // schema representation just modifying a reference to the fields or constraints and thinking it operates on a copy.
     foreach(FieldPtr f, rhs.m_fields)
