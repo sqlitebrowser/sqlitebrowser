@@ -20,7 +20,7 @@ class Trigger;
 class Field;
 class Constraint;
 class IndexedColumn;
-class FieldInfo;
+struct FieldInfo;
 typedef QSharedPointer<Object> ObjectPtr;
 typedef QSharedPointer<Table> TablePtr;
 typedef QSharedPointer<Index> IndexPtr;
