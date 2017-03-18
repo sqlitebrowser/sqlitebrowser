@@ -6,7 +6,7 @@
 
 class SqliteTableModel;
 class QTreeWidgetItem;
-class BrowseDataTableSettings;
+struct BrowseDataTableSettings;
 
 namespace Ui {
 class PlotDock;
