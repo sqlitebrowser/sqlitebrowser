@@ -94,6 +94,10 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     // What type of data is this?
     QString type = reply->property("type").toString();
 
+    // Hide progress dialog before opening a file dialog to make sure the progress dialog doesn't interfer with the file dialog
+    if(type == "database" || type == "push")
+        m_progress->reset();
+
     // Handle the reply data
     if(type == "database")
     {
@@ -116,8 +120,6 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 
     // Delete reply later, i.e. after returning from this slot function
     m_currentReply = nullptr;
-    if(type == "database" || type == "push")
-        m_progress->hide();
     reply->deleteLater();
 }
 
@@ -147,7 +149,7 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
     QMessageBox::warning(0, qApp->applicationName(), message);
 
     // Delete reply later, i.e. after returning from this slot function
-    m_progress->hide();
+    m_progress->reset();
     reply->deleteLater();
 }
 
@@ -162,7 +164,7 @@ void RemoteDatabase::updateProgress(qint64 bytesTransmitted, qint64 bytesTotal)
         m_progress->setValue(0);
     } else if(bytesTransmitted == bytesTotal) {
         // The download has finished
-        m_progress->hide();
+        m_progress->reset();
     } else {
         // It's still downloading and we know the current progress
         m_progress->setMinimum(0);
@@ -175,7 +177,7 @@ void RemoteDatabase::updateProgress(qint64 bytesTransmitted, qint64 bytesTotal)
     if(m_currentReply && m_progress->wasCanceled())
     {
         m_currentReply->abort();
-        m_progress->hide();
+        m_progress->reset();
     }
 }
 
