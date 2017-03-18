@@ -883,7 +883,6 @@
      <property name="title">
       <string>Remote</string>
      </property>
-     <addaction name="actionOpen_Remote"/>
      <addaction name="actionSave_Remote"/>
     </widget>
     <addaction name="fileNewAction"/>
@@ -1119,6 +1118,15 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockRemote">
+   <property name="windowTitle">
+    <string>&amp;Remote</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
@@ -1735,11 +1743,6 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionOpen_Remote">
-   <property name="text">
-    <string>Open from Remote</string>
    </property>
   </action>
   <action name="actionSave_Remote">

@@ -51,5 +51,8 @@
         <file alias="view_modify">picture_edit.png</file>
         <file alias="trigger_modify">script_edit.png</file>
         <file alias="index_modify">tag_blue_edit.png</file>
+        <file>folder.png</file>
+        <file>database.png</file>
+        <file>cog_go.png</file>
     </qresource>
 </RCC>

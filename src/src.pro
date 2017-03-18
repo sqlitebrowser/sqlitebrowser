@@ -54,7 +54,9 @@ HEADERS += \
     FilterLineEdit.h \
     RemoteDatabase.h \
     ForeignKeyEditorDelegate.h \
-    PlotDock.h
+    PlotDock.h \
+    RemoteDock.h \
+    RemoteModel.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -87,7 +89,9 @@ SOURCES += \
     FilterLineEdit.cpp \
     RemoteDatabase.cpp \
     ForeignKeyEditorDelegate.cpp \
-    PlotDock.cpp
+    PlotDock.cpp \
+    RemoteDock.cpp \
+    RemoteModel.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -108,7 +112,8 @@ FORMS += \
     CipherDialog.ui \
     ExportSqlDialog.ui \
     ColumnDisplayFormatDialog.ui \
-    PlotDock.ui
+    PlotDock.ui \
+    RemoteDock.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

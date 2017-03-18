@@ -18,6 +18,7 @@ class SqliteTableModel;
 class DbStructureModel;
 class QNetworkReply;
 class QNetworkAccessManager;
+class RemoteDock;
 
 namespace Ui {
 class MainWindow;
@@ -83,7 +84,7 @@ public:
     ~MainWindow();
 
     DBBrowserDB& getDb() { return db; }
-    const RemoteDatabase& getRemote() const { return m_remoteDb; }
+    RemoteDatabase& getRemote() { return *m_remoteDb; }
 
     enum Tabs
     {
@@ -137,13 +138,16 @@ private:
 
     QMap<QString, BrowseDataTableSettings> browseTableSettings;
 
+    RemoteDatabase* m_remoteDb;
+
     EditDialog* editDock;
     PlotDock* plotDock;
+    RemoteDock* remoteDock;
+
     QIntValidator* gotoValidator;
 
     DBBrowserDB db;
     QString defaultBrowseTableEncoding;
-    RemoteDatabase m_remoteDb;
 
     QNetworkAccessManager* m_NetworkManager;
 
@@ -205,7 +209,6 @@ private slots:
     void exportTableToJson();
     void fileSave();
     void fileRevert();
-    void on_actionOpen_Remote_triggered();
     void on_actionSave_Remote_triggered();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();

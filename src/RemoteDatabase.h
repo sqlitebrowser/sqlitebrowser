@@ -24,10 +24,11 @@ public:
     const QList<QSslCertificate>& caCertificates() const;
     const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
 
-    void fetchDatabase(const QString& url, const QString& clientCert);
-    void pushDatabase(const QString& filename, const QString& url, const QString& clientCert);
+    void fetch(const QString& url, bool isDatabase, const QString& clientCert, QVariant userdata = QVariant());
+    void push(const QString& filename, const QString& url, const QString& clientCert);
 
 signals:
+    void gotDirList(QString json, QVariant userdata);
     void openFile(QString path);
 
 private:

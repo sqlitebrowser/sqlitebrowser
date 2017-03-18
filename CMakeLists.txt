@@ -115,6 +115,8 @@ set(SQLB_MOC_HDR
 	src/RemoteDatabase.h
 	src/ForeignKeyEditorDelegate.h
 	src/PlotDock.h
+	src/RemoteDock.h
+	src/RemoteModel.h
 )
 
 set(SQLB_SRC
@@ -150,6 +152,8 @@ set(SQLB_SRC
 	src/RemoteDatabase.cpp
 	src/ForeignKeyEditorDelegate.cpp
 	src/PlotDock.cpp
+	src/RemoteDock.cpp
+	src/RemoteModel.cpp
 )
 
 set(SQLB_FORMS
@@ -167,6 +171,7 @@ set(SQLB_FORMS
 	src/ExportSqlDialog.ui
 	src/ColumnDisplayFormatDialog.ui
 	src/PlotDock.ui
+	src/RemoteDock.ui
 )
 
 set(SQLB_RESOURCES

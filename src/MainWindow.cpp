@@ -21,6 +21,7 @@
 #include "FileDialog.h"
 #include "ColumnDisplayFormatDialog.h"
 #include "FilterTableHeader.h"
+#include "RemoteDock.h"
 
 #include <QFile>
 #include <QApplication>
@@ -55,8 +56,10 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       m_browseTableModel(new SqliteTableModel(db, this, Settings::getSettingsValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
+      m_remoteDb(new RemoteDatabase),
       editDock(new EditDialog(this)),
       plotDock(new PlotDock(this)),
+      remoteDock(new RemoteDock(this)),
       gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
@@ -68,6 +71,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
+    delete m_remoteDb;
     delete gotoValidator;
     delete ui;
 }
@@ -77,6 +81,7 @@ void MainWindow::init()
     // Load window settings
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
+    tabifyDockWidget(ui->dockLog, ui->dockRemote);
 
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
@@ -107,6 +112,7 @@ void MainWindow::init()
     // Create docks
     ui->dockEdit->setWidget(editDock);
     ui->dockPlot->setWidget(plotDock);
+    ui->dockRemote->setWidget(remoteDock);
 
     // Restore window geometry
     restoreGeometry(Settings::getSettingsValue("MainWindow", "geometry").toByteArray());
@@ -183,10 +189,12 @@ void MainWindow::init()
 
     // Add menu item for edit dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockEdit->toggleViewAction());
+    ui->viewMenu->actions().at(3)->setShortcut(QKeySequence(tr("Ctrl+E")));
     ui->viewMenu->actions().at(3)->setIcon(QIcon(":/icons/log_dock"));
 
-    // Add keyboard shortcut for "Edit Cell" dock
-    ui->viewMenu->actions().at(3)->setShortcut(QKeySequence(tr("Ctrl+E")));
+    // Add menu item for plot dock
+    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockRemote->toggleViewAction());
+    ui->viewMenu->actions().at(4)->setIcon(QIcon(":/icons/log_dock"));
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
@@ -223,7 +231,7 @@ void MainWindow::init()
     connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
     connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
-    connect(&m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
+    connect(m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
     connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
@@ -274,6 +282,7 @@ void MainWindow::init()
     ui->dockLog->setWindowTitle(ui->dockLog->windowTitle().remove('&'));
     ui->dockPlot->setWindowTitle(ui->dockPlot->windowTitle().remove('&'));
     ui->dockSchema->setWindowTitle(ui->dockSchema->windowTitle().remove('&'));
+    ui->dockRemote->setWindowTitle(ui->dockRemote->windowTitle().remove('&'));
 }
 
 bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bool readOnly)
@@ -1717,11 +1726,17 @@ void MainWindow::reloadSettings()
     populateTable();
 
     // Hide or show the File → Remote menu as needed
-    QAction *remoteMenuAction = ui->menuRemote->menuAction();
-    remoteMenuAction->setVisible(Settings::getSettingsValue("remote", "active").toBool());
+    bool showRemoteActions = Settings::getSettingsValue("remote", "active").toBool();
+    ui->menuRemote->menuAction()->setVisible(showRemoteActions);
+    ui->viewMenu->actions().at(4)->setVisible(showRemoteActions);
+    if(!showRemoteActions)
+        ui->dockRemote->setHidden(true);
 
     // Update the remote database connection settings
-    m_remoteDb.reloadSettings();
+    m_remoteDb->reloadSettings();
+
+    // Reload remote dock settings
+    remoteDock->reloadSettings();
 }
 
 void MainWindow::httpresponse(QNetworkReply *reply)
@@ -1801,23 +1816,13 @@ void MainWindow::httpresponse(QNetworkReply *reply)
     reply->deleteLater();
 }
 
-void MainWindow::on_actionOpen_Remote_triggered()
-{
-    QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to open."));
-    if(!url.isEmpty())
-    {
-        QStringList certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
-        m_remoteDb.fetchDatabase(url, (certs.size() ? certs.at(0) : ""));
-    }
-}
-
 void MainWindow::on_actionSave_Remote_triggered()
 {
     QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to save."));
     if(!url.isEmpty())
     {
         QStringList certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
-        m_remoteDb.pushDatabase(db.currentFile(), url, (certs.size() ? certs.at(0) : ""));
+        m_remoteDb->push(db.currentFile(), url, (certs.size() ? certs.at(0) : ""));
     }
 }
 

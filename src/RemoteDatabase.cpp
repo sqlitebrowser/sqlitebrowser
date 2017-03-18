@@ -86,28 +86,38 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     if(reply->error() != QNetworkReply::NoError)
     {
         QMessageBox::warning(0, qApp->applicationName(),
-                             tr("Error opening remote database file from %1.\n%2").arg(reply->url().toString()).arg(reply->errorString()));
+                             tr("Error when connecting to %1.\n%2").arg(reply->url().toString()).arg(reply->errorString()));
         reply->deleteLater();
         return;
     }
 
-    // Ask user where to store the database file
-    QString saveFileAs = FileDialog::getSaveFileName(0, qApp->applicationName(), FileDialog::getSqlDatabaseFileFilter(), reply->url().fileName());
-    if(!saveFileAs.isEmpty())
-    {
-        // Save the downloaded data under the selected file name
-        QFile file(saveFileAs);
-        file.open(QIODevice::WriteOnly);
-        file.write(reply->readAll());
-        file.close();
+    // What type of data is this?
+    QString type = reply->property("type").toString();
 
-        // Tell the application to open this file
-        emit openFile(saveFileAs);
+    // Handle the reply data
+    if(type == "database")
+    {
+        // It's a database file. Ask user where to store the database file.
+        QString saveFileAs = FileDialog::getSaveFileName(0, qApp->applicationName(), FileDialog::getSqlDatabaseFileFilter(), reply->url().fileName());
+        if(!saveFileAs.isEmpty())
+        {
+            // Save the downloaded data under the selected file name
+            QFile file(saveFileAs);
+            file.open(QIODevice::WriteOnly);
+            file.write(reply->readAll());
+            file.close();
+
+            // Tell the application to open this file
+            emit openFile(saveFileAs);
+        }
+    } else if(type == "dir") {
+        emit gotDirList(reply->readAll(), reply->property("userdata"));
     }
 
     // Delete reply later, i.e. after returning from this slot function
     m_currentReply = nullptr;
-    m_progress->hide();
+    if(type == "database" || type == "push")
+        m_progress->hide();
     reply->deleteLater();
 }
 
@@ -133,7 +143,7 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
     }
 
     // Build an error message and short it to the user
-    QString message = tr("Error opening remote database file from %1.\n%2").arg(reply->url().toString()).arg(errors.at(0).errorString());
+    QString message = tr("Error opening remote file at %1.\n%2").arg(reply->url().toString()).arg(errors.at(0).errorString());
     QMessageBox::warning(0, qApp->applicationName(), message);
 
     // Delete reply later, i.e. after returning from this slot function
@@ -235,7 +245,7 @@ void RemoteDatabase::prepareProgressDialog(bool upload, const QString& url)
         connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
 }
 
-void RemoteDatabase::fetchDatabase(const QString& url, const QString& clientCert)
+void RemoteDatabase::fetch(const QString& url, bool isDatabase, const QString& clientCert, QVariant userdata)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -260,12 +270,19 @@ void RemoteDatabase::fetchDatabase(const QString& url, const QString& clientCert
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);
+    if(isDatabase)
+        m_currentReply->setProperty("type", "database");
+    else
+        m_currentReply->setProperty("type", "dir");
+    m_currentReply->setProperty("userdata", userdata);
 
-    // Initialise the progress dialog for this request
-    prepareProgressDialog(false, url);
+    // Initialise the progress dialog for this request, but only if this is a database file. Directory listing are small enough to be loaded
+    // without progress dialog.
+    if(isDatabase)
+        prepareProgressDialog(false, url);
 }
 
-void RemoteDatabase::pushDatabase(const QString& filename, const QString& url, const QString& clientCert)
+void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -304,6 +321,7 @@ void RemoteDatabase::pushDatabase(const QString& filename, const QString& url, c
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->put(request, file_data);
+    m_currentReply->setProperty("type", "push");
 
     // Initialise the progress dialog for this request
     prepareProgressDialog(true, url);

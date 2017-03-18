@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RemoteDock</class>
+ <widget class="QDialog" name="RemoteDock">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>575</width>
+    <height>310</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Remote</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>B&amp;rowse</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBrowseMode</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBrowseMode">
+       <item>
+        <property name="text">
+         <string>Remote</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Local</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Identity</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboUser</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboUser">
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonLogin">
+       <property name="text">
+        <string>Go</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTreeView" name="treeStructure"/>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonLogin</sender>
+   <signal>clicked()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>setNewIdentity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>551</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>24</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeStructure</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>fetchDatabase(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>204</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setNewIdentity()</slot>
+  <slot>fetchDatabase(QModelIndex)</slot>
+ </slots>
+</ui>
