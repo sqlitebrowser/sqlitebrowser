@@ -117,9 +117,8 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
                         // Only output the separator value if sepChar isn't 0,
                         // as that's used to indicate no separator character
                         // should be used
-                        if (sepChar != 0) {
+                        if(!sepChar.isNull())
                             stream << sepChar;
-                        }
                 }
                 stream << newlineStr;
             }
@@ -142,9 +141,8 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
                         // Only output the separator value if sepChar isn't 0,
                         // as that's used to indicate no separator character
                         // should be used
-                        if (sepChar != 0) {
+                        if(!sepChar.isNull())
                             stream << sepChar;
-                        }
                 }
                 stream << newlineStr;
                 if(counter % 1000 == 0)
@@ -372,7 +370,8 @@ void ExportDataDialog::setQuoteChar(const QChar& c)
         // For everything else, set the combo box to option 3 ('Other') and
         // place the desired string into the matching edit line box
         combo->setCurrentIndex(3);
-        if (c != 0) {
+        if(!c.isNull())
+        {
             // Don't set it if/when it's the 0 flag value
             ui->editCustomQuote->setText(c);
         }
@@ -438,9 +437,8 @@ void ExportDataDialog::setSeparatorChar(const QChar& c)
 
         // Only put the separator character in the matching line edit box if
         // it's not the flag value of 0, which is for indicating its empty
-        if (c != 0) {
+        if(!c.isNull())
             ui->editCustomSeparator->setText(c);
-        }
         break;
     }
 }
