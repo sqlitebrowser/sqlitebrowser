@@ -16,8 +16,6 @@ class QModelIndex;
 class QPersistentModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
-class QNetworkReply;
-class QNetworkAccessManager;
 class RemoteDock;
 
 namespace Ui {
@@ -149,8 +147,6 @@ private:
     DBBrowserDB db;
     QString defaultBrowseTableEncoding;
 
-    QNetworkAccessManager* m_NetworkManager;
-
     void init();
     void clearCompleterModelsFields();
 
@@ -226,7 +222,7 @@ private slots:
     void saveSqlFileAs();
     void loadExtension();
     void reloadSettings();
-    void httpresponse(QNetworkReply* reply);
+    void checkNewVersion(const QString& versionstring, const QString& url);
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
     void on_actionSqlCipherFaq_triggered();

@@ -91,6 +91,21 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
         return;
     }
 
+    // Check for redirect
+    QString redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
+    if(!redirectUrl.isEmpty())
+    {
+        // Avoid redirect loop
+        if(reply->url() == redirectUrl)
+        {
+            reply->deleteLater();
+            return;
+        }
+        fetch(redirectUrl, static_cast<RequestType>(reply->property("type").toInt()), reply->property("certfile").toString(), reply->property("userdata"));
+        reply->deleteLater();
+        return;
+    }
+
     // What type of data is this?
     RequestType type = static_cast<RequestType>(reply->property("type").toInt());
 
@@ -99,23 +114,37 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
         m_progress->reset();
 
     // Handle the reply data
-    if(type == RequestTypeDatabase)
+    switch(type)
     {
-        // It's a database file. Ask user where to store the database file.
-        QString saveFileAs = FileDialog::getSaveFileName(0, qApp->applicationName(), FileDialog::getSqlDatabaseFileFilter(), reply->url().fileName());
-        if(!saveFileAs.isEmpty())
+    case RequestTypeDatabase:
         {
-            // Save the downloaded data under the selected file name
-            QFile file(saveFileAs);
-            file.open(QIODevice::WriteOnly);
-            file.write(reply->readAll());
-            file.close();
+            // It's a database file. Ask user where to store the database file.
+            QString saveFileAs = FileDialog::getSaveFileName(0, qApp->applicationName(), FileDialog::getSqlDatabaseFileFilter(), reply->url().fileName());
+            if(!saveFileAs.isEmpty())
+            {
+                // Save the downloaded data under the selected file name
+                QFile file(saveFileAs);
+                file.open(QIODevice::WriteOnly);
+                file.write(reply->readAll());
+                file.close();
 
-            // Tell the application to open this file
-            emit openFile(saveFileAs);
+                // Tell the application to open this file
+                emit openFile(saveFileAs);
+            }
         }
-    } else if(type == RequestTypeDirectory) {
+        break;
+    case RequestTypeDirectory:
         emit gotDirList(reply->readAll(), reply->property("userdata"));
+        break;
+    case RequestTypeNewVersionCheck:
+        {
+            QString version = reply->readLine().trimmed();
+            QString url = reply->readLine().trimmed();
+            emit gotCurrentVersion(version, url);
+            break;
+        }
+    default:
+        break;
     }
 
     // Delete reply later, i.e. after returning from this slot function
@@ -261,9 +290,10 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
 
-    // Set SSL configuration when trying to access a file via the HTTPS protocol
+    // Set SSL configuration when trying to access a file via the HTTPS protocol.
+    // Skip this step when no client certificate was specified. In this case the default HTTPS configuration is used.
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
-    if(https)
+    if(https && !clientCert.isNull())
     {
         // If configuring the SSL connection fails, abort the request here
         if(!prepareSsl(&request, clientCert))
@@ -273,6 +303,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);
     m_currentReply->setProperty("type", type);
+    m_currentReply->setProperty("certfile", clientCert);
     m_currentReply->setProperty("userdata", userdata);
 
     // Initialise the progress dialog for this request, but only if this is a database file. Directory listing are small enough to be loaded

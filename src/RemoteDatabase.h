@@ -28,15 +28,17 @@ public:
     {
         RequestTypeDatabase,
         RequestTypeDirectory,
+        RequestTypeNewVersionCheck,
         RequestTypePush,
     };
 
-    void fetch(const QString& url, RequestType type, const QString& clientCert, QVariant userdata = QVariant());
+    void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
     void push(const QString& filename, const QString& url, const QString& clientCert);
 
 signals:
     void gotDirList(QString json, QVariant userdata);
     void openFile(QString path);
+    void gotCurrentVersion(QString version, QString url);
 
 private:
     void gotEncrypted(QNetworkReply* reply);

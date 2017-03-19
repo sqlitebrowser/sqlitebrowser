@@ -28,16 +28,12 @@
 #include <QTextStream>
 #include <QWhatsThis>
 #include <QMessageBox>
-#include <QUrl>
 #include <QStandardItemModel>
 #include <QPersistentModelIndex>
 #include <QDragEnterEvent>
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 #include <QElapsedTimer>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QNetworkAccessManager>
 #include <QSettings>
 #include <QMimeData>
 #include <QColorDialog>
@@ -232,6 +228,7 @@ void MainWindow::init()
     connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
     connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
     connect(m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
+    connect(m_remoteDb, &RemoteDatabase::gotCurrentVersion, this, &MainWindow::checkNewVersion);
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
     connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
@@ -260,12 +257,8 @@ void MainWindow::init()
     // Check for a new version if automatic update check aren't disabled in the settings dialog
     if(Settings::getSettingsValue("checkversion", "enabled").toBool())
     {
-        // Check for a new release version, usually only enabled on windows
-        m_NetworkManager = new QNetworkAccessManager(this);
-        connect(m_NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpresponse(QNetworkReply*)));
-
-        QUrl url("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease");
-        m_NetworkManager->get(QNetworkRequest(url));
+        m_remoteDb->fetch("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease",
+                          RemoteDatabase::RequestTypeNewVersionCheck);
     }
 #endif
 
@@ -1739,81 +1732,62 @@ void MainWindow::reloadSettings()
     remoteDock->reloadSettings();
 }
 
-void MainWindow::httpresponse(QNetworkReply *reply)
+void MainWindow::checkNewVersion(const QString& versionstring, const QString& url)
 {
-    if(reply->error() == QNetworkReply::NoError)
+    // versionstring contains a major.minor.patch version string
+    QStringList versiontokens = versionstring.split(".");
+    if(versiontokens.size() < 3)
+        return;
+
+    int major = versiontokens[0].toInt();
+    int minor = versiontokens[1].toInt();
+    int patch = versiontokens[2].toInt();
+
+    bool newversion = false;
+    if(major > MAJOR_VERSION)
+        newversion = true;
+    else if(major == MAJOR_VERSION)
     {
-        // Check for redirect
-        QVariant possibleRedirectUrl =
-                     reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-
-        if(!possibleRedirectUrl.toUrl().isEmpty())
-        {
-            if(reply->url() == possibleRedirectUrl.toUrl())
-                return; // escape possible redirect loop
-            m_NetworkManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
-            return;
-        }
-
-        // first line of the currentrelease file contains a major.minor.patch version string
-        QString sversion(reply->readLine());
-
-        QStringList versiontokens = sversion.split(".");
-        if(versiontokens.size() < 3)
-            return;
-
-        int major = versiontokens[0].toInt();
-        int minor = versiontokens[1].toInt();
-        int patch = versiontokens[2].toInt();
-
-        bool newversion = false;
-        if(major > MAJOR_VERSION)
+        if(minor > MINOR_VERSION)
             newversion = true;
-        else if(major == MAJOR_VERSION)
+        else if(minor == MINOR_VERSION)
         {
-            if(minor > MINOR_VERSION)
+            if(patch > PATCH_VERSION)
                 newversion = true;
-            else if(minor == MINOR_VERSION)
-            {
-                if(patch > PATCH_VERSION)
-                    newversion = true;
-            }
-        }
-
-        if(newversion)
-        {
-            QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-            int ignmajor = settings.value("checkversion/ignmajor", 999).toInt();
-            int ignminor = settings.value("checkversion/ignminor", 0).toInt();
-            int ignpatch = settings.value("checkversion/ignpatch", 0).toInt();
-
-            // check if the user doesn't care about the current update
-            if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
-            {
-                QMessageBox msgBox;
-                QPushButton *idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
-                msgBox.addButton(QMessageBox::Ok);
-                msgBox.setTextFormat(Qt::RichText);
-                msgBox.setWindowTitle(tr("New version available."));
-                msgBox.setText(tr("A new DB Browser for SQLite version is available (%1.%2.%3).<br/><br/>"
-                                  "Please download at <a href='%4'>%4</a>.").arg(major).arg(minor).arg(patch).
-                                    arg(QString(reply->readLine()).trimmed()));
-                msgBox.exec();
-
-                if(msgBox.clickedButton() == idontcarebutton)
-                {
-                    // save that the user don't want to get bothered about this update
-                    settings.beginGroup("checkversion");
-                    settings.setValue("ignmajor", major);
-                    settings.setValue("ignminor", minor);
-                    settings.setValue("ignpatch", patch);
-                    settings.endGroup();
-                }
-            }
         }
     }
 
-    reply->deleteLater();
+    if(newversion)
+    {
+        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+        int ignmajor = settings.value("checkversion/ignmajor", 999).toInt();
+        int ignminor = settings.value("checkversion/ignminor", 0).toInt();
+        int ignpatch = settings.value("checkversion/ignpatch", 0).toInt();
+
+        // check if the user doesn't care about the current update
+        if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
+        {
+            QMessageBox msgBox;
+            QPushButton *idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
+            msgBox.addButton(QMessageBox::Ok);
+            msgBox.setTextFormat(Qt::RichText);
+            msgBox.setWindowTitle(tr("New version available."));
+            msgBox.setText(tr("A new DB Browser for SQLite version is available (%1.%2.%3).<br/><br/>"
+                              "Please download at <a href='%4'>%4</a>.").arg(major).arg(minor).arg(patch).
+                                arg(url));
+            msgBox.exec();
+
+            if(msgBox.clickedButton() == idontcarebutton)
+            {
+                // save that the user don't want to get bothered about this update
+                settings.beginGroup("checkversion");
+                settings.setValue("ignmajor", major);
+                settings.setValue("ignminor", minor);
+                settings.setValue("ignpatch", patch);
+                settings.endGroup();
+            }
+        }
+    }
 }
 
 void MainWindow::on_actionSave_Remote_triggered()
