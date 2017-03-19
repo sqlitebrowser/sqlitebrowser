@@ -115,7 +115,7 @@ void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
     currentClientCert = cert;
 
     // Fetch root directory and put the reply data under the root item
-    remoteDatabase.fetch(currentRootDirectory, false, currentClientCert, QModelIndex());
+    remoteDatabase.fetch(currentRootDirectory, RemoteDatabase::RequestTypeDirectory, currentClientCert, QModelIndex());
 }
 
 void RemoteModel::parseDirectoryListing(const QString& json, const QVariant& userdata)
@@ -298,7 +298,7 @@ void RemoteModel::fetchMore(const QModelIndex& parent)
 
     // Fetch item URL
     item->setFetchedDirectoryList(true);
-    remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), false, currentClientCert, parent);
+    remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), RemoteDatabase::RequestTypeDirectory, currentClientCert, parent);
 }
 
 const QString& RemoteModel::currentClientCertificate() const

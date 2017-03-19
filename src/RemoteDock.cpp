@@ -70,5 +70,5 @@ void RemoteDock::fetchDatabase(const QModelIndex& idx)
 
     // Only open database file
     if(item->value(RemoteModelColumnType).toString() == "database")
-        remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), true, remoteModel->currentClientCertificate());
+        remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), RemoteDatabase::RequestTypeDatabase, remoteModel->currentClientCertificate());
 }

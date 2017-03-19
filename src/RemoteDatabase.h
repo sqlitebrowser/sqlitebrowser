@@ -24,7 +24,14 @@ public:
     const QList<QSslCertificate>& caCertificates() const;
     const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
 
-    void fetch(const QString& url, bool isDatabase, const QString& clientCert, QVariant userdata = QVariant());
+    enum RequestType
+    {
+        RequestTypeDatabase,
+        RequestTypeDirectory,
+        RequestTypePush,
+    };
+
+    void fetch(const QString& url, RequestType type, const QString& clientCert, QVariant userdata = QVariant());
     void push(const QString& filename, const QString& url, const QString& clientCert);
 
 signals:

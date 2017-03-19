@@ -92,14 +92,14 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     }
 
     // What type of data is this?
-    QString type = reply->property("type").toString();
+    RequestType type = static_cast<RequestType>(reply->property("type").toInt());
 
     // Hide progress dialog before opening a file dialog to make sure the progress dialog doesn't interfer with the file dialog
-    if(type == "database" || type == "push")
+    if(type == RequestTypeDatabase || type == RequestTypePush)
         m_progress->reset();
 
     // Handle the reply data
-    if(type == "database")
+    if(type == RequestTypeDatabase)
     {
         // It's a database file. Ask user where to store the database file.
         QString saveFileAs = FileDialog::getSaveFileName(0, qApp->applicationName(), FileDialog::getSqlDatabaseFileFilter(), reply->url().fileName());
@@ -114,7 +114,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             // Tell the application to open this file
             emit openFile(saveFileAs);
         }
-    } else if(type == "dir") {
+    } else if(type == RequestTypeDirectory) {
         emit gotDirList(reply->readAll(), reply->property("userdata"));
     }
 
@@ -247,7 +247,7 @@ void RemoteDatabase::prepareProgressDialog(bool upload, const QString& url)
         connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
 }
 
-void RemoteDatabase::fetch(const QString& url, bool isDatabase, const QString& clientCert, QVariant userdata)
+void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& clientCert, QVariant userdata)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -272,15 +272,12 @@ void RemoteDatabase::fetch(const QString& url, bool isDatabase, const QString& c
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);
-    if(isDatabase)
-        m_currentReply->setProperty("type", "database");
-    else
-        m_currentReply->setProperty("type", "dir");
+    m_currentReply->setProperty("type", type);
     m_currentReply->setProperty("userdata", userdata);
 
     // Initialise the progress dialog for this request, but only if this is a database file. Directory listing are small enough to be loaded
     // without progress dialog.
-    if(isDatabase)
+    if(type == RequestTypeDatabase)
         prepareProgressDialog(false, url);
 }
 
@@ -323,7 +320,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->put(request, file_data);
-    m_currentReply->setProperty("type", "push");
+    m_currentReply->setProperty("type", RequestTypePush);
 
     // Initialise the progress dialog for this request
     prepareProgressDialog(true, url);
