@@ -6,10 +6,10 @@
 #include <QSslKey>
 #include <QProgressDialog>
 #include <QInputDialog>
+#include <QDir>
 
 #include "RemoteDatabase.h"
 #include "version.h"
-#include "FileDialog.h"
 #include "Settings.h"
 
 RemoteDatabase::RemoteDatabase() :
