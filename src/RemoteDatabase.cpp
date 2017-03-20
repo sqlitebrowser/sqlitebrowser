@@ -118,19 +118,20 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     {
     case RequestTypeDatabase:
         {
-            // It's a database file. Ask user where to store the database file.
-            QString saveFileAs = FileDialog::getSaveFileName(0, qApp->applicationName(), FileDialog::getSqlDatabaseFileFilter(), reply->url().fileName());
-            if(!saveFileAs.isEmpty())
-            {
-                // Save the downloaded data under the selected file name
-                QFile file(saveFileAs);
-                file.open(QIODevice::WriteOnly);
-                file.write(reply->readAll());
-                file.close();
+            // It's a database file.
 
-                // Tell the application to open this file
-                emit openFile(saveFileAs);
-            }
+            // Generate a unique file name to save the file under
+            QString saveFileAs = Settings::getSettingsValue("remote", "clonedirectory").toString() +
+                QString("/%2_%1.remotedb").arg(QDateTime::currentMSecsSinceEpoch()).arg(reply->url().fileName());
+
+            // Save the downloaded data under the generated file name
+            QFile file(saveFileAs);
+            file.open(QIODevice::WriteOnly);
+            file.write(reply->readAll());
+            file.close();
+
+            // Tell the application to open this file
+            emit openFile(saveFileAs);
         }
         break;
     case RequestTypeDirectory:

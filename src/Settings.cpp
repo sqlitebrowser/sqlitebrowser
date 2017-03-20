@@ -5,6 +5,7 @@
 #include <QColor>
 #include <QFontInfo>
 #include <QLocale>
+#include <QStandardPaths>
 
 QHash<QString, QVariant> Settings::m_hCache;
 
@@ -246,9 +247,17 @@ QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& 
             return 4;
     }
 
-    // Enable the File → Remote menu by default
-    if(group == "remote" && name == "active")
-        return true;
+    // Remote settings?
+    if(group == "remote")
+    {
+        // Enable the File → Remote menu by default
+        if(name == "active")
+            return true;
+
+        // Clone directory
+        if(name == "clonedirectory")
+            return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    }
 
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();

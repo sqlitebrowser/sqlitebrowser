@@ -149,6 +149,7 @@ void PreferencesDialog::loadSettings()
                 addClientCertToTable(file, cert);
         }
     }
+    ui->editRemoteCloneDirectory->setText(Settings::getSettingsValue("remote", "clonedirectory").toString());
 
     // Gracefully handle the preferred Editor font not being available
     matchingFont = ui->comboEditorFont->findText(Settings::getSettingsValue("editor", "font").toString(), Qt::MatchExactly);
@@ -258,6 +259,7 @@ void PreferencesDialog::saveSettings()
         QFile::remove(file);
     }
     Settings::setSettingsValue("remote", "client_certificates", new_client_certs);
+    Settings::setSettingsValue("remote", "clonedirectory", ui->editRemoteCloneDirectory->text());
 
     // Warn about restarting to change language
     QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
@@ -496,4 +498,15 @@ void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCert
     QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
     cert_serialno->setFlags(Qt::ItemIsSelectable);
     ui->tableClientCerts->setItem(row, 5, cert_serialno);
+}
+
+void PreferencesDialog::chooseRemoteCloneDirectory()
+{
+    QString s = FileDialog::getExistingDirectory(
+                this,
+                tr("Choose a directory"),
+                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    if(!s.isEmpty())
+        ui->editRemoteCloneDirectory->setText(s);
 }

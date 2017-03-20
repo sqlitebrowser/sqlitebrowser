@@ -1011,14 +1011,14 @@
        <string>Remote</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout_5">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_21">
          <property name="text">
           <string>CA certificates</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QTableWidget" name="tableCaCerts">
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
@@ -1062,14 +1062,14 @@
          </column>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_22">
          <property name="text">
           <string>Your certificates</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QTableWidget" name="tableClientCerts">
@@ -1158,6 +1158,43 @@
          </item>
         </layout>
        </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>Clone databases into</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLineEdit" name="editRemoteCloneDirectory">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>316</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonRemoteBrowseCloneDirectory">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -1187,6 +1224,8 @@
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
+  <tabstop>checkUseRemotes</tabstop>
+  <tabstop>checkUpdates</tabstop>
   <tabstop>encodingComboBox</tabstop>
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
@@ -1196,6 +1235,7 @@
   <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
+  <tabstop>spinSymbolLimit</tabstop>
   <tabstop>txtNull</tabstop>
   <tabstop>fr_null_fg</tabstop>
   <tabstop>fr_null_bg</tabstop>
@@ -1217,6 +1257,13 @@
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
   <tabstop>checkRegexDisabled</tabstop>
+  <tabstop>editRemoteCloneDirectory</tabstop>
+  <tabstop>buttonRemoteBrowseCloneDirectory</tabstop>
+  <tabstop>tableCaCerts</tabstop>
+  <tabstop>tableClientCerts</tabstop>
+  <tabstop>buttonClientCertAdd</tabstop>
+  <tabstop>buttonClientCertRemove</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -1373,8 +1420,8 @@
    <slot>addClientCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>563</x>
-     <y>257</y>
+     <x>578</x>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel">
      <x>596</x>
@@ -1389,12 +1436,28 @@
    <slot>removeClientCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>561</x>
-     <y>289</y>
+     <x>578</x>
+     <y>353</y>
     </hint>
     <hint type="destinationlabel">
      <x>597</x>
      <y>295</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRemoteBrowseCloneDirectory</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>chooseRemoteCloneDirectory()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>567</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>595</x>
+     <y>41</y>
     </hint>
    </hints>
   </connection>
@@ -1408,5 +1471,6 @@
   <slot>activateRemoteTab(bool)</slot>
   <slot>addClientCertificate()</slot>
   <slot>removeClientCertificate()</slot>
+  <slot>chooseRemoteCloneDirectory()</slot>
  </slots>
 </ui>

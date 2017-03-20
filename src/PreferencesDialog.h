@@ -33,6 +33,7 @@ private slots:
     virtual void activateRemoteTab(bool active);
     virtual void addClientCertificate();
     virtual void removeClientCertificate();
+    void chooseRemoteCloneDirectory();
 
 private:
     Ui::PreferencesDialog *ui;
