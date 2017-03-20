@@ -50,7 +50,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      m_browseTableModel(new SqliteTableModel(db, this, Settings::getSettingsValue("db", "prefetchsize").toInt())),
+      m_browseTableModel(new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
       m_remoteDb(new RemoteDatabase),
       editDock(new EditDialog(this)),
@@ -111,11 +111,11 @@ void MainWindow::init()
     ui->dockRemote->setWidget(remoteDock);
 
     // Restore window geometry
-    restoreGeometry(Settings::getSettingsValue("MainWindow", "geometry").toByteArray());
-    restoreState(Settings::getSettingsValue("MainWindow", "windowState").toByteArray());
+    restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
+    restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
 
     // Restore dock state settings
-    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getSettingsValue("SQLLogDock", "Log").toString()));
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
 
     // Add keyboard shortcuts
     QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
@@ -255,7 +255,7 @@ void MainWindow::init()
 
 #ifdef CHECKNEWVERSION
     // Check for a new version if automatic update check aren't disabled in the settings dialog
-    if(Settings::getSettingsValue("checkversion", "enabled").toBool())
+    if(Settings::getValue("checkversion", "enabled").toBool())
     {
         m_remoteDb->fetch("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease",
                           RemoteDatabase::RequestTypeNewVersionCheck);
@@ -569,9 +569,9 @@ void MainWindow::closeEvent( QCloseEvent* event )
 {
     if(db.close())
     {
-        Settings::setSettingsValue("MainWindow", "geometry", saveGeometry());
-        Settings::setSettingsValue("MainWindow", "windowState", saveState());
-        Settings::setSettingsValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+        Settings::setValue("MainWindow", "geometry", saveGeometry());
+        Settings::setValue("MainWindow", "windowState", saveState());
+        Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -1314,7 +1314,7 @@ void MainWindow::openRecentFile()
 void MainWindow::updateRecentFileActions()
 {
     // Get recent files list from settings
-    QStringList files = Settings::getSettingsValue("General", "recentFileList").toStringList();
+    QStringList files = Settings::getValue("General", "recentFileList").toStringList();
 
     // Check if files still exist and remove any non-existant file
     for(int i=0;i<files.size();i++)
@@ -1328,7 +1328,7 @@ void MainWindow::updateRecentFileActions()
     }
 
     // Store updated list
-    Settings::setSettingsValue("General", "recentFileList", files);
+    Settings::setValue("General", "recentFileList", files);
 
     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
@@ -1358,7 +1358,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 void MainWindow::addToRecentFilesMenu(const QString& filename)
 {
-    QStringList files = Settings::getSettingsValue("General", "recentFileList").toStringList();
+    QStringList files = Settings::getValue("General", "recentFileList").toStringList();
     QFileInfo info(filename);
 
     files.removeAll(info.absoluteFilePath());
@@ -1366,7 +1366,7 @@ void MainWindow::addToRecentFilesMenu(const QString& filename)
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
-    Settings::setSettingsValue("General", "recentFileList", files);
+    Settings::setValue("General", "recentFileList", files);
 
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
@@ -1679,7 +1679,7 @@ void MainWindow::loadExtensionsFromSettings()
     if(!db.isOpen())
         return;
 
-    QStringList list = Settings::getSettingsValue("extensions", "list").toStringList();
+    QStringList list = Settings::getValue("extensions", "list").toStringList();
     foreach(QString ext, list)
     {
         if(db.loadExtension(ext) == false)
@@ -1690,19 +1690,19 @@ void MainWindow::loadExtensionsFromSettings()
 void MainWindow::reloadSettings()
 {
     // Set data browser font
-    QFont dataBrowserFont(Settings::getSettingsValue("databrowser", "font").toString());
-    dataBrowserFont.setPointSize(Settings::getSettingsValue("databrowser", "fontsize").toInt());
+    QFont dataBrowserFont(Settings::getValue("databrowser", "font").toString());
+    dataBrowserFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     ui->dataTable->setFont(dataBrowserFont);
 
     // Set prefetch sizes for lazy population of table models
-    m_browseTableModel->setChunkSize(Settings::getSettingsValue("db", "prefetchsize").toInt());
+    m_browseTableModel->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
     for(int i=0;i<ui->tabSqlAreas->count();++i)
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->reloadSettings();
 
     // Prepare log font
     QFont logfont("Monospace");
     logfont.setStyleHint(QFont::TypeWriter);
-    logfont.setPointSize(Settings::getSettingsValue("log", "fontsize").toInt());
+    logfont.setPointSize(Settings::getValue("log", "fontsize").toInt());
 
     // Set font for SQL logs and edit dialog
     ui->editLogApplication->reloadSettings();
@@ -1719,7 +1719,7 @@ void MainWindow::reloadSettings()
     populateTable();
 
     // Hide or show the File → Remote menu as needed
-    bool showRemoteActions = Settings::getSettingsValue("remote", "active").toBool();
+    bool showRemoteActions = Settings::getValue("remote", "active").toBool();
     ui->menuRemote->menuAction()->setVisible(showRemoteActions);
     ui->viewMenu->actions().at(4)->setVisible(showRemoteActions);
     if(!showRemoteActions)
@@ -1795,7 +1795,7 @@ void MainWindow::on_actionSave_Remote_triggered()
     QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to save."));
     if(!url.isEmpty())
     {
-        QStringList certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+        QStringList certs = Settings::getValue("remote", "client_certificates").toStringList();
         m_remoteDb->push(db.currentFile(), url, (certs.size() ? certs.at(0) : ""));
     }
 }

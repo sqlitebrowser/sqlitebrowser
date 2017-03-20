@@ -513,7 +513,7 @@ void EditTableDialog::addField()
     typeBox->setEditable(true);
     typeBox->addItems(sqlb::Field::Datatypes);
 
-    int defaultFieldTypeIndex = Settings::getSettingsValue("db", "defaultfieldtype").toInt();
+    int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
     if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
     {

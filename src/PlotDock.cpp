@@ -17,17 +17,17 @@ PlotDock::PlotDock(QWidget* parent)
     ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
 
     // Restore state
-    ui->splitterForPlot->restoreState(Settings::getSettingsValue("PlotDock", "splitterSize").toByteArray());
-    ui->comboLineType->setCurrentIndex(Settings::getSettingsValue("PlotDock", "lineType").toInt());
-    ui->comboPointShape->setCurrentIndex(Settings::getSettingsValue("PlotDock", "pointShape").toInt());
+    ui->splitterForPlot->restoreState(Settings::getValue("PlotDock", "splitterSize").toByteArray());
+    ui->comboLineType->setCurrentIndex(Settings::getValue("PlotDock", "lineType").toInt());
+    ui->comboPointShape->setCurrentIndex(Settings::getValue("PlotDock", "pointShape").toInt());
 }
 
 PlotDock::~PlotDock()
 {
     // Save state
-    Settings::setSettingsValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
-    Settings::setSettingsValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
-    Settings::setSettingsValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
+    Settings::setValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
+    Settings::setValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
+    Settings::setValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
 
     // Finally, delete all widgets
     delete ui;

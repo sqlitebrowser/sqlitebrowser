@@ -48,7 +48,7 @@ void RemoteDatabase::reloadSettings()
 {
     // Load all configured client certificates
     m_clientCertFiles.clear();
-    auto client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+    auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     foreach(const QString& path, client_certs)
     {
         QFile file(path);
@@ -121,7 +121,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             // It's a database file.
 
             // Generate a unique file name to save the file under
-            QString saveFileAs = Settings::getSettingsValue("remote", "clonedirectory").toString() +
+            QString saveFileAs = Settings::getValue("remote", "clonedirectory").toString() +
                 QString("/%2_%1.remotedb").arg(QDateTime::currentMSecsSinceEpoch()).arg(reply->url().fileName());
 
             // Save the downloaded data under the generated file name

@@ -222,11 +222,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
         if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
         {
-            return Settings::getSettingsValue("databrowser", "null_text").toString();
+            return Settings::getValue("databrowser", "null_text").toString();
         } else if(role == Qt::DisplayRole && isBinary(index)) {
             return "BLOB";
         } else if(role == Qt::DisplayRole) {
-            int limit = Settings::getSettingsValue("databrowser", "symbol_limit").toInt();
+            int limit = Settings::getValue("databrowser", "symbol_limit").toInt();
             QByteArray displayText = m_data.at(index.row()).at(index.column());
             if (displayText.length() > limit) {
                 // Add "..." to the end of truncated strings
@@ -244,16 +244,16 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         return font;
     } else if(role == Qt::ForegroundRole) {
         if(m_data.at(index.row()).at(index.column()).isNull())
-            return QColor(Settings::getSettingsValue("databrowser", "null_fg_colour").toString());
+            return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (isBinary(index))
-            return QColor(Settings::getSettingsValue("databrowser", "bin_fg_colour").toString());
-        return QColor(Settings::getSettingsValue("databrowser", "reg_fg_colour").toString());
+            return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
+        return QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
     } else if (role == Qt::BackgroundRole) {
         if(m_data.at(index.row()).at(index.column()).isNull())
-            return QColor(Settings::getSettingsValue("databrowser", "null_bg_colour").toString());
+            return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
         else if (isBinary(index))
-            return QColor(Settings::getSettingsValue("databrowser", "bin_bg_colour").toString());
-        return QColor(Settings::getSettingsValue("databrowser", "reg_bg_colour").toString());
+            return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
+        return QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
         if(fk.isSet())
@@ -652,7 +652,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
             // Keep the default LIKE operator
 
             // Set the escape character if one has been specified in the settings dialog
-            QString escape_character = Settings::getSettingsValue("databrowser", "filter_escape").toString();
+            QString escape_character = Settings::getValue("databrowser", "filter_escape").toString();
             if(escape_character == "'") escape_character = "''";
             if(escape_character.length())
                 escape = QString("ESCAPE '%1'").arg(escape_character);

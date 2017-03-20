@@ -57,19 +57,19 @@ void PreferencesDialog::chooseLocation()
 
 void PreferencesDialog::loadSettings()
 {
-    ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getSettingsValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
-    ui->comboDefaultLocation->setCurrentIndex(Settings::getSettingsValue("db", "savedefaultlocation").toInt());
-    ui->locationEdit->setText(Settings::getSettingsValue("db", "defaultlocation").toString());
-    ui->checkUpdates->setChecked(Settings::getSettingsValue("checkversion", "enabled").toBool());
+    ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
+    ui->comboDefaultLocation->setCurrentIndex(Settings::getValue("db", "savedefaultlocation").toInt());
+    ui->locationEdit->setText(Settings::getValue("db", "defaultlocation").toString());
+    ui->checkUpdates->setChecked(Settings::getValue("checkversion", "enabled").toBool());
 
-    ui->checkHideSchemaLinebreaks->setChecked(Settings::getSettingsValue("db", "hideschemalinebreaks").toBool());
-    ui->foreignKeysCheckBox->setChecked(Settings::getSettingsValue("db", "foreignkeys").toBool());
-    ui->spinPrefetchSize->setValue(Settings::getSettingsValue("db", "prefetchsize").toInt());
-    ui->editDatabaseDefaultSqlText->setText(Settings::getSettingsValue("db", "defaultsqltext").toString());
+    ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue("db", "hideschemalinebreaks").toBool());
+    ui->foreignKeysCheckBox->setChecked(Settings::getValue("db", "foreignkeys").toBool());
+    ui->spinPrefetchSize->setValue(Settings::getValue("db", "prefetchsize").toInt());
+    ui->editDatabaseDefaultSqlText->setText(Settings::getValue("db", "defaultsqltext").toString());
 
     ui->defaultFieldTypeComboBox->addItems(sqlb::Field::Datatypes);
 
-    int defaultFieldTypeIndex = Settings::getSettingsValue("db", "defaultfieldtype").toInt();
+    int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
     if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
     {
@@ -77,12 +77,12 @@ void PreferencesDialog::loadSettings()
     }
 
     // Gracefully handle the preferred Data Browser font not being available
-    int matchingFont = ui->comboDataBrowserFont->findText(Settings::getSettingsValue("databrowser", "font").toString(), Qt::MatchExactly);
+    int matchingFont = ui->comboDataBrowserFont->findText(Settings::getValue("databrowser", "font").toString(), Qt::MatchExactly);
     if (matchingFont == -1)
-        matchingFont = ui->comboDataBrowserFont->findText(Settings::getSettingsDefaultValue("databrowser", "font").toString());
+        matchingFont = ui->comboDataBrowserFont->findText(Settings::getDefaultValue("databrowser", "font").toString());
     ui->comboDataBrowserFont->setCurrentIndex(matchingFont);
 
-    ui->spinDataBrowserFontSize->setValue(Settings::getSettingsValue("databrowser", "fontsize").toInt());
+    ui->spinDataBrowserFontSize->setValue(Settings::getValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
     loadColorSetting(ui->fr_null_bg, "null_bg");
     loadColorSetting(ui->fr_reg_fg, "reg_fg");
@@ -90,28 +90,28 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_bin_fg, "bin_fg");
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
 
-    ui->spinSymbolLimit->setValue(Settings::getSettingsValue("databrowser", "symbol_limit").toInt());
-    ui->txtNull->setText(Settings::getSettingsValue("databrowser", "null_text").toString());
-    ui->editFilterEscape->setText(Settings::getSettingsValue("databrowser", "filter_escape").toString());
-    ui->spinFilterDelay->setValue(Settings::getSettingsValue("databrowser", "filter_delay").toInt());
+    ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
+    ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
+    ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
+    ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
-        QString colorname = Settings::getSettingsValue("syntaxhighlighter", name + "_colour").toString();
+        QString colorname = Settings::getValue("syntaxhighlighter", name + "_colour").toString();
         QColor color = QColor(colorname);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
         if (name != "null") {
-            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getSettingsValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
-            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getSettingsValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
-            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getSettingsValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
         }
     }
 
     // Remote settings
-    ui->checkUseRemotes->setChecked(Settings::getSettingsValue("remote", "active").toBool());
+    ui->checkUseRemotes->setChecked(Settings::getValue("remote", "active").toBool());
     {
         auto ca_certs = static_cast<Application*>(qApp)->mainWindow()->getRemote().caCertificates();
         ui->tableCaCerts->setRowCount(ca_certs.size());
@@ -141,7 +141,7 @@ void PreferencesDialog::loadSettings()
         }
     }
     {
-        QStringList client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+        QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
         foreach(const QString& file, client_certs)
         {
             auto certs = QSslCertificate::fromPath(file);
@@ -149,78 +149,78 @@ void PreferencesDialog::loadSettings()
                 addClientCertToTable(file, cert);
         }
     }
-    ui->editRemoteCloneDirectory->setText(Settings::getSettingsValue("remote", "clonedirectory").toString());
+    ui->editRemoteCloneDirectory->setText(Settings::getValue("remote", "clonedirectory").toString());
 
     // Gracefully handle the preferred Editor font not being available
-    matchingFont = ui->comboEditorFont->findText(Settings::getSettingsValue("editor", "font").toString(), Qt::MatchExactly);
+    matchingFont = ui->comboEditorFont->findText(Settings::getValue("editor", "font").toString(), Qt::MatchExactly);
     if (matchingFont == -1)
-        matchingFont = ui->comboDataBrowserFont->findText(Settings::getSettingsDefaultValue("editor", "font").toString());
+        matchingFont = ui->comboDataBrowserFont->findText(Settings::getDefaultValue("editor", "font").toString());
     ui->comboEditorFont->setCurrentIndex(matchingFont);
 
-    ui->spinEditorFontSize->setValue(Settings::getSettingsValue("editor", "fontsize").toInt());
-    ui->spinTabSize->setValue(Settings::getSettingsValue("editor", "tabsize").toInt());
-    ui->spinLogFontSize->setValue(Settings::getSettingsValue("log", "fontsize").toInt());
-    ui->checkAutoCompletion->setChecked(Settings::getSettingsValue("editor", "auto_completion").toBool());
-    ui->checkErrorIndicators->setChecked(Settings::getSettingsValue("editor", "error_indicators").toBool());
-    ui->checkHorizontalTiling->setChecked(Settings::getSettingsValue("editor", "horizontal_tiling").toBool());
+    ui->spinEditorFontSize->setValue(Settings::getValue("editor", "fontsize").toInt());
+    ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
+    ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
+    ui->checkAutoCompletion->setChecked(Settings::getValue("editor", "auto_completion").toBool());
+    ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
+    ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
 
-    ui->listExtensions->addItems(Settings::getSettingsValue("extensions", "list").toStringList());
-    ui->checkRegexDisabled->setChecked(Settings::getSettingsValue("extensions", "disableregex").toBool());
+    ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
+    ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
     fillLanguageBox();
 }
 
 void PreferencesDialog::saveSettings()
 {
-    Settings::setSettingsValue("db", "defaultencoding", ui->encodingComboBox->currentText());
-    Settings::setSettingsValue("db", "defaultlocation", ui->locationEdit->text());
-    Settings::setSettingsValue("db", "savedefaultlocation", ui->comboDefaultLocation->currentIndex());
-    Settings::setSettingsValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
-    Settings::setSettingsValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
-    Settings::setSettingsValue("db", "prefetchsize", ui->spinPrefetchSize->value());
-    Settings::setSettingsValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
+    Settings::setValue("db", "defaultencoding", ui->encodingComboBox->currentText());
+    Settings::setValue("db", "defaultlocation", ui->locationEdit->text());
+    Settings::setValue("db", "savedefaultlocation", ui->comboDefaultLocation->currentIndex());
+    Settings::setValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
+    Settings::setValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
+    Settings::setValue("db", "prefetchsize", ui->spinPrefetchSize->value());
+    Settings::setValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
 
-    Settings::setSettingsValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
+    Settings::setValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
 
-    Settings::setSettingsValue("checkversion", "enabled", ui->checkUpdates->isChecked());
+    Settings::setValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
-    Settings::setSettingsValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
-    Settings::setSettingsValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
+    Settings::setValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
+    Settings::setValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
     saveColorSetting(ui->fr_null_fg, "null_fg");
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");
     saveColorSetting(ui->fr_reg_bg, "reg_bg");
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
-    Settings::setSettingsValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
-    Settings::setSettingsValue("databrowser", "null_text", ui->txtNull->text());
-    Settings::setSettingsValue("databrowser", "filter_escape", ui->editFilterEscape->text());
-    Settings::setSettingsValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
+    Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
+    Settings::setValue("databrowser", "null_text", ui->txtNull->text());
+    Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
+    Settings::setValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
-        Settings::setSettingsValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
-        Settings::setSettingsValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
-        Settings::setSettingsValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
-        Settings::setSettingsValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
+        Settings::setValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
+        Settings::setValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
+        Settings::setValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
+        Settings::setValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
-    Settings::setSettingsValue("editor", "font", ui->comboEditorFont->currentText());
-    Settings::setSettingsValue("editor", "fontsize", ui->spinEditorFontSize->value());
-    Settings::setSettingsValue("editor", "tabsize", ui->spinTabSize->value());
-    Settings::setSettingsValue("log", "fontsize", ui->spinLogFontSize->value());
-    Settings::setSettingsValue("editor", "auto_completion", ui->checkAutoCompletion->isChecked());
-    Settings::setSettingsValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
-    Settings::setSettingsValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
+    Settings::setValue("editor", "font", ui->comboEditorFont->currentText());
+    Settings::setValue("editor", "fontsize", ui->spinEditorFontSize->value());
+    Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
+    Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
+    Settings::setValue("editor", "auto_completion", ui->checkAutoCompletion->isChecked());
+    Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
+    Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
 
     QStringList extList;
     foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
         extList.append(item->text());
-    Settings::setSettingsValue("extensions", "list", extList);
-    Settings::setSettingsValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
+    Settings::setValue("extensions", "list", extList);
+    Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
 
     // Save remote settings
-    Settings::setSettingsValue("remote", "active", ui->checkUseRemotes->isChecked());
-    QStringList old_client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+    Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
+    QStringList old_client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     QStringList new_client_certs;
     for(int i=0;i<ui->tableClientCerts->rowCount();i++)
     {
@@ -258,16 +258,16 @@ void PreferencesDialog::saveSettings()
         // Now only the deleted client certs are still in the old list. Delete the cert files associated with them.
         QFile::remove(file);
     }
-    Settings::setSettingsValue("remote", "client_certificates", new_client_certs);
-    Settings::setSettingsValue("remote", "clonedirectory", ui->editRemoteCloneDirectory->text());
+    Settings::setValue("remote", "client_certificates", new_client_certs);
+    Settings::setValue("remote", "clonedirectory", ui->editRemoteCloneDirectory->text());
 
     // Warn about restarting to change language
     QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
-    if (newLanguage != Settings::getSettingsValue("General", "language"))
+    if (newLanguage != Settings::getValue("General", "language"))
         QMessageBox::information(this, QApplication::applicationName(),
                                  tr("The language will change after you restart the application."));
 
-    Settings::setSettingsValue("General", "language", newLanguage);
+    Settings::setValue("General", "language", newLanguage);
 
     accept();
 }
@@ -391,7 +391,7 @@ void PreferencesDialog::fillLanguageBox()
     ui->languageComboBox->model()->sort(0);
 
     // Try to select the language for the stored locale
-    int index = ui->languageComboBox->findData(Settings::getSettingsValue("General", "language"),
+    int index = ui->languageComboBox->findData(Settings::getValue("General", "language"),
                                                Qt::UserRole, Qt::MatchExactly);
 
     // If there's no translation for the current locale, default to English
@@ -412,13 +412,13 @@ void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingN
 {
     QPalette palette = frame->palette();
     palette.setColor(frame->backgroundRole(),
-        QColor(Settings::getSettingsValue("databrowser", settingName + "_colour").toString()));
+        QColor(Settings::getValue("databrowser", settingName + "_colour").toString()));
     frame->setPalette(palette);
 }
 
 void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
 {
-    Settings::setSettingsValue("databrowser", settingName + "_colour",
+    Settings::setValue("databrowser", settingName + "_colour",
         frame->palette().color(frame->backgroundRole()));
 }
 

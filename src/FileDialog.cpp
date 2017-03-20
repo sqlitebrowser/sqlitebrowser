@@ -31,13 +31,13 @@ QString FileDialog::getExistingDirectory(QWidget* parent, const QString& caption
 
 QString FileDialog::getFileDialogPath()
 {
-    switch(Settings::getSettingsValue("db", "savedefaultlocation").toInt())
+    switch(Settings::getValue("db", "savedefaultlocation").toInt())
     {
     case 0:     // Remember last location
     case 2:     // Remember last location for current session only
-        return Settings::getSettingsValue("db", "lastlocation").toString();
+        return Settings::getValue("db", "lastlocation").toString();
     case 1:     // Always use this locations
-        return Settings::getSettingsValue("db", "defaultlocation").toString();
+        return Settings::getValue("db", "defaultlocation").toString();
     default:
         return "";
     }
@@ -47,13 +47,13 @@ void FileDialog::setFileDialogPath(const QString& new_path)
 {
     QString dir = QFileInfo(new_path).absolutePath();
 
-    switch(Settings::getSettingsValue("db", "savedefaultlocation").toInt())
+    switch(Settings::getValue("db", "savedefaultlocation").toInt())
     {
     case 0:     // Remember last location
-        Settings::setSettingsValue("db", "lastlocation", dir);
+        Settings::setValue("db", "lastlocation", dir);
         break;
     case 2:     // Remember last location for current session only
-        Settings::setSettingsValue("db", "lastlocation", dir, true);
+        Settings::setValue("db", "lastlocation", dir, true);
         break;
     case 1:     // Always use this locations
         break;  // Do nothing

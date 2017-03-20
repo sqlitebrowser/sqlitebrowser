@@ -19,7 +19,7 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(db, this, Settings::getSettingsValue("db", "prefetchsize").toInt());
+    model = new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
 
     // Create popup menu for save button
@@ -109,17 +109,17 @@ void SqlExecutionArea::reloadSettings()
     ui->editEditor->reloadSettings();
 
     // Set font
-    QFont logfont(Settings::getSettingsValue("editor", "font").toString());
+    QFont logfont(Settings::getValue("editor", "font").toString());
     logfont.setStyleHint(QFont::TypeWriter);
-    logfont.setPointSize(Settings::getSettingsValue("log", "fontsize").toInt());
+    logfont.setPointSize(Settings::getValue("log", "fontsize").toInt());
     ui->editErrors->setFont(logfont);
 
     // Apply horizontal/vertical tiling option
-    if(Settings::getSettingsValue("editor", "horizontal_tiling").toBool())
+    if(Settings::getValue("editor", "horizontal_tiling").toBool())
         ui->splitter->setOrientation(Qt::Horizontal);
     else
         ui->splitter->setOrientation(Qt::Vertical);
 
     // Set prefetch settings
-    model->setChunkSize(Settings::getSettingsValue("db", "prefetchsize").toInt());
+    model->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
 }

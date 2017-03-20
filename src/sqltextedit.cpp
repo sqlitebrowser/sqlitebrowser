@@ -82,13 +82,13 @@ void SqlTextEdit::dropEvent(QDropEvent* e)
 
 void SqlTextEdit::setupSyntaxHighlightingFormat(const QString& settings_name, int style)
 {
-    sqlLexer->setColor(QColor(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
+    sqlLexer->setColor(QColor(Settings::getValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
 
-    QFont font(Settings::getSettingsValue("editor", "font").toString());
-    font.setPointSize(Settings::getSettingsValue("editor", "fontsize").toInt());
-    font.setBold(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_bold").toBool());
-    font.setItalic(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_italic").toBool());
-    font.setUnderline(Settings::getSettingsValue("syntaxhighlighter", settings_name + "_underline").toBool());
+    QFont font(Settings::getValue("editor", "font").toString());
+    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
+    font.setBold(Settings::getValue("syntaxhighlighter", settings_name + "_bold").toBool());
+    font.setItalic(Settings::getValue("syntaxhighlighter", settings_name + "_italic").toBool());
+    font.setUnderline(Settings::getValue("syntaxhighlighter", settings_name + "_underline").toBool());
     sqlLexer->setFont(font, style);
 }
 
@@ -101,7 +101,7 @@ void SqlTextEdit::reloadKeywords()
 void SqlTextEdit::reloadSettings()
 {
     // Enable auto completion if it hasn't been disabled
-    if(Settings::getSettingsValue("editor", "auto_completion").toBool())
+    if(Settings::getValue("editor", "auto_completion").toBool())
     {
         setAutoCompletionThreshold(3);
         setAutoCompletionCaseSensitivity(false);
@@ -112,9 +112,9 @@ void SqlTextEdit::reloadSettings()
     }
 
     // Set syntax highlighting settings
-    QFont defaultfont(Settings::getSettingsValue("editor", "font").toString());
+    QFont defaultfont(Settings::getValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
-    defaultfont.setPointSize(Settings::getSettingsValue("editor", "fontsize").toInt());
+    defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
     sqlLexer->setColor(Qt::black, QsciLexerSQL::Default);
     sqlLexer->setFont(defaultfont);
     setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
@@ -129,13 +129,13 @@ void SqlTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
 
     // Set font
-    QFont font(Settings::getSettingsValue("editor", "font").toString());
+    QFont font(Settings::getValue("editor", "font").toString());
     font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(Settings::getSettingsValue("editor", "fontsize").toInt());
+    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
     setFont(font);
 
     // Show line numbers
-    QFont marginsfont(QFont(Settings::getSettingsValue("editor", "font").toString()));
+    QFont marginsfont(QFont(Settings::getValue("editor", "font").toString()));
     marginsfont.setPointSize(font.pointSize());
     setMarginsFont(marginsfont);
     setMarginLineNumbers(0, true);
@@ -144,13 +144,13 @@ void SqlTextEdit::reloadSettings()
 
     // Highlight current line
     setCaretLineVisible(true);
-    setCaretLineBackgroundColor(QColor(Settings::getSettingsValue("syntaxhighlighter", "currentline_colour").toString()));
+    setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
 
     // Set tab width
-    setTabWidth(Settings::getSettingsValue("editor", "tabsize").toInt());
+    setTabWidth(Settings::getValue("editor", "tabsize").toInt());
 
     // Check if error indicators are enabled and clear them if they just got disabled
-    showErrorIndicators = Settings::getSettingsValue("editor", "error_indicators").toBool();
+    showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
     if(!showErrorIndicators)
         clearErrorIndicators();
 }

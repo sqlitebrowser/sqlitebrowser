@@ -31,7 +31,7 @@ void RemoteDock::reloadSettings()
 {
     // Load list of client certs
     ui->comboUser->clear();
-    QStringList client_certs = Settings::getSettingsValue("remote", "client_certificates").toStringList();
+    QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     foreach(const QString& file, client_certs)
     {
         auto certs = QSslCertificate::fromPath(file);

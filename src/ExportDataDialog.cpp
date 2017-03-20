@@ -26,11 +26,11 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     ui->stackFormat->setCurrentIndex(format);
 
     // Retrieve the saved dialog preferences
-    ui->checkHeader->setChecked(Settings::getSettingsValue("exportcsv", "firstrowheader").toBool());
-    setSeparatorChar(Settings::getSettingsValue("exportcsv", "separator").toInt());
-    setQuoteChar(Settings::getSettingsValue("exportcsv", "quotecharacter").toInt());
-    setNewLineString(Settings::getSettingsValue("exportcsv", "newlinecharacters").toString());
-    ui->checkPrettyPrint->setChecked(Settings::getSettingsValue("exportjson", "prettyprint").toBool());
+    ui->checkHeader->setChecked(Settings::getValue("exportcsv", "firstrowheader").toBool());
+    setSeparatorChar(Settings::getValue("exportcsv", "separator").toInt());
+    setQuoteChar(Settings::getValue("exportcsv", "quotecharacter").toInt());
+    setNewLineString(Settings::getValue("exportcsv", "newlinecharacters").toString());
+    ui->checkPrettyPrint->setChecked(Settings::getValue("exportjson", "prettyprint").toBool());
 
     // Update the visible/hidden status of the "Other" line edit fields
     showCustomCharEdits();
@@ -316,11 +316,11 @@ void ExportDataDialog::accept()
     }
 
     // Save the dialog preferences for future use
-    Settings::setSettingsValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked());
-    Settings::setSettingsValue("exportjson", "prettyprint", ui->checkPrettyPrint->isChecked());
-    Settings::setSettingsValue("exportcsv", "separator", currentSeparatorChar());
-    Settings::setSettingsValue("exportcsv", "quotecharacter", currentQuoteChar());
-    Settings::setSettingsValue("exportcsv", "newlinecharacters", currentNewLineString());
+    Settings::setValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked());
+    Settings::setValue("exportjson", "prettyprint", ui->checkPrettyPrint->isChecked());
+    Settings::setValue("exportcsv", "separator", currentSeparatorChar());
+    Settings::setValue("exportcsv", "quotecharacter", currentQuoteChar());
+    Settings::setValue("exportcsv", "newlinecharacters", currentNewLineString());
 
     // Notify the user the export has completed
     QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));

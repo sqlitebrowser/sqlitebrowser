@@ -40,7 +40,7 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
-        return Settings::getSettingsValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
+        return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
     case Qt::EditRole:
     case Qt::ToolTipRole:   // Don't modify the text when it's supposed to be shown in a tooltip
         return item->text(index.column());

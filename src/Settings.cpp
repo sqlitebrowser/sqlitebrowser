@@ -9,7 +9,7 @@
 
 QHash<QString, QVariant> Settings::m_hCache;
 
-QVariant Settings::getSettingsValue(const QString& group, const QString& name)
+QVariant Settings::getValue(const QString& group, const QString& name)
 {
     // Have a look in the cache first
     auto cacheIndex = m_hCache.find(group + name);
@@ -19,7 +19,7 @@ QVariant Settings::getSettingsValue(const QString& group, const QString& name)
     } else {
         // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
         QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        QVariant value = settings.value(group + "/" + name, getSettingsDefaultValue(group, name));
+        QVariant value = settings.value(group + "/" + name, getDefaultValue(group, name));
 
         // Store this value in the cache for further usage and return it afterwards
         m_hCache.insert(group + name, value);
@@ -27,7 +27,7 @@ QVariant Settings::getSettingsValue(const QString& group, const QString& name)
     }
 }
 
-void Settings::setSettingsValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk)
+void Settings::setValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk)
 {
     // Sometime the value has to be saved for the current session only but get discarded when the application exits.
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
@@ -44,7 +44,7 @@ void Settings::setSettingsValue(const QString& group, const QString& name, const
     m_hCache[group + name] = value;
 }
 
-QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& name)
+QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 {
     // db/defaultencoding?
     if(group == "db" && name == "defaultencoding")
@@ -60,7 +60,7 @@ QVariant Settings::getSettingsDefaultValue(const QString& group, const QString& 
 
     // db/lastlocation?
     if(group == "db" && name == "lastlocation")
-        return getSettingsValue("db", "defaultlocation");
+        return getValue("db", "defaultlocation");
 
     // db/hideschemalinebreaks?
     if(group == "db" && name == "hideschemalinebreaks")

@@ -544,8 +544,8 @@ QString EditDialog::humanReadableSize(double byteCount)
 void EditDialog::reloadSettings()
 {
     // Set the font for the text and hex editors
-    QFont editorFont(Settings::getSettingsValue("databrowser", "font").toString());
-    editorFont.setPointSize(Settings::getSettingsValue("databrowser", "fontsize").toInt());
+    QFont editorFont(Settings::getValue("databrowser", "font").toString());
+    editorFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     ui->editorText->setFont(editorFont);
     hexEdit->setFont(editorFont);
 }

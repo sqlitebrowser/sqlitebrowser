@@ -22,7 +22,7 @@ Application::Application(int& argc, char** argv) :
 
     // Load translations
     bool ok;
-    QString name = Settings::getSettingsValue("General", "language").toString();
+    QString name = Settings::getValue("General", "language").toString();
 
     // First of all try to load the application translation file.
     m_translatorApp = new QTranslator(this);
@@ -34,7 +34,7 @@ Application::Application(int& argc, char** argv) :
     }
 
     if (ok == true) {
-        Settings::setSettingsValue("General", "language", name);
+        Settings::setValue("General", "language", name);
         installTranslator(m_translatorApp);
 
         // The application translation file has been found and loaded.
@@ -54,7 +54,7 @@ Application::Application(int& argc, char** argv) :
         // Set the correct locale so that the program won't erroneously detect
         // a language change when the user toggles settings for the first time.
         // (it also prevents the program from always looking for a translation on launch)
-        Settings::setSettingsValue("General", "language", "en_US");
+        Settings::setValue("General", "language", "en_US");
     }
 
     // Parse command line
