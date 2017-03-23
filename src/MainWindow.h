@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include "sqlitedb.h"
-#include "RemoteDatabase.h"
 #include "PlotDock.h"
 
 #include <QMainWindow>
@@ -17,6 +16,7 @@ class QPersistentModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
 class RemoteDock;
+class RemoteDatabase;
 
 namespace Ui {
 class MainWindow;

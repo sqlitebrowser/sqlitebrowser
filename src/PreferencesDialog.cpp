@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "Application.h"
 #include "MainWindow.h"
+#include "RemoteDatabase.h"
 
 #include <QDir>
 #include <QColorDialog>

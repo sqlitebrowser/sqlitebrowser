@@ -22,6 +22,7 @@
 #include "ColumnDisplayFormatDialog.h"
 #include "FilterTableHeader.h"
 #include "RemoteDock.h"
+#include "RemoteDatabase.h"
 
 #include <QFile>
 #include <QApplication>

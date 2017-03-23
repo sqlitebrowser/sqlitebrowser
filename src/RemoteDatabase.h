@@ -10,6 +10,7 @@ class QNetworkReply;
 class QSslError;
 class QProgressDialog;
 class QNetworkRequest;
+struct sqlite3;
 
 class RemoteDatabase : public QObject
 {
@@ -48,11 +49,17 @@ private:
     bool prepareSsl(QNetworkRequest* request, const QString& clientCert);
     void prepareProgressDialog(bool upload, const QString& url);
 
+    // Helper functions for managing the list of locally available databases
+    void localAssureOpened();
+    void localAdd(QString filename, QString identity, const QUrl& url);
+    QString localExists(const QUrl& url, QString identity);
+
     QNetworkAccessManager* m_manager;
     QProgressDialog* m_progress;
     QNetworkReply* m_currentReply;
     QSslConfiguration m_sslConfiguration;
     QMap<QString, QSslCertificate> m_clientCertFiles;
+    sqlite3* m_dbLocal;
 };
 
 #endif

@@ -7,15 +7,19 @@
 #include <QProgressDialog>
 #include <QInputDialog>
 #include <QDir>
+#include <QStandardPaths>
+#include <QUrlQuery>
 
 #include "RemoteDatabase.h"
 #include "version.h"
 #include "Settings.h"
+#include "sqlite.h"
 
 RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
     m_progress(nullptr),
-    m_currentReply(nullptr)
+    m_currentReply(nullptr),
+    m_dbLocal(nullptr)
 {
     // Set up SSL configuration
     m_sslConfiguration = QSslConfiguration::defaultConfiguration();
@@ -42,6 +46,10 @@ RemoteDatabase::~RemoteDatabase()
 {
     delete m_manager;
     delete m_progress;
+
+    // Close local storage db - but only if it was created/opened in the meantime
+    if(m_dbLocal)
+        sqlite3_close(m_dbLocal);
 }
 
 void RemoteDatabase::reloadSettings()
@@ -123,6 +131,9 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             // Generate a unique file name to save the file under
             QString saveFileAs = Settings::getValue("remote", "clonedirectory").toString() +
                 QString("/%2_%1.remotedb").arg(QDateTime::currentMSecsSinceEpoch()).arg(reply->url().fileName());
+
+            // Add cloned database to list of local databases
+            localAdd(saveFileAs, reply->property("certfile").toString(), reply->url());
 
             // Save the downloaded data under the generated file name
             QFile file(saveFileAs);
@@ -286,6 +297,19 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
         return;
     }
 
+    // If this is a request for a database there is a chance that we've already cloned that database. So check for that first
+    if(type == RequestTypeDatabase)
+    {
+        QString exists = localExists(url, clientCert);
+        if(!exists.isEmpty())
+        {
+            // Database has already been cloned! So open the local file instead of fetching the one from the
+            // server again.
+            emit openFile(exists);
+            return;
+        }
+    }
+
     // Build network request
     QNetworkRequest request;
     request.setUrl(url);
@@ -356,4 +380,173 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
 
     // Initialise the progress dialog for this request
     prepareProgressDialog(true, url);
+}
+
+void RemoteDatabase::localAssureOpened()
+{
+    // This function should be called first in each RemoteDatabase::local* function. It assures the database for storing
+    // the local database information is opened and ready. If the database file doesn't exist yet it is created by this
+    // function. If the database file is already created and opened this function does nothing. The reason to open the
+    // database on first use instead of doing that in the constructor of this class is that this way no database file is
+    // going to be created and no database handle is held when it's not actually needed. For people not interested in
+    // the dbhub.io functionality this means no unnecessary files being created.
+
+    // Check if database is already opened and return if it is
+    if(m_dbLocal)
+        return;
+
+    // Open file
+    QString database_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/remotedbs.db";
+    if(sqlite3_open_v2(database_file.toUtf8(), &m_dbLocal, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL) != SQLITE_OK)
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error opening local databases list.\n%1").arg(QString::fromUtf8(sqlite3_errmsg(m_dbLocal))));
+        return;
+    }
+
+    // Create local local table if it doesn't exists yet
+    char* errmsg;
+    QString statement = QString("CREATE TABLE IF NOT EXISTS \"local\"("
+                                "\"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+                                "\"identity\" TEXT NOT NULL,"
+                                "\"name\" TEXT NOT NULL,"
+                                "\"url\" TEXT NOT NULL,"
+                                "\"version\" INTEGER NOT NULL,"
+                                "\"file\" INTEGER,"
+                                "\"modified\" INTEGER DEFAULT 0"
+                                ")");
+    if(sqlite3_exec(m_dbLocal, statement.toUtf8(), NULL, NULL, &errmsg) != SQLITE_OK)
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error creating local databases list.\n%1").arg(QString::fromUtf8(errmsg)));
+        sqlite3_free(errmsg);
+        sqlite3_close(m_dbLocal);
+        m_dbLocal = nullptr;
+        return;
+    }
+}
+
+void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url)
+{
+    // This function adds a new local database clone to our internal list. It does so by adding a single
+    // new record to the remote dbs database. All the fields are extracted from the filename, the identity
+    // and (most importantly) the url parameters. Note that for the version field to be correctly filled we
+    // require the version to be part of the url parameter. Also note that this function doesn't check if the
+    // database has already been added to the list before. This needs to be done before calling this function,
+    // ideally even before sending out a request to the network.
+
+    localAssureOpened();
+
+    // Insert database into local database list
+    QString sql = QString("INSERT INTO local(identity, name, url, version, file) VALUES(?, ?, ?, ?, ?)");
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+        return;
+
+    QFileInfo f(identity);                  // Remove the path
+    identity = f.fileName();
+    if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    if(sqlite3_bind_text(stmt, 2, url.fileName().toUtf8(), url.fileName().toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    QUrl url_without_query = url;           // Remove the '?version=x' bit from the URL
+    url_without_query.setQuery(QString());
+    if(sqlite3_bind_text(stmt, 3, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    if(sqlite3_bind_int(stmt, 4, QUrlQuery(url).queryItemValue("version").toInt()))
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    f = QFileInfo(filename);                // Remove the path
+    filename = f.fileName();
+    if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    if(sqlite3_step(stmt) != SQLITE_DONE)
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+QString RemoteDatabase::localExists(const QUrl& url, QString identity)
+{
+    // This function checks if there already is a clone for the given combination of url and identity. It returns the filename
+    // of this clone if there is or a null string if there isn't a clone yet. The identity needs to be part of this check because
+    // with the url alone there could be corner cases where different versions or whatever may not be accessible for all users.
+
+    localAssureOpened();
+
+    // Extract version from url and remove query part afterwards
+    int url_version = QUrlQuery(url).queryItemValue("version").toInt();
+    QUrl url_without_query = url;
+    url_without_query.setQuery(QString());
+
+    // Query version and filename for the given combination of url and identity
+    QString sql = QString("SELECT id, version, file FROM local WHERE url=? AND identity=?");
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+        return QString();
+
+    if(sqlite3_bind_text(stmt, 1, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
+    QFileInfo f(identity);                  // Remove the path
+    identity = f.fileName();
+    if(sqlite3_bind_text(stmt, 2, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
+    if(sqlite3_step(stmt) != SQLITE_ROW)
+    {
+        // If there was either an error or no record was found for this combination of url and
+        // identity, stop here.
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
+    // Having come here we can assume that at least some local clone for the given combination of
+    // url and identity exists. So extract all the information we have on it.
+    //int local_id = sqlite3_column_int(stmt, 0);
+    int local_version = sqlite3_column_int(stmt, 1);
+    QString local_file = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+    sqlite3_finalize(stmt);
+
+    // There are three possibilities now: either the requested version is the same as the local version, or the requested version
+    // is newer, or the local version is newer.
+    if(local_version == url_version)
+    {
+        // Both versions are the same. That's the perfect match, so just return the path to the local file
+        return Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
+    } else {
+        // In all the other cases just treat the remote database as a completely new database for now.
+
+        // TODO Add some way to update the local clone here. Maybe ask the user what to do because I don't really know what the
+        // most sensible way to go is in the two remaining cases. We can use the local_id variable (see above) to update the
+        // record afterwards.
+
+        return QString();
+    }
 }
