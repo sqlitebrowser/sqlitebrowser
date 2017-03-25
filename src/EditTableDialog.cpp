@@ -256,8 +256,15 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         switch(column)
         {
         case kName:
-            // When a field of that name already exists, show a warning to the user and don't apply the new name
-            if(m_table.findField(item->text(column)) != -1)
+            {
+            // When a field of that name already exists, show a warning to the user and don't apply the new name. There is one exception, however,
+            // to this rule: if the field that is about to be renamed the one we're finding here, this can only mean that the user is trying to
+            // rename the field to essentially the same name but with different case. Example: if I rename column 'COLUMN' to 'column', findField()
+            // is going to return the current field number because it's doing a case-independent search and it can't return another field number
+            // because SQLite prohibits duplicate field names (no matter the case). So when this happens we just allow the renaming because there's
+            // no harm to be expected from it.
+            int foundField = m_table.findField(item->text(column));
+            if(foundField != -1 && foundField != index)
             {
                 QMessageBox::warning(this, qApp->applicationName(), tr("There already is a field with that name. Please rename it first or choose a different "
                                                                        "name for this field."));
@@ -300,7 +307,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
             if(!m_bNewTable)
                 callRenameColumn = true;
-            break;
+            } break;
         case kType:
             // see updateTypes() SLOT
             break;
