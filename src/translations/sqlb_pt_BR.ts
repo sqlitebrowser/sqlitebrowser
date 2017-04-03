@@ -100,7 +100,7 @@
     </message>
     <message>
         <source>Page &amp;size</source>
-        <translation>&amp;Tamanho da página</translation>
+        <translation type="vanished">&amp;Tamanho da página</translation>
     </message>
     <message>
         <source>Please set a key to encrypt the database.
@@ -127,6 +127,18 @@ The encryption process might take some time and you should have a backup copy of
 Note que se você alterar quaisquer configurações opcionais você terá de entrá-las todas as vezes que você abrir o arquivo do banco de dados.
 Deixe os campos de senha em branco para desativar a encriptação.
 O processo de encriptação pode demorar alguns minutos e você deve ter um backup do seu banco de dados! Alterações não salvas são aplicadas antes de se modificar a encriptação.</translation>
+    </message>
+    <message>
+        <source>Page si&amp;ze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passphrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raw key</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -201,47 +213,6 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     </message>
 </context>
 <context>
-    <name>EditIndexDialog</name>
-    <message>
-        <source>Create New Index</source>
-        <translation>Criar novo índice</translation>
-    </message>
-    <message>
-        <source>&amp;Name</source>
-        <translation>&amp;Nome</translation>
-    </message>
-    <message>
-        <source>&amp;Columns</source>
-        <translation>&amp;Colunas</translation>
-    </message>
-    <message>
-        <source>Column</source>
-        <translation>Coluna</translation>
-    </message>
-    <message>
-        <source>Use in Index</source>
-        <translation>Usar no Índice</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation>Ordem</translation>
-    </message>
-    <message>
-        <source>&amp;Table</source>
-        <translation>&amp;Tabela</translation>
-    </message>
-    <message>
-        <source>&amp;Unique</source>
-        <translation>&amp;Único</translation>
-    </message>
-    <message>
-        <source>Creating the index failed:
-%1</source>
-        <translation>Criação de índice falhou:
-%1</translation>
-    </message>
-</context>
-<context>
     <name>DBBrowserDB</name>
     <message>
         <source>no error</source>
@@ -274,12 +245,12 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation>Erro na consulta #%1: %2.
+        <translation type="vanished">Erro na consulta #%1: %2.
 Abortando execução.</translation>
     </message>
     <message>
         <source>renameColumn: cannot find table %1.</source>
-        <translation>renameColumn: não consegue encontrar a tabela %1.</translation>
+        <translation type="vanished">renameColumn: não consegue encontrar a tabela %1.</translation>
     </message>
     <message>
         <source>renameColumn: cannot find column %1.</source>
@@ -326,7 +297,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
-        <translation>Tipo de objeto desconhecido %1</translation>
+        <translation type="vanished">Tipo de objeto desconhecido %1</translation>
     </message>
     <message>
         <source>could not get list of db objects: %1, %2</source>
@@ -334,7 +305,7 @@ Abortando execução.</translation>
     </message>
     <message>
         <source>could not get types</source>
-        <translation>Não pôde obter tipos</translation>
+        <translation type="vanished">Não pôde obter tipos</translation>
     </message>
     <message>
         <source>didn&apos;t receive any output from pragma %1</source>
@@ -351,6 +322,23 @@ Abortando execução.</translation>
     <message>
         <source>File not found.</source>
         <translation>Arquivo não encontrado.</translation>
+    </message>
+    <message>
+        <source>Invalid file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in statement #%1: %2.
+Aborting execution%3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> and rolling back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>could not get column information</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -554,6 +542,56 @@ Abortando execução.</translation>
     </message>
 </context>
 <context>
+    <name>EditIndexDialog</name>
+    <message>
+        <source>Create New Index</source>
+        <translation type="vanished">Criar novo índice</translation>
+    </message>
+    <message>
+        <source>&amp;Name</source>
+        <translation>&amp;Nome</translation>
+    </message>
+    <message>
+        <source>&amp;Columns</source>
+        <translation>&amp;Colunas</translation>
+    </message>
+    <message>
+        <source>Column</source>
+        <translation>Coluna</translation>
+    </message>
+    <message>
+        <source>Use in Index</source>
+        <translation>Usar no Índice</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation>Ordem</translation>
+    </message>
+    <message>
+        <source>&amp;Table</source>
+        <translation>&amp;Tabela</translation>
+    </message>
+    <message>
+        <source>&amp;Unique</source>
+        <translation>&amp;Único</translation>
+    </message>
+    <message>
+        <source>Creating the index failed:
+%1</source>
+        <translation>Criação de índice falhou:
+%1</translation>
+    </message>
+    <message>
+        <source>Edit Index Schema</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting the old index failed:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditTableDialog</name>
     <message>
         <source>Edit table definition</source>
@@ -725,6 +763,19 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Setting the rowid column for the table failed. Error message:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set this to create a temporary table that is deleted when closing the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setting the temporary flag for the table failed. Error message:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -920,7 +971,7 @@ Deseja inserir mesmo assim?</translation>
     <name>FileDialog</name>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation>Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
+        <translation type="vanished">Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
     </message>
 </context>
 <context>
@@ -928,6 +979,17 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <source>Filter</source>
         <translation>Filtro</translation>
+    </message>
+</context>
+<context>
+    <name>ForeignKeyEditor</name>
+    <message>
+        <source>&amp;Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1365,27 +1427,27 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Columns</source>
-        <translation>Colunas</translation>
+        <translation type="vanished">Colunas</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>_</source>
-        <translation>_</translation>
+        <translation type="vanished">_</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save current plot...</source>
-        <translation>Save current plot...</translation>
+        <translation type="vanished">Save current plot...</translation>
     </message>
     <message>
         <source>DB Schema</source>
@@ -1734,7 +1796,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Invalid file format.</source>
-        <translation>Formato de arquivo inválido.</translation>
+        <translation type="vanished">Formato de arquivo inválido.</translation>
     </message>
     <message>
         <source>Choose a filename to save under</source>
@@ -1777,7 +1839,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>There is no database opened.</source>
-        <translation>Não há banco de dados aberto.</translation>
+        <translation type="vanished">Não há banco de dados aberto.</translation>
     </message>
     <message>
         <source>%1 Rows returned from: %3 (took %2ms)</source>
@@ -1893,11 +1955,11 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Choose a axis color</source>
-        <translation>Escolha uma cor para o eixo</translation>
+        <translation type="vanished">Escolha uma cor para o eixo</translation>
     </message>
     <message>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Todos os arquivos(*)</translation>
+        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Choose a file to open</source>
@@ -1925,91 +1987,91 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation>Tipo da linha:</translation>
+        <translation type="vanished">Tipo da linha:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Linha</translation>
+        <translation type="vanished">Linha</translation>
     </message>
     <message>
         <source>StepLeft</source>
-        <translation>StepLeft</translation>
+        <translation type="vanished">StepLeft</translation>
     </message>
     <message>
         <source>StepRight</source>
-        <translation>StepRight</translation>
+        <translation type="vanished">StepRight</translation>
     </message>
     <message>
         <source>StepCenter</source>
-        <translation>StepCenter</translation>
+        <translation type="vanished">StepCenter</translation>
     </message>
     <message>
         <source>Impulse</source>
-        <translation>Impulso</translation>
+        <translation type="vanished">Impulso</translation>
     </message>
     <message>
         <source>Point shape:</source>
-        <translation>Ponto:</translation>
+        <translation type="vanished">Ponto:</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation>Cruz</translation>
+        <translation type="vanished">Cruz</translation>
     </message>
     <message>
         <source>Plus</source>
-        <translation>Mais</translation>
+        <translation type="vanished">Mais</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Círculo</translation>
+        <translation type="vanished">Círculo</translation>
     </message>
     <message>
         <source>Disc</source>
-        <translation>Disco</translation>
+        <translation type="vanished">Disco</translation>
     </message>
     <message>
         <source>Square</source>
-        <translation>Quadrado</translation>
+        <translation type="vanished">Quadrado</translation>
     </message>
     <message>
         <source>Diamond</source>
-        <translation>Diamante</translation>
+        <translation type="vanished">Diamante</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Estrela</translation>
+        <translation type="vanished">Estrela</translation>
     </message>
     <message>
         <source>Triangle</source>
-        <translation>Triângulo</translation>
+        <translation type="vanished">Triângulo</translation>
     </message>
     <message>
         <source>TriangleInverted</source>
-        <translation>TriânguloInvertido</translation>
+        <translation type="vanished">TriânguloInvertido</translation>
     </message>
     <message>
         <source>CrossSquare</source>
-        <translation>CruzQuadrado</translation>
+        <translation type="vanished">CruzQuadrado</translation>
     </message>
     <message>
         <source>PlusSquare</source>
-        <translation>MaisQuadrado</translation>
+        <translation type="vanished">MaisQuadrado</translation>
     </message>
     <message>
         <source>CrossCircle</source>
-        <translation>CruzCírculo</translation>
+        <translation type="vanished">CruzCírculo</translation>
     </message>
     <message>
         <source>PlusCircle</source>
-        <translation>MaisCírculo</translation>
+        <translation type="vanished">MaisCírculo</translation>
     </message>
     <message>
         <source>Peace</source>
-        <translation>Paz</translation>
+        <translation type="vanished">Paz</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Carregar todos os dados. Isso somente tem efeito se nem todos os dados já foram obtidos da tabela devido ao mecanismo de carregamento parcial.</translation>
+        <translation type="vanished">Carregar todos os dados. Isso somente tem efeito se nem todos os dados já foram obtidos da tabela devido ao mecanismo de carregamento parcial.</translation>
     </message>
     <message>
         <source>&amp;Revert Changes</source>
@@ -2214,10 +2276,6 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open from Remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save to Remote</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2232,16 +2290,184 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Please enter the URL of the database file to save.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Cancelar</translation>
+    </message>
+    <message>
+        <source>&amp;Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open Database Read Only...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open an existing database file in read only mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open database file.
+Reason: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PlotDock</name>
+    <message>
+        <source>Plot</source>
+        <translation type="unfinished">Plot</translation>
+    </message>
+    <message>
+        <source>Columns</source>
+        <translation type="unfinished">Colunas</translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <source>_</source>
+        <translation type="unfinished">_</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation type="unfinished">Tipo da linha:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">None</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Linha</translation>
+    </message>
+    <message>
+        <source>StepLeft</source>
+        <translation type="unfinished">StepLeft</translation>
+    </message>
+    <message>
+        <source>StepRight</source>
+        <translation type="unfinished">StepRight</translation>
+    </message>
+    <message>
+        <source>StepCenter</source>
+        <translation type="unfinished">StepCenter</translation>
+    </message>
+    <message>
+        <source>Impulse</source>
+        <translation type="unfinished">Impulso</translation>
+    </message>
+    <message>
+        <source>Point shape:</source>
+        <translation type="unfinished">Ponto:</translation>
+    </message>
+    <message>
+        <source>Cross</source>
+        <translation type="unfinished">Cruz</translation>
+    </message>
+    <message>
+        <source>Plus</source>
+        <translation type="unfinished">Mais</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Círculo</translation>
+    </message>
+    <message>
+        <source>Disc</source>
+        <translation type="unfinished">Disco</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished">Quadrado</translation>
+    </message>
+    <message>
+        <source>Diamond</source>
+        <translation type="unfinished">Diamante</translation>
+    </message>
+    <message>
+        <source>Star</source>
+        <translation type="unfinished">Estrela</translation>
+    </message>
+    <message>
+        <source>Triangle</source>
+        <translation type="unfinished">Triângulo</translation>
+    </message>
+    <message>
+        <source>TriangleInverted</source>
+        <translation type="unfinished">TriânguloInvertido</translation>
+    </message>
+    <message>
+        <source>CrossSquare</source>
+        <translation type="unfinished">CruzQuadrado</translation>
+    </message>
+    <message>
+        <source>PlusSquare</source>
+        <translation type="unfinished">MaisQuadrado</translation>
+    </message>
+    <message>
+        <source>CrossCircle</source>
+        <translation type="unfinished">CruzCírculo</translation>
+    </message>
+    <message>
+        <source>PlusCircle</source>
+        <translation type="unfinished">MaisCírculo</translation>
+    </message>
+    <message>
+        <source>Peace</source>
+        <translation type="unfinished">Paz</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Save current plot...</source>
+        <translation type="unfinished">Save current plot...</translation>
+    </message>
+    <message>
+        <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
+        <translation type="unfinished">Carregar todos os dados. Isso somente tem efeito se nem todos os dados já foram obtidos da tabela devido ao mecanismo de carregamento parcial.</translation>
+    </message>
+    <message>
         <source>Row #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please enter the URL of the database file to open.</source>
-        <translation type="unfinished"></translation>
+        <source>Choose a axis color</source>
+        <translation type="unfinished">Escolha uma cor para o eixo</translation>
     </message>
     <message>
-        <source>Please enter the URL of the database file to save.</source>
-        <translation type="unfinished"></translation>
+        <source>Choose a filename to save under</source>
+        <translation type="unfinished">Escolha um nome de arquivo para salvar</translation>
+    </message>
+    <message>
+        <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
+        <translation type="unfinished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Fetching all data...</source>
@@ -2638,6 +2864,10 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clone databases into</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2675,14 +2905,13 @@ Create a backup!</source>
 So você optar por proceder, esteja avisado de que coisas ruins podem acontecer para o seu banco de dados.
 Faça um backup!</translation>
     </message>
+    <message>
+        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
+        <translation type="unfinished">Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
+    </message>
 </context>
 <context>
     <name>RemoteDatabase</name>
-    <message>
-        <source>Error opening remote database file from %1.
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Error: Invalid client certificate specified.</source>
         <translation type="unfinished"></translation>
@@ -2711,6 +2940,72 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>Error: Cannot open the file for sending.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error when connecting to %1.
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error opening remote file at %1.
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error opening local databases list.
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error creating local databases list.
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDock</name>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B&amp;rowse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteModel</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished">Versão</translation>
+    </message>
+    <message>
+        <source>Last modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bytes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
