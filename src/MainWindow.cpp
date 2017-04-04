@@ -1401,6 +1401,7 @@ void MainWindow::activateFields(bool enable)
 
     ui->fileCloseAction->setEnabled(enable);
     ui->fileCompactAction->setEnabled(enable && write);
+    ui->fileExportJsonAction->setEnabled(enable);
     ui->fileExportCSVAction->setEnabled(enable);
     ui->fileExportSQLAction->setEnabled(enable);
     ui->fileImportCSVAction->setEnabled(enable && write);
