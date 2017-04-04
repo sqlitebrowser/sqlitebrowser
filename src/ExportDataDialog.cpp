@@ -24,6 +24,9 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
 
     // Show different option widgets depending on the export format
     ui->stackFormat->setCurrentIndex(format);
+    if(format == ExportFormatJson) {
+        setWindowTitle(tr("Export data as JSON"));
+    }
 
     // Retrieve the saved dialog preferences
     ui->checkHeader->setChecked(Settings::getValue("exportcsv", "firstrowheader").toBool());
