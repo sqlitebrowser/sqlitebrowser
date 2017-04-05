@@ -3051,12 +3051,12 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="268"/>
         <source>The language will change after you restart the application.</source>
-        <translation>Мова буде змінена після перезапуску програми.</translation>
+        <translation>Мову буде змінено після перезапуску програми.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="333"/>
         <source>Select extension file</source>
-        <translation>Вибираємо файл розширення</translation>
+        <translation>Обираємо файл розширення</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="334"/>
@@ -3118,7 +3118,7 @@ Are you sure?</source>
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
         <translation>Таблиця в базі даних вимагає виконання спеціальної функції зіставлення &apos;%1&apos;.
-Якщо ви продовжите, то можлива псування вашої бази даних.
+Якщо Ви продовжите, то можливе псування Вашої бази даних.
 Створіть резервну копію!</translation>
     </message>
 </context>
@@ -3205,7 +3205,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="97"/>
         <source>Please specify the view name</source>
-        <translation>Вкажіть ім&apos;я уявлення</translation>
+        <translation>Вкажіть ім&apos;я перегляду</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="101"/>
@@ -3220,7 +3220,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="112"/>
         <source>Error creating view: %1</source>
-        <translation>Помилка створення уявлення: %1</translation>
+        <translation>Помилка створення перегляду: %1</translation>
     </message>
 </context>
 <context>
@@ -3233,7 +3233,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="61"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() Функція changes() повертає кількість рядків у базі даних, які були змінені, вставлені або видалені після вдалого виконання INSERT, DELETE або UPDATE.</translation>
+        <translation>() Функція changes() повертає кількість рядків у базі даних, які було змінено, вставлено або видалено після вдалого виконання INSERT, DELETE або UPDATE.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="62"/>
@@ -3253,17 +3253,17 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="65"/>
         <source>(X,Y) The ifnull() function returns a copy of its first non-NULL argument, or NULL if both arguments are NULL.</source>
-        <translation>(X,Y) Функція ifnull() повертає копію першого аргументу не дорівнює NULL інакше якщо обидва аргументи рівні NULL то повертає NULL.</translation>
+        <translation>(X,Y) Функція ifnull() повертає копію першого аргументу неNULL, або якщо обидва аргументи рівні NULL то повертає NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="66"/>
         <source>(X,Y) The instr(X,Y) function finds the first occurrence of string Y within string X and returns the number of prior characters plus 1, or 0 if Y is nowhere found within X.</source>
-        <translation>(X,Y) Функція instr(X,Y) повертає кількість символів, починаючи з якого в рядку X знайдена підрядок Y або 0 якщо така не виявлено.</translation>
+        <translation>(X,Y) Функція instr(X,Y) повертає кількість символів, починаючи з якого в рядку X знайдено підрядок Y або 0 якщо такого не виявлено.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="67"/>
         <source>(X) The hex() function interprets its argument as a BLOB and returns a string which is the upper-case hexadecimal rendering of the content of that blob.</source>
-        <translation>(X) Функція hex() інтерпретує аргумент як BLOB і повертає рядок в 16-річної системі числення з вмістом аргументу.</translation>
+        <translation>(X) Функція hex() інтерпретує аргумент як BLOB і повертає рядок в 16-ричній системі числення із вмістом аргументу.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
@@ -3298,7 +3298,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="74"/>
         <source>(X) The lower(X) function returns a copy of string X with all ASCII characters converted to lower case.</source>
-        <translation>(X) Функція lower(X) повертає копію рядка X, в якій всі ACSII символи переведені в нижній регістр.</translation>
+        <translation>(X) Функція lower(X) повертає копію рядка X, в якій усі ACSII символи переведені в нижній регістр.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="75"/>
@@ -3323,7 +3323,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X,Y) The nullif(X,Y) function returns its first argument if the arguments are different and NULL if the arguments are the same.</source>
-        <translation>(X,Y) Функція nullif(X,Y) повертає перший аргумент якщо аргументи різні або NULL якщо вони однакові.</translation>
+        <translation>(X,Y) Функція nullif(X,Y) повертає перший аргумент якщо аргументи різні, або NULL якщо вони однакові.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
@@ -3333,22 +3333,22 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) Функція quote(X) повертає змінену рядок X, яку можна використовувати в SQL виразах.</translation>
+        <translation>(X) Функція quote(X) повертає змінений рядок X, який можна використовувати в SQL виразах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="82"/>
         <source>() The random() function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807.</source>
-        <translation>() Функція random() повертає псевдо випадкове цілочисельне значення з діапозона від -9223372036854775808 до +9223372036854775807.</translation>
+        <translation>() Функція random() повертає псевдовипадкове цілочисельне значення з діапозона від -9223372036854775808 до +9223372036854775807.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="83"/>
         <source>(N) The randomblob(N) function return an N-byte blob containing pseudo-random bytes.</source>
-        <translation>(N) Функція randomblob(N) повертає N-байтний BLOB, що містить псевдо випадкові байти.</translation>
+        <translation>(N) Функція randomblob(N) повертає N-байтний BLOB, що містить псевдовипадкові байти.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="84"/>
         <source>(X,Y,Z) The replace(X,Y,Z) function returns a string formed by substituting string Z for every occurrence of string Y in string X.</source>
-        <translation>(X,Y,Z) Функція replace(X,Y,Z) повертає новий рядок на основі рядка X, заміною всіх подстрок Y на Z.</translation>
+        <translation>(X,Y,Z) Функція replace(X,Y,Z) повертає новий рядок на основі рядка X, заміною всіх підрядків Y на Z.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="85"/>
@@ -3363,7 +3363,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
         <source>(X) rtrim(X) removes spaces from the right side of X.</source>
-        <translation>(X) rtrim(X) видаляє символи пробілу праворуч рядки X.</translation>
+        <translation>(X) rtrim(X) видаляє символи пробілу праворуч від рядка X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
@@ -3388,7 +3388,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="92"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() Функція total_changes() повертає кількість рядків змінених за допомогою INSERT, UPDATE або DELETE, починаючи з того моменту як Ви зараз приєднані до бази даних було відкрито.</translation>
+        <translation>() Функція total_changes() повертає кількість рядків, змінених за допомогою INSERT, UPDATE або DELETE, починаючи з того моменту, коли під&apos;єднання до бази даних було відкрито.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="93"/>
@@ -3398,12 +3398,12 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="94"/>
         <source>(X,Y) The trim(X,Y) function returns a string formed by removing any and all characters that appear in Y from both ends of X.</source>
-        <translation>(X,Y) Функція trim(X,Y) створює новий рядок з X, шляхом видалення з обох кінців символів, які присутсвуют в рядку Y.</translation>
+        <translation>(X,Y) Функція trim(X,Y) створює новий рядок з X, шляхом видалення з обох кінців символів, які присутні в рядку Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="95"/>
         <source>(X) The typeof(X) function returns a string that indicates the datatype of the expression X.</source>
-        <translation>(X) Функція typeof(X) повертає рядок з типом даних вираження X.</translation>
+        <translation>(X) Функція typeof(X) повертає рядок із типом даних вираження X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="96"/>
@@ -3436,32 +3436,32 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="106"/>
         <source>(X) The avg() function returns the average value of all non-NULL X within a group.</source>
-        <translation>(X) Функція avg() повертає середнє значення для всіх не рівних NULL значень групи.</translation>
+        <translation>(X) Функція avg() повертає середнє значення для всіх не NULL значень групи.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="107"/>
         <source>(X) The count(X) function returns a count of the number of times that X is not NULL in a group.</source>
-        <translation>(X) Функція count(X) повертає количесвто рядків, в яких X не дорівнює NULL в групі.</translation>
+        <translation>(X) Функція count(X) повертає кількість рядків, у яких X не NULL у групі.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="108"/>
         <source>(X) The group_concat() function returns a string which is the concatenation of all non-NULL values of X.</source>
-        <translation>(X) Функція group_concat() повертає рядок з усіх значень X не дорівнює NULL.</translation>
+        <translation>(X) Функція group_concat() повертає рядок з усіх значень X не NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="109"/>
         <source>(X,Y) The group_concat() function returns a string which is the concatenation of all non-NULL values of X. If parameter Y is present then it is used as the separator between instances of X.</source>
-        <translation>(X,Y) Функція group_concat() повертає рядок з усіх значень X не дорівнює NULL. Y - роздільник між значеннями X.</translation>
+        <translation>(X,Y) Функція group_concat() повертає рядок з усіх значень X не NULL. Y - роздільник між значеннями X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="110"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation>(X) Аггрегатна функція max() повертає максимальне значення для X.</translation>
+        <translation>(X) Агрегатна функція max() повертає максимальне значення для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="111"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation>(X) Аггрегатна функція min() повертає мінімальне значення для X.</translation>
+        <translation>(X) Агрегатна функція min() повертає мінімальне не NULL значення для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
@@ -3498,7 +3498,7 @@ Hold Ctrl+Shift and click to jump there</source>
     <message>
         <location filename="../VacuumDialog.ui" line="26"/>
         <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation>Попередження: Ущільнення бази даних зафіксує всі зміни, які були зроблені.</translation>
+        <translation>Попередження: Ущільнення бази даних зафіксує всі зміни, які було зроблено.</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="39"/>
