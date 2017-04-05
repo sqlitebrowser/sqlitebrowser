@@ -2010,7 +2010,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1567"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
-        <translation>Відкрити майстер створення таблиць, де можливо визначити ім&apos;я і поля для нової табло в базі даних</translation>
+        <translation>Відкрити майстер створення таблиць, де можливо визначити ім&apos;я і поля для нової таблиці в базі даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1588"/>
@@ -2025,7 +2025,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1624"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
-        <translation>Відкрити майстер створення Інтекс, в якому можна визначити новий індекс для існуючої таблиць бази даних.</translation>
+        <translation>Відкрити майстер створення Індексу, в якому можна визначити новий індекс для існуючої таблиці бази даних.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1636"/>
@@ -2211,7 +2211,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1774"/>
         <source>Export as CSV file</source>
-        <translation>Експортувати в файл CSV</translation>
+        <translation>Експортувати у файл CSV</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1777"/>
@@ -2237,13 +2237,13 @@ Do you want to insert it anyway?</source>
         <location filename="../MainWindow.ui" line="1825"/>
         <location filename="../MainWindow.ui" line="1828"/>
         <source>Save the current session to a file</source>
-        <translation>Зберегти поточний стан в файл</translation>
+        <translation>Зберегти поточний стан у файл</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1843"/>
         <location filename="../MainWindow.ui" line="1846"/>
         <source>Load a working session from a file</source>
-        <translation>Завантажити робочий стан з файлу</translation>
+        <translation>Завантажити робочий стан із файлу</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1869"/>
@@ -2298,7 +2298,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.cpp" line="208"/>
         <source>Database file is read only. Editing the database is disabled.</source>
-        <translation>База даних тільки для читання. Редагування заборонено.</translation>
+        <translation>База даних тільки для читання. Редагування заборонене.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="214"/>
@@ -2364,7 +2364,7 @@ All data associated with the %1 will be lost.</source>
         <location filename="../MainWindow.cpp" line="757"/>
         <source>Error: could not delete the %1. message from database engine:
 %2</source>
-        <translation>Помилка: невозмножно видалити %1. Повідомлення з движка бази даних:
+        <translation>Помилка: неможливо видалити %1. Повідомлення з движка бази даних:
 %2</translation>
     </message>
     <message>
@@ -2391,7 +2391,7 @@ All data associated with the %1 will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="966"/>
         <source>%1 rows returned in %2ms from: %3</source>
-        <translation>%1 рядка повернуті за %2мс з: %3</translation>
+        <translation>%1 рядків повернуто за %2мс з: %3</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="989"/>
@@ -2401,7 +2401,7 @@ All data associated with the %1 will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="992"/>
         <source>Query executed successfully: %1 (took %2ms %3)</source>
-        <translation>Запит успішно виконаний: %1 (зайняло %2мс %3)</translation>
+        <translation>Запит успішно виконано: %1 (зайняло %2мс %3)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1063"/>
@@ -2422,7 +2422,7 @@ All data associated with the %1 will be lost.</source>
         <location filename="../MainWindow.cpp" line="1125"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Помилка при збереженні файлу бази даних. Це означає, що не всі зміни в базу даних було збережено. Спочатку Вам потрібно вирішити наступну помилку.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1134"/>
@@ -2445,13 +2445,13 @@ All data associated with the %1 will be lost.</source>
         <location filename="../MainWindow.cpp" line="1169"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
-        <translation>Створити новий файл бази даних, щоб зберегти імпортовані дані?
-Якщо відповісти Ні, буде виконана спроба імпортувати дані файлу SQL в поточну базу даних.</translation>
+        <translation>Створити новий файл бази даних для збереження імпортованих даних?
+Якщо відповідь Ні, то буде виконана спроба імпортувати дані файлу SQL в поточну базу даних.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1179"/>
         <source>File %1 already exists. Please choose a different name.</source>
-        <translation>Файл %1 вже існує. Виберіть інше ім&apos;я.</translation>
+        <translation>Файл %1 вже існує. Оберіть інше ім&apos;я.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1194"/>
@@ -2516,7 +2516,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../MainWindow.cpp" line="2777"/>
         <source>This encoding is either not valid or not supported.</source>
-        <translation>Невірне кодування або воно не підтримується.</translation>
+        <translation>Кодування невірне або не підтримується.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2808"/>
@@ -2762,7 +2762,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="368"/>
         <source>Symbol limit in cell</source>
-        <translation>Кількість символів в осередку</translation>
+        <translation>Кількість символів у осередку</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="429"/>
@@ -2912,7 +2912,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="861"/>
         <source>SQL editor &amp;font</source>
-        <translation>&amp;Шрифт в редакторі SQL</translation>
+        <translation>&amp;Шрифт у редакторі SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="874"/>
@@ -2962,7 +2962,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1000"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt; algorithm but calls back the running application. DB Browser for SQLite implements this &lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt; implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач для SQLite дозволяє використовувати оператор REGEXP &apos;з коробки&apos;. Але тим&lt;br/&gt;не менше, можливі кілька різних варіантів реалізацій даного оператора і ви вільні&lt;br/&gt;у виборі яку саме використовувати. Можна відключити нашу реалізацію і використовувати іншу -&lt;br/&gt;шляхом завантаження відповідного розширення. В цьому випадку потрібне перезавантаження програми.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач для SQLite дозволяє використовувати оператор REGEXP &apos;з коробки&apos;. Але тим&lt;br/&gt;не менше, можливі кілька різних варіантів реалізацій даного оператора і Ви вільні&lt;br/&gt;у виборі яку саме використовувати. Можна відключити нашу реалізацію і використовувати іншу -&lt;br/&gt;шляхом завантаження відповідного розширення. В цьому випадку потрібно перезавантажити програму.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1003"/>
@@ -3046,7 +3046,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="53"/>
         <source>Choose a directory</source>
-        <translation>Виберіть каталог</translation>
+        <translation>Оберіть каталог</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="268"/>
