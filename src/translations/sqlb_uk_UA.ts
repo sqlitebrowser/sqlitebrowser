@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач для SQLite - це безкоштовна програма, з відкритим вихідним кодом, призначена для створення і редагування баз даних SQLite.&lt;/p&gt;&lt;p&gt;Програма ліцензована за двома ліцензіями: Mozilla Public License Version 2 і GNU General Public License Version 3 or later. Можна змінювати або розповсюджувати її на умовах цих ліцензій.&lt;/p&gt;&lt;p&gt;Ліцензії можна переглянути за посиланням&lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: # 0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt;і&lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Додаткову інформацію про програму можна дізнатися на веб-сайті: &lt;br/&gt;&lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color: #0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Це програмне забезпечення використовує GPL/LGPL Qt Toolkit&lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small; &quot;&gt;&lt;br /&gt;Умови ліцензії на Qt Toolkit &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Ця програма також використовує набір іконок Silk від Марка Джеймса (Mark James), ліцензований під ліцензією Creative Commons Attribution 2.5 and 3.0.&lt;br /&gt;Детальна інформація за адресою &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt; &lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Переклад українською здійснив Андрій Кондратьєв &lt;a href=&quot;mailto:inbox@kondratyev.dp.ua&quot;&gt;inbox@kondratyev.dp.ua&lt;/a&gt;&lt;br /&gt; Зв&apos;язок з автором: &lt;/span&gt;&lt;a href=&quot;https://www.facebook.com/a.s.kondratyev&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;https://www.facebook.com/a.s.kondratyev&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt; &lt;/body&gt;&lt;/html&gt;
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач для SQLite - це безкоштовна програма з відкритим вихідним кодом, призначена для створення і редагування баз даних SQLite.&lt;/p&gt;&lt;p&gt;Програма має дозволи за двома ліцензіями: Mozilla Public License Version 2 і GNU General Public License Version 3 or later. Можна змінювати або розповсюджувати її за умовами цих ліцензій.&lt;/p&gt;&lt;p&gt;Ліцензії можна переглянути за посиланням&lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: # 0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt;і&lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Додаткову інформацію про програму можна отримати на веб-сайті: &lt;br/&gt;&lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color: #0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Це програмне забезпечення використовує GPL/LGPL Qt Toolkit&lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small; &quot;&gt;&lt;br /&gt;Умови ліцензії на Qt Toolkit &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Ця програма також використовує набір іконок Silk від Марка Джеймса (Mark James), дозволений за ліцензією Creative Commons Attribution 2.5 and 3.0.&lt;br /&gt;Детальна інформація за адресою &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt; &lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Переклад українською здійснив Андрій Кондратьєв &lt;a href=&quot;mailto:inbox@kondratyev.dp.ua&quot;&gt;inbox@kondratyev.dp.ua&lt;/a&gt;&lt;br /&gt; Зв&apos;язок з автором: &lt;/span&gt;&lt;a href=&quot;https://www.facebook.com/a.s.kondratyev&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;https://www.facebook.com/a.s.kondratyev&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size: small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt; &lt;/body&gt;&lt;/html&gt;
 </translation>
     </message>
     <message>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../Application.cpp" line="72"/>
         <source>Possible command line arguments:</source>
-        <translation>Доступні ключі командної строки:</translation>
+        <translation>Доступні ключі командного рядку:</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="73"/>
@@ -123,16 +123,16 @@ Note that if you change any of the other, optional, settings you&apos;ll need to
 Leave the password fields empty to disable the encryption.
 The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
         <translation>Будь ласка, вкажіть ключ шифрування.
-Якщо ви зміните будь-яку опциональную настройку, то її потрібно буде вводити при кожному відкритті цього файлу бази даних.
-Залиште пароль порожнім якщо шифрування не потрібно.
-Процес може зайняти деякий час і наполегливо рекомендується створити резервну копію перед продовженням! Всі не збережені зміни автоматично будуть збережені.</translation>
+Якщо Ви зміните будь-яке опціональне налаштування, то його потрібно буде вводити при кожному відкритті цього файлу бази даних.
+Залиште пароль порожнім якщо шифрування не потрібне.
+Процес може зайняти деякий час. Рекомендується створити резервну копію перед продовженням! Всі незбережені зміни автоматично будуть збережені.</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="20"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
         <translation>Будь ласка, введіть ключ для шифрування бази даних.
-Якщо будь-які інші налаштування були змінені для даної бази даний то потрібно також надати цю інформацію.</translation>
+Якщо будь-які інші налаштування були змінені для цієї бази даних, то варто надати цю інформацію також.</translation>
     </message>
 </context>
 <context>
@@ -140,7 +140,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="14"/>
         <source>Choose display format</source>
-        <translation>Виберіть формат відображення</translation>
+        <translation>Оберіть формат відображення</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="20"/>
@@ -150,7 +150,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="26"/>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation>Виберіть формат відображення для колонки &apos;%1&apos;, який буде застосований до кожного її значенням.</translation>
+        <translation>Оберіть формат відображення для колонки &apos;%1&apos;. Формат буде застосований до кожного її значенням.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
@@ -278,17 +278,17 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="171"/>
         <source>Please specify the database name under which you want to access the attached database</source>
-        <translation></translation>
+        <translation>Будь ласка, вкажіть ім'я бази даних, під яким Ви хочете отримати доступ до підключених баз даних</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="420"/>
         <source>Do you want to save the changes made to the database file %1?</source>
-        <translation>Зберегти зроблені зміни в файлі бази даних %1?</translation>
+        <translation>Зберегти зроблені зміни у файлі бази даних %1?</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="478"/>
         <source>Exporting database to SQL file...</source>
-        <translation>Експорт бази даних в файл SQL...</translation>
+        <translation>Експорт бази даних у файл SQL...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="479"/>
@@ -311,7 +311,7 @@ If any of the other settings were altered for this database file you need to pro
         <location filename="../sqlitedb.cpp" line="715"/>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation>Помилка в операторі #%1: %2. Переривання виконання.</translation>
+        <translation>Помилка в операторі #%1: %2. Виконання зупинено.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1000"/>
@@ -326,35 +326,35 @@ Aborting execution.</source>
     <message>
         <location filename="../sqlitedb.cpp" line="1017"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation>renameColumn: помилка створення точки збереження. БД каже: %1</translation>
+        <translation>renameColumn: помилка створення точки збереження. БД говорить: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1065"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation>renameColumn: помилка створення нової таблиці. БД каже: %1</translation>
+        <translation>renameColumn: помилка створення нової таблиці. БД говорить: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1074"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
-        <translation>renameColumn: помилка копіювання даних в нову таблицю. БД каже:
+        <translation>renameColumn: помилка копіювання даних у нову таблицю. БД говорить:
 %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1100"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation>renameColumn: помилка видалення старої таблиці. БД каже: %1</translation>
+        <translation>renameColumn: помилка видалення старої таблиці. БД говорить: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1119"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 </source>
-        <translation>Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих з цією таблицею. Найбільш ймовірна причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
+        <translation>Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найбільш імовірна причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1128"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation>renameColumn: помилка звільнення точки збереження. БД каже: %1</translation>
+        <translation>renameColumn: помилка звільнення точки збереження. БД говорить: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1142"/>
@@ -366,7 +366,7 @@ Aborting execution.</source>
     <message>
         <location filename="../sqlitedb.cpp" line="1187"/>
         <source>... &lt;string can not be logged, contains binary data &gt; ...</source>
-        <translation>... &lt;рядок не може бути записаний у лог-файл, так як містить двійкові дані &gt;...</translation>
+        <translation>... &lt;рядок не може бути записаний у лог-файл, оскільки містить двійкові дані &gt;...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1227"/>
@@ -429,7 +429,7 @@ Aborting execution.</source>
     <message>
         <location filename="../DbStructureModel.cpp" line="145"/>
         <source>Browsables (%1)</source>
-        <translation>Переглядаємі (%1)</translation>
+        <translation>Можна переглянути (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="150"/>
@@ -498,7 +498,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.ui" line="101"/>
         <source>Opens a file dialog used to export the contents of this database cell to a text file .</source>
-        <translation>Відкривається файловий діалог, щоб експортувати вміст цієї ячейки бази даних в текстовий файл.</translation>
+        <translation>Відкриває файловий діалог щоб експортувати вміст цієї комірки бази даних у текстовий файл.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="104"/>
@@ -508,7 +508,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.ui" line="117"/>
         <source>Set this cell to NULL</source>
-        <translation>Присвоїти цій ячейці значення NULL</translation>
+        <translation>Присвоїти цій комірці значення NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="123"/>
@@ -533,27 +533,27 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.ui" line="120"/>
         <source>Erases the contents of the cell</source>
-        <translation>Очищається вміст комірки</translation>
+        <translation>Очищення вмісту комірки</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="144"/>
         <source>This area displays information about the data present in this database cell</source>
-        <translation>Ця область відображає інформацію про дані, що знаходяться в цьій комірці бази даних</translation>
+        <translation>Ця область відображає інформацію про дані, що знаходяться в цій комірці бази даних</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="187"/>
         <source>Type of data currently in cell</source>
-        <translation>Тип даних в комірці</translation>
+        <translation>Тип даних у комірці</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="194"/>
         <source>Size of data currently in table</source>
-        <translation>Розмір даних в таблиці</translation>
+        <translation>Розмір даних у таблиці</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="239"/>
         <source>Choose a file</source>
-        <translation>Вибрати файл</translation>
+        <translation>Обрати файл</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="241"/>
@@ -573,7 +573,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="188"/>
         <source>Image data can&apos;t be viewed with the text editor</source>
-        <translation>Зображення не може бути відображено в текстовому редакторі</translation>
+        <translation>Зображення не може бути відображене в текстовому редакторі</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="216"/>
@@ -583,7 +583,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="483"/>
         <source>Type of data currently in cell: %1 Image</source>
-        <translation>Тип даних в комірці: %1 Зображення</translation>
+        <translation>Тип даних у комірці: %1 Зображення</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="489"/>
@@ -593,13 +593,13 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="503"/>
         <source>Type of data currently in cell: NULL</source>
-        <translation>Тип даних в комірці: NULL</translation>
+        <translation>Тип даних у комірці: NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="406"/>
         <location filename="../EditDialog.cpp" line="509"/>
         <source>Type of data currently in cell: Text / Numeric</source>
-        <translation>Тип даних в комірці: Текст / Числове</translation>
+        <translation>Тип даних у комірці: Текст / Числове</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="407"/>
@@ -614,7 +614,7 @@ Aborting execution.</source>
     <message>
         <location filename="../EditDialog.cpp" line="515"/>
         <source>Type of data currently in cell: Binary</source>
-        <translation>Тип даних в комірці: Двійкові дані</translation>
+        <translation>Тип даних у комірці: Двійкові дані</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="504"/>
@@ -647,12 +647,12 @@ Aborting execution.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation>Щоб створити таблицю &apos;БЕЗ rowid&apos;, потрібно щоб в ній був первинний ключ INTEGER з відключеним автоінкрементом.</translation>
+        <translation>Щоб створити таблицю &apos;WITHOUT rowid&apos;, потрібно щоб у ній був первинний ключ INTEGER з відключеним автоінкрементом.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="65"/>
         <source>Without Rowid</source>
-        <translation>Без rowid</translation>
+        <translation>Без ідентифікатора</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="78"/>
@@ -765,66 +765,66 @@ Aborting execution.</source>
     <message>
         <location filename="../EditTableDialog.cpp" line="235"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
-        <translation>Поле з таким ім&apos;ям вже існує. Будь ласка перейменуйте його, або виберіть інше ім&apos;я для даного поля.</translation>
+        <translation>Поле з таким ім&apos;ям уже існує. Будь ласка, переіменуйте його або виберіть інше ім&apos;я для даного поля.</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name can not be changed.</source>
-        <translation type="obsolete">На дану колонку посилається зовнішній ключ в таблиці %1, стовнці %2, тому її ім&apos;я не може бути змінено.</translation>
+        <translation type="obsolete">На цю колонку посилається зовнішній ключ у таблиці %1, стовнці %2, тому її ім&apos;я не може бути змінено.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="258"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name can not be changed.</source>
-        <translation>На дану колонку посилається зовнішній ключ в таблиці %1, тому її ім&apos;я не може бути змінено.</translation>
+        <translation>На цю колонку посилається зовнішній ключ у таблиці %1, тому її ім&apos;я не може бути змінено.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="328"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation>Існує принаймні один рядок, де це поле встановлено в NULL. Встановити цей прапор не можна. Спочатку змініть дані таблиці.</translation>
+        <translation>Існує принаймні один рядок де це поле встановлено в NULL. Встановити цей прапорець неможливо. Спочатку змініть дані таблиці.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="355"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
-        <translation>Існує принаймні один рядок, де це поле містить нечислове значення. Встановити прапор АІ не можна. Спочатку змініть дані таблиці.</translation>
+        <translation>Існує принаймні один рядок, де це поле містить нечислове значення. Встановити прапорець АІ неможливо. Спочатку змініть дані таблиці.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="399"/>
         <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation>Стовпець &apos;%1&quot; містить не унікальні дані.</translation>
+        <translation>Стовпець &apos;%1&quot; не містить унікальних даних.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="400"/>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation>Неможливо. Для початку, змініть дані таблиці.</translation>
+        <translation>Неможливо поставити цей прапорець. Спочатку змініть табличні дані.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="467"/>
         <source>Modifying this column failed. Error returned from database:
 %1</source>
-        <translation type="unfinished">Неможливо змінити цю строку. Повідомлення від БД:
+        <translation type="unfinished">Неможливо змінити цей рядок. Повідомлення про помилку від БД:
 %1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="550"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
-        <translation>Видалити поле &apos;%1&apos;?
-Всі дані, які в даний момент збережені в цьому полі, будуть втрачені.</translation>
+        <translation>Ви впевнені, що хочете видалити поле &apos;%1&apos;?
+Всі дані, які містяться в цьому полі, будуть втрачені.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="663"/>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
 - Primary key flag set
 - Auto increment disabled</source>
-        <translation>Перед тим як застосовувати прапор без rowid, будь ласка переконайтеся, що існує стовпець, який:
-- є первинний ключем
-- для нього відключений автоінкремент</translation>
+        <translation>Будь ласка, додайте поле, яке відповідає насупним критеріям перед встановлення прапорцю без rowid:
+- встановлено прапорець первинного ключа
+- відключений автоінкремент</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="691"/>
         <source>Setting the rowid column for the table failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не вдалося встановити rowid стовпець для таблиці. Повідомлення помилки:</translation>
     </message>
 </context>
 <context>
@@ -832,7 +832,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
-        <translation>Експортувати дані в форматі CSV</translation>
+        <translation>Експортувати дані у форматі CSV</translation>
     </message>
     <message>
         <source>&amp;Table(s)</source>
@@ -891,7 +891,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="152"/>
         <source>&amp;Quote character</source>
-        <translation>&amp;Символ лапки</translation>
+        <translation>&amp;Символ лапок</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="177"/>
@@ -958,7 +958,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="329"/>
         <source>Export completed.</source>
-        <translation>Експорт завершений.</translation>
+        <translation>Експорт завершено.</translation>
     </message>
 </context>
 <context>
@@ -976,7 +976,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="63"/>
         <source>Select All</source>
-        <translation>Вибрати все</translation>
+        <translation>Обрати все</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="70"/>
@@ -991,7 +991,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="85"/>
         <source>Keep column names in INSERT INTO</source>
-        <translation>Ім&apos;я стовпців в виразі INSERT INTO</translation>
+        <translation>Ім&apos;я стовпців у виразі INSERT INTO</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
@@ -1016,7 +1016,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="75"/>
         <source>Please select at least 1 table.</source>
-        <translation>ласка, виберіть хоча б одну таблицю.</translation>
+        <translation>Будь ласка, виберіть хоча б одну таблицю.</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="88"/>
@@ -1031,12 +1031,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="117"/>
         <source>Export completed.</source>
-        <translation>Експорт завершений.</translation>
+        <translation>Експорт завершено.</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="119"/>
         <source>Export cancelled or failed.</source>
-        <translation>Експорт скасований або виникли помилки.</translation>
+        <translation>Експорт скасовано або виникла помилка.</translation>
     </message>
 </context>
 <context>
@@ -1118,7 +1118,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="118"/>
         <source>&amp;Quote character</source>
-        <translation>&amp;Символ лапки</translation>
+        <translation>&amp;Символ лапок</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="131"/>
@@ -1168,7 +1168,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="194"/>
         <source>There is already a table of that name and an import into an existing table is only possible if the number of columns match.</source>
-        <translation>Вже існує таблиця з таким же ім&apos;ям, імпорт в існуючу таблицю можливий, тільки якщо число стовпців збігається.</translation>
+        <translation>Вже існує таблиця з таким самим ім&apos;ям, імпорт в існуючу таблицю можливий тільки якщо число стовпців збігається.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="197"/>
@@ -1188,7 +1188,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="241"/>
         <source>Missing field for record %1</source>
-        <translation>Пропущений стовпець для запису %1</translation>
+        <translation>Пропущено стовпець для запису %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="249"/>
@@ -1216,12 +1216,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="102"/>
         <source>Select a table to browse data</source>
-        <translation>Виберіть таблицю для перегляду даних</translation>
+        <translation>Оберіть таблицю для перегляду даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="105"/>
         <source>Use this list to select a table to be displayed in the database view</source>
-        <translation>Використовуйте цей список, щоб вибрати таблицю, яка повинна бути відображена для перегляду бази даних</translation>
+        <translation>Використовуйте цей список щоб вибрати таблицю, яка відобразиться у переглядачі баз даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="118"/>
@@ -1231,7 +1231,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="121"/>
         <source>This button refreshes the data in the currently selected table.</source>
-        <translation>Ця кнопка оновлює дані обраної в даний момент таблиці.</translation>
+        <translation>Ця кнопка оновлює дані обраної на цей момент таблиці.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1245,7 +1245,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="162"/>
         <source>Insert a new record in the current table</source>
-        <translation>Додати новий запис в поточну таблицю</translation>
+        <translation>Додати новий запис у поточну таблицю</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="80"/>
@@ -1255,7 +1255,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="165"/>
         <source>This button creates a new, empty record in the database</source>
-        <translation>Ця кнопка створює новий, порожній запис в таблиці</translation>
+        <translation>Ця кнопка створює новий, порожній запис у таблиці</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="168"/>
@@ -1280,7 +1280,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="193"/>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation>Це перегляд бази даних. Зробіть подвійне клацання по будь-якому запису, щоб відредагувати його вміст.</translation>
+        <translation>Це переглядач баз даних. Зробіть подвійне клацання по будь-якому запису щоб відредагувати його вміст.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="220"/>
@@ -1290,7 +1290,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="223"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переводить до початку в таблиці вище.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переміщує до початку в таблиці вище.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="226"/>
@@ -1305,7 +1305,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки до переміщення на 100 записів вгору в табличному поданні&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переміщує на 100 записів вгору у таблиці вище&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="246"/>
@@ -1325,7 +1325,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="270"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки до переміщення на 100 записів вниз в табличному поданні вище&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переміщує на 100 записів вниз у таблиці вище&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="273"/>
@@ -1350,12 +1350,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="317"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натисніть тут, щоб перейти до зазначеного запису&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натисніть тут щоб перейти до зазначеного запису&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="320"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ця кнопка використовується, щоб переміститися до запису, номер якої зазначений в області Перейти до &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ця кнопка використовується щоб переміститися до запису, номер якого зазначений в області Перейти до &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="323"/>
@@ -1370,7 +1370,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="333"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation>Надрукуйте номер запису в цій області і натисніть кнопку Перейти до:, щоб відобразити запис в поданні бази даних</translation>
+        <translation>Надрукуйте номер запису в цій області й натисніть кнопку Перейти до: щоб відобразити запис у поданні бази даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="336"/>
@@ -1444,7 +1444,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="529"/>
         <source>Persist</source>
-        <translation>Persist</translation>
+        <translation>Продовжити</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="534"/>
@@ -1622,7 +1622,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1925"/>
         <source>Edit the display format of the data in this column</source>
-        <translation>Редагування формату відображення для даних з цій комірці</translation>
+        <translation>Редагування формату відображення для даних у цій комірці</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1933"/>
@@ -1643,7 +1643,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1944"/>
         <source>Change the encoding of the text in the table cells</source>
-        <translation>Зміна кодування тексту в даній таблиці</translation>
+        <translation>Змінити кодування тексту в цій комірці таблиці</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1949"/>
@@ -1653,7 +1653,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1952"/>
         <source>Change the default encoding assumed for all tables in the database</source>
-        <translation>Змінити кодування за замовчуванням для всіх таблиць в базі даних</translation>
+        <translation>Змінити кодування за замовчуванням для всіх таблиць у базі даних</translation>
     </message>
     <message>
         <source>Duplicate record</source>
@@ -1828,22 +1828,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1252"/>
         <source>CrossSquare</source>
-        <translation>Хрест в квадраті</translation>
+        <translation>Хрест у квадраті</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1257"/>
         <source>PlusSquare</source>
-        <translation>Плюс в квадраті</translation>
+        <translation>Плюс у квадраті</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1262"/>
         <source>CrossCircle</source>
-        <translation>Хрест в колі</translation>
+        <translation>Хрест у колі</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1267"/>
         <source>PlusCircle</source>
-        <translation>Плюс в колі</translation>
+        <translation>Плюс у колі</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1272"/>
@@ -1863,7 +1863,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1322"/>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Отримати всі дані. Має ефект лише якщо не всі дані довантажено.</translation>
+        <translation>Отримати всі дані. Діє якщо не всі дані довантажено.</translation>
     </message>
     <message>
         <source>DB Schema</source>
@@ -1883,7 +1883,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1376"/>
         <source>This option is used to create a new database file.</source>
-        <translation>Ця опція використовується, щоб створити новий файл бази даних.</translation>
+        <translation>Ця опція використовується щоб створити новий файл бази даних.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1379"/>
@@ -1929,17 +1929,17 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1438"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
-        <translation>Ця опція використовується, щоб повернути поточний файл бази даних до його останнього збереженого стану. Всі зміни, зроблені з останньої операції збереження загубляться.</translation>
+        <translation>Ця опція використовується щоб повернути поточний файл бази даних до його останнього збереженого стану. Всі зміни, зроблені з останньої операції збереження, загубляться.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1456"/>
         <source>Write changes to the database file</source>
-        <translation>Записати зміни в файл бази даних</translation>
+        <translation>Записати зміни у файл бази даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1459"/>
         <source>This option is used to save changes to the database file.</source>
-        <translation>Ця опція використовується, щоб зберегти зміни у файлі бази даних.</translation>
+        <translation>Ця опція використовується щоб зберегти зміни у файлі бази даних.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1462"/>
@@ -1949,13 +1949,13 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1476"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
-        <translation>Ущільнити базу даних, видаляючи простір, займаний видаленими записами</translation>
+        <translation>Ущільнити базу даних, видаливши простір, зайнятий видаленими записами</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1479"/>
         <location filename="../MainWindow.ui" line="1482"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
-        <translation>Ущільнити базу даних, видаливши простір, займаний видаленими записами.</translation>
+        <translation>Ущільнити базу даних, видаливши простір, зайнятий видаленими записами.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1490"/>
@@ -1975,27 +1975,27 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1507"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
-        <translation>Ця опція дозволяє імпортувати дані з текстового файлу sql в нову або існуючу базу даних. Файл SQL може бути створений на більшості двигунів баз даних, включаючи MySQL і PostgreSQL.</translation>
+        <translation>Ця опція дозволяє імпортувати дані з текстового файлу sql у нову або існуючу базу даних. Файл SQL може бути створений на більшості двигунів баз даних, включаючи MySQL і PostgreSQL.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
-        <translation>Відкрити майстра, який дозволяє імпортувати дані з файлу CSV в таблицю бази даних.</translation>
+        <translation>Відкрити майстра, який дозволяє імпортувати дані з файлу CSV у таблицю бази даних.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1521"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
-        <translation>Відкрити майстра, який дозволяє імпортувати дані з файлу CSV в таблицю бази даних. Файли CSV можуть бути створені в більшості додатків баз даних і електронних таблиць.</translation>
+        <translation>Відкрити майстра, який дозволяє імпортувати дані з файлу CSV у таблицю бази даних. Файли CSV можуть бути створені в більшості додатків баз даних і електронних таблиць.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1532"/>
         <source>Export a database to a .sql dump text file.</source>
-        <translation>Експортувати базу даних в текстовий файл .sql.</translation>
+        <translation>Експортувати базу даних у текстовий файл .sql.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1535"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
-        <translation>Ця опція дозволяє експортувати базу даних в текстовий файл .sql. Файли SQL містять всі дані, необхідні для створення бази даних в большистве движків баз даних, включаючи MySQL і PostgreSQL.</translation>
+        <translation>Ця опція дозволяє експортувати базу даних у текстовий файл .sql. Файли SQL містять всі дані, необхідні для створення бази даних у більшості движків баз даних, включаючи MySQL і PostgreSQL.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1546"/>
