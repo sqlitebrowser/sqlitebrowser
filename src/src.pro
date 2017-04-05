@@ -126,7 +126,8 @@ TRANSLATIONS += \
     translations/sqlb_pt_BR.ts \
     translations/sqlb_en_GB.ts \
     translations/sqlb_ko_KR.ts \
-    translations/sqlb_tr.ts
+    translations/sqlb_tr.ts \
+    translations/sqlb_uk_UA.ts
 
 # SQLite / SQLCipher switch pieces
 CONFIG(sqlcipher) {
