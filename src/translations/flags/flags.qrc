@@ -12,5 +12,6 @@
         <file alias="zh_TW">roc.png</file>
         <file alias="ko_KR">kr.png</file>
         <file alias="tr_TR">tr.png</file>
+        <file alias="uk_UA">ua.png</file>
     </qresource>
 </RCC>
