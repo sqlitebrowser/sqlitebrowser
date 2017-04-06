@@ -71,6 +71,12 @@ void RemoteDatabase::reloadSettings()
 
 void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
 {
+#ifdef Q_OS_MAC
+    // Temporary workaround for now, as Qt 5.8 and below doesn't support
+    // verifying certificates on OSX: https://bugreports.qt.io/browse/QTBUG-56973
+    // Hopefully this is fixed in Qt 5.9
+    return;
+#else
     // Verify the server's certificate using our CA certs
     auto verificationErrors = reply->sslConfiguration().peerCertificate().verify(m_sslConfiguration.caCertificates());
     bool good = false;
@@ -86,6 +92,7 @@ void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
     // If the server certificate didn't turn out to be good, abort the reply here
     if(!good)
         reply->abort();
+#endif
 }
 
 void RemoteDatabase::gotReply(QNetworkReply* reply)
