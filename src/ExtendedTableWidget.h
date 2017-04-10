@@ -20,6 +20,9 @@ public:
 public:
     QSet<int> selectedCols();
 
+public slots:
+    void reloadSettings();
+
 signals:
     void foreignKeyClicked(const QString& table, const QString& column, const QByteArray& value);
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected

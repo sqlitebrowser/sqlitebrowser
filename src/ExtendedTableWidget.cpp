@@ -2,6 +2,7 @@
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
 #include "sqlitetypes.h"
+#include "Settings.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -75,6 +76,17 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     setHorizontalHeader(m_tableHeader);
 
     verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+}
+
+void ExtendedTableWidget::reloadSettings()
+{
+    // Set the new font and font size
+    QFont dataBrowserFont(Settings::getValue("databrowser", "font").toString());
+    dataBrowserFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    setFont(dataBrowserFont);
+
+    // Set new default row height depending on the font size
+    verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
 }
 
 void ExtendedTableWidget::copy()

@@ -1692,9 +1692,7 @@ void MainWindow::loadExtensionsFromSettings()
 void MainWindow::reloadSettings()
 {
     // Set data browser font
-    QFont dataBrowserFont(Settings::getValue("databrowser", "font").toString());
-    dataBrowserFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-    ui->dataTable->setFont(dataBrowserFont);
+    ui->dataTable->reloadSettings();
 
     // Set prefetch sizes for lazy population of table models
     m_browseTableModel->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
