@@ -257,12 +257,12 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         {
         case kName:
             {
-            // When a field of that name already exists, show a warning to the user and don't apply the new name. There is one exception, however,
-            // to this rule: if the field that is about to be renamed the one we're finding here, this can only mean that the user is trying to
-            // rename the field to essentially the same name but with different case. Example: if I rename column 'COLUMN' to 'column', findField()
-            // is going to return the current field number because it's doing a case-independent search and it can't return another field number
-            // because SQLite prohibits duplicate field names (no matter the case). So when this happens we just allow the renaming because there's
-            // no harm to be expected from it.
+            // When a field of that name already exists, show a warning to the user and don't apply the new name. This is done by searching for an
+            // existing field with the new name. There is one exception, however, to this rule: if the field that we have found is the same field
+            // as the one we are currently trying to rename, this means the user is trying to rename the field to essentially the same name but
+            // with different case. Example: if I rename column 'COLUMN' to 'column', findField() is going to return the current field number
+            // because it's doing a case-independent search and it can't return another field number because SQLite prohibits duplicate field
+            // names (no matter the case). So when this happens we just allow the renaming because there's no harm to be expected from it.
             int foundField = m_table.findField(item->text(column));
             if(foundField != -1 && foundField != index)
             {
