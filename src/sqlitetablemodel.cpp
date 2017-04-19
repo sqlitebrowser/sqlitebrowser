@@ -269,16 +269,26 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 {
     static const sqlb::ForeignKeyClause empty_foreign_key_clause;
 
-    if (m_sTable.isEmpty())
+    // No foreign keys when not browsing a table. This usually happens when executing custom SQL statements
+    // and browsing the result set instead of browsing an entire table.
+    if(m_sTable.isEmpty())
         return empty_foreign_key_clause;
 
-    sqlb::TablePtr obj = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
-    if(obj->name().size() && (column >= 0 && column < obj->fields().count()))
+    // Retrieve database object and check if it is a table. If it isn't stop here and don't return a foreign
+    // key. This happens for views which don't have foreign keys (though we might want to think about how we
+    // can check for foreign keys in the underlying tables for some purposes like tool tips).
+    sqlb::ObjectPtr obj = m_db.getObjectByName(m_sTable);
+    if(obj->type() != sqlb::Object::Table)
+        return empty_foreign_key_clause;
+
+    // Convert object to a table and check if the column number is in the valid range
+    sqlb::TablePtr tbl = obj.dynamicCast<sqlb::Table>();
+    if(tbl && tbl->name().size() && (column >= 0 && column < tbl->fields().count()))
     {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = obj->constraint({obj->fields().at(column)}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields().at(column)}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(ptr.dynamicCast<sqlb::ForeignKeyClause>());
     }
