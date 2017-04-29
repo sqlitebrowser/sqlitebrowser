@@ -14,8 +14,8 @@ QMAKE_CXXFLAGS += -std=c++11
 CONFIG(unittest) {
   QT += testlib
 
-  HEADERS += tests/testsqlobjects.h tests/TestImport.h
-  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp
+  HEADERS += tests/testsqlobjects.h tests/TestImport.h tests/TestRegex.h
+  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp tests/TestRegex.cpp
 } else {
   SOURCES += main.cpp
 }
