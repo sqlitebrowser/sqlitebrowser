@@ -25,6 +25,7 @@ private slots:
     void parseSQLEscapedQuotes();
     void parseSQLForeignKeys();
     void parseSQLCheckConstraint();
+    void parseDefaultValues();
     void createTableWithIn();
     void createTableWithNotLikeConstraint();
 };

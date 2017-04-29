@@ -287,6 +287,27 @@ void TestTable::parseSQLCheckConstraint()
     QCOMPARE(tab.fields().at(0)->check(), QString("`b` = 'A' or `b` = 'B'"));
 }
 
+void TestTable::parseDefaultValues()
+{
+    QString sql = "CREATE TABLE test(a int DEFAULT 0, b int DEFAULT -1, c text DEFAULT 'hello', d text DEFAULT '0');";
+
+    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+
+    QCOMPARE(tab.name(), QString("test"));
+    QCOMPARE(tab.fields().at(0)->name(), QString("a"));
+    QCOMPARE(tab.fields().at(0)->type(), QString("int"));
+    QCOMPARE(tab.fields().at(0)->defaultValue(), QString("0"));
+    QCOMPARE(tab.fields().at(1)->name(), QString("b"));
+    QCOMPARE(tab.fields().at(1)->type(), QString("int"));
+    QCOMPARE(tab.fields().at(1)->defaultValue(), QString("-1"));
+    QCOMPARE(tab.fields().at(2)->name(), QString("c"));
+    QCOMPARE(tab.fields().at(2)->type(), QString("text"));
+    QCOMPARE(tab.fields().at(2)->defaultValue(), QString("'hello'"));
+    QCOMPARE(tab.fields().at(3)->name(), QString("d"));
+    QCOMPARE(tab.fields().at(3)->type(), QString("text"));
+    QCOMPARE(tab.fields().at(3)->defaultValue(), QString("'0'"));
+}
+
 void TestTable::createTableWithIn()
 {
     QString sSQL = "CREATE TABLE not_working("
