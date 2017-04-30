@@ -168,6 +168,16 @@ QString PrimaryKeyConstraint::toSql(const FieldVector& applyOn) const
     return result;
 }
 
+QString CheckConstraint::toSql(const FieldVector&) const
+{
+    QString result;
+    if(!m_name.isNull())
+        result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
+    result += QString("CHECK(%1)").arg(m_expression);
+
+    return result;
+}
+
 QString Field::toString(const QString& indent, const QString& sep) const
 {
     QString str = indent + escapeIdentifier(m_name) + sep + m_type;
@@ -257,6 +267,10 @@ Table& Table::operator=(const Table& rhs)
             constraint = ConstraintPtr(new UniqueConstraint(*(it.value().dynamicCast<UniqueConstraint>())));
         else if(it.value()->type() == Constraint::ConstraintTypes::ForeignKeyConstraintType)
             constraint = ConstraintPtr(new ForeignKeyClause(*(it.value().dynamicCast<ForeignKeyClause>())));
+        else if(it.value()->type() == Constraint::ConstraintTypes::CheckConstraintType)
+            constraint = ConstraintPtr(new CheckConstraint(*(it.value().dynamicCast<CheckConstraint>())));
+        else
+            qWarning() << "Unknown constraint type";
         addConstraint(key, constraint);
     }
 
@@ -429,10 +443,15 @@ QString Table::sql() const
     bool autoincrement = hasAutoIncrement();
     while(it != m_constraints.constEnd())
     {
-        if((!autoincrement || it.value()->type() != Constraint::PrimaryKeyConstraintType) && !it.key().isEmpty())
+        // Ignore auto increment primary key constraint
+        if((!autoincrement || it.value()->type() != Constraint::PrimaryKeyConstraintType))
         {
-            sql += QString(",\n\t");
-            sql += it.value()->toSql(it.key());
+            // Ignore all constraints without any fields, except for check constraints which don't rely on a field vector
+            if(!(it.key().isEmpty() && it.value()->type() != Constraint::CheckConstraintType))
+            {
+                sql += QString(",\n\t");
+                sql += it.value()->toSql(it.key());
+            }
         }
         ++it;
     }
@@ -550,18 +569,22 @@ QString identifier(antlr::RefAST ident)
     return sident;
 }
 
+QString textAST(antlr::RefAST t)
+{
+    // When this is called for a KEYWORDASTABLENAME token, we must take the child's content to get the actual value
+    // instead of 'KEYWORDASTABLENAME' as a string. The same applies for  KEYWORDASCOLUMNNAME tokens.
+    if(t != antlr::nullAST && (t->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME || t->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME))
+        return t->getFirstChild()->getText().c_str();
+    else
+        return t->getText().c_str();
+}
+
 QString concatTextAST(antlr::RefAST t, bool withspace = false)
 {
     QStringList stext;
     while(t != antlr::nullAST)
     {
-        // When this is called for a KEYWORDASTABLENAME token, we must take the child's content to get the actual value
-        // instead of 'KEYWORDASTABLENAME' as a string. The same applies for  KEYWORDASCOLUMNNAME tokens.
-        if(t != antlr::nullAST && (t->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME || t->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME))
-            stext.append(t->getFirstChild()->getText().c_str());
-        else
-            stext.append(t->getText().c_str());
-
+        stext.append(textAST(t));
         t = t->getNextSibling();
     }
     return stext.join(withspace ? " " : "");
@@ -817,8 +840,38 @@ TablePtr CreateTableWalker::table()
                     tab->addConstraint(fields, ConstraintPtr(fk));
                 }
                 break;
+                case sqlite3TokenTypes::CHECK:
+                {
+                    CheckConstraint* check = new CheckConstraint;
+                    check->setName(constraint_name);
+
+                    tc = tc->getNextSibling(); // skip CHECK
+                    tc = tc->getNextSibling(); // skip LPAREN
+
+                    int num_paren = 1;
+                    QString expr;
+                    while(tc)
+                    {
+                        if(tc->getType() == sqlite3TokenTypes::LPAREN)
+                            num_paren++;
+                        else if(tc->getType() == sqlite3TokenTypes::RPAREN)
+                            num_paren--;
+
+                        if(num_paren == 0)
+                            break;
+
+                        expr.append(textAST(tc));
+
+                        tc = tc->getNextSibling();
+                    }
+
+                    check->setExpression(expr);
+                    tab->addConstraint(FieldVector(), ConstraintPtr(check));
+                }
+                break;
                 default:
                 {
+                    qWarning() << "unknown table constraint in " << tab->name();
                     tab->setFullyParsed(false);
                 }
                     break;
@@ -979,6 +1032,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         break;
         default:
         {
+            qWarning() << "unknown column constraint in " << table->name() << "." << colname;
             table->setFullyParsed(false);
         }
         break;

@@ -108,6 +108,7 @@ public:
         PrimaryKeyConstraintType,
         UniqueConstraintType,
         ForeignKeyConstraintType,
+        CheckConstraintType,
     };
 
     Constraint(const QString& name = QString())
@@ -181,6 +182,25 @@ public:
     virtual QString toSql(const FieldVector& applyOn) const;
 
     virtual ConstraintTypes type() const { return PrimaryKeyConstraintType; }
+};
+
+class CheckConstraint : public Constraint
+{
+public:
+    CheckConstraint(const QString& expr = QString())
+        : m_expression(expr)
+    {
+    }
+
+    void setExpression(const QString& expr) { m_expression = expr; }
+    QString expression() const { return m_expression; }
+
+    virtual QString toSql(const FieldVector& applyOn) const;
+
+    virtual ConstraintTypes type() const { return CheckConstraintType; }
+
+private:
+    QString m_expression;
 };
 
 class Field
