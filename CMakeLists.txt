@@ -391,6 +391,10 @@ if(WIN32 AND MSVC)
 		${QT5_PATH}/plugins/platforms/qwindows.dll
 		DESTINATION platforms)
 	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION redist)
+	# The batch file launcher
+	install(FILES
+			distri/winlaunch.bat
+		DESTINATION "/")
 endif()
 
 #cpack
@@ -415,7 +419,7 @@ if(WIN32 AND NOT UNIX)
 	set(CPACK_NSIS_CONTACT "justin@postgresql.org")
 	set(CPACK_NSIS_MODIFY_PATH OFF)
 	set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
-	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "DB Browser for SQLite.exe")
+	set(CPACK_NSIS_MUI_FINISHPAGE_RUN "winlaunch.bat")
 	set(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
 
 	# VS redist
