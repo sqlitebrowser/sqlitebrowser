@@ -2278,6 +2278,15 @@ void MainWindow::showRowidColumn(bool show)
     // Block all signals from the horizontal header. Otherwise the QHeaderView::sectionResized signal causes us trouble
     ui->dataTable->horizontalHeader()->blockSignals(true);
 
+    // WORKAROUND
+    // Set the opposite hidden/visible status of what we actually want for the rowid column. This is to work around a Qt bug which
+    // is present in at least version 5.7.1. The problem is this: when you browse a table/view with n colums, then switch to a table/view
+    // with less than n columns, you'll be able to resize the first (hidden!) column by resizing the section to the left of the first visible
+    // column. By doing so the table view gets messed up. But even when not resizing the first hidden column, tab-ing through the fields
+    // will stop at the not-so-much-hidden rowid column, too. All this can be fixed by this line. I haven't managed to find another workaround
+    // or way to fix this yet.
+    ui->dataTable->setColumnHidden(0, show);
+
     // Show/hide rowid column
     ui->dataTable->setColumnHidden(0, !show);
 
