@@ -1026,6 +1026,9 @@ void MainWindow::executeQuery()
         }
 
         execution_start_index = execution_end_index;
+
+        // Process events to keep the UI responsive
+        qApp->processEvents();
     }
     sqlWidget->finishExecution(statusMessage);
     plotDock->updatePlot(sqlWidget->getModel());
