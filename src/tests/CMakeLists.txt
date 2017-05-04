@@ -10,6 +10,7 @@ set(TESTSQLOBJECTS_SRC
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
+    ../SqlThread.cpp
     testsqlobjects.cpp
 )
 
@@ -24,6 +25,7 @@ set(TESTSQLOBJECTS_MOC_HDR
     ../sqlitedb.h
     ../sqlitetablemodel.h
     ../Settings.h
+    ../SqlThread.h
     testsqlobjects.h
 )
 
@@ -82,6 +84,7 @@ set(TESTREGEX_SRC
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
+    ../SqlThread.cpp
     TestRegex.cpp
 )
 
@@ -96,6 +99,7 @@ set(TESTREGEX_MOC_HDR
     ../sqlitedb.h
     ../sqlitetablemodel.h
     ../Settings.h
+    ../SqlThread.h
     TestRegex.h
 )
 
