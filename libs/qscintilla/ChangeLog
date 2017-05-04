@@ -1,8 +1,672 @@
+2017-02-20  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Released as v2.10.
+	[6c07847b2835] [2.10]
+
+	* qt/qscintilla_cs.qm, qt/qscintilla_de.qm, qt/qscintilla_es.qm,
+	qt/qscintilla_fr.qm, qt/qscintilla_pt_br.qm:
+	Updated the .qm files.
+	[3b3c5924e746]
+
+	* qt/qscintilla_fr.ts:
+	Partial updated French translations from Alan Garny.
+	[ca2d6917015e]
+
+2017-02-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qsciscintillabase.sip:
+	Added /Transfer/ to the scroll bar replacement functions.
+	[49cf7181402a]
+
+2017-02-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscintilla_de.ts:
+	Updated German translations from Detlev.
+	[51cca6073075]
+
+2017-02-14  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscintilla_es.ts:
+	Updated Spanish translations from Jaime Seuma.
+	[0e30abdd0907]
+
+2017-02-13  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* designer-Qt4Qt5/designer.pro, example-Qt4Qt5/application.pro,
+	qt/qscintilla.pro:
+	Removed the 'release' option from all CONFIG lines.
+	[0901267a8e49]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.cpp,
+	qt/qsciscintillabase.h:
+	Added replaceHorizontalScrollBar() and replaceVerticalScrollBar() to
+	QsciScintillaBase.
+	[bb7efd26b8b3]
+
+	* qt/qscintilla_cs.ts, qt/qscintilla_de.ts, qt/qscintilla_es.ts,
+	qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts:
+	Updated the translation files.
+	[76c23d751930]
+
+2017-01-21  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qscilexermarkdown.sip, qt/qscilexerjson.cpp,
+	qt/qscilexermarkdown.cpp, qt/qscilexermarkdown.h:
+	Updated the Markdown lexer with the latest settings from Detlev.
+	[9e9992a4e9f7]
+
+2017-01-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciapis.cpp:
+	Fixed problems with auto-completion lists where contexts and image
+	identifiers were getting lost.
+	[039599ba1b85]
+
+2017-01-16  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* designer-Qt4Qt5/designer.pro, example-Qt4Qt5/application.pro:
+	Fixed the example and designer plugin .pro files for the change
+	library name.
+	[d6c564089958]
+
+	* lib/README.doc:
+	Updated website links to https.
+	[18a7013d4f8b]
+
+	* qt/qsciabstractapis.h, qt/qsciapis.h, qt/qscicommand.h,
+	qt/qscicommandset.h, qt/qscidocument.h, qt/qsciglobal.h,
+	qt/qscilexer.h, qt/qscilexeravs.h, qt/qscilexerbash.h,
+	qt/qscilexerbatch.h, qt/qscilexercmake.h,
+	qt/qscilexercoffeescript.h, qt/qscilexercpp.h, qt/qscilexercsharp.h,
+	qt/qscilexercss.h, qt/qscilexercustom.h, qt/qscilexerd.h,
+	qt/qscilexerdiff.h, qt/qscilexerfortran.h, qt/qscilexerfortran77.h,
+	qt/qscilexerhtml.h, qt/qscilexeridl.h, qt/qscilexerjava.h,
+	qt/qscilexerjavascript.h, qt/qscilexerjson.h, qt/qscilexerlua.h,
+	qt/qscilexermakefile.h, qt/qscilexermarkdown.h,
+	qt/qscilexermatlab.h, qt/qscilexeroctave.h, qt/qscilexerpascal.h,
+	qt/qscilexerperl.h, qt/qscilexerpo.h, qt/qscilexerpostscript.h,
+	qt/qscilexerpov.h, qt/qscilexerproperties.h, qt/qscilexerpython.h,
+	qt/qscilexerruby.h, qt/qscilexerspice.h, qt/qscilexersql.h,
+	qt/qscilexertcl.h, qt/qscilexertex.h, qt/qscilexerverilog.h,
+	qt/qscilexervhdl.h, qt/qscilexerxml.h, qt/qscilexeryaml.h,
+	qt/qscimacro.h, qt/qsciprinter.h, qt/qsciscintilla.h,
+	qt/qsciscintillabase.h, qt/qscistyle.h, qt/qscistyledtext.h:
+	Removed all the __APPLE__ C++ linkages.
+	[ecd39912cb9b]
+
+	* NEWS, Python/sip/qscilexer.sip, qt/qscilexer.h:
+	The previously internal methods of QsciLexer are now part of the
+	public API and are exposed to Python.
+	[4791eae227c6]
+
+	* NEWS, Python/configure.py, qt/features/qscintilla2.prf,
+	qt/features_staticlib/qscintilla2.prf, qt/qscintilla.pro:
+	The name of the library now embeds the major version of Qt so that
+	Qt4 and Qt5 libraries can be installed in the same directory.
+	[b501dcc67049]
+
+	* NEWS, Python/sip/qsciscintilla.sip, qt/qscilexercustom.h,
+	qt/qsciscintilla.cpp, qt/qsciscintilla.h:
+	Implemented QscScintilla::bytes() and a corresponding text()
+	overload mainly for the use of QsciLexerCustom::styleText()
+	implementations.
+	[ed7a5a072695]
+
+2017-01-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qsciscintillabase.sip:
+	Updated the sub-class convertor code.
+	[ee4e6efa0576]
+
+	* NEWS, Python/sip/qscilexermarkdown.sip,
+	Python/sip/qscimodcommon.sip, qt/qscilexermarkdown.cpp,
+	qt/qscilexermarkdown.h, qt/qscintilla.pro:
+	Added the QsciLexerMarkdown class.
+	[0b5e03e0b64f]
+
+2017-01-11  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qscilexerjson.sip, Python/sip/qscimodcommon.sip,
+	qt/qscilexerjson.cpp, qt/qscilexerjson.h, qt/qscintilla.pro:
+	Implemented QsciLexerJSON.
+	[bb5118a2b0cb]
+
+2017-01-05  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qscilexercoffeescript.sip,
+	qt/qscilexercoffeescript.cpp, qt/qscilexercoffeescript.h:
+	Added InstanceProperty to QsciLexerCoffeeScript.
+	[2a6987f4c3c3]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/ScintillaQt.cpp,
+	qt/qsciscintilla.cpp, qt/qsciscintilla.h, qt/qsciscintillabase.h:
+	Implemented the new notifications.
+	[12ba81979751]
+
+2017-01-04  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added the low-level popup options.
+	[6a6fccaf8adf]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h, qt/qsciscintillabase.h:
+	Added support for multiple edge columns.
+	[761b940d39c6]
+
+2017-01-03  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added the low-level idle styling support.
+	[fe8c747abb81]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added the low-level support for fold text.
+	[3afaaf7830c6]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Updates to the low-level target support.
+	[709bfb578a28]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qsciscintilla.h,
+	qt/qsciscintillabase.h:
+	Added support for the additional indicators.
+	[fb7bcbfc6c96]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added some more low-level constants.
+	[d19d12e79c31]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h, qt/qsciscintillabase.h:
+	Added support for setting the margin background colour. Added
+	support for setting the number of margins.
+	[407db46c80a6]
+
+	* qt/qscilexercustom.cpp, qt/qscilexercustom.h:
+	Fixed QsciLexerCustom::startStyling() now that the 2nd argument
+	isn't used.
+	[2d4cc3cdb123]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h, qt/qsciscintillabase.h:
+	Added support for visible whitespace in indentations only. Added
+	support for tab drawing modes.
+	[1ef385e510b8]
+
+	* qt/InputMethod.cpp:
+	Updated the inputMethodEvent() implementation.
+	[f0060458bd73]
+
+2017-01-02  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/InputMethod.cpp, qt/ScintillaQt.cpp, qt/ScintillaQt.h:
+	Fixed compilation bugs with SCI_NAMESPACE defined.
+	[ef072ff5da5e]
+
+	* lib/README.doc:
+	Minor documentation updates.
+	[f89ceb95b9c5]
+
+	* qt/qsciscintillabase.cpp:
+	Fixed compilation bugs.
+	[8fdfb9bca00d]
+
+	* CONTRIBUTING, Python/configure-old.py, Python/configure.py, README,
+	cocoa/PlatCocoa.h, cocoa/PlatCocoa.mm, cocoa/ScintillaCocoa.h,
+	cocoa/ScintillaCocoa.mm, cocoa/ScintillaFramework/Info.plist, cocoa/
+	ScintillaFramework/ScintillaFramework.xcodeproj/project.pbxproj, coc
+	oa/ScintillaFramework/ScintillaFramework.xcodeproj/project.xcworkspa
+	ce/contents.xcworkspacedata, cocoa/ScintillaFramework/ScintillaFrame
+	work.xcodeproj/xcshareddata/xcschemes/Scintilla.xcscheme,
+	cocoa/ScintillaFramework/module.modulemap,
+	cocoa/ScintillaTest/AppController.h,
+	cocoa/ScintillaTest/AppController.mm,
+	cocoa/ScintillaTest/English.lproj/MainMenu.xib,
+	cocoa/ScintillaTest/Info.plist,
+	cocoa/ScintillaTest/ScintillaTest.xcodeproj/project.pbxproj, cocoa/S
+	cintillaTest/ScintillaTest.xcodeproj/project.xcworkspace/contents.xc
+	workspacedata, cocoa/ScintillaView.h, cocoa/ScintillaView.mm,
+	cocoa/checkbuildosx.sh, cppcheck.suppress, delcvs.bat, designer-
+	Qt4Qt5/designer.pro, doc/Design.html, doc/Icons.html, doc/Lexer.txt,
+	doc/Privacy.html, doc/SciCoding.html, doc/ScintillaDoc.html,
+	doc/ScintillaDownload.html, doc/ScintillaHistory.html,
+	doc/ScintillaRelated.html, doc/ScintillaToDo.html,
+	doc/ScintillaUsage.html, doc/index.html, example-
+	Qt4Qt5/application.pro, gtk/Converter.h, gtk/PlatGTK.cxx,
+	gtk/ScintillaGTK.cxx, gtk/ScintillaGTK.h,
+	gtk/ScintillaGTKAccessible.cxx, gtk/ScintillaGTKAccessible.h,
+	gtk/deps.mak, gtk/makefile, gtk/scintilla-marshal.c, gtk/scintilla-
+	marshal.h, gtk/scintilla-marshal.list, include/ILexer.h,
+	include/Platform.h, include/SciLexer.h, include/Sci_Position.h,
+	include/Scintilla.h, include/Scintilla.iface,
+	include/ScintillaWidget.h, lexers/LexA68k.cxx, lexers/LexAPDL.cxx,
+	lexers/LexASY.cxx, lexers/LexAU3.cxx, lexers/LexAVE.cxx,
+	lexers/LexAVS.cxx, lexers/LexAbaqus.cxx, lexers/LexAda.cxx,
+	lexers/LexAsm.cxx, lexers/LexAsn1.cxx, lexers/LexBaan.cxx,
+	lexers/LexBash.cxx, lexers/LexBasic.cxx, lexers/LexBatch.cxx,
+	lexers/LexBibTeX.cxx, lexers/LexBullant.cxx, lexers/LexCLW.cxx,
+	lexers/LexCOBOL.cxx, lexers/LexCPP.cxx, lexers/LexCSS.cxx,
+	lexers/LexCaml.cxx, lexers/LexCmake.cxx, lexers/LexCoffeeScript.cxx,
+	lexers/LexConf.cxx, lexers/LexCrontab.cxx, lexers/LexCsound.cxx,
+	lexers/LexD.cxx, lexers/LexDMAP.cxx, lexers/LexDMIS.cxx,
+	lexers/LexDiff.cxx, lexers/LexECL.cxx, lexers/LexEDIFACT.cxx,
+	lexers/LexEScript.cxx, lexers/LexEiffel.cxx, lexers/LexErlang.cxx,
+	lexers/LexErrorList.cxx, lexers/LexFlagship.cxx,
+	lexers/LexForth.cxx, lexers/LexFortran.cxx, lexers/LexGAP.cxx,
+	lexers/LexGui4Cli.cxx, lexers/LexHTML.cxx, lexers/LexHaskell.cxx,
+	lexers/LexHex.cxx, lexers/LexInno.cxx, lexers/LexJSON.cxx,
+	lexers/LexKVIrc.cxx, lexers/LexKix.cxx, lexers/LexLaTeX.cxx,
+	lexers/LexLisp.cxx, lexers/LexLout.cxx, lexers/LexLua.cxx,
+	lexers/LexMMIXAL.cxx, lexers/LexMPT.cxx, lexers/LexMSSQL.cxx,
+	lexers/LexMagik.cxx, lexers/LexMake.cxx, lexers/LexMarkdown.cxx,
+	lexers/LexMatlab.cxx, lexers/LexMetapost.cxx, lexers/LexModula.cxx,
+	lexers/LexMySQL.cxx, lexers/LexNimrod.cxx, lexers/LexNsis.cxx,
+	lexers/LexNull.cxx, lexers/LexOScript.cxx, lexers/LexOpal.cxx,
+	lexers/LexOthers.cxx, lexers/LexPB.cxx, lexers/LexPLM.cxx,
+	lexers/LexPO.cxx, lexers/LexPOV.cxx, lexers/LexPS.cxx,
+	lexers/LexPascal.cxx, lexers/LexPerl.cxx, lexers/LexPowerPro.cxx,
+	lexers/LexPowerShell.cxx, lexers/LexProgress.cxx,
+	lexers/LexProps.cxx, lexers/LexPython.cxx, lexers/LexR.cxx,
+	lexers/LexRebol.cxx, lexers/LexRegistry.cxx, lexers/LexRuby.cxx,
+	lexers/LexRust.cxx, lexers/LexSML.cxx, lexers/LexSQL.cxx,
+	lexers/LexSTTXT.cxx, lexers/LexScriptol.cxx,
+	lexers/LexSmalltalk.cxx, lexers/LexSorcus.cxx,
+	lexers/LexSpecman.cxx, lexers/LexSpice.cxx, lexers/LexTACL.cxx,
+	lexers/LexTADS3.cxx, lexers/LexTAL.cxx, lexers/LexTCL.cxx,
+	lexers/LexTCMD.cxx, lexers/LexTeX.cxx, lexers/LexTxt2tags.cxx,
+	lexers/LexVB.cxx, lexers/LexVHDL.cxx, lexers/LexVerilog.cxx,
+	lexers/LexVisualProlog.cxx, lexers/LexYAML.cxx, lexlib/Accessor.cxx,
+	lexlib/Accessor.h, lexlib/CharacterSet.cxx, lexlib/CharacterSet.h,
+	lexlib/LexAccessor.h, lexlib/LexerBase.cxx, lexlib/LexerBase.h,
+	lexlib/LexerModule.cxx, lexlib/LexerModule.h,
+	lexlib/LexerNoExceptions.cxx, lexlib/LexerNoExceptions.h,
+	lexlib/LexerSimple.cxx, lexlib/LexerSimple.h,
+	lexlib/StyleContext.cxx, lexlib/StyleContext.h, lexlib/SubStyles.h,
+	lexlib/WordList.cxx, lexlib/WordList.h, qt/qscintilla.pro,
+	scripts/Face.py, scripts/FileGenerator.py,
+	scripts/GenerateCaseConvert.py, scripts/HeaderCheck.py,
+	scripts/HeaderOrder.txt, scripts/LexGen.py,
+	scripts/ScintillaData.py, src/AutoComplete.cxx, src/CallTip.cxx,
+	src/CaseConvert.cxx, src/CaseConvert.h, src/CaseFolder.cxx,
+	src/Catalogue.cxx, src/CellBuffer.cxx, src/CellBuffer.h,
+	src/CharClassify.cxx, src/CharClassify.h, src/ContractionState.cxx,
+	src/ContractionState.h, src/Decoration.cxx, src/Document.cxx,
+	src/Document.h, src/EditModel.cxx, src/EditModel.h,
+	src/EditView.cxx, src/EditView.h, src/Editor.cxx, src/Editor.h,
+	src/ExternalLexer.cxx, src/Indicator.cxx, src/Indicator.h,
+	src/KeyMap.cxx, src/KeyMap.h, src/LineMarker.cxx,
+	src/MarginView.cxx, src/PerLine.cxx, src/Position.h,
+	src/PositionCache.cxx, src/PositionCache.h, src/RESearch.cxx,
+	src/RESearch.h, src/RunStyles.cxx, src/ScintillaBase.cxx,
+	src/ScintillaBase.h, src/Selection.cxx, src/Selection.h,
+	src/SparseVector.h, src/SplitVector.h, src/Style.cxx, src/Style.h,
+	src/UniConversion.cxx, src/UniConversion.h, src/ViewStyle.cxx,
+	src/ViewStyle.h, src/XPM.cxx, test/ScintillaCallable.py,
+	test/XiteQt.py, test/XiteWin.py, test/examples/perl-test-
+	5220delta.pl, test/examples/perl-test-5220delta.pl.styled,
+	test/examples/perl-test-sub-prototypes.pl, test/examples/perl-test-
+	sub-prototypes.pl.styled, test/gi/Scintilla-0.1.gir.good, test/gi
+	/Scintilla-filtered.h, test/gi/filter-scintilla-h.py, test/gi/gi-
+	test.py, test/gi/makefile, test/lexTests.py, test/simpleTests.py,
+	test/unit/Sci.natvis, test/unit/UnitTester.cxx,
+	test/unit/UnitTester.vcxproj, test/unit/makefile,
+	test/unit/test.mak, test/unit/testCellBuffer.cxx,
+	test/unit/testContractionState.cxx, test/unit/testDecoration.cxx,
+	test/unit/testPartitioning.cxx, test/unit/testRunStyles.cxx,
+	test/unit/testSparseState.cxx, test/unit/testSparseVector.cxx,
+	test/unit/testSplitVector.cxx, test/unit/testWordList.cxx,
+	version.txt, win32/HanjaDic.cxx, win32/HanjaDic.h,
+	win32/PlatWin.cxx, win32/SciLexer.vcxproj, win32/ScintRes.rc,
+	win32/ScintillaWin.cxx, win32/deps.mak, win32/makefile,
+	win32/scintilla.mak:
+	Initial merge of Scintilla v3.7.2.
+	[abbfc844caaa]
+
+	* lib/LICENSE.commercial.short, lib/LICENSE.gpl,
+	lib/LICENSE.gpl.short:
+	Updated the copyright notices.
+	[10d2ba70b9d0]
+
+	* Makefile, build.py:
+	Merged the v2.9 maintenance branch.
+	[8c0c0a19a3c8]
+
+2016-12-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.9.4 for changeset 06e486532f86
+	[a0e7ce41b57a] <2.9-maint>
+
+	* NEWS:
+	Released as v2.9.4.
+	[06e486532f86] [2.9.4] <2.9-maint>
+
+2016-12-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qsci/api/python/Python-3.6.api:
+	Added the .api file for Python v3.6.
+	[4af5841ab5d2] <2.9-maint>
+
+2016-11-07  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciscintillabase.cpp:
+	Updated a comment to explain why setting custom scrollbars doesn't
+	work.
+	[757ca3bbc419] <2.9-maint>
+
+2016-10-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Fixed configure.py for Python v2.
+	[6d784269a812] <2.9-maint>
+
+2016-10-23  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qscimod4.sip, Python/sip/qscimod5.sip:
+	Explicitly %Import the QtCore module so that it is imported in the
+	.pyi file.
+	[fec61f546e2b] <2.9-maint>
+
+2016-09-26  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/README.doc:
+	Removed some (possibly out of date) information about installation
+	on macOS.
+	[c793591a8192] <2.9-maint>
+
+	* qt/InputMethod.cpp:
+	Disable the hack for handling null input method method events on
+	Windows as there are reports that this breaks character composition.
+	[42977285ae81] <2.9-maint>
+
+2016-09-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciscintilla.cpp:
+	Fixed a Qt warning about a too large red value in a QColor.
+	[f9af82c24301] <2.9-maint>
+
+2016-09-23  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* rb-product:
+	Added the minimum PyQt5 wheel version to the product file.
+	[11d2fb4dc51a] <2.9-maint>
+
+2016-09-10  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py, rb-product:
+	Updated the handling of the minimum SIP version.
+	[1e50ffa9dac1] <2.9-maint>
+
+2016-09-09  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qscimod5.sip:
+	The limited API is now used for the Python bindings.
+	[a2b8118a4483] <2.9-maint>
+
+2016-08-08  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Makefile, build.py:
+	Removed the old internal build system.
+	[522e8b386eef] <2.9-maint>
+
+2016-07-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in:
+	Removed the Obsoletes tag from METADATA.
+	[fbf9aa05d0b4] <2.9-maint>
+
+	* .hgtags:
+	Added tag 2.9.3 for changeset 19c9752958b7
+	[fb5cd006685f] <2.9-maint>
+
+	* NEWS:
+	Released as v2.9.3.
+	[19c9752958b7] [2.9.3] <2.9-maint>
+
+2016-07-19  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in:
+	Updated METADATA.
+	[aa51b27d9baf] <2.9-maint>
+
+2016-06-21  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* build.py, lib/qscintilla.dxy:
+	Simplify the generation of the doxygen documentation.
+	[12575460cd55] <2.9-maint>
+
+	* rb-product, rbproduct.py:
+	Replaced the product plugin with a product file.
+	[846ad54d791e] <2.9-maint>
+
+2016-06-10  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/ScintillaQt.cpp, qt/qscintilla.pro:
+	Fixed a flicker problem on OS X.
+	[c1482a759dc0] <2.9-maint>
+
+2016-05-12  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in, rbproduct.py:
+	Try to prevent the GPL and commercial versions being installed at
+	the same time. (Although it doesn't seem to work.)
+	[826424d291a2] <2.9-maint>
+
+	* METADATA.in, rbproduct.py:
+	Configure the PKG-INFO meta-data according to the license.
+	[e3243207aa15] <2.9-maint>
+
+2016-05-10  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* rbproduct.py:
+	More changes to the product plugin required by rbtools.
+	[437e6032e4df] <2.9-maint>
+
+2016-05-09  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* rbproduct.py:
+	Updated the product plugin for the latest rbtools changes.
+	[393cae59af91] <2.9-maint>
+
+2016-04-22  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in:
+	Updated the meta-data now that Linux wheels are available from PyPI.
+	[40f18e066c6f] <2.9-maint>
+
+2016-04-18  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.9.2 for changeset 15888f3e91ce
+	[5cd132938309] <2.9-maint>
+
+	* NEWS:
+	Released as v2.9.2.
+	[15888f3e91ce] [2.9.2] <2.9-maint>
+
+	* Python/sip/qsciscintillabase.sip:
+	Remove all deprecated /DocType/ annotations.
+	[b9d570ab642a] <2.9-maint>
+
+2016-04-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* rbproduct.py:
+	Locate the static library on Windows.
+	[dd8c14dace83] <2.9-maint>
+
+	* rbproduct.py:
+	Fixed a typo.
+	[baf5c942f528] <2.9-maint>
+
+	* rbproduct.py:
+	Add any pre-installed .api files to the wheel.
+	[cf7b6302ae83] <2.9-maint>
+
+	* rbproduct.py:
+	Exploit verbose mode in the product plugin.
+	[da743c037880] <2.9-maint>
+
+	* rbproduct.py:
+	Fixed permissions of the product plugin.
+	[6fac075e0b88] <2.9-maint>
+
+2016-04-16  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Makefile:
+	Updated the clean target.
+	[692b14f48ade] <2.9-maint>
+
+	* rbproduct.py:
+	The wheel now includes translations and API files.
+	[bf911094e537] <2.9-maint>
+
+	* METADATA.in, Makefile, Python/configure.py, build.py, rbproduct.py:
+	Added the initial support for creating wheels.
+	[da0a5d22e864] <2.9-maint>
+
+	* Makefile, build.py:
+	Added the --omit-license-tag option to build.py. Added the dist-
+	wheel-gpl target to the master Makefile.
+	[a63c245de735] <2.9-maint>
+
+2016-04-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure-old.py, Python/configure.py, build.py,
+	qt/features/qscintilla2.prf, qt/features_staticlib/qscintilla2.prf,
+	qt/qsciglobal.h, qt/qscintilla.pro:
+	Symbols are now hidden if possible on all platforms. Improved the
+	handling of QSCINTILLA_DLL so it should be completely automatic.
+	Removed the --no-dll option to configure.py.
+	[e35caca29dd6] <2.9-maint>
+
+2016-03-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure-old.py, build.py:
+	Use the new naming standards for development versions.
+	[21d2f882320a] <2.9-maint>
+
+2016-03-14  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py, build.py:
+	The configure.py boilerplate code is applied automatically.
+	[848f3fca41c0] <2.9-maint>
+
+2016-03-13  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Updated the configure.py boilerplate.
+	[b3fd404a1134] <2.9-maint>
+
+2016-03-07  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Added support for PEP 484 stub files to configure.py.
+	[9316fed27503] <2.9-maint>
+
+2015-12-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Makefile:
+	Switched the internal build system to Python v3.5.
+	[5215e7f3116e] <2.9-maint>
+
+2015-10-28  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Handle PATH components that are enclosed in quotes.
+	[d0f19b69ce26] <2.9-maint>
+
+2015-10-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.9.1 for changeset 9bd39be91ef8
+	[c71bd22d6ccf] <2.9-maint>
+
+	* NEWS:
+	Released as v2.9.1.
+	[9bd39be91ef8] [2.9.1] <2.9-maint>
+
+2015-10-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciscintilla.cpp:
+	Fixed the handling of the keypad modifier.
+	[e363cc2c347f] <2.9-maint>
+
+2015-09-18  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qsci/api/python/Python-3.5.api:
+	Added the .api file for Python v3.5.
+	[5b4e58de4663] <2.9-maint>
+
+2015-09-10  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qsciabstractapis.sip, Python/sip/qsciapis.sip:
+	Fixed the Python binding for
+	QsciAbstractAPIs::updateAutoCompletionList().
+	[53f2939a3b29] <2.9-maint>
+
+2015-09-08  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Use win32-msvc2015 for Python v3.5 and later.
+	[2f264662e2c7] <2.9-maint>
+
+2015-09-01  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciscintilla.cpp:
+	Fixed the restyling of a document displayed in multiple editors.
+	[9309f264ab57] <2.9-maint>
+
+2015-08-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscintilla.pro, qt/qsciscintilla.cpp:
+	Fixed a problem starting a call tip when the auto-completion list is
+	displayed. Bumped the library version.
+	[2ec2115ea4d2] <2.9-maint>
+
+2015-07-12  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* designer-Qt4Qt5/qscintillaplugin.h:
+	Fixed a warning message when compiling against Qt v5.5.0.
+	[3ff05a0ef88d] <2.9-maint>
+
+2015-07-09  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Update QMAKE_RPATHDIR rather than set it.
+	[045c64a7e65c] <2.9-maint>
+
+2015-06-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Set QMAKE_RPATHDIR for Qt v5.5 on OS X.
+	[b83394e4a676] <2.9-maint>
+
+2015-05-26  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure.py:
+	Fixed the backstop handling in the Python bindings configuration
+	script and bumped the version number.
+	[1ab1dd7ea495] <2.9-maint>
+
+2015-05-02  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscintilla.pro:
+	Use QT_HOST_DATA for the .prf destination with Qt v5. Removed all Qt
+	v3 support from the .pro file.
+	[63c0391624a8] <2.9-maint>
+
 2015-04-20  Phil Thompson  <phil@riverbankcomputing.com>
 
 	* .hgtags:
 	Added tag 2.9 for changeset 41ee8162fa81
-	[9817b0a7a4f7] [tip]
+	[9817b0a7a4f7]
 
 	* NEWS:
 	Released as v2.9.
@@ -2881,287 +3545,6 @@
 	Import from SVN.
 	[49d5a0d80211]
 
-2008-08-31  phil  <phil>
-
-	* qt/qscintilla_de.qm, qt/qscintilla_de.ts:
-	Updated German translations from Detlev.
-	[d2a7db9cb3f6] <2.2-maint>
-
-2008-08-17  phil  <phil>
-
-	* Python/sip/qscilexeryaml.sip, Python/sip/qscimodcommon.sip,
-	qt/qscilexeryaml.cpp, qt/qscilexeryaml.h, qt/qscintilla.pro:
-	Added the QsciLexerYAML class.
-	[87f48847405d] <2.2-maint>
-
-	* Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
-	qt/qsciscintilla.h:
-	The fold margin can now be specified by an extra argument to
-	QsciScintilla::setFolding().
-	[ae43393149f0] <2.2-maint>
-
-	* qt/qscilexerlua.cpp, qt/qscilexerlua.h, qt/qscilexerperl.cpp,
-	qt/qscilexerperl.h:
-	Implemented autoCompletionWordSeparators() for QsciLexerPerl and
-	QsciLexerLua.
-	[1bfc2fc0fa36] <2.2-maint>
-
-	* qt/ListBoxQt.cpp, qt/ListBoxQt.h, qt/qscintilla_de.qm,
-	qt/qscintilla_de.ts, qt/qsciscintilla.cpp, qt/qsciscintilla.h:
-	User lists can now handle entries with embedded spaces. Updated
-	German translations from Detlev.
-	[b5e413c95aff] <2.2-maint>
-
-2008-08-16  phil  <phil>
-
-	* Python/sip/qscilexerxml.sip, Python/sip/qscimodcommon.sip,
-	qt/qscilexerhtml.cpp, qt/qscilexerxml.cpp, qt/qscilexerxml.h,
-	qt/qscintilla.pro:
-	Added the QsciLexerXML class.
-	[643a3e847646] <2.2-maint>
-
-	* Python/sip/qscilexerpostscript.sip, Python/sip/qscimodcommon.sip,
-	qt/qscilexerpostscript.cpp, qt/qscilexerpostscript.h,
-	qt/qscintilla.pro, qt/qscintilla_de.qm, qt/qscintilla_de.ts:
-	Added the QsciLexerPostScript class. Updated German translations
-	from Detlev.
-	[3e4695d615b0] <2.2-maint>
-
-2008-08-10  phil  <phil>
-
-	* Python/sip/qscilexerpascal.sip, Python/sip/qscimodcommon.sip,
-	qt/qscilexerpascal.cpp, qt/qscilexerpascal.h, qt/qscintilla.pro:
-	Added the QsciLexerPascal class.
-	[2712538aa17c] <2.2-maint>
-
-	* Makefile, Python/sip/qscilexerfortran.sip,
-	Python/sip/qscilexerfortran77.sip, Python/sip/qscimodcommon.sip,
-	qt/qscilexerfortran.cpp, qt/qscilexerfortran.h,
-	qt/qscilexerfortran77.cpp, qt/qscilexerfortran77.h,
-	qt/qscintilla.pro:
-	Added the QsciLexerFortran77 and QsciLexerFortran classes.
-	[e72f0ce049ab] <2.2-maint>
-
-2008-07-03  phil  <phil>
-
-	* lib/README.doc, qt/qscintilla.pro:
-	Updated the Windows installation instructions for Qt3. Backed out
-	the use of version numbers on Windows because it breaks
-	compatibility with Qt3. (It may go back for Qt4 if that proves not
-	to be a problem.)
-	[82b976c98cf9] <2.2-maint>
-
-2008-06-19  phil  <phil>
-
-	* build.py, qt/qscintilla.pro:
-	Added the DLL metadata for Windows.
-	[0f65670eeb66] <2.2-maint>
-
-2008-06-16  phil  <phil>
-
-	* Python/sip/qsciscintillabase.sip, qt/qscintilla.pro,
-	qt/qsciscintillabase.h:
-	Added support for the new Scintilla 1.76 features and lexers.
-	[fff8c7e1940e] <2.2-maint>
-
-	* doc/ScintillaDoc.html, doc/ScintillaDownload.html,
-	doc/ScintillaHistory.html, doc/ScintillaRelated.html,
-	doc/index.html, gtk/PlatGTK.cxx, gtk/ScintillaGTK.cxx, gtk/makefile,
-	gtk/scintilla.mak, include/Platform.h, include/SciLexer.h,
-	include/Scintilla.h, include/Scintilla.iface, macosx/ExtInput.cxx,
-	macosx/ExtInput.h, macosx/PlatMacOSX.cxx, macosx/PlatMacOSX.h,
-	macosx/QuartzTextLayout.h, macosx/QuartzTextStyle.h,
-	macosx/QuartzTextStyleAttribute.h, macosx/ScintillaMacOSX.cxx,
-	macosx/ScintillaMacOSX.h, macosx/TView.cxx, macosx/makefile,
-	src/CellBuffer.cxx, src/Editor.cxx, src/Editor.h, src/KeyWords.cxx,
-	src/LexCPP.cxx, src/LexGen.py, src/LexMagik.cxx, src/LexMatlab.cxx,
-	src/LexPerl.cxx, src/LexPowerShell.cxx, src/LineMarker.cxx,
-	src/RunStyles.cxx, src/RunStyles.h, vcbuild/SciLexer.dsp,
-	version.txt, win32/PlatWin.cxx, win32/ScintRes.rc,
-	win32/ScintillaWin.cxx, win32/makefile, win32/scintilla.mak,
-	win32/scintilla_vc6.mak:
-	Merged Scintilla v1.76.
-	[a3a5181efbb0] <2.2-maint>
-
-2008-06-10  phil  <phil>
-
-	* Python/configure.py:
-	Fixed a configuration problem with the Python bindings when building
-	against a Windows DLL of QScintilla.
-	[7d9af6e97d2c] <2.2-maint>
-
-2008-06-07  phil  <phil>
-
-	* Makefile, lib/LICENSE.commercial, lib/README.doc, qt/qscimacro.cpp,
-	qt/qscimacro.h:
-	Fixed a regression in macro recording.
-	[3a2c8add1382] <2.2-maint>
-
-2008-03-09  phil  <phil>
-
-	* lib/qscintilla.dxy:
-	Fixed the doxygen configuration file for Qt4.
-	[2d3ab16b71cb] <2.2-maint>
-
-2008-03-06  phil  <phil>
-
-	* qt/qscintilla_de.qm, qt/qscintilla_de.ts:
-	Updated German translations from Detlev.
-	[478c96e64584] <2.2-maint>
-
-	* include/Platform.h:
-	By default build with (possibly over-aggressive) assertions
-	disabled.
-	[a07535b643ef] <2.2-maint>
-
-2008-03-05  phil  <phil>
-
-	* lib/qscintilla.dxy:
-	Updated the doxygen configuration to remove some warnings.
-	[bf028c1824c3] <2.2-maint>
-
-2008-03-04  phil  <phil>
-
-	* Python/sip/qscilexertcl.sip, Python/sip/qscimodcommon.sip,
-	qt/qscilexertcl.cpp, qt/qscilexertcl.h, qt/qscintilla.pro:
-	Added the QsciLexerTCL class.
-	[a008135167cf] <2.2-maint>
-
-2008-11-17  phil  <phil>
-
-	* NEWS:
-	Released as v2.3.2.
-	[6ae4c306fcf1] [2.3.2] <2.3-maint>
-
-2008-11-16  phil  <phil>
-
-	* qt/qsciscintilla.cpp, qt/qsciscintillabase.h:
-	The default lexer is now SCLEX_CONTAINER rather than SCLEX_NULL.
-	[abffc574bda0] <2.3-maint>
-
-2008-11-14  phil  <phil>
-
-	* qt/qscilexerpython.cpp, qt/qscilexerxml.cpp, qt/qscintilla.pro:
-	The XML lexer now styles embedded scripts properly. (An API call to
-	disable this will be added in a future version.)
-	[be4308ba5fc9] <2.3-maint>
-
-	* UTF-8-demo.txt, qt/PlatQt.cpp:
-	Fixed a regression in measuring character widths introduced when
-	fixing the problem with kerned fonts.
-	[835cbce25ae2] <2.3-maint>
-
-2008-11-08  phil  <phil>
-
-	* NEWS:
-	Released as v2.3.1.
-	[91ec01d1c22c] [2.3.1] <2.3-maint>
-
-	* NEWS, Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
-	qt/qsciscintilla.h:
-	Added QsciScintilla::wordAtPoint() based on a patch from Andrea
-	Battisti.
-	[072c84e5baa7] <2.3-maint>
-
-2008-11-07  phil  <phil>
-
-	* qt/qsciscintilla.cpp:
-	Changing the current lexer while text is displayed should now be
-	handled properly. (However the XML lexer seems buggy in this
-	regard.)
-	[ef0fcd30ff99] <2.3-maint>
-
-	* qt/PlatQt.cpp:
-	Fixed a bug in the calculation of character positions when kerning
-	was in effect. This cause the caret to be displayed too far to the
-	right.
-	[225bf588aeeb] <2.3-maint>
-
-2008-11-01  phil  <phil>
-
-	* NEWS:
-	Updated the NEWS file.
-	[3f777fbcaa87] <2.3-maint>
-
-2008-10-21  phil  <phil>
-
-	* qt/qscintilla_de.ts:
-	Updated German translations from Detlev.
-	[055862970575] <2.3-maint>
-
-2008-10-20  phil  <phil>
-
-	* Python/configure.py, Python/sip/qscilexercss.sip,
-	Python/sip/qscilexerdiff.sip, Python/sip/qsciscintillabase.sip,
-	qt/ScintillaQt.cpp, qt/qscilexercss.cpp, qt/qscilexercss.h,
-	qt/qscilexerdiff.cpp, qt/qscilexerdiff.h, qt/qscintilla.pro,
-	qt/qscintilla_cs.ts, qt/qscintilla_de.ts, qt/qscintilla_fr.ts,
-	qt/qscintilla_pt_br.ts, qt/qscintilla_ru.ts, qt/qsciscintilla.cpp,
-	qt/qsciscintillabase.h:
-	Updated the QScintilla API to accomodate changes in Scintilla v1.77.
-	[9876dd8de8a4] <2.3-maint>
-
-	* README, doc/ScintillaDoc.html, doc/ScintillaDownload.html,
-	doc/ScintillaHistory.html, doc/ScintillaRelated.html,
-	doc/ScintillaToDo.html, doc/index.html, gtk/PlatGTK.cxx,
-	gtk/ScintillaGTK.cxx, gtk/makefile, gtk/scintilla.mak,
-	include/SciLexer.h, include/Scintilla.h, include/Scintilla.iface,
-	macosx/makefile, src/CellBuffer.cxx, src/CellBuffer.h,
-	src/Document.cxx, src/Document.h, src/Editor.cxx,
-	src/ExternalLexer.cxx, src/KeyWords.cxx, src/LexAbaqus.cxx,
-	src/LexAsm.cxx, src/LexBash.cxx, src/LexCPP.cxx, src/LexCSS.cxx,
-	src/LexFortran.cxx, src/LexGen.py, src/LexHTML.cxx,
-	src/LexHaskell.cxx, src/LexInno.cxx, src/LexLua.cxx,
-	src/LexMySQL.cxx, src/LexNsis.cxx, src/LexOthers.cxx,
-	src/LexPerl.cxx, src/LexProgress.cxx, src/LexRuby.cxx,
-	src/LexTeX.cxx, src/LexVerilog.cxx, src/LexYAML.cxx,
-	src/RESearch.cxx, src/RESearch.h, src/RunStyles.h,
-	src/ScintillaBase.cxx, src/SplitVector.h, vcbuild/SciLexer.dsp,
-	version.txt, win32/PlatWin.cxx, win32/ScintRes.rc,
-	win32/ScintillaWin.cxx, win32/makefile, win32/scintilla.mak,
-	win32/scintilla_vc6.mak:
-	Initial merge of Scintilla 1.77.
-	[39acb5c4e434] <2.3-maint>
-
-2008-10-12  phil  <phil>
-
-	* qt/qsciscintilla.cpp, qt/qsciscintilla.h:
-	Applied a patch from Detlev that fixes issues with the document
-	modification notification and setting different fold margins.
-	[3af8eefae9f9] <2.3-maint>
-
-	* Python/sip/qscicommand.sip, Python/sip/qscicommandset.sip,
-	Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
-	qt/qsciscintilla.h:
-	Added the read() and write() methods to QsciScintilla in
-	anticipation of PyQt dropping support for QStrings. This will allow
-	file to be read and written while keeping the number of conversions
-	to the minimum.
-	[85e0d79e204f] <2.3-maint>
-
-	* Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
-	qt/qsciscintilla.h:
-	QsciScintilla::setSelection() is now implemented using SCI_SETSEL so
-	that the carat can be left at either the start or the end of the
-	selection. Exposed QsciScintilla::positionFromLineIndex() and
-	QsciScintilla::lineIndexFromPosition().
-	[acdba5c2e772] <2.3-maint>
-
-2008-10-04  phil  <phil>
-
-	* qt/qscidocument.cpp, qt/qscidocument.h, qt/qsciscintilla.cpp,
-	qt/qsciscintilla.h:
-	The modified status of a document is now maintained on a per
-	document basis rather than a per editor basis.
-	[744886134592] <2.3-maint>
-
-2008-10-02  phil  <phil>
-
-	* qt/qscilexerpython.cpp:
-	Added 'with' to the list of keywords in the Python lexer for Python
-	v2.6.
-	[e33bbbc426ab] <2.3-maint>
-
 2010-01-20  phil  <phil>
 
 	* Makefile, NEWS:
@@ -5013,4 +5396,3 @@
 	win32/scintilla_vc6.mak, zipsrc.bat:
 	First import of QScintilla
 	[0521804cd44a]
-

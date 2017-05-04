@@ -6,20 +6,22 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     }
 }
 
+DEFINES += QSCINTILLA_DLL
+
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]
 
 LIBS += -L$$[QT_INSTALL_LIBS]
 
 CONFIG(debug, debug|release) {
     mac: {
-        LIBS += -lqscintilla2_debug
+        LIBS += -lqscintilla2_qt$${QT_MAJOR_VERSION}_debug
     } else {
         win32: {
-            LIBS += -lqscintilla2d
+            LIBS += -lqscintilla2_qt$${QT_MAJOR_VERSION}d
         } else {
-            LIBS += -lqscintilla2
+            LIBS += -lqscintilla2_qt$${QT_MAJOR_VERSION}
         }
     }
 } else {
-    LIBS += -lqscintilla2
+    LIBS += -lqscintilla2_qt$${QT_MAJOR_VERSION}
 }

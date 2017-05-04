@@ -36,7 +36,7 @@ public:
 
 /**
  * When platform has a way to generate an event before painting,
- * accumulate needed styling range and other work items in 
+ * accumulate needed styling range and other work items in
  * WorkNeeded to avoid unnecessary work inside paint handler
  */
 class WorkNeeded {
@@ -46,13 +46,11 @@ public:
 		workStyle=1,
 		workUpdateUI=2
 	};
-	bool active;
 	enum workItems items;
 	Position upTo;
 
-	WorkNeeded() : active(false), items(workNone), upTo(0) {}
+	WorkNeeded() : items(workNone), upTo(0) {}
 	void Reset() {
-		active = false;
 		items = workNone;
 		upTo = 0;
 	}
@@ -153,7 +151,7 @@ struct WrapPending {
  */
 class Editor : public EditModel, public DocWatcher {
 	// Private so Editor objects can not be copied
-	Editor(const Editor &);
+	explicit Editor(const Editor &);
 	Editor &operator=(const Editor &);
 
 protected:	// ScintillaBase subclass needs access to much of Editor
@@ -178,6 +176,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 
 	bool hasFocus;
 	bool mouseDownCaptures;
+	bool mouseWheelCaptures;
 
 	int xCaretMargin;	///< Ensure this many pixels visible on both sides of caret
 	bool horizontalScrollBarVisible;
@@ -234,6 +233,8 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	bool paintingAllText;
 	bool willRedrawAll;
 	WorkNeeded workNeeded;
+	int idleStyling;
+	bool needIdleStyling;
 
 	int modEventMask;
 
@@ -274,7 +275,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	// The top left visible point in main window coordinates. Will be 0,0 except for
 	// scroll views where it will be equivalent to the current scroll position.
 	virtual Point GetVisibleOriginInMain() const;
-	Point DocumentPointFromView(Point ptView) const;  // Convert a point from view space to document
+	PointDocument DocumentPointFromView(Point ptView) const;  // Convert a point from view space to document
 	int TopLineOfMain() const;   // Return the line at Main's y coordinate 0
 	virtual PRectangle GetClientRectangle() const;
 	virtual PRectangle GetClientDrawingRectangle();
@@ -284,8 +285,8 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	int LinesToScroll() const;
 	int MaxScrollPos() const;
 	SelectionPosition ClampPositionIntoDocument(SelectionPosition sp) const;
-	Point LocationFromPosition(SelectionPosition pos);
-	Point LocationFromPosition(int pos);
+	Point LocationFromPosition(SelectionPosition pos, PointEnd pe=peDefault);
+	Point LocationFromPosition(int pos, PointEnd pe=peDefault);
 	int XFromPosition(int pos);
 	int XFromPosition(SelectionPosition sp);
 	SelectionPosition SPositionFromLocation(Point pt, bool canReturnInvalid=false, bool charPosition=false, bool virtualSpace=true);
@@ -313,18 +314,22 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void SetRectangularRange();
 	void ThinRectangularRange();
 	void InvalidateSelection(SelectionRange newMain, bool invalidateWholeSelection=false);
+	void InvalidateWholeSelection();
 	void SetSelection(SelectionPosition currentPos_, SelectionPosition anchor_);
 	void SetSelection(int currentPos_, int anchor_);
 	void SetSelection(SelectionPosition currentPos_);
 	void SetSelection(int currentPos_);
 	void SetEmptySelection(SelectionPosition currentPos_);
 	void SetEmptySelection(int currentPos_);
+	enum AddNumber { addOne, addEach };
+	void MultipleSelectAdd(AddNumber addNumber);
 	bool RangeContainsProtected(int start, int end) const;
 	bool SelectionContainsProtected();
 	int MovePositionOutsideChar(int pos, int moveDir, bool checkLineEnd=true) const;
 	SelectionPosition MovePositionOutsideChar(SelectionPosition pos, int moveDir, bool checkLineEnd=true) const;
-	int MovePositionTo(SelectionPosition newPos, Selection::selTypes selt=Selection::noSel, bool ensureVisible=true);
-	int MovePositionTo(int newPos, Selection::selTypes selt=Selection::noSel, bool ensureVisible=true);
+	void MovedCaret(SelectionPosition newPos, SelectionPosition previousPos, bool ensureVisible);
+	void MovePositionTo(SelectionPosition newPos, Selection::selTypes selt=Selection::noSel, bool ensureVisible=true);
+	void MovePositionTo(int newPos, Selection::selTypes selt=Selection::noSel, bool ensureVisible=true);
 	SelectionPosition MovePositionSoVisible(SelectionPosition pos, int moveDir);
 	SelectionPosition MovePositionSoVisible(int pos, int moveDir);
 	Point PointMainCaret();
@@ -361,6 +366,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void DropCaret();
 	void CaretSetPeriod(int period);
 	void InvalidateCaret();
+	virtual void NotifyCaretMove();
 	virtual void UpdateSystemCaret();
 
 	bool Wrapping() const;
@@ -385,10 +391,11 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void ChangeSize();
 
 	void FilterSelections();
-	int InsertSpace(int position, unsigned int spaces);
+	int RealizeVirtualSpace(int position, unsigned int virtualSpace);
+	SelectionPosition RealizeVirtualSpace(const SelectionPosition &position);
 	void AddChar(char ch);
 	virtual void AddCharUTF(const char *s, unsigned int len, bool treatAsDBCS=false);
-	void FillVirtualSpace();
+	void ClearBeforeTentativeStart();
 	void InsertPaste(const char *text, int len);
 	enum PasteShape { pasteStream=0, pasteRectangular = 1, pasteLine = 2 };
 	void InsertPasteShape(const char *text, int len, PasteShape shape);
@@ -408,7 +415,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void DelCharBack(bool allowLineStartDeletion);
 	virtual void ClaimSelection() = 0;
 
-	static int ModifierFlags(bool shift, bool ctrl, bool alt, bool meta=false);
+	static int ModifierFlags(bool shift, bool ctrl, bool alt, bool meta=false, bool super=false);
 	virtual void NotifyChange() = 0;
 	virtual void NotifyFocus(bool focus);
 	virtual void SetCtrlID(int identifier);
@@ -432,6 +439,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void NotifyIndicatorClick(bool click, int position, bool shift, bool ctrl, bool alt);
 	bool NotifyMarginClick(Point pt, int modifiers);
 	bool NotifyMarginClick(Point pt, bool shift, bool ctrl, bool alt);
+	bool NotifyMarginRightClick(Point pt, int modifiers);
 	void NotifyNeedShown(int pos, int len);
 	void NotifyDwelling(Point pt, bool state);
 	void NotifyZoom();
@@ -455,9 +463,16 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void Duplicate(bool forLine);
 	virtual void CancelModes();
 	void NewLine();
-	void CursorUpOrDown(int direction, Selection::selTypes selt=Selection::noSel);
-	void ParaUpOrDown(int direction, Selection::selTypes selt=Selection::noSel);
+	SelectionPosition PositionUpOrDown(SelectionPosition spStart, int direction, int lastX);
+	void CursorUpOrDown(int direction, Selection::selTypes selt);
+	void ParaUpOrDown(int direction, Selection::selTypes selt);
+	Range RangeDisplayLine(int lineVisible);
 	int StartEndDisplayLine(int pos, bool start);
+	int VCHomeDisplayPosition(int position);
+	int VCHomeWrapPosition(int position);
+	int LineEndWrapPosition(int position);
+	int HorizontalMove(unsigned int iMessage);
+	int DelWordOrLine(unsigned int iMessage);
 	virtual int KeyCommand(unsigned int iMessage);
 	virtual int KeyDefault(int /* key */, int /*modifiers*/);
 	int KeyDownWithModifiers(int key, int modifiers, bool *consumed);
@@ -494,6 +509,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void DwellEnd(bool mouseMoved);
 	void MouseLeave();
 	virtual void ButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers);
+	virtual void RightButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers);
 	virtual void ButtonDown(Point pt, unsigned int curTime, bool shift, bool ctrl, bool alt);
 	void ButtonMoveWithModifiers(Point pt, int modifiers);
 	void ButtonMove(Point pt);
@@ -515,6 +531,10 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 
 	int PositionAfterArea(PRectangle rcArea) const;
 	void StyleToPositionInView(Position pos);
+	int PositionAfterMaxStyling(int posMax, bool scrolling) const;
+	void StartIdleStyling(bool truncatedLastStyling);
+	void StyleAreaBounded(PRectangle rcArea, bool scrolling);
+	void IdleStyling();
 	virtual void IdleWork();
 	virtual void QueueIdleWork(WorkNeeded::workItems items, int upTo=0);
 
@@ -554,8 +574,10 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void AddStyledText(char *buffer, int appendLength);
 
 	virtual sptr_t DefWndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) = 0;
+	bool ValidMargin(uptr_t wParam) const;
 	void StyleSetMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam);
 	sptr_t StyleGetMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam);
+	void SetSelectionNMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam);
 
 	static const char *StringFromEOLMode(int eolMode);
 

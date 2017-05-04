@@ -1,6 +1,6 @@
 // This class defines the "official" low-level API.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -20,10 +20,6 @@
 
 #ifndef QSCISCINTILLABASE_H
 #define QSCISCINTILLABASE_H
-
-#ifdef __APPLE__
-extern "C++" {
-#endif
 
 #include <qglobal.h>
 
@@ -930,6 +926,18 @@ public:
         SCI_EXPANDCHILDREN = 2239,
 
         //!
+        SCI_SETMARGINBACKN = 2250,
+
+        //!
+        SCI_GETMARGINBACKN = 2251,
+
+        //!
+        SCI_SETMARGINS = 2252,
+
+        //!
+        SCI_GETMARGINS = 2253,
+
+        //!
         SCI_SETTABINDENTS = 2260,
 
         //!
@@ -1680,12 +1688,6 @@ public:
         SCI_GETCHARACTERPOINTER = 2520,
 
         //!
-        SCI_SETKEYSUNICODE = 2521,
-
-        //!
-        SCI_GETKEYSUNICODE = 2522,
-
-        //!
         SCI_INDICSETALPHA = 2523,
 
         //!
@@ -2184,7 +2186,49 @@ public:
         SCI_SETTARGETRANGE = 2686,
 
         //!
-        SCI_GETTARGETRANGE = 2687,
+        SCI_GETTARGETTEXT = 2687,
+
+        //!
+        SCI_MULTIPLESELECTADDNEXT = 2688,
+
+        //!
+        SCI_MULTIPLESELECTADDEACH = 2689,
+
+        //!
+        SCI_TARGETWHOLEDOCUMENT = 2690,
+
+        //!
+        SCI_ISRANGEWORD = 2691,
+
+        //!
+        SCI_SETIDLESTYLING = 2692,
+
+        //!
+        SCI_GETIDLESTYLING = 2693,
+
+        //!
+        SCI_MULTIEDGEADDLINE = 2694,
+
+        //!
+        SCI_MULTIEDGECLEARALL = 2695,
+
+        //!
+        SCI_SETMOUSEWHEELCAPTURES = 2696,
+
+        //!
+        SCI_GETMOUSEWHEELCAPTURES = 2697,
+
+        //!
+        SCI_GETTABDRAWMODE = 2698,
+
+        //!
+        SCI_SETTABDRAWMODE = 2699,
+
+        //!
+        SCI_TOGGLEFOLDSHOWTEXT = 2700,
+
+        //!
+        SCI_FOLDDISPLAYTEXTSETSTYLE = 2701,
 
         //!
         SCI_STARTRECORD = 3001,
@@ -2280,6 +2324,15 @@ public:
         SCI_GETSUBSTYLEBASES = 4026,
     };
 
+	enum
+	{
+		SC_AC_FILLUP = 1,
+		SC_AC_DOUBLECLICK = 2,
+		SC_AC_TAB = 3,
+		SC_AC_NEWLINE = 4,
+		SC_AC_COMMAND = 5,
+	};
+
     enum
     {
         SC_ALPHA_TRANSPARENT = 0,
@@ -2305,6 +2358,14 @@ public:
 
     enum
     {
+        SC_IDLESTYLING_NONE = 0,
+        SC_IDLESTYLING_TOVISIBLE = 1,
+        SC_IDLESTYLING_AFTERVISIBLE = 2,
+        SC_IDLESTYLING_ALL = 3,
+    };
+
+    enum
+    {
         SC_IME_WINDOWED = 0,
         SC_IME_INLINE = 1,
     };
@@ -2325,6 +2386,13 @@ public:
     {
         SC_MULTIPASTE_ONCE = 0,
         SC_MULTIPASTE_EACH = 1
+    };
+
+    enum
+    {
+        SC_POPUP_NEVER = 0,
+        SC_POPUP_ALL = 1,
+        SC_POPUP_TEXT = 2,
     };
 
     //! This enum defines the different selection modes.
@@ -2379,16 +2447,24 @@ public:
 
     enum
     {
+        SCTD_LONGARROW = 0,
+        SCTD_STRIKEOUT = 1,
+    };
+
+    enum
+    {
         SCVS_NONE = 0,
         SCVS_RECTANGULARSELECTION = 1,
-        SCVS_USERACCESSIBLE = 2
+        SCVS_USERACCESSIBLE = 2,
+        SCVS_NOWRAPLINESTART = 4,
     };
 
     enum
     {
         SCWS_INVISIBLE = 0,
         SCWS_VISIBLEALWAYS = 1,
-        SCWS_VISIBLEAFTERINDENT = 2
+        SCWS_VISIBLEAFTERINDENT = 2,
+        SCWS_VISIBLEONLYININDENT = 3,
     };
 
     enum
@@ -2553,7 +2629,11 @@ public:
         SC_MARGIN_TEXT = 4,
 
         //! The margin will display right justified text.
-        SC_MARGIN_RTEXT = 5
+        SC_MARGIN_RTEXT = 5,
+
+        //! The margin's background color will be set to the color set by
+        //! SCI_SETMARGINBACKN.
+        SC_MARGIN_COLOUR = 6,
     };
 
     enum
@@ -2565,6 +2645,7 @@ public:
         STYLE_CONTROLCHAR = 36,
         STYLE_INDENTGUIDE = 37,
         STYLE_CALLTIP = 38,
+        STYLE_FOLDDISPLAYTEXT = 39,
         STYLE_LASTPREDEFINED = 39,
         STYLE_MAX = 255
     };
@@ -2582,6 +2663,8 @@ public:
         SC_CHARSET_MAC = 77,
         SC_CHARSET_OEM = 255,
         SC_CHARSET_RUSSIAN = 204,
+        SC_CHARSET_OEM866 = 866,
+        SC_CHARSET_CYRILLIC = 1251,
         SC_CHARSET_SHIFTJIS = 128,
         SC_CHARSET_SYMBOL = 2,
         SC_CHARSET_TURKISH = 162,
@@ -2597,7 +2680,8 @@ public:
     {
         SC_CASE_MIXED = 0,
         SC_CASE_UPPER = 1,
-        SC_CASE_LOWER = 2
+        SC_CASE_LOWER = 2,
+        SC_CASE_CAMEL = 3,
     };
 
     //! This enum defines the different indentation guide views.
@@ -2644,6 +2728,8 @@ public:
         INDIC_COMPOSITIONTHIN = 15,
         INDIC_FULLBOX = 16,
         INDIC_TEXTFORE = 17,
+        INDIC_POINT = 18,
+        INDIC_POINTCHARACTER = 19,
 
         INDIC_IME = 32,
         INDIC_IME_MAX = 35,
@@ -2677,6 +2763,13 @@ public:
         SCFIND_REGEXP = 0x00200000,
         SCFIND_POSIX = 0x00400000,
         SCFIND_CXX11REGEX = 0x00800000,
+    };
+
+    enum
+    {
+        SC_FOLDDISPLAYTEXT_HIDDEN = 0,
+        SC_FOLDDISPLAYTEXT_STANDARD = 1,
+        SC_FOLDDISPLAYTEXT_BOXED = 2,
     };
 
     enum
@@ -2750,7 +2843,8 @@ public:
     {
         EDGE_NONE = 0,
         EDGE_LINE = 1,
-        EDGE_BACKGROUND = 2
+        EDGE_BACKGROUND = 2,
+        EDGE_MULTILINE = 3,
     };
 
     enum
@@ -3225,6 +3319,12 @@ public:
 
         //! Select the Tektronix extended hex lexer.
         SCLEX_TEHEX = 119,
+
+        //! Select the JSON hex lexer.
+        SCLEX_JSON = 120,
+
+        //! Select the EDIFACT lexer.
+        SCLEX_EDIFACT = 121,
     };
 
     enum
@@ -3284,6 +3384,16 @@ public:
     //! one.  This can be used by the higher level API to send messages that
     //! aren't associated with a particular instance.
     static QsciScintillaBase *pool();
+
+    //! Replaces the existing horizontal scroll bar with \a scrollBar.  The
+    //! existing scroll bar is deleted.  This should be called instead of
+    //! QAbstractScrollArea::setHorizontalScrollBar().
+    void replaceHorizontalScrollBar(QScrollBar *scrollBar);
+
+    //! Replaces the existing vertical scroll bar with \a scrollBar.  The
+    //! existing scroll bar is deleted.  This should be called instead of
+    //! QAbstractScrollArea::setHorizontalScrollBar().
+    void replaceVerticalScrollBar(QScrollBar *scrollBar);
 
     //! Send the Scintilla message \a msg with the optional parameters \a
     //! wParam and \a lParam.
@@ -3355,14 +3465,30 @@ signals:
     //! auto-completion list is active.
     void SCN_AUTOCCHARDELETED();
 
+    //! This signal is emitted after an auto-completion has inserted its text.
+    //! \a selection is the text of the selection.
+    //! \a position is the start position of the word being completed.
+    //! \a ch is the fillup character that triggered the selection if method is
+    //! SC_AC_FILLUP.
+    //! \a method is the method used to trigger the selection.
+    //!
+    //! \sa SCN_AUTOCCANCELLED(), SCN_AUTOCSELECTION
+    void SCN_AUTOCCOMPLETED(const char *selection, int position, int ch, int method);
+
     //! This signal is emitted when the user selects an item in an
     //! auto-completion list.  It is emitted before the selection is inserted.
     //! The insertion can be cancelled by sending an SCI_AUTOCANCEL message
     //! from a connected slot.
     //! \a selection is the text of the selection.
     //! \a position is the start position of the word being completed.
+    //! \a ch is the fillup character that triggered the selection if method is
+    //! SC_AC_FILLUP.
+    //! \a method is the method used to trigger the selection.
     //!
-    //! \sa SCN_AUTOCCANCELLED()
+    //! \sa SCN_AUTOCCANCELLED(), SCN_AUTOCCOMPLETED
+    void SCN_AUTOCSELECTION(const char *selection, int position, int ch, int method);
+
+    //! \overload
     void SCN_AUTOCSELECTION(const char *selection, int position);
 
     //! This signal is emitted when the document has changed for any reason.
@@ -3447,6 +3573,16 @@ signals:
     //! \sa SCI_GETMARGINSENSITIVEN, SCI_SETMARGINSENSITIVEN
     void SCN_MARGINCLICK(int position, int modifiers, int margin);
 
+    //! This signal is emitted when the user right-clicks on a sensitive
+    //! margin.  \a position is the position of the start of the line against
+    //! which the user clicked.
+    //! \a modifiers is the logical or of the modifier keys that were pressed
+    //! when the user clicked.
+    //! \a margin is the number of the margin the user clicked in: 0, 1 or 2.
+    //! 
+    //! \sa SCI_GETMARGINSENSITIVEN, SCI_SETMARGINSENSITIVEN
+    void SCN_MARGINRIGHTCLICK(int position, int modifiers, int margin);
+
     //!
     void SCN_MODIFIED(int, int, const char *, int, int, int, int, int, int, int);
 
@@ -3491,6 +3627,9 @@ signals:
     void SCN_UPDATEUI(int updated);
 
     //!
+    void SCN_USERLISTSELECTION(const char *, int, int, int);
+
+    //! \overload
     void SCN_USERLISTSELECTION(const char *, int);
 
     //!
@@ -3608,14 +3747,13 @@ private:
     bool clickCausedFocus;
 #endif
 
+    void connectHorizontalScrollBar();
+    void connectVerticalScrollBar();
+
     void acceptAction(QDropEvent *e);
 
     QsciScintillaBase(const QsciScintillaBase &);
     QsciScintillaBase &operator=(const QsciScintillaBase &);
 };
-
-#ifdef __APPLE__
-}
-#endif
 
 #endif

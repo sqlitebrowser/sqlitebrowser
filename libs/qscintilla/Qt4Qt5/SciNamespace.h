@@ -1,7 +1,7 @@
 // Support for building the Scintilla code in the Scintilla namespace using the
 // -DSCI_NAMESPACE compiler flag.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 

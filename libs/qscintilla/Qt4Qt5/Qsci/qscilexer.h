@@ -1,6 +1,6 @@
 // This defines the interface to the QsciLexer class.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -20,10 +20,6 @@
 
 #ifndef QSCILEXER_H
 #define QSCILEXER_H
-
-#ifdef __APPLE__
-extern "C++" {
-#endif
 
 #include <QColor>
 #include <QFont>
@@ -97,10 +93,10 @@ public:
     //! \sa setAPIs()
     QsciAbstractAPIs *apis() const;
 
-    //! \internal Returns the characters that can fill up auto-completion.
+    //! Returns the characters that can fill up auto-completion.
     virtual const char *autoCompletionFillups() const;
 
-    //! \internal Returns the list of character sequences that can separate
+    //! Returns the list of character sequences that can separate
     //! auto-completion words.  The first in the list is assumed to be the
     //! sequence used to separate words in the lexer's API files.
     virtual QStringList autoCompletionWordSeparators() const;
@@ -112,30 +108,29 @@ public:
     //! QsciScintilla::AiOpening, QsciScintilla::AiClosing
     int autoIndentStyle();
 
-    //! \internal Returns a space separated list of words or characters in
-    //! a particular style that define the end of a block for
-    //! auto-indentation.  The style is returned via \a style.
+    //! Returns a space separated list of words or characters in a particular
+    //! style that define the end of a block for auto-indentation.  The style
+    //! is returned via \a style.
     virtual const char *blockEnd(int *style = 0) const;
 
-    //! \internal Returns the number of lines prior to the current one when
-    //! determining the scope of a block when auto-indenting.
+    //! Returns the number of lines prior to the current one when determining
+    //! the scope of a block when auto-indenting.
     virtual int blockLookback() const;
 
-    //! \internal Returns a space separated list of words or characters in
-    //! a particular style that define the start of a block for
-    //! auto-indentation.  The style is returned via \a style.
+    //! Returns a space separated list of words or characters in a particular
+    //! style that define the start of a block for auto-indentation.  The style
+    //! is returned via \a style.
     virtual const char *blockStart(int *style = 0) const;
 
-    //! \internal Returns a space separated list of keywords in a
-    //! particular style that define the start of a block for
-    //! auto-indentation.  The style is returned via \a style.
+    //! Returns a space separated list of keywords in a particular style that
+    //! define the start of a block for auto-indentation.  The style is
+    //! returned via \a style.
     virtual const char *blockStartKeyword(int *style = 0) const;
 
-    //! \internal Returns the style used for braces for brace matching.
+    //! Returns the style used for braces for brace matching.
     virtual int braceStyle() const;
 
-    //! \internal Returns true if the language is case sensitive.  The default
-    //! is true.
+    //! Returns true if the language is case sensitive.  The default is true.
     virtual bool caseSensitive() const;
 
     //! Returns the foreground colour of the text for style number \a style.
@@ -154,7 +149,7 @@ public:
     //! \sa defaultFont()
     virtual QFont font(int style) const;
 
-    //! \internal Returns the view used for indentation guides.
+    //! Returns the view used for indentation guides.
     virtual int indentationGuideView() const;
 
     //! Returns the set of keywords for the keyword set \a set recognised
@@ -162,9 +157,9 @@ public:
     //! is no such set.
     virtual const char *keywords(int set) const;
 
-    //! \internal Returns the number of the style used for whitespace.  The
-    //! default implementation returns 0 which is the convention adopted by
-    //! most lexers.
+    //! Returns the number of the style used for whitespace.  The default
+    //! implementation returns 0 which is the convention adopted by most
+    //! lexers.
     virtual int defaultStyle() const;
 
     //! Returns the descriptive name for style number \a style.  For a valid
@@ -350,9 +345,5 @@ private:
     QsciLexer(const QsciLexer &);
     QsciLexer &operator=(const QsciLexer &);
 };
-
-#ifdef __APPLE__
-}
-#endif
 
 #endif

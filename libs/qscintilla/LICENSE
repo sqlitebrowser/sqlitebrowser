@@ -1,12 +1,3 @@
-
- QScintilla is Copyright (C) 2015 Riverbank Computing Limited
-                                            <info@riverbankcomputing.com>
-
- You may use, distribute and copy QScintilla under the terms of GNU
- General Public License version 3, which is displayed below.
-
--------------------------------------------------------------------------
-
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -681,5 +672,3 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
-
--------------------------------------------------------------------------

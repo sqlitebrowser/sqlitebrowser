@@ -8,12 +8,14 @@
 #include <string.h>
 #include <assert.h>
 
+#include <stdexcept>
 #include <vector>
 #include <map>
 
 #include "Platform.h"
 
 #include "Scintilla.h"
+#include "Position.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
 #include "RunStyles.h"
@@ -137,23 +139,21 @@ ViewStyle::ViewStyle(const ViewStyle &source) {
 	alwaysShowCaretLineBackground = source.alwaysShowCaretLineBackground;
 	caretLineBackground = source.caretLineBackground;
 	caretLineAlpha = source.caretLineAlpha;
-	edgecolour = source.edgecolour;
-	edgeState = source.edgeState;
 	caretStyle = source.caretStyle;
 	caretWidth = source.caretWidth;
 	someStylesProtected = false;
 	someStylesForceCase = false;
 	leftMarginWidth = source.leftMarginWidth;
 	rightMarginWidth = source.rightMarginWidth;
-	for (int margin=0; margin <= SC_MAX_MARGIN; margin++) {
-		ms[margin] = source.ms[margin];
-	}
+	ms = source.ms;
 	maskInLine = source.maskInLine;
+	maskDrawInText = source.maskDrawInText;
 	fixedColumnWidth = source.fixedColumnWidth;
 	marginInside = source.marginInside;
 	textStart = source.textStart;
 	zoomLevel = source.zoomLevel;
 	viewWhitespace = source.viewWhitespace;
+	tabDrawMode = source.tabDrawMode;
 	whitespaceSize = source.whitespaceSize;
 	viewIndentationGuides = source.viewIndentationGuides;
 	viewEOL = source.viewEOL;
@@ -168,7 +168,9 @@ ViewStyle::ViewStyle(const ViewStyle &source) {
 	braceBadLightIndicatorSet = source.braceBadLightIndicatorSet;
 	braceBadLightIndicator = source.braceBadLightIndicator;
 
+	edgeState = source.edgeState;
 	theEdge = source.theEdge;
+	theMultiEdge = source.theMultiEdge;
 
 	marginNumberPadding = source.marginNumberPadding;
 	ctrlCharPadding = source.ctrlCharPadding;
@@ -187,6 +189,32 @@ ViewStyle::~ViewStyle() {
 		delete it->second;
 	}
 	fonts.clear();
+}
+
+void ViewStyle::CalculateMarginWidthAndMask() {
+	fixedColumnWidth = marginInside ? leftMarginWidth : 0;
+	maskInLine = 0xffffffff;
+	int maskDefinedMarkers = 0;
+	for (size_t margin = 0; margin < ms.size(); margin++) {
+		fixedColumnWidth += ms[margin].width;
+		if (ms[margin].width > 0)
+			maskInLine &= ~ms[margin].mask;
+		maskDefinedMarkers |= ms[margin].mask;
+	}
+	maskDrawInText = 0;
+	for (int markBit = 0; markBit < 32; markBit++) {
+		const int maskBit = 1 << markBit;
+		switch (markers[markBit].markType) {
+		case SC_MARK_EMPTY:
+			maskInLine &= ~maskBit;
+			break;
+		case SC_MARK_BACKGROUND:
+		case SC_MARK_UNDERLINE:
+			maskInLine &= ~maskBit;
+			maskDrawInText |= maskDefinedMarkers & maskBit;
+			break;
+		}
+	}
 }
 
 void ViewStyle::Init(size_t stylesSize_) {
@@ -239,8 +267,6 @@ void ViewStyle::Init(size_t stylesSize_) {
 	alwaysShowCaretLineBackground = false;
 	caretLineBackground = ColourDesired(0xff, 0xff, 0);
 	caretLineAlpha = SC_ALPHA_NOALPHA;
-	edgecolour = ColourDesired(0xc0, 0xc0, 0xc0);
-	edgeState = EDGE_NONE;
 	caretStyle = CARETSTYLE_LINE;
 	caretWidth = 1;
 	someStylesProtected = false;
@@ -253,6 +279,7 @@ void ViewStyle::Init(size_t stylesSize_) {
 
 	leftMarginWidth = 1;
 	rightMarginWidth = 1;
+	ms.resize(SC_MAX_MARGIN + 1);
 	ms[0].style = SC_MARGIN_NUMBER;
 	ms[0].width = 0;
 	ms[0].mask = 0;
@@ -263,16 +290,11 @@ void ViewStyle::Init(size_t stylesSize_) {
 	ms[2].width = 0;
 	ms[2].mask = 0;
 	marginInside = true;
-	fixedColumnWidth = marginInside ? leftMarginWidth : 0;
-	maskInLine = 0xffffffff;
-	for (int margin=0; margin <= SC_MAX_MARGIN; margin++) {
-		fixedColumnWidth += ms[margin].width;
-		if (ms[margin].width > 0)
-			maskInLine &= ~ms[margin].mask;
-	}
+	CalculateMarginWidthAndMask();
 	textStart = marginInside ? fixedColumnWidth : leftMarginWidth;
 	zoomLevel = 0;
 	viewWhitespace = wsInvisible;
+	tabDrawMode = tdLongArrow;
 	whitespaceSize = 1;
 	viewIndentationGuides = ivNone;
 	viewEOL = false;
@@ -287,7 +309,8 @@ void ViewStyle::Init(size_t stylesSize_) {
 	braceBadLightIndicatorSet = false;
 	braceBadLightIndicator = 0;
 
-	theEdge = 0;
+	edgeState = EDGE_NONE;
+	theEdge = EdgeProperties(0, ColourDesired(0xc0, 0xc0, 0xc0));
 
 	marginNumberPadding = 3;
 	ctrlCharPadding = 3; // +3 For a blank on front and rounded edge each side
@@ -366,13 +389,7 @@ void ViewStyle::Refresh(Surface &surface, int tabInChars) {
 		controlCharWidth = surface.WidthChar(styles[STYLE_CONTROLCHAR].font, static_cast<char>(controlCharSymbol));
 	}
 
-	fixedColumnWidth = marginInside ? leftMarginWidth : 0;
-	maskInLine = 0xffffffff;
-	for (int margin=0; margin <= SC_MAX_MARGIN; margin++) {
-		fixedColumnWidth += ms[margin].width;
-		if (ms[margin].width > 0)
-			maskInLine &= ~ms[margin].mask;
-	}
+	CalculateMarginWidthAndMask();
 	textStart = marginInside ? fixedColumnWidth : leftMarginWidth;
 }
 
@@ -430,6 +447,17 @@ int ViewStyle::ExternalMarginWidth() const {
 	return marginInside ? 0 : fixedColumnWidth;
 }
 
+int ViewStyle::MarginFromLocation(Point pt) const {
+	int margin = -1;
+	int x = textStart - fixedColumnWidth;
+	for (size_t i = 0; i < ms.size(); i++) {
+		if ((pt.x >= x) && (pt.x < x + ms[i].width))
+			margin = static_cast<int>(i);
+		x += ms[i].width;
+	}
+	return margin;
+}
+
 bool ViewStyle::ValidStyle(size_t styleIndex) const {
 	return styleIndex < styles.size();
 }
@@ -475,7 +503,7 @@ ColourOptional ViewStyle::Background(int marksOfLine, bool caretActive, bool lin
 		int marksMasked = marksOfLine & maskInLine;
 		if (marksMasked) {
 			for (int markBit = 0; (markBit < 32) && marksMasked; markBit++) {
-				if ((marksMasked & 1) && (markers[markBit].markType != SC_MARK_EMPTY) &&
+				if ((marksMasked & 1) &&
 					(markers[markBit].alpha == SC_ALPHA_NOALPHA)) {
 					background = ColourOptional(markers[markBit].back, true);
 				}
@@ -493,6 +521,12 @@ bool ViewStyle::SelectionBackgroundDrawn() const {
 
 bool ViewStyle::WhitespaceBackgroundDrawn() const {
 	return (viewWhitespace != wsInvisible) && (whitespaceColours.back.isSet);
+}
+
+bool ViewStyle::WhiteSpaceVisible(bool inIndent) const {
+	return (!inIndent && viewWhitespace == wsVisibleAfterIndent) ||
+		(inIndent && viewWhitespace == wsVisibleOnlyInIndent) ||
+		viewWhitespace == wsVisibleAlways;
 }
 
 ColourDesired ViewStyle::WrapColour() const {

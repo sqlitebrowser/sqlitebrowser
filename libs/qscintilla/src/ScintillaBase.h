@@ -20,7 +20,7 @@ class LexState;
  */
 class ScintillaBase : public Editor {
 	// Private so ScintillaBase objects can not be copied
-	ScintillaBase(const ScintillaBase &);
+	explicit ScintillaBase(const ScintillaBase &);
 	ScintillaBase &operator=(const ScintillaBase &);
 
 protected:
@@ -40,7 +40,7 @@ protected:
 
 	enum { maxLenInputIME = 200 };
 
-	bool displayPopupMenu;
+	int displayPopupMenu;
 	Menu popup;
 	AutoComplete ac;
 
@@ -75,7 +75,7 @@ protected:
 	int AutoCompleteGetCurrentText(char *buffer) const;
 	void AutoCompleteCharacterAdded(char ch);
 	void AutoCompleteCharacterDeleted();
-	void AutoCompleteCompleted();
+	void AutoCompleteCompleted(char ch, unsigned int completionMethod);
 	void AutoCompleteMoveToCurrentWord();
 	static void AutoCompleteDoubleClick(void *p);
 
@@ -84,10 +84,12 @@ protected:
 	virtual void CreateCallTipWindow(PRectangle rc) = 0;
 
 	virtual void AddToPopUp(const char *label, int cmd=0, bool enabled=true) = 0;
+	bool ShouldDisplayPopup(Point ptInWindowCoordinates) const;
 	void ContextMenu(Point pt);
 
 	virtual void ButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers);
 	virtual void ButtonDown(Point pt, unsigned int curTime, bool shift, bool ctrl, bool alt);
+	virtual void RightButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers);
 
 	void NotifyStyleToNeeded(int endStyleNeeded);
 	void NotifyLexerChanged(Document *doc, void *userData);

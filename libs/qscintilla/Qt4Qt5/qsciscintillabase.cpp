@@ -1,6 +1,6 @@
 // This module implements the "official" low-level API.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -89,11 +89,8 @@ QsciScintillaBase::QsciScintillaBase(QWidget *parent)
         , clickCausedFocus(false)
 #endif
 {
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
-            SLOT(handleVSb(int)));
-
-    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
-            SLOT(handleHSb(int)));
+    connectVerticalScrollBar();
+    connectHorizontalScrollBar();
 
     setAcceptDrops(true);
     setFocusPolicy(Qt::WheelFocus);
@@ -226,7 +223,7 @@ long QsciScintillaBase::SendScintilla(unsigned int msg, int wParam) const
 long QsciScintillaBase::SendScintilla(unsigned int msg, long cpMin, long cpMax,
         char *lpstrText) const
 {
-    QSCI_SCI_NAMESPACE(TextRange) tr;
+    Sci_TextRange tr;
 
     tr.chrg.cpMin = cpMin;
     tr.chrg.cpMax = cpMax;
@@ -260,7 +257,7 @@ long QsciScintillaBase::SendScintilla(unsigned int msg, const QColor &col) const
 long QsciScintillaBase::SendScintilla(unsigned int msg, unsigned long wParam,
         QPainter *hdc, const QRect &rc, long cpMin, long cpMax) const
 {
-    QSCI_SCI_NAMESPACE(RangeToFormat) rf;
+    Sci_RangeToFormat rf;
 
     rf.hdc = rf.hdcTarget = reinterpret_cast<QSCI_SCI_NAMESPACE(SurfaceID)>(hdc);
 
@@ -653,7 +650,8 @@ void QsciScintillaBase::resizeEvent(QResizeEvent *)
 
 
 // Re-implemented to suppress the default behaviour as Scintilla works at a
-// more fundamental level.
+// more fundamental level.  Note that this means that replacing the scrollbars
+// with custom versions does not work.
 void QsciScintillaBase::scrollContentsBy(int, int)
 {
 }
@@ -796,4 +794,36 @@ QMimeData *QsciScintillaBase::toMimeData(const QByteArray &text, bool rectangula
     }
 
     return mime;
+}
+
+
+// Connect up the vertical scroll bar.
+void QsciScintillaBase::connectVerticalScrollBar()
+{
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
+            SLOT(handleVSb(int)));
+}
+
+
+// Connect up the horizontal scroll bar.
+void QsciScintillaBase::connectHorizontalScrollBar()
+{
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
+            SLOT(handleHSb(int)));
+}
+
+
+//! Replace the vertical scroll bar.
+void QsciScintillaBase::replaceVerticalScrollBar(QScrollBar *scrollBar)
+{
+    setVerticalScrollBar(scrollBar);
+    connectVerticalScrollBar();
+}
+
+
+// Replace the horizontal scroll bar.
+void QsciScintillaBase::replaceHorizontalScrollBar(QScrollBar *scrollBar)
+{
+    setHorizontalScrollBar(scrollBar);
+    connectHorizontalScrollBar();
 }

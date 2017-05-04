@@ -1,7 +1,7 @@
 // This defines the specialisation of QListBox that handles the Scintilla
 // double-click callback.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 

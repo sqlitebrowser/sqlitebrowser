@@ -25,8 +25,8 @@ namespace Scintilla {
 int CompareCaseInsensitive(const char *a, const char *b) {
 	while (*a && *b) {
 		if (*a != *b) {
-			char upperA = MakeUpperCase(*a);
-			char upperB = MakeUpperCase(*b);
+			char upperA = static_cast<char>(MakeUpperCase(*a));
+			char upperB = static_cast<char>(MakeUpperCase(*b));
 			if (upperA != upperB)
 				return upperA - upperB;
 		}
@@ -40,8 +40,8 @@ int CompareCaseInsensitive(const char *a, const char *b) {
 int CompareNCaseInsensitive(const char *a, const char *b, size_t len) {
 	while (*a && *b && len) {
 		if (*a != *b) {
-			char upperA = MakeUpperCase(*a);
-			char upperB = MakeUpperCase(*b);
+			char upperA = static_cast<char>(MakeUpperCase(*a));
+			char upperB = static_cast<char>(MakeUpperCase(*b));
 			if (upperA != upperB)
 				return upperA - upperB;
 		}

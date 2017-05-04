@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <assert.h>
 
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -18,6 +19,7 @@
 
 #include "Scintilla.h"
 #include "CharacterSet.h"
+#include "Position.h"
 #include "AutoComplete.h"
 
 #ifdef SCI_NAMESPACE
@@ -167,7 +169,9 @@ void AutoComplete::SetList(const char *list) {
 	char item[maxItemLen];
 	for (size_t i = 0; i < sortMatrix.size(); ++i) {
 		int wordLen = IndexSort.indices[sortMatrix[i] * 2 + 2] - IndexSort.indices[sortMatrix[i] * 2];
-		strncpy(item, list + IndexSort.indices[sortMatrix[i] * 2], wordLen);
+		if (wordLen > maxItemLen-2)
+			wordLen = maxItemLen - 2;
+		memcpy(item, list + IndexSort.indices[sortMatrix[i] * 2], wordLen);
 		if ((i+1) == sortMatrix.size()) {
 			// Last item so remove separator if present
 			if ((wordLen > 0) && (item[wordLen-1] == separator))

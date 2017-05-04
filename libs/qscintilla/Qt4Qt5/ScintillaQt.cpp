@@ -1,6 +1,6 @@
 // The implementation of the Qt specific subclass of ScintillaBase.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -38,6 +38,7 @@
 #undef  SCEN_CHANGE
 #undef  SCN_AUTOCCANCELLED
 #undef  SCN_AUTOCCHARDELETED
+#undef  SCN_AUTOCCOMPLETED
 #undef  SCN_AUTOCSELECTION
 #undef  SCN_CALLTIPCLICK
 #undef  SCN_CHARADDED
@@ -53,6 +54,7 @@
 #undef  SCN_INDICATORRELEASE
 #undef  SCN_MACRORECORD
 #undef  SCN_MARGINCLICK
+#undef  SCN_MARGINRIGHTCLICK
 #undef  SCN_MODIFIED
 #undef  SCN_MODIFYATTEMPTRO
 #undef  SCN_NEEDSHOWN
@@ -69,6 +71,7 @@ enum
     SCEN_CHANGE = 768,
     SCN_AUTOCCANCELLED = 2025,
     SCN_AUTOCCHARDELETED = 2026,
+    SCN_AUTOCCOMPLETED = 2030,
     SCN_AUTOCSELECTION = 2022,
     SCN_CALLTIPCLICK = 2021,
     SCN_CHARADDED = 2001,
@@ -84,6 +87,7 @@ enum
     SCN_INDICATORRELEASE = 2024,
     SCN_MACRORECORD = 2009,
     SCN_MARGINCLICK = 2010,
+    SCN_MARGINRIGHTCLICK = 2031,
     SCN_MODIFIED = 2008,
     SCN_MODIFYATTEMPTRO = 2004,
     SCN_NEEDSHOWN = 2011,
@@ -290,7 +294,7 @@ void QsciScintillaQt::NotifyChange()
 
 // Notify interested parties of various events.  This is the main mapping
 // between Scintilla notifications and Qt signals.
-void QsciScintillaQt::NotifyParent(QSCI_SCI_NAMESPACE(SCNotification) scn)
+void QsciScintillaQt::NotifyParent(SCNotification scn)
 {
     switch (scn.nmhdr.code)
     {
@@ -306,7 +310,14 @@ void QsciScintillaQt::NotifyParent(QSCI_SCI_NAMESPACE(SCNotification) scn)
         emit qsb->SCN_AUTOCCHARDELETED();
         break;
 
+    case SCN_AUTOCCOMPLETED:
+        emit qsb->SCN_AUTOCCOMPLETED(scn.text, scn.lParam, scn.ch,
+                scn.listCompletionMethod);
+        break;
+
     case SCN_AUTOCSELECTION:
+        emit qsb->SCN_AUTOCSELECTION(scn.text, scn.lParam, scn.ch,
+                scn.listCompletionMethod);
         emit qsb->SCN_AUTOCSELECTION(scn.text, scn.lParam);
         break;
 
@@ -361,6 +372,11 @@ void QsciScintillaQt::NotifyParent(QSCI_SCI_NAMESPACE(SCNotification) scn)
 
     case SCN_MARGINCLICK:
         emit qsb->SCN_MARGINCLICK(scn.position, scn.modifiers, scn.margin);
+        break;
+
+    case SCN_MARGINRIGHTCLICK:
+        emit qsb->SCN_MARGINRIGHTCLICK(scn.position, scn.modifiers,
+                scn.margin);
         break;
 
     case SCN_MODIFIED:
@@ -418,6 +434,8 @@ void QsciScintillaQt::NotifyParent(QSCI_SCI_NAMESPACE(SCNotification) scn)
         break;
 
     case SCN_USERLISTSELECTION:
+        emit qsb->SCN_USERLISTSELECTION(scn.text, scn.wParam, scn.ch,
+                scn.listCompletionMethod);
         emit qsb->SCN_USERLISTSELECTION(scn.text, scn.wParam);
         break;
 
@@ -575,12 +593,7 @@ sptr_t QsciScintillaQt::DirectFunction(QsciScintillaQt *sciThis, unsigned int iM
 // Draw the contents of the widget.
 void QsciScintillaQt::paintEvent(QPaintEvent *e)
 {
-    QSCI_SCI_NAMESPACE(Surface) *sw = QSCI_SCI_NAMESPACE(Surface)::Allocate(SC_TECHNOLOGY_DEFAULT);
-
-    if (!sw)
-        return;
-
-    paintState = painting;
+    QSCI_SCI_NAMESPACE(Surface) *sw;
 
     const QRect &qr = e->rect();
 
@@ -589,11 +602,16 @@ void QsciScintillaQt::paintEvent(QPaintEvent *e)
     rcPaint.right = qr.right() + 1;
     rcPaint.bottom = qr.bottom() + 1;
 
-    QSCI_SCI_NAMESPACE(PRectangle) rcText = GetTextRectangle();
-    paintingAllText = rcPaint.Contains(rcText);
+    QSCI_SCI_NAMESPACE(PRectangle) rcClient = GetClientRectangle();
+    paintingAllText = rcPaint.Contains(rcClient);
+
+    sw = QSCI_SCI_NAMESPACE(Surface)::Allocate(SC_TECHNOLOGY_DEFAULT);
+    if (!sw)
+        return;
 
     QPainter painter(qsb->viewport());
 
+    paintState = painting;
     sw->Init(&painter);
     sw->SetUnicodeMode(CodePage() == SC_CP_UTF8);
     Paint(sw, rcPaint);
@@ -603,7 +621,26 @@ void QsciScintillaQt::paintEvent(QPaintEvent *e)
     // If the painting area was insufficient to cover the new style or brace
     // highlight positions then repaint the whole thing.
     if (paintState == paintAbandoned)
+    {
+        // Do a full re-paint immediately.  This may only be needed on OS X (to
+        // avoid flicker).
+        paintingAllText = true;
+
+        sw = QSCI_SCI_NAMESPACE(Surface)::Allocate(SC_TECHNOLOGY_DEFAULT);
+        if (!sw)
+            return;
+
+        QPainter painter(qsb->viewport());
+
+        paintState = painting;
+        sw->Init(&painter);
+        sw->SetUnicodeMode(CodePage() == SC_CP_UTF8);
+        Paint(sw, rcPaint);
+
+        delete sw;
+
         qsb->viewport()->update();
+    }
 
     paintState = notPainting;
 }

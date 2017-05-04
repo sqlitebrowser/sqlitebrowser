@@ -16,6 +16,7 @@
 #include "Platform.h"
 
 #include "Scintilla.h"
+#include "Position.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
 #include "CellBuffer.h"
@@ -493,6 +494,25 @@ void CellBuffer::SetLineEndTypes(int utf8LineEnds_) {
 		utf8LineEnds = utf8LineEnds_;
 		ResetLineEnds();
 	}
+}
+
+bool CellBuffer::ContainsLineEnd(const char *s, int length) const {
+	unsigned char chBeforePrev = 0;
+	unsigned char chPrev = 0;
+	for (int i = 0; i < length; i++) {
+		const unsigned char ch = s[i];
+		if ((ch == '\r') || (ch == '\n')) {
+			return true;
+		} else if (utf8LineEnds) {
+			unsigned char back3[3] = { chBeforePrev, chPrev, ch };
+			if (UTF8IsSeparator(back3) || UTF8IsNEL(back3 + 1)) {
+				return true;
+			}
+		}
+		chBeforePrev = chPrev;
+		chPrev = ch;
+	}
+	return false;
 }
 
 void CellBuffer::SetPerLine(PerLine *pl) {

@@ -10,6 +10,8 @@
 
 #include <cstring>
 
+#include <stdexcept>
+#include <string>
 #include <vector>
 #include <algorithm>
 
@@ -627,6 +629,14 @@ size_t CaseConvertString(char *converted, size_t sizeConverted, const char *mixe
 	if (!pCaseConv->Initialised())
 		SetupConversions(conversion);
 	return pCaseConv->CaseConvertString(converted, sizeConverted, mixed, lenMixed);
+}
+
+std::string CaseConvertString(const std::string &s, enum CaseConversion conversion) {
+	std::string retMapped(s.length() * maxExpansionCaseConversion, 0);
+	size_t lenMapped = CaseConvertString(&retMapped[0], retMapped.length(), s.c_str(), s.length(),
+		conversion);
+	retMapped.resize(lenMapped);
+	return retMapped;
 }
 
 #ifdef SCI_NAMESPACE

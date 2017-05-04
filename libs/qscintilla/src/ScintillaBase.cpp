@@ -33,6 +33,7 @@
 #include "Catalogue.h"
 #endif
 
+#include "Position.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
 #include "RunStyles.h"
@@ -63,7 +64,7 @@ using namespace Scintilla;
 #endif
 
 ScintillaBase::ScintillaBase() {
-	displayPopupMenu = true;
+	displayPopupMenu = SC_POPUP_ALL;
 	listType = 0;
 	maxListWidth = 0;
 	multiAutoCMode = SC_MULTIAUTOC_ONCE;
@@ -168,10 +169,10 @@ int ScintillaBase::KeyCommand(unsigned int iMessage) {
 			EnsureCaretVisible();
 			return 0;
 		case SCI_TAB:
-			AutoCompleteCompleted();
+			AutoCompleteCompleted(0, SC_AC_TAB);
 			return 0;
 		case SCI_NEWLINE:
-			AutoCompleteCompleted();
+			AutoCompleteCompleted(0, SC_AC_NEWLINE);
 			return 0;
 
 		default:
@@ -202,7 +203,7 @@ int ScintillaBase::KeyCommand(unsigned int iMessage) {
 
 void ScintillaBase::AutoCompleteDoubleClick(void *p) {
 	ScintillaBase *sci = reinterpret_cast<ScintillaBase *>(p);
-	sci->AutoCompleteCompleted();
+	sci->AutoCompleteCompleted(0, SC_AC_DOUBLECLICK);
 }
 
 void ScintillaBase::AutoCompleteInsert(Position startPos, int removeLen, const char *text, int textLen) {
@@ -217,7 +218,7 @@ void ScintillaBase::AutoCompleteInsert(Position startPos, int removeLen, const c
 			if (!RangeContainsProtected(sel.Range(r).Start().Position(),
 				sel.Range(r).End().Position())) {
 				int positionInsert = sel.Range(r).Start().Position();
-				positionInsert = InsertSpace(positionInsert, sel.Range(r).caret.VirtualSpace());
+				positionInsert = RealizeVirtualSpace(positionInsert, sel.Range(r).caret.VirtualSpace());
 				if (positionInsert - removeLen >= 0) {
 					positionInsert -= removeLen;
 					pdoc->DeleteChars(positionInsert, removeLen);
@@ -275,7 +276,7 @@ void ScintillaBase::AutoCompleteStart(int lenEntered, const char *list) {
 	}
 	PRectangle rcac;
 	rcac.left = pt.x - ac.lb->CaretFromEdge();
-	if (pt.y >= rcPopupBounds.bottom - heightLB &&  // Wont fit below.
+	if (pt.y >= rcPopupBounds.bottom - heightLB &&  // Won't fit below.
 	        pt.y >= (rcPopupBounds.bottom + rcPopupBounds.top) / 2) { // and there is more room above.
 		rcac.top = pt.y - heightLB;
 		if (rcac.top < rcPopupBounds.top) {
@@ -304,7 +305,7 @@ void ScintillaBase::AutoCompleteStart(int lenEntered, const char *list) {
 	// Make an allowance for large strings in list
 	rcList.left = pt.x - ac.lb->CaretFromEdge();
 	rcList.right = rcList.left + widthLB;
-	if (((pt.y + vs.lineHeight) >= (rcPopupBounds.bottom - heightAlloced)) &&  // Wont fit below.
+	if (((pt.y + vs.lineHeight) >= (rcPopupBounds.bottom - heightAlloced)) &&  // Won't fit below.
 	        ((pt.y + vs.lineHeight / 2) >= (rcPopupBounds.bottom + rcPopupBounds.top) / 2)) { // and there is more room above.
 		rcList.top = pt.y - heightAlloced;
 	} else {
@@ -340,7 +341,7 @@ void ScintillaBase::AutoCompleteMoveToCurrentWord() {
 
 void ScintillaBase::AutoCompleteCharacterAdded(char ch) {
 	if (ac.IsFillUpChar(ch)) {
-		AutoCompleteCompleted();
+		AutoCompleteCompleted(ch, SC_AC_FILLUP);
 	} else if (ac.IsStopChar(ch)) {
 		AutoCompleteCancel();
 	} else {
@@ -363,7 +364,7 @@ void ScintillaBase::AutoCompleteCharacterDeleted() {
 	NotifyParent(scn);
 }
 
-void ScintillaBase::AutoCompleteCompleted() {
+void ScintillaBase::AutoCompleteCompleted(char ch, unsigned int completionMethod) {
 	int item = ac.GetSelection();
 	if (item == -1) {
 		AutoCompleteCancel();
@@ -376,6 +377,8 @@ void ScintillaBase::AutoCompleteCompleted() {
 	SCNotification scn = {};
 	scn.nmhdr.code = listType > 0 ? SCN_USERLISTSELECTION : SCN_AUTOCSELECTION;
 	scn.message = 0;
+	scn.ch = ch;
+	scn.listCompletionMethod = completionMethod;
 	scn.wParam = listType;
 	scn.listType = listType;
 	Position firstPos = ac.posStart - ac.startLen;
@@ -398,6 +401,10 @@ void ScintillaBase::AutoCompleteCompleted() {
 		return;
 	AutoCompleteInsert(firstPos, endPos - firstPos, selected.c_str(), static_cast<int>(selected.length()));
 	SetLastXChosen();
+
+	scn.nmhdr.code = SCN_AUTOCCOMPLETED;
+	NotifyParent(scn);
+
 }
 
 int ScintillaBase::AutoCompleteGetCurrent() const {
@@ -471,6 +478,11 @@ void ScintillaBase::CallTipClick() {
 	NotifyParent(scn);
 }
 
+bool ScintillaBase::ShouldDisplayPopup(Point ptInWindowCoordinates) const {
+	return (displayPopupMenu == SC_POPUP_ALL ||
+		(displayPopupMenu == SC_POPUP_TEXT && !PointInSelMargin(ptInWindowCoordinates)));
+}
+
 void ScintillaBase::ContextMenu(Point pt) {
 	if (displayPopupMenu) {
 		bool writable = !WndProc(SCI_GETREADONLY, 0, 0);
@@ -501,6 +513,11 @@ void ScintillaBase::ButtonDownWithModifiers(Point pt, unsigned int curTime, int 
 
 void ScintillaBase::ButtonDown(Point pt, unsigned int curTime, bool shift, bool ctrl, bool alt) {
 	ButtonDownWithModifiers(pt, curTime, ModifierFlags(shift, ctrl, alt));
+}
+
+void ScintillaBase::RightButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers) {
+	CancelModes();
+	Editor::RightButtonDownWithModifiers(pt, curTime, modifiers);
 }
 
 #ifdef SCI_LEXER
@@ -733,6 +750,7 @@ void LexState::FreeSubStyles() {
 void LexState::SetIdentifiers(int style, const char *identifiers) {
 	if (instance && (interfaceVersion >= lvSubStyles)) {
 		static_cast<ILexerWithSubStyles *>(instance)->SetIdentifiers(style, identifiers);
+		pdoc->ModifiedAt(0);
 	}
 }
 
@@ -788,7 +806,7 @@ sptr_t ScintillaBase::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lPara
 		return ac.posStart;
 
 	case SCI_AUTOCCOMPLETE:
-		AutoCompleteCompleted();
+		AutoCompleteCompleted(0, SC_AC_COMMAND);
 		break;
 
 	case SCI_AUTOCSETSEPARATOR:
@@ -962,7 +980,7 @@ sptr_t ScintillaBase::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lPara
 		break;
 
 	case SCI_USEPOPUP:
-		displayPopupMenu = wParam != 0;
+		displayPopupMenu = static_cast<int>(wParam);
 		break;
 
 #ifdef SCI_LEXER

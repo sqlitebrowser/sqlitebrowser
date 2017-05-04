@@ -1,3 +1,80 @@
+v2.10 20th February 2017
+  - Based on Scintilla v3.7.2.
+  - Added the QsciLexerJSON class.
+  - Added the QsciLexerMarkdown class.
+  - Added replaceHorizontalScrollBar() and replaceVerticalScrollBar() to
+    QsciScintillaBase.
+  - Added bytes() and a corresponding text() overload to QsciScintilla.
+  - Added EdgeMultipleLines to QsciScintilla::EdgeMode.
+  - Added addEdgeColumn() and clearEdgeColumns() to QsciScintilla.
+  - Added the marginRightClicked() signal to QsciScintilla.
+  - Added SymbolMarginColor to QsciScintilla::MarginType.
+  - Added setMarginBackgroundColor() and marginBackgroundColor() to
+    QsciScintilla.
+  - Added setMargins() and margins() to QsciScintilla.
+  - Added TriangleIndicator and TriangleCharacterIndicator to
+    QsciScintilla::IndicatorStyle.
+  - Added WsVisibleOnlyInIndent to QsciScintilla::WhitespaceVisibility.
+  - Added TabDrawMode, setTabDrawMode() and tabDrawMode() to QsciScintilla.
+  - Added InstanceProperty to QsciLexerCoffeeScript.
+  - Added EDGE_MULTILINE to QsciScintillaBase.
+  - Added INDIC_POINT and INDIC_POINTCHARACTER to QsciScintillaBase.
+  - Added SC_AC_FILLUP, SC_AC_DOUBLECLICK, SC_AC_TAB, SC_AC_NEWLINE and
+    SC_AC_COMMAND to QsciScintillaBase.
+  - Added SC_CASE_CAMEL to QsciScintillaBase.
+  - Added SC_CHARSET_CYRILLIC and SC_CHARSET_OEM866 to QsciScintillaBase.
+  - Added SC_FOLDDISPLAYTEXT_HIDDEN, SC_FOLDDISPLAYTEXT_STANDARD and
+    SC_FOLDDISPLAYTEXT_BOXED to QsciScintillaBase.
+  - Added SC_IDLESTYLING_NONE, SC_IDLESTYLING_TOVISIBLE,
+    SC_IDLESTYLING_AFTERVISIBLE and SC_IDLESTYLING_ALL to QsciScintillaBase.
+  - Added SC_MARGIN_COLOUR to QsciScintillaBase.
+  - Added SC_POPUP_NEVER, SC_POPUP_ALL and SC_POPUP_TEXT to QsciScintillaBase.
+  - Added SCI_FOLDDISPLAYTEXTSETSTYLE and SCI_TOGGLEFOLDSHOWTEXT to
+    QsciScintillaBase.
+  - Added SCI_GETIDLESTYLING and SCI_SETIDLESTYLING to QsciScintillaBase.
+  - Added SCI_GETMARGINBACKN and SCI_SETMARGINBACKN to QsciScintillaBase.
+  - Added SCI_GETMARGINS and SCI_SETMARGINS to QsciScintillaBase.
+  - Added SCI_GETMOUSEWHEELCAPTURES and SCI_SETMOUSEWHEELCAPTURES to
+    QsciScintillaBase.
+  - Added SCI_GETTABDRAWMODE and SCI_SETTABDRAWMODE to QsciScintillaBase.
+  - Added SCI_ISRANGEWORD to QsciScintillaBase.
+  - Added SCI_MULTIEDGEADDLINE and SCI_MULTIEDGECLEARALL to QsciScintillaBase.
+  - Added SCI_MULTIPLESELECTADDNEXT and SCI_MULTIPLESELECTADDEACH to
+    QsciScintillaBase.
+  - Added SCI_TARGETWHOLEDOCUMENT to QsciScintillaBase.
+  - Added SCLEX_JSON and SCLEX_EDIFACT to QsciScintillaBase.
+  - Added SCTD_LONGARROW and SCTD_STRIKEOUT to QsciScintillaBase.
+  - Added SCVS_NOWRAPLINESTART to QsciScintillaBase.
+  - Added SCWS_VISIBLEONLYININDENT to QsciScintillaBase.
+  - Added STYLE_FOLDDISPLAYTEXT to QsciScintillaBase.
+  - Added the SCN_AUTOCCOMPLETED() signal to QsciScintillaBase.
+  - Added the overloaded SCN_AUTOCSELECTION() and SCN_USERLISTSELECTION()
+    signals to QsciScintillaBase.
+  - Added the SCN_MARGINRIGHTCLICK() signal to QsciScintillaBase.
+  - Renamed SCI_GETTARGETRANGE to SCI_GETTARGETTEXT in QsciScintillaBase.
+  - Removed SCI_GETKEYSUNICODE and SCI_SETKEYSUNICODE to QsciScintillaBase.
+  - The autoCompletionFillups(), autoCompletionWordSeparators(), blockEnd(),
+    blockLookback(), blockStart(), blockStartKeyword(), braceStyle(),
+    caseSensitive(), indentationGuideView() and defaultStyle() methods of
+    QsciLexer are no longer marked as internal and are exposed to Python so
+    that they may be used by QsciLexerCustom sub-classes.
+  - The name of the library has been changed to include the major version
+    number of the version of Qt it is built against (ie. 4 or 5).
+
+v2.9.4 25th December 2016
+  - Added the .api file for Python v3.6.
+  - Bug fixes.
+
+v2.9.3 25th July 2016
+  - Bug fixes.
+
+v2.9.2 18th April 2016
+  - Added support for a PEP 484 stub file for the Python extension module.
+
+v2.9.1 24th October 2015
+  - Added the .api file for Python v3.5.
+  - Bug fixes.
+
 v2.9 20th April 2015
   - Based on Scintilla v3.5.4.
   - Added UserLiteral, InactiveUserLiteral, TaskMarker, InactiveTaskMarker,

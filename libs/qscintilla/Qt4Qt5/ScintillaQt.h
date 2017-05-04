@@ -1,6 +1,6 @@
 // The definition of the Qt specific subclass of ScintillaBase.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -118,7 +118,7 @@ private:
 	bool ModifyScrollBars(int nMax, int nPage);
 	void ReconfigureScrollBars();
 	void NotifyChange();
-	void NotifyParent(QSCI_SCI_NAMESPACE(SCNotification) scn);
+	void NotifyParent(SCNotification scn);
 	void CopyToClipboard(
             const QSCI_SCI_NAMESPACE(SelectionText) &selectedText);
 	void Copy();

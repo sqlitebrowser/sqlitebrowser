@@ -1,7 +1,7 @@
 // This module defines the "official" high-level API of the Qt port of
 // Scintilla.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -186,7 +186,11 @@ public:
         //! The background color of characters after the column limit is
         //! changed to the color set by setEdgeColor().  This is recommended
         //! for proportional fonts.
-        EdgeBackground = EDGE_BACKGROUND
+        EdgeBackground = EDGE_BACKGROUND,
+
+        //! Multiple vertical lines are drawn at the columns defined by
+        //! multiple calls to addEdgeColumn().
+        EdgeMultipleLines = EDGE_MULTILINE,
     };
 
     //! This enum defines the different end-of-line modes.
@@ -291,6 +295,13 @@ public:
         //! The color of the text is set to the color of the indicator's
         //! foreground.
         TextColorIndicator = INDIC_TEXTFORE,
+
+        //! A triangle below the start of the indicator range.
+        TriangleIndicator = INDIC_POINT,
+
+        //! A triangle below the centre of the first character in the indicator
+        //! range.
+        TriangleCharacterIndicator = INDIC_POINTCHARACTER,
     };
 
     //! This enum defines the different margin options.
@@ -323,7 +334,11 @@ public:
         TextMargin = SC_MARGIN_TEXT,
 
         //! The margin contains right justified styled text.
-        TextMarginRightJustified = SC_MARGIN_RTEXT
+        TextMarginRightJustified = SC_MARGIN_RTEXT,
+
+        //! The margin contains symbols and uses the color set by
+        //! setMarginBackgroundColor() as its background color.
+        SymbolMarginColor = SC_MARGIN_COLOUR,
     };
 
     //! This enum defines the different pre-defined marker symbols.
@@ -424,6 +439,16 @@ public:
         Bookmark = SC_MARK_BOOKMARK,
     };
 
+    //! This enum defines how tab characters are drawn when whitespace is
+    //! visible.
+    enum TabDrawMode {
+        //! An arrow stretching to the tab stop.
+        TabLongArrow = SCTD_LONGARROW,
+
+        //! A horizontal line stretching to the tab stop.
+        TabStrikeOut = SCTD_STRIKEOUT,
+    };
+
     //! This enum defines the different whitespace visibility modes.  When
     //! whitespace is visible spaces are displayed as small centred dots and
     //! tabs are displayed as light arrows pointing to the right.
@@ -435,7 +460,10 @@ public:
         WsVisible = SCWS_VISIBLEALWAYS,
 
         //! Whitespace is visible after the whitespace used for indentation.
-        WsVisibleAfterIndent = SCWS_VISIBLEAFTERINDENT
+        WsVisibleAfterIndent = SCWS_VISIBLEAFTERINDENT,
+
+        //! Whitespace used for indentation is visible.
+        WsVisibleOnlyInIndent = SCWS_VISIBLEONLYININDENT,
     };
 
     //! This enum defines the different line wrap modes.
@@ -590,6 +618,12 @@ public:
     //!
     //! \sa setBraceMatching()
     BraceMatch braceMatching() const {return braceMode;}
+
+    //! Returns the encoded text between positions \a start and \a end.  This
+    //! is typically used by QsciLexerCustom::styleText().
+    //!
+    //! \sa text()
+    QByteArray bytes(int start, int end) const;
 
     //! Returns the current call tip position.
     //!
@@ -930,6 +964,11 @@ public:
     //! \sa setLexer()
     QsciLexer *lexer() const;
 
+    //! Returns the background color of margin \a margin.
+    //!
+    //! \sa setMarginBackgroundColor()
+    QColor marginBackgroundColor(int margin) const;
+
     //! Returns true if line numbers are enabled for margin \a margin.
     //!
     //! \sa setMarginLineNumbers(), marginType(), SCI_GETMARGINTYPEN
@@ -959,6 +998,11 @@ public:
     //!
     //! \sa setMarginWidth(), SCI_GETMARGINWIDTHN
     int marginWidth(int margin) const;
+
+    //! Returns the number of margins.
+    //!
+    //! \sa setMargins()
+    int margins() const;
 
     //! Define a type of marker using the symbol \a sym with the marker number
     //! \a markerNumber.  If \a markerNumber is -1 then the marker number is
@@ -1190,6 +1234,17 @@ public:
     //! \sa document()
     void setDocument(const QsciDocument &document);
 
+    //! Add \a colnr to the columns which are displayed with a vertical line.
+    //! The edge mode must be set to EdgeMultipleLines.
+    //!
+    //! \sa clearEdgeColumns()
+    void addEdgeColumn(int colnr, const QColor &col);
+
+    //! Remove any columns added by previous calls to addEdgeColumn().
+    //!
+    //! \sa addEdgeColumn()
+    void clearEdgeColumns();
+
     //! Set the color of the marker used to show that a line has exceeded the
     //! length set by setEdgeColumn().
     //!
@@ -1239,6 +1294,11 @@ public:
     //! At the moment only the alpha value of the colour has any affect.
     void setIndicatorOutlineColor(const QColor &col, int indicatorNumber = -1);
 
+    //! Sets the background color of margin \a margin to \a col.
+    //!
+    //! \sa marginBackgroundColor()
+    void setMarginBackgroundColor(int margin, const QColor &col);
+
     //! Set the margin options to \a options.
     //!
     //! \sa marginOptions(), MoNone, MoSublineSelect.
@@ -1267,6 +1327,11 @@ public:
     //! The margin text on line \a line is removed.  If \a line is negative
     //! then all margin text is removed.
     void clearMarginText(int line = -1);
+
+    //! Set the number of margins to \a margins.
+    //!
+    //! \sa margins()
+    void setMargins(int margins);
 
     //! Set the background colour, including the alpha component, of marker
     //! \a markerNumber to \a col.  If \a markerNumber is -1 then the colour of
@@ -1304,6 +1369,12 @@ public:
     //!
     //! \sa setMatchedBraceIndicator()
     void resetMatchedBraceIndicator();
+
+    //! Sets the mode used to draw tab characters when whitespace is visible to
+    //! \a mode.  The default is to use an arrow.
+    //!
+    //! \sa tabDrawMode()
+    void setTabDrawMode(TabDrawMode mode);
 
     //! Set the background colour used to display unmatched braces to \a col.
     //! It is ignored if an indicator is being used.  The default is white.
@@ -1422,6 +1493,12 @@ public:
     //! The standard command set is returned.
     QsciCommandSet *standardCommands() const {return stdCmds;}
 
+    //! Returns the mode used to draw tab characters when whitespace is
+    //! visible.
+    //!
+    //! \sa setTabDrawMode()
+    TabDrawMode tabDrawMode() const;
+
     //! Returns true if the tab key indents a line instead of inserting a tab
     //! character.  The default is true.
     //!
@@ -1444,6 +1521,14 @@ public:
     //!
     //! \sa setText()
     QString text(int line) const;
+
+    //! \overload
+    //!
+    //! Returns the text between positions \a start and \a end.  This is
+    //! typically used by QsciLexerCustom::styleText().
+    //!
+    //! \sa bytes(), setText()
+    QString text(int start, int end) const;
 
     //! Returns the height in pixels of the text in line number \a linenr.
     int textHeight(int linenr) const;
@@ -1969,6 +2054,15 @@ signals:
     //! \sa marginSensitivity(), setMarginSensitivity()
     void marginClicked(int margin, int line, Qt::KeyboardModifiers state);
 
+    //! This signal is emitted whenever the user right-clicks on a sensitive
+    //! margin.  \a margin is the margin.  \a line is the number of the line
+    //! where the user clicked.  \a state is the state of the modifier keys
+    //! (Qt::ShiftModifier, Qt::ControlModifier, Qt::AltModifer and
+    //! Qt::MetaModifier) when the user clicked.
+    //!
+    //! \sa marginSensitivity(), setMarginSensitivity()
+    void marginRightClicked(int margin, int line, Qt::KeyboardModifiers state);
+
     //! This signal is emitted whenever the user attempts to modify read-only
     //! text.
     //!
@@ -2012,6 +2106,7 @@ private slots:
     void handleIndicatorClick(int pos, int modifiers);
     void handleIndicatorRelease(int pos, int modifiers);
     void handleMarginClick(int pos, int margin, int modifiers);
+    void handleMarginRightClick(int pos, int margin, int modifiers);
     void handleModified(int pos, int mtype, const char *text, int len,
             int added, int line, int foldNow, int foldPrev, int token,
             int annotationLinesAdded);
@@ -2131,6 +2226,7 @@ private:
     int ct_cursor;
     QList<int> ct_shifts;
     AutoCompletionUseSingle use_single;
+    QPointer<QsciLexer> lex;
     QsciCommandSet *stdCmds;
     QsciDocument doc;
     QColor nl_text_colour;

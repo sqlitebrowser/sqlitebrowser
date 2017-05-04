@@ -47,22 +47,6 @@ public:
 	int LineStart(int line) const {
 		return starts.PositionFromPartition(line);
 	}
-
-	int MarkValue(int line);
-	int AddMark(int line, int marker);
-	void MergeMarkers(int pos);
-	void DeleteMark(int line, int markerNum, bool all);
-	void DeleteMarkFromHandle(int markerHandle);
-	int LineFromHandle(int markerHandle);
-
-	void ClearLevels();
-	int SetLevel(int line, int level);
-	int GetLevel(int line);
-
-	int SetLineState(int line, int state);
-	int GetLineState(int line);
-	int GetMaxLineState();
-
 };
 
 enum actionType { insertAction, removeAction, startAction, containerAction };
@@ -177,6 +161,7 @@ public:
 	void Allocate(int newSize);
 	int GetLineEndTypes() const { return utf8LineEnds; }
 	void SetLineEndTypes(int utf8LineEnds_);
+	bool ContainsLineEnd(const char *s, int length) const;
 	void SetPerLine(PerLine *pl);
 	int Lines() const;
 	int LineStart(int line) const;

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdexcept>
 #include <vector>
 #include <map>
 
@@ -144,13 +145,13 @@ void RGBAImage::SetPixel(int x, int y, ColourDesired colour, int alpha)
 
 static const char *NextField(const char *s) {
 	// In case there are leading spaces in the string
-	while (*s && *s == ' ') {
+	while (*s == ' ') {
 		s++;
 	}
 	while (*s && *s != ' ') {
 		s++;
 	}
-	while (*s && *s == ' ') {
+	while (*s == ' ') {
 		s++;
 	}
 	return s;

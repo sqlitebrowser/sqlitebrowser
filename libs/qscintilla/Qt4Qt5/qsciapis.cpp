@@ -1,6 +1,6 @@
 // This module implements the QsciAPIs class.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -455,8 +455,9 @@ void QsciAPIs::updateAutoCompletionList(const QStringList &context,
     }
     else
     {
-        // At the moment we assume we will add words from multiple contexts.
-        unambiguous_context.truncate(0);
+        // At the moment we assume we will add words from multiple contexts so
+        // mark the unambiguous context as unknown.
+        unambiguous_context = QString();
 
         bool unambig = true;
         QStringList with_context;
@@ -468,15 +469,23 @@ void QsciAPIs::updateAutoCompletionList(const QStringList &context,
 
         for (int i = 0; i < with_context.count(); ++i)
         {
-            // Remove any unambigious context.
+            // Remove any unambigious context (allowing for a possible image
+            // identifier).
             QString noc = with_context[i];
 
             if (unambig)
             {
-                int op = noc.indexOf('(');
+                int op = noc.indexOf(QLatin1String(" ("));
 
                 if (op >= 0)
-                    noc.truncate(op);
+                {
+                    int cl = noc.indexOf(QLatin1String(")"));
+
+                    if (cl > op)
+                        noc.remove(op, cl - op + 1);
+                    else
+                        noc.truncate(op);
+                }
             }
 
             list << noc;
@@ -623,26 +632,45 @@ void QsciAPIs::addAPIEntries(const WordIndexList &wl, bool complete,
                 continue;
         }
 
-        QString api_word;
+        QString api_word, org;
 
         if (idx == 0)
+        {
             api_word = api_words[0] + ' ';
+            org = QString::fromLatin1("");
+        }
         else
         {
             QStringList orgl = api_words.mid(0, idx);
-            QString org = orgl.join(wseps.first());
+            org = orgl.join(wseps.first());
 
-            api_word = QString("%1 (%2)").arg(api_words[idx]).arg(org);
+            // Add the context (allowing for a possible image identifier).
+            QString w = api_words[idx];
+            QString type;
+            int type_idx = w.indexOf(QLatin1String("?"));
 
-            // See if the origin has been used before.
-            if (unambig)
-                if (unambiguous_context.isEmpty())
-                    unambiguous_context = org;
-                else if (unambiguous_context != org)
-                {
-                    unambiguous_context.truncate(0);
-                    unambig = false;
-                }
+            if (type_idx >= 0)
+            {
+                type = w.mid(type_idx);
+                w.truncate(type_idx);
+            }
+
+            api_word = QString("%1 (%2)%3").arg(w).arg(org).arg(type);
+        }
+
+        // If the origin is different to the context then the context is
+        // ambiguous.
+        if (unambig)
+        {
+            if (unambiguous_context.isNull())
+            {
+                unambiguous_context = org;
+            }
+            else if (unambiguous_context != org)
+            {
+                unambiguous_context.truncate(0);
+                unambig = false;
+            }
         }
 
         if (!with_context.contains(api_word))

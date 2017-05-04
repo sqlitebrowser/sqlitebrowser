@@ -31,6 +31,7 @@ public:
 	void Set(const char *s);
 	bool InList(const char *s) const;
 	bool InListAbbreviated(const char *s, const char marker) const;
+	bool InListAbridged(const char *s, const char marker) const;
 	const char *WordAt(int n) const;
 };
 

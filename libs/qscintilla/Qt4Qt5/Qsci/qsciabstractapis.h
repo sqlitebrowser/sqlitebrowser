@@ -1,6 +1,6 @@
 // This module defines interface to the QsciAbstractAPIs class.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -20,10 +20,6 @@
 
 #ifndef QSCIABSTRACTAPIS_H
 #define QSCIABSTRACTAPIS_H
-
-#ifdef __APPLE__
-extern "C++" {
-#endif
 
 #include <QList>
 #include <QObject>
@@ -90,9 +86,5 @@ private:
     QsciAbstractAPIs(const QsciAbstractAPIs &);
     QsciAbstractAPIs &operator=(const QsciAbstractAPIs &);
 };
-
-#ifdef __APPLE__
-}
-#endif
 
 #endif

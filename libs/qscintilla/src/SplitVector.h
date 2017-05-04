@@ -29,15 +29,17 @@ protected:
 	void GapTo(int position) {
 		if (position != part1Length) {
 			if (position < part1Length) {
-				memmove(
-					body + position + gapLength,
+				// Moving the gap towards start so moving elements towards end
+				std::copy_backward(
 					body + position,
-					sizeof(T) * (part1Length - position));
-			} else {	// position > part1Length
-				memmove(
 					body + part1Length,
+					body + gapLength + part1Length);
+			} else {	// position > part1Length
+				// Moving the gap towards end so moving elements towards start
+				std::copy(
 					body + part1Length + gapLength,
-					sizeof(T) * (position - part1Length));
+					body + gapLength + position,
+					body + part1Length);
 			}
 			part1Length = position;
 		}
@@ -85,12 +87,15 @@ public:
 	/// copy exisiting contents to the new buffer.
 	/// Must not be used to decrease the size of the buffer.
 	void ReAllocate(int newSize) {
+		if (newSize < 0)
+			throw std::runtime_error("SplitVector::ReAllocate: negative size.");
+
 		if (newSize > size) {
 			// Move the gap to the end
 			GapTo(lengthBody);
 			T *newBody = new T[newSize];
 			if ((size != 0) && (body != 0)) {
-				memmove(newBody, body, sizeof(T) * lengthBody);
+				std::copy(body, body + lengthBody, newBody);
 				delete []body;
 			}
 			body = newBody;
@@ -202,7 +207,7 @@ public:
 			}
 			RoomFor(insertLength);
 			GapTo(positionToInsert);
-			memmove(body + part1Length, s + positionFrom, sizeof(T) * insertLength);
+			std::copy(s + positionFrom, s + positionFrom + insertLength, body + part1Length);
 			lengthBody += insertLength;
 			part1Length += insertLength;
 			gapLength -= insertLength;
@@ -251,11 +256,11 @@ public:
 			if (range1Length > part1AfterPosition)
 				range1Length = part1AfterPosition;
 		}
-		memcpy(buffer, body + position, range1Length * sizeof(T));
+		std::copy(body + position, body + position + range1Length, buffer);
 		buffer += range1Length;
 		position = position + range1Length + gapLength;
 		int range2Length = retrieveLength - range1Length;
-		memcpy(buffer, body + position, range2Length * sizeof(T));
+		std::copy(body + position, body + position + range2Length, buffer);
 	}
 
 	T *BufferPointer() {

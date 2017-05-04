@@ -20,6 +20,7 @@ set(QSCINTILLA_SRC
 	qscicommandset.cpp
 	qscidocument.cpp
 	qscilexer.cpp
+	qscilexercustom.cpp
 	qscilexersql.cpp
 	qscimacro.cpp
 	qsciprinter.cpp
@@ -87,6 +88,7 @@ set(QSCINTILLA_HDR
 	../include/SciLexer.h
 	../include/Scintilla.h
 	../include/ScintillaWidget.h
+	../include/Sci_Position.h
 	../lexlib/Accessor.h
 	../lexlib/CharacterCategory.h
 	../lexlib/CharacterSet.h
@@ -129,6 +131,8 @@ set(QSCINTILLA_HDR
 	../src/UniConversion.h
 	../src/ViewStyle.h
 	../src/XPM.h
+	../src/Position.h
+	../src/SparseVector.h
 )
 
 set(QSCINTILLA_MOC_HDR
@@ -137,6 +141,7 @@ set(QSCINTILLA_MOC_HDR
 	./Qsci/qsciabstractapis.h
 	./Qsci/qsciapis.h
 	./Qsci/qscilexer.h
+	./Qsci/qscilexercustom.h
 	./Qsci/qscilexersql.h
 	./Qsci/qscimacro.h
 	SciClasses.h

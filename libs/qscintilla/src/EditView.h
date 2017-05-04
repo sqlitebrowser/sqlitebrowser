@@ -51,6 +51,7 @@ class EditView {
 public:
 	PrintParameters printParameters;
 	PerLine *ldTabstops;
+	int tabWidthMinimumPixels;
 
 	bool hideSelection;
 	bool drawOverstrikeCaret;
@@ -110,8 +111,10 @@ public:
 	void LayoutLine(const EditModel &model, int line, Surface *surface, const ViewStyle &vstyle,
 		LineLayout *ll, int width = LineLayout::wrapWidthInfinite);
 
-	Point LocationFromPosition(Surface *surface, const EditModel &model, SelectionPosition pos, int topLine, const ViewStyle &vs);
-	SelectionPosition SPositionFromLocation(Surface *surface, const EditModel &model, Point pt, bool canReturnInvalid,
+	Point LocationFromPosition(Surface *surface, const EditModel &model, SelectionPosition pos, int topLine,
+				   const ViewStyle &vs, PointEnd pe);
+	Range RangeDisplayLine(Surface *surface, const EditModel &model, int lineVisible, const ViewStyle &vs);
+	SelectionPosition SPositionFromLocation(Surface *surface, const EditModel &model, PointDocument pt, bool canReturnInvalid,
 		bool charPosition, bool virtualSpace, const ViewStyle &vs);
 	SelectionPosition SPositionFromLineX(Surface *surface, const EditModel &model, int lineDoc, int x, const ViewStyle &vs);
 	int DisplayFromPosition(Surface *surface, const EditModel &model, int pos, const ViewStyle &vs);
@@ -121,6 +124,8 @@ public:
 	void DrawEOL(Surface *surface, const EditModel &model, const ViewStyle &vsDraw, const LineLayout *ll, PRectangle rcLine,
 		int line, int lineEnd, int xStart, int subLine, XYACCUMULATOR subLineStart,
 		ColourOptional background);
+	void DrawFoldDisplayText(Surface *surface, const EditModel &model, const ViewStyle &vsDraw, const LineLayout *ll,
+		int line, int xStart, PRectangle rcLine, int subLine, XYACCUMULATOR subLineStart, DrawPhase phase);
 	void DrawAnnotation(Surface *surface, const EditModel &model, const ViewStyle &vsDraw, const LineLayout *ll,
 		int line, int xStart, PRectangle rcLine, int subLine, DrawPhase phase);
 	void DrawCarets(Surface *surface, const EditModel &model, const ViewStyle &vsDraw, const LineLayout *ll, int line,
@@ -137,6 +142,8 @@ public:
 		int lineVisible, int xStart, PRectangle rcLine, int subLine, DrawPhase phase);
 	void PaintText(Surface *surfaceWindow, const EditModel &model, PRectangle rcArea, PRectangle rcClient,
 		const ViewStyle &vsDraw);
+	void FillLineRemainder(Surface *surface, const EditModel &model, const ViewStyle &vsDraw, const LineLayout *ll,
+		int line, PRectangle rcArea, int subLine);
 	long FormatRange(bool draw, Sci_RangeToFormat *pfr, Surface *surface, Surface *surfaceMeasure,
 		const EditModel &model, const ViewStyle &vs);
 };

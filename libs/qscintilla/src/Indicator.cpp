@@ -5,6 +5,7 @@
 // Copyright 1998-2001 by Neil Hodgson <neilh@scintilla.org>
 // The License.txt file describes the conditions under which this software may be distributed.
 
+#include <stdexcept>
 #include <vector>
 #include <map>
 
@@ -23,7 +24,7 @@ static PRectangle PixelGridAlign(const PRectangle &rc) {
 	return PRectangle::FromInts(int(rc.left + 0.5), int(rc.top), int(rc.right + 0.5), int(rc.bottom));
 }
 
-void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &rcLine, DrawState drawState, int value) const {
+void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &rcLine, const PRectangle &rcCharacter, DrawState drawState, int value) const {
 	StyleAndColour sacDraw = sacNormal;
 	if (Flags() & SC_INDICFLAG_VALUEFORE) {
 		sacDraw.fore = value & SC_INDICVALUEMASK;
@@ -127,7 +128,7 @@ void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &r
 			rcBox.top = rcLine.top + 1;
 		rcBox.left = rc.left;
 		rcBox.right = rc.right;
-		surface->AlphaRectangle(rcBox, (sacDraw.style == INDIC_ROUNDBOX) ? 1 : 0, 
+		surface->AlphaRectangle(rcBox, (sacDraw.style == INDIC_ROUNDBOX) ? 1 : 0,
 			sacDraw.fore, fillAlpha, sacDraw.fore, outlineAlpha, 0);
 	} else if (sacDraw.style == INDIC_DOTBOX) {
 		PRectangle rcBox = PixelGridAlign(rc);
@@ -169,6 +170,19 @@ void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &r
 	} else if (sacDraw.style == INDIC_COMPOSITIONTHIN) {
 		PRectangle rcComposition(rc.left+1, rcLine.bottom-2, rc.right-1, rcLine.bottom-1);
 		surface->FillRectangle(rcComposition, sacDraw.fore);
+	} else if (sacDraw.style == INDIC_POINT || sacDraw.style == INDIC_POINTCHARACTER) {
+		if (rcCharacter.Width() >= 0.1) {
+			const int pixelHeight = static_cast<int>(rc.Height() - 1.0f);	// 1 pixel onto next line if multiphase
+			const XYPOSITION x = (sacDraw.style == INDIC_POINT) ? (rcCharacter.left) : ((rcCharacter.right + rcCharacter.left) / 2);
+			const int ix = static_cast<int>(x + 0.5f);
+			const int iy = static_cast<int>(rc.top + 1.0f);
+			Point pts[] = {
+				Point::FromInts(ix - pixelHeight, iy + pixelHeight),	// Left
+				Point::FromInts(ix + pixelHeight, iy + pixelHeight),	// Right
+				Point::FromInts(ix, iy)									// Top
+			};
+			surface->Polygon(pts, 3, sacDraw.fore, sacDraw.fore);
+		}
 	} else {	// Either INDIC_PLAIN or unknown
 		surface->MoveTo(static_cast<int>(rc.left), ymid);
 		surface->LineTo(static_cast<int>(rc.right), ymid);

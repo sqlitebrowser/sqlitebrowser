@@ -39,7 +39,7 @@ public:
 	int Execute(CharacterIndexer &ci, int lp, int endp);
 
 	enum { MAXTAG=10 };
-	enum { MAXNFA=2048 };
+	enum { MAXNFA=4096 };
 	enum { NOTFOUND=-1 };
 
 	int bopat[MAXTAG];

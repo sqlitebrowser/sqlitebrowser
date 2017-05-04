@@ -1,6 +1,6 @@
 // This defines the interface to the QsciCommandSet class.
 //
-// Copyright (c) 2015 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -20,10 +20,6 @@
 
 #ifndef QSCICOMMANDSET_H
 #define QSCICOMMANDSET_H
-
-#ifdef __APPLE__
-extern "C++" {
-#endif
 
 #include <qglobal.h>
 
@@ -89,9 +85,5 @@ private:
     QsciCommandSet(const QsciCommandSet &);
     QsciCommandSet &operator=(const QsciCommandSet &);
 };
-
-#ifdef __APPLE__
-}
-#endif
 
 #endif
