@@ -437,62 +437,17 @@ void MainWindow::populateTable()
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Search stored table settings for this table
-    auto tableIt = browseTableSettings.constFind(tablename);
-    bool storedDataFound = tableIt != browseTableSettings.constEnd();
+    auto settingsIt = browseTableSettings.constFind(tablename);
+    bool storedDataFound = settingsIt != browseTableSettings.constEnd();
 
     // Set new table
     if(!storedDataFound)
     {
+        // No stored settings found.
+
+        // Set table name and apply default display format settings
         m_browseTableModel->setTable(tablename);
-    } else {
-        QVector<QString> v;
-        bool only_defaults = true;
-        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
-        for(int i=0; i<tablefields.size(); ++i)
-        {
-            QString format = tableIt.value().displayFormats[i+1];
-            if(format.size())
-            {
-                v.push_back(format);
-                only_defaults = false;
-            } else {
-                v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
-            }
-        }
-        if(only_defaults)
-            m_browseTableModel->setTable(tablename);
-        else
-            m_browseTableModel->setTable(tablename, v);
-    }
 
-    // Restore table settings
-    if(storedDataFound)
-    {
-        // There is information stored for this table, so extract it and apply it
-
-        // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
-        // because of the filter row generation.
-        showRowidColumn(tableIt.value().showRowid);
-
-        // Column widths
-        for(auto widthIt=tableIt.value().columnWidths.constBegin();widthIt!=tableIt.value().columnWidths.constEnd();++widthIt)
-            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
-
-        // Sorting
-        m_browseTableModel->sort(tableIt.value().sortOrderIndex, tableIt.value().sortOrderMode);
-        ui->dataTable->filterHeader()->setSortIndicator(tableIt.value().sortOrderIndex, tableIt.value().sortOrderMode);
-
-        // Filters
-        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
-        for(auto filterIt=tableIt.value().filterValues.constBegin();filterIt!=tableIt.value().filterValues.constEnd();++filterIt)
-            filterHeader->setFilter(filterIt.key(), filterIt.value());
-
-        // Encoding
-        m_browseTableModel->setEncoding(tableIt.value().encoding);
-
-        // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()], true, false);
-    } else {
         // There aren't any information stored for this table yet, so use some default values
 
         // Hide rowid column. Needs to be done before the column widths setting because of the workaround in there
@@ -513,6 +468,54 @@ void MainWindow::populateTable()
         plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()]);
 
         // The filters can be left empty as they are
+    } else {
+        // Stored settings found. Retrieve them.
+        BrowseDataTableSettings storedData = settingsIt.value();
+
+        // Load display formats and set them along with the table name
+        QVector<QString> v;
+        bool only_defaults = true;
+        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
+        for(int i=0; i<tablefields.size(); ++i)
+        {
+            QString format = storedData.displayFormats[i+1];
+            if(format.size())
+            {
+                v.push_back(format);
+                only_defaults = false;
+            } else {
+                v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
+            }
+        }
+        if(only_defaults)
+            m_browseTableModel->setTable(tablename);
+        else
+            m_browseTableModel->setTable(tablename, v);
+
+        // There is information stored for this table, so extract it and apply it
+
+        // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
+        // because of the filter row generation.
+        showRowidColumn(storedData.showRowid);
+
+        // Column widths
+        for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
+            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+
+        // Sorting
+        m_browseTableModel->sort(storedData.sortOrderIndex, storedData.sortOrderMode);
+        ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
+
+        // Filters
+        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
+            filterHeader->setFilter(filterIt.key(), filterIt.value());
+
+        // Encoding
+        m_browseTableModel->setEncoding(storedData.encoding);
+
+        // Plot
+        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()], true, false);
     }
 
     // Activate the add and delete record buttons and editing only if a table has been selected
