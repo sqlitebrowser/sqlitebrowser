@@ -446,7 +446,7 @@ void MainWindow::populateTable()
         // No stored settings found.
 
         // Set table name and apply default display format settings
-        m_browseTableModel->setTable(tablename);
+        m_browseTableModel->setTable(tablename, 0, Qt::AscendingOrder);
 
         // There aren't any information stored for this table yet, so use some default values
 
@@ -458,7 +458,6 @@ void MainWindow::populateTable()
             ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
 
         // Sorting
-        m_browseTableModel->sort(0, Qt::AscendingOrder);
         ui->dataTable->filterHeader()->setSortIndicator(0, Qt::AscendingOrder);
 
         // Encoding
@@ -488,9 +487,9 @@ void MainWindow::populateTable()
             }
         }
         if(only_defaults)
-            m_browseTableModel->setTable(tablename);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode);
         else
-            m_browseTableModel->setTable(tablename, v);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
 
         // There is information stored for this table, so extract it and apply it
 
@@ -503,7 +502,6 @@ void MainWindow::populateTable()
             ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
 
         // Sorting
-        m_browseTableModel->sort(storedData.sortOrderIndex, storedData.sortOrderMode);
         ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
 
         // Filters

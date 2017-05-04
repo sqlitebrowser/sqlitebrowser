@@ -25,6 +25,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chun
 
 void SqliteTableModel::reset()
 {
+    m_sTable.clear();
     m_iSortColumn = 0;
     m_sSortOrder = "ASC";
     m_headers.clear();
@@ -38,15 +39,23 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const QString& table, const QVector<QString>& display_format)
+void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOrder sortOrder, const QVector<QString>& display_format)
 {
+    // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
 
+    // Set sort parameters. This saves the sort parameters in the class instance but doesn't execute any query yet because the table name
+    // isn't set yet. This is why this needs to be called before setting the table name
+    sort(sortColumn, sortOrder);
+
+    // Save the other parameters
     m_sTable = table;
     m_vDisplayFormat = display_format;
 
+    // The first column is the rowid column and therefore is always of type integer
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
+    // Get the data types of all other columns as well as the column names
     bool allOk = false;
     if(m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
     {
@@ -73,6 +82,9 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
         }
     }
 
+    // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
+    // information we retrieve it from SQLite using an extra query.
+    // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
     if(!allOk)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(table));
@@ -80,6 +92,7 @@ void SqliteTableModel::setTable(const QString& table, const QVector<QString>& di
         m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
     }
 
+    // Prepare actual query and fetch data
     buildQuery();
 }
 
