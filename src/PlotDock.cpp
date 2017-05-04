@@ -170,10 +170,14 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         // check if we have a x axis with datetime data
         if(xtype == QVariant::DateTime)
         {
-            ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltDateTime);
-            ui->plotWidget->xAxis->setDateTimeFormat("yyyy-MM-dd");
+            QSharedPointer<QCPAxisTickerDateTime> ticker(new QCPAxisTickerDateTime);
+            ticker->setDateTimeFormat("yyyy-MM-dd");
+            ui->plotWidget->xAxis->setTicker(ticker);
         } else {
-            ui->plotWidget->xAxis->setTickLabelType(QCPAxis::ltNumber);
+            QSharedPointer<QCPAxisTickerFixed> ticker(new QCPAxisTickerFixed);
+            ticker->setTickStepStrategy(QCPAxisTicker::tssReadability);
+            ticker->setScaleStrategy(QCPAxisTickerFixed::ssMultiples);
+            ui->plotWidget->xAxis->setTicker(ticker);
         }
 
         // add graph for each selected y axis
