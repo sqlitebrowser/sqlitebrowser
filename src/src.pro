@@ -56,7 +56,8 @@ HEADERS += \
     ForeignKeyEditorDelegate.h \
     PlotDock.h \
     RemoteDock.h \
-    RemoteModel.h
+    RemoteModel.h \
+    SqlThread.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -91,7 +92,8 @@ SOURCES += \
     ForeignKeyEditorDelegate.cpp \
     PlotDock.cpp \
     RemoteDock.cpp \
-    RemoteModel.cpp
+    RemoteModel.cpp \
+    SqlThread.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
