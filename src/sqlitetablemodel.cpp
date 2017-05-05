@@ -2,7 +2,6 @@
 #include "sqlitedb.h"
 #include "sqlite.h"
 #include "Settings.h"
-#include "SqlThread.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -508,19 +507,39 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
             sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(from).arg(to-from);
     }
     m_db.logSQL(sLimitQuery, kLogMsg_App);
+    QByteArray utf8Query = sLimitQuery.toUtf8();
+    sqlite3_stmt *stmt;
+    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
 
-    // Fetch data in separate thread
-    SqlThread* thread = new SqlThread(m_db, sLimitQuery, m_headers.size(), m_data);
-    connect(thread, &SqlThread::done, [this, currentsize]() {
-        // Check if there was any new data
-        if(m_data.size() > currentsize)
+    if(SQLITE_OK == status)
+    {
+        while(sqlite3_step(stmt) == SQLITE_ROW)
         {
-            beginInsertRows(QModelIndex(), currentsize, m_data.size()-1);
-            endInsertRows();
+            QByteArrayList rowdata;
+            for (int i = 0; i < m_headers.size(); ++i)
+            {
+                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                {
+                    rowdata.append(QByteArray());
+                } else {
+                    int bytes = sqlite3_column_bytes(stmt, i);
+                    if(bytes)
+                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                    else
+                        rowdata.append(QByteArray(""));
+                }
+            }
+            m_data.push_back(rowdata);
         }
-    });
-    connect(thread, &SqlThread::finished, thread, &QObject::deleteLater);
-    thread->start();
+    }
+    sqlite3_finalize(stmt);
+
+    // Check if there was any new data
+    if(m_data.size() > currentsize)
+    {
+        beginInsertRows(QModelIndex(), currentsize, m_data.size()-1);
+        endInsertRows();
+    }
 }
 
 void SqliteTableModel::buildQuery()

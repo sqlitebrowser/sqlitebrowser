@@ -117,7 +117,6 @@ set(SQLB_MOC_HDR
 	src/PlotDock.h
 	src/RemoteDock.h
 	src/RemoteModel.h
-	src/SqlThread.h
 )
 
 set(SQLB_SRC
@@ -155,7 +154,6 @@ set(SQLB_SRC
 	src/PlotDock.cpp
 	src/RemoteDock.cpp
 	src/RemoteModel.cpp
-	src/SqlThread.cpp
 )
 
 set(SQLB_FORMS
