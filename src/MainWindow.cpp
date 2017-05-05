@@ -1357,7 +1357,7 @@ void MainWindow::updateRecentFileActions()
 void MainWindow::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
-    setWindowTitle( QApplication::applicationName() +" - "+fileName);
+    setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(fileName));
     activateFields(true);
 }
 
