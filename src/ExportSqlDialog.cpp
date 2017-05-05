@@ -118,5 +118,7 @@ void ExportSqlDialog::accept()
     QDialog::accept();
 }
 
-
-
+void ExportSqlDialog::reject()
+{
+    QDialog::reject();
+}
