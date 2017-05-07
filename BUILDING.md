@@ -51,7 +51,7 @@ The same process works for building the code in any platform supported by Qt
 
 ```bash
 $ sudo apt install build-essential git cmake libsqlite3-dev qt5-default qttools5-dev-tools
-$ git clone https://github.com/sqlitebrowser/sqlitebrowser.git
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build
 $ cd build
@@ -59,28 +59,26 @@ $ cmake -Wno-dev ..
 $ make
 $ sudo make install
 ```
-**5**. This should complete without errors, giving you a binary file called
-       'sqlitebrowser'.
+
+This should complete without errors, giving you a binary file called 'sqlitebrowser'.
 
 Done. :)
 
 ### CentOS / Fedora Linux
 
-**1**. Make sure the `cmake`, `qt-devel`, `ant-antlr`, `sqlite-devel`, `antlr-C++`,
-and `gcc-c++` packages are installed.<br />
-```
-$ sudo dnf install cmake qt-devel ant-antlr sqlite-devel antlr-C++ gcc-c++
-```
-
 **Note** - If on CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`
 
-**2**. Download the DB Browser for SQLite source code.<br />
-**3**. Open a terminal in the source code directory.<br />
-**4**. Run these commands:<br />
-```bash
-$ cmake . && make && sudo make install
 ```
-**5**. This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
+$ sudo dnf install ant-antlr antlr-C++ cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
+       sqlite-devel
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser
+$ cd sqlitebrowser
+$ cmake -Wno-dev .
+$ make
+$ sudo make install
+```
+
+This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
 
 ### MacOS X
 
