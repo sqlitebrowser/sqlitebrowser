@@ -13,10 +13,7 @@ have to worry about these as most systems meet these requirements today.
 
 ### Generic Linux and FreeBSD
 
-The GPL version of Qt is available in almost all Linux distributions as a
-default package.
-
-The only requirements for building this code are the presence of Qt and
+The only requirements for building this code are the presence of Qt5 and
 sqlite3. Qt can be included as a static or shared library, depending on the
 current Qt configuration on the building machine.
 
@@ -24,7 +21,18 @@ Provided you have Qt and cmake installed and configured, simply run:
 
     $ cmake .
 
-followed by:
+There is one potential problem... several Linux distributions provide a
+QScintilla package compiled for (only) Qt4.  If it's present it can confuse
+CMake, which will use it during compiling.  The resulting program just crashes
+instead of running.  If you experience that kind of crash, try using this
+cmake command instead when compiling:
+
+    $ cmake -DFORCE_INTERNAL_QSCINTILLA=ON
+
+That tells cmake to compile QScintilla itself, using the source code version
+we bundle.
+
+After the cmake line, run this:
 
     $ make
 
@@ -37,6 +45,7 @@ running:
 
 The same process works for building the code in any platform supported by Qt
 (including other Unix systems with X11.)
+
 
 ### Ubuntu Linux
 
