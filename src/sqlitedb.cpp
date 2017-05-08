@@ -396,7 +396,6 @@ bool DBBrowserDB::create ( const QString & db)
             NoStructureUpdateChecks nup(*this);
             executeSQL("CREATE TABLE notempty (id integer primary key);", false, false);
             executeSQL("DROP TABLE notempty;", false, false);
-            executeSQL("COMMIT;", false, false);
         }
 
         // Execute default SQL
