@@ -20,6 +20,9 @@ PlotDock::PlotDock(QWidget* parent)
     ui->splitterForPlot->restoreState(Settings::getValue("PlotDock", "splitterSize").toByteArray());
     ui->comboLineType->setCurrentIndex(Settings::getValue("PlotDock", "lineType").toInt());
     ui->comboPointShape->setCurrentIndex(Settings::getValue("PlotDock", "pointShape").toInt());
+
+    // Connect signals
+    connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
 }
 
 PlotDock::~PlotDock()
@@ -41,9 +44,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         // Store pointer to the current browse table settings in the main window
         m_currentTableSettings = settings;
 
-        // disconnect treeplotcolumns item changed updates
-        disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-                   this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+        // disable tree plot columns item changed updates
+        ui->treePlotColumns->blockSignals(true);
 
         m_currentPlotModel = model;
 
@@ -141,7 +143,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         ui->plotWidget->yAxis->setLabel("Y");
         ui->plotWidget->xAxis->setLabel("X");
-        connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
+        ui->treePlotColumns->blockSignals(false);
     }
 
     // search for the x axis select
@@ -255,8 +257,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
-    disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+    ui->treePlotColumns->blockSignals(true);
 
     // make sure only 1 X axis is selected
     if(column == PlotColumnX)
@@ -349,8 +350,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
         }
     }
 
-    connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+    ui->treePlotColumns->blockSignals(false);
 
     updatePlot(m_currentPlotModel, m_currentTableSettings, false);
 }
@@ -358,8 +358,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
 void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
-    disconnect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+    ui->treePlotColumns->blockSignals(true);
 
     if(column == PlotColumnY)
     {
@@ -390,8 +389,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         }
     }
 
-    connect(ui->treePlotColumns, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this,SLOT(on_treePlotColumns_itemChanged(QTreeWidgetItem*,int)));
+    ui->treePlotColumns->blockSignals(false);
 
     updatePlot(m_currentPlotModel, m_currentTableSettings, false);
 }
