@@ -38,6 +38,10 @@ PlotDock::~PlotDock()
 
 void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings, bool update, bool keepOrResetSelection)
 {
+    // Each column has an id that we use internally, starting from 0. However, at the beginning of the columns list we want to add
+    // the virtual 'Row #' column which needs a separate unique id for internal use. This id is defined here as -1 in a 16bit integer.
+    const unsigned int RowNumId = 0xFFFF;
+
     // add columns to x/y selection tree widget
     if(update)
     {
@@ -211,7 +215,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     } else {
                         // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                         // instead of retrieving some value from the model.
-                        if(x == 0xFFFF)
+                        if(x == RowNumId)
                             xdata[i] = i+1;
 
                         else
@@ -221,7 +225,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                     // instead of retrieving some value from the model.
                     QVariant pointdata;
-                    if(column == 0xFFFF)
+                    if(column == RowNumId)
                         pointdata = i+1;
                     else
                         pointdata = model->data(model->index(i, column), Qt::EditRole);
@@ -241,14 +245,20 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)shapeIdx, 5));
 
                 // gather Y label column names
-                yAxisLabels << model->headerData(column, Qt::Horizontal).toString();
+                if(column == RowNumId)
+                    yAxisLabels << tr("Row #");
+                else
+                    yAxisLabels << model->headerData(column, Qt::Horizontal).toString();
             }
         }
 
         ui->plotWidget->rescaleAxes(true);
 
         // set axis labels
-        ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
+        if(x == RowNumId)
+            ui->plotWidget->xAxis->setLabel(tr("Row #"));
+        else
+            ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
         ui->plotWidget->yAxis->setLabel(yAxisLabels.join("|"));
     }
     ui->plotWidget->replot();
