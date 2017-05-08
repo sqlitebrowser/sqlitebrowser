@@ -634,14 +634,14 @@ void MainWindow::selectTableLine(int lineToSelect)
     // Select it
     ui->dataTable->clearSelection();
     ui->dataTable->selectRow(lineToSelect);
-    ui->dataTable->scrollTo(ui->dataTable->currentIndex());
+    ui->dataTable->scrollTo(ui->dataTable->currentIndex(), QAbstractItemView::PositionAtTop);
     QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::navigatePrevious()
 {
     int curRow = ui->dataTable->currentIndex().row();
-    curRow -= 100;
+    curRow -= ui->dataTable->numVisibleRows() - 1;
     if(curRow < 0)
         curRow = 0;
     selectTableLine(curRow);
@@ -651,7 +651,7 @@ void MainWindow::navigatePrevious()
 void MainWindow::navigateNext()
 {
     int curRow = ui->dataTable->currentIndex().row();
-    curRow += 100;
+    curRow += ui->dataTable->numVisibleRows() - 1;
     if(curRow >= m_browseTableModel->totalRowCount())
         curRow = m_browseTableModel->totalRowCount() - 1;
     selectTableLine(curRow);

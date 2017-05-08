@@ -19,6 +19,7 @@ public:
 
 public:
     QSet<int> selectedCols();
+    int numVisibleRows();
 
 public slots:
     void reloadSettings();
@@ -30,7 +31,6 @@ signals:
 private:
     void copy();
     void paste();
-    int numVisibleRows();
 
     typedef QList<QByteArray> QByteArrayList;
     QList<QByteArrayList> m_buffer;
