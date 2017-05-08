@@ -15,7 +15,7 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, con
     if(!defaultFileName.isEmpty())
         dir += "/" + defaultFileName;
 
-    QString result = QFileDialog::getSaveFileName(parent, caption, defaultFileName, filter, selectedFilter, options);
+    QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
     if(!result.isEmpty())
         setFileDialogPath(result);
     return result;
