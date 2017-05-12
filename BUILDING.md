@@ -4,12 +4,16 @@ DB Browser for SQLite requires Qt as well as SQLite. For more information on Qt
 please consult http://www.qt.io and for SQLite please see https://sqlite.org/.
 
 Please note that all versions after 3.9.1 will require:
-* Qt 5.6 or later
+* Qt 5.5 or later, however we advise you to use 5.7 or later
 * A C++ compiler with support for C++11 or later
 
 Without these or with older versions you won't be able to compile DB Browser for
 Sqlite anymore. This applies to all platforms. However, most likely you won't
 have to worry about these as most systems meet these requirements today.
+
+If you have any chance, please use Qt 5.7 or any later version. Even though Qt
+5.5 and 5.6 are supported by us, there might be glitches and minor problems
+when using them.
 
 ### Generic Linux and FreeBSD
 
@@ -98,7 +102,7 @@ and can also be launched through Spotlight.
 ### Building an .app bundle
 
 Building an .app bundle version takes a bit more effort, but isn't too hard.
-It requires SQLite and Qt 4.x/5.x to be installed first.  These are the
+It requires SQLite and Qt 5.x to be installed first.  These are the
 [Homebrew](http://brew.sh) steps, though other package managers should work:
 
     $ brew install sqlite --with-functions --with-json1 --without-readline
