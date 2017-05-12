@@ -31,6 +31,7 @@ void SqliteTableModel::reset()
     m_mWhere.clear();
     m_vDataTypes.clear();
     m_vDisplayFormat.clear();
+    m_pseudoPk.clear();
 }
 
 void SqliteTableModel::setChunkSize(size_t chunksize)
@@ -341,7 +342,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBlob))
+        if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBlob, m_pseudoPk))
         {
             // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
             if(index.row() < m_data.size())
@@ -766,4 +767,20 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
     }
 
     return false;
+}
+
+void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
+{
+    if(pseudoPk.isEmpty())
+    {
+        m_pseudoPk.clear();
+        if(m_headers.size())
+            m_headers[0] = "rowid";
+    } else {
+        m_pseudoPk = pseudoPk;
+        if(m_headers.size())
+            m_headers[0] = pseudoPk;
+    }
+
+    buildQuery();
 }

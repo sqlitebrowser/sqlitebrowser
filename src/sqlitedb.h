@@ -67,7 +67,7 @@ public:
      */
     QString emptyInsertStmt(const sqlb::Table& t, const QString& pk_value = QString()) const;
     bool deleteRecords(const QString& table, const QStringList& rowids);
-    bool updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob);
+    bool updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
 
     bool createTable(const QString& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& from_table, const QString& to_table);

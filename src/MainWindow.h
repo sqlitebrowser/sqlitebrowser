@@ -33,6 +33,7 @@ struct BrowseDataTableSettings
     QString encoding;
     QString plotXAxis;
     QMap<QString, PlotDock::PlotSettings> plotYAxes;
+    QString unlockViewPk;
 
     friend QDataStream& operator<<(QDataStream& stream, const BrowseDataTableSettings& object)
     {
@@ -45,6 +46,7 @@ struct BrowseDataTableSettings
         stream << object.encoding;
         stream << object.plotXAxis;
         stream << object.plotYAxes;
+        stream << object.unlockViewPk;
 
         return stream;
     }
@@ -68,6 +70,7 @@ struct BrowseDataTableSettings
 
         stream >> object.plotXAxis;
         stream >> object.plotYAxes;
+        stream >> object.unlockViewPk;
 
         return stream;
     }
@@ -154,6 +157,7 @@ private:
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
+    void enableEditing(bool enable_edit, bool enable_insertdelete);
     void loadExtensionsFromSettings();
 
 protected:
@@ -242,6 +246,7 @@ private slots:
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
     void fileOpenReadOnly();
+    void unlockViewEditing(bool unlock, QString pk = QString());
 };
 
 #endif

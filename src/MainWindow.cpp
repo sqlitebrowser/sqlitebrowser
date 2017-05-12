@@ -156,6 +156,7 @@ void MainWindow::init()
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
     popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
+    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
     popupBrowseDataHeaderMenu->addSeparator();
     popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
@@ -453,6 +454,9 @@ void MainWindow::populateTable()
         // Hide rowid column. Needs to be done before the column widths setting because of the workaround in there
         showRowidColumn(false);
 
+        // Enable editing in general, but lock view editing
+        unlockViewEditing(false);
+
         // Column widths
         for(int i=1;i<m_browseTableModel->columnCount();i++)
             ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
@@ -497,6 +501,9 @@ void MainWindow::populateTable()
         // because of the filter row generation.
         showRowidColumn(storedData.showRowid);
 
+        // Enable editing in general and (un)lock view editing depending on the settings
+        unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
+
         // Column widths
         for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
             ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
@@ -516,11 +523,15 @@ void MainWindow::populateTable()
         plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()], true, false);
     }
 
-    // Activate the add and delete record buttons and editing only if a table has been selected
-    bool editable = db.getObjectByName(tablename)->type() == sqlb::Object::Types::Table && !db.readOnly();
-    ui->buttonNewRecord->setEnabled(editable);
-    ui->buttonDeleteRecord->setEnabled(editable);
-    ui->dataTable->setEditTriggers(editable ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+    // Show/hide menu options depending on whether this is a table or a view
+    if(db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::Table)
+    {
+        // Table
+        ui->actionUnlockViewEditing->setVisible(false);
+    } else {
+        // View
+        ui->actionUnlockViewEditing->setVisible(true);
+    }
 
     // Set the recordset label
     setRecordsetLabel();
@@ -1438,6 +1449,19 @@ void MainWindow::activateFields(bool enable)
     ui->actionSave_Remote->setEnabled(enable);
 }
 
+void MainWindow::enableEditing(bool enable_edit, bool enable_insertdelete)
+{
+    // Don't enable anything if this is a read only database
+    bool edit = enable_edit && !db.readOnly();
+    bool insertdelete = enable_insertdelete && !db.readOnly();
+
+    // Apply settings
+    ui->buttonNewRecord->setEnabled(insertdelete);
+    ui->buttonDeleteRecord->setEnabled(insertdelete);
+    ui->dataTable->setEditTriggers(edit ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+
+}
+
 void MainWindow::browseTableHeaderClicked(int logicalindex)
 {
     // Abort if there is more than one column selected because this tells us that the user pretty sure wants to do a range selection instead of sorting data
@@ -1939,6 +1963,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
                                                         browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
                             showRowidColumn(browseTableSettings[ui->comboBrowseTable->currentText()].showRowid);
+                            unlockViewEditing(!browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk.isEmpty(), browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk);
                             xml.skipCurrentElement();
                         }
                     }
@@ -2365,4 +2390,49 @@ void MainWindow::fileOpenReadOnly()
 {
     // Redirect to 'standard' fileOpen(), with the read only flag set
     fileOpen(QString(), false, true);
+}
+
+void MainWindow::unlockViewEditing(bool unlock, QString pk)
+{
+    QString currentTable = ui->comboBrowseTable->currentText();
+
+    // If this isn't a view just unlock editing and return
+    if(db.getObjectByName(currentTable)->type() != sqlb::Object::View)
+    {
+        m_browseTableModel->setPseudoPk(QString());
+        enableEditing(true, true);
+        return;
+    }
+
+    // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
+    if(unlock && pk.isEmpty())
+    {
+        while(true)
+        {
+            // Ask for a PK
+            pk = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter a pseudo-primary key in order to enable editing on this view. "
+                                                                         "This should be the name of a unique column in the view."));
+
+            // Cancelled?
+            if(pk.isEmpty())
+                return;
+
+            // Do some basic testing of the input and if the input appears to be good, go on
+            if(db.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1;").arg(sqlb::escapeIdentifier(pk)).arg(sqlb::escapeIdentifier(currentTable)), false, true))
+                break;
+        }
+    } else if(!unlock) {
+        // Locking the view is done by unsetting the pseudo-primary key
+        pk.clear();
+    }
+
+    // (De)activate editing
+    enableEditing(unlock, false);
+    m_browseTableModel->setPseudoPk(pk);
+
+    // Update checked status of the popup menu action
+    ui->actionUnlockViewEditing->setChecked(unlock);
+
+    // Save settings for this table
+    browseTableSettings[currentTable].unlockViewPk = pk;
 }

@@ -48,8 +48,12 @@ public:
 
     bool isBinary(const QModelIndex& index) const;
 
-    void setEncoding(QString encoding) { m_encoding = encoding; }
+    void setEncoding(const QString& encoding) { m_encoding = encoding; }
     QString encoding() const { return m_encoding; }
+
+    // The pseudo-primary key is exclusively for editing views
+    void setPseudoPk(const QString& pseudoPk);
+    QString pseudoPk() const { return m_pseudoPk; }
 
     typedef QList<QByteArray> QByteArrayList;
 
@@ -82,6 +86,7 @@ private:
 
     QString m_sQuery;
     QString m_sTable;
+    QString m_pseudoPk;
     int m_iSortColumn;
     QString m_sSortOrder;
     QMap<int, QString> m_mWhere;

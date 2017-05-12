@@ -945,14 +945,14 @@ bool DBBrowserDB::deleteRecords(const QString& table, const QStringList& rowids)
     return ok;
 }
 
-bool DBBrowserDB::updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob)
+bool DBBrowserDB::updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk)
 {
     if (!isOpen()) return false;
 
     QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
             .arg(sqlb::escapeIdentifier(table))
             .arg(sqlb::escapeIdentifier(column))
-            .arg(sqlb::escapeIdentifier(getObjectByName(table).dynamicCast<sqlb::Table>()->rowidColumn()))
+            .arg(sqlb::escapeIdentifier(pseudo_pk.isEmpty() ? getObjectByName(table).dynamicCast<sqlb::Table>()->rowidColumn() : pseudo_pk))
             .arg(rowid);
 
     logSQL(sql, kLogMsg_App);

@@ -1779,6 +1779,17 @@
     <enum>QAction::NoRole</enum>
    </property>
   </action>
+  <action name="actionUnlockViewEditing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Unlock view editing</string>
+   </property>
+   <property name="toolTip">
+    <string>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2814,6 +2825,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionUnlockViewEditing</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>unlockViewEditing(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2877,5 +2904,6 @@
   <slot>browseDataFetchAllData()</slot>
   <slot>exportTableToJson()</slot>
   <slot>fileOpenReadOnly()</slot>
+  <slot>unlockViewEditing(bool)</slot>
  </slots>
 </ui>
