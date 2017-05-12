@@ -154,9 +154,9 @@ void MainWindow::init()
 
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
+    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
     popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
     popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
-    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
     popupBrowseDataHeaderMenu->addSeparator();
     popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
@@ -528,9 +528,11 @@ void MainWindow::populateTable()
     {
         // Table
         ui->actionUnlockViewEditing->setVisible(false);
+        ui->actionShowRowidColumn->setVisible(true);
     } else {
         // View
         ui->actionUnlockViewEditing->setVisible(true);
+        ui->actionShowRowidColumn->setVisible(false);
     }
 
     // Set the recordset label
