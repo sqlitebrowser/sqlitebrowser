@@ -10,6 +10,15 @@
 
 namespace sqlb {
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
+template<typename T>
+uint qHash(const QVector<T>& key, uint seed = 0)
+    Q_DECL_NOEXCEPT_EXPR(noexcept(qHashRange(key.cbegin(), key.cend(), seed)))
+{
+    return qHashRange(key.cbegin(), key.cend(), seed);
+}
+#endif
+
 QString escapeIdentifier(QString id);
 
 class Object;
