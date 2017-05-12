@@ -10,6 +10,14 @@
 static QString sSettingsGroup("exportsql");
 static QString sSettingsInsertColNames("insertcolnames");
 static QString sSettingsInsertMultiple("insertmultiple");
+static QString sSettingsOldSchema("oldschema");
+
+enum WhatComboEntries
+{
+    ExportEverything,
+    ExportSchemaOnly,
+    ExportDataOnly,
+};
 
 ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString& selection)
     : QDialog(parent),
@@ -23,6 +31,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     settings.beginGroup(sSettingsGroup);
     ui->checkColNames->setChecked(settings.value(sSettingsInsertColNames, false).toBool());
     ui->checkMultiple->setChecked(settings.value(sSettingsInsertMultiple, false).toBool());
+    ui->comboOldSchema->setCurrentIndex(settings.value(sSettingsOldSchema, 0).toInt());
 
     // Get list of tables to export
     objectMap objects = pdb->getBrowsableObjects();
@@ -93,6 +102,7 @@ void ExportSqlDialog::accept()
     settings.beginGroup(sSettingsGroup);
     settings.setValue(sSettingsInsertColNames, ui->checkColNames->isChecked());
     settings.setValue(sSettingsInsertMultiple, ui->checkMultiple->isChecked());
+    settings.setValue(sSettingsOldSchema, ui->comboOldSchema->currentIndex());
     settings.endGroup();
 
     QStringList tables;
@@ -100,8 +110,9 @@ void ExportSqlDialog::accept()
         tables.push_back(item->text());
 
     // Check what to export. The indices here depend on the order of the items in the combobox in the ui file
-    bool exportSchema = ui->comboWhat->currentIndex() == 0 || ui->comboWhat->currentIndex() == 1;
-    bool exportData = ui->comboWhat->currentIndex() == 0 || ui->comboWhat->currentIndex() == 2;
+    bool exportSchema = ui->comboWhat->currentIndex() == ExportEverything || ui->comboWhat->currentIndex() == ExportSchemaOnly;
+    bool exportData = ui->comboWhat->currentIndex() == ExportEverything || ui->comboWhat->currentIndex() == ExportDataOnly;
+    bool keepSchema = ui->comboOldSchema->currentIndex() == 0;
 
     // Perform actual export
     bool dumpOk = pdb->dump(fileName,
@@ -109,7 +120,8 @@ void ExportSqlDialog::accept()
                             ui->checkColNames->isChecked(),
                             ui->checkMultiple->isChecked(),
                             exportSchema,
-                            exportData);
+                            exportData,
+                            keepSchema);
     if (dumpOk)
         QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
     else
@@ -118,5 +130,12 @@ void ExportSqlDialog::accept()
     QDialog::accept();
 }
 
-
-
+void ExportSqlDialog::whatChanged(int index)
+{
+    // Only show the combobox for deciding what to do with the old schema when importing into an existing database when we're
+    // actually exporting the schema here
+    if(index != ExportDataOnly)
+        ui->comboOldSchema->setVisible(true);
+    else
+        ui->comboOldSchema->setVisible(false);
+}

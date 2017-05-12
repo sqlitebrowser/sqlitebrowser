@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>497</width>
-    <height>338</height>
+    <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -96,7 +96,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -124,6 +124,20 @@
           <item>
            <property name="text">
             <string>Export data only</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QComboBox" name="comboOldSchema">
+          <item>
+           <property name="text">
+            <string>Keep old schema (CREATE TABLE IF NOT EXISTS)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Overwrite old schema (DROP TABLE, then CREATE TABLE)</string>
            </property>
           </item>
          </widget>
@@ -163,8 +177,8 @@
    <slot>doDeselectAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>298</x>
-     <y>150</y>
+     <x>488</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -179,8 +193,8 @@
    <slot>doSelectAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>80</x>
-     <y>150</y>
+     <x>140</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -204,8 +218,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboWhat</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ExportSqlDialog</receiver>
+   <slot>whatChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>492</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showCustomCharEdits()</slot>
+  <slot>whatChanged(int)</slot>
  </slots>
 </ui>

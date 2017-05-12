@@ -21,6 +21,7 @@ private slots:
     virtual void accept();
     void doSelectAll();
     void doDeselectAll();
+    void whatChanged(int index);
 
 private:
     Ui::ExportSqlDialog* ui;

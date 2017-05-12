@@ -89,9 +89,10 @@ public:
 
     /**
      * @brief Returns the CREATE statement for this object
+     * @param ifNotExists If set to true the "IF NOT EXISTS" qualifier will be added to the create statement
      * @return A QString with the CREATE statement.
      */
-    virtual QString sql() const = 0;
+    virtual QString sql(bool ifNotExists = false) const = 0;
 
     /**
      * @brief parseSQL Parses the CREATE statement in sSQL.
@@ -282,7 +283,7 @@ public:
      * @brief Returns the CREATE TABLE statement for this table object
      * @return A QString with the CREATE TABLE object.
      */
-    QString sql() const;
+    QString sql(bool ifNotExists = false) const;
 
     void addField(const FieldPtr& f);
     bool removeField(const QString& sFieldName);
@@ -402,7 +403,7 @@ public:
      * @brief Returns the CREATE INDEX statement for this index object
      * @return A QString with the CREATE INDEX object.
      */
-    QString sql() const;
+    QString sql(bool ifNotExists = false) const;
 
     /**
      * @brief parseSQL Parses the CREATE INDEX statement in sSQL.
@@ -430,7 +431,7 @@ public:
 
     virtual Types type() const { return Object::View; }
 
-    QString sql() const { /* TODO */ return m_originalSql; }
+    QString sql(bool ifNotExists = false) const { /* TODO */ Q_UNUSED(ifNotExists); return m_originalSql; }
 
     static ObjectPtr parseSQL(const QString& sSQL);
 
@@ -455,7 +456,7 @@ public:
 
     virtual Types type() const { return Object::Trigger; }
 
-    QString sql() const { /* TODO */ return m_originalSql; }
+    QString sql(bool ifNotExists = false) const { /* TODO */ Q_UNUSED(ifNotExists); return m_originalSql; }
 
     static ObjectPtr parseSQL(const QString& sSQL);
 

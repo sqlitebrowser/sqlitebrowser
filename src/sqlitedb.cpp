@@ -453,7 +453,8 @@ bool DBBrowserDB::dump(const QString& filename,
     bool insertColNames,
     bool insertNewSyntx,
     bool exportSchema,
-    bool exportData)
+    bool exportData,
+    bool keepOldSchema)
 {
     // Open file
     QFile file(filename);
@@ -501,8 +502,11 @@ bool DBBrowserDB::dump(const QString& filename,
             // Write the SQL string used to create this table to the output file
             if(exportSchema)
             {
+                if(!keepOldSchema)
+                    stream << "DROP TABLE IF EXISTS " << sqlb::escapeIdentifier((*it)->name()) << ";\n";
+
                 if((*it)->fullyParsed())
-                    stream << (*it)->sql() << "\n";
+                    stream << (*it)->sql(true) << "\n";
                 else
                     stream << (*it)->originalSql() << ";\n";
             }
@@ -610,7 +614,7 @@ bool DBBrowserDB::dump(const QString& filename,
                 if(!(*it)->originalSql().isEmpty())
                 {
                     if((*it)->fullyParsed())
-                        stream << (*it)->sql() << "\n";
+                        stream << (*it)->sql(true) << "\n";
                     else
                         stream << (*it)->originalSql() << ";\n";
                 }
