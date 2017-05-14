@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>686</width>
-    <height>506</height>
+    <height>543</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,7 +63,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="labelIndexColumns">
        <property name="text">
         <string>Colu&amp;mns</string>
@@ -73,7 +73,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <widget class="QSplitter" name="splitter">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -229,6 +229,22 @@
        </widget>
       </widget>
      </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label">
+       <property name="toolTip">
+        <string>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</string>
+       </property>
+       <property name="text">
+        <string>Partial inde&amp;x clause</string>
+       </property>
+       <property name="buddy">
+        <cstring>editPartialClause</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="editPartialClause"/>
+     </item>
     </layout>
    </item>
    <item>
@@ -255,6 +271,7 @@
   <tabstop>editIndexName</tabstop>
   <tabstop>comboTableName</tabstop>
   <tabstop>checkIndexUnique</tabstop>
+  <tabstop>editPartialClause</tabstop>
   <tabstop>tableTableColumns</tabstop>
   <tabstop>tableIndexColumns</tabstop>
   <tabstop>buttonToIndex</tabstop>
@@ -351,7 +368,7 @@
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
+     <x>153</x>
      <y>100</y>
     </hint>
     <hint type="destinationlabel">
@@ -367,8 +384,8 @@
    <slot>addToIndex()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>372</x>
-     <y>217</y>
+     <x>417</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
@@ -383,8 +400,8 @@
    <slot>removeFromIndex()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>257</y>
+     <x>417</x>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>350</x>
@@ -415,12 +432,28 @@
    <slot>addToIndex(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>228</y>
+     <x>231</x>
+     <y>357</y>
     </hint>
     <hint type="destinationlabel">
      <x>19</x>
      <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editPartialClause</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>EditIndexDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>47</x>
+     <y>103</y>
     </hint>
    </hints>
   </connection>

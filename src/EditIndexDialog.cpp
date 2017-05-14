@@ -32,7 +32,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     // Editing an existing index?
     if(!newIndex)
     {
-        // Load the current layour and fill in the dialog fields
+        // Load the current layout and fill in the dialog fields
         index = *(pdb.getObjectByName(curIndex).dynamicCast<sqlb::Index>());
 
         ui->editIndexName->blockSignals(true);
@@ -44,6 +44,9 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
         ui->comboTableName->blockSignals(true);
         ui->comboTableName->setCurrentText(index.table());
         ui->comboTableName->blockSignals(false);
+        ui->editPartialClause->blockSignals(true);
+        ui->editPartialClause->setText(index.whereExpr());
+        ui->editPartialClause->blockSignals(false);
 
         tableChanged(index.table(), true);
     } else {
@@ -199,6 +202,7 @@ void EditIndexDialog::checkInput()
     // Set the index name and the unique flag
     index.setName(ui->editIndexName->text());
     index.setUnique(ui->checkIndexUnique->isChecked());
+    index.setWhereExpr(ui->editPartialClause->text());
     updateSqlText();
 }
 
