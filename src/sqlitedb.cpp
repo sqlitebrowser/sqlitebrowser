@@ -503,7 +503,7 @@ bool DBBrowserDB::dump(const QString& filename,
             if(exportSchema)
             {
                 if(!keepOldSchema)
-                    stream << "DROP TABLE IF EXISTS " << sqlb::escapeIdentifier((*it)->name()) << ";\n";
+                    stream << QString("DROP TABLE IF EXISTS %1;\n").arg(sqlb::escapeIdentifier((*it)->name()));
 
                 if((*it)->fullyParsed())
                     stream << (*it)->sql(true) << "\n";
@@ -613,6 +613,11 @@ bool DBBrowserDB::dump(const QString& filename,
                 // Write the SQL string used to create this object to the output file
                 if(!(*it)->originalSql().isEmpty())
                 {
+                    if(!keepOldSchema)
+                        stream << QString("DROP %1 IF EXISTS %2;\n")
+                                  .arg(sqlb::Object::typeToString((*it)->type()).toUpper())
+                                  .arg(sqlb::escapeIdentifier((*it)->name()));
+
                     if((*it)->fullyParsed())
                         stream << (*it)->sql(true) << "\n";
                     else
