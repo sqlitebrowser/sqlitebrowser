@@ -18,7 +18,7 @@ if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
 		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
-		set(QT5_PATH "C:/dev/Qt/5.8/msvc2013_64")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013_64")
 		set(VSREDIST "vcredist_x64.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether
@@ -31,7 +31,7 @@ if(WIN32 AND MSVC)
 	else()
 		# Paths for 32-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32")
-		set(QT5_PATH "C:/dev/Qt/5.8/msvc2013")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013")
 		set(VSREDIST "vcredist_x86.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether
