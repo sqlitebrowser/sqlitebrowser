@@ -11,7 +11,8 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
       curIndex(indexName),
       index(indexName),
       newIndex(createIndex),
-      ui(new Ui::EditIndexDialog)
+      ui(new Ui::EditIndexDialog),
+      m_sRestorePointName(pdb.generateSavepointName("editindex"))
 {
     // Create UI
     ui->setupUi(this);
@@ -52,6 +53,9 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     } else {
         tableChanged(ui->comboTableName->currentText(), false);
     }
+
+    // Create a savepoint to revert back to
+    pdb.setSavepoint(m_sRestorePointName);
 }
 
 EditIndexDialog::~EditIndexDialog()
@@ -211,7 +215,7 @@ void EditIndexDialog::accept()
     // When editing an index, delete the old one first
     if(!newIndex)
     {
-        if(!pdb.executeSQL(QString("DROP INDEX %1;").arg(sqlb::escapeIdentifier(curIndex))))
+        if(!pdb.executeSQL(QString("DROP INDEX IF EXISTS %1;").arg(sqlb::escapeIdentifier(curIndex))))
         {
             QMessageBox::warning(this, qApp->applicationName(), tr("Deleting the old index failed:\n%1").arg(pdb.lastError()));
             return;
@@ -223,6 +227,14 @@ void EditIndexDialog::accept()
         QDialog::accept();
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));
+}
+
+void EditIndexDialog::reject()
+{
+    // Rollback to our savepoint
+    pdb.revertToSavepoint(m_sRestorePointName);
+
+    QDialog::reject();
 }
 
 void EditIndexDialog::updateSqlText()

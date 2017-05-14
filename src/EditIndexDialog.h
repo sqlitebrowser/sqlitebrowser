@@ -22,6 +22,8 @@ public:
 
 private slots:
     void accept();
+    void reject();
+
     void tableChanged(const QString& new_table, bool initialLoad = false);
     void checkInput();
     void addToIndex(const QModelIndex& idx = QModelIndex());
@@ -33,6 +35,7 @@ private:
     sqlb::Index index;
     bool newIndex;
     Ui::EditIndexDialog* ui;
+    QString m_sRestorePointName;
 
     void updateColumnLists();
     void updateSqlText();
