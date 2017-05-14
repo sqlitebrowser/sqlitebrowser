@@ -54,6 +54,14 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
         tableChanged(ui->comboTableName->currentText(), false);
     }
 
+    // Add event handler for index column name changes. These are only allowed for expression columns, though.
+    connect(ui->tableIndexColumns, static_cast<void(QTableWidget::*)(QTableWidgetItem*)>(&QTableWidget::itemChanged),
+            [=](QTableWidgetItem* item)
+    {
+        index.columns().at(item->row())->setName(item->text());
+        updateSqlText();
+    });
+
     // Create a savepoint to revert back to
     pdb.setSavepoint(m_sRestorePointName);
 }
@@ -115,13 +123,17 @@ void EditIndexDialog::updateColumnLists()
 
     // Fill the index column list. This is done separately from the table column to include expression columns (these are not found in the original
     // table) and to preserve the order of the index columns
-    sqlb::FieldInfoList indexFields = index.fieldInformation();
+    auto indexFields = index.columns();
+    ui->tableIndexColumns->blockSignals(true);
     ui->tableIndexColumns->setRowCount(indexFields.size());
     for(int i=0;i<indexFields.size();++i)
     {
         // Put the name of the field in the first column
-        QTableWidgetItem* name = new QTableWidgetItem(indexFields.at(i).name);
-        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        QTableWidgetItem* name = new QTableWidgetItem(indexFields.at(i)->name());
+        Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+        if(indexFields.at(i)->expression())
+            flags |= Qt::ItemIsEditable;
+        name->setFlags(flags);
         ui->tableIndexColumns->setItem(i, 0, name);
 
         // And put a combobox to select the order in which to index the field in the last column
@@ -129,12 +141,12 @@ void EditIndexDialog::updateColumnLists()
         order->addItem("");
         order->addItem("ASC");
         order->addItem("DESC");
-        order->setCurrentText(indexFields.at(i).type.toUpper());
+        order->setCurrentText(indexFields.at(i)->order().toUpper());
         ui->tableIndexColumns->setCellWidget(i, 1, order);
         connect(order, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::currentTextChanged),
                 [=](QString new_order)
         {
-            int colnum = index.findColumn(indexFields.at(i).name);
+            int colnum = index.findColumn(indexFields.at(i)->name());
             if(colnum != -1)
             {
                 index.column(colnum)->setOrder(new_order);
@@ -142,6 +154,7 @@ void EditIndexDialog::updateColumnLists()
             }
         });
     }
+    ui->tableIndexColumns->blockSignals(false);
 
     checkInput();
 }
@@ -274,4 +287,30 @@ void EditIndexDialog::moveCurrentColumn(bool down)
 
     // Select old row at new position
     ui->tableIndexColumns->selectRow(newRow);
+}
+
+void EditIndexDialog::addExpressionColumn()
+{
+    // Check if there already is an empty expression column
+    int row = index.findColumn("");
+    if(row == -1)
+    {
+        // There is no empty expression column yet, so add one.
+
+        // Add new expression column to the index
+        index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
+                                                   "",                          // Column name
+                                                   true,                        // Is expression
+                                                   "")));                       // Order
+
+        // Update UI
+        updateColumnLists();
+
+        // Get row number of new column
+        row = ui->tableIndexColumns->rowCount() - 1;
+    }
+
+    // Now we should have the row number of the empty expression column, no matter if it was newly added or it already existed.
+    // Select the row for editing
+    ui->tableIndexColumns->editItem(ui->tableIndexColumns->item(row, 0));
 }

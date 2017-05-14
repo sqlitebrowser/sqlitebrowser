@@ -167,6 +167,17 @@
             </widget>
            </item>
            <item>
+            <widget class="QToolButton" name="buttonAddExpressionColumn">
+             <property name="toolTip">
+              <string>Add a new expression column to the index. Expression columns contain SQL expression rather than column names.</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons/icons.qrc">
+               <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer name="verticalSpacer_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -196,7 +207,7 @@
             </size>
            </property>
            <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
+            <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
            </property>
            <property name="showDropIndicator" stdset="0">
             <bool>false</bool>
@@ -427,7 +438,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>406</x>
-     <y>266</y>
+     <y>247</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
@@ -443,7 +454,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>406</x>
-     <y>304</y>
+     <y>285</y>
     </hint>
     <hint type="destinationlabel">
      <x>350</x>
@@ -531,6 +542,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonAddExpressionColumn</sender>
+   <signal>clicked()</signal>
+   <receiver>EditIndexDialog</receiver>
+   <slot>addExpressionColumn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>398</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>379</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>tableChanged(QString)</slot>
@@ -541,5 +568,6 @@
   <slot>removeFromIndex(QModelIndex)</slot>
   <slot>moveColumnUp()</slot>
   <slot>moveColumnDown()</slot>
+  <slot>addExpressionColumn()</slot>
  </slots>
 </ui>

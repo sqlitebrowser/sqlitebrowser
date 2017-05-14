@@ -30,6 +30,7 @@ private slots:
     void removeFromIndex(const QModelIndex& idx = QModelIndex());
     void moveColumnUp();
     void moveColumnDown();
+    void addExpressionColumn();
 
 private:
     DBBrowserDB& pdb;
