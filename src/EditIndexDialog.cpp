@@ -241,3 +241,37 @@ void EditIndexDialog::updateSqlText()
 {
     ui->sqlTextEdit->setText(index.sql());
 }
+
+void EditIndexDialog::moveColumnUp()
+{
+    moveCurrentColumn(false);
+}
+
+void EditIndexDialog::moveColumnDown()
+{
+    moveCurrentColumn(true);
+}
+
+void EditIndexDialog::moveCurrentColumn(bool down)
+{
+    // Get current row number and calculate row number after the movement. Check the values
+    int currentRow = ui->tableIndexColumns->currentRow();
+    if(currentRow == -1)
+        return;
+    int newRow = currentRow + (down ? 1 : -1);
+    if(newRow < 0)
+        return;
+    if(newRow >= ui->tableIndexColumns->rowCount())
+        return;
+
+    // Get the column information, swap the columns, and save the new column list back in the index
+    auto columns = index.columns();
+    std::swap(columns[currentRow], columns[newRow]);
+    index.setColumns(columns);
+
+    // Update UI
+    updateColumnLists();
+
+    // Select old row at new position
+    ui->tableIndexColumns->selectRow(newRow);
+}

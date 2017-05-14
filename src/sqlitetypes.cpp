@@ -1118,7 +1118,6 @@ bool Index::removeColumn(const QString& name)
 
 void Index::setColumns(const IndexedColumnVector& columns)
 {
-    clear();
     m_columns = columns;
 }
 

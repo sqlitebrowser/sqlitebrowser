@@ -28,6 +28,8 @@ private slots:
     void checkInput();
     void addToIndex(const QModelIndex& idx = QModelIndex());
     void removeFromIndex(const QModelIndex& idx = QModelIndex());
+    void moveColumnUp();
+    void moveColumnDown();
 
 private:
     DBBrowserDB& pdb;
@@ -39,6 +41,7 @@ private:
 
     void updateColumnLists();
     void updateSqlText();
+    void moveCurrentColumn(bool down);
 };
 
 #endif
