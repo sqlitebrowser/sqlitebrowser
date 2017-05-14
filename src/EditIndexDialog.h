@@ -4,6 +4,7 @@
 #include "sqlitetypes.h"
 
 #include <QDialog>
+#include <QModelIndex>
 
 class DBBrowserDB;
 
@@ -23,6 +24,8 @@ private slots:
     void accept();
     void tableChanged(const QString& new_table, bool initialLoad = false);
     void checkInput();
+    void addToIndex(const QModelIndex& idx = QModelIndex());
+    void removeFromIndex(const QModelIndex& idx = QModelIndex());
 
 private:
     DBBrowserDB& pdb;
@@ -31,6 +34,7 @@ private:
     bool newIndex;
     Ui::EditIndexDialog* ui;
 
+    void updateColumnLists();
     void updateSqlText();
 };
 

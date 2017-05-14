@@ -49,9 +49,6 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     } else {
         tableChanged(ui->comboTableName->currentText(), false);
     }
-
-    // Refresh SQL preview
-    updateSqlText();
 }
 
 EditIndexDialog::~EditIndexDialog()
@@ -76,52 +73,61 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
         return;
     }
 
-    // And fill the table again
-    QStringList fields = pdb.getObjectByName(new_table).dynamicCast<sqlb::Table>()->fieldNames();
-    ui->tableIndexColumns->setRowCount(fields.size());
-    for(int i=0; i < fields.size(); ++i)
+    updateColumnLists();
+}
+
+void EditIndexDialog::updateColumnLists()
+{
+    // Fill the table column list
+    sqlb::FieldInfoList tableFields = pdb.getObjectByName(index.table()).dynamicCast<sqlb::Table>()->fieldInformation();
+    ui->tableTableColumns->setRowCount(tableFields.size());
+    int tableRows = 0;
+    for(int i=0;i<tableFields.size();++i)
+    {
+        // When we're doing the initial loading and this field already is in the index to edit, then don't add it to the
+        // list of table columns. It will be added to the list of index columns in the next step. When this is not the initial
+        // loading, the index column list is empty, so this check will always be true.
+        if(index.findColumn(tableFields.at(i).name) == -1)
+        {
+            // Put the name of the field in the first column
+            QTableWidgetItem* name = new QTableWidgetItem(tableFields.at(i).name);
+            name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+            ui->tableTableColumns->setItem(tableRows, 0, name);
+
+            // Put the data type in the second column
+            QTableWidgetItem* type = new QTableWidgetItem(tableFields.at(i).type);
+            type->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+            ui->tableTableColumns->setItem(tableRows, 1, type);
+
+            tableRows++;
+        }
+    }
+
+    // Set row count to actual count. This is needed for the intial loading, when some rows might have been omitted because they were used in the index
+    ui->tableTableColumns->setRowCount(tableRows);
+
+    // Fill the index column list. This is done separately from the table column to include expression columns (these are not found in the original
+    // table) and to preserve the order of the index columns
+    sqlb::FieldInfoList indexFields = index.fieldInformation();
+    ui->tableIndexColumns->setRowCount(indexFields.size());
+    for(int i=0;i<indexFields.size();++i)
     {
         // Put the name of the field in the first column
-        QTableWidgetItem* name = new QTableWidgetItem(fields.at(i));
+        QTableWidgetItem* name = new QTableWidgetItem(indexFields.at(i).name);
         name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         ui->tableIndexColumns->setItem(i, 0, name);
-
-        // Put a checkbox to enable usage in the index of this field in the second column
-        QCheckBox* enabled = new QCheckBox(this);
-        if(initialLoad && index.findColumn(fields.at(i)) != -1)
-            enabled->setCheckState(Qt::Checked);
-        else
-            enabled->setCheckState(Qt::Unchecked);
-        ui->tableIndexColumns->setCellWidget(i, 1, enabled);
-        connect(enabled, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::toggled),
-                [=](bool use_in_index)
-        {
-            if(use_in_index)
-            {
-                index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
-                                                           ui->tableIndexColumns->item(i, 0)->text(),
-                                                           false,
-                                                           qobject_cast<QComboBox*>(ui->tableIndexColumns->cellWidget(i, 2))->currentText())));
-            } else {
-                index.removeColumn(ui->tableIndexColumns->item(i, 0)->text());
-            }
-
-            checkInput();
-            updateSqlText();
-        });
 
         // And put a combobox to select the order in which to index the field in the last column
         QComboBox* order = new QComboBox(this);
         order->addItem("");
         order->addItem("ASC");
         order->addItem("DESC");
-        if(initialLoad && index.findColumn(fields.at(i)) != -1)
-            order->setCurrentText(index.column(index.findColumn(fields.at(i)))->order());
-        ui->tableIndexColumns->setCellWidget(i, 2, order);
+        order->setCurrentText(indexFields.at(i).type.toUpper());
+        ui->tableIndexColumns->setCellWidget(i, 1, order);
         connect(order, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::currentTextChanged),
                 [=](QString new_order)
         {
-            int colnum = index.findColumn(fields.at(i));
+            int colnum = index.findColumn(indexFields.at(i).name);
             if(colnum != -1)
             {
                 index.column(colnum)->setOrder(new_order);
@@ -130,7 +136,50 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
         });
     }
 
-    updateSqlText();
+    checkInput();
+}
+
+void EditIndexDialog::addToIndex(const QModelIndex& idx)
+{
+    // Get current row number
+    int row;
+    if(idx.isValid())
+        row = idx.row();
+    else
+        row = ui->tableTableColumns->currentRow();
+
+    // No row selected? Abort.
+    if(row == -1)
+        return;
+
+    // Add field to index
+    index.addColumn(sqlb::IndexedColumnPtr(new sqlb::IndexedColumn(
+                                               ui->tableTableColumns->item(row, 0)->text(),     // Column name
+                                               false,                                           // Is expression
+                                               "")));                                           // Order
+
+    // Update UI
+    updateColumnLists();
+}
+
+void EditIndexDialog::removeFromIndex(const QModelIndex& idx)
+{
+    // Get current row number
+    int row;
+    if(idx.isValid())
+        row = idx.row();
+    else
+        row = ui->tableIndexColumns->currentRow();
+
+    // No row selected? Abort.
+    if(row == -1)
+        return;
+
+    // Remove column from index
+    index.removeColumn(ui->tableIndexColumns->item(row, 0)->text());
+
+    // Update UI
+    updateColumnLists();
 }
 
 void EditIndexDialog::checkInput()
