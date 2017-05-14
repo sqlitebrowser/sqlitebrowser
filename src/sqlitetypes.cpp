@@ -1069,7 +1069,9 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
 
 QString IndexedColumn::toString(const QString& indent, const QString& sep) const
 {
-    return indent + (m_isExpression ? m_name : escapeIdentifier(m_name)) + sep + m_order;
+    QString name = m_isExpression ? m_name : escapeIdentifier(m_name);
+    QString order = (m_order.isEmpty() ? "" : (sep + m_order));
+    return indent + name + order;
 }
 
 Index::~Index()
