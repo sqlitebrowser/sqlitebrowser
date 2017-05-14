@@ -198,8 +198,22 @@ LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPA
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5
 
 unix {
+    # The executable
     target.path = /usr/local/bin/
     INSTALLS += target
+
+    # Icon
+    icon.path = /usr/local/share/icons/hicolor/256x256/apps/
+    icon.files = icons/sqlitebrowser.png
+    INSTALLS += icon
+
+    # Desktop metadata
+    desktop.path = /usr/local/share/applications/
+    desktop.files = ../distri/sqlitebrowser.desktop
+    INSTALLS += desktop
+    appdata.path = /usr/local/share/appdata/
+    appdata.files = ../distri/sqlitebrowser.desktop.appdata.xml
+    INSTALLS += appdata
 }
 
 # Rules for creating/updating {ts|qm}-files
