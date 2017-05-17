@@ -37,16 +37,17 @@ not require familiarity with SQL commands. It is a tool to be used both by
 developers and by end users, and it must remain as simple to use as possible
 in order to achieve its goals.
 
+## Nightly builds
+
+Nightly builds for Windows and OSX can be downloaded here:
+
+* https://nightlies.sqlitebrowser.org/latest
+
 ## Windows
 
-Windows binaries can be downloaded from here:
+Windows releases can be downloaded here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
-
-Nightly builds are available at:
-
-* https://nightlies.sqlitebrowser.org/win32/
-* https://nightlies.sqlitebrowser.org/win64/
 
 **Note** - If for some reason the standard Windows release doesn't work for
 you (eg it gives an error), try a nightly build.  They often fix bugs
@@ -56,9 +57,9 @@ reported after the last release. :D
 
 DB Browser for SQLite works well on MacOS X.
 
-* OSX 10.8 (Mountain Lion) - 10.11 (El Capitan) are tested and known to work
+* OSX 10.8 (Mountain Lion) - 10.12 (Sierra) are tested and known to work
 
-OSX binaries can be downloaded from here:
+OSX releases can be downloaded here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
 
@@ -67,10 +68,6 @@ Latest OSX binary can be installed via [Homebrew Cask](https://caskroom.github.i
 ```
 brew cask install sqlitebrowser
 ```
-
-Nightly builds for OSX are available at:
-
-* https://nightlies.sqlitebrowser.org/osx/
 
 ## Linux
 
@@ -108,11 +105,11 @@ Install the package using:
     sudo apt-get install sqlitebrowser
 
 Ubuntu 14.04.X, 15.04.X, 15.10.X and 16.04.X are supported for now (until
-Launchpad decides to discontinue build for any series).
+Launchpad decides to discontinue building for any series).
 
 Ubuntu Precise (12.04) and Utopic (14.10) are not supported:
-* Precise doesn't have a Qt 5.2 package in its repository by default, which is
-  a dependency
+* Precise doesn't have a new enough Qt package in its repository by default,
+  which is a dependency
 * Launchpad doesn't support Utopic any more, as that has reached its End of
   Life
 
