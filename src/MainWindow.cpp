@@ -1047,8 +1047,7 @@ void MainWindow::executeQuery()
     sqlWidget->finishExecution(statusMessage);
     plotDock->updatePlot(sqlWidget->getModel());
 
-    connect(sqlWidget->getTableResult(), SIGNAL(clicked(QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
-
+    connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
     connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
 
     if(!modified && !wasdirty)
