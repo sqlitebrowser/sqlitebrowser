@@ -44,10 +44,6 @@ void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOr
     // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
 
-    // Set sort parameters. This saves the sort parameters in the class instance but doesn't execute any query yet because the table name
-    // isn't set yet. This is why this needs to be called before setting the table name
-    sort(sortColumn, sortOrder);
-
     // Save the other parameters
     m_sTable = table;
     m_vDisplayFormat = display_format;
@@ -92,8 +88,11 @@ void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOr
         m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
     }
 
-    // Prepare actual query and fetch data
-    buildQuery();
+    // Set sort parameters. We're setting the sort column to an invalid value before calling sort() because this way, in sort() the
+    // current sort order is always changed and thus buildQuery() is always going to be called.
+    // This is also why we don't need to call buildQuery() here again.
+    m_iSortColumn = -1;
+    sort(sortColumn, sortOrder);
 }
 
 namespace {
