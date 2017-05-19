@@ -312,6 +312,10 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
+    // Don't even try setting any data if we're not browsing a table, i.e. the model data comes from a custom query
+    if(m_sTable.isEmpty())
+        return false;
+
     // This function is for in-place editing.
     // So, BLOB flag is false every times.
     return setTypedData(index, false, value, role);
