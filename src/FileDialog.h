@@ -11,6 +11,9 @@ public:
     static QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(),
                                    const QString& filter = QString(), QString* selectedFilter = 0,
                                    Options options = 0);
+    static QStringList getOpenFileNames(QWidget* parent = 0, const QString& caption = QString(),
+                                        const QString& filter = QString(), QString* selectedFilter = 0,
+                                        Options options = 0);
     static QString getSaveFileName(QWidget* parent = 0, const QString& caption = QString(),
                                    const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = 0,
                                    Options options = 0);
