@@ -1094,16 +1094,20 @@ void MainWindow::mainTabSelected(int tabindex)
 
 void MainWindow::importTableFromCSV()
 {
-    QString wFile = FileDialog::getOpenFileName(
-                this,
-                tr("Choose a text file"),
-                tr("Text files(*.csv *.txt);;All files(*)"));
+    QStringList wFiles = FileDialog::getOpenFileNames(
+                            this,
+                            tr("Choose text files"),
+                            tr("Text files(*.csv *.txt);;All files(*)"));
 
-    if (QFile::exists(wFile) )
-    {
-        ImportCsvDialog dialog(wFile, &db, this);
-        if(dialog.exec())
-        {
+    QStringList validFiles;
+    foreach(auto file, wFiles) {
+        if (QFile::exists(file))
+            validFiles.append(file);
+    }
+
+    if (!validFiles.isEmpty()) {
+        ImportCsvDialog dialog(validFiles, &db, this);
+        if (dialog.exec()) {
             populateTable();
             QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
         }

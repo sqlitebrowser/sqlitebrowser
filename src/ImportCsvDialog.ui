@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Import CSV file</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <layout class="QFormLayout" name="formLayout">
      <property name="fieldGrowthPolicy">
@@ -241,7 +241,75 @@
        </property>
       </widget>
      </item>
+     <item row="7" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_2"/>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="separateTables">
+       <property name="text">
+        <string>Separate tables</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QCheckBox" name="checkBoxSeparateTables">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="filePickerBlock" native="true">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <layout class="QHBoxLayout" name="filePickerLayout">
+      <item>
+       <widget class="QListWidget" name="filePicker"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>7</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="toggleSelected">
+          <property name="text">
+           <string>Deselect All</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QTableWidget" name="tablePreview"/>
@@ -273,82 +341,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>ImportCsvDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>261</x>
-     <y>480</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>ImportCsvDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>329</x>
-     <y>480</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkboxHeader</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>ImportCsvDialog</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>187</x>
-     <y>46</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>354</x>
-     <y>45</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboSeparator</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>ImportCsvDialog</receiver>
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>216</x>
-     <y>71</y>
+     <x>232</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>445</x>
      <y>64</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboQuote</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>ImportCsvDialog</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>224</x>
-     <y>100</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>350</x>
-     <y>88</y>
     </hint>
    </hints>
   </connection>
@@ -375,8 +379,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>70</y>
+     <x>478</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>577</x>
@@ -391,28 +395,12 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>467</x>
-     <y>101</y>
+     <x>478</x>
+     <y>132</y>
     </hint>
     <hint type="destinationlabel">
      <x>530</x>
      <y>90</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboEncoding</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>ImportCsvDialog</receiver>
-   <slot>updatePreview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>198</x>
-     <y>131</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>572</x>
-     <y>121</y>
     </hint>
    </hints>
   </connection>
@@ -423,8 +411,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>378</x>
-     <y>132</y>
+     <x>495</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>540</x>
@@ -439,8 +427,120 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>191</x>
-     <y>189</y>
+     <x>184</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>368</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboEncoding</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>572</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkboxHeader</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>354</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toggleSelected</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updateSelection(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>674</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>368</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboQuote</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>340</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxSeparateTables</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>216</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -452,5 +552,6 @@
  <slots>
   <slot>updatePreview()</slot>
   <slot>checkInput()</slot>
+  <slot>updateSelection(bool)</slot>
  </slots>
 </ui>
