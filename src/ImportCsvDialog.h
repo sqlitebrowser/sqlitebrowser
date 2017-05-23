@@ -1,6 +1,7 @@
 #ifndef IMPORTCSVDIALOG_H
 #define IMPORTCSVDIALOG_H
 
+#include "sqlitetypes.h"
 #include <QDialog>
 
 class DBBrowserDB;
@@ -26,6 +27,7 @@ private slots:
     void selectFiles();
     void updateSelectedFilePreview(QListWidgetItem*);
     void updateSelection(bool);
+    void matchSimilar();
 
 private:
     Ui::ImportCsvDialog* ui;
@@ -35,6 +37,7 @@ private:
     QCompleter* encodingCompleter;
 
     void importCsv(const QString& f);
+    sqlb::FieldVector fetchCsvHeader(const QString& f);
 
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
