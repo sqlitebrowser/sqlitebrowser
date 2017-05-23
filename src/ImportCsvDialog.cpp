@@ -43,6 +43,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
     ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
+    ui->checkBoxSeparateTables->setChecked(settings.value("importcsv/separatetables", false).toBool());
     setSeparatorChar(QChar(settings.value("importcsv/separator", ',').toInt()));
     setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
     setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
@@ -144,6 +145,7 @@ void ImportCsvDialog::accept()
     settings.setValue("separator", currentSeparatorChar());
     settings.setValue("quotecharacter", currentQuoteChar());
     settings.setValue("trimfields", ui->checkBoxTrimFields->isChecked());
+    settings.setValue("separatetables", ui->checkBoxSeparateTables->isChecked());
     settings.setValue("encoding", currentEncoding());
     settings.endGroup();
 
