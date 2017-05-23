@@ -266,6 +266,18 @@
       <bool>true</bool>
      </property>
      <layout class="QHBoxLayout" name="filePickerLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QListWidget" name="filePicker"/>
       </item>
@@ -290,6 +302,16 @@
           </property>
           <property name="checked">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="matchSimilar">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Match Similar</string>
           </property>
          </widget>
         </item>
@@ -548,10 +570,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>matchSimilar</sender>
+   <signal>pressed()</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>matchSimilar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>682</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>368</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updatePreview()</slot>
   <slot>checkInput()</slot>
   <slot>updateSelection(bool)</slot>
+  <slot>matchSimilar()</slot>
  </slots>
 </ui>
