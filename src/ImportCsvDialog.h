@@ -5,6 +5,7 @@
 
 class DBBrowserDB;
 class QCompleter;
+class QListWidgetItem;
 
 namespace Ui {
 class ImportCsvDialog;
@@ -15,19 +16,25 @@ class ImportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent = 0);
+    explicit ImportCsvDialog(const QStringList& filenames, DBBrowserDB* db, QWidget* parent = 0);
     ~ImportCsvDialog();
 
 private slots:
     virtual void accept();
     void updatePreview();
     void checkInput();
+    void selectFiles();
+    void updateSelectedFilePreview(QListWidgetItem*);
+    void updateSelection(bool);
 
 private:
     Ui::ImportCsvDialog* ui;
-    QString csvFilename;
+    QStringList csvFilenames;
+    QString selectedFile;
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
+
+    void importCsv(const QString& f);
 
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;

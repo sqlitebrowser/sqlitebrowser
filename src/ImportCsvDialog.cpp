@@ -18,16 +18,17 @@
 #include <QFileInfo>
 #include <memory>
 
-ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidget* parent)
+ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
-      csvFilename(filename),
+      csvFilenames(filenames),
       pdb(db)
 {
     ui->setupUi(this);
 
     // Get the actual file name out of the provided path and use it as the default table name for import
-    QFileInfo file(filename);
+    // For importing several files at once, the fields have to be the same so we can safely use the first
+    QFileInfo file(filenames.first());
     ui->editName->setText(file.baseName());
 
     // Create a list of all available encodings and create an auto completion list from them
@@ -46,9 +47,24 @@ ImportCsvDialog::ImportCsvDialog(const QString& filename, DBBrowserDB* db, QWidg
     setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
     setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
 
-    // Initialise user interface
-    checkInput();
+    // Prepare and show interface depending on how many files are selected
+    if (csvFilenames.length() > 1)
+    {
+        ui->separateTables->setVisible(true);
+        ui->checkBoxSeparateTables->setVisible(true);
+        ui->filePickerBlock->setVisible(true);
+        selectFiles();
+    }
+    else if (csvFilenames.length() == 1)
+    {
+        ui->separateTables->setVisible(false);
+        ui->checkBoxSeparateTables->setVisible(false);
+        ui->filePickerBlock->setVisible(false);
+    }
+
+    selectedFile = csvFilenames.first();
     updatePreview();
+    checkInput();
 }
 
 ImportCsvDialog::~ImportCsvDialog()
@@ -131,8 +147,140 @@ void ImportCsvDialog::accept()
     settings.setValue("encoding", currentEncoding());
     settings.endGroup();
 
+    // Get all the selected files and start the import
+    if (ui->filePickerBlock->isVisible())
+    {
+        QStringList selectedFiles;
+        for (int i = 0; i < ui->filePicker->count(); i++) {
+            auto item = ui->filePicker->item(i);
+            if (item->checkState() == Qt::Checked)
+                selectedFiles.append(item->data(Qt::DisplayRole).toString());
+        }
+
+        for (auto file : selectedFiles)
+            importCsv(file);
+    }
+    else
+    {
+        importCsv(csvFilenames.first());
+    }
+
+    QApplication::restoreOverrideCursor();  // restore original cursor
+    QDialog::accept();
+}
+
+void ImportCsvDialog::updatePreview()
+{
+    // Show/hide custom quote/separator input fields
+    ui->editCustomQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1);
+    ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1);
+    ui->editCustomEncoding->setVisible(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1);
+
+    // Get preview data
+    QFile file(selectedFile);
+    file.open(QIODevice::ReadOnly);
+
+    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
+
+    QTextStream tstream(&file);
+    tstream.setCodec(currentEncoding().toUtf8());
+    csv.parse(tstream, 20);
+    file.close();
+
+    // Reset preview widget
+    ui->tablePreview->clear();
+    ui->tablePreview->setColumnCount(csv.columns());
+
+    // Exit if there are no lines to preview at all
+    if(csv.columns() == 0)
+        return;
+
+    // Use first row as header if necessary
+    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
+    if(ui->checkboxHeader->isChecked())
+    {
+        ui->tablePreview->setHorizontalHeaderLabels(*itBegin);
+        ++itBegin;
+    }
+
+    // Fill data section
+    ui->tablePreview->setRowCount(std::distance(itBegin, csv.csv().end()));
+
+    for(CSVParser::TCSVResult::const_iterator ct = itBegin;
+        ct != csv.csv().end();
+        ++ct)
+    {
+        for(QStringList::const_iterator it = ct->begin(); it != ct->end(); ++it)
+        {
+            int rowNum = std::distance(itBegin, ct);
+            if(it == ct->begin())
+            {
+                ui->tablePreview->setVerticalHeaderItem(
+                            rowNum,
+                            new QTableWidgetItem(QString::number(rowNum + 1)));
+            }
+            ui->tablePreview->setItem(
+                        rowNum,
+                        std::distance(ct->begin(), it),
+                        new QTableWidgetItem(*it));
+        }
+    }
+}
+
+void ImportCsvDialog::checkInput()
+{
+    bool checkedItem = false;
+    for (int i = 0; i < ui->filePicker->count(); i++) {
+        if (ui->filePicker->item(i)->checkState() == Qt::Checked) checkedItem = true;
+    }
+
+    bool allowImporting = !ui->editName->text().isEmpty() && checkedItem;
+
+    ui->editName->setEnabled(!ui->checkBoxSeparateTables->isChecked());
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(allowImporting);
+}
+
+void ImportCsvDialog::selectFiles()
+{
+    for (auto filename : csvFilenames) {
+        auto item = new QListWidgetItem();
+        item->setText(filename);
+        item->setCheckState(Qt::Checked);
+        ui->filePicker->addItem(item);
+    }
+
+    connect(ui->filePicker, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(updateSelectedFilePreview(QListWidgetItem*)));
+}
+
+void ImportCsvDialog::updateSelectedFilePreview(QListWidgetItem* item)
+{
+    selectedFile = item->data(Qt::DisplayRole).toString();
+    QFileInfo fileInfo(selectedFile);
+    ui->editName->setText(fileInfo.baseName());
+    updatePreview();
+    checkInput();
+}
+
+void ImportCsvDialog::updateSelection(bool selected)
+{
+    for (int i = 0; i < ui->filePicker->count(); i++)
+        ui->filePicker->item(i)->setCheckState(selected ? Qt::Checked : Qt::Unchecked);
+    ui->toggleSelected->setText(selected ? tr("Deselect All") : tr("Select All"));
+    checkInput();
+}
+
+void ImportCsvDialog::importCsv(const QString& fileName)
+{
+    QString tableName;
+    if (ui->checkBoxSeparateTables->isChecked()) {
+        QFileInfo fileInfo(fileName);
+        tableName = fileInfo.baseName();
+    } else {
+        tableName = ui->editName->text();
+    }
+
     // Parse all csv data
-    QFile file(csvFilename);
+    QFile file(fileName);
     file.open(QIODevice::ReadOnly);
 
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
@@ -186,7 +334,7 @@ void ImportCsvDialog::accept()
     objectMap objects = pdb->getBrowsableObjects();
     for(auto it=objects.constBegin();it!=objects.constEnd();++it)
     {
-        if((*it)->type() == sqlb::Object::Types::Table && (*it)->name() == ui->editName->text())
+        if((*it)->type() == sqlb::Object::Types::Table && (*it)->name() == tableName)
         {
             if((size_t)(*it).dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
             {
@@ -194,6 +342,13 @@ void ImportCsvDialog::accept()
                                      tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
                 return;
             } else {
+                // If we are importing multiple files, we can skip the warning and perform the inserts
+                // To omit further warnings there is a filter button to select all conforming sql
+                if (!ui->checkBoxSeparateTables->isChecked()) {
+                    importToExistingTable = true;
+                    break;
+                }
+
                 if(QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
                 {
                     importToExistingTable = true;
@@ -214,7 +369,7 @@ void ImportCsvDialog::accept()
     // Create table
     if(!importToExistingTable)
     {
-        if(!pdb->createTable(ui->editName->text(), fieldList))
+        if(!pdb->createTable(tableName, fieldList))
             return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
     }
 
@@ -223,7 +378,7 @@ void ImportCsvDialog::accept()
         it != csv.csv().end();
         ++it)
     {
-        QString sql = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(ui->editName->text()));
+        QString sql = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
 
         QStringList insertlist;
         for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
@@ -255,76 +410,6 @@ void ImportCsvDialog::accept()
         if(progress.wasCanceled())
             return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, "");
     }
-
-    QApplication::restoreOverrideCursor();  // restore original cursor
-    QDialog::accept();
-}
-
-void ImportCsvDialog::updatePreview()
-{
-    // Show/hide custom quote/separator input fields
-    ui->editCustomQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1);
-    ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1);
-    ui->editCustomEncoding->setVisible(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1);
-
-    // Get preview data
-    QFile file(csvFilename);
-    file.open(QIODevice::ReadOnly);
-
-    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
-
-    QTextStream tstream(&file);
-    tstream.setCodec(currentEncoding().toUtf8());
-    csv.parse(tstream, 20);
-    file.close();
-
-    // Reset preview widget
-    ui->tablePreview->clear();
-    ui->tablePreview->setColumnCount(csv.columns());
-
-    // Exit if there are no lines to preview at all
-    if(csv.columns() == 0)
-        return;
-
-    // Use first row as header if necessary
-    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
-    if(ui->checkboxHeader->isChecked())
-    {
-        ui->tablePreview->setHorizontalHeaderLabels(*itBegin);
-        ++itBegin;
-    }
-
-    // Fill data section
-    ui->tablePreview->setRowCount(std::distance(itBegin, csv.csv().end()));
-
-    for(CSVParser::TCSVResult::const_iterator ct = itBegin;
-        ct != csv.csv().end();
-        ++ct)
-    {
-        for(QStringList::const_iterator it = ct->begin(); it != ct->end(); ++it)
-        {
-            int rowNum = std::distance(itBegin, ct);
-            if(it == ct->begin())
-            {
-                ui->tablePreview->setVerticalHeaderItem(
-                            rowNum,
-                            new QTableWidgetItem(QString::number(rowNum + 1)));
-            }
-            ui->tablePreview->setItem(
-                        rowNum,
-                        std::distance(ct->begin(), it),
-                        new QTableWidgetItem(*it));
-        }
-    }
-}
-
-void ImportCsvDialog::checkInput()
-{
-    bool valid = true;
-    if(ui->editName->text().isEmpty())
-        valid = false;
-
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
 void ImportCsvDialog::setQuoteChar(const QChar& c)
