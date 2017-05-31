@@ -37,5 +37,5 @@ below with an "x", then click the "Submit new issue" button at the bottom
 
 #### I have also:
 
-- [ ] Tried out the nightly version: https://github.com/sqlitebrowser/sqlitebrowser#windows
+- [ ] Tried out the latest nightly version: https://github.com/sqlitebrowser/sqlitebrowser#nightly-builds
 - [ ] Searched for an existing similar issue: https://github.com/sqlitebrowser/sqlitebrowser/issues?utf8=%E2%9C%93&q=is%3Aissue%20
