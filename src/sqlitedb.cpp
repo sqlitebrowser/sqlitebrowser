@@ -1381,6 +1381,12 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
         qWarning() << tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage);
+
+    // If this is the page_size pragma being set, we need to execute the vacuum command right after the pragma statement or the new
+    // page size won't be saved.
+    if(res && pragma == "page_size")
+        res = executeSQL("VACUUM;", false, true);
+
     return res;
 }
 
