@@ -48,7 +48,7 @@ QSize FilterTableHeader::sizeHint() const
     // For the size hint just take the value of the standard implementation and add the height of a input widget to it if necessary
     QSize s = QHeaderView::sizeHint();
     if(filterWidgets.size())
-        s.setHeight(s.height() + filterWidgets.at(0)->sizeHint().height() + 5); // The 5 adds just adds some extra space
+        s.setHeight(filterWidgets.at(0)->sizeHint().height() * 2);
     return s;
 }
 
@@ -73,9 +73,9 @@ void FilterTableHeader::adjustPositions()
         // Get the current widget, move it and resize it
         QWidget* w = filterWidgets.at(i);
         if (QApplication::layoutDirection() == Qt::RightToLeft)
-            w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+            w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), w->sizeHint().height());
         else
-            w->move(sectionPosition(i) - offset(), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+            w->move(sectionPosition(i) - offset(), w->sizeHint().height());
         w->resize(sectionSize(i), w->sizeHint().height());
     }
 }
