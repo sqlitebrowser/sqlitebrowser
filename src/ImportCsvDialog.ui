@@ -358,6 +358,10 @@
   <tabstop>comboEncoding</tabstop>
   <tabstop>editCustomEncoding</tabstop>
   <tabstop>checkBoxTrimFields</tabstop>
+  <tabstop>checkBoxSeparateTables</tabstop>
+  <tabstop>filePicker</tabstop>
+  <tabstop>toggleSelected</tabstop>
+  <tabstop>matchSimilar</tabstop>
   <tabstop>tablePreview</tabstop>
  </tabstops>
  <resources/>
