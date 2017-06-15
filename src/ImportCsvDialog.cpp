@@ -152,15 +152,12 @@ void ImportCsvDialog::accept()
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
     {
-        QStringList selectedFiles;
         for (int i = 0; i < ui->filePicker->count(); i++) {
             auto item = ui->filePicker->item(i);
-            if (item->checkState() == Qt::Checked)
-                selectedFiles.append(item->data(Qt::DisplayRole).toString());
+            if (item->checkState() == Qt::Checked) {
+                importCsv(item->data(Qt::DisplayRole).toString(), item->data(Qt::UserRole).toString());
+            }
         }
-
-        for (auto file : selectedFiles)
-            importCsv(file);
     }
     else
     {
@@ -242,16 +239,21 @@ void ImportCsvDialog::checkInput()
         allowImporting = !ui->editName->text().isEmpty();
     }
 
+    if (ui->filePicker->currentItem()) {
+        ui->filePicker->currentItem()->setData(Qt::UserRole, ui->editName->text());
+    }
+
     ui->matchSimilar->setEnabled(ui->filePicker->currentItem() != nullptr);
-    ui->editName->setEnabled(!ui->checkBoxSeparateTables->isChecked());
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(allowImporting);
 }
 
 void ImportCsvDialog::selectFiles()
 {
-    for (auto filename : csvFilenames) {
+    for (auto fileName : csvFilenames) {
+        auto fInfo = QFileInfo(fileName);
         auto item = new QListWidgetItem();
-        item->setText(filename);
+        item->setText(fileName);
+        item->setData(Qt::UserRole, fInfo.baseName());
         item->setCheckState(Qt::Checked);
         ui->filePicker->addItem(item);
     }
@@ -263,7 +265,11 @@ void ImportCsvDialog::updateSelectedFilePreview(QListWidgetItem* item)
 {
     selectedFile = item->data(Qt::DisplayRole).toString();
     QFileInfo fileInfo(selectedFile);
-    ui->editName->setText(fileInfo.baseName());
+    if (ui->checkBoxSeparateTables->isChecked()) {
+        ui->editName->setText(item->data(Qt::UserRole).toString());
+    } else {
+        ui->editName->setText(fileInfo.baseName());
+    }
     updatePreview();
     checkInput();
 }
@@ -363,12 +369,17 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const CSVParser &parser)
     return fieldList;
 }
 
-void ImportCsvDialog::importCsv(const QString& fileName)
+void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 {
     QString tableName;
+
     if (ui->checkBoxSeparateTables->isChecked()) {
-        QFileInfo fileInfo(fileName);
-        tableName = fileInfo.baseName();
+        if (name.isEmpty()) {
+            QFileInfo fileInfo(fileName);
+            tableName = fileInfo.baseName();
+        } else {
+            tableName = name;
+        }
     } else {
         tableName = ui->editName->text();
     }

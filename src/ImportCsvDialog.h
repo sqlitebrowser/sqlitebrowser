@@ -40,7 +40,7 @@ private:
     CSVParser parseCSV(const QString &f, qint64 count = -1);
     sqlb::FieldVector generateFieldList(const CSVParser& parser);
 
-    void importCsv(const QString& f);
+    void importCsv(const QString& f, const QString &n = QString());
 
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
