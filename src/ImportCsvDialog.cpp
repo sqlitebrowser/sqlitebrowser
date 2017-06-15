@@ -279,17 +279,17 @@ void ImportCsvDialog::updateSelection(bool selected)
 void ImportCsvDialog::matchSimilar()
 {
     auto item = ui->filePicker->currentItem();
-    auto selectedHeader = fetchCsvHeader(item->data(Qt::DisplayRole).toString());
+    auto selectedHeader = generateFieldList(parseCSV(item->data(Qt::DisplayRole).toString(), 1));
 
     for (int i = 0; i < ui->filePicker->count(); i++)
     {
         auto item = ui->filePicker->item(i);
-        auto headers = fetchCsvHeader(item->data(Qt::DisplayRole).toString());
+        auto header = generateFieldList(parseCSV(item->data(Qt::DisplayRole).toString(), 1));
         bool matchingHeader = false;
 
-        if (selectedHeader.count() == headers.count())
+        if (selectedHeader.count() == header.count())
         {
-            matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), headers.begin(),
+            matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
                                         [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
                                             return (item1->name() == item2->name());
                                         });
@@ -308,39 +308,36 @@ void ImportCsvDialog::matchSimilar()
     checkInput();
 }
 
-void ImportCsvDialog::importCsv(const QString& fileName)
+CSVParser ImportCsvDialog::parseCSV(const QString &fileName, qint64 count)
 {
-    QString tableName;
-    if (ui->checkBoxSeparateTables->isChecked()) {
-        QFileInfo fileInfo(fileName);
-        tableName = fileInfo.baseName();
-    } else {
-        tableName = ui->editName->text();
-    }
-
     // Parse all csv data
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
 
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
-    csv.setCSVProgress(new CSVImportProgress(file.size()));
+    // If count is one, we only want the header, no need to see progress
+    if (count != 1) csv.setCSVProgress(new CSVImportProgress(file.size()));
 
     QTextStream tstream(&file);
     tstream.setCodec(currentEncoding().toUtf8());
-    csv.parse(tstream);
+    csv.parse(tstream, count);
     file.close();
 
-    if(csv.csv().size() == 0)
-        return;
+    return csv;
+}
+
+sqlb::FieldVector ImportCsvDialog::generateFieldList(const CSVParser &parser)
+{
+    if (parser.csv().size() == 0) return sqlb::FieldVector();
 
     // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
     sqlb::FieldVector fieldList;
-    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
+    CSVParser::TCSVResult::const_iterator itBegin = parser.csv().begin();
     if(ui->checkboxHeader->isChecked())
     {
         ++itBegin;
-        for(QStringList::const_iterator it = csv.csv().at(0).begin();
-            it != csv.csv().at(0).end();
+        for(QStringList::const_iterator it = parser.csv().at(0).begin();
+            it != parser.csv().at(0).end();
             ++it)
         {
             // Remove invalid characters
@@ -354,14 +351,32 @@ void ImportCsvDialog::importCsv(const QString& fileName)
 
             // Avoid empty field names
             if(thisfield.isEmpty())
-                thisfield = QString("field%1").arg(std::distance(csv.csv().at(0).begin(), it) + 1);
+                thisfield = QString("field%1").arg(std::distance(parser.csv().at(0).begin(), it) + 1);
 
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(thisfield, "")));
         }
     } else {
-        for(size_t i=0; i < csv.columns(); ++i)
+        for(size_t i=0; i < parser.columns(); ++i)
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(QString("field%1").arg(i+1), "")));
     }
+
+    return fieldList;
+}
+
+void ImportCsvDialog::importCsv(const QString& fileName)
+{
+    QString tableName;
+    if (ui->checkBoxSeparateTables->isChecked()) {
+        QFileInfo fileInfo(fileName);
+        tableName = fileInfo.baseName();
+    } else {
+        tableName = ui->editName->text();
+    }
+
+    CSVParser csv = parseCSV(fileName);
+    if (csv.csv().size() == 0)  return;
+
+    sqlb::FieldVector fieldList = generateFieldList(csv);
 
     // Show progress dialog
     QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, csv.csv().size());
@@ -413,6 +428,7 @@ void ImportCsvDialog::importCsv(const QString& fileName)
     }
 
     // now lets import all data, one row at a time
+    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
     for(CSVParser::TCSVResult::const_iterator it = itBegin;
         it != csv.csv().end();
         ++it)
@@ -449,55 +465,6 @@ void ImportCsvDialog::importCsv(const QString& fileName)
         if(progress.wasCanceled())
             return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, "");
     }
-}
-
-sqlb::FieldVector ImportCsvDialog::fetchCsvHeader(const QString& fileName)
-{
-    // Parse all csv data
-    QFile file(fileName);
-    file.open(QIODevice::ReadOnly);
-
-    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
-    csv.setCSVProgress(new CSVImportProgress(file.size()));
-
-    QTextStream tstream(&file);
-    tstream.setCodec(currentEncoding().toUtf8());
-    csv.parse(tstream);
-    file.close();
-
-    if (csv.csv().size() == 0) return sqlb::FieldVector();
-
-    // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
-    sqlb::FieldVector fieldList;
-    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
-    if(ui->checkboxHeader->isChecked())
-    {
-        ++itBegin;
-        for(QStringList::const_iterator it = csv.csv().at(0).begin();
-            it != csv.csv().at(0).end();
-            ++it)
-        {
-            // Remove invalid characters
-            QString thisfield = *it;
-            thisfield.replace("`", "");
-            thisfield.replace(" ", "");
-            thisfield.replace('"', "");
-            thisfield.replace("'","");
-            thisfield.replace(",","");
-            thisfield.replace(";","");
-
-            // Avoid empty field names
-            if(thisfield.isEmpty())
-                thisfield = QString("field%1").arg(std::distance(csv.csv().at(0).begin(), it) + 1);
-
-            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(thisfield, "")));
-        }
-    } else {
-        for(size_t i=0; i < csv.columns(); ++i)
-            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(QString("field%1").arg(i+1), "")));
-    }
-
-    return fieldList;
 }
 
 void ImportCsvDialog::setQuoteChar(const QChar& c)
