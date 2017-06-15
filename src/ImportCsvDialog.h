@@ -6,6 +6,7 @@
 
 class DBBrowserDB;
 class QCompleter;
+class CSVParser;
 class QListWidgetItem;
 
 namespace Ui {
@@ -36,8 +37,10 @@ private:
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
 
+    CSVParser parseCSV(const QString &f, qint64 count = -1);
+    sqlb::FieldVector generateFieldList(const CSVParser& parser);
+
     void importCsv(const QString& f);
-    sqlb::FieldVector fetchCsvHeader(const QString& f);
 
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
