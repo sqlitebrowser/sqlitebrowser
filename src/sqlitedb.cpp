@@ -610,6 +610,11 @@ bool DBBrowserDB::dump(const QString& filename,
                 if(it.value()->type() == sqlb::Object::Types::Table)
                     continue;
 
+                // If this object is based on a table (e.g. is an index for that table) it depends on the existence of this table.
+                // So if we didn't export the base table this depends on, don't export this object either.
+                if(!(*it)->baseTable().isEmpty() && !tablesToDump.contains((*it)->baseTable()))
+                    continue;
+
                 // Write the SQL string used to create this object to the output file
                 if(!(*it)->originalSql().isEmpty())
                 {
