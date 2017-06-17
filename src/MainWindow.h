@@ -35,6 +35,13 @@ struct BrowseDataTableSettings
     QMap<QString, PlotDock::PlotSettings> plotYAxes;
     QString unlockViewPk;
 
+    BrowseDataTableSettings() :
+        sortOrderIndex(0),
+        sortOrderMode(Qt::AscendingOrder),
+        showRowid(false)
+    {
+    }
+
     friend QDataStream& operator<<(QDataStream& stream, const BrowseDataTableSettings& object)
     {
         stream << object.sortOrderIndex;
