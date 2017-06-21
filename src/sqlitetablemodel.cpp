@@ -25,6 +25,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chun
 void SqliteTableModel::reset()
 {
     m_sTable.clear();
+    m_sRowidColumn.clear();
     m_iSortColumn = 0;
     m_sSortOrder = "ASC";
     m_headers.clear();
@@ -58,7 +59,8 @@ void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOr
         sqlb::TablePtr t = m_db.getObjectByName(table).dynamicCast<sqlb::Table>();
         if(t && t->fields().size()) // parsing was OK
         {
-            m_headers.push_back(t->rowidColumn());
+            m_sRowidColumn = t->rowidColumn();
+            m_headers.push_back(m_sRowidColumn);
             m_headers.append(t->fieldNames());
 
             // parse columns types
@@ -84,6 +86,7 @@ void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOr
     if(!allOk)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(table));
+        m_sRowidColumn = "rowid";
         m_headers.push_back("rowid");
         m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
     }
@@ -778,7 +781,7 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
     {
         m_pseudoPk.clear();
         if(m_headers.size())
-            m_headers[0] = "rowid";
+            m_headers[0] = m_sRowidColumn;
     } else {
         m_pseudoPk = pseudoPk;
         if(m_headers.size())

@@ -86,6 +86,7 @@ private:
 
     QString m_sQuery;
     QString m_sTable;
+    QString m_sRowidColumn;
     QString m_pseudoPk;
     int m_iSortColumn;
     QString m_sSortOrder;
