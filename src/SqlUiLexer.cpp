@@ -174,3 +174,8 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
     wl << ".";
     return wl;
 }
+
+bool SqlUiLexer::caseSensitive() const
+{
+    return false;
+}

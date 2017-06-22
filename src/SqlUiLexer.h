@@ -29,6 +29,8 @@ public:
 
     virtual QStringList autoCompletionWordSeparators() const;
 
+    bool caseSensitive() const;
+
 private:
     QsciAPIs* autocompleteApi;
 
