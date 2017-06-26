@@ -1964,11 +1964,14 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
                             QDataStream stream(temp);
                             stream >> browseTableSettings;
-                            populateTable();     // Refresh view
-                            ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
-                                                        browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
-                            showRowidColumn(browseTableSettings[ui->comboBrowseTable->currentText()].showRowid);
-                            unlockViewEditing(!browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk.isEmpty(), browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk);
+                            if(ui->mainTab->currentIndex() == BrowseTab)
+                            {
+                                populateTable();     // Refresh view
+                                ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
+                                                            browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
+                                showRowidColumn(browseTableSettings[ui->comboBrowseTable->currentText()].showRowid);
+                                unlockViewEditing(!browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk.isEmpty(), browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk);
+                            }
                             xml.skipCurrentElement();
                         }
                     }
