@@ -195,6 +195,15 @@ void EditIndexDialog::removeFromIndex(const QModelIndex& idx)
     if(row == -1)
         return;
 
+    // If this is an expression column and the action was triggered by a double click event instead of a button click,
+    // we won't remove the expression column because it's too likely that this was only done by accident by the user.
+    // Instead just open the expression column for editing.
+    if(index.column(row)->expression() && sender() != ui->buttonFromIndex)
+    {
+        ui->tableIndexColumns->editItem(ui->tableIndexColumns->item(row, 0));
+        return;
+    }
+
     // Remove column from index
     index.removeColumn(ui->tableIndexColumns->item(row, 0)->text());
 
