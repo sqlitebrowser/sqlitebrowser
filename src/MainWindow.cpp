@@ -310,6 +310,13 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
             // No project file; so it should be a database file
             if(db.open(wFile, readOnly))
             {
+                // Close all open but empty SQL tabs
+                for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
+                {
+                    if(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getSql().trimmed().isEmpty())
+                        closeSqlTab(i, true);
+                }
+
                 statusEncodingLabel->setText(db.getPragma("encoding"));
                 statusEncryptionLabel->setVisible(db.encrypted());
                 statusReadOnlyLabel->setVisible(db.readOnly());
@@ -573,9 +580,6 @@ bool MainWindow::fileClose()
     // Clear the SQL Log
     ui->editLogApplication->clear();
     ui->editLogUser->clear();
-
-    for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
-        closeSqlTab(i, true);
 
     return true;
 }
@@ -1441,11 +1445,6 @@ void MainWindow::activateFields(bool enable)
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
-    ui->actionSqlOpenFile->setEnabled(enable);
-    ui->actionSqlOpenTab->setEnabled(enable);
-    ui->actionSqlSaveFilePopup->setEnabled(enable);
-    ui->actionSqlSaveFileAs->setEnabled(enable);
-    ui->actionSqlSaveFile->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
@@ -1652,7 +1651,7 @@ void MainWindow::openSqlFile()
         // Decide whether to open a new tab or take the current one
         unsigned int index;
         SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-        if(current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
+        if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
             index = ui->tabSqlAreas->currentIndex();
         else
             index = openSqlTab();
@@ -1668,6 +1667,8 @@ void MainWindow::openSqlFile()
 void MainWindow::saveSqlFile()
 {
     SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    if(!sqlarea)
+        return;
 
     // If this SQL file hasn't been saved before open the Save As dialog. Otherwise just use the old file name for saving
     if(sqlarea->fileName().isEmpty())
@@ -1984,10 +1985,9 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         }
                     }
                 } else if(xml.name() == "tab_sql") {
-                    // Close existing tab
-                    QWidget* w = ui->tabSqlAreas->widget(0);
-                    ui->tabSqlAreas->removeTab(0);
-                    delete w;
+                    // Close all open tabs first
+                    for(int i=ui->tabSqlAreas->count()-1;i>=0;i--)
+                        closeSqlTab(i, true);
 
                     // Execute SQL tab data
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "tab_sql")
