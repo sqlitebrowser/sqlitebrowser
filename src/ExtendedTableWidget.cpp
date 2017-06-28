@@ -12,6 +12,7 @@
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QBuffer>
+#include <QMenu>
 
 namespace
 {
@@ -75,7 +76,34 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_tableHeader = new FilterTableHeader(this);
     setHorizontalHeader(m_tableHeader);
 
+    // Set up vertical header context menu
     verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // Set up table view context menu
+    m_contextMenu = new QMenu(this);
+    QAction* copyAction = new QAction(QIcon(":/icons/copy"), "Copy", m_contextMenu);
+    QAction* pasteAction = new QAction(QIcon(":/icons/paste"), "Paste", m_contextMenu);
+    m_contextMenu->addAction(copyAction);
+    m_contextMenu->addAction(pasteAction);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // Set up context menu actions
+    connect(this, static_cast<void(QTableView::*)(const QPoint&)>(&QTableView::customContextMenuRequested),
+            [=](const QPoint& pos)
+    {
+        // Try to find out whether the current view is editable and (de)activate menu options according to that
+        bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
+        pasteAction->setEnabled(editable);
+
+        // Show menu
+        m_contextMenu->popup(viewport()->mapToGlobal(pos));
+    });
+    connect(copyAction, &QAction::triggered, [&]() {
+       copy();
+    });
+    connect(pasteAction, &QAction::triggered, [&]() {
+       paste();
+    });
 }
 
 void ExtendedTableWidget::reloadSettings()

@@ -6,6 +6,7 @@
 #include <QDropEvent>
 #include <QDragMoveEvent>
 
+class QMenu;
 class FilterTableHeader;
 
 class ExtendedTableWidget : public QTableView
@@ -47,6 +48,7 @@ protected:
     virtual void dropEvent(QDropEvent* event);
 
     FilterTableHeader* m_tableHeader;
+    QMenu* m_contextMenu;
 };
 
 #endif
