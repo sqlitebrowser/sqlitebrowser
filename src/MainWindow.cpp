@@ -1643,6 +1643,11 @@ void MainWindow::openSqlFile()
     {
         QFile f(file);
         f.open(QIODevice::ReadOnly);
+        if(!f.isOpen())
+        {
+            QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't read file: %1.").arg(f.errorString()));
+            return;
+        }
 
         // Decide whether to open a new tab or take the current one
         unsigned int index;
@@ -1671,10 +1676,13 @@ void MainWindow::saveSqlFile()
     } else {
         QFile f(sqlarea->fileName());
         f.open(QIODevice::WriteOnly);
-        f.write(sqlarea->getSql().toUtf8());
-
-        QFileInfo fileinfo(sqlarea->fileName());
-        ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
+        if(f.isOpen() && f.write(sqlarea->getSql().toUtf8()) != -1)
+        {
+            QFileInfo fileinfo(sqlarea->fileName());
+            ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
+        } else {
+            QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
+        }
     }
 }
 
