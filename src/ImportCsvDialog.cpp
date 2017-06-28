@@ -338,10 +338,8 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const CSVParser &parser)
 
     // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
     sqlb::FieldVector fieldList;
-    CSVParser::TCSVResult::const_iterator itBegin = parser.csv().begin();
     if(ui->checkboxHeader->isChecked())
     {
-        ++itBegin;
         for(QStringList::const_iterator it = parser.csv().at(0).begin();
             it != parser.csv().at(0).end();
             ++it)
@@ -373,7 +371,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 {
     QString tableName;
 
-    if (ui->checkBoxSeparateTables->isChecked()) {
+    if (csvFilenames.size() > 1 && ui->checkBoxSeparateTables->isChecked()) {
         if (name.isEmpty()) {
             QFileInfo fileInfo(fileName);
             tableName = fileInfo.baseName();
@@ -396,32 +394,24 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    objectMap objects = pdb->getBrowsableObjects();
-    for(auto it=objects.constBegin();it!=objects.constEnd();++it)
+    const sqlb::ObjectPtr obj = pdb->getObjectByName(tableName);
+    if(obj && obj->type() == sqlb::Object::Types::Table)
     {
-        if((*it)->type() == sqlb::Object::Types::Table && (*it)->name() == tableName)
+        if((size_t)obj.dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
         {
-            if((size_t)(*it).dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
-            {
-                QMessageBox::warning(this, QApplication::applicationName(),
-                                     tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
-                return;
-            } else {
-                // If we are importing multiple files, we can skip the warning and perform the inserts
-                // To omit further warnings there is a filter button to select all conforming sql
-                if (!ui->checkBoxSeparateTables->isChecked()) {
-                    importToExistingTable = true;
-                    break;
-                }
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
+            return;
+        } else {
+            // If we are importing multiple files, we can skip the warning and perform the inserts
+            // To omit further warnings there is a filter button to select all conforming sql
+            if (!ui->checkBoxSeparateTables->isChecked())
+                importToExistingTable = true;
 
-                if(QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
-                {
-                    importToExistingTable = true;
-                    break;
-                } else {
-                    return;
-                }
-            }
+            if(QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+                importToExistingTable = true;
+            else
+                return;
         }
     }
 
@@ -440,6 +430,8 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // now lets import all data, one row at a time
     CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
+    if(ui->checkboxHeader->isChecked())     // If the first row contains the field names we should skip it here because this is the data import
+        ++itBegin;
     for(CSVParser::TCSVResult::const_iterator it = itBegin;
         it != csv.csv().end();
         ++it)
