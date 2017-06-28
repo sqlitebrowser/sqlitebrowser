@@ -293,7 +293,7 @@ void ExtendedTableWidget::paste()
         {
             // Ask user is it sure about this
             QMessageBox::StandardButton reply = QMessageBox::question(this, QApplication::applicationName(),
-                tr("The content of clipboard is bigger than the range selected.\nDo you want to insert it anyway?"),
+                tr("The content of the clipboard is bigger than the range selected.\nDo you want to insert it anyway?"),
                 QMessageBox::Yes|QMessageBox::No);
             if(reply != QMessageBox::Yes)
             {
