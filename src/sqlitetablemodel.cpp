@@ -315,7 +315,7 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     // Don't even try setting any data if we're not browsing a table, i.e. the model data comes from a custom query
-    if(m_sTable.isEmpty())
+    if(!isEditable())
         return false;
 
     // This function is for in-place editing.
@@ -415,6 +415,9 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
 
 bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 {
+    if(!isEditable())
+        return false;
+
     QByteArrayList blank_data;
     for(int i=0; i < m_headers.size(); ++i)
         blank_data.push_back("");
@@ -453,6 +456,9 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 
 bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 {
+    if(!isEditable())
+        return false;
+
     beginRemoveRows(parent, row, row + count - 1);
 
     bool ok = true;
@@ -475,6 +481,9 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
 QModelIndex SqliteTableModel::dittoRecord(int old_row)
 {
+    if(!isEditable())
+        return QModelIndex();
+
     insertRow(rowCount());
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
@@ -789,4 +798,9 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
     }
 
     buildQuery();
+}
+
+bool SqliteTableModel::isEditable() const
+{
+    return !m_sTable.isEmpty();
 }
