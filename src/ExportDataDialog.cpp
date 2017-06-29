@@ -136,10 +136,18 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
                     QString content = QString::fromUtf8(
                                 (const char*)sqlite3_column_blob(stmt, i),
                                 sqlite3_column_bytes(stmt, i));
-                    if(content.toStdString().find_first_of(special_chars) != std::string::npos)
+
+                    // If no quote char is set but the content contains a line break, we enforce some quote characters. This probably isn't entirely correct
+                    // but still better than having the line breaks unquoted and effectively outputting a garbage file.
+                    if(quoteChar.isNull() && content.contains(newlineStr))
+                        stream << '"' << content.replace('"', "\"\"") << '"';
+                    // If the content needs to be quoted, quote it. But only if a quote char has been specified
+                    else if(!quoteChar.isNull() && content.toStdString().find_first_of(special_chars) != std::string::npos)
                         stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
+                    // If it doesn't need to be quoted, don't quote it
                     else
                         stream << content;
+
                     if(i != columns - 1)
                         // Only output the separator value if sepChar isn't 0,
                         // as that's used to indicate no separator character
