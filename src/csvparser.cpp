@@ -64,6 +64,22 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                     // look ahead to check for linefeed
                     QString::iterator nit = it + 1;
 
+                    // In order to check what the next byte is we must make sure that that byte is already loaded. Assume we're at an m_nBufferSize
+                    // boundary but not at the end of the file when we hit a \r character. Now we're going to be at the end of the sBuffer string
+                    // because of the m_nBufferSize boundary. But this means that the following check won't work properly because we can't check the
+                    // next byte when we really should be able to do so because there's more data coming. To fix this we'll check for this particular
+                    // case and, if this is what's happening, we'll just load an extra byte.
+                    if(nit == sBuffer.end())
+                    {
+                        // Load one more byte
+                        sBuffer.append(stream.read(1));
+
+                        // Restore both iterators. sBuffer.end() points to the imagined char after the last one in the string. So the extra byte we've
+                        // just loaded is the one before that, i.e. the actual last one, and the original last char is the one before that.
+                        it = sBuffer.end() - 2;
+                        nit = sBuffer.end() - 1;
+                    }
+
                     // no linefeed, so assume that CR represents a newline
                     if(nit != sBuffer.end() && *nit != '\n')
                     {
@@ -119,6 +135,14 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                 {
                     // look ahead to check for linefeed
                     QString::iterator nit = it + 1;
+
+                    // See above for details on this.
+                    if(nit == sBuffer.end())
+                    {
+                        sBuffer.append(stream.read(1));
+                        it = sBuffer.end() - 2;
+                        nit = sBuffer.end() - 1;
+                    }
 
                     // no linefeed, so assume that CR represents a newline
                     if(nit != sBuffer.end() && *nit != '\n')
