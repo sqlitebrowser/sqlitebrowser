@@ -422,10 +422,29 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
 
     // Create table
+    QStringList nullValues;
     if(!importToExistingTable)
     {
         if(!pdb->createTable(tableName, fieldList))
             return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+    } else {
+        // Importing into an existing table. So find out something about it's structure.
+
+        // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
+        // and the constraints of a field, we need to handle this case differently.
+        sqlb::TablePtr tbl = pdb->getObjectByName(tableName).dynamicCast<sqlb::Table>();
+        if(tbl)
+        {
+            foreach(const sqlb::FieldPtr& f, tbl->fields())
+            {
+                if(f->isInteger() && f->notnull())              // If this is an integer column but NULL isn't allowed, insert 0
+                    nullValues << "0";
+                else if(f->isInteger() && !f->notnull())        // If this is an integer column and NULL is allowed, insert NULL
+                    nullValues << QString();
+                else                                            // Otherwise (i.e. if this isn't an integer column), insert an empty string
+                    nullValues << "''";
+            }
+        }
     }
 
     // now lets import all data, one row at a time
@@ -439,13 +458,27 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         QString sql = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
 
         QStringList insertlist;
-        for(QStringList::const_iterator jt = it->begin(); jt != it->end(); ++jt)
+        for(int i=0;i<it->size();i++)
         {
-            // need to mprintf here
-            char* formSQL = sqlite3_mprintf("%Q", (const char*)jt->toUtf8());
-            insertlist << formSQL;
-            if(formSQL)
-                sqlite3_free(formSQL);
+            // Empty values need special treatment, but only when importing into an existing table where we could find out something about
+            // its table definition
+            if(importToExistingTable && it->at(i).isEmpty() && nullValues.size() > i)
+            {
+                // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
+                QString val = nullValues.at(i);
+                if(val.isNull())
+                    insertlist << "NULL";
+                else
+                    insertlist << val;
+            } else {
+                // This is a non-empty value. Just add it to the list. The sqlite3_mprintf call with the %Q placeholder takes the value,
+                // adds single quotes around it and doubles all single quotes inside it. This means it'll be safe to be inserted into the SQL
+                // statement.
+                char* formSQL = sqlite3_mprintf("%Q", (const char*)it->at(i).toUtf8());
+                insertlist << formSQL;
+                if(formSQL)
+                    sqlite3_free(formSQL);
+            }
         }
 
         // add missing fields with empty values
