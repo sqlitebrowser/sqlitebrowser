@@ -948,17 +948,12 @@ void MainWindow::executeQuery()
     bool modified = false;
     bool wasdirty = db.getDirty();
     bool structure_updated = false;
-
-    // there is no choice, we have to start a transaction before
-    // we create the prepared statement, otherwise every executed
-    // statement will get committed after the prepared statement
-    // gets finalized, see http://www.sqlite.org/lang_transaction.html
-    db.setSavepoint();
+    bool savepoint_created = false;
 
     // Remove any error indicators
     sqlWidget->getEditor()->clearErrorIndicators();
 
-    //Accept multi-line queries, by looping until the tail is empty
+    // Accept multi-line queries, by looping until the tail is empty
     QElapsedTimer timer;
     timer.start();
     while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
@@ -970,6 +965,41 @@ void MainWindow::executeQuery()
                 qtail.startsWith("DROP", Qt::CaseInsensitive) ||
                 qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
             structure_updated = true;
+
+        // Check whether this is trying to set a pragma
+        if(qtail.startsWith("PRAGMA", Qt::CaseInsensitive) && qtail.contains('='))
+        {
+            // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
+            // user about that
+            if(db.getDirty())
+            {
+                if(QMessageBox::question(this,
+                                         QApplication::applicationName(),
+                                         tr("Setting PRAGMA values will commit your current transaction.\nAre you sure?"),
+                                         QMessageBox::Yes | QMessageBox::Default,
+                                         QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+                {
+                    // Commit all changes
+                    db.releaseAllSavepoints();
+                } else {
+                    // Abort
+                    statusMessage = tr("Execution aborted by user");
+                    break;
+                }
+            }
+        } else {
+            // We're not trying to set a pragma. In this case make sure a savepoint has been created in order to avoid committing
+            // all changes to the database immediately. Don't set more than one savepoint.
+
+            if(!savepoint_created)
+            {
+                // there is no choice, we have to start a transaction before we create the prepared statement,
+                // otherwise every executed statement will get committed after the prepared statement gets finalized,
+                // see http://www.sqlite.org/lang_transaction.html
+                db.setSavepoint();
+                savepoint_created = true;
+            }
+        }
 
         // Execute next statement
         int tail_length_before = tail_length;
@@ -1054,7 +1084,7 @@ void MainWindow::executeQuery()
     connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
     connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
 
-    if(!modified && !wasdirty)
+    if(!modified && !wasdirty && savepoint_created)
         db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
 
     // If the DB structure was changed by some command in this SQL script, update our schema representations
