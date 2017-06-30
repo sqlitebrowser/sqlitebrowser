@@ -69,7 +69,7 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                     // because of the m_nBufferSize boundary. But this means that the following check won't work properly because we can't check the
                     // next byte when we really should be able to do so because there's more data coming. To fix this we'll check for this particular
                     // case and, if this is what's happening, we'll just load an extra byte.
-                    if(nit == sBuffer.end())
+                    if(nit == sBuffer.end() && !stream.atEnd())
                     {
                         // Load one more byte
                         sBuffer.append(stream.read(1));
@@ -137,7 +137,7 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                     QString::iterator nit = it + 1;
 
                     // See above for details on this.
-                    if(nit == sBuffer.end())
+                    if(nit == sBuffer.end() && !stream.atEnd())
                     {
                         sBuffer.append(stream.read(1));
                         it = sBuffer.end() - 2;
