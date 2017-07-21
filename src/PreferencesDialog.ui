@@ -1020,6 +1020,12 @@
        </item>
        <item row="1" column="1">
         <widget class="QTableWidget" name="tableCaCerts">
+         <property name="minimumSize">
+          <size>
+           <width>550</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
          </property>
@@ -1073,6 +1079,12 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QTableWidget" name="tableClientCerts">
+           <property name="minimumSize">
+            <size>
+             <width>550</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>
