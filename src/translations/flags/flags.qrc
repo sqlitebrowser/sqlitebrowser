@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/flags">
         <file alias="ar_SA">ar.png</file>
+        <file alias="cs_CZ">cs.png</file>
         <file alias="de_DE">de.png</file>
         <file alias="es_ES">es.png</file>
         <file alias="en_US">us.png</file>
