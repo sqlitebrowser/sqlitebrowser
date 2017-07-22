@@ -56,7 +56,7 @@ script:
   - cp ./usr/share/applications/sqlitebrowser.desktop .
   - cp ./usr/share/icons/hicolor/256x256/apps/sqlitebrowser.png .
   - cd .. 
-  - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-3-x86_64.AppImage" 
+  - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" 
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
   - ./linuxdeployqt*.AppImage ./appdir/usr/bin/sqlitebrowser -bundle-non-qt-libs
