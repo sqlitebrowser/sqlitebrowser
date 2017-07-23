@@ -59,8 +59,7 @@ script:
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" 
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-  - ldd ./appdir/usr/bin/sqlitebrowser
-  - ./linuxdeployqt*.AppImage ./appdir/usr/bin/sqlitebrowser -bundle-non-qt-libs -verbose=3
+  - ./linuxdeployqt*.AppImage ./appdir/usr/bin/sqlitebrowser -bundle-non-qt-libs
   - ./linuxdeployqt*.AppImage ./appdir/usr/bin/sqlitebrowser -appimage 
   - curl --upload-file ./DB*.AppImage https://transfer.sh/sqlitebrowser-git.$(git rev-parse --short HEAD)-x86_64.AppImage 
 
