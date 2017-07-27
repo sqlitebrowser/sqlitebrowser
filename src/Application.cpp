@@ -72,10 +72,10 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("Usage: %1 [options] [db]\n").arg(argv[0]));
             qWarning() << qPrintable(tr("Possible command line arguments:"));
             qWarning() << qPrintable(tr("  -h, --help\t\tShow command line options"));
-            qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
+            qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
             qWarning() << qPrintable(tr("  -s, --sql [file]\tExecute this SQL file after opening the DB"));
             qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
-            qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
+            qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
