@@ -77,7 +77,7 @@
     <message>
         <location filename="../Application.cpp" line="74"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql [Datei]		Führe nach dem Öffnen der Datenbank diese SQL-Datei aus</translation>
+        <translation>  -s, --sql [Datei]	Führe nach dem Öffnen der Datenbank diese SQL-Datei aus</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="75"/>
