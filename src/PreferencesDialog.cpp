@@ -121,23 +121,23 @@ void PreferencesDialog::loadSettings()
             QSslCertificate cert = ca_certs.at(i);
 
             QTableWidgetItem* cert_cn = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::CommonName).at(0));
-            cert_cn->setFlags(Qt::ItemIsSelectable);
+            cert_cn->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableCaCerts->setItem(i, 0, cert_cn);
 
             QTableWidgetItem* cert_o = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::Organization).at(0));
-            cert_o->setFlags(Qt::ItemIsSelectable);
+            cert_o->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableCaCerts->setItem(i, 1, cert_o);
 
             QTableWidgetItem* cert_from = new QTableWidgetItem(cert.effectiveDate().toString());
-            cert_from->setFlags(Qt::ItemIsSelectable);
+            cert_from->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableCaCerts->setItem(i, 2, cert_from);
 
             QTableWidgetItem* cert_to = new QTableWidgetItem(cert.expiryDate().toString());
-            cert_to->setFlags(Qt::ItemIsSelectable);
+            cert_to->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableCaCerts->setItem(i, 3, cert_to);
 
             QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
-            cert_serialno->setFlags(Qt::ItemIsSelectable);
+            cert_serialno->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableCaCerts->setItem(i, 4, cert_serialno);
         }
     }
@@ -477,27 +477,27 @@ void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCert
 
     // Fill row with data
     QTableWidgetItem* cert_file = new QTableWidgetItem(path);
-    cert_file->setFlags(Qt::ItemIsSelectable);
+    cert_file->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     ui->tableClientCerts->setItem(row, 0, cert_file);
 
     QTableWidgetItem* cert_subject_cn = new QTableWidgetItem(cert.subjectInfo(QSslCertificate::CommonName).at(0));
-    cert_subject_cn->setFlags(Qt::ItemIsSelectable);
+    cert_subject_cn->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     ui->tableClientCerts->setItem(row, 1, cert_subject_cn);
 
     QTableWidgetItem* cert_issuer_cn = new QTableWidgetItem(cert.issuerInfo(QSslCertificate::CommonName).at(0));
-    cert_issuer_cn->setFlags(Qt::ItemIsSelectable);
+    cert_issuer_cn->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     ui->tableClientCerts->setItem(row, 2, cert_issuer_cn);
 
     QTableWidgetItem* cert_from = new QTableWidgetItem(cert.effectiveDate().toString());
-    cert_from->setFlags(Qt::ItemIsSelectable);
+    cert_from->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     ui->tableClientCerts->setItem(row, 3, cert_from);
 
     QTableWidgetItem* cert_to = new QTableWidgetItem(cert.expiryDate().toString());
-    cert_to->setFlags(Qt::ItemIsSelectable);
+    cert_to->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     ui->tableClientCerts->setItem(row, 4, cert_to);
 
     QTableWidgetItem* cert_serialno = new QTableWidgetItem(QString(cert.serialNumber()));
-    cert_serialno->setFlags(Qt::ItemIsSelectable);
+    cert_serialno->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     ui->tableClientCerts->setItem(row, 5, cert_serialno);
 }
 
