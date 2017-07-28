@@ -81,7 +81,7 @@ QList<RemoteModelItem*> RemoteModelItem::loadArray(const QJsonValue& value, Remo
         item->setValue(RemoteModelColumnName, array.at(i).toObject().value("name"));
         item->setValue(RemoteModelColumnType, array.at(i).toObject().value("type"));
         item->setValue(RemoteModelColumnUrl, array.at(i).toObject().value("url"));
-        item->setValue(RemoteModelColumnVersion, array.at(i).toObject().value("version"));
+        item->setValue(RemoteModelColumnCommitId, array.at(i).toObject().value("commit_id"));
         item->setValue(RemoteModelColumnSize, array.at(i).toObject().value("size"));
         item->setValue(RemoteModelColumnLastModified, array.at(i).toObject().value("last_modified"));
 
@@ -97,7 +97,7 @@ RemoteModel::RemoteModel(QObject* parent, RemoteDatabase& remote) :
     remoteDatabase(remote)
 {
     // Initialise list of column names
-    headerList << tr("Name") << tr("Version") << tr("Last modified") << tr("Size");
+    headerList << tr("Name") << tr("Commit") << tr("Last modified") << tr("Size");
 
     // Set up signals
     connect(&remoteDatabase, &RemoteDatabase::gotDirList, this, &RemoteModel::parseDirectoryListing);
@@ -212,7 +212,7 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
             {
                 if(type == "folder")
                     return QVariant();
-                return QString::number(item->value(RemoteModelColumnVersion).toInt());
+                return item->value(RemoteModelColumnCommitId);
             }
         case 2:
             {

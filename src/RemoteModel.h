@@ -12,7 +12,7 @@ enum RemoteModelColumns
     RemoteModelColumnName,
     RemoteModelColumnType,
     RemoteModelColumnUrl,
-    RemoteModelColumnVersion,
+    RemoteModelColumnCommitId,
     RemoteModelColumnSize,
     RemoteModelColumnLastModified,
 

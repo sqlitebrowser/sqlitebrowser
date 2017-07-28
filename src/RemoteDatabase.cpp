@@ -417,7 +417,7 @@ void RemoteDatabase::localAssureOpened()
                                 "\"identity\" TEXT NOT NULL,"
                                 "\"name\" TEXT NOT NULL,"
                                 "\"url\" TEXT NOT NULL,"
-                                "\"version\" INTEGER NOT NULL,"
+                                "\"commit_id\" TEXT NOT NULL,"
                                 "\"file\" INTEGER,"
                                 "\"modified\" INTEGER DEFAULT 0"
                                 ")");
@@ -435,15 +435,15 @@ void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& ur
 {
     // This function adds a new local database clone to our internal list. It does so by adding a single
     // new record to the remote dbs database. All the fields are extracted from the filename, the identity
-    // and (most importantly) the url parameters. Note that for the version field to be correctly filled we
-    // require the version to be part of the url parameter. Also note that this function doesn't check if the
+    // and (most importantly) the url parameters. Note that for the commit id field to be correctly filled we
+    // require the commit id to be part of the url parameter. Also note that this function doesn't check if the
     // database has already been added to the list before. This needs to be done before calling this function,
     // ideally even before sending out a request to the network.
 
     localAssureOpened();
 
     // Insert database into local database list
-    QString sql = QString("INSERT INTO local(identity, name, url, version, file) VALUES(?, ?, ?, ?, ?)");
+    QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file) VALUES(?, ?, ?, ?, ?)");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
         return;
@@ -462,7 +462,7 @@ void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& ur
         return;
     }
 
-    QUrl url_without_query = url;           // Remove the '?version=x' bit from the URL
+    QUrl url_without_query = url;           // Remove the '?commit_id=x' bit from the URL
     url_without_query.setQuery(QString());
     if(sqlite3_bind_text(stmt, 3, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
     {
@@ -470,7 +470,7 @@ void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& ur
         return;
     }
 
-    if(sqlite3_bind_int(stmt, 4, QUrlQuery(url).queryItemValue("version").toInt()))
+    if(sqlite3_bind_int(stmt, 4, QUrlQuery(url).queryItemValue("commit_id").toInt()))
     {
         sqlite3_finalize(stmt);
         return;
@@ -501,13 +501,13 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
 
     localAssureOpened();
 
-    // Extract version from url and remove query part afterwards
-    int url_version = QUrlQuery(url).queryItemValue("version").toInt();
+    // Extract commit id from url and remove query part afterwards
+    QString url_commit_id = QUrlQuery(url).queryItemValue("commit_id");
     QUrl url_without_query = url;
     url_without_query.setQuery(QString());
 
-    // Query version and filename for the given combination of url and identity
-    QString sql = QString("SELECT id, version, file FROM local WHERE url=? AND identity=?");
+    // Query commit id and filename for the given combination of url and identity
+    QString sql = QString("SELECT id, commit_id, file FROM local WHERE url=? AND identity=?");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
         return QString();
@@ -537,15 +537,15 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     // Having come here we can assume that at least some local clone for the given combination of
     // url and identity exists. So extract all the information we have on it.
     //int local_id = sqlite3_column_int(stmt, 0);
-    int local_version = sqlite3_column_int(stmt, 1);
+    QString local_commit_id = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
     QString local_file = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
     sqlite3_finalize(stmt);
 
-    // There are three possibilities now: either the requested version is the same as the local version, or the requested version
-    // is newer, or the local version is newer.
-    if(local_version == url_version)
+    // There are three possibilities now: either the requested commit id is the same as the local commit id, or the requested commit id
+    // is newer, or the local commit id is newer.
+    if(local_commit_id == url_commit_id)
     {
-        // Both versions are the same. That's the perfect match, so just return the path to the local file
+        // Both commit ids are the same. That's the perfect match, so just return the path to the local file
         return Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
     } else {
         // In all the other cases just treat the remote database as a completely new database for now.
