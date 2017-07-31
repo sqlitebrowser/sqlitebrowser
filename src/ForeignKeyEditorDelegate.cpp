@@ -19,7 +19,7 @@ public:
         , m_btnReset(new QPushButton(tr("&Reset"), this))
     {
         idsComboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-        clauseEdit->setPlaceholderText(tr("(foreign key clauses(ON UPDATE, ON DELETE etc.)"));
+        clauseEdit->setPlaceholderText(tr("Foreign key clauses (ON UPDATE, ON DELETE etc.)"));
 
         QHBoxLayout* layout = new QHBoxLayout(this);
         layout->addWidget(tablesComboBox);
