@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de">
+<TS version="2.1" language="de">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -54,19 +54,19 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="71"/>
+        <location filename="../Application.cpp" line="72"/>
         <source>Usage: %1 [options] [db]
 </source>
         <translation>Verwendung: %1 [Optionen] [db]
 </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="72"/>
+        <location filename="../Application.cpp" line="73"/>
         <source>Possible command line arguments:</source>
         <translation>Mögliche Kommandozeilen-Argumente:</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="73"/>
+        <location filename="../Application.cpp" line="74"/>
         <source>  -h, --help		Show command line options</source>
         <translation>  -h, --help		Kommandozeilen-Optionen anzeigen</translation>
     </message>
@@ -75,42 +75,52 @@
         <translation type="obsolete">  -s, --sql  [Datei] Führe diese SQL-Datei nach dem Öffnen der DB aus</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="74"/>
+        <location filename="../Application.cpp" line="76"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
         <translation>  -s, --sql [Datei]	Führe nach dem Öffnen der Datenbank diese SQL-Datei aus</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="75"/>
+        <location filename="../Application.cpp" line="77"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
         <translation>  -t, --table [Tabelle]	Navigiere nach dem Öffnen der Datenbank durch diese Tabelle</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="76"/>
+        <location filename="../Application.cpp" line="75"/>
         <source>  -q, --quit		Exit application after running scripts</source>
         <translation>  -q, --quit		Beende die Anwendung nach Ausführung der Skripte</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="77"/>
+        <location filename="../Application.cpp" line="78"/>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="79"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>  [Datei]		Diese SQLite-Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="82"/>
+        <location filename="../Application.cpp" line="91"/>
+        <source>This is DB Browser for SQLite version %1%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="96"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>Die -s/--sql Option benötigt ein Argument</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="84"/>
+        <location filename="../Application.cpp" line="98"/>
         <source>The file %1 does not exist</source>
         <translation>Die Datei %1 existiert nicht</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="89"/>
+        <location filename="../Application.cpp" line="103"/>
         <source>The -t/--table option requires an argument</source>
         <translation>Die -t/--table Option benötigt ein Argument</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="99"/>
+        <location filename="../Application.cpp" line="113"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Ungültige Option/nicht existente Datei: %1</translation>
     </message>
@@ -149,7 +159,7 @@
     </message>
     <message>
         <source>Page &amp;size</source>
-        <translation>&amp;Seitengröße</translation>
+        <translation type="vanished">&amp;Seitengröße</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="17"/>
@@ -299,12 +309,12 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation>Fehler im Statement #%1: %2.
+        <translation type="vanished">Fehler im Statement #%1: %2.
 Ausführung wird abgebrochen.</translation>
     </message>
     <message>
         <source>renameColumn: cannot find table %1.</source>
-        <translation>Spalte umbenennen: Tabelle %1 nicht gefunden.</translation>
+        <translation type="vanished">Spalte umbenennen: Tabelle %1 nicht gefunden.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="758"/>
@@ -385,7 +395,7 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
-        <translation>unbekannter Objekttyp %1</translation>
+        <translation type="vanished">unbekannter Objekttyp %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1364"/>
@@ -394,7 +404,7 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <source>could not get types</source>
-        <translation>Typen konnten nicht bezogen werden</translation>
+        <translation type="vanished">Typen konnten nicht bezogen werden</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1387"/>
@@ -662,7 +672,7 @@ Ausführung wird abgebrochen %3.</translation>
     <name>EditIndexDialog</name>
     <message>
         <source>Create New Index</source>
-        <translation>Neuen Index erstellen</translation>
+        <translation type="vanished">Neuen Index erstellen</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
@@ -672,15 +682,15 @@ Ausführung wird abgebrochen %3.</translation>
     <message>
         <source>&amp;Columns</source>
         <translatorcomment>character after ampersand changed</translatorcomment>
-        <translation>&amp;Spalten</translation>
+        <translation type="vanished">&amp;Spalten</translation>
     </message>
     <message>
         <source>Column</source>
-        <translation>Spalte</translation>
+        <translation type="vanished">Spalte</translation>
     </message>
     <message>
         <source>Use in Index</source>
-        <translation>Im Index verwenden</translation>
+        <translation type="vanished">Im Index verwenden</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
@@ -886,8 +896,12 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="304"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warnung: &lt;/span&gt;Die Definition dieser Tabelle enthält Elemente, die unser Parser nicht vollständig versteht. Ändern und Speichern dieser Tabelle könnte zu Problemen führen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warnung: &lt;/span&gt;Die Definition dieser Tabelle enthält Elemente, die unser Parser nicht vollständig versteht. Ändern und Speichern dieser Tabelle könnte zu Problemen führen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="157"/>
@@ -903,7 +917,7 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
-        <translation>Diese Spalte wird über einen Fremdschlüssel in Tabelle %1, Spalte %2 referenziert, sodass deren Name nicht geändert werden kann.</translation>
+        <translation type="vanished">Diese Spalte wird über einen Fremdschlüssel in Tabelle %1, Spalte %2 referenziert, sodass deren Name nicht geändert werden kann.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="292"/>
@@ -979,15 +993,15 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     </message>
     <message>
         <source>&amp;Table(s)</source>
-        <translation>&amp;Tabelle(n)</translation>
+        <translation type="vanished">&amp;Tabelle(n)</translation>
     </message>
     <message>
         <source>&amp;Column names in first line</source>
-        <translation>&amp;Spaltennamen in erster Zeile</translation>
+        <translation type="vanished">&amp;Spaltennamen in erster Zeile</translation>
     </message>
     <message>
         <source>Field &amp;separator</source>
-        <translation>Feld-&amp;Separator</translation>
+        <translation type="vanished">Feld-&amp;Separator</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
@@ -1206,7 +1220,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <source>The content of clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation>Der Inhalt der Zwischenablage ist größer als der ausgewählte Bereich.
+        <translation type="vanished">Der Inhalt der Zwischenablage ist größer als der ausgewählte Bereich.
 Möchten Sie ihn dennoch einfügen?</translation>
     </message>
     <message>
@@ -1235,7 +1249,7 @@ Do you want to insert it anyway?</source>
     <name>FileDialog</name>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation>SQLite Datenbankdateien (*.db *.sqlite *.sqlite3 *.db3);;Alle Dateien (*)</translation>
+        <translation type="vanished">SQLite Datenbankdateien (*.db *.sqlite *.sqlite3 *.db3);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -1262,8 +1276,12 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
+        <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation>(Fremdschlüssel-Klauseln(ON UPDATE, ON DELETE etc.)</translation>
+        <translation type="vanished">(Fremdschlüssel-Klauseln(ON UPDATE, ON DELETE etc.)</translation>
     </message>
 </context>
 <context>
@@ -1440,7 +1458,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Table:</source>
-        <translation>Tabelle:</translation>
+        <translation type="vanished">Tabelle:</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="117"/>
@@ -1973,7 +1991,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation>Zeile duplizieren</translation>
+        <translation type="vanished">Zeile duplizieren</translation>
     </message>
     <message>
         <source>toolBar</source>
@@ -2008,115 +2026,115 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Columns</source>
-        <translation>Spalten</translation>
+        <translation type="vanished">Spalten</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>_</source>
-        <translation>_</translation>
+        <translation type="vanished">_</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation>Zeilentyp:</translation>
+        <translation type="vanished">Zeilentyp:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Zeile</translation>
+        <translation type="vanished">Zeile</translation>
     </message>
     <message>
         <source>StepLeft</source>
-        <translation>Nach links</translation>
+        <translation type="vanished">Nach links</translation>
     </message>
     <message>
         <source>StepRight</source>
-        <translation>Nach rechts</translation>
+        <translation type="vanished">Nach rechts</translation>
     </message>
     <message>
         <source>StepCenter</source>
-        <translation>Zur Mitte</translation>
+        <translation type="vanished">Zur Mitte</translation>
     </message>
     <message>
         <source>Impulse</source>
-        <translation>Impuls</translation>
+        <translation type="vanished">Impuls</translation>
     </message>
     <message>
         <source>Point shape:</source>
-        <translation>Punktform:</translation>
+        <translation type="vanished">Punktform:</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation>Kreuz</translation>
+        <translation type="vanished">Kreuz</translation>
     </message>
     <message>
         <source>Plus</source>
-        <translation>Plus</translation>
+        <translation type="vanished">Plus</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Kreis</translation>
+        <translation type="vanished">Kreis</translation>
     </message>
     <message>
         <source>Disc</source>
-        <translation>Scheibe</translation>
+        <translation type="vanished">Scheibe</translation>
     </message>
     <message>
         <source>Square</source>
-        <translation>Quadrat</translation>
+        <translation type="vanished">Quadrat</translation>
     </message>
     <message>
         <source>Diamond</source>
-        <translation>Diamant</translation>
+        <translation type="vanished">Diamant</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Stern</translation>
+        <translation type="vanished">Stern</translation>
     </message>
     <message>
         <source>Triangle</source>
-        <translation>Dreieck</translation>
+        <translation type="vanished">Dreieck</translation>
     </message>
     <message>
         <source>TriangleInverted</source>
-        <translation>Invertiertes Dreieck</translation>
+        <translation type="vanished">Invertiertes Dreieck</translation>
     </message>
     <message>
         <source>CrossSquare</source>
-        <translation>Quadrat mit Kreuz</translation>
+        <translation type="vanished">Quadrat mit Kreuz</translation>
     </message>
     <message>
         <source>PlusSquare</source>
-        <translation>Quadrat mit Plus</translation>
+        <translation type="vanished">Quadrat mit Plus</translation>
     </message>
     <message>
         <source>CrossCircle</source>
-        <translation>Kreis mit Kreuz</translation>
+        <translation type="vanished">Kreis mit Kreuz</translation>
     </message>
     <message>
         <source>PlusCircle</source>
-        <translation>Kreis mit Plus</translation>
+        <translation type="vanished">Kreis mit Plus</translation>
     </message>
     <message>
         <source>Peace</source>
-        <translation>Peace</translation>
+        <translation type="vanished">Peace</translation>
     </message>
     <message>
         <source>Save current plot...</source>
-        <translation>Aktuelles Diagramm speichern...</translation>
+        <translation type="vanished">Aktuelles Diagramm speichern...</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Alle Daten laden. Dies bringt nur etwas, wenn aufgrund des partiellen Abrufmechanismus noch nicht alle Daten der Tabelle abgerufen wurden.</translation>
+        <translation type="vanished">Alle Daten laden. Dies bringt nur etwas, wenn aufgrund des partiellen Abrufmechanismus noch nicht alle Daten der Tabelle abgerufen wurden.</translation>
     </message>
     <message>
         <source>DB Schema</source>
-        <translation>DB Schema</translation>
+        <translation type="vanished">DB Schema</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1137"/>
@@ -2400,7 +2418,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Edit Database Cell</source>
-        <translation>Datenbankzelle bearbeiten</translation>
+        <translation type="vanished">Datenbankzelle bearbeiten</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="978"/>
@@ -2484,7 +2502,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation>SQL ausführen [F5, Strg+Return]</translation>
+        <translation type="vanished">SQL ausführen [F5, Strg+Return]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -2533,7 +2551,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktuelles Diagramm speichern...&lt;/p&gt;&lt;p&gt;Dateiformat durch Endung auswählen (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktuelles Diagramm speichern...&lt;/p&gt;&lt;p&gt;Dateiformat durch Endung auswählen (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
@@ -2553,7 +2571,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation>Aktuelle Zeile ausführen [Strg+E]</translation>
+        <translation type="vanished">Aktuelle Zeile ausführen [Strg+E]</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="190"/>
@@ -2685,7 +2703,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     </message>
     <message>
         <source>There is no database opened.</source>
-        <translation>Keine Datenbank geöffnet.</translation>
+        <translation type="vanished">Keine Datenbank geöffnet.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1032"/>
@@ -2768,7 +2786,7 @@ Lassen Sie das Feld leer, um die Datenbankodierung zu verwenden.</translation>
     </message>
     <message>
         <source>Choose a text file</source>
-        <translation>Textdatei auswählen</translation>
+        <translation type="vanished">Textdatei auswählen</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1134"/>
@@ -2969,11 +2987,11 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>Choose a axis color</source>
-        <translation>Achsenfarbe auswählen</translation>
+        <translation type="vanished">Achsenfarbe auswählen</translation>
     </message>
     <message>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Alle Dateien(*)</translation>
+        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Alle Dateien(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1921"/>
@@ -2986,7 +3004,7 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>Invalid file format.</source>
-        <translation>Ungültiges Dateiformat.</translation>
+        <translation type="vanished">Ungültiges Dateiformat.</translation>
     </message>
 </context>
 <context>
@@ -3280,7 +3298,7 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>SQL to execute after opening database</source>
-        <translation>Nach dem Öffnen einer Datenbank auszuführendes SQL</translation>
+        <translation type="vanished">Nach dem Öffnen einer Datenbank auszuführendes SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="285"/>
@@ -3924,9 +3942,8 @@ Erstellen Sie ein Backup!</translation>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="100"/>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation type="vanished">Version</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
@@ -3937,6 +3954,11 @@ Erstellen Sie ein Backup!</translation>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Size</source>
         <translation>Größe</translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="100"/>
+        <source>Commit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="232"/>

@@ -83,6 +83,14 @@
         <source>The -t/--table option requires an argument</source>
         <translation>A opção -t/--table requer um argumento</translation>
     </message>
+    <message>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is DB Browser for SQLite version %1%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CipherDialog</name>
@@ -784,7 +792,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Aviso: &lt;/span&gt;Há algo com essa definição de tabela que nosso parser não entende. Modificar e salvar essa tabela pode resultar em problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Aviso: &lt;/span&gt;Há algo com essa definição de tabela que nosso parser não entende. Modificar e salvar essa tabela pode resultar em problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
@@ -815,6 +823,10 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
 %1</source>
         <translation>Definindo a flag temporária para a tabela falhou. Mensagem de erro:
 %1</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1056,7 +1068,11 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation>(cláusulas de chave estrangeira (ON UPDATE, ON DELETE etc.)</translation>
+        <translation type="vanished">(cláusulas de chave estrangeira (ON UPDATE, ON DELETE etc.)</translation>
+    </message>
+    <message>
+        <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3114,7 +3130,7 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Versão</translation>
+        <translation type="vanished">Versão</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -3127,6 +3143,10 @@ Faça um backup!</translation>
     <message>
         <source>bytes</source>
         <translation>bytes</translation>
+    </message>
+    <message>
+        <source>Commit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

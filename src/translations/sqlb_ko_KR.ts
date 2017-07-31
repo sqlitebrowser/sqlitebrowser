@@ -43,19 +43,19 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="71"/>
+        <location filename="../Application.cpp" line="72"/>
         <source>Usage: %1 [options] [db]
 </source>
         <translation>사용법: %1 [옵션] [데이터베이스]
 </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="72"/>
+        <location filename="../Application.cpp" line="73"/>
         <source>Possible command line arguments:</source>
         <translation>사용할 수 있는 커맨드라인 매개변수:</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="73"/>
+        <location filename="../Application.cpp" line="74"/>
         <source>  -h, --help		Show command line options</source>
         <translation>  -h, --help		커맨드라인 옵션을 보여줍니다</translation>
     </message>
@@ -64,42 +64,52 @@
         <translation type="obsolete">  -s, --sql  [file]	데이터베이스 파일을 연 후에 SQL 파일 내용을 실행합니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="74"/>
+        <location filename="../Application.cpp" line="76"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
         <translation>  -s, --sql [file]	데이터베이스 파일을 연 후 이 SQL 파일을 실행합니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="75"/>
+        <location filename="../Application.cpp" line="77"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
         <translation>  -t, --table [table]	데이터베이스 파일을 연 후 이 테이블을 봅니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="76"/>
+        <location filename="../Application.cpp" line="75"/>
         <source>  -q, --quit		Exit application after running scripts</source>
         <translation>  -q, --quit		스크립트를 실행한 후에 애플리케이션을 종료합니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="77"/>
+        <location filename="../Application.cpp" line="78"/>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="79"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>  [파일]		지정한 SQLite 데이터베이스 파일을 엽니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="82"/>
+        <location filename="../Application.cpp" line="91"/>
+        <source>This is DB Browser for SQLite version %1%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="96"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>-s/--sql 옵션은 실행할 SQL 파일명을 같이 지정해주어야 합니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="84"/>
+        <location filename="../Application.cpp" line="98"/>
         <source>The file %1 does not exist</source>
         <translation>%1 파일이 존재하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="89"/>
+        <location filename="../Application.cpp" line="103"/>
         <source>The -t/--table option requires an argument</source>
         <translation>-t/--table 옵션의 대상이되는 테이블 명을 써주세요</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="99"/>
+        <location filename="../Application.cpp" line="113"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>잘못된 옵션을 사용하였거나/파일이 존재하지 않습니다: %1</translation>
     </message>
@@ -878,7 +888,7 @@ Aborting execution%3.</source>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="304"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1252,7 +1262,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
-        <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
+        <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3786,9 +3796,8 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="100"/>
         <source>Version</source>
-        <translation type="unfinished">버전</translation>
+        <translation type="obsolete">버전</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
@@ -3798,6 +3807,11 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="100"/>
+        <source>Commit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

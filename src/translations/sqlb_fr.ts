@@ -59,18 +59,18 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="71"/>
+        <location filename="../Application.cpp" line="72"/>
         <source>Usage: %1 [options] [db]
 </source>
         <translation>Usage: %1 [options] [db]&gt;</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="72"/>
+        <location filename="../Application.cpp" line="73"/>
         <source>Possible command line arguments:</source>
         <translation>Arguments utilisables en ligne de commande :</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="73"/>
+        <location filename="../Application.cpp" line="74"/>
         <source>  -h, --help		Show command line options</source>
         <translation>  -h, --help		Affiche les options en mode ligne de commande</translation>
     </message>
@@ -79,44 +79,54 @@
         <translation type="obsolete">  -s, --sql  [fichier]	Exécute ce fichier de commande SQL après l&apos;ouverture de la base de données</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="74"/>
+        <location filename="../Application.cpp" line="76"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
         <translatorcomment>Il est possible de remplacer &quot;ce fichier de commande SQL&quot; par &quot;ce fichier SQL&quot; et &quot;base de données&quot; par BdD</translatorcomment>
         <translation>  -s, --sql  [fichier], Exécute ce fichier de commande SQL après l&apos;ouverture de la base de données</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="75"/>
+        <location filename="../Application.cpp" line="77"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
         <translatorcomment>Il est possible de remplacer &quot;base de données&quot; par BdD</translatorcomment>
         <translation>  -t, --table [table]	Parcourir cette table après l&apos;ouverture de la base de données</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="76"/>
+        <location filename="../Application.cpp" line="75"/>
         <source>  -q, --quit		Exit application after running scripts</source>
         <translation>  -q, --quit		Quitte l&apos;application après l&apos;exécution du script</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="77"/>
+        <location filename="../Application.cpp" line="78"/>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="79"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>  [fichier]		Ouvre cette base de données SQLite</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="82"/>
+        <location filename="../Application.cpp" line="91"/>
+        <source>This is DB Browser for SQLite version %1%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="96"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>L&apos;option -s/--sql nécessite un argument</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="84"/>
+        <location filename="../Application.cpp" line="98"/>
         <source>The file %1 does not exist</source>
         <translation>Le fichier %1 n&apos;existe pas</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="89"/>
+        <location filename="../Application.cpp" line="103"/>
         <source>The -t/--table option requires an argument</source>
         <translation>L&apos;option -t/--table nécessite un argument</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="99"/>
+        <location filename="../Application.cpp" line="113"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Option invalide ou fichier %1 inexistant</translation>
     </message>
@@ -895,7 +905,7 @@ Aborting execution%3.</source>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="304"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1272,7 +1282,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
-        <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
+        <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3985,9 +3995,8 @@ Faitez une sauvegarde !</translation>
         <translation type="unfinished">Nom</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="100"/>
         <source>Version</source>
-        <translation type="unfinished">Version</translation>
+        <translation type="obsolete">Version</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
@@ -3997,6 +4006,11 @@ Faitez une sauvegarde !</translation>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="100"/>
+        <source>Commit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
