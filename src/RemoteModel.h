@@ -105,6 +105,7 @@ private:
     // lazy population.
     QString currentRootDirectory;
     QString currentClientCert;
+    QString currentUserName;
 };
 
 #endif

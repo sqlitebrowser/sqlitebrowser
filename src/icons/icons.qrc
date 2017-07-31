@@ -55,5 +55,6 @@
         <file>database.png</file>
         <file>cog_go.png</file>
         <file alias="paste">page_paste.png</file>
+        <file>folder_user.png</file>
     </qresource>
 </RCC>

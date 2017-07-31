@@ -110,6 +110,13 @@ RemoteModel::~RemoteModel()
 
 void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
 {
+    // Extract user name
+    QString cn = remoteDatabase.clientCertificates()[cert].subjectInfo(QSslCertificate::CommonName).at(0);
+    QStringList cn_parts = cn.split("@");
+    if(cn_parts.size() < 2)
+        return;
+    currentUserName = cn_parts.first();
+
     // Save settings
     currentRootDirectory = url;
     currentClientCert = cert;
@@ -194,7 +201,9 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
     if(role == Qt::DecorationRole && index.column() == 0)
     {
         // Use different icons depending on item type
-        if(type == "folder")
+        if(type == "folder" && index.parent() == QModelIndex() && item->value(RemoteModelColumnName) == currentUserName)
+            return QImage(":/icons/folder_user");
+        else if(type == "folder")
             return QImage(":/icons/folder");
         else if(type == "database")
             return QImage(":/icons/database");
