@@ -462,7 +462,7 @@ void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& ur
         return;
     }
 
-    QUrl url_without_query = url;           // Remove the '?commit_id=x' bit from the URL
+    QUrl url_without_query = url;           // Remove the '?commit=x' bit from the URL
     url_without_query.setQuery(QString());
     if(sqlite3_bind_text(stmt, 3, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
     {
@@ -470,7 +470,7 @@ void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& ur
         return;
     }
 
-    if(sqlite3_bind_int(stmt, 4, QUrlQuery(url).queryItemValue("commit_id").toInt()))
+    if(sqlite3_bind_text(stmt, 4, QUrlQuery(url).queryItemValue("commit").toUtf8(), QUrlQuery(url).queryItemValue("commit").toUtf8().length(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
         return;
@@ -502,7 +502,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     localAssureOpened();
 
     // Extract commit id from url and remove query part afterwards
-    QString url_commit_id = QUrlQuery(url).queryItemValue("commit_id");
+    QString url_commit_id = QUrlQuery(url).queryItemValue("commit");
     QUrl url_without_query = url;
     url_without_query.setQuery(QString());
 
