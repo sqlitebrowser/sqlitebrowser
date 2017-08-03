@@ -349,6 +349,15 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
             return;
     }
 
+    // When the client certificate is different from the one before, clear the access and authentication cache.
+    // Otherwise Qt might use the old certificate again.
+    static QString lastClientCert;
+    if(lastClientCert != clientCert)
+    {
+        lastClientCert = clientCert;
+        m_manager->clearAccessCache();
+    }
+
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);
     m_currentReply->setProperty("type", type);
