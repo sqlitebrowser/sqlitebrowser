@@ -20,13 +20,17 @@ public:
     ~RemoteDock();
 
     void reloadSettings();
+    void enableButtons();
 
 private slots:
     void setNewIdentity();
     void fetchDatabase(const QModelIndex& idx);
+    void pushDatabase();
 
 private:
     Ui::RemoteDock* ui;
+
+    MainWindow* mainWindow;
 
     RemoteDatabase& remoteDatabase;
     RemoteModel* remoteModel;

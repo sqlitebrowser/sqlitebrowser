@@ -1480,7 +1480,8 @@ void MainWindow::activateFields(bool enable)
     ui->buttonClearFilters->setEnabled(enable);
     ui->dockEdit->setEnabled(enable && write);
     ui->dockPlot->setEnabled(enable);
-    ui->actionSave_Remote->setEnabled(enable);
+
+    remoteDock->enableButtons();
 }
 
 void MainWindow::enableEditing(bool enable_edit, bool enable_insertdelete)
@@ -1790,9 +1791,8 @@ void MainWindow::reloadSettings()
     populateStructure();
     populateTable();
 
-    // Hide or show the File → Remote menu as needed
+    // Hide or show the remote dock as needed
     bool showRemoteActions = Settings::getValue("remote", "active").toBool();
-    ui->menuRemote->menuAction()->setVisible(showRemoteActions);
     ui->viewMenu->actions().at(4)->setVisible(showRemoteActions);
     if(!showRemoteActions)
         ui->dockRemote->setHidden(true);
@@ -1859,16 +1859,6 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
                 settings.endGroup();
             }
         }
-    }
-}
-
-void MainWindow::on_actionSave_Remote_triggered()
-{
-    QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to save."));
-    if(!url.isEmpty())
-    {
-        QStringList certs = Settings::getValue("remote", "client_certificates").toStringList();
-        m_remoteDb->push(db.currentFile(), url, (certs.size() ? certs.at(0) : ""));
     }
 }
 

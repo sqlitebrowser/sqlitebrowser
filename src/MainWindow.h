@@ -216,7 +216,6 @@ private slots:
     void exportTableToJson();
     void fileSave();
     void fileRevert();
-    void on_actionSave_Remote_triggered();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
     void openPreferences();

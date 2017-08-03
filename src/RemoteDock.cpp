@@ -1,4 +1,5 @@
 #include <QSslCertificate>
+#include <QInputDialog>
 
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"
@@ -10,6 +11,7 @@
 RemoteDock::RemoteDock(MainWindow* parent)
     : QDialog(parent),
       ui(new Ui::RemoteDock),
+      mainWindow(parent),
       remoteDatabase(parent->getRemote()),
       remoteModel(new RemoteModel(this, parent->getRemote()))
 {
@@ -58,6 +60,9 @@ void RemoteDock::setNewIdentity()
     if(cn_parts.size() < 2)
         return;
     remoteModel->setNewRootDir(QString("https://%1:5550/").arg(cn_parts.last()), cert);
+
+    // Enable buttons if necessary
+    enableButtons();
 }
 
 void RemoteDock::fetchDatabase(const QModelIndex& idx)
@@ -71,4 +76,19 @@ void RemoteDock::fetchDatabase(const QModelIndex& idx)
     // Only open database file
     if(item->value(RemoteModelColumnType).toString() == "database")
         remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), RemoteDatabase::RequestTypeDatabase, remoteModel->currentClientCertificate());
+}
+
+void RemoteDock::enableButtons()
+{
+    bool db_opened = mainWindow->getDb().isOpen();
+    bool logged_in = !remoteModel->currentClientCertificate().isEmpty();
+
+    ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
+}
+
+void RemoteDock::pushDatabase()
+{
+    QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to save."));
+    if(!url.isEmpty())
+        remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate());
 }

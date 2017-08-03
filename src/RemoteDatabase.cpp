@@ -381,7 +381,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     QByteArray file_data = file.readAll();
     file.close();
 
-    // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
+    // Fetch database and save pending reply. Note that we're only supporting one active download or upload here at the moment.
     m_currentReply = m_manager->put(request, file_data);
     m_currentReply->setProperty("type", RequestTypePush);
 

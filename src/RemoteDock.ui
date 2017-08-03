@@ -57,6 +57,17 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QToolButton" name="buttonPushDatabase">
+       <property name="toolTip">
+        <string>Push currently opened database to server</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/push_database</normaloff>:/icons/push_database</iconset>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -100,9 +111,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonPushDatabase</sender>
+   <signal>clicked()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>pushDatabase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>551</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setNewIdentity()</slot>
   <slot>fetchDatabase(QModelIndex)</slot>
+  <slot>pushDatabase()</slot>
  </slots>
 </ui>
