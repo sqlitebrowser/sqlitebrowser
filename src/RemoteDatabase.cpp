@@ -235,6 +235,23 @@ const QList<QSslCertificate>& RemoteDatabase::caCertificates() const
     return certs;
 }
 
+QString RemoteDatabase::getInfoFromClientCert(const QString& cert, CertInfo info) const
+{
+    // Get the common name of the certificate and split it into user name and server address
+    QString cn = m_clientCertFiles[cert].subjectInfo(QSslCertificate::CommonName).at(0);
+    QStringList cn_parts = cn.split("@");
+    if(cn_parts.size() < 2)
+        return QString();
+
+    // Return requested part of the CN
+    if(info == CertInfoUser)
+        return cn_parts.first();
+    else if(info == CertInfoServer)
+        return cn_parts.last();
+    else
+        return QString();
+}
+
 bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientCert)
 {
     // Check if client cert exists

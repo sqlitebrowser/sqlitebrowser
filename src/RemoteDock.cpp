@@ -1,5 +1,6 @@
 #include <QSslCertificate>
 #include <QInputDialog>
+#include <QFileInfo>
 
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"
@@ -55,11 +56,8 @@ void RemoteDock::setNewIdentity()
         return;
 
     // Open root directory. Get host name from client cert
-    QString cn = remoteDatabase.clientCertificates()[cert].subjectInfo(QSslCertificate::CommonName).at(0);
-    QStringList cn_parts = cn.split("@");
-    if(cn_parts.size() < 2)
-        return;
-    remoteModel->setNewRootDir(QString("https://%1:5550/").arg(cn_parts.last()), cert);
+    QString host = remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoServer);
+    remoteModel->setNewRootDir(QString("https://%1:5550/").arg(host), cert);
 
     // Enable buttons if necessary
     enableButtons();
@@ -88,7 +86,23 @@ void RemoteDock::enableButtons()
 
 void RemoteDock::pushDatabase()
 {
-    QString url = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter the URL of the database file to save."));
-    if(!url.isEmpty())
-        remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate());
+    // Ask for file name to save under. The default suggestion is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
+    // the extra bit of information at the end of the name gets removed first.
+    QString name = QFileInfo(mainWindow->getDb().currentFile()).fileName();
+    name = name.remove(QRegExp("_[0-9]+.remotedb$"));
+    name = QInputDialog::getText(this, qApp->applicationName(),
+                                 tr("Please enter the database name to push to."),
+                                 QLineEdit::Normal,
+                                 name);
+    if(name.isEmpty())
+        return;
+
+    // Build push URL
+    QString url = QString("https://%1:5550/").arg(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer));
+    url.append(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser));
+    url.append("/");
+    url.append(name);
+
+    // Push database
+    remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate());
 }

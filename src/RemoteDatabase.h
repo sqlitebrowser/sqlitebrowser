@@ -22,8 +22,15 @@ public:
 
     void reloadSettings();
 
+    enum CertInfo
+    {
+        CertInfoUser,
+        CertInfoServer,
+    };
+
     const QList<QSslCertificate>& caCertificates() const;
     const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
+    QString getInfoFromClientCert(const QString& cert, CertInfo info) const;
 
     enum RequestType
     {

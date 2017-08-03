@@ -110,12 +110,8 @@ RemoteModel::~RemoteModel()
 
 void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
 {
-    // Extract user name
-    QString cn = remoteDatabase.clientCertificates()[cert].subjectInfo(QSslCertificate::CommonName).at(0);
-    QStringList cn_parts = cn.split("@");
-    if(cn_parts.size() < 2)
-        return;
-    currentUserName = cn_parts.first();
+    // Get user name from client cert
+    currentUserName = remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoUser);
 
     // Save settings
     currentRootDirectory = url;
