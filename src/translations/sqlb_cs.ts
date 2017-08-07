@@ -181,7 +181,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Apple NSDate to date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Apple NSDate na datum</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
@@ -318,12 +318,12 @@ Ruším provedení.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1000"/>
         <source>renameColumn: cannot find table %1.</source>
-        <translation>renameColumn: nemůžu nalézt tabulku %1.</translation>
+        <translation>renameColumn: nemohu nalézt tabulku %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1010"/>
         <source>renameColumn: cannot find column %1.</source>
-        <translation>renameColumn: nemůžu nalézt sloupec %1.</translation>
+        <translation>renameColumn: nemohu nalézt sloupec %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1017"/>
@@ -379,12 +379,12 @@ Ruším provedení.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1231"/>
         <source>could not get list of db objects: %1, %2</source>
-        <translation></translation>
+        <translation>nemohu získat seznam objektů db: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1261"/>
         <source>could not get types</source>
-        <translation></translation>
+        <translation>nemohu získat typy</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1286"/>
@@ -394,12 +394,12 @@ Ruším provedení.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1290"/>
         <source>could not execute pragma command: %1, %2</source>
-        <translation></translation>
+        <translation>nemohu provést příkaz pragma: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1305"/>
         <source>Error setting pragma %1 to %2: %3</source>
-        <translation></translation>
+        <translation>Chyba při nastavování pragma %1 na %2: %3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1344"/>
@@ -581,12 +581,12 @@ Ruším provedení.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="216"/>
         <source>Binary data can&apos;t be viewed with the text editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Binární data nemohou být prohlížena v textovém editoru</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="483"/>
         <source>Type of data currently in cell: %1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktuální typ dat v buňce: %1 Obrázek</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="489"/>
@@ -771,17 +771,17 @@ Ruším provedení.</translation>
     <message>
         <location filename="../EditTableDialog.cpp" line="258"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tento sloupec je použit jako cizí klíč v tabulce %1 a jeho název nemůže být změněn.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="328"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation></translation>
+        <translation>Existuje alespoň jeden řádek, který je nastaven na NULL. Z tohoto důvodu je nemožné nastavit tento flag. Nejprve změňte data v tabulce, prosím.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="355"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
-        <translation></translation>
+        <translation>Existuje alespoň jeden řádek, který neobsahuje hodnotu typu integer. Z tohoto důvodu je nemožné nastavit AI flag. Nejprve změňte data v tabulce, prosím.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="399"/>
@@ -1371,7 +1371,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="320"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toto tlačítko je určeno k navigaci k záznamu, jehož číslo je nastaveno v poli Jít na.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="323"/>
@@ -1386,7 +1386,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="333"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation></translation>
+        <translation>Napiště číslo záznamu do tohoto pole a klikněte na Jít na: tlačítko k zobrazení záznamu v pohledu databáze</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="336"/>
@@ -1439,7 +1439,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="485"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignorovat Kontrolu Omezení&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="505"/>
@@ -1522,7 +1522,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="685"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronní&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="717"/>
@@ -1542,7 +1542,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="749"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Verze Uživatele&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="769"/>
@@ -1587,7 +1587,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="932"/>
         <source>DB Toolbar</source>
-        <translation>DB Lišta</translation>
+        <translation>Panel nástrojů DB</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="951"/>
@@ -1768,7 +1768,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1207"/>
         <source>Cross</source>
-        <translation></translation>
+        <translation>Kříž</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1212"/>
@@ -1951,7 +1951,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1504"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
-        <translation></translation>
+        <translation>Importovat data z textového souboru .sql do nové nebo již existující databáze.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1507"/>
@@ -1961,7 +1961,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
-        <translation></translation>
+        <translation>Otevře průzkumníka, kde můžete importovat data z textového souboru, kde jsou data oddělena čárkami, do databázové tabulky.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1521"/>
@@ -2029,7 +2029,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1657"/>
         <source>&amp;DB Toolbar</source>
-        <translation>&amp;DB Toolbar</translation>
+        <translation>Panel nástrojů DB</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1660"/>
@@ -2065,7 +2065,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="963"/>
         <source>SQL &amp;Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SQL &amp;Log</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="981"/>
@@ -2225,7 +2225,7 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1917"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
-        <translation></translation>
+        <translation>Zkopírovat do schránky příkaz CREATE</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="120"/>
@@ -2353,7 +2353,7 @@ Všechna přidružená data se %1 budou ztracena.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="966"/>
         <source>%1 rows returned in %2ms from: %3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 řádků vráceno za %2ms z: %3</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="989"/>
@@ -2390,7 +2390,7 @@ Všechna přidružená data se %1 budou ztracena.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1134"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
-        <translation></translation>
+        <translation>Jste si jisti, že chcete vrátit zpět všechny provedené změny v databázi &apos;%1&apos; od posledního uložení?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1158"/>
@@ -2550,12 +2550,13 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="2766"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1
+Pro použití kódování databáze ponechte pole prázdné.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2777"/>
         <source>This encoding is either not valid or not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toto kódování není buď platné, nebo podporováno.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2808"/>
@@ -2644,7 +2645,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="202"/>
         <source>Open databases with foreign keys enabled.</source>
-        <translation></translation>
+        <translation>Otevře databázi s povolenými cizími klíči.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="205"/>
@@ -2849,12 +2850,12 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="804"/>
         <source>SQL &amp;editor font size</source>
-        <translation></translation>
+        <translation>velikost fontu SQL &amp;editoru</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="821"/>
         <source>SQL &amp;log font size</source>
-        <translation></translation>
+        <translation>Velikost fontu SQL &amp;logu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="838"/>
@@ -2864,7 +2865,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="861"/>
         <source>SQL editor &amp;font</source>
-        <translation></translation>
+        <translation>&amp;font SQL editoru</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="874"/>
@@ -2894,22 +2895,22 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="934"/>
         <source>&amp;Extensions</source>
-        <translation>&amp;Přípony</translation>
+        <translation>&amp;Rozšíření</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="940"/>
         <source>Select extensions to load for every database:</source>
-        <translation></translation>
+        <translation>Vyberte rozšíření k načtení pro každou databázi:</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="961"/>
         <source>Add extension</source>
-        <translation>Přidat příponu</translation>
+        <translation>Přidat rozšíření</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="972"/>
         <source>Remove extension</source>
-        <translation>Odebrat příponu</translation>
+        <translation>Odebrat rozšíření</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1000"/>
@@ -2919,7 +2920,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1003"/>
         <source>Disable Regular Expression extension</source>
-        <translation></translation>
+        <translation>Zakázat rozšíření pro regulární výrazy</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1011"/>
@@ -3003,12 +3004,12 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="268"/>
         <source>The language will change after you restart the application.</source>
-        <translation></translation>
+        <translation>Jazyk bude změněn po restartu aplikace.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="333"/>
         <source>Select extension file</source>
-        <translation>Vybrat příponu souboru</translation>
+        <translation>Vybrat soubor rozšíření</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="334"/>
@@ -3023,12 +3024,12 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="442"/>
         <source>No certificates found in this file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">V tomto souboru nebyly nalezeny žádné certifikáty.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="459"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opravdu chcete smazat tento certifikát? Všechny data certifikátu budou smazány z nastavení aplikace!</translation>
     </message>
 </context>
 <context>
@@ -3041,7 +3042,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="74"/>
         <source> from record number %1</source>
-        <translation></translation>
+        <translation> ze záznamu číslo %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="75"/>
@@ -3063,7 +3064,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../sqlitedb.cpp" line="47"/>
         <source>Collation needed! Proceed?</source>
-        <translation></translation>
+        <translation>Je potřeba provést collation! Potvrdit?</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="48"/>
@@ -3080,7 +3081,8 @@ Create a backup!</source>
         <location filename="../RemoteDatabase.cpp" line="136"/>
         <source>Error opening remote database file from %1.
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyba při otevírání vzdálené databáze ze souboru %1.
+%2</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="184"/>
@@ -3101,24 +3103,26 @@ Create a backup!</source>
         <location filename="../RemoteDatabase.cpp" line="223"/>
         <source>Uploading remote database to
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nahrávám vzdálenou databázi do
+%1.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="225"/>
         <source>Downloading remote database from
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stahuji vzdálenou databázi z
+%1.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="243"/>
         <location filename="../RemoteDatabase.cpp" line="273"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyba: síť není dostupná.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="281"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyba: Nemohu otevřít soubor k odeslání.</translation>
     </message>
 </context>
 <context>
@@ -3131,7 +3135,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="51"/>
         <source>Results of the last executed statements</source>
-        <translation></translation>
+        <translation>Výsledky naposledy provedených příkazů</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="54"/>
@@ -3141,12 +3145,12 @@ Create a backup!</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="94"/>
         <source>Export to &amp;CSV</source>
-        <translation></translation>
+        <translation>Export do &amp;CSV</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="99"/>
         <source>Save as &amp;view</source>
-        <translation></translation>
+        <translation>Uložit jako &amp;pohled</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="102"/>
@@ -3156,22 +3160,22 @@ Create a backup!</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="97"/>
         <source>Please specify the view name</source>
-        <translation></translation>
+        <translation>Specifikujte název pohledu, prosím</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="101"/>
         <source>There is already an object with that name. Please choose a different name.</source>
-        <translation></translation>
+        <translation>Objekt s tímto názvem již existuje. Vyberte jiný název, prosím.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="110"/>
         <source>View successfully created.</source>
-        <translation></translation>
+        <translation>Pohled byl úspěšně vytvořen.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="112"/>
         <source>Error creating view: %1</source>
-        <translation></translation>
+        <translation>Chyba při vytváření pohledu: %1</translation>
     </message>
 </context>
 <context>
@@ -3254,7 +3258,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="75"/>
         <source>(X) ltrim(X) removes spaces from the left side of X.</source>
-        <translation></translation>
+        <translation>(X) ltrim(X) odstraní mezery z levé strany X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="76"/>
@@ -3269,12 +3273,12 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="78"/>
         <source>(X,Y,...) The multi-argument min() function returns the argument with the minimum value.</source>
-        <translation></translation>
+        <translation>(X,Y,...) Funkce s více parametry min() vrací parametr s minimální hodnotou.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X,Y) The nullif(X,Y) function returns its first argument if the arguments are different and NULL if the arguments are the same.</source>
-        <translation></translation>
+        <translation>(X,Y) Funkce nullif(X,Y) vrací první parametr, pokud jsou parametry odlišné. NULL vrací, pokud jsou parametry stejné.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
@@ -3289,7 +3293,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="82"/>
         <source>() The random() function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807.</source>
-        <translation></translation>
+        <translation>() Funkce random() vrací pseudo-náhodný integer v rozmezí -9223372036854775808 a +9223372036854775807.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="83"/>
@@ -3344,7 +3348,7 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="93"/>
         <source>(X) trim(X) removes spaces from both ends of X.</source>
-        <translation></translation>
+        <translation>(X) trim(X) odstraní mezery z obou stran X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="94"/>
@@ -3407,18 +3411,18 @@ Create a backup!</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="110"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation></translation>
+        <translation>(X) Agregační funkce max() vrací maximální hodnotu ze všech hodnot ve skupině.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="111"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation></translation>
+        <translation>(X) Agregační funkce min() vrací minimální hodnotu ze všech hodnot ve skupině, která není NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
         <location filename="../SqlUiLexer.cpp" line="113"/>
         <source>(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.</source>
-        <translation></translation>
+        <translation>(X) Agregační funkce sum() a total() vrací součet všech hodnot ve skupině, které nejsou NULL.</translation>
     </message>
 </context>
 <context>
@@ -3433,7 +3437,8 @@ Hold Ctrl+Shift and click to jump there</source>
         <location filename="../sqlitetablemodel.cpp" line="313"/>
         <source>Error changing data:
 %1</source>
-        <translation></translation>
+        <translation>Chyba při změně dat:
+%1</translation>
     </message>
 </context>
 <context>
