@@ -98,7 +98,7 @@
     <message>
         <location filename="../Application.cpp" line="78"/>
         <source>  -v, --version		Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation> -v, --version		Affiche la version en cours</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="79"/>
@@ -108,7 +108,7 @@
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>This is DB Browser for SQLite version %1%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Voici DB Browser pour SQLite version %1%2.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
@@ -913,7 +913,7 @@ Exécution de %3 abandonnée.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="304"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Attention : &lt;/span&gt;Il y a quelque chose dans la définition de cette table que notre analyseur syntaxique n&apos;a pas complètement compris. La modification et la sauvegarde de cette table peuvent créer des problèmes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1298,7 +1298,7 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Clauses de clé étrangère (ON UPDATE, ON DELETE etc.)</translation>
     </message>
     <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
@@ -1584,7 +1584,7 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../MainWindow.ui" line="235"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Accéder au début&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aller au début&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="238"/>
@@ -1613,7 +1613,7 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     </message>
     <message>
         <source>Scroll 100 records upwards</source>
-        <translation type="vanished">Faire défiler de 100 enregistrements vers le haut</translation>
+        <translation type="vanished">Remonter de 100 enregistrements</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="14"/>
@@ -1622,25 +1622,25 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquer sur ce bouton permet de remonter de 100 enregistrements dans l&apos;affichage de la table ci dessous.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquer sur ce bouton permet de remonter de 100 enregistrements dans l&apos;affichage de la table ci-dessus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Faire défiler de 100 enregistrements vers le bas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Descendre de 100 enregistrements&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquer sur ce bouton permet de descendre de 100 enregistrements dans l&apos;affichage de la table ci dessous.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquer sur ce bouton permet de descendre de 100 enregistrements dans l&apos;affichage de la table ci-dessus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="302"/>
         <source>Scroll to the end</source>
-        <translation>Accéder à la fin</translation>
+        <translation>Aller à la fin</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="305"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Cliquer sur ce bouton  permet d&apos;aller à la fin de la table ci-dessus.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Cliquer sur ce bouton permet d&apos;aller à la fin de la table ci-dessus.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="308"/>
@@ -1670,7 +1670,7 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../MainWindow.ui" line="348"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation>Entrez un numéro d&apos;enregistrement dans ce champ et cliquez sur le bouton &quot;Aller à&quot; pour afficher l&apos;enregistrement dans la vue Base de données</translation>
+        <translation>Entrez un numéro d&apos;enregistrement dans ce champ et cliquez sur le bouton &quot;Aller à&quot; pour afficher l&apos;enregistrement dans la vue Base de Données</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="351"/>
@@ -2242,22 +2242,22 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../MainWindow.ui" line="255"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Remonter d&apos;une page</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquer sur ce bouton permet d&apos;afficher la page d&apos;enregistrements précédente de la table ci dessus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="282"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Descendre d&apos;une page</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquer sur ce bouton permet d&apos;afficher la page d&apos;enregistrements suivante de la table ci dessus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="361"/>
@@ -3318,7 +3318,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="128"/>
         <source>Show remote options</source>
-        <translation>Afficher options Serv. Dist.</translation>
+        <translation>Afficher options Serv. Distant</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="145"/>
@@ -3973,7 +3973,7 @@ Faitez une sauvegarde !</translation>
         <source>Downloading remote database from
 %1.</source>
         <translation>Télécharger une base de données distante depuis
-%1</translation>
+%1.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="320"/>
@@ -4006,7 +4006,7 @@ Faitez une sauvegarde !</translation>
     <message>
         <location filename="../RemoteDock.ui" line="14"/>
         <source>Remote</source>
-        <translation>Distant</translation>
+        <translation>Serveur Distant</translation>
     </message>
     <message>
         <source>B&amp;rowse</source>
@@ -4029,12 +4029,12 @@ Faitez une sauvegarde !</translation>
     <message>
         <location filename="../RemoteDock.ui" line="63"/>
         <source>Push currently opened database to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplacer la Base de Données en cours sur le serveur</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="94"/>
         <source>Please enter the database name to push to.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez saisir le nom de la Base de Données à déplacer.</translation>
     </message>
 </context>
 <context>
@@ -4061,7 +4061,7 @@ Faitez une sauvegarde !</translation>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Commit</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="237"/>
