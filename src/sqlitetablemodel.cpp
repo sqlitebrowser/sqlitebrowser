@@ -656,6 +656,12 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query) {
 
         query = result.trimmed();
     }
+
+    // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
+    query.replace(QRegExp("\\n+"), "\n");
+
+    // Also remove any remaining whitespace at the end of each line
+    query.replace(QRegExp("[ \t]+\n"), "\n");
 }
 
 QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fieldsTypes)
