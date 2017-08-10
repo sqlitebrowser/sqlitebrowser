@@ -932,6 +932,8 @@ void MainWindow::executeQuery()
             sqlWidget->getEditor()->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
     }
 
+    SqliteTableModel::removeCommentsFromQuery(query);
+
     if (query.trimmed().isEmpty() || query.trimmed() == ";")
         return;
 

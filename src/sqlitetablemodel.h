@@ -64,6 +64,9 @@ public:
     // the model is currently editable, i.e. it's running in table mode.
     bool isEditable() const;
 
+    // Helper function for removing all comments from a SQL query
+    static void removeCommentsFromQuery(QString& query);
+
 public slots:
     void updateFilter(int column, const QString& value);
 
@@ -76,7 +79,6 @@ private:
     void clearCache();
 
     void buildQuery();
-    void removeCommentsFromQuery(QString& query);
     QStringList getColumns(const QString& sQuery, QVector<int>& fieldsTypes);
     int getQueryRowCount();
 
