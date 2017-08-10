@@ -29,6 +29,34 @@ void TestRegex::sqlQueryComments_data()
         "qwfqwf"
         << // cleanQuery
         "SELECT *\nFROM\nqwfqwf";
+
+    QTest::newRow("test3")
+            << // dirtyQuery
+               "-- Comment before the query\n"
+               "SELECT * FROM test"
+            << // cleanQuery
+               "SELECT * FROM test";
+
+    QTest::newRow("test4")
+            << // dirtyQuery
+               "SELECT * FROM test\n"
+               "-- Comment after the query"
+            << // cleanQuery
+               "SELECT * FROM test";
+
+    QTest::newRow("test5")
+            << // dirtyQuery
+               "SELECT 40+2 -- get the answer\n"
+               "AS answer"
+            << // cleanQuery
+               "SELECT 40+2\n"
+               "AS answer";
+
+    QTest::newRow("test6")
+            << // dirtyQuery
+               "SELECT '-- comment inside quotes'"
+            << // cleanQuery
+               "SELECT '-- comment inside quotes'";
 }
 
 void TestRegex::sqlQueryComments()
