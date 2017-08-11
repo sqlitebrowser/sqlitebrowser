@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de">
+<TS version="2.0" language="de">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../Application.cpp" line="78"/>
         <source>  -v, --version		Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version		Die aktuelle Version anzeigen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="79"/>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>This is DB Browser for SQLite version %1%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies ist DB Browser für SQLite version %1%2.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>Page &amp;size</source>
-        <translation type="vanished">&amp;Seitengröße</translation>
+        <translation>&amp;Seitengröße</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="17"/>
@@ -309,12 +309,12 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="vanished">Fehler im Statement #%1: %2.
+        <translation>Fehler im Statement #%1: %2.
 Ausführung wird abgebrochen.</translation>
     </message>
     <message>
         <source>renameColumn: cannot find table %1.</source>
-        <translation type="vanished">Spalte umbenennen: Tabelle %1 nicht gefunden.</translation>
+        <translation>Spalte umbenennen: Tabelle %1 nicht gefunden.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="758"/>
@@ -395,7 +395,7 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
-        <translation type="vanished">unbekannter Objekttyp %1</translation>
+        <translation>unbekannter Objekttyp %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1364"/>
@@ -404,7 +404,7 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <source>could not get types</source>
-        <translation type="vanished">Typen konnten nicht bezogen werden</translation>
+        <translation>Typen konnten nicht bezogen werden</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1387"/>
@@ -672,7 +672,7 @@ Ausführung wird abgebrochen %3.</translation>
     <name>EditIndexDialog</name>
     <message>
         <source>Create New Index</source>
-        <translation type="vanished">Neuen Index erstellen</translation>
+        <translation>Neuen Index erstellen</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
@@ -682,15 +682,15 @@ Ausführung wird abgebrochen %3.</translation>
     <message>
         <source>&amp;Columns</source>
         <translatorcomment>character after ampersand changed</translatorcomment>
-        <translation type="vanished">&amp;Spalten</translation>
+        <translation>&amp;Spalten</translation>
     </message>
     <message>
         <source>Column</source>
-        <translation type="vanished">Spalte</translation>
+        <translation>Spalte</translation>
     </message>
     <message>
         <source>Use in Index</source>
-        <translation type="vanished">Im Index verwenden</translation>
+        <translation>Im Index verwenden</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
@@ -897,11 +897,11 @@ Ausführung wird abgebrochen %3.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="304"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;font-weight:600; color:#ff0000;&quot;&gt;Warnung: &lt;/span&gt;Diese Tabellendefinitionenthält Elemente, die unser Parser nicht vollständig versteht. Das Ändern und Speichern der Tabelle kann zu Problemen führen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warnung: &lt;/span&gt;Die Definition dieser Tabelle enthält Elemente, die unser Parser nicht vollständig versteht. Ändern und Speichern dieser Tabelle könnte zu Problemen führen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warnung: &lt;/span&gt;Die Definition dieser Tabelle enthält Elemente, die unser Parser nicht vollständig versteht. Ändern und Speichern dieser Tabelle könnte zu Problemen führen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="157"/>
@@ -917,7 +917,7 @@ Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
-        <translation type="vanished">Diese Spalte wird über einen Fremdschlüssel in Tabelle %1, Spalte %2 referenziert, sodass deren Name nicht geändert werden kann.</translation>
+        <translation>Diese Spalte wird über einen Fremdschlüssel in Tabelle %1, Spalte %2 referenziert, sodass deren Name nicht geändert werden kann.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="292"/>
@@ -993,15 +993,15 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     </message>
     <message>
         <source>&amp;Table(s)</source>
-        <translation type="vanished">&amp;Tabelle(n)</translation>
+        <translation>&amp;Tabelle(n)</translation>
     </message>
     <message>
         <source>&amp;Column names in first line</source>
-        <translation type="vanished">&amp;Spaltennamen in erster Zeile</translation>
+        <translation>&amp;Spaltennamen in erster Zeile</translation>
     </message>
     <message>
         <source>Field &amp;separator</source>
-        <translation type="vanished">Feld-&amp;Separator</translation>
+        <translation>Feld-&amp;Separator</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
@@ -1220,7 +1220,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <source>The content of clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation type="vanished">Der Inhalt der Zwischenablage ist größer als der ausgewählte Bereich.
+        <translation>Der Inhalt der Zwischenablage ist größer als der ausgewählte Bereich.
 Möchten Sie ihn dennoch einfügen?</translation>
     </message>
     <message>
@@ -1249,7 +1249,7 @@ Do you want to insert it anyway?</source>
     <name>FileDialog</name>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="vanished">SQLite Datenbankdateien (*.db *.sqlite *.sqlite3 *.db3);;Alle Dateien (*)</translation>
+        <translation>SQLite Datenbankdateien (*.db *.sqlite *.sqlite3 *.db3);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -1277,11 +1277,11 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fremdschlüssel-Klauseln (ON UPDATE, ON DELETE etc.)</translation>
     </message>
     <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation type="vanished">(Fremdschlüssel-Klauseln(ON UPDATE, ON DELETE etc.)</translation>
+        <translation>(Fremdschlüssel-Klauseln(ON UPDATE, ON DELETE etc.))</translation>
     </message>
 </context>
 <context>
@@ -1458,7 +1458,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Table:</source>
-        <translation type="vanished">Tabelle:</translation>
+        <translation>Tabelle:</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="117"/>
@@ -1483,22 +1483,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="255"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Seite nach oben scrollen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in den Einträgen der Tabellenansicht oben eine Seite nach oben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="282"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Seite nach unten scrollen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in den Einträgen der Tabellenansicht oben eine Seite nach unten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1731"/>
@@ -1587,7 +1587,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Scroll 100 records upwards</source>
-        <translation type="vanished">100 Zeilen nach oben scrollen</translation>
+        <translation>100 Zeilen nach oben scrollen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="14"/>
@@ -1621,15 +1621,15 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Einträge höher in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Einträge höher in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;100 Zeilen nach unten scrollen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;100 Zeilen nach unten scrollen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Einträge nach unten in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Einträge nach unten in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="302"/>
@@ -2007,7 +2007,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation type="vanished">Zeile duplizieren</translation>
+        <translation>Zeile duplizieren</translation>
     </message>
     <message>
         <source>toolBar</source>
@@ -2042,115 +2042,115 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Columns</source>
-        <translation type="vanished">Spalten</translation>
+        <translation>Spalten</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="vanished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="vanished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>_</source>
-        <translation type="vanished">_</translation>
+        <translation>_</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation type="vanished">Zeilentyp:</translation>
+        <translation>Zeilentyp:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="vanished">Zeile</translation>
+        <translation>Zeile</translation>
     </message>
     <message>
         <source>StepLeft</source>
-        <translation type="vanished">Nach links</translation>
+        <translation>Nach links</translation>
     </message>
     <message>
         <source>StepRight</source>
-        <translation type="vanished">Nach rechts</translation>
+        <translation>Nach rechts</translation>
     </message>
     <message>
         <source>StepCenter</source>
-        <translation type="vanished">Zur Mitte</translation>
+        <translation>Zur Mitte</translation>
     </message>
     <message>
         <source>Impulse</source>
-        <translation type="vanished">Impuls</translation>
+        <translation>Impuls</translation>
     </message>
     <message>
         <source>Point shape:</source>
-        <translation type="vanished">Punktform:</translation>
+        <translation>Punktform:</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation type="vanished">Kreuz</translation>
+        <translation>Kreuz</translation>
     </message>
     <message>
         <source>Plus</source>
-        <translation type="vanished">Plus</translation>
+        <translation>Plus</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="vanished">Kreis</translation>
+        <translation>Kreis</translation>
     </message>
     <message>
         <source>Disc</source>
-        <translation type="vanished">Scheibe</translation>
+        <translation>Scheibe</translation>
     </message>
     <message>
         <source>Square</source>
-        <translation type="vanished">Quadrat</translation>
+        <translation>Quadrat</translation>
     </message>
     <message>
         <source>Diamond</source>
-        <translation type="vanished">Diamant</translation>
+        <translation>Diamant</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation type="vanished">Stern</translation>
+        <translation>Stern</translation>
     </message>
     <message>
         <source>Triangle</source>
-        <translation type="vanished">Dreieck</translation>
+        <translation>Dreieck</translation>
     </message>
     <message>
         <source>TriangleInverted</source>
-        <translation type="vanished">Invertiertes Dreieck</translation>
+        <translation>Invertiertes Dreieck</translation>
     </message>
     <message>
         <source>CrossSquare</source>
-        <translation type="vanished">Quadrat mit Kreuz</translation>
+        <translation>Quadrat mit Kreuz</translation>
     </message>
     <message>
         <source>PlusSquare</source>
-        <translation type="vanished">Quadrat mit Plus</translation>
+        <translation>Quadrat mit Plus</translation>
     </message>
     <message>
         <source>CrossCircle</source>
-        <translation type="vanished">Kreis mit Kreuz</translation>
+        <translation>Kreis mit Kreuz</translation>
     </message>
     <message>
         <source>PlusCircle</source>
-        <translation type="vanished">Kreis mit Plus</translation>
+        <translation>Kreis mit Plus</translation>
     </message>
     <message>
         <source>Peace</source>
-        <translation type="vanished">Peace</translation>
+        <translation>Peace</translation>
     </message>
     <message>
         <source>Save current plot...</source>
-        <translation type="vanished">Aktuelles Diagramm speichern...</translation>
+        <translation>Aktuelles Diagramm speichern...</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="vanished">Alle Daten laden. Dies bringt nur etwas, wenn aufgrund des partiellen Abrufmechanismus noch nicht alle Daten der Tabelle abgerufen wurden.</translation>
+        <translation>Alle Daten laden. Dies bringt nur etwas, wenn aufgrund des partiellen Abrufmechanismus noch nicht alle Daten der Tabelle abgerufen wurden.</translation>
     </message>
     <message>
         <source>DB Schema</source>
-        <translation type="vanished">DB Schema</translation>
+        <translation>DB Schema</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1137"/>
@@ -2434,7 +2434,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Edit Database Cell</source>
-        <translation type="vanished">Datenbankzelle bearbeiten</translation>
+        <translation>Datenbankzelle bearbeiten</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="978"/>
@@ -2518,7 +2518,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">SQL ausführen [F5, Strg+Return]</translation>
+        <translation>SQL ausführen [F5, Strg+Return]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -2567,7 +2567,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktuelles Diagramm speichern...&lt;/p&gt;&lt;p&gt;Dateiformat durch Endung auswählen (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktuelles Diagramm speichern...&lt;/p&gt;&lt;p&gt;Dateiformat durch Endung auswählen (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
@@ -2587,7 +2587,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">Aktuelle Zeile ausführen [Strg+E]</translation>
+        <translation>Aktuelle Zeile ausführen [Strg+E]</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="190"/>
@@ -2719,7 +2719,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     </message>
     <message>
         <source>There is no database opened.</source>
-        <translation type="vanished">Keine Datenbank geöffnet.</translation>
+        <translation>Keine Datenbank geöffnet.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1032"/>
@@ -2802,7 +2802,7 @@ Lassen Sie das Feld leer, um die Datenbankodierung zu verwenden.</translation>
     </message>
     <message>
         <source>Choose a text file</source>
-        <translation type="vanished">Textdatei auswählen</translation>
+        <translation>Textdatei auswählen</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1134"/>
@@ -3003,11 +3003,11 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>Choose a axis color</source>
-        <translation type="vanished">Achsenfarbe auswählen</translation>
+        <translation>Achsenfarbe auswählen</translation>
     </message>
     <message>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Alle Dateien(*)</translation>
+        <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Alle Dateien(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1921"/>
@@ -3020,7 +3020,7 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>Invalid file format.</source>
-        <translation type="vanished">Ungültiges Dateiformat.</translation>
+        <translation>Ungültiges Dateiformat.</translation>
     </message>
 </context>
 <context>
@@ -3314,7 +3314,7 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>SQL to execute after opening database</source>
-        <translation type="vanished">Nach dem Öffnen einer Datenbank auszuführendes SQL</translation>
+        <translation>Nach dem Öffnen einer Datenbank auszuführendes SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="285"/>
@@ -3959,7 +3959,7 @@ Erstellen Sie ein Backup!</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="vanished">Version</translation>
+        <translation>Version</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
@@ -3974,7 +3974,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Commit</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="241"/>
