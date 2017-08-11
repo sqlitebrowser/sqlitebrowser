@@ -102,7 +102,7 @@
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>This is DB Browser for SQLite version %1%2.</source>
-        <translation>Dies ist DB Browser für SQLite version %1%2.</translation>
+        <translation>Dies ist DB Browser für SQLite Version %1%2.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
