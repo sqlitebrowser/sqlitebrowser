@@ -973,8 +973,8 @@ void MainWindow::executeQuery()
                 qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
             structure_updated = true;
 
-        // Check whether this is trying to set a pragma
-        if(qtail.startsWith("PRAGMA", Qt::CaseInsensitive) && qtail.contains('='))
+        // Check whether this is trying to set a pragma or to vacuum the database
+        if((qtail.startsWith("PRAGMA", Qt::CaseInsensitive) && qtail.contains('=')) || qtail.startsWith("VACUUM", Qt::CaseInsensitive))
         {
             // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
             // user about that
@@ -982,7 +982,7 @@ void MainWindow::executeQuery()
             {
                 if(QMessageBox::question(this,
                                          QApplication::applicationName(),
-                                         tr("Setting PRAGMA values will commit your current transaction.\nAre you sure?"),
+                                         tr("Setting PRAGMA values or vacuuming will commit your current transaction.\nAre you sure?"),
                                          QMessageBox::Yes | QMessageBox::Default,
                                          QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
                 {
@@ -995,7 +995,7 @@ void MainWindow::executeQuery()
                 }
             }
         } else {
-            // We're not trying to set a pragma. In this case make sure a savepoint has been created in order to avoid committing
+            // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
             // all changes to the database immediately. Don't set more than one savepoint.
 
             if(!savepoint_created)
