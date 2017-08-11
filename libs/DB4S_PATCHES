@@ -1,0 +1,13 @@
+diff --git a/libs/qscintilla/lexers/LexSQL.cpp b/libs/qscintilla/lexers/LexSQL.cpp
+index 1d00918..086955a 100644
+--- a/libs/qscintilla/lexers/LexSQL.cpp
++++ b/libs/qscintilla/lexers/LexSQL.cpp
+@@ -546,7 +546,7 @@ void SCI_METHOD LexerSQL::Lex(Sci_PositionU startPos, Sci_Position length, int i
+ 			}
+ 			break;
+ 		case SCE_SQL_STRING:
+-			if (sc.ch == '\\') {
++			if (options.sqlBackslashEscapes && sc.ch == '\\') {
+ 				// Escape sequence
+ 				sc.Forward();
+ 			} else if (sc.ch == '\"') {
