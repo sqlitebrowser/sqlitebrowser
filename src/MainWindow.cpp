@@ -897,6 +897,11 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
  */
 void MainWindow::executeQuery()
 {
+    // Make sure a database is opened. This is necessary because we allow opened SQL editor tabs even if no database is loaded. Hitting F5 or similar
+    // then might call this function.
+    if(!db.isOpen())
+        return;
+
     SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
     // Get SQL code to execute. This depends on the button that's been pressed
