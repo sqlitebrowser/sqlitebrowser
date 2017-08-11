@@ -966,7 +966,7 @@ void MainWindow::executeQuery()
     while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
     {
         // Check whether the DB structure is changed by this statement
-        QString qtail = QString(tail);
+        QString qtail = QString(tail).trimmed();
         if(!structure_updated && (qtail.startsWith("ALTER", Qt::CaseInsensitive) ||
                 qtail.startsWith("CREATE", Qt::CaseInsensitive) ||
                 qtail.startsWith("DROP", Qt::CaseInsensitive) ||
