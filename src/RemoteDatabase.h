@@ -64,6 +64,10 @@ private:
     void localAdd(QString filename, QString identity, const QUrl& url);
     QString localExists(const QUrl& url, QString identity);
 
+    // Before using a new client certificate we need to clear the access and authentication cache of the network manager
+    // object. Otherwise Qt might reuse the old certificate if the requested URL has been used before.
+    void clearAccessCache(const QString& clientCert);
+
     QNetworkAccessManager* m_manager;
     QProgressDialog* m_progress;
     QNetworkReply* m_currentReply;

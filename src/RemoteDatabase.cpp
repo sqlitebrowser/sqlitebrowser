@@ -369,14 +369,8 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
             return;
     }
 
-    // When the client certificate is different from the one before, clear the access and authentication cache.
-    // Otherwise Qt might use the old certificate again.
-    static QString lastClientCert;
-    if(lastClientCert != clientCert)
-    {
-        lastClientCert = clientCert;
-        m_manager->clearAccessCache();
-    }
+    // Clear access cache if necessary
+    clearAccessCache(clientCert);
 
     // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
     m_currentReply = m_manager->get(request);
@@ -426,6 +420,9 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
         if(!prepareSsl(&request, clientCert))
             return;
     }
+
+    // Clear access cache if necessary
+    clearAccessCache(clientCert);
 
     // Get file data
     // TODO: Don't read the entire file here but directly pass the file handle to the put() call below in order
@@ -607,5 +604,17 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
         // record afterwards.
 
         return QString();
+    }
+}
+
+void RemoteDatabase::clearAccessCache(const QString& clientCert)
+{
+    // When the client certificate is different from the one before, clear the access and authentication cache.
+    // Otherwise Qt might use the old certificate again.
+    static QString lastClientCert;
+    if(lastClientCert != clientCert)
+    {
+        lastClientCert = clientCert;
+        m_manager->clearAccessCache();
     }
 }
