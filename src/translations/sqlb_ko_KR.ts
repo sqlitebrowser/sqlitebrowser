@@ -81,7 +81,7 @@
     <message>
         <location filename="../Application.cpp" line="78"/>
         <source>  -v, --version		Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version		현재 버전을 표시합니다</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="79"/>
@@ -91,7 +91,7 @@
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>This is DB Browser for SQLite version %1%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>DB Browser for SQLite 버전 %1%2.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
@@ -134,17 +134,17 @@
     <message>
         <location filename="../CipherDialog.ui" line="61"/>
         <source>Page si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>페이지 크기(&amp;Z)</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="89"/>
         <source>Passphrase</source>
-        <translation type="unfinished"></translation>
+        <translation>암호</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="94"/>
         <source>Raw key</source>
-        <translation type="unfinished"></translation>
+        <translation>Raw key</translation>
     </message>
     <message>
         <source>Page &amp;size</source>
@@ -214,7 +214,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Apple NSDate to date</source>
-        <translation type="unfinished"></translation>
+        <translation>애플 NSDate 날짜</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
@@ -271,7 +271,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="209"/>
         <source>Invalid file format</source>
-        <translation type="unfinished"></translation>
+        <translation>잘못된 파일 포맷입니다</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="425"/>
@@ -314,18 +314,18 @@ Aborting execution.</source>
         <location filename="../sqlitedb.cpp" line="768"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
-        <translation type="unfinished"></translation>
+        <translation>#%1: %2 구문에 에러가 있어 실행을 중단했습니다%3.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="761"/>
         <location filename="../sqlitedb.cpp" line="771"/>
         <source> and rolling back</source>
-        <translation type="unfinished"></translation>
+        <translation>그리고 롤백 합니다</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="973"/>
         <source>Cannot set data on this object</source>
-        <translation type="unfinished"></translation>
+        <translation>이 객체에는 데이터를 저장할 수 없습니다</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1075"/>
@@ -382,7 +382,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../sqlitedb.cpp" line="1487"/>
         <source>could not get column information</source>
-        <translation type="unfinished"></translation>
+        <translation>컬럼(열) 정보를 가져올 수 없습니다</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
@@ -443,12 +443,12 @@ Aborting execution%3.</source>
     <message>
         <location filename="../DbStructureModel.cpp" line="145"/>
         <source>Browsables (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>찾아보기 (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="150"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>모두선택</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="154"/>
@@ -697,7 +697,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation type="unfinished"></translation>
+        <translation>인덱스 스키마 수정</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
@@ -707,43 +707,43 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
         <source>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</source>
-        <translation type="unfinished"></translation>
+        <translation>인덱스를 테이블의 일부로만 제한하기 위해서 인덱싱 해야하는 테이블의 일부를 지정하는 WHERE 절을 지정할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="72"/>
         <source>Partial inde&amp;x clause</source>
-        <translation type="unfinished"></translation>
+        <translation>부분(Partial) 인덱스(&amp;x) 절</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="85"/>
         <source>Colu&amp;mns</source>
-        <translation type="unfinished"></translation>
+        <translation>컬럼(&amp;m)</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="130"/>
         <source>Table column</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블 컬럼</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="135"/>
         <source>Type</source>
-        <translation type="unfinished">타입</translation>
+        <translation>타입</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="172"/>
         <source>Add a new expression column to the index. Expression columns contain SQL expression rather than column names.</source>
-        <translation type="unfinished"></translation>
+        <translation>인덱스에 새 표현식 컬럼을 추가하세요. 표현식 컬럼은 컬럼 이름 대신 SQL?표현식이 들어갑니다.</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation type="unfinished"></translation>
+        <translation>인덱스 컬럼</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="242"/>
         <source>Deleting the old index failed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>이전 인덱스를 삭제하는데 실패했습니다: %1</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="251"/>
@@ -783,12 +783,12 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="72"/>
         <source>Set this to create a temporary table that is deleted when closing the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스를 닫을 때 삭제되는 임시 테이블을 만들기위해서는 이 값을 설정하세요.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="75"/>
         <source>Temporary table</source>
-        <translation type="unfinished"></translation>
+        <translation>임시 테이블</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="88"/>
@@ -889,7 +889,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="304"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;이 테이블 정의 중에 파서가 이해할 수 없는 부분이 있습니다. 이 테이블을 수정하거나 저장하면 문제가 생길 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="157"/>
@@ -910,7 +910,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditTableDialog.cpp" line="292"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 필드는 테이블 %1 에 있는 외래키에 참조되어 있기 때문에 이름을 변경할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="362"/>
@@ -932,13 +932,13 @@ Aborting execution%3.</source>
         <location filename="../EditTableDialog.cpp" line="716"/>
         <source>Setting the rowid column for the table failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블의 rowid 필드를 지정하는데 실패했습니다. 에러 메시지: </translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="735"/>
         <source>Setting the temporary flag for the table failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블에 임시 플래그를 지정하는데 실패했습니다. 에러 메시지:</translation>
     </message>
     <message>
         <source>Column `%1` has no unique data.
@@ -955,7 +955,8 @@ Aborting execution%3.</source>
         <location filename="../EditTableDialog.cpp" line="493"/>
         <source>Modifying this column failed. Error returned from database:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>이 필드를 수정하는데 실패했습니다. 데이터베이스가 반환된 에러:
+%1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="576"/>
@@ -996,17 +997,17 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
         <source>Tab&amp;le(s)</source>
-        <translation type="unfinished">테이블(&amp;l)</translation>
+        <translation>테이블(&amp;l)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="57"/>
         <source>Colu&amp;mn names in first line</source>
-        <translation type="unfinished"></translation>
+        <translation>첫 행이 필드이름입니다.(&amp;m)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="77"/>
         <source>Fie&amp;ld separator</source>
-        <translation type="unfinished"></translation>
+        <translation>필드 구분자(&amp;)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="102"/>
@@ -1068,7 +1069,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretty print</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="173"/>
@@ -1090,12 +1091,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="28"/>
         <source>Export data as JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON으로 내보내기</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="255"/>
         <source>Text files(*.json *.js *.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>텍스트 파일(*.json *.js *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="281"/>
@@ -1167,12 +1168,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="135"/>
         <source>Keep old schema (CREATE TABLE IF NOT EXISTS)</source>
-        <translation type="unfinished"></translation>
+        <translation>이전 스키마 유지하기 (CREATE TABLE IF NOT EXISTS))</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="140"/>
         <source>Overwrite old schema (DROP TABLE, then CREATE TABLE)</source>
-        <translation type="unfinished"></translation>
+        <translation>이전 스키마 덮어쓰기 (DROP TABLE, then CREATE TABLE)</translation>
     </message>
     <message>
         <source>New INSERT INTO syntax (multiple rows in VALUES)</source>
@@ -1219,23 +1220,23 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="84"/>
         <source>Set to NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>NULL로 변경하기</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="85"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>복사</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="86"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>붙여넣기</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="296"/>
         <source>The content of the clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>클립보드의 내용이 선택한 범위보다 큽니다. 어쨌든 추가할까요?</translation>
     </message>
 </context>
 <context>
@@ -1258,12 +1259,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="19"/>
         <source>&amp;Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>초기화(&amp;R)</translation>
     </message>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
-        <translation type="unfinished"></translation>
+        <translation>외부 키(ON UPDATE, ON DELETE 등.)</translation>
     </message>
 </context>
 <context>
@@ -1359,23 +1360,23 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="250"/>
         <source>Separate tables</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블 나누기</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="298"/>
         <location filename="../ImportCsvDialog.cpp" line="281"/>
         <source>Deselect All</source>
-        <translation type="unfinished">모두 선택 해제</translation>
+        <translation>모두선택 해제</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="314"/>
         <source>Match Similar</source>
-        <translation type="unfinished"></translation>
+        <translation>비슷한거 찾기</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="281"/>
         <source>Select All</source>
-        <translation type="unfinished">모두 선택</translation>
+        <translation>모두 선택</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="391"/>
@@ -1466,52 +1467,52 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="255"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished"></translation>
+        <translation>한 페이지 위로 스크롤합니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;위 테이블 뷰에서 레코드를 한 페이지 앞으로 가려면 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="282"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished"></translation>
+        <translation>한 페이지 아래로 스크롤합니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;위 테이블 뷰에서 레코드를 한 페이지 뒤로 가려면 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1731"/>
         <source>SQLCipher &amp;FAQ...</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher FAQ...(&amp;F)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1734"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher FAQ를 봅니다</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>Table(s) to JSON...</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블을 JSON으로 내보내기...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1742"/>
         <source>Export one or more table(s) to a JSON file</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블을 JSON 파일로 내보냅니다</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1750"/>
         <source>Save to Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 저장하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1755"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>새로고침</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1758"/>
@@ -1526,7 +1527,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="95"/>
         <source>&amp;Table:</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블(&amp;T):</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="177"/>
@@ -1814,22 +1815,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1767"/>
         <source>&amp;Open Database Read Only...</source>
-        <translation type="unfinished"></translation>
+        <translation>읽기 전용으로 데이터베이스 열기(&amp;O)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1770"/>
         <source>Open an existing database file in read only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>읽기 전용 모드로 존재하는 데이터베이스 파일을 엽니다</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1787"/>
         <source>Unlock view editing</source>
-        <translation type="unfinished"></translation>
+        <translation>뷰 수정 락 해제하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1790"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>수정을 위하여 현재 뷰의 락을 해제합니다. 하지만 수정을 위해서는 적절한 트리거가 필요할 것입니다.</translation>
     </message>
     <message>
         <source>E&amp;xecute SQL</source>
@@ -1853,7 +1854,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="884"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="912"/>
@@ -1878,22 +1879,22 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="966"/>
         <source>Edit Database &amp;Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>데티어베이스 셀 수정하기(&amp;C)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1099"/>
         <source>DB Sche&amp;ma</source>
-        <translation type="unfinished"></translation>
+        <translation>DB 스키마(&amp;m)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1124"/>
         <source>&amp;Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1488"/>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL 실행하기 [F5, Ctrl+Return, Ctrl+R]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -1903,12 +1904,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1533"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 행 실행하기 [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1536"/>
         <source>Shift+F5</source>
-        <translation type="unfinished">Shift+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1592"/>
@@ -2758,7 +2759,9 @@ All data associated with the %1 will be lost.</source>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 파일을 저장할 때 에러가 발생했습니다. 이 말은 모든 변경사항들이 데이터베이스에 저장되지 못했음을 의미합니다. 다음에 나오는 에러를 먼저 해결하기 바랍니다.
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1208"/>
@@ -2809,7 +2812,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <location filename="../MainWindow.cpp" line="1328"/>
         <location filename="../MainWindow.cpp" line="1329"/>
         <source>Modify View</source>
-        <translation type="unfinished"></translation>
+        <translation>뷰 수정하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1331"/>
@@ -2821,7 +2824,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <location filename="../MainWindow.cpp" line="1333"/>
         <location filename="../MainWindow.cpp" line="1334"/>
         <source>Modify Trigger</source>
-        <translation type="unfinished"></translation>
+        <translation>트리거 수정하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1336"/>
@@ -2833,13 +2836,13 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <location filename="../MainWindow.cpp" line="1338"/>
         <location filename="../MainWindow.cpp" line="1339"/>
         <source>Modify Index</source>
-        <translation type="unfinished"></translation>
+        <translation>인덱스 수정하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1343"/>
         <location filename="../MainWindow.cpp" line="1344"/>
         <source>Modify Table</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블 수정하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1391"/>
@@ -2849,7 +2852,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="2459"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 뷰에서 수정을 활성화하기 위하여 pseudo-primary key를 입력하시기 바랍니다. 이것은 뷰에서 유일한 이름이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="978"/>
@@ -2863,17 +2866,18 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="334"/>
         <source>Could not open database file.
 Reason: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 파일을 열 수 없습니다.
+원인: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="986"/>
         <source>Execution aborted by user</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자에 의해서 실행이 취소되었습니다</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1133"/>
         <source>Choose text files</source>
-        <translation type="unfinished"></translation>
+        <translation>텍스트 파일 선택</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1668"/>
@@ -2883,12 +2887,12 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="1677"/>
         <source>Couldn&apos;t read file: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 읽을 수 없습니다: %1.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1715"/>
         <source>Couldn&apos;t save file: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 저장할 수 없습니다: %1.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1724"/>
@@ -2942,7 +2946,7 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="1867"/>
         <source>Please enter the URL of the database file to save.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 파일을 저장하기 위한 URL을 입력해주세요.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1921"/>
@@ -2986,185 +2990,185 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PlotDock.ui" line="14"/>
         <source>Plot</source>
-        <translation type="unfinished">플롯</translation>
+        <translation>플롯</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="37"/>
         <source>Columns</source>
-        <translation type="unfinished">필드</translation>
+        <translation>필드</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="42"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="47"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="52"/>
         <source>_</source>
-        <translation type="unfinished">_</translation>
+        <translation>_</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="71"/>
         <source>Line type:</source>
-        <translation type="unfinished">행 타입:</translation>
+        <translation>행 타입:</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="100"/>
         <location filename="../PlotDock.ui" line="147"/>
         <source>None</source>
-        <translation type="unfinished">사용하지 않음</translation>
+        <translation>사용하지 않음</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="105"/>
         <source>Line</source>
-        <translation type="unfinished">행</translation>
+        <translation>행</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="110"/>
         <source>StepLeft</source>
-        <translation type="unfinished">왼쪽으로</translation>
+        <translation>왼쪽으로</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="115"/>
         <source>StepRight</source>
-        <translation type="unfinished">오른쪽으로</translation>
+        <translation>오른쪽으로</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="120"/>
         <source>StepCenter</source>
-        <translation type="unfinished">중앙으로</translation>
+        <translation>중앙으로</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="125"/>
         <source>Impulse</source>
-        <translation type="unfinished">임펄스</translation>
+        <translation>임펄스</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="133"/>
         <source>Point shape:</source>
-        <translation type="unfinished">포인트 모양:</translation>
+        <translation>포인트 모양:</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="152"/>
         <source>Cross</source>
-        <translation type="unfinished">십자가</translation>
+        <translation>십자가</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="157"/>
         <source>Plus</source>
-        <translation type="unfinished">더하기</translation>
+        <translation>더하기</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="162"/>
         <source>Circle</source>
-        <translation type="unfinished">원</translation>
+        <translation>원</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="167"/>
         <source>Disc</source>
-        <translation type="unfinished">디스크</translation>
+        <translation>디스크</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="172"/>
         <source>Square</source>
-        <translation type="unfinished">정사각형</translation>
+        <translation>정사각형</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="177"/>
         <source>Diamond</source>
-        <translation type="unfinished">마름모</translation>
+        <translation>마름모</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="182"/>
         <source>Star</source>
-        <translation type="unfinished">별</translation>
+        <translation>별</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="187"/>
         <source>Triangle</source>
-        <translation type="unfinished">삼각형</translation>
+        <translation>삼각형</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="192"/>
         <source>TriangleInverted</source>
-        <translation type="unfinished">역삼각형</translation>
+        <translation>역삼각형</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="197"/>
         <source>CrossSquare</source>
-        <translation type="unfinished">CrossSquare</translation>
+        <translation>CrossSquare</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="202"/>
         <source>PlusSquare</source>
-        <translation type="unfinished">PlusSquare</translation>
+        <translation>PlusSquare</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="207"/>
         <source>CrossCircle</source>
-        <translation type="unfinished">CrossCircle</translation>
+        <translation>CrossCircle</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="212"/>
         <source>PlusCircle</source>
-        <translation type="unfinished">PlusCircle</translation>
+        <translation>PlusCircle</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="217"/>
         <source>Peace</source>
-        <translation type="unfinished">Peace</translation>
+        <translation>Peace</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="238"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;현재 플롯 저장하기...&lt;/p&gt;&lt;p&gt;파일 포맷 확장자를 고르세요 (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;현재 플롯 저장하기...&lt;/p&gt;&lt;p&gt;파일 포맷 확장자를 고르세요 (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="241"/>
         <source>Save current plot...</source>
-        <translation type="unfinished">현재 플롯 저장하기...</translation>
+        <translation>현재 플롯 저장하기...</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="267"/>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="unfinished">모든 데이터를 불러옵니다. 이 기능은 부분만 가져오는 메카니즘으로 인하여 테이블에서 모든 데이터가 가져오지 않았을 때에만 작동합니다.</translation>
+        <translation>모든 데이터를 불러옵니다. 이 기능은 부분만 가져오는 메카니즘으로 인하여 테이블에서 모든 데이터가 가져오지 않았을 때에만 작동합니다.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="128"/>
         <location filename="../PlotDock.cpp" line="249"/>
         <location filename="../PlotDock.cpp" line="259"/>
         <source>Row #</source>
-        <translation type="unfinished"></translation>
+        <translation>행 #</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="379"/>
         <source>Choose a axis color</source>
-        <translation type="unfinished">축의 색깔을 고르세요</translation>
+        <translation>축의 색깔을 고르세요</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="410"/>
         <source>Choose a filename to save under</source>
-        <translation type="unfinished">저장하려는 파일명을 고르세요</translation>
+        <translation>저장하려는 파일명을 고르세요</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="411"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="unfinished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;모든 파일(*)</translation>
+        <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;모든 파일(*)</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="520"/>
         <source>Fetching all data...</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 데이터 가져오는 중...</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="521"/>
         <source>Cancel</source>
-        <translation type="unfinished">취소</translation>
+        <translation>취소</translation>
     </message>
 </context>
 <context>
@@ -3229,7 +3233,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="128"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>원격 옵션 보기</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="163"/>
@@ -3304,7 +3308,7 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="285"/>
         <source>SQ&amp;L to execute after opening database</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스를 연 후 SQL을 실행(&amp;L)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="311"/>
@@ -3329,12 +3333,12 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="362"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>내용</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="368"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>셀 안 심볼 한계</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="429"/>
@@ -3484,81 +3488,81 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1011"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1017"/>
         <source>CA certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>CA 증명서</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1040"/>
         <location filename="../PreferencesDialog.ui" line="1104"/>
         <source>Subject CN</source>
-        <translation type="unfinished"></translation>
+        <translation>제목 CN</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1043"/>
         <source>Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>일반 이름</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1048"/>
         <source>Subject O</source>
-        <translation type="unfinished"></translation>
+        <translation>제목 O</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1051"/>
         <source>Organization</source>
-        <translation type="unfinished"></translation>
+        <translation>기관</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1056"/>
         <location filename="../PreferencesDialog.ui" line="1120"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>유효날짜(시작)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1061"/>
         <location filename="../PreferencesDialog.ui" line="1125"/>
         <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <translation>유효날짜(끝)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1066"/>
         <location filename="../PreferencesDialog.ui" line="1130"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>시리얼 넘버</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1074"/>
         <source>Your certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>당신의 증명서</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1099"/>
         <source>File</source>
-        <translation type="unfinished">파일</translation>
+        <translation>파일</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1107"/>
         <source>Subject Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>주제 일반 이름</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1112"/>
         <source>Issuer CN</source>
-        <translation type="unfinished"></translation>
+        <translation>이슈 등록자 CN</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1115"/>
         <source>Issuer Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>이슈 등록자 일반 이름</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1176"/>
         <source>Clone databases into</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 복제하기</translation>
     </message>
     <message>
         <source>Tab size:</source>
@@ -3648,17 +3652,17 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="435"/>
         <source>Import certificate file</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서 파일 가져오기</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="443"/>
         <source>No certificates found in this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 파일에는 인증서가 없습니다.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="460"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
-        <translation type="unfinished"></translation>
+        <translation>정말로 이 인증서를 삭제하겠습니까? 애플리케이션 설정에서 모든 증명 데이터가 삭제될 것입니다!</translation>
     </message>
 </context>
 <context>
@@ -3707,7 +3711,7 @@ Create a backup!</source>
     <message>
         <location filename="../FileDialog.h" line="25"/>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="unfinished">SQLite 데이터베이스 파일(*.db *.sqlite *.sqlite3 *.db3);;모든 파일 (*)</translation>
+        <translation>SQLite 데이터베이스 파일(*.db *.sqlite *.sqlite3 *.db3);;모든 파일 (*)</translation>
     </message>
 </context>
 <context>
@@ -3716,63 +3720,63 @@ Create a backup!</source>
         <location filename="../RemoteDatabase.cpp" line="104"/>
         <source>Error when connecting to %1.
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 에 연결할 때 에러가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="196"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 에 있는 원격 파일을 열 때 에러가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="244"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>에러: 올바르지 않은 클라이언트 인증서입니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="256"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished"></translation>
+        <translation>인증을 위한 클라이언트 인증서 암호를 입력해주세요.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="279"/>
         <source>Cancel</source>
-        <translation type="unfinished">취소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="283"/>
         <source>Uploading remote database to
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 로 원격 데이터베이스 업로드 중입니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="285"/>
         <source>Downloading remote database from
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 에서 원격 데이터베이스 다운로드 중입니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="303"/>
         <location filename="../RemoteDatabase.cpp" line="352"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished"></translation>
+        <translation>에러: 네트워크가 접근할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="360"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished"></translation>
+        <translation>에러: 보낼 파일을 열 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="409"/>
         <source>Error opening local databases list.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>지역 데이터베이스 목록을 열 때 에러가 발생했습니다. %1</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="426"/>
         <source>Error creating local databases list.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>지역 데이터베이스 목록을 생성할 때 에러가 발생했습니다. %1</translation>
     </message>
 </context>
 <context>
@@ -3781,27 +3785,27 @@ Create a backup!</source>
         <location filename="../RemoteDock.ui" line="14"/>
         <location filename="../RemoteDock.ui" line="33"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>원격</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="22"/>
         <source>B&amp;rowse</source>
-        <translation type="unfinished"></translation>
+        <translation>찾아보기(&amp;r)</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="38"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>지역</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="59"/>
         <source>Identity</source>
-        <translation type="unfinished"></translation>
+        <translation>식별하기</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="76"/>
         <source>Go</source>
-        <translation type="unfinished"></translation>
+        <translation>이동</translation>
     </message>
 </context>
 <context>
@@ -3809,7 +3813,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>이름</translation>
     </message>
     <message>
         <source>Version</source>
@@ -3818,22 +3822,22 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Last modified</source>
-        <translation type="unfinished"></translation>
+        <translation>마지막 수정</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>크기</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>커밋</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="241"/>
         <source>bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>바이트</translation>
     </message>
 </context>
 <context>
