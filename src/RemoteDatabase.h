@@ -38,15 +38,18 @@ public:
         RequestTypeDirectory,
         RequestTypeNewVersionCheck,
         RequestTypePush,
+        RequestTypeLicenceList,
     };
 
     void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
-    void push(const QString& filename, const QString& url, const QString& clientCert);
+    void push(const QString& filename, const QString& url, const QString& clientCert,
+              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false);
 
 signals:
     void gotDirList(QString json, QVariant userdata);
     void openFile(QString path);
     void gotCurrentVersion(QString version, QString url);
+    void gotLicenceList(QMap<QString, QString> licences);
 
 private:
     void gotEncrypted(QNetworkReply* reply);

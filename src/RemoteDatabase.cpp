@@ -9,6 +9,8 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QUrlQuery>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "RemoteDatabase.h"
 #include "version.h"
@@ -160,6 +162,23 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             QString version = reply->readLine().trimmed();
             QString url = reply->readLine().trimmed();
             emit gotCurrentVersion(version, url);
+            break;
+        }
+    case RequestTypeLicenceList:
+        {
+            // Read and check results
+            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+            if(json.isNull() || !json.isObject())
+                break;
+            QJsonObject obj = json.object();
+
+            // Parse data and build licence map (short name -> long name)
+            QMap<QString, QString> licences;
+            for(auto it=obj.constBegin();it!=obj.constEnd();++it)
+                licences.insert(it.key(), it.value().toObject().value("full_name").toString());
+
+            // Send licence map to anyone who's interested
+            emit gotLicenceList(licences);
             break;
         }
     default:
@@ -370,7 +389,8 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
         prepareProgressDialog(false, url);
 }
 
-void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert)
+void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert,
+                          const QString& commitMessage, const QString& licence, bool isPublic)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -391,6 +411,11 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     QNetworkRequest request;
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
+
+    // Set custom headers for extra information about the commit
+    request.setRawHeader("commitmsg", commitMessage.toUtf8());
+    request.setRawHeader("licence", licence.toUtf8());
+    request.setRawHeader("public", isPublic ? "true" : "false");
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;

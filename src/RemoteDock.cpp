@@ -8,6 +8,7 @@
 #include "RemoteDatabase.h"
 #include "RemoteModel.h"
 #include "MainWindow.h"
+#include "RemotePushDialog.h"
 
 RemoteDock::RemoteDock(MainWindow* parent)
     : QDialog(parent),
@@ -86,23 +87,24 @@ void RemoteDock::enableButtons()
 
 void RemoteDock::pushDatabase()
 {
-    // Ask for file name to save under. The default suggestion is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
+    // The default suggestion for a database name is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
     // the extra bit of information at the end of the name gets removed first.
     QString name = QFileInfo(mainWindow->getDb().currentFile()).fileName();
     name = name.remove(QRegExp("_[0-9]+.remotedb$"));
-    name = QInputDialog::getText(this, qApp->applicationName(),
-                                 tr("Please enter the database name to push to."),
-                                 QLineEdit::Normal,
-                                 name);
-    if(name.isEmpty())
+
+    // Show the user a dialog for setting all the commit details
+    QString host = QString("https://%1:5550/").arg(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer));
+    RemotePushDialog pushDialog(this, remoteDatabase, host, remoteModel->currentClientCertificate(), name);
+    if(pushDialog.exec() != QDialog::Accepted)
         return;
 
     // Build push URL
-    QString url = QString("https://%1:5550/").arg(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer));
+    QString url = host;
     url.append(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser));
     url.append("/");
-    url.append(name);
+    url.append(pushDialog.name());
 
     // Push database
-    remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate());
+    remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(),
+                        pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic());
 }

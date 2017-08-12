@@ -117,6 +117,7 @@ set(SQLB_MOC_HDR
 	src/PlotDock.h
 	src/RemoteDock.h
 	src/RemoteModel.h
+	src/RemotePushDialog.h
 )
 
 set(SQLB_SRC
@@ -154,6 +155,7 @@ set(SQLB_SRC
 	src/PlotDock.cpp
 	src/RemoteDock.cpp
 	src/RemoteModel.cpp
+	src/RemotePushDialog.cpp
 )
 
 set(SQLB_FORMS
@@ -172,6 +174,7 @@ set(SQLB_FORMS
 	src/ColumnDisplayFormatDialog.ui
 	src/PlotDock.ui
 	src/RemoteDock.ui
+	src/RemotePushDialog.ui
 )
 
 set(SQLB_RESOURCES

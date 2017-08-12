@@ -56,7 +56,8 @@ HEADERS += \
     ForeignKeyEditorDelegate.h \
     PlotDock.h \
     RemoteDock.h \
-    RemoteModel.h
+    RemoteModel.h \
+    RemotePushDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -91,7 +92,8 @@ SOURCES += \
     ForeignKeyEditorDelegate.cpp \
     PlotDock.cpp \
     RemoteDock.cpp \
-    RemoteModel.cpp
+    RemoteModel.cpp \
+    RemotePushDialog.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -113,7 +115,8 @@ FORMS += \
     ExportSqlDialog.ui \
     ColumnDisplayFormatDialog.ui \
     PlotDock.ui \
-    RemoteDock.ui
+    RemoteDock.ui \
+    RemotePushDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \
