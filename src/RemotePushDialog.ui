@@ -156,6 +156,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkPublic</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>RemotePushDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>171</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>210</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkInput()</slot>

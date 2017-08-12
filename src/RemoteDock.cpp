@@ -1,5 +1,4 @@
 #include <QSslCertificate>
-#include <QInputDialog>
 #include <QFileInfo>
 
 #include "RemoteDock.h"

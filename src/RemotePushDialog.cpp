@@ -30,6 +30,13 @@ RemotePushDialog::~RemotePushDialog()
 
 void RemotePushDialog::checkInput()
 {
+    // Update public/private check box text
+    if(ui->checkPublic->isChecked())
+        ui->checkPublic->setText(tr("Database will be public. Everyone has read access to it."));
+    else
+        ui->checkPublic->setText(tr("Database will be private. Only you have access to it."));
+
+    // Check input
     bool valid = true;
 
     if(ui->editName->text().trimmed().isEmpty())
