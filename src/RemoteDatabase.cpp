@@ -311,6 +311,7 @@ void RemoteDatabase::prepareProgressDialog(bool upload, const QString& url)
     // Instantiate progress dialog and apply some basic settings
     if(!m_progress)
         m_progress = new QProgressDialog();
+    m_progress->reset();
     m_progress->setWindowModality(Qt::ApplicationModal);
     m_progress->setCancelButtonText(tr("Cancel"));
 
