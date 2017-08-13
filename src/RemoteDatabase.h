@@ -46,10 +46,18 @@ public:
               const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false);
 
 signals:
-    void gotDirList(QString json, QVariant userdata);
+    // The openFile signal is emitted whenever a remote database file shall be opened in the main window. This happens when the
+    // fetch() call for a database is finished, either by actually downloading the database or opening the local clone.
     void openFile(QString path);
+
+    // These signals are emitted when the fetch() calls are finished that are not requesting a remote database but other data, like
+    // a directory listing or the licence list.
+    void gotDirList(QString json, QVariant userdata);
     void gotCurrentVersion(QString version, QString url);
     void gotLicenceList(QMap<QString, QString> licences);
+
+    // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
+    void uploadFinished(QString url);
 
 private:
     void gotEncrypted(QNetworkReply* reply);

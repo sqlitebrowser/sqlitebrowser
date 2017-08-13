@@ -21,6 +21,9 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // Set up model
     ui->treeStructure->setModel(remoteModel);
 
+    // Reload the directory tree when a database upload has finished
+    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::setNewIdentity);
+
     // Initial setup
     reloadSettings();
 }

@@ -184,6 +184,9 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             emit gotLicenceList(licences);
             break;
         }
+    case RequestTypePush:
+        emit uploadFinished(reply->url().toString());
+        break;
     default:
         break;
     }
