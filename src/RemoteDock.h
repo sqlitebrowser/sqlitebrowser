@@ -26,6 +26,7 @@ private slots:
     void setNewIdentity();
     void fetchDatabase(const QModelIndex& idx);
     void pushDatabase();
+    void newDirectoryNode(const QModelIndex& parent);
 
 private:
     Ui::RemoteDock* ui;

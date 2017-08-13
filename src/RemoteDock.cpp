@@ -24,6 +24,9 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // Reload the directory tree when a database upload has finished
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::setNewIdentity);
 
+    // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
+    connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
+
     // Initial setup
     reloadSettings();
 }
@@ -109,4 +112,23 @@ void RemoteDock::pushDatabase()
     // Push database
     remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(),
                         pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic());
+}
+
+void RemoteDock::newDirectoryNode(const QModelIndex& parent)
+{
+    // Was this a new root dir?
+    if(!parent.isValid())
+    {
+        // Then check if there is a directory with the current user name
+
+        // Get current user name
+        QString user = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser);
+
+        for(int i=0;i<remoteModel->rowCount(parent);i++)
+        {
+            QModelIndex child = remoteModel->index(i, RemoteModelColumnName, parent);
+            if(child.data().toString() == user)
+                ui->treeStructure->expand(child);
+        }
+    }
 }

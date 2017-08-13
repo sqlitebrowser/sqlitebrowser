@@ -153,6 +153,9 @@ void RemoteModel::parseDirectoryListing(const QString& json, const QVariant& use
     foreach(RemoteModelItem* item, items)
         parentItem->appendChild(item);
     endInsertRows();
+
+    // Emit directory listing parsed signal
+    emit directoryListingParsed(parent);
 }
 
 QModelIndex RemoteModel::index(int row, int column, const QModelIndex& parent) const
