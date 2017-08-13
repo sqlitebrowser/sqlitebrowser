@@ -20,7 +20,6 @@
 RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
     m_progress(nullptr),
-    m_currentReply(nullptr),
     m_dbLocal(nullptr)
 {
     // Set up SSL configuration
@@ -190,7 +189,6 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     }
 
     // Delete reply later, i.e. after returning from this slot function
-    m_currentReply = nullptr;
     reply->deleteLater();
 }
 
@@ -230,6 +228,9 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
 
 void RemoteDatabase::updateProgress(qint64 bytesTransmitted, qint64 bytesTotal)
 {
+    // Find out to which pending reply this progress update belongs
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(QObject::sender());
+
     // Update progress dialog
     if(bytesTotal == -1)
     {
@@ -249,9 +250,9 @@ void RemoteDatabase::updateProgress(qint64 bytesTransmitted, qint64 bytesTotal)
 
     // Check if the Cancel button has been pressed
     qApp->processEvents();
-    if(m_currentReply && m_progress->wasCanceled())
+    if(reply && m_progress->wasCanceled())
     {
-        m_currentReply->abort();
+        reply->abort();
         m_progress->reset();
     }
 }
@@ -314,7 +315,7 @@ bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientC
     return true;
 }
 
-void RemoteDatabase::prepareProgressDialog(bool upload, const QString& url)
+void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, const QString& url)
 {
     // Instantiate progress dialog and apply some basic settings
     if(!m_progress)
@@ -335,9 +336,9 @@ void RemoteDatabase::prepareProgressDialog(bool upload, const QString& url)
 
     // Make sure the dialog is updated
     if(upload)
-        connect(m_currentReply, &QNetworkReply::uploadProgress, this, &RemoteDatabase::updateProgress);
+        connect(reply, &QNetworkReply::uploadProgress, this, &RemoteDatabase::updateProgress);
     else
-        connect(m_currentReply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
+        connect(reply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
 }
 
 void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& clientCert, QVariant userdata)
@@ -380,16 +381,16 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
     // Clear access cache if necessary
     clearAccessCache(clientCert);
 
-    // Fetch database and save pending reply. Note that we're only supporting one active download here at the moment.
-    m_currentReply = m_manager->get(request);
-    m_currentReply->setProperty("type", type);
-    m_currentReply->setProperty("certfile", clientCert);
-    m_currentReply->setProperty("userdata", userdata);
+    // Fetch database and prepare pending reply for future processing
+    QNetworkReply* reply = m_manager->get(request);
+    reply->setProperty("type", type);
+    reply->setProperty("certfile", clientCert);
+    reply->setProperty("userdata", userdata);
 
     // Initialise the progress dialog for this request, but only if this is a database file. Directory listing are small enough to be loaded
     // without progress dialog.
     if(type == RequestTypeDatabase)
-        prepareProgressDialog(false, url);
+        prepareProgressDialog(reply, false, url);
 }
 
 void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert,
@@ -436,13 +437,13 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     // Clear access cache if necessary
     clearAccessCache(clientCert);
 
-    // Put database to remote server and save pending reply. Note that we're only supporting one active download or upload here at the moment.
-    m_currentReply = m_manager->put(request, file);
-    m_currentReply->setProperty("type", RequestTypePush);
-    m_currentReply->setProperty("file", qVariantFromValue(dynamic_cast<void*>(file)));
+    // Put database to remote server and save pending reply for future processing
+    QNetworkReply* reply = m_manager->put(request, file);
+    reply->setProperty("type", RequestTypePush);
+    reply->setProperty("file", qVariantFromValue(dynamic_cast<void*>(file)));
 
     // Initialise the progress dialog for this request
-    prepareProgressDialog(true, url);
+    prepareProgressDialog(reply, true, url);
 }
 
 void RemoteDatabase::localAssureOpened()

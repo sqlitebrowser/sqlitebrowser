@@ -57,7 +57,7 @@ private:
     void gotError(QNetworkReply* reply, const QList<QSslError>& errors);
     void updateProgress(qint64 bytesTransmitted, qint64 bytesTotal);
     bool prepareSsl(QNetworkRequest* request, const QString& clientCert);
-    void prepareProgressDialog(bool upload, const QString& url);
+    void prepareProgressDialog(QNetworkReply* reply, bool upload, const QString& url);
 
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
@@ -70,7 +70,6 @@ private:
 
     QNetworkAccessManager* m_manager;
     QProgressDialog* m_progress;
-    QNetworkReply* m_currentReply;
     QSslConfiguration m_sslConfiguration;
     QMap<QString, QSslCertificate> m_clientCertFiles;
     sqlite3* m_dbLocal;
