@@ -99,6 +99,10 @@ void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
 
 void RemoteDatabase::gotReply(QNetworkReply* reply)
 {
+    // If this was a push database request, close the opened file
+    if(reply->property("type").toInt() == RequestTypePush)
+        delete reinterpret_cast<const QFile*>(reply->property("file").value<void*>());
+
     // Check if request was successful
     if(reply->error() != QNetworkReply::NoError)
     {
@@ -192,6 +196,10 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 
 void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& errors)
 {
+    // If this was a push database request, close the opened file
+    if(reply->property("type").toInt() == RequestTypePush)
+        delete reinterpret_cast<const QFile*>(reply->property("file").value<void*>());
+
     // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
     // TODO What about the hostname mismatch? Can we remove that from the list of ignored errors later?
     bool serious_errors = false;
@@ -395,9 +403,10 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     }
 
     // Open the file to send and check if it exists
-    QFile file(filename);
-    if(!file.open(QFile::ReadOnly))
+    QFile* file = new QFile(filename);
+    if(!file->open(QFile::ReadOnly))
     {
+        delete file;
         QMessageBox::warning(0, qApp->applicationName(), tr("Error: Cannot open the file for sending."));
         return;
     }
@@ -418,21 +427,19 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     {
         // If configuring the SSL connection fails, abort the request here
         if(!prepareSsl(&request, clientCert))
+        {
+            delete file;
             return;
+        }
     }
 
     // Clear access cache if necessary
     clearAccessCache(clientCert);
 
-    // Get file data
-    // TODO: Don't read the entire file here but directly pass the file handle to the put() call below in order
-    // to read larger files chunk by chunk.
-    QByteArray file_data = file.readAll();
-    file.close();
-
-    // Fetch database and save pending reply. Note that we're only supporting one active download or upload here at the moment.
-    m_currentReply = m_manager->put(request, file_data);
+    // Put database to remote server and save pending reply. Note that we're only supporting one active download or upload here at the moment.
+    m_currentReply = m_manager->put(request, file);
     m_currentReply->setProperty("type", RequestTypePush);
+    m_currentReply->setProperty("file", qVariantFromValue(dynamic_cast<void*>(file)));
 
     // Initialise the progress dialog for this request
     prepareProgressDialog(true, url);
