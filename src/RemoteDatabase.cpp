@@ -199,11 +199,10 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
         delete reinterpret_cast<const QFile*>(reply->property("file").value<void*>());
 
     // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
-    // TODO What about the hostname mismatch? Can we remove that from the list of ignored errors later?
     bool serious_errors = false;
     foreach(const QSslError& error, errors)
     {
-        if(error.error() != QSslError::SelfSignedCertificate && error.error() != QSslError::HostNameMismatch)
+        if(error.error() != QSslError::SelfSignedCertificate)
         {
             serious_errors = true;
             break;
