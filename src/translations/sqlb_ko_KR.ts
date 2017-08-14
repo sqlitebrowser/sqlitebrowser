@@ -2870,7 +2870,7 @@ Reason: %1</source>
         <location filename="../MainWindow.cpp" line="985"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>PRAGMA 값을 지정하지 않으면 현재 트랜잭션에 DB파일 축소작업(Vaccum)이 커밋됩니다. 진행할까요?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="993"/>
@@ -3809,7 +3809,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="63"/>
         <source>Push currently opened database to server</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 열린 데이베이스를 서버로 반영(Push)하기</translation>
     </message>
 </context>
 <context>
@@ -3849,17 +3849,17 @@ Create a backup!</source>
     <message>
         <location filename="../RemotePushDialog.ui" line="14"/>
         <source>Push database</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 푸시(Push)</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="22"/>
         <source>Database na&amp;me to push to</source>
-        <translation type="unfinished"></translation>
+        <translation>푸시할 데이터베이스 이름</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="35"/>
         <source>Commit message</source>
-        <translation type="unfinished"></translation>
+        <translation>커밋 메시지</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="45"/>
@@ -3868,32 +3868,36 @@ Create a backup!</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="59"/>
         <source>Database licence</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 라이센스</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="79"/>
         <source>Public</source>
-        <translation type="unfinished"></translation>
+        <translation>공개</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="35"/>
         <source>Database will be public. Everyone has read access to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 데이터베이스로 지정합니다. 누구나 읽기 접근이 가능합니다.</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="37"/>
         <source>Database will be private. Only you have access to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>비공개 데이터베이스로 지정합니다. 당신만 접근할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="77"/>
         <source>Unspecified</source>
-        <translation type="unfinished"></translation>
+        <translation>미지정</translation>
     </message>
 </context>
 <context>
@@ -4218,7 +4222,7 @@ Ctrl+Shift를 누른 상태에서 점프하고자 하는 곳을 클릭하세요<
     <message>
         <location filename="../VacuumDialog.ui" line="14"/>
         <source>Compact Database</source>
-        <translation>데이터베이스 크기 줄이기</translation>
+        <translation>데이터베이스 크기 줄이기(Vaccum)</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="26"/>
