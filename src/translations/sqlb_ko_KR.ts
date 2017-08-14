@@ -4222,7 +4222,7 @@ Ctrl+Shift를 누른 상태에서 점프하고자 하는 곳을 클릭하세요<
     <message>
         <location filename="../VacuumDialog.ui" line="14"/>
         <source>Compact Database</source>
-        <translation>데이터베이스 크기 줄이기</translation>
+        <translation>데이터베이스 크기 줄이기(Vaccum)</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="26"/>
