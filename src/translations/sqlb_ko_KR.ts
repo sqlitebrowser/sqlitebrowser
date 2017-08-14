@@ -1069,7 +1069,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation>Pretty print</translation>
+        <translation>프린트하기 좋은 스타일</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="173"/>
@@ -1487,7 +1487,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1731"/>
         <source>SQLCipher &amp;FAQ...</source>
-        <translation>SQLCipher FAQ...(&amp;F)</translation>
+        <translation>SQLCipher &amp;FAQ...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1734"/>
@@ -1567,7 +1567,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="235"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;맨 위로 스크롤하기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;첫 페이지로 갑니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="238"/>
@@ -1613,7 +1613,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="302"/>
         <source>Scroll to the end</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;맨 아래로 스크롤하기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;마지막 페이지로 갑니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1884,12 +1884,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1099"/>
         <source>DB Sche&amp;ma</source>
-        <translation>DB 스키마(&amp;m)</translation>
+        <translation>DB 스키마</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1124"/>
         <source>&amp;Remote</source>
-        <translation>원격(&amp;R)</translation>
+        <translation>원격</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1488"/>
@@ -2080,23 +2080,23 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>CrossSquare</source>
-        <translation type="vanished">CrossSquare</translation>
+        <translation type="vanished">크로스스퀘어</translation>
     </message>
     <message>
         <source>PlusSquare</source>
-        <translation type="vanished">PlusSquare</translation>
+        <translation type="vanished">플러스스퀘어</translation>
     </message>
     <message>
         <source>CrossCircle</source>
-        <translation type="vanished">CrossCircle</translation>
+        <translation type="vanished">크로스써클</translation>
     </message>
     <message>
         <source>PlusCircle</source>
-        <translation type="vanished">PlusCircle</translation>
+        <translation type="vanished">플러스써클</translation>
     </message>
     <message>
         <source>Peace</source>
-        <translation type="vanished">Peace</translation>
+        <translation type="vanished">피스</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -2339,7 +2339,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1427"/>
         <source>&amp;DB Toolbar</source>
-        <translation>DB 툴바(&amp;D)</translation>
+        <translation>DB 툴바</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
@@ -2408,7 +2408,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="978"/>
         <source>SQL &amp;Log</source>
-        <translation>SQL 로그(&amp;L)</translation>
+        <translation>SQL 로그</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="996"/>
@@ -2418,7 +2418,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1088"/>
         <source>&amp;Plot</source>
-        <translation>플롯(&amp;P)</translation>
+        <translation>플롯</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1202"/>
@@ -2778,7 +2778,7 @@ All data associated with the %1 will be lost.</source>
         <location filename="../MainWindow.cpp" line="1669"/>
         <location filename="../MainWindow.cpp" line="1725"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
-        <translation>문자열 파일(*.csv *.txt);;모든 파일(*)</translation>
+        <translation>문자열 파일(*.sql *.txt);;모든 파일(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1243"/>
