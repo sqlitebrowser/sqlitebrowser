@@ -10,6 +10,8 @@ class QNetworkReply;
 class QSslError;
 class QProgressDialog;
 class QNetworkRequest;
+class QHttpMultiPart;
+class QFile;
 struct sqlite3;
 
 class RemoteDatabase : public QObject
@@ -42,7 +44,7 @@ public:
     };
 
     void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
-    void push(const QString& filename, const QString& url, const QString& clientCert,
+    void push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
               const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false);
 
 signals:
@@ -71,6 +73,10 @@ private:
     void localAssureOpened();
     void localAdd(QString filename, QString identity, const QUrl& url);
     QString localExists(const QUrl& url, QString identity);
+
+    // Helper functions for building multi-part HTTP requests
+    void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value);
+    void addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename);
 
     // Before using a new client certificate we need to clear the access and authentication cache of the network manager
     // object. Otherwise Qt might reuse the old certificate if the requested URL has been used before.

@@ -110,7 +110,7 @@ void RemoteDock::pushDatabase()
     url.append(pushDialog.name());
 
     // Push database
-    remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(),
+    remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(), pushDialog.name(),
                         pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic());
 }
 

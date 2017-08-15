@@ -11,6 +11,7 @@
 #include <QUrlQuery>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QHttpMultiPart>
 
 #include "RemoteDatabase.h"
 #include "version.h"
@@ -98,10 +99,6 @@ void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
 
 void RemoteDatabase::gotReply(QNetworkReply* reply)
 {
-    // If this was a push database request, close the opened file
-    if(reply->property("type").toInt() == RequestTypePush)
-        delete reinterpret_cast<const QFile*>(reply->property("file").value<void*>());
-
     // Check if request was successful
     if(reply->error() != QNetworkReply::NoError)
     {
@@ -197,10 +194,6 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 
 void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& errors)
 {
-    // If this was a push database request, close the opened file
-    if(reply->property("type").toInt() == RequestTypePush)
-        delete reinterpret_cast<const QFile*>(reply->property("file").value<void*>());
-
     // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
     bool serious_errors = false;
     foreach(const QSslError& error, errors)
@@ -395,7 +388,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
         prepareProgressDialog(reply, false, url);
 }
 
-void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert,
+void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
                           const QString& commitMessage, const QString& licence, bool isPublic)
 {
     // Check if network is accessible. If not, abort right here
@@ -419,10 +412,12 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
 
-    // Set custom headers for extra information about the commit
-    request.setRawHeader("commitmsg", commitMessage.toUtf8());
-    request.setRawHeader("licence", licence.toUtf8());
-    request.setRawHeader("public", isPublic ? "true" : "false");
+    // Prepare HTTP multi part data containing all the information about the commit we're about to push
+    QHttpMultiPart* multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    addPart(multipart, "file", file, remotename);
+    addPart(multipart, "commitmsg", commitMessage);
+    addPart(multipart, "licence", licence);
+    addPart(multipart, "public", isPublic ? "true" : "false");
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
@@ -440,12 +435,31 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     clearAccessCache(clientCert);
 
     // Put database to remote server and save pending reply for future processing
-    QNetworkReply* reply = m_manager->put(request, file);
+    QNetworkReply* reply = m_manager->post(request, multipart);
     reply->setProperty("type", RequestTypePush);
-    reply->setProperty("file", qVariantFromValue(dynamic_cast<void*>(file)));
+    multipart->setParent(reply);        // Delete the multi-part object along with the reply
 
     // Initialise the progress dialog for this request
     prepareProgressDialog(reply, true, url);
+}
+
+void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, const QString& value)
+{
+    QHttpPart part;
+    part.setHeader(QNetworkRequest::ContentDispositionHeader, QString("form-data; name=\"%1\"").arg(name));
+    part.setBody(value.toUtf8());
+
+    multipart->append(part);
+}
+
+void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename)
+{
+    QHttpPart part;
+    part.setHeader(QNetworkRequest::ContentDispositionHeader, QString("form-data; name=\"%1\"; filename=\"%2\"").arg(name).arg(filename));
+    part.setBodyDevice(file);
+    file->setParent(multipart);     // Close the file and delete the file object as soon as the multi-part object is destroyed
+
+    multipart->append(part);
 }
 
 void RemoteDatabase::localAssureOpened()
