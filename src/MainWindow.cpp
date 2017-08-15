@@ -1441,7 +1441,7 @@ void MainWindow::addToRecentFilesMenu(const QString& filename)
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
     if( event->mimeData()->hasFormat("text/uri-list") )
-            event->acceptProposedAction();
+        event->acceptProposedAction();
 }
 
 void MainWindow::dropEvent(QDropEvent *event)
