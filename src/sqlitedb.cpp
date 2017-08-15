@@ -178,8 +178,9 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
 
     // Attach database
     QString key;
-    if(cipher) key = cipher->password();
-    if(!executeSQL(QString("ATTACH '%1' AS %2 KEY %3").arg(filename).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
+    if(cipher && is_encrypted)
+        key = "KEY " + cipher->password();
+    if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filename).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(0, qApp->applicationName(), lastErrorMessage);
         return false;
