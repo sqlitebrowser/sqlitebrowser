@@ -1416,6 +1416,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
     setWindowFilePath(fileName);
     setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(fileName));
     activateFields(true);
+    dbState(db.getDirty());
 }
 
 void MainWindow::addToRecentFilesMenu(const QString& filename)
