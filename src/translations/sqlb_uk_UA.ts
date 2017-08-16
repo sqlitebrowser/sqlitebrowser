@@ -296,81 +296,81 @@ If any of the other settings were altered for this database file you need to pro
         <translation>Будь ласка, вкажіть ім&apos;я бази даних, під яким Ви хочете отримати доступ до під&apos;єднаних баз даних</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="209"/>
+        <location filename="../sqlitedb.cpp" line="210"/>
         <source>Invalid file format</source>
         <translation>Неправильний формат файлу</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="425"/>
+        <location filename="../sqlitedb.cpp" line="426"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>Зберегти зроблені зміни у файлі бази даних %1?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="484"/>
+        <location filename="../sqlitedb.cpp" line="485"/>
         <source>Exporting database to SQL file...</source>
         <translation>Експорт бази даних у файл SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="485"/>
-        <location filename="../sqlitedb.cpp" line="707"/>
+        <location filename="../sqlitedb.cpp" line="486"/>
+        <location filename="../sqlitedb.cpp" line="708"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="706"/>
+        <location filename="../sqlitedb.cpp" line="707"/>
         <source>Executing SQL...</source>
         <translation>Виконати код SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="728"/>
+        <location filename="../sqlitedb.cpp" line="729"/>
         <source>Action cancelled.</source>
         <translation>Дію скасовано.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="758"/>
-        <location filename="../sqlitedb.cpp" line="768"/>
+        <location filename="../sqlitedb.cpp" line="759"/>
+        <location filename="../sqlitedb.cpp" line="769"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Помилка в операторі #%1: %2. 
 Виконання скасовано%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="761"/>
-        <location filename="../sqlitedb.cpp" line="771"/>
+        <location filename="../sqlitedb.cpp" line="762"/>
+        <location filename="../sqlitedb.cpp" line="772"/>
         <source> and rolling back</source>
         <translation> і відкочено</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="973"/>
+        <location filename="../sqlitedb.cpp" line="974"/>
         <source>Cannot set data on this object</source>
         <translation>Не вдається встановити дані в цей об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1075"/>
+        <location filename="../sqlitedb.cpp" line="1076"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>renameColumn: не вдається знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1209"/>
+        <location filename="../sqlitedb.cpp" line="1210"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
         <translation>Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найімовірніша причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1232"/>
+        <location filename="../sqlitedb.cpp" line="1233"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Помилка перейменування таблиці &apos;%1&apos; в &apos;%2&apos;. Повідомлення від ядра БД:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1277"/>
+        <location filename="../sqlitedb.cpp" line="1278"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;рядок не можна записати в лог-файл, який містить двійкові дані&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1487"/>
+        <location filename="../sqlitedb.cpp" line="1488"/>
         <source>could not get column information</source>
         <translation>неможливо отримати інформацію про стовпець</translation>
     </message>
@@ -388,24 +388,24 @@ Aborting execution.</source>
         <translation type="vanished">renameColumn: неможливо знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1083"/>
+        <location filename="../sqlitedb.cpp" line="1084"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: помилка створення точки збереження. БД говорить: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1132"/>
+        <location filename="../sqlitedb.cpp" line="1133"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: помилка створення нової таблиці. БД говорить: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1141"/>
+        <location filename="../sqlitedb.cpp" line="1142"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: помилка копіювання даних у нову таблицю. БД говорить:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1184"/>
+        <location filename="../sqlitedb.cpp" line="1185"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: помилка видалення старої таблиці. БД говорить: %1</translation>
     </message>
@@ -415,7 +415,7 @@ Aborting execution.</source>
         <translation type="vanished">Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найбільш імовірна причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1218"/>
+        <location filename="../sqlitedb.cpp" line="1219"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: помилка звільнення точки збереження. БД говорить: %1</translation>
     </message>
@@ -434,7 +434,7 @@ Aborting execution.</source>
         <translation type="vanished">невідомий тип об&apos;єкту %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1364"/>
+        <location filename="../sqlitedb.cpp" line="1365"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>неможливо отримати список об&apos;єктів БД: %1, %2</translation>
     </message>
@@ -443,22 +443,22 @@ Aborting execution.</source>
         <translation type="vanished">неможливо отримати типи</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1387"/>
+        <location filename="../sqlitedb.cpp" line="1388"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>не отримано жодного виходу з Прагма %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1391"/>
+        <location filename="../sqlitedb.cpp" line="1392"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>неможливо виконати комманду-прагму: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1406"/>
+        <location filename="../sqlitedb.cpp" line="1407"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Помилка встановлення Прагми %1 в %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1451"/>
+        <location filename="../sqlitedb.cpp" line="1452"/>
         <source>File not found.</source>
         <translation>Файл не знайдено.</translation>
     </message>
@@ -1616,22 +1616,22 @@ Do you want to insert it anyway?</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL автоматична контрольна точка&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1124"/>
+        <location filename="../MainWindow.ui" line="1117"/>
         <source>&amp;Remote</source>
         <translation>&amp;Віддалений</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1580"/>
+        <location filename="../MainWindow.ui" line="1573"/>
         <source>Web&amp;site...</source>
         <translation>Веб-&amp;сайт</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1755"/>
+        <location filename="../MainWindow.ui" line="1743"/>
         <source>Refresh</source>
         <translation>Оновити</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1758"/>
+        <location filename="../MainWindow.ui" line="1746"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
@@ -1919,108 +1919,107 @@ Do you want to insert it anyway?</source>
         <translation>&amp;Експорт</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="884"/>
         <source>Remote</source>
-        <translation>Віддалений сервер</translation>
+        <translation type="vanished">Віддалений сервер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="912"/>
+        <location filename="../MainWindow.ui" line="905"/>
         <source>&amp;Edit</source>
         <translation>&amp;Редагування</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="922"/>
+        <location filename="../MainWindow.ui" line="915"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="930"/>
+        <location filename="../MainWindow.ui" line="923"/>
         <source>&amp;Help</source>
         <translation>&amp;Довідка</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="947"/>
+        <location filename="../MainWindow.ui" line="940"/>
         <source>DB Toolbar</source>
         <translation>Панель інструментів БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="966"/>
+        <location filename="../MainWindow.ui" line="959"/>
         <source>Edit Database &amp;Cell</source>
         <translation>Редагування &amp;комірки БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1099"/>
+        <location filename="../MainWindow.ui" line="1092"/>
         <source>DB Sche&amp;ma</source>
         <translation>Схе&amp;ма БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1488"/>
+        <location filename="../MainWindow.ui" line="1481"/>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
         <translation>Виконати SQL [F5, Ctrl+Return, Ctrl+R]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1518"/>
+        <location filename="../MainWindow.ui" line="1511"/>
         <source>&amp;Load extension</source>
         <translation>Завантажити &amp;розширення</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1533"/>
+        <location filename="../MainWindow.ui" line="1526"/>
         <source>Execute current line [Shift+F5]</source>
         <translation>Виконати поточний рядок [Shift+F5]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1536"/>
+        <location filename="../MainWindow.ui" line="1529"/>
         <source>Shift+F5</source>
         <translation>Shift+F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1592"/>
+        <location filename="../MainWindow.ui" line="1585"/>
         <source>Sa&amp;ve Project</source>
         <translation>&amp;Зберегти проект</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1610"/>
+        <location filename="../MainWindow.ui" line="1603"/>
         <source>Open &amp;Project</source>
         <translation>Відкрити &amp;проект</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1692"/>
+        <location filename="../MainWindow.ui" line="1685"/>
         <source>Edit display format</source>
         <translation>Формат показу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1695"/>
+        <location filename="../MainWindow.ui" line="1688"/>
         <source>Edit the display format of the data in this column</source>
         <translation>Редагування формату показу для даних у цьому стовпці</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1703"/>
+        <location filename="../MainWindow.ui" line="1696"/>
         <source>Show rowid column</source>
         <translation>Показати стовпець rowid</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1706"/>
+        <location filename="../MainWindow.ui" line="1699"/>
         <source>Toggle the visibility of the rowid column</source>
         <translation>Змінити видимість стовпця rowid</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1711"/>
-        <location filename="../MainWindow.cpp" line="2397"/>
+        <location filename="../MainWindow.ui" line="1704"/>
+        <location filename="../MainWindow.cpp" line="2395"/>
         <source>Set encoding</source>
         <translation>Кодування</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1714"/>
+        <location filename="../MainWindow.ui" line="1707"/>
         <source>Change the encoding of the text in the table cells</source>
         <translation>Змінити кодування тексту в цій комірці таблиці</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1719"/>
+        <location filename="../MainWindow.ui" line="1712"/>
         <source>Set encoding for all tables</source>
         <translation>Встановити кодування для всіх таблиць</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1722"/>
+        <location filename="../MainWindow.ui" line="1715"/>
         <source>Change the default encoding assumed for all tables in the database</source>
         <translation>Змінити кодування за замовчуванням для всіх таблиць у базі даних</translation>
     </message>
@@ -2029,22 +2028,22 @@ Do you want to insert it anyway?</source>
         <translation type="vanished"> Дублікат запису</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1731"/>
+        <location filename="../MainWindow.ui" line="1724"/>
         <source>SQLCipher &amp;FAQ...</source>
         <translation>SQLCipher &amp; ЧаПи...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1734"/>
+        <location filename="../MainWindow.ui" line="1727"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
         <translation>Відкрити SQLCiphier ЧаПи в браузері</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1739"/>
+        <location filename="../MainWindow.ui" line="1732"/>
         <source>Table(s) to JSON...</source>
         <translation>Таблиці в файл JSON...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1742"/>
+        <location filename="../MainWindow.ui" line="1735"/>
         <source>Export one or more table(s) to a JSON file</source>
         <translation>Експортувати таблиці в JSON файл</translation>
     </message>
@@ -2053,23 +2052,22 @@ Do you want to insert it anyway?</source>
         <translation type="vanished">Відкрити віддалений файл</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1750"/>
         <source>Save to Remote</source>
-        <translation>Зберегти в хмару</translation>
+        <translation type="vanished">Зберегти в хмару</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1627"/>
+        <location filename="../MainWindow.ui" line="1620"/>
         <source>&amp;Attach Database</source>
         <translation>&amp;Прикріпити базу даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1651"/>
-        <location filename="../MainWindow.ui" line="1654"/>
+        <location filename="../MainWindow.ui" line="1644"/>
+        <location filename="../MainWindow.ui" line="1647"/>
         <source>Save SQL file as</source>
         <translation>Зберегти файл SQL як</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1675"/>
+        <location filename="../MainWindow.ui" line="1668"/>
         <source>&amp;Browse Table</source>
         <translation>Пе&amp;регляд таблиці</translation>
     </message>
@@ -2079,17 +2077,17 @@ Do you want to insert it anyway?</source>
         <translation>Очистити всі фільтри</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1013"/>
+        <location filename="../MainWindow.ui" line="1006"/>
         <source>User</source>
         <translation>Користувачем</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1018"/>
+        <location filename="../MainWindow.ui" line="1011"/>
         <source>Application</source>
         <translation>Додатком</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1045"/>
+        <location filename="../MainWindow.ui" line="1038"/>
         <source>&amp;Clear</source>
         <translation>О&amp;чистити</translation>
     </message>
@@ -2210,234 +2208,234 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Схема БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1137"/>
+        <location filename="../MainWindow.ui" line="1130"/>
         <source>&amp;New Database...</source>
         <translation>&amp;Нова база даних...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1140"/>
-        <location filename="../MainWindow.ui" line="1143"/>
+        <location filename="../MainWindow.ui" line="1133"/>
+        <location filename="../MainWindow.ui" line="1136"/>
         <source>Create a new database file</source>
         <translation>Створити новий файл бази даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1146"/>
+        <location filename="../MainWindow.ui" line="1139"/>
         <source>This option is used to create a new database file.</source>
         <translation>Ця опція використовується щоб створити новий файл бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1149"/>
+        <location filename="../MainWindow.ui" line="1142"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1161"/>
+        <location filename="../MainWindow.ui" line="1154"/>
         <source>&amp;Open Database...</source>
         <translation>&amp;Відкрити базу даних...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1164"/>
-        <location filename="../MainWindow.ui" line="1167"/>
-        <location filename="../MainWindow.ui" line="1773"/>
+        <location filename="../MainWindow.ui" line="1157"/>
+        <location filename="../MainWindow.ui" line="1160"/>
+        <location filename="../MainWindow.ui" line="1761"/>
         <source>Open an existing database file</source>
         <translation>Відкрити існуючий файл бази даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1170"/>
-        <location filename="../MainWindow.ui" line="1776"/>
+        <location filename="../MainWindow.ui" line="1163"/>
+        <location filename="../MainWindow.ui" line="1764"/>
         <source>This option is used to open an existing database file.</source>
         <translation>Ця опція використовується, щоб відкрити існуючий файл бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1173"/>
+        <location filename="../MainWindow.ui" line="1166"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1184"/>
+        <location filename="../MainWindow.ui" line="1177"/>
         <source>&amp;Close Database</source>
         <translation>&amp;Закрити базу даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1187"/>
+        <location filename="../MainWindow.ui" line="1180"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1205"/>
+        <location filename="../MainWindow.ui" line="1198"/>
         <source>Revert database to last saved state</source>
         <translation>Повернути базу даних до останнього збереженого стану</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1208"/>
+        <location filename="../MainWindow.ui" line="1201"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>Ця опція використовується, щоб повернути поточний файл бази даних до його останнього збереженого стану. Всі зміни, зроблені з останньої операції збереження, буде втрачено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1226"/>
+        <location filename="../MainWindow.ui" line="1219"/>
         <source>Write changes to the database file</source>
         <translation>Записати зміни у файл бази даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1229"/>
+        <location filename="../MainWindow.ui" line="1222"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>Ця опція використовується, щоб зберегти зміни у файлі бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1232"/>
+        <location filename="../MainWindow.ui" line="1225"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1246"/>
+        <location filename="../MainWindow.ui" line="1239"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>Ущільнити базу даних, видаливши простір, зайнятий видаленими записами</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1249"/>
-        <location filename="../MainWindow.ui" line="1252"/>
+        <location filename="../MainWindow.ui" line="1242"/>
+        <location filename="../MainWindow.ui" line="1245"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
         <translation>Ущільнити базу даних, видаливши простір, зайнятий видаленими записами.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1260"/>
+        <location filename="../MainWindow.ui" line="1253"/>
         <source>E&amp;xit</source>
         <translation>&amp;Вихід</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1263"/>
+        <location filename="../MainWindow.ui" line="1256"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1274"/>
+        <location filename="../MainWindow.ui" line="1267"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>Імпортувати дані з текстового файлу .sql в нову або існуючу базу даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1277"/>
+        <location filename="../MainWindow.ui" line="1270"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Ця опція дає змогу імпортувати дані з текстового файлу .sql у нову або існуючу базу даних. Файл SQL можна створити на більшості двигунів баз даних, включно з MySQL і PostgreSQL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1288"/>
+        <location filename="../MainWindow.ui" line="1281"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>Відкрити майстер, який дає змогу імпортувати дані з файлу CSV у таблицю бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1291"/>
+        <location filename="../MainWindow.ui" line="1284"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>Відкрити майстер, який дає змогу імпортувати дані з файлу CSV у таблицю бази даних. Файли CSV можна створити в більшості програм баз даних і електронних таблиць.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1302"/>
+        <location filename="../MainWindow.ui" line="1295"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>Експортувати базу даних у текстовий файл .sql.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1305"/>
+        <location filename="../MainWindow.ui" line="1298"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Ця опція дає змогу експортувати базу даних у текстовий файл .sql. Файли SQL містять всі дані, необхідні для створення бази даних у більшості движків баз даних, включно з MySQL і PostgreSQL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1313"/>
+        <location filename="../MainWindow.ui" line="1306"/>
         <source>&amp;Table(s) as CSV file...</source>
         <translation>Таблиці у файл CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1316"/>
+        <location filename="../MainWindow.ui" line="1309"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>Експортувати таблицю бази даних як CSV текстовий файл.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1319"/>
+        <location filename="../MainWindow.ui" line="1312"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>Експортувати таблицю бази даних як CSV текстовий файл, готовий для імпортування в інші бази даних або програми електронних таблиць.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1337"/>
+        <location filename="../MainWindow.ui" line="1330"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>Відкрити майстер створення таблиць, де можливо визначити ім&apos;я і поля для нової таблиці в базі даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1358"/>
+        <location filename="../MainWindow.ui" line="1351"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>Відкрити майстер видалення таблиці, де можна вибрати таблицю бази даних для видалення.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1376"/>
+        <location filename="../MainWindow.ui" line="1369"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>Відкрити майстер зміни таблиці, де можливо перейменувати існуючу таблиць. Можна додати або видалити поля таблиці, так само змінювати імена полів і типи.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1394"/>
+        <location filename="../MainWindow.ui" line="1387"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>Відкрити майстер створення Індексу, в якому можна визначити новий індекс для існуючої таблиці бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1406"/>
+        <location filename="../MainWindow.ui" line="1399"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Налаштування...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1409"/>
-        <location filename="../MainWindow.ui" line="1412"/>
+        <location filename="../MainWindow.ui" line="1402"/>
+        <location filename="../MainWindow.ui" line="1405"/>
         <source>Open the preferences window.</source>
         <translation>Відкрити вікно налаштувань.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1427"/>
+        <location filename="../MainWindow.ui" line="1420"/>
         <source>&amp;DB Toolbar</source>
         <translation>&amp;Панель інструментів БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1430"/>
+        <location filename="../MainWindow.ui" line="1423"/>
         <source>Shows or hides the Database toolbar.</source>
         <translation>Показати або приховати панель інструментів БД.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1448"/>
+        <location filename="../MainWindow.ui" line="1441"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1456"/>
+        <location filename="../MainWindow.ui" line="1449"/>
         <source>&amp;About...</source>
         <translation>Про &amp;програму...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1464"/>
+        <location filename="../MainWindow.ui" line="1457"/>
         <source>&amp;Recently opened</source>
         <translation>&amp;Недавно відкриті</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1473"/>
+        <location filename="../MainWindow.ui" line="1466"/>
         <source>Open &amp;tab</source>
         <translation>Відкрити &amp;вкладку</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1767"/>
+        <location filename="../MainWindow.ui" line="1755"/>
         <source>&amp;Open Database Read Only...</source>
         <translation>&amp;Відкрити БД тільки для читання...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1770"/>
+        <location filename="../MainWindow.ui" line="1758"/>
         <source>Open an existing database file in read only mode</source>
         <translation>Відкрити існуючий файл БД у режимі тільки для читання</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1787"/>
+        <location filename="../MainWindow.ui" line="1775"/>
         <source>Unlock view editing</source>
         <translation>Розблокувати редагування вигляду</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1790"/>
+        <location filename="../MainWindow.ui" line="1778"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
         <translation>Це розблоковує поточний вигляд для редагування. Проте вам необхідно виділити тригери для редагування</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1433"/>
-        <location filename="../MainWindow.ui" line="1476"/>
+        <location filename="../MainWindow.ui" line="1426"/>
+        <location filename="../MainWindow.ui" line="1469"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
@@ -2466,47 +2464,47 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete"> Редагування комірки БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="978"/>
+        <location filename="../MainWindow.ui" line="971"/>
         <source>SQL &amp;Log</source>
         <translation>&amp;Журнал SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="996"/>
+        <location filename="../MainWindow.ui" line="989"/>
         <source>Show S&amp;QL submitted by</source>
         <translation>По&amp;казати SQL, який виконано</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1088"/>
+        <location filename="../MainWindow.ui" line="1081"/>
         <source>&amp;Plot</source>
         <translation>&amp;Графік</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1202"/>
+        <location filename="../MainWindow.ui" line="1195"/>
         <source>&amp;Revert Changes</source>
         <translation>&amp;Скасувати зміни</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1223"/>
+        <location filename="../MainWindow.ui" line="1216"/>
         <source>&amp;Write Changes</source>
         <translation>&amp;Записати зміни</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1243"/>
+        <location filename="../MainWindow.ui" line="1236"/>
         <source>Compact &amp;Database</source>
         <translation>&amp;Ущільнити базу даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1271"/>
+        <location filename="../MainWindow.ui" line="1264"/>
         <source>&amp;Database from SQL file...</source>
         <translation>&amp;База даних з файлу SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1285"/>
+        <location filename="../MainWindow.ui" line="1278"/>
         <source>&amp;Table from CSV file...</source>
         <translation>&amp;Таблиці з файлу CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1299"/>
+        <location filename="../MainWindow.ui" line="1292"/>
         <source>&amp;Database to SQL file...</source>
         <translation>Базу &amp;даних в файл SQL...</translation>
     </message>
@@ -2515,32 +2513,32 @@ Do you want to insert it anyway?</source>
         <translation type="vanished">&amp;Таблиці в файл CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1334"/>
+        <location filename="../MainWindow.ui" line="1327"/>
         <source>&amp;Create Table...</source>
         <translation>&amp;Створити таблицю...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1352"/>
+        <location filename="../MainWindow.ui" line="1345"/>
         <source>&amp;Delete Table...</source>
         <translation>&amp;Видалити таблицю...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1373"/>
+        <location filename="../MainWindow.ui" line="1366"/>
         <source>&amp;Modify Table...</source>
         <translation>&amp;Змінити таблицю...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1391"/>
+        <location filename="../MainWindow.ui" line="1384"/>
         <source>Create &amp;Index...</source>
         <translation>Створити і&amp;ндекс...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1445"/>
+        <location filename="../MainWindow.ui" line="1438"/>
         <source>W&amp;hat&apos;s This?</source>
         <translation>Що &amp;це таке?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1485"/>
+        <location filename="../MainWindow.ui" line="1478"/>
         <source>&amp;Execute SQL</source>
         <translation>Ви&amp;конати код SQL</translation>
     </message>
@@ -2549,19 +2547,19 @@ Do you want to insert it anyway?</source>
         <translation type="vanished">Виконати код SQL [F5, Ctrl+Return]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1497"/>
+        <location filename="../MainWindow.ui" line="1490"/>
         <source>Open SQL file</source>
         <translation>Відкрити файл SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1506"/>
-        <location filename="../MainWindow.ui" line="1663"/>
-        <location filename="../MainWindow.ui" line="1666"/>
+        <location filename="../MainWindow.ui" line="1499"/>
+        <location filename="../MainWindow.ui" line="1656"/>
+        <location filename="../MainWindow.ui" line="1659"/>
         <source>Save SQL file</source>
         <translation>Зберегти файл SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1530"/>
+        <location filename="../MainWindow.ui" line="1523"/>
         <source>Execute current line</source>
         <translation>Виконати поточний рядок</translation>
     </message>
@@ -2575,22 +2573,22 @@ Do you want to insert it anyway?</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1544"/>
+        <location filename="../MainWindow.ui" line="1537"/>
         <source>Export as CSV file</source>
         <translation>Експортувати у файл CSV</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1547"/>
+        <location filename="../MainWindow.ui" line="1540"/>
         <source>Export table as comma separated values file</source>
         <translation>Експортувати таблицю як CSV файл</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1556"/>
+        <location filename="../MainWindow.ui" line="1549"/>
         <source>&amp;Wiki...</source>
         <translation>В&amp;ікі...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1568"/>
+        <location filename="../MainWindow.ui" line="1561"/>
         <source>Bug &amp;report...</source>
         <translation>&amp;Звіт про помилку...</translation>
     </message>
@@ -2599,29 +2597,29 @@ Do you want to insert it anyway?</source>
         <translation type="vanished">&amp;Веб-сайт...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1595"/>
-        <location filename="../MainWindow.ui" line="1598"/>
+        <location filename="../MainWindow.ui" line="1588"/>
+        <location filename="../MainWindow.ui" line="1591"/>
         <source>Save the current session to a file</source>
         <translation>Зберегти поточний стан у файл</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1613"/>
-        <location filename="../MainWindow.ui" line="1616"/>
+        <location filename="../MainWindow.ui" line="1606"/>
+        <location filename="../MainWindow.ui" line="1609"/>
         <source>Load a working session from a file</source>
         <translation>Завантажити робочий стан із файлу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1639"/>
+        <location filename="../MainWindow.ui" line="1632"/>
         <source>&amp;Set Encryption</source>
         <translation>Ши&amp;фрування</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1684"/>
+        <location filename="../MainWindow.ui" line="1677"/>
         <source>Copy Create statement</source>
         <translation>Копіювати CREATE вираз</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1687"/>
+        <location filename="../MainWindow.ui" line="1680"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
         <translation>Копіювати CREATE вираз елемента в буффер обміну</translation>
     </message>
@@ -2677,7 +2675,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="292"/>
-        <location filename="../MainWindow.cpp" line="2152"/>
+        <location filename="../MainWindow.cpp" line="2150"/>
         <source>Choose a database file</source>
         <translation>Вибрати файл бази даних</translation>
     </message>
@@ -2690,8 +2688,8 @@ Reason: %1</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
-        <location filename="../MainWindow.cpp" line="1249"/>
-        <location filename="../MainWindow.cpp" line="2068"/>
+        <location filename="../MainWindow.cpp" line="1256"/>
+        <location filename="../MainWindow.cpp" line="2066"/>
         <source>Choose a filename to save under</source>
         <translation>Вибрати ім&apos;я, під яким зберегти дані</translation>
     </message>
@@ -2743,23 +2741,23 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">Немає відкритої бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1847"/>
+        <location filename="../MainWindow.cpp" line="1855"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Вийшла нова версія оглядача для SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Вона доступна для скачування за посиланням &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1922"/>
-        <location filename="../MainWindow.cpp" line="2069"/>
+        <location filename="../MainWindow.cpp" line="1920"/>
+        <location filename="../MainWindow.cpp" line="2067"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Файл проекту оглядача для SQLite (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1039"/>
+        <location filename="../MainWindow.cpp" line="1046"/>
         <source>Error executing query: %1</source>
         <translation>Помилка виконання запиту: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1032"/>
+        <location filename="../MainWindow.cpp" line="1039"/>
         <source>%1 rows returned in %2ms from: %3</source>
         <translation>%1 рядків повернуто за %2мс з: %3</translation>
     </message>
@@ -2780,7 +2778,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">Текстові файли (*.csv *.txt);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1146"/>
+        <location filename="../MainWindow.cpp" line="1153"/>
         <source>Import completed</source>
         <translation>Імпорт завершено</translation>
     </message>
@@ -2790,12 +2788,12 @@ All data associated with the %1 will be lost.</source>
         <translation type="obsolete">Помилка під час збереження файлу бази даних. Це означає, що не всі зміни в базу даних було збережено. Спочатку Вам потрібно розв&apos;язати наступну помилку.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1208"/>
+        <location filename="../MainWindow.cpp" line="1215"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Скасувати всі зміни, зроблені у файлі бази даних &apos;%1&apos; після останнього збереження?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1232"/>
+        <location filename="../MainWindow.cpp" line="1239"/>
         <source>Choose a file to import</source>
         <translation>Оберіть файл для імпорту</translation>
     </message>
@@ -2804,42 +2802,42 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">Текстові файли (*.sql *.txt);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1243"/>
+        <location filename="../MainWindow.cpp" line="1250"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Створити новий файл бази даних для збереження імпортованих даних?
 Якщо відповідь Ні, то здійсниться спроба імпортувати дані файлу SQL в поточну базу даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1253"/>
+        <location filename="../MainWindow.cpp" line="1260"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Файл %1 вже існує. Оберіть інше ім&apos;я.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1268"/>
+        <location filename="../MainWindow.cpp" line="1275"/>
         <source>Error importing data: %1</source>
         <translation>Помилка імпортування даних: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1270"/>
+        <location filename="../MainWindow.cpp" line="1277"/>
         <source>Import completed.</source>
         <translation>Імпорт завершено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1326"/>
-        <location filename="../MainWindow.cpp" line="1327"/>
+        <location filename="../MainWindow.cpp" line="1333"/>
+        <location filename="../MainWindow.cpp" line="1334"/>
         <source>Delete View</source>
         <translation>Видалити перегляд</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1331"/>
-        <location filename="../MainWindow.cpp" line="1332"/>
+        <location filename="../MainWindow.cpp" line="1338"/>
+        <location filename="../MainWindow.cpp" line="1339"/>
         <source>Delete Trigger</source>
         <translation>Видалити тригер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1336"/>
-        <location filename="../MainWindow.cpp" line="1337"/>
+        <location filename="../MainWindow.cpp" line="1343"/>
+        <location filename="../MainWindow.cpp" line="1344"/>
         <source>Delete Index</source>
         <translation>Видалити індекс</translation>
     </message>
@@ -2848,29 +2846,28 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="vanished">Введіть URL файлу БД для його відкриття.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1867"/>
         <source>Please enter the URL of the database file to save.</source>
-        <translation>Введіть URL файлу БД для його збереження.</translation>
+        <translation type="vanished">Введіть URL файлу БД для його збереження.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2395"/>
+        <location filename="../MainWindow.cpp" line="2393"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Оберіть нову систему кодування для цієї таблиці.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2393"/>
+        <location filename="../MainWindow.cpp" line="2391"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Оберіть нову систему кодування для всіх таблиць.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2398"/>
+        <location filename="../MainWindow.cpp" line="2396"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Залиште це поле порожнім якщо хочете, щоб використовувалося кодування за замовчуванням.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2409"/>
+        <location filename="../MainWindow.cpp" line="2407"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Кодування невірне або не підтримується.</translation>
     </message>
@@ -2879,20 +2876,19 @@ Leave the field empty for using the database encoding.</source>
         <translation type="vanished">Скасувати</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1355"/>
-        <location filename="../MainWindow.cpp" line="1341"/>
-        <location filename="../MainWindow.cpp" line="1342"/>
+        <location filename="../MainWindow.ui" line="1348"/>
+        <location filename="../MainWindow.cpp" line="1348"/>
+        <location filename="../MainWindow.cpp" line="1349"/>
         <source>Delete Table</source>
         <translation>Видалити таблицю</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1391"/>
+        <location filename="../MainWindow.cpp" line="1398"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="978"/>
-        <location filename="../MainWindow.cpp" line="1597"/>
+        <location filename="../MainWindow.cpp" line="1606"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>Встановлення значень PRAGMA завершить поточну транзакцію. Встановити значення?</translation>
@@ -2905,32 +2901,38 @@ Are you sure?</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="986"/>
+        <location filename="../MainWindow.cpp" line="985"/>
+        <source>Setting PRAGMA values or vacuuming will commit your current transaction.
+Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="993"/>
         <source>Execution aborted by user</source>
         <translation>Виконання скасовано користувачем</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1055"/>
+        <location filename="../MainWindow.cpp" line="1062"/>
         <source>, %1 rows affected</source>
         <translation>, %1 рядків постраждало</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1058"/>
+        <location filename="../MainWindow.cpp" line="1065"/>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
         <translation>Запит виконано успішно: %1 (тривало %2мс%3)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1133"/>
+        <location filename="../MainWindow.cpp" line="1140"/>
         <source>Choose text files</source>
         <translation>Оберіть текстові файли</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1134"/>
+        <location filename="../MainWindow.cpp" line="1141"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>Текстові файли(*.csv *.txt);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1199"/>
+        <location filename="../MainWindow.cpp" line="1206"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -2939,89 +2941,89 @@ Are you sure?</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1233"/>
-        <location filename="../MainWindow.cpp" line="1669"/>
-        <location filename="../MainWindow.cpp" line="1725"/>
+        <location filename="../MainWindow.cpp" line="1240"/>
+        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1734"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Текстові файли(*.sql *.txt);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1328"/>
-        <location filename="../MainWindow.cpp" line="1329"/>
+        <location filename="../MainWindow.cpp" line="1335"/>
+        <location filename="../MainWindow.cpp" line="1336"/>
         <source>Modify View</source>
         <translation>Змінити вид</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1333"/>
-        <location filename="../MainWindow.cpp" line="1334"/>
+        <location filename="../MainWindow.cpp" line="1340"/>
+        <location filename="../MainWindow.cpp" line="1341"/>
         <source>Modify Trigger</source>
         <translation>Змінити тригер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1338"/>
-        <location filename="../MainWindow.cpp" line="1339"/>
+        <location filename="../MainWindow.cpp" line="1345"/>
+        <location filename="../MainWindow.cpp" line="1346"/>
         <source>Modify Index</source>
         <translation>Змінити індекс</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1343"/>
-        <location filename="../MainWindow.cpp" line="1344"/>
+        <location filename="../MainWindow.cpp" line="1350"/>
+        <location filename="../MainWindow.cpp" line="1351"/>
         <source>Modify Table</source>
         <translation>Змінити таблицю</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1668"/>
+        <location filename="../MainWindow.cpp" line="1677"/>
         <source>Select SQL file to open</source>
         <translation>Обрати файл SQL для відкривання</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1677"/>
+        <location filename="../MainWindow.cpp" line="1686"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>Неможливо прочитати файл: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1715"/>
+        <location filename="../MainWindow.cpp" line="1724"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>Неможливо зберегти файл: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1724"/>
+        <location filename="../MainWindow.cpp" line="1733"/>
         <source>Select file name</source>
         <translation>Обрати ім&apos;я файлу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1739"/>
+        <location filename="../MainWindow.cpp" line="1748"/>
         <source>Select extension file</source>
         <translation>Обрати розширення файлу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1740"/>
+        <location filename="../MainWindow.cpp" line="1749"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Розширення(*.so *.dll);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1746"/>
+        <location filename="../MainWindow.cpp" line="1755"/>
         <source>Extension successfully loaded.</source>
         <translation>Розширення успішно завантажено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1748"/>
-        <location filename="../MainWindow.cpp" line="1760"/>
+        <location filename="../MainWindow.cpp" line="1757"/>
+        <location filename="../MainWindow.cpp" line="1769"/>
         <source>Error loading extension: %1</source>
         <translation>Помилка завантаження розширення: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1843"/>
+        <location filename="../MainWindow.cpp" line="1851"/>
         <source>Don&apos;t show again</source>
         <translation>Не показувати наступного разу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1846"/>
+        <location filename="../MainWindow.cpp" line="1854"/>
         <source>New version available.</source>
         <translation>Доступна нова версія.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2459"/>
+        <location filename="../MainWindow.cpp" line="2457"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Будь ласка, введіть псевдо-первинний ключ для можливості редагування у цьому виді. Це має бути і&apos;мя унікального стовпця у виді</translation>
     </message>
@@ -3034,7 +3036,7 @@ Are you sure?</source>
         <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1921"/>
+        <location filename="../MainWindow.cpp" line="1919"/>
         <source>Choose a file to open</source>
         <translation>Вибрати файл для відкривання</translation>
     </message>
@@ -3775,68 +3777,68 @@ Create a backup!</source>
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="104"/>
+        <location filename="../RemoteDatabase.cpp" line="106"/>
         <source>Error when connecting to %1.
 %2</source>
         <translation>Помилка під час під&apos;єднання до %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="196"/>
+        <location filename="../RemoteDatabase.cpp" line="216"/>
         <source>Error opening remote file at %1.
 %2</source>
         <translation>Помилка під час відкривання віддаленого файлу %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="244"/>
+        <location filename="../RemoteDatabase.cpp" line="284"/>
         <source>Error: Invalid client certificate specified.</source>
         <translation>Помилка: Вказано неправильний сертифікат клієнта.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="256"/>
+        <location filename="../RemoteDatabase.cpp" line="296"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
         <translation>Будь ласка, введіть парольну фразу для цього сертифіката клієнта, для автентифікації</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="279"/>
+        <location filename="../RemoteDatabase.cpp" line="320"/>
         <source>Cancel</source>
         <translation> Скасувати</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="283"/>
+        <location filename="../RemoteDatabase.cpp" line="324"/>
         <source>Uploading remote database to
 %1.</source>
         <translation>Вивантаження віддаленої бази даних до
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="285"/>
+        <location filename="../RemoteDatabase.cpp" line="326"/>
         <source>Downloading remote database from
 %1.</source>
         <translation>Завантаження віддаленої бази даних із
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="303"/>
-        <location filename="../RemoteDatabase.cpp" line="352"/>
+        <location filename="../RemoteDatabase.cpp" line="344"/>
+        <location filename="../RemoteDatabase.cpp" line="397"/>
         <source>Error: The network is not accessible.</source>
         <translation>Помилка: Мережа не доступна.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="360"/>
+        <location filename="../RemoteDatabase.cpp" line="406"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation>Помилка: Неможливо відкрити файл для відправлення.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="409"/>
+        <location filename="../RemoteDatabase.cpp" line="482"/>
         <source>Error opening local databases list.
 %1</source>
         <translation>Помилка відкривання списку локальних баз даних.
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="426"/>
+        <location filename="../RemoteDatabase.cpp" line="499"/>
         <source>Error creating local databases list.
 %1</source>
         <translation type="unfinished">Помилка створення списку локальних баз даних.
@@ -3847,29 +3849,31 @@ Create a backup!</source>
     <name>RemoteDock</name>
     <message>
         <location filename="../RemoteDock.ui" line="14"/>
-        <location filename="../RemoteDock.ui" line="33"/>
         <source>Remote</source>
         <translation>Віддалений</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="22"/>
         <source>B&amp;rowse</source>
-        <translation>В&amp;ідкрити</translation>
+        <translation type="vanished">В&amp;ідкрити</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="38"/>
         <source>Local</source>
-        <translation>Локальний</translation>
+        <translation type="vanished">Локальний</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="59"/>
+        <location filename="../RemoteDock.ui" line="22"/>
         <source>Identity</source>
         <translation>Ідентичний</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="76"/>
+        <location filename="../RemoteDock.ui" line="39"/>
         <source>Go</source>
         <translation>Перейти</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="63"/>
+        <source>Push currently opened database to server</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3899,9 +3903,61 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="241"/>
+        <location filename="../RemoteModel.cpp" line="240"/>
         <source>bytes</source>
         <translation>байтів</translation>
+    </message>
+</context>
+<context>
+    <name>RemotePushDialog</name>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="14"/>
+        <source>Push database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="22"/>
+        <source>Database na&amp;me to push to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="35"/>
+        <source>Commit message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="45"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="59"/>
+        <source>Database licence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="79"/>
+        <source>Public</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="35"/>
+        <source>Database will be public. Everyone has read access to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="37"/>
+        <source>Database will be private. Only you have access to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="77"/>
+        <source>Unspecified</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

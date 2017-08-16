@@ -269,33 +269,33 @@ If any of the other settings were altered for this database file you need to pro
         <translation>데이터베이스 연결(attach)을 위해 불러올 데이터베이스의 별명을 지정해주세요</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="209"/>
+        <location filename="../sqlitedb.cpp" line="210"/>
         <source>Invalid file format</source>
         <translation>잘못된 파일 포맷입니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="425"/>
+        <location filename="../sqlitedb.cpp" line="426"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>%1 데이터베이스 파일을 생성하기 위해 변경사항을 저장하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="484"/>
+        <location filename="../sqlitedb.cpp" line="485"/>
         <source>Exporting database to SQL file...</source>
         <translation>데이터베이스를 SQL 파일로 내보내기 중...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="485"/>
-        <location filename="../sqlitedb.cpp" line="707"/>
+        <location filename="../sqlitedb.cpp" line="486"/>
+        <location filename="../sqlitedb.cpp" line="708"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="706"/>
+        <location filename="../sqlitedb.cpp" line="707"/>
         <source>Executing SQL...</source>
         <translation>SQL 실행중...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="728"/>
+        <location filename="../sqlitedb.cpp" line="729"/>
         <source>Action cancelled.</source>
         <translation>실행 취소되었습니다.</translation>
     </message>
@@ -310,51 +310,51 @@ Aborting execution.</source>
         <translation type="vanished">필드이름 변경: %1 테이블을 발견할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="758"/>
-        <location filename="../sqlitedb.cpp" line="768"/>
+        <location filename="../sqlitedb.cpp" line="759"/>
+        <location filename="../sqlitedb.cpp" line="769"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>#%1: %2 구문에 에러가 있어 실행을 중단했습니다%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="761"/>
-        <location filename="../sqlitedb.cpp" line="771"/>
+        <location filename="../sqlitedb.cpp" line="762"/>
+        <location filename="../sqlitedb.cpp" line="772"/>
         <source> and rolling back</source>
         <translation>그리고 롤백 합니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="973"/>
+        <location filename="../sqlitedb.cpp" line="974"/>
         <source>Cannot set data on this object</source>
         <translation>이 객체에는 데이터를 저장할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1075"/>
+        <location filename="../sqlitedb.cpp" line="1076"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>필드이름 변경: %1 필드를 발견할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1083"/>
+        <location filename="../sqlitedb.cpp" line="1084"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>필드이름 변경: 세이브포인트를 생성하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1132"/>
+        <location filename="../sqlitedb.cpp" line="1133"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>필드이름 변경: 새 테이블을 생성하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1141"/>
+        <location filename="../sqlitedb.cpp" line="1142"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>필드이름 변경: 새 테이블로 데이터를 복사하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1184"/>
+        <location filename="../sqlitedb.cpp" line="1185"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>필드이름 변경: 이전 테이블을 삭제하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1209"/>
+        <location filename="../sqlitedb.cpp" line="1210"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -363,24 +363,24 @@ Aborting execution%3.</source>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1218"/>
+        <location filename="../sqlitedb.cpp" line="1219"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>필드이름 변경: 세이브포인트를 해제하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1232"/>
+        <location filename="../sqlitedb.cpp" line="1233"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>테이블명을 &apos;%1&apos;에서 &apos;%2&apos;로 변경하는데 에러가 발생했습니다. 데이베이스 메시지:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1277"/>
+        <location filename="../sqlitedb.cpp" line="1278"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;문자열이 바이너리 데이터를 포함하여 로깅될 수 없습니다.&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1487"/>
+        <location filename="../sqlitedb.cpp" line="1488"/>
         <source>could not get column information</source>
         <translation>컬럼(열) 정보를 가져올 수 없습니다</translation>
     </message>
@@ -389,7 +389,7 @@ Aborting execution%3.</source>
         <translation type="vanished">%1 은(는) 알 수 없는 객체 타입입니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1364"/>
+        <location filename="../sqlitedb.cpp" line="1365"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>데이터베이스 객체 목록을 가져올 수 없습니다: %1, %2</translation>
     </message>
@@ -398,22 +398,22 @@ Aborting execution%3.</source>
         <translation type="vanished">타입을 얻어올 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1387"/>
+        <location filename="../sqlitedb.cpp" line="1388"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>pragma %1 에서 출력결과를 받아올 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1391"/>
+        <location filename="../sqlitedb.cpp" line="1392"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>pragma 명령을 실행할 수 없습니다: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1406"/>
+        <location filename="../sqlitedb.cpp" line="1407"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>pragma 세팅을 %1에서 %2로 변경하는데 에러: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1451"/>
+        <location filename="../sqlitedb.cpp" line="1452"/>
         <source>File not found.</source>
         <translation>파일이 없습니다.</translation>
     </message>
@@ -1946,7 +1946,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1704"/>
-        <location filename="../MainWindow.cpp" line="2394"/>
+        <location filename="../MainWindow.cpp" line="2395"/>
         <source>Set encoding</source>
         <translation>인코딩 지정하기</translation>
     </message>
@@ -2644,7 +2644,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="292"/>
-        <location filename="../MainWindow.cpp" line="2149"/>
+        <location filename="../MainWindow.cpp" line="2150"/>
         <source>Choose a database file</source>
         <translation>데이터베이스 파일을 선택하세요</translation>
     </message>
@@ -2659,7 +2659,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
         <location filename="../MainWindow.cpp" line="1256"/>
-        <location filename="../MainWindow.cpp" line="2065"/>
+        <location filename="../MainWindow.cpp" line="2066"/>
         <source>Choose a filename to save under</source>
         <translation>저장하려는 파일명을 고르세요</translation>
     </message>
@@ -2773,8 +2773,8 @@ All data associated with the %1 will be lost.</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1240"/>
-        <location filename="../MainWindow.cpp" line="1677"/>
-        <location filename="../MainWindow.cpp" line="1733"/>
+        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1734"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>문자열 파일(*.sql *.txt);;모든 파일(*)</translation>
     </message>
@@ -2848,12 +2848,12 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2456"/>
+        <location filename="../MainWindow.cpp" line="2457"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>이 뷰에서 수정을 활성화하기 위하여 pseudo-primary key를 입력하시기 바랍니다. 이것은 뷰에서 유일한 이름이어야 합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1605"/>
+        <location filename="../MainWindow.cpp" line="1606"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA 설정을 변경하려면 여러분의 현재 트랜잭션을 커밋해야합니다.
@@ -2883,58 +2883,58 @@ Are you sure?</source>
         <translation>텍스트 파일 선택</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1676"/>
+        <location filename="../MainWindow.cpp" line="1677"/>
         <source>Select SQL file to open</source>
         <translation>열 SQL 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1685"/>
+        <location filename="../MainWindow.cpp" line="1686"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>파일을 읽을 수 없습니다: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1723"/>
+        <location filename="../MainWindow.cpp" line="1724"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>파일을 저장할 수 없습니다: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1732"/>
+        <location filename="../MainWindow.cpp" line="1733"/>
         <source>Select file name</source>
         <translation>파일 이름을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1747"/>
+        <location filename="../MainWindow.cpp" line="1748"/>
         <source>Select extension file</source>
         <translation>파일 확장자를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1748"/>
+        <location filename="../MainWindow.cpp" line="1749"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>확장기능 파일들(*.so *.dll);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1754"/>
+        <location filename="../MainWindow.cpp" line="1755"/>
         <source>Extension successfully loaded.</source>
         <translation>확장기능을 성공적으로 불러왔습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1756"/>
-        <location filename="../MainWindow.cpp" line="1768"/>
+        <location filename="../MainWindow.cpp" line="1757"/>
+        <location filename="../MainWindow.cpp" line="1769"/>
         <source>Error loading extension: %1</source>
         <translation>확장기능을 불러오기 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1850"/>
+        <location filename="../MainWindow.cpp" line="1851"/>
         <source>Don&apos;t show again</source>
         <translation>다시 보지 않기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1853"/>
+        <location filename="../MainWindow.cpp" line="1854"/>
         <source>New version available.</source>
         <translation>이용 가능한 새 버전이 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1854"/>
+        <location filename="../MainWindow.cpp" line="1855"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>이용 가능한 새 버전이 있습니다 (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;&lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;에서 다운로드하세요.</translation>
     </message>
@@ -2951,34 +2951,34 @@ Are you sure?</source>
         <translation type="vanished">데이터베이스 파일을 저장하기 위한 URL을 입력해주세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1918"/>
+        <location filename="../MainWindow.cpp" line="1919"/>
         <source>Choose a file to open</source>
         <translation>불러올 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1919"/>
-        <location filename="../MainWindow.cpp" line="2066"/>
+        <location filename="../MainWindow.cpp" line="1920"/>
+        <location filename="../MainWindow.cpp" line="2067"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser for SQLite 프로젝트 파일 (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2392"/>
+        <location filename="../MainWindow.cpp" line="2393"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>이 테이블에 적용할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2390"/>
+        <location filename="../MainWindow.cpp" line="2391"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>모든 테이블에 설정 할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2395"/>
+        <location filename="../MainWindow.cpp" line="2396"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>데이터베이스 인코딩을 사용하기위해 필드를 비워둡니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2406"/>
+        <location filename="../MainWindow.cpp" line="2407"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>이 인코딩은 올바르지 않거나 지원되지 않습니다.</translation>
     </message>
@@ -3719,63 +3719,63 @@ Create a backup!</source>
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="109"/>
+        <location filename="../RemoteDatabase.cpp" line="106"/>
         <source>Error when connecting to %1.
 %2</source>
         <translation>%1 에 연결할 때 에러가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="223"/>
+        <location filename="../RemoteDatabase.cpp" line="216"/>
         <source>Error opening remote file at %1.
 %2</source>
         <translation>%1 에 있는 원격 파일을 열 때 에러가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="291"/>
+        <location filename="../RemoteDatabase.cpp" line="284"/>
         <source>Error: Invalid client certificate specified.</source>
         <translation>에러: 올바르지 않은 클라이언트 인증서입니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="303"/>
+        <location filename="../RemoteDatabase.cpp" line="296"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
         <translation>인증을 위한 클라이언트 인증서 암호를 입력해주세요.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="327"/>
+        <location filename="../RemoteDatabase.cpp" line="320"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="331"/>
+        <location filename="../RemoteDatabase.cpp" line="324"/>
         <source>Uploading remote database to
 %1.</source>
         <translation>%2 로 원격 데이터베이스 업로드 중입니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="333"/>
+        <location filename="../RemoteDatabase.cpp" line="326"/>
         <source>Downloading remote database from
 %1.</source>
         <translation>%1 에서 원격 데이터베이스 다운로드 중입니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="351"/>
-        <location filename="../RemoteDatabase.cpp" line="404"/>
+        <location filename="../RemoteDatabase.cpp" line="344"/>
+        <location filename="../RemoteDatabase.cpp" line="397"/>
         <source>Error: The network is not accessible.</source>
         <translation>에러: 네트워크가 접근할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="413"/>
+        <location filename="../RemoteDatabase.cpp" line="406"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation>에러: 보낼 파일을 열 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="468"/>
+        <location filename="../RemoteDatabase.cpp" line="482"/>
         <source>Error opening local databases list.
 %1</source>
         <translation>지역 데이터베이스 목록을 열 때 에러가 발생했습니다. %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="485"/>
+        <location filename="../RemoteDatabase.cpp" line="499"/>
         <source>Error creating local databases list.
 %1</source>
         <translation>지역 데이터베이스 목록을 생성할 때 에러가 발생했습니다. %1</translation>

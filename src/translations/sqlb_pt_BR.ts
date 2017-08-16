@@ -2336,7 +2336,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Remote</source>
-        <translation>Remoto</translation>
+        <translation type="vanished">Remoto</translation>
     </message>
     <message>
         <source>Edit Database &amp;Cell</source>
@@ -2376,7 +2376,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Save to Remote</source>
-        <translation>Salvar para remoto</translation>
+        <translation type="vanished">Salvar para remoto</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2392,7 +2392,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Please enter the URL of the database file to save.</source>
-        <translation>Por favor, entre a URL do arquivo de banco de dados para salvar.</translation>
+        <translation type="vanished">Por favor, entre a URL do arquivo de banco de dados para salvar.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2474,6 +2474,11 @@ Motivo: %1</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setting PRAGMA values or vacuuming will commit your current transaction.
+Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3123,11 +3128,11 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>B&amp;rowse</source>
-        <translation>&amp;Navegar</translation>
+        <translation type="vanished">&amp;Navegar</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation>Local</translation>
+        <translation type="vanished">Local</translation>
     </message>
     <message>
         <source>Identity</source>
@@ -3136,6 +3141,10 @@ Faça um backup!</translation>
     <message>
         <source>Go</source>
         <translation>Ir</translation>
+    </message>
+    <message>
+        <source>Push currently opened database to server</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3162,6 +3171,49 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>Commit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemotePushDialog</name>
+    <message>
+        <source>Push database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database na&amp;me to push to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commit message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database licence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database will be public. Everyone has read access to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database will be private. Only you have access to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unspecified</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

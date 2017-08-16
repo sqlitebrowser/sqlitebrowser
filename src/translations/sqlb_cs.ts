@@ -256,33 +256,33 @@ If any of the other settings were altered for this database file you need to pro
         <translation>Prosím specifikujte jméno databáze, pod kterým chcete přistupovat k připojené databázi</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="209"/>
+        <location filename="../sqlitedb.cpp" line="210"/>
         <source>Invalid file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="425"/>
+        <location filename="../sqlitedb.cpp" line="426"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>Chcete uložit změny provedené do databázového souboru %1?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="484"/>
+        <location filename="../sqlitedb.cpp" line="485"/>
         <source>Exporting database to SQL file...</source>
         <translation>Exportuji databázi do souboru SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="485"/>
-        <location filename="../sqlitedb.cpp" line="707"/>
+        <location filename="../sqlitedb.cpp" line="486"/>
+        <location filename="../sqlitedb.cpp" line="708"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="706"/>
+        <location filename="../sqlitedb.cpp" line="707"/>
         <source>Executing SQL...</source>
         <translation>Provádím SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="728"/>
+        <location filename="../sqlitedb.cpp" line="729"/>
         <source>Action cancelled.</source>
         <translation>Akce zrušena.</translation>
     </message>
@@ -297,76 +297,76 @@ Ruším provedení.</translation>
         <translation type="vanished">renameColumn: nemohu nalézt tabulku %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="758"/>
-        <location filename="../sqlitedb.cpp" line="768"/>
+        <location filename="../sqlitedb.cpp" line="759"/>
+        <location filename="../sqlitedb.cpp" line="769"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="761"/>
-        <location filename="../sqlitedb.cpp" line="771"/>
+        <location filename="../sqlitedb.cpp" line="762"/>
+        <location filename="../sqlitedb.cpp" line="772"/>
         <source> and rolling back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="973"/>
+        <location filename="../sqlitedb.cpp" line="974"/>
         <source>Cannot set data on this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1075"/>
+        <location filename="../sqlitedb.cpp" line="1076"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>renameColumn: nemohu nalézt sloupec %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1083"/>
+        <location filename="../sqlitedb.cpp" line="1084"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: vytváření bodu obnovy selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1132"/>
+        <location filename="../sqlitedb.cpp" line="1133"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: vytváření nové tabulky selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1141"/>
+        <location filename="../sqlitedb.cpp" line="1142"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: kopírování dat do nové tabulky selhalo. DB říká:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1184"/>
+        <location filename="../sqlitedb.cpp" line="1185"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: smazání staré tabulky selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1209"/>
+        <location filename="../sqlitedb.cpp" line="1210"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1218"/>
+        <location filename="../sqlitedb.cpp" line="1219"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: uvolňování bodu obnovy selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1232"/>
+        <location filename="../sqlitedb.cpp" line="1233"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Chyba při přejmenování tabulky &apos;%1&apos; to &apos;%2&apos;.Zpráva z databáze:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1277"/>
+        <location filename="../sqlitedb.cpp" line="1278"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;string nemůže být zaznamenán, obsahuje binární data&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1487"/>
+        <location filename="../sqlitedb.cpp" line="1488"/>
         <source>could not get column information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -375,7 +375,7 @@ Aborting execution%3.</source>
         <translation type="vanished">neznámý typ objektu %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1364"/>
+        <location filename="../sqlitedb.cpp" line="1365"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>nemohu získat seznam objektů db: %1, %2</translation>
     </message>
@@ -384,22 +384,22 @@ Aborting execution%3.</source>
         <translation type="vanished">nemohu získat typy</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1387"/>
+        <location filename="../sqlitedb.cpp" line="1388"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1391"/>
+        <location filename="../sqlitedb.cpp" line="1392"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>nemohu provést příkaz pragma: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1406"/>
+        <location filename="../sqlitedb.cpp" line="1407"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Chyba při nastavování pragma %1 na %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1451"/>
+        <location filename="../sqlitedb.cpp" line="1452"/>
         <source>File not found.</source>
         <translation>Soubor nebyl nalezen.</translation>
     </message>
@@ -1842,7 +1842,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1704"/>
-        <location filename="../MainWindow.cpp" line="2387"/>
+        <location filename="../MainWindow.cpp" line="2395"/>
         <source>Set encoding</source>
         <translation type="unfinished">Nastavit kódování</translation>
     </message>
@@ -2123,8 +2123,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1348"/>
-        <location filename="../MainWindow.cpp" line="1341"/>
-        <location filename="../MainWindow.cpp" line="1342"/>
+        <location filename="../MainWindow.cpp" line="1348"/>
+        <location filename="../MainWindow.cpp" line="1349"/>
         <source>Delete Table</source>
         <translation>Smazat Tabulku</translation>
     </message>
@@ -2432,7 +2432,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="292"/>
-        <location filename="../MainWindow.cpp" line="2142"/>
+        <location filename="../MainWindow.cpp" line="2150"/>
         <source>Choose a database file</source>
         <translation>Vyberte soubor databáze</translation>
     </message>
@@ -2442,8 +2442,8 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
-        <location filename="../MainWindow.cpp" line="1249"/>
-        <location filename="../MainWindow.cpp" line="2058"/>
+        <location filename="../MainWindow.cpp" line="1256"/>
+        <location filename="../MainWindow.cpp" line="2066"/>
         <source>Choose a filename to save under</source>
         <translation>Vyberte název souboru pro uložení</translation>
     </message>
@@ -2496,22 +2496,22 @@ Všechna přidružená data se %1 budou ztracena.</translation>
         <translation type="vanished">Žádná databáze není otevřena.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1039"/>
+        <location filename="../MainWindow.cpp" line="1046"/>
         <source>Error executing query: %1</source>
         <translation>Chyba při vykonávání příkazu: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1032"/>
+        <location filename="../MainWindow.cpp" line="1039"/>
         <source>%1 rows returned in %2ms from: %3</source>
         <translation type="unfinished">%1 řádků vráceno za %2ms z: %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1055"/>
+        <location filename="../MainWindow.cpp" line="1062"/>
         <source>, %1 rows affected</source>
         <translation type="unfinished">, %1 řádků bylo ovlivněno</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1058"/>
+        <location filename="../MainWindow.cpp" line="1065"/>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
         <translation type="unfinished">Příkaz byl proveden úspěšně: %1 (za dobu %2ms%3)</translation>
     </message>
@@ -2520,115 +2520,114 @@ Všechna přidružená data se %1 budou ztracena.</translation>
         <translation type="vanished">Vyberte textový soubor</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1134"/>
+        <location filename="../MainWindow.cpp" line="1141"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>Textové soubory(*.csv *.txt);;Všechny soubory(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1146"/>
+        <location filename="../MainWindow.cpp" line="1153"/>
         <source>Import completed</source>
         <translation>Import dokončen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1199"/>
+        <location filename="../MainWindow.cpp" line="1206"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1208"/>
+        <location filename="../MainWindow.cpp" line="1215"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Jste si jisti, že chcete vrátit zpět všechny provedené změny v databázi &apos;%1&apos; od posledního uložení?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1232"/>
+        <location filename="../MainWindow.cpp" line="1239"/>
         <source>Choose a file to import</source>
         <translation>Vyberte soubor pro import</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1233"/>
-        <location filename="../MainWindow.cpp" line="1670"/>
-        <location filename="../MainWindow.cpp" line="1726"/>
+        <location filename="../MainWindow.cpp" line="1240"/>
+        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1734"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Textové soubory(*.sql *.txt);;Všechny soubory(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1243"/>
+        <location filename="../MainWindow.cpp" line="1250"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1253"/>
+        <location filename="../MainWindow.cpp" line="1260"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Soubor %1 již existuje. Vyberte jiný název, prosím.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1268"/>
+        <location filename="../MainWindow.cpp" line="1275"/>
         <source>Error importing data: %1</source>
         <translation>Chyba při importu dat: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1270"/>
+        <location filename="../MainWindow.cpp" line="1277"/>
         <source>Import completed.</source>
         <translation>Import dokončen.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1326"/>
-        <location filename="../MainWindow.cpp" line="1327"/>
+        <location filename="../MainWindow.cpp" line="1333"/>
+        <location filename="../MainWindow.cpp" line="1334"/>
         <source>Delete View</source>
         <translation>Smazat Pohled</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1328"/>
-        <location filename="../MainWindow.cpp" line="1329"/>
+        <location filename="../MainWindow.cpp" line="1335"/>
+        <location filename="../MainWindow.cpp" line="1336"/>
         <source>Modify View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1331"/>
-        <location filename="../MainWindow.cpp" line="1332"/>
+        <location filename="../MainWindow.cpp" line="1338"/>
+        <location filename="../MainWindow.cpp" line="1339"/>
         <source>Delete Trigger</source>
         <translation>Smazat Spoušť</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1333"/>
-        <location filename="../MainWindow.cpp" line="1334"/>
+        <location filename="../MainWindow.cpp" line="1340"/>
+        <location filename="../MainWindow.cpp" line="1341"/>
         <source>Modify Trigger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="1336"/>
-        <location filename="../MainWindow.cpp" line="1337"/>
-        <source>Delete Index</source>
-        <translation>Smazat Index</translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="1338"/>
-        <location filename="../MainWindow.cpp" line="1339"/>
-        <source>Modify Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1343"/>
         <location filename="../MainWindow.cpp" line="1344"/>
+        <source>Delete Index</source>
+        <translation>Smazat Index</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1345"/>
+        <location filename="../MainWindow.cpp" line="1346"/>
+        <source>Modify Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1350"/>
+        <location filename="../MainWindow.cpp" line="1351"/>
         <source>Modify Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1391"/>
+        <location filename="../MainWindow.cpp" line="1398"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2449"/>
+        <location filename="../MainWindow.cpp" line="2457"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="978"/>
-        <location filename="../MainWindow.cpp" line="1598"/>
+        <location filename="../MainWindow.cpp" line="1606"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation></translation>
@@ -2640,68 +2639,74 @@ Reason: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="986"/>
+        <location filename="../MainWindow.cpp" line="985"/>
+        <source>Setting PRAGMA values or vacuuming will commit your current transaction.
+Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="993"/>
         <source>Execution aborted by user</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1133"/>
+        <location filename="../MainWindow.cpp" line="1140"/>
         <source>Choose text files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1669"/>
+        <location filename="../MainWindow.cpp" line="1677"/>
         <source>Select SQL file to open</source>
         <translation>Vyberte soubor SQL k otevření</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1686"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1716"/>
+        <location filename="../MainWindow.cpp" line="1724"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1725"/>
+        <location filename="../MainWindow.cpp" line="1733"/>
         <source>Select file name</source>
         <translation>Vyberte název souboru</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1740"/>
+        <location filename="../MainWindow.cpp" line="1748"/>
         <source>Select extension file</source>
         <translation>Vyberte soubor s rozšířením</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1741"/>
+        <location filename="../MainWindow.cpp" line="1749"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Přípony(*.so *.dll);;Všechny soubory(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1747"/>
+        <location filename="../MainWindow.cpp" line="1755"/>
         <source>Extension successfully loaded.</source>
         <translation>Rozšíření bylo úspěšně načteno.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1749"/>
-        <location filename="../MainWindow.cpp" line="1761"/>
+        <location filename="../MainWindow.cpp" line="1757"/>
+        <location filename="../MainWindow.cpp" line="1769"/>
         <source>Error loading extension: %1</source>
         <translation>Chyba při načítání přípony: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1843"/>
+        <location filename="../MainWindow.cpp" line="1851"/>
         <source>Don&apos;t show again</source>
         <translation>Znovu nezobrazovat</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1846"/>
+        <location filename="../MainWindow.cpp" line="1854"/>
         <source>New version available.</source>
         <translation>Dostupná nová verze.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1847"/>
+        <location filename="../MainWindow.cpp" line="1855"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Nová verze DB Browseru pro SQLite je nyní dostupná (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Stáhněte ji prosím na &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
@@ -2726,35 +2731,35 @@ Reason: %1</source>
         <translation type="obsolete">Zadejte URL k databázového souboru pro jeho uložení, prosím.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1911"/>
+        <location filename="../MainWindow.cpp" line="1919"/>
         <source>Choose a file to open</source>
         <translation>Vyberte soubor k otevření</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1912"/>
-        <location filename="../MainWindow.cpp" line="2059"/>
+        <location filename="../MainWindow.cpp" line="1920"/>
+        <location filename="../MainWindow.cpp" line="2067"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser pro SQLite project file (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2385"/>
+        <location filename="../MainWindow.cpp" line="2393"/>
         <source>Please choose a new encoding for this table.</source>
         <translation type="unfinished">Vyberte nové kódování pro tuto tabulku, prosím.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2383"/>
+        <location filename="../MainWindow.cpp" line="2391"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation type="unfinished">Vyberte nové kódování pro všechny tabulky, prosím.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2388"/>
+        <location filename="../MainWindow.cpp" line="2396"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation type="unfinished">%1
 Pro použití kódování databáze ponechte pole prázdné.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2399"/>
+        <location filename="../MainWindow.cpp" line="2407"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation type="unfinished">Toto kódování není buď platné, nebo podporováno.</translation>
     </message>
@@ -3479,65 +3484,65 @@ Create a backup!</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="104"/>
+        <location filename="../RemoteDatabase.cpp" line="106"/>
         <source>Error when connecting to %1.
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="196"/>
+        <location filename="../RemoteDatabase.cpp" line="216"/>
         <source>Error opening remote file at %1.
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="261"/>
+        <location filename="../RemoteDatabase.cpp" line="284"/>
         <source>Error: Invalid client certificate specified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="273"/>
+        <location filename="../RemoteDatabase.cpp" line="296"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="296"/>
+        <location filename="../RemoteDatabase.cpp" line="320"/>
         <source>Cancel</source>
         <translation type="unfinished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="300"/>
+        <location filename="../RemoteDatabase.cpp" line="324"/>
         <source>Uploading remote database to
 %1.</source>
         <translation type="unfinished">Nahrávám vzdálenou databázi do
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="302"/>
+        <location filename="../RemoteDatabase.cpp" line="326"/>
         <source>Downloading remote database from
 %1.</source>
         <translation type="unfinished">Stahuji vzdálenou databázi z
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="320"/>
-        <location filename="../RemoteDatabase.cpp" line="378"/>
+        <location filename="../RemoteDatabase.cpp" line="344"/>
+        <location filename="../RemoteDatabase.cpp" line="397"/>
         <source>Error: The network is not accessible.</source>
         <translation type="unfinished">Chyba: síť není dostupná.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="386"/>
+        <location filename="../RemoteDatabase.cpp" line="406"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation type="unfinished">Chyba: Nemohu otevřít soubor k odeslání.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="435"/>
+        <location filename="../RemoteDatabase.cpp" line="482"/>
         <source>Error opening local databases list.
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="452"/>
+        <location filename="../RemoteDatabase.cpp" line="499"/>
         <source>Error creating local databases list.
 %1</source>
         <translation type="unfinished"></translation>
@@ -3565,11 +3570,6 @@ Create a backup!</source>
         <source>Push currently opened database to server</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../RemoteDock.cpp" line="94"/>
-        <source>Please enter the database name to push to.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RemoteModel</name>
@@ -3594,8 +3594,60 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="237"/>
+        <location filename="../RemoteModel.cpp" line="240"/>
         <source>bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemotePushDialog</name>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="14"/>
+        <source>Push database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="22"/>
+        <source>Database na&amp;me to push to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="35"/>
+        <source>Commit message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="45"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="59"/>
+        <source>Database licence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="79"/>
+        <source>Public</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="35"/>
+        <source>Database will be public. Everyone has read access to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="37"/>
+        <source>Database will be private. Only you have access to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="77"/>
+        <source>Unspecified</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
