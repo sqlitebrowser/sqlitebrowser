@@ -244,7 +244,6 @@ void RemoteDatabase::updateProgress(qint64 bytesTransmitted, qint64 bytesTotal)
     }
 
     // Check if the Cancel button has been pressed
-    qApp->processEvents();
     if(reply && m_progress->wasCanceled())
     {
         reply->abort();
@@ -316,7 +315,7 @@ void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, co
     if(!m_progress)
         m_progress = new QProgressDialog();
     m_progress->reset();
-    m_progress->setWindowModality(Qt::ApplicationModal);
+    m_progress->setWindowModality(Qt::NonModal);
     m_progress->setCancelButtonText(tr("Cancel"));
 
     // Set dialog text
@@ -327,7 +326,6 @@ void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, co
 
     // Show dialog
     m_progress->show();
-    qApp->processEvents();
 
     // Make sure the dialog is updated
     if(upload)
