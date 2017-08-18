@@ -3397,7 +3397,7 @@ Are you sure?</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1017"/>
         <source>CA certificates</source>
-        <translation type="unfinished">CA 证书</translation>
+        <translation>CA 证书</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1040"/>
@@ -3582,7 +3582,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDatabase.cpp" line="320"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="324"/>
@@ -3652,7 +3652,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="63"/>
         <source>Push currently opened database to server</source>
-        <translation type="unfinished"></translation>
+        <translation>推送当前打开的数据库到服务器</translation>
     </message>
 </context>
 <context>
@@ -3660,7 +3660,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>Version</source>
@@ -3679,12 +3679,12 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>提交</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="240"/>
         <source>bytes</source>
-        <translation type="unfinished">字节</translation>
+        <translation>字节</translation>
     </message>
 </context>
 <context>
@@ -3692,17 +3692,17 @@ Create a backup!</source>
     <message>
         <location filename="../RemotePushDialog.ui" line="14"/>
         <source>Push database</source>
-        <translation type="unfinished"></translation>
+        <translation>推送数据库</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="22"/>
         <source>Database na&amp;me to push to</source>
-        <translation type="unfinished"></translation>
+        <translation>推送的数据库名(&amp;m)</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="35"/>
         <source>Commit message</source>
-        <translation type="unfinished"></translation>
+        <translation>提交信息</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="45"/>
@@ -3716,27 +3716,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.ui" line="59"/>
         <source>Database licence</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库许可协议</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="79"/>
         <source>Public</source>
-        <translation type="unfinished"></translation>
+        <translation>公有</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="35"/>
         <source>Database will be public. Everyone has read access to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库将是公有的。所有人都可以读取它。</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="37"/>
         <source>Database will be private. Only you have access to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库将是私有的。只有您可以访问它。</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="77"/>
         <source>Unspecified</source>
-        <translation type="unfinished"></translation>
+        <translation>未指定的</translation>
     </message>
 </context>
 <context>
