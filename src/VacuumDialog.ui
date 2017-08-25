@@ -23,7 +23,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Warning: Compacting the database will commit all changes you made.</string>
+      <string>Warning: Compacting the database will commit all of your changes.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
