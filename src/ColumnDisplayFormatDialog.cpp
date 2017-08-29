@@ -20,6 +20,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Octal number"), "octal");
     ui->comboDisplayFormat->addItem(tr("Round number"), "round");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
+    ui->comboDisplayFormat->addItem(tr("Java epoch (milliseconds) to date"), "javaEpoch");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->comboDisplayFormat->addItem(tr("Windows DATE to date"), "winDate");
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
@@ -61,6 +62,8 @@ void ColumnDisplayFormatDialog::updateSqlCode()
         ui->editDisplayFormat->setText("upper(" + sqlb::escapeIdentifier(column_name) + ")");
     else if(format == "epoch")
         ui->editDisplayFormat->setText("datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')");
+    else if(format == "javaEpoch")
+        ui->editDisplayFormat->setText("strftime('%Y-%m-%d %H:%M:%f', " + (sqlb::escapeIdentifier(column_name)/1000) + ", 'unixepoch', ('0.' || " + (sqlb::escapeIdentifier(column_name) % 1000) + "|| ' seconds')) as timestamp";
     else if(format == "winDate")
         ui->editDisplayFormat->setText("datetime ('1899-12-30', " + sqlb::escapeIdentifier(column_name) + " || \" days\" )");
     else if(format == "appleDate")
