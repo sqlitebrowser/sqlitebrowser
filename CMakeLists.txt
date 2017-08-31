@@ -433,7 +433,7 @@ if(WIN32 AND NOT UNIX)
 
 	# VS redist
 	list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-               ExecWait '\\\"$INSTDIR\\\\redist\\\\${VSREDIST}\\\" /install /passive /quiet'
+               ExecWait '\\\"$INSTDIR\\\\redist\\\\${VSREDIST}\\\" /install /passive /norestart /quiet'
                Delete '\\\"$INSTDIR\\\\redist\\\\${VSREDIST}\\\"'
                ")
 else(WIN32 AND NOT UNIX)
