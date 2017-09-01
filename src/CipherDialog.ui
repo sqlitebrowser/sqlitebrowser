@@ -126,8 +126,8 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>comboKeyFormat</tabstop>
   <tabstop>editPassword</tabstop>
+  <tabstop>comboKeyFormat</tabstop>
   <tabstop>editPassword2</tabstop>
   <tabstop>spinPageSize</tabstop>
  </tabstops>
