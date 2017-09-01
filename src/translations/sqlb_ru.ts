@@ -3988,7 +3988,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="107"/>
         <source>(X) The count(X) function returns a count of the number of times that X is not NULL in a group.</source>
-        <translation>(X) Функция count(X) возвращает количесвто строк, в которых X не равно NULL в группе.</translation>
+        <translation>(X) Функция count(X) возвращает количество строк, в которых X не равно NULL в группе.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="108"/>
