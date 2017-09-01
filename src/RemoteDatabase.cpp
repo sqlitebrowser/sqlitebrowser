@@ -616,8 +616,32 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     // is newer, or the local commit id is newer.
     if(local_commit_id == url_commit_id)
     {
-        // Both commit ids are the same. That's the perfect match, so just return the path to the local file
-        return Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
+        // Both commit ids are the same. That's the perfect match, so we can build the full path to where the file should be
+        QString full_path = Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
+
+        // Check if the database still exists. If so return its path, if not return an empty string to redownload it
+        if(QFile::exists(full_path))
+        {
+            return full_path;
+        } else {
+            // Remove the apparently invalid entry from the local clones database to avoid future lookups and confusions. The file column
+            // should be unique for the entire table because the files are all in the same directory and their names need to be unique because
+            // of this.
+            QString sql = QString("DELETE FROM local WHERE file=?");
+            sqlite3_stmt* stmt;
+            if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+                return QString();
+            if(sqlite3_bind_text(stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
+            {
+                sqlite3_finalize(stmt);
+                return QString();
+            }
+            sqlite3_step(stmt);
+            sqlite3_finalize(stmt);
+
+            // Return empty string to indicate a redownload request
+            return QString();
+        }
     } else {
         // In all the other cases just treat the remote database as a completely new database for now.
 
