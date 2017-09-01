@@ -243,7 +243,7 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
                     unit = it.next();
                     size /= 1024.0;
                 }
-                return QString().setNum(size, 'f', 2) + " " + unit;
+                return QString().setNum(size, 'f', 2).remove(".00") + " " + unit;
             }
         }
     }
