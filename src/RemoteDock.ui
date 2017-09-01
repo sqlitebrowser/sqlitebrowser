@@ -35,6 +35,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="buttonLogin">
+       <property name="toolTip">
+        <string>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</string>
+       </property>
        <property name="text">
         <string>Go</string>
        </property>
