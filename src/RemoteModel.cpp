@@ -233,7 +233,7 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
                     return QVariant();
 
                 // Convert size to human readable format
-                float size = item->value(RemoteModelColumnSize).toInt();
+                float size = item->value(RemoteModelColumnSize).toLongLong();
                 QStringList list;
                 list << "KiB" << "MiB" << "GiB" << "TiB";
                 QStringListIterator it(list);
