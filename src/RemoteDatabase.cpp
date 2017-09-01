@@ -619,17 +619,30 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     // is newer, or the local commit id is newer.
     if(local_commit_id == url_commit_id)
     {
-        // Both commit ids are the same. That's the perfect match, so we can build the full path to where the file should be
-        QString full_path = Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
+        // Both commit ids are the same. That's the perfect match, so we can download the local file if it still exists
+        return localCheckFile(local_file);
+    } else {
+        // The commit ids differ. That means we have another version locally checked out than we're trying to download. Because the commit ids are
+        // only calculated on the server side and we're currently always checking out the latest version this can only mean that the remote version has
+        // been updated, i.e. is newer than the local version.
 
-        // Check if the database still exists. If so return its path, if not return an empty string to redownload it
-        if(QFile::exists(full_path))
+        // TODO Support multiple checkouts of the same database at different versions at the same time. For this we need to be more intelligent with
+        // comparing the commit ids.
+
+        // Ask the user what to do: open the local version or updating to the new remote version
+        if(QMessageBox::question(nullptr, qApp->applicationName(),
+                                 tr("The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note "
+                                    "that this discards any changes you have made locally! If you don't want to lose local changes, click No to open the local version."),
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            return full_path;
-        } else {
-            // Remove the apparently invalid entry from the local clones database to avoid future lookups and confusions. The file column
-            // should be unique for the entire table because the files are all in the same directory and their names need to be unique because
-            // of this.
+            // User wants to download the newest version. So delete the entry from the clones database and delete the local database copy and return an empty
+            // string to indicate a redownload request.
+
+            // Build full path to database file and delete it
+            QFile::remove(Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file);
+
+            // Remove the old entry from the local clones database to enforce a redownload. The file column should be unique for the entire table because the
+            // files are all in the same directory and their names need to be unique because of this.
             QString sql = QString("DELETE FROM local WHERE file=?");
             sqlite3_stmt* stmt;
             if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
@@ -642,16 +655,43 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
             sqlite3_step(stmt);
             sqlite3_finalize(stmt);
 
-            // Return empty string to indicate a redownload request
+            // Return an empty string to indicate a redownload request
+            return QString();
+        } else {
+            // User wants to open the local version. So build the full path and return it if the file still exists.
+            return localCheckFile(local_file);
+        }
+    }
+}
+
+QString RemoteDatabase::localCheckFile(const QString& local_file)
+{
+    // This function takes the file name of a locally cloned database and checks if this file still exists. If it has been deleted in the meantime it returns
+    // an empty string and deletes the file from the clone database. If the file still exists, it returns the full path to the file.
+
+    // Build the full path to where the file should be
+    QString full_path = Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
+
+    // Check if the database still exists. If so return its path, if not return an empty string to redownload it
+    if(QFile::exists(full_path))
+    {
+        return full_path;
+    } else {
+        // Remove the apparently invalid entry from the local clones database to avoid future lookups and confusions. The file column should
+        // be unique for the entire table because the files are all in the same directory and their names need to be unique because of this.
+        QString sql = QString("DELETE FROM local WHERE file=?");
+        sqlite3_stmt* stmt;
+        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+            return QString();
+        if(sqlite3_bind_text(stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
             return QString();
         }
-    } else {
-        // In all the other cases just treat the remote database as a completely new database for now.
+        sqlite3_step(stmt);
+        sqlite3_finalize(stmt);
 
-        // TODO Add some way to update the local clone here. Maybe ask the user what to do because I don't really know what the
-        // most sensible way to go is in the two remaining cases. We can use the local_id variable (see above) to update the
-        // record afterwards.
-
+        // Return empty string to indicate a redownload request
         return QString();
     }
 }
