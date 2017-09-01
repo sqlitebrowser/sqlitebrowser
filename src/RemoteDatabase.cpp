@@ -597,8 +597,6 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
 
     // Extract commit id from url and remove query part afterwards
     QString url_commit_id = QUrlQuery(url).queryItemValue("commit");
-    QUrl url_without_query = url;
-    url_without_query.setQuery(QString());
 
     // Query commit id and filename for the given combination of url and identity
     QString sql = QString("SELECT id, commit_id, file FROM local WHERE url=? AND identity=?");
@@ -606,7 +604,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
         return QString();
 
-    if(sqlite3_bind_text(stmt, 1, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
+    if(sqlite3_bind_text(stmt, 1, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(), url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().length(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
         return QString();
