@@ -42,6 +42,9 @@ void RemotePushDialog::checkInput()
     if(ui->editName->text().trimmed().isEmpty())
         valid = false;
 
+    if(ui->editCommitMessage->toPlainText().size() > 1024)
+        valid = false;
+
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
