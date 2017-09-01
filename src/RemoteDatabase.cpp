@@ -337,9 +337,9 @@ void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, co
 
     // Set dialog text
     if(upload)
-        m_progress->setLabelText(tr("Uploading remote database to\n%1.").arg(url));
+        m_progress->setLabelText(tr("Uploading remote database to\n%1").arg(url));
     else
-        m_progress->setLabelText(tr("Downloading remote database from\n%1.").arg(url));
+        m_progress->setLabelText(tr("Downloading remote database from\n%1").arg(url));
 
     // Show dialog
     m_progress->show();
