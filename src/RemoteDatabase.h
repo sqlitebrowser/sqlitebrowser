@@ -75,6 +75,7 @@ private:
     void localAssureOpened();
     void localAdd(QString filename, QString identity, const QUrl& url);
     QString localExists(const QUrl& url, QString identity);
+    QString localCheckFile(const QString& local_file);
 
     // Helper functions for building multi-part HTTP requests
     void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value);
