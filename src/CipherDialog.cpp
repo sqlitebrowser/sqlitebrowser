@@ -40,7 +40,7 @@ CipherDialog::KeyFormats CipherDialog::keyFormat() const
 QString CipherDialog::password() const
 {
     if(keyFormat() == KeyFormats::Passphrase)
-        return QString("'%1'").arg(ui->editPassword->text());
+        return QString("'%1'").arg(ui->editPassword->text().replace("'", "''"));
     else
         return QString("\"x'%1'\"").arg(ui->editPassword->text().mid(2));   // Remove the '0x' part at the beginning
 }
