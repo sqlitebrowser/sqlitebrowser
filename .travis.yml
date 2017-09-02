@@ -52,7 +52,6 @@ script:
   - make
   - ctest -V
   - # AppImage generation
-  - cd ../build
   - sudo apt-get -y install checkinstall
   - sudo checkinstall --pkgname=app --pkgversion="1" --pkgrelease="1" --backup=no --fstrans=no --default --deldoc 
   - mkdir appdir ; cd appdir
