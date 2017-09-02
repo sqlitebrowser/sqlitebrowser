@@ -19,7 +19,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
 
     // Get list of tables, sort it alphabetically and fill the combobox
     objectMap dbobjs;
-    QList<sqlb::ObjectPtr> tables = pdb.objMap.values("table");
+    QList<sqlb::ObjectPtr> tables = pdb.schemata["main"].values("table");
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
         dbobjs.insert((*it)->name(), (*it));
     ui->comboTableName->blockSignals(true);
@@ -34,7 +34,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     if(!newIndex)
     {
         // Load the current layout and fill in the dialog fields
-        index = *(pdb.getObjectByName(curIndex).dynamicCast<sqlb::Index>());
+        index = *(pdb.getObjectByName(sqlb::ObjectIdentifier("main", curIndex)).dynamicCast<sqlb::Index>());
 
         ui->editIndexName->blockSignals(true);
         ui->editIndexName->setText(index.name());
@@ -94,7 +94,7 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 void EditIndexDialog::updateColumnLists()
 {
     // Fill the table column list
-    sqlb::FieldInfoList tableFields = pdb.getObjectByName(index.table()).dynamicCast<sqlb::Table>()->fieldInformation();
+    sqlb::FieldInfoList tableFields = pdb.getObjectByName(sqlb::ObjectIdentifier("main", index.table())).dynamicCast<sqlb::Table>()->fieldInformation();
     ui->tableTableColumns->setRowCount(tableFields.size());
     int tableRows = 0;
     for(int i=0;i<tableFields.size();++i)

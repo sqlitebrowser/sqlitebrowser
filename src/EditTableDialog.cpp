@@ -33,7 +33,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const QString& tableName, bool
     if(m_bNewTable == false)
     {
         // Existing table, so load and set the current layout
-        m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
+        m_table = *(pdb.getObjectByName(sqlb::ObjectIdentifier("main", curTable)).dynamicCast<sqlb::Table>());
         ui->labelEditWarning->setVisible(!m_table.fullyParsed());
 
         // Set without rowid and temporary checkboxex. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
@@ -163,7 +163,7 @@ void EditTableDialog::accept()
         // Rename table if necessary
         if(ui->editTableName->text() != curTable)
         {
-            if(!pdb.renameTable(curTable, ui->editTableName->text()))
+            if(!pdb.renameTable("main", curTable, ui->editTableName->text()))
             {
                 QMessageBox::warning(this, QApplication::applicationName(), pdb.lastError());
                 return;
@@ -210,7 +210,7 @@ void EditTableDialog::checkInput()
                 if (oldTableName == fk->table()) {
                     fk->setTable(normTableName);
                     if(!fksEnabled)
-                        pdb.renameColumn(curTable, m_table, f->name(), f, 0);
+                        pdb.renameColumn(sqlb::ObjectIdentifier("main", curTable), m_table, f->name(), f, 0);
                 }
             }
         }
@@ -239,7 +239,7 @@ void EditTableDialog::updateTypes()
 
         m_table.fields().at(index)->setType(type);
         if(!m_bNewTable)
-            pdb.renameColumn(curTable, m_table, column, m_table.fields().at(index));
+            pdb.renameColumn(sqlb::ObjectIdentifier("main", curTable), m_table, column, m_table.fields().at(index));
         checkInput();
     }
 }
@@ -279,7 +279,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 sqlb::FieldVector pk = m_table.primaryKey();
-                foreach(const sqlb::ObjectPtr& fkobj, pdb.objMap.values("table"))
+                foreach(const sqlb::ObjectPtr& fkobj, pdb.schemata["main"].values("table"))
                 {
                     QList<sqlb::ConstraintPtr> fks = fkobj.dynamicCast<sqlb::Table>()->constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
                     foreach(sqlb::ConstraintPtr fkptr, fks)
@@ -352,8 +352,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
-                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
-                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>()->rowidColumn()))
+                m.setQuery(QString("SELECT COUNT(%1) FROM %2.%3 WHERE %4 IS NULL;")
+                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName(sqlb::ObjectIdentifier("main", curTable)).dynamicCast<sqlb::Table>()->rowidColumn()))
+                           .arg(sqlb::escapeIdentifier("main"))
                            .arg(sqlb::escapeIdentifier(curTable))
                            .arg(sqlb::escapeIdentifier(field->name())));
                 if(m.data(m.index(0, 0)).toInt() > 0)
@@ -489,7 +490,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 
         if(callRenameColumn)
         {
-            if(!pdb.renameColumn(curTable, m_table, oldFieldName, field))
+            if(!pdb.renameColumn(sqlb::ObjectIdentifier("main", curTable), m_table, oldFieldName, field))
                 QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastError()));
         }
     }
@@ -548,7 +549,7 @@ void EditTableDialog::addField()
 
     // Actually add the new column to the table if we're editing an existing table
     if(!m_bNewTable)
-        pdb.addColumn(curTable, f);
+        pdb.addColumn(sqlb::ObjectIdentifier("main", curTable), f);
 
     checkInput();
 }
@@ -576,12 +577,12 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            if(!pdb.renameColumn(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
+            if(!pdb.renameColumn(sqlb::ObjectIdentifier("main", curTable), m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
                 QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
             } else {
                 //relayout
-                m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
+                m_table = *(pdb.getObjectByName(sqlb::ObjectIdentifier("main", curTable)).dynamicCast<sqlb::Table>());
                 populateFields();
             }
         }
@@ -654,7 +655,7 @@ void EditTableDialog::moveCurrentField(bool down)
 
         // Move the actual column
         if(!pdb.renameColumn(
-                    curTable,
+                    sqlb::ObjectIdentifier("main", curTable),
                     m_table,
                     ui->treeWidget->currentItem()->text(0),
                     m_table.fields().at(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())),
@@ -664,7 +665,7 @@ void EditTableDialog::moveCurrentField(bool down)
             QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
         } else {
             // Reload table SQL
-            m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
+            m_table = *(pdb.getObjectByName(sqlb::ObjectIdentifier("main", curTable)).dynamicCast<sqlb::Table>());
             populateFields();
 
             // Select old item at new position
@@ -710,7 +711,7 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
+        if(!pdb.renameColumn(sqlb::ObjectIdentifier("main", curTable), m_table, QString(), sqlb::FieldPtr(), 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastError()));
@@ -729,7 +730,7 @@ void EditTableDialog::setTemporary(bool is_temp)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
+        if(!pdb.renameColumn(sqlb::ObjectIdentifier("main", curTable), m_table, QString(), sqlb::FieldPtr(), 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastError()));

@@ -142,7 +142,7 @@ void DbStructureModel::reloadData()
 
     QTreeWidgetItem* itemBrowsables = new QTreeWidgetItem(rootItem);
     itemBrowsables->setIcon(0, QIcon(QString(":/icons/view")));
-    itemBrowsables->setText(0, tr("Browsables (%1)").arg(m_db.objMap.values("table").count() + m_db.objMap.values("view").count()));
+    itemBrowsables->setText(0, tr("Browsables (%1)").arg(m_db.schemata["main"].values("table").count() + m_db.schemata["main"].values("view").count()));
     typeToParentItem.insert("browsable", itemBrowsables);
 
     QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
@@ -151,27 +151,27 @@ void DbStructureModel::reloadData()
 
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(itemAll);
     itemTables->setIcon(0, QIcon(QString(":/icons/table")));
-    itemTables->setText(0, tr("Tables (%1)").arg(m_db.objMap.values("table").count()));
+    itemTables->setText(0, tr("Tables (%1)").arg(m_db.schemata["main"].values("table").count()));
     typeToParentItem.insert("table", itemTables);
 
     QTreeWidgetItem* itemIndices = new QTreeWidgetItem(itemAll);
     itemIndices->setIcon(0, QIcon(QString(":/icons/index")));
-    itemIndices->setText(0, tr("Indices (%1)").arg(m_db.objMap.values("index").count()));
+    itemIndices->setText(0, tr("Indices (%1)").arg(m_db.schemata["main"].values("index").count()));
     typeToParentItem.insert("index", itemIndices);
 
     QTreeWidgetItem* itemViews = new QTreeWidgetItem(itemAll);
     itemViews->setIcon(0, QIcon(QString(":/icons/view")));
-    itemViews->setText(0, tr("Views (%1)").arg(m_db.objMap.values("view").count()));
+    itemViews->setText(0, tr("Views (%1)").arg(m_db.schemata["main"].values("view").count()));
     typeToParentItem.insert("view", itemViews);
 
     QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(itemAll);
     itemTriggers->setIcon(0, QIcon(QString(":/icons/trigger")));
-    itemTriggers->setText(0, tr("Triggers (%1)").arg(m_db.objMap.values("trigger").count()));
+    itemTriggers->setText(0, tr("Triggers (%1)").arg(m_db.schemata["main"].values("trigger").count()));
     typeToParentItem.insert("trigger", itemTriggers);
 
     // Get all database objects and sort them by their name
     QMultiMap<QString, sqlb::ObjectPtr> dbobjs;
-    for(auto it=m_db.objMap.constBegin(); it != m_db.objMap.constEnd(); ++it)
+    for(auto it=m_db.schemata["main"].constBegin(); it != m_db.schemata["main"].constEnd(); ++it)
         dbobjs.insert((*it)->name(), (*it));
 
     // Add the actual table objects
@@ -238,7 +238,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
             if(data(index.sibling(index.row(), 1), Qt::DisplayRole).toString() == "table")
             {
                 SqliteTableModel tableModel(m_db);
-                tableModel.setTable(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString());
+                tableModel.setTable(sqlb::ObjectIdentifier("main", data(index.sibling(index.row(), 0), Qt::DisplayRole).toString()));
                 for(int i=0; i < tableModel.rowCount(); ++i)
                 {
                     QString insertStatement = "INSERT INTO " + sqlb::escapeIdentifier(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString()) + " VALUES(";

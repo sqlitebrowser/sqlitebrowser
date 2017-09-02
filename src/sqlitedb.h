@@ -16,7 +16,8 @@ enum
     kLogMsg_App
 };
 
-typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;
+typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
+typedef QMap<QString, objectMap> schemaMap;                 // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
 
 class DBBrowserDB : public QObject
 {
@@ -42,50 +43,53 @@ public:
     /**
      * @brief getRow Executes a sqlite statement to get the rowdata(columns)
      *        for the given rowid.
+     * @param schemaName Name of the database schema.
      * @param sTableName Table to query.
      * @param rowid The rowid to fetch.
      * @param rowdata A list of QByteArray containing the row data.
      * @return true if statement execution was ok, else false.
      */
-    bool getRow(const QString& sTableName, const QString& rowid, QList<QByteArray>& rowdata);
+    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QList<QByteArray>& rowdata);
 
     /**
      * @brief max Queries the table t for the max value of field.
-     * @param t Table to query
+     * @param tableName Table to query
      * @param field Field to get the max value
      * @return the max value of the field or 0 on error
      */
-    QString max(const sqlb::Table& t, sqlb::FieldPtr field) const;
+    QString max(const sqlb::ObjectIdentifier& tableName, sqlb::FieldPtr field) const;
 
     void updateSchema();
-    QString addRecord(const QString& sTableName);
+    QString addRecord(const sqlb::ObjectIdentifier& tablename);
 
     /**
      * @brief Creates an empty insert statement.
+     * @param schemaName The name of the database schema in which to find the table
      * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
-    QString emptyInsertStmt(const sqlb::Table& t, const QString& pk_value = QString()) const;
-    bool deleteRecords(const QString& table, const QStringList& rowids);
-    bool updateRecord(const QString& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
+    QString emptyInsertStmt(const QString& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
+    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids);
+    bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
 
-    bool createTable(const QString& name, const sqlb::FieldVector& structure);
-    bool renameTable(const QString& from_table, const QString& to_table);
-    bool addColumn(const QString& table, const sqlb::FieldPtr& field);
+    bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
+    bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
+    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::FieldPtr& field);
 
     /**
      * @brief renameColumn Can be used to rename, modify or drop an existing column of a given table
-     * @param table_name Specifies the name of the table to edit
+     * @param schema Specifies the name of the schema, i.e. the database name, of the table
+     * @param tablename Specifies the name of the table to edit
      * @param table Specifies the table to edit. The table constraints are used from this but not the columns
      * @param name Name of the column to edit
      * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
      * @param move Set this to a value != 0 to move the new column to a different position
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool renameColumn(const QString& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0);
+    bool renameColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0);
 
-    objectMap getBrowsableObjects() const;
-    const sqlb::ObjectPtr getObjectByName(const QString& name) const;
+    objectMap getBrowsableObjects(const QString& schema) const;
+    const sqlb::ObjectPtr getObjectByName(const sqlb::ObjectIdentifier& name) const;
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
@@ -100,13 +104,13 @@ public:
 
     bool loadExtension(const QString& filename);
 
-    QVector<QPair<QString, QString>> queryColumnInformation(const QString& object_name);
+    QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);
 
     QString generateSavepointName(const QString& identifier = QString()) const;
 
     sqlite3 * _db;
 
-    objectMap objMap;
+    schemaMap schemata;
 
 signals:
     void sqlExecuted(QString sql, int msgtype);

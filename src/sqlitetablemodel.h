@@ -5,8 +5,9 @@
 #include <QStringList>
 #include <QVector>
 
+#include "sqlitetypes.h"
+
 class DBBrowserDB;
-namespace sqlb { class ForeignKeyClause; }
 
 class SqliteTableModel : public QAbstractTableModel
 {
@@ -38,7 +39,7 @@ public:
 
     void setQuery(const QString& sQuery, bool dontClearHeaders = false);
     QString query() const { return m_sQuery; }
-    void setTable(const QString& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QVector<QString> &display_format = QVector<QString>());
+    void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QVector<QString> &display_format = QVector<QString>());
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
@@ -92,7 +93,7 @@ private:
     DataType m_data;
 
     QString m_sQuery;
-    QString m_sTable;
+    sqlb::ObjectIdentifier m_sTable;
     QString m_sRowidColumn;
     QString m_pseudoPk;
     int m_iSortColumn;
@@ -116,4 +117,4 @@ private:
     QString m_encoding;
 };
 
-#endif // SQLITETABLEMODEL_H
+#endif

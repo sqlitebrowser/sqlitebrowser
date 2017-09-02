@@ -394,7 +394,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    const sqlb::ObjectPtr obj = pdb->getObjectByName(tableName);
+    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName));
     if(obj && obj->type() == sqlb::Object::Types::Table)
     {
         if((size_t)obj.dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
@@ -425,14 +425,14 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     QStringList nullValues;
     if(!importToExistingTable)
     {
-        if(!pdb->createTable(tableName, fieldList))
+        if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
             return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
     } else {
         // Importing into an existing table. So find out something about it's structure.
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName(tableName).dynamicCast<sqlb::Table>();
+        sqlb::TablePtr tbl = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName)).dynamicCast<sqlb::Table>();
         if(tbl)
         {
             foreach(const sqlb::FieldPtr& f, tbl->fields())

@@ -15,9 +15,9 @@ VacuumDialog::VacuumDialog(DBBrowserDB* _db, QWidget* parent) :
     // Show warning if DB is dirty
     ui->labelSavepointWarning->setVisible(db->getDirty());
 
-    // Populate list of objects to compact
-    QList<sqlb::ObjectPtr> objects = db->objMap.values("table");
-    objects.append(db->objMap.values("index"));
+    // Populate list of objects to compact. We just support vacuuming the main schema here.
+    QList<sqlb::ObjectPtr> objects = db->schemata["main"].values("table");
+    objects.append(db->schemata["main"].values("index"));
     for(QList<sqlb::ObjectPtr>::const_iterator i=objects.constBegin();i!=objects.constEnd();++i)
     {
         QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeSelectedObjects);

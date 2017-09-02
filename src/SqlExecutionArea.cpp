@@ -90,7 +90,7 @@ void SqlExecutionArea::saveAsView()
         name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
         if(name.isEmpty())
             return;
-        if(db.getObjectByName(name) != nullptr)
+        if(db.getObjectByName(sqlb::ObjectIdentifier("main", name)) != nullptr)
             QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
         else
             break;

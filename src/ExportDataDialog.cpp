@@ -42,7 +42,7 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     if(query.isEmpty())
     {
         // Get list of tables to export
-        objectMap objects = pdb.getBrowsableObjects();
+        objectMap objects = pdb.getBrowsableObjects("main");
         foreach(const sqlb::ObjectPtr& obj, objects)
             ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString(obj->type()))), obj->name()));
 

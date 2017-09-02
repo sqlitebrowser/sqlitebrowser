@@ -21,6 +21,47 @@ uint qHash(const QVector<T>& key, uint seed = 0)
 
 QString escapeIdentifier(QString id);
 
+class ObjectIdentifier
+{
+public:
+    ObjectIdentifier(const QString& schema, const QString& name)
+        : m_schema(schema),
+          m_name(name)
+    {
+    }
+
+    ObjectIdentifier()
+        : m_schema("main"),
+          m_name(QString())
+    {
+    }
+
+    const QString& schema() const { return m_schema; }
+    const QString& name() const { return m_name; }
+    void setSchema(const QString& schema) { m_schema = schema; }
+    void setName(const QString& name) { m_name = name; }
+
+    void clear()
+    {
+        m_schema = "main";
+        m_name.clear();
+    }
+
+    bool isEmpty() const { return m_name.isEmpty(); }
+
+    QString toString(bool shortName = false) const
+    {
+        if(shortName && m_schema == "main")
+            return sqlb::escapeIdentifier(m_name);
+        else
+            return QString("%1.%2").arg(sqlb::escapeIdentifier(m_schema)).arg(sqlb::escapeIdentifier(m_name));
+    }
+
+private:
+    QString m_schema;
+    QString m_name;
+};
+
 class Object;
 class Table;
 class Index;
@@ -89,14 +130,15 @@ public:
 
     /**
      * @brief Returns the CREATE statement for this object
+     * @param schema The schema name of the object
      * @param ifNotExists If set to true the "IF NOT EXISTS" qualifier will be added to the create statement
      * @return A QString with the CREATE statement.
      */
-    virtual QString sql(bool ifNotExists = false) const = 0;
+    virtual QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const = 0;
 
     /**
      * @brief parseSQL Parses the CREATE statement in sSQL.
-     * @param sSQL The type of the object.
+     * @param type The type of the object.
      * @param sSQL The create statement.
      * @return The parsed database object. The object may be empty if parsing failed.
      */
@@ -283,7 +325,7 @@ public:
      * @brief Returns the CREATE TABLE statement for this table object
      * @return A QString with the CREATE TABLE object.
      */
-    QString sql(bool ifNotExists = false) const;
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const;
 
     void addField(const FieldPtr& f);
     bool removeField(const QString& sFieldName);
@@ -403,7 +445,7 @@ public:
      * @brief Returns the CREATE INDEX statement for this index object
      * @return A QString with the CREATE INDEX object.
      */
-    QString sql(bool ifNotExists = false) const;
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const;
 
     /**
      * @brief parseSQL Parses the CREATE INDEX statement in sSQL.
@@ -431,7 +473,7 @@ public:
 
     virtual Types type() const { return Object::View; }
 
-    QString sql(bool ifNotExists = false) const { /* TODO */ Q_UNUSED(ifNotExists); return m_originalSql; }
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
 
     static ObjectPtr parseSQL(const QString& sSQL);
 
@@ -456,7 +498,7 @@ public:
 
     virtual Types type() const { return Object::Trigger; }
 
-    QString sql(bool ifNotExists = false) const { /* TODO */ Q_UNUSED(ifNotExists); return m_originalSql; }
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
 
     static ObjectPtr parseSQL(const QString& sSQL);
 
@@ -471,4 +513,4 @@ private:
 
 } //namespace sqlb
 
-#endif // SQLITETYPES_H
+#endif

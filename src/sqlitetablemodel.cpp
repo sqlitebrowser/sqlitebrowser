@@ -40,7 +40,7 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOrder sortOrder, const QVector<QString>& display_format)
+void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortColumn, Qt::SortOrder sortOrder, const QVector<QString>& display_format)
 {
     // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
@@ -85,7 +85,7 @@ void SqliteTableModel::setTable(const QString& table, int sortColumn, Qt::SortOr
     // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
     if(!allOk)
     {
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(table));
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(table.toString());
         m_sRowidColumn = "rowid";
         m_headers.push_back("rowid");
         m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
@@ -409,7 +409,7 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
     m_sSortOrder = (order == Qt::AscendingOrder ? "ASC" : "DESC");
 
     // Set the new query (but only if a table has already been set
-    if(m_sTable != "")
+    if(!m_sTable.isEmpty())
         buildQuery();
 }
 
@@ -597,7 +597,7 @@ void SqliteTableModel::buildQuery()
     QString sql = QString("SELECT %1,%2 FROM %3 ")
             .arg(sqlb::escapeIdentifier(m_headers.at(0)))
             .arg(selector)
-            .arg(sqlb::escapeIdentifier(m_sTable))
+            .arg(m_sTable.toString())
             + where
             + QString("ORDER BY %1 %2")
             .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))

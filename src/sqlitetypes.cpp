@@ -427,17 +427,17 @@ ObjectPtr Table::parseSQL(const QString &sSQL)
     return TablePtr(new Table(""));
 }
 
-QString Table::sql(bool ifNotExists) const
+QString Table::sql(const QString& schema, bool ifNotExists) const
 {
     // Special handling for virtual tables: just build an easy create statement and copy the using part in there
     if(isVirtual())
-        return QString("CREATE VIRTUAL TABLE %1 USING %2;").arg(escapeIdentifier(m_name)).arg(m_virtual);
+        return QString("CREATE VIRTUAL TABLE %1 USING %2;").arg(ObjectIdentifier(schema, m_name).toString(true)).arg(m_virtual);
 
     // This is a normal table, not a virtual one
     QString sql = QString("CREATE %1TABLE%2 %3 (\n")
             .arg(m_temporary ? QString("TEMPORARY ") : QString(""))
             .arg(ifNotExists ? QString(" IF NOT EXISTS") : QString(""))
-            .arg(escapeIdentifier(m_name));
+            .arg(ObjectIdentifier(schema, m_name).toString(true));
 
     sql += fieldList().join(",\n");
 
@@ -1141,14 +1141,14 @@ QStringList Index::columnSqlList() const
     return sl;
 }
 
-QString Index::sql(bool ifNotExists) const
+QString Index::sql(const QString& schema, bool ifNotExists) const
 {
     // Start CREATE (UNIQUE) INDEX statement
     QString sql = QString("CREATE %1INDEX%2 %3 ON %4 (\n")
             .arg(m_unique ? QString("UNIQUE ") : QString(""))
             .arg(ifNotExists ? QString(" IF NOT EXISTS") : QString(""))
-            .arg(escapeIdentifier(m_name))
-            .arg(escapeIdentifier(m_table));
+            .arg(ObjectIdentifier(schema, m_name).toString(true))
+            .arg(ObjectIdentifier(schema, m_table).toString(true));
 
     // Add column list
     sql += columnSqlList().join(",\n");

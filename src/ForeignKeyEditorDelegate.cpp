@@ -81,7 +81,7 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
     , m_db(db)
     , m_table(table)
 {
-    const auto objects = m_db.getBrowsableObjects();
+    const auto objects = m_db.getBrowsableObjects("main");
     for (auto& obj : objects) {
         if (obj->type() == sqlb::Object::Types::Table) {
             QString tableName = obj->name();

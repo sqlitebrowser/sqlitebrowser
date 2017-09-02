@@ -388,7 +388,7 @@ void MainWindow::populateStructure()
         return;
 
     // Update table and column names for syntax highlighting
-    objectMap tab = db.getBrowsableObjects();
+    objectMap tab = db.getBrowsableObjects("main");
     SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
     for(auto it=tab.constBegin();it!=tab.constEnd();++it)
     {
@@ -454,7 +454,7 @@ void MainWindow::populateTable()
         // No stored settings found.
 
         // Set table name and apply default display format settings
-        m_browseTableModel->setTable(tablename, 0, Qt::AscendingOrder);
+        m_browseTableModel->setTable(sqlb::ObjectIdentifier("main", tablename), 0, Qt::AscendingOrder);
 
         // There aren't any information stored for this table yet, so use some default values
 
@@ -485,7 +485,7 @@ void MainWindow::populateTable()
         // Load display formats and set them along with the table name
         QVector<QString> v;
         bool only_defaults = true;
-        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
+        const sqlb::FieldInfoList& tablefields = db.getObjectByName(sqlb::ObjectIdentifier("main", tablename))->fieldInformation();
         for(int i=0; i<tablefields.size(); ++i)
         {
             QString format = storedData.displayFormats[i+1];
@@ -498,9 +498,9 @@ void MainWindow::populateTable()
             }
         }
         if(only_defaults)
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode);
+            m_browseTableModel->setTable(sqlb::ObjectIdentifier("main", tablename), storedData.sortOrderIndex, storedData.sortOrderMode);
         else
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
+            m_browseTableModel->setTable(sqlb::ObjectIdentifier("main", tablename), storedData.sortOrderIndex, storedData.sortOrderMode, v);
 
         // There is information stored for this table, so extract it and apply it
 
@@ -531,7 +531,7 @@ void MainWindow::populateTable()
     }
 
     // Show/hide menu options depending on whether this is a table or a view
-    if(db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::Table)
+    if(db.getObjectByName(sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText()))->type() == sqlb::Object::Table)
     {
         // Table
         ui->actionUnlockViewEditing->setVisible(false);
@@ -852,7 +852,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // * Don't allow editing of other objects than tables (on the browse table) *
     bool isEditingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::Types::Table);
+            (db.getObjectByName(sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText()))->type() == sqlb::Object::Types::Table);
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
@@ -876,7 +876,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 
     bool editingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(ui->comboBrowseTable->currentText())->type() == sqlb::Object::Types::Table);
+            (db.getObjectByName(sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText()))->type() == sqlb::Object::Types::Table);
 
     // Don't allow editing of other objects than tables
     editDock->setReadOnly(!editingAllowed);
@@ -2263,7 +2263,7 @@ void MainWindow::copyCurrentCreateStatement()
 void MainWindow::jumpToRow(const QString& table, QString column, const QByteArray& value)
 {
     // First check if table exists
-    sqlb::TablePtr obj = db.getObjectByName(table).dynamicCast<sqlb::Table>();
+    sqlb::TablePtr obj = db.getObjectByName(sqlb::ObjectIdentifier("main", table)).dynamicCast<sqlb::Table>();
     if(!obj)
         return;
 
@@ -2300,7 +2300,7 @@ void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
 void MainWindow::showRecordPopupMenu(const QPoint& pos)
 {
     const QString sCurrentTable = ui->comboBrowseTable->currentText();
-    if(!(db.getObjectByName(sCurrentTable)->type() == sqlb::Object::Types::Table && !db.readOnly()))
+    if(!(db.getObjectByName(sqlb::ObjectIdentifier("main", sCurrentTable))->type() == sqlb::Object::Types::Table && !db.readOnly()))
         return;
 
     int row = ui->dataTable->verticalHeader()->logicalIndexAt(pos);
@@ -2325,7 +2325,7 @@ void MainWindow::editDataColumnDisplayFormat()
     // column is always the rowid column. Ultimately, get the column name from the column object
     QString current_table = ui->comboBrowseTable->currentText();
     int field_number = sender()->property("clicked_column").toInt();
-    QString field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
+    QString field_name = db.getObjectByName(sqlb::ObjectIdentifier("main", current_table)).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
 
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
@@ -2441,7 +2441,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     QString currentTable = ui->comboBrowseTable->currentText();
 
     // If this isn't a view just unlock editing and return
-    if(db.getObjectByName(currentTable)->type() != sqlb::Object::View)
+    if(db.getObjectByName(sqlb::ObjectIdentifier("main", currentTable))->type() != sqlb::Object::View)
     {
         m_browseTableModel->setPseudoPk(QString());
         enableEditing(true, true);
