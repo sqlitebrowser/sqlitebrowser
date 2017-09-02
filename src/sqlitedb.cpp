@@ -435,7 +435,7 @@ bool DBBrowserDB::close()
                 return false;
 
             // If he didn't it was either yes or no
-            if(reply == QMessageBox::Yes)
+            if(reply == QMessageBox::Save)
                 releaseAllSavepoints();
             else
                 revertAll(); //not really necessary, I think... but will not hurt.
