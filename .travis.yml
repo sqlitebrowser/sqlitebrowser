@@ -2,6 +2,10 @@ language: cpp
 sudo: required
 dist: trusty
 
+branches:
+  only:
+  - master
+
 matrix:
   fast_finish: true
   include:
@@ -71,3 +75,8 @@ notifications:
       - justin@postgresql.org
     on_success: never
     on_failure: always
+
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - sed -i -e 's|Continuous build|Continuous Linux build|g' upload.sh
+  - bash ./upload.sh ./DB*.AppImage
