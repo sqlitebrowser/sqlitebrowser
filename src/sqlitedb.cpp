@@ -1414,7 +1414,13 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     // Set the pragma value
     QString sql = QString("PRAGMA %1 = \"%2\";").arg(pragma).arg(value);
 
-    releaseSavepoint();
+    // In general, we want to commit changes before running pragmas because most of them can't be rolled back and some of them
+    // even fail when run in a transaction. However, the defer_foreign_keys pragma has neither problem and we need it to be settable
+    // inside transactions (see the renameColumn() function where it is set and reset at some point and where we don't want the changes
+    // to be committed just because of this pragma).
+    if(pragma != "defer_foreign_keys")
+        releaseSavepoint();
+
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
         qWarning() << tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage);
