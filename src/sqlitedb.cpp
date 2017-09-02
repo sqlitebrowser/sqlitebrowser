@@ -1157,12 +1157,25 @@ bool DBBrowserDB::renameColumn(const QString& tablename, const sqlb::Table& tabl
             if((*it)->type() == sqlb::Object::Types::Index)
             {
                 sqlb::IndexPtr idx = (*it).dynamicCast<sqlb::Index>();
-                for(int i=0;i<idx->columns().size();i++)
+
+                // Are we updating a field name or are we removing a field entirely?
+                if(to)
                 {
-                    if(idx->column(i)->name() == name)
-                        idx->column(i)->setName(to->name());
+                    // We're updating a field name. So search for it in the index and replace it whereever it is found
+                    for(int i=0;i<idx->columns().size();i++)
+                    {
+                        if(idx->column(i)->name() == name)
+                            idx->column(i)->setName(to->name());
+                    }
+                } else {
+                    // We're removing a field. So remove it from any indices, too.
+                    while(idx->removeColumn(name))
+                        ;
                 }
-                otherObjectsSql << idx->sql();
+
+                // Only try to add the index later if it has any columns remaining
+                if(idx->columns().size())
+                    otherObjectsSql << idx->sql();
             } else {
                 // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
                 // hope for the best.
