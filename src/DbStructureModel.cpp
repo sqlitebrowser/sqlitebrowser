@@ -183,11 +183,12 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
             if(data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString() == "table")
             {
                 SqliteTableModel tableModel(m_db);
-                tableModel.setTable(sqlb::ObjectIdentifier(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
-                                                           data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString()));
+                sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
+                                             data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
+                tableModel.setTable(objid);
                 for(int i=0; i < tableModel.rowCount(); ++i)
                 {
-                    QString insertStatement = "INSERT INTO " + sqlb::escapeIdentifier(data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString()) + " VALUES(";
+                    QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
                     for(int j=1; j < tableModel.columnCount(); ++j)
                         insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
                     insertStatement.chop(1);
