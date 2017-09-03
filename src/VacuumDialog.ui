@@ -36,15 +36,15 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Please select the objects to compact:</string>
+      <string>Please select the databases to co&amp;mpact:</string>
      </property>
      <property name="buddy">
-      <cstring>treeSelectedObjects</cstring>
+      <cstring>treeDatabases</cstring>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QTreeWidget" name="treeSelectedObjects">
+    <widget class="QTreeWidget" name="treeDatabases">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -86,7 +86,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>treeSelectedObjects</tabstop>
+  <tabstop>treeDatabases</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>

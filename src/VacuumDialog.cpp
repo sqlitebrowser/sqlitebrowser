@@ -16,19 +16,16 @@ VacuumDialog::VacuumDialog(DBBrowserDB* _db, QWidget* parent) :
     ui->labelSavepointWarning->setVisible(db->getDirty());
 
     // Populate list of objects to compact. We just support vacuuming the main schema here.
-    QList<sqlb::ObjectPtr> objects = db->schemata["main"].values("table");
-    objects.append(db->schemata["main"].values("index"));
-    for(QList<sqlb::ObjectPtr>::const_iterator i=objects.constBegin();i!=objects.constEnd();++i)
+    for(auto it=db->schemata.constBegin();it!=db->schemata.constEnd();++it)
     {
-        QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeSelectedObjects);
-        item->setText(0, (*i)->name());
-        item->setIcon(0, QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString((*i)->type()))));
-        ui->treeSelectedObjects->addTopLevelItem(item);
+        QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeDatabases);
+        item->setText(0, it.key());
+        item->setIcon(0, QIcon(QString(":icons/database")));
+        ui->treeDatabases->addTopLevelItem(item);
     }
 
-    // Sort objects and select them all
-    ui->treeSelectedObjects->sortByColumn(0, Qt::AscendingOrder);
-    ui->treeSelectedObjects->selectAll();
+    // Select the first item which should always be the main schema
+    ui->treeDatabases->setCurrentItem(ui->treeDatabases->topLevelItem(0));
 }
 
 VacuumDialog::~VacuumDialog()
@@ -38,7 +35,7 @@ VacuumDialog::~VacuumDialog()
 
 void VacuumDialog::accept()
 {
-    if(ui->treeSelectedObjects->selectedItems().count() == 0)
+    if(ui->treeDatabases->selectedItems().count() == 0)
         return QDialog::reject();
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -46,17 +43,10 @@ void VacuumDialog::accept()
     // Commit all changes first
     db->releaseAllSavepoints();
 
-    // All items selected?
-    if(ui->treeSelectedObjects->selectedItems().count() ==  ui->treeSelectedObjects->topLevelItemCount())
-    {
-        // Yes, so just execute a simple vacuum command for all objects
-        db->executeSQL("VACUUM;", false);
-    } else {
-        // No, so execute a vacuum command for each selected object individually
-        QList<QTreeWidgetItem*> selection = ui->treeSelectedObjects->selectedItems();
-        foreach(QTreeWidgetItem* item, selection)
-            db->executeSQL(QString("VACUUM %1;").arg(sqlb::escapeIdentifier(item->text(0))), false);
-    }
+    // Loop through all selected databases and vacuum them individually
+    QList<QTreeWidgetItem*> selection = ui->treeDatabases->selectedItems();
+    foreach(QTreeWidgetItem* item, selection)
+        db->executeSQL(QString("VACUUM %1;").arg(sqlb::escapeIdentifier(item->text(0))), false);
 
     QApplication::restoreOverrideCursor();
     QDialog::accept();
