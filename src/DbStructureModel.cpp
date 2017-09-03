@@ -14,7 +14,7 @@ DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
 {
     // Create root item and use its columns to store the header strings
     QStringList header;
-    header << tr("Name") << tr("Object") << tr("Type") << tr("Schema");
+    header << tr("Name") << tr("Object") << tr("Type") << tr("Schema") << tr("Database");
     rootItem = new QTreeWidgetItem(header);
 }
 
@@ -60,7 +60,7 @@ Qt::ItemFlags DbStructureModel::flags(const QModelIndex &index) const
     Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDropEnabled;
 
     // Only enable dragging for entire table objects
-    QString type = data(index.sibling(index.row(), 1), Qt::DisplayRole).toString();
+    QString type = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
     if(type == "table" || type == "view" || type == "index" || type == "trigger")
         flags |= Qt::ItemIsDragEnabled;
 
@@ -138,77 +138,22 @@ void DbStructureModel::reloadData()
     // In the root node there are two nodes: 'browsables' and 'all'. The first node contains a list of a all browsable objects, i.e. views and tables.
     // The seconds node contains four sub-nodes (tables, indices, views and triggers), each containing a list of objects of that type.
     // This way we only have to have and only have to update one model and can use it in all sorts of places, just by setting a different root node.
-    QMap<QString, QTreeWidgetItem*> typeToParentItem;
-
     QTreeWidgetItem* itemBrowsables = new QTreeWidgetItem(rootItem);
-    itemBrowsables->setIcon(0, QIcon(QString(":/icons/view")));
-    itemBrowsables->setText(0, tr("Browsables (%1)").arg(m_db.schemata["main"].values("table").count() + m_db.schemata["main"].values("view").count()));
-    typeToParentItem.insert("browsable", itemBrowsables);
+    itemBrowsables->setIcon(ColumnName, QIcon(QString(":/icons/view")));
+    itemBrowsables->setText(ColumnName, tr("Browsables"));
 
     QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
-    itemAll->setIcon(0, QIcon(QString(":/icons/view")));
-    itemAll->setText(0, tr("All"));
+    itemAll->setIcon(ColumnName, QIcon(QString(":/icons/database")));
+    itemAll->setText(ColumnName, tr("All"));
+    buildTree(itemAll, itemBrowsables, "main");
 
-    QTreeWidgetItem* itemTables = new QTreeWidgetItem(itemAll);
-    itemTables->setIcon(0, QIcon(QString(":/icons/table")));
-    itemTables->setText(0, tr("Tables (%1)").arg(m_db.schemata["main"].values("table").count()));
-    typeToParentItem.insert("table", itemTables);
-
-    QTreeWidgetItem* itemIndices = new QTreeWidgetItem(itemAll);
-    itemIndices->setIcon(0, QIcon(QString(":/icons/index")));
-    itemIndices->setText(0, tr("Indices (%1)").arg(m_db.schemata["main"].values("index").count()));
-    typeToParentItem.insert("index", itemIndices);
-
-    QTreeWidgetItem* itemViews = new QTreeWidgetItem(itemAll);
-    itemViews->setIcon(0, QIcon(QString(":/icons/view")));
-    itemViews->setText(0, tr("Views (%1)").arg(m_db.schemata["main"].values("view").count()));
-    typeToParentItem.insert("view", itemViews);
-
-    QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(itemAll);
-    itemTriggers->setIcon(0, QIcon(QString(":/icons/trigger")));
-    itemTriggers->setText(0, tr("Triggers (%1)").arg(m_db.schemata["main"].values("trigger").count()));
-    typeToParentItem.insert("trigger", itemTriggers);
-
-    // Get all database objects and sort them by their name
-    QMultiMap<QString, sqlb::ObjectPtr> dbobjs;
-    for(auto it=m_db.schemata["main"].constBegin(); it != m_db.schemata["main"].constEnd(); ++it)
-        dbobjs.insert((*it)->name(), (*it));
-
-    // Add the actual table objects
-    for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
+    // Add the temporary database as a node if it isn't empty
+    if(!m_db.schemata["temp"].isEmpty())
     {
-        // Object node
-        QTreeWidgetItem* item = addNode(typeToParentItem.value(sqlb::Object::typeToString((*it)->type())), *it);
-
-        // If it is a table or view add the field nodes, add an extra node for the browsable section
-        if((*it)->type() == sqlb::Object::Types::Table || (*it)->type() == sqlb::Object::Types::View)
-            addNode(typeToParentItem.value("browsable"), *it);
-
-        // Add field nodes if there are any
-        sqlb::FieldInfoList fieldList = (*it)->fieldInformation();
-        if(!fieldList.empty())
-        {
-            QStringList pk_columns;
-            if((*it)->type() == sqlb::Object::Types::Table)
-            {
-                sqlb::FieldVector pk = (*it).dynamicCast<sqlb::Table>()->primaryKey();
-                foreach(sqlb::FieldPtr pk_col, pk)
-                    pk_columns.push_back(pk_col->name());
-
-            }
-            foreach(const sqlb::FieldInfo& field, fieldList)
-            {
-                QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
-                fldItem->setText(0, field.name);
-                fldItem->setText(1, "field");
-                fldItem->setText(2, field.type);
-                fldItem->setText(3, field.sql);
-                if(pk_columns.contains(field.name))
-                    fldItem->setIcon(0, QIcon(":/icons/field_key"));
-                else
-                    fldItem->setIcon(0, QIcon(":/icons/field"));
-            }
-        }
+        QTreeWidgetItem* itemTemp = new QTreeWidgetItem(itemAll);
+        itemTemp->setIcon(ColumnName, QIcon(QString(":/icons/database")));
+        itemTemp->setText(ColumnName, tr("Temporary"));
+        buildTree(itemTemp, itemBrowsables, "temp");
     }
 
     // Refresh the view
@@ -229,19 +174,20 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
     foreach(QModelIndex index, indices)
     {
         // Only export data for valid indices and only for the SQL column, i.e. only once per row
-        if(index.isValid() && index.column() == 3)
+        if(index.isValid() && index.column() == ColumnSQL)
         {
             // Add the SQL code used to create the object
             d = d.append(data(index, Qt::DisplayRole).toString() + ";\n");
 
             // If it is a table also add the content
-            if(data(index.sibling(index.row(), 1), Qt::DisplayRole).toString() == "table")
+            if(data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString() == "table")
             {
                 SqliteTableModel tableModel(m_db);
-                tableModel.setTable(sqlb::ObjectIdentifier("main", data(index.sibling(index.row(), 0), Qt::DisplayRole).toString()));
+                tableModel.setTable(sqlb::ObjectIdentifier(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
+                                                           data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString()));
                 for(int i=0; i < tableModel.rowCount(); ++i)
                 {
-                    QString insertStatement = "INSERT INTO " + sqlb::escapeIdentifier(data(index.sibling(index.row(), 0), Qt::DisplayRole).toString()) + " VALUES(";
+                    QString insertStatement = "INSERT INTO " + sqlb::escapeIdentifier(data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString()) + " VALUES(";
                     for(int j=1; j < tableModel.columnCount(); ++j)
                         insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
                     insertStatement.chop(1);
@@ -285,15 +231,94 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     }
 }
 
-QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object)
+void DbStructureModel::buildTree(QTreeWidgetItem* parent, QTreeWidgetItem* browsables, const QString& schema)
+{
+    // Build a map from object type to tree node to simplify finding the correct tree node later
+    QMap<QString, QTreeWidgetItem*> typeToParentItem;
+
+    // Get object map for the given schema
+    objectMap objmap = m_db.schemata[schema];
+
+    // Prepare tree
+    QTreeWidgetItem* itemTables = new QTreeWidgetItem(parent);
+    itemTables->setIcon(ColumnName, QIcon(QString(":/icons/table")));
+    itemTables->setText(ColumnName, tr("Tables (%1)").arg(objmap.values("table").count()));
+    typeToParentItem.insert("table", itemTables);
+
+    QTreeWidgetItem* itemIndices = new QTreeWidgetItem(parent);
+    itemIndices->setIcon(ColumnName, QIcon(QString(":/icons/index")));
+    itemIndices->setText(ColumnName, tr("Indices (%1)").arg(objmap.values("index").count()));
+    typeToParentItem.insert("index", itemIndices);
+
+    QTreeWidgetItem* itemViews = new QTreeWidgetItem(parent);
+    itemViews->setIcon(ColumnName, QIcon(QString(":/icons/view")));
+    itemViews->setText(ColumnName, tr("Views (%1)").arg(objmap.values("view").count()));
+    typeToParentItem.insert("view", itemViews);
+
+    QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(parent);
+    itemTriggers->setIcon(ColumnName, QIcon(QString(":/icons/trigger")));
+    itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(objmap.values("trigger").count()));
+    typeToParentItem.insert("trigger", itemTriggers);
+
+    // Get all database objects and sort them by their name
+    QMultiMap<QString, sqlb::ObjectPtr> dbobjs;
+    for(auto it=objmap.constBegin(); it != objmap.constEnd(); ++it)
+        dbobjs.insert((*it)->name(), (*it));
+
+    // Add the database objects to the tree nodes
+    for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
+    {
+        // Object node
+        QTreeWidgetItem* item = addNode(typeToParentItem.value(sqlb::Object::typeToString((*it)->type())), *it, schema);
+
+        // If it is a table or view add the field nodes, add an extra node for the browsable section
+        if((*it)->type() == sqlb::Object::Types::Table || (*it)->type() == sqlb::Object::Types::View)
+        {
+            // TODO We're currently only adding objects in the main schema to the list of browsable objects because browsing non-main objects
+            // isn't really supported in the main window yet. As soon as this is implemented the following if statement can be removed.
+            if(schema == "main")
+                addNode(browsables, *it, schema);
+        }
+
+        // Add field nodes if there are any
+        sqlb::FieldInfoList fieldList = (*it)->fieldInformation();
+        if(!fieldList.empty())
+        {
+            QStringList pk_columns;
+            if((*it)->type() == sqlb::Object::Types::Table)
+            {
+                sqlb::FieldVector pk = (*it).dynamicCast<sqlb::Table>()->primaryKey();
+                foreach(sqlb::FieldPtr pk_col, pk)
+                    pk_columns.push_back(pk_col->name());
+
+            }
+            foreach(const sqlb::FieldInfo& field, fieldList)
+            {
+                QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
+                fldItem->setText(ColumnName, field.name);
+                fldItem->setText(ColumnObjectType, "field");
+                fldItem->setText(ColumnDataType, field.type);
+                fldItem->setText(ColumnSQL, field.sql);
+                fldItem->setText(ColumnSchema, schema);
+                if(pk_columns.contains(field.name))
+                    fldItem->setIcon(ColumnName, QIcon(":/icons/field_key"));
+                else
+                    fldItem->setIcon(ColumnName, QIcon(":/icons/field"));
+            }
+        }
+    }
+}
+
+QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const QString& schema)
 {
     QString type = sqlb::Object::typeToString(object->type());
 
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-    item->setIcon(0, QIcon(QString(":/icons/%1").arg(type)));
-    item->setText(0, object->name());
-    item->setText(1, type);
-    item->setText(3, object->originalSql());
+    item->setIcon(ColumnName, QIcon(QString(":/icons/%1").arg(type)));
+    item->setText(ColumnName, object->name());
+    item->setText(ColumnObjectType, type);
+    item->setText(ColumnSQL, object->originalSql());
+    item->setText(ColumnSchema, schema);
 
     return item;
 }

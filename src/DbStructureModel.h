@@ -29,11 +29,21 @@ public:
     QMimeData* mimeData(const QModelIndexList& indices) const;
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
 
+    enum Columns
+    {
+        ColumnName,
+        ColumnObjectType,
+        ColumnDataType,
+        ColumnSQL,
+        ColumnSchema,
+    };
+
 private:
     QTreeWidgetItem* rootItem;
     DBBrowserDB& m_db;
 
-    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object);
+    void buildTree(QTreeWidgetItem* parent, QTreeWidgetItem* browsables, const QString& schema);
+    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const QString& schema);
 };
 
 #endif

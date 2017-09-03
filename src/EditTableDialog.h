@@ -18,7 +18,7 @@ class EditTableDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditTableDialog(DBBrowserDB& pdb, const QString& tableName, bool createTable, QWidget* parent = 0);
+    explicit EditTableDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent = 0);
     ~EditTableDialog();
 
 protected:
@@ -61,7 +61,7 @@ private:
     Ui::EditTableDialog* ui;
     DBBrowserDB& pdb;
     ForeignKeyEditorDelegate* m_fkEditorDelegate;
-    QString curTable;
+    sqlb::ObjectIdentifier curTable;
     sqlb::Table m_table;
     QStringList types;
     QStringList fields;

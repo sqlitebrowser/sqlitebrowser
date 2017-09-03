@@ -1148,7 +1148,7 @@ QString Index::sql(const QString& schema, bool ifNotExists) const
             .arg(m_unique ? QString("UNIQUE ") : QString(""))
             .arg(ifNotExists ? QString(" IF NOT EXISTS") : QString(""))
             .arg(ObjectIdentifier(schema, m_name).toString(true))
-            .arg(ObjectIdentifier(schema, m_table).toString(true));
+            .arg(sqlb::escapeIdentifier(m_table));
 
     // Add column list
     sql += columnSqlList().join(",\n");

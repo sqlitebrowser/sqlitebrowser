@@ -95,13 +95,15 @@ void MainWindow::init()
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
     ui->dbTreeWidget->setModel(dbStructureModel);
-    ui->dbTreeWidget->setColumnHidden(1, true);
-    ui->dbTreeWidget->setColumnWidth(0, 300);
+    ui->dbTreeWidget->setColumnWidth(DbStructureModel::ColumnName, 300);
+    ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnObjectType, true);
+    ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnSchema, true);
 
     // Set up DB schema dock
     ui->treeSchemaDock->setModel(dbStructureModel);
-    ui->treeSchemaDock->setColumnHidden(1, true);
-    ui->treeSchemaDock->setColumnWidth(0, 300);
+    ui->treeSchemaDock->setColumnWidth(DbStructureModel::ColumnName, 300);
+    ui->treeSchemaDock->setColumnHidden(DbStructureModel::ColumnObjectType, true);
+    ui->treeSchemaDock->setColumnHidden(DbStructureModel::ColumnSchema, true);
 
     // Set up the table combo box in the Browse Data tab
     ui->comboBrowseTable->setModel(dbStructureModel);
@@ -746,7 +748,7 @@ void MainWindow::createTable()
         return;
     }
 
-    EditTableDialog dialog(db, "", true, this);
+    EditTableDialog dialog(db, sqlb::ObjectIdentifier(), true, this);
     if(dialog.exec())
     {
         populateTable();
@@ -760,7 +762,7 @@ void MainWindow::createIndex()
         return;
     }
 
-    EditIndexDialog dialog(db, "", true, this);
+    EditIndexDialog dialog(db, sqlb::ObjectIdentifier(), true, this);
     if(dialog.exec())
         populateTable();
 }
@@ -774,16 +776,17 @@ void MainWindow::compact()
 void MainWindow::deleteObject()
 {
     // Get name and type of object to delete
-    QString table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0), Qt::EditRole).toString();
-    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1), Qt::EditRole).toString();
+    sqlb::ObjectIdentifier name(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString(),
+                                ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString());
+    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
 
     // Ask user if he really wants to delete that table
-    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the %1 '%2'?\nAll data associated with the %1 will be lost.").arg(type).arg(table),
+    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the %1 '%2'?\nAll data associated with the %1 will be lost.").arg(type).arg(name.name()),
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         // Delete the table
-        QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(sqlb::escapeIdentifier(table));
-        if(!db.executeSQL( statement))
+        QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(name.toString());
+        if(!db.executeSQL(statement))
         {
             QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastError());
             QMessageBox::warning(this, QApplication::applicationName(), error);
@@ -800,8 +803,9 @@ void MainWindow::editObject()
         return;
 
     // Get name and type of the object to edit
-    QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0), Qt::EditRole).toString();
-    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1), Qt::EditRole).toString();
+    sqlb::ObjectIdentifier name(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString(),
+                                ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString());
+    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
 
     if(type == "table")
     {
@@ -1158,14 +1162,19 @@ void MainWindow::importTableFromCSV()
 void MainWindow::exportTableToCSV()
 {
     // Get the current table name if we are in the Browse Data tab
-    QString current_table;
-    if(ui->mainTab->currentIndex() == StructureTab) {
-        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
+    sqlb::ObjectIdentifier current_table;
+    if(ui->mainTab->currentIndex() == StructureTab)
+    {
+        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
         if(type == "table" || type == "view")
-            current_table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+        {
+            QString schema = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema)).toString();
+            QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
+            current_table = sqlb::ObjectIdentifier(schema, name);
+        }
+    } else if(ui->mainTab->currentIndex() == BrowseTab) {
+        current_table = sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText());
     }
-    else if(ui->mainTab->currentIndex() == BrowseTab)
-        current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
     ExportDataDialog dialog(db, ExportDataDialog::ExportFormatCsv, this, "", current_table);
@@ -1175,14 +1184,19 @@ void MainWindow::exportTableToCSV()
 void MainWindow::exportTableToJson()
 {
     // Get the current table name if we are in the Browse Data tab
-    QString current_table;
-    if(ui->mainTab->currentIndex() == StructureTab) {
-        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
+    sqlb::ObjectIdentifier current_table;
+    if(ui->mainTab->currentIndex() == StructureTab)
+    {
+        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
         if(type == "table" || type == "view")
-            current_table = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+        {
+            QString schema = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema)).toString();
+            QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
+            current_table = sqlb::ObjectIdentifier(schema, name);
+        }
+    } else if(ui->mainTab->currentIndex() == BrowseTab) {
+        current_table = sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText());
     }
-    else if(ui->mainTab->currentIndex() == BrowseTab)
-        current_table = ui->comboBrowseTable->currentText();
 
     // Open dialog
     ExportDataDialog dialog(db, ExportDataDialog::ExportFormatJson, this, "", current_table);

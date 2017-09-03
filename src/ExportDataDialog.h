@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "sqlitetypes.h"
+
 class DBBrowserDB;
 
 namespace Ui {
@@ -20,7 +22,8 @@ public:
         ExportFormatJson,
     };
 
-    explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = 0, const QString& query = "", const QString& selection = "");
+    explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = 0,
+                              const QString& query = "", const sqlb::ObjectIdentifier& selection = sqlb::ObjectIdentifier());
     ~ExportDataDialog();
 
 private slots:

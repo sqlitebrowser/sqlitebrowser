@@ -7,6 +7,7 @@
 #include <QVector>
 #include <QStringList>
 #include <QMultiHash>
+#include <QVariant>
 
 namespace sqlb {
 
@@ -36,6 +37,18 @@ public:
     {
     }
 
+    ObjectIdentifier(QVariant variant)
+    {
+        QStringList str = variant.toStringList();
+        m_schema = str.first();
+        m_name = str.last();
+    }
+
+    bool operator==(const ObjectIdentifier& rhs) const
+    {
+        return (rhs.m_schema == m_schema && rhs.m_name == m_name);
+    }
+
     const QString& schema() const { return m_schema; }
     const QString& name() const { return m_name; }
     void setSchema(const QString& schema) { m_schema = schema; }
@@ -49,12 +62,29 @@ public:
 
     bool isEmpty() const { return m_name.isEmpty(); }
 
+    // This returns a string which can be used in SQL statements
     QString toString(bool shortName = false) const
     {
         if(shortName && m_schema == "main")
             return sqlb::escapeIdentifier(m_name);
         else
             return QString("%1.%2").arg(sqlb::escapeIdentifier(m_schema)).arg(sqlb::escapeIdentifier(m_name));
+    }
+
+    // This returns a string which can be used in the user interface
+    QString toDisplayString() const
+    {
+        if(m_schema == "main")
+            return m_name;
+        else
+            return QString("%1.%2").arg(m_schema).arg(m_name);
+    }
+
+    QVariant toVariant() const
+    {
+        QStringList result;
+        result << m_schema << m_name;
+        return QVariant(result);
     }
 
 private:

@@ -5,11 +5,11 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool createIndex, QWidget* parent)
+EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& indexName, bool createIndex, QWidget* parent)
     : QDialog(parent),
       pdb(db),
       curIndex(indexName),
-      index(indexName),
+      index(indexName.name()),
       newIndex(createIndex),
       ui(new Ui::EditIndexDialog),
       m_sRestorePointName(pdb.generateSavepointName("editindex"))
@@ -18,13 +18,31 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     ui->setupUi(this);
 
     // Get list of tables, sort it alphabetically and fill the combobox
-    objectMap dbobjs;
-    QList<sqlb::ObjectPtr> tables = pdb.schemata["main"].values("table");
-    for(auto it=tables.constBegin();it!=tables.constEnd();++it)
-        dbobjs.insert((*it)->name(), (*it));
+    QMap<QString, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
+    if(newIndex)        // If this is a new index, offer all tables of all database schemata
+    {
+        for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
+        {
+            QList<sqlb::ObjectPtr> tables = it->values("table");
+            for(auto jt=tables.constBegin();jt!=tables.constEnd();++jt)
+            {
+                // Only show the schema name for non-main schemata
+                sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
+                dbobjs.insert(obj.toDisplayString(), obj);
+            }
+        }
+    } else {            // If this is an existing index, only offer tables of the current database schema
+        QList<sqlb::ObjectPtr> tables = pdb.schemata[curIndex.schema()].values("table");
+        for(auto it=tables.constBegin();it!=tables.constEnd();++it)
+        {
+            // Only show the schema name for non-main schemata
+            sqlb::ObjectIdentifier obj(curIndex.schema(), (*it)->name());
+            dbobjs.insert(obj.toDisplayString(), obj);
+        }
+    }
     ui->comboTableName->blockSignals(true);
     for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
-        ui->comboTableName->addItem(QIcon(QString(":icons/table")), (*it)->name());
+        ui->comboTableName->addItem(QIcon(QString(":icons/table")), it.key(), it.value().toVariant());
     ui->comboTableName->blockSignals(false);
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
@@ -34,7 +52,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const QString& indexName, bool
     if(!newIndex)
     {
         // Load the current layout and fill in the dialog fields
-        index = *(pdb.getObjectByName(sqlb::ObjectIdentifier("main", curIndex)).dynamicCast<sqlb::Index>());
+        index = *(pdb.getObjectByName(curIndex).dynamicCast<sqlb::Index>());
 
         ui->editIndexName->blockSignals(true);
         ui->editIndexName->setText(index.name());
@@ -76,7 +94,7 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
     // Set the table name and clear all index columns
     if(!initialLoad)
     {
-        index.setTable(new_table);
+        index.setTable(sqlb::ObjectIdentifier(ui->comboTableName->currentData()).name());
         index.clearColumns();
     }
 
@@ -94,7 +112,7 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 void EditIndexDialog::updateColumnLists()
 {
     // Fill the table column list
-    sqlb::FieldInfoList tableFields = pdb.getObjectByName(sqlb::ObjectIdentifier("main", index.table())).dynamicCast<sqlb::Table>()->fieldInformation();
+    sqlb::FieldInfoList tableFields = pdb.getObjectByName(sqlb::ObjectIdentifier(ui->comboTableName->currentData())).dynamicCast<sqlb::Table>()->fieldInformation();
     ui->tableTableColumns->setRowCount(tableFields.size());
     int tableRows = 0;
     for(int i=0;i<tableFields.size();++i)
@@ -237,15 +255,15 @@ void EditIndexDialog::accept()
     // When editing an index, delete the old one first
     if(!newIndex)
     {
-        if(!pdb.executeSQL(QString("DROP INDEX IF EXISTS %1;").arg(sqlb::escapeIdentifier(curIndex))))
+        if(!pdb.executeSQL(QString("DROP INDEX IF EXISTS %1;").arg(curIndex.toString())))
         {
             QMessageBox::warning(this, qApp->applicationName(), tr("Deleting the old index failed:\n%1").arg(pdb.lastError()));
             return;
         }
     }
 
-    // Create the new index
-    if(pdb.executeSQL(index.sql()))
+    // Create the new index in the schema of the selected table
+    if(pdb.executeSQL(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData()).schema())))
         QDialog::accept();
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));
@@ -261,7 +279,7 @@ void EditIndexDialog::reject()
 
 void EditIndexDialog::updateSqlText()
 {
-    ui->sqlTextEdit->setText(index.sql());
+    ui->sqlTextEdit->setText(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData()).schema()));
 }
 
 void EditIndexDialog::moveColumnUp()

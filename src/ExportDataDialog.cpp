@@ -12,7 +12,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const QString& query, const QString& selection)
+ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const QString& query, const sqlb::ObjectIdentifier& selection)
     : QDialog(parent),
       ui(new Ui::ExportDataDialog),
       pdb(db),
@@ -42,9 +42,17 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     if(query.isEmpty())
     {
         // Get list of tables to export
-        objectMap objects = pdb.getBrowsableObjects("main");
-        foreach(const sqlb::ObjectPtr& obj, objects)
-            ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString(obj->type()))), obj->name()));
+        for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
+        {
+            QList<sqlb::ObjectPtr> tables = it->values("table") + it->values("view");
+            for(auto jt=tables.constBegin();jt!=tables.constEnd();++jt)
+            {
+                sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
+                QListWidgetItem* item = new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString((*jt)->type()))), obj.toDisplayString());
+                item->setData(Qt::UserRole, obj.toVariant());
+                ui->listTables->addItem(item);
+            }
+        }
 
         // Sort list of tables and select the table specified in the selection parameter or alternatively the first one
         ui->listTables->model()->sort(0);
@@ -52,9 +60,14 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
         {
             ui->listTables->setCurrentItem(ui->listTables->item(0));
         } else {
-            QList<QListWidgetItem*> items = ui->listTables->findItems(selection, Qt::MatchExactly);
-            if(!items.isEmpty())
-                ui->listTables->setCurrentItem(items.first());
+            for(int i=0;i<ui->listTables->count();i++)
+            {
+                if(sqlb::ObjectIdentifier(ui->listTables->item(i)->data(Qt::UserRole)) == selection)
+                {
+                    ui->listTables->setCurrentRow(i);
+                    break;
+                }
+            }
         }
     } else {
         // Hide table combo box
@@ -320,8 +333,7 @@ void ExportDataDialog::accept()
         {
             // if we are called from execute sql tab, query is already set
             // and we only export 1 select
-            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(selectedItems.at(i)->text()));
-
+            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::ObjectIdentifier(selectedItems.at(i)->data(Qt::UserRole)).toString());
             exportQuery(sQuery, filenames.at(i));
         }
     }
