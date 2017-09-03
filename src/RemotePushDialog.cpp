@@ -1,4 +1,5 @@
 #include <QPushButton>
+#include <QUrlQuery>
 
 #include "RemotePushDialog.h"
 #include "ui_RemotePushDialog.h"
@@ -7,6 +8,8 @@
 RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert, const QString& name) :
     QDialog(parent),
     ui(new Ui::RemotePushDialog),
+    m_host(host),
+    m_clientCert(clientCert),
     remoteDatabase(remote)
 {
     // Create UI
@@ -21,6 +24,10 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, cons
     // Fetch list of available licences
     connect(&remoteDatabase, &RemoteDatabase::gotLicenceList, this, &RemotePushDialog::fillInLicences);
     remoteDatabase.fetch(host + "licence/list", RemoteDatabase::RequestTypeLicenceList, clientCert);
+
+    // Prepare fetching list of available branches
+    connect(&remoteDatabase, &RemoteDatabase::gotBranchList, this, &RemotePushDialog::fillInBranches);
+    reloadBranchList();
 }
 
 RemotePushDialog::~RemotePushDialog()
@@ -43,6 +50,9 @@ void RemotePushDialog::checkInput()
         valid = false;
 
     if(ui->editCommitMessage->toPlainText().size() > 1024)
+        valid = false;
+
+    if(ui->comboBranch->currentText().size() < 1 || ui->comboBranch->currentText().size() > 32)
         valid = false;
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
@@ -70,7 +80,12 @@ QString RemotePushDialog::licence() const
 
 bool RemotePushDialog::isPublic() const
 {
-    return  ui->checkPublic->isChecked();
+    return ui->checkPublic->isChecked();
+}
+
+QString RemotePushDialog::branch() const
+{
+    return ui->comboBranch->currentText();
 }
 
 void RemotePushDialog::fillInLicences(const QMap<QString, QString>& licences)
@@ -82,4 +97,32 @@ void RemotePushDialog::fillInLicences(const QMap<QString, QString>& licences)
     // Parse licence list and fill combo box. Show the full name to the user and use the short name as user data.
     for(auto it=licences.constBegin();it!=licences.constEnd();++it)
         ui->comboLicence->addItem(it.value(), it.key());
+}
+
+void RemotePushDialog::fillInBranches(const QStringList& branches)
+{
+    // Clear branch list and add the default master branch
+    ui->comboBranch->clear();
+    ui->comboBranch->addItem("master");
+
+    // Add rest of the branch list to the combo box
+    foreach(const QString& branch, branches)
+    {
+        if(branch != "master")
+            ui->comboBranch->addItem(branch);
+    }
+}
+
+void RemotePushDialog::reloadBranchList()
+{
+    // Assemble query URL
+    QUrl url(m_host + "branch/list");
+    QUrlQuery query;
+    query.addQueryItem("username", remoteDatabase.getInfoFromClientCert(m_clientCert, RemoteDatabase::CertInfoUser));
+    query.addQueryItem("folder", "/");
+    query.addQueryItem("dbname", ui->editName->text());
+    url.setQuery(query);
+
+    // Send request
+    remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeBranchList, m_clientCert);
 }

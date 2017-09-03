@@ -41,11 +41,12 @@ public:
         RequestTypeNewVersionCheck,
         RequestTypePush,
         RequestTypeLicenceList,
+        RequestTypeBranchList,
     };
 
     void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
     void push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
-              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false);
+              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false, const QString& branch = QString("master"));
 
 signals:
     // The openFile signal is emitted whenever a remote database file shall be opened in the main window. This happens when the
@@ -57,6 +58,7 @@ signals:
     void gotDirList(QString json, QVariant userdata);
     void gotCurrentVersion(QString version, QString url);
     void gotLicenceList(QMap<QString, QString> licences);
+    void gotBranchList(QStringList branches);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
     void uploadFinished(QString url);

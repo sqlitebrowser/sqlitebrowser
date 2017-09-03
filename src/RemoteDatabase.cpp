@@ -181,6 +181,23 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             emit gotLicenceList(licences);
             break;
         }
+    case RequestTypeBranchList:
+        {
+            // Read and check results
+            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+            if(json.isNull() || !json.isObject())
+                break;
+            QJsonObject obj = json.object();
+
+            // Parse data and assemble branch list
+            QStringList branches;
+            for(auto it=obj.constBegin();it!=obj.constEnd();++it)
+                branches.append(it.key());
+
+            // Send branch list to anyone who is interested
+            emit gotBranchList(branches);
+            break;
+        }
     case RequestTypePush:
         emit uploadFinished(reply->url().toString());
         break;
@@ -392,7 +409,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
 }
 
 void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
-                          const QString& commitMessage, const QString& licence, bool isPublic)
+                          const QString& commitMessage, const QString& licence, bool isPublic, const QString& branch)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -421,6 +438,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "commitmsg", commitMessage);
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
+    addPart(multipart, "branch", branch);
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
