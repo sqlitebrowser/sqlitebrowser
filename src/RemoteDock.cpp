@@ -111,7 +111,7 @@ void RemoteDock::pushDatabase()
 
     // Push database
     remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(), pushDialog.name(),
-                        pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic());
+                        pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic(), pushDialog.branch());
 }
 
 void RemoteDock::newDirectoryNode(const QModelIndex& parent)

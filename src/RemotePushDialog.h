@@ -21,9 +21,14 @@ public:
     QString commitMessage() const;
     QString licence() const;
     bool isPublic() const;
+    QString branch() const;
 
 private:
     Ui::RemotePushDialog* ui;
+
+    // Connection details
+    QString m_host;
+    QString m_clientCert;
 
     // Reference to the remote database object which is stored somewhere in the main window
     RemoteDatabase& remoteDatabase;
@@ -32,7 +37,10 @@ protected slots:
     void checkInput();
     virtual void accept();
 
+    void reloadBranchList();
+
     void fillInLicences(const QMap<QString, QString>& licences);
+    void fillInBranches(const QStringList& branches);
 };
 
 #endif

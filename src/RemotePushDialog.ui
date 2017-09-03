@@ -53,7 +53,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Database licence</string>
@@ -63,7 +63,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <widget class="QComboBox" name="comboLicence">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -73,7 +73,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Public</string>
@@ -83,8 +83,25 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <widget class="QCheckBox" name="checkPublic"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Branch</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBranch</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="comboBranch">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -103,6 +120,7 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>editName</tabstop>
   <tabstop>editCommitMessage</tabstop>
+  <tabstop>comboBranch</tabstop>
   <tabstop>checkPublic</tabstop>
   <tabstop>comboLicence</tabstop>
  </tabstops>
@@ -172,8 +190,57 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>editCommitMessage</sender>
+   <signal>textChanged()</signal>
+   <receiver>RemotePushDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>91</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editName</sender>
+   <signal>editingFinished()</signal>
+   <receiver>RemotePushDialog</receiver>
+   <slot>reloadBranchList()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>77</x>
+     <y>3</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBranch</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>RemotePushDialog</receiver>
+   <slot>checkInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>33</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkInput()</slot>
+  <slot>reloadBranchList()</slot>
  </slots>
 </ui>
