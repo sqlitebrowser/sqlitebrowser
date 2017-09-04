@@ -55,7 +55,7 @@ private slots:
     void moveUp();
     void moveDown();
     void setWithoutRowid(bool without_rowid);
-    void setTemporary(bool is_temp);
+    void changeSchema(const QString& schema);
 
 private:
     Ui::EditTableDialog* ui;

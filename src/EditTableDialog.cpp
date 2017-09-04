@@ -36,15 +36,20 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
         ui->labelEditWarning->setVisible(!m_table.fullyParsed());
 
-        // Set without rowid and temporary checkboxex. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
+        // Set without rowid checkbox and schema dropdown. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
         // for error checking etc.
         ui->checkWithoutRowid->blockSignals(true);
         ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
-        ui->checkTemporary->setChecked(curTable.schema() == "temp");
         ui->checkWithoutRowid->blockSignals(false);
+        ui->comboSchema->blockSignals(true);
+        ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
+        ui->comboSchema->setCurrentText(curTable.schema());
+        ui->comboSchema->blockSignals(false);
 
         populateFields();
     } else {
+        ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
+        ui->comboSchema->setCurrentText("main");                // Always create tables in the main schema by default
         ui->labelEditWarning->setVisible(false);
     }
 
@@ -149,7 +154,7 @@ void EditTableDialog::accept()
     if(m_bNewTable)
     {
         // Creation of new table
-        if(!pdb.executeSQL(m_table.sql()))
+        if(!pdb.executeSQL(m_table.sql(ui->comboSchema->currentText())))
         {
             QMessageBox::warning(
                 this,
@@ -163,7 +168,7 @@ void EditTableDialog::accept()
         // Rename table if necessary
         if(ui->editTableName->text() != curTable.name())
         {
-            if(!pdb.renameTable(curTable.schema(), curTable.name(), ui->editTableName->text()))
+            if(!pdb.renameTable(ui->comboSchema->currentText(), curTable.name(), ui->editTableName->text()))
             {
                 QMessageBox::warning(this, QApplication::applicationName(), pdb.lastError());
                 return;
@@ -184,7 +189,7 @@ void EditTableDialog::reject()
 
 void EditTableDialog::updateSqlText()
 {
-    ui->sqlTextEdit->setText(m_table.sql());
+    ui->sqlTextEdit->setText(m_table.sql(ui->comboSchema->currentText()));
 }
 
 void EditTableDialog::checkInput()
@@ -718,7 +723,7 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     }
 }
 
-void EditTableDialog::setTemporary(bool is_temp)
+void EditTableDialog::changeSchema(const QString& schema)
 {
     // Update the SQL preview
     updateSqlText();
@@ -726,7 +731,7 @@ void EditTableDialog::setTemporary(bool is_temp)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, is_temp ? "temp" : "main"))
+        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastError()));
