@@ -1064,6 +1064,19 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     // 2) Include the addColumn() use case in here, so the calling side doesn't need to know anything about how this class handles table modifications.
     // 3) Maybe rename this function to alterTable() or something
 
+    // If no new schema name has been set, we just use the old schema name
+    if(newSchemaName.isNull())
+    {
+        newSchemaName = tablename.schema();
+    } else {
+        // We're moving the table to a different schema. So check first if it doesn't already exist in the new schema.
+        if(getObjectByName(sqlb::ObjectIdentifier(newSchemaName, tablename.name())) != nullptr && newSchemaName != tablename.schema())
+        {
+            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(tablename.name()).arg(newSchemaName);
+            return false;
+        }
+    }
+
     // Create table schema
     const sqlb::TablePtr oldSchema = getObjectByName(tablename).dynamicCast<sqlb::Table>();
 
@@ -1121,10 +1134,6 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
         // Modify field
         newSchema.setField(index + move, to);
     }
-
-    // If no new schema name has been set, we just use the old schema name
-    if(newSchemaName.isNull())
-        newSchemaName = tablename.schema();
 
     // Create the new table
     NoStructureUpdateChecks nup(*this);

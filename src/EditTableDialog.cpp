@@ -733,8 +733,8 @@ void EditTableDialog::changeSchema(const QString& schema)
     {
         if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
         {
-            QMessageBox::warning(this, QApplication::applicationName(),
-                                 tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastError()));
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Changing the table schema failed. Error message:\n%1").arg(pdb.lastError()));
+            ui->comboSchema->setCurrentText(curTable.schema()); // Set it back to the original schema
         }
     }
 }
