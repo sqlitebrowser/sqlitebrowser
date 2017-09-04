@@ -1038,7 +1038,7 @@ bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb:
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move)
+bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move, QString newSchemaName)
 {
     /*
      * USE CASES:
@@ -1089,7 +1089,6 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     newSchema.setName("sqlitebrowser_rename_column_new_table");
     newSchema.setConstraints(table.allConstraints());
     newSchema.setRowidColumn(table.rowidColumn());
-    newSchema.setTemporary(table.isTemporary());
     QString select_cols;
     if(to.isNull())
     {
@@ -1123,9 +1122,13 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
         newSchema.setField(index + move, to);
     }
 
+    // If no new schema name has been set, we just use the old schema name
+    if(newSchemaName.isNull())
+        newSchemaName = tablename.schema();
+
     // Create the new table
     NoStructureUpdateChecks nup(*this);
-    if(!executeSQL(newSchema.sql(tablename.schema()), true, true))
+    if(!executeSQL(newSchema.sql(newSchemaName), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1135,7 +1138,7 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
 
     // Copy the data from the old table to the new one
     if(!executeSQL(QString("INSERT INTO %1.sqlitebrowser_rename_column_new_table SELECT %2 FROM %3;")
-                   .arg(tablename.schema())
+                   .arg(newSchemaName)
                    .arg(select_cols)
                    .arg(tablename.toString())))
     {
@@ -1173,9 +1176,10 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
                         ;
                 }
 
-                // Only try to add the index later if it has any columns remaining
+                // Only try to add the index later if it has any columns remaining. Also use the new schema name here, too, to basically move
+                // any index that references the table to the same new schema as the table.
                 if(idx->columns().size())
-                    otherObjectsSql << idx->sql();
+                    otherObjectsSql << idx->sql(newSchemaName);
             } else {
                 // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
                 // hope for the best.
@@ -1202,7 +1206,7 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     }
 
     // Rename the temporary table
-    if(!renameTable(tablename.schema(), "sqlitebrowser_rename_column_new_table", tablename.name()))
+    if(!renameTable(newSchemaName, "sqlitebrowser_rename_column_new_table", tablename.name()))
     {
         revertToSavepoint(savepointName);
         return false;
@@ -1362,8 +1366,6 @@ void DBBrowserDB::updateSchema()
                     if(!val_sql.isEmpty())
                     {
                         sqlb::ObjectPtr object = sqlb::Object::parseSQL(type, val_sql);
-                        if(schema_name == "temp")
-                                object->setTemporary(true);
 
                         // If parsing wasn't successful set the object name manually, so that at least the name is going to be correct
                         if(!object->fullyParsed())

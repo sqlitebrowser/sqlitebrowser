@@ -40,7 +40,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         // for error checking etc.
         ui->checkWithoutRowid->blockSignals(true);
         ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
-        ui->checkTemporary->setChecked(m_table.isTemporary());
+        ui->checkTemporary->setChecked(curTable.schema() == "temp");
         ui->checkWithoutRowid->blockSignals(false);
 
         populateFields();
@@ -720,16 +720,13 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
 
 void EditTableDialog::setTemporary(bool is_temp)
 {
-    // Set the temporary flag in the table definition
-    m_table.setTemporary(is_temp);
-
     // Update the SQL preview
     updateSqlText();
 
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
+        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, is_temp ? "temp" : "main"))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the temporary flag for the table failed. Error message:\n%1").arg(pdb.lastError()));

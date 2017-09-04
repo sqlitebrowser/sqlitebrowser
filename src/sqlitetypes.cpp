@@ -253,7 +253,6 @@ void Table::clear()
     m_fields.clear();
     m_constraints.clear();
     m_virtual = QString();
-    m_temporary = false;
 }
 Table::~Table()
 {
@@ -456,8 +455,7 @@ QString Table::sql(const QString& schema, bool ifNotExists) const
         return QString("CREATE VIRTUAL TABLE %1 USING %2;").arg(ObjectIdentifier(schema, m_name).toString(true)).arg(m_virtual);
 
     // This is a normal table, not a virtual one
-    QString sql = QString("CREATE %1TABLE%2 %3 (\n")
-            .arg(m_temporary ? QString("TEMPORARY ") : QString(""))
+    QString sql = QString("CREATE TABLE%1 %2 (\n")
             .arg(ifNotExists ? QString(" IF NOT EXISTS") : QString(""))
             .arg(ObjectIdentifier(schema, m_name).toString(true));
 

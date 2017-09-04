@@ -142,7 +142,7 @@ public:
         Trigger
     };
 
-    explicit Object(const QString& name): m_name(name), m_temporary(false), m_fullyParsed(false) {}
+    explicit Object(const QString& name): m_name(name), m_fullyParsed(false) {}
     virtual ~Object() {}
 
     virtual Types type() const = 0;
@@ -153,9 +153,6 @@ public:
 
     void setOriginalSql(const QString& original_sql) { m_originalSql = original_sql; }
     QString originalSql() const { return m_originalSql; }
-
-    void setTemporary(bool temp) { m_temporary = temp; }
-    bool isTemporary() const { return m_temporary; }
 
     virtual QString baseTable() const { return QString(); }
 
@@ -185,7 +182,6 @@ public:
 protected:
     QString m_name;
     QString m_originalSql;
-    bool m_temporary;
     bool m_fullyParsed;
 };
 
