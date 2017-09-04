@@ -42,6 +42,7 @@ public:
     void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QVector<QString> &display_format = QVector<QString>());
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    const sqlb::ObjectIdentifier& currentTableName() const { return m_sTable; }
 
     Qt::ItemFlags flags(const QModelIndex& index) const;
 

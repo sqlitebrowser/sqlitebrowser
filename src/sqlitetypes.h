@@ -49,6 +49,11 @@ public:
         return (rhs.m_schema == m_schema && rhs.m_name == m_name);
     }
 
+    bool operator<(const ObjectIdentifier& rhs) const
+    {
+        return toDisplayString() < rhs.toDisplayString();
+    }
+
     const QString& schema() const { return m_schema; }
     const QString& name() const { return m_name; }
     void setSchema(const QString& schema) { m_schema = schema; }
@@ -91,6 +96,9 @@ private:
     QString m_schema;
     QString m_name;
 };
+
+QDataStream& operator<<(QDataStream& ds, const ObjectIdentifier& objid);
+QDataStream & operator>>(QDataStream& ds, ObjectIdentifier& objid);
 
 class Object;
 class Table;

@@ -22,6 +22,28 @@ QStringList fieldVectorToFieldNames(const FieldVector& vector)
     return result;
 }
 
+QDataStream& operator<<(QDataStream& ds, const ObjectIdentifier& objid)
+{
+    ds << objid.toVariant();
+    return ds;
+}
+
+QDataStream & operator>>(QDataStream& ds, ObjectIdentifier& objid)
+{
+    // Read in the item
+    QVariant v;
+    ds >> v;
+
+    // If it is a string list, we can treat it as an object identifier. If it isn't, we assume it's just a
+    // single string and use interpret it as the table name in the main schema. This is done for backwards
+    // compatability with old project file formats.
+    if(v.toStringList().isEmpty())
+        objid = sqlb::ObjectIdentifier("main", v.toString());
+    else
+        objid = sqlb::ObjectIdentifier(v);
+    return ds;
+}
+
 /**
  * @brief The CreateTableWalker class
  * Goes trough the createtable AST and returns

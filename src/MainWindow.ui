@@ -1791,7 +1791,7 @@
    <extends>QTableWidget</extends>
    <header>ExtendedTableWidget.h</header>
    <slots>
-    <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+    <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
    </slots>
   </customwidget>
  </customwidgets>
@@ -2687,9 +2687,9 @@
   </connection>
   <connection>
    <sender>dataTable</sender>
-   <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+   <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
    <receiver>MainWindow</receiver>
-   <slot>jumpToRow(QString,QString,QByteArray)</slot>
+   <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -2884,7 +2884,7 @@
   <slot>saveSqlFileAs()</slot>
   <slot>switchToBrowseDataTab()</slot>
   <slot>copyCurrentCreateStatement()</slot>
-  <slot>jumpToRow(QString,QString,QByteArray)</slot>
+  <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
   <slot>editDataColumnDisplayFormat()</slot>
   <slot>showRowidColumn(bool)</slot>
   <slot>browseDataSetTableEncoding()</slot>

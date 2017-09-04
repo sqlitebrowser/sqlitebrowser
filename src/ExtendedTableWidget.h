@@ -8,6 +8,7 @@
 
 class QMenu;
 class FilterTableHeader;
+namespace sqlb { class ObjectIdentifier; }
 
 class ExtendedTableWidget : public QTableView
 {
@@ -26,7 +27,7 @@ public slots:
     void reloadSettings();
 
 signals:
-    void foreignKeyClicked(const QString& table, const QString& column, const QByteArray& value);
+    void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
 
 private:

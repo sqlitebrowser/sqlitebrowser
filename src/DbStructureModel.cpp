@@ -40,7 +40,13 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
-        return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
+        // For the display role and the browsabled branch of the tree we want to show the column name including the schema name if necessary (i.e.
+        // for schemata != "main"). For the normal structure branch of the tree we don't want to add the schema name because it's already obvious from
+        // the position of the item in the tree.
+        if(index.column() == ColumnName && item->parent() == browsablesRootItem)
+            return sqlb::ObjectIdentifier(item->text(ColumnSchema), item->text(ColumnName)).toDisplayString();
+        else
+            return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
     case Qt::EditRole:
     case Qt::ToolTipRole:   // Don't modify the text when it's supposed to be shown in a tooltip
         return item->text(index.column());
@@ -138,14 +144,14 @@ void DbStructureModel::reloadData()
     // In the root node there are two nodes: 'browsables' and 'all'. The first node contains a list of a all browsable objects, i.e. views and tables.
     // The seconds node contains four sub-nodes (tables, indices, views and triggers), each containing a list of objects of that type.
     // This way we only have to have and only have to update one model and can use it in all sorts of places, just by setting a different root node.
-    QTreeWidgetItem* itemBrowsables = new QTreeWidgetItem(rootItem);
-    itemBrowsables->setIcon(ColumnName, QIcon(QString(":/icons/view")));
-    itemBrowsables->setText(ColumnName, tr("Browsables"));
+    browsablesRootItem = new QTreeWidgetItem(rootItem);
+    browsablesRootItem->setIcon(ColumnName, QIcon(QString(":/icons/view")));
+    browsablesRootItem->setText(ColumnName, tr("Browsables"));
 
     QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
     itemAll->setIcon(ColumnName, QIcon(QString(":/icons/database")));
     itemAll->setText(ColumnName, tr("All"));
-    buildTree(itemAll, itemBrowsables, "main");
+    buildTree(itemAll, "main");
 
     // Add the temporary database as a node if it isn't empty
     if(!m_db.schemata["temp"].isEmpty())
@@ -153,7 +159,7 @@ void DbStructureModel::reloadData()
         QTreeWidgetItem* itemTemp = new QTreeWidgetItem(itemAll);
         itemTemp->setIcon(ColumnName, QIcon(QString(":/icons/database")));
         itemTemp->setText(ColumnName, tr("Temporary"));
-        buildTree(itemTemp, itemBrowsables, "temp");
+        buildTree(itemTemp, "temp");
     }
 
     // Refresh the view
@@ -232,7 +238,7 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     }
 }
 
-void DbStructureModel::buildTree(QTreeWidgetItem* parent, QTreeWidgetItem* browsables, const QString& schema)
+void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
 {
     // Build a map from object type to tree node to simplify finding the correct tree node later
     QMap<QString, QTreeWidgetItem*> typeToParentItem;
@@ -274,12 +280,7 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, QTreeWidgetItem* brows
 
         // If it is a table or view add the field nodes, add an extra node for the browsable section
         if((*it)->type() == sqlb::Object::Types::Table || (*it)->type() == sqlb::Object::Types::View)
-        {
-            // TODO We're currently only adding objects in the main schema to the list of browsable objects because browsing non-main objects
-            // isn't really supported in the main window yet. As soon as this is implemented the following if statement can be removed.
-            if(schema == "main")
-                addNode(browsables, *it, schema);
-        }
+            addNode(browsablesRootItem, *it, schema);
 
         // Add field nodes if there are any
         sqlb::FieldInfoList fieldList = (*it)->fieldInformation();

@@ -144,7 +144,7 @@ private:
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
-    QMap<QString, BrowseDataTableSettings> browseTableSettings;
+    QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> browseTableSettings;
 
     RemoteDatabase* m_remoteDb;
 
@@ -167,6 +167,8 @@ private:
     void enableEditing(bool enable_edit, bool enable_insertdelete);
     void loadExtensionsFromSettings();
 
+    sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
+
 protected:
     void closeEvent(QCloseEvent *);
     void dragEnterEvent(QDragEnterEvent *event);
@@ -179,7 +181,7 @@ public slots:
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void refresh();
-    void jumpToRow(const QString& table, QString column, const QByteArray& value);
+    void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure();
 

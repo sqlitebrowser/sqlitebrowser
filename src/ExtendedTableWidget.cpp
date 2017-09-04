@@ -433,7 +433,9 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
         sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
 
         if(fk.isSet())
-            emit foreignKeyClicked(fk.table(), fk.columns().size() ? fk.columns().at(0) : "", m->data(index, Qt::EditRole).toByteArray());
+            emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
+                                   fk.columns().size() ? fk.columns().at(0) : "",
+                                   m->data(index, Qt::EditRole).toByteArray());
     }
 }
 

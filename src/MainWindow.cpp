@@ -439,7 +439,7 @@ void MainWindow::populateTable()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // Get current table name
-    QString tablename = ui->comboBrowseTable->currentText();
+    sqlb::ObjectIdentifier tablename = currentlyBrowsedTableName();
 
     // Set model
     bool reconnectSelectionSignals = false;
@@ -450,8 +450,7 @@ void MainWindow::populateTable()
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Search stored table settings for this table
-    auto settingsIt = browseTableSettings.constFind(tablename);
-    bool storedDataFound = settingsIt != browseTableSettings.constEnd();
+    bool storedDataFound = browseTableSettings.contains(tablename);
 
     // Set new table
     if(!storedDataFound)
@@ -459,7 +458,7 @@ void MainWindow::populateTable()
         // No stored settings found.
 
         // Set table name and apply default display format settings
-        m_browseTableModel->setTable(sqlb::ObjectIdentifier("main", tablename), 0, Qt::AscendingOrder);
+        m_browseTableModel->setTable(tablename, 0, Qt::AscendingOrder);
 
         // There aren't any information stored for this table yet, so use some default values
 
@@ -480,17 +479,17 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
         // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()]);
+        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[tablename]);
 
         // The filters can be left empty as they are
     } else {
         // Stored settings found. Retrieve them.
-        BrowseDataTableSettings storedData = settingsIt.value();
+        BrowseDataTableSettings storedData = browseTableSettings[tablename];
 
         // Load display formats and set them along with the table name
         QVector<QString> v;
         bool only_defaults = true;
-        const sqlb::FieldInfoList& tablefields = db.getObjectByName(sqlb::ObjectIdentifier("main", tablename))->fieldInformation();
+        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
         for(int i=0; i<tablefields.size(); ++i)
         {
             QString format = storedData.displayFormats[i+1];
@@ -503,9 +502,9 @@ void MainWindow::populateTable()
             }
         }
         if(only_defaults)
-            m_browseTableModel->setTable(sqlb::ObjectIdentifier("main", tablename), storedData.sortOrderIndex, storedData.sortOrderMode);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode);
         else
-            m_browseTableModel->setTable(sqlb::ObjectIdentifier("main", tablename), storedData.sortOrderIndex, storedData.sortOrderMode, v);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
 
         // There is information stored for this table, so extract it and apply it
 
@@ -532,11 +531,11 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(storedData.encoding);
 
         // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[ui->comboBrowseTable->currentText()], true, false);
+        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[tablename], true, false);
     }
 
     // Show/hide menu options depending on whether this is a table or a view
-    if(db.getObjectByName(sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText()))->type() == sqlb::Object::Table)
+    if(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
     {
         // Table
         ui->actionUnlockViewEditing->setVisible(false);
@@ -859,7 +858,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // * Don't allow editing of other objects than tables (on the browse table) *
     bool isEditingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText()))->type() == sqlb::Object::Types::Table);
+            (db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table);
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
@@ -883,7 +882,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 
     bool editingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText()))->type() == sqlb::Object::Types::Table);
+            (db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table);
 
     // Don't allow editing of other objects than tables
     editDock->setReadOnly(!editingAllowed);
@@ -1176,7 +1175,7 @@ void MainWindow::exportTableToCSV()
             current_table = sqlb::ObjectIdentifier(schema, name);
         }
     } else if(ui->mainTab->currentIndex() == BrowseTab) {
-        current_table = sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText());
+        current_table = currentlyBrowsedTableName();
     }
 
     // Open dialog
@@ -1198,7 +1197,7 @@ void MainWindow::exportTableToJson()
             current_table = sqlb::ObjectIdentifier(schema, name);
         }
     } else if(ui->mainTab->currentIndex() == BrowseTab) {
-        current_table = sqlb::ObjectIdentifier("main", ui->comboBrowseTable->currentText());
+        current_table = currentlyBrowsedTableName();
     }
 
     // Open dialog
@@ -1529,7 +1528,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
         return;
 
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
-    BrowseDataTableSettings& settings = browseTableSettings[ui->comboBrowseTable->currentText()];
+    BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
     settings.sortOrderIndex = logicalindex;
     settings.sortOrderMode = settings.sortOrderMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
     ui->dataTable->sortByColumn(settings.sortOrderIndex, settings.sortOrderMode);
@@ -1910,7 +1909,8 @@ void MainWindow::on_actionWebsite_triggered()
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
 {
     QSet<int> selectedCols(ui->dataTable->selectedCols());
-    QString tableName(ui->comboBrowseTable->currentText());
+    sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
+
     if (!selectedCols.contains(section))
     {
         browseTableSettings[tableName].columnWidths[section] = new_size;
@@ -2021,10 +2021,11 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             if(ui->mainTab->currentIndex() == BrowseTab)
                             {
                                 populateTable();     // Refresh view
-                                ui->dataTable->sortByColumn(browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderIndex,
-                                                            browseTableSettings[ui->comboBrowseTable->currentText()].sortOrderMode);
-                                showRowidColumn(browseTableSettings[ui->comboBrowseTable->currentText()].showRowid);
-                                unlockViewEditing(!browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk.isEmpty(), browseTableSettings[ui->comboBrowseTable->currentText()].unlockViewPk);
+                                sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+                                ui->dataTable->sortByColumn(browseTableSettings[current_table].sortOrderIndex,
+                                                            browseTableSettings[current_table].sortOrderMode);
+                                showRowidColumn(browseTableSettings[current_table].showRowid);
+                                unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
                             }
                             xml.skipCurrentElement();
                         }
@@ -2176,7 +2177,7 @@ void MainWindow::fileAttach()
 void MainWindow::updateFilter(int column, const QString& value)
 {
     m_browseTableModel->updateFilter(column, value);
-    browseTableSettings[ui->comboBrowseTable->currentText()].filterValues[column] = value;
+    browseTableSettings[currentlyBrowsedTableName()].filterValues[column] = value;
     setRecordsetLabel();
 }
 
@@ -2252,7 +2253,9 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
         if(!ui->dbTreeWidget->selectionModel()->hasSelection())
             return;
 
-        tableToBrowse = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 0)).toString();
+        sqlb::ObjectIdentifier obj(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema)).toString(),
+                                   ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString());
+        tableToBrowse = obj.toDisplayString();
     }
 
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
@@ -2277,10 +2280,10 @@ void MainWindow::copyCurrentCreateStatement()
     QApplication::clipboard()->setText(stmt);
 }
 
-void MainWindow::jumpToRow(const QString& table, QString column, const QByteArray& value)
+void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value)
 {
     // First check if table exists
-    sqlb::TablePtr obj = db.getObjectByName(sqlb::ObjectIdentifier("main", table)).dynamicCast<sqlb::Table>();
+    sqlb::TablePtr obj = db.getObjectByName(table).dynamicCast<sqlb::Table>();
     if(!obj)
         return;
 
@@ -2294,7 +2297,7 @@ void MainWindow::jumpToRow(const QString& table, QString column, const QByteArra
         return;
 
     // Jump to table
-    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(table));
+    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(table.toDisplayString()));
     populateTable();
 
     // Set filter
@@ -2316,8 +2319,7 @@ void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
 
 void MainWindow::showRecordPopupMenu(const QPoint& pos)
 {
-    const QString sCurrentTable = ui->comboBrowseTable->currentText();
-    if(!(db.getObjectByName(sqlb::ObjectIdentifier("main", sCurrentTable))->type() == sqlb::Object::Types::Table && !db.readOnly()))
+    if(!(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table && !db.readOnly()))
         return;
 
     int row = ui->dataTable->verticalHeader()->logicalIndexAt(pos);
@@ -2340,9 +2342,9 @@ void MainWindow::editDataColumnDisplayFormat()
     // Get the current table name and fetch its table object, then retrieve the fields of that table and look up the index of the clicked table header
     // section using it as the table field array index. Subtract one from the header index to get the column index because in the the first (though hidden)
     // column is always the rowid column. Ultimately, get the column name from the column object
-    QString current_table = ui->comboBrowseTable->currentText();
+    sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     int field_number = sender()->property("clicked_column").toInt();
-    QString field_name = db.getObjectByName(sqlb::ObjectIdentifier("main", current_table)).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
+    QString field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
 
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
@@ -2384,7 +2386,7 @@ void MainWindow::showRowidColumn(bool show)
     ui->actionShowRowidColumn->setChecked(show);
 
     // Save settings for this table
-    QString current_table = ui->comboBrowseTable->currentText();
+    sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     browseTableSettings[current_table].showRowid = show;
 
     // Update the filter row
@@ -2429,7 +2431,7 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
         m_browseTableModel->setEncoding(encoding);
 
         // Save encoding for this table
-        browseTableSettings[ui->comboBrowseTable->currentText()].encoding = encoding;
+        browseTableSettings[currentlyBrowsedTableName()].encoding = encoding;
 
         // Set default encoding if requested to and change all stored table encodings
         if(forAllTables)
@@ -2455,10 +2457,10 @@ void MainWindow::fileOpenReadOnly()
 
 void MainWindow::unlockViewEditing(bool unlock, QString pk)
 {
-    QString currentTable = ui->comboBrowseTable->currentText();
+    sqlb::ObjectIdentifier currentTable = currentlyBrowsedTableName();
 
     // If this isn't a view just unlock editing and return
-    if(db.getObjectByName(sqlb::ObjectIdentifier("main", currentTable))->type() != sqlb::Object::View)
+    if(db.getObjectByName(currentTable)->type() != sqlb::Object::View)
     {
         m_browseTableModel->setPseudoPk(QString());
         enableEditing(true, true);
@@ -2479,7 +2481,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
                 return;
 
             // Do some basic testing of the input and if the input appears to be good, go on
-            if(db.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1;").arg(sqlb::escapeIdentifier(pk)).arg(sqlb::escapeIdentifier(currentTable)), false, true))
+            if(db.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1;").arg(sqlb::escapeIdentifier(pk)).arg(currentTable.toString()), false, true))
                 break;
         }
     } else if(!unlock) {
@@ -2496,4 +2498,13 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
 
     // Save settings for this table
     browseTableSettings[currentTable].unlockViewPk = pk;
+}
+
+sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
+{
+    return sqlb::ObjectIdentifier(ui->comboBrowseTable->model()->data(dbStructureModel->index(ui->comboBrowseTable->currentIndex(),
+                                                                                              DbStructureModel::ColumnSchema,
+                                                                                              ui->comboBrowseTable->rootModelIndex())).toString(),
+                                  ui->comboBrowseTable->currentData(Qt::EditRole).toString());  // Use the edit role here to make sure we actually get the
+                                                                                                // table name without the schema bit in front of it.
 }

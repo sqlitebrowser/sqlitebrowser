@@ -39,10 +39,11 @@ public:
     };
 
 private:
-    QTreeWidgetItem* rootItem;
     DBBrowserDB& m_db;
+    QTreeWidgetItem* rootItem;
+    QTreeWidgetItem* browsablesRootItem;
 
-    void buildTree(QTreeWidgetItem* parent, QTreeWidgetItem* browsables, const QString& schema);
+    void buildTree(QTreeWidgetItem* parent, const QString& schema);
     QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const QString& schema);
 };
 
