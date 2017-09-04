@@ -81,11 +81,15 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
     , m_db(db)
     , m_table(table)
 {
-    const auto objects = m_db.getBrowsableObjects("main");
-    for (auto& obj : objects) {
-        if (obj->type() == sqlb::Object::Types::Table) {
-            QString tableName = obj->name();
-            m_tablesIds.insert(tableName, obj.dynamicCast<sqlb::Table>()->fieldNames());
+    for(auto it=m_db.schemata.constBegin();it!=m_db.schemata.constEnd();++it)
+    {
+        for(auto jt=it->constBegin();jt!=it->constEnd();++jt)
+        {
+            if((*jt)->type() == sqlb::Object::Types::Table)
+            {
+                QString tableName = (*jt)->name();
+                m_tablesIds.insert(tableName, (*jt).dynamicCast<sqlb::Table>()->fieldNames());
+            }
         }
     }
 }
