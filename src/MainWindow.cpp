@@ -390,15 +390,18 @@ void MainWindow::populateStructure()
         return;
 
     // Update table and column names for syntax highlighting
-    objectMap tab = db.getBrowsableObjects("main");
     SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
-    for(auto it=tab.constBegin();it!=tab.constEnd();++it)
+    for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
     {
-        QString objectname = (*it)->name();
+        objectMap tab = db.getBrowsableObjects(it.key());
+        for(auto it=tab.constBegin();it!=tab.constEnd();++it)
+        {
+            QString objectname = (*it)->name();
 
-        sqlb::FieldInfoList fi = (*it)->fieldInformation();
-        foreach(const sqlb::FieldInfo& f, fi)
-            tablesToColumnsMap[objectname].append(f.name);
+            sqlb::FieldInfoList fi = (*it)->fieldInformation();
+            foreach(const sqlb::FieldInfo& f, fi)
+                tablesToColumnsMap[objectname].append(f.name);
+        }
     }
     SqlTextEdit::sqlLexer->setTableNames(tablesToColumnsMap);
     ui->editLogApplication->reloadKeywords();
