@@ -148,18 +148,32 @@ void DbStructureModel::reloadData()
     browsablesRootItem->setIcon(ColumnName, QIcon(QString(":/icons/view")));
     browsablesRootItem->setText(ColumnName, tr("Browsables"));
 
+    // Make sure to always load the main schema first
     QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
     itemAll->setIcon(ColumnName, QIcon(QString(":/icons/database")));
     itemAll->setText(ColumnName, tr("All"));
     buildTree(itemAll, "main");
 
-    // Add the temporary database as a node if it isn't empty
+    // Add the temporary database as a node if it isn't empty. Make sure it's always second if it exists.
     if(!m_db.schemata["temp"].isEmpty())
     {
         QTreeWidgetItem* itemTemp = new QTreeWidgetItem(itemAll);
         itemTemp->setIcon(ColumnName, QIcon(QString(":/icons/database")));
         itemTemp->setText(ColumnName, tr("Temporary"));
         buildTree(itemTemp, "temp");
+    }
+
+    // Now load all the other schemata last
+    for(auto it=m_db.schemata.constBegin();it!=m_db.schemata.constEnd();++it)
+    {
+        // Don't load the main and temp schema again
+        if(it.key() != "main" && it.key() != "temp")
+        {
+            QTreeWidgetItem* itemSchema = new QTreeWidgetItem(itemAll);
+            itemSchema->setIcon(ColumnName, QIcon(QString(":/icons/database")));
+            itemSchema->setText(ColumnName, it.key());
+            buildTree(itemSchema, it.key());
+        }
     }
 
     // Refresh the view
