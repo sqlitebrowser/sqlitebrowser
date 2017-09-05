@@ -98,7 +98,7 @@ private:
 };
 
 QDataStream& operator<<(QDataStream& ds, const ObjectIdentifier& objid);
-QDataStream & operator>>(QDataStream& ds, ObjectIdentifier& objid);
+QDataStream& operator>>(QDataStream& ds, ObjectIdentifier& objid);
 
 class Object;
 class Table;

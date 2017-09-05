@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <QDebug>
+#include <QDataStream>      // This include seems to only be necessary for the Windows build
 
 namespace sqlb {
 
@@ -28,7 +29,7 @@ QDataStream& operator<<(QDataStream& ds, const ObjectIdentifier& objid)
     return ds;
 }
 
-QDataStream & operator>>(QDataStream& ds, ObjectIdentifier& objid)
+QDataStream& operator>>(QDataStream& ds, ObjectIdentifier& objid)
 {
     // Read in the item
     QVariant v;
