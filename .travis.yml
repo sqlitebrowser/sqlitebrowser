@@ -67,6 +67,10 @@ script:
   - curl --upload-file ./DB*.AppImage https://transfer.sh/sqlitebrowser-git.$(git rev-parse --short HEAD)-x86_64.AppImage 
 
 notifications:
+  branches:
+    except:
+      - # Do not build tags that we create when we upload to GitHub Releases
+      - /^(?i:continuous)$/
   email:
     recipients:
       - mkleusberg@gmail.com
