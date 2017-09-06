@@ -67,10 +67,6 @@ script:
   - curl --upload-file ./DB*.AppImage https://transfer.sh/sqlitebrowser-git.$(git rev-parse --short HEAD)-x86_64.AppImage 
 
 notifications:
-  branches:
-    except:
-      - # Do not build tags that we create when we upload to GitHub Releases
-      - /^(?i:continuous)$/
   email:
     recipients:
       - mkleusberg@gmail.com
@@ -80,6 +76,6 @@ notifications:
     on_failure: always
 
 after_success:
-  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
   - sed -i -e 's|Continuous build|Continuous Linux build|g' upload.sh
   - bash ./upload.sh ./DB*.AppImage
