@@ -442,10 +442,19 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
                 else if(f->isInteger() && !f->notnull())        // If this is an integer column and NULL is allowed, insert NULL
                     nullValues << QString();
                 else                                            // Otherwise (i.e. if this isn't an integer column), insert an empty string
-                    nullValues << "''";
+                    nullValues << "";
             }
         }
     }
+
+    // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
+    QString sQuery = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
+    for(size_t i=1;i<=csv.columns();i++)
+        sQuery.append(QString("?%1,").arg(i));
+    sQuery.chop(1); // Remove last comma
+    sQuery.append(")");
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(pdb->_db, sQuery.toUtf8(), sQuery.toUtf8().length(), &stmt, nullptr);
 
     // now lets import all data, one row at a time
     CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
@@ -455,10 +464,9 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         it != csv.csv().end();
         ++it)
     {
-        QString sql = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
-
-        QStringList insertlist;
-        for(int i=0;i<it->size();i++)
+        // Bind all values
+        unsigned int bound_fields = 0;
+        for(int i=0;i<it->size();i++,bound_fields++)
         {
             // Empty values need special treatment, but only when importing into an existing table where we could find out something about
             // its table definition
@@ -466,41 +474,39 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
             {
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 QString val = nullValues.at(i);
-                if(val.isNull())
-                    insertlist << "NULL";
-                else
-                    insertlist << val;
+                if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
+                    sqlite3_bind_text(stmt, i+1, val.toUtf8(), val.toUtf8().size(), SQLITE_TRANSIENT);
             } else {
-                // This is a non-empty value. Just add it to the list. The sqlite3_mprintf call with the %Q placeholder takes the value,
-                // adds single quotes around it and doubles all single quotes inside it. This means it'll be safe to be inserted into the SQL
-                // statement.
-                char* formSQL = sqlite3_mprintf("%Q", (const char*)it->at(i).toUtf8());
-                insertlist << formSQL;
-                if(formSQL)
-                    sqlite3_free(formSQL);
+                // This is a non-empty value. Just add it to the statement
+                sqlite3_bind_text(stmt, i+1, static_cast<const char*>(it->at(i).toUtf8()), it->at(i).toUtf8().size(), SQLITE_TRANSIENT);
             }
         }
 
-        // add missing fields with empty values
-        for(unsigned int i = insertlist.size(); i < csv.columns(); ++i)
+        // Insert row
+        if(sqlite3_step(stmt) != SQLITE_DONE)
         {
-            qWarning() << "ImportCSV" << tr("Missing field for record %1").arg(std::distance(itBegin, it) + 1);
-            insertlist << "NULL";
+            sqlite3_finalize(stmt);
+            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, tr("Inserting row failed: %1").arg(pdb->lastError()));
         }
 
-        sql.append(insertlist.join(QChar(',')));
-        sql.append(");");
-
-        if(!pdb->executeSQL(sql, false, false))
-            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, tr("Inserting row failed: %1").arg(pdb->lastError()));
+        // Reset statement for next use. Also reset all bindings to NULL. This is important, so we don't need to bind missing columns or empty values in NULL
+        // columns manually.
+        sqlite3_reset(stmt);
+        sqlite3_clear_bindings(stmt);
 
         // Update progress bar and check if cancel button was clicked
         unsigned int prog = std::distance(csv.csv().begin(), it);
         if(prog % 100 == 0)
             progress.setValue(prog);
         if(progress.wasCanceled())
+        {
+            sqlite3_finalize(stmt);
             return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, "");
+        }
     }
+
+    // Clean up prepared statement
+    sqlite3_finalize(stmt);
 }
 
 void ImportCsvDialog::setQuoteChar(const QChar& c)
