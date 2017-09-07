@@ -18,6 +18,14 @@
 #include <QFileInfo>
 #include <memory>
 
+// Enable this line to show basic performance stats after each imported CSV file. Please keep in mind that while these
+// numbers might help to estimate the performance of the algorithm, this is not a proper benchmark.
+//#define CSV_BENCHMARK
+
+#ifdef CSV_BENCHMARK
+#include <QElapsedTimer>
+#endif
+
 ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
@@ -369,6 +377,12 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const CSVParser &parser)
 
 void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 {
+#ifdef CSV_BENCHMARK
+    // If benchmark mode is enabled start measuring the performance now
+    QElapsedTimer timer;
+    timer.start();
+#endif
+
     QString tableName;
 
     if (csvFilenames.size() > 1 && ui->checkBoxSeparateTables->isChecked()) {
@@ -386,6 +400,10 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     if (csv.csv().size() == 0)  return;
 
     sqlb::FieldVector fieldList = generateFieldList(csv);
+
+#ifdef CSV_BENCHMARK
+    qint64 timer_after_parsing = timer.elapsed();
+#endif
 
     // Show progress dialog
     QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, csv.csv().size());
@@ -414,6 +432,10 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
                 return;
         }
     }
+
+#ifdef CSV_BENCHMARK
+    qint64 timer_before_insert = timer.elapsed();
+#endif
 
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
@@ -507,6 +529,18 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // Clean up prepared statement
     sqlite3_finalize(stmt);
+
+#ifdef CSV_BENCHMARK
+    // If benchmark mode is enabled calculate the results now
+    qint64 timer_after_insert = timer.elapsed();
+
+    QMessageBox::information(this, qApp->applicationName(),
+                             tr("Importing the file '%1' took %2ms. The parser took %3ms and the insertion took %4ms.")
+                             .arg(fileName)
+                             .arg(timer_after_insert)
+                             .arg(timer_after_parsing)
+                             .arg(timer_after_insert-timer_before_insert));
+#endif
 }
 
 void ImportCsvDialog::setQuoteChar(const QChar& c)
