@@ -188,14 +188,18 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             if(json.isNull() || !json.isObject())
                 break;
             QJsonObject obj = json.object();
+            QJsonObject obj_branches = obj["branches"].toObject();
 
             // Parse data and assemble branch list
             QStringList branches;
-            for(auto it=obj.constBegin();it!=obj.constEnd();++it)
+            for(auto it=obj_branches.constBegin();it!=obj_branches.constEnd();++it)
                 branches.append(it.key());
 
+            // Get default branch
+            QString default_branch = obj["default_branch"].toString("master");
+
             // Send branch list to anyone who is interested
-            emit gotBranchList(branches);
+            emit gotBranchList(branches, default_branch);
             break;
         }
     case RequestTypePush:

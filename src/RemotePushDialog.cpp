@@ -99,16 +99,16 @@ void RemotePushDialog::fillInLicences(const QMap<QString, QString>& licences)
         ui->comboLicence->addItem(it.value(), it.key());
 }
 
-void RemotePushDialog::fillInBranches(const QStringList& branches)
+void RemotePushDialog::fillInBranches(const QStringList& branches, const QString& default_branch)
 {
-    // Clear branch list and add the default master branch
+    // Clear branch list and add the default branch
     ui->comboBranch->clear();
-    ui->comboBranch->addItem("master");
+    ui->comboBranch->addItem(default_branch);
 
     // Add rest of the branch list to the combo box
     foreach(const QString& branch, branches)
     {
-        if(branch != "master")
+        if(branch != default_branch)
             ui->comboBranch->addItem(branch);
     }
 }

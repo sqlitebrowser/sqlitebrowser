@@ -105,6 +105,9 @@ p, li { white-space: pre-wrap; }
        <property name="editable">
         <bool>true</bool>
        </property>
+       <property name="duplicatesEnabled">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
