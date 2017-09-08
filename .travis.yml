@@ -75,7 +75,3 @@ notifications:
     on_success: never
     on_failure: always
 
-after_success:
-  - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
-  - sed -i -e 's|Continuous build|Continuous Linux build|g' upload.sh
-  - bash ./upload.sh continuous ./DB*.AppImage
