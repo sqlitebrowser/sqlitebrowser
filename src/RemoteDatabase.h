@@ -58,7 +58,7 @@ signals:
     void gotDirList(QString json, QVariant userdata);
     void gotCurrentVersion(QString version, QString url);
     void gotLicenceList(QMap<QString, QString> licences);
-    void gotBranchList(QStringList branches);
+    void gotBranchList(QStringList branches, QString default_branch);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
     void uploadFinished(QString url);

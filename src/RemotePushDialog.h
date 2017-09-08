@@ -40,7 +40,7 @@ protected slots:
     void reloadBranchList();
 
     void fillInLicences(const QMap<QString, QString>& licences);
-    void fillInBranches(const QStringList& branches);
+    void fillInBranches(const QStringList& branches, const QString& default_branch);
 };
 
 #endif
