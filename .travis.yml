@@ -78,4 +78,4 @@ notifications:
 after_success:
   - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
   - sed -i -e 's|Continuous build|Continuous Linux build|g' upload.sh
-  - bash ./upload.sh ./DB*.AppImage
+  - bash ./upload.sh continuous ./DB*.AppImage
