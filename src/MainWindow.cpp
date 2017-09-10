@@ -113,6 +113,9 @@ void MainWindow::init()
     ui->dockPlot->setWidget(plotDock);
     ui->dockRemote->setWidget(remoteDock);
 
+    // Set up edit dock
+    editDock->setReadOnly(true);
+
     // Restore window geometry
     restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
     restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
@@ -863,7 +866,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
     }
 
     // * Don't allow editing of other objects than tables (on the browse table) *
-    bool isEditingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
+    bool isEditingAllowed = !db.readOnly() && m_currentTabTableModel == m_browseTableModel &&
             (db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table);
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
@@ -887,7 +890,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
         return;
     }
 
-    bool editingAllowed = (m_currentTabTableModel == m_browseTableModel) &&
+    bool editingAllowed = !db.readOnly() && (m_currentTabTableModel == m_browseTableModel) &&
             (db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table);
 
     // Don't allow editing of other objects than tables
@@ -1509,7 +1512,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
-    ui->dockEdit->setEnabled(enable && write);
+    ui->dockEdit->setEnabled(enable);
     ui->dockPlot->setEnabled(enable);
 
     if(!enable)
