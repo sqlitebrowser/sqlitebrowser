@@ -28,7 +28,7 @@
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QTextEdit" name="editErrors">
@@ -89,6 +89,7 @@
    <header>ExtendedTableWidget.h</header>
    <slots>
     <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+    <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
    </slots>
   </customwidget>
  </customwidgets>
