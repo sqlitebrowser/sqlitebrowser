@@ -711,13 +711,23 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
         val2.clear();
         if(value.left(2) == ">=" || value.left(2) == "<=" || value.left(2) == "<>")
         {
-            bool ok;
-            value.mid(2).toFloat(&ok);
-            if(ok)
+            // Check if we're filtering for '<> NULL'. In this case we need a special comparison operator.
+            if(value.left(2) == "<>" && value.mid(2) == "NULL")
             {
-                op = value.left(2);
-                val = value.mid(2);
+                // We are filtering for '<> NULL'. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
+                // in order to avoid putting quotes around it.
+                op = "IS NOT";
                 numeric = true;
+                val = "NULL";
+            } else {
+                bool ok;
+                value.mid(2).toFloat(&ok);
+                if(ok)
+                {
+                    op = value.left(2);
+                    val = value.mid(2);
+                    numeric = true;
+                }
             }
         } else if(value.left(1) == ">" || value.left(1) == "<") {
             bool ok;
