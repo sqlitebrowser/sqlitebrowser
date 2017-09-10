@@ -8,7 +8,6 @@ CSVParser::CSVParser(bool trimfields, const QChar& fieldseparator, const QChar& 
     , m_cFieldSeparator(fieldseparator)
     , m_cQuoteChar(quotechar)
     , m_pCSVProgress(0)
-    , m_nColumns(0)
     , m_nBufferSize(4096)
 {
 }
@@ -32,7 +31,6 @@ inline void addColumn(QStringList& r, QString& field, bool trim)
 bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
 {
     m_vCSVData.clear();
-    m_nColumns = 0;
     ParseStates state = StateNormal;
     QString fieldbuf;
     QStringList record;

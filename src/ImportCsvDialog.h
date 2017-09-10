@@ -38,7 +38,7 @@ private:
     QCompleter* encodingCompleter;
 
     CSVParser parseCSV(const QString &f, qint64 count = -1);
-    sqlb::FieldVector generateFieldList(const CSVParser& parser);
+    sqlb::FieldVector generateFieldList(const QString& filename);
 
     void importCsv(const QString& f, const QString &n = QString());
 

@@ -44,12 +44,6 @@ public:
      */
     const TCSVResult& csv() const { return m_vCSVData; }
 
-    /*!
-     * \brief columns
-     * \return Number of columns parsed
-     */
-    size_t columns() const { return m_nColumns; }
-
     void setCSVProgress(CSVProgress* csvp) { m_pCSVProgress = csvp; }
 
 private:
@@ -63,7 +57,6 @@ private:
     inline void addRow(QStringList& r)
     {
         m_vCSVData.append(r);
-        m_nColumns = std::max<size_t>(r.size(), m_nColumns);
         r.clear();
     }
 
@@ -74,9 +67,8 @@ private:
     CSVProgress* m_pCSVProgress;
 
     TCSVResult m_vCSVData;
-    size_t m_nColumns;
 
     size_t m_nBufferSize; //! internal buffer read size
 };
 
-#endif // CSVPARSER_H
+#endif

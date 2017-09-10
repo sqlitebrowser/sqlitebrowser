@@ -48,7 +48,6 @@ void TestImport::csvImport()
 
     // Check return values
     QCOMPARE(csvparser.csv(), result);
-    QCOMPARE((int)csvparser.columns(), numfields);
 }
 
 void TestImport::csvImport_data()

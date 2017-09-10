@@ -194,12 +194,15 @@ void ImportCsvDialog::updatePreview()
     csv.parse(tstream, 20);
     file.close();
 
+    // Analyse CSV file
+    sqlb::FieldVector fieldList = generateFieldList(selectedFile);
+
     // Reset preview widget
     ui->tablePreview->clear();
-    ui->tablePreview->setColumnCount(csv.columns());
+    ui->tablePreview->setColumnCount(fieldList.size());
 
     // Exit if there are no lines to preview at all
-    if(csv.columns() == 0)
+    if(fieldList.size() == 0)
         return;
 
     // Use first row as header if necessary
@@ -293,12 +296,12 @@ void ImportCsvDialog::updateSelection(bool selected)
 void ImportCsvDialog::matchSimilar()
 {
     auto item = ui->filePicker->currentItem();
-    auto selectedHeader = generateFieldList(parseCSV(item->data(Qt::DisplayRole).toString(), 1));
+    auto selectedHeader = generateFieldList(item->data(Qt::DisplayRole).toString());
 
     for (int i = 0; i < ui->filePicker->count(); i++)
     {
         auto item = ui->filePicker->item(i);
-        auto header = generateFieldList(parseCSV(item->data(Qt::DisplayRole).toString(), 1));
+        auto header = generateFieldList(item->data(Qt::DisplayRole).toString());
         bool matchingHeader = false;
 
         if (selectedHeader.count() == header.count())
@@ -340,36 +343,50 @@ CSVParser ImportCsvDialog::parseCSV(const QString &fileName, qint64 count)
     return csv;
 }
 
-sqlb::FieldVector ImportCsvDialog::generateFieldList(const CSVParser &parser)
+sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
 {
-    if (parser.csv().size() == 0) return sqlb::FieldVector();
+    // Parse the first couple of records of the CSV file and only analyse them
+    CSVParser parser = parseCSV(filename, 20);
+
+    // If there is no data, we don't return any fields
+    if(parser.csv().size() == 0)
+        return sqlb::FieldVector();
+
+    // How many columns are there in the CSV file?
+    int columns = 0;
+    for(int i=0;i<parser.csv().size();i++)
+    {
+        if(parser.csv().at(i).size() > columns)
+            columns = parser.csv().at(i).size();
+    }
 
     // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
     sqlb::FieldVector fieldList;
-    if(ui->checkboxHeader->isChecked())
+    for(int i=0;i<columns;i++)
     {
-        for(QStringList::const_iterator it = parser.csv().at(0).begin();
-            it != parser.csv().at(0).end();
-            ++it)
+        QString fieldname;
+
+        // Only take the names from the CSV file if the user wants that and if the first row in the CSV file has enough columns
+        if(ui->checkboxHeader->isChecked() && i < parser.csv().at(0).size())
         {
-            // Remove invalid characters
-            QString thisfield = *it;
-            thisfield.replace("`", "");
-            thisfield.replace(" ", "");
-            thisfield.replace('"', "");
-            thisfield.replace("'","");
-            thisfield.replace(",","");
-            thisfield.replace(";","");
-
-            // Avoid empty field names
-            if(thisfield.isEmpty())
-                thisfield = QString("field%1").arg(std::distance(parser.csv().at(0).begin(), it) + 1);
-
-            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(thisfield, "")));
+            // Take field name from CSV and remove invalid characters
+            fieldname = parser.csv().at(0).at(i);
+            fieldname.replace("`", "");
+            fieldname.replace(" ", "");
+            fieldname.replace('"', "");
+            fieldname.replace("'","");
+            fieldname.replace(",","");
+            fieldname.replace(";","");
         }
-    } else {
-        for(size_t i=0; i < parser.columns(); ++i)
-            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(QString("field%1").arg(i+1), "")));
+
+        // If we don't have a field name by now, generate one
+        if(fieldname.isEmpty())
+            fieldname = QString("field%1").arg(i+1);
+
+        // TODO Here's also the place to do some sort of data type analysation of the CSV data
+
+        // Add field to the column list
+        fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
     }
 
     return fieldList;
@@ -396,10 +413,12 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         tableName = ui->editName->text();
     }
 
+    // Analyse CSV file
+    sqlb::FieldVector fieldList = generateFieldList(fileName);
+
+    // Parse entire file
     CSVParser csv = parseCSV(fileName);
     if (csv.csv().size() == 0)  return;
-
-    sqlb::FieldVector fieldList = generateFieldList(csv);
 
 #ifdef CSV_BENCHMARK
     qint64 timer_after_parsing = timer.elapsed();
@@ -415,7 +434,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName));
     if(obj && obj->type() == sqlb::Object::Types::Table)
     {
-        if((size_t)obj.dynamicCast<sqlb::Table>()->fields().size() != csv.columns())
+        if(obj.dynamicCast<sqlb::Table>()->fields().size() != fieldList.size())
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
@@ -471,7 +490,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
     QString sQuery = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
-    for(size_t i=1;i<=csv.columns();i++)
+    for(int i=1;i<=fieldList.size();i++)
         sQuery.append(QString("?%1,").arg(i));
     sQuery.chop(1); // Remove last comma
     sQuery.append(")");
