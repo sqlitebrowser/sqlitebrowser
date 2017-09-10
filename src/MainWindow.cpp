@@ -821,8 +821,10 @@ void MainWindow::editObject()
     if(type == "table")
     {
         EditTableDialog dialog(db, name, false, this);
-        if(dialog.exec())
+        if(dialog.exec()) {
+            ui->dataTable->filterHeader()->clearFilters();
             populateTable();
+        }
     } else if(type == "index") {
         EditIndexDialog dialog(db, name, false, this);
         if(dialog.exec())
