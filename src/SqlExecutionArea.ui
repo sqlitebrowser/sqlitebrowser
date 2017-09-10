@@ -70,38 +70,11 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QToolButton" name="buttonSave">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="icon">
-          <iconset resource="icons/icons.qrc">
-           <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
-         </property>
-         <property name="popupMode">
-          <enum>QToolButton::InstantPopup</enum>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
    </item>
   </layout>
-  <action name="actionExportCsv">
-   <property name="text">
-    <string>Export to &amp;CSV</string>
-   </property>
-  </action>
-  <action name="actionSaveAsView">
-   <property name="text">
-    <string>Save as &amp;view</string>
-   </property>
-   <property name="toolTip">
-    <string>Save as view</string>
-   </property>
-  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -123,45 +96,9 @@
   <tabstop>editEditor</tabstop>
   <tabstop>tableResult</tabstop>
   <tabstop>editErrors</tabstop>
-  <tabstop>buttonSave</tabstop>
  </tabstops>
- <resources>
-  <include location="icons/icons.qrc"/>
- </resources>
- <connections>
-  <connection>
-   <sender>actionExportCsv</sender>
-   <signal>triggered()</signal>
-   <receiver>SqlExecutionArea</receiver>
-   <slot>saveAsCsv()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>183</x>
-     <y>215</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSaveAsView</sender>
-   <signal>triggered()</signal>
-   <receiver>SqlExecutionArea</receiver>
-   <slot>saveAsView()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>183</x>
-     <y>215</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <resources/>
+ <connections/>
  <slots>
   <slot>saveAsCsv()</slot>
   <slot>saveAsView()</slot>

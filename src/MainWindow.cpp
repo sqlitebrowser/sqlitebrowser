@@ -154,6 +154,12 @@ void MainWindow::init()
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFileAs);
     ui->actionSqlSaveFilePopup->setMenu(popupSaveSqlFileMenu);
 
+    popupSaveSqlResultsMenu = new QMenu(this);
+    popupSaveSqlResultsMenu->addAction(ui->actionSqlResultsExportCsv);
+    popupSaveSqlResultsMenu->addAction(ui->actionSqlResultsSaveAsView);
+    ui->actionSqlResultsSave->setMenu(popupSaveSqlResultsMenu);
+    qobject_cast<QToolButton*>(ui->toolbarSql->widgetForAction(ui->actionSqlResultsSave))->setPopupMode(QToolButton::InstantPopup);
+
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
@@ -1044,7 +1050,8 @@ void MainWindow::executeQuery()
                     // The query takes the last placeholder as it may itself contain the sequence '%' + number
                     statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
                                 sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
-                    sqlWidget->enableSaveButton(true);
+                    ui->actionSqlResultsSave->setEnabled(true);
+                    ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
                     sql3status = SQLITE_OK;
                 }
                 else
@@ -1505,6 +1512,9 @@ void MainWindow::activateFields(bool enable)
     ui->dockEdit->setEnabled(enable && write);
     ui->dockPlot->setEnabled(enable);
 
+    if(!enable)
+        ui->actionSqlResultsSave->setEnabled(false);
+
     remoteDock->enableButtons();
 }
 
@@ -1686,6 +1696,13 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
     return index;
 }
 
+void MainWindow::changeSqlTab(int /*index*/)
+{
+    // Instead of figuring out if there are some execution results in the new tab and which statement was used to generate them,
+    // we just disable the export buttons in the toolbar.
+    ui->actionSqlResultsSave->setEnabled(false);
+}
+
 void MainWindow::openSqlFile()
 {
     QString file = FileDialog::getOpenFileName(
@@ -1755,6 +1772,16 @@ void MainWindow::saveSqlFileAs()
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFileName(file);
         saveSqlFile();
     }
+}
+
+void MainWindow::saveSqlResultsAsCsv()
+{
+    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->saveAsCsv();
+}
+
+void MainWindow::saveSqlResultsAsView()
+{
+    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->saveAsView();
 }
 
 void MainWindow::loadExtension()

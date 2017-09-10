@@ -129,9 +129,10 @@ private:
     SqliteTableModel* m_browseTableModel;
     SqliteTableModel* m_currentTabTableModel;
 
-    QMenu *popupTableMenu;
-    QMenu *recentFilesMenu;
-    QMenu *popupSaveSqlFileMenu;
+    QMenu* popupTableMenu;
+    QMenu* recentFilesMenu;
+    QMenu* popupSaveSqlFileMenu;
+    QMenu* popupSaveSqlResultsMenu;
     QMenu* popupBrowseDataHeaderMenu;
 
     QLabel* statusEncodingLabel;
@@ -229,9 +230,12 @@ private slots:
     void browseTableHeaderClicked(int logicalindex);
     unsigned int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false);
+    void changeSqlTab(int index);
     void openSqlFile();
     void saveSqlFile();
     void saveSqlFileAs();
+    void saveSqlResultsAsCsv();
+    void saveSqlResultsAsView();
     void loadExtension();
     void reloadSettings();
     void checkNewVersion(const QString& versionstring, const QString& url);

@@ -830,6 +830,8 @@
           <addaction name="separator"/>
           <addaction name="actionExecuteSql"/>
           <addaction name="actionSqlExecuteLine"/>
+          <addaction name="separator"/>
+          <addaction name="actionSqlResultsSave"/>
          </widget>
         </item>
         <item>
@@ -1778,6 +1780,31 @@
     <string>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</string>
    </property>
   </action>
+  <action name="actionSqlResultsSave">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+   </property>
+   <property name="text">
+    <string>Save results</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the results view</string>
+   </property>
+  </action>
+  <action name="actionSqlResultsExportCsv">
+   <property name="text">
+    <string>Export to &amp;CSV</string>
+   </property>
+  </action>
+  <action name="actionSqlResultsSaveAsView">
+   <property name="text">
+    <string>Save as &amp;view</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as view</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2414,6 +2441,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>tabSqlAreas</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeSqlTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>actionExecuteSql</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -2829,6 +2872,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSqlResultsExportCsv</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSqlResultsAsCsv()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlResultsSaveAsView</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSqlResultsAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -2893,5 +2968,8 @@
   <slot>exportTableToJson()</slot>
   <slot>fileOpenReadOnly()</slot>
   <slot>unlockViewEditing(bool)</slot>
+  <slot>saveSqlResultsAsCsv()</slot>
+  <slot>saveSqlResultsAsView()</slot>
+  <slot>changeSqlTab(int)</slot>
  </slots>
 </ui>

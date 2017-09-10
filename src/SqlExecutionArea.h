@@ -6,7 +6,6 @@
 class SqlTextEdit;
 class SqliteTableModel;
 class DBBrowserDB;
-class QMenu;
 class ExtendedTableWidget;
 
 namespace Ui {
@@ -33,7 +32,6 @@ public:
     
 public slots:
     virtual void finishExecution(const QString& result);
-    virtual void enableSaveButton(bool enable);
     virtual void saveAsCsv();
     virtual void saveAsView();
     virtual void reloadSettings();
@@ -41,7 +39,6 @@ public slots:
 private:
     DBBrowserDB& db;
     SqliteTableModel* model;
-    QMenu* menuPopupSave;
     QString sqlFileName;
     Ui::SqlExecutionArea* ui;
 };

@@ -6,7 +6,6 @@
 #include "Settings.h"
 #include "ExportDataDialog.h"
 
-#include <QMenu>
 #include <QInputDialog>
 #include <QMessageBox>
 
@@ -21,12 +20,6 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     // Create model
     model = new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
-
-    // Create popup menu for save button
-    menuPopupSave = new QMenu(this);
-    menuPopupSave->addAction(ui->actionExportCsv);
-    menuPopupSave->addAction(ui->actionSaveAsView);
-    ui->buttonSave->setMenu(menuPopupSave);
 
     // Load settings
     reloadSettings();
@@ -68,11 +61,6 @@ SqlTextEdit *SqlExecutionArea::getEditor()
 ExtendedTableWidget *SqlExecutionArea::getTableResult()
 {
     return ui->tableResult;
-}
-
-void SqlExecutionArea::enableSaveButton(bool enable)
-{
-    ui->buttonSave->setEnabled(enable);
 }
 
 void SqlExecutionArea::saveAsCsv()
