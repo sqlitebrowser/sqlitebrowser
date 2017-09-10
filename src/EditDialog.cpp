@@ -464,6 +464,8 @@ void EditDialog::setReadOnly(bool ro)
     ui->buttonApply->setEnabled(!ro);
     ui->buttonNull->setEnabled(!ro);
     ui->buttonImport->setEnabled(!ro);
+    ui->editorText->setReadOnly(ro);
+    ui->editorBinary->setEnabled(!ro);  // We disable the entire hex editor here instead of setting it to read only because it doesn't have a setReadOnly() method
 }
 
 // Update the information labels in the bottom left corner of the dialog
