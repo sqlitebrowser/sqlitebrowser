@@ -10,17 +10,17 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     // Create UI
     ui->setupUi(this);
     ui->comboDisplayFormat->addItem(tr("Default"), "default");
+    ui->comboDisplayFormat->addItem(tr("Apple NSDate to date"), "appleDate");
     ui->comboDisplayFormat->addItem(tr("Decimal number"), "decimal");
     ui->comboDisplayFormat->addItem(tr("Exponent notation"), "exponent");
     ui->comboDisplayFormat->addItem(tr("Hex blob"), "hexblob");
     ui->comboDisplayFormat->addItem(tr("Hex number"), "hex");
-    ui->comboDisplayFormat->addItem(tr("Apple NSDate to date"), "appleDate");
+    ui->comboDisplayFormat->addItem(tr("Java epoch (milliseconds) to date"), "javaEpoch");
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Octal number"), "octal");
     ui->comboDisplayFormat->addItem(tr("Round number"), "round");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
-    ui->comboDisplayFormat->addItem(tr("Java epoch (milliseconds) to date"), "javaEpoch");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->comboDisplayFormat->addItem(tr("Windows DATE to date"), "winDate");
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
