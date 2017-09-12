@@ -170,6 +170,8 @@ void MainWindow::init()
     popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
     popupBrowseDataHeaderMenu->addSeparator();
     popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
+    popupBrowseDataHeaderMenu->addAction(ui->actionHideColumns);
+    popupBrowseDataHeaderMenu->addAction(ui->actionShowAllColumns);
 
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
     connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
@@ -2539,4 +2541,50 @@ sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
                                                                                               ui->comboBrowseTable->rootModelIndex())).toString(),
                                   ui->comboBrowseTable->currentData(Qt::EditRole).toString());  // Use the edit role here to make sure we actually get the
                                                                                                 // table name without the schema bit in front of it.
+}
+
+void MainWindow::on_actionHideColumns_triggered()
+{
+     int myCol = -1;
+     if(ui->dataTable->selectedCols().size() == 0)
+     {
+          myCol = ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt();
+     }
+
+     foreach(int col, ui->dataTable->selectedCols())
+     {
+          ui->dataTable->hideColumn(col);
+     }
+     if(myCol != -1)
+          ui->dataTable->hideColumn(myCol);
+
+     // check to see if all the columns are hidden
+
+     bool allHidden = true;
+     for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
+     {
+          if(!ui->dataTable->isColumnHidden(col))
+          {
+                allHidden = false;
+                break;
+          }
+     }
+
+     if(allHidden  && ui->dataTable->model()->columnCount() > 1)
+     {
+          ui->dataTable->showColumn(1);
+          ui->dataTable->resizeColumnToContents(1);
+     }
+}
+
+void MainWindow::on_actionShowAllColumns_triggered()
+{
+     for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
+     {
+          if(ui->dataTable->isColumnHidden(col))
+          {
+                ui->dataTable->showColumn(col);
+                ui->dataTable->resizeColumnToContents(col);
+          }
+     }
 }
