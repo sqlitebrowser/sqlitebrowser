@@ -1,12 +1,14 @@
 #ifndef IMPORTCSVDIALOG_H
 #define IMPORTCSVDIALOG_H
 
+#include "csvparser.h"
 #include "sqlitetypes.h"
+
 #include <QDialog>
+#include <functional>
 
 class DBBrowserDB;
 class QCompleter;
-class CSVParser;
 class QListWidgetItem;
 
 namespace Ui {
@@ -37,7 +39,7 @@ private:
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
 
-    CSVParser parseCSV(const QString &f, qint64 count = -1);
+    CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, QStringList)> rowFunction, qint64 count = -1);
     sqlb::FieldVector generateFieldList(const QString& filename);
 
     void importCsv(const QString& f, const QString &n = QString());

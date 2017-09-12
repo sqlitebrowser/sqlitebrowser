@@ -28,9 +28,10 @@ inline void addColumn(QStringList& r, QString& field, bool trim)
 }
 }
 
-bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
+CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStream& stream, qint64 nMaxRecords)
 {
-    m_vCSVData.clear();
+    m_iParsedRows = 0;
+    m_insertFunction = insertFunction;
     ParseStates state = StateNormal;
     QString fieldbuf;
     QStringList record;
@@ -83,14 +84,16 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                     {
                         addColumn(record, fieldbuf, m_bTrimFields);
 
-                        addRow(record);
+                        if(!addRow(record))
+                            return ParserResult::ParserResultError;
                     }
                 }
                 else if(c == '\n')
                 {
                     addColumn(record, fieldbuf, m_bTrimFields);
 
-                    addRow(record);
+                    if(!addRow(record))
+                        return ParserResult::ParserResultError;
                 }
                 else
                 {
@@ -127,7 +130,8 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                     state = StateNormal;
                     addColumn(record, fieldbuf, m_bTrimFields);
 
-                    addRow(record);
+                    if(!addRow(record))
+                        return ParserResult::ParserResultError;
                 }
                 else if(c == '\r')
                 {
@@ -147,7 +151,8 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
                     {
                         addColumn(record, fieldbuf, m_bTrimFields);
 
-                        addRow(record);
+                        if(!addRow(record))
+                            return ParserResult::ParserResultError;
                     }
                 }
                 else
@@ -159,14 +164,14 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
             break;
             }
 
-            if(nMaxRecords != -1 && m_vCSVData.size() >= nMaxRecords)
-                return true;
+            if(nMaxRecords != -1 && m_iParsedRows >= nMaxRecords)
+                return ParserResult::ParserResultSuccess;
         }
 
-        if(m_pCSVProgress && m_vCSVData.size() % 100 == 0)
+        if(m_pCSVProgress && m_iParsedRows % 100 == 0)
         {
             if(!m_pCSVProgress->update(stream.pos()))
-                return false;
+                return ParserResult::ParserResultCancelled;
         }
     }
 
@@ -174,11 +179,12 @@ bool CSVParser::parse(QTextStream& stream, qint64 nMaxRecords)
     {
         addColumn(record, fieldbuf, m_bTrimFields);
 
-        addRow(record);
+        if(!addRow(record))
+            return ParserResult::ParserResultError;
     }
 
     if(m_pCSVProgress)
         m_pCSVProgress->end();
 
-    return state == StateNormal;
+    return (state == StateNormal) ? ParserResult::ParserResultSuccess : ParserResult::ParserResultError;
 }

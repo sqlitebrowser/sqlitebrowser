@@ -4,13 +4,12 @@
 #include <QtTest/QTest>
 #include <QCoreApplication>
 #include <QTextStream>
+#include <QVector>
 
 #include "csvparser.h"
 #include "TestImport.h"
 
 QTEST_MAIN(TestImport)
-
-Q_DECLARE_METATYPE(CSVParser::TCSVResult)
 
 TestImport::TestImport()
 {
@@ -34,9 +33,9 @@ void TestImport::csvImport()
     QTemporaryFile file;
     QVERIFY(file.open());
     {
-    QTextStream out(&file);
-    out.setCodec(encoding.toUtf8());
-    out << csv;
+        QTextStream out(&file);
+        out.setCodec(encoding.toUtf8());
+        out << csv;
     }
     file.flush();
 
@@ -44,10 +43,19 @@ void TestImport::csvImport()
     file.seek(0);
     QTextStream tstream(&file);
     tstream.setCodec(encoding.toUtf8());
-    csvparser.parse(tstream);
+
+    QVector<QStringList> parsedCsv;
+    int parsedCsvColumns = 0;
+    csvparser.parse([&parsedCsv, &parsedCsvColumns](size_t /*rowNum*/, const QStringList& data) -> bool {
+        parsedCsv.push_back(data);
+        if(data.size() > parsedCsvColumns)
+            parsedCsvColumns = data.size();
+        return true;
+    }, tstream);
 
     // Check return values
-    QCOMPARE(csvparser.csv(), result);
+    QCOMPARE(parsedCsvColumns, numfields);
+    QCOMPARE(parsedCsv, result);
 }
 
 void TestImport::csvImport_data()
@@ -57,9 +65,9 @@ void TestImport::csvImport_data()
     QTest::addColumn<char>("quote");
     QTest::addColumn<QString>("encoding");
     QTest::addColumn<int>("numfields");
-    QTest::addColumn<CSVParser::TCSVResult>("result");
+    QTest::addColumn<QVector<QStringList>>("result");
 
-    CSVParser::TCSVResult result;
+    QVector<QStringList> result;
     result.append(QStringList() << "a" << "b" << "c");
     result.append(QStringList() << "d" << "e" << "f");
     result.append(QStringList() << "g" << "h" << "i");

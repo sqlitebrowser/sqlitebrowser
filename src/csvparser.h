@@ -2,8 +2,8 @@
 #define CSVPARSER_H
 
 #include <QChar>
-#include <QVector>
 #include <QStringList>
+#include <functional>
 
 class QTextStream;
 
@@ -25,24 +25,27 @@ public:
 class CSVParser
 {
 public:
-    typedef QVector<QStringList> TCSVResult;
+    typedef std::function<bool(size_t, QStringList)> csvRowFunction;
 
     CSVParser(bool trimfields = true, const QChar& fieldseparator = ',', const QChar& quotechar = '"');
     ~CSVParser();
 
-    /*!
-     * \brief parse the given stream
-     * \param stream Stream with the CSV parser
-     * \param nMaxRecords Max records too read, -1 if unlimited
-     * \return True if parsing worked.
-     */
-    bool parse(QTextStream& stream, qint64 nMaxRecords = -1);
+    enum ParserResult
+    {
+        ParserResultSuccess,
+        ParserResultCancelled,
+        ParserResultError
+    };
 
     /*!
-     * \brief csv
-     * \return The parse result
+     * \brief parse the given stream
+     * @param insertFunction A function pointer that is called for each parsed row. It is passed two parameters, the row number and a list of all parsed columns
+     *                       in the row. The called function may return false if an error ocurred to stop the import process. Otherwise it should return true.
+     * \param stream Stream with the CSV parser
+     * \param nMaxRecords Max records too read, -1 if unlimited
+     * \return ParserResult value that indicated whether action finished normally, was cancelled or errored.
      */
-    const TCSVResult& csv() const { return m_vCSVData; }
+    ParserResult parse(csvRowFunction insertFunction, QTextStream& stream, qint64 nMaxRecords = -1);
 
     void setCSVProgress(CSVProgress* csvp) { m_pCSVProgress = csvp; }
 
@@ -54,10 +57,14 @@ private:
         StateEndQuote
     };
 
-    inline void addRow(QStringList& r)
+    inline bool addRow(QStringList& r)
     {
-        m_vCSVData.append(r);
+        if(!m_insertFunction(m_iParsedRows, r))
+            return false;
+
         r.clear();
+        m_iParsedRows++;
+        return true;
     }
 
 private:
@@ -65,8 +72,9 @@ private:
     QChar m_cFieldSeparator;
     QChar m_cQuoteChar;
     CSVProgress* m_pCSVProgress;
+    csvRowFunction m_insertFunction;
 
-    TCSVResult m_vCSVData;
+    qint64 m_iParsedRows;   // Number of rows parsed so far
 
     size_t m_nBufferSize; //! internal buffer read size
 };

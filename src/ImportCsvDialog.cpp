@@ -14,7 +14,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <QSettings>
-#include <QDebug>
 #include <QFileInfo>
 #include <memory>
 
@@ -85,12 +84,10 @@ namespace {
 void rollback(
         ImportCsvDialog* dialog,
         DBBrowserDB* pdb,
-        QProgressDialog& progress,
         const QString& savepointName,
         size_t nRecord,
         const QString& message)
 {
-    progress.hide();
     QApplication::restoreOverrideCursor();  // restore original cursor
     if(!message.isEmpty())
     {
@@ -110,7 +107,7 @@ public:
     explicit CSVImportProgress(size_t filesize)
     {
         m_pProgressDlg = new QProgressDialog(
-                    QObject::tr("Decoding CSV file..."),
+                    QObject::tr("Importing CSV file..."),
                     QObject::tr("Cancel"),
                     0,
                     filesize);
@@ -183,16 +180,10 @@ void ImportCsvDialog::updatePreview()
     ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1);
     ui->editCustomEncoding->setVisible(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1);
 
-    // Get preview data
-    QFile file(selectedFile);
-    file.open(QIODevice::ReadOnly);
-
-    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
-
-    QTextStream tstream(&file);
-    tstream.setCodec(currentEncoding().toUtf8());
-    csv.parse(tstream, 20);
-    file.close();
+    // Reset preview widget
+    ui->tablePreview->clear();
+    ui->tablePreview->setColumnCount(0);
+    ui->tablePreview->setRowCount(0);
 
     // Analyse CSV file
     sqlb::FieldVector fieldList = generateFieldList(selectedFile);
@@ -205,36 +196,40 @@ void ImportCsvDialog::updatePreview()
     if(fieldList.size() == 0)
         return;
 
-    // Use first row as header if necessary
-    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
-    if(ui->checkboxHeader->isChecked())
-    {
-        ui->tablePreview->setHorizontalHeaderLabels(*itBegin);
-        ++itBegin;
-    }
+    // Set horizontal header data
+    QStringList horizontalHeader;
+    foreach(const sqlb::FieldPtr& field, fieldList)
+        horizontalHeader.push_back(field->name());
+    ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
-    // Fill data section
-    ui->tablePreview->setRowCount(std::distance(itBegin, csv.csv().end()));
+    // Parse file
+    parseCSV(selectedFile, [this](size_t rowNum, const QStringList& data) -> bool {
+        // Skip first row if it is to be used as header
+        if(rowNum == 0 && ui->checkboxHeader->isChecked())
+            return true;
 
-    for(CSVParser::TCSVResult::const_iterator ct = itBegin;
-        ct != csv.csv().end();
-        ++ct)
-    {
-        for(QStringList::const_iterator it = ct->begin(); it != ct->end(); ++it)
+        // Decrease the row number by one if the header checkbox is checked to take into account that the first row was used for the table header labels
+        // and therefore all data rows move one row up.
+        if(ui->checkboxHeader->isChecked())
+            rowNum--;
+
+        // Fill data section
+        ui->tablePreview->setRowCount(ui->tablePreview->rowCount() + 1);
+        for(QStringList::const_iterator it=data.begin();it!=data.end();++it)
         {
-            int rowNum = std::distance(itBegin, ct);
-            if(it == ct->begin())
-            {
-                ui->tablePreview->setVerticalHeaderItem(
-                            rowNum,
-                            new QTableWidgetItem(QString::number(rowNum + 1)));
-            }
+            // Generate vertical header items
+            if(it == data.begin())
+                ui->tablePreview->setVerticalHeaderItem(rowNum, new QTableWidgetItem(QString::number(rowNum + 1)));
+
+            // Add table item
             ui->tablePreview->setItem(
                         rowNum,
-                        std::distance(ct->begin(), it),
+                        std::distance(data.begin(), it),
                         new QTableWidgetItem(*it));
         }
-    }
+
+        return true;
+    }, 20);
 }
 
 void ImportCsvDialog::checkInput()
@@ -325,69 +320,61 @@ void ImportCsvDialog::matchSimilar()
     checkInput();
 }
 
-CSVParser ImportCsvDialog::parseCSV(const QString &fileName, qint64 count)
+CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::function<bool(size_t, QStringList)> rowFunction, qint64 count)
 {
     // Parse all csv data
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
 
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
-    // If count is one, we only want the header, no need to see progress
-    if (count != 1) csv.setCSVProgress(new CSVImportProgress(file.size()));
+
+    // Only show progress dialog if we parse all rows. The assumption here is that if a row count limit has been set, it won't be a very high one.
+    if(count == -1)
+        csv.setCSVProgress(new CSVImportProgress(file.size()));
 
     QTextStream tstream(&file);
     tstream.setCodec(currentEncoding().toUtf8());
-    csv.parse(tstream, count);
-    file.close();
 
-    return csv;
+    return csv.parse(rowFunction, tstream, count);
 }
 
 sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
 {
+    sqlb::FieldVector fieldList;        // List of fields in the file
+
     // Parse the first couple of records of the CSV file and only analyse them
-    CSVParser parser = parseCSV(filename, 20);
-
-    // If there is no data, we don't return any fields
-    if(parser.csv().size() == 0)
-        return sqlb::FieldVector();
-
-    // How many columns are there in the CSV file?
-    int columns = 0;
-    for(int i=0;i<parser.csv().size();i++)
-    {
-        if(parser.csv().at(i).size() > columns)
-            columns = parser.csv().at(i).size();
-    }
-
-    // Generate field names. These are either taken from the first CSV row or are generated in the format of "fieldXY" depending on the user input
-    sqlb::FieldVector fieldList;
-    for(int i=0;i<columns;i++)
-    {
-        QString fieldname;
-
-        // Only take the names from the CSV file if the user wants that and if the first row in the CSV file has enough columns
-        if(ui->checkboxHeader->isChecked() && i < parser.csv().at(0).size())
+    parseCSV(filename, [this, &fieldList](size_t rowNum, const QStringList& data) -> bool {
+        // Has this row more columns than the previous one? Then add more fields to the field list as necessary.
+        for(int i=fieldList.size();i<data.size();i++)
         {
-            // Take field name from CSV and remove invalid characters
-            fieldname = parser.csv().at(0).at(i);
-            fieldname.replace("`", "");
-            fieldname.replace(" ", "");
-            fieldname.replace('"', "");
-            fieldname.replace("'","");
-            fieldname.replace(",","");
-            fieldname.replace(";","");
-        }
+            QString fieldname;
 
-        // If we don't have a field name by now, generate one
-        if(fieldname.isEmpty())
-            fieldname = QString("field%1").arg(i+1);
+            // If the user wants to use the first row as table header and if this is the first row, extract a field name
+            if(rowNum == 0 && ui->checkboxHeader->isChecked())
+            {
+                // Take field name from CSV and remove invalid characters
+                fieldname = data.at(i);
+                fieldname.replace("`", "");
+                fieldname.replace(" ", "");
+                fieldname.replace('"', "");
+                fieldname.replace("'","");
+                fieldname.replace(",","");
+                fieldname.replace(";","");
+            }
+
+            // If we don't have a field name by now, generate one
+            if(fieldname.isEmpty())
+                fieldname = QString("field%1").arg(i+1);
+
+            // Add field to the column list
+            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
+        }
 
         // TODO Here's also the place to do some sort of data type analysation of the CSV data
 
-        // Add field to the column list
-        fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
-    }
+        // All good
+        return true;
+    }, 20);
 
     return fieldList;
 }
@@ -396,6 +383,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 {
 #ifdef CSV_BENCHMARK
     // If benchmark mode is enabled start measuring the performance now
+    qint64 timesRowFunction = 0;
     QElapsedTimer timer;
     timer.start();
 #endif
@@ -415,19 +403,8 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // Analyse CSV file
     sqlb::FieldVector fieldList = generateFieldList(fileName);
-
-    // Parse entire file
-    CSVParser csv = parseCSV(fileName);
-    if (csv.csv().size() == 0)  return;
-
-#ifdef CSV_BENCHMARK
-    qint64 timer_after_parsing = timer.elapsed();
-#endif
-
-    // Show progress dialog
-    QProgressDialog progress(tr("Inserting data..."), tr("Cancel"), 0, csv.csv().size());
-    progress.setWindowModality(Qt::ApplicationModal);
-    progress.show();
+    if(fieldList.size() == 0)
+        return;
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
@@ -452,22 +429,18 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         }
     }
 
-#ifdef CSV_BENCHMARK
-    qint64 timer_before_insert = timer.elapsed();
-#endif
-
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
     QString restorepointName = pdb->generateSavepointName("csvimport");
     if(!pdb->setSavepoint(restorepointName))
-        return rollback(this, pdb, progress, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
+        return rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
 
     // Create table
     QStringList nullValues;
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
-            return rollback(this, pdb, progress, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+            return rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
     } else {
         // Importing into an existing table. So find out something about it's structure.
 
@@ -497,21 +470,29 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(pdb->_db, sQuery.toUtf8(), sQuery.toUtf8().length(), &stmt, nullptr);
 
-    // now lets import all data, one row at a time
-    CSVParser::TCSVResult::const_iterator itBegin = csv.csv().begin();
-    if(ui->checkboxHeader->isChecked())     // If the first row contains the field names we should skip it here because this is the data import
-        ++itBegin;
-    for(CSVParser::TCSVResult::const_iterator it = itBegin;
-        it != csv.csv().end();
-        ++it)
-    {
+    // Parse entire file
+    size_t lastRowNum = 0;
+    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const QStringList& data) -> bool {
+        // Process the parser results row by row
+
+#ifdef CSV_BENCHMARK
+        qint64 timeAtStartOfRowFunction = timer.elapsed();
+#endif
+
+        // Save row num for later use. This is used in the case of an error to tell the user in which row the error ocurred
+        lastRowNum = rowNum;
+
+        // If this is the first row and we want to use the first row as table header, skip it now because this is the data import, not the header parsing
+        if(rowNum == 0 && ui->checkboxHeader->isChecked())
+            return true;
+
         // Bind all values
         unsigned int bound_fields = 0;
-        for(int i=0;i<it->size();i++,bound_fields++)
+        for(int i=0;i<data.size();i++,bound_fields++)
         {
             // Empty values need special treatment, but only when importing into an existing table where we could find out something about
             // its table definition
-            if(importToExistingTable && it->at(i).isEmpty() && nullValues.size() > i)
+            if(importToExistingTable && data.at(i).isEmpty() && nullValues.size() > i)
             {
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 QString val = nullValues.at(i);
@@ -519,46 +500,48 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
                     sqlite3_bind_text(stmt, i+1, val.toUtf8(), val.toUtf8().size(), SQLITE_TRANSIENT);
             } else {
                 // This is a non-empty value. Just add it to the statement
-                sqlite3_bind_text(stmt, i+1, static_cast<const char*>(it->at(i).toUtf8()), it->at(i).toUtf8().size(), SQLITE_TRANSIENT);
+                sqlite3_bind_text(stmt, i+1, static_cast<const char*>(data.at(i).toUtf8()), data.at(i).toUtf8().size(), SQLITE_TRANSIENT);
             }
         }
 
         // Insert row
         if(sqlite3_step(stmt) != SQLITE_DONE)
-        {
-            sqlite3_finalize(stmt);
-            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, tr("Inserting row failed: %1").arg(pdb->lastError()));
-        }
+            return false;
 
         // Reset statement for next use. Also reset all bindings to NULL. This is important, so we don't need to bind missing columns or empty values in NULL
         // columns manually.
         sqlite3_reset(stmt);
         sqlite3_clear_bindings(stmt);
 
-        // Update progress bar and check if cancel button was clicked
-        unsigned int prog = std::distance(csv.csv().begin(), it);
-        if(prog % 100 == 0)
-            progress.setValue(prog);
-        if(progress.wasCanceled())
-        {
-            sqlite3_finalize(stmt);
-            return rollback(this, pdb, progress, restorepointName, std::distance(itBegin, it) + 1, "");
-        }
+#ifdef CSV_BENCHMARK
+        timesRowFunction += timer.elapsed() - timeAtStartOfRowFunction;
+#endif
+
+        return true;
+    });
+
+    // Success?
+    if(result != CSVParser::ParserResult::ParserResultSuccess)
+    {
+        // Some error occurred or the user cancelled the action
+
+        // Rollback the entire import. If the action was cancelled, don't show an error message. If it errored, show an error message.
+        sqlite3_finalize(stmt);
+        if(result == CSVParser::ParserResult::ParserResultCancelled)
+            return rollback(this, pdb, restorepointName, 0, QString());
+        else
+            return rollback(this, pdb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(pdb->lastError()));
     }
 
     // Clean up prepared statement
     sqlite3_finalize(stmt);
 
 #ifdef CSV_BENCHMARK
-    // If benchmark mode is enabled calculate the results now
-    qint64 timer_after_insert = timer.elapsed();
-
     QMessageBox::information(this, qApp->applicationName(),
-                             tr("Importing the file '%1' took %2ms. The parser took %3ms and the insertion took %4ms.")
+                             tr("Importing the file '%1' took %2ms. Of this %3ms were spent in the row function.")
                              .arg(fileName)
-                             .arg(timer_after_insert)
-                             .arg(timer_after_parsing)
-                             .arg(timer_after_insert-timer_before_insert));
+                             .arg(timer.elapsed())
+                             .arg(timesRowFunction));
 #endif
 }
 
