@@ -259,6 +259,8 @@ private slots:
     void browseDataSetDefaultTableEncoding();
     void fileOpenReadOnly();
     void unlockViewEditing(bool unlock, QString pk = QString());
+    void on_actionHideColumns_triggered();
+    void on_actionShowAllColumns_triggered();
 };
 
 #endif
