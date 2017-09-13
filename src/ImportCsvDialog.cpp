@@ -104,7 +104,7 @@ void rollback(
 class CSVImportProgress : public CSVProgress
 {
 public:
-    explicit CSVImportProgress(size_t filesize)
+    explicit CSVImportProgress(qint64 filesize)
     {
         m_pProgressDlg = new QProgressDialog(
                     QObject::tr("Importing CSV file..."),
@@ -124,7 +124,7 @@ public:
         m_pProgressDlg->show();
     }
 
-    bool update(size_t pos)
+    bool update(qint64 pos)
     {
         m_pProgressDlg->setValue(pos);
         qApp->processEvents();
@@ -203,7 +203,7 @@ void ImportCsvDialog::updatePreview()
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
-    parseCSV(selectedFile, [this](size_t rowNum, const QStringList& data) -> bool {
+    parseCSV(selectedFile, [this](size_t rowNum, const QVector<QByteArray>& data) -> bool {
         // Skip first row if it is to be used as header
         if(rowNum == 0 && ui->checkboxHeader->isChecked())
             return true;
@@ -215,7 +215,7 @@ void ImportCsvDialog::updatePreview()
 
         // Fill data section
         ui->tablePreview->setRowCount(ui->tablePreview->rowCount() + 1);
-        for(QStringList::const_iterator it=data.begin();it!=data.end();++it)
+        for(auto it=data.constBegin();it!=data.constEnd();++it)
         {
             // Generate vertical header items
             if(it == data.begin())
@@ -225,7 +225,7 @@ void ImportCsvDialog::updatePreview()
             ui->tablePreview->setItem(
                         rowNum,
                         std::distance(data.begin(), it),
-                        new QTableWidgetItem(*it));
+                        new QTableWidgetItem(QString(*it)));
         }
 
         return true;
@@ -320,7 +320,7 @@ void ImportCsvDialog::matchSimilar()
     checkInput();
 }
 
-CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::function<bool(size_t, QStringList)> rowFunction, qint64 count)
+CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::function<bool(size_t, QVector<QByteArray>)> rowFunction, size_t count)
 {
     // Parse all csv data
     QFile file(fileName);
@@ -329,7 +329,7 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
 
     // Only show progress dialog if we parse all rows. The assumption here is that if a row count limit has been set, it won't be a very high one.
-    if(count == -1)
+    if(count == 0)
         csv.setCSVProgress(new CSVImportProgress(file.size()));
 
     QTextStream tstream(&file);
@@ -343,7 +343,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
     sqlb::FieldVector fieldList;        // List of fields in the file
 
     // Parse the first couple of records of the CSV file and only analyse them
-    parseCSV(filename, [this, &fieldList](size_t rowNum, const QStringList& data) -> bool {
+    parseCSV(filename, [this, &fieldList](size_t rowNum, const QVector<QByteArray>& data) -> bool {
         // Has this row more columns than the previous one? Then add more fields to the field list as necessary.
         for(int i=fieldList.size();i<data.size();i++)
         {
@@ -436,7 +436,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         return rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
 
     // Create table
-    QStringList nullValues;
+    QVector<QByteArray> nullValues;
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
@@ -454,7 +454,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
                 if(f->isInteger() && f->notnull())              // If this is an integer column but NULL isn't allowed, insert 0
                     nullValues << "0";
                 else if(f->isInteger() && !f->notnull())        // If this is an integer column and NULL is allowed, insert NULL
-                    nullValues << QString();
+                    nullValues << QByteArray();
                 else                                            // Otherwise (i.e. if this isn't an integer column), insert an empty string
                     nullValues << "";
             }
@@ -472,7 +472,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
     // Parse entire file
     size_t lastRowNum = 0;
-    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const QStringList& data) -> bool {
+    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const QVector<QByteArray>& data) -> bool {
         // Process the parser results row by row
 
 #ifdef CSV_BENCHMARK
@@ -487,20 +487,20 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
             return true;
 
         // Bind all values
-        unsigned int bound_fields = 0;
-        for(int i=0;i<data.size();i++,bound_fields++)
+        int bound_fields = 0;
+        for(auto it=data.constBegin();it!=data.constEnd();++it,bound_fields++)
         {
             // Empty values need special treatment, but only when importing into an existing table where we could find out something about
             // its table definition
-            if(importToExistingTable && data.at(i).isEmpty() && nullValues.size() > i)
+            if(importToExistingTable && it->isEmpty() && nullValues.size() > bound_fields)
             {
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
-                QString val = nullValues.at(i);
+                const QByteArray& val = nullValues.at(bound_fields);
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
-                    sqlite3_bind_text(stmt, i+1, val.toUtf8(), val.toUtf8().size(), SQLITE_TRANSIENT);
+                    sqlite3_bind_text(stmt, bound_fields+1, val, val.size(), SQLITE_STATIC);
             } else {
                 // This is a non-empty value. Just add it to the statement
-                sqlite3_bind_text(stmt, i+1, static_cast<const char*>(data.at(i).toUtf8()), data.at(i).toUtf8().size(), SQLITE_TRANSIENT);
+                sqlite3_bind_text(stmt, bound_fields+1, *it, it->size(), SQLITE_STATIC);
             }
         }
 

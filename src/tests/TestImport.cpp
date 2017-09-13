@@ -27,7 +27,7 @@ void TestImport::csvImport()
     QFETCH(char, quote);
     QFETCH(QString, encoding);
     QFETCH(int, numfields);
-    QFETCH(QVector<QStringList>, result);
+    QFETCH(QVector<QVector<QByteArray>>, result);
 
     // Create temporary CSV file
     QTemporaryFile file;
@@ -44,9 +44,9 @@ void TestImport::csvImport()
     QTextStream tstream(&file);
     tstream.setCodec(encoding.toUtf8());
 
-    QVector<QStringList> parsedCsv;
+    QVector<QVector<QByteArray>> parsedCsv;
     int parsedCsvColumns = 0;
-    csvparser.parse([&parsedCsv, &parsedCsvColumns](size_t /*rowNum*/, const QStringList& data) -> bool {
+    csvparser.parse([&parsedCsv, &parsedCsvColumns](size_t /*rowNum*/, const QVector<QByteArray>& data) -> bool {
         parsedCsv.push_back(data);
         if(data.size() > parsedCsvColumns)
             parsedCsvColumns = data.size();
@@ -65,12 +65,12 @@ void TestImport::csvImport_data()
     QTest::addColumn<char>("quote");
     QTest::addColumn<QString>("encoding");
     QTest::addColumn<int>("numfields");
-    QTest::addColumn<QVector<QStringList>>("result");
+    QTest::addColumn<QVector<QVector<QByteArray>>>("result");
 
-    QVector<QStringList> result;
-    result.append(QStringList() << "a" << "b" << "c");
-    result.append(QStringList() << "d" << "e" << "f");
-    result.append(QStringList() << "g" << "h" << "i");
+    QVector<QVector<QByteArray>> result;
+    result.append(QVector<QByteArray>() << "a" << "b" << "c");
+    result.append(QVector<QByteArray>() << "d" << "e" << "f");
+    result.append(QVector<QByteArray>() << "g" << "h" << "i");
     QTest::newRow("commas_noquotes") << "a,b,c\nd,e,f\ng,h,i\n"
                                      << ','
                                      << (char)0
@@ -109,11 +109,11 @@ void TestImport::csvImport_data()
                                        << result;
 
     result.clear();
-    result.append(QStringList() << "a" << "b" << "");
-    result.append(QStringList() << "c" << "");
-    result.append(QStringList() << "d" << "" << "e");
-    result.append(QStringList() << "");
-    result.append(QStringList() << "" << "" << "f");
+    result.append(QVector<QByteArray>() << "a" << "b" << "");
+    result.append(QVector<QByteArray>() << "c" << "");
+    result.append(QVector<QByteArray>() << "d" << "" << "e");
+    result.append(QVector<QByteArray>() << "");
+    result.append(QVector<QByteArray>() << "" << "" << "f");
     QTest::newRow("emptyvalues") << "a,b,\nc,\nd,,e\n\n,,f"
                                      << ','
                                      << (char)0
@@ -122,7 +122,7 @@ void TestImport::csvImport_data()
                                      << result;
 
     result.clear();
-    result.append(QStringList() << "a" << "b" << "c");
+    result.append(QVector<QByteArray>() << "a" << "b" << "c");
     QTest::newRow("oneline") << "a,b,c"
                              << ','
                              << (char)0
@@ -131,8 +131,8 @@ void TestImport::csvImport_data()
                              << result;
 
     result.clear();
-    result.append(QStringList() << "a,a\"" << "b" << "c");
-    result.append(QStringList() << "d" << "e" << "\"\"f,f");
+    result.append(QVector<QByteArray>() << "a,a\"" << "b" << "c");
+    result.append(QVector<QByteArray>() << "d" << "e" << "\"\"f,f");
     QTest::newRow("manyquotes") << "\"a,a\"\"\",\"b\",\"c\"\n\"d\",\"e\",\"\"\"\"\"f,f\"\n"
                                 << ','
                                 << '"'
@@ -141,7 +141,7 @@ void TestImport::csvImport_data()
                                 << result;
 
     result.clear();
-    result.append(QStringList() << QString::fromUtf8("\xC2\xAE") << QString::fromUtf8("\xC9\x85") << QString::fromUtf8("\xC6\x89"));
+    result.append(QVector<QByteArray>() << QByteArray("\xC2\xAE") << QByteArray("\xC9\x85") << QByteArray("\xC6\x89"));
     QString csv = QString::fromUtf8("\xC2\xAE") + "," + QString::fromUtf8("\xC9\x85") + "," + QString::fromUtf8("\xC6\x89") + "\n";
     QTest::newRow("utf8chars") << csv
                                << ','
@@ -151,7 +151,7 @@ void TestImport::csvImport_data()
                                << result;
 
     result.clear();
-    result.append(QStringList() << QString::fromUtf8("\u4E18") << QString::fromUtf8("\u4E26") << QString::fromUtf8("\u4E4B"));
+    result.append(QVector<QByteArray>() << QByteArray("\u4E18") << QByteArray("\u4E26") << QByteArray("\u4E4B"));
     QString csv2 = QString::fromUtf8("\u4E18") + "," + QString::fromUtf8("\u4E26") + "," + QString::fromUtf8("\u4E4B") + "\n";
     QTest::newRow("utf16chars") << csv2
                                << ','

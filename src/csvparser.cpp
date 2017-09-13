@@ -3,7 +3,7 @@
 #include <QTextStream>
 #include <algorithm>
 
-CSVParser::CSVParser(bool trimfields, const QChar& fieldseparator, const QChar& quotechar)
+CSVParser::CSVParser(bool trimfields, char16_t fieldseparator, char16_t quotechar)
     : m_bTrimFields(trimfields)
     , m_cFieldSeparator(fieldseparator)
     , m_cQuoteChar(quotechar)
@@ -18,34 +18,49 @@ CSVParser::~CSVParser()
 }
 
 namespace {
-inline void addColumn(QStringList& r, QString& field, bool trim)
+inline void addColumn(QVector<QByteArray>& r, QString& field, bool trim)
 {
     if(trim)
-        r << field.trimmed();
+        r.push_back(field.trimmed().toUtf8());
     else
-        r << field;
+        r.push_back(field.toUtf8());
+
     field.clear();
+    field.reserve(128);
+}
+
+inline bool addRow(CSVParser::csvRowFunction& f, QVector<QByteArray>& r, size_t& rowCount)
+{
+    if(!f(rowCount, r))
+        return false;
+
+    r.clear();
+    rowCount++;
+    return true;
 }
 }
 
-CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStream& stream, qint64 nMaxRecords)
+CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStream& stream, size_t nMaxRecords)
 {
-    m_iParsedRows = 0;
-    m_insertFunction = insertFunction;
-    ParseStates state = StateNormal;
-    QString fieldbuf;
-    QStringList record;
+    ParseStates state = StateNormal;        // State of the parser
+    QString sBuffer;                        // Buffer for reading in the file
+    QString fieldbuf;                       // Buffer for parsing the current field
+    QVector<QByteArray> record;             // Buffer for parsing the current row
+    size_t parsedRows = 0;                  // Number of rows parsed so far
 
     if(m_pCSVProgress)
         m_pCSVProgress->start();
 
     while(!stream.atEnd())
     {
-        QString sBuffer = stream.read(m_nBufferSize);
+        sBuffer = stream.read(m_nBufferSize);
+        auto sBufferEnd = sBuffer.constEnd();
 
-        for(QString::iterator it = sBuffer.begin(); it != sBuffer.end(); ++it)
+        for(auto it = sBuffer.constBegin(); it != sBufferEnd; ++it)
         {
-            QChar c = *it;
+            // Get next char
+            char16_t c = it->unicode();
+
             switch(state)
             {
             case StateNormal:
@@ -61,30 +76,31 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                 else if(c == '\r')
                 {
                     // look ahead to check for linefeed
-                    QString::iterator nit = it + 1;
+                    auto nit = it + 1;
 
                     // In order to check what the next byte is we must make sure that that byte is already loaded. Assume we're at an m_nBufferSize
                     // boundary but not at the end of the file when we hit a \r character. Now we're going to be at the end of the sBuffer string
                     // because of the m_nBufferSize boundary. But this means that the following check won't work properly because we can't check the
                     // next byte when we really should be able to do so because there's more data coming. To fix this we'll check for this particular
                     // case and, if this is what's happening, we'll just load an extra byte.
-                    if(nit == sBuffer.end() && !stream.atEnd())
+                    if(nit == sBufferEnd && !stream.atEnd())
                     {
                         // Load one more byte
                         sBuffer.append(stream.read(1));
+                        sBufferEnd = sBuffer.constEnd();
 
-                        // Restore both iterators. sBuffer.end() points to the imagined char after the last one in the string. So the extra byte we've
+                        // Restore both iterators. sBufferEnd points to the imagined char after the last one in the string. So the extra byte we've
                         // just loaded is the one before that, i.e. the actual last one, and the original last char is the one before that.
-                        it = sBuffer.end() - 2;
-                        nit = sBuffer.end() - 1;
+                        it = sBufferEnd - 2;
+                        nit = sBufferEnd - 1;
                     }
 
                     // no linefeed, so assume that CR represents a newline
-                    if(nit != sBuffer.end() && *nit != '\n')
+                    if(nit != sBufferEnd && *nit != '\n')
                     {
                         addColumn(record, fieldbuf, m_bTrimFields);
 
-                        if(!addRow(record))
+                        if(!addRow(insertFunction, record, parsedRows))
                             return ParserResult::ParserResultError;
                     }
                 }
@@ -92,7 +108,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                 {
                     addColumn(record, fieldbuf, m_bTrimFields);
 
-                    if(!addRow(record))
+                    if(!addRow(insertFunction, record, parsedRows))
                         return ParserResult::ParserResultError;
                 }
                 else
@@ -130,28 +146,29 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                     state = StateNormal;
                     addColumn(record, fieldbuf, m_bTrimFields);
 
-                    if(!addRow(record))
+                    if(!addRow(insertFunction, record, parsedRows))
                         return ParserResult::ParserResultError;
                 }
                 else if(c == '\r')
                 {
                     // look ahead to check for linefeed
-                    QString::iterator nit = it + 1;
+                    auto nit = it + 1;
 
                     // See above for details on this.
-                    if(nit == sBuffer.end() && !stream.atEnd())
+                    if(nit == sBufferEnd && !stream.atEnd())
                     {
                         sBuffer.append(stream.read(1));
-                        it = sBuffer.end() - 2;
-                        nit = sBuffer.end() - 1;
+                        sBufferEnd = sBuffer.constEnd();
+                        it = sBufferEnd - 2;
+                        nit = sBufferEnd - 1;
                     }
 
                     // no linefeed, so assume that CR represents a newline
-                    if(nit != sBuffer.end() && *nit != '\n')
+                    if(nit != sBufferEnd && *nit != '\n')
                     {
                         addColumn(record, fieldbuf, m_bTrimFields);
 
-                        if(!addRow(record))
+                        if(!addRow(insertFunction, record, parsedRows))
                             return ParserResult::ParserResultError;
                     }
                 }
@@ -164,11 +181,11 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
             break;
             }
 
-            if(nMaxRecords != -1 && m_iParsedRows >= nMaxRecords)
+            if(nMaxRecords > 0 && parsedRows >= nMaxRecords)
                 return ParserResult::ParserResultSuccess;
         }
 
-        if(m_pCSVProgress && m_iParsedRows % 100 == 0)
+        if(m_pCSVProgress && parsedRows % 100 == 0)
         {
             if(!m_pCSVProgress->update(stream.pos()))
                 return ParserResult::ParserResultCancelled;
@@ -179,7 +196,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
     {
         addColumn(record, fieldbuf, m_bTrimFields);
 
-        if(!addRow(record))
+        if(!addRow(insertFunction, record, parsedRows))
             return ParserResult::ParserResultError;
     }
 
