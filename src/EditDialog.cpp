@@ -16,7 +16,9 @@ EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog),
       currentIndex(QModelIndex()),
+      dataSource(TextBuffer),
       dataType(Null),
+      textNullSet(false),
       isReadOnly(true)
 {
     ui->setupUi(this);

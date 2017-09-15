@@ -16,6 +16,7 @@ DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     QStringList header;
     header << tr("Name") << tr("Object") << tr("Type") << tr("Schema") << tr("Database");
     rootItem = new QTreeWidgetItem(header);
+    browsablesRootItem = nullptr;
 }
 
 DbStructureModel::~DbStructureModel()

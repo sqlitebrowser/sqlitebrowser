@@ -56,6 +56,9 @@ Application::Application(int& argc, char** argv) :
         // a language change when the user toggles settings for the first time.
         // (it also prevents the program from always looking for a translation on launch)
         Settings::setValue("General", "language", "en_US");
+
+        // Don't install a translator for Qt texts if no translator for DB4S texts could be loaded
+        m_translatorQt = nullptr;
     }
 
     // Parse command line
