@@ -928,8 +928,8 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     QString defaultvalue;
     QString check;
     QString collation;
-    sqlb::PrimaryKeyConstraint* primaryKey = 0;
-    sqlb::ForeignKeyClause* foreignKey = 0;
+    sqlb::PrimaryKeyConstraint* primaryKey = nullptr;
+    sqlb::ForeignKeyClause* foreignKey = nullptr;
 
     colname = columnname(c);
     c = c->getNextSibling(); //type?
@@ -958,6 +958,11 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         {
         case sqlite3TokenTypes::PRIMARY:
         {
+            // If we have already allocated a primary key object, delete it first. This should never happen in real world situations because
+            // SQLite only supports one primary key constraint per field.
+            if(primaryKey)
+                delete primaryKey;
+
             primaryKey = new PrimaryKeyConstraint;
             primaryKey->setName(constraint_name);
 
