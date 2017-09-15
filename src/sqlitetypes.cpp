@@ -929,7 +929,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     QString check;
     QString collation;
     sqlb::PrimaryKeyConstraint* primaryKey = nullptr;
-    sqlb::ForeignKeyClause* foreignKey = nullptr;
+    QVector<sqlb::ForeignKeyClause*> foreignKeys;
 
     colname = columnname(c);
     c = c->getNextSibling(); //type?
@@ -1028,7 +1028,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         {
             con = con->getNextSibling();    // REFERENCES
 
-            foreignKey = new ForeignKeyClause;
+            sqlb::ForeignKeyClause* foreignKey = new ForeignKeyClause;
             foreignKey->setTable(identifier(con));
             foreignKey->setName(constraint_name);
             con = con->getNextSibling();    // identifier
@@ -1050,6 +1050,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             }
 
             foreignKey->setConstraint(concatTextAST(con, true));
+            foreignKeys.push_back(foreignKey);
         }
         break;
         case sqlite3TokenTypes::COLLATE:
@@ -1073,8 +1074,8 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     f->setAutoIncrement(autoincrement);
     table->addField(f);
 
-    if(foreignKey)
-        table->addConstraint({f}, ConstraintPtr(foreignKey));
+    foreach(sqlb::ForeignKeyClause* fk, foreignKeys)
+        table->addConstraint({f}, ConstraintPtr(fk));
     if(primaryKey)
     {
         FieldVector v;
