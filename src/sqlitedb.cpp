@@ -1328,8 +1328,7 @@ void DBBrowserDB::updateSchema()
     QByteArray db_utf8Statement = db_statement.toUtf8();
     logSQL(db_statement, kLogMsg_App);
     sqlite3_stmt* db_vm;
-    const char* db_tail;
-    if(sqlite3_prepare_v2(_db, db_utf8Statement, db_utf8Statement.length(), &db_vm, &db_tail) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, db_utf8Statement, db_utf8Statement.length(), &db_vm, NULL) == SQLITE_OK)
     {
         // Loop through all the databases
         while(sqlite3_step(db_vm) == SQLITE_ROW)
@@ -1348,8 +1347,7 @@ void DBBrowserDB::updateSchema()
             logSQL(statement, kLogMsg_App);
 
             sqlite3_stmt* vm;
-            const char* tail;
-            int err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, &tail);
+            int err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, NULL);
             if(err == SQLITE_OK)
             {
                 while(sqlite3_step(vm) == SQLITE_ROW)
@@ -1409,6 +1407,8 @@ void DBBrowserDB::updateSchema()
                 qWarning() << tr("could not get list of db objects: %1, %2").arg(err).arg(sqlite3_errmsg(_db));
             }
         }
+
+        sqlite3_finalize(db_vm);
     } else {
         qWarning() << tr("could not get list of databases: %1").arg(sqlite3_errmsg(_db));
     }
