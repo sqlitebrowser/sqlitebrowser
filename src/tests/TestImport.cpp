@@ -46,15 +46,25 @@ void TestImport::csvImport()
 
     QVector<QVector<QByteArray>> parsedCsv;
     int parsedCsvColumns = 0;
-    csvparser.parse([&parsedCsv, &parsedCsvColumns](size_t /*rowNum*/, const QVector<QByteArray>& data) -> bool {
-        parsedCsv.push_back(data);
-        if(data.size() > parsedCsvColumns)
-            parsedCsvColumns = data.size();
+    csvparser.parse([&parsedCsv, &parsedCsvColumns](size_t /*rowNum*/, const CSVRow& data) -> bool {
+        QVector<QByteArray> row;
+        for(size_t i=0;i<data.num_fields;i++)
+            row.push_back(QByteArray(data.fields[i].data, data.fields[i].data_length));
+        parsedCsv.push_back(row);
+        if(row.size() > parsedCsvColumns)
+            parsedCsvColumns = row.size();
         return true;
     }, tstream);
 
     // Check return values
     QCOMPARE(parsedCsvColumns, numfields);
+    QCOMPARE(parsedCsv.size(), result.size());
+    for(int i=0;i<parsedCsv.size();i++)
+    {
+        QCOMPARE(parsedCsv.at(i).size(), result.at(i).size());
+        for(int j=0;j<parsedCsv.at(i).size();j++)
+            QCOMPARE(parsedCsv.at(i).at(j), result.at(i).at(j));
+    }
     QCOMPARE(parsedCsv, result);
 }
 

@@ -1,7 +1,6 @@
 #ifndef CSVPARSER_H
 #define CSVPARSER_H
 
-#include <QVector>
 #include <functional>
 
 class QTextStream;
@@ -17,16 +16,41 @@ public:
     virtual ~CSVProgress() { }
 
     virtual void start() = 0;
-    virtual bool update(qint64 pos) = 0;
+    virtual bool update(unsigned long long pos) = 0;
     virtual void end() = 0;
+};
+
+/*
+ * This structure represents one parsed column in a CSV row
+ */
+struct CSVField
+{
+    // These variables are used internally by the parser. Usually there should be no need to access them from outside the parser
+    char* buffer;                   // Start of the field buffer
+    uint64_t buffer_length;         // Current length of the buffer content. The content is NOT null-terminated
+    uint64_t buffer_max_length;     // Size of the entire buffer
+
+    // These variables point to the parsed contents of the field and can be directly passed to SQLite functions
+    char* data;                     // Pointer to the start of the field contents
+    uint64_t data_length;           // Length of the field contents
+};
+
+/*
+ * This structure holds all columns of a single parsed CSV row
+ */
+struct CSVRow
+{
+    CSVField* fields;               // Pointer to the field list/the first element in the list
+    size_t num_fields;              // Number of fields in the row
+    size_t max_num_fields;          // Size of the field list. Used internally by the parser only
 };
 
 class CSVParser
 {
 public:
-    typedef std::function<bool(size_t, QVector<QByteArray>)> csvRowFunction;
+    typedef std::function<bool(size_t, CSVRow)> csvRowFunction;
 
-    CSVParser(bool trimfields = true, char16_t fieldseparator = ',', char16_t quotechar = '"');
+    CSVParser(bool trimfields = true, char fieldseparator = ',', char quotechar = '"');
     ~CSVParser();
 
     enum ParserResult
@@ -58,11 +82,11 @@ private:
 
 private:
     bool m_bTrimFields;
-    char16_t m_cFieldSeparator;
-    char16_t m_cQuoteChar;
+    char m_cFieldSeparator;
+    char m_cQuoteChar;
     CSVProgress* m_pCSVProgress;
 
-    qint64 m_nBufferSize;   //! internal buffer read size
+    unsigned long m_nBufferSize;        //! internal buffer read size
 };
 
 #endif
