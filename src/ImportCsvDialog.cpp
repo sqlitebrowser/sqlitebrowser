@@ -380,11 +380,45 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             if(fieldname.isEmpty())
                 fieldname = QString("field%1").arg(i+1);
 
-            // Add field to the column list
+            // Add field to the column list. For now we set the data type to nothing but this might be overwritten later in the automatic
+            // type detection code.
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
         }
 
-        // TODO Here's also the place to do some sort of data type analysation of the CSV data
+        // Try to find out a data type for each column
+        if(!(rowNum == 0 && ui->checkboxHeader->isChecked()))
+        {
+            for(size_t i=0;i<data.num_fields;i++)
+            {
+                // If the data type has been set to TEXT, there's no going back because it means we had at least one row with text-only
+                // content and that means we don't want to set the data type to any number type.
+                QString old_type = fieldList.at(i)->type();
+                if(old_type != "TEXT")
+                {
+                    QString content = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
+
+                    // Check if the content can be converted to an integer or to float
+                    bool convert_to_int, convert_to_float;
+                    content.toInt(&convert_to_int);
+                    content.toFloat(&convert_to_float);
+
+                    // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
+                    QString new_type = "TEXT";
+                    if(old_type == "INTEGER" && !convert_to_int && convert_to_float)    // So far it's integer, but now it's only convertible to float
+                        new_type = "REAL";
+                    else if(old_type == "" && convert_to_int)                           // No type yet, but this bit is convertible to integer
+                        new_type = "INTEGER";
+                    else if(old_type == "" && convert_to_float)                         // No type yet and only convertible to float (less 'difficult' than integer)
+                        new_type = "REAL";
+                    else if(old_type == "REAL" && convert_to_float)                     // It was float so far and still is
+                        new_type = "INTEGER";
+                    else if(old_type == "INTEGER" && convert_to_int)                    // It was integer so far and still is
+                        new_type = "INTEGER";
+
+                    fieldList.at(i)->setType(new_type);
+                }
+            }
+        }
 
         // All good
         return true;
