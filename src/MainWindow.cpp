@@ -476,6 +476,9 @@ void MainWindow::populateTable()
         // Hide rowid column. Needs to be done before the column widths setting because of the workaround in there
         showRowidColumn(false);
 
+        // Unhide all columns by default
+        on_actionShowAllColumns_triggered();
+
         // Enable editing in general, but lock view editing
         unlockViewEditing(false);
 
@@ -525,6 +528,11 @@ void MainWindow::populateTable()
 
         // Enable editing in general and (un)lock view editing depending on the settings
         unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
+
+        // Column hidden status
+        on_actionShowAllColumns_triggered();
+        for(auto hiddenIt=storedData.hiddenColumns.constBegin();hiddenIt!=storedData.hiddenColumns.constEnd();++hiddenIt)
+            hideColumns(hiddenIt.key(), hiddenIt.value());
 
         // Column widths
         for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
@@ -2543,48 +2551,51 @@ sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
                                                                                                 // table name without the schema bit in front of it.
 }
 
-void MainWindow::on_actionHideColumns_triggered()
+void MainWindow::hideColumns(int column, bool hide)
 {
-     int myCol = -1;
-     if(ui->dataTable->selectedCols().size() == 0)
-     {
-          myCol = ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt();
-     }
+    sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
 
-     foreach(int col, ui->dataTable->selectedCols())
-     {
-          ui->dataTable->hideColumn(col);
-     }
-     if(myCol != -1)
-          ui->dataTable->hideColumn(myCol);
+    // Select columns to (un)hide
+    QSet<int> columns;
+    if(column == -1)
+    {
+         if(ui->dataTable->selectedCols().size() == 0)
+             columns.insert(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
+         else
+             columns += ui->dataTable->selectedCols();
+    } else {
+        columns.insert(column);
+    }
 
-     // check to see if all the columns are hidden
+    // (Un)hide requested column(s)
+    foreach(int col, columns)
+    {
+        ui->dataTable->setColumnHidden(col, hide);
+        if(!hide)
+            ui->dataTable->setColumnWidth(col, ui->dataTable->horizontalHeader()->defaultSectionSize());
+        browseTableSettings[tableName].hiddenColumns[col] = hide;
+    }
 
-     bool allHidden = true;
-     for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
-     {
-          if(!ui->dataTable->isColumnHidden(col))
-          {
-                allHidden = false;
-                break;
-          }
-     }
+    // check to see if all the columns are hidden
+    bool allHidden = true;
+    for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
+    {
+        if(!ui->dataTable->isColumnHidden(col))
+        {
+            allHidden = false;
+            break;
+        }
+    }
 
-     if(allHidden  && ui->dataTable->model()->columnCount() > 1)
-     {
-          ui->dataTable->showColumn(1);
-          ui->dataTable->resizeColumnToContents(1);
-     }
+    if(allHidden  && ui->dataTable->model()->columnCount() > 1)
+        hideColumns(1, false);
 }
 
 void MainWindow::on_actionShowAllColumns_triggered()
 {
-     for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
-     {
-          if(ui->dataTable->isColumnHidden(col))
-          {
-                ui->dataTable->showColumn(col);
-                ui->dataTable->resizeColumnToContents(col);
-          }
-     }
+    for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
+    {
+        if(ui->dataTable->isColumnHidden(col))
+            hideColumns(col, false);
+    }
 }

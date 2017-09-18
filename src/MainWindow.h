@@ -34,6 +34,7 @@ struct BrowseDataTableSettings
     QString plotXAxis;
     QMap<QString, PlotDock::PlotSettings> plotYAxes;
     QString unlockViewPk;
+    QMap<int, bool> hiddenColumns;
 
     BrowseDataTableSettings() :
         sortOrderIndex(0),
@@ -54,6 +55,7 @@ struct BrowseDataTableSettings
         stream << object.plotXAxis;
         stream << object.plotYAxes;
         stream << object.unlockViewPk;
+        stream << object.hiddenColumns;
 
         return stream;
     }
@@ -74,10 +76,14 @@ struct BrowseDataTableSettings
         // those cases, check for the end of the stream here.
         if(stream.atEnd())
             return stream;
-
         stream >> object.plotXAxis;
         stream >> object.plotYAxes;
         stream >> object.unlockViewPk;
+
+        // Project files from versions before 3.11.0 didn't have these fields
+        if(stream.atEnd())
+            return stream;
+        stream >> object.hiddenColumns;
 
         return stream;
     }
@@ -259,7 +265,7 @@ private slots:
     void browseDataSetDefaultTableEncoding();
     void fileOpenReadOnly();
     void unlockViewEditing(bool unlock, QString pk = QString());
-    void on_actionHideColumns_triggered();
+    void hideColumns(int column = -1, bool hide = true);
     void on_actionShowAllColumns_triggered();
 };
 
