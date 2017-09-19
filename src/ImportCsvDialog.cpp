@@ -171,18 +171,37 @@ void ImportCsvDialog::accept()
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
     {
+        bool filesLeft = false;
+
+        // Loop through all the rows in the file picker list
         for (int i = 0; i < ui->filePicker->count(); i++) {
             auto item = ui->filePicker->item(i);
-            if (item->checkState() == Qt::Checked) {
+            int row = ui->filePicker->row(item);
+
+            // Check for files that aren't hidden (=imported) yet but that are checked and thus marked for import
+            if (item->checkState() == Qt::Checked && !ui->filePicker->isRowHidden(row)) {
                 importCsv(item->data(Qt::DisplayRole).toString(), item->data(Qt::UserRole).toString());
+
+                // Hide each row after it's done
+                ui->filePicker->setRowHidden(row, true);
+            } else if(!ui->filePicker->isRowHidden(row)) {
+                // Check for files that aren't hidden yet but that aren't checked either. These are files that are still left
+                // to be imported
+                filesLeft = true;
             }
         }
-    }
-    else
-    {
+
+        // Don't close the window if there are still files left to be imported
+        if(filesLeft)
+        {
+            QApplication::restoreOverrideCursor();  // restore original cursor
+            return;
+        }
+    } else {
         importCsv(csvFilenames.first());
     }
 
+    QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
     QApplication::restoreOverrideCursor();  // restore original cursor
     QDialog::accept();
 }

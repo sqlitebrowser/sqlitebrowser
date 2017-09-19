@@ -1174,12 +1174,11 @@ void MainWindow::importTableFromCSV()
             validFiles.append(file);
     }
 
-    if (!validFiles.isEmpty()) {
+    if (!validFiles.isEmpty())
+    {
         ImportCsvDialog dialog(validFiles, &db, this);
-        if (dialog.exec()) {
+        if (dialog.exec())
             populateTable();
-            QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
-        }
     }
 }
 
