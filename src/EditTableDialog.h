@@ -51,6 +51,8 @@ private slots:
     virtual void reject();
     void checkInput();
     void itemChanged(QTreeWidgetItem* item, int column);
+    void updateTypes(QObject *object);
+    bool eventFilter(QObject *object, QEvent *event);
     void updateTypes();
     void moveUp();
     void moveDown();
