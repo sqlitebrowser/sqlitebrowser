@@ -119,6 +119,7 @@ void EditTableDialog::populateFields()
             index = typeBox->count() - 1;
         }
         typeBox->setCurrentIndex(index);
+        typeBox->installEventFilter(this);
         connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
@@ -227,13 +228,13 @@ void EditTableDialog::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
-void EditTableDialog::updateTypes()
+void EditTableDialog::updateTypes(QObject *object)
 {
-    QComboBox* typeBox = qobject_cast<QComboBox*>(sender());
+    QComboBox* typeBox = qobject_cast<QComboBox*>(object);
     if(typeBox)
     {
         QString type = typeBox->currentText();
-        QString column = sender()->property("column").toString();
+        QString column = typeBox->property("column").toString();
 
         int index;
         for(index=0; index < m_table.fields().size(); ++index)
@@ -247,6 +248,20 @@ void EditTableDialog::updateTypes()
             pdb.renameColumn(curTable, m_table, column, m_table.fields().at(index));
         checkInput();
     }
+}
+
+void EditTableDialog::updateTypes()
+{
+    updateTypes(sender());
+}
+
+bool EditTableDialog::eventFilter(QObject *object, QEvent *event)
+{
+    if(event->type() == QEvent::FocusOut)
+    {
+        updateTypes(object);
+    }
+    return false;
 }
 
 void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
@@ -533,6 +548,7 @@ void EditTableDialog::addField()
     }
 
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
+    typeBox->installEventFilter(this);
     connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
@@ -636,7 +652,8 @@ void EditTableDialog::moveCurrentField(bool down)
         QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
         QComboBox* newCombo = new QComboBox(ui->treeWidget);
         newCombo->setProperty("column", oldCombo->property("column"));
-        connect(newCombo, SIGNAL(activated(int)), this, SLOT(updateTypes()));
+        newCombo->installEventFilter(this);
+        connect(newCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
         newCombo->setEditable(true);
         for(int i=0; i < oldCombo->count(); ++i)
             newCombo->addItem(oldCombo->itemText(i));
