@@ -2,6 +2,7 @@
 #define CSVPARSER_H
 
 #include <functional>
+#include <cstdint>
 
 class QTextStream;
 
