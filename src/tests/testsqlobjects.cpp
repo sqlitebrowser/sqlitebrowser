@@ -128,7 +128,7 @@ void TestTable::parseSQL()
 
     QVERIFY(tab.fields().at(0)->type() == "integer");
     QVERIFY(tab.fields().at(1)->type() == "text");
-    QCOMPARE(tab.fields().at(2)->type(), QString("VARCHAR ( 255 )"));
+    QCOMPARE(tab.fields().at(2)->type(), QString("VARCHAR(255)"));
 
     FieldVector pk = tab.primaryKey();
     QVERIFY(tab.fields().at(0)->autoIncrement());

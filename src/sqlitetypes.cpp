@@ -935,7 +935,28 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     c = c->getNextSibling(); //type?
     if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::TYPE_NAME)
     {
-        type = concatTextAST(c->getFirstChild(), true);
+        antlr::RefAST t = c->getFirstChild();
+
+        if(t != antlr::nullAST)
+        {
+            type.clear();
+        }
+
+        while(t != antlr::nullAST)
+        {
+            int thisType = t->getType();
+            type.append(textAST(t));
+            t = t->getNextSibling();
+            if(t != antlr::nullAST)
+            {
+                int nextType = t->getType();
+                if(nextType != sqlite3TokenTypes::LPAREN && nextType != sqlite3TokenTypes::RPAREN &&
+                   thisType != sqlite3TokenTypes::LPAREN)
+                {
+                    type.append(" ");
+                }
+            }
+        }
         c = c->getNextSibling();
     }
 
