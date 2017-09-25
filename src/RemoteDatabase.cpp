@@ -238,7 +238,8 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
     QMessageBox::warning(0, qApp->applicationName(), message);
 
     // Delete reply later, i.e. after returning from this slot function
-    m_progress->reset();
+    if(m_progress)
+        m_progress->reset();
     reply->deleteLater();
 }
 
