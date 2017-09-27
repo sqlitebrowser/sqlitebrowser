@@ -29,8 +29,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
       csvFilenames(filenames),
-      pdb(db),
-      dontAskForExistingTableAgain(false)
+      pdb(db)
 {
     ui->setupUi(this);
 
@@ -168,9 +167,6 @@ void ImportCsvDialog::accept()
     settings.setValue("separatetables", ui->checkBoxSeparateTables->isChecked());
     settings.setValue("encoding", currentEncoding());
     settings.endGroup();
-
-    // Reset the 'don't ask again' flag for the message box
-    dontAskForExistingTableAgain = false;
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -485,14 +481,15 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         if(obj.dynamicCast<sqlb::Table>()->fields().size() != fieldList.size())
         {
             QMessageBox::warning(this, QApplication::applicationName(),
-                                 tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
+                                 tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
             return;
         } else {
             // Only ask whether to import into the existing table if the 'Yes all' button has not been clicked (yet)
-            if(!dontAskForExistingTableAgain)
+            if(!dontAskForExistingTableAgain.contains(tableName))
             {
-                int answer = QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"),
-                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll, QMessageBox::No);
+                int answer = QMessageBox::question(this, QApplication::applicationName(),
+                                                   tr("There is already a table named '%1'. Do you want to import the data into it?").arg(tableName),
+                                                   QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll, QMessageBox::No);
 
                 // Cancel if the No button has been clicked
                 if(answer == QMessageBox::No)
@@ -500,7 +497,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
 
                 // If the 'Yes all' button has been clicked, save that for later
                 if(answer == QMessageBox::YesAll)
-                    dontAskForExistingTableAgain = true;
+                    dontAskForExistingTableAgain.append(tableName);
             }
 
             // If we reached this point, this means that either the 'Yes' or the 'Yes all' button has been clicked or that no message box was shown at all
@@ -521,6 +518,10 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
             return rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+
+        // If we're creating the table in this import session, don't ask the user if it's okay to import more data into it. It seems
+        // safe to just assume that's what they want.
+        dontAskForExistingTableAgain.append(tableName);
     } else {
         // Importing into an existing table. So find out something about it's structure.
 

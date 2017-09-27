@@ -38,7 +38,7 @@ private:
     QString selectedFile;
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
-    bool dontAskForExistingTableAgain;
+    QStringList dontAskForExistingTableAgain;
 
     CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count = 0);
     sqlb::FieldVector generateFieldList(const QString& filename);
