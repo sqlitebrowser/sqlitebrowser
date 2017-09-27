@@ -29,7 +29,8 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
       csvFilenames(filenames),
-      pdb(db)
+      pdb(db),
+      dontAskForExistingTableAgain(false)
 {
     ui->setupUi(this);
 
@@ -167,6 +168,9 @@ void ImportCsvDialog::accept()
     settings.setValue("separatetables", ui->checkBoxSeparateTables->isChecked());
     settings.setValue("encoding", currentEncoding());
     settings.endGroup();
+
+    // Reset the 'don't ask again' flag for the message box
+    dontAskForExistingTableAgain = false;
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -484,15 +488,24 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
                                  tr("There is already a table of that name and an import into an existing table is only possible if the number of columns match."));
             return;
         } else {
-            // If we are importing multiple files, we can skip the warning and perform the inserts
-            // To omit further warnings there is a filter button to select all conforming sql
-            if (!ui->checkBoxSeparateTables->isChecked())
-                importToExistingTable = true;
+            // Only ask whether to import into the existing table if the 'Yes all' button has not been clicked (yet)
+            if(!dontAskForExistingTableAgain)
+            {
+                int answer = QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"),
+                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll, QMessageBox::No);
 
-            if(QMessageBox::question(this, QApplication::applicationName(), tr("There is already a table of that name. Do you want to import the data into it?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
-                importToExistingTable = true;
-            else
-                return;
+                // Cancel if the No button has been clicked
+                if(answer == QMessageBox::No)
+                    return;
+
+                // If the 'Yes all' button has been clicked, save that for later
+                if(answer == QMessageBox::YesAll)
+                    dontAskForExistingTableAgain = true;
+            }
+
+            // If we reached this point, this means that either the 'Yes' or the 'Yes all' button has been clicked or that no message box was shown at all
+            // because the 'Yes all' button has been clicked for a previous file
+            importToExistingTable = true;
         }
     }
 
