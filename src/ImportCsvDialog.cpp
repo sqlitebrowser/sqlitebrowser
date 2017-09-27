@@ -180,7 +180,13 @@ void ImportCsvDialog::accept()
 
             // Check for files that aren't hidden (=imported) yet but that are checked and thus marked for import
             if (item->checkState() == Qt::Checked && !ui->filePicker->isRowHidden(row)) {
-                importCsv(item->data(Qt::DisplayRole).toString(), item->data(Qt::UserRole).toString());
+                if(!importCsv(item->data(Qt::DisplayRole).toString(), item->data(Qt::UserRole).toString()))
+                {
+                    // If we're supposed to cancel the import process, we always have at least one file left (the cancelled one). Also
+                    // we stop looping through the rest of the CSV files.
+                    filesLeft = true;
+                    break;
+                }
 
                 // Hide each row after it's done
                 ui->filePicker->setRowHidden(row, true);
@@ -446,8 +452,15 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
     return fieldList;
 }
 
-void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
+bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 {
+    // This function returns a boolean to indicate whether to continue or abort the import process. It's worth keeping in mind that
+    // this doesn't correlate 100% to this import being a success or not. The general rule is that if there was some internal error
+    // when writing to the database, we stop the entire import process. Also, if the user has clicked Cancel during the import of one
+    // file, we stop the entire import process, i.e. also the import of the remaining files. Furthermore, if the user clicks the Cancel
+    // button in a message box we (obviously) cancel the import process, too. In all other cases we return true to indicate that the import
+    // should continue.
+
 #ifdef CSV_BENCHMARK
     // If benchmark mode is enabled start measuring the performance now
     qint64 timesRowFunction = 0;
@@ -471,7 +484,7 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     // Analyse CSV file
     sqlb::FieldVector fieldList = generateFieldList(fileName);
     if(fieldList.size() == 0)
-        return;
+        return true;
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
@@ -482,18 +495,22 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
-            return;
+            return true;
         } else {
             // Only ask whether to import into the existing table if the 'Yes all' button has not been clicked (yet)
             if(!dontAskForExistingTableAgain.contains(tableName))
             {
                 int answer = QMessageBox::question(this, QApplication::applicationName(),
                                                    tr("There is already a table named '%1'. Do you want to import the data into it?").arg(tableName),
-                                                   QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll, QMessageBox::No);
+                                                   QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll | QMessageBox::Cancel, QMessageBox::No);
 
-                // Cancel if the No button has been clicked
+                // Stop now if the No button has been clicked
                 if(answer == QMessageBox::No)
-                    return;
+                    return true;
+
+                // Stop now if the Cancel button has been clicked. But also indicate, that the entire import process should be stopped.
+                if(answer == QMessageBox::Cancel)
+                    return false;
 
                 // If the 'Yes all' button has been clicked, save that for later
                 if(answer == QMessageBox::YesAll)
@@ -510,14 +527,20 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
     // db needs to be saved or an error will occur
     QString restorepointName = pdb->generateSavepointName("csvimport");
     if(!pdb->setSavepoint(restorepointName))
-        return rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
+    {
+        rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
+        return false;
+    }
 
     // Create table
     QVector<QByteArray> nullValues;
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
-            return rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+        {
+            rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+            return false;
+        }
 
         // If we're creating the table in this import session, don't ask the user if it's okay to import more data into it. It seems
         // safe to just assume that's what they want.
@@ -608,9 +631,13 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
         // Rollback the entire import. If the action was cancelled, don't show an error message. If it errored, show an error message.
         sqlite3_finalize(stmt);
         if(result == CSVParser::ParserResult::ParserResultCancelled)
-            return rollback(this, pdb, restorepointName, 0, QString());
-        else
-            return rollback(this, pdb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(pdb->lastError()));
+        {
+            rollback(this, pdb, restorepointName, 0, QString());
+            return false;
+        } else {
+            rollback(this, pdb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(pdb->lastError()));
+            return false;
+        }
     }
 
     // Clean up prepared statement
@@ -623,6 +650,8 @@ void ImportCsvDialog::importCsv(const QString& fileName, const QString &name)
                              .arg(timer.elapsed())
                              .arg(timesRowFunction));
 #endif
+
+    return true;
 }
 
 void ImportCsvDialog::setQuoteChar(const QChar& c)

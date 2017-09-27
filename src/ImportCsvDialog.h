@@ -43,7 +43,7 @@ private:
     CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count = 0);
     sqlb::FieldVector generateFieldList(const QString& filename);
 
-    void importCsv(const QString& f, const QString &n = QString());
+    bool importCsv(const QString& f, const QString& n = QString());
 
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
