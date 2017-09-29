@@ -260,11 +260,15 @@ void ImportCsvDialog::updatePreview()
             if(i == 0)
                 ui->tablePreview->setVerticalHeaderItem(rowNum, new QTableWidgetItem(QString::number(rowNum + 1)));
 
-            // Add table item
+            // Add table item. Limit data length to a maximum character count to avoid a sluggish UI. And it's very unlikely that this
+            // many characters are going to be needed anyway for a preview.
+            int data_length = data.fields[i].data_length;
+            if(data_length > 1024)
+                data_length = 1024;
             ui->tablePreview->setItem(
                         rowNum,
                         i,
-                        new QTableWidgetItem(QString::fromUtf8(data.fields[i].data, data.fields[i].data_length)));
+                        new QTableWidgetItem(QString::fromUtf8(data.fields[i].data, data_length)));
         }
 
         return true;
