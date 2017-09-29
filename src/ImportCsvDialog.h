@@ -28,7 +28,7 @@ private slots:
     void updatePreview();
     void checkInput();
     void selectFiles();
-    void updateSelectedFilePreview(QListWidgetItem*);
+    void updateSelectedFilePreview();
     void updateSelection(bool);
     void matchSimilar();
 

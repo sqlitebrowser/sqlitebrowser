@@ -284,7 +284,7 @@ void ImportCsvDialog::checkInput()
         allowImporting = !ui->editName->text().isEmpty();
     }
 
-    if (ui->filePicker->currentItem()) {
+    if (ui->filePicker->currentItem() && ui->checkBoxSeparateTables->isChecked()) {
         ui->filePicker->currentItem()->setData(Qt::UserRole, ui->editName->text());
     }
 
@@ -303,20 +303,20 @@ void ImportCsvDialog::selectFiles()
         ui->filePicker->addItem(item);
     }
 
-    connect(ui->filePicker, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(updateSelectedFilePreview(QListWidgetItem*)));
+    connect(ui->filePicker, &QListWidget::itemSelectionChanged, this, &ImportCsvDialog::updateSelectedFilePreview);
 }
 
-void ImportCsvDialog::updateSelectedFilePreview(QListWidgetItem* item)
+void ImportCsvDialog::updateSelectedFilePreview()
 {
-    selectedFile = item->data(Qt::DisplayRole).toString();
-    QFileInfo fileInfo(selectedFile);
-    if (ui->checkBoxSeparateTables->isChecked()) {
+    auto selection = ui->filePicker->selectedItems();
+    if(!selection.isEmpty())
+    {
+        auto item = selection.first();
+        selectedFile = item->data(Qt::DisplayRole).toString();
         ui->editName->setText(item->data(Qt::UserRole).toString());
-    } else {
-        ui->editName->setText(fileInfo.baseName());
+        updatePreview();
+        checkInput();
     }
-    updatePreview();
-    checkInput();
 }
 
 void ImportCsvDialog::updateSelection(bool selected)
