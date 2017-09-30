@@ -138,12 +138,9 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
         {
             // It's a database file.
 
-            // Generate a unique file name to save the file under
-            QString saveFileAs = Settings::getValue("remote", "clonedirectory").toString() +
-                QString("/%2_%1.remotedb").arg(QDateTime::currentMSecsSinceEpoch()).arg(reply->url().fileName());
-
             // Add cloned database to list of local databases
-            localAdd(saveFileAs, reply->property("certfile").toString(), reply->url());
+            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(),
+                                          reply->url(), QUrlQuery(reply->url()).queryItemValue("commit"));
 
             // Save the downloaded data under the generated file name
             QFile file(saveFileAs);
@@ -215,10 +212,24 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             break;
         }
     case RequestTypePush:
-        emit uploadFinished(reply->url().toString());
-        break;
-    default:
-        break;
+        {
+            // Read and check results
+            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+            if(json.isNull() || !json.isObject())
+                break;
+            QJsonObject obj = json.object();
+
+            // Create or update the record in our local checkout database
+            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), reply->url(), obj["commit_id"].toString());
+
+            // If the name of the source file and the name we're saving as differ, we're doing an initial push. In this case, copy the source file to
+            // the destination path to avoid redownloading it when it's first used.
+            if(saveFileAs != reply->property("source_file").toString())
+                QFile::copy(reply->property("source_file").toString(), saveFileAs);
+
+            emit uploadFinished(obj["url"].toString());
+            break;
+        }
     }
 
     // Delete reply later, i.e. after returning from this slot function
@@ -461,7 +472,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
-    addPart(multipart, "commit", localLastCommitId(filename));
+    addPart(multipart, "commit", localLastCommitId(clientCert, url));
     addPart(multipart, "force", forcePush ? "true" : "false");
     addPart(multipart, "lastmodified", last_modified.toString(Qt::ISODate));
 
@@ -483,6 +494,8 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     // Put database to remote server and save pending reply for future processing
     QNetworkReply* reply = m_manager->post(request, multipart);
     reply->setProperty("type", RequestTypePush);
+    reply->setProperty("certfile", clientCert);
+    reply->setProperty("source_file", filename);
     multipart->setParent(reply);        // Delete the multi-part object along with the reply
 
     // Initialise the progress dialog for this request
@@ -551,103 +564,121 @@ void RemoteDatabase::localAssureOpened()
     }
 }
 
-void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url)
+QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const QString& new_commit_id)
 {
     // This function adds a new local database clone to our internal list. It does so by adding a single
     // new record to the remote dbs database. All the fields are extracted from the filename, the identity
     // and (most importantly) the url parameters. Note that for the commit id field to be correctly filled we
-    // require the commit id to be part of the url parameter. Also note that this function doesn't check if the
-    // database has already been added to the list before. This needs to be done before calling this function,
-    // ideally even before sending out a request to the network.
+    // require the commit id to be part of the url parameter. Also note that this function doesn't care if the
+    // database has already been added to the list or not. If you need this information you need to check it before
+    // calling this function, ideally even before sending out a request to the network. The function returns the full
+    // path of the newly created/updated file.
 
     localAssureOpened();
 
+    // Remove the path
+    QFileInfo f(identity);
+    identity = f.fileName();
+
     // Check if this file has already been checked in
-    QString last_commit_id = localLastCommitId(filename);
-    QString new_commit_id = QUrlQuery(url).queryItemValue("commit");
+    QString last_commit_id = localLastCommitId(identity, url.toString());
     if(last_commit_id.isNull())
     {
         // The file hasn't been checked in yet. So add a new record for it.
+
+        // Generate a new file name to save the file under
+        filename = QString("%2_%1.remotedb").arg(QDateTime::currentMSecsSinceEpoch()).arg(filename);
 
         // Insert database into local database list
         QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file) VALUES(?, ?, ?, ?, ?)");
         sqlite3_stmt* stmt;
         if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
-            return;
+            return QString();
 
-        QFileInfo f(identity);                  // Remove the path
-        identity = f.fileName();
         if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
         if(sqlite3_bind_text(stmt, 2, url.fileName().toUtf8(), url.fileName().toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
-        QUrl url_without_query = url;           // Remove the '?commit=x' bit from the URL
-        url_without_query.setQuery(QString());
-        if(sqlite3_bind_text(stmt, 3, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 3, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(),
+                             url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
         if(sqlite3_bind_text(stmt, 4, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
-        f = QFileInfo(filename);                // Remove the path
-        filename = f.fileName();
         if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
         if(sqlite3_step(stmt) != SQLITE_DONE)
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
         sqlite3_finalize(stmt);
-    } else if(last_commit_id != new_commit_id) {
-        // The file has already been checked in and the commit ids are different (if they weren't we wouldn't need to update anything)
 
-        QString sql = QString("UPDATE local SET commit_id=? WHERE file=?");
+        // Return full path to the new file
+        return Settings::getValue("remote", "clonedirectory").toString() + "/" + filename;
+    }
+
+    // If we get here, the file has been checked in before. Check next if it has been updated in the meantime.
+    if(last_commit_id != new_commit_id)
+    {
+        // The file has already been checked in and the commit ids are different. If they weren't we wouldn't need to update anything
+
+        QString sql = QString("UPDATE local SET commit_id=? WHERE identity=? AND url=?");
         sqlite3_stmt* stmt;
         if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
-            return;
+            return QString();
 
         if(sqlite3_bind_text(stmt, 1, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
-        QFileInfo f(filename);                  // Remove the path
-        filename = f.fileName();
-        if(sqlite3_bind_text(stmt, 2, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 2, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
+        }
+
+        if(sqlite3_bind_text(stmt, 3, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(),
+                             url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return QString();
         }
 
         if(sqlite3_step(stmt) != SQLITE_DONE)
         {
             sqlite3_finalize(stmt);
-            return;
+            return QString();
         }
 
         sqlite3_finalize(stmt);
     }
+
+    // If we got here, the file was already checked in (and was either updated or not (obviously)). This mean we can just return the file name as
+    // we know it.
+    return localExists(url, identity);
 }
 
 QString RemoteDatabase::localExists(const QUrl& url, QString identity)
@@ -696,9 +727,10 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     QString local_file = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
     sqlite3_finalize(stmt);
 
-    // There are three possibilities now: either the requested commit id is the same as the local commit id, or the requested commit id
-    // is newer, or the local commit id is newer.
-    if(local_commit_id == url_commit_id)
+    // There are three possibilities now: either we didn't get any commit id in the URL in which case we just return the file we got, no matter what.
+    // Or the requested commit id is the same as the local commit id in which case we return the file we got as well.
+    // Or the requested commit id differ in which case we ask the user what to do.
+    if(url_commit_id.isNull() || local_commit_id == url_commit_id)
     {
         // Both commit ids are the same. That's the perfect match, so we can download the local file if it still exists
         return localCheckFile(local_file);
@@ -779,21 +811,28 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     }
 }
 
-QString RemoteDatabase::localLastCommitId(QString filename)
+QString RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
 {
     // This function takes a file name and checks with which commit id we had checked out this file or last pushed it.
 
     localAssureOpened();
 
     // Query commit id for that file name
-    QString sql = QString("SELECT commit_id FROM local WHERE file=?");
+    QString sql = QString("SELECT commit_id FROM local WHERE identity=? AND url=?");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, NULL) != SQLITE_OK)
         return QString();
 
-    QFileInfo f(filename);              // Remove the path
-    filename = f.fileName();
-    if(sqlite3_bind_text(stmt, 1, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+    QFileInfo f(identity);                  // Remove the path
+    identity = f.fileName();
+    if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
+    if(sqlite3_bind_text(stmt, 2, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(),
+                         url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().size(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
         return QString();

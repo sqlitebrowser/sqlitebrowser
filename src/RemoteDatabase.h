@@ -74,10 +74,10 @@ private:
 
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
-    void localAdd(QString filename, QString identity, const QUrl& url);
+    QString localAdd(QString filename, QString identity, const QUrl& url, const QString& new_commit_id);
     QString localExists(const QUrl& url, QString identity);
     QString localCheckFile(const QString& local_file);
-    QString localLastCommitId(QString filename);
+    QString localLastCommitId(QString clientCert, const QUrl& url);
 
     // Helper functions for building multi-part HTTP requests
     void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value);
