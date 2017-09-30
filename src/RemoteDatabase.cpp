@@ -444,6 +444,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
+    addPart(multipart, "commit", localLastCommitId(filename));
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
@@ -699,6 +700,8 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     // This function takes the file name of a locally cloned database and checks if this file still exists. If it has been deleted in the meantime it returns
     // an empty string and deletes the file from the clone database. If the file still exists, it returns the full path to the file.
 
+    localAssureOpened();
+
     // Build the full path to where the file should be
     QString full_path = Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
 
@@ -724,6 +727,40 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
         // Return empty string to indicate a redownload request
         return QString();
     }
+}
+
+QString RemoteDatabase::localLastCommitId(QString filename)
+{
+    // This function takes a file name and checks with which commit id we had checked out this file or last pushed it.
+
+    localAssureOpened();
+
+    // Query commit id for that file name
+    QString sql = QString("SELECT commit_id FROM local WHERE file=?");
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, NULL) != SQLITE_OK)
+        return QString();
+
+    QFileInfo f(filename);              // Remove the path
+    filename = f.fileName();
+    if(sqlite3_bind_text(stmt, 1, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
+    if(sqlite3_step(stmt) != SQLITE_ROW)
+    {
+        // If there was either an error or no record was found for this file name, stop here.
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
+    // Having come here we can assume that at least some local clone with the given file name
+    QString local_commit_id = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+    sqlite3_finalize(stmt);
+
+    return local_commit_id;
 }
 
 void RemoteDatabase::clearAccessCache(const QString& clientCert)
