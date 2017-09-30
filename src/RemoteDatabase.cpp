@@ -543,55 +543,92 @@ void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& ur
 
     localAssureOpened();
 
-    // Insert database into local database list
-    QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file) VALUES(?, ?, ?, ?, ?)");
-    sqlite3_stmt* stmt;
-    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
-        return;
-
-    QFileInfo f(identity);                  // Remove the path
-    identity = f.fileName();
-    if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
+    // Check if this file has already been checked in
+    QString last_commit_id = localLastCommitId(filename);
+    QString new_commit_id = QUrlQuery(url).queryItemValue("commit");
+    if(last_commit_id.isNull())
     {
-        sqlite3_finalize(stmt);
-        return;
-    }
+        // The file hasn't been checked in yet. So add a new record for it.
 
-    if(sqlite3_bind_text(stmt, 2, url.fileName().toUtf8(), url.fileName().toUtf8().length(), SQLITE_TRANSIENT))
-    {
-        sqlite3_finalize(stmt);
-        return;
-    }
+        // Insert database into local database list
+        QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file) VALUES(?, ?, ?, ?, ?)");
+        sqlite3_stmt* stmt;
+        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+            return;
 
-    QUrl url_without_query = url;           // Remove the '?commit=x' bit from the URL
-    url_without_query.setQuery(QString());
-    if(sqlite3_bind_text(stmt, 3, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
-    {
-        sqlite3_finalize(stmt);
-        return;
-    }
+        QFileInfo f(identity);                  // Remove the path
+        identity = f.fileName();
+        if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
 
-    if(sqlite3_bind_text(stmt, 4, QUrlQuery(url).queryItemValue("commit").toUtf8(), QUrlQuery(url).queryItemValue("commit").toUtf8().length(), SQLITE_TRANSIENT))
-    {
-        sqlite3_finalize(stmt);
-        return;
-    }
+        if(sqlite3_bind_text(stmt, 2, url.fileName().toUtf8(), url.fileName().toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
 
-    f = QFileInfo(filename);                // Remove the path
-    filename = f.fileName();
-    if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
-    {
-        sqlite3_finalize(stmt);
-        return;
-    }
+        QUrl url_without_query = url;           // Remove the '?commit=x' bit from the URL
+        url_without_query.setQuery(QString());
+        if(sqlite3_bind_text(stmt, 3, url_without_query.toString().toUtf8(), url_without_query.toString().toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
 
-    if(sqlite3_step(stmt) != SQLITE_DONE)
-    {
-        sqlite3_finalize(stmt);
-        return;
-    }
+        if(sqlite3_bind_text(stmt, 4, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
 
-    sqlite3_finalize(stmt);
+        f = QFileInfo(filename);                // Remove the path
+        filename = f.fileName();
+        if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        if(sqlite3_step(stmt) != SQLITE_DONE)
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        sqlite3_finalize(stmt);
+    } else if(last_commit_id != new_commit_id) {
+        // The file has already been checked in and the commit ids are different (if they weren't we wouldn't need to update anything)
+
+        QString sql = QString("UPDATE local SET commit_id=? WHERE file=?");
+        sqlite3_stmt* stmt;
+        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+            return;
+
+        if(sqlite3_bind_text(stmt, 1, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        QFileInfo f(filename);                  // Remove the path
+        filename = f.fileName();
+        if(sqlite3_bind_text(stmt, 2, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        if(sqlite3_step(stmt) != SQLITE_DONE)
+        {
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        sqlite3_finalize(stmt);
+    }
 }
 
 QString RemoteDatabase::localExists(const QUrl& url, QString identity)
