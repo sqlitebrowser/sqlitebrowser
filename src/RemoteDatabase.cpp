@@ -518,7 +518,8 @@ void RemoteDatabase::localAssureOpened()
                                 "\"url\" TEXT NOT NULL,"
                                 "\"commit_id\" TEXT NOT NULL,"
                                 "\"file\" INTEGER,"
-                                "\"modified\" INTEGER DEFAULT 0"
+                                "\"modified\" INTEGER DEFAULT 0,"
+                                "\"branch\" TEXT NOT NULL DEFAULT \"master\""
                                 ")");
     if(sqlite3_exec(m_dbLocal, statement.toUtf8(), NULL, NULL, &errmsg) != SQLITE_OK)
     {
@@ -528,6 +529,12 @@ void RemoteDatabase::localAssureOpened()
         m_dbLocal = nullptr;
         return;
     }
+
+    // Add column "branch" if it doesn't exist yet. This isn't done in a particular nice way here because we just let the
+    // command fail if it already exists but whatever.
+    // NOTE that this code can be removed after releasing v3.11.0.
+    statement = QString("ALTER TABLE \"local\" ADD COLUMN \"branch\" TEXT NOT NULL DEFAULT \"master\"");
+    sqlite3_exec(m_dbLocal, statement.toUtf8(), NULL, NULL, NULL);
 }
 
 void RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url)
