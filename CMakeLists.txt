@@ -47,10 +47,10 @@ if(WIN32 AND MSVC)
 endif()
 
 if(NOT FORCE_INTERNAL_ANTLR)
-    find_package(Antlr2)
+    find_package(Antlr2 QUIET)
 endif()
 if(NOT FORCE_INTERNAL_QSCINTILLA)
-    find_package(QScintilla)
+    find_package(QScintilla QUIET)
 endif()
 
 set(QHEXEDIT_DIR libs/qhexedit)
