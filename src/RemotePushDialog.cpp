@@ -43,6 +43,12 @@ void RemotePushDialog::checkInput()
     else
         ui->checkPublic->setText(tr("Database will be private. Only you have access to it."));
 
+    // Update the foce push check box text
+    if(ui->checkForce->isChecked())
+        ui->checkForce->setText(tr("Use with care. This can cause remote commits to be deleted."));
+    else
+        ui->checkForce->setText(" ");   // The space character here is required to avoid annoying resizes when toggling the checkbox
+
     // Check input
     bool valid = true;
 
@@ -86,6 +92,11 @@ bool RemotePushDialog::isPublic() const
 QString RemotePushDialog::branch() const
 {
     return ui->comboBranch->currentText();
+}
+
+bool RemotePushDialog::forcePush() const
+{
+    return ui->checkForce->isChecked();
 }
 
 void RemotePushDialog::fillInLicences(const QMap<QString, QString>& licences)

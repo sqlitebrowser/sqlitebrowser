@@ -414,7 +414,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
 }
 
 void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
-                          const QString& commitMessage, const QString& licence, bool isPublic, const QString& branch)
+                          const QString& commitMessage, const QString& licence, bool isPublic, const QString& branch, bool forcePush)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -445,6 +445,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
     addPart(multipart, "commit", localLastCommitId(filename));
+    addPart(multipart, "force", forcePush ? "true" : "false");
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;

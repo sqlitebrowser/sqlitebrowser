@@ -46,7 +46,8 @@ public:
 
     void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
     void push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
-              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false, const QString& branch = QString("master"));
+              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
+              const QString& branch = QString("master"), bool forcePush = false);
 
 signals:
     // The openFile signal is emitted whenever a remote database file shall be opened in the main window. This happens when the

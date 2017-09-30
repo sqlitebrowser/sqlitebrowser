@@ -22,6 +22,7 @@ public:
     QString licence() const;
     bool isPublic() const;
     QString branch() const;
+    bool forcePush() const;
 
 private:
     Ui::RemotePushDialog* ui;
