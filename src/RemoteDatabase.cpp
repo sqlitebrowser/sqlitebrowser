@@ -12,6 +12,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QHttpMultiPart>
+#include <QTimeZone>
 
 #include "RemoteDatabase.h"
 #include "version.h"
@@ -149,6 +150,17 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             file.open(QIODevice::WriteOnly);
             file.write(reply->readAll());
             file.close();
+
+            // Set last modified data of the new file to the one provided by the server
+            // TODO Qt doesn't offer any option to set this attribute, so we'd need to figure out a way to do it
+            // ourselves in a platform-independent way.
+            /*QString last_modified = reply->rawHeader("Content-Disposition");
+            QRegExp regex("^.*modification-date=\"(.+)\";.*$");
+            regex.setMinimal(true); // Set to non-greedy matching
+            if(regex.indexIn(last_modified) != -1)
+            {
+                last_modified = regex.cap(1);
+            }*/
 
             // Tell the application to open this file
             emit openFile(saveFileAs);
@@ -437,6 +449,11 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
 
+    // Get the last modified date of the file and prepare it for conversion into the ISO date format
+    QDateTime last_modified = QFileInfo(filename).lastModified();
+    last_modified.setTimeSpec(Qt::OffsetFromUTC);
+    last_modified.setTimeZone(QTimeZone::systemTimeZone());
+
     // Prepare HTTP multi part data containing all the information about the commit we're about to push
     QHttpMultiPart* multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     addPart(multipart, "file", file, remotename);
@@ -446,6 +463,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "branch", branch);
     addPart(multipart, "commit", localLastCommitId(filename));
     addPart(multipart, "force", forcePush ? "true" : "false");
+    addPart(multipart, "lastmodified", last_modified.toString(Qt::ISODate));
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
