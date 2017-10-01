@@ -462,7 +462,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
 
     // Get the last modified date of the file and prepare it for conversion into the ISO date format
     QDateTime last_modified = QFileInfo(filename).lastModified();
-    last_modified.setTimeSpec(Qt::OffsetFromUTC);
+    last_modified.setTimeSpec(Qt::TimeZone);
     last_modified.setTimeZone(QTimeZone::systemTimeZone());
 
     // Prepare HTTP multi part data containing all the information about the commit we're about to push
