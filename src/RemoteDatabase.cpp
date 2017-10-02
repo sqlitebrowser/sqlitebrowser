@@ -462,8 +462,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
 
     // Get the last modified date of the file and prepare it for conversion into the ISO date format
     QDateTime last_modified = QFileInfo(filename).lastModified();
-    last_modified.setTimeSpec(Qt::TimeZone);
-    last_modified.setTimeZone(QTimeZone::systemTimeZone());
+    last_modified.toOffsetFromUtc(0);
 
     // Prepare HTTP multi part data containing all the information about the commit we're about to push
     QHttpMultiPart* multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
@@ -474,7 +473,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "branch", branch);
     addPart(multipart, "commit", localLastCommitId(clientCert, url));
     addPart(multipart, "force", forcePush ? "true" : "false");
-    addPart(multipart, "lastmodified", last_modified.toString(Qt::ISODate));
+    addPart(multipart, "lastmodified", last_modified.toString("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
