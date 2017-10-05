@@ -164,7 +164,9 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     if(attach_as.isEmpty())
         attach_as = QInputDialog::getText(0,
                                           qApp->applicationName(),
-                                          tr("Please specify the database name under which you want to access the attached database")
+                                          tr("Please specify the database name under which you want to access the attached database"),
+                                          QLineEdit::Normal,
+                                          QFileInfo(filename).baseName()
                                           ).trimmed();
     if(attach_as.isEmpty())
         return false;
