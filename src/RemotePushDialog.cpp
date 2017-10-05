@@ -54,11 +54,15 @@ void RemotePushDialog::checkInput()
 
     if(ui->editName->text().trimmed().isEmpty())
         valid = false;
+    if(!QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$").exactMatch(ui->editName->text()))
+        valid = false;
 
     if(ui->editCommitMessage->toPlainText().size() > 1024)
         valid = false;
 
     if(ui->comboBranch->currentText().size() < 1 || ui->comboBranch->currentText().size() > 32)
+        valid = false;
+    if(!QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$").exactMatch(ui->comboBranch->currentText()))
         valid = false;
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
