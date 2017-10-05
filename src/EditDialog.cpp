@@ -419,13 +419,12 @@ int EditDialog::checkDataType(const QByteArray& data)
         return Null;
     }
 
-    // Check if it's an image
+    // Check if it's an image. First do a quick test by calling canRead() which only checks the first couple of bytes or so. Only if
+    // that returned true, do a more sophisticated test of the data. This way we get both, good performance and proper data checking.
     QBuffer imageBuffer(&cellData);
     QImageReader readerBuffer(&imageBuffer);
-    bool someCheck = readerBuffer.canRead();
-    if (someCheck == true) {
+    if(readerBuffer.canRead() && !readerBuffer.read().isNull())
         return Image;
-    }
 
     // Check if it's text only
     if (QString(cellData).toUtf8() == cellData) { // Is there a better way to check this?
