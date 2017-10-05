@@ -168,7 +168,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
                                           QLineEdit::Normal,
                                           QFileInfo(filename).baseName()
                                           ).trimmed();
-    if(attach_as.isEmpty())
+    if(attach_as.isNull())
         return false;
 
 #ifdef ENABLE_SQLCIPHER
