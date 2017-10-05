@@ -1168,7 +1168,7 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
 
     // Copy the data from the old table to the new one
     if(!executeSQL(QString("INSERT INTO %1.sqlitebrowser_rename_column_new_table SELECT %2 FROM %3;")
-                   .arg(newSchemaName)
+                   .arg(sqlb::escapeIdentifier(newSchemaName))
                    .arg(select_cols)
                    .arg(tablename.toString())))
     {
