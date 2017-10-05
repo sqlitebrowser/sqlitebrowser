@@ -69,6 +69,7 @@ private:
     QStringList fields;
     bool m_bNewTable;
     QString m_sRestorePointName;
+    bool m_bForeignKeysEnabled;
 };
 
 #endif

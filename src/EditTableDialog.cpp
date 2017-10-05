@@ -56,6 +56,9 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     // And create a savepoint
     pdb.setSavepoint(m_sRestorePointName);
 
+    // Check now if foreign keys are enabled so we don't have to query this later again and again
+    m_bForeignKeysEnabled = (pdb.getPragma("foreign_keys") == "1");
+
     // Update UI
     ui->editTableName->setText(curTable.name());
     updateColumnWidth();
@@ -206,8 +209,6 @@ void EditTableDialog::checkInput()
         m_table.setName(normTableName);
         m_fkEditorDelegate->updateTablesList(oldTableName);
 
-        bool fksEnabled = (pdb.getPragma("foreign_keys") == "1");
-
         // update fk's that refer to table itself recursively
         sqlb::FieldVector fields = m_table.fields();
         foreach(sqlb::FieldPtr f, fields) {
@@ -215,7 +216,7 @@ void EditTableDialog::checkInput()
             if(!fk.isNull()) {
                 if (oldTableName == fk->table()) {
                     fk->setTable(normTableName);
-                    if(!fksEnabled)
+                    if(!m_bForeignKeysEnabled)
                         pdb.renameColumn(curTable, m_table, f->name(), f, 0);
                 }
             }
