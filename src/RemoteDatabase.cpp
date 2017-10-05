@@ -220,7 +220,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             QJsonObject obj = json.object();
 
             // Create or update the record in our local checkout database
-            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), reply->url(), obj["commit_id"].toString());
+            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), obj["url"].toString(), obj["commit_id"].toString());
 
             // If the name of the source file and the name we're saving as differ, we're doing an initial push. In this case, copy the source file to
             // the destination path to avoid redownloading it when it's first used.
