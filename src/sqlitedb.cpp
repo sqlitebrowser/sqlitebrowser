@@ -1336,6 +1336,9 @@ void DBBrowserDB::updateSchema()
             // Get the schema name which is in column 1 (counting starts with 0). 0 contains an ID and 2 the file path.
             QString schema_name = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
 
+            // Always add the schema to the map. This makes sure it's even then added when there are no objects in the database
+            schemata[schema_name] = objectMap();
+
             // Get a list of all the tables for the current database schema. We need to do this differently for normal databases and the temporary schema
             // because SQLite doesn't understand the "temp.sqlite_master" notation.
             QString statement;
