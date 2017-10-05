@@ -749,8 +749,11 @@ void EditTableDialog::changeSchema(const QString& schema)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
+        if(pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
         {
+            // Save the new schema name to use it from now on
+            curTable.setSchema(schema);
+        } else {
             QMessageBox::warning(this, QApplication::applicationName(), tr("Changing the table schema failed. Error message:\n%1").arg(pdb.lastError()));
             ui->comboSchema->setCurrentText(curTable.schema()); // Set it back to the original schema
         }
