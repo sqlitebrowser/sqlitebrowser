@@ -160,6 +160,25 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
 bool DBBrowserDB::attach(const QString& filename, QString attach_as)
 {
+    // Check if this file has already been attached and abort if this is the case
+    QString sql = "PRAGMA database_list;";
+    logSQL(sql, kLogMsg_App);
+    sqlite3_stmt* db_vm;
+    if(sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &db_vm, NULL) == SQLITE_OK)
+    {
+        // Loop through all the databases
+        while(sqlite3_step(db_vm) == SQLITE_ROW)
+        {
+            QString path = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2));
+            if(filename == path)
+            {
+                QString schema = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
+                QMessageBox::information(0, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
+                return false;
+            }
+        }
+    }
+
     // Ask for name to be given to the attached database if none was provided
     if(attach_as.isEmpty())
         attach_as = QInputDialog::getText(0,
