@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class RemoteDatabase;
+class QRegExpValidator;
 
 namespace Ui {
 class RemotePushDialog;
@@ -33,6 +34,10 @@ private:
 
     // Reference to the remote database object which is stored somewhere in the main window
     RemoteDatabase& remoteDatabase;
+
+    // Validators
+    QRegExpValidator* m_nameValidator;
+    QRegExpValidator* m_branchValidator;
 
 protected slots:
     void checkInput();

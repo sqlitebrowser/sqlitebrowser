@@ -1,5 +1,6 @@
 #include <QPushButton>
 #include <QUrlQuery>
+#include <QRegExpValidator>
 
 #include "RemotePushDialog.h"
 #include "ui_RemotePushDialog.h"
@@ -10,10 +11,14 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, cons
     ui(new Ui::RemotePushDialog),
     m_host(host),
     m_clientCert(clientCert),
-    remoteDatabase(remote)
+    remoteDatabase(remote),
+    m_nameValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$"), this)),
+    m_branchValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$"), this))
 {
     // Create UI
     ui->setupUi(this);
+    ui->editName->setValidator(m_nameValidator);
+    ui->comboBranch->setValidator(m_branchValidator);
 
     // Set start values
     ui->editName->setText(name);
@@ -54,15 +59,11 @@ void RemotePushDialog::checkInput()
 
     if(ui->editName->text().trimmed().isEmpty())
         valid = false;
-    if(!QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$").exactMatch(ui->editName->text()))
-        valid = false;
 
     if(ui->editCommitMessage->toPlainText().size() > 1024)
         valid = false;
 
     if(ui->comboBranch->currentText().size() < 1 || ui->comboBranch->currentText().size() > 32)
-        valid = false;
-    if(!QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$").exactMatch(ui->comboBranch->currentText()))
         valid = false;
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
