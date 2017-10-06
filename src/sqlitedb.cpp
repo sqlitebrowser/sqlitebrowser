@@ -167,10 +167,11 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     if(sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &db_vm, NULL) == SQLITE_OK)
     {
         // Loop through all the databases
+        QFileInfo fi(filename);
         while(sqlite3_step(db_vm) == SQLITE_ROW)
         {
-            QString path = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2));
-            if(filename == path)
+            QFileInfo path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+            if(fi == path)
             {
                 QString schema = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
                 QMessageBox::information(0, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
