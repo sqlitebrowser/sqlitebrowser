@@ -851,6 +851,10 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
 
 void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 {
+    // Do nothing if the value didn't change
+    if(m_pseudoPk == pseudoPk)
+        return;
+
     if(pseudoPk.isEmpty())
     {
         m_pseudoPk.clear();
