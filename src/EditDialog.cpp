@@ -520,18 +520,16 @@ void EditDialog::updateCellInfo(const QByteArray& data)
     }
 }
 
-QString EditDialog::humanReadableSize(double byteCount)
+QString EditDialog::humanReadableSize(double byteCount) const
 {
-    QList<QString> units;
+    QStringList units;
+    units << "" << "Ki" << "Mi" << "Gi" << "Ti" << "Pi" << "Ei" << "Zi";
 
-    units<<""<<"Ki"<<"Mi"<<"Gi"<<"Ti"<<"Pi"<<"Ei"<<"Zi";
-
-    foreach (QString unit, units)
+    foreach(const QString& unit, units)
     {
-        if (fabs(byteCount) < 1024.0)
+        if(fabs(byteCount) < 1024.0)
         {
             QString size = QString::number(byteCount, 'f', 2);
-
             return size + " " + unit + "B";
         }
 

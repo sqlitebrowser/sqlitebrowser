@@ -41,7 +41,7 @@ private slots:
     void editModeChanged(int newMode);
     void editTextChanged();
     void updateCellInfo(const QByteArray& data);
-    QString humanReadableSize(double byteCount);
+    QString humanReadableSize(double byteCount) const;
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
