@@ -207,6 +207,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                 sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
                                              data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
                 tableModel.setTable(objid);
+                tableModel.waitForFetchingFinished();
                 for(int i=0; i < tableModel.rowCount(); ++i)
                 {
                     QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";

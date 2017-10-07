@@ -10,6 +10,7 @@
 #include <QMimeData>
 #include <QFile>
 #include <QUrl>
+#include <QtConcurrent>
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
@@ -24,6 +25,10 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chun
 
 void SqliteTableModel::reset()
 {
+    m_mutexDataCache.unlock();
+    m_futureFetch.cancel();
+    m_futureFetch.waitForFinished();
+
     m_sTable.clear();
     m_sRowidColumn.clear();
     m_iSortColumn = 0;
@@ -230,6 +235,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     if (index.row() >= m_rowCount)
         return QVariant();
 
+    QMutexLocker lock(&m_mutexDataCache);
+
     if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
         // If this row is not in the cache yet get it first
@@ -327,6 +334,8 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
 {
     if(index.isValid() && role == Qt::EditRole)
     {
+        QMutexLocker lock(&m_mutexDataCache);
+
         QByteArray newValue = encode(value.toByteArray());
         QByteArray oldValue = m_data.at(index.row()).at(index.column());
 
@@ -367,11 +376,15 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
 
 bool SqliteTableModel::canFetchMore(const QModelIndex&) const
 {
+    m_futureFetch.waitForFinished();
+    QMutexLocker lock(&m_mutexDataCache);
     return m_data.size() < m_rowCount;
 }
 
 void SqliteTableModel::fetchMore(const QModelIndex&)
 {
+    m_futureFetch.waitForFinished();
+    QMutexLocker lock(&m_mutexDataCache);
     int row = m_data.size();
     fetchData(row, row + m_chunkSize);
 }
@@ -446,6 +459,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     }
 
     beginInsertRows(parent, row, row + count - 1);
+    QMutexLocker lock(&m_mutexDataCache);
     for(int i = 0; i < tempList.size(); ++i)
     {
         m_data.insert(i + row, tempList.at(i));
@@ -460,6 +474,8 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         return false;
 
     beginRemoveRows(parent, row, row + count - 1);
+
+    QMutexLocker lock(&m_mutexDataCache);
 
     bool ok = true;
 
@@ -506,57 +522,63 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
 
 void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 {
-    int currentsize = m_data.size();
+    // Finish previous loading
+    m_futureFetch.waitForFinished();
 
-    QString sLimitQuery;
-    if(m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive) || m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive))
-    {
-        sLimitQuery = m_sQuery;
-    } else {
-        // Remove trailing trailing semicolon
-        QString queryTemp = rtrimChar(m_sQuery, ';');
+    // Fetch more data using a separate thread
+    m_futureFetch = QtConcurrent::run([=]() {
+        QMutexLocker lock(&m_mutexDataCache);
+        size_t num_rows_before_insert = m_data.size();
 
-        // If the query ends with a LIMIT statement take it as it is, if not append our own LIMIT part for lazy population
-        if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)))
-            sLimitQuery = queryTemp;
-        else
-            sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(from).arg(to-from);
-    }
-    m_db.logSQL(sLimitQuery, kLogMsg_App);
-    QByteArray utf8Query = sLimitQuery.toUtf8();
-    sqlite3_stmt *stmt;
-    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
-
-    if(SQLITE_OK == status)
-    {
-        int num_columns = m_headers.size();
-        while(sqlite3_step(stmt) == SQLITE_ROW)
+        QString sLimitQuery;
+        if(m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive) || m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive))
         {
-            QByteArrayList rowdata;
-            for(int i=0;i<num_columns;++i)
-            {
-                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
-                {
-                    rowdata.append(QByteArray());
-                } else {
-                    int bytes = sqlite3_column_bytes(stmt, i);
-                    if(bytes)
-                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
-                    else
-                        rowdata.append(QByteArray(""));
-                }
-            }
-            m_data.push_back(rowdata);
-        }
-    }
-    sqlite3_finalize(stmt);
+            sLimitQuery = m_sQuery;
+        } else {
+            // Remove trailing trailing semicolon
+            QString queryTemp = rtrimChar(m_sQuery, ';');
 
-    // Check if there was any new data
-    if(m_data.size() > currentsize)
-    {
-        beginInsertRows(QModelIndex(), currentsize, m_data.size()-1);
-        endInsertRows();
-    }
+            // If the query ends with a LIMIT statement take it as it is, if not append our own LIMIT part for lazy population
+            if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)))
+                sLimitQuery = queryTemp;
+            else
+                sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(from).arg(to-from);
+        }
+        m_db.logSQL(sLimitQuery, kLogMsg_App);
+        QByteArray utf8Query = sLimitQuery.toUtf8();
+        sqlite3_stmt *stmt;
+        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+
+        if(SQLITE_OK == status)
+        {
+            int num_columns = m_headers.size();
+            while(!m_futureFetch.isCanceled() && sqlite3_step(stmt) == SQLITE_ROW)
+            {
+                QByteArrayList rowdata;
+                for(int i=0;i<num_columns;++i)
+                {
+                    if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                    {
+                        rowdata.append(QByteArray());
+                    } else {
+                        int bytes = sqlite3_column_bytes(stmt, i);
+                        if(bytes)
+                            rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        else
+                            rowdata.append(QByteArray(""));
+                    }
+                }
+                m_data.push_back(rowdata);
+            }
+        }
+        sqlite3_finalize(stmt);
+
+        if(m_data.size() > num_rows_before_insert)
+        {
+            beginInsertRows(QModelIndex(), num_rows_before_insert, m_data.size()-1);
+            endInsertRows();
+        }
+    });
 }
 
 void SqliteTableModel::buildQuery()
@@ -795,12 +817,15 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 
 void SqliteTableModel::clearCache()
 {
-	if(!m_data.empty())
-	{
-		beginRemoveRows(QModelIndex(), 0, m_data.size() - 1);
-		m_data.clear();
-		endRemoveRows();
-	}
+    m_futureFetch.cancel();
+    m_futureFetch.waitForFinished();
+    QMutexLocker lock(&m_mutexDataCache);
+    if(!m_data.empty())
+    {
+        beginRemoveRows(QModelIndex(), 0, m_data.size() - 1);
+        m_data.clear();
+        endRemoveRows();
+    }
 }
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
@@ -873,4 +898,10 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 bool SqliteTableModel::isEditable() const
 {
     return !m_sTable.isEmpty();
+}
+
+void SqliteTableModel::waitForFetchingFinished()
+{
+    if(m_futureFetch.isRunning())
+        m_futureFetch.waitForFinished();
 }
