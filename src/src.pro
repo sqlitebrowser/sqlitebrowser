@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += core gui network widgets printsupport
+QT += core gui network widgets printsupport concurrent
 
 TARGET = sqlitebrowser
 

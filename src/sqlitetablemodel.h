@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QStringList>
 #include <QVector>
+#include <QFuture>
 
 #include "sqlitetypes.h"
 
@@ -30,7 +31,6 @@ public:
     bool setTypedData(const QModelIndex& index, bool isBlob, const QVariant& value, int role = Qt::EditRole);
     bool canFetchMore(const QModelIndex &parent = QModelIndex()) const;
     void fetchMore(const QModelIndex &parent = QModelIndex());
-    size_t queryMore(size_t offset);
 
     bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
@@ -68,6 +68,9 @@ public:
 
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
+
+    // Call this if you want to wait until the thread which is currently fetching more data is finished
+    void waitForFetchingFinished();
 
 public slots:
     void updateFilter(int column, const QString& value);
@@ -116,6 +119,12 @@ private:
     bool m_valid; //! tells if the current query is valid.
 
     QString m_encoding;
+
+    /**
+     * These are used for multi-threaded population of the table
+     */
+    mutable QFuture<void> m_futureFetch;
+    mutable QMutex m_mutexDataCache;
 };
 
 #endif

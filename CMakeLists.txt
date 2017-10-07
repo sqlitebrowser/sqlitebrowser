@@ -70,6 +70,7 @@ add_subdirectory(${QCUSTOMPLOT_DIR})
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5Network REQUIRED)
+find_package(Qt5Concurrent REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -291,7 +292,7 @@ add_executable(${PROJECT_NAME}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
 
-qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport)
+qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport Concurrent)
 set(QT_LIBRARIES "")
 
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
@@ -379,6 +380,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5Networkd.dll
 			${QT5_BIN_PATH}/Qt5PrintSupportd.dll
 			${QT5_BIN_PATH}/Qt5Widgetsd.dll
+			${QT5_BIN_PATH}/Qt5Concurrentd.dll
 		DESTINATION "/"
 		CONFIGURATIONS Debug)
 	# The Qt5 Release configuration files don't have a postfix
@@ -388,6 +390,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5Network.dll
 			${QT5_BIN_PATH}/Qt5PrintSupport.dll
 			${QT5_BIN_PATH}/Qt5Widgets.dll
+			${QT5_BIN_PATH}/Qt5Concurrent.dll
 		DESTINATION "/"
 		CONFIGURATIONS Release)
 	# The files below are common to all configurations
