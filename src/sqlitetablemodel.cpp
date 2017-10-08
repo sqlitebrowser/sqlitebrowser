@@ -10,7 +10,7 @@
 #include <QMimeData>
 #include <QFile>
 #include <QUrl>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrentRun>
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
