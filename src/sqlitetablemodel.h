@@ -75,6 +75,9 @@ public:
 public slots:
     void updateFilter(int column, const QString& value);
 
+signals:
+    void finishedFetch();
+
 protected:
     virtual Qt::DropActions supportedDropActions() const;
     virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
