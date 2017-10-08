@@ -49,7 +49,7 @@ public:
      * @param rowdata A list of QByteArray containing the row data.
      * @return true if statement execution was ok, else false.
      */
-    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QList<QByteArray>& rowdata);
+    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata);
 
     /**
      * @brief max Queries the table t for the max value of field.

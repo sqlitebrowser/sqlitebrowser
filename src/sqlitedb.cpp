@@ -808,7 +808,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QList<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata)
 {
     QString sQuery = QString("SELECT * FROM %1 WHERE %2='%3';")
             .arg(table.toString())

@@ -57,7 +57,7 @@ public:
     void setPseudoPk(const QString& pseudoPk);
     QString pseudoPk() const { return m_pseudoPk; }
 
-    typedef QList<QByteArray> QByteArrayList;
+    typedef QVector<QByteArray> QByteArrayList;
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 

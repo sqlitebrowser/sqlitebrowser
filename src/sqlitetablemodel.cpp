@@ -436,7 +436,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 
         // update column with default values
         QByteArrayList rowdata;
-        if( m_db.getRow(m_sTable, rowid, rowdata) )
+        if(m_db.getRow(m_sTable, rowid, rowdata))
         {
             for(int j=1; j < m_headers.size(); ++j)
             {
@@ -529,10 +529,11 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 
     if(SQLITE_OK == status)
     {
+        int num_columns = m_headers.size();
         while(sqlite3_step(stmt) == SQLITE_ROW)
         {
             QByteArrayList rowdata;
-            for (int i = 0; i < m_headers.size(); ++i)
+            for(int i=0;i<num_columns;++i)
             {
                 if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
                 {
