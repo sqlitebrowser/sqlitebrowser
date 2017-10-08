@@ -528,7 +528,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
     // Fetch more data using a separate thread
     m_futureFetch = QtConcurrent::run([=]() {
         QMutexLocker lock(&m_mutexDataCache);
-        size_t num_rows_before_insert = m_data.size();
+        int num_rows_before_insert = m_data.size();
 
         QString sLimitQuery;
         if(m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive) || m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive))
