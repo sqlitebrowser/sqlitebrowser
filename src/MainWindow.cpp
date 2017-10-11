@@ -863,7 +863,6 @@ void MainWindow::toggleEditDock(bool visible)
 {
     if (!visible) {
         // Update main window
-        activateWindow();
         ui->dataTable->setFocus();
     } else {
         // fill edit dock with actual data
