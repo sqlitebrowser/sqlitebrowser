@@ -566,9 +566,6 @@ void MainWindow::populateTable()
         ui->actionShowRowidColumn->setVisible(false);
     }
 
-    // Set the recordset label
-    setRecordsetLabel();
-
     QApplication::restoreOverrideCursor();
 }
 
