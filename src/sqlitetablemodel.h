@@ -94,7 +94,8 @@ private:
     QByteArray decode(const QByteArray& str) const;
 
     DBBrowserDB& m_db;
-    int m_rowCount;
+    QFuture<int> m_rowCount;
+    int m_rowCountAdjustment;   // This needs to be added to the results of the m_rowCount future object to get the actual row count
     QStringList m_headers;
     typedef QList<QByteArrayList> DataType;
     DataType m_data;

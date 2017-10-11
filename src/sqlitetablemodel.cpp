@@ -15,7 +15,7 @@
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
     , m_db(db)
-    , m_rowCount(0)
+    , m_rowCountAdjustment(0)
     , m_chunkSize(chunkSize)
     , m_valid(false)
     , m_encoding(encoding)
@@ -27,7 +27,12 @@ void SqliteTableModel::reset()
 {
     m_futureFetch.cancel();
     m_futureFetch.waitForFinished();
+    m_rowCount = QtConcurrent::run([=]() {
+        // Make sure we report 0 rows if anybody asks
+        return 0;
+    });
 
+    m_rowCountAdjustment = 0;
     m_sTable.clear();
     m_sRowidColumn.clear();
     m_iSortColumn = 0;
@@ -125,12 +130,14 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     removeCommentsFromQuery(m_sQuery);
 
     // do a count query to get the full row count in a fast manner
-    m_rowCount = getQueryRowCount();
-    if(m_rowCount == -1)
-    {
-        m_valid = false;
-        return;
-    }
+    m_rowCountAdjustment = 0;
+    m_rowCount = QtConcurrent::run([=]() {
+        int count = getQueryRowCount();
+        if(count == -1)
+            m_valid = false;
+
+        return count;
+    });
 
     // headers
     if(!dontClearHeaders)
@@ -201,7 +208,7 @@ int SqliteTableModel::rowCount(const QModelIndex&) const
 
 int SqliteTableModel::totalRowCount() const
 {
-    return m_rowCount;
+    return m_rowCount + m_rowCountAdjustment;
 }
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
@@ -231,7 +238,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() >= m_rowCount)
+    if (index.row() >= (m_rowCount + m_rowCountAdjustment))
         return QVariant();
 
     QMutexLocker lock(&m_mutexDataCache);
@@ -379,7 +386,7 @@ bool SqliteTableModel::canFetchMore(const QModelIndex&) const
 {
     m_futureFetch.waitForFinished();
     QMutexLocker lock(&m_mutexDataCache);
-    return m_data.size() < m_rowCount;
+    return m_data.size() < (m_rowCount + m_rowCountAdjustment);
 }
 
 void SqliteTableModel::fetchMore(const QModelIndex&)
@@ -444,7 +451,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         {
             return false;
         }
-        m_rowCount++;
+        m_rowCountAdjustment++;
         tempList.append(blank_data);
         tempList[i - row].replace(0, rowid.toUtf8());
 
@@ -485,7 +492,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     {
         rowids.append(m_data.at(row + i).at(0));
         m_data.removeAt(row + i);
-        --m_rowCount;
+        --m_rowCountAdjustment;
     }
     if(!m_db.deleteRecords(m_sTable, rowids))
     {
