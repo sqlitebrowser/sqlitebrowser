@@ -363,9 +363,11 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
             if(index.row() < m_data.size())
                 m_data[index.row()].replace(index.column(), newValue);
 
+            lock.unlock();
             emit(dataChanged(index, index));
             return true;
         } else {
+            lock.unlock();
             QMessageBox::warning(0, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db.lastError()));
             return false;
         }
