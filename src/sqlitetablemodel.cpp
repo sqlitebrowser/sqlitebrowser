@@ -25,7 +25,6 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chun
 
 void SqliteTableModel::reset()
 {
-    m_mutexDataCache.unlock();
     m_futureFetch.cancel();
     m_futureFetch.waitForFinished();
 
