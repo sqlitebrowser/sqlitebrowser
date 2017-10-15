@@ -66,7 +66,7 @@ OSX releases can be downloaded here:
 Latest OSX binary can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
 
 ```
-brew cask install sqlitebrowser
+brew cask install db-browser-for-sqlite
 ```
 
 ## Linux
