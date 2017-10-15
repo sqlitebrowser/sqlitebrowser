@@ -12,7 +12,8 @@
 SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
     db(_db),
-    ui(new Ui::SqlExecutionArea)
+    ui(new Ui::SqlExecutionArea),
+    m_columnsResized(false)
 {
     // Create UI
     ui->setupUi(this);
@@ -20,6 +21,7 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     // Create model
     model = new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt());
     ui->tableResult->setModel(model);
+    connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
 
     // Load settings
     reloadSettings();
@@ -42,7 +44,17 @@ QString SqlExecutionArea::getSelectedSql() const
 
 void SqlExecutionArea::finishExecution(const QString& result)
 {
+    m_columnsResized = false;
     ui->editErrors->setPlainText(result);
+}
+
+void SqlExecutionArea::fetchedData()
+{
+    // Don't resize the columns more than once to fit their contents. This is necessary because the finishedFetch signal of the model
+    // is emitted for each loaded prefetch block and we want to avoid resizes while scrolling down.
+    if(m_columnsResized)
+        return;
+    m_columnsResized = true;
 
     // Set column widths according to their contents but make sure they don't exceed a certain size
     ui->tableResult->resizeColumnsToContents();
