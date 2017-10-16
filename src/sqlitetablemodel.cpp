@@ -384,7 +384,6 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
 
 bool SqliteTableModel::canFetchMore(const QModelIndex&) const
 {
-    m_futureFetch.waitForFinished();
     QMutexLocker lock(&m_mutexDataCache);
     return m_data.size() < (m_rowCount + m_rowCountAdjustment);
 }
@@ -535,7 +534,6 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
 
     // Fetch more data using a separate thread
     m_futureFetch = QtConcurrent::run([=]() {
-        QMutexLocker lock(&m_mutexDataCache);
         int num_rows_before_insert = m_data.size();
 
         QString sLimitQuery;
@@ -562,6 +560,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
             int num_columns = m_headers.size();
             while(!m_futureFetch.isCanceled() && sqlite3_step(stmt) == SQLITE_ROW)
             {
+                QMutexLocker lock(&m_mutexDataCache);
                 QByteArrayList rowdata;
                 for(int i=0;i<num_columns;++i)
                 {
