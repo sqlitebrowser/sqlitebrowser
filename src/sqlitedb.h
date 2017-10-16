@@ -19,6 +19,8 @@ enum
 typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
 typedef QMap<QString, objectMap> schemaMap;                 // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
 
+int collCompare(void* pArg, int eTextRepA, const void* sA, int eTextRepB, const void* sB);
+
 class DBBrowserDB : public QObject
 {
     Q_OBJECT
@@ -117,6 +119,7 @@ signals:
     void sqlExecuted(QString sql, int msgtype);
     void dbChanged(bool dirty);
     void structureUpdated();
+    void requestCollation(QString name, int eTextRep);
 
 private:
     QString curDBFilename;
@@ -124,6 +127,8 @@ private:
     QStringList savepointList;
     bool isEncrypted;
     bool isReadOnly;
+
+    void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
 

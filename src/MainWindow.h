@@ -267,6 +267,7 @@ private slots:
     void unlockViewEditing(bool unlock, QString pk = QString());
     void hideColumns(int column = -1, bool hide = true);
     void on_actionShowAllColumns_triggered();
+    void requestCollation(const QString& name, int eTextRep);
 };
 
 #endif

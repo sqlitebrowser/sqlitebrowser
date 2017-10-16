@@ -13,6 +13,20 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDateTime>
+#include <functional>
+
+// Helper template to allow turning member functions into a C-style function pointer
+// See https://stackoverflow.com/questions/19808054/convert-c-function-pointer-to-c-function-pointer/19809787
+template <typename T>
+struct Callback;
+template <typename Ret, typename... Params>
+struct Callback<Ret(Params...)> {
+    template <typename... Args>
+    static Ret callback(Args... args) { return func(args...); }
+    static std::function<Ret(Params...)> func;
+};
+template <typename Ret, typename... Params>
+std::function<Ret(Params...)> Callback<Ret(Params...)>::func;
 
 // collation callbacks
 int collCompare(void* /*pArg*/, int /*eTextRepA*/, const void* sA, int /*eTextRepB*/, const void* sB)
@@ -41,19 +55,10 @@ static int sqlite_compare_utf16ci( void* /*arg*/,int size1, const void *str1, in
     return QString::compare(string1, string2, Qt::CaseInsensitive);
 }
 
-void collation_needed(void* /*pData*/, sqlite3* db, int eTextRep, const char* sCollationName)
+void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep, const char* sCollationName)
 {
-    QMessageBox::StandardButton reply = QMessageBox::question(
-                0,
-                QObject::tr("Collation needed! Proceed?"),
-                QObject::tr("A table in this database requires a special collation function '%1' "
-                            "that this application can't provide without further knowledge.\n"
-                            "If you choose to proceed, be aware bad things can happen to your database.\n"
-                            "Create a backup!").arg(sCollationName), QMessageBox::Yes | QMessageBox::No);
-    if(reply == QMessageBox::Yes)
-        sqlite3_create_collation(db, sCollationName, eTextRep, NULL, collCompare);
+    emit requestCollation(sCollationName, eTextRep);
 }
-
 
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
@@ -122,7 +127,9 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         sqlite3_create_collation(_db, "UTF16CI", SQLITE_UTF16, 0, sqlite_compare_utf16ci);
        
         // register collation callback
-        sqlite3_collation_needed(_db, NULL, collation_needed);
+        Callback<void(void*, sqlite3*, int, const char*)>::func = std::bind(&DBBrowserDB::collationNeeded, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
+        void (*c_callback)(void*, sqlite3*, int, const char*) = static_cast<decltype(c_callback)>(Callback<void(void*, sqlite3*, int, const char*)>::callback);
+        sqlite3_collation_needed(_db, NULL, c_callback);
 
         // Set foreign key settings as requested in the preferences
         bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();

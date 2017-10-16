@@ -84,6 +84,7 @@ void MainWindow::init()
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
     connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
     connect(&db, SIGNAL(structureUpdated()), this, SLOT(populateStructure()));
+    connect(&db, &DBBrowserDB::requestCollation, this, &MainWindow::requestCollation);
 
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
@@ -2594,4 +2595,17 @@ void MainWindow::on_actionShowAllColumns_triggered()
         if(ui->dataTable->isColumnHidden(col))
             hideColumns(col, false);
     }
+}
+
+void MainWindow::requestCollation(const QString& name, int eTextRep)
+{
+    QMessageBox::StandardButton reply = QMessageBox::question(
+                this,
+                tr("Collation needed! Proceed?"),
+                tr("A table in this database requires a special collation function '%1' "
+                   "that this application can't provide without further knowledge.\n"
+                   "If you choose to proceed, be aware bad things can happen to your database.\n"
+                   "Create a backup!").arg(name), QMessageBox::Yes | QMessageBox::No);
+    if(reply == QMessageBox::Yes)
+        sqlite3_create_collation(db._db, name.toUtf8(), eTextRep, nullptr, collCompare);
 }
