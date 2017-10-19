@@ -832,6 +832,7 @@ void SqliteTableModel::clearCache()
     {
         beginRemoveRows(QModelIndex(), 0, m_data.size() - 1);
         m_data.clear();
+        lock.unlock();
         endRemoveRows();
     }
 }
