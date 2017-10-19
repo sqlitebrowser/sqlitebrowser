@@ -19,7 +19,7 @@ enum
 typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
 typedef QMap<QString, objectMap> schemaMap;                 // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
 
-int collCompare(void* pArg, int eTextRepA, const void* sA, int eTextRepB, const void* sB);
+int collCompare(void* pArg, int sizeA, const void* sA, int sizeB, const void* sB);
 
 class DBBrowserDB : public QObject
 {

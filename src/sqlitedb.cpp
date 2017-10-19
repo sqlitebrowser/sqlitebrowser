@@ -29,11 +29,8 @@ template <typename Ret, typename... Params>
 std::function<Ret(Params...)> Callback<Ret(Params...)>::func;
 
 // collation callbacks
-int collCompare(void* /*pArg*/, int /*eTextRepA*/, const void* sA, int /*eTextRepB*/, const void* sB)
+int collCompare(void* /*pArg*/, int sizeA, const void* sA, int sizeB, const void* sB)
 {
-    size_t sizeA = strlen((const char*)sA);
-    size_t sizeB = strlen((const char*)sB);
-
     if(sizeA == sizeB)
         return memcmp(sA, sB, sizeA);
     return sizeA - sizeB;
