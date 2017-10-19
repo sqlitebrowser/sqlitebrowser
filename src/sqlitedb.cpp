@@ -54,7 +54,16 @@ static int sqlite_compare_utf16ci( void* /*arg*/,int size1, const void *str1, in
 
 void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep, const char* sCollationName)
 {
-    emit requestCollation(sCollationName, eTextRep);
+    QString name(sCollationName);
+
+    // Don't request built-in collations. SQLite requests these collations even though they are built into
+    // the library. Since we have no need for overriding them, we just silently ignore these requests.
+    if(name.compare("BINARY", Qt::CaseInsensitive) &&
+            name.compare("NOCASE", Qt::CaseInsensitive) &&
+            name.compare("RTRIM", Qt::CaseInsensitive))
+    {
+        emit requestCollation(name, eTextRep);
+    }
 }
 
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
