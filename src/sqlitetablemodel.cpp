@@ -827,12 +827,18 @@ void SqliteTableModel::clearCache()
 {
     m_futureFetch.cancel();
     m_futureFetch.waitForFinished();
+
     QMutexLocker lock(&m_mutexDataCache);
-    if(!m_data.empty())
+    int size = m_data.size();
+    if(size > 0)
     {
-        beginRemoveRows(QModelIndex(), 0, m_data.size() - 1);
-        m_data.clear();
         lock.unlock();
+
+        beginRemoveRows(QModelIndex(), 0, size - 1);
+        {
+            QMutexLocker lock(&m_mutexDataCache);
+            m_data.clear();
+        }
         endRemoveRows();
     }
 }
