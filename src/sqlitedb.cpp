@@ -685,7 +685,10 @@ bool DBBrowserDB::dump(const QString& filename,
 bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
 {
     if (!isOpen())
+    {
+        lastErrorMessage = tr("No database file opened");
         return false;
+    }
 
     statement = statement.trimmed();
 
@@ -715,7 +718,10 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 {
     // First check if a DB is opened
     if(!isOpen())
+    {
+        lastErrorMessage = tr("No database file opened");
         return false;
+    }
 
     QString query = statement.trimmed();
 
