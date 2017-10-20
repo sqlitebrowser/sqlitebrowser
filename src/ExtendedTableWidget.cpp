@@ -84,6 +84,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
+    QAction* filterAction = new QAction(tr("Use as Filter"), m_contextMenu);
+    m_contextMenu->addAction(filterAction);
+    m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(copyAction);
@@ -101,6 +104,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
         // Show menu
         m_contextMenu->popup(viewport()->mapToGlobal(pos));
+    });
+    connect(filterAction, &QAction::triggered, [&]() {
+        useAsFilter();
     });
     connect(nullAction, &QAction::triggered, [&]() {
         foreach(const QModelIndex& index, selectedIndexes())
@@ -339,6 +345,17 @@ void ExtendedTableWidget::paste()
         }
     }
 
+}
+
+void ExtendedTableWidget::useAsFilter()
+{
+    QModelIndex index = selectionModel()->currentIndex();
+
+    // Abort if there's nothing to filter
+    if (!index.isValid() || !selectionModel()->hasSelection())
+      return;
+
+    m_tableHeader->setFilter(index.column(), "=" + model()->data(index).toString());
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)

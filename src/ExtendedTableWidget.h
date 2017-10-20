@@ -33,6 +33,7 @@ signals:
 private:
     void copy();
     void paste();
+    void useAsFilter();
 
     typedef QList<QByteArray> QByteArrayList;
     QList<QByteArrayList> m_buffer;
