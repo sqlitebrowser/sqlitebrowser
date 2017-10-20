@@ -130,6 +130,21 @@ private:
         int wal_autocheckpoint;
     } pragmaValues;
 
+    enum QueryType
+    {
+        SELECT,
+        ALTER,
+        DROP,
+        ROLLBACK,
+        PRAGMA,
+        VACUUM,
+        INSERT,
+        UPDATE,
+        DELETE,
+        CREATE,
+        OTHER,
+    };
+
     Ui::MainWindow* ui;
 
     SqliteTableModel* m_browseTableModel;
@@ -175,6 +190,8 @@ private:
     void loadExtensionsFromSettings();
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
+
+    QueryType getQueryType(const QString& query) const;
 
 protected:
     void closeEvent(QCloseEvent *);

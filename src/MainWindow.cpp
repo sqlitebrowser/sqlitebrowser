@@ -912,6 +912,24 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 }
 
+MainWindow::QueryType MainWindow::getQueryType(const QString& query) const
+{
+    // Helper function for getting the type of a given query
+
+    if(query.startsWith("SELECT", Qt::CaseInsensitive)) return SELECT;
+    if(query.startsWith("ALTER", Qt::CaseInsensitive)) return ALTER;
+    if(query.startsWith("DROP", Qt::CaseInsensitive)) return DROP;
+    if(query.startsWith("ROLLBACK", Qt::CaseInsensitive)) return ROLLBACK;
+    if(query.startsWith("PRAGMA", Qt::CaseInsensitive)) return PRAGMA;
+    if(query.startsWith("VACUUM", Qt::CaseInsensitive)) return VACUUM;
+    if(query.startsWith("INSERT", Qt::CaseInsensitive)) return INSERT;
+    if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UPDATE;
+    if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DELETE;
+    if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CREATE;
+
+    return OTHER;
+}
+
 /*
  * I'm still not happy how the results are represented to the user
  * right now you only see the result of the last executed statement.
@@ -990,16 +1008,19 @@ void MainWindow::executeQuery()
     timer.start();
     while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
     {
-        // Check whether the DB structure is changed by this statement
+        // What type of query is this?
         QString qtail = QString(tail).trimmed();
-        if(!structure_updated && (qtail.startsWith("ALTER", Qt::CaseInsensitive) ||
-                qtail.startsWith("CREATE", Qt::CaseInsensitive) ||
-                qtail.startsWith("DROP", Qt::CaseInsensitive) ||
-                qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
+        QueryType query_type = getQueryType(qtail);
+
+        // Check whether the DB structure is changed by this statement
+        if(!structure_updated && (query_type == ALTER ||
+                query_type == CREATE ||
+                query_type == DROP ||
+                query_type == ROLLBACK))
             structure_updated = true;
 
         // Check whether this is trying to set a pragma or to vacuum the database
-        if((qtail.startsWith("PRAGMA", Qt::CaseInsensitive) && qtail.contains('=')) || qtail.startsWith("VACUUM", Qt::CaseInsensitive))
+        if((query_type == PRAGMA && qtail.contains('=')) || query_type == VACUUM)
         {
             // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
             // user about that
@@ -1046,11 +1067,13 @@ void MainWindow::executeQuery()
             sql3status = sqlite3_step(vm);
             sqlite3_finalize(vm);
 
+            // Get type
+            QueryType query_part_type = getQueryType(queryPart.trimmed());
+
             // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
             // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
             // return rows just like SELECT statements, too.
-            if((queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) ||
-               queryPart.trimmed().startsWith("PRAGMA", Qt::CaseInsensitive)) && sql3status == SQLITE_DONE)
+            if((query_part_type == SELECT || query_part_type == PRAGMA) && sql3status == SQLITE_DONE)
                 sql3status = SQLITE_ROW;
 
             switch(sql3status)
@@ -1076,17 +1099,13 @@ void MainWindow::executeQuery()
             case SQLITE_DONE:
             case SQLITE_OK:
             {
-                if( !queryPart.trimmed().startsWith("SELECT", Qt::CaseInsensitive) )
+                if(query_part_type != SELECT)
                 {
                     modified = true;
 
                     QString stmtHasChangedDatabase;
-                    if(queryPart.trimmed().startsWith("INSERT", Qt::CaseInsensitive) ||
-                            queryPart.trimmed().startsWith("UPDATE", Qt::CaseInsensitive) ||
-                            queryPart.trimmed().startsWith("DELETE", Qt::CaseInsensitive))
-                    {
+                    if(query_part_type == INSERT || query_part_type == UPDATE || query_part_type == DELETE)
                         stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
-                    }
 
                     statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
                 }
@@ -1095,14 +1114,12 @@ void MainWindow::executeQuery()
             case SQLITE_MISUSE:
                 continue;
             default:
-                statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
-                        ": " + queryPart;
+                statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) + ": " + queryPart;
                 break;
             }
             timer.restart();
         } else {
-            statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) +
-                    ": " + queryPart;
+            statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) + ": " + queryPart;
             sqlWidget->getEditor()->setErrorIndicator(execution_start_line, execution_start_index, execution_start_line, execution_end_index);
         }
 
