@@ -353,9 +353,15 @@ void ExtendedTableWidget::useAsFilter()
 
     // Abort if there's nothing to filter
     if (!index.isValid() || !selectionModel()->hasSelection())
-      return;
+        return;
 
-    m_tableHeader->setFilter(index.column(), "=" + model()->data(index).toString());
+    QVariant data = model()->data(index, Qt::EditRole);
+
+    if (data.isNull())
+        m_tableHeader->setFilter(index.column(), "=NULL");
+    else
+        m_tableHeader->setFilter(index.column(), "=" + data.toString());
+
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
