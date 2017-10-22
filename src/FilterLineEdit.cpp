@@ -30,8 +30,16 @@ void FilterLineEdit::delayedSignalTimerTriggered()
     // Stop the timer first to avoid triggering in intervals
     delaySignalTimer->stop();
 
-    // Emit the delayed signal using the current value
-    emit delayedTextChanged(text());
+    // Only emit text changed signal if the text has actually changed in comparison to the last emitted signal. This is necessary
+    // because this method is also called whenever the line edit loses focus and not only when its text has definitely been changed.
+    if(text() != lastValue)
+    {
+        // Emit the delayed signal using the current value
+        emit delayedTextChanged(text());
+
+        // Remember this value for the next time
+        lastValue = text();
+    }
 }
 
 void FilterLineEdit::keyReleaseEvent(QKeyEvent* event)
