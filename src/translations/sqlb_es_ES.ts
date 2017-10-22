@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_ES">
+<TS version="2.0" language="es_ES">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -20,9 +20,9 @@
 &lt;p&gt;DB Browser para SQLite es una herramienta gratuita y de código abierto usada para crear, diseñar y editar archivos de bases de datos de SQLite.&lt;/p&gt;
 &lt;p&gt;Está doblemente licenciada con Mozilla Public License Version 2, y también con GNU General Public License Version 3 o posterior. Puede modificarla o redistribuirla bajo las condiciones de esas licencias.&lt;/p&gt;
 &lt;p&gt;Vea &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; y &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; para los detalles.&lt;/p&gt;
-&lt;p&gt;Para más información acerca de este programa por favor, visite nuestra página web en: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Para más información acerca de este programa visite, por favor, nuestra página web en: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Este software usa el GPL/LGPL Qt Toolkit de &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Vea &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para más información y las condiciones de la licencia.&lt;/span&gt;
-&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;También usa el Silk icon set de Mark James licenciado bajo Creative Commons Attribution 2.5 y 3.0.&lt;br/&gt;Vea &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para los detalles.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;También usa el conjunto de iconos Silk de Mark James licenciado bajo Creative Commons Attribution 2.5 y 3.0.&lt;br/&gt;Vea &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para los detalles.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
     </message>
     <message>
@@ -49,14 +49,14 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="72"/>
+        <location filename="../Application.cpp" line="75"/>
         <source>Usage: %1 [options] [db]
 </source>
         <translation>Uso: %1 [opciones] [bd]
 </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="73"/>
+        <location filename="../Application.cpp" line="76"/>
         <source>Possible command line arguments:</source>
         <translation>Argumentos de línea de comandos disponibles:</translation>
     </message>
@@ -69,57 +69,57 @@
         <translation type="obsolete">  -s, --sql  [archivo]	Ejecuta este archivo de SQL tras abrir la base de datos</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="74"/>
-        <source>  -h, --help		Show command line options</source>
-        <translation>  -h, --help		Muestra opciones de línea de comandos</translation>
-    </message>
-    <message>
-        <location filename="../Application.cpp" line="76"/>
-        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql  [archivo]	Ejecuta este archivo de SQL tras abrir la base de datos</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="77"/>
+        <source>  -h, --help		Show command line options</source>
+        <translation>  -h, --help		Mostrar opciones de línea de comandos</translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="79"/>
+        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
+        <translation>  -s, --sql  [archivo]	Ejecutar este archivo de SQL tras abrir la base de datos</translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="80"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
         <translation>  -t, --table [table]	Navegar esta tabla tras abrir la base de datos</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="75"/>
+        <location filename="../Application.cpp" line="78"/>
         <source>  -q, --quit		Exit application after running scripts</source>
         <translation>  -q, --quit		Salir de la aplicación tras ejecutar los scripts</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="78"/>
+        <location filename="../Application.cpp" line="81"/>
         <source>  -v, --version		Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version		Mostrar la versión actual</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="79"/>
+        <location filename="../Application.cpp" line="82"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>  [archivo]		Abrir esta base de datos de SQLite</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="91"/>
+        <location filename="../Application.cpp" line="94"/>
         <source>This is DB Browser for SQLite version %1%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esto es DB Browser para SQLite versión %1%2.</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="96"/>
+        <location filename="../Application.cpp" line="99"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>La opción -s/--sql necesita un argumento</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="98"/>
+        <location filename="../Application.cpp" line="101"/>
         <source>The file %1 does not exist</source>
         <translation>El archivo %1 no existe</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="103"/>
+        <location filename="../Application.cpp" line="106"/>
         <source>The -t/--table option requires an argument</source>
         <translation>La opción -t/--table necesita un argumento</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="113"/>
+        <location filename="../Application.cpp" line="116"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Opción inválida o archivo inexistente: %1</translation>
     </message>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../CipherDialog.ui" line="89"/>
         <source>Passphrase</source>
-        <translation>Frase clave</translation>
+        <translation>Frase de contraseña</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="94"/>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <source>Page &amp;size</source>
-        <translation type="vanished">&amp;Tamaño de página</translation>
+        <translation type="obsolete">&amp;Tamaño de página</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="17"/>
@@ -172,7 +172,7 @@ Tenga en cuenta que:
   reintroducirlos también cada vez que abra la base de datos.
 - Puede dejar los campos de clave en blanco para no usar cifrado.
 - El proceso de cifrado puede llevar algún tiempo.
-- ¡Debería hacer una copia de seguridad de la base de datos!
+- ¡Debería hacer una copia de respaldo de la base de datos!
 - Los cambios no guardados son aplicados antes de modificar el cifrado.</translation>
     </message>
     <message>
@@ -198,7 +198,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="26"/>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation>Elija el formato para la columna &apos;%1&apos; el cual se aplicará a cada valor antes de mostrarlo.</translation>
+        <translation>Elija el formato para la columna «%1» el cual se aplicará a cada valor antes de mostrarlo.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
@@ -206,67 +206,72 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
         <translation>Por defecto</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="13"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="14"/>
         <source>Decimal number</source>
         <translation>Número decimal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="14"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="15"/>
         <source>Exponent notation</source>
         <translation>Notación exponencial</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="15"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="16"/>
         <source>Hex blob</source>
         <translation>Secuencia hexadecimal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="16"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Hex number</source>
         <translation>Número hexadecimal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="13"/>
         <source>Apple NSDate to date</source>
         <translation>Fecha de Apple NSDate a fecha</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
-        <source>Julian day to date</source>
-        <translation>Fecha Juliana a fecha</translation>
+        <source>Java epoch (milliseconds) to date</source>
+        <translation>Fecha Java (milisegundos) a fecha</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
+        <source>Julian day to date</source>
+        <translation>Fecha juliana a fecha</translation>
+    </message>
+    <message>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="20"/>
         <source>Lower case</source>
         <translation>Minúsculas</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="20"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
         <source>Octal number</source>
         <translation>Número octal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Round number</source>
         <translation>Número redondeado</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Unix epoch to date</source>
         <translation>Fecha Unix a fecha</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Upper case</source>
         <translation>Mayúsculas</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
         <source>Windows DATE to date</source>
         <translation>Fecha Windows a fecha</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
         <source>Custom</source>
         <translation>A medida</translation>
     </message>
@@ -278,99 +283,115 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
         <translation type="obsolete">Sin errores</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="167"/>
+        <location filename="../sqlitedb.cpp" line="200"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation>Por favor, especifique el nombre de la base de datos con el que acceder a la base de datos anexada</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="210"/>
+        <location filename="../sqlitedb.cpp" line="248"/>
         <source>Invalid file format</source>
         <translation>Formato de archivo inválido</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="426"/>
+        <location filename="../sqlitedb.cpp" line="464"/>
         <source>Do you want to save the changes made to the database file %1?</source>
-        <translation>¿Guardar los cambios hechos a la base de datos %1?</translation>
+        <translation>¿Guardar los cambios hechos al archivo de base de datos «%1»?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="485"/>
+        <location filename="../sqlitedb.cpp" line="524"/>
         <source>Exporting database to SQL file...</source>
-        <translation>Exportando base de datos a un archivo SQL</translation>
+        <translation>Exportando base de datos a un archivo SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="486"/>
-        <location filename="../sqlitedb.cpp" line="708"/>
+        <location filename="../sqlitedb.cpp" line="525"/>
+        <location filename="../sqlitedb.cpp" line="752"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="707"/>
+        <location filename="../sqlitedb.cpp" line="751"/>
         <source>Executing SQL...</source>
         <translation>Ejecutando SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="729"/>
+        <location filename="../sqlitedb.cpp" line="773"/>
         <source>Action cancelled.</source>
         <translation>Acción cancelada.</translation>
     </message>
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="vanished">Error en la consulta #%1: %2.
+        <translation type="obsolete">Error en la consulta #%1: %2.
 Abortando ejecución.</translation>
     </message>
     <message>
         <source>renameColumn: cannot find table %1.</source>
-        <translation type="vanished">renameColumn: no se puede encontrar la tabla %1.</translation>
+        <translation type="obsolete">renameColumn: no se puede encontrar la tabla %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="759"/>
-        <location filename="../sqlitedb.cpp" line="769"/>
+        <location filename="../sqlitedb.cpp" line="190"/>
+        <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
+        <translation>Esta base de datos ya ha sido asociada. Su nombre de esquema es «%1».</translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="689"/>
+        <location filename="../sqlitedb.cpp" line="722"/>
+        <source>No database file opened</source>
+        <translation>No hay una base de datos abierta</translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="803"/>
+        <location filename="../sqlitedb.cpp" line="813"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Error en la consulta #%1: %2.
 Abortando ejecución%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="762"/>
-        <location filename="../sqlitedb.cpp" line="772"/>
+        <location filename="../sqlitedb.cpp" line="806"/>
+        <location filename="../sqlitedb.cpp" line="816"/>
         <source> and rolling back</source>
         <translation> y deshaciendo cambios</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="974"/>
+        <location filename="../sqlitedb.cpp" line="1012"/>
         <source>Cannot set data on this object</source>
         <translation>No se pueden poner datos en este objeto</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1076"/>
-        <source>renameColumn: cannot find column %1.</source>
-        <translation>renameColumn: no se puede encontrar la columna %1.</translation>
+        <location filename="../sqlitedb.cpp" line="1116"/>
+        <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
+        <translation>Una tabla con el nombre «%1» ya existe en el esquema «%2».</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1084"/>
+        <location filename="../sqlitedb.cpp" line="1127"/>
+        <source>renameColumn: cannot find column %1.</source>
+        <translation>renameColumn: no se puede encontrar la columna «%1».</translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="1135"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: creación del savepoint fallido. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1133"/>
+        <location filename="../sqlitedb.cpp" line="1183"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: creación de la nueva tabla fallida. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1142"/>
+        <location filename="../sqlitedb.cpp" line="1195"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: copia de datos a la nueva table fallida. La base de datos dice:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1185"/>
+        <location filename="../sqlitedb.cpp" line="1252"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: borrado de tabla fallido. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1210"/>
+        <location filename="../sqlitedb.cpp" line="1277"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -379,57 +400,62 @@ Abortando ejecución%3.</translation>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1219"/>
+        <location filename="../sqlitedb.cpp" line="1286"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: liberación del savepoint fallido. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1233"/>
+        <location filename="../sqlitedb.cpp" line="1303"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
-        <translation>Error renombrando la tabla &apos;%1&apos; a &apos;%2&apos;. Mensaje de la base de datos:
-%3</translation>
+        <translation>Error renombrando la tabla «%1» a «%2». Mensaje de la base de datos:
+«%3»</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1278"/>
+        <location filename="../sqlitedb.cpp" line="1348"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation>... &lt;la cadena no se puede &apos;logear&apos;; contiene datos binarios&gt; ...</translation>
+        <translation>... &lt;la cadena no se puede registrar; contiene datos binarios&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1488"/>
+        <location filename="../sqlitedb.cpp" line="1457"/>
+        <source>could not get list of databases: %1</source>
+        <translation>no se pudo obtener lista de bases de datos: %1</translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="1585"/>
         <source>could not get column information</source>
         <translation>No se pudo obtener información de la columna</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
-        <translation type="vanished">tipo de objeto desconocido %1</translation>
+        <translation type="obsolete">tipo de objeto desconocido %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1365"/>
+        <location filename="../sqlitedb.cpp" line="1451"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>No se pudo obtener la lista de objetos de la base de datos: %1, %2</translation>
     </message>
     <message>
         <source>could not get types</source>
-        <translation type="vanished">No se pudieron obtener los tipos</translation>
+        <translation type="obsolete">No se pudieron obtener los tipos</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1388"/>
+        <location filename="../sqlitedb.cpp" line="1480"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>No se obtuvo ninguna salida del pragma %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1392"/>
+        <location filename="../sqlitedb.cpp" line="1484"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>No se pudo ejecutar el comando pragma: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1407"/>
+        <location filename="../sqlitedb.cpp" line="1505"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Error definiendo pragma %1 como %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1452"/>
+        <location filename="../sqlitedb.cpp" line="1550"/>
         <source>File not found.</source>
         <translation>Archivo no encontrado.</translation>
     </message>
@@ -457,32 +483,46 @@ Abortando ejecución%3.</translation>
         <translation>Esquema</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="145"/>
         <source>Browsables (%1)</source>
-        <translation>Navegables (%1)</translation>
+        <translation type="obsolete">Navegables (%1)</translation>
+    </message>
+    <message>
+        <location filename="../DbStructureModel.cpp" line="17"/>
+        <source>Database</source>
+        <translation>Base de datos</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="150"/>
+        <source>Browsables</source>
+        <translation>Navegables</translation>
+    </message>
+    <message>
+        <location filename="../DbStructureModel.cpp" line="155"/>
         <source>All</source>
         <translation>Todos</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="154"/>
+        <location filename="../DbStructureModel.cpp" line="163"/>
+        <source>Temporary</source>
+        <translation>Temporal</translation>
+    </message>
+    <message>
+        <location filename="../DbStructureModel.cpp" line="268"/>
         <source>Tables (%1)</source>
         <translation>Tablas (%1)</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="159"/>
+        <location filename="../DbStructureModel.cpp" line="273"/>
         <source>Indices (%1)</source>
         <translation>Índices (%1)</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="164"/>
+        <location filename="../DbStructureModel.cpp" line="278"/>
         <source>Views (%1)</source>
         <translation>Vistas (%1)</translation>
     </message>
     <message>
-        <location filename="../DbStructureModel.cpp" line="169"/>
+        <location filename="../DbStructureModel.cpp" line="283"/>
         <source>Triggers (%1)</source>
         <translation>Disparadores (%1)</translation>
     </message>
@@ -501,7 +541,7 @@ Abortando ejecución%3.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="52"/>
-        <location filename="../EditDialog.cpp" line="268"/>
+        <location filename="../EditDialog.cpp" line="270"/>
         <source>Image</source>
         <translation>Imagen</translation>
     </message>
@@ -513,7 +553,7 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
         <source>Opens a file dialog used to import text to this database cell.</source>
-        <translation>Abre una ventana para importar texto a esta celda de la base de datos</translation>
+        <translation>Abre una ventana para importar texto a esta celda de la base de datos.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="85"/>
@@ -528,12 +568,13 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="101"/>
         <source>Opens a file dialog used to export the contents of this database cell to a text file.</source>
-        <translation>Abre una ventana para exportar el contenido de esta celda de la base de datos a un archivo de texto</translation>
+        <translation>Abre una ventana para exportar el contenido de esta celda a un archivo de texto.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="104"/>
         <source>&amp;Export</source>
-        <translation>&amp;Exportar</translation>
+        <translatorcomment>E es el acelerador del menú editar</translatorcomment>
+        <translation>E&amp;xportar</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="117"/>
@@ -593,47 +634,47 @@ Abortando ejecución%3.</translation>
         <translation>Tamaño de los datos actualmente en la tabla</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="238"/>
+        <location filename="../EditDialog.cpp" line="240"/>
         <source>Choose a file</source>
         <translation>Seleccione un archivo</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="240"/>
+        <location filename="../EditDialog.cpp" line="242"/>
         <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
         <translation>Archivos de texto(*.txt);;Archivos de imagen(%1);;Todos los archivos(*)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="275"/>
+        <location filename="../EditDialog.cpp" line="277"/>
         <source>Choose a filename to export data</source>
         <translation>Seleccione un nombre de archivo para exportar los datos</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="270"/>
+        <location filename="../EditDialog.cpp" line="272"/>
         <source>Text files(*.txt);;All files(*)</source>
         <translation>Archivos de texto(*.txt);;Todos los archivos(*)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="187"/>
+        <location filename="../EditDialog.cpp" line="189"/>
         <source>Image data can&apos;t be viewed with the text editor</source>
         <translation>Los datos de imagen no se pueden mostrar en el editor de texto</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="215"/>
+        <location filename="../EditDialog.cpp" line="217"/>
         <source>Binary data can&apos;t be viewed with the text editor</source>
         <translation>Los datos binarios no se pueden mostrar en el editor de texto</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="482"/>
+        <location filename="../EditDialog.cpp" line="485"/>
         <source>Type of data currently in cell: %1 Image</source>
         <translation>El tipo de datos en la celda es: Imagen %1</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="488"/>
+        <location filename="../EditDialog.cpp" line="491"/>
         <source>%1x%2 pixel(s)</source>
-        <translation>%1x%2 píxel(s)</translation>
+        <translation>%1×%2 píxel(s)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="502"/>
+        <location filename="../EditDialog.cpp" line="505"/>
         <source>Type of data currently in cell: NULL</source>
         <translation>El tipo de datos en la celda es: NULL</translation>
     </message>
@@ -642,14 +683,14 @@ Abortando ejecución%3.</translation>
         <translation type="obsolete">Tipo de datos actualmente en la celda: Null</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="405"/>
-        <location filename="../EditDialog.cpp" line="508"/>
+        <location filename="../EditDialog.cpp" line="407"/>
+        <location filename="../EditDialog.cpp" line="511"/>
         <source>Type of data currently in cell: Text / Numeric</source>
         <translation>Tipo de datos actualmente en la celda: Texto / Numérico</translation>
     </message>
     <message numerus="yes">
-        <location filename="../EditDialog.cpp" line="406"/>
-        <location filename="../EditDialog.cpp" line="509"/>
+        <location filename="../EditDialog.cpp" line="408"/>
+        <location filename="../EditDialog.cpp" line="512"/>
         <source>%n char(s)</source>
         <translation>
             <numerusform>%n carácter</numerusform>
@@ -665,13 +706,13 @@ Abortando ejecución%3.</translation>
         <translation type="obsolete">%1x%2 píxel</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="514"/>
+        <location filename="../EditDialog.cpp" line="517"/>
         <source>Type of data currently in cell: Binary</source>
         <translation>Tipo de datos actualmente en la celda: Binario</translation>
     </message>
     <message numerus="yes">
-        <location filename="../EditDialog.cpp" line="503"/>
-        <location filename="../EditDialog.cpp" line="515"/>
+        <location filename="../EditDialog.cpp" line="506"/>
+        <location filename="../EditDialog.cpp" line="518"/>
         <source>%n byte(s)</source>
         <translation>
             <numerusform>%n byte</numerusform>
@@ -683,7 +724,7 @@ Abortando ejecución%3.</translation>
     <name>EditIndexDialog</name>
     <message>
         <source>Create New Index</source>
-        <translation type="vanished">Crear un Índice Nuevo</translation>
+        <translation type="obsolete">Crear un Índice Nuevo</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
@@ -692,15 +733,15 @@ Abortando ejecución%3.</translation>
     </message>
     <message>
         <source>&amp;Columns</source>
-        <translation type="vanished">&amp;Columnas</translation>
+        <translation type="obsolete">&amp;Columnas</translation>
     </message>
     <message>
         <source>Column</source>
-        <translation type="vanished">Columna</translation>
+        <translation type="obsolete">Columna</translation>
     </message>
     <message>
         <source>Use in Index</source>
-        <translation type="vanished">Usar como Índice</translation>
+        <translation type="obsolete">Usar como Índice</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
@@ -715,7 +756,7 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation>Editar Índice del Esquema</translation>
+        <translation>Editar índice del esquema</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
@@ -758,14 +799,14 @@ Abortando ejecución%3.</translation>
         <translation>Columna de índice</translation>
     </message>
     <message>
-        <location filename="../EditIndexDialog.cpp" line="242"/>
+        <location filename="../EditIndexDialog.cpp" line="260"/>
         <source>Deleting the old index failed:
 %1</source>
         <translation>Borrado del índice previo fallido:
 %1</translation>
     </message>
     <message>
-        <location filename="../EditIndexDialog.cpp" line="251"/>
+        <location filename="../EditIndexDialog.cpp" line="269"/>
         <source>Creating the index failed:
 %1</source>
         <translation>Creación de índice fallida:
@@ -791,178 +832,188 @@ Abortando ejecución%3.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
-        <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation>Hacer de esta una tabla &apos;SIN rowid&apos;. Para activar este flag es necesario un campo de tipo ENTERO con la clave primaria activada y el flag de autoincremento desactivado.</translation>
+        <source>Database schema</source>
+        <translatorcomment>El contexto es claro, mejor omitir &quot;de la base de datos&quot;</translatorcomment>
+        <translation>Esquema</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="65"/>
+        <location filename="../EditTableDialog.ui" line="85"/>
+        <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
+        <translation>Hacer de esta una tabla «SIN rowid». Para activar este flag es necesario un campo de tipo ENTERO con la clave primaria activada y el indicador de autoincremento desactivado.</translation>
+    </message>
+    <message>
+        <location filename="../EditTableDialog.ui" line="75"/>
         <source>Without Rowid</source>
         <translation>Sin Rowid</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="72"/>
         <source>Set this to create a temporary table that is deleted when closing the database.</source>
-        <translation>Hacer de esta una tabla temporal que se borrará al cerrar la base de datos.</translation>
+        <translation type="obsolete">Hacer de esta una tabla temporal que se borrará al cerrar la base de datos.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="75"/>
         <source>Temporary table</source>
-        <translation>Tabla temporal</translation>
+        <translation type="obsolete">Tabla temporal</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="88"/>
+        <location filename="../EditTableDialog.ui" line="98"/>
         <source>Fields</source>
         <translation>Campos</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="96"/>
+        <location filename="../EditTableDialog.ui" line="106"/>
         <source>Add field</source>
         <translation>Añadir campo</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="116"/>
+        <location filename="../EditTableDialog.ui" line="126"/>
         <source>Remove field</source>
         <translation>Eliminar campo</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="136"/>
+        <location filename="../EditTableDialog.ui" line="146"/>
         <source>Move field up</source>
         <translation>Mover campo hacia arriba</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="156"/>
+        <location filename="../EditTableDialog.ui" line="166"/>
         <source>Move field down</source>
         <translation>Mover campo hacia abajo</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="226"/>
+        <location filename="../EditTableDialog.ui" line="236"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="231"/>
+        <location filename="../EditTableDialog.ui" line="241"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="236"/>
-        <location filename="../EditTableDialog.ui" line="239"/>
+        <location filename="../EditTableDialog.ui" line="246"/>
+        <location filename="../EditTableDialog.ui" line="249"/>
         <source>Not null</source>
         <translation>No nulo</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="244"/>
+        <location filename="../EditTableDialog.ui" line="254"/>
         <source>PK</source>
         <translation>PK</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="247"/>
+        <location filename="../EditTableDialog.ui" line="257"/>
         <source>Primary key</source>
         <translation>Clave primaria</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="252"/>
+        <location filename="../EditTableDialog.ui" line="262"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="255"/>
+        <location filename="../EditTableDialog.ui" line="265"/>
         <source>Autoincrement</source>
         <translation>Autoincremento</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="260"/>
+        <location filename="../EditTableDialog.ui" line="270"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="263"/>
+        <location filename="../EditTableDialog.ui" line="273"/>
         <source>Unique</source>
         <translation>Único</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="268"/>
+        <location filename="../EditTableDialog.ui" line="278"/>
         <source>Default</source>
         <translation>Por defecto</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="271"/>
+        <location filename="../EditTableDialog.ui" line="281"/>
         <source>Default value</source>
         <translation>Valor por defecto</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="276"/>
+        <location filename="../EditTableDialog.ui" line="286"/>
         <source>Check</source>
         <translation>Check</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="279"/>
+        <location filename="../EditTableDialog.ui" line="289"/>
         <source>Check constraint</source>
         <translation>Comprobar restricción</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="284"/>
+        <location filename="../EditTableDialog.ui" line="294"/>
         <source>Foreign Key</source>
-        <translation>Foreign Key</translation>
+        <translation>Clave foránea</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="304"/>
+        <location filename="../EditTableDialog.ui" line="314"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Aviso: &lt;/span&gt;algo ocurre con la definición de esta tabla que nuestro intérprete no entiende completamente. Modificar y guardar esta tabla podría traer problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Cuidado: &lt;/span&gt;Hay algo en la definición de esta tabla que nuestro intérprete no entiende del todo. Modificar y guardar esta tabla puede causar problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Cuidado: &lt;/span&gt;Hay algo en la definición de esta tabla que nuestro intérprete no entiende del todo. Modificar y guardar esta tabla puede causar problemas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="157"/>
+        <location filename="../EditTableDialog.cpp" line="166"/>
         <source>Error creating table. Message from database engine:
 %1</source>
         <translation>Error creando la tabla. Mensaje de la base de datos:
 %1</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="269"/>
+        <location filename="../EditTableDialog.cpp" line="290"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
-        <translation>Ya hay un campo con este nombre. Por favor, renómbrelo antes o elija un nombre diferente para este campo</translation>
+        <translation>Ya hay un campo con este nombre. Por favor, renómbrelo antes o elija un nombre diferente para este campo.</translation>
     </message>
     <message>
         <source>This column is referenced in a foreign key in table %1, column %2 and thus its name cannot be changed.</source>
-        <translation type="vanished">Esta columna está referenciada en una foreign key en la tabla %1, columna %2 y por tanto no se le puede cambiar el nombre.</translation>
+        <translation type="obsolete">Esta columna está referenciada en una foreign key en la tabla %1, columna %2 y por tanto no se le puede cambiar el nombre.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="292"/>
+        <location filename="../EditTableDialog.cpp" line="313"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation>Esta columna está referenciada en una foreign key en la tabla %1 y por tanto no se le puede cambiar el nombre.</translation>
+        <translation>Esta columna está referenciada en una clave foránea en la tabla %1 y por tanto no se le puede cambiar el nombre.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="362"/>
+        <location filename="../EditTableDialog.cpp" line="384"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
         <translation>Hay al menos una línea con este campo NULO. Esto hace imposible activar este flag. Por favor, modifique antes los datos de la tabla.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="389"/>
+        <location filename="../EditTableDialog.cpp" line="412"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
         <translation>Hay al menos una línea con un valor no entero en este campo. Esto hace imposible activar el flag AI. Por favor, modifique antes los datos de la tabla.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="433"/>
+        <location filename="../EditTableDialog.cpp" line="458"/>
         <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation>La columna &apos;%1&apos; no tiene datos únicos.</translation>
+        <translation>La columna «%1» no tiene datos únicos.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="716"/>
+        <location filename="../EditTableDialog.cpp" line="743"/>
         <source>Setting the rowid column for the table failed. Error message:
 %1</source>
         <translation>El ajuste de la columna rowid para la tabla falló. Mensaje de error:
 %1</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="735"/>
+        <location filename="../EditTableDialog.cpp" line="761"/>
+        <source>Changing the table schema failed. Error message:
+%1</source>
+        <translation>Falló el cambio de esquema de la tabla. Mensaje de error:
+%1</translation>
+    </message>
+    <message>
         <source>Setting the temporary flag for the table failed. Error message:
 %1</source>
-        <translation>Activación de la marca de tabla temporal fallida. Mensaje de error:
+        <translation type="obsolete">Activación de la marca de tabla temporal fallida. Mensaje de error:
 %1</translation>
     </message>
     <message>
@@ -972,32 +1023,32 @@ Abortando ejecución%3.</translation>
 </translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="434"/>
+        <location filename="../EditTableDialog.cpp" line="459"/>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
         <translation>Esto hace imposible activar este flag. Por favor, modifique antes los datos de la tabla.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="493"/>
+        <location filename="../EditTableDialog.cpp" line="518"/>
         <source>Modifying this column failed. Error returned from database:
 %1</source>
         <translation>La modificación de esta columna falló. Error devuelto por la base de datos:
 %1</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="576"/>
+        <location filename="../EditTableDialog.cpp" line="602"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
-        <translation>¿Está seguro de que quiere borrar este campo &apos;%1&apos;?
+        <translation>¿Está seguro de que quiere borrar este campo «%1»?
 Todos los datos actualmente almacenados en este campo se perderán.</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="688"/>
+        <location filename="../EditTableDialog.cpp" line="715"/>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto increment disabled</source>
-        <translation>Por favor añada un campo que cumpla las siguientes condiciones antes de activar el flag &apos;sin rowid&apos;:
- - Flag de clave primaria activado
- - Flag de autoincremento desactivado</translation>
+        <translation>Por favor añada un campo que cumpla las siguientes condiciones antes de activar el indicador «sin rowid»:
+ - Indicador de clave primaria activado
+ - Indicador de autoincremento desactivado</translation>
     </message>
 </context>
 <context>
@@ -1009,15 +1060,15 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     </message>
     <message>
         <source>&amp;Table(s)</source>
-        <translation type="vanished">&amp;Tablas(s)</translation>
+        <translation type="obsolete">&amp;Tablas(s)</translation>
     </message>
     <message>
         <source>&amp;Column names in first line</source>
-        <translation type="vanished">Nombres de las &amp;columnas en la primera línea</translation>
+        <translation type="obsolete">Nombres de las &amp;columnas en la primera línea</translation>
     </message>
     <message>
         <source>Field &amp;separator</source>
-        <translation type="vanished">&amp;Separador de campos</translation>
+        <translation type="obsolete">&amp;Separador de campos</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
@@ -1064,7 +1115,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExportDataDialog.ui" line="152"/>
         <source>&amp;Quote character</source>
-        <translation>Entrecomillado</translation>
+        <translation>&amp;Entrecomillado</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="177"/>
@@ -1097,19 +1148,19 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
         <translation>Impresión formateada</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="173"/>
-        <location filename="../ExportDataDialog.cpp" line="237"/>
+        <location filename="../ExportDataDialog.cpp" line="186"/>
+        <location filename="../ExportDataDialog.cpp" line="250"/>
         <source>Could not open output file: %1</source>
         <translation>No se puede abrir el archivo de salida: %1</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="265"/>
-        <location filename="../ExportDataDialog.cpp" line="291"/>
+        <location filename="../ExportDataDialog.cpp" line="278"/>
+        <location filename="../ExportDataDialog.cpp" line="304"/>
         <source>Choose a filename to export data</source>
         <translation>Seleccione un nombre de archivo para exportar los datos</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="251"/>
+        <location filename="../ExportDataDialog.cpp" line="264"/>
         <source>Text files(*.csv *.txt)</source>
         <translation>Archivos de texto(*.csv *.txt)</translation>
     </message>
@@ -1119,22 +1170,22 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
         <translation>Exportar datos como JSON</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="255"/>
+        <location filename="../ExportDataDialog.cpp" line="268"/>
         <source>Text files(*.json *.js *.txt)</source>
         <translation>Archivos de texto(*.json *.js *.txt)</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="281"/>
+        <location filename="../ExportDataDialog.cpp" line="294"/>
         <source>Please select at least 1 table.</source>
         <translation>Por favor, seleccione al menos 1 tabla.</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="305"/>
+        <location filename="../ExportDataDialog.cpp" line="318"/>
         <source>Choose a directory</source>
         <translation>Seleccione una carpeta</translation>
     </message>
     <message>
-        <location filename="../ExportDataDialog.cpp" line="337"/>
+        <location filename="../ExportDataDialog.cpp" line="349"/>
         <source>Export completed.</source>
         <translation>Exportación completada.</translation>
     </message>
@@ -1210,27 +1261,27 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
         <translation>Exportar sólo el esquema</translation>
     </message>
     <message>
-        <location filename="../ExportSqlDialog.cpp" line="81"/>
+        <location filename="../ExportSqlDialog.cpp" line="80"/>
         <source>Please select at least 1 table.</source>
         <translation>Por favor, seleccione al menos 1 tabla.</translation>
     </message>
     <message>
-        <location filename="../ExportSqlDialog.cpp" line="94"/>
+        <location filename="../ExportSqlDialog.cpp" line="93"/>
         <source>Choose a filename to export</source>
         <translation>Seleccione un nombre de archivo al que exportar</translation>
     </message>
     <message>
-        <location filename="../ExportSqlDialog.cpp" line="95"/>
+        <location filename="../ExportSqlDialog.cpp" line="94"/>
         <source>Text files(*.sql *.txt)</source>
         <translation>Archivos de texto(*.sql *.txt)</translation>
     </message>
     <message>
-        <location filename="../ExportSqlDialog.cpp" line="126"/>
+        <location filename="../ExportSqlDialog.cpp" line="125"/>
         <source>Export completed.</source>
         <translation>Exportación completada.</translation>
     </message>
     <message>
-        <location filename="../ExportSqlDialog.cpp" line="128"/>
+        <location filename="../ExportSqlDialog.cpp" line="127"/>
         <source>Export cancelled or failed.</source>
         <translation>Exportación cancelada o fallida.</translation>
     </message>
@@ -1240,7 +1291,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <source>The content of clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation type="vanished">El contenido del portapapeles es mayor que el rango seleccionado.
+        <translation type="obsolete">El contenido del portapapeles es mayor que el rango seleccionado.
 ¿Quiere insertarlo de todos modos?</translation>
     </message>
     <message>
@@ -1259,7 +1310,12 @@ Do you want to insert it anyway?</source>
         <translation>Pegar</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="296"/>
+        <location filename="../ExtendedTableWidget.cpp" line="87"/>
+        <source>Use as Filter</source>
+        <translation>Usar como filtro</translation>
+    </message>
+    <message>
+        <location filename="../ExtendedTableWidget.cpp" line="302"/>
         <source>The content of the clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
         <translation>El contenido del portapapeles es mayor que el rango seleccionado.
@@ -1270,7 +1326,7 @@ Do you want to insert it anyway?</source>
     <name>FileDialog</name>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="vanished">Archivos de base de datos de SQLite (*.db *.sqlite *.sqlite3 *.db3);;Todos los archivos (*)</translation>
+        <translation type="obsolete">Archivos de base de datos de SQLite (*.db *.sqlite *.sqlite3 *.db3);;Todos los archivos (*)</translation>
     </message>
 </context>
 <context>
@@ -1291,11 +1347,11 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cláusulas de clave foránea (ON UPDATE, ON DELETE etc.)</translation>
     </message>
     <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation type="vanished">claúsulas para foreign key (ON UPDATE, ON DELETE etc.)</translation>
+        <translation type="obsolete">claúsulas para foreign key (ON UPDATE, ON DELETE etc.)</translation>
     </message>
 </context>
 <context>
@@ -1332,7 +1388,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="78"/>
-        <location filename="../ImportCsvDialog.cpp" line="555"/>
+        <location filename="../ImportCsvDialog.cpp" line="710"/>
         <source>Tab</source>
         <translation>Tab</translation>
     </message>
@@ -1366,7 +1422,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="176"/>
         <source>&amp;Encoding</source>
-        <translation>&amp;Codificado</translation>
+        <translation>&amp;Codificación</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="189"/>
@@ -1394,58 +1450,73 @@ Do you want to insert it anyway?</source>
         <translation>Tablas separadas</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.ui" line="298"/>
-        <location filename="../ImportCsvDialog.cpp" line="281"/>
+        <location filename="../ImportCsvDialog.ui" line="305"/>
+        <location filename="../ImportCsvDialog.cpp" line="330"/>
         <source>Deselect All</source>
         <translation>Deseleccionar Todo</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.ui" line="314"/>
+        <location filename="../ImportCsvDialog.ui" line="321"/>
         <source>Match Similar</source>
         <translation>Emparejar Similares</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="281"/>
+        <location filename="../ImportCsvDialog.cpp" line="330"/>
         <source>Select All</source>
         <translation>Seleccionar Todo</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="391"/>
         <source>Inserting data...</source>
-        <translation>Insertando datos...</translation>
+        <translation type="obsolete">Insertando datos...</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="391"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="403"/>
         <source>There is already a table of that name and an import into an existing table is only possible if the number of columns match.</source>
-        <translation>Ya hay una tabla con ese nombre y la importación a una tabla existente sólo es posible si el número de columnas coincide.</translation>
+        <translation type="obsolete">Ya hay una tabla con ese nombre y la importación a una tabla existente sólo es posible si el número de columnas coincide.</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="411"/>
         <source>There is already a table of that name. Do you want to import the data into it?</source>
-        <translation>Ya hay una tabla con ese nombre. ¿Quiere importar los datos en ella?</translation>
+        <translation type="obsolete">Ya hay una tabla con ese nombre. ¿Quiere importar los datos en ella?</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="422"/>
+        <location filename="../ImportCsvDialog.cpp" line="210"/>
+        <source>Import completed</source>
+        <translation>Importación completada</translation>
+    </message>
+    <message>
+        <location filename="../ImportCsvDialog.cpp" line="501"/>
+        <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
+        <translation>Ya existe una tabla con nombre «%1» y una importación a una tabla existente sólo es posible si el número de columnas coincide.</translation>
+    </message>
+    <message>
+        <location filename="../ImportCsvDialog.cpp" line="508"/>
+        <source>There is already a table named &apos;%1&apos;. Do you want to import the data into it?</source>
+        <translation>Ya existe una tabla con nombre &apos;%1&apos;. ¿Desea importar los datos cargándolos en ella?</translation>
+    </message>
+    <message>
+        <location filename="../ImportCsvDialog.cpp" line="535"/>
         <source>Creating restore point failed: %1</source>
         <translation>Creación del punto de restauración fallido: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="429"/>
+        <location filename="../ImportCsvDialog.cpp" line="545"/>
         <source>Creating the table failed: %1</source>
         <translation>Creación de la tabla fallido: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="487"/>
-        <source>Missing field for record %1</source>
-        <translation>Falta el campo para el registro %1</translation>
+        <location filename="../ImportCsvDialog.cpp" line="652"/>
+        <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
+        <translation>Importar el archivo &apos;%1&apos; llevó %2ms. De ellos, %3ms se gastaron en la función fila.</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="495"/>
+        <source>Missing field for record %1</source>
+        <translation type="obsolete">Falta el campo para el registro %1</translation>
+    </message>
+    <message>
+        <location filename="../ImportCsvDialog.cpp" line="642"/>
         <source>Inserting row failed: %1</source>
         <translation>Inserción de línea fallido: %1</translation>
     </message>
@@ -1473,7 +1544,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Table:</source>
-        <translation type="vanished">Tabla:</translation>
+        <translation type="obsolete">Tabla:</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="117"/>
@@ -1498,53 +1569,52 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="255"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Retroceder una página</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Al pulsar este botón se retrocede una página de registros en la vista de tabla superior.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="282"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanzar una página</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Al pulsar este botón se avanza una página de registros en la vista de tabla superior.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1724"/>
+        <location filename="../MainWindow.ui" line="1726"/>
         <source>SQLCipher &amp;FAQ...</source>
-        <translation>FAQ de SQLCipher...</translation>
+        <translation>&amp;FAQ de SQLCipher...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1732"/>
         <source>Table(s) to JSON...</source>
-        <translation>Tabla(s) a JSON...</translation>
+        <translation type="obsolete">Tabla(s) a JSON...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1735"/>
+        <location filename="../MainWindow.ui" line="1737"/>
         <source>Export one or more table(s) to a JSON file</source>
-        <translation>Exportar una o más tabla(s) a un archivo JSON</translation>
+        <translation>Exportar una o más tablas a un archivo JSON</translation>
     </message>
     <message>
         <source>Open from Remote</source>
-        <translation type="vanished">Abrir desde el Remoto</translation>
+        <translation type="obsolete">Abrir desde el Remoto</translation>
     </message>
     <message>
         <source>Save to Remote</source>
-        <translation type="vanished">Guardar al Remoto</translation>
+        <translation type="obsolete">Guardar al Remoto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1743"/>
+        <location filename="../MainWindow.ui" line="1745"/>
         <source>Refresh</source>
         <translation>Refrescar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1746"/>
+        <location filename="../MainWindow.ui" line="1748"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
@@ -1610,11 +1680,11 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Scroll 100 records upwards</source>
-        <translation type="vanished">Desplazarse 100 registros hacia arriba</translation>
+        <translation type="obsolete">Desplazarse 100 registros hacia arriba</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pulsando este botón se desplaza 100 registros hacia arriba en la vista de tabla de arriba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pulsando este botón se desplaza 100 registros hacia arriba en la vista de tabla de arriba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="261"/>
@@ -1628,11 +1698,11 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Desplazarse 100 registros hacia abajo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Desplazarse 100 registros hacia abajo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pulsando este botón se desplaza 100 registros hacia abajo en la vista de tabla de arriba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pulsando este botón se desplaza 100 registros hacia abajo en la vista de tabla de arriba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="288"/>
@@ -1722,7 +1792,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="460"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Claves foráneas&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="480"/>
@@ -1843,22 +1913,76 @@ Do you want to insert it anyway?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1755"/>
-        <source>&amp;Open Database Read Only...</source>
-        <translation>&amp;Abrir Base de Datos como Sólo Lectura...</translation>
+        <location filename="../MainWindow.ui" line="1734"/>
+        <source>Table(&amp;s) to JSON...</source>
+        <translation>Tabla(&amp;s) a JSON...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1758"/>
+        <location filename="../MainWindow.ui" line="1757"/>
+        <source>Open Data&amp;base Read Only...</source>
+        <translation>Abrir &amp;base de datos como sólo lectura...</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1789"/>
+        <source>Save results</source>
+        <translation>Guardar resultados</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1792"/>
+        <source>Save the results view</source>
+        <translation>Guardar la vista de resultados</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1797"/>
+        <source>Export to &amp;CSV</source>
+        <translation>Exportar a &amp;CSV</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1802"/>
+        <source>Save as &amp;view</source>
+        <translation>Guardar como &amp;vista</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1805"/>
+        <source>Save as view</source>
+        <translation>Guardar como vista</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1810"/>
+        <source>Hide column(s)</source>
+        <translation>Ocultar columna(s)</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1813"/>
+        <source>Hide selected column(s)</source>
+        <translation>Ocultar columna(s) seleccionada(s)</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1818"/>
+        <source>Show all columns</source>
+        <translation>Mostrar todas las columnas</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1821"/>
+        <source>Show all columns that were hidden</source>
+        <translation>Mostrar todas las columnas que están ocultas</translation>
+    </message>
+    <message>
+        <source>&amp;Open Database Read Only...</source>
+        <translation type="obsolete">&amp;Abrir Base de Datos como Sólo Lectura...</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1760"/>
         <source>Open an existing database file in read only mode</source>
         <translation>Abre una Base de Datos existente en modo de sólo lectura</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1775"/>
+        <location filename="../MainWindow.ui" line="1777"/>
         <source>Unlock view editing</source>
         <translation>Desbloquear edición de vistas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1778"/>
+        <location filename="../MainWindow.ui" line="1780"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
         <translation>Esto desbloquea la vista actual para edición. Aunque para la edición se necesitarán los disparadores adecuados.</translation>
     </message>
@@ -1867,138 +1991,138 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">E&amp;jecutar SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="865"/>
+        <location filename="../MainWindow.ui" line="867"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="869"/>
+        <location filename="../MainWindow.ui" line="871"/>
         <source>&amp;Import</source>
         <translation>&amp;Importar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="876"/>
+        <location filename="../MainWindow.ui" line="878"/>
         <source>&amp;Export</source>
         <translation>E&amp;xportar</translation>
     </message>
     <message>
         <source>Remote</source>
-        <translation type="vanished">Remoto</translation>
+        <translation type="obsolete">Remoto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="905"/>
+        <location filename="../MainWindow.ui" line="907"/>
         <source>&amp;Edit</source>
         <translation>&amp;Editar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="915"/>
+        <location filename="../MainWindow.ui" line="917"/>
         <source>&amp;View</source>
         <translation>&amp;Ver</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="923"/>
+        <location filename="../MainWindow.ui" line="925"/>
         <source>&amp;Help</source>
         <translation>Ay&amp;uda</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="940"/>
+        <location filename="../MainWindow.ui" line="942"/>
         <source>DB Toolbar</source>
         <translation>DB Toolbar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="959"/>
+        <location filename="../MainWindow.ui" line="961"/>
         <source>Edit Database &amp;Cell</source>
-        <translation>Editar &amp;Celda de la Base de Datos</translation>
+        <translation>Editar &amp;celda</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1092"/>
+        <location filename="../MainWindow.ui" line="1094"/>
         <source>DB Sche&amp;ma</source>
-        <translation>Esquema de la base de datos</translation>
+        <translation>Esque&amp;ma</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1117"/>
+        <location filename="../MainWindow.ui" line="1119"/>
         <source>&amp;Remote</source>
         <translation>&amp;Remoto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1481"/>
+        <location filename="../MainWindow.ui" line="1483"/>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
         <translation>Ejecuta SQL [F5, Ctrl+Intro, Ctrl+R]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1511"/>
+        <location filename="../MainWindow.ui" line="1513"/>
         <source>&amp;Load extension</source>
         <translation>&amp;Cargar extension</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1526"/>
+        <location filename="../MainWindow.ui" line="1528"/>
         <source>Execute current line [Shift+F5]</source>
         <translation>Ejecuta la línea actual [Shift+F5]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1529"/>
+        <location filename="../MainWindow.ui" line="1531"/>
         <source>Shift+F5</source>
         <translation>Shift+F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1585"/>
+        <location filename="../MainWindow.ui" line="1587"/>
         <source>Sa&amp;ve Project</source>
-        <translation>&amp;Guardar Proyecto</translation>
+        <translation>&amp;Guardar proyecto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1603"/>
+        <location filename="../MainWindow.ui" line="1605"/>
         <source>Open &amp;Project</source>
-        <translation>Abrir &amp;Proyecto</translation>
+        <translation>Abrir &amp;proyecto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1632"/>
+        <location filename="../MainWindow.ui" line="1634"/>
         <source>&amp;Set Encryption</source>
         <translation>&amp;Definir cifrado</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1685"/>
+        <location filename="../MainWindow.ui" line="1687"/>
         <source>Edit display format</source>
         <translation>Editar el formato de presentación</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1688"/>
+        <location filename="../MainWindow.ui" line="1690"/>
         <source>Edit the display format of the data in this column</source>
         <translation>Editar el formato de presentación de los datos en esta columna</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1696"/>
+        <location filename="../MainWindow.ui" line="1698"/>
         <source>Show rowid column</source>
-        <translation>Muestra la columna rowid</translation>
+        <translation>Mostrar la columna rowid</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1699"/>
+        <location filename="../MainWindow.ui" line="1701"/>
         <source>Toggle the visibility of the rowid column</source>
         <translation>Cambia la visibilidad de la columna rowid</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1704"/>
-        <location filename="../MainWindow.cpp" line="2395"/>
+        <location filename="../MainWindow.ui" line="1706"/>
+        <location filename="../MainWindow.cpp" line="2470"/>
         <source>Set encoding</source>
         <translation>Definir codificación</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1707"/>
+        <location filename="../MainWindow.ui" line="1709"/>
         <source>Change the encoding of the text in the table cells</source>
         <translation>Cambia la codificación del texto de las celdas de la tabla</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1712"/>
+        <location filename="../MainWindow.ui" line="1714"/>
         <source>Set encoding for all tables</source>
         <translation>Definir la codificación para todas las tablas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1715"/>
+        <location filename="../MainWindow.ui" line="1717"/>
         <source>Change the default encoding assumed for all tables in the database</source>
         <translation>Cambia la codificación por defecto para todas las tablas en la base de datos</translation>
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation type="vanished">Registro duplicado</translation>
+        <translation type="obsolete">Registro duplicado</translation>
     </message>
     <message>
         <source>SQL Log</source>
@@ -2009,17 +2133,17 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">&amp;Mostrar SQL enviado por</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1006"/>
+        <location filename="../MainWindow.ui" line="1008"/>
         <source>User</source>
         <translation>Usuario</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1011"/>
+        <location filename="../MainWindow.ui" line="1013"/>
         <source>Application</source>
         <translation>Aplicación</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1038"/>
+        <location filename="../MainWindow.ui" line="1040"/>
         <source>&amp;Clear</source>
         <translation>&amp;Limpiar</translation>
     </message>
@@ -2029,180 +2153,180 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Columns</source>
-        <translation type="vanished">Columnas</translation>
+        <translation type="obsolete">Columnas</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="vanished">X</translation>
+        <translation type="obsolete">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="vanished">Y</translation>
+        <translation type="obsolete">Y</translation>
     </message>
     <message>
         <source>_</source>
-        <translation type="vanished">_</translation>
+        <translation type="obsolete">_</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation type="vanished">Tipo de línea:</translation>
+        <translation type="obsolete">Tipo de línea:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="vanished">Línea</translation>
+        <translation type="obsolete">Línea</translation>
     </message>
     <message>
         <source>StepLeft</source>
-        <translation type="vanished">EscalónIzquierda</translation>
+        <translation type="obsolete">EscalónIzquierda</translation>
     </message>
     <message>
         <source>StepRight</source>
-        <translation type="vanished">EscalónDerecha</translation>
+        <translation type="obsolete">EscalónDerecha</translation>
     </message>
     <message>
         <source>StepCenter</source>
-        <translation type="vanished">EscalónCentrado</translation>
+        <translation type="obsolete">EscalónCentrado</translation>
     </message>
     <message>
         <source>Impulse</source>
-        <translation type="vanished">Impulso</translation>
+        <translation type="obsolete">Impulso</translation>
     </message>
     <message>
         <source>Point shape:</source>
-        <translation type="vanished">Forma del punto:</translation>
+        <translation type="obsolete">Forma del punto:</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation type="vanished">Cruz</translation>
+        <translation type="obsolete">Cruz</translation>
     </message>
     <message>
         <source>Plus</source>
-        <translation type="vanished">Más</translation>
+        <translation type="obsolete">Más</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="vanished">Circunferencia</translation>
+        <translation type="obsolete">Circunferencia</translation>
     </message>
     <message>
         <source>Disc</source>
-        <translation type="vanished">Disco</translation>
+        <translation type="obsolete">Disco</translation>
     </message>
     <message>
         <source>Square</source>
-        <translation type="vanished">Cuadrado</translation>
+        <translation type="obsolete">Cuadrado</translation>
     </message>
     <message>
         <source>Diamond</source>
-        <translation type="vanished">Diamante</translation>
+        <translation type="obsolete">Diamante</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation type="vanished">Estrella</translation>
+        <translation type="obsolete">Estrella</translation>
     </message>
     <message>
         <source>Triangle</source>
-        <translation type="vanished">Triángulo</translation>
+        <translation type="obsolete">Triángulo</translation>
     </message>
     <message>
         <source>TriangleInverted</source>
-        <translation type="vanished">TriánguloInvertido</translation>
+        <translation type="obsolete">TriánguloInvertido</translation>
     </message>
     <message>
         <source>CrossSquare</source>
-        <translation type="vanished">CruzCuadrado</translation>
+        <translation type="obsolete">CruzCuadrado</translation>
     </message>
     <message>
         <source>PlusSquare</source>
-        <translation type="vanished">MasCuadrado</translation>
+        <translation type="obsolete">MasCuadrado</translation>
     </message>
     <message>
         <source>CrossCircle</source>
-        <translation type="vanished">CruzCircunferencia</translation>
+        <translation type="obsolete">CruzCircunferencia</translation>
     </message>
     <message>
         <source>PlusCircle</source>
-        <translation type="vanished">MásCircunferencia</translation>
+        <translation type="obsolete">MásCircunferencia</translation>
     </message>
     <message>
         <source>Peace</source>
-        <translation type="vanished">Paz</translation>
+        <translation type="obsolete">Paz</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Guarda la gráfica actual...&lt;/p&gt;&lt;p&gt;El formato del archivo es elegido por la extensión (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Guarda la gráfica actual...&lt;/p&gt;&lt;p&gt;El formato del archivo es elegido por la extensión (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save current plot...</source>
-        <translation type="vanished">Guardar la gráfica actual...</translation>
+        <translation type="obsolete">Guardar la gráfica actual...</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="vanished">Carga todos los datos. Es efectivo sólo si no se han leído ya todos los datos de la tabla porque el mecanismo de lectura ha hecho una lectura parcial.</translation>
+        <translation type="obsolete">Carga todos los datos. Es efectivo sólo si no se han leído ya todos los datos de la tabla porque el mecanismo de lectura ha hecho una lectura parcial.</translation>
     </message>
     <message>
         <source>DB Schema</source>
-        <translation type="vanished">Esquema de la base de datos</translation>
+        <translation type="obsolete">Esquema de la base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1130"/>
+        <location filename="../MainWindow.ui" line="1132"/>
         <source>&amp;New Database...</source>
-        <translation>&amp;Nueva base de datos</translation>
+        <translation>&amp;Nueva base de datos...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1133"/>
-        <location filename="../MainWindow.ui" line="1136"/>
+        <location filename="../MainWindow.ui" line="1135"/>
+        <location filename="../MainWindow.ui" line="1138"/>
         <source>Create a new database file</source>
         <translation>Crea un nuevo archivo de base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1139"/>
+        <location filename="../MainWindow.ui" line="1141"/>
         <source>This option is used to create a new database file.</source>
-        <translation>Esta opción se usa para crear un nuevo archivo de base de datos</translation>
+        <translation>Esta opción se usa para crear un nuevo archivo de base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1142"/>
+        <location filename="../MainWindow.ui" line="1144"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1154"/>
+        <location filename="../MainWindow.ui" line="1156"/>
         <source>&amp;Open Database...</source>
-        <translation>&amp;Abrir base de datos</translation>
+        <translation>&amp;Abrir base de datos...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1157"/>
-        <location filename="../MainWindow.ui" line="1160"/>
-        <location filename="../MainWindow.ui" line="1761"/>
+        <location filename="../MainWindow.ui" line="1159"/>
+        <location filename="../MainWindow.ui" line="1162"/>
+        <location filename="../MainWindow.ui" line="1763"/>
         <source>Open an existing database file</source>
         <translation>Abre un archivo de base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1163"/>
-        <location filename="../MainWindow.ui" line="1764"/>
+        <location filename="../MainWindow.ui" line="1165"/>
+        <location filename="../MainWindow.ui" line="1766"/>
         <source>This option is used to open an existing database file.</source>
         <translation>Esta opción se usa para abrir un archivo de base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1166"/>
+        <location filename="../MainWindow.ui" line="1168"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1177"/>
+        <location filename="../MainWindow.ui" line="1179"/>
         <source>&amp;Close Database</source>
         <translation>&amp;Cerrar la base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1180"/>
+        <location filename="../MainWindow.ui" line="1182"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
         <source>SQLCipher FAQ...</source>
-        <translation type="vanished">FAQ de SQLCipher...</translation>
+        <translation type="obsolete">FAQ de SQLCipher...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1727"/>
+        <location filename="../MainWindow.ui" line="1729"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
         <translation>Abre la FAQ de SQLCipher en una ventana del navegador</translation>
     </message>
@@ -2211,12 +2335,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Deshacer cambios</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1198"/>
+        <location filename="../MainWindow.ui" line="1200"/>
         <source>Revert database to last saved state</source>
         <translation>Deshace los cambios al último estado guardado</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1201"/>
+        <location filename="../MainWindow.ui" line="1203"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>Esta opción se usa para deshacer los cambios en la base de datos actual al último estado guardado. Todos los cambios hechos desde la última vez que se guardó se perderán.</translation>
     </message>
@@ -2225,17 +2349,17 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Escribir cambios</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1219"/>
+        <location filename="../MainWindow.ui" line="1221"/>
         <source>Write changes to the database file</source>
         <translation>Escribe los cambios al archivo de la base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1222"/>
+        <location filename="../MainWindow.ui" line="1224"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>Esta opción se usa para guardar los cambios en el archivo de la base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1225"/>
+        <location filename="../MainWindow.ui" line="1227"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -2244,23 +2368,23 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Compactar base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1239"/>
+        <location filename="../MainWindow.ui" line="1241"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>Compacta el archivo de la base de datos eliminando el espacio malgastado por los registros borrados</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1242"/>
-        <location filename="../MainWindow.ui" line="1245"/>
+        <location filename="../MainWindow.ui" line="1244"/>
+        <location filename="../MainWindow.ui" line="1247"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
-        <translation>Compacta el archivo de la base de datos eliminando el espacio malgastado por los registros borrados</translation>
+        <translation>Compacta el archivo de la base de datos, eliminando el espacio malgastado por los registros borrados.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1253"/>
+        <location filename="../MainWindow.ui" line="1255"/>
         <source>E&amp;xit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1256"/>
+        <location filename="../MainWindow.ui" line="1258"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -2269,12 +2393,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Base de datos en un archivo SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1267"/>
+        <location filename="../MainWindow.ui" line="1269"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>Importa datos de un archivo de texto con un volcado .sql en una base de datos nueva o existente.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1270"/>
+        <location filename="../MainWindow.ui" line="1272"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Esta opción se usa para importar datos de un archivo de texto con un volcado .sql en una base de datos nueva o existente. Los archivos de volcado SQL se pueden crear en la mayoría de los motores de base de datos, incluyendo MySQL y PostgreSQL.</translation>
     </message>
@@ -2283,12 +2407,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Tabla de un archivo CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1281"/>
+        <location filename="../MainWindow.ui" line="1283"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>Abre un asistente que le permite importar datos desde un archivo de texto con valores separado por comas a una tabla de una base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1284"/>
+        <location filename="../MainWindow.ui" line="1286"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>Abre un asistente que le permite importar datos desde un archivo de texto con valores separado por comas a una tabla de una base de datos. Los archivos CSV se pueden crear en la mayoría de las aplicaciones de bases de datos y hojas de cálculo.</translation>
     </message>
@@ -2297,12 +2421,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Base de datos a archivo SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1295"/>
+        <location filename="../MainWindow.ui" line="1297"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>Exporta la base de datos como un volcado .sql a un archivo de texto.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1298"/>
+        <location filename="../MainWindow.ui" line="1300"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Esta opción le permite exportar la base de datos como un volcado .sql a un archivo de texto. Los archivos de volcado SQL contienen todos los datos necesarios para recrear la base de datos en la mayoría de los motores de base de datos, incluyendo MySQL y PostgreSQL.</translation>
     </message>
@@ -2311,12 +2435,12 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Tabla(s) como un archivo CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1309"/>
+        <location filename="../MainWindow.ui" line="1311"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>Exporta la base de datos como un archivo de texto con valores separados por comas.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1312"/>
+        <location filename="../MainWindow.ui" line="1314"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>Exporta la base de datos como un archivo de texto con valores separados por comas, listo para ser importado en otra base de datos o aplicaciones de hoja de cálculo.</translation>
     </message>
@@ -2325,7 +2449,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Crear Tabla...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1330"/>
+        <location filename="../MainWindow.ui" line="1332"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>Abre el asistente para Crear una Tabla, donde se puede definir el nombre y los campos de una nueva tabla en la base de datos</translation>
     </message>
@@ -2334,14 +2458,14 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Borrar Tabla...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1348"/>
-        <location filename="../MainWindow.cpp" line="1348"/>
-        <location filename="../MainWindow.cpp" line="1349"/>
+        <location filename="../MainWindow.ui" line="1350"/>
+        <location filename="../MainWindow.cpp" line="1400"/>
+        <location filename="../MainWindow.cpp" line="1401"/>
         <source>Delete Table</source>
         <translation>Borrar Tabla</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1351"/>
+        <location filename="../MainWindow.ui" line="1353"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>Abre el asistente para Borrar una Tabla, donde se puede seleccionar una tabla de la base de datos para borrar.</translation>
     </message>
@@ -2350,7 +2474,7 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Modificar Tabla...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1369"/>
+        <location filename="../MainWindow.ui" line="1371"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>Abre el asistente para Modificar una Tabla, donde se puede renombrar una tabla existente de la base de datos. También se pueden añadir o borrar campos de la tabla, así como modificar los nombres de los campos y sus tipos.</translation>
     </message>
@@ -2359,75 +2483,75 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Crear Índice...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1387"/>
+        <location filename="../MainWindow.ui" line="1389"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>Abre el asistente para Crear un Índice, donde se puede definir un nuevo índice de una tabla existente de la base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1399"/>
+        <location filename="../MainWindow.ui" line="1401"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Preferencias...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1402"/>
-        <location filename="../MainWindow.ui" line="1405"/>
+        <location filename="../MainWindow.ui" line="1404"/>
+        <location filename="../MainWindow.ui" line="1407"/>
         <source>Open the preferences window.</source>
         <translation>Abrir la ventana de preferencias.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1420"/>
+        <location filename="../MainWindow.ui" line="1422"/>
         <source>&amp;DB Toolbar</source>
-        <translation>Barra de herramientas de la base de datos</translation>
+        <translation>&amp;Barra de herramientas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1423"/>
+        <location filename="../MainWindow.ui" line="1425"/>
         <source>Shows or hides the Database toolbar.</source>
-        <translation>Muestra u oculta la barra de herramientas de la base de datos</translation>
+        <translation>Muestra u oculta la barra de herramientas de la base de datos.</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
         <translation type="obsolete">¿Qué es esto?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1441"/>
+        <location filename="../MainWindow.ui" line="1443"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1449"/>
+        <location filename="../MainWindow.ui" line="1451"/>
         <source>&amp;About...</source>
         <translation>&amp;Acerca de...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1457"/>
+        <location filename="../MainWindow.ui" line="1459"/>
         <source>&amp;Recently opened</source>
         <translation>Archivos &amp;recientes</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1466"/>
+        <location filename="../MainWindow.ui" line="1468"/>
         <source>Open &amp;tab</source>
         <translation>Abrir &amp;pestaña</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1426"/>
-        <location filename="../MainWindow.ui" line="1469"/>
+        <location filename="../MainWindow.ui" line="1428"/>
+        <location filename="../MainWindow.ui" line="1471"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="29"/>
         <source>Database Structure</source>
-        <translation>Estructura de la Base de datos</translation>
+        <translation>Estructura</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="87"/>
         <source>Browse Data</source>
-        <translation>Navegar Datos</translation>
+        <translation>Hoja de datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="361"/>
         <source>Edit Pragmas</source>
-        <translation>Editar Pragmas</translation>
+        <translation>Editar pragmas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="819"/>
@@ -2436,101 +2560,101 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Edit Database Cell</source>
-        <translation type="vanished">Editar Celda de la Base de datos</translation>
+        <translation type="obsolete">Editar Celda de la Base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="971"/>
+        <location filename="../MainWindow.ui" line="973"/>
         <source>SQL &amp;Log</source>
-        <translation>&amp;Log de SQL</translation>
+        <translation>Historial de &amp;SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="989"/>
+        <location filename="../MainWindow.ui" line="991"/>
         <source>Show S&amp;QL submitted by</source>
-        <translation>Muestra S&amp;QL enviado por</translation>
+        <translation>Mostrar S&amp;QL ejecutado por</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1081"/>
+        <location filename="../MainWindow.ui" line="1083"/>
         <source>&amp;Plot</source>
         <translation>&amp;Gráfica</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1195"/>
+        <location filename="../MainWindow.ui" line="1197"/>
         <source>&amp;Revert Changes</source>
         <translation>&amp;Deshacer cambios</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1216"/>
+        <location filename="../MainWindow.ui" line="1218"/>
         <source>&amp;Write Changes</source>
         <translation>&amp;Guardar cambios</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1236"/>
+        <location filename="../MainWindow.ui" line="1238"/>
         <source>Compact &amp;Database</source>
-        <translation>Compactar Base de &amp;datos</translation>
+        <translation>Compactar base de &amp;datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1264"/>
+        <location filename="../MainWindow.ui" line="1266"/>
         <source>&amp;Database from SQL file...</source>
         <translation>Base de datos de &amp;archivo SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1278"/>
+        <location filename="../MainWindow.ui" line="1280"/>
         <source>&amp;Table from CSV file...</source>
         <translation>&amp;Tabla de archivo CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1292"/>
+        <location filename="../MainWindow.ui" line="1294"/>
         <source>&amp;Database to SQL file...</source>
         <translation>&amp;Base de datos a archivo SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1306"/>
+        <location filename="../MainWindow.ui" line="1308"/>
         <source>&amp;Table(s) as CSV file...</source>
         <translation>&amp;Tabla(s) a archivo CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1327"/>
+        <location filename="../MainWindow.ui" line="1329"/>
         <source>&amp;Create Table...</source>
-        <translation>&amp;Crear Tabla...</translation>
+        <translation>&amp;Crear tabla...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1345"/>
+        <location filename="../MainWindow.ui" line="1347"/>
         <source>&amp;Delete Table...</source>
-        <translation>&amp;Borrar Tabla...</translation>
+        <translation>&amp;Borrar tabla...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1366"/>
+        <location filename="../MainWindow.ui" line="1368"/>
         <source>&amp;Modify Table...</source>
-        <translation>&amp;Modificar Tabla...</translation>
+        <translation>&amp;Modificar tabla...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1384"/>
+        <location filename="../MainWindow.ui" line="1386"/>
         <source>Create &amp;Index...</source>
-        <translation>Crear &amp;Índice...</translation>
+        <translation>Crear &amp;índice...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1438"/>
+        <location filename="../MainWindow.ui" line="1440"/>
         <source>W&amp;hat&apos;s This?</source>
-        <translation>¿&amp;Qué es Esto?</translation>
+        <translation>¿&amp;Qué es esto?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1478"/>
+        <location filename="../MainWindow.ui" line="1480"/>
         <source>&amp;Execute SQL</source>
         <translation>&amp;Ejecutar SQL</translation>
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">Ejecuta SQL [F5, Ctrl+Return]</translation>
+        <translation type="obsolete">Ejecuta SQL [F5, Ctrl+Return]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1490"/>
+        <location filename="../MainWindow.ui" line="1492"/>
         <source>Open SQL file</source>
         <translation>Abrir archivo SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1499"/>
-        <location filename="../MainWindow.ui" line="1656"/>
-        <location filename="../MainWindow.ui" line="1659"/>
+        <location filename="../MainWindow.ui" line="1501"/>
+        <location filename="../MainWindow.ui" line="1658"/>
+        <location filename="../MainWindow.ui" line="1661"/>
         <source>Save SQL file</source>
         <translation>Guardar archivo SQL</translation>
     </message>
@@ -2539,51 +2663,51 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Cargar extensión</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1523"/>
+        <location filename="../MainWindow.ui" line="1525"/>
         <source>Execute current line</source>
         <translation>Ejecutar la línea actual</translation>
     </message>
     <message>
         <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">Ejecuta la línea actual [Ctrl+E]</translation>
+        <translation type="obsolete">Ejecuta la línea actual [Ctrl+E]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="190"/>
+        <location filename="../MainWindow.cpp" line="204"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1537"/>
+        <location filename="../MainWindow.ui" line="1539"/>
         <source>Export as CSV file</source>
         <translation>Exportar como archivo CSV</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1540"/>
+        <location filename="../MainWindow.ui" line="1542"/>
         <source>Export table as comma separated values file</source>
         <translation>Exportar tabla como archivo de valores separados por comas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1549"/>
+        <location filename="../MainWindow.ui" line="1551"/>
         <source>&amp;Wiki...</source>
         <translation>&amp;Wiki...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1561"/>
+        <location filename="../MainWindow.ui" line="1563"/>
         <source>Bug &amp;report...</source>
-        <translation>Informe de &amp;fallos</translation>
+        <translation>Informe de &amp;fallos...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1573"/>
+        <location filename="../MainWindow.ui" line="1575"/>
         <source>Web&amp;site...</source>
-        <translation>Sitio &amp;Web</translation>
+        <translation>Sitio &amp;web...</translation>
     </message>
     <message>
         <source>Save Project</source>
         <translation type="obsolete">Guardar Proyecto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1588"/>
-        <location filename="../MainWindow.ui" line="1591"/>
+        <location filename="../MainWindow.ui" line="1590"/>
+        <location filename="../MainWindow.ui" line="1593"/>
         <source>Save the current session to a file</source>
         <translation>Guardar la sesión actual en un archivo</translation>
     </message>
@@ -2592,94 +2716,94 @@ Do you want to insert it anyway?</source>
         <translation type="obsolete">Abrir Proyecto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1606"/>
-        <location filename="../MainWindow.ui" line="1609"/>
+        <location filename="../MainWindow.ui" line="1608"/>
+        <location filename="../MainWindow.ui" line="1611"/>
         <source>Load a working session from a file</source>
         <translation>Carga una sesión de trabajo de un archivo</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1620"/>
+        <location filename="../MainWindow.ui" line="1622"/>
         <source>&amp;Attach Database</source>
-        <translation>Anexa&amp;r la base de datos</translation>
+        <translation>Asocia&amp;rse a base de datos</translation>
     </message>
     <message>
         <source>Set Encryption</source>
         <translation type="obsolete">Definir Cifrado</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1644"/>
-        <location filename="../MainWindow.ui" line="1647"/>
+        <location filename="../MainWindow.ui" line="1646"/>
+        <location filename="../MainWindow.ui" line="1649"/>
         <source>Save SQL file as</source>
         <translation>Guardar archivo SQL como</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1668"/>
+        <location filename="../MainWindow.ui" line="1670"/>
         <source>&amp;Browse Table</source>
-        <translation>&amp;Navegar por la Tabla</translation>
+        <translation>&amp;Navegar por la tabla</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1677"/>
+        <location filename="../MainWindow.ui" line="1679"/>
         <source>Copy Create statement</source>
         <translation>Copiar comando Create</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1680"/>
+        <location filename="../MainWindow.ui" line="1682"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
         <translation>Copia el comando CREATE del ítem al portapapeles</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="123"/>
+        <location filename="../MainWindow.cpp" line="129"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Return</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="172"/>
+        <location filename="../MainWindow.cpp" line="186"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="179"/>
+        <location filename="../MainWindow.cpp" line="193"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="179"/>
+        <location filename="../MainWindow.cpp" line="193"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="185"/>
+        <location filename="../MainWindow.cpp" line="199"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="206"/>
+        <location filename="../MainWindow.cpp" line="220"/>
         <source>Encrypted</source>
         <translation>Cifrado</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="213"/>
+        <location filename="../MainWindow.cpp" line="227"/>
         <source>Read only</source>
         <translation>Sólo lectura</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="214"/>
+        <location filename="../MainWindow.cpp" line="228"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>El archivo de la base de datos es de sólo lectura. La edición de la base de datos está desactivada.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="220"/>
+        <location filename="../MainWindow.cpp" line="234"/>
         <source>Database encoding</source>
         <translation>Codificación de la base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="207"/>
+        <location filename="../MainWindow.cpp" line="221"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>La base de datos está cifrada usando SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="292"/>
-        <location filename="../MainWindow.cpp" line="2150"/>
+        <location filename="../MainWindow.cpp" line="307"/>
+        <location filename="../MainWindow.cpp" line="2224"/>
         <source>Choose a database file</source>
         <translation>Seleccione un archivo de base de datos</translation>
     </message>
@@ -2689,54 +2813,54 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <source>Invalid file format.</source>
-        <translation type="vanished">Formato de archivo inválido.</translation>
+        <translation type="obsolete">Formato de archivo inválido.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="346"/>
-        <location filename="../MainWindow.cpp" line="1256"/>
-        <location filename="../MainWindow.cpp" line="2066"/>
+        <location filename="../MainWindow.cpp" line="361"/>
+        <location filename="../MainWindow.cpp" line="1308"/>
+        <location filename="../MainWindow.cpp" line="2140"/>
         <source>Choose a filename to save under</source>
         <translation>Seleccione un nombre de archivo en el que guardar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="607"/>
+        <location filename="../MainWindow.cpp" line="629"/>
         <source>Error adding record:
 </source>
         <translation>Error añadiendo registro:
 </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="627"/>
+        <location filename="../MainWindow.cpp" line="649"/>
         <source>Error deleting record:
 %1</source>
         <translation>Error borrando registro:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="636"/>
+        <location filename="../MainWindow.cpp" line="658"/>
         <source>Please select a record first</source>
         <translation>Por favor, antes seleccione un registro</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="713"/>
+        <location filename="../MainWindow.cpp" line="735"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 de %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="745"/>
-        <location filename="../MainWindow.cpp" line="759"/>
+        <location filename="../MainWindow.cpp" line="767"/>
+        <location filename="../MainWindow.cpp" line="781"/>
         <source>There is no database opened. Please open or create a new database file.</source>
         <translation>No hay una base de datos abierta. Por favor, abra o cree un nuevo archivo de base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="781"/>
+        <location filename="../MainWindow.cpp" line="804"/>
         <source>Are you sure you want to delete the %1 &apos;%2&apos;?
 All data associated with the %1 will be lost.</source>
         <translation>¿Está seguro de que quiere borrar: %1 &apos;%2&apos;?
-Se perderán todos los datos asociados con: %1</translation>
+Se perderán todos los datos asociados con %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="788"/>
+        <location filename="../MainWindow.cpp" line="811"/>
         <source>Error: could not delete the %1. Message from database engine:
 %2</source>
         <translation>Error: no se pudo borrar el %1. Mensaje de la base de datos:
@@ -2744,14 +2868,14 @@ Se perderán todos los datos asociados con: %1</translation>
     </message>
     <message>
         <source>There is no database opened.</source>
-        <translation type="vanished">No hay una base de datos abierta.</translation>
+        <translation type="obsolete">No hay una base de datos abierta.</translation>
     </message>
     <message>
         <source>%1 Rows returned from: %3 (took %2ms)</source>
         <translation type="obsolete">%1 líneas devueltas de: %3 (tardó %2ms)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1046"/>
+        <location filename="../MainWindow.cpp" line="1095"/>
         <source>Error executing query: %1</source>
         <translation>Error ejecutando la consulta: %1</translation>
     </message>
@@ -2760,36 +2884,35 @@ Se perderán todos los datos asociados con: %1</translation>
         <translation type="obsolete">Consulta ejecutada con éxito: %1 (tardó %2ms)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1039"/>
+        <location filename="../MainWindow.cpp" line="1087"/>
         <source>%1 rows returned in %2ms from: %3</source>
         <translation>%1 líneas devueltas en %2ms de: %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1062"/>
+        <location filename="../MainWindow.cpp" line="1108"/>
         <source>, %1 rows affected</source>
         <translation>, %1 líneas afectadas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1065"/>
+        <location filename="../MainWindow.cpp" line="1110"/>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
         <translation>Consulta ejecutada con éxito: %1 (tardó %2ms%3)</translation>
     </message>
     <message>
         <source>Choose a text file</source>
-        <translation type="vanished">Seleccione un archivo de texto</translation>
+        <translation type="obsolete">Seleccione un archivo de texto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1141"/>
+        <location filename="../MainWindow.cpp" line="1184"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>Archivos de texto(*.csv *.txt);;Todos los archivos(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1153"/>
         <source>Import completed</source>
-        <translation>Importación completada</translation>
+        <translation type="obsolete">Importación completada</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1206"/>
+        <location filename="../MainWindow.cpp" line="1258"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -2797,242 +2920,258 @@ Se perderán todos los datos asociados con: %1</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1215"/>
+        <location filename="../MainWindow.cpp" line="1267"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>¿Está seguro de que quiere deshacer todos los cambios hechos al archivo de la base de datos &apos;%1&apos; desde la última vez que se guardó?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1239"/>
+        <location filename="../MainWindow.cpp" line="1291"/>
         <source>Choose a file to import</source>
         <translation>Seleccione el archivo a importar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1240"/>
-        <location filename="../MainWindow.cpp" line="1678"/>
-        <location filename="../MainWindow.cpp" line="1734"/>
+        <location filename="../MainWindow.cpp" line="1292"/>
+        <location filename="../MainWindow.cpp" line="1740"/>
+        <location filename="../MainWindow.cpp" line="1796"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Archivos de texto(*.sql *.txt);;Todos los archivos(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1250"/>
+        <location filename="../MainWindow.cpp" line="1302"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>¿Quiere crear un nuevo archivo de base de datos donde poner los datos importados?
 Si responde no se intentarán importar los datos del archivo SQL en la base de datos actual.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1260"/>
+        <location filename="../MainWindow.cpp" line="1312"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>El archivo %1 ya existe. Por favor elija un nombre diferente.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1275"/>
+        <location filename="../MainWindow.cpp" line="1327"/>
         <source>Error importing data: %1</source>
         <translation>Error importando datos: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1277"/>
+        <location filename="../MainWindow.cpp" line="1329"/>
         <source>Import completed.</source>
         <translation>Importación completada.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1333"/>
-        <location filename="../MainWindow.cpp" line="1334"/>
+        <location filename="../MainWindow.cpp" line="1385"/>
+        <location filename="../MainWindow.cpp" line="1386"/>
         <source>Delete View</source>
         <translation>Borrar vista</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1335"/>
-        <location filename="../MainWindow.cpp" line="1336"/>
+        <location filename="../MainWindow.cpp" line="1387"/>
+        <location filename="../MainWindow.cpp" line="1388"/>
         <source>Modify View</source>
-        <translation>Modificar Vista</translation>
+        <translation>Modificar vista</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1338"/>
-        <location filename="../MainWindow.cpp" line="1339"/>
+        <location filename="../MainWindow.cpp" line="1390"/>
+        <location filename="../MainWindow.cpp" line="1391"/>
         <source>Delete Trigger</source>
-        <translation>Borrar Disparador</translation>
+        <translation>Borrar disparador</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1340"/>
-        <location filename="../MainWindow.cpp" line="1341"/>
+        <location filename="../MainWindow.cpp" line="1392"/>
+        <location filename="../MainWindow.cpp" line="1393"/>
         <source>Modify Trigger</source>
-        <translation>Modificar Disparador</translation>
+        <translation>Modificar disparador</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1343"/>
-        <location filename="../MainWindow.cpp" line="1344"/>
+        <location filename="../MainWindow.cpp" line="1395"/>
+        <location filename="../MainWindow.cpp" line="1396"/>
         <source>Delete Index</source>
-        <translation>Borrar Índice</translation>
+        <translation>Borrar índice</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1345"/>
-        <location filename="../MainWindow.cpp" line="1346"/>
-        <source>Modify Index</source>
-        <translation>Modificar Índice</translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="1350"/>
-        <location filename="../MainWindow.cpp" line="1351"/>
-        <source>Modify Table</source>
-        <translation>Modificar Tabla</translation>
-    </message>
-    <message>
+        <location filename="../MainWindow.cpp" line="1397"/>
         <location filename="../MainWindow.cpp" line="1398"/>
+        <source>Modify Index</source>
+        <translation>Modificar índice</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1402"/>
+        <location filename="../MainWindow.cpp" line="1403"/>
+        <source>Modify Table</source>
+        <translation>Modificar tabla</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1450"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2457"/>
+        <location filename="../MainWindow.cpp" line="2532"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Introduzca una clave pseudo-primaria para activar la edición en esta vista. Esta debería ser el nombre de una columna única en la vista.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1606"/>
+        <location filename="../MainWindow.cpp" line="2621"/>
+        <source>Collation needed! Proceed?</source>
+        <translation>¡Es necesaria una función de comparación! ¿Proceder?</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="2622"/>
+        <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
+If you choose to proceed, be aware bad things can happen to your database.
+Create a backup!</source>
+        <translation>Una tabla en esta base de datos necesita una función de comparación especial &apos;%1&apos; que esta aplicación no puede proporcionar sin más información.
+Si decide continuar, está avisado de que la base de datos se puede dañar.
+¡Cree una copia de respaldo!
+</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1661"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
-        <translation>Al definir los valores de PRAGMA se confirmará la transacción actual.
+        <translation>Al definir los valores de PRAGMA se consolidará la transacción actual.
 ¿Está seguro?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="334"/>
+        <location filename="../MainWindow.cpp" line="349"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>No se pudo abrir el archivo de base de datos.
 Razón: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="985"/>
+        <location filename="../MainWindow.cpp" line="1031"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Establecer valores PRAGMA o realizar una limpieza consolidará la transacción actual.
+¿Está seguro?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="993"/>
+        <location filename="../MainWindow.cpp" line="1039"/>
         <source>Execution aborted by user</source>
         <translation>Ejecución abortada por el usuario</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1140"/>
+        <location filename="../MainWindow.cpp" line="1183"/>
         <source>Choose text files</source>
         <translation>Elija archivos de texto</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1677"/>
+        <location filename="../MainWindow.cpp" line="1739"/>
         <source>Select SQL file to open</source>
         <translation>Seleccione el archivo SQL a abrir</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1686"/>
+        <location filename="../MainWindow.cpp" line="1748"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>No se pudo leer el archivo: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1724"/>
+        <location filename="../MainWindow.cpp" line="1786"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>No se pudo guardar el archivo: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1733"/>
+        <location filename="../MainWindow.cpp" line="1795"/>
         <source>Select file name</source>
         <translation>Seleccione el nombre del archivo</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1748"/>
+        <location filename="../MainWindow.cpp" line="1820"/>
         <source>Select extension file</source>
         <translation>Selecione el archivo de extensión</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1749"/>
+        <location filename="../MainWindow.cpp" line="1821"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Extensiones(*.so *.dll);;Todos los archivos(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1755"/>
+        <location filename="../MainWindow.cpp" line="1827"/>
         <source>Extension successfully loaded.</source>
         <translation>Extensiones cargadas con éxito.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1757"/>
-        <location filename="../MainWindow.cpp" line="1769"/>
+        <location filename="../MainWindow.cpp" line="1829"/>
+        <location filename="../MainWindow.cpp" line="1841"/>
         <source>Error loading extension: %1</source>
         <translation>Error cargando la extensión: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1851"/>
+        <location filename="../MainWindow.cpp" line="1923"/>
         <source>Don&apos;t show again</source>
         <translation>No volver a mostrar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1854"/>
+        <location filename="../MainWindow.cpp" line="1926"/>
         <source>New version available.</source>
         <translation>Hay una nueva versión disponible.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1855"/>
+        <location filename="../MainWindow.cpp" line="1927"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Hay disponible una nueva versión de DB Browser para SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Por favor, descárguela de &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Row #</source>
-        <translation type="vanished">Línea #</translation>
+        <translation type="obsolete">Línea #</translation>
     </message>
     <message>
         <source>Choose a axis color</source>
-        <translation type="vanished">Seleccione un eje de color</translation>
+        <translation type="obsolete">Seleccione un eje de color</translation>
     </message>
     <message>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Todos los Archivos(*)</translation>
+        <translation type="obsolete">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Todos los Archivos(*)</translation>
     </message>
     <message>
         <source>Please enter the URL of the database file to open.</source>
-        <translation type="vanished">Por favor introduzca la URL del archivo de la base de datos a abrir.</translation>
+        <translation type="obsolete">Por favor introduzca la URL del archivo de la base de datos a abrir.</translation>
     </message>
     <message>
         <source>Please enter the URL of the database file to save.</source>
-        <translation type="vanished">Por favor introduzca la URL del archivo de la base de datos a guardar.</translation>
+        <translation type="obsolete">Por favor introduzca la URL del archivo de la base de datos a guardar.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1919"/>
+        <location filename="../MainWindow.cpp" line="1992"/>
         <source>Choose a file to open</source>
         <translation>Seleccione un archivo para abrir</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1920"/>
-        <location filename="../MainWindow.cpp" line="2067"/>
+        <location filename="../MainWindow.cpp" line="1993"/>
+        <location filename="../MainWindow.cpp" line="2141"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Archivo de proyecto de DB Browser para SQLite (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2393"/>
+        <location filename="../MainWindow.cpp" line="2468"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Por favor, elija una nueva codificación para esta tabla.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2391"/>
+        <location filename="../MainWindow.cpp" line="2466"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Por favor, elija una nueva codificación para todas las tablas.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2396"/>
+        <location filename="../MainWindow.cpp" line="2471"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Deje este campo vacío para usar la codificación de la base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2407"/>
+        <location filename="../MainWindow.cpp" line="2482"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Esta codificación no es válida o no está soportada.</translation>
     </message>
     <message>
         <source>Fetching all data...</source>
-        <translation type="vanished">Trayendo todos los datos...</translation>
+        <translation type="obsolete">Trayendo todos los datos...</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -3106,7 +3245,8 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PlotDock.ui" line="152"/>
         <source>Cross</source>
-        <translation>Cruz</translation>
+        <translatorcomment>Aspa es más específico que cruz. El signo más también es una cruz (una cruz griega).</translatorcomment>
+        <translation>Aspa</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="157"/>
@@ -3121,7 +3261,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PlotDock.ui" line="167"/>
         <source>Disc</source>
-        <translation>Disco</translation>
+        <translation>Círculo</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="172"/>
@@ -3151,17 +3291,17 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PlotDock.ui" line="197"/>
         <source>CrossSquare</source>
-        <translation>CruzCuadrado</translation>
+        <translation>AspaCuadrado</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="202"/>
         <source>PlusSquare</source>
-        <translation>MasCuadrado</translation>
+        <translation>MásCuadrado</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="207"/>
         <source>CrossCircle</source>
-        <translation>CruzCircunferencia</translation>
+        <translation>AspaCircunferencia</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="212"/>
@@ -3186,7 +3326,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PlotDock.ui" line="267"/>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Carga todos los datos...&lt;/p&gt;&lt;p&gt;Es efectivo sólo si no se han leído ya todos los datos de la tabla porque el mecanismo de lectura ha hecho una lectura parcial.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>Cargar todos los datos. Es efectivo sólo si no se han leído ya todos los datos de la tabla porque el mecanismo de lectura ha hecho una lectura parcial.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="128"/>
@@ -3250,8 +3390,8 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1148"/>
-        <location filename="../PreferencesDialog.ui" line="1204"/>
+        <location filename="../PreferencesDialog.ui" line="1154"/>
+        <location filename="../PreferencesDialog.ui" line="1210"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -3298,12 +3438,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="202"/>
         <source>Open databases with foreign keys enabled.</source>
-        <translation>Abrir base de datos con &apos;claves foreign&apos; activadas</translation>
+        <translation>Abrir base de datos con claves foráneas activadas.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="205"/>
         <source>&amp;Foreign keys</source>
-        <translation>Foreign &amp;keys</translation>
+        <translation>Claves &amp;foráneas</translation>
     </message>
     <message>
         <source>Remove line breaks in schema view</source>
@@ -3316,7 +3456,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="319"/>
         <source>Data &amp;Browser</source>
-        <translation>&amp;Navegador de datos</translation>
+        <translation>&amp;Hoja de datos</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="394"/>
@@ -3353,7 +3493,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     </message>
     <message>
         <source>SQL to execute after opening database</source>
-        <translation type="vanished">SQL a ejecutar tras abrir la base de datos</translation>
+        <translation type="obsolete">SQL a ejecutar tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="285"/>
@@ -3368,17 +3508,17 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="327"/>
         <source>Font</source>
-        <translation>Tipografía de caracteres</translation>
+        <translation>Tipo de letra</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="333"/>
         <source>&amp;Font</source>
-        <translation>&amp;Fuentes de texto</translation>
+        <translation>&amp;Tipo de letra</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="346"/>
         <source>Font si&amp;ze:</source>
-        <translation>Tamaño del texto</translation>
+        <translation>&amp;Tamaño del texto</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="362"/>
@@ -3428,7 +3568,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="604"/>
         <source>Escape character</source>
-        <translation>Carácter de Escape</translation>
+        <translation>Carácter de escape</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="614"/>
@@ -3523,12 +3663,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="804"/>
         <source>SQL &amp;editor font size</source>
-        <translation>Tamaño de fuentes del &amp;editor SQL</translation>
+        <translation>Tamaño de letra del &amp;editor SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="821"/>
         <source>SQL &amp;log font size</source>
-        <translation>Tamaño de fuentes del &amp;log de SQL</translation>
+        <translation>Tamaño de letra del &amp;historial SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="838"/>
@@ -3546,71 +3686,71 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
         <translation>Certificados CA</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1040"/>
-        <location filename="../PreferencesDialog.ui" line="1104"/>
+        <location filename="../PreferencesDialog.ui" line="1043"/>
+        <location filename="../PreferencesDialog.ui" line="1110"/>
         <source>Subject CN</source>
         <translation>Sujeto CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1043"/>
+        <location filename="../PreferencesDialog.ui" line="1046"/>
         <source>Common Name</source>
         <translation>Nombre Común</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1048"/>
+        <location filename="../PreferencesDialog.ui" line="1051"/>
         <source>Subject O</source>
         <translation>Sujeto O</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1051"/>
+        <location filename="../PreferencesDialog.ui" line="1054"/>
         <source>Organization</source>
         <translation>Organización</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1056"/>
-        <location filename="../PreferencesDialog.ui" line="1120"/>
+        <location filename="../PreferencesDialog.ui" line="1059"/>
+        <location filename="../PreferencesDialog.ui" line="1126"/>
         <source>Valid from</source>
         <translation>Válido desde</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1061"/>
-        <location filename="../PreferencesDialog.ui" line="1125"/>
+        <location filename="../PreferencesDialog.ui" line="1064"/>
+        <location filename="../PreferencesDialog.ui" line="1131"/>
         <source>Valid to</source>
         <translation>Válido hasta</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1066"/>
-        <location filename="../PreferencesDialog.ui" line="1130"/>
+        <location filename="../PreferencesDialog.ui" line="1069"/>
+        <location filename="../PreferencesDialog.ui" line="1136"/>
         <source>Serial number</source>
         <translation>Número de serie</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1074"/>
+        <location filename="../PreferencesDialog.ui" line="1077"/>
         <source>Your certificates</source>
         <translation>Sus certificados</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1099"/>
+        <location filename="../PreferencesDialog.ui" line="1105"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1107"/>
+        <location filename="../PreferencesDialog.ui" line="1113"/>
         <source>Subject Common Name</source>
         <translation>Nombre Común del Sujeto</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1112"/>
+        <location filename="../PreferencesDialog.ui" line="1118"/>
         <source>Issuer CN</source>
         <translation>Emisor CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1115"/>
+        <location filename="../PreferencesDialog.ui" line="1121"/>
         <source>Issuer Common Name</source>
         <translation>Nombre Común del Emisor</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1176"/>
+        <location filename="../PreferencesDialog.ui" line="1182"/>
         <source>Clone databases into</source>
         <translation>Clonar las bases de datos en</translation>
     </message>
@@ -3621,7 +3761,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="861"/>
         <source>SQL editor &amp;font</source>
-        <translation>&amp;Tipo de fuente del editor SQL</translation>
+        <translation>&amp;Tipo de letra del editor SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="874"/>
@@ -3636,7 +3776,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="894"/>
         <source>Hori&amp;zontal tiling</source>
-        <translation>Disposición horizontal</translation>
+        <translation>Mosaico hori&amp;zontal</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="904"/>
@@ -3646,7 +3786,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PreferencesDialog.ui" line="914"/>
         <source>Code co&amp;mpletion</source>
-        <translation>Co&amp;mpletar Código</translation>
+        <translation>Co&amp;mpletar código</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="934"/>
@@ -3694,7 +3834,7 @@ usando una extensión. Necesitará reiniciar la aplicación.&lt;/p&gt;
     <message>
         <location filename="../PreferencesDialog.cpp" line="269"/>
         <source>The language will change after you restart the application.</source>
-        <translation>El idioma cambiará al reiniciar la aplicación</translation>
+        <translation>El idioma cambiará al reiniciar la aplicación.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="334"/>
@@ -3725,43 +3865,45 @@ usando una extensión. Necesitará reiniciar la aplicación.&lt;/p&gt;
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="89"/>
+        <location filename="../ImportCsvDialog.cpp" line="108"/>
         <source>Error importing data</source>
         <translation>Error importando datos</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="91"/>
+        <location filename="../ImportCsvDialog.cpp" line="110"/>
         <source> from record number %1</source>
         <translation> del registro número %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="92"/>
+        <location filename="../ImportCsvDialog.cpp" line="111"/>
         <source>.
 %1</source>
         <translation>.
 %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="105"/>
-        <source>Decoding CSV file...</source>
-        <translation>Descodificando archivo CSV...</translation>
+        <location filename="../ImportCsvDialog.cpp" line="124"/>
+        <source>Importing CSV file...</source>
+        <translation>Importando archivo CSV...</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="106"/>
+        <source>Decoding CSV file...</source>
+        <translation type="obsolete">Descodificando archivo CSV...</translation>
+    </message>
+    <message>
+        <location filename="../ImportCsvDialog.cpp" line="125"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="48"/>
         <source>Collation needed! Proceed?</source>
-        <translation>¡Es necesaria una función de comparación! ¿Proceder?</translation>
+        <translation type="obsolete">¡Es necesaria una función de comparación! ¿Proceder?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="49"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation>Una tabla en esta base de datos necesita una función de comparación especial &apos;%1&apos; que esta aplicación no puede proporcionar sin más información.
+        <translation type="obsolete">Una tabla en esta base de datos necesita una función de comparación especial &apos;%1&apos; que esta aplicación no puede proporcionar sin más información.
 Si decide continuar, está avisado de que la base de datos se puede dañar.
 ¡Cree un backup!
 </translation>
@@ -3777,72 +3919,89 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <source>Error opening remote database file from %1.
 %2</source>
-        <translation type="vanished">Error abriendo el archivo de base de datos remoto de %1.
+        <translation type="obsolete">Error abriendo el archivo de base de datos remoto de %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="106"/>
+        <location filename="../RemoteDatabase.cpp" line="107"/>
         <source>Error when connecting to %1.
 %2</source>
         <translation>Error conectando a %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="216"/>
+        <location filename="../RemoteDatabase.cpp" line="260"/>
         <source>Error opening remote file at %1.
 %2</source>
         <translation>Error abriendo el archivo remoto en %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="284"/>
+        <location filename="../RemoteDatabase.cpp" line="333"/>
         <source>Error: Invalid client certificate specified.</source>
         <translation>Error: El certificado del cliente es inválido.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="296"/>
+        <location filename="../RemoteDatabase.cpp" line="345"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
         <translation>Por favor introduzca la clave de este certificado del cliente para autentificarse.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="320"/>
+        <location filename="../RemoteDatabase.cpp" line="369"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="324"/>
+        <location filename="../RemoteDatabase.cpp" line="373"/>
+        <source>Uploading remote database to
+%1</source>
+        <translation>Subiendo base de datos remota a
+%1</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDatabase.cpp" line="375"/>
+        <source>Downloading remote database from
+%1</source>
+        <translation>Descargando base de datos remota desde
+%1</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDatabase.cpp" line="746"/>
+        <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
+        <translation>La base de datos remota ha cambiado desde la última sincronización. ¿Desea actualizar la base de datos local a la versión más reciente? ¡Tenga en cuenta que esto descartará cualquier cambio que haya hecho localmente! Si no desea perder cambios locales, pulse No para abrir la versión local.</translation>
+    </message>
+    <message>
         <source>Uploading remote database to
 %1.</source>
-        <translation>Subiendo base de datos remota a
+        <translation type="obsolete">Subiendo base de datos remota a
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="326"/>
         <source>Downloading remote database from
 %1.</source>
-        <translation>Descargando base de datos remota desde
+        <translation type="obsolete">Descargando base de datos remota desde
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="344"/>
-        <location filename="../RemoteDatabase.cpp" line="397"/>
+        <location filename="../RemoteDatabase.cpp" line="392"/>
+        <location filename="../RemoteDatabase.cpp" line="445"/>
         <source>Error: The network is not accessible.</source>
         <translation>Error: La red no es accesible.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="406"/>
+        <location filename="../RemoteDatabase.cpp" line="454"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation>Error: No se puede abrir el archivo para enviar.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="482"/>
+        <location filename="../RemoteDatabase.cpp" line="540"/>
         <source>Error opening local databases list.
 %1</source>
         <translation>Error abriendo la lista de bases de datos locales.
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="499"/>
+        <location filename="../RemoteDatabase.cpp" line="558"/>
         <source>Error creating local databases list.
 %1</source>
         <translation>Error creando la lista de bases de datos locales.
@@ -3858,11 +4017,11 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     </message>
     <message>
         <source>B&amp;rowse</source>
-        <translation type="vanished">Navega&amp;r</translation>
+        <translation type="obsolete">Navega&amp;r</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="vanished">Local</translation>
+        <translation type="obsolete">Local</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="22"/>
@@ -3871,13 +4030,18 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="39"/>
+        <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
+        <translation>Conectar al servidor remoto usando la identidad actualmente seleccionada. El servidor correcto se selecciona también con la entidad.</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="42"/>
         <source>Go</source>
         <translation>Ir</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="63"/>
+        <location filename="../RemoteDock.ui" line="66"/>
         <source>Push currently opened database to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Volcar la base de datos actualmente abierta al servidor</translation>
     </message>
 </context>
 <context>
@@ -3889,7 +4053,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     </message>
     <message>
         <source>Version</source>
-        <translation type="vanished">Versión</translation>
+        <translation type="obsolete">Versión</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
@@ -3904,7 +4068,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Consolidación</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="240"/>
@@ -3917,51 +4081,66 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../RemotePushDialog.ui" line="14"/>
         <source>Push database</source>
-        <translation type="unfinished"></translation>
+        <translation>Remitir base de datos</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="22"/>
         <source>Database na&amp;me to push to</source>
-        <translation type="unfinished"></translation>
+        <translation>No&amp;mbre de la base de datos de destino</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.ui" line="35"/>
+        <location filename="../RemotePushDialog.ui" line="39"/>
         <source>Commit message</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensaje de consolidación</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.ui" line="45"/>
+        <location filename="../RemotePushDialog.ui" line="49"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.ui" line="59"/>
+        <location filename="../RemotePushDialog.ui" line="63"/>
         <source>Database licence</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencia de la base de datos</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.ui" line="79"/>
+        <location filename="../RemotePushDialog.ui" line="83"/>
         <source>Public</source>
-        <translation type="unfinished"></translation>
+        <translation>Pública</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="35"/>
+        <location filename="../RemotePushDialog.ui" line="96"/>
+        <source>Branch</source>
+        <translation>Rama</translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="116"/>
+        <source>Force push</source>
+        <translation>Forzar remisión</translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="47"/>
         <source>Database will be public. Everyone has read access to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>La base de datos será pública. Todo el mundo podrá leerla.</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="37"/>
+        <location filename="../RemotePushDialog.cpp" line="49"/>
         <source>Database will be private. Only you have access to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>La base de datos será privada. Sólo usted tendrá acceso.</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="77"/>
+        <location filename="../RemotePushDialog.cpp" line="53"/>
+        <source>Use with care. This can cause remote commits to be deleted.</source>
+        <translation>Usar con cuidado. Esto puede provocar borrados de consolidaciones remotas.</translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="111"/>
         <source>Unspecified</source>
-        <translation type="unfinished"></translation>
+        <translation>No especificada</translation>
     </message>
 </context>
 <context>
@@ -3972,29 +4151,26 @@ p, li { white-space: pre-wrap; }
         <translation>Formulario</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.ui" line="51"/>
+        <location filename="../SqlExecutionArea.ui" line="55"/>
         <source>Results of the last executed statements</source>
         <translation>Resultados de los últimos comandos ejecutados</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.ui" line="54"/>
+        <location filename="../SqlExecutionArea.ui" line="58"/>
         <source>This field shows the results and status codes of the last executed statements.</source>
         <translation>Este campo muestra los resultados y códigos de estado de los últimos comandos ejecutados.</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.ui" line="94"/>
         <source>Export to &amp;CSV</source>
-        <translation>Exportar a &amp;CSV</translation>
+        <translation type="obsolete">Exportar a &amp;CSV</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.ui" line="99"/>
         <source>Save as &amp;view</source>
-        <translation>Guardar como &amp;vista</translation>
+        <translation type="obsolete">Guardar como &amp;vista</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.ui" line="102"/>
         <source>Save as view</source>
-        <translation>Guardar como vista</translation>
+        <translation type="obsolete">Guardar como vista</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="90"/>
@@ -4047,7 +4223,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="65"/>
         <source>(X,Y) The ifnull() function returns a copy of its first non-NULL argument, or NULL if both arguments are NULL.</source>
-        <translation>(X,Y) La función ifnull() devuelve una copia de su primer argumento no nulo, o NULL si ambos argumentos son NULL</translation>
+        <translation>(X,Y) La función ifnull() devuelve una copia de su primer argumento no nulo, o NULL si ambos argumentos son NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="66"/>
@@ -4267,14 +4443,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="276"/>
+        <location filename="../sqlitetablemodel.cpp" line="289"/>
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
         <translation>Referencias %1(%2)
 Mantenga pulsado Ctrl+Shift y haga click para ir ahí</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="360"/>
+        <location filename="../sqlitetablemodel.cpp" line="377"/>
         <source>Error changing data:
 %1</source>
         <translation>Error modificando datos:
@@ -4286,17 +4462,25 @@ Mantenga pulsado Ctrl+Shift y haga click para ir ahí</translation>
     <message>
         <location filename="../VacuumDialog.ui" line="14"/>
         <source>Compact Database</source>
-        <translation>Compactar Base de Datos</translation>
+        <translation>Compactar base de datos</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="26"/>
-        <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation>Cuidado: Al compactar la base de datos se confirmarán todos los cambios hechos.</translation>
+        <source>Warning: Compacting the database will commit all of your changes.</source>
+        <translation>Aviso: compactar la base de datos provocará la consolidación de todos sus cambios.</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="39"/>
+        <source>Please select the databases to co&amp;mpact:</source>
+        <translation>Seleccione las bases de datos que desea co&amp;mpactar:</translation>
+    </message>
+    <message>
+        <source>Warning: Compacting the database will commit all changes you made.</source>
+        <translation type="obsolete">Cuidado: Al compactar la base de datos se confirmarán todos los cambios hechos.</translation>
+    </message>
+    <message>
         <source>Please select the objects to compact:</source>
-        <translation>Por favor, seleccione los objetos a compactar:</translation>
+        <translation type="obsolete">Por favor, seleccione los objetos a compactar:</translation>
     </message>
 </context>
 </TS>
