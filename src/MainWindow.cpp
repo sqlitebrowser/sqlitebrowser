@@ -1112,12 +1112,12 @@ void MainWindow::executeQuery()
             case SQLITE_MISUSE:
                 continue;
             default:
-                statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) + ": " + queryPart;
+                statusMessage = QString::fromUtf8(sqlite3_errmsg(db._db)) + ": " + queryPart;
                 break;
             }
             timer.restart();
         } else {
-            statusMessage = QString::fromUtf8((const char*)sqlite3_errmsg(db._db)) + ": " + queryPart;
+            statusMessage = QString::fromUtf8(sqlite3_errmsg(db._db)) + ": " + queryPart;
             sqlWidget->getEditor()->setErrorIndicator(execution_start_line, execution_start_index, execution_start_line, execution_end_index);
         }
 
