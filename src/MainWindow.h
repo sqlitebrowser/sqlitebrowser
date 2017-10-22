@@ -285,6 +285,7 @@ private slots:
     void hideColumns(int column = -1, bool hide = true);
     void on_actionShowAllColumns_triggered();
     void requestCollation(const QString& name, int eTextRep);
+    void renameSqlTab(int index);
 };
 
 #endif

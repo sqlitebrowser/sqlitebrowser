@@ -2937,6 +2937,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tabSqlAreas</sender>
+   <signal>tabBarDoubleClicked(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>renameSqlTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>330</x>
+     <y>372</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -3005,5 +3021,6 @@
   <slot>saveSqlResultsAsView()</slot>
   <slot>changeSqlTab(int)</slot>
   <slot>hideColumns()</slot>
+  <slot>renameSqlTab(int)</slot>
  </slots>
 </ui>
