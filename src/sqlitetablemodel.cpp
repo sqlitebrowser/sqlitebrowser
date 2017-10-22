@@ -920,3 +920,18 @@ void SqliteTableModel::waitForFetchingFinished()
     if(m_futureFetch.isRunning())
         m_futureFetch.waitForFinished();
 }
+
+void SqliteTableModel::cancelQuery()
+{
+    if(m_rowCount.isRunning())
+    {
+        m_rowCount.cancel();
+        m_rowCount = QtConcurrent::run([=]() {
+            // Make sure we report 0 rows if anybody asks
+            return 0;
+        });
+    }
+
+    if(m_futureFetch.isRunning())
+        m_futureFetch.cancel();
+}
