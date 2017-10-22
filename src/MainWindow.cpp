@@ -1080,6 +1080,9 @@ void MainWindow::executeQuery()
             {
             case SQLITE_ROW:
             {
+                // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
+                // because statements that display data don't change data as well.
+
                 sqlWidget->getModel()->setQuery(queryPart);
 
                 // The query takes the last placeholder as it may itself contain the sequence '%' + number
@@ -1087,21 +1090,23 @@ void MainWindow::executeQuery()
                             sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
                 ui->actionSqlResultsSave->setEnabled(true);
                 ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
+
+                statusMessage = tr("Query executed successfully: %1 (took %2ms)").arg(queryPart.trimmed()).arg(timer.elapsed());
                 sql3status = SQLITE_OK;
+                break;
             }
             case SQLITE_DONE:
             case SQLITE_OK:
             {
-                if(query_part_type != SelectStatement)
-                {
-                    modified = true;
+                // If we get here, the SQL statement doesn't return data and just executes. Don't run it again because it has already been executed.
+                // But do set the modified flag because statements that don't return data, often modify the database.
 
-                    QString stmtHasChangedDatabase;
-                    if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
-                        stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
+                QString stmtHasChangedDatabase;
+                if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
+                    stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
 
-                    statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
-                }
+                modified = true;
+                statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
                 break;
             }
             case SQLITE_MISUSE:
