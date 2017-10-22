@@ -17,7 +17,6 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chun
     , m_db(db)
     , m_rowCountAdjustment(0)
     , m_chunkSize(chunkSize)
-    , m_valid(false)
     , m_encoding(encoding)
 {
     reset();
@@ -132,11 +131,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     // do a count query to get the full row count in a fast manner
     m_rowCountAdjustment = 0;
     m_rowCount = QtConcurrent::run([=]() {
-        int count = getQueryRowCount();
-        if(count == -1)
-            m_valid = false;
-
-        return count;
+        return getQueryRowCount();
     });
 
     // headers
@@ -148,7 +143,6 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     // now fetch the first entries
     clearCache();
     fetchData(0, m_chunkSize);
-    m_valid = true;
 
     emit layoutChanged();
 }

@@ -1081,20 +1081,13 @@ void MainWindow::executeQuery()
             case SQLITE_ROW:
             {
                 sqlWidget->getModel()->setQuery(queryPart);
-                if(sqlWidget->getModel()->valid())
-                {
-                    // The query takes the last placeholder as it may itself contain the sequence '%' + number
-                    statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
-                                sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
-                    ui->actionSqlResultsSave->setEnabled(true);
-                    ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
-                    sql3status = SQLITE_OK;
-                }
-                else
-                {
-                    statusMessage = tr("Error executing query: %1").arg(queryPart);
-                    sql3status = SQLITE_ERROR;
-                }
+
+                // The query takes the last placeholder as it may itself contain the sequence '%' + number
+                statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
+                            sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
+                ui->actionSqlResultsSave->setEnabled(true);
+                ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
+                sql3status = SQLITE_OK;
             }
             case SQLITE_DONE:
             case SQLITE_OK:
