@@ -31,6 +31,7 @@ private:
     QList<FilterLineEdit*>* filterList;
     int columnNumber;
     QTimer* delaySignalTimer;
+    QString lastValue;
 };
 
 #endif

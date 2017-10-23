@@ -75,6 +75,10 @@ public:
 public slots:
     void updateFilter(int column, const QString& value);
 
+    // This cancels the execution of the current query. It can't guarantee that the query is stopped immediately or after returning but it should
+    // stop soon afterwards. If some data has already been loaded into the model, that data is not deleted
+    void cancelQuery();
+
 signals:
     void finishedFetch();
 

@@ -2626,3 +2626,15 @@ void MainWindow::requestCollation(const QString& name, int eTextRep)
     if(reply == QMessageBox::Yes)
         sqlite3_create_collation(db._db, name.toUtf8(), eTextRep, nullptr, collCompare);
 }
+
+void MainWindow::renameSqlTab(int index)
+{
+    QString new_name = QInputDialog::getText(this,
+                                             qApp->applicationName(),
+                                             tr("Set a new name for the SQL tab. Use the '&' character to allow using the following character as a keyboard shortcut."),
+                                             QLineEdit::EchoMode::Normal,
+                                             ui->tabSqlAreas->tabText(index));
+
+    if(!new_name.isNull())      // Don't do anything if the Cancel button was clicked
+        ui->tabSqlAreas->setTabText(index, new_name);
+}
