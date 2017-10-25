@@ -2400,8 +2400,11 @@ void MainWindow::editDataColumnDisplayFormat()
     // column is always the rowid column. Ultimately, get the column name from the column object
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     int field_number = sender()->property("clicked_column").toInt();
-    QString field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
-
+    QString field_name;
+    if (db.getObjectByName(current_table)->type() == sqlb::Object::Table)
+      field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
+    else
+      field_name = db.getObjectByName(current_table).dynamicCast<sqlb::View>()->fieldNames().at(field_number-1);
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
 
