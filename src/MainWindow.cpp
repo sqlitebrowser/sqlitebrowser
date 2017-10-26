@@ -912,22 +912,22 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 }
 
-MainWindow::QueryType MainWindow::getQueryType(const QString& query) const
+MainWindow::StatementType MainWindow::getQueryType(const QString& query) const
 {
     // Helper function for getting the type of a given query
 
-    if(query.startsWith("SELECT", Qt::CaseInsensitive)) return SELECT;
-    if(query.startsWith("ALTER", Qt::CaseInsensitive)) return ALTER;
-    if(query.startsWith("DROP", Qt::CaseInsensitive)) return DROP;
-    if(query.startsWith("ROLLBACK", Qt::CaseInsensitive)) return ROLLBACK;
-    if(query.startsWith("PRAGMA", Qt::CaseInsensitive)) return PRAGMA;
-    if(query.startsWith("VACUUM", Qt::CaseInsensitive)) return VACUUM;
-    if(query.startsWith("INSERT", Qt::CaseInsensitive)) return INSERT;
-    if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UPDATE;
-    if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DELETE;
-    if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CREATE;
+    if(query.startsWith("SELECT", Qt::CaseInsensitive)) return SelectStatement;
+    if(query.startsWith("ALTER", Qt::CaseInsensitive)) return AlterStatement;
+    if(query.startsWith("DROP", Qt::CaseInsensitive)) return DropStatement;
+    if(query.startsWith("ROLLBACK", Qt::CaseInsensitive)) return RollbackStatement;
+    if(query.startsWith("PRAGMA", Qt::CaseInsensitive)) return PragmaStatement;
+    if(query.startsWith("VACUUM", Qt::CaseInsensitive)) return VacuumStatement;
+    if(query.startsWith("INSERT", Qt::CaseInsensitive)) return InsertStatement;
+    if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UpdateStatement;
+    if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DeleteStatement;
+    if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CreateStatement;
 
-    return OTHER;
+    return OtherStatement;
 }
 
 /*
@@ -1010,17 +1010,17 @@ void MainWindow::executeQuery()
     {
         // What type of query is this?
         QString qtail = QString(tail).trimmed();
-        QueryType query_type = getQueryType(qtail);
+        StatementType query_type = getQueryType(qtail);
 
         // Check whether the DB structure is changed by this statement
-        if(!structure_updated && (query_type == ALTER ||
-                query_type == CREATE ||
-                query_type == DROP ||
-                query_type == ROLLBACK))
+        if(!structure_updated && (query_type == AlterStatement ||
+                query_type == CreateStatement ||
+                query_type == DropStatement ||
+                query_type == RollbackStatement))
             structure_updated = true;
 
         // Check whether this is trying to set a pragma or to vacuum the database
-        if((query_type == PRAGMA && qtail.contains('=')) || query_type == VACUUM)
+        if((query_type == PragmaStatement && qtail.contains('=')) || query_type == VacuumStatement)
         {
             // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
             // user about that
@@ -1068,12 +1068,12 @@ void MainWindow::executeQuery()
             sqlite3_finalize(vm);
 
             // Get type
-            QueryType query_part_type = getQueryType(queryPart.trimmed());
+            StatementType query_part_type = getQueryType(queryPart.trimmed());
 
             // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
             // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
             // return rows just like SELECT statements, too.
-            if((query_part_type == SELECT || query_part_type == PRAGMA) && sql3status == SQLITE_DONE)
+            if((query_part_type == SelectStatement || query_part_type == PragmaStatement) && sql3status == SQLITE_DONE)
                 sql3status = SQLITE_ROW;
 
             switch(sql3status)
@@ -1099,12 +1099,12 @@ void MainWindow::executeQuery()
             case SQLITE_DONE:
             case SQLITE_OK:
             {
-                if(query_part_type != SELECT)
+                if(query_part_type != SelectStatement)
                 {
                     modified = true;
 
                     QString stmtHasChangedDatabase;
-                    if(query_part_type == INSERT || query_part_type == UPDATE || query_part_type == DELETE)
+                    if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
                         stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
 
                     statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);

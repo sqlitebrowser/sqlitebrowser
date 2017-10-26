@@ -130,19 +130,19 @@ private:
         int wal_autocheckpoint;
     } pragmaValues;
 
-    enum QueryType
+    enum StatementType
     {
-        SELECT,
-        ALTER,
-        DROP,
-        ROLLBACK,
-        PRAGMA,
-        VACUUM,
-        INSERT,
-        UPDATE,
-        DELETE,
-        CREATE,
-        OTHER,
+        SelectStatement,
+        AlterStatement,
+        DropStatement,
+        RollbackStatement,
+        PragmaStatement,
+        VacuumStatement,
+        InsertStatement,
+        UpdateStatement,
+        DeleteStatement,
+        CreateStatement,
+        OtherStatement,
     };
 
     Ui::MainWindow* ui;
@@ -191,7 +191,7 @@ private:
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
-    QueryType getQueryType(const QString& query) const;
+    StatementType getQueryType(const QString& query) const;
 
 protected:
     void closeEvent(QCloseEvent *);
