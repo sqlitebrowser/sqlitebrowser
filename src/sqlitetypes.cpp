@@ -46,6 +46,36 @@ QDataStream& operator>>(QDataStream& ds, ObjectIdentifier& objid)
 }
 
 /**
+ * @brief The SetLocaleToC class
+ * This is a stupid helper class which sets the current locale as used by the C++ standard library to the C locale.
+ * Upon destruction it resets it to whatever the previous locale was. This is used to work around a problem in Antlr's
+ * string comparison which because it is case-independent relies on the current locale. However, when parsind SQL
+ * statements we don't want the locale to interfere here. Especially the Turkish locale is problematic here because
+ * of the dotted I problem.
+ */
+class SetLocaleToC
+{
+public:
+    SetLocaleToC()
+    {
+        // Query current locale and save it
+        oldLocale = std::setlocale(LC_CTYPE, nullptr);
+
+        // Set locale for standard library functions
+        std::setlocale(LC_CTYPE, "C.UTF-8");
+    }
+
+    ~SetLocaleToC()
+    {
+        // Reset old locale
+        std::setlocale(LC_CTYPE, oldLocale.c_str());
+    }
+
+private:
+    std::string oldLocale;
+};
+
+/**
  * @brief The CreateTableWalker class
  * Goes trough the createtable AST and returns
  * Table object.
@@ -420,6 +450,8 @@ bool Table::hasAutoIncrement() const
 
 ObjectPtr Table::parseSQL(const QString &sSQL)
 {
+    SetLocaleToC locale;
+
     std::stringstream s;
     s << sSQL.toStdString();
     Sqlite3Lexer lex(s);
@@ -1219,6 +1251,8 @@ FieldInfoList Index::fieldInformation() const
 
 ObjectPtr Index::parseSQL(const QString& sSQL)
 {
+    SetLocaleToC locale;
+
     std::stringstream s;
     s << sSQL.toStdString();
     Sqlite3Lexer lex(s);
