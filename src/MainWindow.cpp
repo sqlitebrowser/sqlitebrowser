@@ -2631,7 +2631,7 @@ void MainWindow::renameSqlTab(int index)
 {
     QString new_name = QInputDialog::getText(this,
                                              qApp->applicationName(),
-                                             tr("Set a new name for the SQL tab. Use the '&' character to allow using the following character as a keyboard shortcut."),
+                                             tr("Set a new name for the SQL tab. Use the '&&' character to allow using the following character as a keyboard shortcut."),
                                              QLineEdit::EchoMode::Normal,
                                              ui->tabSqlAreas->tabText(index));
 
