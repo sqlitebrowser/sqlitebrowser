@@ -2,6 +2,8 @@
 #define COLUMNDISPLAYFORMATDIALOG_H
 
 #include <QDialog>
+#include <QString>
+#include <QMap>
 
 namespace Ui {
 class ColumnDisplayFormatDialog;
@@ -23,6 +25,7 @@ private slots:
 private:
     Ui::ColumnDisplayFormatDialog* ui;
     QString column_name;
+    QMap<QString, QString> formatFunctions;
 };
 
 #endif
