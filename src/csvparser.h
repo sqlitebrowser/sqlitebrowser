@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <cstdint>
+#include <cstddef>
 
 class QTextStream;
 

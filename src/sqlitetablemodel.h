@@ -46,8 +46,6 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const;
 
-    bool valid() const { return m_valid; }
-
     bool isBinary(const QModelIndex& index) const;
 
     void setEncoding(const QString& encoding) { m_encoding = encoding; }
@@ -123,8 +121,6 @@ private:
      * to that row count.
      */
     size_t m_chunkSize;
-
-    bool m_valid; //! tells if the current query is valid.
 
     QString m_encoding;
 
