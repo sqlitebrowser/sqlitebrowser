@@ -5,6 +5,7 @@
 #include <sstream>
 #include <QDebug>
 #include <QDataStream>      // This include seems to only be necessary for the Windows build
+#include <clocale>          // This include seems to only be necessary for the Windows build
 
 namespace sqlb {
 
