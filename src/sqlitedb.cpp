@@ -371,7 +371,7 @@ bool DBBrowserDB::revertToSavepoint(const QString& pointname)
 
 bool DBBrowserDB::releaseAllSavepoints()
 {
-    foreach(const QString& point, savepointList)
+    for(const QString& point : savepointList)
     {
         if(!releaseSavepoint(point))
             return false;
@@ -386,7 +386,7 @@ bool DBBrowserDB::releaseAllSavepoints()
 
 bool DBBrowserDB::revertAll()
 {
-    foreach(const QString& point, savepointList)
+    for(const QString& point : savepointList)
     {
         if(!revertToSavepoint(point))
             return false;
@@ -890,7 +890,7 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
 
     QStringList vals;
     QStringList fields;
-    foreach(sqlb::FieldPtr f, t.fields())
+    for(const sqlb::FieldPtr& f : t.fields())
     {
         sqlb::ConstraintPtr pk = t.constraint({f}, sqlb::Constraint::PrimaryKeyConstraintType);
         if(pk)
@@ -932,7 +932,7 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
         stmt.append(" DEFAULT VALUES;");
     } else {
         stmt.append("(");
-        foreach(const QString& f, fields)
+        for(const QString& f : fields)
             stmt.append(sqlb::escapeIdentifier(f) + ",");
         stmt.chop(1);
         stmt.append(") VALUES (");
@@ -978,7 +978,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
     if (!isOpen()) return false;
 
     QStringList quoted_rowids;
-    foreach(QString rowid, rowids)
+    for(const QString& rowid : rowids)
         quoted_rowids.append("'" + rowid + "'");
 
     QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
@@ -1267,7 +1267,7 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
 
     // Restore the saved triggers, views and indices
     QString errored_sqls;
-    foreach(const QString& sql, otherObjectsSql)
+    for(const QString& sql : otherObjectsSql)
     {
         if(!executeSQL(sql, true, true))
             errored_sqls += sql + "\n";
@@ -1430,11 +1430,11 @@ void DBBrowserDB::updateSchema()
                             if(type == sqlb::Object::Types::Table)
                             {
                                 sqlb::TablePtr tab = object.dynamicCast<sqlb::Table>();
-                                foreach(const auto& column, columns)
+                                for(const auto& column : columns)
                                     tab->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
                             } else {
                                 sqlb::ViewPtr view = object.dynamicCast<sqlb::View>();
-                                foreach(const auto& column, columns)
+                                for(const auto& column : columns)
                                     view->addField(sqlb::FieldPtr(new sqlb::Field(column.first, column.second)));
                             }
                         } else if(type == sqlb::Object::Types::Trigger) {

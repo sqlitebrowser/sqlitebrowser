@@ -40,7 +40,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
 
     // Create a list of all available encodings and create an auto completion list from them
     QStringList encodingList;
-    foreach(QString enc, QTextCodec::availableCodecs())
+    for(const QString& enc : QTextCodec::availableCodecs())
         encodingList.push_back(enc);
     encodingCompleter = new QCompleter(encodingList, this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
@@ -237,7 +237,7 @@ void ImportCsvDialog::updatePreview()
 
     // Set horizontal header data
     QStringList horizontalHeader;
-    foreach(const sqlb::FieldPtr& field, fieldList)
+    for(const sqlb::FieldPtr& field : fieldList)
         horizontalHeader.push_back(field->name());
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
@@ -557,7 +557,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         sqlb::TablePtr tbl = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName)).dynamicCast<sqlb::Table>();
         if(tbl)
         {
-            foreach(const sqlb::FieldPtr& f, tbl->fields())
+            for(const sqlb::FieldPtr& f : tbl->fields())
             {
                 if(f->isInteger() && f->notnull())              // If this is an integer column but NULL isn't allowed, insert 0
                     nullValues << "0";

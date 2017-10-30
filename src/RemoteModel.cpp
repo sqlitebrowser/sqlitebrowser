@@ -150,7 +150,7 @@ void RemoteModel::parseDirectoryListing(const QString& json, const QVariant& use
     // Insert data
     beginInsertRows(parent, 0, array.size());
     QList<RemoteModelItem*> items = RemoteModelItem::loadArray(QJsonValue(array), parentItem);
-    foreach(RemoteModelItem* item, items)
+    for(RemoteModelItem* item : items)
         parentItem->appendChild(item);
     endInsertRows();
 

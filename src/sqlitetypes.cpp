@@ -19,7 +19,7 @@ QString escapeIdentifier(QString id)
 QStringList fieldVectorToFieldNames(const FieldVector& vector)
 {
     QStringList result;
-    foreach(const FieldPtr& field, vector)
+    for(const FieldPtr& field : vector)
         result.append(escapeIdentifier(field->name()));
     return result;
 }
@@ -175,7 +175,7 @@ QString ForeignKeyClause::toString() const
     if(m_columns.size())
     {
         result += "(";
-        foreach(const QString& column, m_columns)
+        for(const QString& column : m_columns)
             result += escapeIdentifier(column) + ',';
         result.chop(1); // Remove last comma
         result += ")";
@@ -306,13 +306,13 @@ Table& Table::operator=(const Table& rhs)
 
     // Make copies of the fields and the constraints. This is necessary in order to avoid any unwanted changes to the application's main database
     // schema representation just modifying a reference to the fields or constraints and thinking it operates on a copy.
-    foreach(FieldPtr f, rhs.m_fields)
+    for(const FieldPtr& f : rhs.m_fields)
         addField(FieldPtr(new Field(*f)));
     for(auto it=rhs.m_constraints.constBegin();it!=rhs.m_constraints.constEnd();++it)   // TODO This is so ugly, it should be replaced really by anything else
     {
         FieldVector key;
         ConstraintPtr constraint;
-        foreach(FieldPtr f, it.key())
+        for(const FieldPtr& f : it.key())
             key.push_back(m_fields.at(findField(f->name())));
         if(it.value()->type() == Constraint::ConstraintTypes::PrimaryKeyConstraintType)
             constraint = ConstraintPtr(new PrimaryKeyConstraint(*(it.value().dynamicCast<PrimaryKeyConstraint>())));
@@ -415,9 +415,8 @@ QStringList Table::fieldList() const
 {
     QStringList sl;
 
-    foreach(const FieldPtr& f, m_fields) {
+    for(const FieldPtr& f : m_fields)
         sl << f->toString();
-    }
 
     return sl;
 }
@@ -426,7 +425,7 @@ QStringList Table::fieldNames() const
 {
     QStringList sl;
 
-    foreach(FieldPtr f, m_fields)
+    for(const FieldPtr& f : m_fields)
         sl << f->name();
 
     return sl;
@@ -435,14 +434,14 @@ QStringList Table::fieldNames() const
 FieldInfoList Table::fieldInformation() const
 {
     FieldInfoList result;
-    foreach(FieldPtr f, m_fields)
+    for(const FieldPtr& f : m_fields)
         result.append({f->name(), f->type(), f->toString("  ", " ")});
     return result;
 }
 
 bool Table::hasAutoIncrement() const
 {
-    foreach(FieldPtr f, m_fields) {
+    for(const FieldPtr& f : m_fields) {
         if(f->autoIncrement())
             return true;
     }
@@ -567,7 +566,7 @@ QList<ConstraintPtr> Table::constraints(FieldVector fields, Constraint::Constrai
         return clist;
     } else {
         QList<ConstraintPtr> clist_typed;
-        foreach(const ConstraintPtr& ptr, clist)
+        for(const ConstraintPtr& ptr : clist)
         {
             if(ptr->type() == type)
                 clist_typed.push_back(ptr);
@@ -1128,7 +1127,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     f->setAutoIncrement(autoincrement);
     table->addField(f);
 
-    foreach(sqlb::ForeignKeyClause* fk, foreignKeys)
+    for(sqlb::ForeignKeyClause* fk : foreignKeys)
         table->addConstraint({f}, ConstraintPtr(fk));
     if(primaryKey)
     {
@@ -1171,7 +1170,7 @@ Index& Index::operator=(const Index& rhs)
     m_whereExpr = rhs.m_whereExpr;
 
     // Make copies of the column
-    foreach(IndexedColumnPtr c, rhs.m_columns)
+    for(const IndexedColumnPtr& c : rhs.m_columns)
         addColumn(IndexedColumnPtr(new IndexedColumn(*c)));
 
     return *this;
@@ -1216,7 +1215,7 @@ QStringList Index::columnSqlList() const
 {
     QStringList sl;
 
-    foreach(const IndexedColumnPtr& c, m_columns)
+    for(const IndexedColumnPtr& c : m_columns)
         sl << c->toString();
 
     return sl;
@@ -1245,7 +1244,7 @@ QString Index::sql(const QString& schema, bool ifNotExists) const
 FieldInfoList Index::fieldInformation() const
 {
     FieldInfoList result;
-    foreach(IndexedColumnPtr c, m_columns)
+    for(const IndexedColumnPtr& c : m_columns)
         result.append({c->name(), c->order(), c->toString("  ", " ")});
     return result;
 }
@@ -1437,7 +1436,7 @@ QStringList View::fieldNames() const
 {
     QStringList sl;
 
-    foreach(FieldPtr f, m_fields)
+    for(const FieldPtr& f : m_fields)
         sl << f->name();
 
     return sl;
@@ -1446,7 +1445,7 @@ QStringList View::fieldNames() const
 FieldInfoList View::fieldInformation() const
 {
     FieldInfoList result;
-    foreach(FieldPtr f, m_fields)
+    for(const FieldPtr& f : m_fields)
         result.append({f->name(), f->type(), f->toString("  ", " ")});
     return result;
 }

@@ -128,7 +128,7 @@ Application::Application(int& argc, char** argv) :
         if(m_mainWindow->fileOpen(fileToOpen))
         {
             // If database could be opened run the SQL scripts
-            foreach(const QString& f, sqlToExecute)
+            for(const QString& f : sqlToExecute)
             {
                 QFile file(f);
                 if(file.open(QIODevice::ReadOnly))

@@ -32,7 +32,7 @@ RemoteDatabase::RemoteDatabase() :
     QDir dirCaCerts(":/certs");
     QStringList caCertsList = dirCaCerts.entryList();
     QList<QSslCertificate> caCerts;
-    foreach(const QString& caCertName, caCertsList)
+    for(const QString& caCertName : caCertsList)
         caCerts += QSslCertificate::fromPath(":/certs/" + caCertName);
     m_sslConfiguration.setCaCertificates(caCerts);
 
@@ -60,7 +60,7 @@ void RemoteDatabase::reloadSettings()
     // Load all configured client certificates
     m_clientCertFiles.clear();
     auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
-    foreach(const QString& path, client_certs)
+    for(const QString& path : client_certs)
     {
         QFile file(path);
         file.open(QFile::ReadOnly);
@@ -240,7 +240,7 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
 {
     // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
     bool serious_errors = false;
-    foreach(const QSslError& error, errors)
+    for(const QSslError& error : errors)
     {
         if(error.error() != QSslError::SelfSignedCertificate)
         {

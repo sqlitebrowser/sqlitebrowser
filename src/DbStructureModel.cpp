@@ -192,7 +192,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 {
     // Loop through selected indices
     QByteArray d;
-    foreach(QModelIndex index, indices)
+    for(const QModelIndex& index : indices)
     {
         // Only export data for valid indices and only for the SQL column, i.e. only once per row
         if(index.isValid() && index.column() == ColumnSQL)
@@ -306,11 +306,11 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
             if((*it)->type() == sqlb::Object::Types::Table)
             {
                 sqlb::FieldVector pk = (*it).dynamicCast<sqlb::Table>()->primaryKey();
-                foreach(sqlb::FieldPtr pk_col, pk)
+                for(const sqlb::FieldPtr& pk_col : pk)
                     pk_columns.push_back(pk_col->name());
 
             }
-            foreach(const sqlb::FieldInfo& field, fieldList)
+            for(const sqlb::FieldInfo& field : fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
                 fldItem->setText(ColumnName, field.name);

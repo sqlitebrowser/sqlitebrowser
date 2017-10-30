@@ -77,7 +77,7 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
                     << "REAL"
                     << "TEXT"
                     << "BLOB";
-            foreach(const sqlb::FieldPtr fld,  t->fields())
+            for(const sqlb::FieldPtr& fld :  t->fields())
             {
                 QString name(fld->type().toUpper());
                 int colType = dataTypes.indexOf(name);

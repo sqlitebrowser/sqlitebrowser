@@ -412,7 +412,7 @@ void MainWindow::populateStructure()
             QString objectname = (*it)->name();
 
             sqlb::FieldInfoList fi = (*it)->fieldInformation();
-            foreach(const sqlb::FieldInfo& f, fi)
+            for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
     }
@@ -1182,7 +1182,7 @@ void MainWindow::importTableFromCSV()
                             tr("Text files(*.csv *.txt);;All files(*)"));
 
     QStringList validFiles;
-    foreach(auto file, wFiles) {
+    for(const auto& file : wFiles) {
         if (QFile::exists(file))
             validFiles.append(file);
     }
@@ -1481,7 +1481,7 @@ void MainWindow::addToRecentFilesMenu(const QString& filename)
 
     Settings::setValue("General", "recentFileList", files);
 
-    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+    for(QWidget* widget : QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
         if (mainWin)
             mainWin->updateRecentFileActions();
@@ -1833,7 +1833,7 @@ void MainWindow::loadExtensionsFromSettings()
         return;
 
     QStringList list = Settings::getValue("extensions", "list").toStringList();
-    foreach(QString ext, list)
+    for(const QString& ext : list)
     {
         if(db.loadExtension(ext) == false)
             QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
@@ -1972,7 +1972,7 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
     else
     {
         ui->dataTable->blockSignals(true);
-        foreach (int col, selectedCols)
+        for(int col : selectedCols)
         {
             ui->dataTable->setColumnWidth(col, new_size);
             browseTableSettings[tableName].columnWidths[col] = new_size;
@@ -2583,7 +2583,7 @@ void MainWindow::hideColumns(int column, bool hide)
     }
 
     // (Un)hide requested column(s)
-    foreach(int col, columns)
+    for(int col : columns)
     {
         ui->dataTable->setColumnHidden(col, hide);
         if(!hide)

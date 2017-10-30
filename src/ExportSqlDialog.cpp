@@ -105,7 +105,7 @@ void ExportSqlDialog::accept()
     settings.endGroup();
 
     QStringList tables;
-    foreach (const QListWidgetItem * item, ui->listTables->selectedItems())
+    for(const QListWidgetItem* item : ui->listTables->selectedItems())
         tables.push_back(item->text());
 
     // Check what to export. The indices here depend on the order of the items in the combobox in the ui file

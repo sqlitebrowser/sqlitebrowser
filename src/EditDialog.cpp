@@ -525,7 +525,7 @@ QString EditDialog::humanReadableSize(double byteCount) const
     QStringList units;
     units << "" << "Ki" << "Mi" << "Gi" << "Ti" << "Pi" << "Ei" << "Zi";
 
-    foreach(const QString& unit, units)
+    for(const QString& unit : units)
     {
         if(fabs(byteCount) < 1024.0)
         {
