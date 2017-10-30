@@ -103,7 +103,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     // Check if request was successful
     if(reply->error() != QNetworkReply::NoError)
     {
-        QMessageBox::warning(0, qApp->applicationName(),
+        QMessageBox::warning(nullptr, qApp->applicationName(),
                              tr("Error when connecting to %1.\n%2").arg(reply->url().toString()).arg(reply->errorString()));
         reply->deleteLater();
         return;
@@ -258,7 +258,7 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
 
     // Build an error message and short it to the user
     QString message = tr("Error opening remote file at %1.\n%2").arg(reply->url().toString()).arg(errors.at(0).errorString());
-    QMessageBox::warning(0, qApp->applicationName(), message);
+    QMessageBox::warning(nullptr, qApp->applicationName(), message);
 
     // Delete reply later, i.e. after returning from this slot function
     if(m_progress)
@@ -330,7 +330,7 @@ bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientC
     const QSslCertificate& cert = m_clientCertFiles[clientCert];
     if(cert.isNull())
     {
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Invalid client certificate specified."));
+        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error: Invalid client certificate specified."));
         return false;
     }
 
@@ -342,7 +342,7 @@ bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientC
     {
         // If the private key couldn't be read, we assume it's password protected. So ask the user for the correct password and try reading it
         // again. If the user cancels the password dialog, abort the whole process.
-        QString password = QInputDialog::getText(0, qApp->applicationName(), tr("Please enter the passphrase for this client certificate in order to authenticate."));
+        QString password = QInputDialog::getText(nullptr, qApp->applicationName(), tr("Please enter the passphrase for this client certificate in order to authenticate."));
         if(password.isEmpty())
             return false;
         clientKey = QSslKey(&fileClientCert, QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey, password.toUtf8());
@@ -389,7 +389,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
     {
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: The network is not accessible."));
+        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error: The network is not accessible."));
         return;
     }
 
@@ -442,7 +442,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
     {
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: The network is not accessible."));
+        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error: The network is not accessible."));
         return;
     }
 
@@ -451,7 +451,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     if(!file->open(QFile::ReadOnly))
     {
         delete file;
-        QMessageBox::warning(0, qApp->applicationName(), tr("Error: Cannot open the file for sending."));
+        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error: Cannot open the file for sending."));
         return;
     }
 
@@ -591,7 +591,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
         // Insert database into local database list
         QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file) VALUES(?, ?, ?, ?, ?)");
         sqlite3_stmt* stmt;
-        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
 
         if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
@@ -644,7 +644,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
 
         QString sql = QString("UPDATE local SET commit_id=? WHERE identity=? AND url=?");
         sqlite3_stmt* stmt;
-        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
 
         if(sqlite3_bind_text(stmt, 1, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
@@ -694,7 +694,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     // Query commit id and filename for the given combination of url and identity
     QString sql = QString("SELECT id, commit_id, file FROM local WHERE url=? AND identity=?");
     sqlite3_stmt* stmt;
-    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
         return QString();
 
     if(sqlite3_bind_text(stmt, 1, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(), url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().length(), SQLITE_TRANSIENT))
@@ -757,7 +757,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
             // files are all in the same directory and their names need to be unique because of this.
             QString sql = QString("DELETE FROM local WHERE file=?");
             sqlite3_stmt* stmt;
-            if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+            if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
                 return QString();
             if(sqlite3_bind_text(stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
             {
@@ -795,7 +795,7 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
         // be unique for the entire table because the files are all in the same directory and their names need to be unique because of this.
         QString sql = QString("DELETE FROM local WHERE file=?");
         sqlite3_stmt* stmt;
-        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, 0) != SQLITE_OK)
+        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
         if(sqlite3_bind_text(stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
         {

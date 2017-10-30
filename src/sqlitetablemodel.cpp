@@ -368,7 +368,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
             return true;
         } else {
             lock.unlock();
-            QMessageBox::warning(0, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db.lastError()));
+            QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db.lastError()));
             return false;
         }
     }

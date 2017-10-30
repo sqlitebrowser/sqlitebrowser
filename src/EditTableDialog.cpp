@@ -604,7 +604,7 @@ void EditTableDialog::removeField()
         {
             if(!pdb.renameColumn(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
-                QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
+                QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
             } else {
                 //relayout
                 m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
@@ -688,7 +688,7 @@ void EditTableDialog::moveCurrentField(bool down)
                     (down ? 1 : -1)
                 ))
         {
-            QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
+            QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
         } else {
             // Reload table SQL
             m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());

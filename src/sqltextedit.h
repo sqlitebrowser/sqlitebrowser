@@ -14,7 +14,7 @@ class SqlTextEdit : public QsciScintilla
     Q_OBJECT
 
 public:
-    explicit SqlTextEdit(QWidget *parent = 0);
+    explicit SqlTextEdit(QWidget *parent = nullptr);
     virtual ~SqlTextEdit();
 
     static SqlUiLexer* sqlLexer;

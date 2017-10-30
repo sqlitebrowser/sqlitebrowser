@@ -430,7 +430,7 @@ void MainWindow::clearTableBrowser()
     if (!ui->dataTable->model())
         return;
 
-    ui->dataTable->setModel(0);
+    ui->dataTable->setModel(nullptr);
     if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
         qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
 }
@@ -455,7 +455,7 @@ void MainWindow::populateTable()
 
     // Set model
     bool reconnectSelectionSignals = false;
-    if(ui->dataTable->model() == 0)
+    if(ui->dataTable->model() == nullptr)
         reconnectSelectionSignals = true;
     ui->dataTable->setModel(m_browseTableModel);
     if(reconnectSelectionSignals)
@@ -594,7 +594,7 @@ bool MainWindow::fileClose()
     setRecordsetLabel();
 
     // Reset the plot dock model
-    plotDock->updatePlot(0);
+    plotDock->updatePlot(nullptr);
 
     activateFields(false);
 
@@ -2240,7 +2240,7 @@ void MainWindow::editEncryption()
         // Show progress dialog even though we can't provide any detailed progress information but this
         // process might take some time.
         QProgressDialog progress(this);
-        progress.setCancelButton(0);
+        progress.setCancelButton(nullptr);
         progress.setWindowModality(Qt::ApplicationModal);
         progress.show();
         qApp->processEvents();

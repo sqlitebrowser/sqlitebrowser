@@ -6,7 +6,7 @@ CSVParser::CSVParser(bool trimfields, char fieldseparator, char quotechar)
     : m_bTrimFields(trimfields)
     , m_cFieldSeparator(fieldseparator)
     , m_cQuoteChar(quotechar)
-    , m_pCSVProgress(0)
+    , m_pCSVProgress(nullptr)
     , m_nBufferSize(4096)
 {
 }
@@ -120,7 +120,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
         m_pCSVProgress->start();
 
     // Initialise row buffer and get pointer to the first field
-    record = { 0, 0, 0 };
+    record = { nullptr, 0, 0 };
     increaseRowSize(record);
     field = record.fields;
 

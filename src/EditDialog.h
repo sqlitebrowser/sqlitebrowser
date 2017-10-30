@@ -15,7 +15,7 @@ class EditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditDialog(QWidget* parent = 0);
+    explicit EditDialog(QWidget* parent = nullptr);
     ~EditDialog();
 
     void setCurrentIndex(const QModelIndex& idx);
