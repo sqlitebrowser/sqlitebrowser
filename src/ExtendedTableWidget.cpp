@@ -94,7 +94,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Set up context menu actions
-    connect(this, static_cast<void(QTableView::*)(const QPoint&)>(&QTableView::customContextMenuRequested),
+    connect(this, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos)
     {
         // Try to find out whether the current view is editable and (de)activate menu options according to that
