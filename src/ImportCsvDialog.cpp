@@ -3,6 +3,7 @@
 #include "sqlitedb.h"
 #include "csvparser.h"
 #include "sqlite.h"
+#include "Settings.h"
 
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -13,7 +14,6 @@
 #include <QComboBox>
 #include <QFile>
 #include <QTextStream>
-#include <QSettings>
 #include <QFileInfo>
 #include <memory>
 
@@ -54,13 +54,12 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
 
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
-    ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
-    ui->checkBoxSeparateTables->setChecked(settings.value("importcsv/separatetables", false).toBool());
-    setSeparatorChar(QChar(settings.value("importcsv/separator", ',').toInt()));
-    setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
-    setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
+    ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
+    ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
+    ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
+    setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
+    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
+    setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
@@ -157,16 +156,13 @@ private:
 
 void ImportCsvDialog::accept()
 {
-    // save settings
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup("importcsv");
-    settings.setValue("firstrowheader", ui->checkboxHeader->isChecked());
-    settings.setValue("separator", currentSeparatorChar());
-    settings.setValue("quotecharacter", currentQuoteChar());
-    settings.setValue("trimfields", ui->checkBoxTrimFields->isChecked());
-    settings.setValue("separatetables", ui->checkBoxSeparateTables->isChecked());
-    settings.setValue("encoding", currentEncoding());
-    settings.endGroup();
+    // Save settings
+    Settings::setValue("importcsv", "firstrowheader", ui->checkboxHeader->isChecked());
+    Settings::setValue("importcsv", "separator", currentSeparatorChar());
+    Settings::setValue("importcsv", "quotecharacter", currentQuoteChar());
+    Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
+    Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
+    Settings::setValue("importcsv", "encoding", currentEncoding());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())

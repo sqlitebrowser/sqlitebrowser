@@ -35,7 +35,6 @@
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 #include <QElapsedTimer>
-#include <QSettings>
 #include <QMimeData>
 #include <QColorDialog>
 #include <QDesktopServices>
@@ -1909,10 +1908,9 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
 
     if(newversion)
     {
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        int ignmajor = settings.value("checkversion/ignmajor", 999).toInt();
-        int ignminor = settings.value("checkversion/ignminor", 0).toInt();
-        int ignpatch = settings.value("checkversion/ignpatch", 0).toInt();
+        int ignmajor = Settings::getValue("checkversion", "ignmajor").toInt();
+        int ignminor = Settings::getValue("checkversion", "ignminor").toInt();
+        int ignpatch = Settings::getValue("checkversion", "ignpatch").toInt();
 
         // check if the user doesn't care about the current update
         if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
@@ -1930,11 +1928,9 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
             if(msgBox.clickedButton() == idontcarebutton)
             {
                 // save that the user don't want to get bothered about this update
-                settings.beginGroup("checkversion");
-                settings.setValue("ignmajor", major);
-                settings.setValue("ignminor", minor);
-                settings.setValue("ignpatch", patch);
-                settings.endGroup();
+                Settings::setValue("checkversion", "ignmajor", major);
+                Settings::setValue("checkversion", "ignminor", minor);
+                Settings::setValue("checkversion", "ignpatch", patch);
             }
         }
     }
