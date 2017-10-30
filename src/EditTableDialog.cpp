@@ -76,7 +76,7 @@ void EditTableDialog::keyPressEvent(QKeyEvent *evt)
     if((evt->modifiers() & Qt::ControlModifier)
             && (evt->key() == Qt::Key_Enter || evt->key() == Qt::Key_Return))
     {
-        emit accept();
+        accept();
         return;
     }
     if(evt->key() == Qt::Key_Enter || evt->key() == Qt::Key_Return)

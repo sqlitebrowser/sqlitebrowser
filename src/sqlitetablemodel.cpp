@@ -364,7 +364,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
                 m_data[index.row()].replace(index.column(), newValue);
 
             lock.unlock();
-            emit(dataChanged(index, index));
+            emit dataChanged(index, index);
             return true;
         } else {
             lock.unlock();
