@@ -18,6 +18,8 @@ public:
 
     MainWindow* mainWindow() { return m_mainWindow; }
 
+    static QString versionString();
+
 protected:
     bool event(QEvent* event);
 
