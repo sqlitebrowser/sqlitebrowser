@@ -717,6 +717,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     QString val, val2;
     QString escape;
     bool numeric = false, ok = false;
+
     // range/BETWEEN operator
     if (value.contains("~")) {
         int sepIdx = value.indexOf('~');
@@ -739,11 +740,16 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
             // Check if we're filtering for '<> NULL'. In this case we need a special comparison operator.
             if(value.left(2) == "<>" && value.mid(2) == "NULL")
             {
-                // We are filtering for '<> NULL'. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
+                // We are filtering for '<>NULL'. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
                 // in order to avoid putting quotes around it.
                 op = "IS NOT";
                 numeric = true;
                 val = "NULL";
+            } else if(value.left(2) == "<>" && value.mid(2) == "''") {
+                // We are filtering for "<>''", i.e. for everything which is not an empty string
+                op = "<>";
+                numeric = true;
+                val = "''";
             } else {
                 bool ok;
                 value.mid(2).toFloat(&ok);
@@ -799,13 +805,15 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     }
     if(val.isEmpty())
         val = value;
-    if(!numeric)
-        val = QString("'%1'").arg(val.replace("'", "''"));
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(val == "''" || val == "'%'" || val == "'%%'")
+    if(val == "" || val == "%" || val == "%%")
         m_mWhere.remove(column);
     else {
+        // Quote and escape value, but only if it's not numeric and not the empty string sequence
+        if(!numeric && val != "''")
+            val = QString("'%1'").arg(val.replace("'", "''"));
+
         QString whereClause(op + " " + QString(encode(val.toUtf8())));
         if (!val2.isEmpty())
             whereClause += " AND " + QString(encode(val2.toUtf8()));
