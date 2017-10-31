@@ -37,7 +37,7 @@ public:
     {
     }
 
-    ObjectIdentifier(QVariant variant)
+    explicit ObjectIdentifier(QVariant variant)
     {
         QStringList str = variant.toStringList();
         m_schema = str.first();
@@ -197,7 +197,7 @@ public:
         CheckConstraintType,
     };
 
-    Constraint(const QString& name = QString())
+    explicit Constraint(const QString& name = QString())
         : m_name(name)
     {
     }
@@ -273,7 +273,7 @@ public:
 class CheckConstraint : public Constraint
 {
 public:
-    CheckConstraint(const QString& expr = QString())
+    explicit CheckConstraint(const QString& expr = QString())
         : m_expression(expr)
     {
     }

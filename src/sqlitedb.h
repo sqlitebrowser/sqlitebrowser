@@ -137,7 +137,7 @@ private:
     class NoStructureUpdateChecks
     {
     public:
-        NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.dontCheckForStructureUpdates = true; }
+        explicit NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.dontCheckForStructureUpdates = true; }
         ~NoStructureUpdateChecks() { m_db.dontCheckForStructureUpdates = false; }
 
     private:

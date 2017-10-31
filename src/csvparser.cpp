@@ -128,7 +128,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
     class FieldBufferDealloc
     {
     public:
-        FieldBufferDealloc(CSVRow& row) : m_row(row) {}
+        explicit FieldBufferDealloc(CSVRow& row) : m_row(row) {}
         ~FieldBufferDealloc()
         {
             for(size_t i=0;i<m_row.max_num_fields;i++)
