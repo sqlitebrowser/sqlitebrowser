@@ -50,15 +50,15 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
         updateSqlCode();
     } else {
         QString formatName;
-	foreach (const QString &formatKey, formatFunctions.keys()) {
-	    if(current_format == formatFunctions.value(formatKey)) {
-	        formatName = formatKey;
-		break;
-	    }
-	}
+        for(auto& formatKey : formatFunctions.keys()) {
+            if(current_format == formatFunctions.value(formatKey)) {
+                formatName = formatKey;
+                break;
+            }
+        }
 
         if(formatName.isEmpty()) {
-	    ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
+            ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
             ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
             formatName = "custom";
         }
