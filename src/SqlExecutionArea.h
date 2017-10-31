@@ -17,7 +17,7 @@ class SqlExecutionArea : public QWidget
     Q_OBJECT
 
 public:
-    explicit SqlExecutionArea(DBBrowserDB& _db, QWidget* parent = Q_NULLPTR);
+    explicit SqlExecutionArea(DBBrowserDB& _db, QWidget* parent = nullptr);
     ~SqlExecutionArea();
 
     QString getSql() const;

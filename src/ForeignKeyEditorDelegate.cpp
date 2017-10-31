@@ -11,7 +11,7 @@ class ForeignKeyEditor : public QWidget
     Q_OBJECT
 
 public:
-    explicit ForeignKeyEditor(QWidget* parent = Q_NULLPTR)
+    explicit ForeignKeyEditor(QWidget* parent = nullptr)
         : QWidget(parent)
         , tablesComboBox(new QComboBox(this))
         , idsComboBox(new QComboBox(this))
