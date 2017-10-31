@@ -336,14 +336,13 @@ void ImportCsvDialog::matchSimilar()
     {
         auto item = ui->filePicker->item(i);
         auto header = generateFieldList(item->data(Qt::DisplayRole).toString());
-        bool matchingHeader = false;
 
         if (selectedHeader.count() == header.count())
         {
-            matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
-                                        [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
-                                            return (item1->name() == item2->name());
-                                        });
+            bool matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
+                                             [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
+                                                return (item1->name() == item2->name());
+                                             });
             if (matchingHeader) {
                 item->setCheckState(Qt::Checked);
                 item->setBackgroundColor(Qt::green);
