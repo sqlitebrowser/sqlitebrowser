@@ -61,6 +61,13 @@ Application::Application(int& argc, char** argv) :
         m_translatorQt = nullptr;
     }
 
+    // On Windows, add the plugins subdirectory to the list of library directories. We need this
+    // for Qt to search for more image format plugins.
+#ifdef Q_WS_WIN
+    QApplication::addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+#endif
+
+
     // Parse command line
     QString fileToOpen;
     QString tableToBrowse;
