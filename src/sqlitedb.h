@@ -111,6 +111,9 @@ public:
 
     QString generateSavepointName(const QString& identifier = QString()) const;
 
+    // This function generates the name for a temporary table. It guarantees that there is no table with this name yet
+    QString generateTemporaryTableName(const QString& schema) const;
+
     sqlite3 * _db;
 
     schemaMap schemata;

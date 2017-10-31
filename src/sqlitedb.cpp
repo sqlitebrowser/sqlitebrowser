@@ -14,6 +14,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <functional>
+#include <atomic>
 
 // Helper template to allow turning member functions into a C-style function pointer
 // See https://stackoverflow.com/questions/19808054/convert-c-function-pointer-to-c-function-pointer/19809787
@@ -1140,7 +1141,8 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     // Its layout is exactly the same as the one of the table to change - except for the column to change
     // of course, and the table constraints which are copied from the table parameter.
     sqlb::Table newSchema = *oldSchema;
-    newSchema.setName("sqlitebrowser_rename_column_new_table");
+    QString temp_table_name = generateTemporaryTableName(newSchemaName);
+    newSchema.setName(temp_table_name);
     newSchema.setConstraints(table.allConstraints());
     newSchema.setRowidColumn(table.rowidColumn());
     QString select_cols;
@@ -1187,8 +1189,9 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO %1.sqlitebrowser_rename_column_new_table SELECT %2 FROM %3;")
+    if(!executeSQL(QString("INSERT INTO %1.%2 SELECT %3 FROM %4;")
                    .arg(sqlb::escapeIdentifier(newSchemaName))
+                   .arg(sqlb::escapeIdentifier(temp_table_name))
                    .arg(select_cols)
                    .arg(tablename.toString())))
     {
@@ -1256,7 +1259,7 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     }
 
     // Rename the temporary table
-    if(!renameTable(newSchemaName, "sqlitebrowser_rename_column_new_table", tablename.name()))
+    if(!renameTable(newSchemaName, temp_table_name, tablename.name()))
     {
         revertToSavepoint(savepointName);
         return false;
@@ -1592,4 +1595,19 @@ QString DBBrowserDB::generateSavepointName(const QString& identifier) const
 {
     // Generate some sort of unique name for a savepoint for internal use.
     return QString("db4s_%1_%2").arg(identifier).arg(QDateTime::currentMSecsSinceEpoch());
+}
+
+QString DBBrowserDB::generateTemporaryTableName(const QString& schema) const
+{
+    // We're using a static variable as a counter here instead of checking from the beginning onwards every time. This has
+    // two reasons: 1) It makes the function thread-safe, and 2) it saves us some time because in case older temporary tables
+    // are still in use. Both reasons don't matter too much for now, but just in case...
+    static std::atomic_uint counter;
+
+    while(true)
+    {
+        QString table_name = QString("sqlb_temp_table_%1").arg(++counter);
+        if(!getObjectByName(sqlb::ObjectIdentifier(schema, table_name)))
+            return table_name;
+    }
 }
