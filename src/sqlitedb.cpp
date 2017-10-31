@@ -1297,6 +1297,28 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
 
 bool DBBrowserDB::renameTable(const QString& schema, const QString& from_table, const QString& to_table)
 {
+    // Do nothing if table names are the same
+    if(from_table == to_table)
+        return true;
+
+    // Check if table names only differ in case. If they do, we have to rename the table twice because SQLite can't rename 'table' to 'Table'.
+    // To solve this we rename 'table' to 'some temp name' and then 'some temp name' to 'Table'.
+    if(from_table.compare(to_table, Qt::CaseInsensitive) == 0)
+    {
+        // Generate a temporary table name and rename the table via that by recusrively calling this function
+        QString temp_name = generateTemporaryTableName(schema);
+        if(!renameTable(schema, from_table, temp_name))
+            return false;
+        if(!renameTable(schema, temp_name, to_table))
+            return false;
+
+        // Exit here
+        return true;
+    }
+
+    // The old and the new table names differ (and that not only in case)
+
+    // Rename the table
     QString sql = QString("ALTER TABLE %1.%2 RENAME TO %3")
             .arg(sqlb::escapeIdentifier(schema))
             .arg(sqlb::escapeIdentifier(from_table))
