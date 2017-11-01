@@ -361,9 +361,10 @@ void ExtendedTableWidget::useAsFilter()
 
     if (data.isNull())
         m_tableHeader->setFilter(index.column(), "=NULL");
+    else if (data.toString().isEmpty())
+        m_tableHeader->setFilter(index.column(), "=''");
     else
         m_tableHeader->setFilter(index.column(), "=" + data.toString());
-
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
