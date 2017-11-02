@@ -1090,7 +1090,6 @@ void MainWindow::executeQuery()
                 ui->actionSqlResultsSave->setEnabled(true);
                 ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
 
-                statusMessage = tr("Query executed successfully: %1 (took %2ms)").arg(queryPart.trimmed()).arg(timer.elapsed());
                 sql3status = SQLITE_OK;
                 break;
             }
