@@ -57,8 +57,8 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
-    setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
-    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
+    setSeparatorChar(Settings::getValue("importcsv", "separator").toInt());
+    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toInt());
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
