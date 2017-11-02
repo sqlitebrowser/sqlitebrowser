@@ -117,13 +117,14 @@ void rollback(
 class CSVImportProgress : public CSVProgress
 {
 public:
-    explicit CSVImportProgress(qint64 filesize)
+    explicit CSVImportProgress(unsigned long long filesize)
+        : totalFileSize(filesize)
     {
         m_pProgressDlg = new QProgressDialog(
                     QObject::tr("Importing CSV file..."),
                     QObject::tr("Cancel"),
                     0,
-                    filesize);
+                    10000);
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
     }
 
@@ -139,7 +140,7 @@ public:
 
     bool update(unsigned long long pos)
     {
-        m_pProgressDlg->setValue(pos);
+        m_pProgressDlg->setValue(static_cast<int>((static_cast<float>(pos) / static_cast<float>(totalFileSize)) * 10000.0f));
         qApp->processEvents();
 
         return !m_pProgressDlg->wasCanceled();
@@ -152,6 +153,8 @@ public:
 
 private:
     QProgressDialog* m_pProgressDlg;
+
+    unsigned long long totalFileSize;
 };
 
 void ImportCsvDialog::accept()
