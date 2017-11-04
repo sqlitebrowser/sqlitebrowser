@@ -83,6 +83,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu = new QMenu(this);
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
+    QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/copy"), tr("Copy with Headers"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
     QAction* filterAction = new QAction(tr("Use as Filter"), m_contextMenu);
     m_contextMenu->addAction(filterAction);
@@ -90,6 +91,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addAction(nullAction);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(copyAction);
+    m_contextMenu->addAction(copyWithHeadersAction);
     m_contextMenu->addAction(pasteAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -113,7 +115,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
             model()->setData(index, QVariant());
     });
     connect(copyAction, &QAction::triggered, [&]() {
-       copy();
+       copy(false);
+    });
+    connect(copyWithHeadersAction, &QAction::triggered, [&]() {
+       copy(true);
     });
     connect(pasteAction, &QAction::triggered, [&]() {
        paste();
@@ -131,7 +136,7 @@ void ExtendedTableWidget::reloadSettings()
     verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
 }
 
-void ExtendedTableWidget::copy()
+void ExtendedTableWidget::copy(const bool withHeaders)
 {
     QModelIndexList indices = selectionModel()->selectedIndexes();
 
@@ -165,6 +170,8 @@ void ExtendedTableWidget::copy()
 
             if (text.contains('\n'))
                 text = QString("\"%1\"").arg(text);
+            if (withHeaders)
+                text.prepend(model()->headerData(indices.front().column(), Qt::Horizontal, Qt::DisplayRole).toString() + "\r\n");
             qApp->clipboard()->setText(text);
             return;
         }
@@ -200,6 +207,16 @@ void ExtendedTableWidget::copy()
     QString result;
     int currentRow = 0;
 
+    if (withHeaders) {
+        int firstColumn = indices.front().column();
+        for(int i = firstColumn; i <= indices.back().column(); i++) {
+            QString headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+            if (i != firstColumn)
+                result.append("\t");
+            result.append(QString("\"%1\"").arg(headerText));
+        }
+        result.append("\r\n");
+    }
     for(const QModelIndex& index : indices) {
         if (first == index) { /* first index */ }
         else if (index.row() != currentRow)

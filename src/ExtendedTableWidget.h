@@ -31,7 +31,7 @@ signals:
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
 
 private:
-    void copy();
+    void copy(const bool withHeaders = false);
     void paste();
     void useAsFilter();
 
