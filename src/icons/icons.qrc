@@ -60,5 +60,6 @@
         <file alias="find">page_find.png</file>
         <file alias="close">cross.png</file>
         <file alias="special_copy">page_white_copy.png</file>
+        <file alias="filters">filters.png</file>
     </qresource>
 </RCC>

@@ -216,6 +216,11 @@ int SqliteTableModel::columnCount(const QModelIndex&) const
     return m_headers.size();
 }
 
+int SqliteTableModel::filterCount() const
+{
+    return m_mWhere.size();
+}
+
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
