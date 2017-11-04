@@ -77,7 +77,7 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
                     << "REAL"
                     << "TEXT"
                     << "BLOB";
-            foreach(const sqlb::FieldPtr fld,  t->fields())
+            for(const sqlb::FieldPtr& fld :  t->fields())
             {
                 QString name(fld->type().toUpper());
                 int colType = dataTypes.indexOf(name);
@@ -369,11 +369,11 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
                 m_data[index.row()].replace(index.column(), newValue);
 
             lock.unlock();
-            emit(dataChanged(index, index));
+            emit dataChanged(index, index);
             return true;
         } else {
             lock.unlock();
-            QMessageBox::warning(0, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db.lastError()));
+            QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error changing data:\n%1").arg(m_db.lastError()));
             return false;
         }
     }
@@ -722,6 +722,7 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     QString val, val2;
     QString escape;
     bool numeric = false, ok = false;
+
     // range/BETWEEN operator
     if (value.contains("~")) {
         int sepIdx = value.indexOf('~');
@@ -744,11 +745,16 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
             // Check if we're filtering for '<> NULL'. In this case we need a special comparison operator.
             if(value.left(2) == "<>" && value.mid(2) == "NULL")
             {
-                // We are filtering for '<> NULL'. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
+                // We are filtering for '<>NULL'. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
                 // in order to avoid putting quotes around it.
                 op = "IS NOT";
                 numeric = true;
                 val = "NULL";
+            } else if(value.left(2) == "<>" && value.mid(2) == "''") {
+                // We are filtering for "<>''", i.e. for everything which is not an empty string
+                op = "<>";
+                numeric = true;
+                val = "''";
             } else {
                 bool ok;
                 value.mid(2).toFloat(&ok);
@@ -804,13 +810,15 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     }
     if(val.isEmpty())
         val = value;
-    if(!numeric)
-        val = QString("'%1'").arg(val.replace("'", "''"));
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(val == "''" || val == "'%'" || val == "'%%'")
+    if(val == "" || val == "%" || val == "%%")
         m_mWhere.remove(column);
     else {
+        // Quote and escape value, but only if it's not numeric and not the empty string sequence
+        if(!numeric && val != "''")
+            val = QString("'%1'").arg(val.replace("'", "''"));
+
         QString whereClause(op + " " + QString(encode(val.toUtf8())));
         if (!val2.isEmpty())
             whereClause += " AND " + QString(encode(val2.toUtf8()));
@@ -844,7 +852,10 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    return m_data.at(index.row()).at(index.column()).left(1024).contains('\0');
+    // We're using the same way to detect binary data here as in the EditDialog class. For performance reasons we're only looking at
+    // the first couple of bytes though.
+    QByteArray data = m_data.at(index.row()).at(index.column()).left(512);
+    return QString(data).toUtf8() != data;
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const

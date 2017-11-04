@@ -22,7 +22,7 @@ public:
         ExportFormatJson,
     };
 
-    explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = 0,
+    explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = nullptr,
                               const QString& query = "", const sqlb::ObjectIdentifier& selection = sqlb::ObjectIdentifier());
     ~ExportDataDialog();
 

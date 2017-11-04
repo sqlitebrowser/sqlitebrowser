@@ -386,7 +386,12 @@ void QsciScintilla::callTip()
         ct = ct_entries.join("\n");
     }
 
-    QByteArray ct_ba = ct.toLatin1();
+    QByteArray ct_ba;
+    if (isUtf8())
+        ct_ba = ct.toUtf8();
+    else
+        ct_ba = ct.toLatin1();
+
     const char *cts = ct_ba.data();
 
     SendScintilla(SCI_CALLTIPSHOW, adjustedCallTipPosition(shift), cts);

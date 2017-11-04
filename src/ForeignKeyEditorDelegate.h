@@ -18,7 +18,7 @@ class ForeignKeyEditorDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::Table& table, QObject* parent = Q_NULLPTR);
+    explicit ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::Table& table, QObject* parent = nullptr);
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
     void setEditorData(QWidget* editor, const QModelIndex& index) const Q_DECL_OVERRIDE;

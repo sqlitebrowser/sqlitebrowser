@@ -17,7 +17,7 @@ class EditIndexDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& indexName, bool createIndex, QWidget* parent = 0);
+    explicit EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& indexName, bool createIndex, QWidget* parent = nullptr);
     ~EditIndexDialog();
 
 private slots:

@@ -12,7 +12,7 @@ class DbStructureModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit DbStructureModel(DBBrowserDB& db, QObject* parent = 0);
+    explicit DbStructureModel(DBBrowserDB& db, QObject* parent = nullptr);
     ~DbStructureModel();
 
     void reloadData();

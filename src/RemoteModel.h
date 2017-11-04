@@ -22,7 +22,7 @@ enum RemoteModelColumns
 class RemoteModelItem
 {
 public:
-    RemoteModelItem(RemoteModelItem* parent = nullptr);
+    explicit RemoteModelItem(RemoteModelItem* parent = nullptr);
     ~RemoteModelItem();
 
     QVariant value(RemoteModelColumns column) const;

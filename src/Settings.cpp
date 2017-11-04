@@ -90,6 +90,32 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "exportcsv" && name == "quotecharacter")
         return '"';
 
+    // importcsv group?
+    if(group == "importcsv")
+    {
+        if(name == "firstrowheader")
+            return false;
+        if(name == "trimfields")
+            return true;
+        if(name == "separatetables")
+            return false;
+        if(name == "separator")
+            return ',';
+        if(name == "quotecharacter")
+            return '"';
+        if(name == "encoding")
+            return "UTF-8";
+    }
+
+    // exportsql group?
+    if(group == "exportsql")
+    {
+        if(name == "insertcolnames" || name == "insertmultiple")
+            return false;
+        if(name == "oldschema")
+            return 0;
+    }
+
     // newline character
     if (group == "exportcsv" && name == "newlinecharacters")
 #ifdef Q_OS_WIN
@@ -122,9 +148,16 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "General" && name == "language")
         return QLocale::system().name();
 
-    // checkversion/enabled
-    if(group == "checkversion" && name == "enabled")
-        return true;
+    // checkversion group?
+    if(group == "checkversion")
+    {
+        if(name == "enabled")
+            return true;
+        if(name == "ignmajor")
+            return 999;
+        if(name == "ignminor" || name == "ignpatch")
+            return 0;
+    }
 
     // Data Browser/NULL Fields
     if(group == "databrowser")

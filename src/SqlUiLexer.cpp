@@ -47,7 +47,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "WHERE" << "WITH" << "WITHOUT"
             // Data types
             << "INT" << "INTEGER" << "REAL" << "TEXT" << "BLOB" << "NUMERIC" << "CHAR";
-    foreach(const QString& keyword, keywordPatterns)
+    for(const QString& keyword : keywordPatterns)
     {
         autocompleteApi->add(keyword + "?" + QString::number(ApiCompleterIconIdKeyword));
         autocompleteApi->add(keyword.toLower() + "?" + QString::number(ApiCompleterIconIdKeyword));
@@ -113,7 +113,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "total" + tr("(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.");
 
     listFunctions.clear();
-    foreach(const QString& keyword, functionPatterns)
+    for(const QString& keyword : functionPatterns)
     {
         QString fn = keyword.left(keyword.indexOf('('));
         QString descr = keyword.mid(keyword.indexOf('('));
@@ -134,7 +134,7 @@ void SqlUiLexer::setTableNames(const TablesAndColumnsMap& tables)
     setupAutoCompletion();
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
     {
-        foreach(const QString& field, it.value())
+        for(const QString& field : it.value())
             autocompleteApi->add(it.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
                                  field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
 

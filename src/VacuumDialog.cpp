@@ -45,7 +45,7 @@ void VacuumDialog::accept()
 
     // Loop through all selected databases and vacuum them individually
     QList<QTreeWidgetItem*> selection = ui->treeDatabases->selectedItems();
-    foreach(QTreeWidgetItem* item, selection)
+    for(const QTreeWidgetItem* item : selection)
         db->executeSQL(QString("VACUUM %1;").arg(sqlb::escapeIdentifier(item->text(0))), false);
 
     QApplication::restoreOverrideCursor();

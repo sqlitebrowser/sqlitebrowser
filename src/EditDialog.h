@@ -15,7 +15,7 @@ class EditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditDialog(QWidget* parent = 0);
+    explicit EditDialog(QWidget* parent = nullptr);
     ~EditDialog();
 
     void setCurrentIndex(const QModelIndex& idx);
@@ -35,13 +35,11 @@ private slots:
     void setNull();
     void updateApplyButton();
     virtual void accept();
-    int checkDataType(const QByteArray& data);
     void loadData(const QByteArray& data);
     void toggleOverwriteMode();
     void editModeChanged(int newMode);
     void editTextChanged();
     void updateCellInfo(const QByteArray& data);
-    QString humanReadableSize(double byteCount) const;
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
@@ -72,6 +70,9 @@ private:
         HexEditor = 1,
         ImageViewer = 2
     };
+
+    int checkDataType(const QByteArray& data);
+    QString humanReadableSize(double byteCount) const;
 };
 
 #endif

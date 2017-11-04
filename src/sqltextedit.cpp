@@ -8,13 +8,13 @@
 #include <QMimeData>
 #include <cmath>
 
-SqlUiLexer* SqlTextEdit::sqlLexer = 0;
+SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
     QsciScintilla(parent)
 {
     // Create lexer object if not done yet
-    if(sqlLexer == 0)
+    if(sqlLexer == nullptr)
         sqlLexer = new SqlUiLexer(this);
 
     // Set the lexer

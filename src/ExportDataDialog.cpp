@@ -324,7 +324,7 @@ void ExportDataDialog::accept()
                 return;
             }
 
-            foreach(QListWidgetItem* item, selectedItems)
+            for(const QListWidgetItem* item : selectedItems)
                 filenames << QDir(exportfolder).filePath(item->text() + default_file_extension);
         }
 

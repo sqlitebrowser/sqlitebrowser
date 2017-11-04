@@ -76,7 +76,7 @@ void EditTableDialog::keyPressEvent(QKeyEvent *evt)
     if((evt->modifiers() & Qt::ControlModifier)
             && (evt->key() == Qt::Key_Enter || evt->key() == Qt::Key_Return))
     {
-        emit accept();
+        accept();
         return;
     }
     if(evt->key() == Qt::Key_Enter || evt->key() == Qt::Key_Return)
@@ -105,7 +105,7 @@ void EditTableDialog::populateFields()
     ui->treeWidget->clear();
     sqlb::FieldVector fields = m_table.fields();
     sqlb::FieldVector pk = m_table.primaryKey();
-    foreach(sqlb::FieldPtr f, fields)
+    for(const sqlb::FieldPtr& f : fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
         tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
@@ -211,7 +211,7 @@ void EditTableDialog::checkInput()
 
         // update fk's that refer to table itself recursively
         sqlb::FieldVector fields = m_table.fields();
-        foreach(sqlb::FieldPtr f, fields) {
+        for(const sqlb::FieldPtr& f : fields) {
             QSharedPointer<sqlb::ForeignKeyClause> fk = m_table.constraint({f}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
             if(!fk.isNull()) {
                 if (oldTableName == fk->table()) {
@@ -300,10 +300,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 sqlb::FieldVector pk = m_table.primaryKey();
-                foreach(const sqlb::ObjectPtr& fkobj, pdb.schemata[curTable.schema()].values("table"))
+                for(const sqlb::ObjectPtr& fkobj : pdb.schemata[curTable.schema()].values("table"))
                 {
                     QList<sqlb::ConstraintPtr> fks = fkobj.dynamicCast<sqlb::Table>()->constraints(sqlb::FieldVector(), sqlb::Constraint::ForeignKeyConstraintType);
-                    foreach(sqlb::ConstraintPtr fkptr, fks)
+                    for(const sqlb::ConstraintPtr& fkptr : fks)
                     {
                         QSharedPointer<sqlb::ForeignKeyClause> fk = fkptr.dynamicCast<sqlb::ForeignKeyClause>();
                         if(fk->table() == m_table.name())
@@ -604,7 +604,7 @@ void EditTableDialog::removeField()
         {
             if(!pdb.renameColumn(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
-                QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
+                QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
             } else {
                 //relayout
                 m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());
@@ -688,7 +688,7 @@ void EditTableDialog::moveCurrentField(bool down)
                     (down ? 1 : -1)
                 ))
         {
-            QMessageBox::warning(0, QApplication::applicationName(), pdb.lastError());
+            QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
         } else {
             // Reload table SQL
             m_table = *(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>());

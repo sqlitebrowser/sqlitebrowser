@@ -19,7 +19,7 @@ class SqliteTableModel : public QAbstractTableModel
 #endif
 
 public:
-    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = 0, size_t chunkSize = 50000, const QString& encoding = QString());
+    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, size_t chunkSize = 50000, const QString& encoding = QString());
     void reset();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

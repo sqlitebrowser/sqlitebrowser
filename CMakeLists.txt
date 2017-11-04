@@ -206,6 +206,26 @@ set(SQLB_TSS
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_uk_UA.ts"
 )
 
+# Windows image format plugin files
+set(WIN_IMG_PLUGINS
+	"${QT5_PATH}/plugins/imageformats/qgif.dll"
+	"${QT5_PATH}/plugins/imageformats/qicns.dll"
+	"${QT5_PATH}/plugins/imageformats/qico.dll"
+	"${QT5_PATH}/plugins/imageformats/qjpeg.dll"
+	"${QT5_PATH}/plugins/imageformats/qsvg.dll"
+	"${QT5_PATH}/plugins/imageformats/qtga.dll"
+	"${QT5_PATH}/plugins/imageformats/qwbmp.dll"
+)
+set(WIN_IMG_PLUGINS_DEBUG
+	"${QT5_PATH}/plugins/imageformats/qgifd.dll"
+	"${QT5_PATH}/plugins/imageformats/qicnsd.dll"
+	"${QT5_PATH}/plugins/imageformats/qicod.dll"
+	"${QT5_PATH}/plugins/imageformats/qjpegd.dll"
+	"${QT5_PATH}/plugins/imageformats/qsvgd.dll"
+	"${QT5_PATH}/plugins/imageformats/qtgad.dll"
+	"${QT5_PATH}/plugins/imageformats/qwbmpd.dll"
+)
+
 
 qt5_wrap_ui(SQLB_FORM_HDR ${SQLB_FORMS})
 if(SQLB_TSS)
@@ -403,6 +423,17 @@ if(WIN32 AND MSVC)
 		${QT5_PATH}/plugins/platforms/qwindows.dll
 		DESTINATION platforms)
 	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION redist)
+
+	# The image format plugins
+	install(FILES
+			${WIN_IMG_PLUGINS_DEBUG}
+		DESTINATION imageformats
+		CONFIGURATIONS Debug)
+	install(FILES
+			${WIN_IMG_PLUGINS}
+		DESTINATION imageformats
+		CONFIGURATIONS Release)
+
 	# The batch file launcher
 	install(FILES
 			distri/winlaunch.bat

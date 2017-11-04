@@ -122,7 +122,7 @@ void RemotePushDialog::fillInBranches(const QStringList& branches, const QString
     ui->comboBranch->addItem(default_branch);
 
     // Add rest of the branch list to the combo box
-    foreach(const QString& branch, branches)
+    for(const QString& branch : branches)
     {
         if(branch != default_branch)
             ui->comboBranch->addItem(branch);

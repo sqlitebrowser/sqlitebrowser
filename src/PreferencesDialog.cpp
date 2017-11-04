@@ -143,10 +143,10 @@ void PreferencesDialog::loadSettings()
     }
     {
         QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
-        foreach(const QString& file, client_certs)
+        for(const QString& file : client_certs)
         {
             auto certs = QSslCertificate::fromPath(file);
-            foreach(const QSslCertificate& cert, certs)
+            for(const QSslCertificate& cert : certs)
                 addClientCertToTable(file, cert);
         }
     }
@@ -214,7 +214,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
 
     QStringList extList;
-    foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
+    for(const QListWidgetItem* item : ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
         extList.append(item->text());
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
@@ -254,7 +254,7 @@ void PreferencesDialog::saveSettings()
             new_client_certs.push_back(copy_to);
         }
     }
-    foreach(const QString& file, old_client_certs)
+    for(const QString& file : old_client_certs)
     {
         // Now only the deleted client certs are still in the old list. Delete the cert files associated with them.
         QFile::remove(file);
@@ -368,7 +368,7 @@ void PreferencesDialog::fillLanguageBox()
     // Get available *.qm files from translation dir near executable as well as from resources
     QFileInfoList file_infos = translationsDir.entryInfoList();
     file_infos += QDir(":/translations").entryInfoList();
-    foreach(const QFileInfo &file, file_infos)
+    for(const QFileInfo& file : file_infos)
     {
         QLocale locale(file.baseName().remove("sqlb_"));
 
