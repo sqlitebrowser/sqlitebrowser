@@ -49,8 +49,20 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
         ui->comboDisplayFormat->setCurrentIndex(0);
         updateSqlCode();
     } else {
-        ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
-        ui->comboDisplayFormat->setCurrentIndex(ui->comboDisplayFormat->findData("custom"));
+        QString formatName;
+        for(auto& formatKey : formatFunctions.keys()) {
+            if(current_format == formatFunctions.value(formatKey)) {
+                formatName = formatKey;
+                break;
+            }
+        }
+
+        if(formatName.isEmpty()) {
+            ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
+            ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
+            formatName = "custom";
+        }
+        ui->comboDisplayFormat->setCurrentIndex(ui->comboDisplayFormat->findData(formatName));
         ui->editDisplayFormat->setText(current_format);
     }
 }
