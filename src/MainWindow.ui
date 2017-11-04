@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="structure">
        <attribute name="title">
@@ -145,16 +145,22 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="buttonClearFilters">
+           <widget class="QToolButton" name="buttonToggleFilters">
             <property name="toolTip">
-             <string>Clear all filters</string>
+             <string>Clear/restore all filters</string>
+            </property>
+            <property name="whatsThis">
+             <string>When filters are applied, this button clears them. When no filters are applied, it restores the last used filters in the table, if available.</string>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
-              <normaloff>:/icons/clear_filters</normaloff>:/icons/clear_filters</iconset>
+              <normaloff>:/icons/filters</normaloff>:/icons/filters</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -371,8 +377,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>605</width>
-             <height>568</height>
+             <width>566</width>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -859,7 +865,7 @@
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>30</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1847,7 +1853,7 @@
   <tabstop>treeSchemaDock</tabstop>
   <tabstop>comboBrowseTable</tabstop>
   <tabstop>buttonRefresh</tabstop>
-  <tabstop>buttonClearFilters</tabstop>
+  <tabstop>buttonToggleFilters</tabstop>
   <tabstop>buttonNewRecord</tabstop>
   <tabstop>buttonDeleteRecord</tabstop>
   <tabstop>dataTable</tabstop>

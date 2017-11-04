@@ -568,6 +568,9 @@ void MainWindow::populateTable()
     }
 
     QApplication::restoreOverrideCursor();
+
+    ui->buttonToggleFilters->setChecked(m_browseTableModel->filterCount() != 0);
+
 }
 
 bool MainWindow::fileClose()
@@ -1535,7 +1538,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable && write);
-    ui->buttonClearFilters->setEnabled(enable);
+    ui->buttonToggleFilters->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
     ui->dockPlot->setEnabled(enable);
 
@@ -2233,6 +2236,7 @@ void MainWindow::updateFilter(int column, const QString& value)
     m_browseTableModel->updateFilter(column, value);
     browseTableSettings[currentlyBrowsedTableName()].filterValues[column] = value;
     setRecordsetLabel();
+    ui->buttonToggleFilters->setChecked(m_browseTableModel->filterCount() != 0);
 }
 
 void MainWindow::editEncryption()
@@ -2316,9 +2320,15 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
     ui->mainTab->setCurrentIndex(BrowseTab);
 }
 
-void MainWindow::on_buttonClearFilters_clicked()
+void MainWindow::on_buttonToggleFilters_clicked(bool checked)
 {
-    ui->dataTable->filterHeader()->clearFilters();
+    if(checked) {
+        for(auto filterIt=browseTableSettings[currentlyBrowsedTableName()].savedFilterValues.constBegin();filterIt!=browseTableSettings[currentlyBrowsedTableName()].savedFilterValues.constEnd();++filterIt)
+            ui->dataTable->filterHeader()->setFilter(filterIt.key(), filterIt.value());
+    } else {
+        browseTableSettings[currentlyBrowsedTableName()].savedFilterValues = browseTableSettings[currentlyBrowsedTableName()].filterValues;
+        ui->dataTable->filterHeader()->clearFilters();
+    }
 }
 
 void MainWindow::copyCurrentCreateStatement()
