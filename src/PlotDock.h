@@ -17,7 +17,7 @@ class PlotDock : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlotDock(QWidget* parent = 0);
+    explicit PlotDock(QWidget* parent = nullptr);
     ~PlotDock();
 
     struct PlotSettings

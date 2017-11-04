@@ -8,16 +8,16 @@ class FileDialog : public QFileDialog
     Q_OBJECT
 
 public:
-    static QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(),
-                                   const QString& filter = QString(), QString* selectedFilter = 0,
+    static QString getOpenFileName(QWidget* parent = nullptr, const QString& caption = QString(),
+                                   const QString& filter = QString(), QString* selectedFilter = nullptr,
                                    Options options = 0);
-    static QStringList getOpenFileNames(QWidget* parent = 0, const QString& caption = QString(),
-                                        const QString& filter = QString(), QString* selectedFilter = 0,
+    static QStringList getOpenFileNames(QWidget* parent = nullptr, const QString& caption = QString(),
+                                        const QString& filter = QString(), QString* selectedFilter = nullptr,
                                         Options options = 0);
-    static QString getSaveFileName(QWidget* parent = 0, const QString& caption = QString(),
-                                   const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = 0,
+    static QString getSaveFileName(QWidget* parent = nullptr, const QString& caption = QString(),
+                                   const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = nullptr,
                                    Options options = 0);
-    static QString getExistingDirectory(QWidget* parent = 0, const QString& caption = QString(),
+    static QString getExistingDirectory(QWidget* parent = nullptr, const QString& caption = QString(),
                                         Options options = 0);
 
     static QString getSqlDatabaseFileFilter()

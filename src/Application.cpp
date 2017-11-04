@@ -61,6 +61,13 @@ Application::Application(int& argc, char** argv) :
         m_translatorQt = nullptr;
     }
 
+    // On Windows, add the plugins subdirectory to the list of library directories. We need this
+    // for Qt to search for more image format plugins.
+#ifdef Q_WS_WIN
+    QApplication::addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+#endif
+
+
     // Parse command line
     QString fileToOpen;
     QString tableToBrowse;
@@ -82,16 +89,7 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
-            // Distinguish between high and low patch version numbers. High numbers as in x.y.99 indicate nightly builds or
-            // beta releases. For these we want to include the build date. For the release versions we don't add the release
-            // date in order to avoid confusion about what is more important, version number or build date, and about different
-            // build dates for the same version. This also should help making release builds reproducible out of the box.
-#if PATCH_VERSION >= 99
-            QString build_date = QString(" (%1)").arg(__DATE__);
-#else
-            QString build_date;
-#endif
-            qWarning() << qPrintable(tr("This is DB Browser for SQLite version %1%2.").arg(APP_VERSION).arg(build_date));
+            qWarning() << qPrintable(tr("This is DB Browser for SQLite version %1.").arg(versionString()));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
@@ -128,7 +126,7 @@ Application::Application(int& argc, char** argv) :
         if(m_mainWindow->fileOpen(fileToOpen))
         {
             // If database could be opened run the SQL scripts
-            foreach(const QString& f, sqlToExecute)
+            for(const QString& f : sqlToExecute)
             {
                 QFile file(f);
                 if(file.open(QIODevice::ReadOnly))
@@ -162,4 +160,17 @@ bool Application::event(QEvent* event)
     default:
         return QApplication::event(event);
     }
+}
+
+QString Application::versionString()
+{
+    // Distinguish between high and low patch version numbers. High numbers as in x.y.99 indicate nightly builds or
+    // beta releases. For these we want to include the build date. For the release versions we don't add the release
+    // date in order to avoid confusion about what is more important, version number or build date, and about different
+    // build dates for the same version. This also should help making release builds reproducible out of the box.
+#if PATCH_VERSION >= 99
+    return QString("%1 (%2)").arg(APP_VERSION).arg(__DATE__);
+#else
+    return QString("%1").arg(APP_VERSION);
+#endif
 }

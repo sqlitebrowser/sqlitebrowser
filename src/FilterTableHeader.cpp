@@ -88,7 +88,7 @@ void FilterTableHeader::inputChanged(const QString& new_value)
 
 void FilterTableHeader::clearFilters()
 {
-    foreach (FilterLineEdit* filterLineEdit, filterWidgets)
+    for(FilterLineEdit* filterLineEdit : filterWidgets)
         filterLineEdit->clear();
 }
 

@@ -26,7 +26,7 @@ class DBBrowserDB : public QObject
     Q_OBJECT
 
 public:
-    explicit DBBrowserDB () : _db(0), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
+    explicit DBBrowserDB () : _db(nullptr), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
     virtual ~DBBrowserDB (){}
     bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = "");
@@ -111,6 +111,9 @@ public:
 
     QString generateSavepointName(const QString& identifier = QString()) const;
 
+    // This function generates the name for a temporary table. It guarantees that there is no table with this name yet
+    QString generateTemporaryTableName(const QString& schema) const;
+
     sqlite3 * _db;
 
     schemaMap schemata;
@@ -137,7 +140,7 @@ private:
     class NoStructureUpdateChecks
     {
     public:
-        NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.dontCheckForStructureUpdates = true; }
+        explicit NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.dontCheckForStructureUpdates = true; }
         ~NoStructureUpdateChecks() { m_db.dontCheckForStructureUpdates = false; }
 
     private:

@@ -13,7 +13,7 @@ class FilterTableHeader : public QHeaderView
     Q_OBJECT
 
 public:
-    explicit FilterTableHeader(QTableView* parent = 0);
+    explicit FilterTableHeader(QTableView* parent = nullptr);
     virtual QSize sizeHint() const;
     
 public slots:

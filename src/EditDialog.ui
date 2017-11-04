@@ -347,7 +347,6 @@
   <slot>importData()</slot>
   <slot>exportData()</slot>
   <slot>editTextChanged()</slot>
-  <slot>checkDataType()</slot>
   <slot>editModeChanged(int)</slot>
   <slot>setNull()</slot>
  </slots>

@@ -35,7 +35,6 @@
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 #include <QElapsedTimer>
-#include <QSettings>
 #include <QMimeData>
 #include <QColorDialog>
 #include <QDesktopServices>
@@ -412,7 +411,7 @@ void MainWindow::populateStructure()
             QString objectname = (*it)->name();
 
             sqlb::FieldInfoList fi = (*it)->fieldInformation();
-            foreach(const sqlb::FieldInfo& f, fi)
+            for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
     }
@@ -431,7 +430,7 @@ void MainWindow::clearTableBrowser()
     if (!ui->dataTable->model())
         return;
 
-    ui->dataTable->setModel(0);
+    ui->dataTable->setModel(nullptr);
     if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
         qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
 }
@@ -456,7 +455,7 @@ void MainWindow::populateTable()
 
     // Set model
     bool reconnectSelectionSignals = false;
-    if(ui->dataTable->model() == 0)
+    if(ui->dataTable->model() == nullptr)
         reconnectSelectionSignals = true;
     ui->dataTable->setModel(m_browseTableModel);
     if(reconnectSelectionSignals)
@@ -598,7 +597,7 @@ bool MainWindow::fileClose()
     setRecordsetLabel();
 
     // Reset the plot dock model
-    plotDock->updatePlot(0);
+    plotDock->updatePlot(nullptr);
 
     activateFields(false);
 
@@ -1094,7 +1093,6 @@ void MainWindow::executeQuery()
                 ui->actionSqlResultsSave->setEnabled(true);
                 ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
 
-                statusMessage = tr("Query executed successfully: %1 (took %2ms)").arg(queryPart.trimmed()).arg(timer.elapsed());
                 sql3status = SQLITE_OK;
                 break;
             }
@@ -1185,7 +1183,7 @@ void MainWindow::importTableFromCSV()
                             tr("Text files(*.csv *.txt);;All files(*)"));
 
     QStringList validFiles;
-    foreach(auto file, wFiles) {
+    for(const auto& file : wFiles) {
         if (QFile::exists(file))
             validFiles.append(file);
     }
@@ -1484,7 +1482,7 @@ void MainWindow::addToRecentFilesMenu(const QString& filename)
 
     Settings::setValue("General", "recentFileList", files);
 
-    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+    for(QWidget* widget : QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
         if (mainWin)
             mainWin->updateRecentFileActions();
@@ -1836,7 +1834,7 @@ void MainWindow::loadExtensionsFromSettings()
         return;
 
     QStringList list = Settings::getValue("extensions", "list").toStringList();
-    foreach(QString ext, list)
+    for(const QString& ext : list)
     {
         if(db.loadExtension(ext) == false)
             QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
@@ -1912,10 +1910,9 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
 
     if(newversion)
     {
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        int ignmajor = settings.value("checkversion/ignmajor", 999).toInt();
-        int ignminor = settings.value("checkversion/ignminor", 0).toInt();
-        int ignpatch = settings.value("checkversion/ignpatch", 0).toInt();
+        int ignmajor = Settings::getValue("checkversion", "ignmajor").toInt();
+        int ignminor = Settings::getValue("checkversion", "ignminor").toInt();
+        int ignpatch = Settings::getValue("checkversion", "ignpatch").toInt();
 
         // check if the user doesn't care about the current update
         if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
@@ -1933,11 +1930,9 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
             if(msgBox.clickedButton() == idontcarebutton)
             {
                 // save that the user don't want to get bothered about this update
-                settings.beginGroup("checkversion");
-                settings.setValue("ignmajor", major);
-                settings.setValue("ignminor", minor);
-                settings.setValue("ignpatch", patch);
-                settings.endGroup();
+                Settings::setValue("checkversion", "ignmajor", major);
+                Settings::setValue("checkversion", "ignminor", minor);
+                Settings::setValue("checkversion", "ignpatch", patch);
             }
         }
     }
@@ -1975,7 +1970,7 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
     else
     {
         ui->dataTable->blockSignals(true);
-        foreach (int col, selectedCols)
+        for(int col : selectedCols)
         {
             ui->dataTable->setColumnWidth(col, new_size);
             browseTableSettings[tableName].columnWidths[col] = new_size;
@@ -2248,7 +2243,7 @@ void MainWindow::editEncryption()
         // Show progress dialog even though we can't provide any detailed progress information but this
         // process might take some time.
         QProgressDialog progress(this);
-        progress.setCancelButton(0);
+        progress.setCancelButton(nullptr);
         progress.setWindowModality(Qt::ApplicationModal);
         progress.show();
         qApp->processEvents();
@@ -2593,7 +2588,7 @@ void MainWindow::hideColumns(int column, bool hide)
     }
 
     // (Un)hide requested column(s)
-    foreach(int col, columns)
+    for(int col : columns)
     {
         ui->dataTable->setColumnHidden(col, hide);
         if(!hide)

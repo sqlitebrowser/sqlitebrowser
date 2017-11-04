@@ -151,14 +151,14 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     }
 
     // search for the x axis select
-    QTreeWidgetItem* xitem = 0;
+    QTreeWidgetItem* xitem = nullptr;
     for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
     {
         xitem = ui->treePlotColumns->topLevelItem(i);
         if(xitem->checkState(PlotColumnX) == Qt::Checked)
             break;
 
-        xitem = 0;
+        xitem = nullptr;
     }
 
     QStringList yAxisLabels;

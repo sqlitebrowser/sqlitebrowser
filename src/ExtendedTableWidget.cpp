@@ -94,7 +94,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Set up context menu actions
-    connect(this, static_cast<void(QTableView::*)(const QPoint&)>(&QTableView::customContextMenuRequested),
+    connect(this, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos)
     {
         // Try to find out whether the current view is editable and (de)activate menu options according to that
@@ -109,7 +109,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         useAsFilter();
     });
     connect(nullAction, &QAction::triggered, [&]() {
-        foreach(const QModelIndex& index, selectedIndexes())
+        for(const QModelIndex& index : selectedIndexes())
             model()->setData(index, QVariant());
     });
     connect(copyAction, &QAction::triggered, [&]() {
@@ -172,11 +172,13 @@ void ExtendedTableWidget::copy()
 
     // If any of the cells contain binary data - we use inner buffer
     bool containsBinary = false;
-    foreach (const QModelIndex& index, indices)
+    for(const QModelIndex& index : indices)
+    {
         if (m->isBinary(index)) {
             containsBinary = true;
             break;
         }
+    }
 
     if (containsBinary) {
         qApp->clipboard()->clear();
@@ -198,7 +200,7 @@ void ExtendedTableWidget::copy()
     QString result;
     int currentRow = 0;
 
-    foreach(const QModelIndex& index, indices) {
+    for(const QModelIndex& index : indices) {
         if (first == index) { /* first index */ }
         else if (index.row() != currentRow)
             result.append("\r\n");
@@ -259,9 +261,9 @@ void ExtendedTableWidget::paste()
 
         int row = firstRow;
 
-        foreach(const QByteArrayList& lst, m_buffer) {
+        for(const QByteArrayList& lst : m_buffer) {
             int column = firstColumn;
-            foreach(const QByteArray& ba, lst) {
+            for(const QByteArray& ba : lst) {
                 m->setData(m->index(row, column), ba);
 
                 column++;
@@ -315,10 +317,10 @@ void ExtendedTableWidget::paste()
     int lastColumn = qMin(firstColumn + clipboardColumns - 1, m->columnCount() - 1);
 
     int row = firstRow;
-    foreach(const QStringList& clipboardRow, clipboardTable)
+    for(const QStringList& clipboardRow : clipboardTable)
     {
         int column = firstColumn;
-        foreach(const QString& cell, clipboardRow)
+        for(const QString& cell : clipboardRow)
         {
             if (cell.isEmpty())
                 m->setData(m->index(row, column), QVariant());
@@ -359,9 +361,10 @@ void ExtendedTableWidget::useAsFilter()
 
     if (data.isNull())
         m_tableHeader->setFilter(index.column(), "=NULL");
+    else if (data.toString().isEmpty())
+        m_tableHeader->setFilter(index.column(), "=''");
     else
         m_tableHeader->setFilter(index.column(), "=" + data.toString());
-
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
@@ -383,11 +386,11 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
         if(event->modifiers().testFlag(Qt::AltModifier))
         {
             // When pressing Alt+Delete set the value to NULL
-            foreach(const QModelIndex& index, selectedIndexes())
+            for(const QModelIndex& index : selectedIndexes())
                 model()->setData(index, QVariant());
         } else {
             // When pressing Delete only set the value to empty string
-            foreach(const QModelIndex& index, selectedIndexes())
+            for(const QModelIndex& index : selectedIndexes())
                 model()->setData(index, "");
         }
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown)) {
@@ -442,7 +445,7 @@ int ExtendedTableWidget::numVisibleRows()
 QSet<int> ExtendedTableWidget::selectedCols()
 {
     QSet<int> selectedCols;
-    foreach(const QModelIndex & idx, selectedIndexes())
+    for(const QModelIndex & idx : selectedIndexes())
         selectedCols.insert(idx.column());
     return selectedCols;
 }

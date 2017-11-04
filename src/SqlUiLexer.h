@@ -12,7 +12,7 @@ class SqlUiLexer : public QsciLexerSQL
     Q_OBJECT
 
 public:
-    explicit SqlUiLexer(QObject *parent = 0);
+    explicit SqlUiLexer(QObject *parent = nullptr);
 
     enum ApiCompleterIconId
     {

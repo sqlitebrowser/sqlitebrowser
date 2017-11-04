@@ -3,6 +3,7 @@
 #include "sqlitedb.h"
 #include "csvparser.h"
 #include "sqlite.h"
+#include "Settings.h"
 
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -13,7 +14,6 @@
 #include <QComboBox>
 #include <QFile>
 #include <QTextStream>
-#include <QSettings>
 #include <QFileInfo>
 #include <memory>
 
@@ -40,7 +40,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
 
     // Create a list of all available encodings and create an auto completion list from them
     QStringList encodingList;
-    foreach(QString enc, QTextCodec::availableCodecs())
+    for(const QString& enc : QTextCodec::availableCodecs())
         encodingList.push_back(enc);
     encodingCompleter = new QCompleter(encodingList, this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
@@ -54,13 +54,12 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
 
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    ui->checkboxHeader->setChecked(settings.value("importcsv/firstrowheader", false).toBool());
-    ui->checkBoxTrimFields->setChecked(settings.value("importcsv/trimfields", true).toBool());
-    ui->checkBoxSeparateTables->setChecked(settings.value("importcsv/separatetables", false).toBool());
-    setSeparatorChar(QChar(settings.value("importcsv/separator", ',').toInt()));
-    setQuoteChar(QChar(settings.value("importcsv/quotecharacter", '"').toInt()));
-    setEncoding(settings.value("importcsv/encoding", "UTF-8").toString());
+    ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
+    ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
+    ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
+    setSeparatorChar(Settings::getValue("importcsv", "separator").toInt());
+    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toInt());
+    setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
@@ -118,13 +117,14 @@ void rollback(
 class CSVImportProgress : public CSVProgress
 {
 public:
-    explicit CSVImportProgress(qint64 filesize)
+    explicit CSVImportProgress(unsigned long long filesize)
+        : totalFileSize(filesize)
     {
         m_pProgressDlg = new QProgressDialog(
                     QObject::tr("Importing CSV file..."),
                     QObject::tr("Cancel"),
                     0,
-                    filesize);
+                    10000);
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
     }
 
@@ -140,7 +140,7 @@ public:
 
     bool update(unsigned long long pos)
     {
-        m_pProgressDlg->setValue(pos);
+        m_pProgressDlg->setValue(static_cast<int>((static_cast<float>(pos) / static_cast<float>(totalFileSize)) * 10000.0f));
         qApp->processEvents();
 
         return !m_pProgressDlg->wasCanceled();
@@ -153,20 +153,19 @@ public:
 
 private:
     QProgressDialog* m_pProgressDlg;
+
+    unsigned long long totalFileSize;
 };
 
 void ImportCsvDialog::accept()
 {
-    // save settings
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup("importcsv");
-    settings.setValue("firstrowheader", ui->checkboxHeader->isChecked());
-    settings.setValue("separator", currentSeparatorChar());
-    settings.setValue("quotecharacter", currentQuoteChar());
-    settings.setValue("trimfields", ui->checkBoxTrimFields->isChecked());
-    settings.setValue("separatetables", ui->checkBoxSeparateTables->isChecked());
-    settings.setValue("encoding", currentEncoding());
-    settings.endGroup();
+    // Save settings
+    Settings::setValue("importcsv", "firstrowheader", ui->checkboxHeader->isChecked());
+    Settings::setValue("importcsv", "separator", currentSeparatorChar());
+    Settings::setValue("importcsv", "quotecharacter", currentQuoteChar());
+    Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
+    Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
+    Settings::setValue("importcsv", "encoding", currentEncoding());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -237,7 +236,7 @@ void ImportCsvDialog::updatePreview()
 
     // Set horizontal header data
     QStringList horizontalHeader;
-    foreach(const sqlb::FieldPtr& field, fieldList)
+    for(const sqlb::FieldPtr& field : fieldList)
         horizontalHeader.push_back(field->name());
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
@@ -340,14 +339,13 @@ void ImportCsvDialog::matchSimilar()
     {
         auto item = ui->filePicker->item(i);
         auto header = generateFieldList(item->data(Qt::DisplayRole).toString());
-        bool matchingHeader = false;
 
         if (selectedHeader.count() == header.count())
         {
-            matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
-                                        [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
-                                            return (item1->name() == item2->name());
-                                        });
+            bool matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
+                                             [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
+                                                return (item1->name() == item2->name());
+                                             });
             if (matchingHeader) {
                 item->setCheckState(Qt::Checked);
                 item->setBackgroundColor(Qt::green);
@@ -557,7 +555,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         sqlb::TablePtr tbl = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName)).dynamicCast<sqlb::Table>();
         if(tbl)
         {
-            foreach(const sqlb::FieldPtr& f, tbl->fields())
+            for(const sqlb::FieldPtr& f : tbl->fields())
             {
                 if(f->isInteger() && f->notnull())              // If this is an integer column but NULL isn't allowed, insert 0
                     nullValues << "0";

@@ -56,8 +56,8 @@ void CipherDialog::checkInputFields()
     {
         if(keyFormat() == KeyFormats::Passphrase)
         {
-            ui->editPassword->setValidator(0);
-            ui->editPassword2->setValidator(0);
+            ui->editPassword->setValidator(nullptr);
+            ui->editPassword2->setValidator(nullptr);
             ui->editPassword->setPlaceholderText("");
         } else if(keyFormat() == KeyFormats::RawKey) {
             ui->editPassword->setValidator(rawKeyValidator);

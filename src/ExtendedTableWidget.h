@@ -15,7 +15,7 @@ class ExtendedTableWidget : public QTableView
     Q_OBJECT
 
 public:
-    explicit ExtendedTableWidget(QWidget* parent = 0);
+    explicit ExtendedTableWidget(QWidget* parent = nullptr);
 
     FilterTableHeader* filterHeader() { return m_tableHeader; }
 
