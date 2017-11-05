@@ -140,9 +140,11 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
     };
     FieldBufferDealloc dealloc(record);
 
+    qint64 bufferPos = 0;
     while(!stream.atEnd())
     {
         sBuffer = stream.read(m_nBufferSize).toUtf8();
+        bufferPos += sBuffer.length();
         auto sBufferEnd = sBuffer.constEnd();
 
         for(auto it = sBuffer.constBegin(); it != sBufferEnd; ++it)
@@ -276,7 +278,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
 
         if(m_pCSVProgress && parsedRows % 100 == 0)
         {
-            if(!m_pCSVProgress->update(stream.pos()))
+            if(!m_pCSVProgress->update(bufferPos))
                 return ParserResult::ParserResultCancelled;
         }
     }
