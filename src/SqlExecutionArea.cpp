@@ -23,6 +23,14 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
 
+    ui->findFrame->hide();
+
+    connect(ui->findLineEdit, SIGNAL(textChanged(const QString &)),
+            this, SLOT(findLineEdit_textChanged(const QString &)));
+    connect(ui->previousToolButton, SIGNAL(clicked()), this, SLOT(findPrevious()));
+    connect(ui->nextToolButton, SIGNAL(clicked()), this, SLOT(findNext()));
+    connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
+
     // Load settings
     reloadSettings();
 }
@@ -122,4 +130,50 @@ void SqlExecutionArea::reloadSettings()
 
     // Set prefetch settings
     model->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
+}
+
+void SqlExecutionArea::find(QString expr, bool forward)
+{
+    bool found = ui->editEditor->findFirst
+      (expr,
+       ui->regexpCheckBox->isChecked(),
+       ui->caseCheckBox->isChecked(),
+       ui->wholeWordsCheckBox->isChecked(),
+       /* wrap */ true,
+       forward);
+
+    // Set reddish background when not found
+    if (found || expr == "")
+      ui->findLineEdit->setStyleSheet("");
+    else
+      ui->findLineEdit->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+
+}
+
+void SqlExecutionArea::findPrevious()
+{
+    find(ui->findLineEdit->text(), false);
+    ui->editEditor->findNext();
+}
+
+void SqlExecutionArea::findNext()
+{
+    find(ui->findLineEdit->text(), true);
+}
+
+void SqlExecutionArea::findLineEdit_textChanged(const QString &)
+{
+    findNext();
+}
+
+void SqlExecutionArea::setFindFrameVisibility(bool show)
+{
+    if (show) {
+        ui->findFrame->show();
+        ui->findLineEdit->setFocus();
+        ui->findLineEdit->selectAll();
+    } else {
+        ui->editEditor->setFocus();
+        ui->findFrame->hide();
+    }
 }

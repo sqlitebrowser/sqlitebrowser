@@ -2634,3 +2634,9 @@ void MainWindow::renameSqlTab(int index)
     if(!new_name.isNull())      // Don't do anything if the Cancel button was clicked
         ui->tabSqlAreas->setTabText(index, new_name);
 }
+
+void MainWindow::setFindFrameVisibility(bool show)
+{
+    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFindFrameVisibility(show);
+
+}

@@ -29,15 +29,22 @@ public:
     SqliteTableModel* getModel() { return model; }
     SqlTextEdit* getEditor();
     ExtendedTableWidget *getTableResult();
-    
+
 public slots:
     virtual void finishExecution(const QString& result);
     virtual void saveAsCsv();
     virtual void saveAsView();
     virtual void reloadSettings();
     void fetchedData();
+    void setFindFrameVisibility(bool show);
+
+private slots:
+    void findPrevious();
+    void findNext();
+    void findLineEdit_textChanged(const QString& text);
 
 private:
+    void find(QString expr, bool forward);
     DBBrowserDB& db;
     SqliteTableModel* model;
     QString sqlFileName;

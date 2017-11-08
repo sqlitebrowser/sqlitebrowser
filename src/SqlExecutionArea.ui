@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>365</width>
+    <width>552</width>
     <height>482</height>
    </rect>
   </property>
@@ -23,6 +23,133 @@
       <bool>false</bool>
      </property>
      <widget class="SqlTextEdit" name="editEditor"/>
+     <widget class="QFrame" name="findFrame">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <item row="0" column="1">
+        <widget class="QToolButton" name="previousToolButton">
+         <property name="toolTip">
+          <string>Find previous match [Shift+F3]</string>
+         </property>
+         <property name="whatsThis">
+          <string>Find previous match with mapping</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
+         </property>
+         <property name="shortcut">
+          <string>Shift+F3</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4">
+        <widget class="QCheckBox" name="wholeWordsCheckBox">
+         <property name="whatsThis">
+          <string>The found pattern must be a whole word</string>
+         </property>
+         <property name="text">
+          <string>Whole Words</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLineEdit" name="findLineEdit">
+         <property name="contextMenuPolicy">
+          <enum>Qt::DefaultContextMenu</enum>
+         </property>
+         <property name="whatsThis">
+          <string>Text pattern to find considering the checks in this frame</string>
+         </property>
+         <property name="placeholderText">
+          <string>Find in editor</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QCheckBox" name="caseCheckBox">
+         <property name="whatsThis">
+          <string>The found pattern must match in letter case</string>
+         </property>
+         <property name="text">
+          <string>Case Sensitive</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QToolButton" name="nextToolButton">
+         <property name="toolTip">
+          <string>Find next match [Enter, F3]</string>
+         </property>
+         <property name="whatsThis">
+          <string>Find next match with wrapping</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons/icons.qrc">
+           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+         </property>
+         <property name="shortcut">
+          <string>F3</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QCheckBox" name="regexpCheckBox">
+         <property name="toolTip">
+          <string>Interpret search pattern as a regular expression</string>
+         </property>
+         <property name="whatsThis">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Regular Expression in Wikibooks&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Regular Expression</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QSplitter" name="splitter_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -97,10 +224,17 @@
  </customwidgets>
  <tabstops>
   <tabstop>editEditor</tabstop>
+  <tabstop>findLineEdit</tabstop>
   <tabstop>tableResult</tabstop>
   <tabstop>editErrors</tabstop>
+  <tabstop>previousToolButton</tabstop>
+  <tabstop>nextToolButton</tabstop>
+  <tabstop>caseCheckBox</tabstop>
+  <tabstop>wholeWordsCheckBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>saveAsCsv()</slot>

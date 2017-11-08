@@ -286,6 +286,7 @@ private slots:
     void on_actionShowAllColumns_triggered();
     void requestCollation(const QString& name, int eTextRep);
     void renameSqlTab(int index);
+    void setFindFrameVisibility(bool show);
 };
 
 #endif
