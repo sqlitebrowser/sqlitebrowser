@@ -1800,7 +1800,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
+     <normaloff>:/icons/find</normaloff>:/icons/find</iconset>
    </property>
    <property name="text">
     <string>Find text in SQL editor</string>
