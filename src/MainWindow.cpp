@@ -1716,6 +1716,7 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
     SqlExecutionArea* w = new SqlExecutionArea(db, this);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
+    w->setFindFrameVisibility(ui->actionSqlFind->isChecked());
     w->getEditor()->setFocus();
 
     return index;
@@ -2637,6 +2638,6 @@ void MainWindow::renameSqlTab(int index)
 
 void MainWindow::setFindFrameVisibility(bool show)
 {
-    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFindFrameVisibility(show);
-
+    for(int i=0;i<ui->tabSqlAreas->count();i++)
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->setFindFrameVisibility(show);
 }
