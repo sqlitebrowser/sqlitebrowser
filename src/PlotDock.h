@@ -48,6 +48,9 @@ public slots:
     void updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool update = true, bool keepOrResetSelection = true);
     void fetchAllData();
 
+signals:
+    void pointsSelected(int firstIndex, int count);
+
 private:
     enum PlotColumns
     {
@@ -76,6 +79,7 @@ private slots:
     void on_butSavePlot_clicked();
     void on_comboLineType_currentIndexChanged(int index);
     void on_comboPointShape_currentIndexChanged(int index);
+    void selectionChanged();
 };
 
 #endif

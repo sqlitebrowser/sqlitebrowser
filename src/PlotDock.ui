@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
+    <width>515</width>
     <height>553</height>
    </rect>
   </property>
@@ -49,7 +49,16 @@
       </column>
       <column>
        <property name="text">
-        <string>_</string>
+        <string notr="true">_</string>
+       </property>
+       <property name="foreground">
+        <brush brushstyle="NoBrush">
+         <color alpha="0">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
        </property>
       </column>
      </widget>

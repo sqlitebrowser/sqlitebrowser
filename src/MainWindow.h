@@ -219,6 +219,7 @@ private slots:
     void addRecord();
     void deleteRecord();
     void selectTableLine( int lineToSelect );
+    void selectTableLines(int firstLine, int count);
     void navigatePrevious();
     void navigateNext();
     void navigateBegin();

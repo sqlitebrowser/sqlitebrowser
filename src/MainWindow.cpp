@@ -92,6 +92,9 @@ void MainWindow::init()
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
+    // Select in table the rows correspoding to the selected points in plot
+    connect(plotDock, SIGNAL(pointsSelected(int,int)), this, SLOT(selectTableLines(int,int)));
+
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
     ui->dbTreeWidget->setModel(dbStructureModel);
@@ -674,6 +677,22 @@ void MainWindow::selectTableLine(int lineToSelect)
     ui->dataTable->selectRow(lineToSelect);
     ui->dataTable->scrollTo(ui->dataTable->currentIndex(), QAbstractItemView::PositionAtTop);
     QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::selectTableLines(int firstLine, int count)
+{
+    int lastLine = firstLine+count-1;
+    // Are there even that many lines?
+    if(lastLine >= m_browseTableModel->totalRowCount())
+        return;
+
+    selectTableLine(firstLine);
+    QItemSelectionModel* selectionModel = ui->dataTable->selectionModel();
+
+    QModelIndex topLeft = ui->dataTable->model()->index(firstLine, 0);
+    QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);
+
+    ui->dataTable->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }
 
 void MainWindow::navigatePrevious()

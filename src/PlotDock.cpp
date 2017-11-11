@@ -23,6 +23,7 @@ PlotDock::PlotDock(QWidget* parent)
 
     // Connect signals
     connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
+    connect(ui->plotWidget, SIGNAL(selectionChangedByUser()), this, SLOT(selectionChanged()));
 }
 
 PlotDock::~PlotDock()
@@ -199,6 +200,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 QCPGraph* graph = ui->plotWidget->addGraph();
 
                 graph->setPen(QPen(item->backgroundColor(PlotColumnY)));
+                graph->setSelectable (QCP::stDataRange);
+                ui->plotWidget->setInteractions(QCP::iSelectPlottables);
+                ui->plotWidget->setSelectionRectMode(QCP::srmSelect);
 
                 // prepare the data vectors for qcustomplot
                 // possible improvement might be a QVector subclass that directly
@@ -376,7 +380,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
         QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
-        QColor color = colordialog.getColor(precolor, this, tr("Choose a axis color"));
+        QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {
             item->setCheckState(column, Qt::Checked);
@@ -539,4 +543,22 @@ void PlotDock::fetchAllData()
         // Update plot
         updatePlot(m_currentPlotModel, m_currentTableSettings);
     }
+}
+
+void PlotDock::selectionChanged()
+{
+
+    for (QCPGraph* graph : ui->plotWidget->selectedGraphs()) {
+
+        for (QCPDataRange dataRange : graph->selection().dataRanges()) {
+
+            int index = dataRange.begin();
+            if (dataRange.length() != 0) {
+                emit pointsSelected(index, dataRange.length());
+                break;
+            }
+
+        }
+    }
+
 }
