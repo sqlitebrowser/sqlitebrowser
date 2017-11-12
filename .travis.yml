@@ -72,6 +72,7 @@ notifications:
       - mkleusberg@gmail.com
       - innermous@gmail.com
       - justin@postgresql.org
+      - mgrojo@gmail.com
     on_success: never
     on_failure: always
 
