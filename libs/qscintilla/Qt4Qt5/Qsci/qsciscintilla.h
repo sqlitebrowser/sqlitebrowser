@@ -2009,6 +2009,34 @@ public slots:
     //! \sa zoomIn(), zoomOut()
     virtual void zoomTo(int size);
 
+    //! For performance, Scintilla does not measure the display width
+    //! of the document to determine the properties of the horizontal
+    //! scroll bar. Instead, an assumed width is used.  This sets the
+    //! document width in pixels assumed by Scintilla to \a
+    //! pixelWidth. The default value is 2000.
+    //!
+    //! \sa getScrollWidth(), setScrollWidthTracking()
+    virtual void setScrollWidth(int pixelWidth);
+
+    //! Gets the document width in pixels assumed by Scintilla.
+    //!
+    //! \sa setScrollWidth(), setScrollWidthTracking()
+    virtual int getScrollWidth() const;
+
+    //! If scroll width tracking is enabled then the scroll width is
+    //! adjusted to ensure that all of the lines currently displayed
+    //! can be completely scrolled. This mode never adjusts the scroll
+    //! width to be narrower.
+    //! Sets the scroll width tracking to \a enabled.
+    //!
+    //! \sa setScrollWidth(), getScrollWidthTracking()
+    virtual void setScrollWidthTracking(bool enabled);
+
+    //! Gets the current scroll width tracking mode.
+    //!
+    //! \sa getScrollWidth(), setScrollWidthTracking()
+    virtual bool getScrollWidthTracking() const;
+
 signals:
     //! This signal is emitted whenever the cursor position changes.  \a line
     //! contains the line number and \a index contains the character index

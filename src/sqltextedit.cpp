@@ -42,6 +42,15 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     errorIndicatorNumber = indicatorDefine(QsciScintilla::SquiggleIndicator);
     setIndicatorForegroundColor(Qt::red, errorIndicatorNumber);
 
+    // Set a sensible scroll width, so the scroll bar is avoided in
+    // most cases.
+    setScrollWidth(80);
+
+    // Scroll width is adjusted to ensure that all of the lines
+    // currently displayed can be completely scrolled. This mode never
+    // adjusts the scroll width to be narrower.
+    setScrollWidthTracking(true);
+
     // Do rest of initialisation
     reloadSettings();
 

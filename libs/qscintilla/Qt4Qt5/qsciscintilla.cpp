@@ -4481,3 +4481,23 @@ static QColor asQColor(long sci_colour)
             ((int)(sci_colour >> 8)) & 0x00ff,
             ((int)(sci_colour >> 16)) & 0x00ff);
 }
+
+void QsciScintilla::setScrollWidth(int pixelWidth)
+{
+    SendScintilla(SCI_SETSCROLLWIDTH, pixelWidth);
+}
+
+int QsciScintilla::getScrollWidth() const
+{
+    return SendScintilla(SCI_GETSCROLLWIDTH);
+}
+
+void QsciScintilla::setScrollWidthTracking(bool enabled)
+{
+    SendScintilla(SCI_SETSCROLLWIDTHTRACKING, enabled);
+}
+
+bool QsciScintilla::getScrollWidthTracking() const
+{
+    return SendScintilla(SCI_GETSCROLLWIDTHTRACKING);
+}
