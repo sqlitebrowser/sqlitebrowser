@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="structure">
        <attribute name="title">
@@ -130,7 +130,7 @@
           <item>
            <widget class="QToolButton" name="buttonRefresh">
             <property name="toolTip">
-             <string>Refresh the data in the selected table.</string>
+             <string>Refresh the data in the selected table [F5, Ctrl+R]</string>
             </property>
             <property name="whatsThis">
              <string>This button refreshes the data in the currently selected table.</string>

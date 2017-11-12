@@ -95,6 +95,13 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addAction(pasteAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
+    // This is only for displaying the shortcut in the context menu.
+    // An entry in keyPressEvent is still needed.
+    nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
+    copyAction->setShortcut(QKeySequence::Copy);
+    copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+H")));
+    pasteAction->setShortcut(QKeySequence::Paste);
+
     // Set up context menu actions
     connect(this, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos)
@@ -389,11 +396,14 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     // Call a custom copy method when Ctrl-C is pressed
     if(event->matches(QKeySequence::Copy))
     {
-        copy();
+        copy(false);
         return;
     } else if(event->matches(QKeySequence::Paste)) {
-        // Call a custom paste method when Ctrl-P is pressed
+        // Call a custom paste method when Ctrl-V is pressed
         paste();
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_H)) {
+        // Call copy with headers when Ctrl-H is pressed
+        copy(true);
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
