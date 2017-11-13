@@ -26,11 +26,17 @@
         <verstretch>2</verstretch>
        </sizepolicy>
       </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
       <property name="columnCount">
-       <number>4</number>
+       <number>3</number>
       </property>
       <attribute name="headerDefaultSectionSize">
        <number>100</number>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>false</bool>
       </attribute>
       <column>
        <property name="text">
@@ -45,20 +51,6 @@
       <column>
        <property name="text">
         <string>Y</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string notr="true">_</string>
-       </property>
-       <property name="foreground">
-        <brush brushstyle="NoBrush">
-         <color alpha="0">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
        </property>
       </column>
      </widget>

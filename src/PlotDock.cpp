@@ -117,6 +117,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
                 }
             }
+            ui->treePlotColumns->resizeColumnToContents(PlotColumnField);
 
             // Add a row number column at the beginning of the column list, but only when there were (other) columns added
             if(ui->treePlotColumns->topLevelItemCount())
