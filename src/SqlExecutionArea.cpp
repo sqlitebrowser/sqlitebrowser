@@ -134,6 +134,15 @@ void SqlExecutionArea::reloadSettings()
 
 void SqlExecutionArea::find(QString expr, bool forward)
 {
+    // For finding the previous occurrence, we need to skip the current
+    // selection, otherwise we'd always found the same occurrence.
+    if (!forward && ui->editEditor->hasSelectedText()) {
+        int lineFrom, indexFrom;
+		int lineTo, indexTo;
+        ui->editEditor->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+        ui->editEditor->setCursorPosition(lineFrom, indexFrom);
+    }
+
     bool found = ui->editEditor->findFirst
       (expr,
        ui->regexpCheckBox->isChecked(),
@@ -143,17 +152,16 @@ void SqlExecutionArea::find(QString expr, bool forward)
        forward);
 
     // Set reddish background when not found
-    if (found || expr == "")
-      ui->findLineEdit->setStyleSheet("");
+    if (found)
+        ui->findLineEdit->setStyleSheet("");
     else
-      ui->findLineEdit->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+        ui->findLineEdit->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
 
 }
 
 void SqlExecutionArea::findPrevious()
 {
     find(ui->findLineEdit->text(), false);
-    ui->editEditor->findNext();
 }
 
 void SqlExecutionArea::findNext()
@@ -163,7 +171,29 @@ void SqlExecutionArea::findNext()
 
 void SqlExecutionArea::findLineEdit_textChanged(const QString &)
 {
-    findNext();
+    // When the text changes, perform an incremental search from cursor
+    // position, or from begin of the selection position.
+
+    // Reset reddish background when the user has deleted the input,
+    // otherwise search the text forward.
+    if (ui->findLineEdit->text() == "")
+        ui->findLineEdit->setStyleSheet("");
+    else {
+        // For incremental search while typing we need to start from the
+        // begining of the current selection, otherwise we'd jump to the
+        // next occurrence
+        if (ui->editEditor->hasSelectedText()) {
+            int lineFrom;
+            int indexFrom;
+            int lineTo;
+            int indexTo;
+            ui->editEditor->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+            ui->editEditor->setCursorPosition(lineFrom, indexFrom);
+        }
+
+        find(ui->findLineEdit->text(), true);
+
+    }
 }
 
 void SqlExecutionArea::setFindFrameVisibility(bool show)
