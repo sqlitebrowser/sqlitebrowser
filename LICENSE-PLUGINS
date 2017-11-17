@@ -1,6 +1,6 @@
 DB Browser for SQLite includes support for TIFF and WebP images.  The
 support for these comes from the LibTIFF and WebP projects, which have
-their own (Open Source) licences, different to ours.
+their own (Open Source) licenses, different to ours.
 
 LibTIFF - http://www.simplesystems.org/libtiff/
 
