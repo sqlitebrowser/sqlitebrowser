@@ -578,8 +578,9 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         {
             beginInsertRows(QModelIndex(), num_rows_before_insert, m_data.size()-1);
             endInsertRows();
-            emit finishedFetch();
         }
+
+        emit finishedFetch();
     });
 }
 
