@@ -687,7 +687,6 @@ void MainWindow::selectTableLines(int firstLine, int count)
         return;
 
     selectTableLine(firstLine);
-    QItemSelectionModel* selectionModel = ui->dataTable->selectionModel();
 
     QModelIndex topLeft = ui->dataTable->model()->index(firstLine, 0);
     QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);

@@ -106,10 +106,16 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(this, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos)
     {
+        // Deactivate context menu options if there is no model set
+        bool enabled = model();
+        filterAction->setEnabled(enabled);
+        copyAction->setEnabled(enabled);
+        copyWithHeadersAction->setEnabled(enabled);
+
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
-        nullAction->setEnabled(editable);
-        pasteAction->setEnabled(editable);
+        nullAction->setEnabled(enabled && editable);
+        pasteAction->setEnabled(enabled && editable);
 
         // Show menu
         m_contextMenu->popup(viewport()->mapToGlobal(pos));

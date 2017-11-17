@@ -24,7 +24,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
 
     // Load settings
     ui->checkColNames->setChecked(Settings::getValue("exportsql", "insertcolnames").toBool());
-    ui->checkColNames->setChecked(Settings::getValue("exportsql", "insertmultiple").toBool());
+    ui->checkMultiple->setChecked(Settings::getValue("exportsql", "insertmultiple").toBool());
     ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
 
     // Get list of tables to export
