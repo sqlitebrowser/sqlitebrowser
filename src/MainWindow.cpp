@@ -462,7 +462,23 @@ void MainWindow::populateTable()
         reconnectSelectionSignals = true;
     ui->dataTable->setModel(m_browseTableModel);
     if(reconnectSelectionSignals)
+    {
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+
+        // Lambda function for updating the delete record button to reflect number of selected records
+        connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
+            // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected rows with a non-selected
+            // row in between.
+            int rows = 0;
+            if(ui->dataTable->selectionModel()->selectedIndexes().count())
+                rows = ui->dataTable->selectionModel()->selectedIndexes().last().row() - ui->dataTable->selectionModel()->selectedIndexes().first().row() + 1;
+
+            if(rows > 1)
+                ui->buttonDeleteRecord->setText(tr("Delete records"));
+            else
+                ui->buttonDeleteRecord->setText(tr("Delete record"));
+        });
+    }
 
     // Search stored table settings for this table
     bool storedDataFound = browseTableSettings.contains(tablename);
