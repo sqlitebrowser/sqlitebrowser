@@ -42,6 +42,10 @@ private slots:
     void findPrevious();
     void findNext();
     void findLineEdit_textChanged(const QString& text);
+    void hideFindFrame();
+
+signals:
+    void findFrameVisibilityChanged(bool visible);
 
 private:
     void find(QString expr, bool forward);

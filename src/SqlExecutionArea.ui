@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
+    <width>579</width>
     <height>482</height>
    </rect>
   </property>
@@ -77,16 +77,10 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="6">
+          <item row="0" column="8">
            <spacer>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
             </property>
            </spacer>
           </item>
@@ -153,6 +147,29 @@
             </property>
             <property name="text">
              <string>Regular Expression</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="9">
+           <widget class="QToolButton" name="hideFindButton">
+            <property name="text">
+             <string notr="true">...</string>
+            </property>
+            <property name="icon">
+             <iconset theme="dialog-close"/>
             </property>
            </widget>
           </item>

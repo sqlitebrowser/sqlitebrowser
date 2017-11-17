@@ -8,6 +8,7 @@
 
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QShortcut>
 
 SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
@@ -25,11 +26,15 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
 
     ui->findFrame->hide();
 
+    QShortcut* shortcutHideFind = new QShortcut(QKeySequence("ESC"), ui->findLineEdit);
+    connect(shortcutHideFind, SIGNAL(activated()), this, SLOT(hideFindFrame()));
+
     connect(ui->findLineEdit, SIGNAL(textChanged(const QString &)),
             this, SLOT(findLineEdit_textChanged(const QString &)));
     connect(ui->previousToolButton, SIGNAL(clicked()), this, SLOT(findPrevious()));
     connect(ui->nextToolButton, SIGNAL(clicked()), this, SLOT(findNext()));
     connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
+    connect(ui->hideFindButton, SIGNAL(clicked()), this, SLOT(hideFindFrame()));
 
     // Load settings
     reloadSettings();
@@ -152,7 +157,7 @@ void SqlExecutionArea::find(QString expr, bool forward)
        forward);
 
     // Set reddish background when not found
-    if (found)
+    if (found || expr == "")
         ui->findLineEdit->setStyleSheet("");
     else
         ui->findLineEdit->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
@@ -174,26 +179,26 @@ void SqlExecutionArea::findLineEdit_textChanged(const QString &)
     // When the text changes, perform an incremental search from cursor
     // position, or from begin of the selection position.
 
-    // Reset reddish background when the user has deleted the input,
-    // otherwise search the text forward.
-    if (ui->findLineEdit->text() == "")
-        ui->findLineEdit->setStyleSheet("");
-    else {
-        // For incremental search while typing we need to start from the
-        // begining of the current selection, otherwise we'd jump to the
-        // next occurrence
-        if (ui->editEditor->hasSelectedText()) {
-            int lineFrom;
-            int indexFrom;
-            int lineTo;
-            int indexTo;
-            ui->editEditor->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
-            ui->editEditor->setCursorPosition(lineFrom, indexFrom);
-        }
-
-        find(ui->findLineEdit->text(), true);
-
+    // For incremental search while typing we need to start from the
+    // begining of the current selection, otherwise we'd jump to the
+    // next occurrence
+    if (ui->editEditor->hasSelectedText()) {
+        int lineFrom;
+        int indexFrom;
+        int lineTo;
+        int indexTo;
+        ui->editEditor->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+        ui->editEditor->setCursorPosition(lineFrom, indexFrom);
     }
+
+    find(ui->findLineEdit->text(), true);
+}
+
+void SqlExecutionArea::hideFindFrame()
+{
+    ui->editEditor->setFocus();
+    ui->findFrame->hide();
+    emit findFrameVisibilityChanged(false);
 }
 
 void SqlExecutionArea::setFindFrameVisibility(bool show)
@@ -202,8 +207,8 @@ void SqlExecutionArea::setFindFrameVisibility(bool show)
         ui->findFrame->show();
         ui->findLineEdit->setFocus();
         ui->findLineEdit->selectAll();
+        emit findFrameVisibilityChanged(true);
     } else {
-        ui->editEditor->setFocus();
-        ui->findFrame->hide();
+        hideFindFrame();
     }
 }

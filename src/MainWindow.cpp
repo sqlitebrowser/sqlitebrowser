@@ -1737,6 +1737,7 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
     ui->tabSqlAreas->setCurrentIndex(index);
     w->setFindFrameVisibility(ui->actionSqlFind->isChecked());
     w->getEditor()->setFocus();
+    connect(w, SIGNAL(findFrameVisibilityChanged(bool)), ui->actionSqlFind, SLOT(setChecked(bool)));
 
     return index;
 }
