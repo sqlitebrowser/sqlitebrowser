@@ -214,7 +214,9 @@ set(WIN_IMG_PLUGINS
 	"${QT5_PATH}/plugins/imageformats/qjpeg.dll"
 	"${QT5_PATH}/plugins/imageformats/qsvg.dll"
 	"${QT5_PATH}/plugins/imageformats/qtga.dll"
+	"${QT5_PATH}/plugins/imageformats/qtiff.dll"
 	"${QT5_PATH}/plugins/imageformats/qwbmp.dll"
+	"${QT5_PATH}/plugins/imageformats/qwebp.dll"
 )
 set(WIN_IMG_PLUGINS_DEBUG
 	"${QT5_PATH}/plugins/imageformats/qgifd.dll"
@@ -223,7 +225,9 @@ set(WIN_IMG_PLUGINS_DEBUG
 	"${QT5_PATH}/plugins/imageformats/qjpegd.dll"
 	"${QT5_PATH}/plugins/imageformats/qsvgd.dll"
 	"${QT5_PATH}/plugins/imageformats/qtgad.dll"
+	"${QT5_PATH}/plugins/imageformats/qtiffd.dll"
 	"${QT5_PATH}/plugins/imageformats/qwbmpd.dll"
+	"${QT5_PATH}/plugins/imageformats/qwebpd.dll"
 )
 
 
@@ -453,7 +457,7 @@ if(WIN32 AND NOT UNIX)
 	# There is a bug in NSIS that does not handle full unix paths properly. Make
 	# sure there is at least one set of four (4) backlasshes.
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
-        set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
+	set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
 	set(CPACK_NSIS_EXECUTABLES_DIRECTORY "/")
 	set(CPACK_NSIS_INSTALLED_ICON_NAME "DB Browser for SQLite.exe")
 	set(CPACK_NSIS_DISPLAY_NAME "DB Browser for SQLite")
