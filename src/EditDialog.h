@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QPersistentModelIndex>
 
+#include "jsontextedit.h"
+
 class QHexEdit;
 
 namespace Ui {
@@ -47,6 +49,7 @@ signals:
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
+    JsonTextEdit* jsonEdit;
     QPersistentModelIndex currentIndex;
     int dataSource;
     int dataType;
@@ -55,7 +58,8 @@ private:
 
     enum DataSources {
         TextBuffer,
-        HexBuffer
+        HexBuffer,
+        JsonBuffer
     };
 
     enum DataTypes {
@@ -68,7 +72,8 @@ private:
     enum EditModes {
         TextEditor = 0,
         HexEditor = 1,
-        ImageViewer = 2
+        JsonEditor = 2,
+        ImageViewer = 3
     };
 
     int checkDataType(const QByteArray& data);

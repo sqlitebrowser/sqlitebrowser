@@ -31,11 +31,17 @@ EditDialog::EditDialog(QWidget* parent)
     hexLayout->addWidget(hexEdit);
     hexEdit->setOverwriteMode(false);
 
+    QHBoxLayout* jsonLayout = new QHBoxLayout(ui->editorJSON);
+    jsonEdit = new JsonTextEdit(this);
+    jsonLayout->addWidget(jsonEdit);
+
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
 
     connect(ui->editorText, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(updateApplyButton()));
+    connect(jsonEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
+    connect(jsonEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
 
     reloadSettings();
 }
@@ -89,6 +95,9 @@ void EditDialog::loadData(const QByteArray& data)
     // Data type specific handling
     switch (dataType) {
     case Null:
+        // Set enabled any of the text widgets
+        ui->editorText->setEnabled(true);
+        jsonEdit->setEnabled(true);
         switch (editMode) {
         case TextEditor:
             // The text widget buffer is now the main data source
@@ -96,9 +105,18 @@ void EditDialog::loadData(const QByteArray& data)
 
             // Empty the text editor contents, then enable text editing
             ui->editorText->clear();
-            ui->editorText->setEnabled(true);
 
             break;
+
+        case JsonEditor:
+            // The JSON widget buffer is now the main data source
+            dataSource = JsonBuffer;
+
+            // Empty the text editor contents, then enable text editing
+            jsonEdit->clear();
+
+            break;
+
 
         case HexEditor:
             // The hex widget buffer is now the main data source
@@ -124,6 +142,10 @@ void EditDialog::loadData(const QByteArray& data)
         break;
 
     case Text:
+        // Set enabled any of the text widgets
+        ui->editorText->setEnabled(true);
+        jsonEdit->setEnabled(true);
+
         switch (editMode) {
         case TextEditor:
             // The text widget buffer is now the main data source
@@ -133,11 +155,21 @@ void EditDialog::loadData(const QByteArray& data)
             textData = QString::fromUtf8(data.constData(), data.size());
             ui->editorText->setPlainText(textData);
 
-            // Enable text editing
-            ui->editorText->setEnabled(true);
-
             // Select all of the text by default
             ui->editorText->selectAll();
+
+            break;
+
+        case JsonEditor:
+            // The JSON widget buffer is now the main data source
+            dataSource = JsonBuffer;
+
+            // Load the text into the text editor
+            textData = QString::fromUtf8(data.constData(), data.size());
+            jsonEdit->setText(textData);
+
+            // Select all of the text by default
+            jsonEdit->selectAll();
 
             break;
 
@@ -191,6 +223,12 @@ void EditDialog::loadData(const QByteArray& data)
             ui->editorText->setEnabled(false);
             break;
 
+        case JsonEditor:
+            // Disable text editing, and use a warning message as the contents
+            jsonEdit->setText(tr("Image data can't be viewed with the JSON editor"));
+            jsonEdit->setEnabled(false);
+            break;
+
         case ImageViewer:
             // Load the image into the image viewing widget
             if (img.loadFromData(data)) {
@@ -217,6 +255,12 @@ void EditDialog::loadData(const QByteArray& data)
                     tr("Binary data can't be viewed with the text editor") %
                     "</i>"));
             ui->editorText->setEnabled(false);
+            break;
+
+         case JsonEditor:
+            // Disable text editing, and use a warning message as the contents
+            jsonEdit->setText(QString(tr("Binary data can't be viewed with the JSON editor")));
+            jsonEdit->setEnabled(false);
             break;
 
         case ImageViewer:
@@ -281,12 +325,20 @@ void EditDialog::exportData()
         QFile file(fileName);
         if(file.open(QIODevice::WriteOnly))
         {
-            if (dataSource == HexBuffer) {
+          switch (dataSource) {
+          case HexBuffer:
                 // Data source is the hex buffer
                 file.write(hexEdit->data());
-            } else {
+                break;
+          case TextBuffer:
                 // Data source is the text buffer
                 file.write(ui->editorText->toPlainText().toUtf8());
+                break;
+          case JsonBuffer:
+                // Data source is the JSON buffer
+                file.write(jsonEdit->text().toUtf8());
+                break;
+
             }
             file.close();
         }
@@ -298,16 +350,19 @@ void EditDialog::setNull()
     ui->editorText->clear();
     ui->editorImage->clear();
     hexEdit->setData(QByteArray());
+    jsonEdit->clear();
     dataType = Null;
 
     // Check if in text editor mode
     int editMode = ui->editorStack->currentIndex();
-    if (editMode == TextEditor) {
+    if (editMode == TextEditor || editMode == JsonEditor) {
         // Setting NULL in the text editor switches the data source to it
         dataSource = TextBuffer;
 
         // Ensure the text editor is enabled
         ui->editorText->setEnabled(true);
+        // Ensure the JSON editor is enabled
+        jsonEdit->setEnabled(true);
 
         // The text editor doesn't know the difference between an empty string
         // and a NULL, so we need to record NULL outside of that
@@ -331,7 +386,8 @@ void EditDialog::accept()
     if(!currentIndex.isValid())
         return;
 
-    if (dataSource == TextBuffer) {
+    switch (dataSource) {
+    case TextBuffer:
         // Check if a NULL is set in the text editor
         if (textNullSet) {
             emit recordTextUpdated(currentIndex, hexEdit->data(), true);
@@ -343,12 +399,28 @@ void EditDialog::accept()
                 // The data is different, so commit it back to the database
                 emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
         }
-    } else {
+        break;
+    case JsonBuffer:
+        // Check if a NULL is set in the text editor
+        if (textNullSet) {
+            emit recordTextUpdated(currentIndex, hexEdit->data(), true);
+        } else {
+            // It's not NULL, so proceed with normal text string checking
+            QString oldData = currentIndex.data(Qt::EditRole).toString();
+            QString newData = jsonEdit->text();
+            if (oldData != newData)
+                // The data is different, so commit it back to the database
+                emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
+        }
+        break;
+
+    case HexBuffer:
         // The data source is the hex widget buffer, thus binary data
         QByteArray oldData = currentIndex.data(Qt::EditRole).toByteArray();
         QByteArray newData = hexEdit->data();
         if (newData != oldData)
             emit recordTextUpdated(currentIndex, newData, true);
+        break;
     }
 }
 
@@ -356,10 +428,19 @@ void EditDialog::accept()
 void EditDialog::editModeChanged(int newMode)
 {
     // * If the dataSource is the text buffer, the data is always text *
-    if (dataSource == TextBuffer) {
+    switch (dataSource) {
+    case TextBuffer:
         switch (newMode) {
         case TextEditor: // Switching to the text editor
             // Nothing to do, as the text is already in the text buffer
+            break;
+
+        case JsonEditor: // Switching to the JSON editor
+            // Convert the text widget buffer for the JSON widget
+            jsonEdit->setText(ui->editorText->toPlainText().toUtf8());
+
+            // The JSON widget buffer is now the main data source
+            dataSource = JsonBuffer;
             break;
 
         case HexEditor: // Switching to the hex editor
@@ -379,24 +460,56 @@ void EditDialog::editModeChanged(int newMode)
         // Switch to the selected editor
         ui->editorStack->setCurrentIndex(newMode);
         return;
-    }
+        break;
+    case HexBuffer:
 
-    // * If the dataSource is the hex buffer, the contents could be anything
-    //   so we just pass it to our loadData() function to handle *
-    if (dataSource == HexBuffer) {
+        // * If the dataSource is the hex buffer, the contents could be anything
+        //   so we just pass it to our loadData() function to handle *
         // Switch to the selected editor first, as loadData() relies on it
         // being current
         ui->editorStack->setCurrentIndex(newMode);
 
         // Load the data into the appropriate widget, as done by loadData()
         loadData(hexEdit->data());
-    }
+        break;
+    case JsonBuffer:
+        switch (newMode) {
+        case TextEditor: // Switching to the text editor
+            // Convert the text widget buffer for the JSON widget
+            ui->editorText->setText(jsonEdit->text());
+
+            // The Text widget buffer is now the main data source
+            dataSource = TextBuffer;
+            break;
+
+        case JsonEditor: // Switching to the JSON editor
+             // Nothing to do, as the text is already in the JSON buffer
+            break;
+
+
+        case HexEditor: // Switching to the hex editor
+            // Convert the text widget buffer for the hex widget
+            hexEdit->setData(jsonEdit->text().toUtf8());
+
+            // The hex widget buffer is now the main data source
+            dataSource = HexBuffer;
+            break;
+
+        case ImageViewer:
+            // Clear any image from the image viewing widget
+            ui->editorImage->setPixmap(QPixmap(0,0));
+            break;
+        }
+
+        // Switch to the selected editor
+        ui->editorStack->setCurrentIndex(newMode);
+        }
 }
 
 // Called for every keystroke in the text editor (only)
 void EditDialog::editTextChanged()
 {
-    if (dataSource == TextBuffer) {
+    if (dataSource == TextBuffer || dataSource == JsonBuffer) {
         // Data has been changed in the text editor, so it can't be a NULL
         // any more
         textNullSet = false;
@@ -442,6 +555,7 @@ void EditDialog::toggleOverwriteMode()
 
     hexEdit->setOverwriteMode(currentMode);
     ui->editorText->setOverwriteMode(currentMode);
+    jsonEdit->setOverwriteMode(currentMode);
 }
 
 void EditDialog::setFocus()
@@ -467,6 +581,7 @@ void EditDialog::setReadOnly(bool ro)
     ui->buttonImport->setEnabled(!ro);
     ui->editorText->setReadOnly(ro);
     ui->editorBinary->setEnabled(!ro);  // We disable the entire hex editor here instead of setting it to read only because it doesn't have a setReadOnly() method
+    jsonEdit->setReadOnly(ro);
 }
 
 // Update the information labels in the bottom left corner of the dialog
@@ -544,9 +659,16 @@ QString EditDialog::humanReadableSize(double byteCount) const
 
 void EditDialog::reloadSettings()
 {
-    // Set the font for the text and hex editors
-    QFont editorFont(Settings::getValue("databrowser", "font").toString());
-    editorFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-    ui->editorText->setFont(editorFont);
-    hexEdit->setFont(editorFont);
+    // Set the databrowser font for the text editor but the (SQL) editor
+    // font for hex editor, since it needs a Monospace font and the
+    // databrowser font would be usually of variable width.
+    QFont textFont(Settings::getValue("databrowser", "font").toString());
+    textFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    ui->editorText->setFont(textFont);
+
+    QFont hexFont(Settings::getValue("editor", "font").toString());
+    hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    hexEdit->setFont(hexFont);
+
+    jsonEdit->reloadSettings();
 }

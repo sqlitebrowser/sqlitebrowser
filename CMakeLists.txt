@@ -105,6 +105,7 @@ set(SQLB_MOC_HDR
 	src/VacuumDialog.h
 	src/sqlitetablemodel.h
 	src/sqltextedit.h
+	src/jsontextedit.h
 	src/DbStructureModel.h
 	src/Application.h
 	src/CipherDialog.h
@@ -139,6 +140,7 @@ set(SQLB_SRC
 	src/sqlitetablemodel.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
+	src/jsontextedit.cpp
 	src/csvparser.cpp
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
