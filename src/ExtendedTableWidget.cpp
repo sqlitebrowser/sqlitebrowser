@@ -6,6 +6,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QMimeData>
 #include <QKeySequence>
 #include <QKeyEvent>
 #include <QScrollBar>
@@ -163,7 +164,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     m_buffer.clear();
 
     // If a single cell is selected, copy it to clipboard
-    if (indices.size() == 1) {
+    if (!withHeaders && indices.size() == 1) {
         QImage img;
         QVariant data = m->data(indices.first(), Qt::EditRole);
 
@@ -183,8 +184,6 @@ void ExtendedTableWidget::copy(const bool withHeaders)
 
             if (text.contains('\n'))
                 text = QString("\"%1\"").arg(text);
-            if (withHeaders)
-                text.prepend(model()->headerData(indices.front().column(), Qt::Horizontal, Qt::DisplayRole).toString() + "\r\n");
             qApp->clipboard()->setText(text);
             return;
         }
@@ -216,30 +215,52 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         return;
     }
 
+    // Multiple cells case: write a table both in HTML and text formats to clipboard
+
     QModelIndex first = indices.first();
     QString result;
+    QString htmlResult = "<html><header><style>br{mso-data-placement:same-cell;}</style></header><body><table>";
     int currentRow = 0;
 
+    const QString fieldSepHtml = "</td><td>";
+    const QString rowSepHtml = "</td></tr><tr><td>";
+    const QString fieldSepText = "\t";
+    const QString rowSepText = "\r\n";
+
+    // Table headers
     if (withHeaders) {
+        htmlResult.append("<tr><th>");
         int firstColumn = indices.front().column();
         for(int i = firstColumn; i <= indices.back().column(); i++) {
             QString headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-            if (i != firstColumn)
-                result.append("\t");
+            if (i != firstColumn) {
+                result.append(fieldSepText);
+                htmlResult.append("</th><th>");
+            }
             result.append(QString("\"%1\"").arg(headerText));
+            htmlResult.append(headerText);
         }
-        result.append("\r\n");
+        result.append(rowSepText);
+        htmlResult.append("</th></tr>");
     }
-    for(const QModelIndex& index : indices) {
-        if (first == index) { /* first index */ }
-        else if (index.row() != currentRow)
-            result.append("\r\n");
-        else
-            result.append("\t");
 
+    // Table data rows
+    for(const QModelIndex& index : indices) {
+        // Separators
+        if (first == index)
+            htmlResult.append("<tr><td>");
+        else if (index.row() != currentRow) {
+            result.append(rowSepText);
+            htmlResult.append(rowSepHtml);
+        } else {
+            result.append(fieldSepText);
+            htmlResult.append(fieldSepHtml);
+        }
         currentRow = index.row();
         QVariant data = index.data(Qt::EditRole);
 
+        // Table cell data
+        htmlResult.append(data.toString().toHtmlEscaped());
         // non-NULL data is enquoted, whilst NULL isn't
         if (!data.isNull()) {
             QString text = data.toString();
@@ -248,7 +269,11 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         }
     }
 
-    qApp->clipboard()->setText(result);
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
+    mimeData->setText(result);
+    qApp->clipboard()->setMimeData(mimeData);
+
 }
 
 void ExtendedTableWidget::paste()
@@ -263,9 +288,11 @@ void ExtendedTableWidget::paste()
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
-    // If clipboard contains image - just insert it
-    QImage img = qApp->clipboard()->image();
-    if (!img.isNull()) {
+    // If clipboard contains image and not text - just insert the image
+    const QMimeData* mimeClipboard = qApp->clipboard()->mimeData();
+
+    if (mimeClipboard->hasImage() && !mimeClipboard->hasText()) {
+        QImage img = qApp->clipboard()->image();
         QByteArray ba;
         QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
