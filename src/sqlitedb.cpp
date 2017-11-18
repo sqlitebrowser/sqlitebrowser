@@ -1080,7 +1080,7 @@ bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb:
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move, QString newSchemaName)
+bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move, QString newSchemaName)
 {
     /*
      * USE CASES:
@@ -1104,7 +1104,6 @@ bool DBBrowserDB::renameColumn(const sqlb::ObjectIdentifier& tablename, const sq
     // more easily. Besides that, it might make sense to support some potential use cases in a more sophisticated way. These include:
     // 1) Allow modifying multiple columns at once in order to only have to call this function (including all its overhead) once instead of once per change.
     // 2) Include the addColumn() use case in here, so the calling side doesn't need to know anything about how this class handles table modifications.
-    // 3) Maybe rename this function to alterTable() or something
 
     // If no new schema name has been set, we just use the old schema name
     if(newSchemaName.isNull())

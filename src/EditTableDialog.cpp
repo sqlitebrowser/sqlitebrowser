@@ -217,7 +217,7 @@ void EditTableDialog::checkInput()
                 if (oldTableName == fk->table()) {
                     fk->setTable(normTableName);
                     if(!m_bForeignKeysEnabled)
-                        pdb.renameColumn(curTable, m_table, f->name(), f, 0);
+                        pdb.alterTable(curTable, m_table, f->name(), f, 0);
                 }
             }
         }
@@ -246,7 +246,7 @@ void EditTableDialog::updateTypes(QObject *object)
 
         m_table.fields().at(index)->setType(type);
         if(!m_bNewTable)
-            pdb.renameColumn(curTable, m_table, column, m_table.fields().at(index));
+            pdb.alterTable(curTable, m_table, column, m_table.fields().at(index));
         checkInput();
     }
 }
@@ -514,7 +514,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 
         if(callRenameColumn)
         {
-            if(!pdb.renameColumn(curTable, m_table, oldFieldName, field))
+            if(!pdb.alterTable(curTable, m_table, oldFieldName, field))
                 QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastError()));
         }
     }
@@ -602,7 +602,7 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            if(!pdb.renameColumn(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
+            if(!pdb.alterTable(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
             {
                 QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
             } else {
@@ -680,7 +680,7 @@ void EditTableDialog::moveCurrentField(bool down)
         // Editing an old one
 
         // Move the actual column
-        if(!pdb.renameColumn(
+        if(!pdb.alterTable(
                     curTable,
                     m_table,
                     ui->treeWidget->currentItem()->text(0),
@@ -737,7 +737,7 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
+        if(!pdb.alterTable(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastError()));
@@ -753,7 +753,7 @@ void EditTableDialog::changeSchema(const QString& schema)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(pdb.renameColumn(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
+        if(pdb.alterTable(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
         {
             // Save the new schema name to use it from now on
             curTable.setSchema(schema);

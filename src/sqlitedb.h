@@ -79,7 +79,7 @@ public:
     bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::FieldPtr& field);
 
     /**
-     * @brief renameColumn Can be used to rename, modify or drop an existing column of a given table
+     * @brief alterTable Can be used to rename, modify or drop an existing column of a given table
      * @param schema Specifies the name of the schema, i.e. the database name, of the table
      * @param tablename Specifies the name of the table to edit
      * @param table Specifies the table to edit. The table constraints are used from this but not the columns
@@ -89,7 +89,7 @@ public:
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool renameColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
     const sqlb::ObjectPtr getObjectByName(const sqlb::ObjectIdentifier& name) const;
