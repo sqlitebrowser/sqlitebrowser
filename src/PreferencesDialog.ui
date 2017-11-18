@@ -818,7 +818,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>SQL &amp;log font size</string>
+            <string>SQL &amp;results font size</string>
            </property>
            <property name="buddy">
             <cstring>spinLogFontSize</cstring>
@@ -881,7 +881,7 @@
          <item row="5" column="1">
           <widget class="QCheckBox" name="checkErrorIndicators">
            <property name="toolTip">
-            <string>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</string>
+            <string>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</string>
            </property>
            <property name="text">
             <string>enabled</string>

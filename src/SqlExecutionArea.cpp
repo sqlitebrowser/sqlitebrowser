@@ -55,10 +55,17 @@ QString SqlExecutionArea::getSelectedSql() const
     return ui->editEditor->selectedText().trimmed().replace(QChar(0x2029), '\n');
 }
 
-void SqlExecutionArea::finishExecution(const QString& result)
+void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
 {
     m_columnsResized = false;
     ui->editErrors->setPlainText(result);
+    // Set reddish background when not ok
+    if (showErrorIndicators)
+        if (ok)
+            ui->editErrors->setStyleSheet("");
+        else
+            ui->editErrors->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+
 }
 
 void SqlExecutionArea::fetchedData()
@@ -135,6 +142,12 @@ void SqlExecutionArea::reloadSettings()
 
     // Set prefetch settings
     model->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
+
+    // Check if error indicators are enabled for the not-ok background clue
+    showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
+    if (!showErrorIndicators)
+        ui->editErrors->setStyleSheet("");
+
 }
 
 void SqlExecutionArea::find(QString expr, bool forward)

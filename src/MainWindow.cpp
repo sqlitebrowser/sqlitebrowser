@@ -1028,6 +1028,7 @@ void MainWindow::executeQuery()
     int sql3status = SQLITE_OK;
     int tail_length = utf8Query.length();
     QString statusMessage;
+    bool ok = false;
     bool modified = false;
     bool wasdirty = db.getDirty();
     bool structure_updated = false;
@@ -1139,18 +1140,22 @@ void MainWindow::executeQuery()
 
                 modified = true;
                 statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
+                ok = true;
                 break;
             }
             case SQLITE_MISUSE:
                 continue;
             default:
                 statusMessage = QString::fromUtf8(sqlite3_errmsg(db._db)) + ": " + queryPart;
+                ok = true;
                 break;
             }
             timer.restart();
         } else {
             statusMessage = QString::fromUtf8(sqlite3_errmsg(db._db)) + ": " + queryPart;
             sqlWidget->getEditor()->setErrorIndicator(execution_start_line, execution_start_index, execution_start_line, execution_end_index);
+            ok = false;
+
         }
 
         execution_start_index = execution_end_index;
@@ -1158,7 +1163,7 @@ void MainWindow::executeQuery()
         // Process events to keep the UI responsive
         qApp->processEvents();
     }
-    sqlWidget->finishExecution(statusMessage);
+    sqlWidget->finishExecution(statusMessage, ok);
     plotDock->updatePlot(sqlWidget->getModel());
 
     connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);

@@ -31,7 +31,7 @@ public:
     ExtendedTableWidget *getTableResult();
 
 public slots:
-    virtual void finishExecution(const QString& result);
+    virtual void finishExecution(const QString& result, const bool ok);
     virtual void saveAsCsv();
     virtual void saveAsView();
     virtual void reloadSettings();
@@ -54,6 +54,7 @@ private:
     QString sqlFileName;
     Ui::SqlExecutionArea* ui;
     bool m_columnsResized;              // This is set to true if the columns of the table view were already adjusted to fit their contents
+    bool showErrorIndicators;
 };
 
 #endif

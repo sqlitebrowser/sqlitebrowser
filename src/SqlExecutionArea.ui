@@ -227,6 +227,9 @@
        <property name="readOnly">
         <bool>true</bool>
        </property>
+       <property name="placeholderText">
+        <string>Results of the last executed statements</string>
+       </property>
       </widget>
      </widget>
     </widget>

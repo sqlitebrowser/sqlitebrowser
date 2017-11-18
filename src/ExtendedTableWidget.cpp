@@ -260,10 +260,14 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         QVariant data = index.data(Qt::EditRole);
 
         // Table cell data
-        htmlResult.append(data.toString().toHtmlEscaped());
-        // non-NULL data is enquoted, whilst NULL isn't
+        QString text = data.toString();
+        if (text.contains('\n'))
+          htmlResult.append("<pre>" + data.toString().toHtmlEscaped() + "</pre>");
+        else
+          htmlResult.append(data.toString().toHtmlEscaped());
+
+        // non-NULL data is enquoted in plain text format, whilst NULL isn't
         if (!data.isNull()) {
-            QString text = data.toString();
             text.replace("\"", "\"\"");
             result.append(QString("\"%1\"").arg(text));
         }
@@ -409,9 +413,10 @@ void ExtendedTableWidget::paste()
 void ExtendedTableWidget::useAsFilter()
 {
     QModelIndex index = selectionModel()->currentIndex();
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
     // Abort if there's nothing to filter
-    if (!index.isValid() || !selectionModel()->hasSelection())
+    if (!index.isValid() || !selectionModel()->hasSelection() || m->isBinary(index))
         return;
 
     QVariant data = model()->data(index, Qt::EditRole);
