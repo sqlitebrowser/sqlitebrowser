@@ -23,25 +23,27 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
     ui->comboDisplayFormat->addItem(tr("Windows DATE to date"), "winDate");
+    ui->comboDisplayFormat->addItem(tr("Date as dd/mm/yyyy"), "ddmmyyyyDate");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
 
-    formatFunctions["lower"] = "lower(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["upper"] = "upper(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["epoch"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')";
-    formatFunctions["javaEpoch"] = "strftime('%Y-%m-%d %H:%M:%S.', " + sqlb::escapeIdentifier(column_name) +
-      "/1000, 'unixepoch') || (" + sqlb::escapeIdentifier(column_name) + "%1000)";
-    formatFunctions["winDate"] = "datetime('1899-12-30', " + sqlb::escapeIdentifier(column_name) + " || \" days\")";
-    formatFunctions["appleDate"] = "datetime('2001-01-01', " + sqlb::escapeIdentifier(column_name) + " || \" seconds\")";
-    formatFunctions["julian"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["round"] = "round(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["hex"] = "printf('0x%x', " + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["octal"] = "printf('%o', " + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["decimal"] = "printf('%d', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["exponent"] = "printf('%e', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["hexblob"] = "hex(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["decimal"] = "printf('%d', " + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["hex"] = "printf('0x%x', " + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["octal"] = "printf('%o', " + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["round"] = "round(" + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["appleDate"] = "datetime('2001-01-01', " + sqlb::escapeIdentifier(column_name) + " || \" seconds\")";
+    formatFunctions["javaEpoch"] = "strftime('%Y-%m-%d %H:%M:%S.', " + sqlb::escapeIdentifier(column_name) +
+            "/1000, 'unixepoch') || (" + sqlb::escapeIdentifier(column_name) + "%1000)";
+    formatFunctions["julian"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["epoch"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')";
+    formatFunctions["winDate"] = "datetime('1899-12-30', " + sqlb::escapeIdentifier(column_name) + " || \" days\")";
+    formatFunctions["ddmmyyyyDate"] = "strftime('%d/%m/%Y', " + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["lower"] = "lower(" + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["upper"] = "upper(" + sqlb::escapeIdentifier(column_name) + ")";
 
     // Set the current format, if it's empty set the default format
     if(current_format.isEmpty())
