@@ -57,7 +57,8 @@ HEADERS += \
     PlotDock.h \
     RemoteDock.h \
     RemoteModel.h \
-    RemotePushDialog.h
+    RemotePushDialog.h \
+    jsontextedit.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -93,7 +94,8 @@ SOURCES += \
     PlotDock.cpp \
     RemoteDock.cpp \
     RemoteModel.cpp \
-    RemotePushDialog.cpp
+    RemotePushDialog.cpp \
+    jsontextedit.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
