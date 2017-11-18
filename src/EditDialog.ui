@@ -49,6 +49,11 @@
        </item>
        <item>
         <property name="text">
+         <string>JSON</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Image</string>
         </property>
        </item>
@@ -151,6 +156,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="editorBinary"/>
+     <widget class="QWidget" name="editorJSON"/>
      <widget class="QScrollArea" name="editorImageScrollArea">
       <property name="widgetResizable">
        <bool>true</bool>
