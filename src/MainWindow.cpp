@@ -1122,6 +1122,7 @@ void MainWindow::executeQuery()
                 // The query takes the last placeholder as it may itself contain the sequence '%' + number
                 statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
                             sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
+                ok = true;
                 ui->actionSqlResultsSave->setEnabled(true);
                 ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
 
