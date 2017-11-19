@@ -84,7 +84,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu = new QMenu(this);
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
-    QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/copy"), tr("Copy with Headers"), m_contextMenu);
+    QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
     QAction* filterAction = new QAction(tr("Use as Filter"), m_contextMenu);
     m_contextMenu->addAction(filterAction);

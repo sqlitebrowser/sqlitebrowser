@@ -58,5 +58,7 @@
         <file>folder_user.png</file>
         <file alias="push_database">server_go.png</file>
         <file alias="find">page_find.png</file>
+        <file alias="close">cross.png</file>
+        <file alias="special_copy">page_white_copy.png</file>
     </qresource>
 </RCC>

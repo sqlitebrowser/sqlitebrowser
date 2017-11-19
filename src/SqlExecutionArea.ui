@@ -165,11 +165,18 @@
           </item>
           <item row="0" column="9">
            <widget class="QToolButton" name="hideFindButton">
+            <property name="toolTip">
+             <string>Close Find Bar</string>
+            </property>
             <property name="text">
-             <string notr="true">...</string>
+             <string>Close Find Bar</string>
             </property>
             <property name="icon">
-             <iconset theme="dialog-close"/>
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/close</normaloff>:/icons/close</iconset>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
