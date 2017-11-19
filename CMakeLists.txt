@@ -232,6 +232,12 @@ set(WIN_IMG_PLUGINS_DEBUG
 	"${QT5_PATH}/plugins/imageformats/qwebpd.dll"
 )
 
+# License files
+set(LICENSE_FILES
+	LICENSE
+	LICENSE-PLUGINS
+)
+
 
 qt5_wrap_ui(SQLB_FORM_HDR ${SQLB_FORMS})
 if(SQLB_TSS)
@@ -439,6 +445,11 @@ if(WIN32 AND MSVC)
 			${WIN_IMG_PLUGINS}
 		DESTINATION imageformats
 		CONFIGURATIONS Release)
+
+	# The license files
+	install(FILES
+			${LICENSE_FILES}
+		DESTINATION licenses)
 
 	# The batch file launcher
 	install(FILES
