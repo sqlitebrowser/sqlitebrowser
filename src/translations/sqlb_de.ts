@@ -1914,7 +1914,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="1526"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation>Aktuelle Zeiel ausführen [Shift+F5]</translation>
+        <translation>Aktuelle Zeile ausführen [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1529"/>
