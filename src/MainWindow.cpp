@@ -46,6 +46,7 @@
 #include <QClipboard>
 #include <QShortcut>
 #include <QTextCodec>
+#include <QOpenGLWidget>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -78,6 +79,13 @@ void MainWindow::init()
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
     tabifyDockWidget(ui->dockLog, ui->dockRemote);
+    
+    // Add OpenGL Context for macOS
+#ifdef Q_OS_MACX
+    QOpenGLWidget *ogl = new QOpenGLWidget(this);
+    ui->horizontalLayout->addWidget(ogl);
+    ogl->setHidden(true);
+#endif
 
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
