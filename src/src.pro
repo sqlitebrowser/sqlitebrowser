@@ -1,6 +1,7 @@
 TEMPLATE = app
 
 QT += core gui network widgets printsupport concurrent
+macx: QT += opengl
 
 TARGET = sqlitebrowser
 
