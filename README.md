@@ -53,11 +53,11 @@ Windows releases can be downloaded here:
 you (eg it gives an error), try a nightly build.  They often fix bugs
 reported after the last release. :D
 
-## MacOS X
+## MacOS X / macOS
 
-DB Browser for SQLite works well on MacOS X.
+DB Browser for SQLite works well on MacOS X / macOS.
 
-* OSX 10.8 (Mountain Lion) - 10.12 (Sierra) are tested and known to work
+* OSX 10.8 (Mountain Lion) - 10.13 (High Sierra) are tested and known to work
 
 OSX releases can be downloaded here:
 
