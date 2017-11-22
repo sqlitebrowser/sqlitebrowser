@@ -343,7 +343,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_17">
               <property name="text">
-               <string>Font si&amp;ze:</string>
+               <string>Font si&amp;ze</string>
               </property>
               <property name="buddy">
                <cstring>spinDataBrowserFontSize</cstring>
@@ -382,6 +382,20 @@
               </property>
               <property name="maximum">
                <number>20000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="checkIndentCompact">
+              <property name="text">
+               <string>Indent text on loading. Compact on saving.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_24">
+              <property name="text">
+               <string>JSON cell editor</string>
               </property>
              </widget>
             </item>

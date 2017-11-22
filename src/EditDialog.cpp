@@ -11,6 +11,7 @@
 #include <QImageReader>
 #include <QBuffer>
 #include <QModelIndex>
+#include <QJsonDocument>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -163,11 +164,19 @@ void EditDialog::loadData(const QByteArray& data)
         case JsonEditor:
             // The JSON widget buffer is now the main data source
             dataSource = JsonBuffer;
+            {
+                QJsonDocument jsonDoc = QJsonDocument::fromJson(QByteArray(data.constData(), data.size()));
 
-            // Load the text into the text editor
-            textData = QString::fromUtf8(data.constData(), data.size());
-            jsonEdit->setText(textData);
-
+                if (mustIndentAndCompact && !jsonDoc.isNull()) {
+                    // Load indented JSON into the JSON editor
+                    textData = QString(jsonDoc.toJson(QJsonDocument::Indented));
+                    jsonEdit->setText(textData);
+                } else {
+                    // Fallback case. The data is not yet valid JSON.
+                    textData = QString::fromUtf8(data.constData(), data.size());
+                    jsonEdit->setText(textData);
+                }
+            }
             // Select all of the text by default
             jsonEdit->selectAll();
 
@@ -407,7 +416,15 @@ void EditDialog::accept()
         } else {
             // It's not NULL, so proceed with normal text string checking
             QString oldData = currentIndex.data(Qt::EditRole).toString();
-            QString newData = jsonEdit->text();
+
+            QString newData;
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonEdit->text().toUtf8());
+            if (mustIndentAndCompact && !jsonDoc.isNull())
+                // Compact the JSON data before storing
+                newData = QString(jsonDoc.toJson(QJsonDocument::Compact));
+            else
+                newData = jsonEdit->text();
+
             if (oldData != newData)
                 // The data is different, so commit it back to the database
                 emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
@@ -436,8 +453,18 @@ void EditDialog::editModeChanged(int newMode)
             break;
 
         case JsonEditor: // Switching to the JSON editor
+
             // Convert the text widget buffer for the JSON widget
-            jsonEdit->setText(ui->editorText->toPlainText().toUtf8());
+            // * If the dataSource is the TextBuffer, the contents could
+            // be still compacted so we just pass it to our loadData()
+            // function to handle, for indenting if necessary *
+            // Switch to the selected editor first, as loadData() relies
+            // on it being current
+            ui->editorStack->setCurrentIndex(newMode);
+
+            // Load the data into the appropriate widget, as done by loadData()
+            loadData(ui->editorText->toPlainText().toUtf8());
+            // jsonEdit->setText(ui->editorText->toPlainText().toUtf8());
 
             // The JSON widget buffer is now the main data source
             dataSource = JsonBuffer;
@@ -671,4 +698,6 @@ void EditDialog::reloadSettings()
     hexEdit->setFont(hexFont);
 
     jsonEdit->reloadSettings();
+
+    mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
 }

@@ -92,6 +92,7 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
+    ui->checkIndentCompact->setChecked(Settings::getValue("databrowser", "indent_compact").toBool());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
     ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
@@ -193,6 +194,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
+    Settings::setValue("databrowser", "indent_compact", ui->checkIndentCompact->isChecked());
     Settings::setValue("databrowser", "null_text", ui->txtNull->text());
     Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
     Settings::setValue("databrowser", "filter_delay", ui->spinFilterDelay->value());

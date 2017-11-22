@@ -55,6 +55,7 @@ private:
     int dataType;
     bool textNullSet;
     bool isReadOnly;
+    bool mustIndentAndCompact;
 
     enum DataSources {
         TextBuffer,
