@@ -12,6 +12,7 @@
 #include <QBuffer>
 #include <QModelIndex>
 #include <QJsonDocument>
+#include <QMessageBox>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -292,7 +293,7 @@ void EditDialog::importData()
                 this,
                 tr("Choose a file")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
-                , tr("Text files(*.txt);;Image files(%1);;All files(*)").arg(image_formats)
+                , tr("Text files(*.txt);;Image files(%1);;JSON files(*.json);;All files(*)").arg(image_formats)
 #endif
                 );
     if(QFile::exists(fileName))
@@ -390,6 +391,16 @@ void EditDialog::updateApplyButton()
         ui->buttonApply->setEnabled(true);
 }
 
+bool EditDialog::promptInvalidData(const QString& dataType, const QString& errorString)
+{
+    QMessageBox::StandardButton reply = QMessageBox::question(
+      this,
+      tr("Invalid data for this mode"),
+      tr("The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?").arg(dataType, errorString),
+      QMessageBox::Apply | QMessageBox::Cancel);
+    return (reply == QMessageBox::Apply);
+}
+
 void EditDialog::accept()
 {
     if(!currentIndex.isValid())
@@ -418,14 +429,18 @@ void EditDialog::accept()
             QString oldData = currentIndex.data(Qt::EditRole).toString();
 
             QString newData;
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonEdit->text().toUtf8());
-            if (mustIndentAndCompact && !jsonDoc.isNull())
+            QJsonParseError parseError;
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonEdit->text().toUtf8(), &parseError);
+            bool proceed;
+            if (mustIndentAndCompact && !jsonDoc.isNull()) {
                 // Compact the JSON data before storing
                 newData = QString(jsonDoc.toJson(QJsonDocument::Compact));
-            else
+                proceed = (oldData != newData);
+            } else {
                 newData = jsonEdit->text();
-
-            if (oldData != newData)
+                proceed = (oldData != newData && promptInvalidData("JSON", parseError.errorString()));
+            }
+            if (proceed)
                 // The data is different, so commit it back to the database
                 emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
         }

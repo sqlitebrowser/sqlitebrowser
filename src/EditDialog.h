@@ -79,6 +79,7 @@ private:
 
     int checkDataType(const QByteArray& data);
     QString humanReadableSize(double byteCount) const;
+    bool promptInvalidData(const QString& dataType, const QString& errorString);
 };
 
 #endif
