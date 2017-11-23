@@ -125,8 +125,9 @@ void SqlExecutionArea::saveAsView()
 
 void SqlExecutionArea::reloadSettings()
 {
-    // Reload editor settings
+    // Reload editor and table settings
     ui->editEditor->reloadSettings();
+    ui->tableResult->reloadSettings();
 
     // Set font
     QFont logfont(Settings::getValue("editor", "font").toString());
