@@ -354,6 +354,17 @@ void ExtendedTableWidget::paste()
     int firstColumn = indices.front().column();
     int selectedColumns = indices.back().column() - firstColumn + 1;
 
+    // Special case: if there is only one cell of data to be pasted, paste it into all selected fields
+    if(clipboardRows == 1 && clipboardColumns == 1)
+    {
+        QString data = clipboardTable.first().first();
+        for(int row=firstRow;row<firstRow+selectedRows;row++)
+        {
+            for(int column=firstColumn;column<firstColumn+selectedColumns;column++)
+                setPasteData(m->index(row, column), data);
+        }
+        return;
+    }
 
     // If not selected only one cell then check does selection match cliboard dimensions
     if(selectedRows != 1 || selectedColumns != 1)
@@ -383,16 +394,7 @@ void ExtendedTableWidget::paste()
         int column = firstColumn;
         for(const QString& cell : clipboardRow)
         {
-            if (cell.isEmpty())
-                m->setData(m->index(row, column), QVariant());
-            else
-            {
-                QString text = cell;
-                if (QRegExp("\".*\"").exactMatch(text))
-                    text = text.mid(1, cell.length() - 2);
-                text.replace("\"\"", "\"");
-                m->setData(m->index(row, column), text);
-            }
+            setPasteData(m->index(row, column), cell);
 
             column++;
             if(column> lastColumn)
@@ -408,6 +410,22 @@ void ExtendedTableWidget::paste()
         }
     }
 
+}
+
+void ExtendedTableWidget::setPasteData(const QModelIndex& idx, const QString& data)
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    if(data.isEmpty())
+    {
+        m->setData(idx, QVariant());
+    } else {
+        QString text = data;
+        if(QRegExp("\".*\"").exactMatch(text))
+            text = text.mid(1, data.length() - 2);
+        text.replace("\"\"", "\"");
+        m->setData(idx, text);
+    }
 }
 
 void ExtendedTableWidget::useAsFilter()

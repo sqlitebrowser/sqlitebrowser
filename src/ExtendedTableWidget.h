@@ -34,6 +34,8 @@ signals:
 private:
     void copy(const bool withHeaders = false);
     void paste();
+    void setPasteData(const QModelIndex& idx, const QString& data);
+
     void useAsFilter();
 
     typedef QList<QByteArray> QByteArrayList;
