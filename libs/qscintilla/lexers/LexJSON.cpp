@@ -457,7 +457,9 @@ void SCI_METHOD LexerJSON::Fold(Sci_PositionU startPos,
 	LexAccessor styler(pAccess);
 	Sci_PositionU currLine = styler.GetLine(startPos);
 	Sci_PositionU endPos = startPos + length;
-	int currLevel = styler.LevelAt(currLine) & SC_FOLDLEVELNUMBERMASK;
+	int currLevel = SC_FOLDLEVELBASE;
+	if (currLine > 0)
+		currLevel = styler.LevelAt(currLine - 1) >> 16;
 	int nextLevel = currLevel;
 	int visibleChars = 0;
 	for (Sci_PositionU i = startPos; i < endPos; i++) {
@@ -472,7 +474,7 @@ void SCI_METHOD LexerJSON::Fold(Sci_PositionU startPos,
 			}
 		}
 		if (atEOL || i == (endPos-1)) {
-			int level = currLevel;
+			int level = currLevel | nextLevel << 16;
 			if (!visibleChars && options.foldCompact) {
 				level |= SC_FOLDLEVELWHITEFLAG;
 			} else if (nextLevel > currLevel) {
