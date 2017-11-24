@@ -145,16 +145,22 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="buttonClearFilters">
+           <widget class="QToolButton" name="buttonToggleFilters">
             <property name="toolTip">
-             <string>Clear all filters</string>
+             <string>Clear/restore all filters</string>
+            </property>
+            <property name="whatsThis">
+             <string>When filters are applied, this button clears them. When no filters are applied, it restores the last used filters in the table, if available.</string>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
-              <normaloff>:/icons/clear_filters</normaloff>:/icons/clear_filters</iconset>
+              <normaloff>:/icons/filters</normaloff>:/icons/filters</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1867,7 +1873,7 @@
   <tabstop>treeSchemaDock</tabstop>
   <tabstop>comboBrowseTable</tabstop>
   <tabstop>buttonRefresh</tabstop>
-  <tabstop>buttonClearFilters</tabstop>
+  <tabstop>buttonToggleFilters</tabstop>
   <tabstop>buttonNewRecord</tabstop>
   <tabstop>buttonDeleteRecord</tabstop>
   <tabstop>dataTable</tabstop>

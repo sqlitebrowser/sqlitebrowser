@@ -28,6 +28,7 @@ struct BrowseDataTableSettings
     Qt::SortOrder sortOrderMode;
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
+    QMap<int, QString> savedFilterValues;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -273,7 +274,7 @@ private slots:
     void fileAttach();
     void updateFilter(int column, const QString& value);
     void editEncryption();
-    void on_buttonClearFilters_clicked();
+    void on_buttonToggleFilters_clicked(bool checked);
     void copyCurrentCreateStatement();
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
