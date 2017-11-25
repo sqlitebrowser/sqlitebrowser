@@ -100,7 +100,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // An entry in keyPressEvent is still needed.
     nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
     copyAction->setShortcut(QKeySequence::Copy);
-    copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+H")));
+    copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+Shift+C")));
     pasteAction->setShortcut(QKeySequence::Paste);
 
     // Set up context menu actions

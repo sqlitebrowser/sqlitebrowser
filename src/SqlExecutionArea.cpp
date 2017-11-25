@@ -153,16 +153,8 @@ void SqlExecutionArea::reloadSettings()
 
 void SqlExecutionArea::find(QString expr, bool forward)
 {
-    // For finding the previous occurrence, we need to skip the current
-    // selection, otherwise we'd always found the same occurrence.
-    if (!forward && ui->editEditor->hasSelectedText()) {
-        int lineFrom, indexFrom;
-		int lineTo, indexTo;
-        ui->editEditor->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
-        ui->editEditor->setCursorPosition(lineFrom, indexFrom);
-    }
 
-    bool found = ui->editEditor->findFirst
+    bool found = ui->editEditor->findText
       (expr,
        ui->regexpCheckBox->isChecked(),
        ui->caseCheckBox->isChecked(),

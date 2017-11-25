@@ -288,6 +288,7 @@ private slots:
     void requestCollation(const QString& name, int eTextRep);
     void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
+    void openFindReplaceDialog();
 };
 
 #endif

@@ -120,6 +120,7 @@ set(SQLB_MOC_HDR
 	src/RemoteDock.h
 	src/RemoteModel.h
 	src/RemotePushDialog.h
+	src/FindReplaceDialog.h
 )
 
 set(SQLB_SRC
@@ -159,6 +160,7 @@ set(SQLB_SRC
 	src/RemoteDock.cpp
 	src/RemoteModel.cpp
 	src/RemotePushDialog.cpp
+	src/FindReplaceDialog.cpp
 )
 
 set(SQLB_FORMS
@@ -178,6 +180,7 @@ set(SQLB_FORMS
 	src/PlotDock.ui
 	src/RemoteDock.ui
 	src/RemotePushDialog.ui
+	src/FindReplaceDialog.ui
 )
 
 set(SQLB_RESOURCES

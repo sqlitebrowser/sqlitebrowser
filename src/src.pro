@@ -59,7 +59,8 @@ HEADERS += \
     RemoteDock.h \
     RemoteModel.h \
     RemotePushDialog.h \
-    jsontextedit.h
+    jsontextedit.h \
+    FindReplaceDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -96,7 +97,8 @@ SOURCES += \
     RemoteDock.cpp \
     RemoteModel.cpp \
     RemotePushDialog.cpp \
-    jsontextedit.cpp
+    jsontextedit.cpp \
+    FindReplaceDialog.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -119,7 +121,8 @@ FORMS += \
     ColumnDisplayFormatDialog.ui \
     PlotDock.ui \
     RemoteDock.ui \
-    RemotePushDialog.ui
+    RemotePushDialog.ui \
+    FindReplaceDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

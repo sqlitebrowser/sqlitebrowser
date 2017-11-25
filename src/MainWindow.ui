@@ -834,6 +834,7 @@
           <addaction name="actionSqlResultsSave"/>
           <addaction name="separator"/>
           <addaction name="actionSqlFind"/>
+          <addaction name="actionSqlFindReplace"/>
          </widget>
         </item>
         <item>
@@ -1812,6 +1813,21 @@
     <string>Ctrl+F</string>
    </property>
   </action>
+  <action name="actionSqlFindReplace">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_replace</normaloff>:/icons/text_replace</iconset>
+   </property>
+   <property name="text">
+    <string>Find or replace text in SQL editor</string>
+   </property>
+   <property name="toolTip">
+    <string>Find or replace text in SQL editor [Ctrl+H]</string>
+   </property>
+  </action>
   <action name="actionSqlResultsExportCsv">
    <property name="text">
     <string>Export to &amp;CSV</string>
@@ -2354,6 +2370,22 @@
    <signal>toggled(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>setFindFrameVisibility(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlFindReplace</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openFindReplaceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

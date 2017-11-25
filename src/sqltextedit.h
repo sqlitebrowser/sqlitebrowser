@@ -17,6 +17,7 @@ public:
     explicit SqlTextEdit(QWidget *parent = nullptr);
     virtual ~SqlTextEdit();
 
+    bool findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward);
     static SqlUiLexer* sqlLexer;
 
 public slots:
@@ -36,6 +37,7 @@ private:
 
 private slots:
     void updateLineNumberAreaWidth();
+    void openFindReplaceDialog();
 };
 
 #endif

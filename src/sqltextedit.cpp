@@ -1,11 +1,13 @@
 #include "sqltextedit.h"
 #include "Settings.h"
 #include "SqlUiLexer.h"
+#include "FindReplaceDialog.h"
 
 #include <QFile>
 #include <QDropEvent>
 #include <QUrl>
 #include <QMimeData>
+#include <QShortcut>
 #include <cmath>
 
 SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
@@ -56,6 +58,13 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 
     // Connect signals
     connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
+
+    // The ideal shortcut would be QKeySequence::Replace, but that is
+    // reserved for the Main Window, that contains various SqlTextEdit
+    // widgets and needs its own shortcut. For other windows
+    // containing the SqlTextEdit widget we can use this one.
+    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+Shift+H")), this);
+    connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -175,4 +184,27 @@ void SqlTextEdit::setErrorIndicator(int fromRow, int fromIndex, int toRow, int t
     // Set error indicator for the specified range but only if they're enabled
     if(showErrorIndicators)
         fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, errorIndicatorNumber);
+}
+
+bool SqlTextEdit::findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward) {
+
+    // For finding the previous occurrence, we need to skip the current
+    // selection, otherwise we'd always found the same occurrence.
+    if (!forward && hasSelectedText()) {
+        int lineFrom, indexFrom;
+		int lineTo, indexTo;
+        getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+        setCursorPosition(lineFrom, indexFrom);
+    }
+
+    return findFirst(text, regexp, caseSensitive, words, wrap, forward);
+
+}
+
+void SqlTextEdit::openFindReplaceDialog()
+{
+
+    FindReplaceDialog dialog(this);
+    dialog.setSqlTextEdit(this);
+    dialog.exec();
 }

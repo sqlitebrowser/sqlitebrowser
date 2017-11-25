@@ -23,6 +23,7 @@
 #include "FilterTableHeader.h"
 #include "RemoteDock.h"
 #include "RemoteDatabase.h"
+#include "FindReplaceDialog.h"
 
 #include <QFile>
 #include <QApplication>
@@ -79,7 +80,7 @@ void MainWindow::init()
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
     tabifyDockWidget(ui->dockLog, ui->dockRemote);
-    
+
     // Add OpenGL Context for macOS
 #ifdef Q_OS_MACX
     QOpenGLWidget *ogl = new QOpenGLWidget(this);
@@ -143,6 +144,8 @@ void MainWindow::init()
     connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
     connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
+    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(QKeySequence::Replace), this);
+    connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -2688,6 +2691,31 @@ void MainWindow::renameSqlTab(int index)
 
 void MainWindow::setFindFrameVisibility(bool show)
 {
+    // Set the find frame visibility for all tabs, but leave the
+    // current as the last, to retain there the focus.
     for(int i=0;i<ui->tabSqlAreas->count();i++)
-        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->setFindFrameVisibility(show);
+        if (i != ui->tabSqlAreas->currentIndex())
+            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->setFindFrameVisibility(show);
+    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFindFrameVisibility(show);
+}
+
+void MainWindow::openFindReplaceDialog()
+{
+    // The slot for the shortcut must discover which sqltexedit widget has the focus and then set it to the dialog.
+    SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    SqlTextEdit* focusedSqlTextEdit = nullptr;
+
+    if (ui->editLogUser->hasFocus())
+        focusedSqlTextEdit = ui->editLogUser;
+    else if (ui->editLogApplication->hasFocus())
+        focusedSqlTextEdit = ui->editLogApplication;
+
+    if (sqlWidget && !focusedSqlTextEdit)
+        focusedSqlTextEdit = sqlWidget->getEditor();
+
+    if (focusedSqlTextEdit) {
+        FindReplaceDialog dialog(this);
+        dialog.setSqlTextEdit(focusedSqlTextEdit);
+        dialog.exec();
+    }
 }
