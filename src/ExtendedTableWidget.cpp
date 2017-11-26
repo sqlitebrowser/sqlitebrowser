@@ -457,8 +457,8 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     } else if(event->matches(QKeySequence::Paste)) {
         // Call a custom paste method when Ctrl-V is pressed
         paste();
-    } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_H)) {
-        // Call copy with headers when Ctrl-H is pressed
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier) && (event->key() == Qt::Key_C)) {
+        // Call copy with headers when Ctrl-Shift-C is pressed
         copy(true);
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
