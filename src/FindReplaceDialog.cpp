@@ -26,12 +26,12 @@ void FindReplaceDialog::setSqlTextEdit(SqlTextEdit* sqlTextEdit)
     m_sqlTextEdit->setIndicatorForegroundColor(Qt::magenta, foundIndicatorNumber);
     m_sqlTextEdit->setIndicatorDrawUnder(true, foundIndicatorNumber);
 
-    if (m_sqlTextEdit->isReadOnly()) {
-        ui->replaceWithText->setEnabled(false);
-        ui->replaceButton->setEnabled(false);
-        ui->replaceAllButton->setEnabled(false);
-    }
+    bool isWriteable = ! m_sqlTextEdit->isReadOnly();
+    ui->replaceWithText->setEnabled(isWriteable);
+    ui->replaceButton->setEnabled(isWriteable);
+    ui->replaceAllButton->setEnabled(isWriteable);
 
+    connect(m_sqlTextEdit, SIGNAL(destroyed()), this, SLOT(hide()));
 }
 
 bool FindReplaceDialog::findNext()
@@ -50,6 +50,13 @@ bool FindReplaceDialog::findNext()
 
     return found;
 
+}
+
+void FindReplaceDialog::show()
+{
+    ui->findText->setFocus();
+    ui->findText->selectAll();
+    QDialog::show();
 }
 
 void FindReplaceDialog::replace()
@@ -80,8 +87,9 @@ void FindReplaceDialog::findAll()
         indicateSelection();
         ++occurrences;
     }
+    m_sqlTextEdit->clearSelection();
 
-     QString message;
+    QString message;
     switch (occurrences) {
     case 0:
         message = tr("The searched text was not found.");
@@ -113,6 +121,7 @@ void FindReplaceDialog::replaceAll()
         indicateSelection();
         ++occurrences;
     }
+    m_sqlTextEdit->clearSelection();
 
     QString message;
     switch (occurrences) {

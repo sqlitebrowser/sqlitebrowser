@@ -17,6 +17,7 @@ class SqliteTableModel;
 class DbStructureModel;
 class RemoteDock;
 class RemoteDatabase;
+class FindReplaceDialog;
 
 namespace Ui {
 class MainWindow;
@@ -173,6 +174,7 @@ private:
     EditDialog* editDock;
     PlotDock* plotDock;
     RemoteDock* remoteDock;
+    FindReplaceDialog* findReplaceDialog;
 
     QIntValidator* gotoValidator;
 

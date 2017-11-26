@@ -18,6 +18,7 @@ public:
     virtual ~SqlTextEdit();
 
     bool findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward);
+    void clearSelection();
     static SqlUiLexer* sqlLexer;
 
 public slots:

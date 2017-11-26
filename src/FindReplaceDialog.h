@@ -19,6 +19,7 @@ public:
     explicit FindReplaceDialog(QWidget* parent = nullptr);
     ~FindReplaceDialog();
     void setSqlTextEdit(SqlTextEdit* sqlTextEdit);
+    void show();
 
 private slots:
     bool findNext();

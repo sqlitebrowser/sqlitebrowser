@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget* parent)
       editDock(new EditDialog(this)),
       plotDock(new PlotDock(this)),
       remoteDock(new RemoteDock(this)),
+      findReplaceDialog(new FindReplaceDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this))
 {
     ui->setupUi(this);
@@ -2714,8 +2715,7 @@ void MainWindow::openFindReplaceDialog()
         focusedSqlTextEdit = sqlWidget->getEditor();
 
     if (focusedSqlTextEdit) {
-        FindReplaceDialog dialog(this);
-        dialog.setSqlTextEdit(focusedSqlTextEdit);
-        dialog.exec();
+        findReplaceDialog->setSqlTextEdit(focusedSqlTextEdit);
+        findReplaceDialog->show();
     }
 }

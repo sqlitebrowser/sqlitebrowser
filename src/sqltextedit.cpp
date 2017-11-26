@@ -198,7 +198,11 @@ bool SqlTextEdit::findText(QString text, bool regexp, bool caseSensitive, bool w
     }
 
     return findFirst(text, regexp, caseSensitive, words, wrap, forward);
+}
 
+void SqlTextEdit::clearSelection()
+{
+    setSelection(-1,-1,-1,-1);
 }
 
 void SqlTextEdit::openFindReplaceDialog()
