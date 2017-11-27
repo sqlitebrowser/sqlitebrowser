@@ -166,7 +166,8 @@ void EditDialog::loadData(const QByteArray& data)
             // The JSON widget buffer is now the main data source
             dataSource = JsonBuffer;
             {
-                QJsonDocument jsonDoc = QJsonDocument::fromJson(QByteArray(data.constData(), data.size()));
+                QJsonParseError parseError;
+                QJsonDocument jsonDoc = QJsonDocument::fromJson(QByteArray(data.constData(), data.size()), &parseError);
 
                 if (mustIndentAndCompact && !jsonDoc.isNull()) {
                     // Load indented JSON into the JSON editor
@@ -177,9 +178,12 @@ void EditDialog::loadData(const QByteArray& data)
                     textData = QString::fromUtf8(data.constData(), data.size());
                     jsonEdit->setText(textData);
                 }
+
+                jsonEdit->clearErrorIndicators();
+                if (parseError.error != QJsonParseError::NoError)
+                    jsonEdit->setErrorIndicator(parseError.offset-1);
+
             }
-            // Select all of the text by default
-            jsonEdit->selectAll();
 
             break;
 
@@ -432,10 +436,19 @@ void EditDialog::accept()
             QJsonParseError parseError;
             QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonEdit->text().toUtf8(), &parseError);
             bool proceed;
-            if (mustIndentAndCompact && !jsonDoc.isNull()) {
-                // Compact the JSON data before storing
-                newData = QString(jsonDoc.toJson(QJsonDocument::Compact));
+
+            jsonEdit->clearErrorIndicators();
+            if (parseError.error != QJsonParseError::NoError)
+                jsonEdit->setErrorIndicator(parseError.offset-1);
+
+            if (!jsonDoc.isNull()) {
+                if (mustIndentAndCompact)
+                    // Compact the JSON data before storing
+                    newData = QString(jsonDoc.toJson(QJsonDocument::Compact));
+                else
+                    newData = jsonEdit->text();
                 proceed = (oldData != newData);
+
             } else {
                 newData = jsonEdit->text();
                 proceed = (oldData != newData && promptInvalidData("JSON", parseError.errorString()));

@@ -388,7 +388,7 @@
             <item row="1" column="1">
              <widget class="QCheckBox" name="checkIndentCompact">
               <property name="text">
-               <string>Indent text on loading. Compact on saving.</string>
+               <string>Pretty print on loading. Compact on saving.</string>
               </property>
              </widget>
             </item>

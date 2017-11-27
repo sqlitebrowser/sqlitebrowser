@@ -32,7 +32,11 @@ JsonTextEdit::JsonTextEdit(QWidget* parent) :
     // Enable folding
     setFolding(QsciScintilla::BoxedTreeFoldStyle);
     jsonLexer->setFoldCompact(false);
-    
+
+    // Create error indicator
+    errorIndicatorNumber = indicatorDefine(QsciScintilla::SquiggleIndicator);
+    setIndicatorForegroundColor(Qt::red, errorIndicatorNumber);
+
     // Set a sensible scroll width, so the scroll bar is avoided in
     // most cases.
     setScrollWidth(80);
@@ -136,7 +140,6 @@ void JsonTextEdit::reloadSettings()
     QFont errorFont(Settings::getValue("editor", "font").toString());
     errorFont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
     errorFont.setItalic(true);
-    errorFont.setUnderline(true);
     jsonLexer->setFont(errorFont, QsciLexerJSON::Error);
     jsonLexer->setFont(errorFont, QsciLexerJSON::UnclosedString);
     jsonLexer->setPaper(jsonLexer->defaultPaper(QsciLexerJSON::String), QsciLexerJSON::Error);
@@ -164,4 +167,34 @@ void JsonTextEdit::reloadSettings()
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
     jsonLexer->refreshProperties();
 
+    // Check if error indicators are enabled and clear them if they just got disabled
+    showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
+    if(!showErrorIndicators)
+        clearErrorIndicators();
+
+}
+
+void JsonTextEdit::clearErrorIndicators()
+{
+    // Clear any error indicators from position (0,0) to the last column of the last line
+    clearIndicatorRange(0, 0, lines(), lineLength(lines()), errorIndicatorNumber);
+}
+
+void JsonTextEdit::setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex)
+{
+    // Set error indicator for the specified range but only if they're enabled
+    if(showErrorIndicators)
+        fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, errorIndicatorNumber);
+}
+
+void JsonTextEdit::setErrorIndicator(int position)
+{
+    // Set error indicator for the position until end of line, but only if they're enabled
+    if(showErrorIndicators) {
+
+        int column = SendScintilla(QsciScintillaBase::SCI_GETCOLUMN, position);
+        int line = SendScintilla(QsciScintillaBase::SCI_LINEFROMPOSITION, position);
+
+        fillIndicatorRange(line, column, line+1, 0, errorIndicatorNumber);
+    }
 }
