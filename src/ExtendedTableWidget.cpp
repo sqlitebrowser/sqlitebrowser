@@ -157,10 +157,10 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     // Abort if there's nothing to copy
     if (indices.isEmpty())
         return;
-    qSort(indices);
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
+    // Clear internal copy-paste buffer
     m_buffer.clear();
 
     // If a single cell is selected, copy it to clipboard
@@ -168,20 +168,24 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         QImage img;
         QVariant data = m->data(indices.first(), Qt::EditRole);
 
-        if (img.loadFromData(data.toByteArray())) { // If it's an image
+        if (img.loadFromData(data.toByteArray()))
+        {
+            // If it's an image, copy the image data to the clipboard
             qApp->clipboard()->setImage(img);
             return;
         } else {
+            // It it's not an image, check if it's an empty field
             QString text = data.toString();
-            if (text.isEmpty()) {
-                // NULL and empty single-cells are handled via inner buffer
+            if (text.isEmpty())
+            {
+                // The field is either NULL or empty. Those are are handled via the internal copy-paste buffer
                 qApp->clipboard()->clear();
-                QByteArrayList lst;
-                lst << data.toByteArray();
-                m_buffer.push_back(lst);
+                m_buffer.push_back(QByteArrayList{data.toByteArray()});
                 return;
             }
 
+            // The field isn't empty. So check if it contains a line break, and if yes, quote it before copying it to the clipboard.
+            // The quotes mimic the behaviour of spreadsheet applications here
             if (text.contains('\n'))
                 text = QString("\"%1\"").arg(text);
             qApp->clipboard()->setText(text);
@@ -189,20 +193,23 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         }
     }
 
-    // If any of the cells contain binary data - we use inner buffer
+    // If any of the selected cells contains binary data, we use the internal copy-paste buffer
     bool containsBinary = false;
     for(const QModelIndex& index : indices)
     {
-        if (m->isBinary(index)) {
+        if (m->isBinary(index)) {   // TODO: Should we check for NULL values, too?
             containsBinary = true;
             break;
         }
     }
 
-    if (containsBinary) {
+    if (containsBinary)
+    {
+        // Make sure to clear the system clipboard, so it's not used when pasting
         qApp->clipboard()->clear();
-        // Copy selected data into inner buffer
-        int columns = indices.last().column() - indices.first().column() + 1;
+
+        // Copy selected data into internal copy-paste buffer
+        int columns = indices.last().column() - indices.first().column() + 1;       // Make sure the layout of the internal buffer is rectangular
         while (!indices.isEmpty()) {
             QByteArrayList lst;
             for (int i = 0; i < columns; ++i) {
@@ -215,7 +222,8 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         return;
     }
 
-    // Multiple cells case: write a table both in HTML and text formats to clipboard
+    // If we got here, there are multiple selected cells, none of which contains binary data.
+    // In this case, write a table both in HTML and text formats to clipboard
 
     QModelIndex first = indices.first();
     QString result;
@@ -237,7 +245,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
             }
-            result.append(QString("\"%1\"").arg(headerText));
+            result.append(QString("\"%1\"").arg(headerText));       // TODO: Check if we need the quotes here
             htmlResult.append(headerText);
         }
         result.append(rowSepText);
@@ -245,11 +253,10 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     }
 
     // Table data rows
+    htmlResult.append("<tr><td>");
     for(const QModelIndex& index : indices) {
         // Separators
-        if (first == index)
-            htmlResult.append("<tr><td>");
-        else if (index.row() != currentRow) {
+        if (index.row() != currentRow) {
             result.append(rowSepText);
             htmlResult.append(rowSepHtml);
         } else {
@@ -257,16 +264,19 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             htmlResult.append(fieldSepHtml);
         }
         currentRow = index.row();
-        QVariant data = index.data(Qt::EditRole);
+        QByteArray data = index.data(Qt::EditRole).toByteArray();
 
         // Table cell data
-        QString text = data.toString();
+        QString text = data;
         if (text.contains('\n'))
-          htmlResult.append("<pre>" + data.toString().toHtmlEscaped() + "</pre>");
+          htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
         else
-          htmlResult.append(data.toString().toHtmlEscaped());
+          htmlResult.append(text.toHtmlEscaped());
 
         // non-NULL data is enquoted in plain text format, whilst NULL isn't
+        // TODO: Do we really want to do this for the non-internal buffer case? The only case where we should definitely quote the data is when there are line breaks
+        //       in the text, again for spreadsheet compatability. We also need to quote when there are tabs in the string (or replace the tabs by spaces, that's what
+        //       LibreOffice seems to be doing here).
         if (!data.isNull()) {
             text.replace("\"", "\"\"");
             result.append(QString("\"%1\"").arg(text));
@@ -277,7 +287,6 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
     mimeData->setText(result);
     qApp->clipboard()->setMimeData(mimeData);
-
 }
 
 void ExtendedTableWidget::paste()
@@ -292,36 +301,40 @@ void ExtendedTableWidget::paste()
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
-    // If clipboard contains image and not text - just insert the image
-    const QMimeData* mimeClipboard = qApp->clipboard()->mimeData();
+    // We're also checking for system clipboard data first. Only if there is no data in the system clipboard we're falling back to the internal buffer.
+    // That's a bit unfortunate because the data in the internal buffer is easier to parse and more accurate, too. However, if we always preferred the
+    // internal copy-paste buffer there would be no way to copy data from other applications in here once the internal buffer has been filled.
 
+    // If clipboard contains an image and no text, just insert the image
+    const QMimeData* mimeClipboard = qApp->clipboard()->mimeData();
     if (mimeClipboard->hasImage() && !mimeClipboard->hasText()) {
         QImage img = qApp->clipboard()->image();
         QByteArray ba;
         QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
-        img.save(&buffer, "PNG");
+        img.save(&buffer, "PNG");       // We're always converting the image format to PNG here. TODO: Is that correct?
         buffer.close();
 
         m->setData(indices.first(), ba);
         return;
     }
 
+    // Get the clipboard text
     QString clipboard = qApp->clipboard()->text();
 
+    // If there is no text but the internal copy-paste buffer is filled, use the internal buffer
     if (clipboard.isEmpty() && !m_buffer.isEmpty()) {
-        // If buffer contains something - use it instead of clipboard
         int rows = m_buffer.size();
         int columns = m_buffer.first().size();
 
         int firstRow = indices.front().row();
         int firstColumn = indices.front().column();
-
         int lastRow = qMin(firstRow + rows - 1, m->rowCount() - 1);
         int lastColumn = qMin(firstColumn + columns - 1, m->columnCount() - 1);
 
         int row = firstRow;
 
+        // Copy the data as-is from the buffer to the table
         for(const QByteArrayList& lst : m_buffer) {
             int column = firstColumn;
             for(const QByteArray& ba : lst) {
@@ -340,15 +353,20 @@ void ExtendedTableWidget::paste()
         return;
     }
 
+    // There was some text in the system clipboard. So we need to parse that before we can paste it.
+    // TODO: It seems like we can tweak the parseClipboard() function to return data that's in the same format as the internal copy-paste buffer would be.
+    //       This way we could reuse the code above and unify both code paths. On the other hand, the code for checking the selected paste range is totally
+    //       different. So we would need to check whether there is any reason to use the code from below also for internal buffer pastes.
     QList<QStringList> clipboardTable = parseClipboard(clipboard);
 
+    // Stop here if there's nothing to paste
+    if(!clipboardTable.size())
+        return;
+
+    // Starting from assumption that selection is rectangular, and then first index is upper-left corner and last is lower-right.
     int clipboardRows = clipboardTable.size();
     int clipboardColumns = clipboardTable.front().size();
 
-    // Sort the items by row, then by column
-    qSort(indices);
-
-    // Starting from assumption that selection is rectangular, and then first index is upper-left corner and last is lower-right.
     int firstRow = indices.front().row();
     int selectedRows = indices.back().row() - firstRow + 1;
     int firstColumn = indices.front().column();
@@ -366,28 +384,26 @@ void ExtendedTableWidget::paste()
         return;
     }
 
-    // If not selected only one cell then check does selection match cliboard dimensions
-    if(selectedRows != 1 || selectedColumns != 1)
+    // If more than one cell was selected, check if the selection matches the cliboard dimensions
+    if(selectedRows != clipboardRows || selectedColumns != clipboardColumns)
     {
-        if(selectedRows != clipboardRows || selectedColumns != clipboardColumns)
+        // Ask user if they are sure about this
+        if(QMessageBox::question(this, QApplication::applicationName(),
+                                 tr("The content of the clipboard is bigger than the range selected.\nDo you want to insert it anyway?"),
+                                 QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
         {
-            // Ask user is it sure about this
-            QMessageBox::StandardButton reply = QMessageBox::question(this, QApplication::applicationName(),
-                tr("The content of the clipboard is bigger than the range selected.\nDo you want to insert it anyway?"),
-                QMessageBox::Yes|QMessageBox::No);
-            if(reply != QMessageBox::Yes)
-            {
-                return;
-            }
+            // If the user doesn't want to paste the clipboard data anymore, stop now
+            return;
         }
     }
-    // Here we have positive answer even if cliboard is bigger than selection
 
+    // If we get here, we can definitely start pasting: either the ranges match in their size or the user agreed to paste anyway
 
-    // If last row and column are after table size clamp it
+    // If last row and column are after table size, clamp it
     int lastRow = qMin(firstRow + clipboardRows - 1, m->rowCount() - 1);
     int lastColumn = qMin(firstColumn + clipboardColumns - 1, m->columnCount() - 1);
 
+    // Paste the data cell by cell
     int row = firstRow;
     for(const QStringList& clipboardRow : clipboardTable)
     {

@@ -39,7 +39,7 @@ private:
     void useAsFilter();
 
     typedef QList<QByteArray> QByteArrayList;
-    QList<QByteArrayList> m_buffer;
+    QList<QByteArrayList> m_buffer;                 // TODO: Shouldn't this be static?
 
 private slots:
     void vscrollbarChanged(int value);
