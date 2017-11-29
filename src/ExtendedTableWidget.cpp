@@ -225,7 +225,6 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     // If we got here, there are multiple selected cells, none of which contains binary data.
     // In this case, write a table both in HTML and text formats to clipboard
 
-    QModelIndex first = indices.first();
     QString result;
     QString htmlResult = "<html><header><style>br{mso-data-placement:same-cell;}</style></header><body><table>";
     int currentRow = 0;

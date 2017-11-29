@@ -61,10 +61,12 @@ void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
     ui->editErrors->setPlainText(result);
     // Set reddish background when not ok
     if (showErrorIndicators)
+    {
         if (ok)
             ui->editErrors->setStyleSheet("");
         else
             ui->editErrors->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+    }
 
 }
 
