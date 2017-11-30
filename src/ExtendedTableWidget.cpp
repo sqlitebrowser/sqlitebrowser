@@ -227,7 +227,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
 
     QString result;
     QString htmlResult = "<html><header><style>br{mso-data-placement:same-cell;}</style></header><body><table>";
-    int currentRow = 0;
+    int currentRow = indices.first().row();
 
     const QString fieldSepHtml = "</td><td>";
     const QString rowSepHtml = "</td></tr><tr><td>";
@@ -252,10 +252,11 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     }
 
     // Table data rows
-    htmlResult.append("<tr><td>");
     for(const QModelIndex& index : indices) {
-        // Separators
-        if (index.row() != currentRow) {
+        // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
+        if (indices.first() == index)
+            htmlResult.append("<tr><td>");
+        else if (index.row() != currentRow) {
             result.append(rowSepText);
             htmlResult.append(rowSepHtml);
         } else {
