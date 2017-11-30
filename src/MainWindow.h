@@ -190,6 +190,7 @@ private:
     void activateFields(bool enable = true);
     void enableEditing(bool enable_edit, bool enable_insertdelete);
     void loadExtensionsFromSettings();
+    void saveAsView(QString query);
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
@@ -291,6 +292,7 @@ private slots:
     void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
+    void saveFilterAsView();
 };
 
 #endif

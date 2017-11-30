@@ -1861,7 +1861,7 @@ void MainWindow::saveSqlResultsAsCsv()
 
 void MainWindow::saveSqlResultsAsView()
 {
-    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->saveAsView();
+    saveAsView(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->getModel()->query());
 }
 
 void MainWindow::loadExtension()
@@ -2718,4 +2718,37 @@ void MainWindow::openFindReplaceDialog()
         findReplaceDialog->setSqlTextEdit(focusedSqlTextEdit);
         findReplaceDialog->show();
     }
+}
+
+void MainWindow::saveAsView(QString query)
+{
+    // Let the user select a name for the new view and make sure it doesn't already exist
+    QString name;
+    while(true)
+    {
+        name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
+        if(name.isEmpty())
+            return;
+        if(db.getObjectByName(sqlb::ObjectIdentifier("main", name)) != nullptr)
+            QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
+        else
+            break;
+    }
+
+    // Create the view
+    if(db.executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(query)))
+        QMessageBox::information(this, qApp->applicationName(), tr("View successfully created."));
+    else
+        QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db.lastError()));
+}
+
+
+void MainWindow::saveFilterAsView()
+{
+    if (m_browseTableModel->filterCount() > 0)
+        // Save as view a custom query without rowid
+        saveAsView(m_browseTableModel->customQuery(false));
+    else
+        QMessageBox::information(this, qApp->applicationName(), tr("There is not any filter set for this table. View will not be created."));
+
 }

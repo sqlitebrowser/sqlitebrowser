@@ -216,6 +216,11 @@ int SqliteTableModel::columnCount(const QModelIndex&) const
     return m_headers.size();
 }
 
+int SqliteTableModel::filterCount() const
+{
+    return m_mWhere.size();
+}
+
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
@@ -590,7 +595,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
     });
 }
 
-void SqliteTableModel::buildQuery()
+QString SqliteTableModel::customQuery(bool withRowid)
 {
     QString where;
 
@@ -600,12 +605,8 @@ void SqliteTableModel::buildQuery()
 
         for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
         {
-            QString column;
-            if(m_vDisplayFormat.size())
-                column = QString("col%1").arg(i.key());
-            else
-                column = m_headers.at(i.key());
-            where.append(QString("%1 %2 AND ").arg(sqlb::escapeIdentifier(column)).arg(i.value()));
+            QString column = sqlb::escapeIdentifier(m_headers.at(i.key()));
+            where.append(QString("%1 %2 AND ").arg(column).arg(i.value()));
         }
 
         // Remove last 'AND '
@@ -613,12 +614,20 @@ void SqliteTableModel::buildQuery()
     }
 
     QString selector;
+    if (withRowid)
+        selector = sqlb::escapeIdentifier(m_headers.at(0)) + ",";
+
     if(m_vDisplayFormat.empty())
     {
-        selector = "*";
+        selector += "*";
     } else {
-        for(int i=0;i<m_vDisplayFormat.size();i++)
-            selector += m_vDisplayFormat.at(i) + " AS " + QString("col%1").arg(i+1) + ",";
+        for(int i=0;i<m_vDisplayFormat.size();i++) {
+            QString column = sqlb::escapeIdentifier(m_headers.at(i+1));
+            if (m_vDisplayFormat.at(i) == column)
+                selector += column + ",";
+            else
+                selector += m_vDisplayFormat.at(i) + " AS " + column + ",";
+        }
         selector.chop(1);
     }
 
@@ -626,15 +635,18 @@ void SqliteTableModel::buildQuery()
     // The reason is that we're adding '%' characters automatically around search terms (and even if we didn't the user could add
     // them manually) which means that e.g. searching for '1' results in another '%1' in the string which then totally confuses
     // the QString::arg() function, resulting in an invalid SQL.
-    QString sql = QString("SELECT %1,%2 FROM %3 ")
-            .arg(sqlb::escapeIdentifier(m_headers.at(0)))
+    return QString("SELECT %1 FROM %2 ")
             .arg(selector)
             .arg(m_sTable.toString())
             + where
             + QString("ORDER BY %1 %2")
             .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
             .arg(m_sSortOrder);
-    setQuery(sql, true);
+}
+
+void SqliteTableModel::buildQuery()
+{
+    setQuery(customQuery(true), true);
 }
 
 void SqliteTableModel::removeCommentsFromQuery(QString& query) {
