@@ -2697,7 +2697,8 @@ void MainWindow::setFindFrameVisibility(bool show)
     for(int i=0;i<ui->tabSqlAreas->count();i++)
         if (i != ui->tabSqlAreas->currentIndex())
             qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->setFindFrameVisibility(show);
-    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFindFrameVisibility(show);
+    if (ui->tabSqlAreas->count()>0)
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFindFrameVisibility(show);
 }
 
 void MainWindow::openFindReplaceDialog()
