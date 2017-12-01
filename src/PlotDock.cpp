@@ -56,7 +56,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         // save current selected columns, so we can restore them after the update
         QString sItemX; // selected X column
-        QMap<QString, QColor> mapItemsY; // selected Y columns with color
+        QMap<QString, PlotSettings> mapItemsY; // selected Y columns with color
 
         if(keepOrResetSelection)
         {
@@ -68,19 +68,13 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     sItemX = item->text(PlotColumnField);
 
                 if(item->checkState(PlotColumnY) == Qt::Checked)
-                    mapItemsY[item->text(PlotColumnField)] = item->backgroundColor(PlotColumnY);
+                    mapItemsY[item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY), item->checkState(PlotColumnY) == Qt::Checked);
             }
         } else {
             // Get the plot columns to select from the stored browse table information
             sItemX = m_currentTableSettings->plotXAxis;
 
-            QMap<QString, PlotSettings> axesY = m_currentTableSettings->plotYAxes;
-            auto it = axesY.constBegin();
-            while(it != axesY.constEnd())
-            {
-                mapItemsY.insert(it.key(), it.value().colour);
-                ++it;
-            }
+            mapItemsY = m_currentTableSettings->plotYAxes;
         }
 
         ui->treePlotColumns->clear();
@@ -106,11 +100,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     // restore previous check state
                     if(mapItemsY.contains(columnitem->text(PlotColumnField)))
                     {
-                        columnitem->setCheckState(PlotColumnY, Qt::Checked);
-                        columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)]);
-                    }
-                    else
+                        columnitem->setCheckState(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
+                        columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)].colour);
+                    } else {
                         columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
+                    }
+
                     if(sItemX == columnitem->text(PlotColumnField))
                         columnitem->setCheckState(PlotColumnX, Qt::Checked);
                     else
@@ -132,8 +127,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // restore previous check state
                 if(mapItemsY.contains(columnitem->text(PlotColumnField)))
                 {
-                    columnitem->setCheckState(PlotColumnY, Qt::Checked);
-                    columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)]);
+                    columnitem->setCheckState(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
+                    columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)].colour);
                 } else {
                     columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
                 }
@@ -295,6 +290,13 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
                 m_currentTableSettings->plotXAxis = QString();
         }
     } else if(column == PlotColumnY) {
+        // Save check state of this column
+        if(m_currentTableSettings)
+        {
+            PlotSettings& plot_settings = m_currentTableSettings->plotYAxes[changeitem->text(PlotColumnField)];
+            plot_settings.active = (changeitem->checkState(column) == Qt::Checked);
+        }
+
         if(changeitem->checkState(column) == Qt::Checked)
         {
             // Generate a default colour if none isn't set yet
@@ -391,6 +393,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
             if(m_currentTableSettings)
             {
                 PlotSettings& plot_settings = m_currentTableSettings->plotYAxes[item->text(PlotColumnField)];
+                plot_settings.active = (item->checkState(column) == Qt::Checked);
                 plot_settings.colour = color;
                 plot_settings.lineStyle = ui->comboLineType->currentIndex();
                 plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());

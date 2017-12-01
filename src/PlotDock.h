@@ -25,12 +25,27 @@ public:
         int lineStyle;
         int pointShape;
         QColor colour;
+        bool active;
+
+        PlotSettings() :
+            lineStyle(0),
+            pointShape(0),
+            active(false)
+        {}
+
+        PlotSettings(int _lineStyle, int _pointShape, QColor _colour, bool _active) :
+            lineStyle(_lineStyle),
+            pointShape(_pointShape),
+            colour(_colour),
+            active(_active)
+        {}
 
         friend QDataStream& operator<<(QDataStream& stream, const PlotDock::PlotSettings& object)
         {
             stream << object.lineStyle;
             stream << object.pointShape;
             stream << object.colour;
+            stream << object.active;
 
             return stream;
         }
@@ -39,6 +54,9 @@ public:
             stream >> object.lineStyle;
             stream >> object.pointShape;
             stream >> object.colour;
+
+            if(!stream.atEnd())
+                stream >> object.active;
 
             return stream;
         }
