@@ -2727,7 +2727,7 @@ void MainWindow::saveAsView(QString query)
     while(true)
     {
         name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
-        if(name.isEmpty())
+        if(name.isNull())
             return;
         if(db.getObjectByName(sqlb::ObjectIdentifier("main", name)) != nullptr)
             QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
@@ -2749,6 +2749,5 @@ void MainWindow::saveFilterAsView()
         // Save as view a custom query without rowid
         saveAsView(m_browseTableModel->customQuery(false));
     else
-        QMessageBox::information(this, qApp->applicationName(), tr("There is not any filter set for this table. View will not be created."));
-
+        QMessageBox::information(this, qApp->applicationName(), tr("There is no filter set for this table. View will not be created."));
 }
