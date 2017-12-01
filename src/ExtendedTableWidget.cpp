@@ -244,7 +244,11 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
             }
-            result.append(QString("\"%1\"").arg(headerText));       // TODO: Check if we need the quotes here
+            // SQLite allows tabs in column and table names. TODO: should we escape double quotes too?
+            if (headerText.contains('\n') || headerText.contains('\t'))
+                result.append(QString("\"%1\"").arg(headerText));
+            else
+                result.append(headerText);
             htmlResult.append(headerText);
         }
         result.append(rowSepText);
@@ -268,18 +272,21 @@ void ExtendedTableWidget::copy(const bool withHeaders)
 
         // Table cell data
         QString text = data;
-        if (text.contains('\n'))
+        if (text.contains('\n') || text.contains('\t'))
           htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
         else
           htmlResult.append(text.toHtmlEscaped());
 
-        // non-NULL data is enquoted in plain text format, whilst NULL isn't
-        // TODO: Do we really want to do this for the non-internal buffer case? The only case where we should definitely quote the data is when there are line breaks
-        //       in the text, again for spreadsheet compatability. We also need to quote when there are tabs in the string (or replace the tabs by spaces, that's what
-        //       LibreOffice seems to be doing here).
+        // Empty string is enquoted in plain text format, whilst NULL isn't
+        // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
+        // We also need to quote when there are tabs in the string (another option would be to replace the tabs by spaces, that's what
+        // LibreOffice seems to be doing here).
         if (!data.isNull()) {
-            text.replace("\"", "\"\"");
-            result.append(QString("\"%1\"").arg(text));
+            if (text.isEmpty() || text.contains('\n') || text.contains('\t') || text.contains('"')) {
+                text.replace("\"", "\"\"");
+                result.append(QString("\"%1\"").arg(text));
+            } else
+                result.append(text);
         }
     }
 
