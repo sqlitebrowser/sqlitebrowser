@@ -33,7 +33,6 @@ public:
 public slots:
     virtual void finishExecution(const QString& result, const bool ok);
     virtual void saveAsCsv();
-    virtual void saveAsView();
     virtual void reloadSettings();
     void fetchedData();
     void setFindFrameVisibility(bool show);

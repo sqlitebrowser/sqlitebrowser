@@ -159,6 +159,20 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="buttonSaveFilterAsView">
+            <property name="toolTip">
+             <string>Save the current filter as a view</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -3014,6 +3028,22 @@
     <hint type="sourcelabel">
      <x>330</x>
      <y>372</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonSaveFilterAsView</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveFilterAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>127</y>
     </hint>
     <hint type="destinationlabel">
      <x>518</x>
