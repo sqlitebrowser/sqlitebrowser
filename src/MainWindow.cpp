@@ -145,7 +145,7 @@ void MainWindow::init()
     connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
     connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
-    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(QKeySequence::Replace), this);
+    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence("Ctrl+H"), this);
     connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
 
     // Create the actions for the recently opened dbs list
