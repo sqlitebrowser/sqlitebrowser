@@ -246,7 +246,7 @@
           </property>
           <property name="icon">
            <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+            <normaloff>:/icons/image_save</normaloff>:/icons/image_save</iconset>
           </property>
           <property name="checkable">
            <bool>false</bool>
@@ -265,11 +265,12 @@
         <item>
          <widget class="QToolButton" name="buttonLoadAllData">
           <property name="toolTip">
-           <string>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</string>
+           <string>Load all data and redraw plot.
+Data loading has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</string>
           </property>
           <property name="icon">
            <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/keyword</normaloff>:/icons/keyword</iconset>
+            <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
           </property>
          </widget>
         </item>

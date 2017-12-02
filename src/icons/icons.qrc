@@ -61,5 +61,6 @@
         <file alias="close">cross.png</file>
         <file alias="special_copy">page_white_copy.png</file>
         <file alias="text_replace">text_replace.png</file>
+        <file alias="image_save">picture_save.png</file>
     </qresource>
 </RCC>

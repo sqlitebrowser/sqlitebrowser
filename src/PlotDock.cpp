@@ -197,8 +197,10 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 graph->setPen(QPen(item->backgroundColor(PlotColumnY)));
                 graph->setSelectable (QCP::stDataRange);
-                ui->plotWidget->setInteractions(QCP::iSelectPlottables);
-                ui->plotWidget->setSelectionRectMode(QCP::srmSelect);
+                // Enable: click on items to select them, Ctrl+Click for multi-selection, mouse-wheel for zooming and mouse drag for
+                // changing the visible range.
+                ui->plotWidget->setInteractions(QCP::iSelectPlottables | QCP::iMultiSelect | QCP::iRangeZoom | QCP::iRangeDrag);
+                ui->plotWidget->setSelectionRectMode(QCP::srmNone);
 
                 // prepare the data vectors for qcustomplot
                 // possible improvement might be a QVector subclass that directly
