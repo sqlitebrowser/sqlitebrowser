@@ -1841,6 +1841,10 @@ void MainWindow::saveSqlFile()
 
 void MainWindow::saveSqlFileAs()
 {
+    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    if(!sqlarea)
+        return;
+
     QString file = FileDialog::getSaveFileName(
                 this,
                 tr("Select file name"),
