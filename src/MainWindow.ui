@@ -161,7 +161,7 @@
           <item>
            <widget class="QToolButton" name="buttonSaveFilterAsView">
             <property name="toolTip">
-             <string>Save the current filter as a view</string>
+             <string>Save the current filter, sort column and display formats as a view</string>
             </property>
             <property name="text">
              <string>...</string>

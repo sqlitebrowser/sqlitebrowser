@@ -607,7 +607,7 @@ QString SqliteTableModel::customQuery(bool withRowid)
         {
             QString columnId = sqlb::escapeIdentifier(m_headers.at(i.key()));
             if(m_vDisplayFormat.size() && m_vDisplayFormat.at(i.key()-1) != columnId)
-                columnId = sqlb::escapeIdentifier(m_headers.at(i.key()) + "_");
+                columnId = m_vDisplayFormat.at(i.key()-1);
             where.append(QString("%1 %2 AND ").arg(columnId).arg(i.value()));
         }
 
@@ -627,7 +627,7 @@ QString SqliteTableModel::customQuery(bool withRowid)
         for(int i=0;i<m_vDisplayFormat.size();i++) {
             columnId = sqlb::escapeIdentifier(m_headers.at(i+1));
             if (columnId != m_vDisplayFormat.at(i))
-                selector += m_vDisplayFormat.at(i) + " AS " + sqlb::escapeIdentifier(m_headers.at(i+1) + "_") + ",";
+                selector += m_vDisplayFormat.at(i) + " AS " + columnId + ",";
             else
                 selector += columnId + ",";
         }
