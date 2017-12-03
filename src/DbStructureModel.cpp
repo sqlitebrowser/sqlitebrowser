@@ -66,9 +66,9 @@ Qt::ItemFlags DbStructureModel::flags(const QModelIndex &index) const
     // All items are enabled and selectable
     Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDropEnabled;
 
-    // Only enable dragging for entire table objects
+    // Only enable dragging for entire table objects and for fields (composition in SQL text editor)
     QString type = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
-    if(type == "table" || type == "view" || type == "index" || type == "trigger")
+    if(type == "table" || type == "field" || type == "view" || type == "index" || type == "trigger")
         flags |= Qt::ItemIsDragEnabled;
 
     return flags;
@@ -194,28 +194,36 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
     QByteArray d;
     for(const QModelIndex& index : indices)
     {
-        // Only export data for valid indices and only for the SQL column, i.e. only once per row
-        if(index.isValid() && index.column() == ColumnSQL)
-        {
-            // Add the SQL code used to create the object
-            d = d.append(data(index, Qt::DisplayRole).toString() + ";\n");
+        // Only export data for valid indices and only once per row (SQL column, except for fields).
+        // For fields, export an escaped identifier of the field for statement composition in SQL editor.
+        if(index.isValid()) {
+            QString objectType = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
 
-            // If it is a table also add the content
-            if(data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString() == "table")
+            if(objectType == "field" && index.column() == ColumnName)
+                d = d.append(sqlb::escapeIdentifier(data(index, Qt::DisplayRole).toString()));
+
+            if(objectType != "field" && index.column() == ColumnSQL)
             {
-                SqliteTableModel tableModel(m_db);
-                sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
-                                             data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
-                tableModel.setTable(objid);
-                tableModel.waitForFetchingFinished();
-                for(int i=0; i < tableModel.rowCount(); ++i)
+                // Add the SQL code used to create the object
+                d = d.append(data(index, Qt::DisplayRole).toString() + ";\n");
+
+                // If it is a table also add the content
+                if(objectType == "table")
                 {
-                    QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
-                    for(int j=1; j < tableModel.columnCount(); ++j)
-                        insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
-                    insertStatement.chop(1);
-                    insertStatement += ");\n";
-                    d = d.append(insertStatement);
+                    SqliteTableModel tableModel(m_db);
+                    sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
+                                                 data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
+                    tableModel.setTable(objid);
+                    tableModel.waitForFetchingFinished();
+                    for(int i=0; i < tableModel.rowCount(); ++i)
+                    {
+                        QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
+                        for(int j=1; j < tableModel.columnCount(); ++j)
+                            insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
+                        insertStatement.chop(1);
+                        insertStatement += ");\n";
+                        d = d.append(insertStatement);
+                    }
                 }
             }
         }

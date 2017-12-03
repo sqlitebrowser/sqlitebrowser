@@ -117,6 +117,7 @@ void MainWindow::init()
     ui->treeSchemaDock->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->treeSchemaDock->setColumnHidden(DbStructureModel::ColumnObjectType, true);
     ui->treeSchemaDock->setColumnHidden(DbStructureModel::ColumnSchema, true);
+    ui->treeSchemaDock->setDragDropMode(QAbstractItemView::DragOnly);
 
     // Set up the table combo box in the Browse Data tab
     ui->comboBrowseTable->setModel(dbStructureModel);
