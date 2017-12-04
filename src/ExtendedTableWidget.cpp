@@ -275,11 +275,8 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
             }
-            // SQLite allows tabs in column and table names. TODO: should we escape double quotes too?
-            if (headerText.contains('\n') || headerText.contains('\t'))
-                result.append(QString("\"%1\"").arg(headerText));
-            else
-                result.append(headerText);
+
+            result.append(escapeCopiedData(headerText));
             htmlResult.append(headerText);
         }
         result.append(rowSepText);
@@ -299,32 +296,40 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             htmlResult.append(fieldSepHtml);
         }
         currentRow = index.row();
-        QByteArray data = index.data(Qt::EditRole).toByteArray();
+        QString text = index.data(Qt::EditRole).toByteArray();
 
         // Table cell data
-        QString text = data;
         if (text.contains('\n') || text.contains('\t'))
           htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
         else
           htmlResult.append(text.toHtmlEscaped());
 
-        // Empty string is enquoted in plain text format, whilst NULL isn't
-        // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
-        // We also need to quote when there are tabs in the string (another option would be to replace the tabs by spaces, that's what
-        // LibreOffice seems to be doing here).
-        if (!data.isNull()) {
-            if (text.isEmpty() || text.contains('\n') || text.contains('\t') || text.contains('"')) {
-                text.replace("\"", "\"\"");
-                result.append(QString("\"%1\"").arg(text));
-            } else
-                result.append(text);
-        }
+        result.append(escapeCopiedData(text));
     }
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
     mimeData->setText(result);
     qApp->clipboard()->setMimeData(mimeData);
+}
+
+QString ExtendedTableWidget::escapeCopiedData(QString data) const
+{
+    // Empty string is enquoted in plain text format, whilst NULL isn't
+    // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
+    // We also need to quote when there are tabs in the string (another option would be to replace the tabs by spaces, that's what
+    // LibreOffice seems to be doing here).
+
+    if(data.isNull())
+        return data;
+
+    if(data.isEmpty() || data.contains('\n') || data.contains('\t') || data.contains('"'))
+    {
+        data.replace("\"", "\"\"");
+        return QString("\"%1\"").arg(data);
+    } else {
+        return data;
+    }
 }
 
 void ExtendedTableWidget::paste()
