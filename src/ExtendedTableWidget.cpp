@@ -32,8 +32,11 @@ QList<QStringList> parseClipboard(QString clipboard)
     if(clipboard.endsWith("\r"))
         clipboard.chop(1);
 
-    // Prepare result list
+    // Make sure there is some data in the clipboard
     QList<QStringList> result;
+    if(clipboard.isEmpty())
+        return result;
+
     result.push_back(QStringList());
 
     QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
