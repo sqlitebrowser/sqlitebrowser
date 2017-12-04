@@ -220,11 +220,8 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 return;
             }
 
-            // The field isn't empty. So check if it contains a line break, and if yes, quote it before copying it to the clipboard.
-            // The quotes mimic the behaviour of spreadsheet applications here
-            if (text.contains('\n'))
-                text = QString("\"%1\"").arg(text);
-            qApp->clipboard()->setText(text);
+            // The field isn't empty. Quote data as needed and copy it to the clipboard
+            qApp->clipboard()->setText(escapeCopiedData(text));
             return;
         }
     }
