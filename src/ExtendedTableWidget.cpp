@@ -154,6 +154,17 @@ void ExtendedTableWidget::copy(const bool withHeaders)
 {
     QModelIndexList indices = selectionModel()->selectedIndexes();
 
+    // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
+    // unintuitive; especially copying the rowid column when selecting all columns of a table is a problem because pasting the data
+    // won't work as expected.
+    for(int i=indices.size()-1;i>=0;)
+    {
+        if(isColumnHidden(indices.at(i).column()))
+            indices.removeAt(i);
+        else
+            i--;
+    }
+
     // Abort if there's nothing to copy
     if (indices.isEmpty())
         return;
