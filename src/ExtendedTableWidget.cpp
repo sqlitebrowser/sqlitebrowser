@@ -15,6 +15,8 @@
 #include <QBuffer>
 #include <QMenu>
 
+QList<QByteArrayList> ExtendedTableWidget::m_buffer;
+
 namespace
 {
 
