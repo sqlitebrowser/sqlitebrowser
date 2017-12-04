@@ -18,8 +18,21 @@
 namespace
 {
 
-QList<QStringList> parseClipboard(const QString& clipboard)
+QList<QStringList> parseClipboard(QString clipboard)
 {
+    // Remove trailing line break from the clipboard text. This is necessary because some applications append an extra
+    // line break to the clipboard contents which we would then interpret as regular data, setting the first field of the
+    // first row after the paste area to NULL. One problem here is that this breaks for those cases where an empty line at
+    // the end of the selection is explicitly copied and the originating application doesn't add an extra line break. However,
+    // there are two reasons for favoring this way: 1) Spreadsheet applications seem to add an extra line break and they are
+    // probably the main source for pasted data, 2) Having to manually delete on extra field seems to be less problematic than
+    // having one extra field deleted without any warning.
+    if(clipboard.endsWith("\n"))
+        clipboard.chop(1);
+    if(clipboard.endsWith("\r"))
+        clipboard.chop(1);
+
+    // Prepare result list
     QList<QStringList> result;
     result.push_back(QStringList());
 
