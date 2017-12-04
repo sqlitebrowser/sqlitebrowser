@@ -34,7 +34,6 @@ signals:
 private:
     void copy(const bool withHeaders = false);
     void paste();
-    void setPasteData(const QModelIndex& idx, const QString& data);
     QString escapeCopiedData(QString data) const;
 
     void useAsFilter();

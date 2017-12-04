@@ -20,7 +20,7 @@ QList<QByteArrayList> ExtendedTableWidget::m_buffer;
 namespace
 {
 
-QList<QStringList> parseClipboard(QString clipboard)
+QList<QByteArrayList> parseClipboard(QString clipboard)
 {
     // Remove trailing line break from the clipboard text. This is necessary because some applications append an extra
     // line break to the clipboard contents which we would then interpret as regular data, setting the first field of the
@@ -35,11 +35,11 @@ QList<QStringList> parseClipboard(QString clipboard)
         clipboard.chop(1);
 
     // Make sure there is some data in the clipboard
-    QList<QStringList> result;
+    QList<QByteArrayList> result;
     if(clipboard.isEmpty())
         return result;
 
-    result.push_back(QStringList());
+    result.push_back(QByteArrayList());
 
     QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
     int offset = 0;
@@ -51,7 +51,10 @@ QList<QStringList> parseClipboard(QString clipboard)
         if (pos < 0) {
             // insert everything that left
             text = clipboard.mid(whitespace_offset);
-            result.last().push_back(text);
+            if(QRegExp("\".*\"").exactMatch(text))
+                text = text.mid(1, text.length() - 2);
+            text.replace("\"\"", "\"");
+            result.last().push_back(text.toUtf8());
             break;
         }
 
@@ -63,15 +66,18 @@ QList<QStringList> parseClipboard(QString clipboard)
         QString ws = re.cap(2);
         // if two whitespaces in row - that's an empty cell
         if (!(pos - whitespace_offset)) {
-            result.last().push_back(QString());
+            result.last().push_back(QByteArray());
         } else {
             text = clipboard.mid(whitespace_offset, pos - whitespace_offset);
-            result.last().push_back(text);
+            if(QRegExp("\".*\"").exactMatch(text))
+                text = text.mid(1, text.length() - 2);
+            text.replace("\"\"", "\"");
+            result.last().push_back(text.toUtf8());
         }
 
         if (ws.endsWith("\n"))
             // create new row
-            result.push_back(QStringList());
+            result.push_back(QByteArrayList());
 
         whitespace_offset = offset = pos + ws.length();
     }
@@ -365,70 +371,48 @@ void ExtendedTableWidget::paste()
     // Get the clipboard text
     QString clipboard = qApp->clipboard()->text();
 
-    // If there is no text but the internal copy-paste buffer is filled, use the internal buffer
-    if (clipboard.isEmpty() && !m_buffer.isEmpty()) {
-        int rows = m_buffer.size();
-        int columns = m_buffer.first().size();
-
-        int firstRow = indices.front().row();
-        int firstColumn = indices.front().column();
-        int lastRow = qMin(firstRow + rows - 1, m->rowCount() - 1);
-        int lastColumn = qMin(firstColumn + columns - 1, m->columnCount() - 1);
-
-        int row = firstRow;
-
-        // Copy the data as-is from the buffer to the table
-        for(const QByteArrayList& lst : m_buffer) {
-            int column = firstColumn;
-            for(const QByteArray& ba : lst) {
-                m->setData(m->index(row, column), ba);
-
-                column++;
-                if (column > lastColumn)
-                    break;
-            }
-
-            row++;
-            if (row > lastRow)
-                break;
-        }
-
-        return;
+    // If there is no text but the internal copy-paste buffer is filled, use the internal buffer; otherwise parse the system clipboard contents
+    QList<QByteArrayList> clipboardTable;
+    QList<QByteArrayList>* source;
+    if(clipboard.isEmpty() && !m_buffer.isEmpty())
+    {
+        source = &m_buffer;
+    } else {
+        clipboardTable = parseClipboard(clipboard);
+        source = &clipboardTable;
     }
 
-    // There was some text in the system clipboard. So we need to parse that before we can paste it.
-    // TODO: It seems like we can tweak the parseClipboard() function to return data that's in the same format as the internal copy-paste buffer would be.
-    //       This way we could reuse the code above and unify both code paths. On the other hand, the code for checking the selected paste range is totally
-    //       different. So we would need to check whether there is any reason to use the code from below also for internal buffer pastes.
-    QList<QStringList> clipboardTable = parseClipboard(clipboard);
-
     // Stop here if there's nothing to paste
-    if(!clipboardTable.size())
+    if(!source->size())
         return;
 
     // Starting from assumption that selection is rectangular, and then first index is upper-left corner and last is lower-right.
-    int clipboardRows = clipboardTable.size();
-    int clipboardColumns = clipboardTable.front().size();
+    int rows = source->size();
+    int columns = source->first().size();
 
     int firstRow = indices.front().row();
-    int selectedRows = indices.back().row() - firstRow + 1;
     int firstColumn = indices.front().column();
+    int selectedRows = indices.back().row() - firstRow + 1;
     int selectedColumns = indices.back().column() - firstColumn + 1;
 
+    // If last row and column are after table size, clamp it
+    int lastRow = qMin(firstRow + rows - 1, m->rowCount() - 1);
+    int lastColumn = qMin(firstColumn + columns - 1, m->columnCount() - 1);
+
     // Special case: if there is only one cell of data to be pasted, paste it into all selected fields
-    if(clipboardRows == 1 && clipboardColumns == 1)
+    if(rows == 1 && columns == 1)
     {
-        QString data = clipboardTable.first().first();
+        QByteArray data = source->first().first();
         for(int row=firstRow;row<firstRow+selectedRows;row++)
         {
             for(int column=firstColumn;column<firstColumn+selectedColumns;column++)
-                setPasteData(m->index(row, column), data);
+                m->setData(m->index(row, column), data);
         }
         return;
     }
 
     // If more than one cell was selected, check if the selection matches the cliboard dimensions
-    if(selectedRows != clipboardRows || selectedColumns != clipboardColumns)
+    if(selectedRows != rows || selectedColumns != columns)
     {
         // Ask user if they are sure about this
         if(QMessageBox::question(this, QApplication::applicationName(),
@@ -442,48 +426,23 @@ void ExtendedTableWidget::paste()
 
     // If we get here, we can definitely start pasting: either the ranges match in their size or the user agreed to paste anyway
 
-    // If last row and column are after table size, clamp it
-    int lastRow = qMin(firstRow + clipboardRows - 1, m->rowCount() - 1);
-    int lastColumn = qMin(firstColumn + clipboardColumns - 1, m->columnCount() - 1);
-
-    // Paste the data cell by cell
+    // Copy the data cell by cell and as-is from the source buffer to the table
     int row = firstRow;
-    for(const QStringList& clipboardRow : clipboardTable)
+    for(const QByteArrayList& source_row : *source)
     {
         int column = firstColumn;
-        for(const QString& cell : clipboardRow)
+        for(const QByteArray& source_cell : source_row)
         {
-            setPasteData(m->index(row, column), cell);
+            m->setData(m->index(row, column), source_cell);
 
             column++;
-            if(column> lastColumn)
-            {
+            if (column > lastColumn)
                 break;
-            }
         }
 
         row++;
-        if(row > lastRow)
-        {
+        if (row > lastRow)
             break;
-        }
-    }
-
-}
-
-void ExtendedTableWidget::setPasteData(const QModelIndex& idx, const QString& data)
-{
-    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-
-    if(data.isEmpty())
-    {
-        m->setData(idx, QVariant());
-    } else {
-        QString text = data;
-        if(QRegExp("\".*\"").exactMatch(text))
-            text = text.mid(1, data.length() - 2);
-        text.replace("\"\"", "\"");
-        m->setData(idx, text);
     }
 }
 
