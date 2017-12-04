@@ -208,6 +208,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             if (text.isEmpty())
             {
                 // The field is either NULL or empty. Those are are handled via the internal copy-paste buffer
+                qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
                 qApp->clipboard()->clear();
                 m_buffer.push_back(QByteArrayList{data.toByteArray()});
                 return;
@@ -235,6 +236,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     if (containsBinary)
     {
         // Make sure to clear the system clipboard, so it's not used when pasting
+        qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
         qApp->clipboard()->clear();
 
         // Copy selected data into internal copy-paste buffer
