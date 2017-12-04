@@ -32,7 +32,7 @@
         <file alias="remove_extension">plugin_delete.png</file>
         <file alias="save_table">table_save.png</file>
         <file alias="run_line">resultset_last.png</file>
-        <file alias="log_dock">layout_sidebar.png</file>
+        <file alias="toolbar">layout_sidebar.png</file>
         <file alias="down">bullet_arrow_down.png</file>
         <file alias="up">bullet_arrow_up.png</file>
         <file alias="appicon">sqlitebrowser.png</file>
@@ -62,5 +62,7 @@
         <file alias="special_copy">page_white_copy.png</file>
         <file alias="text_replace">text_replace.png</file>
         <file alias="image_save">picture_save.png</file>
+        <file alias="log_dock">application_side_list.png</file>
+        <file alias="db_attach">database_link.png</file>
     </qresource>
 </RCC>

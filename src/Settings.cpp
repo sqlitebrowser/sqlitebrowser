@@ -148,6 +148,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "General" && name == "language")
         return QLocale::system().name();
 
+    // General/toolbarStyle
+    if(group == "General" && name == "toolbarStyle")
+        return static_cast<int>(Qt::ToolButtonTextBesideIcon);
+
     // checkversion group?
     if(group == "checkversion")
     {

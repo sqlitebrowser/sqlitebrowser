@@ -123,13 +123,73 @@
         </widget>
        </item>
        <item row="2" column="0">
+        <widget class="QLabel" name="labelToolbarStyle">
+         <property name="text">
+          <string>Toolbar style</string>
+         </property>
+         <property name="buddy">
+          <cstring>languageComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Only display the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Only display the text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears beside the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QLabel" name="labelUseRemotes">
          <property name="text">
           <string>Show remote options</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QCheckBox" name="checkUseRemotes">
          <property name="text">
           <string>enabled</string>
@@ -139,7 +199,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -149,7 +209,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>

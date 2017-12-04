@@ -199,7 +199,6 @@ void MainWindow::init()
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockLog->toggleViewAction());
     ui->viewMenu->actions().at(0)->setShortcut(QKeySequence(tr("Ctrl+L")));
     ui->viewMenu->actions().at(0)->setIcon(QIcon(":/icons/log_dock"));
-    ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
 
     // Add menu item for plot dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockPlot->toggleViewAction());
@@ -221,6 +220,14 @@ void MainWindow::init()
     // Add menu item for plot dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockRemote->toggleViewAction());
     ui->viewMenu->actions().at(4)->setIcon(QIcon(":/icons/log_dock"));
+
+    // Set checked state if toolbar is visible
+    ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
+    ui->viewExtraDBToolbarAction->setChecked(!ui->toolbarExtraDB->isHidden());
+    ui->viewProjectToolbarAction->setChecked(!ui->toolbarProject->isHidden());
+
+    // Add separator between docks and toolbars
+    ui->viewMenu->insertSeparator(ui->viewDBToolbarAction);
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
@@ -1902,6 +1909,8 @@ void MainWindow::reloadSettings()
 {
     // Set data browser font
     ui->dataTable->reloadSettings();
+
+    setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
 
     // Set prefetch sizes for lazy population of table models
     m_browseTableModel->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());

@@ -169,6 +169,7 @@ void PreferencesDialog::loadSettings()
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
     fillLanguageBox();
+    ui->toolbarStyleComboBox->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
 }
 
 void PreferencesDialog::saveSettings()
@@ -271,6 +272,7 @@ void PreferencesDialog::saveSettings()
                                  tr("The language will change after you restart the application."));
 
     Settings::setValue("General", "language", newLanguage);
+    Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboBox->currentIndex());
 
     accept();
 }
