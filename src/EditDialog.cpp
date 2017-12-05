@@ -144,6 +144,8 @@ void EditDialog::loadData(const QByteArray& data)
         break;
 
     case Text:
+    case JSON:
+
         // Set enabled any of the text widgets
         ui->editorText->setEnabled(true);
         jsonEdit->setEnabled(true);
@@ -571,7 +573,11 @@ void EditDialog::editTextChanged()
 
         // Update the cell info in the bottom left manually.  This is because
         // updateCellInfo() only works with QByteArray's (for now)
-        int dataLength = ui->editorText->toPlainText().length();
+        int dataLength;
+        if (dataSource == TextBuffer)
+            dataLength = ui->editorText->toPlainText().length();
+        else
+            dataLength = jsonEdit->text().length();
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         ui->labelSize->setText(tr("%n char(s)", "", dataLength));
     }
@@ -596,7 +602,12 @@ int EditDialog::checkDataType(const QByteArray& data)
 
     // Check if it's text only
     if (QString(cellData).toUtf8() == cellData) { // Is there a better way to check this?
-        return Text;
+
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(QString(cellData).toUtf8());
+        if (!jsonDoc.isNull())
+            return JSON;
+        else
+            return Text;
     }
 
     // It's none of the above, so treat it as general binary data
@@ -634,7 +645,11 @@ void EditDialog::setReadOnly(bool ro)
     ui->buttonApply->setEnabled(!ro);
     ui->buttonNull->setEnabled(!ro);
     ui->buttonImport->setEnabled(!ro);
+
     ui->editorText->setReadOnly(ro);
+    Qt::TextInteractionFlags textFlags = ro? Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard : Qt::TextEditorInteraction;
+    ui->editorText->setTextInteractionFlags(textFlags);
+
     ui->editorBinary->setEnabled(!ro);  // We disable the entire hex editor here instead of setting it to read only because it doesn't have a setReadOnly() method
     jsonEdit->setReadOnly(ro);
 }
@@ -665,24 +680,34 @@ void EditDialog::updateCellInfo(const QByteArray& data)
         return;
     }
 
-    // Determine the length of the cell data
-    int dataLength = cellData.length();
-
     // Use a switch statement for the other data types to keep things neat :)
     switch (dataType) {
     case Null:
         // NULL data type
         ui->labelType->setText(tr("Type of data currently in cell: NULL"));
-        ui->labelSize->setText(tr("%n byte(s)", "", dataLength));
+        ui->labelSize->setText(tr("%n byte(s)", "", 0));
         break;
 
-    case Text:
+    case Text: {
         // Text only
+        // Determine the length of the cell text in characters (possibly different to number of bytes).
+        int textLength = QString(cellData).length();
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        ui->labelSize->setText(tr("%n char(s)", "", dataLength));
+        ui->labelSize->setText(tr("%n char(s)", "", textLength));
         break;
-
+    }
+    case JSON: {
+        // Valid JSON
+        // Determine the length of the cell text in characters (possibly different to number of bytes).
+        int jsonLength = QString(cellData).length();
+        ui->labelType->setText(tr("Type of data currently in cell: Valid JSON"));
+        ui->labelSize->setText(tr("%n char(s)", "", jsonLength));
+        break;
+    }
     default:
+
+        // Determine the length of the cell data
+        int dataLength = cellData.length();
         // If none of the above data types, consider it general binary data
         ui->labelType->setText(tr("Type of data currently in cell: Binary"));
         ui->labelSize->setText(tr("%n byte(s)", "", dataLength));

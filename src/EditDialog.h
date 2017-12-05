@@ -67,7 +67,8 @@ private:
         Binary,
         Image,
         Null,
-        Text
+        Text,
+        JSON
     };
 
     enum EditModes {
