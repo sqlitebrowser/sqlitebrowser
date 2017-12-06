@@ -297,7 +297,7 @@ void EditDialog::importData()
 
     QString fileName = FileDialog::getOpenFileName(
                 this,
-                tr("Choose a file")
+                tr("Choose a file to import")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
                 , tr("Text files(*.txt);;Image files(%1);;JSON files(*.json);;All files(*)").arg(image_formats)
 #endif

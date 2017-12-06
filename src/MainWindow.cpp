@@ -1570,6 +1570,7 @@ void MainWindow::activateFields(bool enable)
     bool write = !db.readOnly();
 
     ui->fileCloseAction->setEnabled(enable);
+    ui->fileAttachAction->setEnabled(enable);
     ui->fileCompactAction->setEnabled(enable && write);
     ui->fileExportJsonAction->setEnabled(enable);
     ui->fileExportCSVAction->setEnabled(enable);
@@ -2051,7 +2052,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
     if(filename.isEmpty())
     {
         filename = FileDialog::getOpenFileName(this,
-                                                tr("Choose a file to open"),
+                                                tr("Choose a project file to open"),
                                                 tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
