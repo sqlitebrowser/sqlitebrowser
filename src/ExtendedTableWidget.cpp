@@ -260,7 +260,12 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     // In this case, write a table both in HTML and text formats to clipboard
 
     QString result;
-    QString htmlResult = "<html><header><style>br{mso-data-placement:same-cell;}</style></header><body><table>";
+    QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
+    htmlResult.append ("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">");
+    htmlResult.append ("<title></title>");
+    htmlResult.append (QString("<meta name=\"generator\" content=\"%1\">").arg(QApplication::applicationName().toHtmlEscaped()));
+    htmlResult.append ("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body><table>");
+
     int currentRow = indices.first().row();
 
     const QString fieldSepHtml = "</td><td>";
