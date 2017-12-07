@@ -241,6 +241,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             lst.clear();
         }
         lst << indices.at(i).data(Qt::EditRole).toByteArray();
+        last_row = indices.at(i).row();
     }
     m_buffer.push_back(lst);
 
