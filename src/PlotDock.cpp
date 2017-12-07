@@ -160,7 +160,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
     QStringList yAxisLabels;
 
+    // Clear graphs and axis labels
     ui->plotWidget->clearGraphs();
+    ui->plotWidget->xAxis->setLabel(QString());
+    ui->plotWidget->yAxis->setLabel(QString());
+
     if(xitem)
     {
         // regain the model column index and the datatype
