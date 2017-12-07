@@ -183,13 +183,11 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
     // unintuitive; especially copying the rowid column when selecting all columns of a table is a problem because pasting the data
     // won't work as expected.
-    for(int i=indices.size()-1;i>=0;)
-    {
-        if(isColumnHidden(indices.at(i).column()))
-            indices.removeAt(i);
-        else
-            i--;
-    }
+    QMutableListIterator<QModelIndex> i(indices);
+    while (i.hasNext()) {
+        if (isColumnHidden(i.next().column()))
+            i.remove();
+     }
 
 
     // Abort if there's nothing to copy
@@ -213,8 +211,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             return;
         } else {
             // It it's not an image, check if it's an empty field
-            QString text = data.toString();
-            if (text.isEmpty())
+            if (data.toByteArray().isEmpty())
             {
                 // The field is either NULL or empty. Those are are handled via the internal copy-paste buffer
                 qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
@@ -224,27 +221,28 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             }
 
             // The field isn't empty. Quote data as needed and copy it to the clipboard
-            qApp->clipboard()->setText(escapeCopiedData(text));
+            qApp->clipboard()->setText(escapeCopiedData(data.toByteArray()));
             return;
         }
     }
-
 
     // If we got here, there are multiple selected cells, or copy with headers was requested.
     // In this case, we copy selected data into internal copy-paste buffer and then
     // we write a table both in HTML and text formats to the system clipboard.
 
-    int columns = indices.last().column() - indices.first().column() + 1;       // Make sure the layout of the internal buffer is rectangular
-    QModelIndexList auxIndices = indices;
-
-    while (!auxIndices.isEmpty()) {
-        QByteArrayList lst;
-        for (int i = 0; i < columns; ++i) {
-            lst << auxIndices.first().data(Qt::EditRole).toByteArray();
-            auxIndices.pop_front();
+    // Copy selected data into internal copy-paste buffer
+    int last_row = indices.first().row();
+    QByteArrayList lst;
+    for(int i=0;i<indices.size();i++)
+    {
+        if(indices.at(i).row() != last_row)
+        {
+            m_buffer.push_back(lst);
+            lst.clear();
         }
-        m_buffer.push_back(lst);
+        lst << indices.at(i).data(Qt::EditRole).toByteArray();
     }
+    m_buffer.push_back(lst);
 
     QString result;
     QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
@@ -271,7 +269,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         htmlResult.append("<tr><th>");
         int firstColumn = indices.front().column();
         for(int i = firstColumn; i <= indices.back().column(); i++) {
-            QString headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+            QByteArray headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toByteArray();
             if (i != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
@@ -316,7 +314,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             result.append(imageBase64); // TODO: Or should be just "Image"?
             htmlResult.append("\" alt=\"Image\">");
         } else {
-            QString text;
+            QByteArray text;
             if (m->isBinary(index))
                 text = data.toByteArray().toBase64(); // TODO: Or should be just "BLOB"?
             else
@@ -324,9 +322,9 @@ void ExtendedTableWidget::copy(const bool withHeaders)
 
             // Table cell data: text
             if (text.contains('\n') || text.contains('\t'))
-                htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
+                htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
             else
-                htmlResult.append(text.toHtmlEscaped());
+                htmlResult.append(QString(text).toHtmlEscaped());
 
             result.append(escapeCopiedData(text));
         }
@@ -338,7 +336,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     qApp->clipboard()->setMimeData(mimeData);
 }
 
-QString ExtendedTableWidget::escapeCopiedData(QString data) const
+QString ExtendedTableWidget::escapeCopiedData(const QByteArray& data) const
 {
     // Empty string is enquoted in plain text format, whilst NULL isn't
     // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
@@ -348,12 +346,13 @@ QString ExtendedTableWidget::escapeCopiedData(QString data) const
     if(data.isNull())
         return data;
 
-    if(data.isEmpty() || data.contains('\n') || data.contains('\t') || data.contains('"'))
+    QString text = data;
+    if(text.isEmpty() || text.contains('\n') || text.contains('\t') || text.contains('"'))
     {
-        data.replace("\"", "\"\"");
-        return QString("\"%1\"").arg(data);
+        text.replace("\"", "\"\"");
+        return QString("\"%1\"").arg(text);
     } else {
-        return data;
+        return text;
     }
 }
 

@@ -34,7 +34,7 @@ signals:
 private:
     void copy(const bool withHeaders = false);
     void paste();
-    QString escapeCopiedData(QString data) const;
+    QString escapeCopiedData(const QByteArray& data) const;
 
     void useAsFilter();
 
