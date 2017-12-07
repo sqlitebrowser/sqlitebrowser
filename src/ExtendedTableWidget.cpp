@@ -14,8 +14,10 @@
 #include <QMessageBox>
 #include <QBuffer>
 #include <QMenu>
+#include <QDateTime>
 
 QList<QByteArrayList> ExtendedTableWidget::m_buffer;
+QString ExtendedTableWidget::m_generatorStamp;
 
 namespace
 {
@@ -189,6 +191,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             i--;
     }
 
+
     // Abort if there's nothing to copy
     if (indices.isEmpty())
         return;
@@ -226,45 +229,35 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         }
     }
 
-    // If any of the selected cells contains binary data, we use the internal copy-paste buffer
-    bool containsBinary = false;
-    for(const QModelIndex& index : indices)
-    {
-        if (m->isBinary(index)) {   // TODO: Should we check for NULL values, too?
-            containsBinary = true;
-            break;
+
+    // If we got here, there are multiple selected cells, or copy with headers was requested.
+    // In this case, we copy selected data into internal copy-paste buffer and then
+    // we write a table both in HTML and text formats to the system clipboard.
+
+    int columns = indices.last().column() - indices.first().column() + 1;       // Make sure the layout of the internal buffer is rectangular
+    QModelIndexList auxIndices = indices;
+
+    while (!auxIndices.isEmpty()) {
+        QByteArrayList lst;
+        for (int i = 0; i < columns; ++i) {
+            lst << auxIndices.first().data(Qt::EditRole).toByteArray();
+            auxIndices.pop_front();
         }
+        m_buffer.push_back(lst);
     }
-
-    if (containsBinary)
-    {
-        // Make sure to clear the system clipboard, so it's not used when pasting
-        qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
-        qApp->clipboard()->clear();
-
-        // Copy selected data into internal copy-paste buffer
-        int columns = indices.last().column() - indices.first().column() + 1;       // Make sure the layout of the internal buffer is rectangular
-        while (!indices.isEmpty()) {
-            QByteArrayList lst;
-            for (int i = 0; i < columns; ++i) {
-                lst << indices.first().data(Qt::EditRole).toByteArray();
-                indices.pop_front();
-            }
-            m_buffer.push_back(lst);
-        }
-
-        return;
-    }
-
-    // If we got here, there are multiple selected cells, none of which contains binary data.
-    // In this case, write a table both in HTML and text formats to clipboard
 
     QString result;
     QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
-    htmlResult.append ("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">");
-    htmlResult.append ("<title></title>");
-    htmlResult.append (QString("<meta name=\"generator\" content=\"%1\">").arg(QApplication::applicationName().toHtmlEscaped()));
-    htmlResult.append ("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body><table>");
+    htmlResult.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">");
+    htmlResult.append("<title></title>");
+
+    // The generator-stamp is later used to know whether the data in the system clipboard is still ours.
+    // In that case we will give precedence to our internal copy buffer.
+    QString now = QDateTime::currentDateTime().toString("YYYY-MM-DDTHH:mm:ss.zzz");
+    m_generatorStamp = QString("<meta name=\"generator\" content=\"%1\"><meta name=\"date\" content=\"%2\">").arg(QApplication::applicationName().toHtmlEscaped(), now);
+    htmlResult.append(m_generatorStamp);
+    // TODO: is this really needed by Excel, since we use <pre> for multi-line cells?
+    htmlResult.append("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body><table>");
 
     int currentRow = indices.first().row();
 
@@ -304,15 +297,39 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             htmlResult.append(fieldSepHtml);
         }
         currentRow = index.row();
-        QString text = index.data(Qt::EditRole).toByteArray();
 
-        // Table cell data
-        if (text.contains('\n') || text.contains('\t'))
-          htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
-        else
-          htmlResult.append(text.toHtmlEscaped());
+        QImage img;
+        QVariant data = index.data(Qt::EditRole);
 
-        result.append(escapeCopiedData(text));
+        // Table cell data: image? Store it as an embedded image in HTML and as base 64 in text version
+        if (img.loadFromData(data.toByteArray()))
+        {
+            QByteArray ba;
+            QBuffer buffer(&ba);
+            buffer.open(QIODevice::WriteOnly);
+            img.save(&buffer, "PNG");
+            buffer.close();
+
+            QString imageBase64 = ba.toBase64();
+            htmlResult.append("<img src=\"data:image/png;base64,");
+            htmlResult.append(imageBase64);
+            result.append(imageBase64); // TODO: Or should be just "Image"?
+            htmlResult.append("\" alt=\"Image\">");
+        } else {
+            QString text;
+            if (m->isBinary(index))
+                text = data.toByteArray().toBase64(); // TODO: Or should be just "BLOB"?
+            else
+                text = data.toByteArray();
+
+            // Table cell data: text
+            if (text.contains('\n') || text.contains('\t'))
+                htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
+            else
+                htmlResult.append(text.toHtmlEscaped());
+
+            result.append(escapeCopiedData(text));
+        }
     }
 
     QMimeData *mimeData = new QMimeData;
@@ -352,9 +369,10 @@ void ExtendedTableWidget::paste()
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
-    // We're also checking for system clipboard data first. Only if there is no data in the system clipboard we're falling back to the internal buffer.
-    // That's a bit unfortunate because the data in the internal buffer is easier to parse and more accurate, too. However, if we always preferred the
-    // internal copy-paste buffer there would be no way to copy data from other applications in here once the internal buffer has been filled.
+    // We're also checking for system clipboard data first. Only if the data in the system clipboard is not ours, we use the system
+    // clipboard, otherwise we prefer the internal buffer.  That's because the data in the internal buffer is easier to parse and more
+    // accurate, too. However, if we always preferred the internal copy-paste buffer there would be no way to copy data from other
+    // applications in here once the internal buffer has been filled.
 
     // If clipboard contains an image and no text, just insert the image
     const QMimeData* mimeClipboard = qApp->clipboard()->mimeData();
@@ -373,10 +391,14 @@ void ExtendedTableWidget::paste()
     // Get the clipboard text
     QString clipboard = qApp->clipboard()->text();
 
-    // If there is no text but the internal copy-paste buffer is filled, use the internal buffer; otherwise parse the system clipboard contents
+
+    // If data in system clipboard is ours and the internal copy-paste buffer is filled, use the internal buffer; otherwise parse the
+    // system clipboard contents (case for data copied by other application).
+
     QList<QByteArrayList> clipboardTable;
     QList<QByteArrayList>* source;
-    if(clipboard.isEmpty() && !m_buffer.isEmpty())
+
+    if(mimeClipboard->hasHtml() && mimeClipboard->html().contains(m_generatorStamp) && !m_buffer.isEmpty())
     {
         source = &m_buffer;
     } else {
@@ -581,14 +603,14 @@ void ExtendedTableWidget::dragMoveEvent(QDragMoveEvent* event)
 void ExtendedTableWidget::dropEvent(QDropEvent* event)
 {
     QModelIndex index = indexAt(event->pos());
-    
+
     if (!index.isValid())
     {
         if (event->mimeData()->hasUrls() && event->mimeData()->urls().first().isLocalFile())
             emit openFileFromDropEvent(event->mimeData()->urls().first().toLocalFile());
         return;
     }
-    
+
     model()->dropMimeData(event->mimeData(), Qt::CopyAction, index.row(), index.column(), QModelIndex());
     event->acceptProposedAction();
 }
