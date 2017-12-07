@@ -242,15 +242,18 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         qApp->clipboard()->clear();
 
         // Copy selected data into internal copy-paste buffer
-        int columns = indices.last().column() - indices.first().column() + 1;       // Make sure the layout of the internal buffer is rectangular
-        while (!indices.isEmpty()) {
-            QByteArrayList lst;
-            for (int i = 0; i < columns; ++i) {
-                lst << indices.first().data(Qt::EditRole).toByteArray();
-                indices.pop_front();
+        int last_row = indices.first().row();
+        QByteArrayList lst;
+        for(int i=0;i<indices.size();i++)
+        {
+            if(indices.at(i).row() != last_row)
+            {
+                m_buffer.push_back(lst);
+                lst.clear();
             }
-            m_buffer.push_back(lst);
+            lst << indices.at(i).data(Qt::EditRole).toByteArray();
         }
+        m_buffer.push_back(lst);
 
         return;
     }
