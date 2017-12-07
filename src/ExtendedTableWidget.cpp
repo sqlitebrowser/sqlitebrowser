@@ -210,8 +210,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             return;
         } else {
             // It it's not an image, check if it's an empty field
-            QString text = data.toString();
-            if (text.isEmpty())
+            if (data.toByteArray().isEmpty())
             {
                 // The field is either NULL or empty. Those are are handled via the internal copy-paste buffer
                 qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
@@ -221,7 +220,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             }
 
             // The field isn't empty. Quote data as needed and copy it to the clipboard
-            qApp->clipboard()->setText(escapeCopiedData(text));
+            qApp->clipboard()->setText(escapeCopiedData(data.toByteArray()));
             return;
         }
     }
@@ -278,7 +277,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
         htmlResult.append("<tr><th>");
         int firstColumn = indices.front().column();
         for(int i = firstColumn; i <= indices.back().column(); i++) {
-            QString headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+            QByteArray headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toByteArray();
             if (i != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
@@ -304,13 +303,13 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             htmlResult.append(fieldSepHtml);
         }
         currentRow = index.row();
-        QString text = index.data(Qt::EditRole).toByteArray();
+        QByteArray text = index.data(Qt::EditRole).toByteArray();
 
         // Table cell data
         if (text.contains('\n') || text.contains('\t'))
-          htmlResult.append("<pre>" + text.toHtmlEscaped() + "</pre>");
+          htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
         else
-          htmlResult.append(text.toHtmlEscaped());
+          htmlResult.append(QString(text).toHtmlEscaped());
 
         result.append(escapeCopiedData(text));
     }
@@ -321,7 +320,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     qApp->clipboard()->setMimeData(mimeData);
 }
 
-QString ExtendedTableWidget::escapeCopiedData(QString data) const
+QString ExtendedTableWidget::escapeCopiedData(const QByteArray& data) const
 {
     // Empty string is enquoted in plain text format, whilst NULL isn't
     // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
@@ -331,12 +330,13 @@ QString ExtendedTableWidget::escapeCopiedData(QString data) const
     if(data.isNull())
         return data;
 
-    if(data.isEmpty() || data.contains('\n') || data.contains('\t') || data.contains('"'))
+    QString text = data;
+    if(text.isEmpty() || text.contains('\n') || text.contains('\t') || text.contains('"'))
     {
-        data.replace("\"", "\"\"");
-        return QString("\"%1\"").arg(data);
+        text.replace("\"", "\"\"");
+        return QString("\"%1\"").arg(text);
     } else {
-        return data;
+        return text;
     }
 }
 
