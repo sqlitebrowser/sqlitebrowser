@@ -42,6 +42,7 @@ private slots:
     void editModeChanged(int newMode);
     void editTextChanged();
     void updateCellInfo(const QByteArray& data);
+    void setMustIndentAndCompact(bool enable);
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);

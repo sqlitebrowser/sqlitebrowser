@@ -73,6 +73,32 @@
       </spacer>
      </item>
      <item>
+      <widget class="QToolButton" name="buttonIndent">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Auto-format: pretty print on loading, compact on saving.</string>
+       </property>
+       <property name="statusTip">
+        <string>Auto-format: pretty print on loading, compact on saving.</string>
+       </property>
+       <property name="whatsThis">
+        <string>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</string>
+       </property>
+       <property name="text">
+        <string>Autoformat</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/text_indent</normaloff>:/icons/text_indent</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonImport">
        <property name="minimumSize">
         <size>
@@ -81,10 +107,10 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Import text</string>
+        <string>Import from file</string>
        </property>
        <property name="whatsThis">
-        <string>Opens a file dialog used to import text to this database cell.</string>
+        <string>Opens a file dialog used to import any kind of data to this database cell.</string>
        </property>
        <property name="text">
         <string>&amp;Import</string>
@@ -100,10 +126,10 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Export text</string>
+        <string>Export to file</string>
        </property>
        <property name="whatsThis">
-        <string>Opens a file dialog used to export the contents of this database cell to a text file.</string>
+        <string>Opens a file dialog used to export the contents of this database cell to a file.</string>
        </property>
        <property name="text">
         <string>&amp;Export</string>
@@ -156,7 +182,13 @@
       </layout>
      </widget>
      <widget class="QWidget" name="editorBinary"/>
-     <widget class="QWidget" name="editorJSON"/>
+     <widget class="QWidget" name="editorJSON">
+      <property name="whatsThis">
+       <string>This editor mode lets you edit JSON data with syntax highlighting, automatic formatting and validation before saving.
+
+Errors are indicated with a red squiggle underline.</string>
+      </property>
+     </widget>
      <widget class="QScrollArea" name="editorImageScrollArea">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -237,7 +269,9 @@
   <tabstop>buttonExport</tabstop>
   <tabstop>buttonNull</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonImport</sender>
@@ -348,6 +382,22 @@
     <hint type="destinationlabel">
      <x>339</x>
      <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonIndent</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditDialog</receiver>
+   <slot>setMustIndentAndCompact(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
     </hint>
    </hints>
   </connection>

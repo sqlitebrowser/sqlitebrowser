@@ -45,11 +45,15 @@ EditDialog::EditDialog(QWidget* parent)
     connect(jsonEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(jsonEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
 
+    mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
+    ui->buttonIndent->setChecked(mustIndentAndCompact);
+
     reloadSettings();
 }
 
 EditDialog::~EditDialog()
 {
+    Settings::setValue("databrowser", "indent_compact",  mustIndentAndCompact);
     delete ui;
 }
 
@@ -474,6 +478,8 @@ void EditDialog::accept()
 // Called when the user manually changes the "Mode" drop down combobox
 void EditDialog::editModeChanged(int newMode)
 {
+    ui->buttonIndent->setEnabled(newMode == JsonEditor);
+
     // * If the dataSource is the text buffer, the data is always text *
     switch (dataSource) {
     case TextBuffer:
@@ -581,6 +587,18 @@ void EditDialog::editTextChanged()
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         ui->labelSize->setText(tr("%n char(s)", "", dataLength));
     }
+}
+
+void EditDialog::setMustIndentAndCompact(bool enable)
+{
+    mustIndentAndCompact = enable;
+
+    // Indent or compact if necessary. If data has changed, reload from the widget, else from the table.
+    if (ui->buttonApply->isEnabled())
+        loadData(jsonEdit->text().toUtf8());
+    else
+        setCurrentIndex(currentIndex);
+
 }
 
 // Determine the type of data in the cell
@@ -752,5 +770,4 @@ void EditDialog::reloadSettings()
 
     jsonEdit->reloadSettings();
 
-    mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
 }
