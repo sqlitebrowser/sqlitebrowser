@@ -61,6 +61,15 @@
         <verstretch>8</verstretch>
        </sizepolicy>
       </property>
+      <property name="whatsThis">
+       <string>Here is a plot drawn when you select the x and y values above.
+
+Click on points to select them in the plot and in the table. Ctrl+Click for selecting a range of points.
+
+Use mouse-wheel for zooming and mouse drag for changing the axis range.
+
+Select the axes or axes labels to drag and zoom only in that orientation.</string>
+      </property>
      </widget>
     </widget>
    </item>

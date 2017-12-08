@@ -97,6 +97,8 @@ private slots:
     void on_comboLineType_currentIndexChanged(int index);
     void on_comboPointShape_currentIndexChanged(int index);
     void selectionChanged();
+    void mousePress();
+    void mouseWheel();
 };
 
 #endif

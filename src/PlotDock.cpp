@@ -24,6 +24,10 @@ PlotDock::PlotDock(QWidget* parent)
     // Connect signals
     connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
     connect(ui->plotWidget, SIGNAL(selectionChangedByUser()), this, SLOT(selectionChanged()));
+
+    // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
+    connect(ui->plotWidget, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(mousePress()));
+    connect(ui->plotWidget, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
 }
 
 PlotDock::~PlotDock()
@@ -203,7 +207,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 graph->setSelectable (QCP::stDataRange);
                 // Enable: click on items to select them, Ctrl+Click for multi-selection, mouse-wheel for zooming and mouse drag for
                 // changing the visible range.
-                ui->plotWidget->setInteractions(QCP::iSelectPlottables | QCP::iMultiSelect | QCP::iRangeZoom | QCP::iRangeDrag);
+                // Select one axis for zoom and drag applying only to that orientation.
+                ui->plotWidget->setInteractions(QCP::iSelectPlottables | QCP::iMultiSelect | QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectAxes);
                 ui->plotWidget->setSelectionRectMode(QCP::srmNone);
 
                 // prepare the data vectors for qcustomplot
@@ -571,4 +576,37 @@ void PlotDock::selectionChanged()
         }
     }
 
+}
+void PlotDock::mousePress()
+{
+    // if an axis (or axis labels) is selected, only allow the direction of that axis to be dragged
+    // if no axis (or axis labels) is selected, both directions may be dragged
+
+    if (ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
+        ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+        ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
+        ui->plotWidget->axisRect()->setRangeDrag(ui->plotWidget->xAxis->orientation());
+    else if (ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
+             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
+        ui->plotWidget->axisRect()->setRangeDrag(ui->plotWidget->yAxis->orientation());
+    else
+        ui->plotWidget->axisRect()->setRangeDrag(Qt::Horizontal | Qt::Vertical);
+}
+
+void PlotDock::mouseWheel()
+{
+    // if an axis (or axis labels) is selected, only allow the direction of that axis to be zoomed
+    // if no axis (or axis labels) is selected, both directions may be zoomed
+
+    if (ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
+        ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+        ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
+        ui->plotWidget->axisRect()->setRangeZoom(ui->plotWidget->xAxis->orientation());
+    else if (ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
+             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
+        ui->plotWidget->axisRect()->setRangeZoom(ui->plotWidget->yAxis->orientation());
+    else
+        ui->plotWidget->axisRect()->setRangeZoom(Qt::Horizontal | Qt::Vertical);
 }
