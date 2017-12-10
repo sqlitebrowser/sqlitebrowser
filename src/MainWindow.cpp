@@ -191,7 +191,6 @@ void MainWindow::init()
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
     connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
         int currentRow = ui->dataTable->currentIndex().row();
-        auto row = m_browseTableModel->dittoRecord(currentRow);
         duplicateRecord(currentRow);
     });
 
@@ -2447,6 +2446,8 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
 
     QMenu popupRecordMenu(this);
     QAction* action = new QAction("Duplicate record", &popupRecordMenu);
+    // Set shortcut for documentation purposes (the actual functional shortcut is not set here)
+    action->setShortcut(QKeySequence(tr("Ctrl+\"")));
     popupRecordMenu.addAction(action);
 
     connect(action, &QAction::triggered, [&]() {
