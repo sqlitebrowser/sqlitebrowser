@@ -192,7 +192,7 @@ void MainWindow::init()
     connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
         int currentRow = ui->dataTable->currentIndex().row();
         auto row = m_browseTableModel->dittoRecord(currentRow);
-        ui->dataTable->setCurrentIndex(row);
+        duplicateRecord(currentRow);
     });
 
     // Add menu item for log dock
@@ -2450,7 +2450,7 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
     popupRecordMenu.addAction(action);
 
     connect(action, &QAction::triggered, [&]() {
-       m_browseTableModel->dittoRecord(row);
+            duplicateRecord(row);
     });
 
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
@@ -2766,4 +2766,13 @@ void MainWindow::saveFilterAsView()
         saveAsView(m_browseTableModel->customQuery(false));
     else
         QMessageBox::information(this, qApp->applicationName(), tr("There is no filter set for this table. View will not be created."));
+}
+
+void MainWindow::duplicateRecord(int currentRow)
+{
+    auto row = m_browseTableModel->dittoRecord(currentRow);
+    if (row.isValid())
+        ui->dataTable->setCurrentIndex(row);
+    else
+        QMessageBox::warning(this, qApp->applicationName(), db.lastError());
 }

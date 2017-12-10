@@ -512,7 +512,9 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     if(!isEditable())
         return QModelIndex();
 
-    insertRow(rowCount());
+    if (!insertRow(rowCount()))
+        return QModelIndex();
+
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 

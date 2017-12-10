@@ -191,6 +191,7 @@ private:
     void enableEditing(bool enable_edit, bool enable_insertdelete);
     void loadExtensionsFromSettings();
     void saveAsView(QString query);
+    void duplicateRecord(int currentRow);
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
