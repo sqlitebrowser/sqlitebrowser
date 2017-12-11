@@ -29,6 +29,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
     ui->fr_null_bg->installEventFilter(this);
     ui->fr_null_fg->installEventFilter(this);
 
+    connect(ui->comboDataBrowserFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreviewFont()));
+    connect(ui->spinDataBrowserFontSize, SIGNAL(valueChanged(int)), this, SLOT(updatePreviewFont()));
+
 #ifndef CHECKNEWVERSION
     ui->labelUpdates->setVisible(false);
     ui->checkUpdates->setVisible(false);
@@ -545,4 +548,14 @@ void PreferencesDialog::chooseRemoteCloneDirectory()
 
     if(!s.isEmpty())
         ui->editRemoteCloneDirectory->setText(s);
+}
+
+void PreferencesDialog::updatePreviewFont()
+{
+    QFont textFont(ui->comboDataBrowserFont->currentText());
+    textFont.setPointSize(ui->spinDataBrowserFontSize->value());
+    ui->txtRegular->setFont(textFont);
+    textFont.setItalic(true);
+    ui->txtNull->setFont(textFont);
+    ui->txtBlob->setFont(textFont);
 }

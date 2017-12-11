@@ -34,6 +34,7 @@ private slots:
     virtual void addClientCertificate();
     virtual void removeClientCertificate();
     void chooseRemoteCloneDirectory();
+    void updatePreviewFont();
 
 private:
     Ui::PreferencesDialog *ui;
