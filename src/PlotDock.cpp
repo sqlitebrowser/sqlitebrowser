@@ -85,6 +85,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         if(model)
         {
+            model->waitForFetchingFinished();
+
             // Add each column with a supported data type to the column selection view
             for(int i=0;i<model->columnCount();++i)
             {
