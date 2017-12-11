@@ -552,10 +552,12 @@ void PreferencesDialog::chooseRemoteCloneDirectory()
 
 void PreferencesDialog::updatePreviewFont()
 {
-    QFont textFont(ui->comboDataBrowserFont->currentText());
-    textFont.setPointSize(ui->spinDataBrowserFontSize->value());
-    ui->txtRegular->setFont(textFont);
-    textFont.setItalic(true);
-    ui->txtNull->setFont(textFont);
-    ui->txtBlob->setFont(textFont);
+    if (ui->spinDataBrowserFontSize->value() != 0) {
+        QFont textFont(ui->comboDataBrowserFont->currentText());
+        textFont.setPointSize(ui->spinDataBrowserFontSize->value());
+        ui->txtRegular->setFont(textFont);
+        textFont.setItalic(true);
+        ui->txtNull->setFont(textFont);
+        ui->txtBlob->setFont(textFont);
+    }
 }
