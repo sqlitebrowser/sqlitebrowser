@@ -258,7 +258,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         {
             return Settings::getValue("databrowser", "null_text").toString();
         } else if(role == Qt::DisplayRole && isBinary(index)) {
-            return "BLOB";
+            return Settings::getValue("databrowser", "blob_text").toString();
         } else if(role == Qt::DisplayRole) {
             int limit = Settings::getValue("databrowser", "symbol_limit").toInt();
             QByteArray displayText = m_data.at(index.row()).at(index.column());

@@ -176,6 +176,8 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return false;
         if(name == "null_text")
             return "NULL";
+        if(name == "blob_text")
+            return "BLOB";
         if(name == "filter_escape")
             return "\\";
         if(name == "filter_delay")

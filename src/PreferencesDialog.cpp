@@ -86,13 +86,14 @@ void PreferencesDialog::loadSettings()
     ui->spinDataBrowserFontSize->setValue(Settings::getValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
     loadColorSetting(ui->fr_null_bg, "null_bg");
-    loadColorSetting(ui->fr_reg_fg, "reg_fg");
-    loadColorSetting(ui->fr_reg_bg, "reg_bg");
     loadColorSetting(ui->fr_bin_fg, "bin_fg");
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
+    loadColorSetting(ui->fr_reg_fg, "reg_fg");
+    loadColorSetting(ui->fr_reg_bg, "reg_bg");
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
+    ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
     ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
 
@@ -195,6 +196,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
     Settings::setValue("databrowser", "null_text", ui->txtNull->text());
+    Settings::setValue("databrowser", "blob_text", ui->txtBlob->text());
     Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
     Settings::setValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
 
@@ -317,9 +319,7 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 
         if (colour.isValid())
         {
-            QPalette palette = frame->palette();
-            palette.setColor(frame->backgroundRole(), colour);
-            frame->setPalette(palette);
+            setColorSetting(frame, colour);
         }
         // Consume
         return true;
@@ -413,10 +413,43 @@ void PreferencesDialog::fillLanguageBox()
 
 void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingName)
 {
+    QColor color = QColor(Settings::getValue("databrowser", settingName + "_colour").toString());
+    setColorSetting(frame, color);
+}
+
+void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
+{
+    QPalette::ColorRole role;
+    QLineEdit *line;
+
+    if (frame == ui->fr_bin_bg) {
+        line = ui->txtBlob;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_bin_fg) {
+        line = ui->txtBlob;
+        role = line->foregroundRole();
+    } else if (frame ==  ui->fr_reg_bg) {
+        line = ui->txtRegular;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_reg_fg) {
+        line = ui->txtRegular;
+        role = line->foregroundRole();
+    } else if (frame ==  ui->fr_null_bg) {
+        line = ui->txtNull;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_null_fg) {
+        line = ui->txtNull;
+        role = line->foregroundRole();
+    } else
+        return;
+
     QPalette palette = frame->palette();
-    palette.setColor(frame->backgroundRole(),
-        QColor(Settings::getValue("databrowser", settingName + "_colour").toString()));
+    palette.setColor(frame->backgroundRole(), color);
     frame->setPalette(palette);
+
+    palette = line->palette();
+    palette.setColor(role, color);
+    line->setPalette(palette);
 }
 
 void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)

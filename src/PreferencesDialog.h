@@ -40,6 +40,7 @@ private:
 
     void fillLanguageBox();
     void loadColorSetting(QFrame *frame, const QString &name);
+    void setColorSetting(QFrame *frame, const QColor &color);
     void saveColorSetting(QFrame *frame, const QString &name);
     void addClientCertToTable(const QString& path, const QSslCertificate& cert);
 
