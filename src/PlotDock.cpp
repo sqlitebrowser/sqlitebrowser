@@ -28,6 +28,28 @@ PlotDock::PlotDock(QWidget* parent)
     // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
     connect(ui->plotWidget, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(mousePress()));
     connect(ui->plotWidget, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
+
+    QShortcut* shortcutCopy = new QShortcut(QKeySequence::Copy, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutCopy, SIGNAL(activated()), this, SLOT(copy()));
+
+    ui->plotWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // Set up context menu
+    m_contextMenu = new QMenu(this);
+    QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
+    copyAction->setShortcut(shortcutCopy->key());
+    m_contextMenu->addAction(copyAction);
+
+    connect(copyAction, &QAction::triggered, [&]() {
+       copy();
+    });
+
+    connect(ui->plotWidget, &QTableView::customContextMenuRequested,
+            [=](const QPoint& pos) {
+        // Show menu
+        m_contextMenu->popup(ui->plotWidget->mapToGlobal(pos));
+    });
+
 }
 
 PlotDock::~PlotDock()
@@ -611,4 +633,9 @@ void PlotDock::mouseWheel()
         ui->plotWidget->axisRect()->setRangeZoom(ui->plotWidget->yAxis->orientation());
     else
         ui->plotWidget->axisRect()->setRangeZoom(Qt::Horizontal | Qt::Vertical);
+}
+
+void PlotDock::copy()
+{
+    QApplication::clipboard()->setPixmap(ui->plotWidget->toPixmap());
 }

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QVariant>
+#include <QMenu>
 
 class SqliteTableModel;
 class QTreeWidgetItem;
@@ -81,6 +82,7 @@ private:
 
     SqliteTableModel* m_currentPlotModel;
     BrowseDataTableSettings* m_currentTableSettings;
+    QMenu* m_contextMenu;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype
@@ -99,6 +101,8 @@ private slots:
     void selectionChanged();
     void mousePress();
     void mouseWheel();
+    void copy();
+
 };
 
 #endif
