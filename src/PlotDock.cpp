@@ -193,8 +193,20 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     ui->plotWidget->xAxis->setLabel(QString());
     ui->plotWidget->yAxis->setLabel(QString());
 
+    ui->buttonLoadAllData->setEnabled(false);
+    ui->buttonLoadAllData->setStyleSheet("");
+    ui->buttonLoadAllData->setToolTip(tr("Load all data and redraw plot"));
+
     if(xitem)
     {
+        // Warn user if not all data has been fetched and hint about the button for loading all the data
+        if (m_currentTableSettings->plotYAxes.count() && model && model->canFetchMore()) {
+            ui->buttonLoadAllData->setEnabled(true);
+            ui->buttonLoadAllData->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+            ui->buttonLoadAllData->setToolTip(tr("Load all data and redraw plot.\n"
+                                                 "Warning: not all data has been fetched from the table yet due to the partial fetch mechanism."));
+            QToolTip::showText(ui->buttonLoadAllData->mapToGlobal(QPoint(0, 0)), ui->buttonLoadAllData->toolTip());
+        }
         // regain the model column index and the datatype
         // leading 16 bit are column index, the other 16 bit are the datatype
         // right now datatype is only important for X axis (date, non date)
@@ -603,9 +615,11 @@ void PlotDock::selectionChanged()
 }
 void PlotDock::mousePress()
 {
+    // Allow user to reset the plot
+    ui->buttonLoadAllData->setEnabled(true);
+
     // if an axis (or axis labels) is selected, only allow the direction of that axis to be dragged
     // if no axis (or axis labels) is selected, both directions may be dragged
-
     if (ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
         ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
         ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
@@ -620,9 +634,11 @@ void PlotDock::mousePress()
 
 void PlotDock::mouseWheel()
 {
+    // Allow user to reset the plot
+    ui->buttonLoadAllData->setEnabled(true);
+
     // if an axis (or axis labels) is selected, only allow the direction of that axis to be zoomed
     // if no axis (or axis labels) is selected, both directions may be zoomed
-
     if (ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
         ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
         ui->plotWidget->xAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))

@@ -274,8 +274,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</strin
         <item>
          <widget class="QToolButton" name="buttonLoadAllData">
           <property name="toolTip">
-           <string>Load all data and redraw plot.
-Data loading has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</string>
+           <string>Load all data and redraw plot</string>
           </property>
           <property name="icon">
            <iconset resource="icons/icons.qrc">
