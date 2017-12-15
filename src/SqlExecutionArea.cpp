@@ -65,7 +65,7 @@ void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
         if (ok)
             ui->editErrors->setStyleSheet("");
         else
-            ui->editErrors->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+            ui->editErrors->setStyleSheet("QTextEdit {color: white; background-color: rgb(255, 102, 102)}");
     }
 
 }
@@ -146,7 +146,7 @@ void SqlExecutionArea::find(QString expr, bool forward)
     if (found || expr == "")
         ui->findLineEdit->setStyleSheet("");
     else
-        ui->findLineEdit->setStyleSheet("color: white; background-color: rgb(255, 102, 102)");
+        ui->findLineEdit->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
 
 }
 
