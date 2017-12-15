@@ -145,8 +145,6 @@ void MainWindow::init()
     connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
     connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
-    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence("Ctrl+H"), this);
-    connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -2719,22 +2717,11 @@ void MainWindow::setFindFrameVisibility(bool show)
 
 void MainWindow::openFindReplaceDialog()
 {
-    // The slot for the shortcut must discover which sqltexedit widget has the focus and then set it to the dialog.
+    // The slot for the shortcut must discover which sqltexedit widget has the focus and then open its dialog.
     SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-    SqlTextEdit* focusedSqlTextEdit = nullptr;
 
-    if (ui->editLogUser->hasFocus())
-        focusedSqlTextEdit = ui->editLogUser;
-    else if (ui->editLogApplication->hasFocus())
-        focusedSqlTextEdit = ui->editLogApplication;
-
-    if (sqlWidget && !focusedSqlTextEdit)
-        focusedSqlTextEdit = sqlWidget->getEditor();
-
-    if (focusedSqlTextEdit) {
-        findReplaceDialog->setSqlTextEdit(focusedSqlTextEdit);
-        findReplaceDialog->show();
-    }
+    if (sqlWidget)
+        sqlWidget->getEditor()->openFindReplaceDialog();
 }
 
 void MainWindow::saveAsView(QString query)

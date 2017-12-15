@@ -3,6 +3,7 @@
 
 #include "Qsci/qsciscintilla.h"
 
+class FindReplaceDialog;
 class SqlUiLexer;
 
 /**
@@ -26,6 +27,7 @@ public slots:
     void reloadSettings();
     void clearErrorIndicators();
     void setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex);
+    void openFindReplaceDialog();
 
 protected:
     void dropEvent(QDropEvent* e);
@@ -35,10 +37,11 @@ private:
 
     int errorIndicatorNumber;
     bool showErrorIndicators;
+    FindReplaceDialog* findReplaceDialog;
 
 private slots:
     void updateLineNumberAreaWidth();
-    void openFindReplaceDialog();
+    void showContextMenu(const QPoint &pos);
 };
 
 #endif

@@ -8,12 +8,15 @@
 #include <QUrl>
 #include <QMimeData>
 #include <QShortcut>
+#include <QAction>
+#include <QMenu>
 #include <cmath>
 
 SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
-    QsciScintilla(parent)
+    QsciScintilla(parent),
+    findReplaceDialog(new FindReplaceDialog(this))
 {
     // Create lexer object if not done yet
     if(sqlLexer == nullptr)
@@ -59,12 +62,13 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     // Connect signals
     connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 
-    // The ideal shortcut would be QKeySequence::Replace, but that is
-    // reserved for the Main Window, that contains various SqlTextEdit
-    // widgets and needs its own shortcut. For other windows
-    // containing the SqlTextEdit widget we can use this one.
-    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+Shift+H")), this);
+    // The shortcut is constrained to the Widget context so it does not conflict with other SqlTextEdit widgets in the Main Window.
+    QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
+
+    // Prepare for adding the find/replace option to the QScintilla context menu
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint &)));
 }
 
 SqlTextEdit::~SqlTextEdit()
@@ -207,8 +211,23 @@ void SqlTextEdit::clearSelection()
 
 void SqlTextEdit::openFindReplaceDialog()
 {
+    findReplaceDialog->setSqlTextEdit(this);
+    findReplaceDialog->show();
+}
 
-    FindReplaceDialog dialog(this);
-    dialog.setSqlTextEdit(this);
-    dialog.exec();
+void SqlTextEdit::showContextMenu(const QPoint &pos)
+{
+
+    QAction* findReplaceAction = new QAction(QIcon(":/icons/text_replace"), tr("Find and Replace..."), this);
+    findReplaceAction->setShortcut(QKeySequence(tr("Ctrl+H")));
+    connect(findReplaceAction, &QAction::triggered, [&]() {
+            openFindReplaceDialog();
+        });
+
+    // This has to be created here, otherwise the set of enabled options would not update accordingly.
+    QMenu* editContextMenu = createStandardContextMenu();
+    editContextMenu->addSeparator();
+    editContextMenu->addAction(findReplaceAction);
+
+    editContextMenu->exec(mapToGlobal(pos));
 }
