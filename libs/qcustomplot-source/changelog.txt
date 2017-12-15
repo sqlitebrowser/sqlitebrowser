@@ -1,4 +1,4 @@
-#### Version 2.0.0-beta released on 13.09.16 ####
+#### Version 2.0.0 released on 04.09.17 ####
 
 Added major features:
   - Axis tick and tick label generation was completely refactored and is now handled in the QCPAxisTicker class (also see QCPAxis::setTicker). Available ticker subclasses for special uses cases:
@@ -8,7 +8,7 @@ Added major features:
   - Rubber band/selection rect for data point selection and axis zooming is now available, see documentation of QCustomPlot::setSelectionRectMode and QCPSelectionRect. For this purpose, the new default
     layer "overlay" was introduced, which is now the top layer, and holds the QCustomPlot's QCPSelectionRect instance.
   - Data sharing between plottables of the same type (see setData methods taking a QSharedPointer)
-  - OpenGL hardware acceleration is now available across all Qt versions (including Qt4) in a unified, simple interface, with QCustomPlot::setOpenGl
+  - OpenGL hardware acceleration is now available across all Qt versions (including Qt4) in a unified, simple interface, with QCustomPlot::setOpenGl (experimental)
   - QCPStatisticalBox can now display a series of statistical boxes instead of only a single one
   - New QCPErrorBars plottable allows attaching error bars to any one-dimensional plottable (QCPGraph has thus lost its own error-bar capability)
   - QCPColorMap now supports transparency via alpha in its color gradient stops, and via a dedicated cell-wise alpha map (see QCPColorMapData::setAlpha)
@@ -38,7 +38,12 @@ Added minor features:
   - QCPGraph::getPreparedData is now virtual, and thus allows subclasses to easily generate own plotted data, e.g. on-the-fly.
   - Added QCPRange qDebug stream operator
   - QCPLayoutGrid (and thus QCPLegend) can now wrap rows or columns at specified row/column counts, see setFillOrder, setWrap and the new addElement overload which doesn't have row/column index
-  
+Added minor features after beta:
+  - QCPGraph fill now renders separate fill segments when there are gaps in the graph data (created by inserting NaN values)
+  - fractional device pixel ratios are now used, if Qt version >= 5.6
+  - Axes may now be dragged/zoomed individually by starting the drag/zoom on top of the axis (previously, this required additional code)
+  - Manual minimum and maximum layout element sizes (setMinimumSize/setMaximumSize) can now affect the inner or the outer rect, see QCPLayoutElement::setSizeConstraintRect
+    
 Bugfixes [Also backported to 1.3.2]:
   - Fixed possible crash when having a QCPGraph with scatters only and a non-transparent main/fill brush of the graph
   - Fixed QCPItemPixmap not updating internally cached scaled pixmap if new pixmap set with same scaled dimensions
@@ -55,7 +60,19 @@ Bugfixes [Not in 1.3.2]:
   - Fixed QCPBarsGroup bug which caused stPlotCoords spacing to be wrong with vertical key axes
   - A QCPBars axis rescale in the main window constructor (i.e. without well-defined plot size) now falls back to a datapoint-tight rescaling instead of doing nothing (because bar width can't be determined)
   - Improved QCPBars stacking when using bars with very large keys and key separation at limit of double precision
-  
+Bugfixes after beta:
+  - fixed QCPCurve vertex optimization algorithm not handling log axes correctly
+  - upon removing the inner most axis, the offset of the new inner most axis (previously second axis) is now set to the value of the removed axis, instead of leaving a gap
+  - QCPColorMap now has a default gradient (gpCold) again, instead of an empty and thus black gradient
+  - doc: black QCPColorMap/QCPColorGradient documentation images fixed
+  - scatter styles ssDiamond, ssTriangle and ssTriangleInverted now get proper filling with the specified brush
+  - fixed click signals of plottable/axes/etc. not being emitted properly
+  - fixed uninitialized scatterSkip on QCPCurve, leading to irregular default appearance of scatter skips
+  - fixed device pixel ratio not being implemented correctly in cached tick labels
+  - QCPLayoutElement::setMaximum/setMinimum now is with respect to the inner rect as intended (and documented), instead of the outer rect (and this can now be changed via setSizeConstraintRect)
+  - fixed dllimport issue on template classes when compiling as shared library with MSVC
+
+
 Summary of backward incompatible changes:
   Plottable related:
   - Removed QCustomPlot::addPlottable, not needed anymore as plottables now automatically register in their constructor
@@ -98,7 +115,12 @@ Other:
   - Default focus policy for QCustomPlot is now Qt::ClickFocus, instead of Qt::NoFocus.
   - tweaked QCPLegend and QCPAbstractLegendItem margins: The items have by default zero own margins, and QCPLegend row- and column spacing was increased to compensate. Legend was made slightly denser by default.
   - Used doxygen version is now 1.8.12, and documentation/postprocessing-scripts were adapted accordingly. Expect minor issues and some warnings when using older doxygen.
-
+Other after beta:
+  - Integrated OpenGL support (QCustomPlot::setOpenGl) is experimental for now, due the strong dependency on the system/graphics driver of the current implementation
+  - fixed some plot title font sizes in the example projects that were too small due to switch to QCPTextElement
+  - added missing override specifiers on reimplemented virtual methods
+  - changed to more intuitive defaults for QCPSelectionDecorator scatter style (now doesn't define an own scatter pen by default)
+    
 #### Version 1.3.2 released on 22.12.15 ####
 
   Bugfixes [Backported from 2.0.0 branch]:
