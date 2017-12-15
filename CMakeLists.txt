@@ -121,6 +121,7 @@ set(SQLB_MOC_HDR
 	src/RemoteModel.h
 	src/RemotePushDialog.h
 	src/FindReplaceDialog.h
+	src/ExtendedScintilla.h
 )
 
 set(SQLB_SRC
@@ -161,6 +162,7 @@ set(SQLB_SRC
 	src/RemoteModel.cpp
 	src/RemotePushDialog.cpp
 	src/FindReplaceDialog.cpp
+	src/ExtendedScintilla.cpp
 )
 
 set(SQLB_FORMS

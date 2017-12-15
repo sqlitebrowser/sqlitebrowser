@@ -1,7 +1,7 @@
 #ifndef FindReplaceDialog_H
 #define FindReplaceDialog_H
 
-#include <sqltextedit.h>
+#include <ExtendedScintilla.h>
 
 #include <QDialog>
 #include <QAbstractButton>
@@ -18,7 +18,7 @@ public:
 
     explicit FindReplaceDialog(QWidget* parent = nullptr);
     ~FindReplaceDialog();
-    void setSqlTextEdit(SqlTextEdit* sqlTextEdit);
+    void setExtendedScintilla(ExtendedScintilla* scintilla);
     void show();
 
 private slots:
@@ -35,7 +35,7 @@ private:
     void indicateSelection();
     void clearIndicators();
     Ui::FindReplaceDialog* ui;
-    SqlTextEdit* m_sqlTextEdit;
+    ExtendedScintilla* m_scintilla;
     int foundIndicatorNumber;
 };
 

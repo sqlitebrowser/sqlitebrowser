@@ -17,28 +17,28 @@ FindReplaceDialog::~FindReplaceDialog()
     delete ui;
 }
 
-void FindReplaceDialog::setSqlTextEdit(SqlTextEdit* sqlTextEdit)
+void FindReplaceDialog::setExtendedScintilla(ExtendedScintilla* scintilla)
 {
-    m_sqlTextEdit = sqlTextEdit;
+    m_scintilla = scintilla;
 
     // Create indicator for find-all and replace-all occurrences
-    foundIndicatorNumber = m_sqlTextEdit->indicatorDefine(QsciScintilla::StraightBoxIndicator);
-    m_sqlTextEdit->setIndicatorForegroundColor(Qt::magenta, foundIndicatorNumber);
-    m_sqlTextEdit->setIndicatorDrawUnder(true, foundIndicatorNumber);
+    foundIndicatorNumber = m_scintilla->indicatorDefine(QsciScintilla::StraightBoxIndicator);
+    m_scintilla->setIndicatorForegroundColor(Qt::magenta, foundIndicatorNumber);
+    m_scintilla->setIndicatorDrawUnder(true, foundIndicatorNumber);
 
-    bool isWriteable = ! m_sqlTextEdit->isReadOnly();
+    bool isWriteable = ! m_scintilla->isReadOnly();
     ui->replaceWithText->setEnabled(isWriteable);
     ui->replaceButton->setEnabled(isWriteable);
     ui->replaceAllButton->setEnabled(isWriteable);
 
-    connect(m_sqlTextEdit, SIGNAL(destroyed()), this, SLOT(hide()));
+    connect(m_scintilla, SIGNAL(destroyed()), this, SLOT(hide()));
 }
 
 bool FindReplaceDialog::findNext()
 {
     clearIndicators();
 
-    bool found = m_sqlTextEdit->findText
+    bool found = m_scintilla->findText
             (ui->findText->text(),
              ui->regexpCheckBox->isChecked(),
              ui->caseCheckBox->isChecked(),
@@ -61,23 +61,23 @@ void FindReplaceDialog::show()
 
 void FindReplaceDialog::replace()
 {
-    m_sqlTextEdit->replace(ui->replaceWithText->text());
+    m_scintilla->replace(ui->replaceWithText->text());
     findNext();
 }
 
 void FindReplaceDialog::indicateSelection()
 {
      int fromRow, fromIndex, toRow, toIndex;
-     m_sqlTextEdit->getSelection(&fromRow, &fromIndex, &toRow, &toIndex);
-     m_sqlTextEdit->fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, foundIndicatorNumber);
+     m_scintilla->getSelection(&fromRow, &fromIndex, &toRow, &toIndex);
+     m_scintilla->fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, foundIndicatorNumber);
 
 }
 void FindReplaceDialog::findAll()
 {
     clearIndicators();
     int occurrences = 0;
-    m_sqlTextEdit->setCursorPosition(0, 0);
-    while (m_sqlTextEdit->findText
+    m_scintilla->setCursorPosition(0, 0);
+    while (m_scintilla->findText
             (ui->findText->text(),
              ui->regexpCheckBox->isChecked(),
              ui->caseCheckBox->isChecked(),
@@ -87,7 +87,7 @@ void FindReplaceDialog::findAll()
         indicateSelection();
         ++occurrences;
     }
-    m_sqlTextEdit->clearSelection();
+    m_scintilla->clearSelection();
 
     QString message;
     switch (occurrences) {
@@ -109,19 +109,19 @@ void FindReplaceDialog::replaceAll()
 {
     clearIndicators();
     int occurrences = 0;
-    m_sqlTextEdit->setCursorPosition(0, 0);
-    while (m_sqlTextEdit->findText
+    m_scintilla->setCursorPosition(0, 0);
+    while (m_scintilla->findText
             (ui->findText->text(),
              ui->regexpCheckBox->isChecked(),
              ui->caseCheckBox->isChecked(),
              ui->wholeWordsCheckBox->isChecked(),
              false,
              true)) {
-        m_sqlTextEdit->replace(ui->replaceWithText->text());
+        m_scintilla->replace(ui->replaceWithText->text());
         indicateSelection();
         ++occurrences;
     }
-    m_sqlTextEdit->clearSelection();
+    m_scintilla->clearSelection();
 
     QString message;
     switch (occurrences) {
@@ -147,12 +147,13 @@ void FindReplaceDialog::help()
 
 void FindReplaceDialog::clearIndicators()
 {
-    m_sqlTextEdit->clearIndicatorRange(0, 0, m_sqlTextEdit->lines(), m_sqlTextEdit->lineLength(m_sqlTextEdit->lines()), foundIndicatorNumber);
+    m_scintilla->clearIndicatorRange(0, 0, m_scintilla->lines(), m_scintilla->lineLength(m_scintilla->lines()), foundIndicatorNumber);
     ui->messageLabel->setText("");
 }
 
 void FindReplaceDialog::close()
 {
+    m_scintilla->clearSelection();
     clearIndicators();
     QDialog::close();
 }
