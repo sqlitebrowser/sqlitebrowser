@@ -122,6 +122,7 @@ set(SQLB_MOC_HDR
 	src/RemotePushDialog.h
 	src/FindReplaceDialog.h
 	src/ExtendedScintilla.h
+	src/FileExtensionManager.h
 )
 
 set(SQLB_SRC
@@ -163,6 +164,7 @@ set(SQLB_SRC
 	src/RemotePushDialog.cpp
 	src/FindReplaceDialog.cpp
 	src/ExtendedScintilla.cpp
+        src/FileExtensionManager.cpp
 )
 
 set(SQLB_FORMS
@@ -183,6 +185,7 @@ set(SQLB_FORMS
 	src/RemoteDock.ui
 	src/RemotePushDialog.ui
 	src/FindReplaceDialog.ui
+        src/FileExtensionManager.ui
 )
 
 set(SQLB_RESOURCES
