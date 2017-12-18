@@ -743,7 +743,7 @@ void MainWindow::selectTableLine(int lineToSelect)
 void MainWindow::selectTableLines(int firstLine, int count)
 {
     int lastLine = firstLine+count-1;
-    if(ui->mainTab->currentIndex() == 1) {
+    if(ui->mainTab->currentIndex() == BrowseTab) {
         // Are there even that many lines?
         if(lastLine >= m_browseTableModel->totalRowCount())
             return;
@@ -754,7 +754,7 @@ void MainWindow::selectTableLines(int firstLine, int count)
         QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);
 
         ui->dataTable->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
-    }else if(ui->mainTab->currentIndex() == 3) {
+    }else if(ui->mainTab->currentIndex() == ExecuteTab) {
         selectCurrentTabTableLines(firstLine, lastLine);
     }
 }
