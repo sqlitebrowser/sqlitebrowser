@@ -48,9 +48,6 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
-
-    if(m_manager != NULL)
-        delete m_manager;
 }
 
 void PreferencesDialog::chooseLocation()
