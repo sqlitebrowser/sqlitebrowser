@@ -73,10 +73,5 @@ void FileDialog::setFileDialogPath(const QString& new_path)
 
 QString FileDialog::getSqlDatabaseFileFilter()
 {
-    QString extensions = Settings::getValue("General", "DBFileExtensions").toString();
-    if ( extensions.isEmpty() )
-    {
-        extensions = QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
-    }
-    return extensions;
+    return Settings::getValue("General", "DBFileExtensions").toString();
 }

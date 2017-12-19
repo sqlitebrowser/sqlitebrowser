@@ -15,7 +15,8 @@
 
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::PreferencesDialog)
+      ui(new Ui::PreferencesDialog),
+      m_dbFileExtensions(FileDialog::getSqlDatabaseFileFilter().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -47,6 +48,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
+
+    if(m_manager != NULL)
+        delete m_manager;
 }
 
 void PreferencesDialog::chooseLocation()
@@ -567,10 +571,10 @@ void PreferencesDialog::updatePreviewFont()
 
 void PreferencesDialog::on_buttonManageFileExtension_clicked()
 {
-    FileExtensionManager *manager = new FileExtensionManager( this );
-    if ( manager->exec() == QDialog::Accepted )
+    FileExtensionManager *manager = new FileExtensionManager(m_dbFileExtensions, this);
+
+    if(manager->exec() == QDialog::Accepted)
     {
-        m_dbFileExtensions = manager->getDBFileExtesions();
+        m_dbFileExtensions = manager->getDBFileExtensions();
     }
-    delete manager;
 }

@@ -12,10 +12,10 @@ class FileExtensionManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit FileExtensionManager(QWidget *parent = 0);
+    explicit FileExtensionManager(QStringList init, QWidget *parent = 0);
     ~FileExtensionManager();
 
-    QStringList getDBFileExtesions();
+    QStringList getDBFileExtensions();
 
 private:
     Ui::FileExtensionManager *ui;
