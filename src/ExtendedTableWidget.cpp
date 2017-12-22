@@ -187,8 +187,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     while (i.hasNext()) {
         if (isColumnHidden(i.next().column()))
             i.remove();
-     }
-
+    }
 
     // Abort if there's nothing to copy
     if (indices.isEmpty())
@@ -312,13 +311,11 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             QString imageBase64 = ba.toBase64();
             htmlResult.append("<img src=\"data:image/png;base64,");
             htmlResult.append(imageBase64);
-            result.append(imageBase64); // TODO: Or should be just "Image"?
+            result.append(QString());
             htmlResult.append("\" alt=\"Image\">");
         } else {
             QByteArray text;
-            if (m->isBinary(index))
-                text = data.toByteArray().toBase64(); // TODO: Or should be just "BLOB"?
-            else
+            if (!m->isBinary(index))
                 text = data.toByteArray();
 
             // Table cell data: text
