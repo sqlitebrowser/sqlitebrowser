@@ -40,6 +40,7 @@ private:
 
     typedef QList<QByteArray> QByteArrayList;
     static QList<QByteArrayList> m_buffer;
+    static QString m_generatorStamp;
 
 private slots:
     void vscrollbarChanged(int value);
