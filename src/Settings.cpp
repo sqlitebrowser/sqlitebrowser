@@ -172,7 +172,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 10;
         if(name == "symbol_limit")
             return 5000;
-        if(name == "compact_indent")
+        if(name == "indent_compact")
             return false;
         if(name == "null_text")
             return "NULL";
