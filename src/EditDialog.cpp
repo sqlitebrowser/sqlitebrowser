@@ -661,7 +661,7 @@ void EditDialog::editTextChanged()
             dataLength = sciEdit->text().length();
             break;
         }
-        // ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
+        ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         ui->labelSize->setText(tr("%n char(s)", "", dataLength));
     }
 }
