@@ -190,22 +190,25 @@ QStringList DbStructureModel::mimeTypes() const
 
 QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 {
+    // We store the SQL data and the names data separately
+    QByteArray sqlData, namesData;
+
     // Loop through selected indices
-    QByteArray d;
     for(const QModelIndex& index : indices)
     {
-        // Only export data for valid indices and only once per row (SQL column, except for fields).
-        // For fields, export an escaped identifier of the field for statement composition in SQL editor.
+        // Only export data for valid indices and only once per row (SQL column or Name column).
+        // For names, export an escaped identifier of the item for statement composition in SQL editor.
+        // Commas are included for a list of identifiers.
         if(index.isValid()) {
             QString objectType = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
 
-            if(objectType == "field" && index.column() == ColumnName)
-                d = d.append(sqlb::escapeIdentifier(data(index, Qt::DisplayRole).toString()));
+            if(index.column() == ColumnName)
+                namesData.append(sqlb::escapeIdentifier(data(index, Qt::DisplayRole).toString()) + ", ");
 
             if(objectType != "field" && index.column() == ColumnSQL)
             {
                 // Add the SQL code used to create the object
-                d = d.append(data(index, Qt::DisplayRole).toString() + ";\n");
+                sqlData.append(data(index, Qt::DisplayRole).toString() + ";\n");
 
                 // If it is a table also add the content
                 if(objectType == "table")
@@ -222,7 +225,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                             insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
                         insertStatement.chop(1);
                         insertStatement += ");\n";
-                        d = d.append(insertStatement);
+                        sqlData.append(insertStatement);
                     }
                 }
             }
@@ -232,7 +235,13 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
     // Create the MIME data object
     QMimeData* mime = new QMimeData();
     mime->setProperty("db_file", m_db.currentFile());      // Also save the file name to avoid dropping an object on the same database as it comes from
-    mime->setData("text/plain", d);
+    // When we have both SQL and Names data (probable row selection mode) we give precedence to the SQL data
+    if (sqlData.length() == 0 && namesData.length() > 0) {
+        // Remove last ", "
+        namesData.chop(2);
+        mime->setData("text/plain", namesData);
+    } else
+        mime->setData("text/plain", sqlData);
     return mime;
 }
 
