@@ -873,7 +873,7 @@ bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
     // We're using the same way to detect binary data here as in the EditDialog class. For performance reasons we're only looking at
     // the first couple of bytes though.
-    QByteArray data = m_data.at(index.row()).at(index.column()).left(512);
+    QByteArray data = decode(m_data.at(index.row()).at(index.column()).left(512));
     return QString(data).toUtf8() != data;
 }
 

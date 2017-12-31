@@ -2542,7 +2542,7 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
     if(ok)
     {
         // Check if encoding is valid
-        if(!QTextCodec::codecForName(encoding.toUtf8()))
+        if(!encoding.isEmpty() && !QTextCodec::codecForName(encoding.toUtf8()))
         {
             QMessageBox::warning(this, qApp->applicationName(), tr("This encoding is either not valid or not supported."));
             return;
