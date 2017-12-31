@@ -5,10 +5,25 @@
 #include <QSet>
 #include <QDropEvent>
 #include <QDragMoveEvent>
+#include <QStyledItemDelegate>
 
 class QMenu;
 class FilterTableHeader;
 namespace sqlb { class ObjectIdentifier; }
+
+// We use this class to provide editor widgets for the ExtendedTableWidget. It's used for every cell in the table view.
+class ExtendedTableWidgetEditorDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+
+public:
+    explicit ExtendedTableWidgetEditorDelegate(QObject* parent = nullptr);
+
+    QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+    void setEditorData(QWidget* editor, const QModelIndex& index) const override;
+    void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
+    void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+};
 
 class ExtendedTableWidget : public QTableView
 {
@@ -55,6 +70,7 @@ protected:
 
     FilterTableHeader* m_tableHeader;
     QMenu* m_contextMenu;
+    ExtendedTableWidgetEditorDelegate* m_editorDelegate;
 };
 
 #endif
