@@ -2,6 +2,7 @@
 #include "sqlitedb.h"
 #include "sqlite.h"
 #include "Settings.h"
+#include "Data.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -871,10 +872,7 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    // We're using the same way to detect binary data here as in the EditDialog class. For performance reasons we're only looking at
-    // the first couple of bytes though.
-    QByteArray data = decode(m_data.at(index.row()).at(index.column()).left(512));
-    return QString(data).toUtf8() != data;
+    return !isTextOnly(m_data.at(index.row()).at(index.column()), m_encoding, true);
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const

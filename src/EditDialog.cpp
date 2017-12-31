@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "src/qhexedit.h"
 #include "FileDialog.h"
+#include "Data.h"
 
 #include <QMainWindow>
 #include <QKeySequence>
@@ -619,8 +620,8 @@ int EditDialog::checkDataType(const QByteArray& data)
         return Image;
 
     // Check if it's text only
-    if (QString(cellData).toUtf8() == cellData) { // Is there a better way to check this?
-
+    if(isTextOnly(cellData))
+    {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(QString(cellData).toUtf8());
         if (!jsonDoc.isNull())
             return JSON;

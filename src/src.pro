@@ -61,7 +61,8 @@ HEADERS += \
     RemotePushDialog.h \
     jsontextedit.h \
     FindReplaceDialog.h \
-    ExtendedScintilla.h
+    ExtendedScintilla.h \
+    Data.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -100,7 +101,8 @@ SOURCES += \
     RemotePushDialog.cpp \
     jsontextedit.cpp \
     FindReplaceDialog.cpp \
-    ExtendedScintilla.cpp
+    ExtendedScintilla.cpp \
+    Data.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
