@@ -63,6 +63,11 @@
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
+          <property name="whatsThis">
+           <string>This is the structure of the opened database.
+You can drag SQL sentences from an object row and drop them into other applications or into another instance of 'DB Browser for SQLite'.
+</string>
+          </property>
           <property name="dragEnabled">
            <bool>true</bool>
           </property>
@@ -1119,8 +1124,26 @@
     <layout class="QVBoxLayout" name="verticalLayout_9">
      <item>
       <widget class="QTreeView" name="treeSchemaDock">
+       <property name="whatsThis">
+        <string>This is the structure of the opened database.
+You can drag multiple object names from the Name column and drop them into the SQL editor .
+You can drag SQL sentences from the Schema column and drop them into the SQL editor or into other applications.
+</string>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDrop</enum>
+       </property>
        <property name="alternatingRowColors">
         <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectItems</enum>
        </property>
        <property name="verticalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>
