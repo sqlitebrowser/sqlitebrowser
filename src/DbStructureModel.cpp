@@ -222,7 +222,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                     {
                         QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
                         for(int j=1; j < tableModel.columnCount(); ++j)
-                            insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j)).toString());
+                            insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j), Qt::EditRole).toString());
                         insertStatement.chop(1);
                         insertStatement += ");\n";
                         sqlData.append(insertStatement);
