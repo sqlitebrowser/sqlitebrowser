@@ -57,6 +57,7 @@ private:
     bool textNullSet;
     bool isReadOnly;
     bool mustIndentAndCompact;
+    QByteArray removedBom;
 
     enum DataSources {
         TextBuffer,

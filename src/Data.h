@@ -9,4 +9,12 @@
 // text but makes it less reliable
 bool isTextOnly(QByteArray data, const QString& encoding = QString(), bool quickTest = false);
 
+// This function returns true if the data in the data parameter starts with a Unicode BOM. Otherwise it returns false.
+bool startsWithBom(const QByteArray& data);
+
+// This function checks if the data in the data parameter starts with a Unicode BOM. If so, the BOM is removed from the
+// byte array and passed back to the caller separately as the return value of the function. If the data does not start
+// with a BOM an empty byte array is returned and the original data is not modified.
+QByteArray removeBom(QByteArray& data);
+
 #endif
