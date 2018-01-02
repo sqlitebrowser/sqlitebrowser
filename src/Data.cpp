@@ -34,16 +34,16 @@ bool startsWithBom(const QByteArray& data)
 
 QByteArray removeBom(QByteArray& data)
 {
-    if(data.startsWith("\xEF\xBB\xBF"))
+    if(data.left(3) == QByteArray("\xEF\xBB\xBF"))
     {
         QByteArray bom = data.left(3);
         data.remove(0, 3);
         return bom;
-    } else if(data.startsWith("\xFE\xFF") || data.startsWith("\xFF\xFE")) {
+    } else if(data.left(2) == QByteArray("\xFE\xFF") || data.left(2) == QByteArray("\xFF\xFE")) {
         QByteArray bom = data.left(2);
         data.remove(0, 2);
         return bom;
-    } else if(data.startsWith("\x00\x00\xFE\xFF") || data.startsWith("\xFF\xFE\x00\x00")) {
+    } else if(data.left(4) == QByteArray("\x00\x00\xFE\xFF") || data.left(4) == QByteArray("\xFF\xFE\x00\x00")) {
         QByteArray bom = data.left(4);
         data.remove(0, 4);
         return bom;
