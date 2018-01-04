@@ -4,7 +4,6 @@
 #include "Settings.h"
 #include "Data.h"
 
-#include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
 #include <QTextCodec>

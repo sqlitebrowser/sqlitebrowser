@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QApplication>
-#include <QDebug>
 #include <QInputDialog>
 #include <QFileInfo>
 #include <QDir>

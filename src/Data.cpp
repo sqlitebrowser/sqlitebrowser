@@ -1,7 +1,6 @@
 #include "Data.h"
 
 #include <QTextCodec>
-#include <QDebug>
 
 // Note that these aren't all possible BOMs. But they are probably the most common ones.
 // The size is needed at least for the ones with character zero in them.
