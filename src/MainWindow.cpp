@@ -2452,6 +2452,13 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
             duplicateRecord(row);
     });
 
+    QAction* deleteRecordAction = new QAction(ui->buttonDeleteRecord->text(), &popupRecordMenu);
+    popupRecordMenu.addAction(deleteRecordAction);
+
+    connect(deleteRecordAction, &QAction::triggered, [&]() {
+            deleteRecord();
+    });
+
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
 }
 
