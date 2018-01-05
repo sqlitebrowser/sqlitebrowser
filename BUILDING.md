@@ -54,12 +54,13 @@ The same process works for building the code in any platform supported by Qt
 ### Ubuntu Linux
 
 ```bash
-$ sudo apt install build-essential git cmake libsqlite3-dev qt5-default qttools5-dev-tools
+$ sudo apt install build-essential git cmake libsqlite3-dev qt5-default qttools5-dev-tools \
+    libsqlcipher-dev
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build
 $ cd build
-$ cmake -Wno-dev ..
+$ cmake -Dsqlcipher=1 -Wno-dev ..
 $ make
 $ sudo make install
 ```
