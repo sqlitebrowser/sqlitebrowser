@@ -678,16 +678,16 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query) {
     // deal with end-of-line comments
     {
         /* The regular expression for removing end of line comments works like this:
-         * ^((?:(?:[^'-]|-(?!-))*|(?:(?:P<quote>['"])[^(?:P=quote)]*(?:P=quote)))*)(--.*)$
-         * ^                                                                             $ # anchor beginning and end of string so we use it all
-         *  (                                                                     )(    )  # two separate capture groups for code and comment
-         *                                                                          --.*   # comment starts with -- and consumes everything afterwards
-         *   (?:                 |                                              )*         # code is none or many strings alternating with non-strings
-         *                        (?:(?:P<quote>['"])[^(?:P=quote)]*(?:P=quote))           # a string is a quote, followed by none or more non-quotes, followed by a quote
-         *      (?:[^'-]|-(?!-))*                                                          # non-string is a sequence of characters which aren't quotes or hyphens,
-         *                                                                                   OR if they are hyphens then they can't be followed immediately by another hyphen
+         * ^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--.*)$
+         * ^                                          $ # anchor beginning and end of string so we use it all
+         *  (                                  )(    )  # two separate capture groups for code and comment
+         *                                       --.*   # comment starts with -- and consumes everything afterwards
+         *   (?:                 |           )*         # code is none or many strings alternating with non-strings
+         *                        (?:'[^']*')           # a string is a quote, followed by none or more non-quotes, followed by a quote
+         *      (?:[^'-]|-(?!-))*                       # non-string is a sequence of characters which aren't quotes or hyphens,
          */
-        QRegExp rxSQL("^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))(?:(?:P<quote>['\"])[^(?:P=quote)]*(?:P=quote))*)(--[^\\r\\n]*)([\\r\\n]*)(.*)$");	// set up regex to find end-of-line comment
+
+        QRegExp rxSQL("^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--[^\\r\\n]*)([\\r\\n]*)(.*)$");	// set up regex to find end-of-line comment
         QString result;
 
         while(query.size() != 0)
