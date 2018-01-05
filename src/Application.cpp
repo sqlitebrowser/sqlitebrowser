@@ -75,6 +75,7 @@ Application::Application(int& argc, char** argv) :
     QString fileToOpen;
     QString tableToBrowse;
     QStringList sqlToExecute;
+    bool readOnly = false;
     m_dontShowMainWindow = false;
     for(int i=1;i<arguments().size();i++)
     {
@@ -88,6 +89,7 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
             qWarning() << qPrintable(tr("  -s, --sql [file]\tExecute this SQL file after opening the DB"));
             qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
+            qWarning() << qPrintable(tr("  -R, --read-only\tOpen database in read-only mode"));
             qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
@@ -109,6 +111,8 @@ Application::Application(int& argc, char** argv) :
                 tableToBrowse = arguments().at(i);
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
             m_dontShowMainWindow = true;
+        } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
+            readOnly = true;
         } else {
             // Other: Check if it's a valid file name
             if(QFile::exists(arguments().at(i)))
@@ -126,7 +130,7 @@ Application::Application(int& argc, char** argv) :
     // Open database if one was specified
     if(fileToOpen.size())
     {
-        if(m_mainWindow->fileOpen(fileToOpen))
+        if(m_mainWindow->fileOpen(fileToOpen, false, readOnly))
         {
             // If database could be opened run the SQL scripts
             for(const QString& f : sqlToExecute)
