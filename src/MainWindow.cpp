@@ -976,6 +976,8 @@ MainWindow::StatementType MainWindow::getQueryType(const QString& query) const
     if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UpdateStatement;
     if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DeleteStatement;
     if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CreateStatement;
+    if(query.startsWith("ATTACH", Qt::CaseInsensitive)) return AttachStatement;
+    if(query.startsWith("DETACH", Qt::CaseInsensitive)) return DetachStatement;
 
     return OtherStatement;
 }
@@ -1156,7 +1158,10 @@ void MainWindow::executeQuery()
                 if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
                     stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
 
-                modified = true;
+                // Attach/Detach statements don't modify the original database
+                if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
+                    modified = true;
+
                 statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
                 ok = true;
                 break;

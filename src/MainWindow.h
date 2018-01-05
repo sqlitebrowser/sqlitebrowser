@@ -143,6 +143,8 @@ private:
         UpdateStatement,
         DeleteStatement,
         CreateStatement,
+        AttachStatement,
+        DetachStatement,
         OtherStatement,
     };
 
