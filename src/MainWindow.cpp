@@ -2447,16 +2447,32 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
     if (row == -1)
         return;
 
-    ui->dataTable->selectRow(row);
+    // Select the row if it is not already in the selection.
+    QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
+    bool found = false;
+    for (QModelIndex index : rowList) {
+        if (row == index.row()) {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        ui->dataTable->selectRow(row);
+
+    rowList = ui->dataTable->selectionModel()->selectedRows();
+
+    QString duplicateText = rowList.count() > 1 ? tr("Duplicate records") : tr("Duplicate record");
 
     QMenu popupRecordMenu(this);
-    QAction* action = new QAction("Duplicate record", &popupRecordMenu);
+    QAction* action = new QAction(duplicateText, &popupRecordMenu);
     // Set shortcut for documentation purposes (the actual functional shortcut is not set here)
     action->setShortcut(QKeySequence(tr("Ctrl+\"")));
     popupRecordMenu.addAction(action);
 
     connect(action, &QAction::triggered, [&]() {
-            duplicateRecord(row);
+            for (QModelIndex index : rowList) {
+                duplicateRecord(index.row());
+            }
     });
 
     QAction* deleteRecordAction = new QAction(ui->buttonDeleteRecord->text(), &popupRecordMenu);
