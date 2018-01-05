@@ -2447,6 +2447,8 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
     if (row == -1)
         return;
 
+    ui->dataTable->selectRow(row);
+
     QMenu popupRecordMenu(this);
     QAction* action = new QAction("Duplicate record", &popupRecordMenu);
     // Set shortcut for documentation purposes (the actual functional shortcut is not set here)
