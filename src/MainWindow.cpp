@@ -1635,6 +1635,8 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(0, logicalindex));
+
+    plotDock->updatePlot(m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
