@@ -195,7 +195,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     QStringList yAxisLabels;
 
     // Clear graphs and axis labels
-    ui->plotWidget->clearGraphs();
+    ui->plotWidget->clearPlottables();
     ui->plotWidget->xAxis->setLabel(QString());
     ui->plotWidget->yAxis->setLabel(QString());
 
@@ -231,17 +231,16 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // leading 16 bit are column index
                 uint itemdata = item->data(0, Qt::UserRole).toUInt();
                 int column = itemdata >> 16;
-                QCPGraph* graph = ui->plotWidget->addGraph();
 
-                graph->setPen(QPen(item->backgroundColor(PlotColumnY)));
-                graph->setSelectable (QCP::stDataRange);
+                bool isSorted = true;
 
                 // prepare the data vectors for qcustomplot
                 // possible improvement might be a QVector subclass that directly
                 // access the model data, to save memory, we are copying here
-                QVector<double> xdata(model->rowCount()), ydata(model->rowCount());
+                QVector<double> xdata(model->rowCount()), ydata(model->rowCount()), tdata(model->rowCount());
                 for(int i = 0; i < model->rowCount(); ++i)
                 {
+                    tdata[i] = i;
                     // convert x type axis if it's datetime
                     if(xtype == QVariant::DateTime)
                     {
@@ -258,6 +257,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                             xdata[i] = model->data(model->index(i, x)).toDouble();
                     }
 
+                    if (i != 0)
+                        isSorted &= (xdata[i-1] <= xdata[i]);
+
                     // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                     // instead of retrieving some value from the model.
                     QVariant pointdata;
@@ -271,14 +273,38 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     else
                         ydata[i] = pointdata.toDouble();
                 }
-
-                // set some graph styles
-                graph->setData(xdata, ydata);
-                graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
                 // WARN: ssDot is removed
                 int shapeIdx = ui->comboPointShape->currentIndex();
                 if (shapeIdx > 0) shapeIdx += 1;
-                graph->setScatterStyle(QCPScatterStyle((QCPScatterStyle::ScatterShape)shapeIdx, 5));
+                QCPScatterStyle scatterStyle = QCPScatterStyle(static_cast<QCPScatterStyle::ScatterShape>(shapeIdx), 5);
+
+                QCPAbstractPlottable* plottable;
+                // When it is already sorted by x, we draw a graph.
+                // When it is not sorted by x, we draw a curve, so the order selected by the user in the table or in the query is
+                // respected.  In this case the line will have loops and only None and Line is supported as line style.
+                // TODO: how to make the user aware of this without disturbing.
+                if (isSorted) {
+                    QCPGraph* graph = ui->plotWidget->addGraph();
+                    plottable = graph;
+                    graph->setData(xdata, ydata, /*alreadySorted*/ true);
+                    // set some graph styles not supported by the abstract plottable
+                    graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
+                    graph->setScatterStyle(scatterStyle);
+
+                } else {
+                    QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
+                    plottable = curve;
+                    curve->setData(tdata, xdata, ydata, /*alreadySorted*/ true);
+                    // set some curve styles not supported by the abstract plottable
+                    if (ui->comboLineType->currentIndex() == QCPCurve::lsNone)
+                        curve->setLineStyle(QCPCurve::lsNone);
+                    else
+                        curve->setLineStyle(QCPCurve::lsLine);
+                    curve->setScatterStyle(scatterStyle);
+                }
+
+                plottable->setPen(QPen(item->backgroundColor(PlotColumnY)));
+                plottable->setSelectable (QCP::stDataRange);
 
                 // gather Y label column names
                 if(column == RowNumId)
@@ -497,14 +523,28 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
 {
     Q_ASSERT(index >= QCPGraph::lsNone &&
              index <= QCPGraph::lsImpulse);
+
+    bool hasCurves = (ui->plotWidget->plottableCount() > ui->plotWidget->graphCount());
     QCPGraph::LineStyle lineStyle = (QCPGraph::LineStyle) index;
+    if (lineStyle > QCPGraph::lsLine && hasCurves) {
+        QMessageBox::warning(this, qApp->applicationName(),
+                             tr("There are curves in this plot and the selected line style can only be applied to graphs sorted by X. "
+                                "Either sort the table or query by X to remove curves or select one of the styles supported by curves: "
+                                "None or Line."));
+        return;
+    }
     for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
     {
         QCPGraph * graph = ui->plotWidget->graph(i);
         if (graph)
             graph->setLineStyle(lineStyle);
     }
-    ui->plotWidget->replot();
+    // We have changed the style only for graphs, but not for curves.
+    // If there are any in the plot, we have to update it completely in order to apply the new style
+    if (hasCurves)
+        updatePlot(m_currentPlotModel, m_currentTableSettings, false);
+    else
+        ui->plotWidget->replot();
 
     // Save settings for this table
     if(m_currentTableSettings)
@@ -525,6 +565,8 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
     if (index > 0) index += 1;
     Q_ASSERT(index >= QCPScatterStyle::ssNone &&
              index <  QCPScatterStyle::ssPixmap);
+
+    bool hasCurves = (ui->plotWidget->plottableCount() > ui->plotWidget->graphCount());
     QCPScatterStyle::ScatterShape shape = (QCPScatterStyle::ScatterShape) index;
     for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
     {
@@ -532,7 +574,12 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
         if (graph)
             graph->setScatterStyle(QCPScatterStyle(shape, 5));
     }
-    ui->plotWidget->replot();
+    // We have changed the style only for graphs, but not for curves.
+    // If there are any in the plot, we have to update it completely in order to apply the new style
+    if (hasCurves)
+        updatePlot(m_currentPlotModel, m_currentTableSettings, false);
+    else
+        ui->plotWidget->replot();
 
     // Save settings for this table
     if(m_currentTableSettings)
@@ -601,9 +648,9 @@ void PlotDock::fetchAllData()
 void PlotDock::selectionChanged()
 {
 
-    for (QCPGraph* graph : ui->plotWidget->selectedGraphs()) {
+    for (QCPAbstractPlottable* plottable : ui->plotWidget->selectedPlottables()) {
 
-        for (QCPDataRange dataRange : graph->selection().dataRanges()) {
+        for (QCPDataRange dataRange : plottable->selection().dataRanges()) {
 
             int index = dataRange.begin();
             if (dataRange.length() != 0) {

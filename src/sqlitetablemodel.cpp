@@ -2,8 +2,8 @@
 #include "sqlitedb.h"
 #include "sqlite.h"
 #include "Settings.h"
+#include "Data.h"
 
-#include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
 #include <QTextCodec>
@@ -685,8 +685,8 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query) {
          *   (?:                 |           )*         # code is none or many strings alternating with non-strings
          *                        (?:'[^']*')           # a string is a quote, followed by none or more non-quotes, followed by a quote
          *      (?:[^'-]|-(?!-))*                       # non-string is a sequence of characters which aren't quotes or hyphens,
-         *                                                OR if they are hyphens then they can't be followed immediately by another hyphen
          */
+
         QRegExp rxSQL("^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--[^\\r\\n]*)([\\r\\n]*)(.*)$");	// set up regex to find end-of-line comment
         QString result;
 
@@ -871,10 +871,7 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    // We're using the same way to detect binary data here as in the EditDialog class. For performance reasons we're only looking at
-    // the first couple of bytes though.
-    QByteArray data = m_data.at(index.row()).at(index.column()).left(512);
-    return QString(data).toUtf8() != data;
+    return !isTextOnly(m_data.at(index.row()).at(index.column()), m_encoding, true);
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const

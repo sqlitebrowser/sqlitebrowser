@@ -976,6 +976,8 @@ MainWindow::StatementType MainWindow::getQueryType(const QString& query) const
     if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UpdateStatement;
     if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DeleteStatement;
     if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CreateStatement;
+    if(query.startsWith("ATTACH", Qt::CaseInsensitive)) return AttachStatement;
+    if(query.startsWith("DETACH", Qt::CaseInsensitive)) return DetachStatement;
 
     return OtherStatement;
 }
@@ -1156,7 +1158,10 @@ void MainWindow::executeQuery()
                 if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
                     stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
 
-                modified = true;
+                // Attach/Detach statements don't modify the original database
+                if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
+                    modified = true;
+
                 statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
                 ok = true;
                 break;
@@ -1630,6 +1635,8 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(0, logicalindex));
+
+    plotDock->updatePlot(m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -2442,14 +2449,39 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
     if (row == -1)
         return;
 
+    // Select the row if it is not already in the selection.
+    QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
+    bool found = false;
+    for (QModelIndex index : rowList) {
+        if (row == index.row()) {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        ui->dataTable->selectRow(row);
+
+    rowList = ui->dataTable->selectionModel()->selectedRows();
+
+    QString duplicateText = rowList.count() > 1 ? tr("Duplicate records") : tr("Duplicate record");
+
     QMenu popupRecordMenu(this);
-    QAction* action = new QAction("Duplicate record", &popupRecordMenu);
+    QAction* action = new QAction(duplicateText, &popupRecordMenu);
     // Set shortcut for documentation purposes (the actual functional shortcut is not set here)
     action->setShortcut(QKeySequence(tr("Ctrl+\"")));
     popupRecordMenu.addAction(action);
 
     connect(action, &QAction::triggered, [&]() {
-            duplicateRecord(row);
+            for (QModelIndex index : rowList) {
+                duplicateRecord(index.row());
+            }
+    });
+
+    QAction* deleteRecordAction = new QAction(ui->buttonDeleteRecord->text(), &popupRecordMenu);
+    popupRecordMenu.addAction(deleteRecordAction);
+
+    connect(deleteRecordAction, &QAction::triggered, [&]() {
+            deleteRecord();
     });
 
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
@@ -2542,7 +2574,7 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
     if(ok)
     {
         // Check if encoding is valid
-        if(!QTextCodec::codecForName(encoding.toUtf8()))
+        if(!encoding.isEmpty() && !QTextCodec::codecForName(encoding.toUtf8()))
         {
             QMessageBox::warning(this, qApp->applicationName(), tr("This encoding is either not valid or not supported."));
             return;

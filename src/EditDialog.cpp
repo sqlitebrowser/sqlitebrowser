@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "src/qhexedit.h"
 #include "FileDialog.h"
+#include "Data.h"
 
 #include <QMainWindow>
 #include <QKeySequence>
@@ -92,6 +93,9 @@ void EditDialog::loadData(const QByteArray& data)
     QImage img;
     QString textData;
 
+    // Clear previously removed BOM
+    removedBom.clear();
+
     // Determine the data type, saving that info in the class variable
     dataType = checkDataType(data);
 
@@ -149,25 +153,28 @@ void EditDialog::loadData(const QByteArray& data)
 
     case Text:
     case JSON:
-
         // Set enabled any of the text widgets
         ui->editorText->setEnabled(true);
         jsonEdit->setEnabled(true);
 
         switch (editMode) {
         case TextEditor:
+        {
             // The text widget buffer is now the main data source
             dataSource = TextBuffer;
 
-            // Load the text into the text editor
-            textData = QString::fromUtf8(data.constData(), data.size());
+            // Load the text into the text editor, remove BOM first if there is one
+            QByteArray dataWithoutBom = data;
+            removedBom = removeBom(dataWithoutBom);
+
+            textData = QString::fromUtf8(dataWithoutBom.constData(), dataWithoutBom.size());
             ui->editorText->setPlainText(textData);
 
             // Select all of the text by default
             ui->editorText->selectAll();
 
             break;
-
+        }
         case JsonEditor:
             // The JSON widget buffer is now the main data source
             dataSource = JsonBuffer;
@@ -372,6 +379,7 @@ void EditDialog::setNull()
     hexEdit->setData(QByteArray());
     jsonEdit->clear();
     dataType = Null;
+    removedBom.clear();
 
     // Check if in text editor mode
     int editMode = ui->editorStack->currentIndex();
@@ -424,10 +432,10 @@ void EditDialog::accept()
         } else {
             // It's not NULL, so proceed with normal text string checking
             QString oldData = currentIndex.data(Qt::EditRole).toString();
-            QString newData = ui->editorText->toPlainText();
+            QString newData = removedBom + ui->editorText->toPlainText();
             if (oldData != newData)
                 // The data is different, so commit it back to the database
-                emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
+                emit recordTextUpdated(currentIndex, removedBom + newData.toUtf8(), false);
         }
         break;
     case JsonBuffer:
@@ -508,7 +516,7 @@ void EditDialog::editModeChanged(int newMode)
 
         case HexEditor: // Switching to the hex editor
             // Convert the text widget buffer for the hex widget
-            hexEdit->setData(ui->editorText->toPlainText().toUtf8());
+            hexEdit->setData(removedBom + ui->editorText->toPlainText().toUtf8());
 
             // The hex widget buffer is now the main data source
             dataSource = HexBuffer;
@@ -619,8 +627,8 @@ int EditDialog::checkDataType(const QByteArray& data)
         return Image;
 
     // Check if it's text only
-    if (QString(cellData).toUtf8() == cellData) { // Is there a better way to check this?
-
+    if(isTextOnly(cellData))
+    {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(QString(cellData).toUtf8());
         if (!jsonDoc.isNull())
             return JSON;

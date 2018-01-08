@@ -92,6 +92,7 @@ public:
 
 private:
     void parsecolumn(Table* table, antlr::RefAST c);
+    QString parseConflictClause(antlr::RefAST c);
 
 private:
     antlr::RefAST m_root;
@@ -218,6 +219,9 @@ QString PrimaryKeyConstraint::toSql(const FieldVector& applyOn) const
     if(!m_name.isNull())
         result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
     result += QString("PRIMARY KEY(%1)").arg(fieldVectorToFieldNames(applyOn).join(","));
+
+    if(!m_conflictAction.isEmpty())
+        result += " ON CONFLICT " + m_conflictAction;
 
     return result;
 }
@@ -794,6 +798,10 @@ TablePtr CreateTableWalker::table()
                         }
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
 
+                    // We're either done now or there is a conflict clause
+                    tc = tc->getNextSibling();          // skip RPAREN
+                    pk->setConflictAction(parseConflictClause(tc));
+
                     tab->addConstraint(fields, ConstraintPtr(pk));
                 }
                 break;
@@ -1026,6 +1034,9 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
                 table->setFullyParsed(false);
                 con = con->getNextSibling(); //skip
             }
+
+            primaryKey->setConflictAction(parseConflictClause(con));
+
             if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::AUTOINCREMENT)
                 autoincrement = true;
         }
@@ -1143,6 +1154,21 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             table->addConstraint({f}, ConstraintPtr(primaryKey));
         }
     }
+}
+
+QString CreateTableWalker::parseConflictClause(antlr::RefAST c)
+{
+    QString conflictAction;
+
+    if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::ON && c->getNextSibling()->getType() == sqlite3TokenTypes::CONFLICT)
+    {
+        c = c->getNextSibling();      // skip ON
+        c = c->getNextSibling();      // skip CONFLICT
+        conflictAction = identifier(c);
+        c = c->getNextSibling();      // skip action
+    }
+
+    return conflictAction;
 }
 
 

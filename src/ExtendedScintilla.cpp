@@ -111,7 +111,7 @@ void ExtendedScintilla::reloadSettings()
     if(Settings::getValue("editor", "auto_completion").toBool())
     {
         setAutoCompletionThreshold(3);
-        setAutoCompletionCaseSensitivity(true);
+        setAutoCompletionCaseSensitivity(false);
         setAutoCompletionShowSingle(true);
         setAutoCompletionSource(QsciScintilla::AcsAPIs);
     } else {

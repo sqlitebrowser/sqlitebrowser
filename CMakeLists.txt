@@ -86,6 +86,7 @@ set(SQLB_HDR
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
+	src/Data.h
 )
 
 set(SQLB_MOC_HDR
@@ -164,7 +165,8 @@ set(SQLB_SRC
 	src/RemotePushDialog.cpp
 	src/FindReplaceDialog.cpp
 	src/ExtendedScintilla.cpp
-        src/FileExtensionManager.cpp
+	src/FileExtensionManager.cpp
+	src/Data.cpp
 )
 
 set(SQLB_FORMS
@@ -185,7 +187,7 @@ set(SQLB_FORMS
 	src/RemoteDock.ui
 	src/RemotePushDialog.ui
 	src/FindReplaceDialog.ui
-        src/FileExtensionManager.ui
+	src/FileExtensionManager.ui
 )
 
 set(SQLB_RESOURCES

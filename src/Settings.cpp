@@ -263,6 +263,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "editor" && name == "auto_completion")
         return true;
 
+    // editor/upper_keywords?
+    if(group == "editor" && name == "upper_keywords")
+        return true;
+
     // editor/error_indicators?
     if(group == "editor" && name == "error_indicators")
         return true;
