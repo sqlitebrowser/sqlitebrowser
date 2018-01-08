@@ -938,7 +938,7 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 
 bool SqliteTableModel::isEditable() const
 {
-    return !m_sTable.isEmpty();
+    return !m_sTable.isEmpty() && m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table;
 }
 
 void SqliteTableModel::waitForFetchingFinished()
