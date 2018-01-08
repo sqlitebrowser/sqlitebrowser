@@ -153,7 +153,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         return static_cast<int>(Qt::ToolButtonTextBesideIcon);
 
     if(group == "General" && name == "DBFileExtensions")
-        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
+        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
 
     // checkversion group?
     if(group == "checkversion")

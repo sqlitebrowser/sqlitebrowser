@@ -1,8 +1,6 @@
 #include "FileExtensionManager.h"
 #include "ui_FileExtensionManager.h"
 
-#include "FileDialog.h"
-
 FileExtensionManager::FileExtensionManager(QStringList init, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FileExtensionManager)
@@ -12,15 +10,18 @@ FileExtensionManager::FileExtensionManager(QStringList init, QWidget *parent) :
     int i = 0;
     foreach(QString itemString, init)
     {
-        ui->tableExtensions->insertRow(i);
         QString description = itemString.left(itemString.indexOf('(')).trimmed();
         QString extension   = itemString;
         extension = extension.remove (0, itemString.indexOf('(')+1).remove(')').simplified().trimmed();
-        QTableWidgetItem *newItemDescription = new QTableWidgetItem(description);
-        QTableWidgetItem *newItemExtension   = new QTableWidgetItem(extension);
-        ui->tableExtensions->setItem(i, 0, newItemDescription);
-        ui->tableExtensions->setItem(i, 1, newItemExtension);
-        i++;
+        if ( extension.compare("*") != 0 ) //We exclude "All files" from the table
+        {
+            QTableWidgetItem *newItemDescription = new QTableWidgetItem(description);
+            QTableWidgetItem *newItemExtension   = new QTableWidgetItem(extension);
+            ui->tableExtensions->insertRow(i);
+            ui->tableExtensions->setItem(i, 0, newItemDescription);
+            ui->tableExtensions->setItem(i, 1, newItemExtension);
+            i++;
+        }
     }
 
     connect(ui->buttonAdd, SIGNAL(clicked(bool)), this, SLOT(addItem()));
