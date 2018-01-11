@@ -209,16 +209,32 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         int xtype = xitemdata & (uint)0xFF;
 
         // check if we have a x axis with datetime data
-        if(xtype == QVariant::DateTime)
-        {
+        switch (xtype) {
+        case QVariant::Date: {
             QSharedPointer<QCPAxisTickerDateTime> ticker(new QCPAxisTickerDateTime);
             ticker->setDateTimeFormat("yyyy-MM-dd");
             ui->plotWidget->xAxis->setTicker(ticker);
-        } else {
+            break;
+        }
+        case QVariant::DateTime: {
+            QSharedPointer<QCPAxisTickerDateTime> ticker(new QCPAxisTickerDateTime);
+            ticker->setDateTimeFormat("yyyy-MM-dd\nhh:mm:ss");
+            ui->plotWidget->xAxis->setTicker(ticker);
+            break;
+        }
+        case QVariant::Time: {
+            QSharedPointer<QCPAxisTickerDateTime> ticker(new QCPAxisTickerDateTime);
+            ticker->setDateTimeFormat("hh:mm:ss");
+            ticker->setDateTimeSpec(Qt::UTC);
+            ui->plotWidget->xAxis->setTicker(ticker);
+            break;
+        }
+        default: {
             QSharedPointer<QCPAxisTickerFixed> ticker(new QCPAxisTickerFixed);
             ticker->setTickStepStrategy(QCPAxisTicker::tssReadability);
             ticker->setScaleStrategy(QCPAxisTickerFixed::ssMultiples);
             ui->plotWidget->xAxis->setTicker(ticker);
+        }
         }
 
         // add graph for each selected y axis
@@ -242,12 +258,21 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 {
                     tdata[i] = i;
                     // convert x type axis if it's datetime
-                    if(xtype == QVariant::DateTime)
-                    {
+                    switch (xtype) {
+                    case QVariant::DateTime:
+                    case QVariant::Date: {
                         QString s = model->data(model->index(i, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
                         xdata[i] = d.toMSecsSinceEpoch() / 1000.0;
-                    } else {
+                        break;
+                    }
+                    case QVariant::Time: {
+                        QString s = model->data(model->index(i, x)).toString();
+                        QTime t = QTime::fromString(s);
+                        xdata[i] = t.msecsSinceStartOfDay() / 1000.0;
+                        break;
+                    }
+                    default: {
                         // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                         // instead of retrieving some value from the model.
                         if(x == RowNumId)
@@ -255,6 +280,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                         else
                             xdata[i] = model->data(model->index(i, x)).toDouble();
+                    }
                     }
 
                     if (i != 0)
@@ -605,9 +631,18 @@ QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column)
             type = QVariant::Double;
         } else {
             QString s = model->data(model->index(i, column)).toString();
-            QDate d = QDate::fromString(s, Qt::ISODate);
-            if(d.isValid())
-                type = QVariant::DateTime;
+            QDateTime dt = QDateTime::fromString(s, Qt::ISODate);
+            QTime t = QTime::fromString(s);
+            if (dt.isValid())
+                // Since the way to discriminate dates with times and pure dates is that the time part is 0, we must take into account
+                // that some DateTimes could have "00:00:00" as time part and still the entire column has time information, so a single
+                // final Date should not set the type to Date if it has already been guessed as DateTime.
+                if (type != QVariant::DateTime && dt.time().msecsSinceStartOfDay() == 0)
+                    type = QVariant::Date;
+                else
+                    type = QVariant::DateTime;
+            else if (t.isValid())
+                type = QVariant::Time;
             else
                 type = QVariant::String;
         }
