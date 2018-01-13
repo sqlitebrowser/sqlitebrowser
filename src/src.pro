@@ -62,6 +62,7 @@ HEADERS += \
     jsontextedit.h \
     FindReplaceDialog.h \
     ExtendedScintilla.h \
+    FileExtensionManager.h \
     Data.h
 
 SOURCES += \
@@ -102,6 +103,7 @@ SOURCES += \
     jsontextedit.cpp \
     FindReplaceDialog.cpp \
     ExtendedScintilla.cpp \
+    FileExtensionManager.cpp \
     Data.cpp
 
 RESOURCES += icons/icons.qrc \
@@ -126,7 +128,8 @@ FORMS += \
     PlotDock.ui \
     RemoteDock.ui \
     RemotePushDialog.ui \
-    FindReplaceDialog.ui
+    FindReplaceDialog.ui \
+    FileExtensionManager.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

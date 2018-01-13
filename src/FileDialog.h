@@ -20,10 +20,7 @@ public:
     static QString getExistingDirectory(QWidget* parent = nullptr, const QString& caption = QString(),
                                         Options options = 0);
 
-    static QString getSqlDatabaseFileFilter()
-    {
-        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
-    }
+    static QString getSqlDatabaseFileFilter();
 
 private:
     static QString getFileDialogPath();
