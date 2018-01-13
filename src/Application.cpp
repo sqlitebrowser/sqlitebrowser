@@ -14,6 +14,14 @@
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
+#if QT_VERSION >= 0x050600
+    // Match the target monitors pixel ratio
+    setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+
+    // Generate and use high res pixmaps where applicable
+    setAttribute(Qt::AA_UseHighDpiPixmaps);
+
     // Set organisation and application names
     setOrganizationName("sqlitebrowser");
     setApplicationName("DB Browser for SQLite");
