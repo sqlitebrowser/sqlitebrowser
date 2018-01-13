@@ -36,8 +36,12 @@ private slots:
     void chooseRemoteCloneDirectory();
     void updatePreviewFont();
 
+    void on_buttonManageFileExtension_clicked();
+
 private:
     Ui::PreferencesDialog *ui;
+
+    QStringList m_dbFileExtensions;
 
     void fillLanguageBox();
     void loadColorSetting(QFrame *frame, const QString &name);
