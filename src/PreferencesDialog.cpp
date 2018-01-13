@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "MainWindow.h"
 #include "RemoteDatabase.h"
+#include "FileExtensionManager.h"
 
 #include <QDir>
 #include <QColorDialog>
@@ -14,7 +15,8 @@
 
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::PreferencesDialog)
+      ui(new Ui::PreferencesDialog),
+      m_dbFileExtensions(FileDialog::getSqlDatabaseFileFilter().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -279,6 +281,8 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("General", "language", newLanguage);
     Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboBox->currentIndex());
+
+    Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
 
     accept();
 }
@@ -562,5 +566,15 @@ void PreferencesDialog::updatePreviewFont()
         textFont.setItalic(true);
         ui->txtNull->setFont(textFont);
         ui->txtBlob->setFont(textFont);
+    }
+}
+
+void PreferencesDialog::on_buttonManageFileExtension_clicked()
+{
+    FileExtensionManager *manager = new FileExtensionManager(m_dbFileExtensions, this);
+
+    if(manager->exec() == QDialog::Accepted)
+    {
+        m_dbFileExtensions = manager->getDBFileExtensions();
     }
 }

@@ -70,3 +70,8 @@ void FileDialog::setFileDialogPath(const QString& new_path)
         break;  // Do nothing
     }
 }
+
+QString FileDialog::getSqlDatabaseFileFilter()
+{
+    return Settings::getValue("General", "DBFileExtensions").toString() + ";;" + QObject::tr("All files (*)"); //Always add "All files (*)" to the available filters
+}
