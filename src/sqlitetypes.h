@@ -40,8 +40,12 @@ public:
     explicit ObjectIdentifier(QVariant variant)
     {
         QStringList str = variant.toStringList();
-        m_schema = str.first();
-        m_name = str.last();
+        if(str.size())
+        {
+            m_schema = str.first();
+            if(str.size() >= 2)
+                m_name = str.last();
+        }
     }
 
     bool operator==(const ObjectIdentifier& rhs) const
