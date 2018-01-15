@@ -1216,6 +1216,17 @@ void MainWindow::executeQuery()
 
         execution_start_index = execution_end_index;
 
+        // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
+        // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
+        // ATTACH 'xxx' AS 'db2'
+        // SELECT * FROM db2.xy;    -- Savepoint created here
+        // DETACH db2;              -- Savepoint makes this statement fail
+        if(!modified && !wasdirty && savepoint_created)
+        {
+            db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
+            savepoint_created = false;
+        }
+
         // Process events to keep the UI responsive
         qApp->processEvents();
     }
@@ -1224,9 +1235,6 @@ void MainWindow::executeQuery()
 
     connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
     connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
-
-    if(!modified && !wasdirty && savepoint_created)
-        db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
 
     // If the DB structure was changed by some command in this SQL script, update our schema representations
     if(structure_updated)
