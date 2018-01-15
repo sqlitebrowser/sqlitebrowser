@@ -92,7 +92,6 @@ void MainWindow::init()
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
     connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
-    connect(&db, SIGNAL(structureUpdated()), this, SLOT(populateStructure()));
     connect(&db, &DBBrowserDB::requestCollation, this, &MainWindow::requestCollation);
 
     // Set the validator for the goto line edit
@@ -107,6 +106,11 @@ void MainWindow::init()
 
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, [this]() {
+        QString old_table = ui->comboBrowseTable->currentText();
+        dbStructureModel->reloadData();
+        populateStructure(old_table);
+    });
     ui->dbTreeWidget->setModel(dbStructureModel);
     ui->dbTreeWidget->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnObjectType, true);
@@ -396,12 +400,9 @@ void MainWindow::fileNew()
     }
 }
 
-void MainWindow::populateStructure()
+void MainWindow::populateStructure(const QString& old_table)
 {
-    QString old_table = ui->comboBrowseTable->currentText();
-
     // Refresh the structure tab
-    dbStructureModel->reloadData();
     ui->dbTreeWidget->setRootIndex(dbStructureModel->index(1, 0));      // Show the 'All' part of the db structure
     ui->dbTreeWidget->expandToDepth(0);
     ui->treeSchemaDock->setRootIndex(dbStructureModel->index(1, 0));    // Show the 'All' part of the db structure
@@ -1970,7 +1971,7 @@ void MainWindow::reloadSettings()
     loadExtensionsFromSettings();
 
     // Refresh view
-    populateStructure();
+    dbStructureModel->reloadData();
     populateTable();
 
     // Hide or show the remote dock as needed

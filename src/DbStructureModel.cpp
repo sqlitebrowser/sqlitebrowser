@@ -138,6 +138,7 @@ void DbStructureModel::reloadData()
     if(!m_db.isOpen())
     {
         endResetModel();
+        emit structureUpdated();
         return;
     }
 
@@ -179,6 +180,7 @@ void DbStructureModel::reloadData()
 
     // Refresh the view
     endResetModel();
+    emit structureUpdated();
 }
 
 QStringList DbStructureModel::mimeTypes() const
@@ -263,7 +265,6 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     if(m_db.executeMultiSQL(d, true, true))
     {
         m_db.updateSchema();
-        reloadData();
         return true;
     } else {
         QMessageBox::warning(nullptr, QApplication::applicationName(), m_db.lastError());

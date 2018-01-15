@@ -213,7 +213,7 @@ public slots:
     void refresh();
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
-    void populateStructure();
+    void populateStructure(const QString& old_table = QString());
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
