@@ -224,7 +224,8 @@ private slots:
     bool fileClose();
     void addRecord();
     void deleteRecord();
-    void selectTableLine( int lineToSelect );
+    void selectTableLine(int lineToSelect);
+    void selectCurrentTabTableLines(int firstLine, int lastLine);
     void selectTableLines(int firstLine, int count);
     void navigatePrevious();
     void navigateNext();

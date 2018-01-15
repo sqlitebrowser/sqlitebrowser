@@ -694,6 +694,34 @@ void MainWindow::deleteRecord()
     }
 }
 
+void MainWindow::selectCurrentTabTableLines(int firstLine, int lastLine)
+{
+    if(lastLine >= m_currentTabTableModel->totalRowCount())
+        return;
+
+    SqlExecutionArea *qw = (SqlExecutionArea*)ui->tabSqlAreas->currentWidget();
+    ExtendedTableWidget *tw = qw->getTableResult();
+
+    if(firstLine >= m_currentTabTableModel->totalRowCount())
+        return;
+
+    QApplication::setOverrideCursor( Qt::WaitCursor );
+    // Make sure this line has already been fetched
+    while(firstLine >= m_currentTabTableModel->rowCount() && m_currentTabTableModel->canFetchMore())
+          m_currentTabTableModel->fetchMore();
+
+    // Select it
+    tw->clearSelection();
+    tw->selectRow(firstLine);
+    tw->scrollTo(tw->currentIndex(), QAbstractItemView::PositionAtTop);
+    QApplication::restoreOverrideCursor();
+
+    QModelIndex topLeft = m_currentTabTableModel->index(firstLine, 0);
+    QModelIndex bottomRight = m_currentTabTableModel->index(lastLine, m_currentTabTableModel->columnCount()-1);
+
+    tw->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+}
+
 void MainWindow::selectTableLine(int lineToSelect)
 {
     // Are there even that many lines?
@@ -715,16 +743,20 @@ void MainWindow::selectTableLine(int lineToSelect)
 void MainWindow::selectTableLines(int firstLine, int count)
 {
     int lastLine = firstLine+count-1;
-    // Are there even that many lines?
-    if(lastLine >= m_browseTableModel->totalRowCount())
-        return;
+    if(ui->mainTab->currentIndex() == BrowseTab) {
+        // Are there even that many lines?
+        if(lastLine >= m_browseTableModel->totalRowCount())
+            return;
 
-    selectTableLine(firstLine);
+        selectTableLine(firstLine);
 
-    QModelIndex topLeft = ui->dataTable->model()->index(firstLine, 0);
-    QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);
+        QModelIndex topLeft = ui->dataTable->model()->index(firstLine, 0);
+        QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);
 
-    ui->dataTable->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        ui->dataTable->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    }else if(ui->mainTab->currentIndex() == ExecuteTab) {
+        selectCurrentTabTableLines(firstLine, lastLine);
+    }
 }
 
 void MainWindow::navigatePrevious()
