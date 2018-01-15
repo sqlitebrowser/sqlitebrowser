@@ -40,6 +40,8 @@ public:
 
 public slots:
     void reloadSettings();
+    void selectTableLine(int lineToSelect);
+    void selectTableLines(int firstLine, int count);
 
 signals:
     void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);

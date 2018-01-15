@@ -18,6 +18,7 @@ class DbStructureModel;
 class RemoteDock;
 class RemoteDatabase;
 class FindReplaceDialog;
+class ExtendedTableWidget;
 
 namespace Ui {
 class MainWindow;
@@ -194,6 +195,8 @@ private:
     void loadExtensionsFromSettings();
     void saveAsView(QString query);
     void duplicateRecord(int currentRow);
+    void selectTableLine(int lineToSelect);
+    void attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool keepOrResetSelection = true);
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
@@ -224,9 +227,6 @@ private slots:
     bool fileClose();
     void addRecord();
     void deleteRecord();
-    void selectTableLine(int lineToSelect);
-    void selectCurrentTabTableLines(int firstLine, int lastLine);
-    void selectTableLines(int firstLine, int count);
     void navigatePrevious();
     void navigateNext();
     void navigateBegin();

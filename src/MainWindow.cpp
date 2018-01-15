@@ -102,7 +102,7 @@ void MainWindow::init()
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Select in table the rows correspoding to the selected points in plot
-    connect(plotDock, SIGNAL(pointsSelected(int,int)), this, SLOT(selectTableLines(int,int)));
+    connect(plotDock, SIGNAL(pointsSelected(int,int)), ui->dataTable, SLOT(selectTableLines(int,int)));
 
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
@@ -531,7 +531,7 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
         // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[tablename]);
+        attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[tablename]);
 
         // The filters can be left empty as they are
     } else {
@@ -588,7 +588,7 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(storedData.encoding);
 
         // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[tablename], true, false);
+        attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[tablename], false);
     }
 
     // Show/hide menu options depending on whether this is a table or a view
@@ -630,8 +630,8 @@ bool MainWindow::fileClose()
     // Reset the recordset label inside the Browse tab now
     setRecordsetLabel();
 
-    // Reset the plot dock model
-    plotDock->updatePlot(nullptr);
+    // Reset the plot dock model and connection
+    attachPlot(nullptr, nullptr);
 
     activateFields(false);
 
@@ -695,69 +695,22 @@ void MainWindow::deleteRecord()
     }
 }
 
-void MainWindow::selectCurrentTabTableLines(int firstLine, int lastLine)
+void MainWindow::attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings, bool keepOrResetSelection)
 {
-    if(lastLine >= m_currentTabTableModel->totalRowCount())
-        return;
+    plotDock->updatePlot(model, settings, true, keepOrResetSelection);
+    // Disconnect previous connection
+    disconnect(plotDock, SIGNAL(pointsSelected(int,int)), nullptr, nullptr);
+    if(tableWidget) {
+        // Connect plot selection to the current table results widget.
+        connect(plotDock, SIGNAL(pointsSelected(int,int)), tableWidget, SLOT(selectTableLines(int,int)));
+        connect(tableWidget, SIGNAL(destroyed()), plotDock, SLOT(resetPlot()));
 
-    SqlExecutionArea *qw = (SqlExecutionArea*)ui->tabSqlAreas->currentWidget();
-    ExtendedTableWidget *tw = qw->getTableResult();
-
-    if(firstLine >= m_currentTabTableModel->totalRowCount())
-        return;
-
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    // Make sure this line has already been fetched
-    while(firstLine >= m_currentTabTableModel->rowCount() && m_currentTabTableModel->canFetchMore())
-          m_currentTabTableModel->fetchMore();
-
-    // Select it
-    tw->clearSelection();
-    tw->selectRow(firstLine);
-    tw->scrollTo(tw->currentIndex(), QAbstractItemView::PositionAtTop);
-    QApplication::restoreOverrideCursor();
-
-    QModelIndex topLeft = m_currentTabTableModel->index(firstLine, 0);
-    QModelIndex bottomRight = m_currentTabTableModel->index(lastLine, m_currentTabTableModel->columnCount()-1);
-
-    tw->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    }
 }
 
 void MainWindow::selectTableLine(int lineToSelect)
 {
-    // Are there even that many lines?
-    if(lineToSelect >= m_browseTableModel->totalRowCount())
-        return;
-
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    // Make sure this line has already been fetched
-    while(lineToSelect >= m_browseTableModel->rowCount() && m_browseTableModel->canFetchMore())
-          m_browseTableModel->fetchMore();
-
-    // Select it
-    ui->dataTable->clearSelection();
-    ui->dataTable->selectRow(lineToSelect);
-    ui->dataTable->scrollTo(ui->dataTable->currentIndex(), QAbstractItemView::PositionAtTop);
-    QApplication::restoreOverrideCursor();
-}
-
-void MainWindow::selectTableLines(int firstLine, int count)
-{
-    int lastLine = firstLine+count-1;
-    if(ui->mainTab->currentIndex() == BrowseTab) {
-        // Are there even that many lines?
-        if(lastLine >= m_browseTableModel->totalRowCount())
-            return;
-
-        selectTableLine(firstLine);
-
-        QModelIndex topLeft = ui->dataTable->model()->index(firstLine, 0);
-        QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);
-
-        ui->dataTable->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
-    }else if(ui->mainTab->currentIndex() == ExecuteTab) {
-        selectCurrentTabTableLines(firstLine, lastLine);
-    }
+    ui->dataTable->selectTableLine(lineToSelect);
 }
 
 void MainWindow::navigatePrevious()
@@ -1231,7 +1184,7 @@ void MainWindow::executeQuery()
         qApp->processEvents();
     }
     sqlWidget->finishExecution(statusMessage, ok);
-    plotDock->updatePlot(sqlWidget->getModel());
+    attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
     connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
     connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
@@ -1677,7 +1630,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // we might try to select the last selected item
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(0, logicalindex));
 
-    plotDock->updatePlot(m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
+    attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)

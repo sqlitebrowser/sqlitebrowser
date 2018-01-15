@@ -365,6 +365,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     }
 }
 
+void PlotDock::resetPlot()
+{
+    updatePlot(nullptr);
+}
+
 void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
