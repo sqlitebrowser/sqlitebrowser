@@ -66,6 +66,7 @@ public:
 public slots:
     void updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool update = true, bool keepOrResetSelection = true);
     void fetchAllData();
+    void resetPlot();
 
 signals:
     void pointsSelected(int firstIndex, int count);

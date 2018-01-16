@@ -40,8 +40,8 @@ void FileExtensionManager::addItem()
 {
     int i = ui->tableExtensions->rowCount();
     ui->tableExtensions->insertRow(i);
-    QTableWidgetItem *newItemDescription = new QTableWidgetItem("Description");
-    QTableWidgetItem *newItemExtension   = new QTableWidgetItem("*.extension");
+    QTableWidgetItem *newItemDescription = new QTableWidgetItem(tr("Description"));
+    QTableWidgetItem *newItemExtension   = new QTableWidgetItem(tr("*.extension"));
     ui->tableExtensions->setItem(i, 0, newItemDescription);
     ui->tableExtensions->setItem(i, 1, newItemExtension);
 }
@@ -70,6 +70,8 @@ void FileExtensionManager::upItem()
     if (ui->tableExtensions->selectedItems().isEmpty()) return;
 
     int selectedRow = ui->tableExtensions->selectedItems().first()->row();
+    if(selectedRow == 0)
+        return;
 
     QTableWidgetItem *t1, *t2;
     t1 = ui->tableExtensions->takeItem(selectedRow, 0);
@@ -86,6 +88,8 @@ void FileExtensionManager::downItem()
     if (ui->tableExtensions->selectedItems().isEmpty()) return;
 
     int selectedRow = ui->tableExtensions->selectedItems().first()->row();
+    if(selectedRow == ui->tableExtensions->rowCount() - 1)
+        return;
 
     QTableWidgetItem *t1, *t2;
     t1 = ui->tableExtensions->takeItem(selectedRow, 0);

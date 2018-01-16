@@ -92,7 +92,6 @@ void MainWindow::init()
     // Connect SQL logging and database state setting to main window
     connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
     connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
-    connect(&db, SIGNAL(structureUpdated()), this, SLOT(populateStructure()));
     connect(&db, &DBBrowserDB::requestCollation, this, &MainWindow::requestCollation);
 
     // Set the validator for the goto line edit
@@ -103,10 +102,15 @@ void MainWindow::init()
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Select in table the rows correspoding to the selected points in plot
-    connect(plotDock, SIGNAL(pointsSelected(int,int)), this, SLOT(selectTableLines(int,int)));
+    connect(plotDock, SIGNAL(pointsSelected(int,int)), ui->dataTable, SLOT(selectTableLines(int,int)));
 
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, [this]() {
+        QString old_table = ui->comboBrowseTable->currentText();
+        dbStructureModel->reloadData();
+        populateStructure(old_table);
+    });
     ui->dbTreeWidget->setModel(dbStructureModel);
     ui->dbTreeWidget->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnObjectType, true);
@@ -396,12 +400,9 @@ void MainWindow::fileNew()
     }
 }
 
-void MainWindow::populateStructure()
+void MainWindow::populateStructure(const QString& old_table)
 {
-    QString old_table = ui->comboBrowseTable->currentText();
-
     // Refresh the structure tab
-    dbStructureModel->reloadData();
     ui->dbTreeWidget->setRootIndex(dbStructureModel->index(1, 0));      // Show the 'All' part of the db structure
     ui->dbTreeWidget->expandToDepth(0);
     ui->treeSchemaDock->setRootIndex(dbStructureModel->index(1, 0));    // Show the 'All' part of the db structure
@@ -530,7 +531,7 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
         // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[tablename]);
+        attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[tablename]);
 
         // The filters can be left empty as they are
     } else {
@@ -587,7 +588,7 @@ void MainWindow::populateTable()
         m_browseTableModel->setEncoding(storedData.encoding);
 
         // Plot
-        plotDock->updatePlot(m_browseTableModel, &browseTableSettings[tablename], true, false);
+        attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[tablename], false);
     }
 
     // Show/hide menu options depending on whether this is a table or a view
@@ -629,8 +630,8 @@ bool MainWindow::fileClose()
     // Reset the recordset label inside the Browse tab now
     setRecordsetLabel();
 
-    // Reset the plot dock model
-    plotDock->updatePlot(nullptr);
+    // Reset the plot dock model and connection
+    attachPlot(nullptr, nullptr);
 
     activateFields(false);
 
@@ -694,37 +695,22 @@ void MainWindow::deleteRecord()
     }
 }
 
-void MainWindow::selectTableLine(int lineToSelect)
+void MainWindow::attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings, bool keepOrResetSelection)
 {
-    // Are there even that many lines?
-    if(lineToSelect >= m_browseTableModel->totalRowCount())
-        return;
+    plotDock->updatePlot(model, settings, true, keepOrResetSelection);
+    // Disconnect previous connection
+    disconnect(plotDock, SIGNAL(pointsSelected(int,int)), nullptr, nullptr);
+    if(tableWidget) {
+        // Connect plot selection to the current table results widget.
+        connect(plotDock, SIGNAL(pointsSelected(int,int)), tableWidget, SLOT(selectTableLines(int,int)));
+        connect(tableWidget, SIGNAL(destroyed()), plotDock, SLOT(resetPlot()));
 
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    // Make sure this line has already been fetched
-    while(lineToSelect >= m_browseTableModel->rowCount() && m_browseTableModel->canFetchMore())
-          m_browseTableModel->fetchMore();
-
-    // Select it
-    ui->dataTable->clearSelection();
-    ui->dataTable->selectRow(lineToSelect);
-    ui->dataTable->scrollTo(ui->dataTable->currentIndex(), QAbstractItemView::PositionAtTop);
-    QApplication::restoreOverrideCursor();
+    }
 }
 
-void MainWindow::selectTableLines(int firstLine, int count)
+void MainWindow::selectTableLine(int lineToSelect)
 {
-    int lastLine = firstLine+count-1;
-    // Are there even that many lines?
-    if(lastLine >= m_browseTableModel->totalRowCount())
-        return;
-
-    selectTableLine(firstLine);
-
-    QModelIndex topLeft = ui->dataTable->model()->index(firstLine, 0);
-    QModelIndex bottomRight = ui->dataTable->model()->index(lastLine, ui->dataTable->model()->columnCount()-1);
-
-    ui->dataTable->selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    ui->dataTable->selectTableLine(lineToSelect);
 }
 
 void MainWindow::navigatePrevious()
@@ -1183,17 +1169,25 @@ void MainWindow::executeQuery()
 
         execution_start_index = execution_end_index;
 
+        // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
+        // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
+        // ATTACH 'xxx' AS 'db2'
+        // SELECT * FROM db2.xy;    -- Savepoint created here
+        // DETACH db2;              -- Savepoint makes this statement fail
+        if(!modified && !wasdirty && savepoint_created)
+        {
+            db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
+            savepoint_created = false;
+        }
+
         // Process events to keep the UI responsive
         qApp->processEvents();
     }
     sqlWidget->finishExecution(statusMessage, ok);
-    plotDock->updatePlot(sqlWidget->getModel());
+    attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
     connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
     connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
-
-    if(!modified && !wasdirty && savepoint_created)
-        db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
 
     // If the DB structure was changed by some command in this SQL script, update our schema representations
     if(structure_updated)
@@ -1636,7 +1630,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // we might try to select the last selected item
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(0, logicalindex));
 
-    plotDock->updatePlot(m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
+    attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -1938,7 +1932,7 @@ void MainWindow::reloadSettings()
     loadExtensionsFromSettings();
 
     // Refresh view
-    populateStructure();
+    dbStructureModel->reloadData();
     populateTable();
 
     // Hide or show the remote dock as needed

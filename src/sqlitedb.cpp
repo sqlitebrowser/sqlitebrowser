@@ -948,6 +948,8 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     if (!isOpen()) return QString();
 
     sqlb::TablePtr table = getObjectByName(tablename).dynamicCast<sqlb::Table>();
+    if(!table)
+        return QString();
 
     // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
     // and adding one to it.

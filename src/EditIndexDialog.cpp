@@ -112,7 +112,10 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 void EditIndexDialog::updateColumnLists()
 {
     // Fill the table column list
-    sqlb::FieldInfoList tableFields = pdb.getObjectByName(sqlb::ObjectIdentifier(ui->comboTableName->currentData())).dynamicCast<sqlb::Table>()->fieldInformation();
+    sqlb::TablePtr table = pdb.getObjectByName(sqlb::ObjectIdentifier(ui->comboTableName->currentData())).dynamicCast<sqlb::Table>();
+    if(!table)
+        return;
+    sqlb::FieldInfoList tableFields = table->fieldInformation();
     ui->tableTableColumns->setRowCount(tableFields.size());
     int tableRows = 0;
     for(int i=0;i<tableFields.size();++i)
@@ -234,6 +237,10 @@ void EditIndexDialog::checkInput()
     // Check if index name is set
     bool valid = true;
     if(ui->editIndexName->text().isEmpty())
+        valid = false;
+
+    // Check if a table is selected (this is especially important in the case where there are no tables in the database yet).
+    if(ui->comboTableName->currentText().isNull())
         valid = false;
 
     // Check if index has any columns

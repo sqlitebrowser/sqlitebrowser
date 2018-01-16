@@ -64,7 +64,7 @@ public:
 
     // This returns true if the model is set up for editing. The model is able to operate in more or less two different modes, table browsing
     // and query browsing. We only support editing data for the table browsing mode and not for the query mode. This function returns true if
-    // the model is currently editable, i.e. it's running in table mode.
+    // the model is currently editable, i.e. it's running in table mode and it isn't a view.
     bool isEditable() const;
 
     // Helper function for removing all comments from a SQL query
