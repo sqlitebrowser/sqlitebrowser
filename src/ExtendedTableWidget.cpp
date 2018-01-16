@@ -18,6 +18,10 @@
 #include <QLineEdit>
 #include <limits>
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
+    typedef QList<QByteArray> QByteArrayList;
+#endif
+
 QList<QByteArrayList> ExtendedTableWidget::m_buffer;
 QString ExtendedTableWidget::m_generatorStamp;
 

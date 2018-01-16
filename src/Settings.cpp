@@ -245,7 +245,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     // editor/fontsize or log/fontsize?
     if((group == "editor" || group == "log") && name == "fontsize")
 #ifdef Q_OS_MAC
-	// Use 12 pt size as the default on OSX
+       // Use 12 pt size as the default on OSX
         return 12;
 #else
         return 9;
@@ -304,7 +304,11 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
         // Clone directory
         if(name == "clonedirectory")
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
             return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+#else
+            return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+#endif
     }
 
     // Unknown combination of group and name? Return an invalid QVariant!
