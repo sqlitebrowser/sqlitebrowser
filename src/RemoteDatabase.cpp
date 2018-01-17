@@ -205,7 +205,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
                 branches.append(it.key());
 
             // Get default branch
-#if QT_VERSION > QT_VERSION_CHECK (5, 4, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
             QString default_branch = obj["default_branch"].toString("master");
 #else
             QString default_branch = obj["default_branch"].toString();

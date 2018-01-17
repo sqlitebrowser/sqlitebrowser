@@ -47,7 +47,8 @@
 #include <QClipboard>
 #include <QShortcut>
 #include <QTextCodec>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0) //Needed only on macOS
+
+#ifdef Q_OS_MACX //Needed only on macOS
 	#include <QOpenGLWidget>
 #endif
 
@@ -84,7 +85,7 @@ void MainWindow::init()
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
     tabifyDockWidget(ui->dockLog, ui->dockRemote);
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0) //Needed only on macOS
+#ifdef Q_OS_MACX
     // Add OpenGL Context for macOS
     QOpenGLWidget *ogl = new QOpenGLWidget(this);
     ui->horizontalLayout->addWidget(ogl);

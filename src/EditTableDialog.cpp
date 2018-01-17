@@ -342,7 +342,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 if(item->checkState(column) == Qt::Checked)
                     pk.push_back(field);
                 else
-#if QT_VERSION > QT_VERSION_CHECK ( 5, 4, 0 )
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
                     pk.removeAll(field);
 #else
                 {
