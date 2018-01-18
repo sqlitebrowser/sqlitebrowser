@@ -26,7 +26,7 @@ below with an "x", then click the "Submit new issue" button at the bottom
 
 - [ ] Windows: ( _version:_ ___ )
 - [ ] Linux: ( _distro:_ ___ )
-- [ ] macOS: ( _version:_ ___ )
+- [ ] Mac OS: ( _version:_ ___ )
 - [ ] Other: ___
 
 #### I'm using DB4S version:
