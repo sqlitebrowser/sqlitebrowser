@@ -138,10 +138,14 @@ void SqlUiLexer::setTableNames(const TablesAndColumnsMap& tables)
     setupAutoCompletion();
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
     {
-        for(const QString& field : it.value())
+        for(const QString& field : it.value()) {
+            // Completion for table.field
             autocompleteApi->add(it.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
                                  field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
+            // Completion for isolated field
+            autocompleteApi->add(field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
 
+        }
         // Store the table name list in order to highlight them in a different colour
         listTables.append(it.key());
     }
