@@ -30,7 +30,7 @@
        <bool>true</bool>
       </property>
       <property name="columnCount">
-       <number>3</number>
+       <number>4</number>
       </property>
       <attribute name="headerDefaultSectionSize">
        <number>100</number>
@@ -51,6 +51,11 @@
       <column>
        <property name="text">
         <string>Y</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Axis Type</string>
        </property>
       </column>
      </widget>

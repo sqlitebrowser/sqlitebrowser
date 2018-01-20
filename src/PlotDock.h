@@ -77,6 +77,7 @@ private:
         PlotColumnField = 0,
         PlotColumnX = 1,
         PlotColumnY = 2,
+        PlotColumnType = 3,
     };
 
     Ui::PlotDock* ui;
