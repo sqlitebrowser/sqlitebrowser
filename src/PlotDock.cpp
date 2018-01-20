@@ -72,8 +72,8 @@ PlotDock::~PlotDock()
 void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings, bool update, bool keepOrResetSelection)
 {
     // Each column has an id that we use internally, starting from 0. However, at the beginning of the columns list we want to add
-    // the virtual 'Row #' column which needs a separate unique id for internal use. This id is defined here as -1 in a 16bit integer.
-    const unsigned int RowNumId = 0xFFFF;
+    // the virtual 'Row #' column which needs a separate unique id for internal use. This id is defined here as -1.
+    const int RowNumId = -1;
 
     // add columns to x/y selection tree widget
     if(update)
@@ -140,13 +140,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         columnitem->setText(PlotColumnType, "Label");
                         break;
                     }
-                    // maybe i make this more complicated than i should
-                    // but store the model column index in the first 16 bit and the type
-                    // in the other 16 bits
-                    uint itemdata = 0;
-                    itemdata = i << 16;
-                    itemdata |= columntype;
-                    columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
+
+                    // Store the model column index in the PlotColumnField and the type
+                    // in the PlotColumnType, both using the User Role.
+                    columnitem->setData(PlotColumnField, Qt::UserRole, i);
+                    columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(columntype));
                     columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
 
                     // restore previous check state
@@ -173,10 +171,10 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             {
                 QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
 
-                // Just set all bits in the user role information field here to somehow indicate what column this is
-                uint itemdata = -1;
-                columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
+                // Just set RowNumId in the user role information field here to somehow indicate what column this is
+                columnitem->setData(PlotColumnField, Qt::UserRole, RowNumId);
                 columnitem->setText(PlotColumnField, tr("Row #"));
+                columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(QVariant::Double));
                 columnitem->setText(PlotColumnType, "Numeric");
 
                 // restore previous check state
@@ -223,11 +221,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     if(xitem)
     {
         // regain the model column index and the datatype
-        // leading 16 bit are column index, the other 16 bit are the datatype
-        // right now datatype is only important for X axis (date, non date)
-        uint xitemdata = xitem->data(PlotColumnField, Qt::UserRole).toUInt();
-        int x = xitemdata >> 16;
-        int xtype = xitemdata & (uint)0xFF;
+        // right now datatype is only important for X axis (Y is always numeric)
+        int x = xitem->data(PlotColumnField, Qt::UserRole).toInt();
+        int xtype = xitem->data(PlotColumnType, Qt::UserRole).toInt();
 
         // check if we have a x axis with datetime data
         switch (xtype) {
@@ -267,10 +263,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
             if(item->checkState((PlotColumnY)) == Qt::Checked)
             {
-                // regain the model column index and the datatype
-                // leading 16 bit are column index
-                uint itemdata = item->data(0, Qt::UserRole).toUInt();
-                int column = itemdata >> 16;
+                // regain the model column index
+                int column = item->data(PlotColumnField, Qt::UserRole).toInt();
 
                 bool isSorted = true;
 
@@ -348,7 +342,10 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     QCPBars* bars = new QCPBars(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
                     plottable = bars;
                     bars->setData(xdata, ydata);
-                    bars->setBrush(item->backgroundColor(PlotColumnY));
+                    QColor brush = item->backgroundColor(PlotColumnY);
+                    if (ui->plotWidget->plottableCount() > 1)
+                        brush.setAlpha(124);
+                    bars->setBrush(brush);
                     QSharedPointer<QCPAxisTickerText> ticker(new QCPAxisTickerText);
                     ticker->addTicks(xdata, labels);
                     ui->plotWidget->xAxis->setTicker(ticker);
@@ -376,7 +373,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 }
 
                 plottable->setPen(QPen(item->backgroundColor(PlotColumnY)));
-                plottable->setSelectable (QCP::stDataRange);
+                plottable->setSelectable(QCP::stDataRange);
 
                 // gather Y label column names
                 if(column == RowNumId)
@@ -529,8 +526,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
 
-    uint itemdata = item->data(PlotColumnField, Qt::UserRole).toUInt();
-    int type = itemdata & (uint)0xFF;
+    int type = item->data(PlotColumnType, Qt::UserRole).toInt();
 
     if(column == PlotColumnY && type == QVariant::Double)
     {
