@@ -54,7 +54,7 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortColumn, Qt::SortOrder sortOrder, const QVector<QString>& display_format)
+void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortColumn, Qt::SortOrder sortOrder, const QMap<int, QString> filterValues, const QVector<QString>& display_format)
 {
     // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
@@ -62,6 +62,9 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
     // Save the other parameters
     m_sTable = table;
     m_vDisplayFormat = display_format;
+
+    for(auto filterIt=filterValues.constBegin(); filterIt!=filterValues.constEnd(); ++filterIt)
+        updateFilter(filterIt.key(), filterIt.value(), false);
 
     // The first column is the rowid column and therefore is always of type integer
     m_vDataTypes.push_back(SQLITE_INTEGER);
@@ -734,7 +737,7 @@ QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fi
     return listColumns;
 }
 
-void SqliteTableModel::updateFilter(int column, const QString& value)
+void SqliteTableModel::updateFilter(int column, const QString& value, bool applyQuery)
 {
     // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
     QString op = "LIKE";
@@ -846,7 +849,8 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     }
 
     // Build the new query
-    buildQuery();
+    if (applyQuery)
+        buildQuery();
 }
 
 void SqliteTableModel::clearCache()

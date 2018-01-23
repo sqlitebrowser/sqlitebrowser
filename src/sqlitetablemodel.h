@@ -42,7 +42,7 @@ public:
     void setQuery(const QString& sQuery, bool dontClearHeaders = false);
     QString query() const { return m_sQuery; }
     QString customQuery(bool withRowid);
-    void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QVector<QString> &display_format = QVector<QString>());
+    void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QMap<int, QString> filterValues = QMap<int, QString>(), const QVector<QString> &display_format = QVector<QString>());
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
     const sqlb::ObjectIdentifier& currentTableName() const { return m_sTable; }
@@ -74,7 +74,7 @@ public:
     void waitForFetchingFinished();
 
 public slots:
-    void updateFilter(int column, const QString& value);
+    void updateFilter(int column, const QString& value, bool applyQuery = true);
 
     // This cancels the execution of the current query. It can't guarantee that the query is stopped immediately or after returning but it should
     // stop soon afterwards. If some data has already been loaded into the model, that data is not deleted
