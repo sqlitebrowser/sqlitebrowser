@@ -77,6 +77,7 @@ private:
         PlotColumnField = 0,
         PlotColumnX = 1,
         PlotColumnY = 2,
+        PlotColumnType = 3,
     };
 
     Ui::PlotDock* ui;
@@ -84,6 +85,8 @@ private:
     SqliteTableModel* m_currentPlotModel;
     BrowseDataTableSettings* m_currentTableSettings;
     QMenu* m_contextMenu;
+    bool m_showLegend;
+    bool m_stackedBars;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype
@@ -92,6 +95,7 @@ private:
      * \return the guessed datatype
      */
     QVariant::Type guessDataType(SqliteTableModel* model, int column);
+    void adjustBars();
 
 private slots:
     void on_treePlotColumns_itemChanged(QTreeWidgetItem* item, int column);
@@ -103,7 +107,8 @@ private slots:
     void mousePress();
     void mouseWheel();
     void copy();
-
+    void toggleLegendVisible(bool visible);
+    void toggleStackedBars(bool stacked);
 };
 
 #endif
