@@ -71,9 +71,10 @@ Done. :)
 
 ### CentOS / Fedora Linux
 
-**Note** - On CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`
+**Note** - On CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`.
 
-**Note 2** - On CentOS 7.x, you need to add `qt5-qtbase-devel` to the `dnf install` line below
+**Note 2** - On CentOS 7.x, you need to replace the `qwt-qt5-devel` package name with
+`qt5-qtbase-devel` in the `dnf install` line below.
 
 ```
 $ sudo dnf install ant-antlr antlr-C++ cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
@@ -86,11 +87,6 @@ $ sudo make install
 ```
 
 This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
-
-**Note 3** 
-On CentOS if cmake complains about missing Qt5 Libraries or sqllite:
-``` sudo yum install ant-antlr antlr-C++ cmake gcc-c++ git qt-dev qwt-qt5-devel sqllite-devel qt qt5widgets qt5-qtbase-devel qt5-linguist sqlite-devel```
-
 
 ### MacOS X
 
