@@ -2391,7 +2391,7 @@ void MainWindow::copyCurrentCreateStatement()
         return;
 
     // Get the CREATE statement from the Schema column
-    QString stmt = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 3)).toString();
+    QString stmt = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 3), Qt::EditRole).toString();
 
     // Copy the statement to the global application clipboard
     QApplication::clipboard()->setText(stmt);
