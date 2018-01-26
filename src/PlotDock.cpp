@@ -139,20 +139,23 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                     switch (columntype) {
                     case QVariant::DateTime:
-                        columnitem->setText(PlotColumnType, "Date/Time");
+                        columnitem->setText(PlotColumnType, tr("Date/Time"));
                         break;
                     case QVariant::Date:
-                        columnitem->setText(PlotColumnType, "Date");
+                        columnitem->setText(PlotColumnType, tr("Date"));
                         break;
                     case QVariant::Time:
-                        columnitem->setText(PlotColumnType, "Time");
+                        columnitem->setText(PlotColumnType, tr("Time"));
                         break;
                     case QVariant::Double:
-                        columnitem->setText(PlotColumnType, "Numeric");
+                        columnitem->setText(PlotColumnType, tr("Numeric"));
                         break;
                     case QVariant::String:
-                        columnitem->setText(PlotColumnType, "Label");
+                        columnitem->setText(PlotColumnType, tr("Label"));
                         break;
+                    default:
+                        // This is not actually expected
+                        columnitem->setText(PlotColumnType, tr("Invalid"));
                     }
 
                     // Store the model column index in the PlotColumnField and the type
@@ -189,7 +192,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 columnitem->setData(PlotColumnField, Qt::UserRole, RowNumId);
                 columnitem->setText(PlotColumnField, tr("Row #"));
                 columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(QVariant::Double));
-                columnitem->setText(PlotColumnType, "Numeric");
+                columnitem->setText(PlotColumnType, tr("Numeric"));
 
                 // restore previous check state
                 if(mapItemsY.contains(columnitem->text(PlotColumnField)))
