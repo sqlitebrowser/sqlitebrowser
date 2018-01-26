@@ -86,6 +86,10 @@ $ sudo make install
 ```
 
 This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
+**Note 3** 
+On CentOS if cmake complains about missing Qt5 Libraries or sqllite:
+``` sudo yum install ant-antlr antlr-C++ cmake gcc-c++ git qt-dev qwt-qt5-devel sqllite-devel qt qt5widgets qt5-qtbase-devel qt5-linguist sqlite-devel```
+
 
 ### MacOS X
 
