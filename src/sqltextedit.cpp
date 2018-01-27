@@ -30,16 +30,27 @@ SqlTextEdit::~SqlTextEdit()
 
 void SqlTextEdit::reloadSettings()
 {
+    // Enable auto completion if it hasn't been disabled
+    if(Settings::getValue("editor", "auto_completion").toBool())
+    {
+        setAutoCompletionThreshold(3);
+        setAutoCompletionCaseSensitivity(true);
+        setAutoCompletionShowSingle(true);
+        setAutoCompletionSource(QsciScintilla::AcsAPIs);
+    } else {
+        setAutoCompletionThreshold(0);
+    }
+
     ExtendedScintilla::reloadSettings();
 
-    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
-    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
-    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
-    setupSyntaxHighlightingFormat("keyword", QsciLexerSQL::Keyword);
-    setupSyntaxHighlightingFormat("table", QsciLexerSQL::KeywordSet6);
-    setupSyntaxHighlightingFormat("function", QsciLexerSQL::KeywordSet7);
-    setupSyntaxHighlightingFormat("string", QsciLexerSQL::DoubleQuotedString);
-    setupSyntaxHighlightingFormat("string", QsciLexerSQL::SingleQuotedString);
-    setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::Identifier);
-    setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
+    setupSyntaxHighlightingFormat(sqlLexer, "comment", QsciLexerSQL::Comment);
+    setupSyntaxHighlightingFormat(sqlLexer, "comment", QsciLexerSQL::CommentLine);
+    setupSyntaxHighlightingFormat(sqlLexer, "comment", QsciLexerSQL::CommentDoc);
+    setupSyntaxHighlightingFormat(sqlLexer, "keyword", QsciLexerSQL::Keyword);
+    setupSyntaxHighlightingFormat(sqlLexer, "table", QsciLexerSQL::KeywordSet6);
+    setupSyntaxHighlightingFormat(sqlLexer, "function", QsciLexerSQL::KeywordSet7);
+    setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
+    setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::SingleQuotedString);
+    setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::Identifier);
+    setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::QuotedIdentifier);
 }

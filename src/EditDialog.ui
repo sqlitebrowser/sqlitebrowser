@@ -49,12 +49,17 @@
        </item>
        <item>
         <property name="text">
+         <string>Image</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>JSON</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Image</string>
+         <string>XML</string>
         </property>
        </item>
       </widget>
@@ -182,13 +187,6 @@
       </layout>
      </widget>
      <widget class="QWidget" name="editorBinary"/>
-     <widget class="QWidget" name="editorJSON">
-      <property name="whatsThis">
-       <string>This editor mode lets you edit JSON data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.</string>
-      </property>
-     </widget>
      <widget class="QScrollArea" name="editorImageScrollArea">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -212,6 +210,13 @@ Errors are indicated with a red squiggle underline.</string>
         </item>
        </layout>
       </widget>
+     </widget>
+     <widget class="QWidget" name="editorSci">
+      <property name="whatsThis">
+       <string>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
+
+Errors are indicated with a red squiggle underline.</string>
+      </property>
      </widget>
     </widget>
    </item>
@@ -302,22 +307,6 @@ Errors are indicated with a red squiggle underline.</string>
     <hint type="destinationlabel">
      <x>162</x>
      <y>17</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editorStack</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>comboMode</receiver>
-   <slot>setCurrentIndex(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>185</x>
-     <y>169</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>149</x>
-     <y>39</y>
     </hint>
    </hints>
   </connection>

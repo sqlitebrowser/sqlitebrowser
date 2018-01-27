@@ -23,6 +23,11 @@ set(QSCINTILLA_SRC
 	qscilexercustom.cpp
 	qscilexersql.cpp
 	qscilexerjson.cpp
+	qscilexerhtml.cpp
+	qscilexerxml.cpp
+	qscilexerjavascript.cpp
+	qscilexercpp.cpp
+	qscilexerpython.cpp
 	qscimacro.cpp
 	qsciprinter.cpp
 	qscistyle.cpp
@@ -35,6 +40,7 @@ set(QSCINTILLA_SRC
 	ScintillaQt.cpp
 	../lexers/LexSQL.cpp
 	../lexers/LexJSON.cpp
+	../lexers/LexHTML.cpp
 	../lexlib/Accessor.cpp
 	../lexlib/CharacterCategory.cpp
 	../lexlib/CharacterSet.cpp
@@ -146,6 +152,11 @@ set(QSCINTILLA_MOC_HDR
 	./Qsci/qscilexercustom.h
 	./Qsci/qscilexersql.h
 	./Qsci/qscilexerjson.h
+	./Qsci/qscilexerhtml.h
+	./Qsci/qscilexerxml.h
+	./Qsci/qscilexerjavascript.h
+	./Qsci/qscilexercpp.h
+	./Qsci/qscilexerpython.h
 	./Qsci/qscimacro.h
 	SciClasses.h
 	ScintillaQt.h
