@@ -15,6 +15,8 @@
 #include <QBuffer>
 #include <QMenu>
 #include <QDateTime>
+#include <QLineEdit>
+#include <limits>
 
 QList<QByteArrayList> ExtendedTableWidget::m_buffer;
 QString ExtendedTableWidget::m_generatorStamp;
@@ -89,6 +91,46 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
 
 }
 
+
+ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* parent)
+    : QStyledItemDelegate(parent)
+{
+}
+
+QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/) const
+{
+    // Just create a normal line editor but set the maximum length to the highest possible value instead of the default 32768.
+    QLineEdit* editor = new QLineEdit(parent);
+    editor->setMaxLength(std::numeric_limits<int>::max());
+    return editor;
+}
+
+void ExtendedTableWidgetEditorDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+{
+    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
+
+    // Set the data for the line editor
+    QString data = index.data(Qt::EditRole).toString();
+    lineedit->setText(data);
+
+    // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
+    lineedit->setReadOnly(data.size() > lineedit->maxLength());
+}
+
+void ExtendedTableWidgetEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+{
+    // Only apply the data back to the model if the editor is not in read only mode to avoid accidental truncation of the data
+    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
+    if(!lineedit->isReadOnly())
+        model->setData(index, lineedit->text());
+}
+
+void ExtendedTableWidgetEditorDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
+{
+    editor->setGeometry(option.rect);
+}
+
+
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent)
 {
@@ -121,6 +163,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addAction(copyWithHeadersAction);
     m_contextMenu->addAction(pasteAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // Create and set up delegate
+    m_editorDelegate = new ExtendedTableWidgetEditorDelegate(this);
+    setItemDelegate(m_editorDelegate);
 
     // This is only for displaying the shortcut in the context menu.
     // An entry in keyPressEvent is still needed.
@@ -187,8 +233,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     while (i.hasNext()) {
         if (isColumnHidden(i.next().column()))
             i.remove();
-     }
-
+    }
 
     // Abort if there's nothing to copy
     if (indices.isEmpty())
@@ -312,13 +357,11 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             QString imageBase64 = ba.toBase64();
             htmlResult.append("<img src=\"data:image/png;base64,");
             htmlResult.append(imageBase64);
-            result.append(imageBase64); // TODO: Or should be just "Image"?
+            result.append(QString());
             htmlResult.append("\" alt=\"Image\">");
         } else {
             QByteArray text;
-            if (m->isBinary(index))
-                text = data.toByteArray().toBase64(); // TODO: Or should be just "BLOB"?
-            else
+            if (!m->isBinary(index))
                 text = data.toByteArray();
 
             // Table cell data: text
@@ -613,4 +656,41 @@ void ExtendedTableWidget::dropEvent(QDropEvent* event)
 
     model()->dropMimeData(event->mimeData(), Qt::CopyAction, index.row(), index.column(), QModelIndex());
     event->acceptProposedAction();
+}
+
+void ExtendedTableWidget::selectTableLine(int lineToSelect)
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // Are there even that many lines?
+    if(lineToSelect >= m->totalRowCount())
+        return;
+
+    QApplication::setOverrideCursor( Qt::WaitCursor );
+    // Make sure this line has already been fetched
+    while(lineToSelect >= m->rowCount() && m->canFetchMore())
+        m->fetchMore();
+
+    // Select it
+    clearSelection();
+    selectRow(lineToSelect);
+    scrollTo(currentIndex(), QAbstractItemView::PositionAtTop);
+    QApplication::restoreOverrideCursor();
+}
+
+void ExtendedTableWidget::selectTableLines(int firstLine, int count)
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    int lastLine = firstLine+count-1;
+    // Are there even that many lines?
+    if(lastLine >= m->totalRowCount())
+        return;
+
+    selectTableLine(firstLine);
+
+    QModelIndex topLeft = m->index(firstLine, 0);
+    QModelIndex bottomRight = m->index(lastLine, m->columnCount()-1);
+
+    selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }

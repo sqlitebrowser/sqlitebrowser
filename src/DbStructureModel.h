@@ -15,8 +15,6 @@ public:
     explicit DbStructureModel(DBBrowserDB& db, QObject* parent = nullptr);
     ~DbStructureModel();
 
-    void reloadData();
-
     QVariant data(const QModelIndex& index, int role) const;
     Qt::ItemFlags flags(const QModelIndex& index) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
@@ -37,6 +35,12 @@ public:
         ColumnSQL,
         ColumnSchema,
     };
+
+public slots:
+    void reloadData();
+
+signals:
+    void structureUpdated();
 
 private:
     DBBrowserDB& m_db;

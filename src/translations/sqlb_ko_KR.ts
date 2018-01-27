@@ -1877,7 +1877,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../MainWindow.ui" line="959"/>
         <source>Edit Database &amp;Cell</source>
-        <translation>데티어베이스 셀 수정하기(&amp;C)</translation>
+        <translation>데이터베이스 셀 수정하기(&amp;C)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1092"/>

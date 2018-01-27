@@ -40,8 +40,12 @@ public:
     explicit ObjectIdentifier(QVariant variant)
     {
         QStringList str = variant.toStringList();
-        m_schema = str.first();
-        m_name = str.last();
+        if(str.size())
+        {
+            m_schema = str.first();
+            if(str.size() >= 2)
+                m_name = str.last();
+        }
     }
 
     bool operator==(const ObjectIdentifier& rhs) const
@@ -265,9 +269,15 @@ class PrimaryKeyConstraint : public Constraint
 public:
     PrimaryKeyConstraint() {}
 
+    void setConflictAction(const QString& conflict) { m_conflictAction = conflict; }
+    const QString& conflictAction() const { return m_conflictAction; }
+
     virtual QString toSql(const FieldVector& applyOn) const;
 
     virtual ConstraintTypes type() const { return PrimaryKeyConstraintType; }
+
+private:
+    QString m_conflictAction;
 };
 
 class CheckConstraint : public Constraint

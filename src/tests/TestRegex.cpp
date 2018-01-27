@@ -57,6 +57,19 @@ void TestRegex::sqlQueryComments_data()
                "SELECT '-- comment inside quotes'"
             << // cleanQuery
                "SELECT '-- comment inside quotes'";
+
+    /* TODO Fix issue #1270, then activate these
+    QTest::newRow("single_quote_comment")
+            << // dirtyQuery
+               "SELECT 'something--something' -- comment"
+            << // cleanQuery
+               "SELECT 'something--something'";
+
+    QTest::newRow("double_quote_comment")
+            << // dirtyQuery
+               "SELECT \"something--something\" -- comment"
+            << // cleanQuery
+               "SELECT \"something--something\"";*/
 }
 
 void TestRegex::sqlQueryComments()

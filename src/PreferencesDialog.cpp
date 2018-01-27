@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "MainWindow.h"
 #include "RemoteDatabase.h"
+#include "FileExtensionManager.h"
 
 #include <QDir>
 #include <QColorDialog>
@@ -14,7 +15,8 @@
 
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
-      ui(new Ui::PreferencesDialog)
+      ui(new Ui::PreferencesDialog),
+      m_dbFileExtensions(FileDialog::getSqlDatabaseFileFilter().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -166,6 +168,8 @@ void PreferencesDialog::loadSettings()
     ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
     ui->checkAutoCompletion->setChecked(Settings::getValue("editor", "auto_completion").toBool());
+    ui->checkCompleteUpper->setEnabled(Settings::getValue("editor", "auto_completion").toBool());
+    ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
 
@@ -216,6 +220,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
     Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
     Settings::setValue("editor", "auto_completion", ui->checkAutoCompletion->isChecked());
+    Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
 
@@ -276,6 +281,8 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("General", "language", newLanguage);
     Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboBox->currentIndex());
+
+    Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
 
     accept();
 }
@@ -559,5 +566,15 @@ void PreferencesDialog::updatePreviewFont()
         textFont.setItalic(true);
         ui->txtNull->setFont(textFont);
         ui->txtBlob->setFont(textFont);
+    }
+}
+
+void PreferencesDialog::on_buttonManageFileExtension_clicked()
+{
+    FileExtensionManager *manager = new FileExtensionManager(m_dbFileExtensions, this);
+
+    if(manager->exec() == QDialog::Accepted)
+    {
+        m_dbFileExtensions = manager->getDBFileExtensions();
     }
 }

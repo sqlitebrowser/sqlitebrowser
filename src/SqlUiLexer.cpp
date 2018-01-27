@@ -1,5 +1,6 @@
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
+#include "Settings.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -47,10 +48,13 @@ void SqlUiLexer::setupAutoCompletion()
             << "WHERE" << "WITH" << "WITHOUT"
             // Data types
             << "INT" << "INTEGER" << "REAL" << "TEXT" << "BLOB" << "NUMERIC" << "CHAR";
+    bool upperKeywords = Settings::getValue("editor", "upper_keywords").toBool();
     for(const QString& keyword : keywordPatterns)
     {
-        autocompleteApi->add(keyword + "?" + QString::number(ApiCompleterIconIdKeyword));
-        autocompleteApi->add(keyword.toLower() + "?" + QString::number(ApiCompleterIconIdKeyword));
+        if (upperKeywords)
+            autocompleteApi->add(keyword + "?" + QString::number(ApiCompleterIconIdKeyword));
+        else
+            autocompleteApi->add(keyword.toLower() + "?" + QString::number(ApiCompleterIconIdKeyword));
     }
 
     // Functions
@@ -134,10 +138,14 @@ void SqlUiLexer::setTableNames(const TablesAndColumnsMap& tables)
     setupAutoCompletion();
     for(auto it=tables.constBegin();it!=tables.constEnd();++it)
     {
-        for(const QString& field : it.value())
+        for(const QString& field : it.value()) {
+            // Completion for table.field
             autocompleteApi->add(it.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
                                  field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
+            // Completion for isolated field
+            autocompleteApi->add(field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
 
+        }
         // Store the table name list in order to highlight them in a different colour
         listTables.append(it.key());
     }

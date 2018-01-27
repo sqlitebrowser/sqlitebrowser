@@ -61,7 +61,9 @@ HEADERS += \
     RemotePushDialog.h \
     docktextedit.h \
     FindReplaceDialog.h \
-    ExtendedScintilla.h
+    ExtendedScintilla.h \
+    FileExtensionManager.h \
+    Data.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -100,7 +102,9 @@ SOURCES += \
     RemotePushDialog.cpp \
     docktextedit.cpp \
     FindReplaceDialog.cpp \
-    ExtendedScintilla.cpp
+    ExtendedScintilla.cpp \
+    FileExtensionManager.cpp \
+    Data.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -124,7 +128,8 @@ FORMS += \
     PlotDock.ui \
     RemoteDock.ui \
     RemotePushDialog.ui \
-    FindReplaceDialog.ui
+    FindReplaceDialog.ui \
+    FileExtensionManager.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

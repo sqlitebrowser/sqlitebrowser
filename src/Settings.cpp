@@ -152,6 +152,9 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "General" && name == "toolbarStyle")
         return static_cast<int>(Qt::ToolButtonTextBesideIcon);
 
+    if(group == "General" && name == "DBFileExtensions")
+        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
+
     // checkversion group?
     if(group == "checkversion")
     {
@@ -258,6 +261,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
     // editor/auto_completion?
     if(group == "editor" && name == "auto_completion")
+        return true;
+
+    // editor/upper_keywords?
+    if(group == "editor" && name == "upper_keywords")
         return true;
 
     // editor/error_indicators?
