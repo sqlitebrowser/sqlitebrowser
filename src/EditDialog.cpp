@@ -473,6 +473,7 @@ void EditDialog::accept()
         }
         break;
         }
+        break;
     case HexBuffer:
         // The data source is the hex widget buffer, thus binary data
         QByteArray oldData = currentIndex.data(Qt::EditRole).toByteArray();
@@ -553,6 +554,7 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
         }
         break;
         }
+        break;
     case HexBuffer:
         hexEdit->setData(data);
         hexEdit->setEnabled(true);
@@ -648,8 +650,10 @@ void EditDialog::editTextChanged()
     if (dataSource == TextBuffer || dataSource == SciBuffer) {
         // Data has been changed in the text editor, so it can't be a NULL
         // any more. It hasn't been validated yet, so it cannot be JSON nor XML.
-        dataType = Text;
-
+        if (dataType == Null) {
+            dataType = Text;
+            ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
+        }
         // Update the cell info in the bottom left manually.  This is because
         // updateCellInfo() only works with QByteArray's (for now)
         int dataLength;
@@ -661,7 +665,6 @@ void EditDialog::editTextChanged()
             dataLength = sciEdit->text().length();
             break;
         }
-        ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         ui->labelSize->setText(tr("%n char(s)", "", dataLength));
     }
 }
@@ -698,7 +701,7 @@ int EditDialog::checkDataType(const QByteArray& data)
     // Check if it's text only
     if (QString(cellData).toUtf8() == cellData) { // Is there a better way to check this?
 
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(QString(cellData).toUtf8());
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(cellData);
         if (!jsonDoc.isNull())
             return JSON;
         else
