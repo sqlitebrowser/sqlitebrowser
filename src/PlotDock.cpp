@@ -861,3 +861,10 @@ void PlotDock::toggleStackedBars(bool stacked)
     adjustBars();
     ui->plotWidget->replot();
 }
+
+void PlotDock::reject()
+{
+    // We override this, to ensure the Escape key doesn't make this dialog
+    // dock go away
+    return;
+}
