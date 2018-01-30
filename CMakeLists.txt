@@ -447,6 +447,16 @@ if(WIN32 AND MSVC)
 		DESTINATION platforms)
 	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION redist)
 
+	# The XML dll
+	install(FILES
+			"${QT5_PATH}/bin/Qt5Xmld.dll"
+		DESTINATION "/"
+		CONFIGURATIONS Debug)
+	install(FILES
+			"${QT5_PATH}/bin/Qt5Xml.dll"
+		DESTINATION "/"
+		CONFIGURATIONS Release)
+
 	# The image format plugins
 	install(FILES
 			${WIN_IMG_PLUGINS_DEBUG}
