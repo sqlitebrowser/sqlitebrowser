@@ -37,6 +37,9 @@
          <height>0</height>
         </size>
        </property>
+       <property name="whatsThis">
+        <string>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</string>
+       </property>
        <item>
         <property name="text">
          <string>Text</string>
@@ -257,6 +260,9 @@ Errors are indicated with a red squiggle underline.</string>
       <widget class="QPushButton" name="buttonApply">
        <property name="toolTip">
         <string>Apply data to cell [Ctrl+Return]</string>
+       </property>
+       <property name="whatsThis">
+        <string>This button saves the changes performed in the cell editor to the database cell.</string>
        </property>
        <property name="text">
         <string>Apply</string>
