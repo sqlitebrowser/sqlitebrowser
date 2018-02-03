@@ -754,21 +754,40 @@ void EditDialog::setFocus()
 
 }
 
-// Enables or disables the Apply, Null, & Import buttons in the Edit Cell dock
+// Enables or disables the Apply, Null, & Import buttons in the Edit Cell dock.
+// Sets or unsets read-only properties for the editors.
 void EditDialog::setReadOnly(bool ro)
 {
     isReadOnly = ro;
+    QPalette textEditPalette = ui->editorText->palette();
 
     ui->buttonApply->setEnabled(!ro);
     ui->buttonNull->setEnabled(!ro);
     ui->buttonImport->setEnabled(!ro);
 
     ui->editorText->setReadOnly(ro);
+    sciEdit->setReadOnly(ro);
+    // We disable the entire hex editor here instead of setting it to read only because it doesn't have a setReadOnly() method
+    ui->editorBinary->setEnabled(!ro);
+
+    // This makes the caret being visible for selection, although the editor is read-only.
     Qt::TextInteractionFlags textFlags = ro? Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard : Qt::TextEditorInteraction;
     ui->editorText->setTextInteractionFlags(textFlags);
 
-    ui->editorBinary->setEnabled(!ro);  // We disable the entire hex editor here instead of setting it to read only because it doesn't have a setReadOnly() method
-    sciEdit->setReadOnly(ro);
+    // If read-only, set the Disabled palette settings for the (in)active groups, so the user gets a hint about the text being read-only.
+    // This should be set also for the Scintilla widget, but it isn't working for that.
+    if (ro) {
+        textEditPalette.setColor(QPalette::Active, QPalette::Base, textEditPalette.color(QPalette::Disabled, QPalette::Base));
+        textEditPalette.setColor(QPalette::Inactive, QPalette::Base, textEditPalette.color(QPalette::Disabled, QPalette::Base));
+        textEditPalette.setColor(QPalette::Active, QPalette::Highlight, textEditPalette.color(QPalette::Disabled, QPalette::Highlight));
+        textEditPalette.setColor(QPalette::Inactive, QPalette::Highlight, textEditPalette.color(QPalette::Disabled, QPalette::Highlight));
+        textEditPalette.setColor(QPalette::Active, QPalette::HighlightedText, textEditPalette.color(QPalette::Disabled, QPalette::HighlightedText));
+        textEditPalette.setColor(QPalette::Inactive, QPalette::HighlightedText, textEditPalette.color(QPalette::Disabled, QPalette::HighlightedText));
+        ui->editorText->setPalette(textEditPalette);
+    } else {
+        // Restore default palette
+        ui->editorText->setPalette(QPalette());
+    }
 }
 
 // Update the information labels in the bottom left corner of the dialog
