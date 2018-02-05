@@ -32,7 +32,8 @@ public slots:
 protected:
     void dropEvent(QDropEvent* e);
 
-    void setupSyntaxHighlightingFormat(const QString& settings_name, int style);
+    void setupSyntaxHighlightingFormat(QsciLexer *lexer, const QString& settings_name, int style);
+    void reloadLexerSettings(QsciLexer *lexer);
 
     int errorIndicatorNumber;
     bool showErrorIndicators;

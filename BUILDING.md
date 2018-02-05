@@ -71,9 +71,10 @@ Done. :)
 
 ### CentOS / Fedora Linux
 
-**Note** - On CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`
+**Note** - On CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`.
 
-**Note 2** - On CentOS 7.x, you need to add `qt5-qtbase-devel` to the `dnf install` line below
+**Note 2** - On CentOS 7.x, you need to replace the `qwt-qt5-devel` package name with
+`qt5-qtbase-devel` in the `dnf install` line below.
 
 ```
 $ sudo dnf install ant-antlr antlr-C++ cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \

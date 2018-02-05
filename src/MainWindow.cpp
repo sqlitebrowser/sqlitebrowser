@@ -1936,6 +1936,7 @@ void MainWindow::reloadSettings()
 
     // Refresh view
     dbStructureModel->reloadData();
+    populateStructure();
     populateTable();
 
     // Hide or show the remote dock as needed
