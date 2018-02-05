@@ -9,7 +9,9 @@ PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PlotDock),
       m_currentPlotModel(nullptr),
-      m_currentTableSettings(nullptr)
+      m_currentTableSettings(nullptr),
+      m_showLegend(false),
+      m_stackedBars(false)
 {
     ui->setupUi(this);
 
@@ -50,6 +52,18 @@ PlotDock::PlotDock(QWidget* parent)
        copy();
     });
 
+    QAction* showLegendAction = new QAction(tr("Show legend"), m_contextMenu);
+    showLegendAction->setCheckable(true);
+    m_contextMenu->addAction(showLegendAction);
+
+    connect(showLegendAction, SIGNAL(toggled(bool)), this, SLOT(toggleLegendVisible(bool)));
+
+    QAction* stackedBarsAction = new QAction(tr("Stacked bars"), m_contextMenu);
+    stackedBarsAction->setCheckable(true);
+    m_contextMenu->addAction(stackedBarsAction);
+
+    connect(stackedBarsAction, SIGNAL(toggled(bool)), this, SLOT(toggleStackedBars(bool)));
+
     connect(ui->plotWidget, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos) {
         // Show menu
@@ -72,8 +86,8 @@ PlotDock::~PlotDock()
 void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings, bool update, bool keepOrResetSelection)
 {
     // Each column has an id that we use internally, starting from 0. However, at the beginning of the columns list we want to add
-    // the virtual 'Row #' column which needs a separate unique id for internal use. This id is defined here as -1 in a 16bit integer.
-    const unsigned int RowNumId = 0xFFFF;
+    // the virtual 'Row #' column which needs a separate unique id for internal use. This id is defined here as -1.
+    const int RowNumId = -1;
 
     // add columns to x/y selection tree widget
     if(update)
@@ -119,16 +133,35 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             for(int i=0;i<model->columnCount();++i)
             {
                 QVariant::Type columntype = guessDataType(model, i);
-                if(columntype != QVariant::String && columntype != QVariant::Invalid)
+                if(columntype != QVariant::Invalid)
                 {
                     QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
-                    // maybe i make this more complicated than i should
-                    // but store the model column index in the first 16 bit and the type
-                    // in the other 16 bits
-                    uint itemdata = 0;
-                    itemdata = i << 16;
-                    itemdata |= columntype;
-                    columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
+
+                    switch (columntype) {
+                    case QVariant::DateTime:
+                        columnitem->setText(PlotColumnType, tr("Date/Time"));
+                        break;
+                    case QVariant::Date:
+                        columnitem->setText(PlotColumnType, tr("Date"));
+                        break;
+                    case QVariant::Time:
+                        columnitem->setText(PlotColumnType, tr("Time"));
+                        break;
+                    case QVariant::Double:
+                        columnitem->setText(PlotColumnType, tr("Numeric"));
+                        break;
+                    case QVariant::String:
+                        columnitem->setText(PlotColumnType, tr("Label"));
+                        break;
+                    default:
+                        // This is not actually expected
+                        columnitem->setText(PlotColumnType, tr("Invalid"));
+                    }
+
+                    // Store the model column index in the PlotColumnField and the type
+                    // in the PlotColumnType, both using the User Role.
+                    columnitem->setData(PlotColumnField, Qt::UserRole, i);
+                    columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(columntype));
                     columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
 
                     // restore previous check state
@@ -137,7 +170,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         columnitem->setCheckState(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
                         columnitem->setBackgroundColor(PlotColumnY, mapItemsY[columnitem->text(PlotColumnField)].colour);
                     } else {
-                        columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
+                        if (columntype == QVariant::Double)
+                            columnitem->setCheckState(PlotColumnY, Qt::Unchecked);
                     }
 
                     if(sItemX == columnitem->text(PlotColumnField))
@@ -146,6 +180,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         columnitem->setCheckState(PlotColumnX, Qt::Unchecked);
                 }
             }
+
             ui->treePlotColumns->resizeColumnToContents(PlotColumnField);
 
             // Add a row number column at the beginning of the column list, but only when there were (other) columns added
@@ -153,10 +188,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             {
                 QTreeWidgetItem* columnitem = new QTreeWidgetItem(ui->treePlotColumns);
 
-                // Just set all bits in the user role information field here to somehow indicate what column this is
-                uint itemdata = -1;
-                columnitem->setData(PlotColumnField, Qt::UserRole, itemdata);
+                // Just set RowNumId in the user role information field here to somehow indicate what column this is
+                columnitem->setData(PlotColumnField, Qt::UserRole, RowNumId);
                 columnitem->setText(PlotColumnField, tr("Row #"));
+                columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(QVariant::Double));
+                columnitem->setText(PlotColumnType, tr("Numeric"));
 
                 // restore previous check state
                 if(mapItemsY.contains(columnitem->text(PlotColumnField)))
@@ -202,11 +238,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     if(xitem)
     {
         // regain the model column index and the datatype
-        // leading 16 bit are column index, the other 16 bit are the datatype
-        // right now datatype is only important for X axis (date, non date)
-        uint xitemdata = xitem->data(PlotColumnField, Qt::UserRole).toUInt();
-        int x = xitemdata >> 16;
-        int xtype = xitemdata & (uint)0xFF;
+        // right now datatype is only important for X axis (Y is always numeric)
+        int x = xitem->data(PlotColumnField, Qt::UserRole).toInt();
+        int xtype = xitem->data(PlotColumnType, Qt::UserRole).toInt();
+
+        ui->plotWidget->xAxis->setTickLabelRotation(0);
 
         // check if we have a x axis with datetime data
         switch (xtype) {
@@ -229,6 +265,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             ui->plotWidget->xAxis->setTicker(ticker);
             break;
         }
+        case QVariant::String: {
+            // Ticker is set when we have got the labels
+            ui->plotWidget->xAxis->setTickLabelRotation(60);
+            break;
+        }
         default: {
             QSharedPointer<QCPAxisTickerFixed> ticker(new QCPAxisTickerFixed);
             ticker->setTickStepStrategy(QCPAxisTicker::tssReadability);
@@ -243,10 +284,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
             if(item->checkState((PlotColumnY)) == Qt::Checked)
             {
-                // regain the model column index and the datatype
-                // leading 16 bit are column index
-                uint itemdata = item->data(0, Qt::UserRole).toUInt();
-                int column = itemdata >> 16;
+                // regain the model column index
+                int column = item->data(PlotColumnField, Qt::UserRole).toInt();
 
                 bool isSorted = true;
 
@@ -254,6 +293,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // possible improvement might be a QVector subclass that directly
                 // access the model data, to save memory, we are copying here
                 QVector<double> xdata(model->rowCount()), ydata(model->rowCount()), tdata(model->rowCount());
+                QVector<QString> labels;
                 for(int i = 0; i < model->rowCount(); ++i)
                 {
                     tdata[i] = i;
@@ -270,6 +310,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         QString s = model->data(model->index(i, x)).toString();
                         QTime t = QTime::fromString(s);
                         xdata[i] = t.msecsSinceStartOfDay() / 1000.0;
+                        break;
+                    }
+                    case QVariant::String: {
+                        xdata[i] = i+1;
+                        labels << model->data(model->index(i, x)).toString();
                         break;
                     }
                     default: {
@@ -299,38 +344,59 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     else
                         ydata[i] = pointdata.toDouble();
                 }
+
+                // Line type and point shape are not supported by the String X type (Bars)
+                ui->comboLineType->setEnabled(xtype != QVariant::String);
+                ui->comboPointShape->setEnabled(xtype != QVariant::String);
+
                 // WARN: ssDot is removed
                 int shapeIdx = ui->comboPointShape->currentIndex();
                 if (shapeIdx > 0) shapeIdx += 1;
                 QCPScatterStyle scatterStyle = QCPScatterStyle(static_cast<QCPScatterStyle::ScatterShape>(shapeIdx), 5);
 
                 QCPAbstractPlottable* plottable;
+                // When the X type is String, we draw a bar chart.
                 // When it is already sorted by x, we draw a graph.
                 // When it is not sorted by x, we draw a curve, so the order selected by the user in the table or in the query is
                 // respected.  In this case the line will have loops and only None and Line is supported as line style.
                 // TODO: how to make the user aware of this without disturbing.
-                if (isSorted) {
-                    QCPGraph* graph = ui->plotWidget->addGraph();
-                    plottable = graph;
-                    graph->setData(xdata, ydata, /*alreadySorted*/ true);
-                    // set some graph styles not supported by the abstract plottable
-                    graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
-                    graph->setScatterStyle(scatterStyle);
-
+                if (xtype == QVariant::String) {
+                    QCPBars* bars = new QCPBars(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
+                    plottable = bars;
+                    bars->setData(xdata, ydata);
+                    // Set ticker once
+                    if (ui->plotWidget->plottableCount() == 1) {
+                        QSharedPointer<QCPAxisTickerText> ticker(new QCPAxisTickerText);
+                        ticker->addTicks(xdata, labels);
+                        ui->plotWidget->xAxis->setTicker(ticker);
+                    }
+                    QColor color = item->backgroundColor(PlotColumnY);
+                    bars->setBrush(color);
+                    plottable->setPen(QPen(color.darker(150)));
                 } else {
-                    QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
-                    plottable = curve;
-                    curve->setData(tdata, xdata, ydata, /*alreadySorted*/ true);
-                    // set some curve styles not supported by the abstract plottable
-                    if (ui->comboLineType->currentIndex() == QCPCurve::lsNone)
-                        curve->setLineStyle(QCPCurve::lsNone);
-                    else
-                        curve->setLineStyle(QCPCurve::lsLine);
-                    curve->setScatterStyle(scatterStyle);
+                    if (isSorted) {
+                        QCPGraph* graph = ui->plotWidget->addGraph();
+                        plottable = graph;
+                        graph->setData(xdata, ydata, /*alreadySorted*/ true);
+                        // set some graph styles not supported by the abstract plottable
+                        graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
+                        graph->setScatterStyle(scatterStyle);
+                    } else {
+                        QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
+                        plottable = curve;
+                        curve->setData(tdata, xdata, ydata, /*alreadySorted*/ true);
+                        // set some curve styles not supported by the abstract plottable
+                        if (ui->comboLineType->currentIndex() == QCPCurve::lsNone)
+                            curve->setLineStyle(QCPCurve::lsNone);
+                        else
+                            curve->setLineStyle(QCPCurve::lsLine);
+                        curve->setScatterStyle(scatterStyle);
+                    }
+                    plottable->setPen(QPen(item->backgroundColor(PlotColumnY)));
                 }
 
-                plottable->setPen(QPen(item->backgroundColor(PlotColumnY)));
-                plottable->setSelectable (QCP::stDataRange);
+                plottable->setSelectable(QCP::stDataRange);
+                plottable->setName(item->text(PlotColumnField));
 
                 // gather Y label column names
                 if(column == RowNumId)
@@ -341,6 +407,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         }
 
         ui->plotWidget->rescaleAxes(true);
+        ui->plotWidget->legend->setVisible(m_showLegend);
+        // Legend with slightly transparent background brush:
+        ui->plotWidget->legend->setBrush(QColor(255, 255, 255, 150));
 
         // set axis labels
         if(x == RowNumId)
@@ -349,6 +418,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
         ui->plotWidget->yAxis->setLabel(yAxisLabels.join("|"));
     }
+
+    adjustBars();
     ui->plotWidget->replot();
 
     // Warn user if not all data has been fetched and hint about the button for loading all the data
@@ -483,7 +554,9 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
 
-    if(column == PlotColumnY)
+    int type = item->data(PlotColumnType, Qt::UserRole).toInt();
+
+    if(column == PlotColumnY && type == QVariant::Double)
     {
         // On double click open the colordialog
         QColorDialog colordialog(this);
@@ -743,4 +816,55 @@ void PlotDock::mouseWheel()
 void PlotDock::copy()
 {
     QApplication::clipboard()->setPixmap(ui->plotWidget->toPixmap());
+}
+
+void PlotDock::toggleLegendVisible(bool visible)
+{
+    m_showLegend = visible;
+    ui->plotWidget->legend->setVisible(m_showLegend);
+    ui->plotWidget->replot();
+}
+
+// Stack or group bars and set the appropiate bar width (since it is not automatically done by QCustomPlot).
+void PlotDock::adjustBars()
+{
+    const double padding = 0.15;
+    const double groupedWidth = ui->plotWidget->plottableCount()? 1.0 / ui->plotWidget->plottableCount() : 0.0;
+    QCPBars* previousBar = nullptr;
+    QCPBarsGroup* barsGroup = m_stackedBars? nullptr : new QCPBarsGroup(ui->plotWidget);
+    for (int i = 0, ie = ui->plotWidget->plottableCount(); i < ie; ++i)
+    {
+        QCPBars* bar = qobject_cast<QCPBars*>(ui->plotWidget->plottable(i));
+        if (bar) {
+            if (m_stackedBars) {
+                // Ungroup if grouped
+                bar->setBarsGroup(nullptr);
+                if (previousBar)
+                    bar->moveAbove(previousBar);
+                // Set width to ocuppy the full coordinate space, less padding
+                bar->setWidth(1.0 - padding);
+            } else {
+                // Unstack if stacked
+                bar->moveAbove(nullptr);
+                bar->setBarsGroup(barsGroup);
+                // Set width to a plot coordinate width, less padding
+                bar->setWidth(groupedWidth - padding);
+            }
+            previousBar = bar;
+        }
+    }
+}
+
+void PlotDock::toggleStackedBars(bool stacked)
+{
+    m_stackedBars = stacked;
+    adjustBars();
+    ui->plotWidget->replot();
+}
+
+void PlotDock::reject()
+{
+    // We override this, to ensure the Escape key doesn't make this dialog
+    // dock go away
+    return;
 }

@@ -4,9 +4,8 @@
 #include <QDialog>
 #include <QPersistentModelIndex>
 
-#include "jsontextedit.h"
-
 class QHexEdit;
+class DockTextEdit;
 
 namespace Ui {
 class EditDialog;
@@ -50,11 +49,10 @@ signals:
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
-    JsonTextEdit* jsonEdit;
+    DockTextEdit* sciEdit;
     QPersistentModelIndex currentIndex;
     int dataSource;
     int dataType;
-    bool textNullSet;
     bool isReadOnly;
     bool mustIndentAndCompact;
     QByteArray removedBom;
@@ -62,27 +60,34 @@ private:
     enum DataSources {
         TextBuffer,
         HexBuffer,
-        JsonBuffer
+        SciBuffer
     };
 
+    // SVG is both an Image and an XML document so it is treated separately
     enum DataTypes {
         Binary,
         Image,
         Null,
         Text,
-        JSON
+        JSON,
+        SVG
     };
 
+    // Edit modes and editor stack (this must be aligned with the UI)
+    // Note that JSON and XML share the Scintilla widget.
     enum EditModes {
         TextEditor = 0,
         HexEditor = 1,
-        JsonEditor = 2,
-        ImageViewer = 3
+        ImageViewer = 2,
+        JsonEditor, SciEditor = 3,
+        XmlEditor = 4
     };
 
     int checkDataType(const QByteArray& data);
     QString humanReadableSize(double byteCount) const;
     bool promptInvalidData(const QString& dataType, const QString& errorString);
+    void setDataInBuffer(const QByteArray& data, DataSources source);
+    void setStackCurrentIndex(int editMode);
 };
 
 #endif

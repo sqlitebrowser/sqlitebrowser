@@ -132,3 +132,10 @@ void RemoteDock::newDirectoryNode(const QModelIndex& parent)
         }
     }
 }
+
+void RemoteDock::reject()
+{
+    // We override this, to ensure the Escape key doesn't make this dialog
+    // dock go away
+    return;
+}
