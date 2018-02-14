@@ -265,8 +265,8 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 return;
             }
 
-            // The field isn't empty. Quote data as needed and copy it to the clipboard
-            qApp->clipboard()->setText(escapeCopiedData(data.toByteArray()));
+            // The field isn't empty. Copy the text to the clipboard without quoting (for general plain text clipboard)
+            qApp->clipboard()->setText(data.toByteArray());
             return;
         }
     }
