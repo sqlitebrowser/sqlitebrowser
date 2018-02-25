@@ -806,7 +806,7 @@
          </item>
          <item>
           <property name="text">
-           <string>function</string>
+           <string notr="true">function</string>
           </property>
           <property name="text">
            <string>Function</string>
@@ -894,10 +894,26 @@
          </item>
          <item>
           <property name="text">
-           <string>currentline</string>
+           <string notr="true">currentline</string>
           </property>
           <property name="text">
            <string>Current line</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">background</string>
+          </property>
+          <property name="text">
+           <string>Background</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">foreground</string>
+          </property>
+          <property name="text">
+           <string>Foreground</string>
           </property>
          </item>
         </widget>
@@ -1349,7 +1365,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Save</set>
      </property>
     </widget>
    </item>
@@ -1415,38 +1431,6 @@
   <include location="icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>saveSettings()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>287</x>
-     <y>607</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>155</x>
-     <y>143</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>355</x>
-     <y>607</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonAddExtension</sender>
    <signal>clicked()</signal>
@@ -1620,6 +1604,22 @@
     <hint type="destinationlabel">
      <x>474</x>
      <y>492</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>on_buttonBox_clicked(QAbstractButton*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>591</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>385</x>
+     <y>306</y>
     </hint>
    </hints>
   </connection>

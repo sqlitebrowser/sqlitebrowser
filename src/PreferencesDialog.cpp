@@ -110,7 +110,7 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
-        if (name != "null") {
+        if (name != "null" && name != "currentline"  && name != "background" && name != "foreground") {
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
@@ -181,6 +181,8 @@ void PreferencesDialog::loadSettings()
 
 void PreferencesDialog::saveSettings()
 {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     Settings::setValue("db", "defaultencoding", ui->encodingComboBox->currentText());
     Settings::setValue("db", "defaultlocation", ui->locationEdit->text());
     Settings::setValue("db", "savedefaultlocation", ui->comboDefaultLocation->currentIndex());
@@ -281,10 +283,11 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("General", "language", newLanguage);
     Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboBox->currentIndex());
-
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
 
     accept();
+
+    QApplication::restoreOverrideCursor();
 }
 
 void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
@@ -576,5 +579,21 @@ void PreferencesDialog::on_buttonManageFileExtension_clicked()
     if(manager->exec() == QDialog::Accepted)
     {
         m_dbFileExtensions = manager->getDBFileExtensions();
+    }
+}
+
+void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
+{
+    if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
+        reject();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Save))
+        saveSettings();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::RestoreDefaults)) {
+        if (QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to clear all the saved settings?\nAll your preferences will be lost and default values will be used."),
+                                 QMessageBox::RestoreDefaults | QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::RestoreDefaults)
+        {
+            Settings::restoreDefaults();
+            accept();
+        }
     }
 }
