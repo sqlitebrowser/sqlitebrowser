@@ -220,10 +220,32 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
                 QJsonObject json_row;
                 for(int i=0;i<columns;++i)
                 {
-                    QString content = QString::fromUtf8(
-                                (const char*)sqlite3_column_blob(stmt, i),
-                                sqlite3_column_bytes(stmt, i));
-                    json_row.insert(column_names[i], content);
+                    int type = sqlite3_column_type(stmt, i);
+
+                    switch (type) {
+                    case SQLITE_INTEGER: {
+                        qint64 content = sqlite3_column_int64(stmt, i);
+                        json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    case SQLITE_FLOAT: {
+                        double content = sqlite3_column_double(stmt, i);
+                        json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    case SQLITE_NULL: {
+                        json_row.insert(column_names[i], QJsonValue());
+                        break;
+                    }
+                    case SQLITE_TEXT:
+                    case SQLITE_BLOB: {
+                        QString content = QString::fromUtf8(
+                            (const char*)sqlite3_column_blob(stmt, i),
+                            sqlite3_column_bytes(stmt, i));
+                        json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    }
                 }
                 json_table.push_back(json_row);
 
