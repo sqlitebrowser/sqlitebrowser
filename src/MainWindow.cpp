@@ -595,8 +595,9 @@ void MainWindow::populateTable()
     if(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
     {
         // Table
+        sqlb::TablePtr table = db.getObjectByName(currentlyBrowsedTableName()).dynamicCast<sqlb::Table>();
         ui->actionUnlockViewEditing->setVisible(false);
-        ui->actionShowRowidColumn->setVisible(true);
+        ui->actionShowRowidColumn->setVisible(!table->isWithoutRowidTable());
     } else {
         // View
         ui->actionUnlockViewEditing->setVisible(true);

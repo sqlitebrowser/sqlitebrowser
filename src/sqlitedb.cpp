@@ -980,8 +980,8 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
     if (!isOpen()) return false;
 
     QStringList quoted_rowids;
-    for(const QString& rowid : rowids)
-        quoted_rowids.append("'" + rowid + "'");
+    for(QString rowid : rowids)
+        quoted_rowids.append("'" + rowid.replace("'", "''") + "'");
 
     QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
             .arg(table.toString())
@@ -1022,7 +1022,7 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
             .arg(table.toString())
             .arg(sqlb::escapeIdentifier(column))
             .arg(pk)
-            .arg(rowid);
+            .arg(QString(rowid).replace("'", "''"));
 
     logSQL(sql, kLogMsg_App);
     setSavepoint();
