@@ -2046,6 +2046,65 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
     }
 }
 
+static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlStreamReader& xml)
+{
+    settings.sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
+    settings.sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
+    settings.showRowid = xml.attributes().value("show_row_id").toInt();
+    settings.encoding = xml.attributes().value("encoding").toString();
+    settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
+    settings.unlockViewPk = xml.attributes().value("unlock_view_pk").toString();
+
+    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "table") {
+        if(xml.name() == "column_widths") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column_widths") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.columnWidths[index] = xml.attributes().value("value").toInt();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "filter_values") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "filter_values") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.filterValues[index] = xml.attributes().value("value").toString();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "display_formats") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "display_formats") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.displayFormats[index] = xml.attributes().value("value").toString();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "hidden_columns") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "hidden_columns") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.hiddenColumns[index] = xml.attributes().value("value").toInt();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "plot_y_axes") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "plot_y_axes") {
+                QString yAxisName;
+                PlotDock::PlotSettings yAxisSettings;
+                if (xml.name() == "y_axis") {
+                    yAxisName = xml.attributes().value("name").toString();
+                    yAxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
+                    yAxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
+                    yAxisSettings.colour = QColor (xml.attributes().value("colour").toString());
+                    yAxisSettings.active = xml.attributes().value("active").toInt();
+                    xml.skipCurrentElement();
+                }
+                settings.plotYAxes[yAxisName] = yAxisSettings;
+            }
+        }
+    }
+}
 bool MainWindow::loadProject(QString filename, bool readOnly)
 {
     // Show the open file dialog when no filename was passed as parameter
@@ -2137,17 +2196,33 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
                             QDataStream stream(temp);
                             stream >> browseTableSettings;
-                            if(ui->mainTab->currentIndex() == BrowseTab)
-                            {
-                                populateTable();     // Refresh view
-                                sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
-                                ui->dataTable->sortByColumn(browseTableSettings[current_table].sortOrderIndex,
-                                                            browseTableSettings[current_table].sortOrderMode);
-                                showRowidColumn(browseTableSettings[current_table].showRowid);
-                                unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "browse_table_settings") {
+
+                            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "browse_table_settings") {
+                                if (xml.name() == "table") {
+
+                                    sqlb::ObjectIdentifier tableIdentifier =
+                                        sqlb::ObjectIdentifier (xml.attributes().value("schema").toString(),
+                                                                xml.attributes().value("name").toString());
+                                    BrowseDataTableSettings settings;
+                                    loadBrowseDataTableSettings(settings, xml);
+                                    browseTableSettings[tableIdentifier] = settings;
+                                }
                             }
                             xml.skipCurrentElement();
                         }
+
+                        if(ui->mainTab->currentIndex() == BrowseTab)
+                        {
+                            populateTable();     // Refresh view
+                            sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+                            ui->dataTable->sortByColumn(browseTableSettings[current_table].sortOrderIndex,
+                                                        browseTableSettings[current_table].sortOrderMode);
+                            showRowidColumn(browseTableSettings[current_table].showRowid);
+                            unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
+                        }
+
                     }
                 } else if(xml.name() == "tab_sql") {
                     // Close all open tabs first
@@ -2195,6 +2270,60 @@ static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModel
 
         saveDbTreeState(tree, xml, tree->model()->index(i, 0, index), i);
     }
+}
+
+static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, QXmlStreamWriter& xml)
+{
+    xml.writeAttribute("sort_order_index", QString::number(object.sortOrderIndex));
+    xml.writeAttribute("sort_order_mode", QString::number(object.sortOrderMode));
+    xml.writeAttribute("show_row_id", QString::number(object.showRowid));
+    xml.writeAttribute("encoding", object.encoding);
+    xml.writeAttribute("plot_x_axis", object.plotXAxis);
+    xml.writeAttribute("unlock_view_pk", object.unlockViewPk);
+    xml.writeStartElement("column_widths");
+    for(auto iter=object.columnWidths.constBegin(); iter!=object.columnWidths.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", QString::number(iter.value()));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("filter_values");
+    for(auto iter=object.filterValues.constBegin(); iter!=object.filterValues.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", iter.value());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("display_formats");
+    for(auto iter=object.displayFormats.constBegin(); iter!=object.displayFormats.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", iter.value());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("hidden_columns");
+    for(auto iter=object.hiddenColumns.constBegin(); iter!=object.hiddenColumns.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", QString::number(iter.value()));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("plot_y_axes");
+    for(auto iter=object.plotYAxes.constBegin(); iter!=object.plotYAxes.constEnd(); ++iter) {
+        PlotDock::PlotSettings plotSettings = iter.value();
+        xml.writeStartElement("y_axis");
+        xml.writeAttribute("name", iter.key());
+        xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
+        xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
+        xml.writeAttribute("colour", plotSettings.colour.name());
+        xml.writeAttribute("active", QString::number(plotSettings.active));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
 }
 
 void MainWindow::saveProject()
@@ -2248,12 +2377,14 @@ void MainWindow::saveProject()
         xml.writeStartElement("default_encoding");  // Default encoding for text stored in tables
         xml.writeAttribute("codec", defaultBrowseTableEncoding);
         xml.writeEndElement();
-        {                                           // Table browser information
-            QByteArray temp;
-            QDataStream stream(&temp, QIODevice::WriteOnly);
-            stream << browseTableSettings;
-            xml.writeStartElement("browsetable_info");
-            xml.writeAttribute("data", temp.toBase64());
+
+        xml.writeStartElement("browse_table_settings");
+        for(auto tableIt=browseTableSettings.constBegin(); tableIt!=browseTableSettings.constEnd(); ++tableIt) {
+
+            xml.writeStartElement("table");
+            xml.writeAttribute("schema", tableIt.key().schema());
+            xml.writeAttribute("name", tableIt.key().name());
+            saveBrowseDataTableSettings(tableIt.value(), xml);
             xml.writeEndElement();
         }
         xml.writeEndElement();

@@ -45,22 +45,6 @@ struct BrowseDataTableSettings
     {
     }
 
-    friend QDataStream& operator<<(QDataStream& stream, const BrowseDataTableSettings& object)
-    {
-        stream << object.sortOrderIndex;
-        stream << static_cast<int>(object.sortOrderMode);
-        stream << object.columnWidths;
-        stream << object.filterValues;
-        stream << object.displayFormats;
-        stream << object.showRowid;
-        stream << object.encoding;
-        stream << object.plotXAxis;
-        stream << object.plotYAxes;
-        stream << object.unlockViewPk;
-        stream << object.hiddenColumns;
-
-        return stream;
-    }
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
     {
         stream >> object.sortOrderIndex;
