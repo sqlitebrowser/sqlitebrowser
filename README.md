@@ -10,7 +10,7 @@
 
 ## What it is
 
-DB Browser for SQLite is a high quality, visual, open source tool to
+_DB Browser for SQLite_ (DB4S) is a high quality, visual, open source tool to
 create, design, and edit database files compatible with SQLite.
 
 It is for users and developers wanting to create databases, search, and edit
@@ -29,6 +29,7 @@ Controls and wizards are available for users to:
 * Import and export databases from/to SQL dump files
 * Issue SQL queries and inspect the results
 * Examine a log of all SQL commands issued by the application
+* Plot simple graphs based on table or query data
 
 ## What it is not
 
