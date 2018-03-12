@@ -84,6 +84,19 @@ For Fedora (i386 and x86_64) you can install by issuing:
 
     $ sudo dnf install sqlitebrowser
 
+### Debian
+
+Note that Debian focuses more on stability rather than newest features. Therefore packages will typically contain some older (but well tested) version, compared to the latest release.
+
+Update the cache using:
+
+    sudo apt-get update
+
+Install the package using:
+
+    sudo apt-get install sqlitebrowser
+
+
 ### Ubuntu and Derivatives
 
 #### Stable release
