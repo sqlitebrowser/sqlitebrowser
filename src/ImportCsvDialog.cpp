@@ -540,6 +540,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Create table
     QVector<QByteArray> nullValues;
+    bool missingValuesAsNull = missingValues() == "null";
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
@@ -565,7 +566,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                     nullValues << "0";
                 else if(f->isInteger() && !f->notnull())        // If this is an integer column and NULL is allowed, insert NULL
                     nullValues << QByteArray();
-                else                                            // Otherwise (i.e. if this isn't an integer column), insert an empty string
+                else if(missingValuesAsNull)                    // If we requested NULL values, do that
+                    nullValues << QByteArray();
+                else                                            // Otherwise, insert an empty string, like .import does
                     nullValues << "";
             }
         }
