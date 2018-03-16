@@ -53,6 +53,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboSeparator->blockSignals(true);
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
+    ui->comboMissingValues->blockSignals(true);
 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
@@ -60,6 +61,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     setSeparatorChar(Settings::getValue("importcsv", "separator").toInt());
     setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toInt());
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
+    setMissingValues(Settings::getValue("importcsv", "missingvalues").toString());
 
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
@@ -67,6 +69,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboSeparator->blockSignals(false);
     ui->comboQuote->blockSignals(false);
     ui->comboEncoding->blockSignals(false);
+    ui->comboMissingValues->blockSignals(false);
 
     // Prepare and show interface depending on how many files are selected
     if (csvFilenames.length() > 1)
@@ -166,6 +169,7 @@ void ImportCsvDialog::accept()
     Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
     Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
     Settings::setValue("importcsv", "encoding", currentEncoding());
+    Settings::setValue("importcsv", "missingvalues", missingValues());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -730,4 +734,20 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->editCustomEncoding->text().length() ? ui->editCustomEncoding->text() : "UTF-8";
     else
         return ui->comboEncoding->currentText();
+}
+
+void ImportCsvDialog::setMissingValues(const QString& sValue)
+{
+    if(sValue == "null")
+        ui->comboMissingValues->setCurrentIndex(1);
+    else
+        ui->comboMissingValues->setCurrentIndex(0);
+}
+
+QString ImportCsvDialog::missingValues() const
+{
+    if(ui->comboMissingValues->currentIndex() == 0)
+        return "emptystring";
+    else
+        return "null";
 }

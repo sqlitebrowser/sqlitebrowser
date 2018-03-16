@@ -53,6 +53,9 @@ private:
 
     void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
+
+    void setMissingValues(const QString& sValue);
+    QString missingValues() const;
 };
 
 #endif
