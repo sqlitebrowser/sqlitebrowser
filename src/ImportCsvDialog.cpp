@@ -602,16 +602,19 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Bind all values
         for(size_t i=0;i<data.num_fields;i++)
         {
-            // Empty values need special treatment, but only when importing into an existing table where we could find out something about
-            // its table definition
+            // Empty values need special treatment
+            // When importing into an existing table where we could find out something about its table definition
             if(importToExistingTable && data.fields[i].data_length == 0 && static_cast<size_t>(nullValues.size()) > i)
             {
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 const QByteArray& val = nullValues.at(i);
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
                     sqlite3_bind_text(stmt, i+1, val, val.size(), SQLITE_STATIC);
+            // When importing into a new table, use the missing values setting directly
+            } else if(!importToExistingTable && data.fields[i].data_length == 0 && missingValuesAsNull) {
+                // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
-                // This is a non-empty value. Just add it to the statement
+                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
                 sqlite3_bind_text(stmt, i+1, data.fields[i].data, data.fields[i].data_length, SQLITE_STATIC);
             }
         }
