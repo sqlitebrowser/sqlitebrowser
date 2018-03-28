@@ -290,6 +290,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         }
     }
 
+    // editor/wrap_lines
+    if(group == "editor" && name == "wrap_lines")
+        return 0; // QsciScintilla::WrapNone
+
     // editor/auto_completion?
     if(group == "editor" && name == "auto_completion")
         return true;

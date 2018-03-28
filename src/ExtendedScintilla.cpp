@@ -45,6 +45,9 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // adjusts the scroll width to be narrower.
     setScrollWidthTracking(true);
 
+    // Visual flags for when wrap lines is enabled
+    setWrapVisualFlags(QsciScintilla::WrapFlagByBorder);
+
     // Connect signals
     connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 
@@ -154,6 +157,9 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     // Set tab width
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
     lexer->refreshProperties();
+
+    // Set wrap lines
+    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
 
     // Check if error indicators are enabled and clear them if they just got disabled
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
