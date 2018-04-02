@@ -1566,6 +1566,7 @@ bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue
 
 bool DBBrowserDB::loadExtension(const QString& filename)
 {
+    QString extensionName = filename;
     if(!isOpen())
         return false;
 
@@ -1576,9 +1577,14 @@ bool DBBrowserDB::loadExtension(const QString& filename)
         return false;
     }
 
+    if (extensionName.endsWith(".so"))
+        extensionName.chop(3);
+    else if (extensionName.endsWith(".dll"))
+        extensionName.chop(4);
+
     // Try to load extension
     char* error;
-    if(sqlite3_load_extension(_db, filename.toUtf8(), nullptr, &error) == SQLITE_OK)
+    if(sqlite3_load_extension(_db, extensionName.toUtf8(), nullptr, &error) == SQLITE_OK)
     {
         return true;
     } else {
