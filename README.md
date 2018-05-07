@@ -179,7 +179,7 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## Website
 
-* http://sqlitebrowser.org
+* https://sqlitebrowser.org
 
 ## Old project page
 

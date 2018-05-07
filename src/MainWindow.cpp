@@ -2022,7 +2022,7 @@ void MainWindow::on_actionSqlCipherFaq_triggered()
 
 void MainWindow::on_actionWebsite_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://sqlitebrowser.org"));
+    QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
 }
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
