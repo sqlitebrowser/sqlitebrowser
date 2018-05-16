@@ -256,6 +256,16 @@ void MainWindow::init()
     statusEncodingLabel->setToolTip(tr("Database encoding"));
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
+    // When changing the text of the toolbar actions, also automatically change their icon text and their tooltip text
+    connect(ui->editModifyObjectAction, &QAction::changed, [=]() {
+        ui->editModifyObjectAction->setIconText(ui->editModifyObjectAction->text());
+        ui->editModifyObjectAction->setToolTip(ui->editModifyObjectAction->text());
+    });
+    connect(ui->editDeleteObjectAction, &QAction::changed, [=]() {
+        ui->editDeleteObjectAction->setIconText(ui->editDeleteObjectAction->text());
+        ui->editDeleteObjectAction->setToolTip(ui->editDeleteObjectAction->text());
+    });
+
     // Connect some more signals and slots
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
@@ -1411,7 +1421,7 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
     if(type == "table" || type == "view" || type == "trigger" || type == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
-//** Tree selection changed
+
 void MainWindow::changeTreeSelection()
 {
     // Just assume first that something's selected that can not be edited at all
@@ -1436,24 +1446,16 @@ void MainWindow::changeTreeSelection()
 
     if (type == "view") {
         ui->editDeleteObjectAction->setText(tr("Delete View"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete View"));
         ui->editModifyObjectAction->setText(tr("Modify View"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify View"));
     } else if(type == "trigger") {
         ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete Trigger"));
         ui->editModifyObjectAction->setText(tr("Modify Trigger"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify Trigger"));
     } else if(type == "index") {
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete Index"));
         ui->editModifyObjectAction->setText(tr("Modify Index"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify Index"));
     } else {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete Table"));
         ui->editModifyObjectAction->setText(tr("Modify Table"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify Table"));
     }
 
     // Activate actions
