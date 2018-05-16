@@ -488,7 +488,7 @@ bool DBBrowserDB::close()
 }
 
 bool DBBrowserDB::dump(const QString& filename,
-    const QStringList & tablesToDump,
+    const QStringList& tablesToDump,
     bool insertColNames,
     bool insertNewSyntx,
     bool exportSchema,
@@ -501,6 +501,7 @@ bool DBBrowserDB::dump(const QString& filename,
     {
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
+        // Count the total number of all records in all tables for the progress dialog
         size_t numRecordsTotal = 0, numRecordsCurrent = 0;
         objectMap objMap = schemata["main"];            // We only always export the main database, not the attached databases
         QList<sqlb::ObjectPtr> tables = objMap.values("table");
@@ -509,8 +510,8 @@ bool DBBrowserDB::dump(const QString& filename,
         {
             it.next();
 
-            // Remove the sqlite_stat1 table if there is one
-            if(it.value()->name() == "sqlite_stat1" || it.value()->name() == "sqlite_sequence")
+            // Remove the sqlite_stat1 and the sqlite_sequence tables if they exist. Also remove any tables which are not selected for export.
+            if(it.value()->name() == "sqlite_stat1" || it.value()->name() == "sqlite_sequence" || !tablesToDump.contains(it.value()->name()))
             {
                 it.remove();
             } else {
@@ -533,140 +534,141 @@ bool DBBrowserDB::dump(const QString& filename,
         // Put the SQL commands in a transaction block
         stream << "BEGIN TRANSACTION;\n";
 
-        // Loop through all tables first as they are required to generate views, indices etc. later
-        for(auto it=tables.constBegin();it!=tables.constEnd();++it)
+        // First export the schema of all selected tables. We need to export the schema of all tables before we export the first INSERT statement to
+        // make sure foreign keys are working properly.
+        if(exportSchema)
         {
-            if (tablesToDump.indexOf((*it)->name()) == -1)
-                continue;
-
-            // Write the SQL string used to create this table to the output file
-            if(exportSchema)
+            for(auto it : tables)
             {
+                // Write the SQL string used to create this table to the output file
                 if(!keepOldSchema)
-                    stream << QString("DROP TABLE IF EXISTS %1;\n").arg(sqlb::escapeIdentifier((*it)->name()));
+                    stream << QString("DROP TABLE IF EXISTS %1;\n").arg(sqlb::escapeIdentifier(it->name()));
 
-                if((*it)->fullyParsed())
-                    stream << (*it)->sql("main", true) << "\n";
+                if(it->fullyParsed())
+                    stream << it->sql("main", true) << "\n";
                 else
-                    stream << (*it)->originalSql() << ";\n";
-            }
+                    stream << it->originalSql() << ";\n";
+                }
+        }
 
-            // If the user doesn't want the data to be exported skip the rest of the loop block here
-            if(!exportData)
-                continue;
-
-            // get columns
-            QStringList cols((*it).dynamicCast<sqlb::Table>()->fieldNames());
-
-            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier((*it)->name()));
-            QByteArray utf8Query = sQuery.toUtf8();
-            sqlite3_stmt *stmt;
-            QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
-
-            int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
-            if(SQLITE_OK == status)
+        // Now export the data as well
+        if(exportData)
+        {
+            for(auto it : tables)
             {
-                int columns = sqlite3_column_count(stmt);
-                size_t counter = 0;
-                qApp->processEvents();
-                while(sqlite3_step(stmt) == SQLITE_ROW)
+                // get columns
+                QStringList cols(it.dynamicCast<sqlb::Table>()->fieldNames());
+
+                QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(it->name()));
+                QByteArray utf8Query = sQuery.toUtf8();
+                sqlite3_stmt *stmt;
+                QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
+
+                int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+                if(SQLITE_OK == status)
                 {
-                    if (counter) stream << lineSep;
-
-                    if (!insertNewSyntx || !counter)
+                    int columns = sqlite3_column_count(stmt);
+                    size_t counter = 0;
+                    qApp->processEvents();
+                    while(sqlite3_step(stmt) == SQLITE_ROW)
                     {
-                        stream << "INSERT INTO " << sqlb::escapeIdentifier((*it)->name());
-                        if (insertColNames)
-                            stream << " (" << cols.join(",") << ")";
-                        stream << " VALUES (";
-                    }
-                    else
-                    {
-                        stream << " (";
-                    }
+                        if (counter) stream << lineSep;
 
-                    for (int i = 0; i < columns; ++i)
-                    {
-                        int fieldsize = sqlite3_column_bytes(stmt, i);
-                        int fieldtype = sqlite3_column_type(stmt, i);
-                        QByteArray bcontent(
-                                    (const char*)sqlite3_column_blob(stmt, i),
-                                    fieldsize);
-
-                        if(bcontent.left(2048).contains('\0')) // binary check
+                        if (!insertNewSyntx || !counter)
                         {
-                            stream << QString("X'%1'").arg(QString(bcontent.toHex()));
+                            stream << "INSERT INTO " << sqlb::escapeIdentifier(it->name());
+                            if (insertColNames)
+                                stream << " (" << cols.join(",") << ")";
+                            stream << " VALUES (";
                         }
                         else
                         {
-                            switch(fieldtype)
-                            {
-                            case SQLITE_TEXT:
-                            case SQLITE_BLOB:
-                                stream << "'" << bcontent.replace("'", "''") << "'";
-                            break;
-                            case SQLITE_NULL:
-                                stream << "NULL";
-                            break;
-                            case SQLITE_FLOAT:
-                                if(bcontent.indexOf("Inf") != -1)
-                                    stream << "'" << bcontent << "'";
-                                else
-                                    stream << bcontent;
-                            break;
-                            default:
-                                stream << bcontent;
-                            }
+                            stream << " (";
                         }
-                        if(i != columns - 1)
-                            stream << ',';
-                    }
 
-                    progress.setValue(++numRecordsCurrent);
-                    if(counter % 5000 == 0)
-                        qApp->processEvents();
-                    counter++;
+                        for (int i = 0; i < columns; ++i)
+                        {
+                            int fieldsize = sqlite3_column_bytes(stmt, i);
+                            int fieldtype = sqlite3_column_type(stmt, i);
+                            QByteArray bcontent(
+                                        (const char*)sqlite3_column_blob(stmt, i),
+                                        fieldsize);
 
-                    if(progress.wasCanceled())
-                    {
-                        sqlite3_finalize(stmt);
-                        file.close();
-                        file.remove();
-                        QApplication::restoreOverrideCursor();
-                        return false;
+                            if(bcontent.left(2048).contains('\0')) // binary check
+                            {
+                                stream << QString("X'%1'").arg(QString(bcontent.toHex()));
+                            }
+                            else
+                            {
+                                switch(fieldtype)
+                                {
+                                case SQLITE_TEXT:
+                                case SQLITE_BLOB:
+                                    stream << "'" << bcontent.replace("'", "''") << "'";
+                                break;
+                                case SQLITE_NULL:
+                                    stream << "NULL";
+                                break;
+                                case SQLITE_FLOAT:
+                                    if(bcontent.indexOf("Inf") != -1)
+                                        stream << "'" << bcontent << "'";
+                                    else
+                                        stream << bcontent;
+                                break;
+                                default:
+                                    stream << bcontent;
+                                }
+                            }
+                            if(i != columns - 1)
+                                stream << ',';
+                        }
+
+                        progress.setValue(++numRecordsCurrent);
+                        if(counter % 5000 == 0)
+                            qApp->processEvents();
+                        counter++;
+
+                        if(progress.wasCanceled())
+                        {
+                            sqlite3_finalize(stmt);
+                            file.close();
+                            file.remove();
+                            QApplication::restoreOverrideCursor();
+                            return false;
+                        }
                     }
+                    if (counter > 0) stream << ");\n";
                 }
-                if (counter > 0) stream << ");\n";
+                sqlite3_finalize(stmt);
             }
-            sqlite3_finalize(stmt);
         }
 
-        // Now dump all the other objects (but only if we are exporting the schema)
+        // Finally export all objects other than tables
         if(exportSchema)
         {
-            for(auto it=objMap.constBegin();it!=objMap.constEnd();++it)
+            for(auto it : objMap)
             {
                 // Make sure it's not a table again
-                if(it.value()->type() == sqlb::Object::Types::Table)
+                if(it->type() == sqlb::Object::Types::Table)
                     continue;
 
                 // If this object is based on a table (e.g. is an index for that table) it depends on the existence of this table.
                 // So if we didn't export the base table this depends on, don't export this object either.
-                if(!(*it)->baseTable().isEmpty() && !tablesToDump.contains((*it)->baseTable()))
+                if(!it->baseTable().isEmpty() && !tablesToDump.contains(it->baseTable()))
                     continue;
 
                 // Write the SQL string used to create this object to the output file
-                if(!(*it)->originalSql().isEmpty())
+                if(!it->originalSql().isEmpty())
                 {
                     if(!keepOldSchema)
                         stream << QString("DROP %1 IF EXISTS %2;\n")
-                                  .arg(sqlb::Object::typeToString((*it)->type()).toUpper())
-                                  .arg(sqlb::escapeIdentifier((*it)->name()));
+                                  .arg(sqlb::Object::typeToString(it->type()).toUpper())
+                                  .arg(sqlb::escapeIdentifier(it->name()));
 
-                    if((*it)->fullyParsed())
-                        stream << (*it)->sql("main", true) << "\n";
+                    if(it->fullyParsed())
+                        stream << it->sql("main", true) << "\n";
                     else
-                        stream << (*it)->originalSql() << ";\n";
+                        stream << it->originalSql() << ";\n";
                 }
             }
         }
