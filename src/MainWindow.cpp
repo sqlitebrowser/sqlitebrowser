@@ -1060,7 +1060,7 @@ void MainWindow::executeQuery()
             structure_updated = true;
 
         // Check whether this is trying to set a pragma or to vacuum the database
-        if((query_type == PragmaStatement && qtail.contains('=')) || query_type == VacuumStatement)
+        if((query_type == PragmaStatement && qtail.contains('=') && !qtail.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
         {
             // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
             // user about that
