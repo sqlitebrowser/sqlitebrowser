@@ -427,11 +427,11 @@ void MainWindow::populateStructure(const QString& old_table)
     for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
     {
         objectMap tab = db.getBrowsableObjects(it.key());
-        for(auto it=tab.constBegin();it!=tab.constEnd();++it)
+        for(auto it : tab)
         {
-            QString objectname = (*it)->name();
+            QString objectname = it->name();
 
-            sqlb::FieldInfoList fi = (*it)->fieldInformation();
+            sqlb::FieldInfoList fi = it->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }

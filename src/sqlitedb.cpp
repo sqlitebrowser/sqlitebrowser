@@ -1205,16 +1205,16 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
 
     // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
     QStringList otherObjectsSql;
-    for(auto it=schemata[tablename.schema()].constBegin();it!=schemata[tablename.schema()].constEnd();++it)
+    for(auto it : schemata[tablename.schema()])
     {
         // If this object references the table and it's not the table itself save it's SQL string
-        if((*it)->baseTable() == tablename.name() && (*it)->type() != sqlb::Object::Types::Table)
+        if(it->baseTable() == tablename.name() && it->type() != sqlb::Object::Types::Table)
         {
             // If this is an index, update the fields first. This highly increases the chance that the SQL statement won't throw an
             // error later on when we try to recreate it.
-            if((*it)->type() == sqlb::Object::Types::Index)
+            if(it->type() == sqlb::Object::Types::Index)
             {
-                sqlb::IndexPtr idx = (*it).dynamicCast<sqlb::Index>();
+                sqlb::IndexPtr idx = it.dynamicCast<sqlb::Index>();
 
                 // Are we updating a field name or are we removing a field entirely?
                 if(to)
@@ -1238,7 +1238,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
             } else {
                 // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
                 // hope for the best.
-                otherObjectsSql << (*it)->originalSql().trimmed() + ";";
+                otherObjectsSql << it->originalSql().trimmed() + ";";
             }
         }
     }
@@ -1352,10 +1352,10 @@ objectMap DBBrowserDB::getBrowsableObjects(const QString& schema) const
 
 const sqlb::ObjectPtr DBBrowserDB::getObjectByName(const sqlb::ObjectIdentifier& name) const
 {
-    for(auto it=schemata[name.schema()].constBegin();it!=schemata[name.schema()].constEnd();++it)
+    for(auto it : schemata[name.schema()])
     {
-        if((*it)->name() == name.name())
-            return *it;
+        if(it->name() == name.name())
+            return it;
     }
     return sqlb::ObjectPtr(nullptr);
 }
