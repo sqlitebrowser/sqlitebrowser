@@ -164,7 +164,7 @@ int SqliteTableModel::getQueryRowCount()
         // So just execute the statement as it is and fetch all results counting the rows
         sqlite3_stmt* stmt;
         QByteArray utf8Query = m_sQuery.toUtf8();
-        if(sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+        if(sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
         {
             retval = 0;
             while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -183,7 +183,7 @@ int SqliteTableModel::getQueryRowCount()
         QByteArray utf8Query = sCountQuery.toUtf8();
 
         sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
         if(status == SQLITE_OK)
         {
             status = sqlite3_step(stmt);
@@ -560,7 +560,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         m_db.logSQL(sLimitQuery, kLogMsg_App);
         QByteArray utf8Query = sLimitQuery.toUtf8();
         sqlite3_stmt *stmt;
-        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
 
         if(SQLITE_OK == status)
         {
@@ -722,7 +722,7 @@ QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fi
 {
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
-    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
     QStringList listColumns;
     if(SQLITE_OK == status)
     {

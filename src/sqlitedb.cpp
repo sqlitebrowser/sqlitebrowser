@@ -108,7 +108,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         return false;
 
     // Open database file
-    if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK)
+    if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
     {
         lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
         return false;
@@ -135,7 +135,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         // register collation callback
         Callback<void(void*, sqlite3*, int, const char*)>::func = std::bind(&DBBrowserDB::collationNeeded, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
         void (*c_callback)(void*, sqlite3*, int, const char*) = static_cast<decltype(c_callback)>(Callback<void(void*, sqlite3*, int, const char*)>::callback);
-        sqlite3_collation_needed(_db, NULL, c_callback);
+        sqlite3_collation_needed(_db, nullptr, c_callback);
 
         // Set foreign key settings as requested in the preferences
         bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
@@ -146,7 +146,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
-            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, NULL, regexp, NULL, NULL);
+            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
 
         // Check if file is read only
         QFileInfo fi(db);
@@ -177,7 +177,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     QString sql = "PRAGMA database_list;";
     logSQL(sql, kLogMsg_App);
     sqlite3_stmt* db_vm;
-    if(sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &db_vm, NULL) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &db_vm, nullptr) == SQLITE_OK)
     {
         // Loop through all the databases
         QFileInfo fi(filename);
@@ -249,7 +249,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
 
     // Open database file
     sqlite3* dbHandle;
-    if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK)
+    if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
         return false;
 
     // Try reading from database
@@ -426,7 +426,7 @@ bool DBBrowserDB::create ( const QString & db)
 
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
-            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, NULL, regexp, NULL, NULL);
+            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
 
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
@@ -564,7 +564,7 @@ bool DBBrowserDB::dump(const QString& filename,
                 sqlite3_stmt *stmt;
                 QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
 
-                int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+                int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
                 if(SQLITE_OK == status)
                 {
                     int columns = sqlite3_column_count(stmt);
@@ -698,7 +698,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
     if (dirtyDB) setSavepoint();
 
     char* errmsg;
-    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), NULL, NULL, &errmsg))
+    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), nullptr, nullptr, &errmsg))
     {
         // Update DB structure after executing an SQL statement. But try to avoid doing unnecessary updates.
         if(!dontCheckForStructureUpdates && (statement.startsWith("ALTER", Qt::CaseInsensitive) ||
@@ -839,7 +839,7 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
     bool ret = false;
-    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
         // even this is a while loop, the statement should always only return 1 row
         while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -872,7 +872,7 @@ QString DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, sqlb::FieldPtr
     sqlite3_stmt *stmt;
     QString ret = "0";
 
-    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
         // even this is a while loop, the statement should always only return 1 row
         while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -1031,7 +1031,7 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
 
     // If we get a NULL QByteArray we insert a NULL value, and for that
     // we can pass NULL to sqlite3_bind_text() so that it behaves like sqlite3_bind_null()
-    const char *rawValue = value.isNull() ? NULL : value.constData();
+    const char *rawValue = value.isNull() ? nullptr : value.constData();
 
     sqlite3_stmt* stmt;
     int success = 1;
@@ -1396,7 +1396,7 @@ void DBBrowserDB::updateSchema()
     QByteArray db_utf8Statement = db_statement.toUtf8();
     logSQL(db_statement, kLogMsg_App);
     sqlite3_stmt* db_vm;
-    if(sqlite3_prepare_v2(_db, db_utf8Statement, db_utf8Statement.length(), &db_vm, NULL) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, db_utf8Statement, db_utf8Statement.length(), &db_vm, nullptr) == SQLITE_OK)
     {
         // Loop through all the databases
         while(sqlite3_step(db_vm) == SQLITE_ROW)
@@ -1418,7 +1418,7 @@ void DBBrowserDB::updateSchema()
             logSQL(statement, kLogMsg_App);
 
             sqlite3_stmt* vm;
-            int err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, NULL);
+            int err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, nullptr);
             if(err == SQLITE_OK)
             {
                 while(sqlite3_step(vm) == SQLITE_ROW)
