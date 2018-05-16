@@ -71,7 +71,7 @@ void ExportSqlDialog::accept()
     if(selectedItems.isEmpty())
     {
         QMessageBox::warning(this, QApplication::applicationName(),
-                             tr("Please select at least 1 table."));
+                             tr("Please select at least one table."));
         return;
     }
 
