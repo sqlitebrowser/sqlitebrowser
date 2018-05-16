@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include "Application.h"
 #include "EditIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
@@ -48,6 +49,7 @@
 #include <QShortcut>
 #include <QTextCodec>
 #include <QOpenGLWidget>
+#include <QUrlQuery>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -2012,9 +2014,23 @@ void MainWindow::on_actionWiki_triggered()
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
+// 'Help | Bug report...' link will add the system information and set the label 'bug' automatically to the issue
 void MainWindow::on_actionBug_report_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/issues/new"));
+    const QString version = Application::versionString();
+    const QString os = QSysInfo::prettyProductName();
+    const QString kernelType = QSysInfo::kernelType();
+    const QString kernelVersion = QSysInfo::kernelVersion();
+    const QString arch = QSysInfo::currentCpuArchitecture();
+    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]").arg(version, os, kernelType, kernelVersion, arch);
+
+    QUrlQuery query;
+    query.addQueryItem("labels", "bug");
+    query.addQueryItem("body", body);
+
+    QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
+    url.setQuery(query);
+    QDesktopServices::openUrl(url);
 }
 
 void MainWindow::on_actionSqlCipherFaq_triggered()
