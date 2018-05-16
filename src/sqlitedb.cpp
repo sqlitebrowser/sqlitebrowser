@@ -808,13 +808,13 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
                 return false;
             }
         } else {
-            if(dirty)
-                revertToSavepoint(savepoint_name);
             lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.")
                     .arg(line)
                     .arg(sqlite3_errmsg(_db))
                     .arg(dirty ? tr(" and rolling back") : "");
             qWarning() << lastErrorMessage;
+            if(dirty)
+                revertToSavepoint(savepoint_name);
             return false;
         }
     }
