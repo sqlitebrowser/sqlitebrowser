@@ -2,7 +2,7 @@
 #include "version.h"
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION     MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION, 0
+FILEVERSION     MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION, BUILD_VERSION
 PRODUCTVERSION  MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION, 0
 FILEOS          VOS_NT_WINDOWS32
 FILETYPE        VFT_APP
@@ -12,7 +12,7 @@ BEGIN
         BLOCK "000004B0"
         BEGIN
             VALUE "FileVersion",      APP_VERSION
-            VALUE "ProductVersion",   APP_VERSION
+            VALUE "ProductVersion",   PRODUCT_VERSION
             VALUE "FileDescription",  "DB Browser for SQLite"
             VALUE "ProductName",      "DB Browser for SQLite"
             VALUE "InternalName",     "DB Browser for SQLite"

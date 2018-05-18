@@ -1,5 +1,13 @@
 project(sqlitebrowser)
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.11)
+
+# BUILD_VERSION is the day of the current year.
+# It is a number between 1 and 365 (356 in a leap year), January 1 is day 1.
+string(TIMESTAMP BUILD_VERSION "%j")
+
+# Comment out this line if you are building a stable version. It is only
+# used by the nightly version to add the date (day of the year) of the build.
+add_definitions(-DBUILD_VERSION=${BUILD_VERSION})
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
