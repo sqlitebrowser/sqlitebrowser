@@ -2,7 +2,7 @@ project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.8.11)
 
 # BUILD_VERSION is the day of the current year.
-# It is a number between 1 and 365 (356 in a leap year), January 1 is day 1.
+# It is a number between 1 and 365 (366 in a leap year), January 1 is day 1.
 string(TIMESTAMP BUILD_VERSION "%j")
 
 # Comment out this line if you are building a stable version. It is only
