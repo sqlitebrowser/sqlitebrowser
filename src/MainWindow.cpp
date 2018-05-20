@@ -2453,7 +2453,8 @@ void MainWindow::updateFilter(int column, const QString& value)
     setRecordsetLabel();
 
     // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the filters.
-    showRowidColumn(browseTableSettings[currentlyBrowsedTableName()].showRowid);
+    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
+    ui->dataTable->setColumnHidden(0, !showRowid);
 }
 
 void MainWindow::editEncryption()
