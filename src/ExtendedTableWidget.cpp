@@ -269,8 +269,8 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 return;
             }
 
-            // The field isn't empty. Quote data as needed and copy it to the clipboard
-            qApp->clipboard()->setText(escapeCopiedData(data.toByteArray()));
+            // The field isn't empty. Copy the text to the clipboard without quoting (for general plain text clipboard)
+            qApp->clipboard()->setText(data.toByteArray());
             return;
         }
     }
@@ -555,15 +555,30 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
         // If the Tab key was pressed while the focus was on the last cell of the last row insert a new row automatically
         model()->insertRow(model()->rowCount());
     } else if ((event->key() == Qt::Key_Delete) || (event->key() == Qt::Key_Backspace)) {
-        if(event->modifiers().testFlag(Qt::AltModifier))
+        // Check if entire rows are selected. We call the selectedRows() method here not only for simplicity reasons but also because it distinguishes between
+        // "an entire row is selected" and "all cells of a row are selected", the former is e.g. the case when the row number is clicked, the latter when all cells
+        // are selected manually. This is an important distinction (especially when a table has only one column!) to match the users' expectations. Also never
+        // delete records when the backspace key was pressed.
+        if(event->key() == Qt::Key_Delete && selectionModel()->selectedRows().size())
         {
-            // When pressing Alt+Delete set the value to NULL
-            for(const QModelIndex& index : selectedIndexes())
-                model()->setData(index, QVariant());
+            // At least on entire row is selected. Because we don't allow completely arbitrary selections (at least at the moment) but only block selections,
+            // this means that only entire entire rows are selected. If an entire row is (or multiple entire rows are) selected, we delete that record instead
+            // of deleting only the cell contents.
+
+            emit selectedRowsToBeDeleted();
         } else {
-            // When pressing Delete only set the value to empty string
-            for(const QModelIndex& index : selectedIndexes())
-                model()->setData(index, "");
+            // No entire row is selected. So just set the selected cells to null or empty string depending on the modifier keys
+
+            if(event->modifiers().testFlag(Qt::AltModifier))
+            {
+                // When pressing Alt+Delete set the value to NULL
+                for(const QModelIndex& index : selectedIndexes())
+                    model()->setData(index, QVariant());
+            } else {
+                // When pressing Delete only set the value to empty string
+                for(const QModelIndex& index : selectedIndexes())
+                    model()->setData(index, "");
+            }
         }
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown)) {
         // When pressing Ctrl + Page up/down send a signal indicating the user wants to change the current table

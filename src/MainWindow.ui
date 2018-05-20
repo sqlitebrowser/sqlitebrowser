@@ -65,7 +65,7 @@
           </property>
           <property name="whatsThis">
            <string>This is the structure of the opened database.
-You can drag SQL sentences from an object row and drop them into other applications or into another instance of 'DB Browser for SQLite'.
+You can drag SQL statements from an object row and drop them into other applications or into another instance of 'DB Browser for SQLite'.
 </string>
           </property>
           <property name="dragEnabled">
@@ -1138,8 +1138,8 @@ You can drag SQL sentences from an object row and drop them into other applicati
       <widget class="QTreeView" name="treeSchemaDock">
        <property name="whatsThis">
         <string>This is the structure of the opened database.
-You can drag multiple object names from the Name column and drop them into the SQL editor .
-You can drag SQL sentences from the Schema column and drop them into the SQL editor or into other applications.
+You can drag multiple object names from the Name column and drop them into the SQL editor.
+You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </string>
        </property>
        <property name="dragEnabled">
@@ -1594,10 +1594,10 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
     <string>&amp;Execute SQL</string>
    </property>
    <property name="toolTip">
-    <string>Execute SQL [F5, Ctrl+Return, Ctrl+R]</string>
+    <string>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</string>
    </property>
    <property name="whatsThis">
-    <string>This button executes all the SQL statements of the current editor tab</string>
+    <string>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</string>
    </property>
   </action>
   <action name="actionSqlOpenFile">

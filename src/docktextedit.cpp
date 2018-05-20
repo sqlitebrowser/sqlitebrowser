@@ -37,6 +37,7 @@ void DockTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat(jsonLexer, "comment", QsciLexerJSON::CommentBlock);
     setupSyntaxHighlightingFormat(jsonLexer, "keyword", QsciLexerJSON::Keyword);
     setupSyntaxHighlightingFormat(jsonLexer, "keyword", QsciLexerJSON::KeywordLD);
+    setupSyntaxHighlightingFormat(jsonLexer, "function", QsciLexerJSON::Operator);
     setupSyntaxHighlightingFormat(jsonLexer, "string", QsciLexerJSON::String);
     setupSyntaxHighlightingFormat(jsonLexer, "table", QsciLexerJSON::Number);
     setupSyntaxHighlightingFormat(jsonLexer, "identifier", QsciLexerJSON::Property);
@@ -57,8 +58,12 @@ void DockTextEdit::reloadSettings()
     jsonLexer->setPaper(jsonLexer->defaultPaper(QsciLexerJSON::String), QsciLexerJSON::Error);
     jsonLexer->setPaper(jsonLexer->defaultPaper(QsciLexerJSON::String), QsciLexerJSON::UnclosedString);
 
+    xmlLexer->setColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
     setupSyntaxHighlightingFormat(xmlLexer, "comment", QsciLexerHTML::HTMLComment);
     setupSyntaxHighlightingFormat(xmlLexer, "keyword", QsciLexerHTML::Tag);
+    setupSyntaxHighlightingFormat(xmlLexer, "keyword", QsciLexerHTML::XMLTagEnd);
+    setupSyntaxHighlightingFormat(xmlLexer, "keyword", QsciLexerHTML::XMLStart);
+    setupSyntaxHighlightingFormat(xmlLexer, "keyword", QsciLexerHTML::XMLEnd);
     setupSyntaxHighlightingFormat(xmlLexer, "string", QsciLexerHTML::HTMLDoubleQuotedString);
     setupSyntaxHighlightingFormat(xmlLexer, "string", QsciLexerHTML::HTMLSingleQuotedString);
     setupSyntaxHighlightingFormat(xmlLexer, "table", QsciLexerHTML::HTMLNumber);

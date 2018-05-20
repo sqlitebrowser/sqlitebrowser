@@ -6,6 +6,7 @@
 #include <QFontInfo>
 #include <QLocale>
 #include <QStandardPaths>
+#include <QPalette>
 
 QHash<QString, QVariant> Settings::m_hCache;
 
@@ -188,15 +189,15 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         if(name == "null_fg_colour")
             return QColor(Qt::lightGray).name();
         if(name == "null_bg_colour")
-            return QColor(Qt::white).name();
+            return QPalette().color(QPalette::Active, QPalette::Base).name();
         if(name == "reg_fg_colour")
-            return QColor(Qt::black).name();
+            return QPalette().color(QPalette::Active, QPalette::Text).name();
         if(name == "reg_bg_colour")
-            return QColor(Qt::white).name();
+            return QPalette().color(QPalette::Active, QPalette::Base).name();
         if(name == "bin_fg_colour")
             return QColor(Qt::lightGray).name();
         if(name == "bin_bg_colour")
-            return QColor(Qt::white).name();
+            return QPalette().color(QPalette::Active, QPalette::Base).name();
     }
 
     // syntaxhighlighter?
@@ -217,20 +218,50 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         // Colour?
         if(name.right(6) == "colour")
         {
-            if(name == "keyword_colour")
-                return QColor(Qt::darkBlue).name();
-            else if(name == "function_colour")
-                return QColor(Qt::blue).name();
-            else if(name == "table_colour")
-                return QColor(Qt::darkCyan).name();
-            else if(name == "comment_colour")
-                return QColor(Qt::darkGreen).name();
-            else if(name == "identifier_colour")
-                return QColor(Qt::darkMagenta).name();
-            else if(name == "string_colour")
-                return QColor(Qt::red).name();
-            else if(name == "currentline_colour")
-                return QColor(236, 236, 245).name();
+            QColor backgroundColour = QPalette().color(QPalette::Active, QPalette::Base);
+            QColor foregroundColour = QPalette().color(QPalette::Active, QPalette::Text);
+
+            if(name == "foreground_colour")
+                return foregroundColour.name();
+            else if(name == "background_colour")
+                return backgroundColour.name();
+
+            // Detect and provide sensible defaults for dark themes
+            if (backgroundColour.value() < foregroundColour.value()) {
+                if(name == "keyword_colour")
+                  return QColor(82, 148, 226).name();
+                else if(name == "function_colour")
+                    return QColor(Qt::yellow).name();
+                else if(name == "table_colour")
+                    return QColor(Qt::cyan).name();
+                else if(name == "comment_colour")
+                    return QColor(Qt::green).name();
+                else if(name == "identifier_colour")
+                    return QColor(Qt::magenta).name();
+                else if(name == "string_colour")
+                    return QColor(Qt::lightGray).name();
+                else if(name == "currentline_colour")
+                    return backgroundColour.lighter(150).name();
+                else if(name == "background_colour")
+                    return backgroundColour.name();
+            } else {
+                if(name == "keyword_colour")
+                    return QColor(Qt::darkBlue).name();
+                else if(name == "function_colour")
+                    return QColor(Qt::blue).name();
+                else if(name == "table_colour")
+                    return QColor(Qt::darkCyan).name();
+                else if(name == "comment_colour")
+                    return QColor(Qt::darkGreen).name();
+                else if(name == "identifier_colour")
+                    return QColor(Qt::darkMagenta).name();
+                else if(name == "string_colour")
+                    return QColor(Qt::red).name();
+                else if(name == "currentline_colour")
+                    return QColor(236, 236, 245).name();
+                else if(name == "background_colour")
+                    return backgroundColour.name();
+            }
         }
     }
 
@@ -258,6 +289,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 4;
         }
     }
+
+    // editor/wrap_lines
+    if(group == "editor" && name == "wrap_lines")
+        return 0; // QsciScintilla::WrapNone
 
     // editor/auto_completion?
     if(group == "editor" && name == "auto_completion")
@@ -313,4 +348,11 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
+}
+
+void Settings::restoreDefaults ()
+{
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    settings.clear();
+    m_hCache.clear();
 }

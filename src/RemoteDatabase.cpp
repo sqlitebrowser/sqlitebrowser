@@ -549,7 +549,7 @@ void RemoteDatabase::localAssureOpened()
                 QStandardPaths::GenericDataLocation
 #endif
                 ) + "/remotedbs.db";
-    if(sqlite3_open_v2(database_file.toUtf8(), &m_dbLocal, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL) != SQLITE_OK)
+    if(sqlite3_open_v2(database_file.toUtf8(), &m_dbLocal, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr) != SQLITE_OK)
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error opening local databases list.\n%1").arg(QString::fromUtf8(sqlite3_errmsg(m_dbLocal))));
         return;
@@ -567,7 +567,7 @@ void RemoteDatabase::localAssureOpened()
                                 "\"modified\" INTEGER DEFAULT 0,"
                                 "\"branch\" TEXT NOT NULL DEFAULT \"master\""
                                 ")");
-    if(sqlite3_exec(m_dbLocal, statement.toUtf8(), NULL, NULL, &errmsg) != SQLITE_OK)
+    if(sqlite3_exec(m_dbLocal, statement.toUtf8(), nullptr, nullptr, &errmsg) != SQLITE_OK)
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error creating local databases list.\n%1").arg(QString::fromUtf8(errmsg)));
         sqlite3_free(errmsg);
@@ -833,7 +833,7 @@ QString RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
     // Query commit id for that file name
     QString sql = QString("SELECT commit_id FROM local WHERE identity=? AND url=?");
     sqlite3_stmt* stmt;
-    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, NULL) != SQLITE_OK)
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
         return QString();
 
     QFileInfo f(identity);                  // Remove the path

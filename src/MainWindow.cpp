@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include "Application.h"
 #include "EditIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
@@ -47,9 +48,10 @@
 #include <QClipboard>
 #include <QShortcut>
 #include <QTextCodec>
+#include <QUrlQuery>
 
 #ifdef Q_OS_MACX //Needed only on macOS
-	#include <QOpenGLWidget>
+    #include <QOpenGLWidget>
 #endif
 
 MainWindow::MainWindow(QWidget* parent)
@@ -259,6 +261,16 @@ void MainWindow::init()
     statusEncodingLabel->setToolTip(tr("Database encoding"));
     ui->statusbar->addPermanentWidget(statusEncodingLabel);
 
+    // When changing the text of the toolbar actions, also automatically change their icon text and their tooltip text
+    connect(ui->editModifyObjectAction, &QAction::changed, [=]() {
+        ui->editModifyObjectAction->setIconText(ui->editModifyObjectAction->text());
+        ui->editModifyObjectAction->setToolTip(ui->editModifyObjectAction->text());
+    });
+    connect(ui->editDeleteObjectAction, &QAction::changed, [=]() {
+        ui->editDeleteObjectAction->setIconText(ui->editDeleteObjectAction->text());
+        ui->editDeleteObjectAction->setToolTip(ui->editDeleteObjectAction->text());
+    });
+
     // Connect some more signals and slots
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
@@ -272,6 +284,7 @@ void MainWindow::init()
     connect(m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
     connect(m_remoteDb, &RemoteDatabase::gotCurrentVersion, this, &MainWindow::checkNewVersion);
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, this, &MainWindow::setRecordsetLabel);
+    connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &MainWindow::deleteRecord);
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
     connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
@@ -430,11 +443,11 @@ void MainWindow::populateStructure(const QString& old_table)
     for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
     {
         objectMap tab = db.getBrowsableObjects(it.key());
-        for(auto it=tab.constBegin();it!=tab.constEnd();++it)
+        for(auto it : tab)
         {
-            QString objectname = (*it)->name();
+            QString objectname = it->name();
 
-            sqlb::FieldInfoList fi = (*it)->fieldInformation();
+            sqlb::FieldInfoList fi = it->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
@@ -598,8 +611,9 @@ void MainWindow::populateTable()
     if(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
     {
         // Table
+        sqlb::TablePtr table = db.getObjectByName(currentlyBrowsedTableName()).dynamicCast<sqlb::Table>();
         ui->actionUnlockViewEditing->setVisible(false);
-        ui->actionShowRowidColumn->setVisible(true);
+        ui->actionShowRowidColumn->setVisible(!table->isWithoutRowidTable());
     } else {
         // View
         ui->actionUnlockViewEditing->setVisible(true);
@@ -1062,7 +1076,7 @@ void MainWindow::executeQuery()
             structure_updated = true;
 
         // Check whether this is trying to set a pragma or to vacuum the database
-        if((query_type == PragmaStatement && qtail.contains('=')) || query_type == VacuumStatement)
+        if((query_type == PragmaStatement && qtail.contains('=') && !qtail.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
         {
             // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
             // user about that
@@ -1413,7 +1427,7 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
     if(type == "table" || type == "view" || type == "trigger" || type == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
-//** Tree selection changed
+
 void MainWindow::changeTreeSelection()
 {
     // Just assume first that something's selected that can not be edited at all
@@ -1438,24 +1452,16 @@ void MainWindow::changeTreeSelection()
 
     if (type == "view") {
         ui->editDeleteObjectAction->setText(tr("Delete View"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete View"));
         ui->editModifyObjectAction->setText(tr("Modify View"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify View"));
     } else if(type == "trigger") {
         ui->editDeleteObjectAction->setText(tr("Delete Trigger"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete Trigger"));
         ui->editModifyObjectAction->setText(tr("Modify Trigger"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify Trigger"));
     } else if(type == "index") {
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete Index"));
         ui->editModifyObjectAction->setText(tr("Modify Index"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify Index"));
     } else {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
-        ui->editDeleteObjectAction->setToolTip(tr("Delete Table"));
         ui->editModifyObjectAction->setText(tr("Modify Table"));
-        ui->editModifyObjectAction->setToolTip(tr("Modify Table"));
     }
 
     // Activate actions
@@ -2012,9 +2018,23 @@ void MainWindow::on_actionWiki_triggered()
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
+// 'Help | Bug report...' link will add the system information and set the label 'bug' automatically to the issue
 void MainWindow::on_actionBug_report_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/issues/new"));
+    const QString version = Application::versionString();
+    const QString os = QSysInfo::prettyProductName();
+    const QString kernelType = QSysInfo::kernelType();
+    const QString kernelVersion = QSysInfo::kernelVersion();
+    const QString arch = QSysInfo::currentCpuArchitecture();
+    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]").arg(version, os, kernelType, kernelVersion, arch);
+
+    QUrlQuery query;
+    query.addQueryItem("labels", "bug");
+    query.addQueryItem("body", body);
+
+    QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
+    url.setQuery(query);
+    QDesktopServices::openUrl(url);
 }
 
 void MainWindow::on_actionSqlCipherFaq_triggered()
@@ -2024,7 +2044,7 @@ void MainWindow::on_actionSqlCipherFaq_triggered()
 
 void MainWindow::on_actionWebsite_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://sqlitebrowser.org"));
+    QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
 }
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
@@ -2048,6 +2068,65 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
     }
 }
 
+static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlStreamReader& xml)
+{
+    settings.sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
+    settings.sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
+    settings.showRowid = xml.attributes().value("show_row_id").toInt();
+    settings.encoding = xml.attributes().value("encoding").toString();
+    settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
+    settings.unlockViewPk = xml.attributes().value("unlock_view_pk").toString();
+
+    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "table") {
+        if(xml.name() == "column_widths") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column_widths") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.columnWidths[index] = xml.attributes().value("value").toInt();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "filter_values") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "filter_values") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.filterValues[index] = xml.attributes().value("value").toString();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "display_formats") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "display_formats") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.displayFormats[index] = xml.attributes().value("value").toString();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "hidden_columns") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "hidden_columns") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    settings.hiddenColumns[index] = xml.attributes().value("value").toInt();
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "plot_y_axes") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "plot_y_axes") {
+                QString yAxisName;
+                PlotDock::PlotSettings yAxisSettings;
+                if (xml.name() == "y_axis") {
+                    yAxisName = xml.attributes().value("name").toString();
+                    yAxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
+                    yAxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
+                    yAxisSettings.colour = QColor (xml.attributes().value("colour").toString());
+                    yAxisSettings.active = xml.attributes().value("active").toInt();
+                    xml.skipCurrentElement();
+                }
+                settings.plotYAxes[yAxisName] = yAxisSettings;
+            }
+        }
+    }
+}
 bool MainWindow::loadProject(QString filename, bool readOnly)
 {
     // Show the open file dialog when no filename was passed as parameter
@@ -2139,17 +2218,33 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
                             QDataStream stream(temp);
                             stream >> browseTableSettings;
-                            if(ui->mainTab->currentIndex() == BrowseTab)
-                            {
-                                populateTable();     // Refresh view
-                                sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
-                                ui->dataTable->sortByColumn(browseTableSettings[current_table].sortOrderIndex,
-                                                            browseTableSettings[current_table].sortOrderMode);
-                                showRowidColumn(browseTableSettings[current_table].showRowid);
-                                unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "browse_table_settings") {
+
+                            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "browse_table_settings") {
+                                if (xml.name() == "table") {
+
+                                    sqlb::ObjectIdentifier tableIdentifier =
+                                        sqlb::ObjectIdentifier (xml.attributes().value("schema").toString(),
+                                                                xml.attributes().value("name").toString());
+                                    BrowseDataTableSettings settings;
+                                    loadBrowseDataTableSettings(settings, xml);
+                                    browseTableSettings[tableIdentifier] = settings;
+                                }
                             }
                             xml.skipCurrentElement();
                         }
+
+                        if(ui->mainTab->currentIndex() == BrowseTab)
+                        {
+                            populateTable();     // Refresh view
+                            sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+                            ui->dataTable->sortByColumn(browseTableSettings[current_table].sortOrderIndex,
+                                                        browseTableSettings[current_table].sortOrderMode);
+                            showRowidColumn(browseTableSettings[current_table].showRowid);
+                            unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
+                        }
+
                     }
                 } else if(xml.name() == "tab_sql") {
                     // Close all open tabs first
@@ -2197,6 +2292,60 @@ static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModel
 
         saveDbTreeState(tree, xml, tree->model()->index(i, 0, index), i);
     }
+}
+
+static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, QXmlStreamWriter& xml)
+{
+    xml.writeAttribute("sort_order_index", QString::number(object.sortOrderIndex));
+    xml.writeAttribute("sort_order_mode", QString::number(object.sortOrderMode));
+    xml.writeAttribute("show_row_id", QString::number(object.showRowid));
+    xml.writeAttribute("encoding", object.encoding);
+    xml.writeAttribute("plot_x_axis", object.plotXAxis);
+    xml.writeAttribute("unlock_view_pk", object.unlockViewPk);
+    xml.writeStartElement("column_widths");
+    for(auto iter=object.columnWidths.constBegin(); iter!=object.columnWidths.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", QString::number(iter.value()));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("filter_values");
+    for(auto iter=object.filterValues.constBegin(); iter!=object.filterValues.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", iter.value());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("display_formats");
+    for(auto iter=object.displayFormats.constBegin(); iter!=object.displayFormats.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", iter.value());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("hidden_columns");
+    for(auto iter=object.hiddenColumns.constBegin(); iter!=object.hiddenColumns.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        xml.writeAttribute("value", QString::number(iter.value()));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("plot_y_axes");
+    for(auto iter=object.plotYAxes.constBegin(); iter!=object.plotYAxes.constEnd(); ++iter) {
+        PlotDock::PlotSettings plotSettings = iter.value();
+        xml.writeStartElement("y_axis");
+        xml.writeAttribute("name", iter.key());
+        xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
+        xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
+        xml.writeAttribute("colour", plotSettings.colour.name());
+        xml.writeAttribute("active", QString::number(plotSettings.active));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
 }
 
 void MainWindow::saveProject()
@@ -2250,12 +2399,14 @@ void MainWindow::saveProject()
         xml.writeStartElement("default_encoding");  // Default encoding for text stored in tables
         xml.writeAttribute("codec", defaultBrowseTableEncoding);
         xml.writeEndElement();
-        {                                           // Table browser information
-            QByteArray temp;
-            QDataStream stream(&temp, QIODevice::WriteOnly);
-            stream << browseTableSettings;
-            xml.writeStartElement("browsetable_info");
-            xml.writeAttribute("data", temp.toBase64());
+
+        xml.writeStartElement("browse_table_settings");
+        for(auto tableIt=browseTableSettings.constBegin(); tableIt!=browseTableSettings.constEnd(); ++tableIt) {
+
+            xml.writeStartElement("table");
+            xml.writeAttribute("schema", tableIt.key().schema());
+            xml.writeAttribute("name", tableIt.key().name());
+            saveBrowseDataTableSettings(tableIt.value(), xml);
             xml.writeEndElement();
         }
         xml.writeEndElement();
@@ -2300,6 +2451,9 @@ void MainWindow::updateFilter(int column, const QString& value)
     m_browseTableModel->updateFilter(column, value);
     browseTableSettings[currentlyBrowsedTableName()].filterValues[column] = value;
     setRecordsetLabel();
+
+    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the filters.
+    showRowidColumn(browseTableSettings[currentlyBrowsedTableName()].showRowid);
 }
 
 void MainWindow::editEncryption()

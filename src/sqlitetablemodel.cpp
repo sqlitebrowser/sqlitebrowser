@@ -164,7 +164,7 @@ int SqliteTableModel::getQueryRowCount()
         // So just execute the statement as it is and fetch all results counting the rows
         sqlite3_stmt* stmt;
         QByteArray utf8Query = m_sQuery.toUtf8();
-        if(sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+        if(sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
         {
             retval = 0;
             while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -183,7 +183,7 @@ int SqliteTableModel::getQueryRowCount()
         QByteArray utf8Query = sCountQuery.toUtf8();
 
         sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
         if(status == SQLITE_OK)
         {
             status = sqlite3_step(stmt);
@@ -560,7 +560,7 @@ void SqliteTableModel::fetchData(unsigned int from, unsigned to)
         m_db.logSQL(sLimitQuery, kLogMsg_App);
         QByteArray utf8Query = sLimitQuery.toUtf8();
         sqlite3_stmt *stmt;
-        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
 
         if(SQLITE_OK == status)
         {
@@ -654,7 +654,10 @@ void SqliteTableModel::buildQuery()
     setQuery(customQuery(true), true);
 }
 
-void SqliteTableModel::removeCommentsFromQuery(QString& query) {
+void SqliteTableModel::removeCommentsFromQuery(QString& query)
+{
+    int oldSize = query.size();
+
     // first remove block comments
     {
         QRegExp rxSQL("^((?:(?:[^'/]|/(?![*]))*|'[^']*')*)(/[*](?:[^*]|[*](?!/))*[*]/)(.*)$");	// set up regex to find block comment
@@ -706,18 +709,20 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query) {
         query = result.trimmed();
     }
 
-    // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
-    query.replace(QRegExp("\\n+"), "\n");
+    if (oldSize != query.size()) {
+        // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
+        query.replace(QRegExp("\\n+"), "\n");
 
-    // Also remove any remaining whitespace at the end of each line
-    query.replace(QRegExp("[ \t]+\n"), "\n");
+        // Also remove any remaining whitespace at the end of each line
+        query.replace(QRegExp("[ \t]+\n"), "\n");
+    }
 }
 
 QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fieldsTypes)
 {
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
-    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, NULL);
+    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
     QStringList listColumns;
     if(SQLITE_OK == status)
     {

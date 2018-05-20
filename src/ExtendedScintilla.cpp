@@ -10,6 +10,7 @@
 #include <QShortcut>
 #include <QAction>
 #include <QMenu>
+#include <QPalette>
 #include <cmath>
 
 
@@ -43,6 +44,9 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // currently displayed can be completely scrolled. This mode never
     // adjusts the scroll width to be narrower.
     setScrollWidthTracking(true);
+
+    // Visual flags for when wrap lines is enabled
+    setWrapVisualFlags(QsciScintilla::WrapFlagByBorder);
 
     // Connect signals
     connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
@@ -99,6 +103,17 @@ void ExtendedScintilla::setupSyntaxHighlightingFormat(QsciLexer *lexer, const QS
     lexer->setFont(font, style);
 }
 
+void ExtendedScintilla::setLexer(QsciLexer *lexer)
+{
+    QsciScintilla::setLexer(lexer);
+
+    // Set margins to system window theme. setLexer seems to reset these colours.
+    setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
+    setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
+    setIndentationGuidesBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
+    setIndentationGuidesForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
+}
+
 void ExtendedScintilla::reloadKeywords()
 {
     // Set lexer again to reload the updated keywords list
@@ -115,8 +130,10 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     QFont defaultfont(Settings::getValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    lexer->setDefaultColor(Qt::black);
     lexer->setFont(defaultfont);
+
+    lexer->setDefaultColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
+    lexer->setPaper(QColor(Settings::getValue("syntaxhighlighter", "background_colour").toString()));
 
     // Set font
     QFont font(Settings::getValue("editor", "font").toString());
@@ -129,16 +146,20 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     marginsfont.setPointSize(font.pointSize());
     setMarginsFont(marginsfont);
     setMarginLineNumbers(0, true);
-    setMarginsBackgroundColor(Qt::lightGray);
+
     updateLineNumberAreaWidth();
 
     // Highlight current line
     setCaretLineVisible(true);
     setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
+    setCaretForegroundColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
 
     // Set tab width
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
     lexer->refreshProperties();
+
+    // Set wrap lines
+    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
 
     // Check if error indicators are enabled and clear them if they just got disabled
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
