@@ -1,5 +1,16 @@
 project(sqlitebrowser)
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.11)
+
+# BUILD_VERSION is the current date in YYYYMMDD format. It is only
+# used by the nightly version to add the date of the build.
+string(TIMESTAMP BUILD_VERSION "%Y%m%d")
+
+# Choose between building a stable version or nightly (the default), depending
+# on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
+option(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF)
+if(NOT BUILD_STABLE_VERSION)
+    add_definitions(-DBUILD_VERSION=${BUILD_VERSION})
+endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
