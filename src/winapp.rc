@@ -11,8 +11,8 @@ BEGIN
     BEGIN
         BLOCK "000004B0"
         BEGIN
-            VALUE "FileVersion",      APP_VERSION
-            VALUE "ProductVersion",   PRODUCT_VERSION
+            VALUE "FileVersion",      APP_VERSION "." xstr(BUILD_VERSION)
+            VALUE "ProductVersion",   APP_VERSION "." xstr(BUILD_VERSION)
             VALUE "FileDescription",  "DB Browser for SQLite"
             VALUE "ProductName",      "DB Browser for SQLite"
             VALUE "InternalName",     "DB Browser for SQLite"
