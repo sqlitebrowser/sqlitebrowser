@@ -12,6 +12,24 @@
 namespace sqlb {
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 5, 0)
+struct QHashCombine {
+    typedef uint result_type;
+    template <typename T>
+    Q_DECL_CONSTEXPR result_type operator()(uint seed, const T &t) const Q_DECL_NOEXCEPT_EXPR(noexcept(qHash(t)))
+    // combiner taken from N3876 / boost::hash_combine
+    { return seed ^ (qHash(t) + 0x9e3779b9 + (seed << 6) + (seed >> 2)) ; }
+};
+
+template <typename InputIterator>
+inline uint qHashRange(InputIterator first, InputIterator last, uint seed = 0)
+    Q_DECL_NOEXCEPT_EXPR(noexcept(qHash(*first))) // assume iterator operations don't throw
+{
+    return std::accumulate(first, last, seed, QHashCombine());
+}
+#endif
+
 template<typename T>
 uint qHash(const QVector<T>& key, uint seed = 0)
     Q_DECL_NOEXCEPT_EXPR(noexcept(qHashRange(key.cbegin(), key.cend(), seed)))

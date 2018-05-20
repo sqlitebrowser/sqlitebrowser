@@ -205,7 +205,15 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
                 branches.append(it.key());
 
             // Get default branch
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
             QString default_branch = obj["default_branch"].toString("master");
+#else
+            QString default_branch = obj["default_branch"].toString();
+            if ( default_branch.isEmpty () )
+            {
+                default_branch = "master";
+            }
+#endif
 
             // Send branch list to anyone who is interested
             emit gotBranchList(branches, default_branch);
@@ -534,7 +542,13 @@ void RemoteDatabase::localAssureOpened()
         return;
 
     // Open file
-    QString database_file = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/remotedbs.db";
+    QString database_file = QStandardPaths::writableLocation(
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+                QStandardPaths::AppDataLocation
+#else
+                QStandardPaths::GenericDataLocation
+#endif
+                ) + "/remotedbs.db";
     if(sqlite3_open_v2(database_file.toUtf8(), &m_dbLocal, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr) != SQLITE_OK)
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error opening local databases list.\n%1").arg(QString::fromUtf8(sqlite3_errmsg(m_dbLocal))));

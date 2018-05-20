@@ -254,7 +254,13 @@ void PreferencesDialog::saveSettings()
             // This is a new certificate. Copy file to a safe place.
 
             // Generate unique destination file name
-            QString copy_to = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/").append(QFileInfo(path).fileName());
+            QString copy_to = QStandardPaths::writableLocation(
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+                        QStandardPaths::AppDataLocation
+#else
+                        QStandardPaths::GenericDataLocation
+#endif
+                        ).append("/").append(QFileInfo(path).fileName());
             int suffix = 0;
             do
             {
@@ -263,7 +269,13 @@ void PreferencesDialog::saveSettings()
 
             // Copy file
             copy_to.append(QString::number(suffix));
-            QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+            QDir().mkpath(QStandardPaths::writableLocation(
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+                              QStandardPaths::AppDataLocation
+#else
+                              QStandardPaths::GenericDataLocation
+#endif
+                              ));
             QFile::copy(path, copy_to);
 
             new_client_certs.push_back(copy_to);
