@@ -9,12 +9,7 @@ CONFIG += debug_and_release
 CONFIG += qt
 CONFIG += warn_on
 
-contains(QT_VERSION, ^4\\..*\\..*) {
-        QMAKE_CXXFLAGS += -std=c++0x
-}
-contains(QT_VERSION, ^5\\..*\\..*) {
-        QMAKE_CXXFLAGS += -std=c++11
-}
+QMAKE_CXXFLAGS += -std=c++11
 
 # create a unittest option
 CONFIG(unittest) {

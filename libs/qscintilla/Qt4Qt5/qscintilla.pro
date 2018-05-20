@@ -27,12 +27,7 @@ TARGET = qscintilla2
 CONFIG += qt warn_off thread exceptions hide_symbols staticlib debug_and_release
 INCLUDEPATH += . ../include ../lexlib ../src
 
-contains(QT_VERSION, ^4\\..*\\..*) {
-        QMAKE_CXXFLAGS += -std=c++0x
-}
-contains(QT_VERSION, ^5\\..*\\..*) {
-        QMAKE_CXXFLAGS += -std=c++11
-}
+QMAKE_CXXFLAGS += -std=c++11
 
 !CONFIG(staticlib) {
     DEFINES += QSCINTILLA_MAKE_DLL
