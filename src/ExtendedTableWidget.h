@@ -47,6 +47,7 @@ signals:
     void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
     void openFileFromDropEvent(QString);
+    void selectedRowsToBeDeleted();
 
 private:
     void copy(const bool withHeaders = false);
