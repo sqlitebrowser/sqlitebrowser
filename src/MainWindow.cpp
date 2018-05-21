@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
@@ -57,6 +59,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
+      db(),
       m_browseTableModel(new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt())),
       m_currentTabTableModel(m_browseTableModel),
       m_remoteDb(new RemoteDatabase),
@@ -292,6 +295,11 @@ void MainWindow::init()
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, this, &MainWindow::setRecordsetLabel);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &MainWindow::deleteRecord);
 
+    connect(m_browseTableModel, &SqliteTableModel::finishedFetch, [this](){
+        auto & settings = browseTableSettings[currentlyBrowsedTableName()];
+        plotDock->updatePlot(m_browseTableModel, &settings, true, true);
+    });
+
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
     connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
         int index = ui->comboBrowseTable->currentIndex();
@@ -505,13 +513,18 @@ void MainWindow::populateTable()
     {
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
-        // Lambda function for updating the delete record button to reflect number of selected records
+        // Lambda function for updating the delete record button to reflect number of selected records. -- TODO actual
+        // call this once to disable Delete button...
         connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
-            // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected rows with a non-selected
-            // row in between.
+            // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected
+            // rows with a non-selected row in between.
             int rows = 0;
-            if(ui->dataTable->selectionModel()->selectedIndexes().count())
-                rows = ui->dataTable->selectionModel()->selectedIndexes().last().row() - ui->dataTable->selectionModel()->selectedIndexes().first().row() + 1;
+
+            const auto & sel = ui->dataTable->selectionModel()->selectedIndexes();
+            if(sel.count())
+                rows = sel.last().row() - sel.first().row() + 1;
+
+            ui->buttonDeleteRecord->setEnabled(rows != 0);
 
             if(rows > 1)
                 ui->buttonDeleteRecord->setText(tr("Delete records"));
@@ -551,6 +564,8 @@ void MainWindow::populateTable()
 
         // Encoding
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
+
+        setRecordsetLabel();
 
         // Plot
         attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[tablename]);
@@ -608,6 +623,8 @@ void MainWindow::populateTable()
 
         // Encoding
         m_browseTableModel->setEncoding(storedData.encoding);
+
+        setRecordsetLabel();
 
         // Plot
         attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[tablename], false);
@@ -710,8 +727,8 @@ void MainWindow::deleteRecord()
             }
         }
 
-        if(old_row > m_browseTableModel->totalRowCount())
-            old_row = m_browseTableModel->totalRowCount();
+        if(old_row > m_browseTableModel->rowCount())
+            old_row = m_browseTableModel->rowCount();
         selectTableLine(old_row);
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
@@ -750,8 +767,8 @@ void MainWindow::navigateNext()
 {
     int curRow = ui->dataTable->currentIndex().row();
     curRow += ui->dataTable->numVisibleRows() - 1;
-    if(curRow >= m_browseTableModel->totalRowCount())
-        curRow = m_browseTableModel->totalRowCount() - 1;
+    if(curRow >= m_browseTableModel->rowCount())
+        curRow = m_browseTableModel->rowCount() - 1;
     selectTableLine(curRow);
 }
 
@@ -762,7 +779,7 @@ void MainWindow::navigateBegin()
 
 void MainWindow::navigateEnd()
 {
-    selectTableLine(m_browseTableModel->totalRowCount()-1);
+    selectTableLine(m_browseTableModel->rowCount()-1);
 }
 
 
@@ -771,8 +788,8 @@ void MainWindow::navigateGoto()
     int row = ui->editGoto->text().toInt();
     if(row <= 0)
         row = 1;
-    if(row > m_browseTableModel->totalRowCount())
-        row = m_browseTableModel->totalRowCount();
+    if(row > m_browseTableModel->rowCount())
+        row = m_browseTableModel->rowCount();
 
     selectTableLine(row - 1);
     ui->editGoto->setText(QString::number(row));
@@ -782,7 +799,7 @@ void MainWindow::setRecordsetLabel()
 {
     // Get all the numbers, i.e. the number of the first row and the last row as well as the total number of rows
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
-    int total = m_browseTableModel->totalRowCount();
+    int total = m_browseTableModel->rowCount();
     int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
     if (to == -2)
         to = total;
@@ -791,7 +808,23 @@ void MainWindow::setRecordsetLabel()
     gotoValidator->setRange(0, total);
 
     // Update the label showing the current position
-    ui->labelRecordset->setText(tr("%1 - %2 of %3").arg(from).arg(to).arg(total));
+    QString txt;
+    switch(m_browseTableModel->rowCountAvailable())
+    {
+    case SqliteTableModel::RowCount::Unknown:
+        txt = tr("determining row count...");
+        break;
+    case SqliteTableModel::RowCount::Partial:
+        txt = tr("%1 - %2 of >= %3").arg(from).arg(to).arg(total);
+        break;
+    case SqliteTableModel::RowCount::Complete:
+    default:
+        txt = tr("%1 - %2 of %3").arg(from).arg(to).arg(total);
+        break;
+    }
+    ui->labelRecordset->setText(txt);
+
+    ui->dataTable->setDisabled( m_browseTableModel->rowCountAvailable() == SqliteTableModel::RowCount::Unknown );
 }
 
 void MainWindow::refresh()
@@ -1119,7 +1152,8 @@ void MainWindow::executeQuery()
         // Execute next statement
         int tail_length_before = tail_length;
         const char* qbegin = tail;
-        sql3status = sqlite3_prepare_v2(db._db,tail, tail_length, &vm, &tail);
+        auto pDb = db.get("executing query");
+        sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         tail_length -= (tail - qbegin);
         int execution_end_index = execution_start_index + tail_length_before - tail_length;
@@ -1144,12 +1178,20 @@ void MainWindow::executeQuery()
             {
                 // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
                 // because statements that display data don't change data as well.
+                pDb = nullptr;
 
-                sqlWidget->getModel()->setQuery(queryPart);
+                auto * model = sqlWidget->getModel();
+                model->setQuery(queryPart);
+
+                // Wait until the initial loading of data (= first chunk and row count) has been performed. I have the
+                // feeling that a lot of stuff would need rewriting if we wanted to become more asynchronous here:
+                // essentially the entire loop over the commands would need to be signal-driven.
+                model->waitUntilIdle();
+                qApp->processEvents(); // to make row count available
 
                 // The query takes the last placeholder as it may itself contain the sequence '%' + number
                 statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
-                            sqlWidget->getModel()->totalRowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
+                    model->rowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
                 ok = true;
                 ui->actionSqlResultsSave->setEnabled(true);
                 ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
@@ -1165,7 +1207,7 @@ void MainWindow::executeQuery()
 
                 QString stmtHasChangedDatabase;
                 if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
-                    stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(db._db));
+                    stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(pDb.get()));
 
                 // Attach/Detach statements don't modify the original database
                 if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
@@ -1178,17 +1220,19 @@ void MainWindow::executeQuery()
             case SQLITE_MISUSE:
                 continue;
             default:
-                statusMessage = QString::fromUtf8(sqlite3_errmsg(db._db)) + ": " + queryPart;
+                statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get())) + ": " + queryPart;
                 ok = true;
                 break;
             }
             timer.restart();
         } else {
-            statusMessage = QString::fromUtf8(sqlite3_errmsg(db._db)) + ": " + queryPart;
+            statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get())) + ": " + queryPart;
             sqlWidget->getEditor()->setErrorIndicator(execution_start_line, execution_start_index, execution_start_line, execution_end_index);
             ok = false;
 
         }
+
+        pDb = nullptr; // release db
 
         execution_start_index = execution_end_index;
 
@@ -1206,6 +1250,7 @@ void MainWindow::executeQuery()
         // Process events to keep the UI responsive
         qApp->processEvents();
     }
+
     sqlWidget->finishExecution(statusMessage, ok);
     attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
@@ -2907,8 +2952,10 @@ void MainWindow::requestCollation(const QString& name, int eTextRep)
                    "that this application can't provide without further knowledge.\n"
                    "If you choose to proceed, be aware bad things can happen to your database.\n"
                    "Create a backup!").arg(name), QMessageBox::Yes | QMessageBox::No);
-    if(reply == QMessageBox::Yes)
-        sqlite3_create_collation(db._db, name.toUtf8(), eTextRep, nullptr, collCompare);
+    if(reply == QMessageBox::Yes) {
+        auto pDb = db.get("creating collation");
+        sqlite3_create_collation(pDb.get(), name.toUtf8(), eTextRep, nullptr, collCompare);
+    }
 }
 
 void MainWindow::renameSqlTab(int index)

@@ -117,7 +117,8 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
         QByteArray utf8Query = sQuery.toUtf8();
         sqlite3_stmt *stmt;
 
-        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
+        auto pDb = pdb.get("exporting CSV");
+        int status = sqlite3_prepare_v2(pDb.get(), utf8Query.data(), utf8Query.size(), &stmt, nullptr);
         if(SQLITE_OK == status)
         {
             if(ui->checkHeader->isChecked())
@@ -199,7 +200,9 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
     {
         QByteArray utf8Query = sQuery.toUtf8();
         sqlite3_stmt *stmt;
-        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
+
+        auto pDb = pdb.get("exporting JSON");
+        int status = sqlite3_prepare_v2(pDb.get(), utf8Query.data(), utf8Query.size(), &stmt, nullptr);
 
         QJsonArray json_table;
 

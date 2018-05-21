@@ -607,7 +607,8 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     sQuery.chop(1); // Remove last comma
     sQuery.append(")");
     sqlite3_stmt* stmt;
-    sqlite3_prepare_v2(pdb->_db, sQuery.toUtf8(), sQuery.toUtf8().length(), &stmt, nullptr);
+    auto pDb = pdb->get("importing CSV");
+    sqlite3_prepare_v2(pDb.get(), sQuery.toUtf8(), sQuery.toUtf8().length(), &stmt, nullptr);
 
     // Parse entire file
     size_t lastRowNum = 0;
