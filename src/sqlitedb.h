@@ -192,8 +192,8 @@ private:
 
     /// wait for release of the DB locked through a previous get(),
     /// giving users the option to discard running task through a
-    /// message box. \returns active lock.
-    std::unique_lock<std::mutex> waitForDbRelease ();
+    /// message box.
+    void waitForDbRelease();
 
     QString curDBFilename;
     QString lastErrorMessage;

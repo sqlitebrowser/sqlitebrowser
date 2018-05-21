@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
@@ -612,8 +610,6 @@ void ExtendedTableWidget::updateGeometries()
 
 void ExtendedTableWidget::vscrollbarChanged(int value)
 {
-    //std::cout << "ExtendedTableWidget::vscrollbarChanged " << value << std::endl;
-
     // Cancel if there is no model set yet - this shouldn't happen (because without a model there should be no scrollbar) but just to be sure...
     if(!model())
         return;
