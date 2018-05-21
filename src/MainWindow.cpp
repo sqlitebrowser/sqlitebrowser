@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
@@ -824,7 +822,7 @@ void MainWindow::setRecordsetLabel()
     }
     ui->labelRecordset->setText(txt);
 
-    ui->dataTable->setDisabled( m_browseTableModel->rowCountAvailable() == SqliteTableModel::RowCount::Unknown );
+    enableEditing(m_browseTableModel->rowCountAvailable() != SqliteTableModel::RowCount::Unknown, 0);
 }
 
 void MainWindow::refresh()
@@ -1152,7 +1150,7 @@ void MainWindow::executeQuery()
         // Execute next statement
         int tail_length_before = tail_length;
         const char* qbegin = tail;
-        auto pDb = db.get("executing query");
+        auto pDb = db.get(tr("executing query"));
         sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         tail_length -= (tail - qbegin);
@@ -1668,8 +1666,10 @@ void MainWindow::enableEditing(bool enable_edit, bool enable_insert)
     bool insert = enable_insert && !db.readOnly();
 
     // Apply settings
-    ui->buttonNewRecord->setEnabled(insert);
-    ui->buttonDeleteRecord->setEnabled(edit);
+    if(insert)
+        ui->buttonNewRecord->setEnabled(insert);
+    if(edit)
+        ui->buttonDeleteRecord->setEnabled(edit);
     ui->dataTable->setEditTriggers(edit ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
 }
 
@@ -2953,7 +2953,7 @@ void MainWindow::requestCollation(const QString& name, int eTextRep)
                    "If you choose to proceed, be aware bad things can happen to your database.\n"
                    "Create a backup!").arg(name), QMessageBox::Yes | QMessageBox::No);
     if(reply == QMessageBox::Yes) {
-        auto pDb = db.get("creating collation");
+        auto pDb = db.get(tr("creating collation"));
         sqlite3_create_collation(pDb.get(), name.toUtf8(), eTextRep, nullptr, collCompare);
     }
 }

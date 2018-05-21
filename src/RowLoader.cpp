@@ -201,8 +201,6 @@ void RowLoader::run ()
 
 void RowLoader::process (Task & t)
 {
-    //std::cout << "RowLoader new task: " << t.row_begin << " --> " << t.row_end << std::endl;
-
     QString sLimitQuery;
     if(query.startsWith("PRAGMA", Qt::CaseInsensitive) || query.startsWith("EXPLAIN", Qt::CaseInsensitive))
     {
@@ -254,11 +252,4 @@ void RowLoader::process (Task & t)
 
     if(row != t.row_begin)
         emit fetched(t.token, t.row_begin, row);
-
-#if 0
-    if(t.cancel)
-        std::cout << "RowLoader task was CANCELLED\n";
-    else
-        std::cout << "RowLoader task done\n";
-#endif
 }

@@ -497,7 +497,8 @@ bool DBBrowserDB::close()
     emit dbChanged(getDirty());
     emit structureUpdated();
 
-    return true; //< not cancelled
+    // Return true to tell the calling function that the closing wasn't cancelled by the user
+    return true;
 }
 
 DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
@@ -505,7 +506,7 @@ DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
     if(!_db)
         return nullptr;
 
-    auto lk = waitForDbRelease();
+    waitForDbRelease();
 
     db_user = user;
     db_used = true;
@@ -513,10 +514,10 @@ DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
     return db_pointer_type(_db, DatabaseReleaser(this));
 }
 
-std::unique_lock<std::mutex> DBBrowserDB::waitForDbRelease()
+void DBBrowserDB::waitForDbRelease()
 {
     if(!_db)
-        return std::unique_lock<std::mutex>();
+        return;
 
     std::unique_lock<std::mutex> lk(m);
     while(db_used) {
@@ -525,8 +526,8 @@ std::unique_lock<std::mutex> DBBrowserDB::waitForDbRelease()
         lk.unlock();
 
         QMessageBox msgBox;
-        msgBox.setText("The database is currently busy: " + str);
-        msgBox.setInformativeText("Do you want to abort that other operation?");
+        msgBox.setText(tr("The database is currently busy: ") + str);
+        msgBox.setInformativeText(tr("Do you want to abort that other operation?"));
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         msgBox.setDefaultButton(QMessageBox::No);
         int ret = msgBox.exec();
@@ -537,8 +538,6 @@ std::unique_lock<std::mutex> DBBrowserDB::waitForDbRelease()
         lk.lock();
         cv.wait(lk, [this](){ return !db_used; });
     }
-
-    return std::move(lk);
 }
 
 bool DBBrowserDB::dump(const QString& filename,
@@ -1035,9 +1034,8 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     } else {
         if(table->isWithoutRowidTable())
             return pk_value;
-        else {
+        else
             return QString::number(sqlite3_last_insert_rowid(_db));
-        }
     }
 }
 

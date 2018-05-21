@@ -1,20 +1,18 @@
 #ifndef SQLITETABLEMODEL_H
 #define SQLITETABLEMODEL_H
 
-#include <memory>
-
 #include <QAbstractTableModel>
 #include <QStringList>
 #include <QVector>
 #include <QThread>
 #include <QMutex>
+#include <memory>
 
 #include "sqlitetypes.h"
 #include "RowCache.h"
 
 struct sqlite3;
 class DBBrowserDB;
-
 
 class SqliteTableModel : public QAbstractTableModel
 {
@@ -87,10 +85,10 @@ public:
     void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QVector<QString> &display_format = QVector<QString>());
 
     void setChunkSize(size_t chunksize);
-    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
     const sqlb::ObjectIdentifier& currentTableName() const { return m_sTable; }
 
-    Qt::ItemFlags flags(const QModelIndex& index) const;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     bool isBinary(const QModelIndex& index) const;
 
@@ -118,8 +116,8 @@ signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
 
 protected:
-    virtual Qt::DropActions supportedDropActions() const;
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+    virtual Qt::DropActions supportedDropActions() const override;
+    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
 private:
     friend class RowLoader;
