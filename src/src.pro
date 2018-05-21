@@ -40,6 +40,8 @@ HEADERS += \
     grammar/Sqlite3Parser.hpp \
     grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
+    RowCache.h \
+    RowLoader.h \
     FilterTableHeader.h \
     version.h \
     SqlExecutionArea.h \
@@ -83,6 +85,7 @@ SOURCES += \
     grammar/Sqlite3Lexer.cpp \
     grammar/Sqlite3Parser.cpp \
     sqlitetablemodel.cpp \
+    RowLoader.cpp \
     FilterTableHeader.cpp \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \

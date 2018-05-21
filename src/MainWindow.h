@@ -135,7 +135,12 @@ private:
 
     Ui::MainWindow* ui;
 
+    DBBrowserDB db;
+
+    /// the table model used in the "Browse Data" page (re-used and
+    /// re-initialized when switching to another table)
     SqliteTableModel* m_browseTableModel;
+
     SqliteTableModel* m_currentTabTableModel;
 
     QMenu* popupTableMenu;
@@ -166,7 +171,6 @@ private:
 
     QIntValidator* gotoValidator;
 
-    DBBrowserDB db;
     QString defaultBrowseTableEncoding;
 
     void init();

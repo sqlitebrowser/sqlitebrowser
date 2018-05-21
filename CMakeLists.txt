@@ -78,6 +78,8 @@ endif()
 add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
 
+add_subdirectory(/home/michael/dev/gtest/git/googletest /home/michael/dev/gtest/build)
+
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5Network REQUIRED)
@@ -117,6 +119,8 @@ set(SQLB_MOC_HDR
 	src/SqlExecutionArea.h
 	src/VacuumDialog.h
 	src/sqlitetablemodel.h
+	src/RowLoader.h
+	src/RowCache.h
 	src/sqltextedit.h
 	src/docktextedit.h
 	src/DbStructureModel.h
@@ -154,6 +158,7 @@ set(SQLB_SRC
 	src/VacuumDialog.cpp
 	src/sqlitedb.cpp
 	src/sqlitetablemodel.cpp
+	src/RowLoader.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
 	src/docktextedit.cpp
@@ -371,6 +376,7 @@ endif()
 target_link_libraries(${PROJECT_NAME}
 		qhexedit
 		qcustomplot
+		pthread
 		${QT_LIBRARIES}
 		${WIN32_STATIC_LINK}
 		${LIBSQLITE}

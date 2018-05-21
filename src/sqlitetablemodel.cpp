@@ -1,3 +1,4 @@
+
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "sqlite.h"
@@ -12,32 +13,92 @@
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
 
+#include "RowLoader.h"
+
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
     , m_db(db)
-    , m_rowCountAdjustment(0)
+    , m_lifeCounter(0)
+    , m_currentRowCount(0)
     , m_chunkSize(chunkSize)
     , m_encoding(encoding)
 {
+    worker = new RowLoader(
+        [this](){ return m_db.get("reading rows"); },
+        [this](QString stmt){ return m_db.logSQL(stmt, kLogMsg_App); },
+        m_headers, m_mutexDataCache, m_cache
+        );
+
+    worker->start();
+
+    // any UI updates must be performed in the UI thread, not in the worker thread:
+    connect(worker, &RowLoader::fetched, this, &SqliteTableModel::handleFinishedFetch, Qt::QueuedConnection);
+    connect(worker, &RowLoader::rowCountComplete, this, &SqliteTableModel::handleRowCountComplete, Qt::QueuedConnection);
+
     reset();
 }
 
 SqliteTableModel::~SqliteTableModel()
 {
-    m_futureFetch.cancel();
-    m_futureFetch.waitForFinished();
+    worker->stop();
+    worker->wait();
+    worker->disconnect();
+    delete worker;
+}
+
+SqliteTableModel::RowCount SqliteTableModel::rowCountAvailable () const
+{
+    return m_rowCountAvailable;
+}
+
+void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_row_begin, unsigned int fetched_row_end)
+{
+    if(life_id < m_lifeCounter)
+        return;
+
+    Q_ASSERT(fetched_row_end >= fetched_row_begin);
+
+    auto old_row_count = m_currentRowCount;
+
+    auto new_row_count = std::max(old_row_count, fetched_row_begin);
+    new_row_count = std::max(new_row_count, fetched_row_end);
+    Q_ASSERT(new_row_count >= old_row_count);
+
+    if(new_row_count != old_row_count)
+    {
+        beginInsertRows(QModelIndex(), old_row_count, new_row_count - 1);
+        m_currentRowCount = new_row_count;
+        endInsertRows();
+    }
+
+    if(fetched_row_end != fetched_row_begin)
+    {
+        // TODO optimize
+        int num_columns = m_headers.size();
+        emit dataChanged(createIndex(fetched_row_begin, 0), createIndex(fetched_row_end - 1, num_columns - 1));
+    }
+
+    if(m_rowCountAvailable != RowCount::Complete)
+        m_rowCountAvailable = RowCount::Partial;
+
+    emit finishedFetch(fetched_row_begin, fetched_row_end);
+}
+
+void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
+{
+    if(life_id < m_lifeCounter)
+        return;
+
+    m_rowCountAvailable = RowCount::Complete;
+    handleFinishedFetch(life_id, num_rows, num_rows);
 }
 
 void SqliteTableModel::reset()
 {
-    m_futureFetch.cancel();
-    m_futureFetch.waitForFinished();
-    m_rowCount = QtConcurrent::run([=]() {
-        // Make sure we report 0 rows if anybody asks
-        return 0;
-    });
+    //std::cout << "\n\nSqliteTableModel::reset()\n";
 
-    m_rowCountAdjustment = 0;
+    clearCache();
+
     m_sTable.clear();
     m_sRowidColumn.clear();
     m_iSortColumn = 0;
@@ -102,7 +163,7 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(table.toString());
         m_sRowidColumn = "rowid";
         m_headers.push_back("rowid");
-        m_headers.append(getColumns(sColumnQuery, m_vDataTypes));
+        m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
     }
 
     // Set sort parameters. We're setting the sort column to an invalid value before calling sort() because this way, in sort() the
@@ -112,103 +173,35 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
     sort(sortColumn, sortOrder);
 }
 
-namespace {
-QString rtrimChar(const QString& s, QChar c) {
-    QString r = s.trimmed();
-    while(r.endsWith(c))
-        r.chop(1);
-    return r;
-}
-}
-
 void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
 {
     // clear
     if(!dontClearHeaders)
         reset();
+    else
+        clearCache();
 
     if(!m_db.isOpen())
         return;
 
     m_sQuery = sQuery.trimmed();
-
     removeCommentsFromQuery(m_sQuery);
 
-    // do a count query to get the full row count in a fast manner
-    m_rowCountAdjustment = 0;
-    m_rowCount = QtConcurrent::run([=]() {
-        return getQueryRowCount();
-    });
+    worker->setQuery(m_sQuery);
+    worker->triggerRowCountDetermination(m_lifeCounter);
 
-    // headers
     if(!dontClearHeaders)
-    {
-        m_headers.append(getColumns(sQuery, m_vDataTypes));
-    }
+        m_headers.append(getColumns(worker->getDb(), sQuery, m_vDataTypes));
 
     // now fetch the first entries
-    clearCache();
-    fetchData(0, m_chunkSize);
+    triggerCacheLoad(m_chunkSize / 2 - 1);
 
     emit layoutChanged();
 }
 
-int SqliteTableModel::getQueryRowCount()
-{
-    // Return -1 if there is an error
-    int retval = -1;
-
-    // Use a different approach of determining the row count when a EXPLAIN or a PRAGMA statement is used because a COUNT fails on these queries
-    if(m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive) || m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive))
-    {
-        // So just execute the statement as it is and fetch all results counting the rows
-        sqlite3_stmt* stmt;
-        QByteArray utf8Query = m_sQuery.toUtf8();
-        if(sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
-        {
-            retval = 0;
-            while(sqlite3_step(stmt) == SQLITE_ROW)
-                retval++;
-            sqlite3_finalize(stmt);
-
-            // Return the results but also set the chunk size the number of rows to prevent the lazy population mechanism to kick in as using LIMIT
-            // fails on this kind of queries as well
-            m_chunkSize = retval;
-            return retval;
-        }
-    } else {
-        // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
-        QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(m_sQuery, ';'));
-        m_db.logSQL(sCountQuery, kLogMsg_App);
-        QByteArray utf8Query = sCountQuery.toUtf8();
-
-        sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
-        if(status == SQLITE_OK)
-        {
-            status = sqlite3_step(stmt);
-            if(status == SQLITE_ROW)
-            {
-                QString sCount = QString::fromUtf8((const char*)sqlite3_column_text(stmt, 0));
-                retval = sCount.toInt();
-            }
-            sqlite3_finalize(stmt);
-        } else {
-            qWarning() << "Count query failed: " << sCountQuery;
-        }
-    }
-
-    return retval;
-}
-
 int SqliteTableModel::rowCount(const QModelIndex&) const
 {
-    return m_data.size(); // current fetched row count
-}
-
-int SqliteTableModel::totalRowCount() const
-{
-    return m_rowCount + m_rowCountAdjustment;
+    return m_currentRowCount;
 }
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
@@ -243,25 +236,43 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() >= (m_rowCount + m_rowCountAdjustment))
+    if (index.row() >= rowCount())
         return QVariant();
 
     QMutexLocker lock(&m_mutexDataCache);
 
+    Row blank_data;
+    bool row_available;
+
+    const Row * cached_row;
+    if(m_cache.count(index.row()))
+    {
+        cached_row = &m_cache.at(index.row());
+        row_available = true;
+    }
+    else
+    {
+        blank_data = makeDefaultCacheEntry();
+        cached_row = &blank_data;
+        row_available = false;
+    }
+
     if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
-        // If this row is not in the cache yet get it first
-        while(index.row() >= m_data.size() && canFetchMore())
-            const_cast<SqliteTableModel*>(this)->fetchMore();   // Nothing evil to see here, move along
-
-        if(role == Qt::DisplayRole && m_data.at(index.row()).at(index.column()).isNull())
+        if(!row_available)
+            return decode("loading...");
+        if(role == Qt::DisplayRole && cached_row->at(index.column()).isNull())
         {
             return Settings::getValue("databrowser", "null_text").toString();
-        } else if(role == Qt::DisplayRole && isBinary(index)) {
+        }
+        else if(role == Qt::DisplayRole && nosync_isBinary(index))
+        {
             return Settings::getValue("databrowser", "blob_text").toString();
-        } else if(role == Qt::DisplayRole) {
+        }
+        else if(role == Qt::DisplayRole)
+        {
             int limit = Settings::getValue("databrowser", "symbol_limit").toInt();
-            QByteArray displayText = m_data.at(index.row()).at(index.column());
+            QByteArray displayText = cached_row->at(index.column());
             if (displayText.length() > limit) {
                 // Add "..." to the end of truncated strings
                 return decode(displayText.left(limit).append(" ..."));
@@ -269,34 +280,46 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                 return decode(displayText);
             }
         } else {
-            return decode(m_data.at(index.row()).at(index.column()));
+            return decode(cached_row->at(index.column()));
         }
-    } else if(role == Qt::FontRole) {
+    }
+    else if(role == Qt::FontRole)
+    {
         QFont font;
-        if(m_data.at(index.row()).at(index.column()).isNull() || isBinary(index))
+        if(!row_available || cached_row->at(index.column()).isNull() || nosync_isBinary(index))
             font.setItalic(true);
         return font;
-    } else if(role == Qt::ForegroundRole) {
-        if(m_data.at(index.row()).at(index.column()).isNull())
+    }
+    else if(role == Qt::ForegroundRole)
+    {
+        if(!row_available)
+            return QColor(100, 100, 100);
+        if(cached_row->at(index.column()).isNull())
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
-        else if (isBinary(index))
+        else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
         return QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
-    } else if (role == Qt::BackgroundRole) {
-        if(m_data.at(index.row()).at(index.column()).isNull())
+    }
+    else if (role == Qt::BackgroundRole)
+    {
+        if(!row_available)
+            return QColor(255, 200, 200);
+        if(cached_row->at(index.column()).isNull())
             return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
-        else if (isBinary(index))
+        else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
         return QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
-    } else if(role == Qt::ToolTipRole) {
+    }
+    else if(role == Qt::ToolTipRole)
+    {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
         if(fk.isSet())
             return tr("References %1(%2)\nHold Ctrl+Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","));
         else
             return QString();
-    } else {
-        return QVariant();
     }
+
+    return QVariant();
 }
 
 sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
@@ -343,12 +366,19 @@ bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, 
 
 bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const QVariant& value, int role)
 {
+    if(readingData()) {
+        // can't insert rows while reading data in background
+        return false;
+    }
+
     if(index.isValid() && role == Qt::EditRole)
     {
         QMutexLocker lock(&m_mutexDataCache);
 
+        auto & cached_row = m_cache.at(index.row());
+
         QByteArray newValue = encode(value.toByteArray());
-        QByteArray oldValue = m_data.at(index.row()).at(index.column());
+        QByteArray oldValue = cached_row.at(index.column());
 
         // Special handling for integer columns: instead of setting an integer column to an empty string, set it to '0' when it is also
         // used in a primary key. Otherwise SQLite will always output an 'datatype mismatch' error.
@@ -368,12 +398,9 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), m_data[index.row()].at(0), newValue, isBlob, m_pseudoPk))
+        if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_pseudoPk))
         {
-            // Only update the cache if this row has already been read, if not there's no need to do any changes to the cache
-            if(index.row() < m_data.size())
-                m_data[index.row()].replace(index.column(), newValue);
-
+            cached_row.replace(index.column(), newValue);
             lock.unlock();
             emit dataChanged(index, index);
             return true;
@@ -385,20 +412,6 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
     }
 
     return false;
-}
-
-bool SqliteTableModel::canFetchMore(const QModelIndex&) const
-{
-    QMutexLocker lock(&m_mutexDataCache);
-    return m_data.size() < (m_rowCount + m_rowCountAdjustment);
-}
-
-void SqliteTableModel::fetchMore(const QModelIndex&)
-{
-    m_futureFetch.waitForFinished();
-    QMutexLocker lock(&m_mutexDataCache);
-    int row = m_data.size();
-    fetchData(row, row + m_chunkSize);
 }
 
 Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
@@ -438,16 +451,34 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
         buildQuery();
 }
 
+SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
+{
+    Row blank_data;
+
+    for(int i=0; i < m_headers.size(); ++i)
+        blank_data.push_back("");
+
+    return blank_data;
+}
+
+bool SqliteTableModel::readingData() const
+{
+    return worker->readingData();
+}
+
 bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 {
     if(!isEditable())
         return false;
 
-    QByteArrayList blank_data;
-    for(int i=0; i < m_headers.size(); ++i)
-        blank_data.push_back("");
+    if(readingData()) {
+        // can't insert rows while reading data in background
+        return false;
+    }
 
-    DataType tempList;
+    const auto blank_data = makeDefaultCacheEntry();
+
+    std::vector<Row> tempList;
     for(int i=row; i < row + count; ++i)
     {
         QString rowid = m_db.addRecord(m_sTable);
@@ -455,28 +486,29 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         {
             return false;
         }
-        m_rowCountAdjustment++;
-        tempList.append(blank_data);
-        tempList[i - row].replace(0, rowid.toUtf8());
+        tempList.push_back(blank_data);
+        tempList.back().replace(0, rowid.toUtf8());
 
         // update column with default values
-        QByteArrayList rowdata;
+        Row rowdata;
         if(m_db.getRow(m_sTable, rowid, rowdata))
         {
             for(int j=1; j < m_headers.size(); ++j)
             {
-                tempList[i - row].replace(j, rowdata[j - 1]);
+                tempList.back().replace(j, rowdata[j - 1]);
             }
         }
     }
 
     beginInsertRows(parent, row, row + count - 1);
-    QMutexLocker lock(&m_mutexDataCache);
-    for(int i = 0; i < tempList.size(); ++i)
+    for(unsigned int i = 0; i < tempList.size(); ++i)
     {
-        m_data.insert(i + row, tempList.at(i));
+        //std::cout << "inserting at " << i + row << std::endl;
+        m_cache.insert(i + row, std::move(tempList.at(i)));
+        m_currentRowCount++;
     }
     endInsertRows();
+
     return true;
 }
 
@@ -485,16 +517,21 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     if(!isEditable())
         return false;
 
-    beginRemoveRows(parent, row, row + count - 1);
+    if(readingData()) {
+        // can't delete rows while reading data in background
+        return false;
+    }
 
-    QMutexLocker lock(&m_mutexDataCache);
+    beginRemoveRows(parent, row, row + count - 1);
 
     QStringList rowids;
     for(int i=count-1;i>=0;i--)
     {
-        rowids.append(m_data.at(row + i).at(0));
-        m_data.removeAt(row + i);
-        --m_rowCountAdjustment;
+        if(m_cache.count(row+i)) {
+            rowids.append(m_cache.at(row + i).at(0));
+        }
+        m_cache.erase(row + i);
+        m_currentRowCount--;
     }
 
     bool ok = m_db.deleteRecords(m_sTable, rowids, m_pseudoPk);
@@ -528,69 +565,6 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     }
 
     return index(new_row, firstEditedColumn);
-}
-
-void SqliteTableModel::fetchData(unsigned int from, unsigned to)
-{
-    // Finish previous loading
-    m_futureFetch.waitForFinished();
-
-    // Fetch more data using a separate thread
-    m_futureFetch = QtConcurrent::run([=]() {
-        int num_rows_before_insert = m_data.size();
-
-        QString sLimitQuery;
-        if(m_sQuery.startsWith("PRAGMA", Qt::CaseInsensitive) || m_sQuery.startsWith("EXPLAIN", Qt::CaseInsensitive))
-        {
-            sLimitQuery = m_sQuery;
-        } else {
-            // Remove trailing trailing semicolon
-            QString queryTemp = rtrimChar(m_sQuery, ';');
-
-            // If the query ends with a LIMIT statement take it as it is, if not append our own LIMIT part for lazy population
-            if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)))
-                sLimitQuery = queryTemp;
-            else
-                sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(from).arg(to-from);
-        }
-        m_db.logSQL(sLimitQuery, kLogMsg_App);
-        QByteArray utf8Query = sLimitQuery.toUtf8();
-        sqlite3_stmt *stmt;
-        int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
-
-        if(SQLITE_OK == status)
-        {
-            int num_columns = m_headers.size();
-            while(!m_futureFetch.isCanceled() && sqlite3_step(stmt) == SQLITE_ROW)
-            {
-                QMutexLocker lock(&m_mutexDataCache);
-                QByteArrayList rowdata;
-                for(int i=0;i<num_columns;++i)
-                {
-                    if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
-                    {
-                        rowdata.append(QByteArray());
-                    } else {
-                        int bytes = sqlite3_column_bytes(stmt, i);
-                        if(bytes)
-                            rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
-                        else
-                            rowdata.append(QByteArray(""));
-                    }
-                }
-                m_data.push_back(rowdata);
-            }
-        }
-        sqlite3_finalize(stmt);
-
-        if(m_data.size() > num_rows_before_insert)
-        {
-            beginInsertRows(QModelIndex(), num_rows_before_insert, m_data.size()-1);
-            endInsertRows();
-        }
-
-        emit finishedFetch();
-    });
 }
 
 QString SqliteTableModel::customQuery(bool withRowid)
@@ -714,11 +688,14 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
     }
 }
 
-QStringList SqliteTableModel::getColumns(const QString& sQuery, QVector<int>& fieldsTypes)
+QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, QVector<int>& fieldsTypes)
 {
+    if(!pDb)
+        pDb = m_db.get("retrieving list of columns");
+
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
-    int status = sqlite3_prepare_v2(m_db._db, utf8Query, utf8Query.size(), &stmt, nullptr);
+    int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
     QStringList listColumns;
     if(SQLITE_OK == status)
     {
@@ -852,27 +829,38 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 
 void SqliteTableModel::clearCache()
 {
-    m_futureFetch.cancel();
-    m_futureFetch.waitForFinished();
+    m_lifeCounter++;
 
-    QMutexLocker lock(&m_mutexDataCache);
-    int size = m_data.size();
-    if(size > 0)
+    if(m_db.isOpen()) {
+        worker->cancel();
+        worker->waitUntilIdle();
+    }
+
+    if(m_currentRowCount > 0)
     {
-        lock.unlock();
-
-        beginRemoveRows(QModelIndex(), 0, size - 1);
-        {
-            QMutexLocker lock(&m_mutexDataCache);
-            m_data.clear();
-        }
+        beginRemoveRows(QModelIndex(), 0, m_currentRowCount - 1);
         endRemoveRows();
     }
+
+    m_cache.clear();
+    m_currentRowCount = 0;
+    m_rowCountAvailable = RowCount::Unknown;
 }
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    return !isTextOnly(m_data.at(index.row()).at(index.column()), m_encoding, true);
+    QMutexLocker lock(&m_mutexDataCache);
+    return nosync_isBinary(index);
+}
+
+bool SqliteTableModel::nosync_isBinary(const QModelIndex& index) const
+{
+    if(!m_cache.count(index.row()))
+        return false;
+
+    const auto & cached_row = m_cache.at(index.row());
+
+    return !isTextOnly(cached_row.at(index.column()), m_encoding, true);
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const
@@ -942,23 +930,51 @@ bool SqliteTableModel::isEditable() const
     return !m_sTable.isEmpty() && (m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table || !m_pseudoPk.isEmpty());
 }
 
-void SqliteTableModel::waitForFetchingFinished()
+void SqliteTableModel::triggerCacheLoad (int row) const
 {
-    if(m_futureFetch.isRunning())
-        m_futureFetch.waitForFinished();
-}
+    size_t row_begin = std::max(0, row - int(m_chunkSize) / 2);
+    size_t row_end = row + m_chunkSize / 2;
 
-void SqliteTableModel::cancelQuery()
-{
-    if(m_rowCount.isRunning())
-    {
-        m_rowCount.cancel();
-        m_rowCount = QtConcurrent::run([=]() {
-            // Make sure we report 0 rows if anybody asks
-            return 0;
-        });
+    if(rowCountAvailable() == RowCount::Complete) {
+        row_end = std::min(row_end, size_t(rowCount()));
+    } else {
+        // will be truncated by reader
     }
 
-    if(m_futureFetch.isRunning())
-        m_futureFetch.cancel();
+    // avoid re-fetching data
+    QMutexLocker lk(&m_mutexDataCache);
+    m_cache.smallestNonAvailableRange(row_begin, row_end);
+
+    if(row_end != row_begin) {
+        worker->triggerFetch(m_lifeCounter, row_begin, row_end);
+    } else {
+        //std::cout << "entire range already loaded\n";
+    }
+}
+
+void SqliteTableModel::triggerCacheLoad (int row_begin, int row_end) const
+{
+    if(row_end == row_begin)
+        return;
+
+    triggerCacheLoad((row_begin + row_end) / 2);
+}
+
+void SqliteTableModel::completeCache () const
+{
+    triggerCacheLoad(0, rowCount());
+    worker->waitUntilIdle();
+}
+
+bool SqliteTableModel::isCacheComplete () const
+{
+    if(readingData())
+        return false;
+    QMutexLocker lock(&m_mutexDataCache);
+    return m_cache.numSet() == m_currentRowCount;
+}
+
+void SqliteTableModel::waitUntilIdle () const
+{
+    worker->waitUntilIdle();
 }

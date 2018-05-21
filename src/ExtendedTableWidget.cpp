@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
@@ -604,19 +606,29 @@ void ExtendedTableWidget::updateGeometries()
         // If so and if it is a SqliteTableModel and if the parent implementation of this method decided that a scrollbar is needed, update its maximum value
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
         if(m && verticalScrollBar()->maximum())
-            verticalScrollBar()->setMaximum(m->totalRowCount() - numVisibleRows() + 1);
+            verticalScrollBar()->setMaximum(m->rowCount() - numVisibleRows() + 1);
     }
 }
 
 void ExtendedTableWidget::vscrollbarChanged(int value)
 {
+    //std::cout << "ExtendedTableWidget::vscrollbarChanged " << value << std::endl;
+
     // Cancel if there is no model set yet - this shouldn't happen (because without a model there should be no scrollbar) but just to be sure...
     if(!model())
         return;
 
     // Fetch more data from the DB if necessary
-    if((value + numVisibleRows()) >= model()->rowCount() && model()->canFetchMore(QModelIndex()))
-        model()->fetchMore(QModelIndex());
+    const auto nrows = model()->rowCount();
+    if(nrows == 0)
+        return;
+
+    if(auto * m = dynamic_cast<SqliteTableModel*>(model()))
+    {
+        int row_begin = std::min(value, nrows - 1);
+        int row_end = std::min(value + numVisibleRows(), nrows);
+        m->triggerCacheLoad(row_begin, row_end);
+    }
 }
 
 int ExtendedTableWidget::numVisibleRows()
@@ -682,13 +694,11 @@ void ExtendedTableWidget::selectTableLine(int lineToSelect)
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
     // Are there even that many lines?
-    if(lineToSelect >= m->totalRowCount())
+    if(lineToSelect >= m->rowCount())
         return;
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
-    // Make sure this line has already been fetched
-    while(lineToSelect >= m->rowCount() && m->canFetchMore())
-        m->fetchMore();
+    m->triggerCacheLoad(lineToSelect);
 
     // Select it
     clearSelection();
@@ -703,7 +713,7 @@ void ExtendedTableWidget::selectTableLines(int firstLine, int count)
 
     int lastLine = firstLine+count-1;
     // Are there even that many lines?
-    if(lastLine >= m->totalRowCount())
+    if(lastLine >= m->rowCount())
         return;
 
     selectTableLine(firstLine);
