@@ -53,6 +53,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboSeparator->blockSignals(true);
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
+    ui->comboMissingValues->blockSignals(true);
 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
@@ -60,6 +61,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     setSeparatorChar(Settings::getValue("importcsv", "separator").toInt());
     setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toInt());
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
+    setMissingValues(Settings::getValue("importcsv", "missingvalues").toString());
 
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
@@ -67,6 +69,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboSeparator->blockSignals(false);
     ui->comboQuote->blockSignals(false);
     ui->comboEncoding->blockSignals(false);
+    ui->comboMissingValues->blockSignals(false);
 
     // Prepare and show interface depending on how many files are selected
     if (csvFilenames.length() > 1)
@@ -166,6 +169,7 @@ void ImportCsvDialog::accept()
     Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
     Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
     Settings::setValue("importcsv", "encoding", currentEncoding());
+    Settings::setValue("importcsv", "missingvalues", missingValues());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -536,6 +540,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Create table
     QVector<QByteArray> nullValues;
+    bool missingValuesAsNull = missingValues() == "null";
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
@@ -561,7 +566,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                     nullValues << "0";
                 else if(f->isInteger() && !f->notnull())        // If this is an integer column and NULL is allowed, insert NULL
                     nullValues << QByteArray();
-                else                                            // Otherwise (i.e. if this isn't an integer column), insert an empty string
+                else if(missingValuesAsNull)                    // If we requested NULL values, do that
+                    nullValues << QByteArray();
+                else                                            // Otherwise, insert an empty string, like .import does
                     nullValues << "";
             }
         }
@@ -595,16 +602,19 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Bind all values
         for(size_t i=0;i<data.num_fields;i++)
         {
-            // Empty values need special treatment, but only when importing into an existing table where we could find out something about
-            // its table definition
+            // Empty values need special treatment
+            // When importing into an existing table where we could find out something about its table definition
             if(importToExistingTable && data.fields[i].data_length == 0 && static_cast<size_t>(nullValues.size()) > i)
             {
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 const QByteArray& val = nullValues.at(i);
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
                     sqlite3_bind_text(stmt, i+1, val, val.size(), SQLITE_STATIC);
+            // When importing into a new table, use the missing values setting directly
+            } else if(!importToExistingTable && data.fields[i].data_length == 0 && missingValuesAsNull) {
+                // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
-                // This is a non-empty value. Just add it to the statement
+                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
                 sqlite3_bind_text(stmt, i+1, data.fields[i].data, data.fields[i].data_length, SQLITE_STATIC);
             }
         }
@@ -730,4 +740,20 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->editCustomEncoding->text().length() ? ui->editCustomEncoding->text() : "UTF-8";
     else
         return ui->comboEncoding->currentText();
+}
+
+void ImportCsvDialog::setMissingValues(const QString& sValue)
+{
+    if(sValue == "null")
+        ui->comboMissingValues->setCurrentIndex(1);
+    else
+        ui->comboMissingValues->setCurrentIndex(0);
+}
+
+QString ImportCsvDialog::missingValues() const
+{
+    if(ui->comboMissingValues->currentIndex() == 0)
+        return "emptystring";
+    else
+        return "null";
 }
