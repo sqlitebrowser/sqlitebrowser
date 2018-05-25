@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>788</width>
-    <height>637</height>
+    <height>717</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Import CSV file</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QFormLayout" name="formLayout">
      <property name="fieldGrowthPolicy">
@@ -22,7 +22,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="labelName">
        <property name="text">
-        <string>&amp;Table name</string>
+        <string>Table na&amp;me</string>
        </property>
        <property name="buddy">
         <cstring>editName</cstring>
@@ -49,7 +49,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="labelSeparator">
        <property name="text">
         <string>Field &amp;separator</string>
@@ -59,7 +59,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QComboBox" name="comboSeparator">
@@ -112,7 +112,7 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="labelQuote">
        <property name="text">
         <string>&amp;Quote character</string>
@@ -122,7 +122,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QComboBox" name="comboQuote">
@@ -170,7 +170,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="labelEncoding">
        <property name="text">
         <string>&amp;Encoding</string>
@@ -180,7 +180,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QComboBox" name="comboEncoding">
@@ -224,52 +224,17 @@
        </item>
       </layout>
      </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="labelMissingValues">
-       <property name="text">
-        <string>Missing values</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QComboBox" name="comboMissingValues">
-         <item>
-          <property name="text">
-           <string>Empty string</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>NULL</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="7" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="labelTrim">
        <property name="text">
         <string>Trim fields?</string>
        </property>
+       <property name="buddy">
+        <cstring>checkBoxTrimFields</cstring>
+       </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="5" column="1">
       <widget class="QCheckBox" name="checkBoxTrimFields">
        <property name="text">
         <string/>
@@ -279,17 +244,68 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="separateTables">
        <property name="text">
         <string>Separate tables</string>
        </property>
+       <property name="buddy">
+        <cstring>checkBoxSeparateTables</cstring>
+       </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="6" column="1">
       <widget class="QCheckBox" name="checkBoxSeparateTables">
        <property name="text">
         <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QPushButton" name="buttonAdvanced">
+       <property name="text">
+        <string>Advanced</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QCheckBox" name="checkIgnoreDefaults">
+       <property name="toolTip">
+        <string>When importing an empty value from the CSV file into an existing table with a default value for this column, that default value is inserted. Activate this option to insert an empty value instead.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="labelIgnoreDefaults">
+       <property name="text">
+        <string>Ignore default &amp;values</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkIgnoreDefaults</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QCheckBox" name="checkFailOnMissing">
+       <property name="toolTip">
+        <string>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="labelFailOnMissing">
+       <property name="text">
+        <string>Fail on missing values </string>
+       </property>
+       <property name="buddy">
+        <cstring>checkFailOnMissing</cstring>
        </property>
       </widget>
      </item>
@@ -400,12 +416,17 @@
   <tabstop>editCustomEncoding</tabstop>
   <tabstop>checkBoxTrimFields</tabstop>
   <tabstop>checkBoxSeparateTables</tabstop>
+  <tabstop>buttonAdvanced</tabstop>
+  <tabstop>checkIgnoreDefaults</tabstop>
+  <tabstop>checkFailOnMissing</tabstop>
   <tabstop>filePicker</tabstop>
   <tabstop>toggleSelected</tabstop>
   <tabstop>matchSimilar</tabstop>
   <tabstop>tablePreview</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>comboSeparator</sender>
@@ -510,8 +531,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>165</y>
+     <x>263</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>572</x>
@@ -542,8 +563,8 @@
    <slot>updateSelection(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>674</x>
-     <y>258</y>
+     <x>780</x>
+     <y>337</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -575,7 +596,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>272</x>
-     <y>478</y>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -591,7 +612,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>340</x>
-     <y>478</y>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -606,8 +627,8 @@
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>216</y>
+     <x>194</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -622,12 +643,28 @@
    <slot>matchSimilar()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>682</x>
-     <y>279</y>
+     <x>780</x>
+     <y>378</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
      <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonAdvanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>toggleAdvancedSection(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>358</y>
     </hint>
    </hints>
   </connection>
@@ -637,5 +674,6 @@
   <slot>checkInput()</slot>
   <slot>updateSelection(bool)</slot>
   <slot>matchSimilar()</slot>
+  <slot>toggleAdvancedSection(bool)</slot>
  </slots>
 </ui>
