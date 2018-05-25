@@ -1640,6 +1640,10 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     ui->dataTable->setCurrentIndex(ui->dataTable->currentIndex().sibling(0, logicalindex));
 
     attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
+
+    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the filters.
+    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
+    ui->dataTable->setColumnHidden(0, !showRowid);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
