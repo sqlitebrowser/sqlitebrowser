@@ -275,14 +275,14 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="9" column="1">
       <widget class="QCheckBox" name="checkIgnoreDefaults">
        <property name="toolTip">
         <string>When importing an empty value from the CSV file into an existing table with a default value for this column, that default value is inserted. Activate this option to insert an empty value instead.</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="labelIgnoreDefaults">
        <property name="text">
         <string>Ignore default &amp;values</string>
@@ -292,20 +292,34 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="10" column="1">
       <widget class="QCheckBox" name="checkFailOnMissing">
        <property name="toolTip">
         <string>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
+     <item row="10" column="0">
       <widget class="QLabel" name="labelFailOnMissing">
        <property name="text">
         <string>Fail on missing values </string>
        </property>
        <property name="buddy">
         <cstring>checkFailOnMissing</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="labelNoTypeDetection">
+       <property name="text">
+        <string>Disable data type detection</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QCheckBox" name="checkNoTypeDetection">
+       <property name="toolTip">
+        <string>Disable the automatic data type detection when creating a new table.</string>
        </property>
       </widget>
      </item>

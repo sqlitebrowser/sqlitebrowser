@@ -415,8 +415,8 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
         }
 
-        // Try to find out a data type for each column
-        if(!(rowNum == 0 && ui->checkboxHeader->isChecked()))
+        // Try to find out a data type for each column. Skip the header row if there is one.
+        if(!ui->checkNoTypeDetection->isChecked() && !(rowNum == 0 && ui->checkboxHeader->isChecked()))
         {
             for(size_t i=0;i<data.num_fields;i++)
             {
@@ -774,6 +774,8 @@ QString ImportCsvDialog::currentEncoding() const
 
 void ImportCsvDialog::toggleAdvancedSection(bool show)
 {
+    ui->labelNoTypeDetection->setVisible(show);
+    ui->checkNoTypeDetection->setVisible(show);
     ui->labelFailOnMissing->setVisible(show);
     ui->checkFailOnMissing->setVisible(show);
     ui->labelIgnoreDefaults->setVisible(show);
