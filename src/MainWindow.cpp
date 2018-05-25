@@ -2214,6 +2214,25 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             defaultBrowseTableEncoding = xml.attributes().value("codec").toString();
                             xml.skipCurrentElement();
                         } else if(xml.name() == "browsetable_info") {
+                            // This tag is only found in old project files. In newer versions (>= 3.11) it is replaced by a new implementation.
+                            // We still support loading it though we might decide to drop that support later. But for now we show a warning to the
+                            // user when loading an old file.
+                            if(!Settings::getValue("idontcare", "projectBrowseTable").toBool())
+                            {
+                                QMessageBox msgBox;
+                                QPushButton* idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
+                                msgBox.addButton(QMessageBox::Ok);
+                                msgBox.setTextFormat(Qt::RichText);
+                                msgBox.setWindowTitle(qApp->applicationName());
+                                msgBox.setText(tr("This project file is using an old file format because it was created using DB Browser for SQLite "
+                                                  "version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert "
+                                                  "all your project files to the new file format because support for older formats might be dropped "
+                                                  "at some point in the future. You can convert your files by simply opening and re-saving them."));
+                                msgBox.exec();
+                                if(msgBox.clickedButton() == idontcarebutton)
+                                    Settings::setValue("idontcare", "projectBrowseTable", true);
+                            }
+
                             QString attrData = xml.attributes().value("data").toString();
                             QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
                             QDataStream stream(temp);
