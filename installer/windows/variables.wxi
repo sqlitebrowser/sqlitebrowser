@@ -34,7 +34,7 @@
     <?define AppContact="justin@postgresql.org" ?>
     <?define AppReadme="https://github.com/sqlitebrowser/sqlitebrowser" ?>
     <?define AppHelpLink="https://github.com/sqlitebrowser/sqlitebrowser/wiki" ?>
-    <?define AppSupportLink="https://github.com/sqlitebrowser/sqlitebrowser/issues/new/choose" ?>
+    <?define AppSupportLink="https://github.com/sqlitebrowser/sqlitebrowser/issues" ?>
     <?define AppUpdateInfoLink="https://github.com/sqlitebrowser/sqlitebrowser/releases" ?>
 
     <!--
