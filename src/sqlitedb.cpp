@@ -172,7 +172,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     }
 }
 
-bool DBBrowserDB::attach(const QString& filename, QString attach_as)
+bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 {
     if(!_db)
         return false;
@@ -186,7 +186,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     if(sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &db_vm, nullptr) == SQLITE_OK)
     {
         // Loop through all the databases
-        QFileInfo fi(filename);
+        QFileInfo fi(filePath);
         while(sqlite3_step(db_vm) == SQLITE_ROW)
         {
             QFileInfo path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
@@ -205,7 +205,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
                                           qApp->applicationName(),
                                           tr("Please specify the database name under which you want to access the attached database"),
                                           QLineEdit::Normal,
-                                          QFileInfo(filename).baseName()
+                                          QFileInfo(filePath).baseName()
                                           ).trimmed();
     if(attach_as.isNull())
         return false;
@@ -214,14 +214,14 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     // Try encryption settings
     CipherDialog* cipher = nullptr;
     bool is_encrypted;
-    if(tryEncryptionSettings(filename, &is_encrypted, cipher) == false)
+    if(tryEncryptionSettings(filePath, &is_encrypted, cipher) == false)
         return false;
 
     // Attach database
     QString key;
     if(cipher && is_encrypted)
         key = "KEY " + cipher->password();
-    if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filename).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
+    if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -236,7 +236,7 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     }
 #else
     // Attach database
-    if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filename).arg(sqlb::escapeIdentifier(attach_as)), false))
+    if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -249,13 +249,13 @@ bool DBBrowserDB::attach(const QString& filename, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings)
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherDialog*& cipherSettings)
 {
     lastErrorMessage = tr("Invalid file format");
 
     // Open database file
     sqlite3* dbHandle;
-    if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
+    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
         return false;
 
     // Try reading from database
@@ -285,7 +285,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filename, bool* encrypted
             {
                 // Close and reopen database first to be in a clean state after the failed read attempt from above
                 sqlite3_close(dbHandle);
-                if(sqlite3_open_v2(filename.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK)
+                if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK)
                 {
                     delete cipherSettings;
                     cipherSettings = nullptr;
@@ -540,7 +540,7 @@ void DBBrowserDB::waitForDbRelease()
     }
 }
 
-bool DBBrowserDB::dump(const QString& filename,
+bool DBBrowserDB::dump(const QString& filePath,
     const QStringList& tablesToDump,
     bool insertColNames,
     bool insertNewSyntx,
@@ -551,7 +551,7 @@ bool DBBrowserDB::dump(const QString& filename,
     waitForDbRelease();
 
     // Open file
-    QFile file(filename);
+    QFile file(filePath);
     if(file.open(QIODevice::WriteOnly))
     {
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -1650,14 +1650,14 @@ bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue
     return false;
 }
 
-bool DBBrowserDB::loadExtension(const QString& filename)
+bool DBBrowserDB::loadExtension(const QString& filePath)
 {
     waitForDbRelease();
     if(!_db)
         return false;
 
     // Check if file exists
-    if(!QFile::exists(filename))
+    if(!QFile::exists(filePath))
     {
         lastErrorMessage = tr("File not found.");
         return false;
@@ -1665,7 +1665,7 @@ bool DBBrowserDB::loadExtension(const QString& filename)
 
     // Try to load extension
     char* error;
-    if(sqlite3_load_extension(_db, filename.toUtf8(), nullptr, &error) == SQLITE_OK)
+    if(sqlite3_load_extension(_db, filePath.toUtf8(), nullptr, &error) == SQLITE_OK)
     {
         return true;
     } else {
