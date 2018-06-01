@@ -31,7 +31,7 @@
 
     <?define AppIcon="..\..\src\iconwin.ico" ?>
     <?define AppComments="$(var.Name) is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite." ?>
-    <?define AppContact="justin@postgresql.org" ?>
+    <?define AppContact="db4s-dev@sqlitebrowser.org" ?>
     <?define AppReadme="https://github.com/sqlitebrowser/sqlitebrowser" ?>
     <?define AppHelpLink="https://github.com/sqlitebrowser/sqlitebrowser/wiki" ?>
     <?define AppSupportLink="https://github.com/sqlitebrowser/sqlitebrowser/issues" ?>
