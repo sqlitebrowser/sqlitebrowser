@@ -142,6 +142,7 @@ private:
     QMenu* recentFilesMenu;
     QMenu* popupSaveSqlFileMenu;
     QMenu* popupSaveSqlResultsMenu;
+    QMenu* popupSaveFilterAsMenu;
     QMenu* popupBrowseDataHeaderMenu;
 
     QLabel* statusEncodingLabel;
@@ -281,6 +282,7 @@ private slots:
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
     void saveFilterAsView();
+    void exportFilteredTable();
 };
 
 #endif

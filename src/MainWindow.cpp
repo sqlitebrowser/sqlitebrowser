@@ -185,6 +185,12 @@ void MainWindow::init()
     ui->actionSqlResultsSave->setMenu(popupSaveSqlResultsMenu);
     qobject_cast<QToolButton*>(ui->toolbarSql->widgetForAction(ui->actionSqlResultsSave))->setPopupMode(QToolButton::InstantPopup);
 
+    popupSaveFilterAsMenu = new QMenu(this);
+    popupSaveFilterAsMenu->addAction(ui->actionFilteredTableExportCsv);
+    popupSaveFilterAsMenu->addAction(ui->actionFilterSaveAsView);
+    ui->buttonSaveFilterAsPopup->setMenu(popupSaveFilterAsMenu);
+    ui->buttonSaveFilterAsPopup->setPopupMode(QToolButton::InstantPopup);
+
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
@@ -1600,7 +1606,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSaveProject->setEnabled(enable);
     ui->actionEncryption->setEnabled(enable && write);
     ui->buttonClearFilters->setEnabled(enable);
-    ui->buttonSaveFilterAsView->setEnabled(enable);
+    ui->buttonSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
     ui->dockPlot->setEnabled(enable);
 
@@ -2954,6 +2960,11 @@ void MainWindow::saveAsView(QString query)
         QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db.lastError()));
 }
 
+void MainWindow::exportFilteredTable()
+{
+    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatCsv, this, m_browseTableModel->customQuery(false));
+    dialog.exec();
+}
 
 void MainWindow::saveFilterAsView()
 {

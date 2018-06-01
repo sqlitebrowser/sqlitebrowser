@@ -167,12 +167,12 @@ You can drag SQL statements from an object row and drop them into other applicat
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="buttonSaveFilterAsView">
+           <widget class="QToolButton" name="buttonSaveFilterAsPopup">
             <property name="toolTip">
-             <string>Save the current filter, sort column and display formats as a view</string>
+             <string>Save the table as currently displayed</string>
             </property>
             <property name="whatsThis">
-             <string>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -396,8 +396,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>566</width>
-             <height>531</height>
+             <width>601</width>
+             <height>484</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -887,7 +887,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -2039,6 +2039,34 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Extra DB Toolbar</string>
+   </property>
+  </action>
+  <action name="actionFilteredTableExportCsv">
+   <property name="text">
+    <string>Export to &amp;CSV</string>
+   </property>
+   <property name="toolTip">
+    <string>Export the filtered data to CSV</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the filtered data to CSV</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</string>
+   </property>
+  </action>
+  <action name="actionFilterSaveAsView">
+   <property name="text">
+    <string>Save as &amp;view</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current filter, sort column and display formats as a view</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the current filter, sort column and display formats as a view</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</string>
    </property>
   </action>
  </widget>
@@ -3206,7 +3234,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>buttonSaveFilterAsView</sender>
+   <sender>buttonSaveFilterAsPopup</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveFilterAsView()</slot>
@@ -3298,6 +3326,38 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>959</x>
      <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilteredTableExportCsv</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportFilteredTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilterSaveAsView</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveFilterAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>
