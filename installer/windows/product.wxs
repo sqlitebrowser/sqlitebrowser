@@ -139,6 +139,9 @@
         <!-- License file -->
         <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
 
+        <!-- Banner image -->
+        <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
+
         <!-- Optional text, shown at the end of installation -->
         <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Thank you for installing $(var.Name)." />
 
