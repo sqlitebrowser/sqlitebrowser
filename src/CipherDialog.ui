@@ -115,6 +115,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PageSizeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>PageSizeSpinBox.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>editPassword</tabstop>
   <tabstop>comboKeyFormat</tabstop>
