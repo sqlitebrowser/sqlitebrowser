@@ -49,34 +49,33 @@ CipherDialog::~CipherDialog()
     delete ui;
 }
 
-CipherSettings::KeyFormats CipherDialog::keyFormat() const
+CipherSettings CipherDialog::getCipherSettings() const
 {
-    return static_cast<CipherSettings::KeyFormats>(ui->comboKeyFormat->currentIndex());
-}
+    CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(ui->comboKeyFormat->currentIndex());
+    QString password = ui->editPassword->text();
+    int pageSize = ui->comboPageSize->itemData(ui->comboPageSize->currentIndex()).toInt();
 
-QString CipherDialog::password() const
-{
-    if(keyFormat() == CipherSettings::KeyFormats::Passphrase)
-        return QString("'%1'").arg(ui->editPassword->text().replace("'", "''"));
-    else
-        return QString("\"x'%1'\"").arg(ui->editPassword->text().mid(2));   // Remove the '0x' part at the beginning
-}
+    CipherSettings cipherSettings;
 
-int CipherDialog::pageSize() const
-{
-    return ui->comboPageSize->itemData(ui->comboPageSize->currentIndex()).toInt();
+    cipherSettings.setKeyFormat(keyFormat);
+    cipherSettings.setPassword(password);
+    cipherSettings.setPageSize(pageSize);
+
+    return cipherSettings;
 }
 
 void CipherDialog::checkInputFields()
 {
     if(sender() == ui->comboKeyFormat)
     {
-        if(keyFormat() == CipherSettings::KeyFormats::Passphrase)
+        CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(ui->comboKeyFormat->currentIndex());
+
+        if(keyFormat == CipherSettings::KeyFormats::Passphrase)
         {
             ui->editPassword->setValidator(nullptr);
             ui->editPassword2->setValidator(nullptr);
             ui->editPassword->setPlaceholderText("");
-        } else if(keyFormat() == CipherSettings::KeyFormats::RawKey) {
+        } else if(keyFormat == CipherSettings::KeyFormats::RawKey) {
             ui->editPassword->setValidator(rawKeyValidator);
             ui->editPassword2->setValidator(rawKeyValidator);
             ui->editPassword->setPlaceholderText("0x...");

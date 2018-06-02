@@ -105,8 +105,8 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     dontCheckForStructureUpdates = false;
 
     // Get encryption settings for database file
-    CipherDialog* cipher = nullptr;
-    if(tryEncryptionSettings(db, &isEncrypted, cipher) == false)
+    CipherSettings* cipherSettings = nullptr;
+    if(tryEncryptionSettings(db, &isEncrypted, cipherSettings) == false)
         return false;
 
     // Open database file
@@ -118,14 +118,14 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
     // Set encryption details if database is encrypted
 #ifdef ENABLE_SQLCIPHER
-    if(isEncrypted && cipher)
+    if(isEncrypted && cipherSettings)
     {
-        executeSQL(QString("PRAGMA key = %1").arg(cipher->password()), false, false);
-        if(cipher->pageSize() != CipherSettings::defaultPageSize)
-            executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipher->pageSize()), false, false);
+        executeSQL(QString("PRAGMA key = %1").arg(cipherSettings->getPassword()), false, false);
+        if(cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
+            executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()), false, false);
     }
 #endif
-    delete cipher;
+    delete cipherSettings;
 
     if (_db)
     {
@@ -213,29 +213,29 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 
 #ifdef ENABLE_SQLCIPHER
     // Try encryption settings
-    CipherDialog* cipher = nullptr;
+    CipherSettings* cipherSettings = nullptr;
     bool is_encrypted;
-    if(tryEncryptionSettings(filePath, &is_encrypted, cipher) == false)
+    if(tryEncryptionSettings(filePath, &is_encrypted, cipherSettings) == false)
         return false;
 
     // Attach database
     QString key;
-    if(cipher && is_encrypted)
-        key = "KEY " + cipher->password();
+    if(cipherSettings && is_encrypted)
+        key = "KEY " + cipherSettings->getPassword();
     if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
     }
-    if(cipher && cipher->pageSize() != CipherSettings::defaultPageSize)
+    if(cipherSettings && cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
     {
-        if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipher->pageSize()), false))
+        if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getPageSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
     }
-    delete cipher;
+    delete cipherSettings;
 #else
     // Attach database
     if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
@@ -251,7 +251,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherDialog*& cipherSettings)
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings*& cipherSettings)
 {
     lastErrorMessage = tr("Invalid file format");
 
@@ -281,9 +281,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         {
             sqlite3_finalize(vm);
 #ifdef ENABLE_SQLCIPHER
-            delete cipherSettings;
-            cipherSettings = new CipherDialog(nullptr, false);
-            if(cipherSettings->exec())
+            CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
+            if(cipherDialog->exec())
             {
                 // Close and reopen database first to be in a clean state after the failed read attempt from above
                 sqlite3_close(dbHandle);
@@ -294,19 +293,27 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     return false;
                 }
 
+                if (cipherSettings)
+                    delete cipherSettings;
+
+                cipherSettings = new CipherSettings(cipherDialog->getCipherSettings());
+
                 // Set the key
-                sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->password()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->getPassword()).toUtf8(), nullptr, nullptr, nullptr);
 
                 // Set the page size if it differs from the default value
-                if(cipherSettings->pageSize() != CipherSettings::defaultPageSize)
-                    sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), nullptr, nullptr, nullptr);
+                if(cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
+                    sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()).toUtf8(), nullptr, nullptr, nullptr);
 
                 *encrypted = true;
             } else {
                 sqlite3_close(dbHandle);
                 *encrypted = false;
-                delete cipherSettings;
-                cipherSettings = nullptr;
+                if (cipherSettings)
+                {
+                    delete cipherSettings;
+                    cipherSettings = nullptr;
+                }
                 return false;
             }
 #else

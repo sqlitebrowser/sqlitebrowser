@@ -21,10 +21,7 @@ public:
     explicit CipherDialog(QWidget* parent, bool encrypt);
     ~CipherDialog();
 
-    // Allow read access to the input fields
-    CipherSettings::KeyFormats keyFormat() const;
-    QString password() const;
-    int pageSize() const;
+    CipherSettings getCipherSettings() const;
 
 private:
     Ui::CipherDialog* ui;
