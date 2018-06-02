@@ -356,3 +356,10 @@ void Settings::restoreDefaults ()
     settings.clear();
     m_hCache.clear();
 }
+
+QSettings::Format Settings::getDotenvFormat()
+{
+    static const QSettings::Format DotenvFormat = QSettings::registerFormat("env", &DotenvFormat::readEnvFile, nullptr);
+
+    return DotenvFormat;
+}

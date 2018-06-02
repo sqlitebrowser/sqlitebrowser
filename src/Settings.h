@@ -3,7 +3,10 @@
 
 #include <QApplication>
 #include <QHash>
+#include <QSettings>
 #include <QVariant>
+
+#include "DotenvFormat.h"
 
 class Settings
 {
@@ -13,6 +16,7 @@ public:
     static QVariant getValue(const QString& group, const QString& name);
     static void setValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk = false);
     static void restoreDefaults();
+    static QSettings::Format getDotenvFormat();
 
 private:
     Settings() { } // class is fully static

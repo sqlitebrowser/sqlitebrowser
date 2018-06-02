@@ -66,7 +66,8 @@ HEADERS += \
     ExtendedScintilla.h \
     FileExtensionManager.h \
     Data.h \
-    CipherSettings.h
+    CipherSettings.h \
+    DotenvFormat.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -109,7 +110,8 @@ SOURCES += \
     ExtendedScintilla.cpp \
     FileExtensionManager.cpp \
     Data.cpp \
-    CipherSettings.cpp
+    CipherSettings.cpp \
+    DotenvFormat.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
