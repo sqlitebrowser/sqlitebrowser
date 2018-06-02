@@ -4,6 +4,12 @@
 class CipherSettings
 {
 public:
+    enum KeyFormats
+    {
+        Passphrase,
+        RawKey
+    };
+
     static const int defaultPageSize = 1024;
 };
 

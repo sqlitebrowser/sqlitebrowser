@@ -49,14 +49,14 @@ CipherDialog::~CipherDialog()
     delete ui;
 }
 
-CipherDialog::KeyFormats CipherDialog::keyFormat() const
+CipherSettings::KeyFormats CipherDialog::keyFormat() const
 {
-    return static_cast<CipherDialog::KeyFormats>(ui->comboKeyFormat->currentIndex());
+    return static_cast<CipherSettings::KeyFormats>(ui->comboKeyFormat->currentIndex());
 }
 
 QString CipherDialog::password() const
 {
-    if(keyFormat() == KeyFormats::Passphrase)
+    if(keyFormat() == CipherSettings::KeyFormats::Passphrase)
         return QString("'%1'").arg(ui->editPassword->text().replace("'", "''"));
     else
         return QString("\"x'%1'\"").arg(ui->editPassword->text().mid(2));   // Remove the '0x' part at the beginning
@@ -71,12 +71,12 @@ void CipherDialog::checkInputFields()
 {
     if(sender() == ui->comboKeyFormat)
     {
-        if(keyFormat() == KeyFormats::Passphrase)
+        if(keyFormat() == CipherSettings::KeyFormats::Passphrase)
         {
             ui->editPassword->setValidator(nullptr);
             ui->editPassword2->setValidator(nullptr);
             ui->editPassword->setPlaceholderText("");
-        } else if(keyFormat() == KeyFormats::RawKey) {
+        } else if(keyFormat() == CipherSettings::KeyFormats::RawKey) {
             ui->editPassword->setValidator(rawKeyValidator);
             ui->editPassword2->setValidator(rawKeyValidator);
             ui->editPassword->setPlaceholderText("0x...");
