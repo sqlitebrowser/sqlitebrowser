@@ -6,23 +6,6 @@
     <?define Version="3.10.99" ?>
 
     <!--
-    ======================================================= MSI ========================================================
-
-    UpgradeCode
-        Use a different GUID to be able to install both 32-bit and 64-bit together.
-    -->
-
-    <?if $(sys.BUILDARCH)="x64"?>
-        <?define ProductName="$(var.Name) (64-bit)" ?>
-        <?define UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" ?>
-        <?define ProgramFilesFolder="ProgramFiles64Folder" ?>
-    <?elseif $(sys.BUILDARCH)="x86"?>
-        <?define ProductName="$(var.Name) (32-bit)" ?>
-        <?define UpgradeCode="23F25B1F-9C8B-41A1-A2DC-D693B87C556B" ?>
-        <?define ProgramFilesFolder="ProgramFilesFolder" ?>
-    <?endif?>
-
-    <!--
     =============================================== Add/Remove Programs ================================================
     https://www.firegiant.com/wix/tutorial/com-expression-syntax-miscellanea/add-or-remove-programs-entries/
     

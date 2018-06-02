@@ -3,7 +3,7 @@
 
     <?include variables.wxi ?>
 
-    <Product Id="*" UpgradeCode="$(var.UpgradeCode)" Name="$(var.ProductName)" Manufacturer="$(var.Team)" Version="$(var.Version)" Language="1033">
+    <Product Id="*" UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Name="$(var.Name)" Manufacturer="$(var.Team)" Version="$(var.Version)" Language="1033">
 
         <Package Id="*" Compressed="yes" InstallerVersion="301" InstallScope="perMachine" />
 
@@ -23,7 +23,7 @@
         <MajorUpgrade
             Schedule="afterInstallInitialize"
             AllowSameVersionUpgrades="yes"
-            DowngradeErrorMessage="A later version of $(var.ProductName) is already installed. Setup will now exit."
+            DowngradeErrorMessage="A later version of $(var.Name) is already installed. Setup will now exit."
         />
 
         <!-- ========================================= Add/Remove Programs ========================================= -->
@@ -39,6 +39,12 @@
         <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLDIR]" After="CostFinalize" />
 
         <!-- ================================================ Files ================================================ -->
+
+        <?if $(sys.BUILDARCH)="x64"?>
+            <?define ProgramFilesFolder="ProgramFiles64Folder" ?>
+        <?elseif $(sys.BUILDARCH)="x86"?>
+            <?define ProgramFilesFolder="ProgramFilesFolder" ?>
+        <?endif?>
 
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
@@ -77,7 +83,7 @@
                         <File Source="..\..\Release\DB Browser for SQLite.exe" Checksum="yes" KeyPath="yes">
                             <Shortcut
                                 Id="StartMenuShortcut"
-                                Name="$(var.ProductName)"
+                                Name="$(var.Name)"
                                 Description="$(var.AppComments)"
                                 Directory="ProgramMenuFolder"
                                 WorkingDirectory="INSTALLDIR"
