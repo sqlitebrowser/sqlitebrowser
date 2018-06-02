@@ -285,7 +285,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             {
                 // Close and reopen database first to be in a clean state after the failed read attempt from above
                 sqlite3_close(dbHandle);
-                if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK)
+                if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
                 {
                     delete cipherSettings;
                     cipherSettings = nullptr;
@@ -293,9 +293,9 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 }
 
                 // Set key and, if it differs from the default value, the page size
-                sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->password()).toUtf8(), NULL, NULL, NULL);
+                sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->password()).toUtf8(), nullptr, nullptr, nullptr);
                 if(cipherSettings->pageSize() != 1024)
-                    sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), NULL, NULL, NULL);
+                    sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), nullptr, nullptr, nullptr);
 
                 *encrypted = true;
             } else {
