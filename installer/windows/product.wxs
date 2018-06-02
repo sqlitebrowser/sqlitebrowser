@@ -78,7 +78,11 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
                     <Component><File Source="$(var.OpenSSLPath)\libeay32.dll" /></Component>
                     <Component><File Source="$(var.OpenSSLPath)\ssleay32.dll" /></Component>
-                    <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
+                    <?ifdef SQLCipher ?>
+                        <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
+                    <?else?>
+                        <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
+                    <?endif?>
                     <Component>
                         <File Source="..\..\Release\DB Browser for SQLite.exe" Checksum="yes" KeyPath="yes">
                             <Shortcut
@@ -128,8 +132,12 @@
             <!-- OpenSSL -->
             <ComponentRef Id="libeay32.dll" />
             <ComponentRef Id="ssleay32.dll" />
-            <!-- SQLite -->
-            <ComponentRef Id="sqlite3.dll" />
+            <!-- SQLCipher or SQLite -->
+            <?ifdef SQLCipher ?>
+                <ComponentRef Id="sqlcipher.dll" />
+            <?else?>
+                <ComponentRef Id="sqlite3.dll" />
+            <?endif?>
             <!-- Application -->
             <ComponentRef Id="DB_Browser_for_SQLite.exe" />
         </Feature>
