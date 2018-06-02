@@ -142,6 +142,9 @@
         <!-- Banner image -->
         <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
 
+        <!-- Background image -->
+        <WixVariable Id="WixUIDialogBmp" Value="background.bmp" />
+
         <!-- Optional text, shown at the end of installation -->
         <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Thank you for installing $(var.Name)." />
 
