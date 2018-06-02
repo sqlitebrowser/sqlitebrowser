@@ -261,6 +261,11 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         return false;
 
     // Try reading from database
+
+#ifdef ENABLE_SQLCIPHER
+    bool isDotenvChecked = false;
+#endif
+
     *encrypted = false;
     cipherSettings = nullptr;
     while(true)
@@ -281,6 +286,61 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         {
             sqlite3_finalize(vm);
 #ifdef ENABLE_SQLCIPHER
+            // Being in a while loop, we don't want to check the same file multiple times
+            if (!isDotenvChecked) {
+                QFile databaseFile(filePath);
+                QFileInfo databaseFileInfo(databaseFile);
+
+                QString databaseDirectoryPath = databaseFileInfo.dir().path();
+                QString databaseFileName(databaseFileInfo.fileName());
+
+                QString dotenvFilePath = databaseDirectoryPath + "/.env";
+                QSettings::Format dotenvFormat = Settings::getDotenvFormat();
+                QSettings dotenv(dotenvFilePath, dotenvFormat);
+
+                QVariant passwordValue = dotenv.value(databaseFileName);
+
+                bool foundPassword = !passwordValue.isNull();
+
+                isDotenvChecked = true;
+
+                if (foundPassword)
+                {
+                    QString password = passwordValue.toString();
+
+                    QVariant keyFormatValue = dotenv.value(databaseFileName + "_keyFormat", QVariant(CipherSettings::KeyFormats::Passphrase));
+                    CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(keyFormatValue.toInt());
+
+                    QVariant pageSizeValue = dotenv.value(databaseFileName + "_pageSize", QVariant(CipherSettings::defaultPageSize));
+                    int pageSize = pageSizeValue.toInt();
+
+                    cipherSettings = new CipherSettings();
+
+                    cipherSettings->setKeyFormat(keyFormat);
+                    cipherSettings->setPassword(password);
+                    cipherSettings->setPageSize(pageSize);
+
+                    // Close and reopen database first to be in a clean state after the failed read attempt from above
+                    sqlite3_close(dbHandle);
+                    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
+                    {
+                        return false;
+                    }
+
+                    // Set the key
+                    sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->getPassword()).toUtf8(), nullptr, nullptr, nullptr);
+
+                    // Set the page size if it differs from the default value
+                    if(cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
+                        sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()).toUtf8(), nullptr, nullptr, nullptr);
+
+                    *encrypted = true;
+
+                    // Skip the CipherDialog prompt for now to test if the saved password was correct
+                    continue;
+                }
+            }
+
             CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
             if(cipherDialog->exec())
             {
