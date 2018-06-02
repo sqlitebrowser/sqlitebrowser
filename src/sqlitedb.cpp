@@ -235,6 +235,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
             return false;
         }
     }
+    delete cipher;
 #else
     // Attach database
     if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
