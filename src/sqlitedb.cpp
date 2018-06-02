@@ -292,8 +292,10 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     return false;
                 }
 
-                // Set key and, if it differs from the default value, the page size
+                // Set the key
                 sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->password()).toUtf8(), nullptr, nullptr, nullptr);
+
+                // Set the page size if it differs from the default value
                 if(cipherSettings->pageSize() != 1024)
                     sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), nullptr, nullptr, nullptr);
 
