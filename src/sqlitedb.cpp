@@ -2,6 +2,7 @@
 #include "sqlite.h"
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
+#include "CipherSettings.h"
 #include "Settings.h"
 
 #include <QFile>
@@ -120,7 +121,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     if(isEncrypted && cipher)
     {
         executeSQL(QString("PRAGMA key = %1").arg(cipher->password()), false, false);
-        if(cipher->pageSize() != 1024)
+        if(cipher->pageSize() != CipherSettings::defaultPageSize)
             executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipher->pageSize()), false, false);
     }
 #endif
@@ -226,7 +227,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
     }
-    if(cipher && cipher->pageSize() != 1024)
+    if(cipher && cipher->pageSize() != CipherSettings::defaultPageSize)
     {
         if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipher->pageSize()), false))
         {
@@ -296,7 +297,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->password()).toUtf8(), nullptr, nullptr, nullptr);
 
                 // Set the page size if it differs from the default value
-                if(cipherSettings->pageSize() != 1024)
+                if(cipherSettings->pageSize() != CipherSettings::defaultPageSize)
                     sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->pageSize()).toUtf8(), nullptr, nullptr, nullptr);
 
                 *encrypted = true;
