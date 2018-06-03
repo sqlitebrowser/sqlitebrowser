@@ -1,6 +1,7 @@
 :: Destination path - specify where to move package after build
 set DEST_PATH=C:\\builds
 MKDIR "%DEST_PATH%"
+MKDIR "%DEST_PATH%\tmp\"
 
 set SQLITE_DIR=C:\\dev\\SQLite-
 set SQLCIPHER_DIR=C:\\git_repos\\SQLCipher-
@@ -31,6 +32,7 @@ git clone -b msvc2013_win32 --depth 1 https://github.com/justinclift/sqlcipher.g
 git clone -b msvc2013_win64 --depth 1 https://github.com/justinclift/sqlcipher.git SQLCipher-Win64
 git clone -b %BRANCH% https://github.com/sqlitebrowser/sqlitebrowser.git
 
+
 :: WIN32 SQLITE BUILD PROCEDURE
 
 :: Set path variables
@@ -49,8 +51,20 @@ cmake -G "Visual Studio 12 2013" -Wno-dev ..
 :: Build package
 FOR %%I IN (*.sln) DO devenv /Build Release "%%I" /project "PACKAGE"
 
+:: Copy .exe to destination.  Weirdly, this needs to be done in two steps as doing
+:: it with a single MOVE always results in a broken .exe 4k in size
+COPY /Y C:\\git_repos\\sqlitebrowser\\release-sqlite-win32\\DB*.exe "%DEST_PATH%\\tmp\\"
+MOVE /Y %DEST_PATH%\\tmp\\DB*.exe "%DEST_PATH%\\DB Browser for SQLite-%RUN_DATE%-win32.exe"
+
+:: Build MSI
+MKDIR C:\\git_repos\\sqlitebrowser\\Release
+MOVE C:\\git_repos\\sqlitebrowser\\release-sqlite-win32\\Release\\*.exe C:\\git_repos\\sqlitebrowser\\Release
+cd C:\\git_repos\\sqlitebrowser\\installer\\windows
+CALL build.cmd win32
+
 :: Move package to DEST_PATH
-MOVE /Y *exe "%DEST_PATH%\DB Browser for SQLite-%RUN_DATE%-win32.exe"
+MOVE /Y *msi "%DEST_PATH%\DB Browser for SQLite-%RUN_DATE%-win32.msi"
+
 
 :: WIN32 SQLCIPHER BUILD PROCEDURE
 
@@ -67,8 +81,20 @@ cmake -G "Visual Studio 12 2013" -Wno-dev -Dsqlcipher=1 ..
 :: Build package
 FOR %%I IN (*.sln) DO devenv /Build Release "%%I" /project "PACKAGE"
 
+:: Copy .exe to destination.  Weirdly, this needs to be done in two steps as doing
+:: it with a single MOVE always results in a broken .exe 4k in size
+COPY /Y C:\\git_repos\\sqlitebrowser\\release-sqlcipher-win32\\DB*.exe "%DEST_PATH%\\tmp\\"
+MOVE /Y %DEST_PATH%\\tmp\\DB*.exe "%DEST_PATH%\\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.exe"
+
+:: Build MSI
+MKDIR C:\\git_repos\\sqlitebrowser\\Release
+MOVE C:\\git_repos\\sqlitebrowser\\release-sqlcipher-win32\\Release\\*.exe C:\\git_repos\\sqlitebrowser\\Release
+cd C:\\git_repos\\sqlitebrowser\\installer\\windows
+CALL build.cmd win32 sqlcipher
+
 :: Move package to DEST_PATH
-MOVE /Y *exe "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.exe"
+MOVE /Y *msi "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.msi"
+
 
 :: WIN64 SQLITE BUILD PROCEDURE
 
@@ -88,8 +114,20 @@ cmake -G "Visual Studio 12 2013 Win64" -Wno-dev ..
 :: Build package
 FOR %%I IN (*.sln) DO devenv /Build Release "%%I" /project "PACKAGE"
 
+:: Copy .exe to destination.  Weirdly, this needs to be done in two steps as doing
+:: it with a single MOVE always results in a broken .exe 4k in size
+COPY /Y C:\\git_repos\\sqlitebrowser\\release-sqlite-win64\\DB*.exe "%DEST_PATH%\\tmp\\"
+MOVE /Y %DEST_PATH%\\tmp\\DB*.exe "%DEST_PATH%\DB Browser for SQLite-%RUN_DATE%-win64.exe"
+
+:: Build MSI
+MKDIR C:\\git_repos\\sqlitebrowser\\Release
+MOVE C:\\git_repos\\sqlitebrowser\\release-sqlite-win64\\Release\\*.exe C:\\git_repos\\sqlitebrowser\\Release
+cd C:\\git_repos\\sqlitebrowser\\installer\\windows
+CALL build.cmd win64
+
 :: Move package to DEST_PATH
-MOVE /Y *exe "%DEST_PATH%\DB Browser for SQLite-%RUN_DATE%-win64.exe"
+MOVE /Y *msi "%DEST_PATH%\DB Browser for SQLite-%RUN_DATE%-win64.msi"
+
 
 :: WIN64 SQLCIPHER BUILD PROCEDURE
 
@@ -106,19 +144,36 @@ cmake -G "Visual Studio 12 2013 Win64" -Wno-dev -Dsqlcipher=1 ..
 :: Build package
 FOR %%I IN (*.sln) DO devenv /Build Release "%%I" /project "PACKAGE"
 
+:: Copy .exe to destination.  Weirdly, this needs to be done in two steps as doing
+:: it with a single MOVE always results in a broken .exe 4k in size
+COPY /Y C:\\git_repos\\sqlitebrowser\\release-sqlcipher-win64\\DB*.exe "%DEST_PATH%\\tmp\\"
+MOVE /Y %DEST_PATH%\\tmp\\DB*.exe "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win64.exe"
+
+:: Build MSI
+MKDIR C:\\git_repos\\sqlitebrowser\\Release
+MOVE C:\\git_repos\\sqlitebrowser\\release-sqlcipher-win64\\Release\\*.exe C:\\git_repos\\sqlitebrowser\\Release
+cd C:\\git_repos\\sqlitebrowser\\installer\\windows
+CALL build.cmd win64 sqlcipher
+
 :: Move package to DEST_PATH
-MOVE /Y *exe "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win64.exe"
+MOVE /Y *msi "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win64.msi"
 
 :: Upload the packages to the nightlies server
 pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.exe" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
+pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.msi" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
 pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win64.exe" nightlies@nightlies.sqlitebrowser.org:/nightlies/win64
+pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win64.msi" nightlies@nightlies.sqlitebrowser.org:/nightlies/win64
 
 :: Copy the new binaries to /latest directory on the nightlies server
-plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cd /nightlies/latest; rm -f *.exe"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cd /nightlies/latest; rm -f *.exe *.msi"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*SQLite-%RUN_DATE%-win32.exe /nightlies/latest/DB.Browser.for.SQLite-win32.exe"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*SQLite-%RUN_DATE%-win32.msi /nightlies/latest/DB.Browser.for.SQLite-win32.msi"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*sqlcipher-%RUN_DATE%-win32.exe /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win32.exe"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*sqlcipher-%RUN_DATE%-win32.msi /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win32.msi"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win64/DB*SQLite-%RUN_DATE%-win64.exe /nightlies/latest/DB.Browser.for.SQLite-win64.exe"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win64/DB*SQLite-%RUN_DATE%-win64.msi /nightlies/latest/DB.Browser.for.SQLite-win64.msi"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win64/DB*sqlcipher-%RUN_DATE%-win64.exe /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win64.exe"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win64/DB*sqlcipher-%RUN_DATE%-win64.msi /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win64.msi"
 
 :: Wipe working dir
 cd /d C:\
