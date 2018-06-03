@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="WelcomeDlgDescription">This Setup Wizard will install [ProductName] on your computer.
+
+If you have a previous version already installed, this will update it.</String>
+</WixLocalization>
