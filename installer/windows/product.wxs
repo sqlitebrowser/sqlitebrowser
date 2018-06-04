@@ -48,6 +48,7 @@
 
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
+            <Directory Id="DesktopFolder" />
             <Directory Id="ProgramMenuFolder" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
@@ -85,14 +86,8 @@
                     <?endif?>
                     <Component>
                         <File Source="..\..\Release\DB Browser for SQLite.exe" Checksum="yes" KeyPath="yes">
-                            <Shortcut
-                                Id="StartMenuShortcut"
-                                Name="$(var.Name)"
-                                Description="$(var.AppComments)"
-                                Directory="ProgramMenuFolder"
-                                WorkingDirectory="INSTALLDIR"
-                                Icon="app.ico"
-                            />
+                            <Shortcut Id="DesktopShortcut" Name="$(var.Name)" Description="$(var.AppComments)" Directory="DesktopFolder" WorkingDirectory="INSTALLDIR" />
+                            <Shortcut Id="StartMenuShortcut" Name="$(var.Name)" Description="$(var.AppComments)" Directory="ProgramMenuFolder" WorkingDirectory="INSTALLDIR" />
                         </File>
                     </Component>
                 </Directory>
