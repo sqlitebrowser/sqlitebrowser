@@ -40,7 +40,7 @@ set LIGHT=-sw1104
 
 :: Compile & Link
 "%WIX%\bin\candle.exe" -nologo -pedantic -arch %ARCH% %SQLCIPHER% product.wxs
-"%WIX%\bin\light.exe" -nologo -pedantic %LIGHT% %ICE% -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -loc strings.wxl product.wixobj -out %MSI%.msi
+"%WIX%\bin\light.exe" -sval -nologo -pedantic %LIGHT% %ICE% -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -loc strings.wxl product.wixobj -out %MSI%.msi
 
 :: Cleanup
 del product.wixobj
