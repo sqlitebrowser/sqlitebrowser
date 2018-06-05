@@ -31,8 +31,8 @@ if "%2"=="" (
 :: Suppress some ICE checks
 :: - 61 (major upgrade)
 :: - 03 & 82 (merge module)
-:: - 43 & 57 (non-advertised shortcuts)
-set ICE=-sice:ICE03 -sice:ICE82 -sice:ICE61 -sice:ICE43 -sice:ICE57
+:: - 38 & 43 & 57 (non-advertised shortcuts)
+set ICE=-sice:ICE03 -sice:ICE82 -sice:ICE61 -sice:ICE38 -sice:ICE43 -sice:ICE57
 
 :: Suppress 'light.exe' warning
 :: - 1104 (vcredist merge module installer version)
