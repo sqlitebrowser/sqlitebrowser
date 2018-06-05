@@ -48,8 +48,6 @@
 
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
-            <Directory Id="DesktopFolder" />
-            <Directory Id="ProgramMenuFolder" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
                     <Directory Id="imageformats" Name="imageformats">
@@ -84,23 +82,40 @@
                     <?else?>
                         <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
                     <?endif?>
-                    <Component>
-                        <File Source="..\..\Release\DB Browser for SQLite.exe" Checksum="yes" KeyPath="yes">
-                            <Shortcut Id="DesktopShortcut" Name="$(var.Name)" Description="$(var.AppComments)" Directory="DesktopFolder" WorkingDirectory="INSTALLDIR" />
-                            <Shortcut Id="StartMenuShortcut" Name="$(var.Name)" Description="$(var.AppComments)" Directory="ProgramMenuFolder" WorkingDirectory="INSTALLDIR" />
-                        </File>
-                    </Component>
+                    <Component><File Source="..\..\Release\DB Browser for SQLite.exe" Checksum="yes" /></Component>
                 </Directory>
+            </Directory>
+            <Directory Id="DesktopFolder">
+                <Component Id="DesktopShortcut">
+                    <Shortcut Id="DSC" Name="$(var.Name)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
+                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                </Component>
+            </Directory>
+            <Directory Id="ProgramMenuFolder">
+                <Component Id="ProgramMenuShortcut">
+                    <Shortcut Id="PMSC" Name="$(var.Name)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
+                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="ProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                </Component>
             </Directory>
         </Directory>
 
         <!-- ============================================== Features =============================================== -->
 
-        <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden" Level="1">
-            <MergeRef Id="VCRedist"/>
-        </Feature>
+        <Feature Id="Complete" Title="$(var.Name)" Description="The complete package" ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no" Display="expand">
 
-        <Feature Id="Complete" Level="1">
+            <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden">
+                <MergeRef Id="VCRedist"/>
+            </Feature>
+
+            <Feature Id="Shortcuts" Title="Shortcuts" Description="Show shortcuts for the application in different locations" AllowAdvertise="no" Display="expand">
+                <Feature Id="FeatureDesktopShortcut" Title="Desktop" AllowAdvertise="no">
+                    <ComponentRef Id="DesktopShortcut" />
+                </Feature>
+                <Feature Id="FeatureProgramMenuShortcut" Title="Program Menu" AllowAdvertise="no">
+                    <ComponentRef Id="ProgramMenuShortcut" />
+                </Feature>
+            </Feature>
+
             <!-- Plugins -->
             <ComponentRef Id="qgif.dll" />
             <ComponentRef Id="qicns.dll" />
@@ -140,10 +155,7 @@
     <!-- ============================================= Installation UI ============================================= -->
 
         <!-- Dialog Set -->
-        <UIRef Id="WixUI_InstallDir" />
-
-        <!-- Default installation directory -->
-        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <UIRef Id="WixUI_FeatureTree" />
 
         <!-- License file -->
         <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
