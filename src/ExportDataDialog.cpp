@@ -11,6 +11,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QTextCodec>
 
 ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const QString& query, const sqlb::ObjectIdentifier& selection)
     : QDialog(parent),
@@ -237,12 +238,19 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
                         json_row.insert(column_names[i], QJsonValue());
                         break;
                     }
-                    case SQLITE_TEXT:
-                    case SQLITE_BLOB: {
+                    case SQLITE_TEXT: {
                         QString content = QString::fromUtf8(
-                            (const char*)sqlite3_column_blob(stmt, i),
+                            (const char*)sqlite3_column_text(stmt, i),
                             sqlite3_column_bytes(stmt, i));
                         json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    case SQLITE_BLOB: {
+                        QByteArray content((const char*)sqlite3_column_blob(stmt, i),
+                                           sqlite3_column_bytes(stmt, i));
+                        QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+                        QString string = codec->toUnicode(content.toBase64(QByteArray::Base64Encoding));
+                        json_row.insert(column_names[i], string);
                         break;
                     }
                     }
