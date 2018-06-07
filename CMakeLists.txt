@@ -346,7 +346,10 @@ add_executable(${PROJECT_NAME}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
 
-qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport Concurrent Xml)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Test REQUIRED)
+find_package(Qt5PrintSupport REQUIRED)
+
 set(QT_LIBRARIES "")
 
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
@@ -413,7 +416,7 @@ endif()
 if(UNIX AND NOT APPLE)
 	install(FILES src/icons/${PROJECT_NAME}.png
 		DESTINATION share/icons/hicolor/256x256/apps/)
-	
+
 	install(FILES distri/${PROJECT_NAME}.desktop
 		DESTINATION share/applications/)
 
