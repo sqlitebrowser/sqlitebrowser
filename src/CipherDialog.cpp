@@ -21,7 +21,7 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     for(int exponent = minimumPageSizeExponent; exponent <= maximumPageSizeExponent; exponent++)
     {
         int pageSize = static_cast<int>(qPow(2, exponent));
-        ui->comboPageSize->addItem(QString::number(pageSize), pageSize);
+        ui->comboPageSize->addItem(QLocale().toString(pageSize), pageSize);
 
         if (exponent == defaultPageSizeExponent)
             ui->comboPageSize->setCurrentIndex(exponent - minimumPageSizeExponent);
