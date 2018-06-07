@@ -1626,7 +1626,6 @@ void MainWindow::enableEditing(bool enable_edit, bool enable_insertdelete)
     ui->buttonNewRecord->setEnabled(insertdelete);
     ui->buttonDeleteRecord->setEnabled(insertdelete);
     ui->dataTable->setEditTriggers(edit ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
-
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -1647,7 +1646,7 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 
     attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the filters.
+    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
     bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
     ui->dataTable->setColumnHidden(0, !showRowid);
 }
@@ -2481,7 +2480,7 @@ void MainWindow::updateFilter(int column, const QString& value)
     browseTableSettings[currentlyBrowsedTableName()].filterValues[column] = value;
     setRecordsetLabel();
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the filters.
+    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
     bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
     ui->dataTable->setColumnHidden(0, !showRowid);
 }
@@ -2833,6 +2832,10 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
 
     // Save settings for this table
     browseTableSettings[currentTable].unlockViewPk = pk;
+
+    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
+    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
+    ui->dataTable->setColumnHidden(0, !showRowid);
 }
 
 sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
