@@ -66,7 +66,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="PageSizeSpinBox" name="spinPageSize"/>
+        <widget class="QComboBox" name="comboPageSize"/>
        </item>
       </layout>
      </item>
@@ -115,18 +115,11 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PageSizeSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>PageSizeSpinBox.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>editPassword</tabstop>
   <tabstop>comboKeyFormat</tabstop>
   <tabstop>editPassword2</tabstop>
-  <tabstop>spinPageSize</tabstop>
+  <tabstop>comboPageSize</tabstop>
  </tabstops>
  <resources/>
  <connections>

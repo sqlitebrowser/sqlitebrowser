@@ -4,6 +4,8 @@
 #include <QPushButton>
 #include <QRegExpValidator>
 
+#include <QtCore/qmath.h>
+
 CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     QDialog(parent),
     ui(new Ui::CipherDialog),
@@ -11,6 +13,21 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     rawKeyValidator(new QRegExpValidator(QRegExp("0x[a-fA-F0-9]+")))
 {
     ui->setupUi(this);
+
+    int minimumPageSizeExponent = 9;
+    int maximumPageSizeExponent = 16;
+    int defaultPageSizeExponent = 10;
+
+    for(int exponent = minimumPageSizeExponent; exponent <= maximumPageSizeExponent; exponent++)
+    {
+        int pageSize = static_cast<int>(qPow(2, exponent));
+        ui->comboPageSize->addItem(QString::number(pageSize), pageSize);
+
+        if (exponent == defaultPageSizeExponent)
+            ui->comboPageSize->setCurrentIndex(exponent - minimumPageSizeExponent);
+    }
+
+    ui->comboPageSize->setMinimumWidth(ui->editPassword->width());
 
     if(encrypt)
     {
@@ -47,7 +64,7 @@ QString CipherDialog::password() const
 
 int CipherDialog::pageSize() const
 {
-    return ui->spinPageSize->value();
+    return ui->comboPageSize->itemData(ui->comboPageSize->currentIndex()).toInt();
 }
 
 void CipherDialog::checkInputFields()

@@ -63,8 +63,7 @@ HEADERS += \
     FindReplaceDialog.h \
     ExtendedScintilla.h \
     FileExtensionManager.h \
-    Data.h \
-    PageSizeSpinBox.h
+    Data.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -105,8 +104,7 @@ SOURCES += \
     FindReplaceDialog.cpp \
     ExtendedScintilla.cpp \
     FileExtensionManager.cpp \
-    Data.cpp \
-    PageSizeSpinBox.cpp
+    Data.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

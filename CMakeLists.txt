@@ -136,7 +136,6 @@ set(SQLB_MOC_HDR
 	src/FindReplaceDialog.h
 	src/ExtendedScintilla.h
 	src/FileExtensionManager.h
-	src/PageSizeSpinBox.h
 )
 
 set(SQLB_SRC
@@ -180,7 +179,6 @@ set(SQLB_SRC
 	src/ExtendedScintilla.cpp
 	src/FileExtensionManager.cpp
 	src/Data.cpp
-	src/PageSizeSpinBox.cpp
 )
 
 set(SQLB_FORMS
