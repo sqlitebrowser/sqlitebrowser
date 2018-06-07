@@ -263,7 +263,7 @@ You can modify or redistribute it under the conditions of these licenses.
   [travis]: https://travis-ci.org/sqlitebrowser/sqlitebrowser
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
-  [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+  [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser
 
   [slack-img]: https://img.shields.io/badge/chat-on%20slack-orange.svg
   [slack]: https://join.slack.com/t/db4s/shared_invite/enQtMzc3MzY5OTU4NDgzLWRlYjk0ZmE5ZDEzYWVmNDQxYTYxNmJjNWVkMjI3ZmVjZTY2NDBjODY3YzNhNTNmZDVlNWI2ZGFjNTk5MjJkYmU
