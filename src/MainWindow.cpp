@@ -510,26 +510,11 @@ void MainWindow::populateTable()
     if(reconnectSelectionSignals)
     {
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
-
-        // Lambda function for updating the delete record button to reflect number of selected records. -- TODO actual
-        // call this once to disable Delete button...
         connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
-            // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected
-            // rows with a non-selected row in between.
-            int rows = 0;
-
-            const auto & sel = ui->dataTable->selectionModel()->selectedIndexes();
-            if(sel.count())
-                rows = sel.last().row() - sel.first().row() + 1;
-
-            ui->buttonDeleteRecord->setEnabled(rows != 0);
-
-            if(rows > 1)
-                ui->buttonDeleteRecord->setText(tr("Delete records"));
-            else
-                ui->buttonDeleteRecord->setText(tr("Delete record"));
+            updateInsertDeleteRecordButton();
         });
     }
+    updateInsertDeleteRecordButton();
 
     // Search stored table settings for this table
     bool storedDataFound = browseTableSettings.contains(tablename);
@@ -822,7 +807,7 @@ void MainWindow::setRecordsetLabel()
     }
     ui->labelRecordset->setText(txt);
 
-    enableEditing(m_browseTableModel->rowCountAvailable() != SqliteTableModel::RowCount::Unknown, 0);
+    enableEditing(m_browseTableModel->rowCountAvailable() != SqliteTableModel::RowCount::Unknown);
 }
 
 void MainWindow::refresh()
@@ -1641,8 +1626,6 @@ void MainWindow::activateFields(bool enable)
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
-    ui->buttonDeleteRecord->setEnabled(enable && write);
-    ui->buttonNewRecord->setEnabled(enable && write);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
@@ -1656,21 +1639,18 @@ void MainWindow::activateFields(bool enable)
     if(!enable)
         ui->actionSqlResultsSave->setEnabled(false);
 
+    updateInsertDeleteRecordButton();
     remoteDock->enableButtons();
 }
 
-void MainWindow::enableEditing(bool enable_edit, bool enable_insert)
+void MainWindow::enableEditing(bool enable_edit)
 {
     // Don't enable anything if this is a read only database
     bool edit = enable_edit && !db.readOnly();
-    bool insert = enable_insert && !db.readOnly();
 
     // Apply settings
-    if(insert)
-        ui->buttonNewRecord->setEnabled(insert);
-    if(edit)
-        ui->buttonDeleteRecord->setEnabled(edit);
     ui->dataTable->setEditTriggers(edit ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
+    updateInsertDeleteRecordButton();
 }
 
 void MainWindow::browseTableHeaderClicked(int logicalindex)
@@ -2842,7 +2822,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     if(db.getObjectByName(currentTable)->type() != sqlb::Object::View)
     {
         m_browseTableModel->setPseudoPk(QString());
-        enableEditing(true, true);
+        enableEditing(true);
         return;
     }
 
@@ -2869,7 +2849,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     }
 
     // (De)activate editing
-    enableEditing(unlock, false);
+    enableEditing(unlock);
     m_browseTableModel->setPseudoPk(pk);
 
     // Update checked status of the popup menu action
@@ -3034,4 +3014,35 @@ void MainWindow::duplicateRecord(int currentRow)
         ui->dataTable->setCurrentIndex(row);
     else
         QMessageBox::warning(this, qApp->applicationName(), db.lastError());
+}
+
+void MainWindow::updateInsertDeleteRecordButton()
+{
+    // Update the delete record button to reflect number of selected records
+
+    // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected
+    // rows with a non-selected row in between.
+    int rows = 0;
+
+    // If there is no model yet (because e.g. no database file is opened) there is no selection model either. So we need to check for that here
+    // in order to avoid null pointer dereferences. If no selection model exists we will just continue as if no row is selected because without a
+    // model you could argue there actually is no row to be selected.
+    if(ui->dataTable->selectionModel())
+    {
+        const auto & sel = ui->dataTable->selectionModel()->selectedIndexes();
+        if(sel.count())
+            rows = sel.last().row() - sel.first().row() + 1;
+    }
+
+    // Enable the insert and delete buttons only if the currently browsed table or view is editable. For the delete button we additionally require
+    // at least one row to be selected. For the insert button there is an extra rule to disable it when we are browsing a view because inserting
+    // into a view isn't supported yet.
+    bool isEditable = m_browseTableModel->isEditable() && !db.readOnly();
+    ui->buttonNewRecord->setEnabled(isEditable && m_browseTableModel->pseudoPk().isEmpty());
+    ui->buttonDeleteRecord->setEnabled(isEditable && rows != 0);
+
+    if(rows > 1)
+        ui->buttonDeleteRecord->setText(tr("Delete records"));
+    else
+        ui->buttonDeleteRecord->setText(tr("Delete record"));
 }

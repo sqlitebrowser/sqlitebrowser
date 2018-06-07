@@ -180,7 +180,7 @@ private:
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
-    void enableEditing(bool enable_edit, bool enable_insert);
+    void enableEditing(bool enable_edit);
     void loadExtensionsFromSettings();
     void saveAsView(QString query);
     void duplicateRecord(int currentRow);
@@ -287,6 +287,7 @@ private slots:
     void openFindReplaceDialog();
     void saveFilterAsView();
     void exportFilteredTable();
+    void updateInsertDeleteRecordButton();
 };
 
 #endif
