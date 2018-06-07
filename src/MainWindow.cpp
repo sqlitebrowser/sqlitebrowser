@@ -2828,7 +2828,9 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     m_browseTableModel->setPseudoPk(pk);
 
     // Update checked status of the popup menu action
+    ui->actionUnlockViewEditing->blockSignals(true);
     ui->actionUnlockViewEditing->setChecked(unlock);
+    ui->actionUnlockViewEditing->blockSignals(false);
 
     // Save settings for this table
     browseTableSettings[currentTable].unlockViewPk = pk;
