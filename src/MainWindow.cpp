@@ -576,9 +576,9 @@ void MainWindow::populateTable()
             }
         }
         if(only_defaults)
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues);
         else
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues, v);
 
         // There is information stored for this table, so extract it and apply it
 
@@ -601,10 +601,12 @@ void MainWindow::populateTable()
         // Sorting
         ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
 
-        // Filters
+        // Set filters blocking signals, since the filter is already applied to the browse table model
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        bool oldState = filterHeader->blockSignals(true);
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
+        filterHeader->blockSignals(oldState);
 
         // Encoding
         m_browseTableModel->setEncoding(storedData.encoding);
