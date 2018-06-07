@@ -1616,15 +1616,15 @@ void MainWindow::activateFields(bool enable)
     remoteDock->enableButtons();
 }
 
-void MainWindow::enableEditing(bool enable_edit, bool enable_insertdelete)
+void MainWindow::enableEditing(bool enable_edit, bool enable_insert)
 {
     // Don't enable anything if this is a read only database
     bool edit = enable_edit && !db.readOnly();
-    bool insertdelete = enable_insertdelete && !db.readOnly();
+    bool insert = enable_insert && !db.readOnly();
 
     // Apply settings
-    ui->buttonNewRecord->setEnabled(insertdelete);
-    ui->buttonDeleteRecord->setEnabled(insertdelete);
+    ui->buttonNewRecord->setEnabled(insert);
+    ui->buttonDeleteRecord->setEnabled(edit);
     ui->dataTable->setEditTriggers(edit ? QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed | QAbstractItemView::EditKeyPressed : QAbstractItemView::NoEditTriggers);
 }
 

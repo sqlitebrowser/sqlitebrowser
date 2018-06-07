@@ -71,7 +71,7 @@ public:
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
     QString emptyInsertStmt(const QString& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
-    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids);
+    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk = QString());
     bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
@@ -130,6 +130,8 @@ private:
     QStringList savepointList;
     bool isEncrypted;
     bool isReadOnly;
+
+    QString primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const;
 
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
 

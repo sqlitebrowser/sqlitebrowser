@@ -176,7 +176,7 @@ private:
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
-    void enableEditing(bool enable_edit, bool enable_insertdelete);
+    void enableEditing(bool enable_edit, bool enable_insert);
     void loadExtensionsFromSettings();
     void saveAsView(QString query);
     void duplicateRecord(int currentRow);

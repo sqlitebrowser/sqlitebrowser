@@ -489,8 +489,6 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
 
     QMutexLocker lock(&m_mutexDataCache);
 
-    bool ok = true;
-
     QStringList rowids;
     for(int i=count-1;i>=0;i--)
     {
@@ -498,10 +496,8 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         m_data.removeAt(row + i);
         --m_rowCountAdjustment;
     }
-    if(!m_db.deleteRecords(m_sTable, rowids))
-    {
-        ok = false;
-    }
+
+    bool ok = m_db.deleteRecords(m_sTable, rowids, m_pseudoPk);
 
     endRemoveRows();
     return ok;

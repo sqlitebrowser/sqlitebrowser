@@ -977,9 +977,17 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     }
 }
 
-bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids)
+bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk)
 {
     if (!isOpen()) return false;
+
+    // Get primary key of the object to edit.
+    QString pk = primaryKeyForEditing(table, pseudo_pk);
+    if(pk.isNull())
+    {
+        lastErrorMessage = tr("Cannot delete this object");
+        return false;
+    }
 
     QStringList quoted_rowids;
     for(QString rowid : rowids)
@@ -987,7 +995,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
 
     QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
             .arg(table.toString())
-            .arg(sqlb::escapeIdentifier(getObjectByName(table).dynamicCast<sqlb::Table>()->rowidColumn()))
+            .arg(pk)
             .arg(quoted_rowids.join(", "));
     if(executeSQL(statement))
     {
@@ -1002,22 +1010,12 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
 {
     if (!isOpen()) return false;
 
-    // Get primary key of the object to edit. For views we support 'pseudo' primary keys which must be specified manually.
-    // If no pseudo pk is specified we'll take the rowid column of the table. If this isn't a table, however, we'll just assume
-    // it's a view that hasn't been configured for editing and thus abort here.
-    QString pk;
-    if(pseudo_pk.isEmpty())
+    // Get primary key of the object to edit.
+    QString pk = primaryKeyForEditing(table, pseudo_pk);
+    if(pk.isNull())
     {
-        sqlb::TablePtr tbl = getObjectByName(table).dynamicCast<sqlb::Table>();
-        if(tbl)
-        {
-            pk = tbl->rowidColumn();
-        } else {
-            lastErrorMessage = tr("Cannot set data on this object");
-            return false;
-        }
-    } else {
-        pk = pseudo_pk;
+        lastErrorMessage = tr("Cannot set data on this object");
+        return false;
     }
 
     QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
@@ -1062,6 +1060,24 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
         qWarning() << "updateRecord: " << lastErrorMessage;
         return false;
     }
+}
+
+QString DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const
+{
+    // This function returns the primary key of the object to edit. For views we support 'pseudo' primary keys which must be specified manually.
+    // If no pseudo pk is specified we'll take the rowid column of the table instead. If this neither a table nor was a pseudo-PK specified,
+    // it is most likely a view that hasn't been configured for editing yet. In this case we return a null string to abort.
+
+    if(pseudo_pk.isEmpty())
+    {
+        sqlb::TablePtr tbl = getObjectByName(table).dynamicCast<sqlb::Table>();
+        if(tbl)
+            return tbl->rowidColumn();
+    } else {
+        return pseudo_pk;
+    }
+
+    return QString();
 }
 
 bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure)
