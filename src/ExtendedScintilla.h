@@ -19,6 +19,8 @@ public:
 
     bool findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward);
     void clearSelection();
+    // Override parent setLexer
+    void setLexer(QsciLexer *lexer);
 
 public slots:
     void reloadKeywords();
@@ -32,7 +34,8 @@ public slots:
 protected:
     void dropEvent(QDropEvent* e);
 
-    void setupSyntaxHighlightingFormat(const QString& settings_name, int style);
+    void setupSyntaxHighlightingFormat(QsciLexer *lexer, const QString& settings_name, int style);
+    void reloadLexerSettings(QsciLexer *lexer);
 
     int errorIndicatorNumber;
     bool showErrorIndicators;

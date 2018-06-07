@@ -33,6 +33,9 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
 {
     ui->setupUi(this);
 
+    // Hide "Advanced" section of the settings
+    toggleAdvancedSection(false);
+
     // Get the actual file name out of the provided path and use it as the default table name for import
     // For importing several files at once, the fields have to be the same so we can safely use the first
     QFileInfo file(filenames.first());
@@ -412,8 +415,8 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
         }
 
-        // Try to find out a data type for each column
-        if(!(rowNum == 0 && ui->checkboxHeader->isChecked()))
+        // Try to find out a data type for each column. Skip the header row if there is one.
+        if(!ui->checkNoTypeDetection->isChecked() && !(rowNum == 0 && ui->checkboxHeader->isChecked()))
         {
             for(size_t i=0;i<data.num_fields;i++)
             {
@@ -536,6 +539,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Create table
     QVector<QByteArray> nullValues;
+    std::vector<bool> failOnMissingFieldList;
+    bool ignoreDefaults = ui->checkIgnoreDefaults->isChecked();
+    bool failOnMissing = ui->checkFailOnMissing->isChecked();
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
@@ -557,12 +563,39 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         {
             for(const sqlb::FieldPtr& f : tbl->fields())
             {
-                if(f->isInteger() && f->notnull())              // If this is an integer column but NULL isn't allowed, insert 0
-                    nullValues << "0";
-                else if(f->isInteger() && !f->notnull())        // If this is an integer column and NULL is allowed, insert NULL
-                    nullValues << QByteArray();
-                else                                            // Otherwise (i.e. if this isn't an integer column), insert an empty string
-                    nullValues << "";
+                // For determining the value for empty fields we follow a set of rules
+
+                // Normally we don't have to fail the import when importing an empty field. This last value of the vector
+                // is changed to true later if we actually do want to fail the import for this field.
+                failOnMissingFieldList.push_back(false);
+
+                // If a field has a default value, that gets priority over everything else.
+                // Exception: if the user wants to ignore default values we never use them.
+                if(!ignoreDefaults && !f->defaultValue().isNull())
+                {
+                    nullValues << f->defaultValue().toUtf8();
+                } else {
+                    // If it has no default value, check if the field is NOT NULL
+                    if(f->notnull())
+                    {
+                        // The field is NOT NULL
+
+                        // If this is an integer column insert 0. Otherwise insert an empty string.
+                        if(f->isInteger())
+                            nullValues << "0";
+                        else
+                            nullValues << "";
+
+                        // If the user wants to fail the import, remember this field
+                        if(failOnMissing)
+                            failOnMissingFieldList.back() = true;
+                    } else {
+                        // The field is not NOT NULL (stupid double negation here! NULL values are allowed in this case)
+
+                        // Just insert a NULL value
+                        nullValues << QByteArray();
+                    }
+                }
             }
         }
     }
@@ -595,16 +628,23 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Bind all values
         for(size_t i=0;i<data.num_fields;i++)
         {
-            // Empty values need special treatment, but only when importing into an existing table where we could find out something about
-            // its table definition
+            // Empty values need special treatment
+            // When importing into an existing table where we could find out something about its table definition
             if(importToExistingTable && data.fields[i].data_length == 0 && static_cast<size_t>(nullValues.size()) > i)
             {
+                // Do we want to fail when trying to import an empty value into this field? Then exit with an error.
+                if(failOnMissingFieldList.at(i))
+                    return false;
+
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 const QByteArray& val = nullValues.at(i);
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
                     sqlite3_bind_text(stmt, i+1, val, val.size(), SQLITE_STATIC);
+            // When importing into a new table, use the missing values setting directly
+            } else if(!importToExistingTable && data.fields[i].data_length == 0) {
+                // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
-                // This is a non-empty value. Just add it to the statement
+                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
                 sqlite3_bind_text(stmt, i+1, data.fields[i].data, data.fields[i].data_length, SQLITE_STATIC);
             }
         }
@@ -730,4 +770,14 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->editCustomEncoding->text().length() ? ui->editCustomEncoding->text() : "UTF-8";
     else
         return ui->comboEncoding->currentText();
+}
+
+void ImportCsvDialog::toggleAdvancedSection(bool show)
+{
+    ui->labelNoTypeDetection->setVisible(show);
+    ui->checkNoTypeDetection->setVisible(show);
+    ui->labelFailOnMissing->setVisible(show);
+    ui->checkFailOnMissing->setVisible(show);
+    ui->labelIgnoreDefaults->setVisible(show);
+    ui->checkIgnoreDefaults->setVisible(show);
 }

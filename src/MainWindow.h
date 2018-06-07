@@ -45,22 +45,6 @@ struct BrowseDataTableSettings
     {
     }
 
-    friend QDataStream& operator<<(QDataStream& stream, const BrowseDataTableSettings& object)
-    {
-        stream << object.sortOrderIndex;
-        stream << static_cast<int>(object.sortOrderMode);
-        stream << object.columnWidths;
-        stream << object.filterValues;
-        stream << object.displayFormats;
-        stream << object.showRowid;
-        stream << object.encoding;
-        stream << object.plotXAxis;
-        stream << object.plotYAxes;
-        stream << object.unlockViewPk;
-        stream << object.hiddenColumns;
-
-        return stream;
-    }
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
     {
         stream >> object.sortOrderIndex;
@@ -158,6 +142,7 @@ private:
     QMenu* recentFilesMenu;
     QMenu* popupSaveSqlFileMenu;
     QMenu* popupSaveSqlResultsMenu;
+    QMenu* popupSaveFilterAsMenu;
     QMenu* popupBrowseDataHeaderMenu;
 
     QLabel* statusEncodingLabel;
@@ -297,6 +282,7 @@ private slots:
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
     void saveFilterAsView();
+    void exportFilteredTable();
 };
 
 #endif

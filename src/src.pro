@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += core gui network widgets printsupport concurrent
+QT += core gui network widgets printsupport concurrent xml
 macx: QT += opengl
 
 TARGET = sqlitebrowser
@@ -59,7 +59,7 @@ HEADERS += \
     RemoteDock.h \
     RemoteModel.h \
     RemotePushDialog.h \
-    jsontextedit.h \
+    docktextedit.h \
     FindReplaceDialog.h \
     ExtendedScintilla.h \
     FileExtensionManager.h \
@@ -100,7 +100,7 @@ SOURCES += \
     RemoteDock.cpp \
     RemoteModel.cpp \
     RemotePushDialog.cpp \
-    jsontextedit.cpp \
+    docktextedit.cpp \
     FindReplaceDialog.cpp \
     ExtendedScintilla.cpp \
     FileExtensionManager.cpp \

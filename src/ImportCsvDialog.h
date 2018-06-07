@@ -31,6 +31,7 @@ private slots:
     void updateSelectedFilePreview();
     void updateSelection(bool);
     void matchSimilar();
+    void toggleAdvancedSection(bool show);
 
 private:
     Ui::ImportCsvDialog* ui;

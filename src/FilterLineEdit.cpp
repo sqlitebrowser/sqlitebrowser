@@ -20,6 +20,18 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters,
     connect(this, SIGNAL(textChanged(QString)), delaySignalTimer, SLOT(start()));
     connect(delaySignalTimer, SIGNAL(timeout()), this, SLOT(delayedSignalTimerTriggered()));
 
+    setWhatsThis(tr("These input fields allow you to perform quick filters in the currently selected table.\n"
+                    "By default, the rows containing the input text are filtered out.\n"
+                    "The following operators are also supported:\n"
+                    "%\tWildcard\n"
+                    ">\tGreater than\n"
+                    "<\tLess than\n"
+                    ">=\tEqual to or greater\n"
+                    "<=\tEqual to or less\n"
+                    "=\tEqual to: exact match\n"
+                    "<>\tUnequal: exact inverse match\n"
+                    "x~y\tRange: values between x and y"));
+
     // Immediately emit the delayed filter value changed signal if the user presses the enter or the return key or
     // the line edit widget loses focus
     connect(this, SIGNAL(editingFinished()), this, SLOT(delayedSignalTimerTriggered()));

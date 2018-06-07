@@ -33,10 +33,10 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         }
     } else {            // If this is an existing index, only offer tables of the current database schema
         QList<sqlb::ObjectPtr> tables = pdb.schemata[curIndex.schema()].values("table");
-        for(auto it=tables.constBegin();it!=tables.constEnd();++it)
+        for(auto it : tables)
         {
             // Only show the schema name for non-main schemata
-            sqlb::ObjectIdentifier obj(curIndex.schema(), (*it)->name());
+            sqlb::ObjectIdentifier obj(curIndex.schema(), it->name());
             dbobjs.insert(obj.toDisplayString(), obj);
         }
     }

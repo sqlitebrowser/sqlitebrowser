@@ -11,6 +11,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QTextCodec>
 
 ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const QString& query, const sqlb::ObjectIdentifier& selection)
     : QDialog(parent),
@@ -116,7 +117,7 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
         QByteArray utf8Query = sQuery.toUtf8();
         sqlite3_stmt *stmt;
 
-        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
         if(SQLITE_OK == status)
         {
             if(ui->checkHeader->isChecked())
@@ -198,7 +199,7 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
     {
         QByteArray utf8Query = sQuery.toUtf8();
         sqlite3_stmt *stmt;
-        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(pdb._db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
 
         QJsonArray json_table;
 
@@ -220,10 +221,39 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
                 QJsonObject json_row;
                 for(int i=0;i<columns;++i)
                 {
-                    QString content = QString::fromUtf8(
-                                (const char*)sqlite3_column_blob(stmt, i),
-                                sqlite3_column_bytes(stmt, i));
-                    json_row.insert(column_names[i], content);
+                    int type = sqlite3_column_type(stmt, i);
+
+                    switch (type) {
+                    case SQLITE_INTEGER: {
+                        qint64 content = sqlite3_column_int64(stmt, i);
+                        json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    case SQLITE_FLOAT: {
+                        double content = sqlite3_column_double(stmt, i);
+                        json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    case SQLITE_NULL: {
+                        json_row.insert(column_names[i], QJsonValue());
+                        break;
+                    }
+                    case SQLITE_TEXT: {
+                        QString content = QString::fromUtf8(
+                            (const char*)sqlite3_column_text(stmt, i),
+                            sqlite3_column_bytes(stmt, i));
+                        json_row.insert(column_names[i], content);
+                        break;
+                    }
+                    case SQLITE_BLOB: {
+                        QByteArray content((const char*)sqlite3_column_blob(stmt, i),
+                                           sqlite3_column_bytes(stmt, i));
+                        QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+                        QString string = codec->toUnicode(content.toBase64(QByteArray::Base64Encoding));
+                        json_row.insert(column_names[i], string);
+                        break;
+                    }
+                    }
                 }
                 json_table.push_back(json_row);
 

@@ -9,6 +9,7 @@ class QTreeWidgetItem;
 class QFrame;
 class QTableWidget;
 class QSslCertificate;
+class QAbstractButton;
 
 namespace Ui {
 class PreferencesDialog;
@@ -37,6 +38,7 @@ private slots:
     void updatePreviewFont();
 
     void on_buttonManageFileExtension_clicked();
+    void on_buttonBox_clicked(QAbstractButton* button);
 
 private:
     Ui::PreferencesDialog *ui;

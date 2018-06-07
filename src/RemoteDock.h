@@ -22,6 +22,9 @@ public:
     void reloadSettings();
     void enableButtons();
 
+public slots:
+    virtual void reject();
+
 private slots:
     void setNewIdentity();
     void fetchDatabase(const QModelIndex& idx);

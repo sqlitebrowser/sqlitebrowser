@@ -1,5 +1,16 @@
 project(sqlitebrowser)
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.11)
+
+# BUILD_VERSION is the current date in YYYYMMDD format. It is only
+# used by the nightly version to add the date of the build.
+string(TIMESTAMP BUILD_VERSION "%Y%m%d")
+
+# Choose between building a stable version or nightly (the default), depending
+# on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
+option(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF)
+if(NOT BUILD_STABLE_VERSION)
+    add_definitions(-DBUILD_VERSION=${BUILD_VERSION})
+endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
@@ -71,6 +82,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
+find_package(Qt5Xml REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -106,7 +118,7 @@ set(SQLB_MOC_HDR
 	src/VacuumDialog.h
 	src/sqlitetablemodel.h
 	src/sqltextedit.h
-	src/jsontextedit.h
+	src/docktextedit.h
 	src/DbStructureModel.h
 	src/Application.h
 	src/CipherDialog.h
@@ -144,7 +156,7 @@ set(SQLB_SRC
 	src/sqlitetablemodel.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
-	src/jsontextedit.cpp
+	src/docktextedit.cpp
 	src/csvparser.cpp
 	src/DbStructureModel.cpp
 	src/grammar/Sqlite3Lexer.cpp
@@ -334,7 +346,7 @@ add_executable(${PROJECT_NAME}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
 
-qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport Concurrent)
+qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport Concurrent Xml)
 set(QT_LIBRARIES "")
 
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
@@ -445,6 +457,16 @@ if(WIN32 AND MSVC)
 		${QT5_PATH}/plugins/platforms/qwindows.dll
 		DESTINATION platforms)
 	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION redist)
+
+	# The XML dll
+	install(FILES
+			"${QT5_PATH}/bin/Qt5Xmld.dll"
+		DESTINATION "/"
+		CONFIGURATIONS Debug)
+	install(FILES
+			"${QT5_PATH}/bin/Qt5Xml.dll"
+		DESTINATION "/"
+		CONFIGURATIONS Release)
 
 	# The image format plugins
 	install(FILES

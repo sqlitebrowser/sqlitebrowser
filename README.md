@@ -10,7 +10,7 @@
 
 ## What it is
 
-DB Browser for SQLite is a high quality, visual, open source tool to
+_DB Browser for SQLite_ (DB4S) is a high quality, visual, open source tool to
 create, design, and edit database files compatible with SQLite.
 
 It is for users and developers wanting to create databases, search, and edit
@@ -29,6 +29,7 @@ Controls and wizards are available for users to:
 * Import and export databases from/to SQL dump files
 * Issue SQL queries and inspect the results
 * Examine a log of all SQL commands issued by the application
+* Plot simple graphs based on table or query data
 
 ## What it is not
 
@@ -82,6 +83,19 @@ Arch Linux provides a package through pacman.
 For Fedora (i386 and x86_64) you can install by issuing:
 
     $ sudo dnf install sqlitebrowser
+
+### Debian
+
+Note that Debian focuses more on stability rather than newest features. Therefore packages will typically contain some older (but well tested) version, compared to the latest release.
+
+Update the cache using:
+
+    sudo apt-get update
+
+Install the package using:
+
+    sudo apt-get install sqlitebrowser
+
 
 ### Ubuntu and Derivatives
 
@@ -165,7 +179,7 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## Website
 
-* http://sqlitebrowser.org
+* https://sqlitebrowser.org
 
 ## Old project page
 

@@ -27,6 +27,8 @@ TARGET = qscintilla2
 CONFIG += qt warn_off thread exceptions hide_symbols staticlib debug_and_release
 INCLUDEPATH += . ../include ../lexlib ../src
 
+QMAKE_CXXFLAGS += -std=c++11
+
 !CONFIG(staticlib) {
     DEFINES += QSCINTILLA_MAKE_DLL
 }
@@ -87,6 +89,11 @@ HEADERS = \
 	./Qsci/qscilexercustom.h \
 	./Qsci/qscilexersql.h \
 	./Qsci/qscilexerjson.h \
+	./Qsci/qscilexerhtml.h \
+	./Qsci/qscilexerxml.h \
+	./Qsci/qscilexerjavascript.h \
+	./Qsci/qscilexercpp.h \
+	./Qsci/qscilexerpython.h \
 	./Qsci/qscimacro.h \
 	./Qsci/qsciprinter.h \
 	./Qsci/qscistyle.h \
@@ -157,21 +164,27 @@ SOURCES = \
 	qscicommandset.cpp \
 	qscidocument.cpp \
 	qscilexer.cpp \
-    qscilexercustom.cpp \
-    qscilexersql.cpp \
-    qscilexerjson.cpp \
+	qscilexercustom.cpp \
+	qscilexersql.cpp \
+	qscilexerjson.cpp \
+	qscilexerhtml.cpp \
+	qscilexerxml.cpp \
+	qscilexerjavascript.cpp \
+	qscilexercpp.cpp \
+	qscilexerpython.cpp \
 	qscimacro.cpp \
 	qsciprinter.cpp \
 	qscistyle.cpp \
 	qscistyledtext.cpp \
-    MacPasteboardMime.cpp \
-    InputMethod.cpp \
+	MacPasteboardMime.cpp \
+	InputMethod.cpp \
 	SciClasses.cpp \
 	ListBoxQt.cpp \
 	PlatQt.cpp \
-    ScintillaQt.cpp \
-    ../lexers/LexSQL.cpp \
-    ../lexers/LexJSON.cpp \
+	ScintillaQt.cpp \
+	../lexers/LexSQL.cpp \
+	../lexers/LexJSON.cpp \
+	../lexers/LexHTML.cpp \
 	../lexlib/Accessor.cpp \
 	../lexlib/CharacterCategory.cpp \
 	../lexlib/CharacterSet.cpp \
@@ -197,15 +210,15 @@ SOURCES = \
 	../src/EditView.cpp \
 	../src/ExternalLexer.cpp \
 	../src/Indicator.cpp \
-    ../src/KeyMap.cpp \
+	../src/KeyMap.cpp \
 	../src/LineMarker.cpp \
 	../src/MarginView.cpp \
 	../src/PerLine.cpp \
 	../src/PositionCache.cpp \
-    ../src/RESearch.cpp \
+	../src/RESearch.cpp \
 	../src/RunStyles.cpp \
-    ../src/ScintillaBase.cpp \
-    ../src/Selection.cpp \
+	../src/ScintillaBase.cpp \
+	../src/Selection.cpp \
 	../src/Style.cpp \
 	../src/UniConversion.cpp \
 	../src/ViewStyle.cpp \

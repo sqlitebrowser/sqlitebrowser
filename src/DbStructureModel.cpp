@@ -303,27 +303,27 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
 
     // Get all database objects and sort them by their name
     QMultiMap<QString, sqlb::ObjectPtr> dbobjs;
-    for(auto it=objmap.constBegin(); it != objmap.constEnd(); ++it)
-        dbobjs.insert((*it)->name(), (*it));
+    for(auto it : objmap)
+        dbobjs.insert(it->name(), it);
 
     // Add the database objects to the tree nodes
-    for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
+    for(auto it : dbobjs)
     {
         // Object node
-        QTreeWidgetItem* item = addNode(typeToParentItem.value(sqlb::Object::typeToString((*it)->type())), *it, schema);
+        QTreeWidgetItem* item = addNode(typeToParentItem.value(sqlb::Object::typeToString(it->type())), it, schema);
 
         // If it is a table or view add the field nodes, add an extra node for the browsable section
-        if((*it)->type() == sqlb::Object::Types::Table || (*it)->type() == sqlb::Object::Types::View)
-            addNode(browsablesRootItem, *it, schema);
+        if(it->type() == sqlb::Object::Types::Table || it->type() == sqlb::Object::Types::View)
+            addNode(browsablesRootItem, it, schema);
 
         // Add field nodes if there are any
-        sqlb::FieldInfoList fieldList = (*it)->fieldInformation();
+        sqlb::FieldInfoList fieldList = it->fieldInformation();
         if(!fieldList.empty())
         {
             QStringList pk_columns;
-            if((*it)->type() == sqlb::Object::Types::Table)
+            if(it->type() == sqlb::Object::Types::Table)
             {
-                sqlb::FieldVector pk = (*it).dynamicCast<sqlb::Table>()->primaryKey();
+                sqlb::FieldVector pk = it.dynamicCast<sqlb::Table>()->primaryKey();
                 for(const sqlb::FieldPtr& pk_col : pk)
                     pk_columns.push_back(pk_col->name());
 

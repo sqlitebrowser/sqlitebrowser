@@ -65,7 +65,7 @@
           </property>
           <property name="whatsThis">
            <string>This is the structure of the opened database.
-You can drag SQL sentences from an object row and drop them into other applications or into another instance of 'DB Browser for SQLite'.
+You can drag SQL statements from an object row and drop them into other applications or into another instance of 'DB Browser for SQLite'.
 </string>
           </property>
           <property name="dragEnabled">
@@ -154,6 +154,9 @@ You can drag SQL sentences from an object row and drop them into other applicati
             <property name="toolTip">
              <string>Clear all filters</string>
             </property>
+            <property name="whatsThis">
+             <string>This button clears all the filters set in the header input fields for the currently browsed table.</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -164,9 +167,12 @@ You can drag SQL sentences from an object row and drop them into other applicati
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="buttonSaveFilterAsView">
+           <widget class="QToolButton" name="buttonSaveFilterAsPopup">
             <property name="toolTip">
-             <string>Save the current filter, sort column and display formats as a view</string>
+             <string>Save the table as currently displayed</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -209,7 +215,7 @@ You can drag SQL sentences from an object row and drop them into other applicati
              <string>Delete the current record</string>
             </property>
             <property name="whatsThis">
-             <string>This button deletes the record currently selected in the database</string>
+             <string>This button deletes the record or records currently selected in the table</string>
             </property>
             <property name="text">
              <string>Delete Record</string>
@@ -390,8 +396,8 @@ You can drag SQL sentences from an object row and drop them into other applicati
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>566</width>
-             <height>531</height>
+             <width>601</width>
+             <height>484</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -881,7 +887,7 @@ You can drag SQL sentences from an object row and drop them into other applicati
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1060,6 +1066,9 @@ You can drag SQL sentences from an object row and drop them into other applicati
            <height>30</height>
           </size>
          </property>
+         <property name="whatsThis">
+          <string>This button clears the contents of the SQL logs</string>
+         </property>
          <property name="text">
           <string>&amp;Clear</string>
          </property>
@@ -1069,6 +1078,9 @@ You can drag SQL sentences from an object row and drop them into other applicati
      </item>
      <item>
       <widget class="QStackedWidget" name="stackLog">
+       <property name="whatsThis">
+        <string>This panel lets you examine a log of all SQL commands issued by the application or by yourself</string>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -1126,8 +1138,8 @@ You can drag SQL sentences from an object row and drop them into other applicati
       <widget class="QTreeView" name="treeSchemaDock">
        <property name="whatsThis">
         <string>This is the structure of the opened database.
-You can drag multiple object names from the Name column and drop them into the SQL editor .
-You can drag SQL sentences from the Schema column and drop them into the SQL editor or into other applications.
+You can drag multiple object names from the Name column and drop them into the SQL editor.
+You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </string>
        </property>
        <property name="dragEnabled">
@@ -1267,6 +1279,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="statusTip">
     <string>Close the current database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button closes the connection to the currently open database file</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
@@ -1563,6 +1578,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    <property name="text">
     <string>Open &amp;tab</string>
    </property>
+   <property name="whatsThis">
+    <string>This button opens a new tab for the SQL editor</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
    </property>
@@ -1576,7 +1594,10 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
     <string>&amp;Execute SQL</string>
    </property>
    <property name="toolTip">
-    <string>Execute SQL [F5, Ctrl+Return, Ctrl+R]</string>
+    <string>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</string>
    </property>
   </action>
   <action name="actionSqlOpenFile">
@@ -1586,6 +1607,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="text">
     <string>Open SQL file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button opens a file containing SQL statements and loads it in a new editor tab</string>
    </property>
   </action>
   <action name="actionSqlSaveFile">
@@ -1622,6 +1646,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="toolTip">
     <string>Execute current line [Shift+F5]</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button executes the SQL statement present in the current editor line</string>
    </property>
    <property name="shortcut">
     <string>Shift+F5</string>
@@ -1688,6 +1715,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    <property name="statusTip">
     <string>Save the current session to a file</string>
    </property>
+   <property name="whatsThis">
+    <string>This button lets you save all the settings associated to the open DB to a DB4S project file</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>
@@ -1705,6 +1735,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="statusTip">
     <string>Load a working session from a file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button lets you open a DB4S project file</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1726,6 +1759,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="statusTip">
     <string>Add another database file to the current database connection</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button lets you add another database file to the current database connection</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1765,6 +1801,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="toolTip">
     <string>Save SQL file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button opens a saves the content of the current SQL editor tab to a file</string>
    </property>
   </action>
   <action name="actionEditBrowseTable">
@@ -1897,6 +1936,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    <property name="toolTip">
     <string>Save the results view</string>
    </property>
+   <property name="whatsThis">
+    <string>This button lets you save the results of the last executed query</string>
+   </property>
   </action>
   <action name="actionSqlFind">
    <property name="checkable">
@@ -1911,6 +1953,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="toolTip">
     <string>Find text in SQL editor [Ctrl+F]</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button opens the search bar of the editor</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
@@ -1929,6 +1974,9 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="toolTip">
     <string>Find or replace text in SQL editor [Ctrl+H]</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button opens the find/replace dialog for the current editor tab</string>
    </property>
   </action>
   <action name="actionSqlResultsExportCsv">
@@ -1991,6 +2039,34 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </property>
    <property name="text">
     <string>Extra DB Toolbar</string>
+   </property>
+  </action>
+  <action name="actionFilteredTableExportCsv">
+   <property name="text">
+    <string>Export to &amp;CSV</string>
+   </property>
+   <property name="toolTip">
+    <string>Export the filtered data to CSV</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the filtered data to CSV</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</string>
+   </property>
+  </action>
+  <action name="actionFilterSaveAsView">
+   <property name="text">
+    <string>Save as &amp;view</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current filter, sort column and display formats as a view</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the current filter, sort column and display formats as a view</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</string>
    </property>
   </action>
  </widget>
@@ -3158,7 +3234,7 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
    </hints>
   </connection>
   <connection>
-   <sender>buttonSaveFilterAsView</sender>
+   <sender>buttonSaveFilterAsPopup</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveFilterAsView()</slot>
@@ -3250,6 +3326,38 @@ You can drag SQL sentences from the Schema column and drop them into the SQL edi
     <hint type="destinationlabel">
      <x>959</x>
      <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilteredTableExportCsv</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>exportFilteredTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilterSaveAsView</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveFilterAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>
