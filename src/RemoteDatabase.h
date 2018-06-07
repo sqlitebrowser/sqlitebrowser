@@ -2,7 +2,7 @@
 #define REMOTEDATABASE_H
 
 #include <QObject>
-#include <QSslConfiguration>
+#include <QtNetwork/QSslConfiguration>
 
 class QNetworkAccessManager;
 class QString;
