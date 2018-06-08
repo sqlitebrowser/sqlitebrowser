@@ -60,7 +60,7 @@
         <file alias="find">page_find.png</file>
         <file alias="close">cross.png</file>
         <file alias="special_copy">page_white_copy.png</file>
-	<file alias="sql_copy">page_copy_sql.png</file>
+        <file alias="sql_copy">page_copy_sql.png</file>
         <file alias="text_replace">text_replace.png</file>
         <file alias="image_save">picture_save.png</file>
         <file alias="log_dock">application_side_list.png</file>
