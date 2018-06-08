@@ -6,6 +6,7 @@
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
+<a href="https://www.patreon.com/bePatron?u=11578749"><img src="https://c5.patreon.com/external/logo/downloads_wordmark_white_on_coral.png" height="20"></a>
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
