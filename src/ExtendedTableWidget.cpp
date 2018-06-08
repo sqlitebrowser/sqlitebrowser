@@ -157,6 +157,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
+    QAction* copyAsSQLAction = new QAction(QIcon(":/icons/sql_copy"), tr("Copy as SQL"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
     QAction* filterAction = new QAction(tr("Use as Filter"), m_contextMenu);
     m_contextMenu->addAction(filterAction);
@@ -165,6 +166,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(copyAction);
     m_contextMenu->addAction(copyWithHeadersAction);
+    m_contextMenu->addAction(copyAsSQLAction);
     m_contextMenu->addAction(pasteAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -177,6 +179,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
     copyAction->setShortcut(QKeySequence::Copy);
     copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+Shift+C")));
+    copyAsSQLAction->setShortcut(QKeySequence(tr("Ctrl+Alt+C")));
     pasteAction->setShortcut(QKeySequence::Paste);
 
     // Set up context menu actions
@@ -188,6 +191,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         filterAction->setEnabled(enabled);
         copyAction->setEnabled(enabled);
         copyWithHeadersAction->setEnabled(enabled);
+        copyAsSQLAction->setEnabled(enabled);
 
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
@@ -210,6 +214,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(copyWithHeadersAction, &QAction::triggered, [&]() {
        copy(true);
     });
+    connect(copyAsSQLAction, &QAction::triggered, [&]() {
+       copySQL();
+    });
     connect(pasteAction, &QAction::triggered, [&]() {
        paste();
     });
@@ -226,7 +233,7 @@ void ExtendedTableWidget::reloadSettings()
     verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
 }
 
-void ExtendedTableWidget::copy(const bool withHeaders)
+void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
 {
     QModelIndexList indices = selectionModel()->selectedIndexes();
 
@@ -249,7 +256,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     m_buffer.clear();
 
     // If a single cell is selected, copy it to clipboard
-    if (!withHeaders && indices.size() == 1) {
+    if (!inSQL && !withHeaders && indices.size() == 1) {
         QImage img;
         QVariant data = m->data(indices.first(), Qt::EditRole);
 
@@ -294,6 +301,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     }
     m_buffer.push_back(lst);
 
+    QString sqlResult;
     QString result;
     QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
     htmlResult.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">");
@@ -314,8 +322,9 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     const QString fieldSepText = "\t";
     const QString rowSepText = "\r\n";
 
+    QString sqlInsertStatement = QString("INSERT INTO \"%1\" ( '").arg(m->currentTableName().toString());
     // Table headers
-    if (withHeaders) {
+    if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
         int firstColumn = indices.front().column();
         for(int i = firstColumn; i <= indices.back().column(); i++) {
@@ -323,26 +332,32 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             if (i != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
+                sqlInsertStatement.append("', '");
             }
 
             result.append(escapeCopiedData(headerText));
             htmlResult.append(headerText);
+            sqlInsertStatement.append(escapeCopiedData(headerText));
         }
         result.append(rowSepText);
         htmlResult.append("</th></tr>");
+        sqlInsertStatement.append("') VALUES (\"");
     }
 
     // Table data rows
     for(const QModelIndex& index : indices) {
         // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
-        if (indices.first() == index)
+        if (indices.first() == index) {
             htmlResult.append("<tr><td>");
-        else if (index.row() != currentRow) {
+            sqlResult.append(sqlInsertStatement);
+        } else if (index.row() != currentRow) {
             result.append(rowSepText);
             htmlResult.append(rowSepHtml);
+            sqlResult.append("\");\r\n"+sqlInsertStatement);
         } else {
             result.append(fieldSepText);
             htmlResult.append(fieldSepHtml);
+            sqlResult.append("\", \"");
         }
         currentRow = index.row();
 
@@ -362,6 +377,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             htmlResult.append("<img src=\"data:image/png;base64,");
             htmlResult.append(imageBase64);
             result.append(QString());
+            sqlResult.append(imageBase64);
             htmlResult.append("\" alt=\"Image\">");
         } else {
             QByteArray text;
@@ -375,12 +391,19 @@ void ExtendedTableWidget::copy(const bool withHeaders)
                 htmlResult.append(QString(text).toHtmlEscaped());
 
             result.append(escapeCopiedData(text));
+            sqlResult.append(text.replace("\"", "\"\""));
         }
     }
+    sqlResult.append("\");");
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
-    mimeData->setText(result);
+    if ( inSQL )
+    {
+        mimeData->setText(sqlResult);
+    } else {
+        mimeData->setText(result);
+    }
     qApp->clipboard()->setMimeData(mimeData);
 }
 
