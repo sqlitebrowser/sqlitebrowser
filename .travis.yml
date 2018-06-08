@@ -61,3 +61,5 @@ notifications:
     - mgrojo@gmail.com
     on_success: never
     on_failure: always
+  slack:
+    secure: ax5bu7ySF+wlG0pCmQqyzvaurzQt2yLnp/u4KajyFCgWZKOwcvElndjhvW8bIRNgWrGP8TVPkosHhwGucFQNjJq5hHJIbuPzfBTIbITCVbKJNRqeqL0QXlKLwMTejX9AUYwzzJ3xTTj8rZn/UMocsiCy7uPuK1v/5BhZfEr3BBU=
