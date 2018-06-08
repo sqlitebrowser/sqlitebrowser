@@ -9,55 +9,55 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-      env: COMPILER=g++-5 CXX=g++-5
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-          packages:
-            - clang-3.8
-      env: COMPILER=clang++-3.8
+  - compiler: gcc
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-5
+    env: COMPILER=g++-5 CXX=g++-5
+  - compiler: clang
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-precise-3.8
+        packages:
+        - clang-3.8
+    env: COMPILER=clang++-3.8
 
 before_install:
-  - sudo add-apt-repository ppa:likemartinma/devel -y
-  - sudo add-apt-repository --yes ppa:beineri/opt-qt571-trusty
-  - sudo apt-get update -qq
-  - sudo apt-get --force-yes install qt57base qt57translations qt57tools
-  - sudo apt-get --force-yes install libsqlite3-dev libsqlcipher-dev libantlr-dev
-  - QT_ENV_SCRIPT=$(find /opt -name 'qt*-env.sh')
-  - source $QT_ENV_SCRIPT
+- sudo add-apt-repository ppa:likemartinma/devel -y
+- sudo add-apt-repository --yes ppa:beineri/opt-qt571-trusty
+- sudo apt-get update -qq
+- sudo apt-get --force-yes install qt57base qt57translations qt57tools
+- sudo apt-get --force-yes install libsqlite3-dev libsqlcipher-dev libantlr-dev
+- QT_ENV_SCRIPT=$(find /opt -name 'qt*-env.sh')
+- source $QT_ENV_SCRIPT
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
+- if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+- if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
 
 script:
-  - mkdir build
-  - mkdir build_cipher
-  - cd build
-  - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON ..
-  - make
-  - ctest -V
-  - cd ../build_cipher
-  - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 ..
-  - make
-  - ctest -V
+- mkdir build
+- mkdir build_cipher
+- cd build
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON ..
+- make
+- ctest -V
+- cd ../build_cipher
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 ..
+- make
+- ctest -V
 
 notifications:
   email:
     recipients:
-      - mkleusberg@gmail.com
-      - innermous@gmail.com
-      - justin@postgresql.org
-      - mgrojo@gmail.com
+    - mkleusberg@gmail.com
+    - innermous@gmail.com
+    - justin@postgresql.org
+    - mgrojo@gmail.com
     on_success: never
     on_failure: always
