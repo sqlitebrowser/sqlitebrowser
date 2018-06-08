@@ -61,7 +61,7 @@
           <string>Page si&amp;ze</string>
          </property>
          <property name="buddy">
-          <cstring>spinPageSize</cstring>
+          <cstring>comboPageSize</cstring>
          </property>
         </widget>
        </item>
