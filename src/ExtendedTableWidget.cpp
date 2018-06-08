@@ -209,13 +209,13 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
             model()->setData(index, QVariant());
     });
     connect(copyAction, &QAction::triggered, [&]() {
-       copy(false);
+       copy(false, false);
     });
     connect(copyWithHeadersAction, &QAction::triggered, [&]() {
-       copy(true);
+       copy(true, false);
     });
     connect(copyAsSQLAction, &QAction::triggered, [&]() {
-       copySQL();
+       copy(false, true);
     });
     connect(pasteAction, &QAction::triggered, [&]() {
        paste();
@@ -564,14 +564,17 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     // Call a custom copy method when Ctrl-C is pressed
     if(event->matches(QKeySequence::Copy))
     {
-        copy(false);
+        copy(false, false);
         return;
     } else if(event->matches(QKeySequence::Paste)) {
         // Call a custom paste method when Ctrl-V is pressed
         paste();
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier) && (event->key() == Qt::Key_C)) {
         // Call copy with headers when Ctrl-Shift-C is pressed
-        copy(true);
+        copy(true, false);
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::AltModifier) && (event->key() == Qt::Key_C)) {
+        // Call copy in SQL format when Ctrl-Alt-C is pressed
+        copy(false, true);
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
