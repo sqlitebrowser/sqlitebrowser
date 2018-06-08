@@ -219,15 +219,19 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                     sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
                                                  data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
                     tableModel.setTable(objid);
-                    tableModel.completeCache();
-                    for(int i=0; i < tableModel.rowCount(); ++i)
+                    if(tableModel.completeCache())
                     {
-                        QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
-                        for(int j=1; j < tableModel.columnCount(); ++j)
-                            insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j), Qt::EditRole).toString());
-                        insertStatement.chop(1);
-                        insertStatement += ");\n";
-                        sqlData.append(insertStatement);
+                        // Only continue if all data was fetched
+
+                        for(int i=0; i < tableModel.rowCount(); ++i)
+                        {
+                            QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
+                            for(int j=1; j < tableModel.columnCount(); ++j)
+                                insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j), Qt::EditRole).toString());
+                            insertStatement.chop(1);
+                            insertStatement += ");\n";
+                            sqlData.append(insertStatement);
+                        }
                     }
                 }
             }

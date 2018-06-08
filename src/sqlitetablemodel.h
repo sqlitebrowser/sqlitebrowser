@@ -61,8 +61,8 @@ public:
     /// complete, just that the background reader is idle)
     void waitUntilIdle () const;
 
-    /// load all rows into cache, return when done
-    void completeCache () const;
+    /// load all rows into cache, return when done. Returns true if all data was loaded, false if the loading was cancelled.
+    bool completeCache() const;
 
     /// returns true if all rows are currently available in cache
     /// [NOTE: potentially unsafe in case we have a limited-size

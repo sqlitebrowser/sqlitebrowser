@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QProgressDialog>
 
 #include "RowLoader.h"
 
@@ -939,10 +940,30 @@ void SqliteTableModel::triggerCacheLoad (int row_begin, int row_end) const
     triggerCacheLoad((row_begin + row_end) / 2);
 }
 
-void SqliteTableModel::completeCache () const
+bool SqliteTableModel::completeCache () const
 {
-    triggerCacheLoad(0, rowCount());
-    worker->waitUntilIdle();
+    // Show progress dialog because fetching all data might take some time but only show
+    // cancel button if we allow cancellation here. This isn't
+    QProgressDialog progress(tr("Fetching data..."),
+                             tr("Cancel"), 0, rowCount());
+    progress.setWindowModality(Qt::ApplicationModal);
+    progress.show();
+
+    waitUntilIdle();
+
+    // This loop fetches all data by loading it block by block into the cache
+    for(int i=0;i<rowCount()+static_cast<int>(m_chunkSize)/2;i+=m_chunkSize)
+    {
+        progress.setValue(i);
+        qApp->processEvents();
+        if(progress.wasCanceled())
+            return false;
+
+        triggerCacheLoad(i);
+        worker->waitUntilIdle();
+    }
+
+    return true;
 }
 
 bool SqliteTableModel::isCacheComplete () const

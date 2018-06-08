@@ -733,15 +733,7 @@ void PlotDock::fetchAllData()
 {
     if(m_currentPlotModel)
     {
-        // Show progress dialog because fetching all data might take some time
-        QProgressDialog progress(tr("Fetching all data..."),
-                                 tr("Cancel"), m_currentPlotModel->rowCount(), m_currentPlotModel->rowCount());
-        progress.setWindowModality(Qt::ApplicationModal);
-        progress.show();
-        qApp->processEvents();
-
         // Make sure all data is loaded
-        // TODO make this cancellable & show progress
         m_currentPlotModel->completeCache();
 
         // Update plot
