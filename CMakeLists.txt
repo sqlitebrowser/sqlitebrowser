@@ -138,6 +138,8 @@ set(SQLB_MOC_HDR
 	src/FindReplaceDialog.h
 	src/ExtendedScintilla.h
 	src/FileExtensionManager.h
+	src/CipherSettings.h
+	src/DotenvFormat.h
 )
 
 set(SQLB_SRC
@@ -182,6 +184,8 @@ set(SQLB_SRC
 	src/ExtendedScintilla.cpp
 	src/FileExtensionManager.cpp
 	src/Data.cpp
+	src/CipherSettings.cpp
+	src/DotenvFormat.cpp
 )
 
 set(SQLB_FORMS
