@@ -8,6 +8,8 @@
 #include <QStandardPaths>
 #include <QPalette>
 
+#include "DotenvFormat.h"
+
 QHash<QString, QVariant> Settings::m_hCache;
 
 QVariant Settings::getValue(const QString& group, const QString& name)

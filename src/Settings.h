@@ -6,8 +6,6 @@
 #include <QSettings>
 #include <QVariant>
 
-#include "DotenvFormat.h"
-
 class Settings
 {
     friend class PreferencesDialog;
