@@ -127,8 +127,6 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         if(model)
         {
-            model->waitForFetchingFinished();
-
             // Add each column with a supported data type to the column selection view
             for(int i=0;i<model->columnCount();++i)
             {
@@ -292,9 +290,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // prepare the data vectors for qcustomplot
                 // possible improvement might be a QVector subclass that directly
                 // access the model data, to save memory, we are copying here
-                QVector<double> xdata(model->rowCount()), ydata(model->rowCount()), tdata(model->rowCount());
+
+                auto nrows = model->rowCount();
+
+                QVector<double> xdata(nrows), ydata(nrows), tdata(nrows);
                 QVector<QString> labels;
-                for(int i = 0; i < model->rowCount(); ++i)
+                for(int i = 0; i < nrows; ++i)
                 {
                     tdata[i] = i;
                     // convert x type axis if it's datetime
@@ -423,12 +424,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     ui->plotWidget->replot();
 
     // Warn user if not all data has been fetched and hint about the button for loading all the data
-    if (ui->plotWidget->plottableCount() > 0 && model->canFetchMore()) {
+    if (model && (model->rowCountAvailable() != SqliteTableModel::RowCount::Complete || !model->isCacheComplete())) {
         ui->buttonLoadAllData->setEnabled(true);
         ui->buttonLoadAllData->setStyleSheet("QToolButton {color: white; background-color: rgb(255, 102, 102)}");
         ui->buttonLoadAllData->setToolTip(tr("Load all data and redraw plot.\n"
                                              "Warning: not all data has been fetched from the table yet due to the partial fetch mechanism."));
-        QToolTip::showText(ui->buttonLoadAllData->mapToGlobal(QPoint(0, 0)), ui->buttonLoadAllData->toolTip());
     } else {
         ui->buttonLoadAllData->setEnabled(false);
         ui->buttonLoadAllData->setStyleSheet("");
@@ -733,25 +733,8 @@ void PlotDock::fetchAllData()
 {
     if(m_currentPlotModel)
     {
-        // Show progress dialog because fetching all data might take some time
-        QProgressDialog progress(tr("Fetching all data..."),
-                                 tr("Cancel"), m_currentPlotModel->rowCount(), m_currentPlotModel->totalRowCount());
-        progress.setWindowModality(Qt::ApplicationModal);
-        progress.show();
-        qApp->processEvents();
-
         // Make sure all data is loaded
-        while(m_currentPlotModel->canFetchMore())
-        {
-            // Fetch the next bunch of data
-            m_currentPlotModel->fetchMore();
-
-            // Update the progress dialog and stop loading data when the cancel button was pressed
-            progress.setValue(m_currentPlotModel->rowCount());
-            qApp->processEvents();
-            if(progress.wasCanceled())
-                break;
-        }
+        m_currentPlotModel->completeCache();
 
         // Update plot
         updatePlot(m_currentPlotModel, m_currentTableSettings);

@@ -120,6 +120,8 @@ set(SQLB_MOC_HDR
 	src/SqlExecutionArea.h
 	src/VacuumDialog.h
 	src/sqlitetablemodel.h
+	src/RowLoader.h
+	src/RowCache.h
 	src/sqltextedit.h
 	src/docktextedit.h
 	src/DbStructureModel.h
@@ -157,6 +159,7 @@ set(SQLB_SRC
 	src/VacuumDialog.cpp
 	src/sqlitedb.cpp
 	src/sqlitetablemodel.cpp
+	src/RowLoader.cpp
 	src/sqlitetypes.cpp
 	src/sqltextedit.cpp
 	src/docktextedit.cpp
@@ -289,6 +292,8 @@ if(WIN32)
 	ELSE( MINGW )
 		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
 	ENDIF( MINGW )
+else()
+	set(LPTHREAD pthread)
 endif(WIN32)
 
 #enable version check for MacOS
@@ -372,7 +377,8 @@ set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::
 target_link_libraries(${PROJECT_NAME}
 		qhexedit
 		qcustomplot
-		${QT_LIBS}
+    ${LPTHREAD}
+    ${QT_LIBS}
 		${WIN32_STATIC_LINK}
 		${LIBSQLITE}
 		${ADDITIONAL_LIBS})

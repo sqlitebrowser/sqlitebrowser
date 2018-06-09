@@ -3,6 +3,10 @@
 
 #include "sqlitetypes.h"
 
+#include <memory>
+#include <mutex>
+#include <condition_variable>
+
 #include <QStringList>
 #include <QMultiMap>
 #include <QByteArray>
@@ -21,17 +25,64 @@ typedef QMap<QString, objectMap> schemaMap;                 // Maps from the sch
 
 int collCompare(void* pArg, int sizeA, const void* sA, int sizeB, const void* sB);
 
+/// represents a single SQLite database. except when noted otherwise,
+/// all member functions are to be called from the main UI thread
+/// only.
 class DBBrowserDB : public QObject
 {
     Q_OBJECT
 
+private:
+    /// custom unique_ptr deleter releases database for further use by others
+    struct DatabaseReleaser
+    {
+        DatabaseReleaser(DBBrowserDB * pParent_ = nullptr) : pParent(pParent_) {}
+
+        DBBrowserDB * pParent;
+
+        void operator() (sqlite3 * db) const
+        {
+            if(!db || !pParent)
+                return;
+
+            std::unique_lock<std::mutex> lk(pParent->m);
+            pParent->db_used = false;
+            lk.unlock();
+            pParent->cv.notify_one();
+        }
+    };
+
 public:
-    explicit DBBrowserDB () : _db(nullptr), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
+    explicit DBBrowserDB () : _db(nullptr), db_used(false), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
     virtual ~DBBrowserDB (){}
+
     bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = "");
     bool create ( const QString & db);
     bool close();
+
+    typedef std::unique_ptr<sqlite3, DatabaseReleaser> db_pointer_type;
+
+    /**
+       borrow exclusive address to the currently open database, until
+       releasing the returned unique_ptr.
+
+       the intended use case is that the main UI thread can call this
+       any time, and then optionally pass the obtained pointer to a
+       background worker, or release it after doing work immediately.
+
+       if database is currently used by somebody else, opens a dialog
+       box and gives user the opportunity to sqlite3_interrupt() the
+       operation of the current owner, then tries again.
+
+       \param user a string that identifies the new user, and which
+       can be displayed in the dialog box.
+
+       \returns a unique_ptr containing the SQLite database handle, or
+       nullptr in case no database is open.
+    **/
+    db_pointer_type get (QString user);
+
     bool setSavepoint(const QString& pointname = "RESTOREPOINT");
     bool releaseSavepoint(const QString& pointname = "RESTOREPOINT");
     bool revertToSavepoint(const QString& pointname = "RESTOREPOINT");
@@ -53,6 +104,7 @@ public:
      */
     bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata);
 
+private:
     /**
      * @brief max Queries the table t for the max value of field.
      * @param tableName Table to query
@@ -61,9 +113,10 @@ public:
      */
     QString max(const sqlb::ObjectIdentifier& tableName, sqlb::FieldPtr field) const;
 
+public:
     void updateSchema();
-    QString addRecord(const sqlb::ObjectIdentifier& tablename);
 
+private:
     /**
      * @brief Creates an empty insert statement.
      * @param schemaName The name of the database schema in which to find the table
@@ -71,6 +124,9 @@ public:
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
     QString emptyInsertStmt(const QString& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
+
+public:
+    QString addRecord(const sqlb::ObjectIdentifier& tablename);
     bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk = QString());
     bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
 
@@ -98,6 +154,8 @@ public:
     bool readOnly() const { return isReadOnly; }
     bool getDirty() const;
     QString currentFile() const { return curDBFilename; }
+
+    /// log an SQL statement [thread-safe]
     void logSQL(QString statement, int msgtype);
 
     QString getPragma(const QString& pragma);
@@ -107,14 +165,14 @@ public:
 
     bool loadExtension(const QString& filename);
 
+private:
     QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);
 
+public:
     QString generateSavepointName(const QString& identifier = QString()) const;
 
     // This function generates the name for a temporary table. It guarantees that there is no table with this name yet
     QString generateTemporaryTableName(const QString& schema) const;
-
-    sqlite3 * _db;
 
     schemaMap schemata;
 
@@ -125,6 +183,18 @@ signals:
     void requestCollation(QString name, int eTextRep);
 
 private:
+    /// external code needs to go through get() to obtain access to the database
+    sqlite3 * _db;
+    std::mutex m;
+    std::condition_variable cv;
+    bool db_used;
+    QString db_user;
+
+    /// wait for release of the DB locked through a previous get(),
+    /// giving users the option to discard running task through a
+    /// message box.
+    void waitForDbRelease();
+
     QString curDBFilename;
     QString lastErrorMessage;
     QStringList savepointList;

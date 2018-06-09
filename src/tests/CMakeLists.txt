@@ -1,10 +1,15 @@
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" ..)
 
+if(NOT WIN32)
+	set(LPTHREAD pthread)
+endif()
+
 # test-sqlobjects
 
 set(TESTSQLOBJECTS_SRC
     ../sqlitedb.cpp
     ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
     ../sqlitetypes.cpp
     ../csvparser.cpp
     ../grammar/Sqlite3Lexer.cpp
@@ -53,7 +58,7 @@ else()
 endif()
 link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
 add_dependencies(test-sqlobjects qscintilla2)
-target_link_libraries(test-sqlobjects qscintilla2)
+target_link_libraries(test-sqlobjects qscintilla2 ${LPTHREAD})
 add_test(test-sqlobjects test-sqlobjects)
 
 # test-import
@@ -80,6 +85,7 @@ add_test(test-import test-import)
 set(TESTREGEX_SRC
     ../sqlitedb.cpp
     ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
     ../sqlitetypes.cpp
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
@@ -124,5 +130,23 @@ else()
 endif()
 link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
 add_dependencies(test-regex qscintilla2)
-target_link_libraries(test-regex qscintilla2)
+target_link_libraries(test-regex qscintilla2 ${LPTHREAD})
 add_test(test-regex test-regex)
+
+# test cache
+
+set(TESTCACHE_SRC
+    TestRowCache.cpp
+)
+
+set(TESTCACHE_MOC_HDR
+    TestRowCache.h
+)
+
+add_executable(test-cache ${TESTCACHE_MOC} ${TESTCACHE_SRC})
+
+qt5_use_modules(test-cache Test Core)
+set(QT_LIBRARIES "")
+
+target_link_libraries(test-cache ${QT_LIBRARIES})
+add_test(test-cache test-cache)
