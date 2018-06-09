@@ -17,6 +17,8 @@ set(TESTSQLOBJECTS_SRC
     ../Settings.cpp
     testsqlobjects.cpp
     ../Data.cpp
+    ../CipherSettings.cpp
+    ../DotenvFormat.cpp
 )
 
 set(TESTSQLOBJECTS_HDR
@@ -32,6 +34,8 @@ set(TESTSQLOBJECTS_MOC_HDR
     ../sqlitetablemodel.h
     ../Settings.h
     testsqlobjects.h
+    ../CipherSettings.h
+    ../DotenvFormat.h
 )
 
 if(sqlcipher)
@@ -92,6 +96,8 @@ set(TESTREGEX_SRC
     ../Settings.cpp
     TestRegex.cpp
     ../Data.cpp
+    ../CipherSettings.cpp
+    ../DotenvFormat.cpp
 )
 
 set(TESTREGEX_HDR
@@ -107,6 +113,8 @@ set(TESTREGEX_MOC_HDR
     ../sqlitetablemodel.h
     ../Settings.h
     TestRegex.h
+    ../CipherSettings.h
+    ../DotenvFormat.h
 )
 
 if(sqlcipher)
