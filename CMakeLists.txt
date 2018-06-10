@@ -352,7 +352,7 @@ add_executable(${PROJECT_NAME}
 		${SQLB_MOC}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
-		
+
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
 if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)

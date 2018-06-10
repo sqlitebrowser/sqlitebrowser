@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.1.0)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-find_package(Qt5Widgets REQUIRED)
+
+find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 set(QHEXEDIT_SRC
     src/qhexedit.cpp
@@ -22,4 +23,4 @@ set(QHEXEDIT_MOC_HDR
 
 add_library(qhexedit ${QHEXEDIT_SRC} ${QHEXEDIT_HDR} ${QHEXEDIT_MOC})
 
-qt5_use_modules(qhexedit Widgets)
+target_link_libraries(qhexedit Qt5::Widgets)
