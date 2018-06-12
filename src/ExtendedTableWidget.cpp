@@ -322,7 +322,7 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     const QString fieldSepText = "\t";
     const QString rowSepText = "\r\n";
 
-    QString sqlInsertStatement = QString("INSERT INTO \"%1\" ( '").arg(m->currentTableName().toString());
+    QString sqlInsertStatement = QString("INSERT INTO %1 ( '").arg(sqlb::escapeIdentifier(m->currentTableName().toString()));
     // Table headers
     if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
@@ -377,7 +377,7 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
             htmlResult.append("<img src=\"data:image/png;base64,");
             htmlResult.append(imageBase64);
             result.append(QString());
-            sqlResult.append(imageBase64);
+            sqlResult.append( "X\'" + ba.toHex() + "\'" );
             htmlResult.append("\" alt=\"Image\">");
         } else {
             QByteArray text;
@@ -397,11 +397,11 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     sqlResult.append("\");");
 
     QMimeData *mimeData = new QMimeData;
-    mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
     if ( inSQL )
     {
         mimeData->setText(sqlResult);
     } else {
+        mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
         mimeData->setText(result);
     }
     qApp->clipboard()->setMimeData(mimeData);
