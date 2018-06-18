@@ -1,3 +1,4 @@
+#include "sqlitetypes.h"
 #include "sqltextedit.h"
 #include "Settings.h"
 #include "SqlUiLexer.h"
@@ -49,8 +50,18 @@ void SqlTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat(sqlLexer, "keyword", QsciLexerSQL::Keyword);
     setupSyntaxHighlightingFormat(sqlLexer, "table", QsciLexerSQL::KeywordSet6);
     setupSyntaxHighlightingFormat(sqlLexer, "function", QsciLexerSQL::KeywordSet7);
-    setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
     setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::SingleQuotedString);
+
+    // Highlight double quote strings as identifier or as literal string depending on user preference
+    switch(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt())) {
+    case sqlb::DoubleQuotes:
+        setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::DoubleQuotedString);
+        break;
+    case sqlb::GraveAccents:
+    case sqlb::SquareBrackets:
+        setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
+        break;
+    }
     setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::Identifier);
     setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::QuotedIdentifier);
 }

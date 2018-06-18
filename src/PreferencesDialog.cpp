@@ -168,6 +168,7 @@ void PreferencesDialog::loadSettings()
     ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
     ui->wrapComboBox->setCurrentIndex(Settings::getValue("editor", "wrap_lines").toInt());
+    ui->quoteComboBox->setCurrentIndex(Settings::getValue("editor", "identifier_quotes").toInt());
     ui->checkAutoCompletion->setChecked(Settings::getValue("editor", "auto_completion").toBool());
     ui->checkCompleteUpper->setEnabled(Settings::getValue("editor", "auto_completion").toBool());
     ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
@@ -223,6 +224,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
     Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
     Settings::setValue("editor", "wrap_lines", ui->wrapComboBox->currentIndex());
+    Settings::setValue("editor", "identifier_quotes", ui->quoteComboBox->currentIndex());
     Settings::setValue("editor", "auto_completion", ui->checkAutoCompletion->isChecked());
     Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());

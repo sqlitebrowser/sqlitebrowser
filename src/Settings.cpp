@@ -294,6 +294,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "editor" && name == "wrap_lines")
         return 0; // QsciScintilla::WrapNone
 
+    // editor/identifier_quotes
+    if(group == "editor" && name == "identifier_quotes")
+        return 0; // sqlb::DoubleQuotes
+
     // editor/auto_completion?
     if(group == "editor" && name == "auto_completion")
         return true;

@@ -38,6 +38,15 @@ uint qHash(const QVector<T>& key, uint seed = 0)
 }
 #endif
 
+enum escapeQuoting {
+    DoubleQuotes,
+    GraveAccents,
+    SquareBrackets
+};
+
+// Set quoting style for escapeIdentifier
+void setIdentifierQuoting(escapeQuoting toQuoting);
+
 QString escapeIdentifier(QString id);
 
 class ObjectIdentifier

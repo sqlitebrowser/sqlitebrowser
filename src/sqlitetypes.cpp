@@ -11,9 +11,26 @@ namespace sqlb {
 
 QStringList Field::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
+escapeQuoting customQuoting = DoubleQuotes;
+
+void setIdentifierQuoting(escapeQuoting toQuoting)
+{
+    customQuoting = toQuoting;
+}
+
 QString escapeIdentifier(QString id)
 {
-    return '`' + id.replace('`', "``") + '`';
+    switch(customQuoting) {
+    case DoubleQuotes:
+        return '"' + id.replace('"', "\"\"") + '"';
+    case GraveAccents:
+        return '`' + id.replace('`', "``") + '`';
+    case SquareBrackets:
+        // There aren't any escaping possibilities for square brackets inside the identifier,
+        // so we rely on the user to not enter these characters when this kind of quoting is
+        // selected.
+        return '[' + id + ']';
+    }
 }
 
 QStringList fieldVectorToFieldNames(const FieldVector& vector)
