@@ -11,7 +11,7 @@ namespace sqlb {
 
 QStringList Field::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
-escapeQuoting customQuoting = DoubleQuotes;
+escapeQuoting customQuoting = GraveAccents;
 
 void setIdentifierQuoting(escapeQuoting toQuoting)
 {
