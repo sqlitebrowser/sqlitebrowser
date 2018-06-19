@@ -1188,6 +1188,8 @@ void MainWindow::executeQuery()
                 // If we get here, the SQL statement doesn't return data and just executes. Don't run it again because it has already been executed.
                 // But do set the modified flag because statements that don't return data, often modify the database.
 
+                sqlWidget->getModel()->reset();
+
                 QString stmtHasChangedDatabase;
                 if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
                     stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(pDb.get()));
