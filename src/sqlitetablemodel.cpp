@@ -95,6 +95,7 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 
 void SqliteTableModel::reset()
 {
+    beginResetModel();
     clearCache();
 
     m_sTable.clear();
@@ -106,6 +107,8 @@ void SqliteTableModel::reset()
     m_vDataTypes.clear();
     m_vDisplayFormat.clear();
     m_pseudoPk.clear();
+
+    endResetModel();
 }
 
 void SqliteTableModel::setChunkSize(size_t chunksize)
