@@ -194,7 +194,8 @@ void EditDialog::loadData(const QByteArray& data)
         case TextEditor:
             // Disable text editing, and use a warning message as the contents
             ui->editorText->setText(QString("<i>" %
-                    tr("Image data can't be viewed with the text editor") %
+                    tr("Image data can't be viewed in this mode.") % "<br/>" %
+                    tr("Try switching to Image or Binary mode.") %
                     "</i>"));
             ui->editorText->setEnabled(false);
             break;
@@ -202,7 +203,8 @@ void EditDialog::loadData(const QByteArray& data)
         case XmlEditor:
         case JsonEditor:
             // Disable text editing, and use a warning message as the contents
-            sciEdit->setText(tr("Image data can't be viewed with this editor"));
+            sciEdit->setText(tr("Image data can't be viewed in this mode.") % '\n' %
+                             tr("Try switching to Image or Binary mode."));
             sciEdit->setEnabled(false);
 
             break;
@@ -258,7 +260,8 @@ void EditDialog::loadData(const QByteArray& data)
         case TextEditor:
             // Disable text editing, and use a warning message as the contents
             ui->editorText->setText(QString("<i>" %
-                    tr("Binary data can't be viewed with the text editor") %
+                    tr("Binary data can't be viewed in this mode.") % "<br/>" %
+                    tr("Try switching to Binary mode.") %
                     "</i>"));
             ui->editorText->setEnabled(false);
             break;
@@ -266,7 +269,8 @@ void EditDialog::loadData(const QByteArray& data)
          case JsonEditor:
          case XmlEditor:
             // Disable text editing, and use a warning message as the contents
-             sciEdit->setText(QString(tr("Binary data can't be viewed with this editor")));
+             sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
+                                      tr("Try switching to Binary mode.")));
              sciEdit->setEnabled(false);
             break;
 
