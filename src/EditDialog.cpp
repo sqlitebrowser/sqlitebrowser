@@ -290,7 +290,7 @@ void EditDialog::importData()
                 this,
                 tr("Choose a file to import")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
-                , tr("Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;All files (*)").arg(image_formats)
+                , tr("Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;Binary files (*.bin);;All files (*)").arg(image_formats)
 #endif
                 );
     if(QFile::exists(fileName))
@@ -312,15 +312,29 @@ void EditDialog::exportData()
 {
     // Images get special treatment
     QString fileExt;
-    if (dataType == Image) {
+    switch (dataType) {
+    case Image: {
         // Determine the likely filename extension
         QByteArray cellData = hexEdit->data();
         QBuffer imageBuffer(&cellData);
         QImageReader imageReader(&imageBuffer);
         QString imageFormat = imageReader.format();
         fileExt = imageFormat.toUpper() % " " % tr("Image") % "(*." % imageFormat.toLower() % ");;All files(*)";
-    } else {
+        break;
+    }
+    case Binary:
+    case Null:
+        fileExt = tr("Binary files(*.bin);;All files(*)");
+        break;
+    case Text:
         fileExt = tr("Text files(*.txt);;All files(*)");
+        break;
+    case JSON:
+        fileExt = tr("JSON files(*.json);;All files(*)");
+        break;
+    case SVG:
+        fileExt = tr("SVG files(*.svg);;All files(*)");
+        break;
     }
 
     QString fileName = FileDialog::getSaveFileName(
@@ -342,7 +356,7 @@ void EditDialog::exportData()
                 file.write(ui->editorText->toPlainText().toUtf8());
                 break;
           case SciBuffer:
-                // Data source is the JSON buffer
+                // Data source is the Scintilla buffer
                 file.write(sciEdit->text().toUtf8());
                 break;
             }
