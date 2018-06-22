@@ -61,22 +61,12 @@
           <string>Page si&amp;ze</string>
          </property>
          <property name="buddy">
-          <cstring>spinPageSize</cstring>
+          <cstring>comboPageSize</cstring>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="spinPageSize">
-         <property name="minimum">
-          <number>512</number>
-         </property>
-         <property name="maximum">
-          <number>65536</number>
-         </property>
-         <property name="value">
-          <number>1024</number>
-         </property>
-        </widget>
+        <widget class="QComboBox" name="comboPageSize"/>
        </item>
       </layout>
      </item>
@@ -129,7 +119,7 @@
   <tabstop>editPassword</tabstop>
   <tabstop>comboKeyFormat</tabstop>
   <tabstop>editPassword2</tabstop>
-  <tabstop>spinPageSize</tabstop>
+  <tabstop>comboPageSize</tabstop>
  </tabstops>
  <resources/>
  <connections>

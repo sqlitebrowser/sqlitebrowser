@@ -388,7 +388,12 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                            .arg(sqlb::escapeIdentifier(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>()->rowidColumn()))
                            .arg(curTable.toString())
                            .arg(sqlb::escapeIdentifier(field->name())));
-                m.waitForFetchingFinished();
+                if(!m.completeCache())
+                {
+                    // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
+                    item->setCheckState(column, Qt::Unchecked);
+                    return;
+                }
                 if(m.data(m.index(0, 0)).toInt() > 0)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
@@ -416,7 +421,12 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                                .arg(curTable.toString())
                                .arg(sqlb::escapeIdentifier(field->name()))
                                .arg(sqlb::escapeIdentifier(field->name())));
-                    m.waitForFetchingFinished();
+                    if(!m.completeCache())
+                    {
+                        // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
+                        item->setCheckState(column, Qt::Unchecked);
+                        return;
+                    }
                     if(m.data(m.index(0, 0)).toInt() > 0)
                     {
                         // There is a non-integer value, so print an error message, uncheck the combobox, and return here
@@ -458,10 +468,20 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
                 SqliteTableModel m(pdb, this);
                 m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(curTable.toString()).arg(sqlb::escapeIdentifier(field->name())));
-                m.waitForFetchingFinished();
+                if(!m.completeCache())
+                {
+                    // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
+                    item->setCheckState(column, Qt::Unchecked);
+                    return;
+                }
                 int rowcount = m.data(m.index(0, 0)).toInt();
                 m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(curTable.toString()).arg(sqlb::escapeIdentifier(field->name())));
-                m.waitForFetchingFinished();
+                if(!m.completeCache())
+                {
+                    // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
+                    item->setCheckState(column, Qt::Unchecked);
+                    return;
+                }
                 int uniquecount = m.data(m.index(0, 0)).toInt();
                 if(rowcount != uniquecount)
                 {

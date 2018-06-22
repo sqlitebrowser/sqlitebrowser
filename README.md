@@ -2,9 +2,11 @@
 
 [![Build Status][travis-img]][travis]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
+[![Join the chat at https://join.slack.com/t/db4s/shared_invite/enQtMzc3MzY5OTU4NDgzLWRlYjk0ZmE5ZDEzYWVmNDQxYTYxNmJjNWVkMjI3ZmVjZTY2NDBjODY3YzNhNTNmZDVlNWI2ZGFjNTk5MjJkYmU][slack-img]][slack]
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
+<a href="https://www.patreon.com/bePatron?u=11578749"><img src="https://c5.patreon.com/external/logo/downloads_wordmark_white_on_coral.png" height="20"></a>
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
@@ -262,7 +264,10 @@ You can modify or redistribute it under the conditions of these licenses.
   [travis]: https://travis-ci.org/sqlitebrowser/sqlitebrowser
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
-  [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+  [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser
+
+  [slack-img]: https://img.shields.io/badge/chat-on%20slack-orange.svg
+  [slack]: https://join.slack.com/t/db4s/shared_invite/enQtMzc3MzY5OTU4NDgzLWRlYjk0ZmE5ZDEzYWVmNDQxYTYxNmJjNWVkMjI3ZmVjZTY2NDBjODY3YzNhNTNmZDVlNWI2ZGFjNTk5MjJkYmU
 
   [download-img]: https://img.shields.io/github/downloads/sqlitebrowser/sqlitebrowser/total.svg
   [download]: https://github.com/sqlitebrowser/sqlitebrowser/releases

@@ -15,8 +15,8 @@ QMAKE_CXXFLAGS += -std=c++11
 CONFIG(unittest) {
   QT += testlib
 
-  HEADERS += tests/testsqlobjects.h tests/TestImport.h tests/TestRegex.h
-  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp tests/TestRegex.cpp
+  HEADERS += tests/testsqlobjects.h tests/TestImport.h tests/TestRegex.h tests/TestRowCache.h
+  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestRegex.cpp tests/TestRowCache.cpp
 } else {
   SOURCES += main.cpp
 }
@@ -40,6 +40,8 @@ HEADERS += \
     grammar/Sqlite3Parser.hpp \
     grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
+    RowCache.h \
+    RowLoader.h \
     FilterTableHeader.h \
     version.h \
     SqlExecutionArea.h \
@@ -83,6 +85,7 @@ SOURCES += \
     grammar/Sqlite3Lexer.cpp \
     grammar/Sqlite3Parser.cpp \
     sqlitetablemodel.cpp \
+    RowLoader.cpp \
     FilterTableHeader.cpp \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \

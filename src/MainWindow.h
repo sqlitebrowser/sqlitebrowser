@@ -135,7 +135,12 @@ private:
 
     Ui::MainWindow* ui;
 
+    DBBrowserDB db;
+
+    /// the table model used in the "Browse Data" page (re-used and
+    /// re-initialized when switching to another table)
     SqliteTableModel* m_browseTableModel;
+
     SqliteTableModel* m_currentTabTableModel;
 
     QMenu* popupTableMenu;
@@ -166,7 +171,6 @@ private:
 
     QIntValidator* gotoValidator;
 
-    DBBrowserDB db;
     QString defaultBrowseTableEncoding;
 
     void init();
@@ -176,7 +180,7 @@ private:
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
-    void enableEditing(bool enable_edit, bool enable_insertdelete);
+    void enableEditing(bool enable_edit);
     void loadExtensionsFromSettings();
     void saveAsView(QString query);
     void duplicateRecord(int currentRow);
@@ -283,6 +287,7 @@ private slots:
     void openFindReplaceDialog();
     void saveFilterAsView();
     void exportFilteredTable();
+    void updateInsertDeleteRecordButton();
 };
 
 #endif

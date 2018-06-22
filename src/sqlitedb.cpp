@@ -12,6 +12,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDateTime>
+#include <QDebug>
 #include <functional>
 #include <atomic>
 
@@ -173,6 +174,11 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
 bool DBBrowserDB::attach(const QString& filename, QString attach_as)
 {
+    if(!_db)
+        return false;
+
+    waitForDbRelease();
+
     // Check if this file has already been attached and abort if this is the case
     QString sql = "PRAGMA database_list;";
     logSQL(sql, kLogMsg_App);
@@ -371,6 +377,11 @@ bool DBBrowserDB::revertToSavepoint(const QString& pointname)
 
 bool DBBrowserDB::releaseAllSavepoints()
 {
+    if(!_db)
+        return false;
+
+    waitForDbRelease();
+
     for(const QString& point : savepointList)
     {
         if(!releaseSavepoint(point))
@@ -396,7 +407,8 @@ bool DBBrowserDB::revertAll()
 
 bool DBBrowserDB::create ( const QString & db)
 {
-    if (isOpen()) close();
+    if (isOpen())
+        close();
 
     // read encoding from settings and open with sqlite3_open for utf8 and sqlite3_open16 for utf16
     QString sEncoding = Settings::getValue("db", "defaultencoding").toString();
@@ -452,9 +464,10 @@ bool DBBrowserDB::create ( const QString & db)
     }
 }
 
-
 bool DBBrowserDB::close()
 {
+    waitForDbRelease();
+
     if(_db)
     {
         if (getDirty())
@@ -476,8 +489,9 @@ bool DBBrowserDB::close()
                 revertAll(); //not really necessary, I think... but will not hurt.
         }
         sqlite3_close(_db);
+        _db = nullptr;
     }
-    _db = nullptr;
+
     schemata.clear();
     savepointList.clear();
     emit dbChanged(getDirty());
@@ -485,6 +499,45 @@ bool DBBrowserDB::close()
 
     // Return true to tell the calling function that the closing wasn't cancelled by the user
     return true;
+}
+
+DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
+{
+    if(!_db)
+        return nullptr;
+
+    waitForDbRelease();
+
+    db_user = user;
+    db_used = true;
+
+    return db_pointer_type(_db, DatabaseReleaser(this));
+}
+
+void DBBrowserDB::waitForDbRelease()
+{
+    if(!_db)
+        return;
+
+    std::unique_lock<std::mutex> lk(m);
+    while(db_used) {
+        // notify user, give him the opportunity to cancel that
+        auto str = db_user;
+        lk.unlock();
+
+        QMessageBox msgBox;
+        msgBox.setText(tr("The database is currently busy: ") + str);
+        msgBox.setInformativeText(tr("Do you want to abort that other operation?"));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        int ret = msgBox.exec();
+
+        if(ret == QMessageBox::Yes)
+            sqlite3_interrupt(_db);
+
+        lk.lock();
+        cv.wait(lk, [this](){ return !db_used; });
+    }
 }
 
 bool DBBrowserDB::dump(const QString& filename,
@@ -495,6 +548,8 @@ bool DBBrowserDB::dump(const QString& filename,
     bool exportData,
     bool keepOldSchema)
 {
+    waitForDbRelease();
+
     // Open file
     QFile file(filename);
     if(file.open(QIODevice::WriteOnly))
@@ -518,7 +573,7 @@ bool DBBrowserDB::dump(const QString& filename,
                 // Otherwise get the number of records in this table
                 SqliteTableModel tableModel(*this);
                 tableModel.setTable(sqlb::ObjectIdentifier("main", it.value()->name()));
-                numRecordsTotal += tableModel.totalRowCount();
+                numRecordsTotal += tableModel.rowCount();
             }
         }
 
@@ -564,7 +619,7 @@ bool DBBrowserDB::dump(const QString& filename,
                 sqlite3_stmt *stmt;
                 QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
 
-                int status = sqlite3_prepare_v2(this->_db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
+                int status = sqlite3_prepare_v2(_db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
                 if(SQLITE_OK == status)
                 {
                     int columns = sqlite3_column_count(stmt);
@@ -686,7 +741,8 @@ bool DBBrowserDB::dump(const QString& filename,
 
 bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
 {
-    if (!isOpen())
+    waitForDbRelease();
+    if(!_db)
     {
         lastErrorMessage = tr("No database file opened");
         return false;
@@ -718,8 +774,8 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
 
 bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log)
 {
-    // First check if a DB is opened
-    if(!isOpen())
+    waitForDbRelease();
+    if(!_db)
     {
         lastErrorMessage = tr("No database file opened");
         return false;
@@ -831,6 +887,10 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
 bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata)
 {
+    waitForDbRelease();
+    if(!_db)
+        return false;
+
     QString sQuery = QString("SELECT * FROM %1 WHERE %2='%3';")
             .arg(table.toString())
             .arg(sqlb::escapeIdentifier(getObjectByName(table).dynamicCast<sqlb::Table>()->rowidColumn()))
@@ -947,7 +1007,9 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
 
 QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
 {
-    if (!isOpen()) return QString();
+    waitForDbRelease();
+    if(!_db)
+        return QString();
 
     sqlb::TablePtr table = getObjectByName(tablename).dynamicCast<sqlb::Table>();
     if(!table)
@@ -977,9 +1039,17 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     }
 }
 
-bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids)
+bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk)
 {
     if (!isOpen()) return false;
+
+    // Get primary key of the object to edit.
+    QString pk = primaryKeyForEditing(table, pseudo_pk);
+    if(pk.isNull())
+    {
+        lastErrorMessage = tr("Cannot delete this object");
+        return false;
+    }
 
     QStringList quoted_rowids;
     for(QString rowid : rowids)
@@ -987,7 +1057,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
 
     QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
             .arg(table.toString())
-            .arg(sqlb::escapeIdentifier(getObjectByName(table).dynamicCast<sqlb::Table>()->rowidColumn()))
+            .arg(pk)
             .arg(quoted_rowids.join(", "));
     if(executeSQL(statement))
     {
@@ -998,26 +1068,18 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
     }
 }
 
-bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk)
+bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QString& column,
+                               const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk)
 {
+    waitForDbRelease();
     if (!isOpen()) return false;
 
-    // Get primary key of the object to edit. For views we support 'pseudo' primary keys which must be specified manually.
-    // If no pseudo pk is specified we'll take the rowid column of the table. If this isn't a table, however, we'll just assume
-    // it's a view that hasn't been configured for editing and thus abort here.
-    QString pk;
-    if(pseudo_pk.isEmpty())
+    // Get primary key of the object to edit.
+    QString pk = primaryKeyForEditing(table, pseudo_pk);
+    if(pk.isNull())
     {
-        sqlb::TablePtr tbl = getObjectByName(table).dynamicCast<sqlb::Table>();
-        if(tbl)
-        {
-            pk = tbl->rowidColumn();
-        } else {
-            lastErrorMessage = tr("Cannot set data on this object");
-            return false;
-        }
-    } else {
-        pk = pseudo_pk;
+        lastErrorMessage = tr("Cannot set data on this object");
+        return false;
     }
 
     QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
@@ -1062,6 +1124,24 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
         qWarning() << "updateRecord: " << lastErrorMessage;
         return false;
     }
+}
+
+QString DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const
+{
+    // This function returns the primary key of the object to edit. For views we support 'pseudo' primary keys which must be specified manually.
+    // If no pseudo pk is specified we'll take the rowid column of the table instead. If this neither a table nor was a pseudo-PK specified,
+    // it is most likely a view that hasn't been configured for editing yet. In this case we return a null string to abort.
+
+    if(pseudo_pk.isEmpty())
+    {
+        sqlb::TablePtr tbl = getObjectByName(table).dynamicCast<sqlb::Table>();
+        if(tbl)
+            return tbl->rowidColumn();
+    } else {
+        return pseudo_pk;
+    }
+
+    return QString();
 }
 
 bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure)
@@ -1385,6 +1465,8 @@ void DBBrowserDB::logSQL(QString statement, int msgtype)
 
 void DBBrowserDB::updateSchema()
 {
+    waitForDbRelease();
+
     schemata.clear();
 
     // Exit here is no DB is opened
@@ -1489,6 +1571,8 @@ void DBBrowserDB::updateSchema()
 
 QString DBBrowserDB::getPragma(const QString& pragma)
 {
+    waitForDbRelease();
+
     if(!isOpen())
         return QString();
 
@@ -1568,7 +1652,8 @@ bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue
 
 bool DBBrowserDB::loadExtension(const QString& filename)
 {
-    if(!isOpen())
+    waitForDbRelease();
+    if(!_db)
         return false;
 
     // Check if file exists
@@ -1592,6 +1677,8 @@ bool DBBrowserDB::loadExtension(const QString& filename)
 
 QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QString& schema_name, const QString& object_name)
 {
+    waitForDbRelease();
+
     QVector<QPair<QString, QString>> result;
     QString statement = QString("PRAGMA %1.TABLE_INFO(%2);").arg(sqlb::escapeIdentifier(schema_name)).arg(sqlb::escapeIdentifier(object_name));
     logSQL(statement, kLogMsg_App);
