@@ -17,12 +17,55 @@ void TestTable::sqlOutput()
     tt.addField(fkm);
     tt.addConstraint({f, fkm}, ConstraintPtr(new PrimaryKeyConstraint()));
 
+    QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
+                               "\t\"id\"\tinteger,\n"
+                               "\t\"car\"\ttext,\n"
+                               "\t\"km\"\tinteger CHECK(km > 1000),\n"
+                               "\tPRIMARY KEY(\"id\",\"km\")\n"
+                               ");"));
+}
+
+void TestTable::sqlGraveAccentOutput()
+{
+    Table tt("testtable");
+    FieldPtr f = FieldPtr(new Field("id", "integer"));
+    FieldPtr fkm = FieldPtr(new Field("km", "integer", false, "", "km > 1000"));
+    tt.addField(f);
+    tt.addField(FieldPtr(new Field("car", "text")));
+    tt.addField(fkm);
+    tt.addConstraint({f, fkm}, ConstraintPtr(new PrimaryKeyConstraint()));
+    sqlb::setIdentifierQuoting(sqlb::GraveAccents);
+
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
                                "\t`id`\tinteger,\n"
                                "\t`car`\ttext,\n"
                                "\t`km`\tinteger CHECK(km > 1000),\n"
                                "\tPRIMARY KEY(`id`,`km`)\n"
                                ");"));
+
+    sqlb::setIdentifierQuoting(sqlb::DoubleQuotes);
+}
+
+
+void TestTable::sqlSquareBracketsOutput()
+{
+    Table tt("testtable");
+    FieldPtr f = FieldPtr(new Field("id", "integer"));
+    FieldPtr fkm = FieldPtr(new Field("km", "integer", false, "", "km > 1000"));
+    tt.addField(f);
+    tt.addField(FieldPtr(new Field("car", "text")));
+    tt.addField(fkm);
+    tt.addConstraint({f, fkm}, ConstraintPtr(new PrimaryKeyConstraint()));
+    sqlb::setIdentifierQuoting(sqlb::SquareBrackets);
+
+    QCOMPARE(tt.sql(), QString("CREATE TABLE [testtable] (\n"
+                               "\t[id]\tinteger,\n"
+                               "\t[car]\ttext,\n"
+                               "\t[km]\tinteger CHECK(km > 1000),\n"
+                               "\tPRIMARY KEY([id],[km])\n"
+                               ");"));
+
+    sqlb::setIdentifierQuoting(sqlb::DoubleQuotes);
 }
 
 void TestTable::autoincrement()
@@ -36,10 +79,10 @@ void TestTable::autoincrement()
     tt.addField(fkm);
     tt.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
 
-    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\t`id`\tinteger PRIMARY KEY AUTOINCREMENT,\n"
-                               "\t`car`\ttext,\n"
-                               "\t`km`\tinteger\n"
+    QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
+                               "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                               "\t\"car\"\ttext,\n"
+                               "\t\"km\"\tinteger\n"
                                ");"));
 }
 
@@ -54,10 +97,10 @@ void TestTable::notnull()
     tt.addField(fkm);
     tt.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
 
-    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\t`id`\tinteger PRIMARY KEY AUTOINCREMENT,\n"
-                               "\t`car`\ttext NOT NULL,\n"
-                               "\t`km`\tinteger\n"
+    QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
+                               "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                               "\t\"car\"\ttext NOT NULL,\n"
+                               "\t\"km\"\tinteger\n"
                                ");"));
 }
 
@@ -71,9 +114,9 @@ void TestTable::withoutRowid()
     tt.setRowidColumn("a");
     tt.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
 
-    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\t`a`\tinteger PRIMARY KEY AUTOINCREMENT,\n"
-                               "\t`b`\tinteger\n"
+    QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
+                               "\t\"a\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                               "\t\"b\"\tinteger\n"
                                ") WITHOUT ROWID;"));
 }
 
@@ -84,9 +127,9 @@ void TestTable::foreignKeys()
     tt.addField(f);
     tt.addConstraint({f}, sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", QStringList("c"))));
 
-    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\t`a`\tinteger,\n"
-                               "\tFOREIGN KEY(`a`) REFERENCES `b`(`c`)\n"
+    QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
+                               "\t\"a\"\tinteger,\n"
+                               "\tFOREIGN KEY(\"a\") REFERENCES \"b\"(\"c\")\n"
                                ");"));
 }
 
@@ -102,11 +145,11 @@ void TestTable::uniqueConstraint()
     tt.addField(f3);
     tt.addConstraint({f2, f3}, sqlb::ConstraintPtr(new sqlb::UniqueConstraint()));
 
-    QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
-                               "\t`a`\tinteger UNIQUE,\n"
-                               "\t`b`\tinteger,\n"
-                               "\t`c`\tinteger,\n"
-                               "\tUNIQUE(`b`,`c`)\n"
+    QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
+                               "\t\"a\"\tinteger UNIQUE,\n"
+                               "\t\"b\"\tinteger,\n"
+                               "\t\"c\"\tinteger,\n"
+                               "\tUNIQUE(\"b\",\"c\")\n"
                                ");"));
 }
 
@@ -177,7 +220,7 @@ void TestTable::parseSQLMultiPk()
             "\tid1 integer,\n"
             "\tid2 integer,\n"
             "\tnonpkfield blob,\n"
-            "PRIMARY KEY(`id1`,`id2`)\n"
+            "PRIMARY KEY(\"id1\",\"id2\")\n"
             ");";
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
@@ -215,6 +258,18 @@ void TestTable::parseSQLSingleQuotes()
     QVERIFY(tab.fields().at(1)->name() == "test");
 }
 
+void TestTable::parseSQLSquareBrackets()
+{
+    QString sSQL = "CREATE TABLE [test]([id],[test]);";
+
+    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+
+    QVERIFY(tab.name() == "test");
+    QVERIFY(tab.fields().at(0)->name() == "id");
+    QVERIFY(tab.fields().at(1)->name() == "test");
+}
+
+
 void TestTable::parseSQLKeywordInIdentifier()
 {
     QString sSQL = "CREATE TABLE deffered(key integer primary key, if text);";
@@ -224,6 +279,20 @@ void TestTable::parseSQLKeywordInIdentifier()
     QVERIFY(tab.name() == "deffered");
     QVERIFY(tab.fields().at(0)->name() == "key");
     QVERIFY(tab.fields().at(1)->name() == "if");
+}
+
+
+void TestTable::parseSQLSomeKeywordsInIdentifier()
+{
+    QString sSQL = "CREATE TABLE \"Average Number of Volunteers by Area of Work\" ("
+      "`Area of Work`	TEXT,"
+      "`Average Number of Volunteers`	INTEGER);";
+
+    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+
+    QVERIFY(tab.name() == "Average Number of Volunteers by Area of Work");
+    QVERIFY(tab.fields().at(0)->name() == "Area of Work");
+    QVERIFY(tab.fields().at(1)->name() == "Average Number of Volunteers");
 }
 
 void TestTable::parseSQLWithoutRowid()
@@ -249,6 +318,19 @@ void TestTable::parseNonASCIIChars()
     QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
 }
 
+void TestTable::parseNonASCIICharsEs()
+{
+    QString sSQL = "CREATE TABLE \"Cigüeñas de Alcalá\" ("
+            "\"Field áéíóúÁÉÍÓÚñÑçÇ\"	INTEGER,"
+            "PRIMARY KEY(\"Field áéíóúÁÉÍÓÚñÑçÇ\")"
+            ");";
+
+    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+
+    QVERIFY(tab.name() == "Cigüeñas de Alcalá");
+    QVERIFY(tab.fields().at(0)->name() == "Field áéíóúÁÉÍÓÚñÑçÇ");
+}
+
 void TestTable::parseSQLEscapedQuotes()
 {
     QString sSql = "CREATE TABLE double_quotes(a text default 'a''a');";
@@ -272,19 +354,19 @@ void TestTable::parseSQLForeignKeys()
     QCOMPARE(tab.constraint({tab.fields().at(0)}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->table(), QString("x"));
     QCOMPARE(tab.fields().at(1)->name(), QString("b"));
     QCOMPARE(tab.fields().at(1)->type(), QString("int"));
-    QCOMPARE(tab.constraint({tab.fields().at(1)}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->toString(), QString("`w`(`y`,`z`) on delete set null"));
+    QCOMPARE(tab.constraint({tab.fields().at(1)}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->toString(), QString("\"w\"(\"y\",\"z\") on delete set null"));
 }
 
 void TestTable::parseSQLCheckConstraint()
 {
-    QString sql = "CREATE TABLE a (`b` text CHECK(`b`='A' or `b`='B'));";
+    QString sql = "CREATE TABLE a (\"b\" text CHECK(\"b\"='A' or \"b\"='B'));";
 
     Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
 
     QCOMPARE(tab.name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->name(), QString("b"));
     QCOMPARE(tab.fields().at(0)->type(), QString("text"));
-    QCOMPARE(tab.fields().at(0)->check(), QString("`b` = 'A' or `b` = 'B'"));
+    QCOMPARE(tab.fields().at(0)->check(), QString("\"b\" = 'A' or \"b\" = 'B'"));
 }
 
 void TestTable::parseDefaultValues()

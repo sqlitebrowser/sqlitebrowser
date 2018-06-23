@@ -56,8 +56,11 @@ void SqlTextEdit::reloadSettings()
     switch(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt())) {
     case sqlb::DoubleQuotes:
         setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::DoubleQuotedString);
+        sqlLexer->setQuotedIdentifiers(false);
         break;
     case sqlb::GraveAccents:
+        sqlLexer->setQuotedIdentifiers(true);
+        // Fall through, treat quoted string as literal string
     case sqlb::SquareBrackets:
         setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
         break;

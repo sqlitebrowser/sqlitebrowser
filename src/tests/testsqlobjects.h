@@ -8,6 +8,8 @@ class TestTable: public QObject
     Q_OBJECT
 private slots:
     void sqlOutput();
+    void sqlGraveAccentOutput();
+    void sqlSquareBracketsOutput();
     void autoincrement();
     void notnull();
     void withoutRowid();
@@ -15,13 +17,16 @@ private slots:
     void uniqueConstraint();
 
     void parseSQL();
+    void parseSQLSquareBrackets();
     void parseSQLdefaultexpr();
     void parseSQLMultiPk();
     void parseSQLForeignKey();
     void parseSQLSingleQuotes();
     void parseSQLKeywordInIdentifier();
+    void parseSQLSomeKeywordsInIdentifier();
     void parseSQLWithoutRowid();
     void parseNonASCIIChars();
+    void parseNonASCIICharsEs();
     void parseSQLEscapedQuotes();
     void parseSQLForeignKeys();
     void parseSQLCheckConstraint();

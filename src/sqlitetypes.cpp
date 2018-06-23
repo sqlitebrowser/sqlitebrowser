@@ -11,7 +11,7 @@ namespace sqlb {
 
 QStringList Field::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
-escapeQuoting customQuoting = GraveAccents;
+static escapeQuoting customQuoting = DoubleQuotes;
 
 void setIdentifierQuoting(escapeQuoting toQuoting)
 {
@@ -21,8 +21,6 @@ void setIdentifierQuoting(escapeQuoting toQuoting)
 QString escapeIdentifier(QString id)
 {
     switch(customQuoting) {
-    case DoubleQuotes:
-        return '"' + id.replace('"', "\"\"") + '"';
     case GraveAccents:
         return '`' + id.replace('`', "``") + '`';
     case SquareBrackets:
@@ -30,6 +28,12 @@ QString escapeIdentifier(QString id)
         // so we rely on the user to not enter these characters when this kind of quoting is
         // selected.
         return '[' + id + ']';
+    case DoubleQuotes:
+    default:
+        // This may produce a 'control reaches end of non-void function' warning if the
+        // default branch is removed, even though we have covered all possibilities in the
+        // switch statement.
+        return '"' + id.replace('"', "\"\"") + '"';
     }
 }
 
