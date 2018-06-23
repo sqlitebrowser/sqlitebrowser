@@ -8,8 +8,6 @@
 #include <QStandardPaths>
 #include <QPalette>
 
-#include "DotenvFormat.h"
-
 QHash<QString, QVariant> Settings::m_hCache;
 
 QVariant Settings::getValue(const QString& group, const QString& name)
@@ -357,11 +355,4 @@ void Settings::restoreDefaults ()
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
     settings.clear();
     m_hCache.clear();
-}
-
-QSettings::Format Settings::getDotenvFormat()
-{
-    static const QSettings::Format DotenvFormat = QSettings::registerFormat("env", &DotenvFormat::readEnvFile, nullptr);
-
-    return DotenvFormat;
 }

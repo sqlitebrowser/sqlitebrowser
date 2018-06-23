@@ -3,6 +3,7 @@
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
 #include "CipherSettings.h"
+#include "DotenvFormat.h"
 #include "Settings.h"
 
 #include <QFile>
@@ -295,7 +296,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 QString databaseFileName(databaseFileInfo.fileName());
 
                 QString dotenvFilePath = databaseDirectoryPath + "/.env";
-                QSettings::Format dotenvFormat = Settings::getDotenvFormat();
+                static const QSettings::Format dotenvFormat = QSettings::registerFormat("env", &DotenvFormat::readEnvFile, nullptr);
                 QSettings dotenv(dotenvFilePath, dotenvFormat);
 
                 QVariant passwordValue = dotenv.value(databaseFileName);
