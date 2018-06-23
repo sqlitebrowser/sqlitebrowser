@@ -348,6 +348,9 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
             if(cipherDialog->exec())
             {
+                delete cipherSettings;
+                cipherSettings = new CipherSettings(cipherDialog->getCipherSettings());
+
                 // Close and reopen database first to be in a clean state after the failed read attempt from above
                 sqlite3_close(dbHandle);
                 if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
@@ -356,10 +359,6 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings = nullptr;
                     return false;
                 }
-
-                delete cipherSettings;
-
-                cipherSettings = new CipherSettings(cipherDialog->getCipherSettings());
 
                 // Set the key
                 sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->getPassword()).toUtf8(), nullptr, nullptr, nullptr);
