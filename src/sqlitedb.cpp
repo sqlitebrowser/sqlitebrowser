@@ -301,11 +301,11 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                 QVariant passwordValue = dotenv.value(databaseFileName);
 
-                bool foundPassword = !passwordValue.isNull();
+                bool foundDotenvPassword = !passwordValue.isNull();
 
                 isDotenvChecked = true;
 
-                if (foundPassword)
+                if (foundDotenvPassword)
                 {
                     QString password = passwordValue.toString();
 
@@ -340,7 +340,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                     *encrypted = true;
 
-                    // Skip the CipherDialog prompt for now to test if the saved password was correct
+                    // Skip the CipherDialog prompt for now to test if the dotenv password was correct
                     continue;
                 }
             }
