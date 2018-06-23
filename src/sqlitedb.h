@@ -12,7 +12,6 @@
 #include <QByteArray>
 
 struct sqlite3;
-class CipherDialog;
 class CipherSettings;
 
 enum
