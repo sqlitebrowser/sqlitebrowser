@@ -354,8 +354,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     return false;
                 }
 
-                if (cipherSettings)
-                    delete cipherSettings;
+                delete cipherSettings;
 
                 cipherSettings = new CipherSettings(cipherDialog->getCipherSettings());
 
@@ -370,11 +369,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             } else {
                 sqlite3_close(dbHandle);
                 *encrypted = false;
-                if (cipherSettings)
-                {
-                    delete cipherSettings;
-                    cipherSettings = nullptr;
-                }
+                delete cipherSettings;
+                cipherSettings = nullptr;
                 return false;
             }
 #else
