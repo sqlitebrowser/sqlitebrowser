@@ -315,6 +315,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     QVariant pageSizeValue = dotenv.value(databaseFileName + "_pageSize", QVariant(CipherSettings::defaultPageSize));
                     int pageSize = pageSizeValue.toInt();
 
+                    delete cipherSettings;
                     cipherSettings = new CipherSettings();
 
                     cipherSettings->setKeyFormat(keyFormat);
@@ -325,6 +326,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     sqlite3_close(dbHandle);
                     if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
                     {
+	                    delete cipherSettings;
+	                    cipherSettings = nullptr;
                         return false;
                     }
 
