@@ -128,7 +128,7 @@
           <string>Toolbar style</string>
          </property>
          <property name="buddy">
-          <cstring>languageComboBox</cstring>
+          <cstring>toolbarStyleComboBox</cstring>
          </property>
         </widget>
        </item>
@@ -187,6 +187,9 @@
          <property name="text">
           <string>Show remote options</string>
          </property>
+         <property name="buddy">
+          <cstring>checkUseRemotes</cstring>
+         </property>
         </widget>
        </item>
        <item row="3" column="1">
@@ -220,6 +223,9 @@
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>DB file extensions</string>
+         </property>
+         <property name="buddy">
+          <cstring>buttonManageFileExtension</cstring>
          </property>
         </widget>
        </item>
@@ -381,6 +387,9 @@
         <widget class="QLabel" name="defaultFieldTypeLabel">
          <property name="text">
           <string>Default field type</string>
+         </property>
+         <property name="buddy">
+          <cstring>defaultFieldTypeComboBox</cstring>
          </property>
         </widget>
        </item>
@@ -931,20 +940,23 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QFontComboBox" name="comboEditorFont"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>SQL &amp;editor font size</string>
-           </property>
-           <property name="buddy">
-            <cstring>spinEditorFontSize</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QFontComboBox" name="comboEditorFont"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>SQL &amp;editor font size</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="buddy">
+              <cstring>spinEditorFontSize</cstring>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QSpinBox" name="spinEditorFontSize">
              <property name="minimum">
@@ -952,40 +964,24 @@
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>SQL &amp;results font size</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinLogFontSize</cstring>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="spinLogFontSize">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
           </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>SQL &amp;results font size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinLogFontSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinLogFontSize">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_13">
@@ -1013,7 +1009,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="wrapLabel">
            <property name="text">
-            <string>Wrap lines</string>
+            <string>&amp;Wrap lines</string>
            </property>
            <property name="buddy">
             <cstring>wrapComboBox</cstring>
@@ -1042,6 +1038,16 @@
              <string>At whitespace boundaries</string>
             </property>
            </item>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_25">
+           <property name="text">
+            <string>&amp;Quotes for identifiers</string>
+           </property>
+           <property name="buddy">
+            <cstring>quoteComboBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="4" column="1">
@@ -1143,16 +1149,6 @@
            </property>
            <property name="text">
             <string>enabled</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_25">
-           <property name="text">
-            <string>Quotes for identifiers</string>
-           </property>
-           <property name="buddy">
-            <cstring>quoteComboBox</cstring>
            </property>
           </widget>
          </item>
