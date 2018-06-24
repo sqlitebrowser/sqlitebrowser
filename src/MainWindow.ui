@@ -981,7 +981,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <bool>false</bool>
    </attribute>
    <addaction name="fileNewAction"/>
-   <addaction name="fileOpenAction"/>
+   <addaction name="fileOpenActionPopup"/>
    <addaction name="separator"/>
    <addaction name="fileSaveAction"/>
    <addaction name="fileRevertAction"/>
@@ -2067,6 +2067,30 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="whatsThis">
     <string>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</string>
+   </property>
+  </action>
+  <action name="fileOpenActionPopup">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_open</normaloff>:/icons/db_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open an existing database file</string>
+   </property>
+   <property name="statusTip">
+    <string>Open an existing database file</string>
+   </property>
+   <property name="whatsThis">
+    <string>This option is used to open an existing database file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
    </property>
   </action>
  </widget>
@@ -3350,6 +3374,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveFilterAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileOpenActionPopup</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileOpen()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

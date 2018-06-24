@@ -175,6 +175,11 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->actionEditCopyCreateStatement);
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
+    popupOpenDbMenu = new QMenu(this);
+    popupOpenDbMenu->addAction(ui->fileOpenAction);
+    popupOpenDbMenu->addAction(ui->fileOpenReadOnlyAction);
+    ui->fileOpenActionPopup->setMenu(popupOpenDbMenu);
+
     popupSaveSqlFileMenu = new QMenu(this);
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFile);
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFileAs);
