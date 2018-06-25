@@ -477,6 +477,7 @@ void MainWindow::populateStructure(const QString& old_table)
 
     // Resize SQL column to fit contents
     ui->dbTreeWidget->resizeColumnToContents(3);
+    ui->treeSchemaDock->resizeColumnToContents(3);
 }
 
 void MainWindow::clearTableBrowser()
