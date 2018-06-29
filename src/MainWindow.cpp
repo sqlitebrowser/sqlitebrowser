@@ -25,6 +25,7 @@
 #include "RemoteDock.h"
 #include "RemoteDatabase.h"
 #include "FindReplaceDialog.h"
+#include "Data.h"
 
 #include <QFile>
 #include <QApplication>
@@ -2773,15 +2774,20 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
     // Ask the user for a new encoding
     bool ok;
     QString question;
+    QStringList availableCodecs = toStringList(QTextCodec::availableCodecs());
+    availableCodecs.removeDuplicates();
+    int currentItem = availableCodecs.indexOf(encoding);
+
     if(forAllTables)
         question = tr("Please choose a new encoding for all tables.");
     else
         question = tr("Please choose a new encoding for this table.");
-    encoding = QInputDialog::getText(this,
+    encoding = QInputDialog::getItem(this,
                                      tr("Set encoding"),
                                      tr("%1\nLeave the field empty for using the database encoding.").arg(question),
-                                     QLineEdit::Normal,
-                                     encoding,
+                                     availableCodecs,
+                                     currentItem,
+                                     true, // editable
                                      &ok);
 
     // Only set the new encoding if the user clicked the OK button

@@ -57,3 +57,11 @@ QByteArray removeBom(QByteArray& data)
         return QByteArray();
     }
 }
+
+QStringList toStringList(const QList<QByteArray> list) {
+    QStringList strings;
+    for (const QByteArray &item : list) {
+        strings.append(QString::fromUtf8(item));
+    }
+    return strings;
+}
