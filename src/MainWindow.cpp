@@ -125,7 +125,6 @@ void MainWindow::init()
 
     // Set up DB schema dock
     ui->treeSchemaDock->setModel(dbStructureModel);
-    ui->treeSchemaDock->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->treeSchemaDock->setColumnHidden(DbStructureModel::ColumnObjectType, true);
     ui->treeSchemaDock->setColumnHidden(DbStructureModel::ColumnSchema, true);
 
@@ -477,8 +476,13 @@ void MainWindow::populateStructure(const QString& old_table)
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getEditor()->reloadKeywords();
 
     // Resize SQL column to fit contents
-    ui->dbTreeWidget->resizeColumnToContents(3);
-    ui->treeSchemaDock->resizeColumnToContents(3);
+    ui->dbTreeWidget->resizeColumnToContents(DbStructureModel::ColumnSQL);
+    ui->treeSchemaDock->resizeColumnToContents(DbStructureModel::ColumnSQL);
+    // Resize also the Name column in the Dock since it has usually
+    // short content and there is little space there.
+    ui->treeSchemaDock->resizeColumnToContents(DbStructureModel::ColumnName);
+
+
 }
 
 void MainWindow::clearTableBrowser()
