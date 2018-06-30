@@ -1035,44 +1035,52 @@ void MainWindow::executeQuery()
     QString query;
     int execution_start_line = 0;
     int execution_start_index = 0;
+    int execution_start_position = 0;
+    SqlTextEdit *editor = sqlWidget->getEditor();
     if(sender()->objectName() == "actionSqlExecuteLine")
     {
         int cursor_line, cursor_index;
-        SqlTextEdit *editor = sqlWidget->getEditor();
 
         editor->getCursorPosition(&cursor_line, &cursor_index);
 
         execution_start_line = cursor_line;
 
-        int lineStartCursorPosition = editor->positionFromLineIndex(cursor_line, 0);
+        execution_start_position = editor->positionFromLineIndex(cursor_line, 0);
 
         QString entireSQL = editor->text();
-        QString firstPartEntireSQL = entireSQL.left(lineStartCursorPosition);
-        QString secondPartEntireSQL = entireSQL.right(entireSQL.length() - lineStartCursorPosition);
+        QString firstPartEntireSQL = entireSQL.left(execution_start_position);
+        QString secondPartEntireSQL = entireSQL.right(entireSQL.length() - execution_start_position);
 
         QString firstPartSQL = firstPartEntireSQL.split(";").last();
         QString lastPartSQL = secondPartEntireSQL.split(";").first();
 
         query = firstPartSQL + lastPartSQL;
+        db.logSQL(tr("-- EXECUTING LINE AT '%1'\n--").arg(sqlWidget->fileName()), kLogMsg_User);
+
     } else {
         // if a part of the query is selected, we will only execute this part
         query = sqlWidget->getSelectedSql();
         int dummy;
-        if(query.isEmpty())
+        if(query.isEmpty()) {
             query = sqlWidget->getSql();
-        else
-            sqlWidget->getEditor()->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
+            db.logSQL(tr("-- EXECUTING ALL AT '%1'\n--").arg(sqlWidget->fileName()), kLogMsg_User);
+        } else {
+            editor->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
+            execution_start_position = editor->positionFromLineIndex(execution_start_line, execution_start_index);
+            db.logSQL(tr("-- EXECUTING SELECTION AT '%1'\n--").arg(sqlWidget->fileName()), kLogMsg_User);
+        }
     }
-
-    SqliteTableModel::removeCommentsFromQuery(query);
 
     if (query.trimmed().isEmpty() || query.trimmed() == ";")
         return;
 
-    query = query.remove(QRegExp("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$")).trimmed();
+    // All replacements in the query should be made by the same amount of characters, so the positions in the file
+    // for error indicators and line and column logs are not displaced.
+    // Whitespace and comments are discarded by SQLite, so it is better to just let it ignore them.
 
-    //log the query
-    db.logSQL(query, kLogMsg_User);
+    query = query.replace(QRegExp("^(\\s*)BEGIN TRANSACTION;", Qt::CaseInsensitive), "\\1                  ");
+    query = query.replace(QRegExp("COMMIT;(\\s*)$", Qt::CaseInsensitive), "       \\1");
+
     sqlite3_stmt *vm;
     QByteArray utf8Query = query.toUtf8();
     const char *tail = utf8Query.data();
@@ -1086,7 +1094,9 @@ void MainWindow::executeQuery()
     bool savepoint_created = false;
 
     // Remove any error indicators
-    sqlWidget->getEditor()->clearErrorIndicators();
+    editor->clearErrorIndicators();
+
+    QApplication::setOverrideCursor(Qt::BusyCursor);
 
     // Accept multi-line queries, by looping until the tail is empty
     QElapsedTimer timer;
@@ -1146,7 +1156,7 @@ void MainWindow::executeQuery()
         sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         tail_length -= (tail - qbegin);
-        int execution_end_index = execution_start_index + tail_length_before - tail_length;
+        int execution_end_position = execution_start_position + tail_length_before - tail_length;
 
         if (sql3status == SQLITE_OK)
         {
@@ -1179,9 +1189,7 @@ void MainWindow::executeQuery()
                 model->waitUntilIdle();
                 qApp->processEvents(); // to make row count available
 
-                // The query takes the last placeholder as it may itself contain the sequence '%' + number
-                statusMessage = tr("%1 rows returned in %2ms from: %3").arg(
-                    model->rowCount()).arg(timer.elapsed()).arg(queryPart.trimmed());
+                statusMessage = tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(timer.elapsed());
                 ok = true;
                 ui->actionSqlResultsSave->setEnabled(true);
                 ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
@@ -1205,28 +1213,38 @@ void MainWindow::executeQuery()
                 if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
                     modified = true;
 
-                statusMessage = tr("Query executed successfully: %1 (took %2ms%3)").arg(queryPart.trimmed()).arg(timer.elapsed()).arg(stmtHasChangedDatabase);
+                statusMessage = tr("query executed successfully. Took %1ms%2").arg(timer.elapsed()).arg(stmtHasChangedDatabase);
                 ok = true;
                 break;
             }
             case SQLITE_MISUSE:
                 continue;
             default:
-                statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get())) + ": " + queryPart;
-                ok = true;
+                ok = false;
                 break;
             }
             timer.restart();
         } else {
-            statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get())) + ": " + queryPart;
-            sqlWidget->getEditor()->setErrorIndicator(execution_start_line, execution_start_index, execution_start_line, execution_end_index);
             ok = false;
 
         }
+        editor->lineIndexFromPosition(execution_start_position+1, &execution_start_line, &execution_start_index);
+
+        if (!ok) {
+            int execution_end_index, execution_end_line;
+            editor->lineIndexFromPosition(execution_end_position, &execution_end_line, &execution_end_index);
+            statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
+            editor->setErrorIndicator(execution_start_line, execution_start_index, execution_end_line, execution_end_index);
+            editor->setCursorPosition(execution_start_line, execution_start_index);
+        }
+        // Log the query and the result message.
+        // The query takes the last placeholder as it may itself contain the sequence '%' + number.
+        statusMessage = QString("-- At line %1:\n%4\n-- Result: %3").arg(execution_start_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        db.logSQL(statusMessage, kLogMsg_User);
 
         pDb = nullptr; // release db
 
-        execution_start_index = execution_end_index;
+        execution_start_position = execution_end_position;
 
         // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
         // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
@@ -1252,6 +1270,8 @@ void MainWindow::executeQuery()
     // If the DB structure was changed by some command in this SQL script, update our schema representations
     if(structure_updated)
         db.updateSchema();
+
+    QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::mainTabSelected(int tabindex)
