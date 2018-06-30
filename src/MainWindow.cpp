@@ -2003,6 +2003,8 @@ void MainWindow::reloadSettings()
 
     // Reload remote dock settings
     remoteDock->reloadSettings();
+
+    sqlb::setIdentifierQuoting(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt()));
 }
 
 void MainWindow::checkNewVersion(const QString& versionstring, const QString& url)
