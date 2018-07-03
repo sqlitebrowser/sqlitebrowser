@@ -218,20 +218,35 @@ LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPA
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5
 
 unix {
+    # Below, the user can specify where all generated file can be placed
+    # through a set of variables, being them:
+    #
+    # PREFIX        -> the root directory where the files will be placed
+    # BINDIR        -> where executables accessible by the user resides
+    # DATADIR       -> where data files and resources should be placed
+    #
+    # The values of each variable changes between supported platforms and are describe as follow
+
+    # Default configuration for package sqlitebrowser.
+    # The default prefix is /usr/local
+    !defined(PREFIX, var):        PREFIX = /usr/local
+    !defined(BINDIR, var):        BINDIR = $$PREFIX/bin
+    !defined(DATADIR, var):       DATADIR = $$PREFIX/share
+
     # The executable
-    target.path = /usr/local/bin/
+    target.path = $$BINDIR
     INSTALLS += target
 
     # Icon
-    icon.path = /usr/local/share/icons/hicolor/256x256/apps/
+    icon.path = $$DATADIR/icons/hicolor/256x256/apps/
     icon.files = icons/sqlitebrowser.png
     INSTALLS += icon
 
     # Desktop metadata
-    desktop.path = /usr/local/share/applications/
+    desktop.path = $$DATADIR/applications/
     desktop.files = ../distri/sqlitebrowser.desktop
     INSTALLS += desktop
-    appdata.path = /usr/local/share/appdata/
+    appdata.path = $$DATADIR/appdata/
     appdata.files = ../distri/sqlitebrowser.desktop.appdata.xml
     INSTALLS += appdata
 }
