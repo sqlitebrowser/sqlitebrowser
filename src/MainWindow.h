@@ -145,6 +145,7 @@ private:
 
     QMenu* popupTableMenu;
     QMenu* recentFilesMenu;
+    QMenu* popupOpenDbMenu;
     QMenu* popupSaveSqlFileMenu;
     QMenu* popupSaveSqlResultsMenu;
     QMenu* popupSaveFilterAsMenu;
