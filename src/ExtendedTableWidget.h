@@ -50,7 +50,7 @@ signals:
     void selectedRowsToBeDeleted();
 
 private:
-    void copy(const bool withHeaders = false);
+    void copy(const bool withHeaders, const bool inSQL );
     void paste();
     QString escapeCopiedData(const QByteArray& data) const;
 
