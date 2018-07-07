@@ -785,8 +785,7 @@ void EditDialog::setReadOnly(bool ro)
 
     ui->editorText->setReadOnly(ro);
     sciEdit->setReadOnly(ro);
-    // We disable the entire hex editor here instead of setting it to read only because it doesn't have a setReadOnly() method
-    ui->editorBinary->setEnabled(!ro);
+    hexEdit->setReadOnly(ro);
 
     // This makes the caret being visible for selection, although the editor is read-only.
     Qt::TextInteractionFlags textFlags = ro? Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard : Qt::TextEditorInteraction;
