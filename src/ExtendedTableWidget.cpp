@@ -320,9 +320,13 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     const QString fieldSepHtml = "</td><td>";
     const QString rowSepHtml = "</td></tr><tr><td>";
     const QString fieldSepText = "\t";
+#ifdef Q_OS_WIN
     const QString rowSepText = "\r\n";
+#else
+    const QString rowSepText = "\n";
+#endif
 
-    QString sqlInsertStatement = QString("INSERT INTO %1 ( '").arg(sqlb::escapeIdentifier(m->currentTableName().toString()));
+    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(m->currentTableName().toString());
     // Table headers
     if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
@@ -332,16 +336,16 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
             if (i != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
-                sqlInsertStatement.append("', '");
+                sqlInsertStatement.append(", ");
             }
 
             result.append(escapeCopiedData(headerText));
             htmlResult.append(headerText);
-            sqlInsertStatement.append(escapeCopiedData(headerText));
+            sqlInsertStatement.append(sqlb::escapeIdentifier(headerText));
         }
         result.append(rowSepText);
         htmlResult.append("</th></tr>");
-        sqlInsertStatement.append("') VALUES (\"");
+        sqlInsertStatement.append(") VALUES (");
     }
 
     // Table data rows
@@ -353,19 +357,19 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
         } else if (index.row() != currentRow) {
             result.append(rowSepText);
             htmlResult.append(rowSepHtml);
-            sqlResult.append("\");\r\n"+sqlInsertStatement);
+            sqlResult.append(");" + rowSepText + sqlInsertStatement);
         } else {
             result.append(fieldSepText);
             htmlResult.append(fieldSepHtml);
-            sqlResult.append("\", \"");
+            sqlResult.append(", ");
         }
         currentRow = index.row();
 
         QImage img;
         QVariant data = index.data(Qt::EditRole);
 
-        // Table cell data: image? Store it as an embedded image in HTML and as base 64 in text version
-        if (img.loadFromData(data.toByteArray()))
+        // Table cell data: image? Store it as an embedded image in HTML
+        if (!inSQL && img.loadFromData(data.toByteArray()))
         {
             QByteArray ba;
             QBuffer buffer(&ba);
@@ -377,24 +381,27 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
             htmlResult.append("<img src=\"data:image/png;base64,");
             htmlResult.append(imageBase64);
             result.append(QString());
-            sqlResult.append( "X\'" + ba.toHex() + "\'" );
             htmlResult.append("\" alt=\"Image\">");
         } else {
             QByteArray text;
-            if (!m->isBinary(index))
+            if (!m->isBinary(index)) {
                 text = data.toByteArray();
 
-            // Table cell data: text
-            if (text.contains('\n') || text.contains('\t'))
-                htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
-            else
-                htmlResult.append(QString(text).toHtmlEscaped());
+                // Table cell data: text
+                if (text.contains('\n') || text.contains('\t'))
+                    htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
+                else
+                    htmlResult.append(QString(text).toHtmlEscaped());
 
-            result.append(escapeCopiedData(text));
-            sqlResult.append(text.replace("\"", "\"\""));
+                result.append(escapeCopiedData(text));
+                sqlResult.append("'" + text.replace("'", "''") + "'");
+            } else
+                // Table cell data: binary. Save as BLOB literal in SQL
+                sqlResult.append( "X'" + data.toByteArray().toHex() + "'" );
+
         }
     }
-    sqlResult.append("\");");
+    sqlResult.append(");");
 
     QMimeData *mimeData = new QMimeData;
     if ( inSQL )
