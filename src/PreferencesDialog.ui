@@ -1060,17 +1060,17 @@
            </property>
            <item>
             <property name="text">
-             <string>&quot;Double quotes&quot;</string>
+             <string>&quot;Double quotes&quot; - Standard SQL (recommended)</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>`Grave accents`</string>
+             <string>`Grave accents` - Traditional MySQL quotes</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>[Square brackets]</string>
+             <string>[Square brackets] - Traditional MS SQL Server quotes</string>
             </property>
            </item>
           </widget>
