@@ -50,11 +50,11 @@ signals:
     void selectedRowsToBeDeleted();
 
 private:
-    void copy(const bool withHeaders, const bool inSQL );
+    void copy(const bool withHeaders, const bool inSQL);
     void paste();
     QString escapeCopiedData(const QByteArray& data) const;
 
-    void useAsFilter();
+    void useAsFilter(const QString& filterOperator, bool binary = false);
 
     typedef QList<QByteArray> QByteArrayList;
     static QList<QByteArrayList> m_buffer;

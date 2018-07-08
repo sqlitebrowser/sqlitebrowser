@@ -154,13 +154,32 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
     // Set up table view context menu
     m_contextMenu = new QMenu(this);
+
+    QAction* filterAction = new QAction(tr("Use as Exact Filter"), m_contextMenu);
+    QAction* containingAction = new QAction(tr("Containing"), m_contextMenu);
+    QAction* notEqualToAction = new QAction(tr("Not equal to"), m_contextMenu);
+    QAction* greaterThanAction = new QAction(tr("Greater than"), m_contextMenu);
+    QAction* lessThanAction = new QAction(tr("Less than"), m_contextMenu);
+    QAction* greaterEqualAction = new QAction(tr("Greater or equal"), m_contextMenu);
+    QAction* lessEqualAction = new QAction(tr("Less or equal"), m_contextMenu);
+    QAction* inRangeAction = new QAction(tr("Between this and..."), m_contextMenu);
+
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
     QAction* copyAsSQLAction = new QAction(QIcon(":/icons/sql_copy"), tr("Copy as SQL"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
-    QAction* filterAction = new QAction(tr("Use as Filter"), m_contextMenu);
+
     m_contextMenu->addAction(filterAction);
+    QMenu* filterMenu = m_contextMenu->addMenu(tr("Use in Filter Expression"));
+    filterMenu->addAction(containingAction);
+    filterMenu->addAction(notEqualToAction);
+    filterMenu->addAction(greaterThanAction);
+    filterMenu->addAction(lessThanAction);
+    filterMenu->addAction(greaterEqualAction);
+    filterMenu->addAction(lessEqualAction);
+    filterMenu->addAction(inRangeAction);
+
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
     m_contextMenu->addSeparator();
@@ -189,6 +208,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         // Deactivate context menu options if there is no model set
         bool enabled = model();
         filterAction->setEnabled(enabled);
+        filterMenu->setEnabled(enabled);
         copyAction->setEnabled(enabled);
         copyWithHeadersAction->setEnabled(enabled);
         copyAsSQLAction->setEnabled(enabled);
@@ -202,8 +222,30 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         m_contextMenu->popup(viewport()->mapToGlobal(pos));
     });
     connect(filterAction, &QAction::triggered, [&]() {
-        useAsFilter();
+        useAsFilter(QString ("="));
     });
+    connect(containingAction, &QAction::triggered, [&]() {
+            useAsFilter(QString (""));
+        });
+    connect(notEqualToAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("<>"));
+        });
+    connect(greaterThanAction, &QAction::triggered, [&]() {
+            useAsFilter(QString (">"));
+        });
+    connect(lessThanAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("<"));
+        });
+    connect(greaterEqualAction, &QAction::triggered, [&]() {
+            useAsFilter(QString (">="));
+        });
+    connect(lessEqualAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("<="));
+        });
+    connect(inRangeAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("~"), /* binary */ true);
+        });
+
     connect(nullAction, &QAction::triggered, [&]() {
         for(const QModelIndex& index : selectedIndexes())
             model()->setData(index, QVariant());
@@ -547,7 +589,7 @@ void ExtendedTableWidget::paste()
     }
 }
 
-void ExtendedTableWidget::useAsFilter()
+void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary)
 {
     QModelIndex index = selectionModel()->currentIndex();
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
@@ -557,13 +599,20 @@ void ExtendedTableWidget::useAsFilter()
         return;
 
     QVariant data = model()->data(index, Qt::EditRole);
-
+    QString value;
     if (data.isNull())
-        m_tableHeader->setFilter(index.column(), "=NULL");
+        value = "NULL";
     else if (data.toString().isEmpty())
-        m_tableHeader->setFilter(index.column(), "=''");
+        value = "''";
     else
-        m_tableHeader->setFilter(index.column(), "=" + data.toString());
+        value = data.toString();
+
+    // If binary operator, the cell data is used as first value and
+    // the second value must be added by the user.
+    if (binary)
+        m_tableHeader->setFilter(index.column(), value + filterOperator);
+    else
+        m_tableHeader->setFilter(index.column(), filterOperator + value);
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)

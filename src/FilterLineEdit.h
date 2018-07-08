@@ -26,12 +26,16 @@ signals:
 
 protected:
     void keyReleaseEvent(QKeyEvent* event);
+    void setFilterHelper(const QString& filterOperator);
 
 private:
     QList<FilterLineEdit*>* filterList;
     int columnNumber;
     QTimer* delaySignalTimer;
     QString lastValue;
+
+private slots:
+    void showContextMenu(const QPoint &pos);
 };
 
 #endif

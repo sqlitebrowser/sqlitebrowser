@@ -3,6 +3,8 @@
 
 #include <QTimer>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QWhatsThis>
 
 FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
 {
@@ -35,6 +37,10 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters,
     // Immediately emit the delayed filter value changed signal if the user presses the enter or the return key or
     // the line edit widget loses focus
     connect(this, SIGNAL(editingFinished()), this, SLOT(delayedSignalTimerTriggered()));
+
+    // Prepare for adding the What's This information and filter helper actions to the context menu
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint &)));
 }
 
 void FilterLineEdit::delayedSignalTimerTriggered()
@@ -86,4 +92,92 @@ void FilterLineEdit::setText(const QString& text)
     // bypass the delayed signal timer
     QLineEdit::setText(text);
     delayedSignalTimerTriggered();
+}
+
+void FilterLineEdit::setFilterHelper(const QString& filterOperator)
+{
+    setText(filterOperator + "?");
+    // Select the value for easy editing of the expression
+    setSelection(filterOperator.length(), filterOperator.length());
+}
+
+void FilterLineEdit::showContextMenu(const QPoint &pos)
+{
+
+    // This has to be created here, otherwise the set of enabled options would not update accordingly.
+    QMenu* editContextMenu = createStandardContextMenu();
+    editContextMenu->addSeparator();
+
+    QMenu* filterMenu = editContextMenu->addMenu(tr("Set Filter Expression"));
+
+    QAction* whatsThisAction = new QAction(QIcon(":/icons/whatis"), tr("What's This?"), editContextMenu);
+    connect(whatsThisAction, &QAction::triggered, [&]() {
+            QWhatsThis::showText(pos, whatsThis(), this);
+        });
+
+    QAction* isNullAction = new QAction(tr("Is NULL"), editContextMenu);
+    connect(isNullAction, &QAction::triggered, [&]() {
+            setText("=NULL");
+        });
+
+    QAction* isNotNullAction = new QAction(tr("Is not NULL"), editContextMenu);
+    connect(isNotNullAction, &QAction::triggered, [&]() {
+            setText("<>NULL");
+        });
+
+    QAction* isEmptyAction = new QAction(tr("Is empty"), editContextMenu);
+    connect(isEmptyAction, &QAction::triggered, [&]() {
+            setText("=''");
+        });
+
+    QAction* isNotEmptyAction = new QAction(tr("Is not empty"), editContextMenu);
+    connect(isNotEmptyAction, &QAction::triggered, [&]() {
+            setText("<>''");
+        });
+
+    QAction* equalToAction = new QAction(tr("Equal to..."), editContextMenu);
+    connect(equalToAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("="));
+        });
+    QAction* notEqualToAction = new QAction(tr("Not equal to..."), editContextMenu);
+    connect(notEqualToAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("<>"));
+        });
+    QAction* greaterThanAction = new QAction(tr("Greater than..."), editContextMenu);
+    connect(greaterThanAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString (">"));
+        });
+    QAction* lessThanAction = new QAction(tr("Less than..."), editContextMenu);
+    connect(lessThanAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("<"));
+        });
+    QAction* greaterEqualAction = new QAction(tr("Greater or equal..."), editContextMenu);
+    connect(greaterEqualAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString (">="));
+        });
+    QAction* lessEqualAction = new QAction(tr("Less or equal..."), editContextMenu);
+    connect(lessEqualAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("<="));
+        });
+    QAction* inRangeAction = new QAction(tr("In range..."), editContextMenu);
+    connect(inRangeAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("?~"));
+        });
+
+    filterMenu->addAction(whatsThisAction);
+    filterMenu->addSeparator();
+    filterMenu->addAction(isNullAction);
+    filterMenu->addAction(isNotNullAction);
+    filterMenu->addAction(isEmptyAction);
+    filterMenu->addAction(isNotEmptyAction);
+    filterMenu->addSeparator();
+    filterMenu->addAction(equalToAction);
+    filterMenu->addAction(notEqualToAction);
+    filterMenu->addAction(greaterThanAction);
+    filterMenu->addAction(lessThanAction);
+    filterMenu->addAction(greaterEqualAction);
+    filterMenu->addAction(lessEqualAction);
+    filterMenu->addAction(inRangeAction);
+
+    editContextMenu->exec(mapToGlobal(pos));
 }
