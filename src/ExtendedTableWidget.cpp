@@ -154,17 +154,38 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
     // Set up table view context menu
     m_contextMenu = new QMenu(this);
+
+    QAction* filterAction = new QAction(tr("Use as Exact Filter"), m_contextMenu);
+    QAction* containingAction = new QAction(tr("Containing"), m_contextMenu);
+    QAction* notEqualToAction = new QAction(tr("Not equal to"), m_contextMenu);
+    QAction* greaterThanAction = new QAction(tr("Greater than"), m_contextMenu);
+    QAction* lessThanAction = new QAction(tr("Less than"), m_contextMenu);
+    QAction* greaterEqualAction = new QAction(tr("Greater or equal"), m_contextMenu);
+    QAction* lessEqualAction = new QAction(tr("Less or equal"), m_contextMenu);
+    QAction* inRangeAction = new QAction(tr("Between this and..."), m_contextMenu);
+
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
+    QAction* copyAsSQLAction = new QAction(QIcon(":/icons/sql_copy"), tr("Copy as SQL"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
-    QAction* filterAction = new QAction(tr("Use as Filter"), m_contextMenu);
+
     m_contextMenu->addAction(filterAction);
+    QMenu* filterMenu = m_contextMenu->addMenu(tr("Use in Filter Expression"));
+    filterMenu->addAction(containingAction);
+    filterMenu->addAction(notEqualToAction);
+    filterMenu->addAction(greaterThanAction);
+    filterMenu->addAction(lessThanAction);
+    filterMenu->addAction(greaterEqualAction);
+    filterMenu->addAction(lessEqualAction);
+    filterMenu->addAction(inRangeAction);
+
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(copyAction);
     m_contextMenu->addAction(copyWithHeadersAction);
+    m_contextMenu->addAction(copyAsSQLAction);
     m_contextMenu->addAction(pasteAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -177,6 +198,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
     copyAction->setShortcut(QKeySequence::Copy);
     copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+Shift+C")));
+    copyAsSQLAction->setShortcut(QKeySequence(tr("Ctrl+Alt+C")));
     pasteAction->setShortcut(QKeySequence::Paste);
 
     // Set up context menu actions
@@ -186,8 +208,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         // Deactivate context menu options if there is no model set
         bool enabled = model();
         filterAction->setEnabled(enabled);
+        filterMenu->setEnabled(enabled);
         copyAction->setEnabled(enabled);
         copyWithHeadersAction->setEnabled(enabled);
+        copyAsSQLAction->setEnabled(enabled);
 
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
@@ -198,17 +222,42 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         m_contextMenu->popup(viewport()->mapToGlobal(pos));
     });
     connect(filterAction, &QAction::triggered, [&]() {
-        useAsFilter();
+        useAsFilter(QString ("="));
     });
+    connect(containingAction, &QAction::triggered, [&]() {
+            useAsFilter(QString (""));
+        });
+    connect(notEqualToAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("<>"));
+        });
+    connect(greaterThanAction, &QAction::triggered, [&]() {
+            useAsFilter(QString (">"));
+        });
+    connect(lessThanAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("<"));
+        });
+    connect(greaterEqualAction, &QAction::triggered, [&]() {
+            useAsFilter(QString (">="));
+        });
+    connect(lessEqualAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("<="));
+        });
+    connect(inRangeAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("~"), /* binary */ true);
+        });
+
     connect(nullAction, &QAction::triggered, [&]() {
         for(const QModelIndex& index : selectedIndexes())
             model()->setData(index, QVariant());
     });
     connect(copyAction, &QAction::triggered, [&]() {
-       copy(false);
+       copy(false, false);
     });
     connect(copyWithHeadersAction, &QAction::triggered, [&]() {
-       copy(true);
+       copy(true, false);
+    });
+    connect(copyAsSQLAction, &QAction::triggered, [&]() {
+       copy(false, true);
     });
     connect(pasteAction, &QAction::triggered, [&]() {
        paste();
@@ -226,7 +275,7 @@ void ExtendedTableWidget::reloadSettings()
     verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
 }
 
-void ExtendedTableWidget::copy(const bool withHeaders)
+void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
 {
     QModelIndexList indices = selectionModel()->selectedIndexes();
 
@@ -249,7 +298,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     m_buffer.clear();
 
     // If a single cell is selected, copy it to clipboard
-    if (!withHeaders && indices.size() == 1) {
+    if (!inSQL && !withHeaders && indices.size() == 1) {
         QImage img;
         QVariant data = m->data(indices.first(), Qt::EditRole);
 
@@ -294,6 +343,7 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     }
     m_buffer.push_back(lst);
 
+    QString sqlResult;
     QString result;
     QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
     htmlResult.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">");
@@ -312,10 +362,15 @@ void ExtendedTableWidget::copy(const bool withHeaders)
     const QString fieldSepHtml = "</td><td>";
     const QString rowSepHtml = "</td></tr><tr><td>";
     const QString fieldSepText = "\t";
+#ifdef Q_OS_WIN
     const QString rowSepText = "\r\n";
+#else
+    const QString rowSepText = "\n";
+#endif
 
+    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(m->currentTableName().toString());
     // Table headers
-    if (withHeaders) {
+    if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
         int firstColumn = indices.front().column();
         for(int i = firstColumn; i <= indices.back().column(); i++) {
@@ -323,34 +378,40 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             if (i != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
+                sqlInsertStatement.append(", ");
             }
 
             result.append(escapeCopiedData(headerText));
             htmlResult.append(headerText);
+            sqlInsertStatement.append(sqlb::escapeIdentifier(headerText));
         }
         result.append(rowSepText);
         htmlResult.append("</th></tr>");
+        sqlInsertStatement.append(") VALUES (");
     }
 
     // Table data rows
     for(const QModelIndex& index : indices) {
         // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
-        if (indices.first() == index)
+        if (indices.first() == index) {
             htmlResult.append("<tr><td>");
-        else if (index.row() != currentRow) {
+            sqlResult.append(sqlInsertStatement);
+        } else if (index.row() != currentRow) {
             result.append(rowSepText);
             htmlResult.append(rowSepHtml);
+            sqlResult.append(");" + rowSepText + sqlInsertStatement);
         } else {
             result.append(fieldSepText);
             htmlResult.append(fieldSepHtml);
+            sqlResult.append(", ");
         }
         currentRow = index.row();
 
         QImage img;
         QVariant data = index.data(Qt::EditRole);
 
-        // Table cell data: image? Store it as an embedded image in HTML and as base 64 in text version
-        if (img.loadFromData(data.toByteArray()))
+        // Table cell data: image? Store it as an embedded image in HTML
+        if (!inSQL && img.loadFromData(data.toByteArray()))
         {
             QByteArray ba;
             QBuffer buffer(&ba);
@@ -365,22 +426,33 @@ void ExtendedTableWidget::copy(const bool withHeaders)
             htmlResult.append("\" alt=\"Image\">");
         } else {
             QByteArray text;
-            if (!m->isBinary(index))
+            if (!m->isBinary(index)) {
                 text = data.toByteArray();
 
-            // Table cell data: text
-            if (text.contains('\n') || text.contains('\t'))
-                htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
-            else
-                htmlResult.append(QString(text).toHtmlEscaped());
+                // Table cell data: text
+                if (text.contains('\n') || text.contains('\t'))
+                    htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
+                else
+                    htmlResult.append(QString(text).toHtmlEscaped());
 
-            result.append(escapeCopiedData(text));
+                result.append(escapeCopiedData(text));
+                sqlResult.append("'" + text.replace("'", "''") + "'");
+            } else
+                // Table cell data: binary. Save as BLOB literal in SQL
+                sqlResult.append( "X'" + data.toByteArray().toHex() + "'" );
+
         }
     }
+    sqlResult.append(");");
 
     QMimeData *mimeData = new QMimeData;
-    mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
-    mimeData->setText(result);
+    if ( inSQL )
+    {
+        mimeData->setText(sqlResult);
+    } else {
+        mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
+        mimeData->setText(result);
+    }
     qApp->clipboard()->setMimeData(mimeData);
 }
 
@@ -517,7 +589,7 @@ void ExtendedTableWidget::paste()
     }
 }
 
-void ExtendedTableWidget::useAsFilter()
+void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary)
 {
     QModelIndex index = selectionModel()->currentIndex();
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
@@ -527,13 +599,20 @@ void ExtendedTableWidget::useAsFilter()
         return;
 
     QVariant data = model()->data(index, Qt::EditRole);
-
+    QString value;
     if (data.isNull())
-        m_tableHeader->setFilter(index.column(), "=NULL");
+        value = "NULL";
     else if (data.toString().isEmpty())
-        m_tableHeader->setFilter(index.column(), "=''");
+        value = "''";
     else
-        m_tableHeader->setFilter(index.column(), "=" + data.toString());
+        value = data.toString();
+
+    // If binary operator, the cell data is used as first value and
+    // the second value must be added by the user.
+    if (binary)
+        m_tableHeader->setFilter(index.column(), value + filterOperator);
+    else
+        m_tableHeader->setFilter(index.column(), filterOperator + value);
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
@@ -541,14 +620,17 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     // Call a custom copy method when Ctrl-C is pressed
     if(event->matches(QKeySequence::Copy))
     {
-        copy(false);
+        copy(false, false);
         return;
     } else if(event->matches(QKeySequence::Paste)) {
         // Call a custom paste method when Ctrl-V is pressed
         paste();
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier) && (event->key() == Qt::Key_C)) {
         // Call copy with headers when Ctrl-Shift-C is pressed
-        copy(true);
+        copy(true, false);
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::AltModifier) && (event->key() == Qt::Key_C)) {
+        // Call copy in SQL format when Ctrl-Alt-C is pressed
+        copy(false, true);
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {

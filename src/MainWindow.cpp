@@ -2300,7 +2300,6 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                                     browseTableSettings[tableIdentifier] = settings;
                                 }
                             }
-                            xml.skipCurrentElement();
                         }
 
                         if(ui->mainTab->currentIndex() == BrowseTab)
@@ -2477,6 +2476,9 @@ void MainWindow::saveProject()
             saveBrowseDataTableSettings(tableIt.value(), xml);
             xml.writeEndElement();
         }
+        // </browse_table_settings>
+        xml.writeEndElement();
+        // </tab_browse>
         xml.writeEndElement();
 
         // Execute SQL tab data
