@@ -147,6 +147,7 @@ TRANSLATIONS += \
     translations/sqlb_es_ES.ts \
     translations/sqlb_fr.ts \
     translations/sqlb_ru.ts \
+    translations/sqlb_pl.ts \
     translations/sqlb_pt_BR.ts \
     translations/sqlb_en_GB.ts \
     translations/sqlb_ko_KR.ts \

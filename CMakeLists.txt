@@ -233,6 +233,7 @@ set(SQLB_TSS
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_es_ES.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_fr.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ru.ts"
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_pl.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_pt_BR.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_en_GB.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ko_KR.ts"
