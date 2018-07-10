@@ -12,7 +12,7 @@
 #include <QByteArray>
 
 struct sqlite3;
-class CipherDialog;
+class CipherSettings;
 
 enum
 {
@@ -205,7 +205,7 @@ private:
 
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
 
-    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
+    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings);
 
     bool dontCheckForStructureUpdates;
 

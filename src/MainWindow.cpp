@@ -2530,8 +2530,8 @@ void MainWindow::updateFilter(int column, const QString& value)
 void MainWindow::editEncryption()
 {
 #ifdef ENABLE_SQLCIPHER
-    CipherDialog dialog(this, true);
-    if(dialog.exec())
+    CipherDialog cipherDialog(this, true);
+    if(cipherDialog.exec())
     {
         // Show progress dialog even though we can't provide any detailed progress information but this
         // process might take some time.
@@ -2553,14 +2553,16 @@ void MainWindow::editEncryption()
             file.close();
         }
 
+        CipherSettings cipherSettings = cipherDialog.getCipherSettings();
+
         // Attach a new database using the new settings
         qApp->processEvents();
         if(ok)
-            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY %2;").arg(db.currentFile() + ".enctemp").arg(dialog.password()),
+            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY %2;").arg(db.currentFile() + ".enctemp").arg(cipherSettings.getPassword()),
                                false, false);
         qApp->processEvents();
         if(ok)
-            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = %1").arg(dialog.pageSize()), false, false);
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = %1").arg(cipherSettings.getPageSize()), false, false);
 
         // Export the current database to the new one
         qApp->processEvents();

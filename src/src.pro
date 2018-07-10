@@ -65,7 +65,9 @@ HEADERS += \
     FindReplaceDialog.h \
     ExtendedScintilla.h \
     FileExtensionManager.h \
-    Data.h
+    Data.h \
+    CipherSettings.h \
+    DotenvFormat.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -107,7 +109,9 @@ SOURCES += \
     FindReplaceDialog.cpp \
     ExtendedScintilla.cpp \
     FileExtensionManager.cpp \
-    Data.cpp
+    Data.cpp \
+    CipherSettings.cpp \
+    DotenvFormat.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
