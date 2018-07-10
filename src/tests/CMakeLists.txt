@@ -48,7 +48,9 @@ QT5_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
 
 add_executable(test-sqlobjects ${TESTSQLOBJECTS_MOC} ${TESTSQLOBJECTS_HDR} ${TESTSQLOBJECTS_SRC} ${TESTSQLOBJECTS_FORM_HDR})
 
-qt5_use_modules(test-sqlobjects Test Widgets Gui)
+find_package(Qt5 REQUIRED COMPONENTS Test Widgets Gui)
+target_link_libraries(test-sqlobjects Qt5::Test Qt5::Widgets Qt5::Gui)
+
 set(QT_LIBRARIES "")
 
 if(NOT ANTLR2_FOUND)
@@ -78,7 +80,9 @@ set(TESTIMPORT_MOC_HDR
 
 add_executable(test-import ${TESTIMPORT_MOC} ${TESTIMPORT_SRC})
 
-qt5_use_modules(test-import Test Core)
+find_package(Qt5 REQUIRED COMPONENTS Core)
+target_link_libraries(test-import Qt5::Test Qt5::Core)
+
 set(QT_LIBRARIES "")
 
 target_link_libraries(test-import ${QT_LIBRARIES})
@@ -124,7 +128,8 @@ endif()
 
 add_executable(test-regex ${TESTREGEX_MOC} ${TESTREGEX_HDR} ${TESTREGEX_SRC})
 
-qt5_use_modules(test-regex Test Core Gui Widgets)
+target_link_libraries(test-regex Qt5::Test Qt5::Core Qt5::Gui Qt5::Widgets)
+
 set(QT_LIBRARIES "")
 
 if(NOT ANTLR2_FOUND)
@@ -153,7 +158,8 @@ set(TESTCACHE_MOC_HDR
 
 add_executable(test-cache ${TESTCACHE_MOC} ${TESTCACHE_SRC})
 
-qt5_use_modules(test-cache Test Core)
+target_link_libraries(test-cache Qt5::Test Qt5::Core)
+
 set(QT_LIBRARIES "")
 
 target_link_libraries(test-cache ${QT_LIBRARIES})

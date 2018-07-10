@@ -1,4 +1,4 @@
-#include <QSslCertificate>
+#include <QtNetwork/QSslCertificate>
 #include <QFileInfo>
 
 #include "RemoteDock.h"

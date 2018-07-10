@@ -1,9 +1,9 @@
 #include <QApplication>
-#include <QNetworkAccessManager>
+#include <QtNetwork/QNetworkAccessManager>
 #include <QMessageBox>
-#include <QNetworkReply>
+#include <QtNetwork/QNetworkReply>
 #include <QFile>
-#include <QSslKey>
+#include <QtNetwork/QSslKey>
 #include <QProgressDialog>
 #include <QInputDialog>
 #include <QDir>
@@ -11,7 +11,7 @@
 #include <QUrlQuery>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QHttpMultiPart>
+#include <QtNetwork/QHttpMultiPart>
 #include <QTimeZone>
 
 #include "RemoteDatabase.h"

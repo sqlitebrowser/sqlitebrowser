@@ -1,5 +1,5 @@
 project(sqlitebrowser)
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.1.0)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
@@ -22,7 +22,13 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-add_definitions(-std=c++11)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
+if (POLICY CMP0025)
+    cmake_policy(SET CMP0025 NEW)
+endif ()
 
 if(WIN32 AND MSVC)
 	project("DB Browser for SQLite")
@@ -78,11 +84,8 @@ endif()
 add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
 
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5Xml REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -267,7 +270,6 @@ set(LICENSE_FILES
 	LICENSE-PLUGINS
 )
 
-
 qt5_wrap_ui(SQLB_FORM_HDR ${SQLB_FORMS})
 if(SQLB_TSS)
 	# add translations
@@ -355,9 +357,6 @@ add_executable(${PROJECT_NAME}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
 
-qt5_use_modules(${PROJECT_NAME} Gui Widgets Network Test PrintSupport Concurrent Xml)
-set(QT_LIBRARIES "")
-
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
 if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)
@@ -377,11 +376,13 @@ if(NOT QSCINTILLA_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
 endif()
 
+set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Xml)
+
 target_link_libraries(${PROJECT_NAME}
 		qhexedit
 		qcustomplot
-		${LPTHREAD}
-		${QT_LIBRARIES}
+    ${LPTHREAD}
+    ${QT_LIBS}
 		${WIN32_STATIC_LINK}
 		${LIBSQLITE}
 		${ADDITIONAL_LIBS})
@@ -423,7 +424,7 @@ endif()
 if(UNIX AND NOT APPLE)
 	install(FILES src/icons/${PROJECT_NAME}.png
 		DESTINATION share/icons/hicolor/256x256/apps/)
-	
+
 	install(FILES distri/${PROJECT_NAME}.desktop
 		DESTINATION share/applications/)
 

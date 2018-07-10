@@ -14,7 +14,7 @@
 #include <QBuffer>
 #include <QModelIndex>
 #include <QJsonDocument>
-#include <QDomDocument>
+#include <QtXml/QDomDocument>
 #include <QMessageBox>
 
 EditDialog::EditDialog(QWidget* parent)
