@@ -945,7 +945,10 @@ TablePtr CreateTableWalker::table()
                         if(num_paren == 0)
                             break;
 
-                        expr.append(textAST(tc));
+                        if(tc->getType() == sqlite3TokenTypes::AND || tc->getType() == sqlite3TokenTypes::OR)
+                            expr.append(" " + textAST(tc) + " ");
+                        else
+                            expr.append(textAST(tc));
 
                         tc = tc->getNextSibling();
                     }
