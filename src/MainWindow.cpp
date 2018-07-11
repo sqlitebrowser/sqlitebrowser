@@ -1037,6 +1037,8 @@ void MainWindow::executeQuery()
     int execution_start_index = 0;
     int execution_start_position = 0;
     SqlTextEdit *editor = sqlWidget->getEditor();
+    const QString tabName = ui->tabSqlAreas->tabText(ui->tabSqlAreas->currentIndex()).remove('&');
+
     if(sender()->objectName() == "actionSqlExecuteLine")
     {
         int cursor_line, cursor_index;
@@ -1055,7 +1057,7 @@ void MainWindow::executeQuery()
         QString lastPartSQL = secondPartEntireSQL.split(";").first();
 
         query = firstPartSQL + lastPartSQL;
-        db.logSQL(tr("-- EXECUTING LINE AT '%1'\n--").arg(sqlWidget->fileName()), kLogMsg_User);
+        db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
 
     } else {
         // if a part of the query is selected, we will only execute this part
@@ -1063,11 +1065,11 @@ void MainWindow::executeQuery()
         int dummy;
         if(query.isEmpty()) {
             query = sqlWidget->getSql();
-            db.logSQL(tr("-- EXECUTING ALL AT '%1'\n--").arg(sqlWidget->fileName()), kLogMsg_User);
+            db.logSQL(tr("-- EXECUTING ALL IN '%1'\n--").arg(tabName), kLogMsg_User);
         } else {
             editor->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
             execution_start_position = editor->positionFromLineIndex(execution_start_line, execution_start_index);
-            db.logSQL(tr("-- EXECUTING SELECTION AT '%1'\n--").arg(sqlWidget->fileName()), kLogMsg_User);
+            db.logSQL(tr("-- EXECUTING SELECTION IN '%1'\n--").arg(tabName), kLogMsg_User);
         }
     }
 
@@ -1228,7 +1230,14 @@ void MainWindow::executeQuery()
             ok = false;
 
         }
-        editor->lineIndexFromPosition(execution_start_position+1, &execution_start_line, &execution_start_index);
+        editor->lineIndexFromPosition(execution_start_position, &execution_start_line, &execution_start_index);
+
+        // Special case: if the start position is at the end of a line, then move to the beggining of next line.
+        // Otherwise for the typical case, the line reference is one less than expected.
+        if (editor->lineLength(execution_start_line) == execution_start_index+1) {
+            execution_start_line++;
+            execution_start_index = 0;
+        }
 
         if (!ok) {
             int execution_end_index, execution_end_line;
