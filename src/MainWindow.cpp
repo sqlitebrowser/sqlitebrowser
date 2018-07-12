@@ -1033,81 +1033,117 @@ void MainWindow::executeQuery()
     if(!db.isOpen())
         return;
 
+    // Get current SQL tab and editor
     SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-
-    // Get SQL code to execute. This depends on the button that's been pressed
-    QString query;
-    int execution_start_line = 0;
-    int execution_start_index = 0;
-    int execution_start_position = 0;
-    SqlTextEdit *editor = sqlWidget->getEditor();
+    SqlTextEdit* editor = sqlWidget->getEditor();
     const QString tabName = ui->tabSqlAreas->tabText(ui->tabSqlAreas->currentIndex()).remove('&');
 
-    if(sender()->objectName() == "actionSqlExecuteLine")
+    // Determine execution mode: execute all, execute selection or execute current line
+    enum executionMode
     {
-        int cursor_line, cursor_index;
+        All,
+        Selection,
+        Line
+    };
+    executionMode mode;
+    if(sender()->objectName() == "actionSqlExecuteLine")
+        mode = Line;
+    else if(!sqlWidget->getSelectedSql().isEmpty())
+        mode = Selection;
+    else
+        mode = All;
 
-        editor->getCursorPosition(&cursor_line, &cursor_index);
+    // Get SQL code to execute. This depends on the execution mode.
+    QString query = sqlWidget->getSql();
+    int execute_from_line = 0;           // These three variables hold the start position
+    int execute_from_index = 0;          // of the executed statements in the entire
+    int execute_from_position = 0;       // SQL code of the current SQL tab.
+    int execute_to_line = 0;             // These three variables hold the end position
+    int execute_to_index = 0;            // of the executed statements in the entire
+    int execute_to_position = 0;         // SQL code of the current SQL tab.
 
-        execution_start_line = cursor_line;
-
-        execution_start_position = editor->positionFromLineIndex(cursor_line, 0);
-
-        QString entireSQL = editor->text();
-        QString firstPartEntireSQL = entireSQL.left(execution_start_position);
-        QString secondPartEntireSQL = entireSQL.right(entireSQL.length() - execution_start_position);
-
-        QString firstPartSQL = firstPartEntireSQL.split(";").last();
-        QString lastPartSQL = secondPartEntireSQL.split(";").first();
-
-        query = firstPartSQL + lastPartSQL;
-        db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
-
-    } else {
-        // if a part of the query is selected, we will only execute this part
-        query = sqlWidget->getSelectedSql();
-        int dummy;
-        if(query.isEmpty()) {
-            query = sqlWidget->getSql();
-            db.logSQL(tr("-- EXECUTING ALL IN '%1'\n--").arg(tabName), kLogMsg_User);
-        } else {
-            editor->getSelection(&execution_start_line, &execution_start_index, &dummy, &dummy);
-            execution_start_position = editor->positionFromLineIndex(execution_start_line, execution_start_index);
+    switch(mode)
+    {
+    case Selection:
+        {
+            // Start and end positions are start and end positions from the selection
+            editor->getSelection(&execute_from_line, &execute_from_index, &execute_to_line, &execute_to_index);
+            execute_from_position = editor->positionFromLineIndex(execute_from_line, execute_from_index);
+            execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
             db.logSQL(tr("-- EXECUTING SELECTION IN '%1'\n--").arg(tabName), kLogMsg_User);
-        }
+        } break;
+    case Line:
+        {
+            // Start position is the first character of the current line, except for those cases where we're in the middle of a
+            // statement which started on one the previous line. In that case the start position is actually a bit earlier. For
+            // the end position we set the last character of the current line. If the statement(s) continue(s) into the next line,
+            // SQLite will execute it/them anyway and we'll stop afterwards.
+            int dummy;
+            editor->getCursorPosition(&execute_from_line, &dummy);
+            execute_from_position = editor->positionFromLineIndex(execute_from_line, 0);
+
+            // Need to set the end position here before adjusting the start line
+            execute_to_line = execute_from_line;
+            execute_to_index = editor->lineLength(execute_to_line) - 1;     // The -1 compensates for the line break at the end of the line
+            execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
+
+            QString firstPartEntireSQL = query.left(execute_from_position);
+            if(firstPartEntireSQL.lastIndexOf(';') != -1)
+            {
+                execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
+                editor->lineIndexFromPosition(execute_from_position, &execute_from_line, &execute_from_index);
+            }
+
+            db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
+        } break;
+    case All:
+        {
+            // Start position is the first character, end position the last
+            execute_to_position = editor->text().length();
+            editor->lineIndexFromPosition(execute_to_position, &execute_to_line, &execute_to_index);
+            db.logSQL(tr("-- EXECUTING ALL IN '%1'\n--").arg(tabName), kLogMsg_User);
+        } break;
     }
 
-    if (query.trimmed().isEmpty() || query.trimmed() == ";")
+    // Cancel if there is nothing to execute
+    if(query.trimmed().isEmpty() || query.trimmed() == ";" || execute_from_position == execute_to_position ||
+            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed().isEmpty() ||
+            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed() == ";")
         return;
 
     // All replacements in the query should be made by the same amount of characters, so the positions in the file
     // for error indicators and line and column logs are not displaced.
     // Whitespace and comments are discarded by SQLite, so it is better to just let it ignore them.
-
     query = query.replace(QRegExp("^(\\s*)BEGIN TRANSACTION;", Qt::CaseInsensitive), "\\1                  ");
     query = query.replace(QRegExp("COMMIT;(\\s*)$", Qt::CaseInsensitive), "       \\1");
 
-    sqlite3_stmt *vm;
-    QByteArray utf8Query = query.toUtf8();
-    const char *tail = utf8Query.data();
+    // Convert query to C string which we will use from now on, starting from the determined start position and
+    // until the end of the SQL code. By doing so we go further than the determined end position because in Line
+    // mode the last statement might go beyond that point.
+    QByteArray utf8Query = query.mid(execute_from_position).toUtf8();
+
+    // Remove any error indicators
+    editor->clearErrorIndicators();
+
+    // Set cursor and start execution timer
+    QApplication::setOverrideCursor(Qt::BusyCursor);
+    QElapsedTimer timer;
+    timer.start();
+
+    // Prepare execution
+    sqlite3_stmt* vm;
+    const char* tail = utf8Query.data();
     int sql3status = SQLITE_OK;
     int tail_length = utf8Query.length();
     QString statusMessage;
     bool ok = false;
     bool modified = false;
-    bool wasdirty = db.getDirty();
+    const bool wasdirty = db.getDirty();
     bool structure_updated = false;
     bool savepoint_created = false;
 
-    // Remove any error indicators
-    editor->clearErrorIndicators();
-
-    QApplication::setOverrideCursor(Qt::BusyCursor);
-
     // Accept multi-line queries, by looping until the tail is empty
-    QElapsedTimer timer;
-    timer.start();
-    while( tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
+    while(tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
     {
         // What type of query is this?
         QString qtail = QString(tail).trimmed();
@@ -1147,9 +1183,8 @@ void MainWindow::executeQuery()
 
             if(!savepoint_created)
             {
-                // there is no choice, we have to start a transaction before we create the prepared statement,
-                // otherwise every executed statement will get committed after the prepared statement gets finalized,
-                // see http://www.sqlite.org/lang_transaction.html
+                // We have to start a transaction before we create the prepared statement otherwise every executed
+                // statement will get committed after the prepared statement gets finalized
                 db.setSavepoint();
                 savepoint_created = true;
             }
@@ -1162,7 +1197,7 @@ void MainWindow::executeQuery()
         sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
         QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
         tail_length -= (tail - qbegin);
-        int execution_end_position = execution_start_position + tail_length_before - tail_length;
+        int end_of_current_statement_position = execute_from_position + tail_length_before - tail_length;
 
         if (sql3status == SQLITE_OK)
         {
@@ -1234,30 +1269,34 @@ void MainWindow::executeQuery()
             ok = false;
 
         }
-        editor->lineIndexFromPosition(execution_start_position, &execution_start_line, &execution_start_index);
+        editor->lineIndexFromPosition(execute_from_position, &execute_from_line, &execute_from_index);
 
         // Special case: if the start position is at the end of a line, then move to the beggining of next line.
         // Otherwise for the typical case, the line reference is one less than expected.
-        if (editor->lineLength(execution_start_line) == execution_start_index+1) {
-            execution_start_line++;
-            execution_start_index = 0;
+        if (editor->lineLength(execute_from_line) == execute_from_index+1) {
+            execute_from_line++;
+            execute_from_index = 0;
         }
 
-        if (!ok) {
-            int execution_end_index, execution_end_line;
-            editor->lineIndexFromPosition(execution_end_position, &execution_end_line, &execution_end_index);
+        // If there was an error, save the error message for later and highlight the erroneous SQL statement
+        if (!ok)
+        {
             statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
-            editor->setErrorIndicator(execution_start_line, execution_start_index, execution_end_line, execution_end_index);
-            editor->setCursorPosition(execution_start_line, execution_start_index);
+
+            int end_of_current_statement_line, end_of_current_statement_index;
+            editor->lineIndexFromPosition(end_of_current_statement_position, &end_of_current_statement_line, &end_of_current_statement_index);
+            editor->setErrorIndicator(execute_from_line, execute_from_index, end_of_current_statement_line, end_of_current_statement_index);
+
+            editor->setCursorPosition(execute_from_line, execute_from_index);
         }
+
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = QString("-- At line %1:\n%4\n-- Result: %3").arg(execution_start_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        statusMessage = QString("-- At line %1:\n%4\n-- Result: %3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
         db.logSQL(statusMessage, kLogMsg_User);
 
-        pDb = nullptr; // release db
-
-        execution_start_position = execution_end_position;
+        // Release the database
+        pDb = nullptr;
 
         // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
         // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
@@ -1269,6 +1308,12 @@ void MainWindow::executeQuery()
             db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
             savepoint_created = false;
         }
+
+        // Update the start position for the next statement and check if we are at
+        // the end of the part we want to execute. If so, stop the execution now.
+        execute_from_position = end_of_current_statement_position;
+        if(execute_from_position >= execute_to_position)
+            break;
 
         // Process events to keep the UI responsive
         qApp->processEvents();
