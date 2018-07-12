@@ -10,6 +10,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>db</string>
+				<string>sqlite</string>
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>Database Document</string>
