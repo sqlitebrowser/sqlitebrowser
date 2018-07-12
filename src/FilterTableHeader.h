@@ -15,6 +15,7 @@ class FilterTableHeader : public QHeaderView
 public:
     explicit FilterTableHeader(QTableView* parent = nullptr);
     virtual QSize sizeHint() const;
+    bool hasFilters() const {return (filterWidgets.count() > 0);};
     
 public slots:
     void generateFilters(int number, bool showFirst = false);

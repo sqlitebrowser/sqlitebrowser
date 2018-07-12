@@ -213,6 +213,11 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         copyWithHeadersAction->setEnabled(enabled);
         copyAsSQLAction->setEnabled(enabled);
 
+        // Hide filter actions when there isn't any filters
+        bool hasFilters = m_tableHeader->hasFilters();
+        filterAction->setVisible(hasFilters);
+        filterMenu->menuAction()->setVisible(hasFilters);
+
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
         nullAction->setEnabled(enabled && editable);
