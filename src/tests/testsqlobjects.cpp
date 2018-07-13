@@ -163,19 +163,20 @@ void TestTable::parseSQL()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "hero");
-    QVERIFY(tab.rowidColumn() == "_rowid_");
-    QVERIFY(tab.fields().at(0)->name() == "id");
-    QVERIFY(tab.fields().at(1)->name() == "name");
-    QVERIFY(tab.fields().at(2)->name() == "info");
+    QCOMPARE(tab.name(), "hero");
+    QCOMPARE(tab.rowidColumn(), "_rowid_");
+    QCOMPARE(tab.fields().at(0)->name(), "id");
+    QCOMPARE(tab.fields().at(1)->name(), "name");
+    QCOMPARE(tab.fields().at(2)->name(), "info");
 
-    QVERIFY(tab.fields().at(0)->type() == "integer");
-    QVERIFY(tab.fields().at(1)->type() == "text");
+    QCOMPARE(tab.fields().at(0)->type(), "integer");
+    QCOMPARE(tab.fields().at(1)->type(), "text");
     QCOMPARE(tab.fields().at(2)->type(), QString("VARCHAR(255)"));
 
     FieldVector pk = tab.primaryKey();
     QVERIFY(tab.fields().at(0)->autoIncrement());
-    QVERIFY(pk.size() == 1 && pk.at(0) == tab.fields().at(0));
+    QCOMPARE(pk.size(), 1);
+    QCOMPARE(pk.at(0), tab.fields().at(0));
     QVERIFY(tab.fields().at(1)->notnull());
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
@@ -211,7 +212,8 @@ void TestTable::parseSQLdefaultexpr()
     QCOMPARE(tab.fields().at(3)->check(), QString(""));
 
     sqlb::FieldVector pk = tab.primaryKey();
-    QVERIFY(pk.size() == 1 && pk.at(0) == tab.fields().at(0));
+    QCOMPARE(pk.size(), 1);
+    QCOMPARE(pk.at(0), tab.fields().at(0));
 }
 
 void TestTable::parseSQLMultiPk()
@@ -225,15 +227,17 @@ void TestTable::parseSQLMultiPk()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "hero");
-    QVERIFY(tab.fields().at(0)->name() == "id1");
-    QVERIFY(tab.fields().at(1)->name() == "id2");
+    QCOMPARE(tab.name(), "hero");
+    QCOMPARE(tab.fields().at(0)->name(), "id1");
+    QCOMPARE(tab.fields().at(1)->name(), "id2");
 
-    QVERIFY(tab.fields().at(0)->type() == "integer");
-    QVERIFY(tab.fields().at(1)->type() == "integer");
+    QCOMPARE(tab.fields().at(0)->type(), "integer");
+    QCOMPARE(tab.fields().at(1)->type(), "integer");
 
     sqlb::FieldVector pk = tab.primaryKey();
-    QVERIFY(pk.size() == 2 && pk.at(0) == tab.fields().at(0) && pk.at(1) == tab.fields().at(1));
+    QCOMPARE(pk.size(), 2);
+    QCOMPARE(pk.at(0), tab.fields().at(0));
+    QCOMPARE(pk.at(1), tab.fields().at(1));
 }
 
 void TestTable::parseSQLForeignKey()
@@ -242,9 +246,9 @@ void TestTable::parseSQLForeignKey()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "grammar_test");
-    QVERIFY(tab.fields().at(0)->name() == "id");
-    QVERIFY(tab.fields().at(1)->name() == "test");
+    QCOMPARE(tab.name(), "grammar_test");
+    QCOMPARE(tab.fields().at(0)->name(), "id");
+    QCOMPARE(tab.fields().at(1)->name(), "test");
 }
 
 void TestTable::parseSQLSingleQuotes()
@@ -253,9 +257,9 @@ void TestTable::parseSQLSingleQuotes()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "test");
-    QVERIFY(tab.fields().at(0)->name() == "id");
-    QVERIFY(tab.fields().at(1)->name() == "test");
+    QCOMPARE(tab.name(), "test");
+    QCOMPARE(tab.fields().at(0)->name(), "id");
+    QCOMPARE(tab.fields().at(1)->name(), "test");
 }
 
 void TestTable::parseSQLSquareBrackets()
@@ -264,9 +268,9 @@ void TestTable::parseSQLSquareBrackets()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "test");
-    QVERIFY(tab.fields().at(0)->name() == "id");
-    QVERIFY(tab.fields().at(1)->name() == "test");
+    QCOMPARE(tab.name(), "test");
+    QCOMPARE(tab.fields().at(0)->name(), "id");
+    QCOMPARE(tab.fields().at(1)->name(), "test");
 }
 
 
@@ -276,9 +280,9 @@ void TestTable::parseSQLKeywordInIdentifier()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "deffered");
-    QVERIFY(tab.fields().at(0)->name() == "key");
-    QVERIFY(tab.fields().at(1)->name() == "if");
+    QCOMPARE(tab.name(), "deffered");
+    QCOMPARE(tab.fields().at(0)->name(), "key");
+    QCOMPARE(tab.fields().at(1)->name(), "if");
 }
 
 
@@ -290,9 +294,9 @@ void TestTable::parseSQLSomeKeywordsInIdentifier()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "Average Number of Volunteers by Area of Work");
-    QVERIFY(tab.fields().at(0)->name() == "Area of Work");
-    QVERIFY(tab.fields().at(1)->name() == "Average Number of Volunteers");
+    QCOMPARE(tab.name(), "Average Number of Volunteers by Area of Work");
+    QCOMPARE(tab.fields().at(0)->name(), "Area of Work");
+    QCOMPARE(tab.fields().at(1)->name(), "Average Number of Volunteers");
 }
 
 void TestTable::parseSQLWithoutRowid()
@@ -301,8 +305,8 @@ void TestTable::parseSQLWithoutRowid()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.fields().at(tab.findPk())->name() == "a");
-    QVERIFY(tab.rowidColumn() == "a");
+    QCOMPARE(tab.fields().at(tab.findPk())->name(), "a");
+    QCOMPARE(tab.rowidColumn(), "a");
 }
 
 void TestTable::parseNonASCIIChars()
@@ -314,8 +318,8 @@ void TestTable::parseNonASCIIChars()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "lösung");
-    QVERIFY(tab.fields().at(0)->name() == "Fieldöäüß");
+    QCOMPARE(tab.name(), "lösung");
+    QCOMPARE(tab.fields().at(0)->name(), "Fieldöäüß");
 }
 
 void TestTable::parseNonASCIICharsEs()
@@ -327,8 +331,8 @@ void TestTable::parseNonASCIICharsEs()
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
 
-    QVERIFY(tab.name() == "Cigüeñas de Alcalá");
-    QVERIFY(tab.fields().at(0)->name() == "Field áéíóúÁÉÍÓÚñÑçÇ");
+    QCOMPARE(tab.name(), "Cigüeñas de Alcalá");
+    QCOMPARE(tab.fields().at(0)->name(), "Field áéíóúÁÉÍÓÚñÑçÇ");
 }
 
 void TestTable::parseSQLEscapedQuotes()
@@ -398,7 +402,7 @@ void TestTable::createTableWithIn()
             ");";
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
-    QVERIFY(tab.name() == "not_working");
+    QCOMPARE(tab.name(), "not_working");
 
     QCOMPARE(tab.fields().at(1)->check(), "value IN ('a','b','c')");
 }
@@ -416,7 +420,7 @@ void TestTable::createTableWithNotLikeConstraint()
             ");";
 
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
-    QVERIFY(tab.name() == "hopefully_working");
+    QCOMPARE(tab.name(), "hopefully_working");
 
     QCOMPARE(tab.fields().at(0)->check(), "value NOT LIKE 'prefix%'");
     QCOMPARE(tab.fields().at(1)->check(), "value2 NOT MATCH 'prefix%'");
