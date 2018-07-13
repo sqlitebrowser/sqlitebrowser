@@ -670,6 +670,47 @@ QString concatTextAST(antlr::RefAST t, bool withspace = false)
     }
     return stext.join(withspace ? " " : "");
 }
+
+QString concatExprAST(antlr::RefAST t)
+{
+    QString expr;
+
+    int num_paren = 1;
+    while(t)
+    {
+        if(t->getType() == sqlite3TokenTypes::LPAREN)
+            num_paren++;
+        else if(t->getType() == sqlite3TokenTypes::RPAREN)
+            num_paren--;
+
+        if(num_paren == 0)
+            break;
+
+        switch(t->getType())
+        {
+        case sqlite3TokenTypes::AND:
+        case sqlite3TokenTypes::OR:
+        case sqlite3TokenTypes::IN:
+        case sqlite3TokenTypes::LIKE:
+        case sqlite3TokenTypes::MATCH:
+        case sqlite3TokenTypes::REGEXP:
+        case sqlite3TokenTypes::EXISTS:
+        case sqlite3TokenTypes::GLOB:
+        case sqlite3TokenTypes::BETWEEN:
+            expr.append(" " + textAST(t) + " ");
+            break;
+        case sqlite3TokenTypes::NOT:
+            expr.append(" " + textAST(t));
+            break;
+        default:
+            expr.append(textAST(t));
+        }
+
+        t = t->getNextSibling();
+    }
+
+    return expr.trimmed();
+}
 }
 
 namespace {
@@ -933,27 +974,7 @@ TablePtr CreateTableWalker::table()
                     tc = tc->getNextSibling(); // skip CHECK
                     tc = tc->getNextSibling(); // skip LPAREN
 
-                    int num_paren = 1;
-                    QString expr;
-                    while(tc)
-                    {
-                        if(tc->getType() == sqlite3TokenTypes::LPAREN)
-                            num_paren++;
-                        else if(tc->getType() == sqlite3TokenTypes::RPAREN)
-                            num_paren--;
-
-                        if(num_paren == 0)
-                            break;
-
-                        if(tc->getType() == sqlite3TokenTypes::AND || tc->getType() == sqlite3TokenTypes::OR)
-                            expr.append(" " + textAST(tc) + " ");
-                        else
-                            expr.append(textAST(tc));
-
-                        tc = tc->getNextSibling();
-                    }
-
-                    check->setExpression(expr);
+                    check->setExpression(concatExprAST(tc));
                     tab->addConstraint(FieldVector(), ConstraintPtr(check));
                 }
                 break;
@@ -1085,12 +1106,10 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             if(!constraint_name.isEmpty())
                 table->setFullyParsed(false);
 
+            con = con->getNextSibling(); //CHECK
             con = con->getNextSibling(); //LPAREN
-            check = concatTextAST(con, true);
-            // remove parenthesis
-            check.remove(check.length()-1, 1);
-            check.remove(0,1);
-            check = check.trimmed();
+
+            check = concatExprAST(con);
         }
         break;
         case sqlite3TokenTypes::DEFAULT:

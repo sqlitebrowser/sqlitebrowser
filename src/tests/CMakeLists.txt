@@ -62,9 +62,7 @@ if(ANTLR2_FOUND)
 else()
     target_link_libraries(test-sqlobjects antlr)
 endif()
-link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
-add_dependencies(test-sqlobjects qscintilla2)
-target_link_libraries(test-sqlobjects qscintilla2 ${LPTHREAD})
+target_link_libraries(test-sqlobjects ${LPTHREAD})
 add_test(test-sqlobjects test-sqlobjects)
 
 # test-import
@@ -141,9 +139,7 @@ if(ANTLR2_FOUND)
 else()
     target_link_libraries(test-regex antlr)
 endif()
-link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
-add_dependencies(test-regex qscintilla2)
-target_link_libraries(test-regex qscintilla2 ${LPTHREAD})
+target_link_libraries(test-regex ${LPTHREAD})
 add_test(test-regex test-regex)
 
 # test cache

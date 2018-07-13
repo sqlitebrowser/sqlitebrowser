@@ -179,7 +179,7 @@ void TestTable::parseSQL()
     QVERIFY(tab.fields().at(1)->notnull());
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
     QCOMPARE(tab.fields().at(1)->check(), QString(""));
-    QCOMPARE(tab.fields().at(2)->check(), QString("info == 'x'"));
+    QCOMPARE(tab.fields().at(2)->check(), QString("info=='x'"));
 }
 
 void TestTable::parseSQLdefaultexpr()
@@ -204,7 +204,7 @@ void TestTable::parseSQLdefaultexpr()
     QCOMPARE(tab.fields().at(3)->type(), QString("integer"));
 
     QCOMPARE(tab.fields().at(1)->defaultValue(), QString("('axa')"));
-    QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext == \"aa\""));
+    QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext==\"aa\""));
     QCOMPARE(tab.fields().at(2)->defaultValue(), QString("CURRENT_TIMESTAMP"));
     QCOMPARE(tab.fields().at(2)->check(), QString(""));
     QCOMPARE(tab.fields().at(3)->defaultValue(), QString(""));
@@ -366,7 +366,7 @@ void TestTable::parseSQLCheckConstraint()
     QCOMPARE(tab.name(), QString("a"));
     QCOMPARE(tab.fields().at(0)->name(), QString("b"));
     QCOMPARE(tab.fields().at(0)->type(), QString("text"));
-    QCOMPARE(tab.fields().at(0)->check(), QString("\"b\" = 'A' or \"b\" = 'B'"));
+    QCOMPARE(tab.fields().at(0)->check(), QString("\"b\"='A' or \"b\"='B'"));
 }
 
 void TestTable::parseDefaultValues()
@@ -400,7 +400,7 @@ void TestTable::createTableWithIn()
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
     QVERIFY(tab.name() == "not_working");
 
-    QVERIFY(tab.fields().at(1)->check() == "value IN ( 'a' , 'b' , 'c' )");
+    QCOMPARE(tab.fields().at(1)->check(), "value IN ('a','b','c')");
 }
 
 void TestTable::createTableWithNotLikeConstraint()
@@ -418,11 +418,43 @@ void TestTable::createTableWithNotLikeConstraint()
     Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
     QVERIFY(tab.name() == "hopefully_working");
 
-    QVERIFY(tab.fields().at(0)->check() == "value NOT LIKE 'prefix%'");
-    QVERIFY(tab.fields().at(1)->check() == "value2 NOT MATCH 'prefix%'");
-    QVERIFY(tab.fields().at(2)->check() == "value3 NOT REGEXP 'prefix%'");
-    QVERIFY(tab.fields().at(3)->check() == "value4 NOT GLOB 'prefix%'");
-    QVERIFY(tab.fields().at(4)->check() == "value5 BETWEEN 1 + 4 AND 100 OR 200");
-    QVERIFY(tab.fields().at(5)->check() == "value6 NOT BETWEEN 1 AND 100");
-    QVERIFY(tab.fields().at(6)->check() == "NOT EXISTS ( 1 )");
+    QCOMPARE(tab.fields().at(0)->check(), "value NOT LIKE 'prefix%'");
+    QCOMPARE(tab.fields().at(1)->check(), "value2 NOT MATCH 'prefix%'");
+    QCOMPARE(tab.fields().at(2)->check(), "value3 NOT REGEXP 'prefix%'");
+    QCOMPARE(tab.fields().at(3)->check(), "value4 NOT GLOB 'prefix%'");
+    QCOMPARE(tab.fields().at(4)->check(), "value5 BETWEEN 1+4 AND 100 OR 200");
+    QCOMPARE(tab.fields().at(5)->check(), "value6 NOT BETWEEN 1 AND 100");
+    QCOMPARE(tab.fields().at(6)->check(), "NOT EXISTS (1)");
+}
+
+void TestTable::rowValues()
+{
+    QString sql = "CREATE TABLE test(\n"
+            "a INTEGER,\n"
+            "b INTEGER,\n"
+            "CHECK((a, b) = (1, 2))\n"
+            ");";
+
+    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    QCOMPARE(tab.name(), "test");
+
+    QCOMPARE(tab.constraint({}, sqlb::Constraint::CheckConstraintType).dynamicCast<sqlb::CheckConstraint>()->expression(), QString("(a,b)=(1,2)"));
+}
+
+void TestTable::complexExpressions()
+{
+    QString sql = "CREATE TABLE test(\n"
+            "a INTEGER CHECK((a > 0)),\n"
+            "b INTEGER CHECK((b > 0 and b > 1)),\n"
+            "c INTEGER CHECK((c = -1) or (c > 0 and c > 1) or (c = 0)),\n"
+            "d INTEGER CHECK((((d > 0))))\n"
+            ");";
+
+    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    QCOMPARE(tab.name(), "test");
+
+    QCOMPARE(tab.fields().at(0)->check(), "(a>0)");
+    QCOMPARE(tab.fields().at(1)->check(), "(b>0 and b>1)");
+    QCOMPARE(tab.fields().at(2)->check(), "(c=-1) or (c>0 and c>1) or (c=0)");
+    QCOMPARE(tab.fields().at(3)->check(), "(((d>0)))");
 }
