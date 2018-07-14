@@ -7,6 +7,19 @@ QTEST_APPLESS_MAIN(TestTable)
 
 using namespace sqlb;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+namespace QTest
+{
+template <typename T1, typename T2>
+inline bool qCompare(const T1 &t1, const T2 &t2, const char *actual, const char *expected,
+                     const char *file, int line)
+{
+    return compare_helper(t1 == t2, "Compared values are not the same",
+                          toString(t1), toString(t2), actual, expected, file, line);
+}
+}
+#endif
+
 void TestTable::sqlOutput()
 {
     Table tt("testtable");
