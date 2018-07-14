@@ -628,9 +628,11 @@ bool DBBrowserDB::dump(const QString& filePath,
                 it.remove();
             } else {
                 // Otherwise get the number of records in this table
-                SqliteTableModel tableModel(*this);
-                tableModel.setTable(sqlb::ObjectIdentifier("main", it.value()->name()));
-                numRecordsTotal += tableModel.rowCount();
+                SqliteTableModel m(*this);
+                m.setQuery(QString("SELECT COUNT(*) FROM %1;")
+                           .arg(sqlb::ObjectIdentifier("main", it.value()->name()).toString()));
+                if(m.completeCache())
+                    numRecordsTotal += m.data(m.index(0, 0)).toUInt();
             }
         }
 
