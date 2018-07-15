@@ -5,6 +5,7 @@
 #include "EditIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
+#include "AddRecordDialog.h"
 #include "ImportCsvDialog.h"
 #include "ExportDataDialog.h"
 #include "Settings.h"
@@ -691,12 +692,10 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
 void MainWindow::addRecord()
 {
-    int row = m_browseTableModel->rowCount();
-    if(m_browseTableModel->insertRow(row))
+    AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
+    if(dialog.exec())
     {
-        selectTableLine(row);
-    } else {
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Error adding record:\n") + db.lastError());
+        populateTable();
     }
 }
 
@@ -2723,7 +2722,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index+1, value);
+    ui->dataTable->filterHeader()->setFilter(column_index+1, "=" + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
