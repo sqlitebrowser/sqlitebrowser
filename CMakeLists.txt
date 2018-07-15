@@ -196,6 +196,7 @@ set(SQLB_FORMS
 	src/AboutDialog.ui
 	src/EditIndexDialog.ui
 	src/EditDialog.ui
+	src/EditTableDialog.ui
 	src/AddRecordDialog.ui
 	src/ExportDataDialog.ui
 	src/ImportCsvDialog.ui
