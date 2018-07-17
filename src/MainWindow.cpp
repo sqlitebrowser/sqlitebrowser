@@ -2723,7 +2723,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index+1, value);
+    ui->dataTable->filterHeader()->setFilter(column_index+1, "=" + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
