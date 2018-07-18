@@ -692,10 +692,16 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
 void MainWindow::addRecord()
 {
-    AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
-    if(dialog.exec())
+    int row = m_browseTableModel->rowCount();
+    if(m_browseTableModel->insertRow(row))
     {
-        populateTable();
+        selectTableLine(row);
+    } else {
+        // Error inserting empty row.
+        // User has to provide values acomplishing the constraints. Open Add Record Dialog.
+        AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
+        if (dialog.exec())
+            populateTable();
     }
 }
 

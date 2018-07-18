@@ -24,7 +24,7 @@
    <item>
     <widget class="QGroupBox" name="groupFields">
      <property name="title">
-      <string>Enter values for the new record. Fields in bold are mandatory.</string>
+      <string>Enter values for the new record considering constraints. Fields in bold are mandatory.</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>

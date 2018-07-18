@@ -36,6 +36,8 @@ AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 
     populateFields();
 
+    ui->sqlTextEdit->setReadOnly(true);
+
     // Update UI
     ui->treeWidget->resizeColumnToContents(kName);
     ui->treeWidget->resizeColumnToContents(kType);
