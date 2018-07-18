@@ -10,16 +10,25 @@
 #include <QStyledItemDelegate>
 #include <QWhatsThis>
 #include <QAbstractButton>
+#include <QLineEdit>
 
 // Styled Item Delegate for non-editable columns (all except Value)
 class NoEditDelegate: public QStyledItemDelegate {
-    public:
-      NoEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
-      virtual QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+public:
+    NoEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    virtual QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
         return nullptr;
-      }
-    };
+    }
+};
 
+// Styled Item Delegate for editable columns (Value)
+class EditDelegate: public QStyledItemDelegate {
+public:
+    EditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    virtual QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+        return new QLineEdit(parent);
+    }
+};
 
 AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent)
     : QDialog(parent),
@@ -78,12 +87,14 @@ void AddRecordDialog::populateFields()
     // Disallow edition of columns except Value
     ui->treeWidget->setItemDelegateForColumn(kName, new NoEditDelegate(this));
     ui->treeWidget->setItemDelegateForColumn(kType, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kValue, new EditDelegate(this));
 
     sqlb::FieldVector fields = m_table.fields();
     sqlb::FieldVector pk = m_table.primaryKey();
     for(const sqlb::FieldPtr& f : fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
+
         tbitem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
         tbitem->setText(kName, f->name());
@@ -131,7 +142,11 @@ void AddRecordDialog::populateFields()
         } else
             tbitem->setData(kValue, Qt::DisplayRole, QVariant());
 
-        tbitem->setToolTip(kValue, toolTip);
+        if (!toolTip.isEmpty()) {
+            // Chop last end-of-line
+            toolTip.chop(1);
+            tbitem->setToolTip(kValue, toolTip);
+        }
     }
 
     updateSqlText();
