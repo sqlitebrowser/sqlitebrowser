@@ -3140,7 +3140,7 @@ void MainWindow::updateInsertDeleteRecordButton()
     ui->buttonDeleteRecord->setEnabled(isEditable && rows != 0);
 
     if(rows > 1)
-        ui->buttonDeleteRecord->setText(tr("Delete records"));
+        ui->buttonDeleteRecord->setText(tr("Delete Records"));
     else
-        ui->buttonDeleteRecord->setText(tr("Delete record"));
+        ui->buttonDeleteRecord->setText(tr("Delete Record"));
 }
