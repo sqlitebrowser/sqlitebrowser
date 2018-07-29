@@ -1144,7 +1144,7 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
     QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
             .arg(table.toString())
             .arg(sqlb::escapeIdentifier(column))
-            .arg(pk)
+            .arg(sqlb::escapeIdentifier(pk))
             .arg(QString(rowid).replace("'", "''"));
 
     logSQL(sql, kLogMsg_App);

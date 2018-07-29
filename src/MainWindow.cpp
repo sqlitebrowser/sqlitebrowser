@@ -2923,19 +2923,30 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
         enableEditing(true);
         return;
     }
+    sqlb::ViewPtr obj = db.getObjectByName(currentTable).dynamicCast<sqlb::View>();
 
     // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
     if(unlock && pk.isEmpty())
     {
         while(true)
         {
+            bool ok;
+
             // Ask for a PK
-            pk = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter a pseudo-primary key in order to enable editing on this view. "
-                                                                         "This should be the name of a unique column in the view."));
+            pk = QInputDialog::getItem(this,
+                                       qApp->applicationName(),
+                                       tr("Please enter a pseudo-primary key in order to enable editing on this view. "
+                                          "This should be the name of a unique column in the view."),
+                                       obj->fieldNames(),
+                                       0,
+                                       false,
+                                       &ok);
 
             // Cancelled?
-            if(pk.isEmpty())
+            if(!ok || pk.isEmpty()) {
+                ui->actionUnlockViewEditing->setChecked(false);
                 return;
+            }
 
             // Do some basic testing of the input and if the input appears to be good, go on
             if(db.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1;").arg(sqlb::escapeIdentifier(pk)).arg(currentTable.toString()), false, true))
