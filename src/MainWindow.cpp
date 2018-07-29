@@ -525,8 +525,6 @@ void MainWindow::populateTable()
             updateInsertDeleteRecordButton();
         });
     }
-    updateInsertDeleteRecordButton();
-
     // Search stored table settings for this table
     bool storedDataFound = browseTableSettings.contains(tablename);
 
@@ -636,6 +634,8 @@ void MainWindow::populateTable()
         ui->actionUnlockViewEditing->setVisible(true);
         ui->actionShowRowidColumn->setVisible(false);
     }
+
+    updateInsertDeleteRecordButton();
 
     QApplication::restoreOverrideCursor();
 }
