@@ -1803,7 +1803,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Save SQL file</string>
    </property>
    <property name="whatsThis">
-    <string>This button opens a saves the content of the current SQL editor tab to a file</string>
+    <string>This button saves the content of the current SQL editor tab to a file</string>
    </property>
   </action>
   <action name="actionEditBrowseTable">

@@ -886,16 +886,36 @@ void MainWindow::deleteObject()
                                 ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString());
     QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
 
+    // Due to different grammar in languages (e.g. gender or declension), each message must be given separately to translation.
+    QString message;
+    if (type == "table")
+        message = tr("Are you sure you want to delete the table '%1'?\nAll data associated with the table will be lost.");
+    else if (type == "view")
+        message = tr("Are you sure you want to delete the view '%1'?");
+    else if (type == "trigger")
+        message = tr("Are you sure you want to delete the trigger '%1'?");
+    else if (type == "index")
+        message = tr("Are you sure you want to delete the index '%1'?");
+
     // Ask user if he really wants to delete that table
-    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the %1 '%2'?\nAll data associated with the %1 will be lost.").arg(type).arg(name.name()),
+    if(QMessageBox::warning(this, QApplication::applicationName(), message.arg(name.name()),
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         // Delete the table
         QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(name.toString());
         if(!db.executeSQL(statement))
         {
-            QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastError());
-            QMessageBox::warning(this, QApplication::applicationName(), error);
+            if (type == "table")
+                message = tr("Error: could not delete the table.");
+            else if (type == "view")
+                message = tr("Error: could not delete the view.");
+            else if (type == "trigger")
+                message = tr("Error: could not delete the trigger.");
+            else if (type == "index")
+                message = tr("Error: could not delete the index.");
+
+            QString error = tr("Message from database engine:\n%1").arg(db.lastError());
+            QMessageBox::warning(this, QApplication::applicationName(), message + " " + error);
         } else {
             populateTable();
             changeTreeSelection();
