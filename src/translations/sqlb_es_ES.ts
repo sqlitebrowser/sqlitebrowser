@@ -597,7 +597,7 @@ Abortando ejecución%3.</translation>
         <location filename="../EditDialog.ui" line="89"/>
         <location filename="../EditDialog.ui" line="92"/>
         <source>Auto-format: pretty print on loading, compact on saving.</source>
-        <translation>Auto-formato: dar format al cargar, compactar al guardar.</translation>
+        <translation>Auto-formato: dar formato al cargar, compactar al guardar.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="95"/>
@@ -671,7 +671,7 @@ Abortando ejecución%3.</translation>
         <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation>Este modo del editor le permite editor datos JSON o XML con resalte de sintáxis, formato automático y validación antes de guardar.
+        <translation>Este modo del editor le permite editar datos JSON o XML con resalte de sintaxis, formato automático y validación antes de guardar.
 
 Los errores se indican con un subrayado ondulado rojo.</translation>
     </message>
@@ -926,7 +926,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
         <source>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</source>
-        <translation>Para restringir el índice excusivamente a una parte de la tabla hay que especificar aquí una cláusula WHERE que seleccione la parte de la tabla que será indexada</translation>
+        <translation>Para restringir el índice exclusivamente a una parte de la tabla hay que especificar aquí una cláusula WHERE que seleccione la parte de la tabla que será indexada</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="72"/>
@@ -1423,7 +1423,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExportSqlDialog.ui" line="140"/>
         <source>Overwrite old schema (DROP TABLE, then CREATE TABLE)</source>
-        <translation>Sobreescribir esquema previo (DROP TABLE, después CREATE TABLE)</translation>
+        <translation>Sobrescribir esquema previo (DROP TABLE, después CREATE TABLE)</translation>
     </message>
     <message>
         <source>New INSERT INTO syntax (multiple rows in VALUES)</source>
@@ -1554,7 +1554,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="174"/>
         <source>Use in Filter Expression</source>
-        <translation>Usar en expresion de filtro</translation>
+        <translation>Usar en expresión de filtro</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="198"/>
@@ -2477,7 +2477,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="233"/>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation>Esta es la vista de la base de datos. Puede hacer doble-click sobre cualquier registro para editar su contenido en la ventana del editor de celdas.</translation>
+        <translation>Esta es la vista de la base de datos. Puede hacer doble-clic sobre cualquier registro para editar su contenido en la ventana del editor de celdas.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="260"/>
@@ -2563,7 +2563,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="373"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation>Escriba un número de registro en esta casilla y haga click en el botón Ir a: para mostrar el registro en la vista de la base de datos</translation>
+        <translation>Escriba un número de registro en esta casilla y haga clic en el botón «Ir a:» para mostrar el registro en la vista de la base de datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="376"/>
@@ -2876,17 +2876,17 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="1639"/>
         <source>&amp;Load extension</source>
-        <translation>&amp;Cargar extension</translation>
+        <translation>&amp;Cargar extensión</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1654"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation>Ejecuta la línea actual [Shift+F5]</translation>
+        <translation>Ejecuta la línea actual [Mayús+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1660"/>
         <source>Shift+F5</source>
-        <translation>Shift+F5</translation>
+        <translation>Mayús+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1716"/>
@@ -3346,7 +3346,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="1560"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation>Mayús+F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1568"/>
@@ -4015,7 +4015,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2032"/>
         <source>Select extension file</source>
-        <translation>Selecione el archivo de extensión</translation>
+        <translation>Seleccione el archivo de extensión</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2033"/>
@@ -4057,7 +4057,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3074"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation>Establezca el nuevo nombre para la pestaña SQL. Use el character «&amp;» para permitir usar el siguiente caracter como un atajo de teclado.</translation>
+        <translation>Establezca el nuevo nombre para la pestaña SQL. Use el carácter «&amp;» para permitir usar el carácter siguiente como un atajo de teclado.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3108"/>
@@ -4160,7 +4160,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PlotDock.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta tabla muestra la lista de columnas de la tabla actualmente visualizada o de la consulta recien ejecutada. Puede seleccionar las columnas que desea usar como ejes X o Y en el gráfico del panel inferior. La tabla muestra el tipo de eje detectado, el cual afectará al gráfico resultante. Para los ejes Y solo se pueden seleccionar columnas numéricas, pero para el eje X se pueden seleccionar :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fecha/Hora&lt;/span&gt;: texto con formato &amp;quot;aaaa-MM-dd hh:mm:ss&amp;quot; o &amp;quot;aaaa-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fecha&lt;/span&gt;: texto con formato &amp;quot;aaaa-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: texto con formato &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Etiqueta&lt;/span&gt;: texto con otros formatos. Seleccionado esta columna como eje X se dibuja un gráfico de barrras con los valores de la columna usados como etiquetas de las barras.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numérico&lt;/span&gt;: valores reales o enteros&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Haciendo doble clic sobre las celdas Y se puede cambiar el color usado para la gráfica correspondiente.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta tabla muestra la lista de columnas de la tabla actualmente visualizada o de la consulta recién ejecutada. Puede seleccionar las columnas que desea usar como ejes X o Y en el gráfico del panel inferior. La tabla muestra el tipo de eje detectado, el cual afectará al gráfico resultante. Para los ejes Y solo se pueden seleccionar columnas numéricas, pero para el eje X se pueden seleccionar :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fecha/Hora&lt;/span&gt;: texto con formato &amp;quot;aaaa-MM-dd hh:mm:ss&amp;quot; o &amp;quot;aaaa-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fecha&lt;/span&gt;: texto con formato &amp;quot;aaaa-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: texto con formato &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Etiqueta&lt;/span&gt;: texto con otros formatos. Seleccionado esta columna como eje X se dibuja un gráfico de barras con los valores de la columna usados como etiquetas de las barras.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numérico&lt;/span&gt;: valores reales o enteros&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Haciendo doble clic sobre las celdas Y se puede cambiar el color usado para la gráfica correspondiente.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="46"/>
@@ -4682,7 +4682,7 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="484"/>
         <source>Displayed &amp;text</source>
-        <translation>Estilo del texto</translation>
+        <translation>&amp;Texto presentado</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="543"/>
@@ -4697,7 +4697,7 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="672"/>
         <source>Preview only (N/A)</source>
-        <translation>Vista previa (N/A)</translation>
+        <translation>Solo vista previa (N/A)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="719"/>
@@ -4824,7 +4824,7 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="1033"/>
         <source>At character boundaries</source>
-        <translation>En los límites de carácteres</translation>
+        <translation>En los límites de caracteres</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1038"/>
@@ -5165,7 +5165,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../RemoteDatabase.cpp" line="353"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation>Por favor introduzca la clave de este certificado del cliente para autentificarse.</translation>
+        <translation>Por favor, introduzca la clave de este certificado de cliente para autenticarse.</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="377"/>
@@ -5267,7 +5267,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../RemoteDock.ui" line="79"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;En este panel, las BB.DD. remotas del sitio web dbhub.io se pueden añadir a DB4S. En primer lugar usted necesita una identidad:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ingrese en el sitio web dbhub.io (use sus credenciales de GitHub o las que desee)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Haga clic en el botón de crear un certificado de DB4S (esa es su identidad). Eso le proporcionará un archivo de certificado (guárdelo en su disco local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vaya a la pestaña «Remoto» de las preferencias de DB4S. Haga clic en el btón para añadir el nuevo certificado a DB4S y elija el archivo de certificado recién descargado.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ahora el panel «Remoto» le mostrará su identidad y podrá añadir BB.DD. remotas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;En este panel, las BB.DD. remotas del sitio web dbhub.io se pueden añadir a DB4S. En primer lugar usted necesita una identidad:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ingrese en el sitio web dbhub.io (use sus credenciales de GitHub o las que desee)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Haga clic en el botón de crear un certificado de DB4S (esa es su identidad). Eso le proporcionará un archivo de certificado (guárdelo en su disco local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vaya a la pestaña «Remoto» de las preferencias de DB4S. Haga clic en el botón para añadir el nuevo certificado a DB4S y elija el archivo de certificado recién descargado.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ahora el panel «Remoto» le mostrará su identidad y podrá añadir BB.DD. remotas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5379,7 +5379,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="66"/>
         <source>Find previous match [Shift+F3]</source>
-        <translation>Buscar la siguiente ocurrencia [Shift+F3]</translation>
+        <translation>Buscar la siguiente ocurrencia [Mayús+F3]</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="69"/>
@@ -5389,7 +5389,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="76"/>
         <source>Shift+F3</source>
-        <translation>Mayús.+F3</translation>
+        <translation>Mayús+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="90"/>
@@ -5760,8 +5760,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../sqlitetablemodel.cpp" line="304"/>
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
-        <translation>Referencias %1(%2)
-Mantenga pulsado Ctrl+Shift y haga click para ir ahí</translation>
+        <translation>Referencia %1(%2)
+Mantenga pulsado Ctrl+Mayús y haga clic para ir ahí</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="396"/>
@@ -5778,7 +5778,7 @@ Mantenga pulsado Ctrl+Shift y haga click para ir ahí</translation>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="950"/>
         <source>Fetching data...</source>
-        <translation>Oteniendo datos...</translation>
+        <translation>Obteniendo datos...</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="951"/>
