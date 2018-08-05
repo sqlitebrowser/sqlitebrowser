@@ -913,7 +913,9 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 
 bool SqliteTableModel::isEditable() const
 {
-    return !m_sTable.isEmpty() && m_db.isOpen() && (m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table || !m_pseudoPk.isEmpty());
+    return !m_sTable.isEmpty() &&
+            m_db.isOpen() &&
+            ((m_db.getObjectByName(m_sTable) && m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table) || !m_pseudoPk.isEmpty());
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const
