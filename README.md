@@ -6,7 +6,7 @@
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
-<a href="https://www.patreon.com/bePatron?u=11578749"><img src="https://c5.patreon.com/external/logo/downloads_wordmark_white_on_coral.png" height="20"></a>
+[![Patreon][patreon-img]][patreon]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
@@ -277,3 +277,6 @@ You can modify or redistribute it under the conditions of these licenses.
 
   [coverity-img]: https://img.shields.io/coverity/scan/11712.svg
   [coverity]: https://scan.coverity.com/projects/sqlitebrowser-sqlitebrowser
+
+  [patreon-img]: https://img.shields.io/badge/donate-Patreon-coral.svg
+  [patreon]: https://www.patreon.com/bePatron?u=11578749
