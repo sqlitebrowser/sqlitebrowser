@@ -212,6 +212,7 @@ private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
+    void fileNewInMemoryDatabase();
     void populateTable();
     void clearTableBrowser();
     bool fileClose();

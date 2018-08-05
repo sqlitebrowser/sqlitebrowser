@@ -433,6 +433,19 @@ void MainWindow::fileNew()
     }
 }
 
+void MainWindow::fileNewInMemoryDatabase()
+{
+    db.create(":memory:");
+    setCurrentFile(tr("In-Memory database"));
+    statusEncodingLabel->setText(db.getPragma("encoding"));
+    statusEncryptionLabel->setVisible(false);
+    statusReadOnlyLabel->setVisible(false);
+    loadExtensionsFromSettings();
+    populateTable();
+    openSqlTab(true);
+    createTable();
+}
+
 void MainWindow::populateStructure(const QString& old_table)
 {
     // Refresh the structure tab
@@ -1714,6 +1727,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::activateFields(bool enable)
 {
     bool write = !db.readOnly();
+    bool tempDb = db.currentFile() == ":memory:";
 
     ui->fileCloseAction->setEnabled(enable);
     ui->fileAttachAction->setEnabled(enable);
@@ -1736,8 +1750,8 @@ void MainWindow::activateFields(bool enable)
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
-    ui->actionSaveProject->setEnabled(enable);
-    ui->actionEncryption->setEnabled(enable && write);
+    ui->actionSaveProject->setEnabled(enable && !tempDb);
+    ui->actionEncryption->setEnabled(enable && write && !tempDb);
     ui->buttonClearFilters->setEnabled(enable);
     ui->buttonSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);

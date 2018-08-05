@@ -529,11 +529,22 @@ bool DBBrowserDB::close()
     {
         if (getDirty())
         {
-            QMessageBox::StandardButton reply = QMessageBox::question(nullptr,
-                                                                      QApplication::applicationName(),
-                                                                      tr("Do you want to save the changes "
-                                                                         "made to the database file %1?").arg(curDBFilename),
-                                                                      QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+            // In-memory databases can't be saved to disk. So the need another text than regular databases.
+            // Note that the QMessageBox::Yes option in the :memory: case and the QMessageBox::No option in the regular case are
+            // doing the same job: proceeding but not saving anything.
+            QMessageBox::StandardButton reply;
+            if(curDBFilename == ":memory:")
+            {
+                reply = QMessageBox::question(nullptr,
+                                              QApplication::applicationName(),
+                                              tr("Do you really want to close this temporary database? All data will be lost."),
+                                              QMessageBox::Yes | QMessageBox::Cancel);
+            } else {
+                reply = QMessageBox::question(nullptr,
+                                              QApplication::applicationName(),
+                                              tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
+                                              QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+            }
 
             // If the user clicked the cancel button stop here and return false
             if(reply == QMessageBox::Cancel)

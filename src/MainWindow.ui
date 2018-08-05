@@ -910,6 +910,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <addaction name="fileExportJsonAction"/>
     </widget>
     <addaction name="fileNewAction"/>
+    <addaction name="fileNewInMemoryDatabaseAction"/>
     <addaction name="fileOpenAction"/>
     <addaction name="fileOpenReadOnlyAction"/>
     <addaction name="fileAttachAction"/>
@@ -2091,6 +2092,11 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="fileNewInMemoryDatabaseAction">
+   <property name="text">
+    <string>New In-&amp;Memory Database</string>
    </property>
   </action>
  </widget>
@@ -3401,6 +3407,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>fileNewInMemoryDatabaseAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileNewInMemoryDatabase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -3470,5 +3492,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>changeSqlTab(int)</slot>
   <slot>hideColumns()</slot>
   <slot>renameSqlTab(int)</slot>
+  <slot>fileNewInMemoryDatabase()</slot>
  </slots>
 </ui>
