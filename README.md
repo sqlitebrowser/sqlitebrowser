@@ -1,5 +1,6 @@
 # DB Browser for SQLite
 
+[![Wiki][wiki-img]][wiki]
 [![Build Status][travis-img]][travis]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
 [![Join the chat at https://join.slack.com/t/db4s/shared_invite/enQtMzc3MzY5OTU4NDgzLWRlYjk0ZmE5ZDEzYWVmNDQxYTYxNmJjNWVkMjI3ZmVjZTY2NDBjODY3YzNhNTNmZDVlNWI2ZGFjNTk5MjJkYmU][slack-img]][slack]
@@ -39,6 +40,11 @@ This program is not a visual shell for the sqlite command line tool. It does
 not require familiarity with SQL commands. It is a tool to be used both by
 developers and by end users, and it must remain as simple to use as possible
 in order to achieve its goals.
+
+## Wiki
+
+For documentation, for users as well as for developer, check out our Wiki at
+https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
 ## Nightly builds
 
@@ -280,3 +286,6 @@ You can modify or redistribute it under the conditions of these licenses.
 
   [patreon-img]: https://img.shields.io/badge/donate-Patreon-coral.svg
   [patreon]: https://www.patreon.com/bePatron?u=11578749
+
+  [wiki-img]: https://img.shields.io/badge/docs-Wiki-blue.svg
+  [wiki]: https://github.com/sqlitebrowser/sqlitebrowser/wiki
