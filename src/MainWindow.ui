@@ -916,12 +916,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="fileAttachAction"/>
     <addaction name="fileCloseAction"/>
     <addaction name="separator"/>
-    <addaction name="separator"/>
     <addaction name="fileSaveAction"/>
     <addaction name="fileRevertAction"/>
-    <addaction name="fileCompactAction"/>
-    <addaction name="actionEncryption"/>
-    <addaction name="actionLoadExtension"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
@@ -940,6 +936,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="editDeleteObjectAction"/>
     <addaction name="separator"/>
     <addaction name="editCreateIndexAction"/>
+    <addaction name="separator"/>
+    <addaction name="viewPreferencesAction"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -948,8 +946,6 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="viewDBToolbarAction"/>
     <addaction name="viewExtraDBToolbarAction"/>
     <addaction name="viewProjectToolbarAction"/>
-    <addaction name="separator"/>
-    <addaction name="viewPreferencesAction"/>
    </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">
@@ -962,9 +958,19 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionBug_report"/>
     <addaction name="helpAboutAction"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="fileCompactAction"/>
+    <addaction name="actionEncryption"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoadExtension"/>
+   </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
    <addaction name="viewMenu"/>
+   <addaction name="menuTools"/>
    <addaction name="helpMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
