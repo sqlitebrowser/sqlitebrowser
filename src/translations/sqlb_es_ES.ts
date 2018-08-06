@@ -1564,7 +1564,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="200"/>
         <source>Ctrl+Shift+C</source>
-        <translation></translation>
+        <translation>Ctrl+May+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="201"/>
@@ -2881,12 +2881,12 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="1654"/>
         <source>Execute current line [Shift+F5]</source>
-        <translation>Ejecuta la línea actual [Mayús+F5]</translation>
+        <translation>Ejecuta la línea actual [May+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1660"/>
         <source>Shift+F5</source>
-        <translation>Mayús+F5</translation>
+        <translation>May+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1716"/>
@@ -3346,7 +3346,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="1560"/>
         <source>Shift+F1</source>
-        <translation>Mayús+F1</translation>
+        <translation>May+F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1568"/>
@@ -5379,7 +5379,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="66"/>
         <source>Find previous match [Shift+F3]</source>
-        <translation>Buscar la siguiente ocurrencia [Mayús+F3]</translation>
+        <translation>Buscar la siguiente ocurrencia [May+F3]</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="69"/>
@@ -5389,7 +5389,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="76"/>
         <source>Shift+F3</source>
-        <translation>Mayús+F3</translation>
+        <translation>May+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="90"/>
@@ -5761,7 +5761,7 @@ p, li { white-space: pre-wrap; }
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
         <translation>Referencia %1(%2)
-Mantenga pulsado Ctrl+Mayús y haga clic para ir ahí</translation>
+Mantenga pulsado Ctrl+May y haga clic para ir ahí</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="396"/>
