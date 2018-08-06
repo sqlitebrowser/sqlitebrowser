@@ -669,7 +669,7 @@
                </font>
               </property>
               <property name="text">
-               <string notr="true">Preview only (N/A)</string>
+               <string>Preview only (N/A)</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>

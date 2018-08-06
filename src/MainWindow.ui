@@ -47,7 +47,7 @@
         <item>
          <widget class="QToolBar" name="dbToolbar">
           <property name="windowTitle">
-           <string>toolBar1</string>
+           <string notr="true">toolBar1</string>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
