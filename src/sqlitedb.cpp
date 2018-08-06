@@ -134,7 +134,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         sqlite3_create_collation(_db, "UTF16", SQLITE_UTF16, nullptr, sqlite_compare_utf16);
         // add UTF16CI (case insensitive) collation (comparison is performed by QString functions)
         sqlite3_create_collation(_db, "UTF16CI", SQLITE_UTF16, nullptr, sqlite_compare_utf16ci);
-       
+
         // register collation callback
         Callback<void(void*, sqlite3*, int, const char*)>::func = std::bind(&DBBrowserDB::collationNeeded, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
         void (*c_callback)(void*, sqlite3*, int, const char*) = static_cast<decltype(c_callback)>(Callback<void(void*, sqlite3*, int, const char*)>::callback);
@@ -1672,7 +1672,7 @@ QString DBBrowserDB::getPragma(const QString& pragma)
 bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
 {
     // Set the pragma value
-    QString sql = QString("PRAGMA %1 = \"%2\";").arg(pragma).arg(value);
+    QString sql = QString("PRAGMA %1 = '%2';").arg(pragma).arg(value);
 
     // In general, we want to commit changes before running pragmas because most of them can't be rolled back and some of them
     // even fail when run in a transaction. However, the defer_foreign_keys pragma has neither problem and we need it to be settable
