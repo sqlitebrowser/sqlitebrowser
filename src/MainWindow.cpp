@@ -948,8 +948,40 @@ void MainWindow::editObject()
 
     if(type == "table")
     {
+        // For a safe and possibly complex table modification we must follow the steps documented in
+        // https://www.sqlite.org/lang_altertable.html
+        // Paragraph (first procedure): Making Other Kinds Of Table Schema Changes
+
+        QString foreign_keys = db.getPragma("foreign_keys");
+        if (foreign_keys == "1") {
+            if(db.getDirty() && QMessageBox::question(this,
+                                     QApplication::applicationName(),
+                                     tr("Editing the table requires to save all pending changes now.\nAre you sure you want to save the database?"),
+                                     QMessageBox::Save | QMessageBox::Default,
+                                     QMessageBox::Cancel | QMessageBox::Escape) != QMessageBox::Save)
+                return;
+            // Commit all changes so the foreign_keys can be effective.
+            fileSave();
+            db.setPragma("foreign_keys", "0");
+        }
+
         EditTableDialog dialog(db, name, false, this);
-        if(dialog.exec()) {
+        bool ok = dialog.exec();
+
+        // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
+        if (foreign_keys == "1") {
+            if (!db.executeSQL(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema())))) {
+                QMessageBox::warning(this, QApplication::applicationName(),
+                                     tr("Error checking foreign keys after table modification. The changes will be reverted.\n"
+                                        "Message from database engine:\n%1").arg(db.lastError()));
+                db.revertAll();
+            } else {
+                // Commit all changes so the foreign_keys can be effective.
+                fileSave();
+            }
+            db.setPragma("foreign_keys", foreign_keys);
+        }
+        if(ok) {
             ui->dataTable->filterHeader()->clearFilters();
             populateTable();
         }
