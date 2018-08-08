@@ -175,12 +175,6 @@ or this:
 Instructions for compiling on (at least) Windows, OSX, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
 
-## Developer mailing list
-
-For development related discussion about DB4S and DBHub.io:
-
-* https://lists.sqlitebrowser.org/mailman/listinfo/db4s-dev
-
 ## Twitter
 
 Follow us on Twitter: https://twitter.com/sqlitebrowser
