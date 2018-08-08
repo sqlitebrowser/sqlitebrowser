@@ -1353,7 +1353,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Compact &amp;Database</string>
+    <string>Compact &amp;Database...</string>
    </property>
    <property name="toolTip">
     <string>Compact the database file, removing space wasted by deleted records</string>
@@ -1566,7 +1566,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   </action>
   <action name="helpAboutAction">
    <property name="text">
-    <string>&amp;About...</string>
+    <string>&amp;About</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
@@ -1637,7 +1637,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/load_extension</normaloff>:/icons/load_extension</iconset>
    </property>
    <property name="text">
-    <string>&amp;Load extension</string>
+    <string>&amp;Load Extension...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1678,7 +1678,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
    </property>
    <property name="text">
-    <string>&amp;Wiki...</string>
+    <string>&amp;Wiki</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1690,7 +1690,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
    </property>
    <property name="text">
-    <string>Bug &amp;report...</string>
+    <string>Bug &amp;Report...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1702,7 +1702,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
    </property>
    <property name="text">
-    <string>Web&amp;site...</string>
+    <string>Web&amp;site</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1714,7 +1714,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/project_save</normaloff>:/icons/project_save</iconset>
    </property>
    <property name="text">
-    <string>Sa&amp;ve Project</string>
+    <string>Sa&amp;ve Project...</string>
    </property>
    <property name="toolTip">
     <string>Save the current session to a file</string>
@@ -1735,7 +1735,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/project_open</normaloff>:/icons/project_open</iconset>
    </property>
    <property name="text">
-    <string>Open &amp;Project</string>
+    <string>Open &amp;Project...</string>
    </property>
    <property name="toolTip">
     <string>Load a working session from a file</string>
@@ -1759,7 +1759,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/db_attach</normaloff>:/icons/db_attach</iconset>
    </property>
    <property name="text">
-    <string>&amp;Attach Database</string>
+    <string>&amp;Attach Database...</string>
    </property>
    <property name="toolTip">
     <string>Add another database file to the current database connection</string>
@@ -1780,7 +1780,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/encryption</normaloff>:/icons/encryption</iconset>
    </property>
    <property name="text">
-    <string>&amp;Set Encryption</string>
+    <string>&amp;Set Encryption...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1875,7 +1875,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
    </property>
    <property name="text">
-    <string>SQLCipher &amp;FAQ...</string>
+    <string>SQLCipher &amp;FAQ</string>
    </property>
    <property name="toolTip">
     <string>Opens the SQLCipher FAQ in a browser window</string>
