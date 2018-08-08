@@ -612,6 +612,11 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
     else
         value = data.toString();
 
+    // When Containing filter is requested (empty operator) and the value starts with
+    // an operator character, the character is escaped.
+    if (filterOperator.isEmpty())
+        value.replace(QRegExp("^(<|>|=)"), Settings::getValue("databrowser", "filter_escape").toString() + QString("\\1"));
+
     // If binary operator, the cell data is used as first value and
     // the second value must be added by the user.
     if (binary)
