@@ -43,7 +43,7 @@ in order to achieve its goals.
 
 ## Wiki
 
-For documentation, for users as well as for developer, check out our Wiki at
+For documentation, for users as well as for developers, check out our Wiki at
 https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
 ## Nightly builds
