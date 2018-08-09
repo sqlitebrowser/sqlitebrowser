@@ -2362,6 +2362,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     // PRAGMAs
                     if(xml.attributes().hasAttribute("foreign_keys"))
                         db.setPragma("foreign_keys", xml.attributes().value("foreign_keys").toString());
+                    if(xml.attributes().hasAttribute("case_sensitive_like"))
+                        db.setPragma("case_sensitive_like", xml.attributes().value("case_sensitive_like").toString());
                 } else if(xml.name() == "window") {
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
@@ -2580,6 +2582,7 @@ void MainWindow::saveProject()
         xml.writeStartElement("db");
         xml.writeAttribute("path", db.currentFile());
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
+        xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
         xml.writeEndElement();
 
         // Window settings
