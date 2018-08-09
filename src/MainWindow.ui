@@ -407,7 +407,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="0" column="0">
              <widget class="QLabel" name="labelPragmaAutoVacuum">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;Auto Vacuum&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;Auto Vacuum&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -424,17 +424,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaAutoVacuum">
               <item>
                <property name="text">
-                <string>None</string>
+                <string notr="true">None</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Full</string>
+                <string notr="true">Full</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Incremental</string>
+                <string notr="true">Incremental</string>
                </property>
               </item>
              </widget>
@@ -442,7 +442,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="1" column="0">
              <widget class="QLabel" name="labelPragmaAutomaticIndex">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;Automatic Index&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;Automatic Index&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -462,7 +462,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="2" column="0">
              <widget class="QLabel" name="labelPragmaCheckpointFullFsync">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;Checkpoint Full FSYNC&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;Checkpoint Full FSYNC&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -482,7 +482,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="3" column="0">
              <widget class="QLabel" name="labelPragmaForeignKeys">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;Foreign Keys&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;Foreign Keys&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -502,7 +502,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="4" column="0">
              <widget class="QLabel" name="labelPragmaFullFsync">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;Full FSYNC&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;Full FSYNC&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -522,7 +522,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="5" column="0">
              <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;Ignore Check Constraints&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;Ignore Check Constraints&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -542,7 +542,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="6" column="0">
              <widget class="QLabel" name="labelPragmaJournalMode">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;Journal Mode&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;Journal Mode&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -556,32 +556,32 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaJournalMode">
               <item>
                <property name="text">
-                <string>Delete</string>
+                <string notr="true">Delete</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Truncate</string>
+                <string notr="true">Truncate</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Persist</string>
+                <string notr="true">Persist</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Memory</string>
+                <string notr="true">Memory</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>WAL</string>
+                <string notr="true">WAL</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Off</string>
+                <string notr="true">Off</string>
                </property>
               </item>
              </widget>
@@ -589,7 +589,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="7" column="0">
              <widget class="QLabel" name="labelJournalSizeLimit">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;Journal Size Limit&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;Journal Size Limit&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -612,7 +612,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="8" column="0">
              <widget class="QLabel" name="labelPragmaLockingMode">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;Locking Mode&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;Locking Mode&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -626,12 +626,12 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaLockingMode">
               <item>
                <property name="text">
-                <string>Normal</string>
+                <string notr="true">Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Exclusive</string>
+                <string notr="true">Exclusive</string>
                </property>
               </item>
              </widget>
@@ -639,7 +639,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="9" column="0">
              <widget class="QLabel" name="labelPragmaMaxPageCount">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;Max Page Count&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;Max Page Count&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -659,7 +659,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="10" column="0">
              <widget class="QLabel" name="labelPragmaPageSize">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;Page Size&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;Page Size&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -682,7 +682,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="11" column="0">
              <widget class="QLabel" name="labelPragmaRecursiveTriggers">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;Recursive Triggers&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;Recursive Triggers&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -702,7 +702,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="12" column="0">
              <widget class="QLabel" name="labelPragmaSecureDelete">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;Secure Delete&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;Secure Delete&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -722,7 +722,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="13" column="0">
              <widget class="QLabel" name="labelPragmaSynchronous">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;Synchronous&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;Synchronous&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -736,17 +736,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaSynchronous">
               <item>
                <property name="text">
-                <string>Off</string>
+                <string notr="true">Off</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Normal</string>
+                <string notr="true">Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Full</string>
+                <string notr="true">Full</string>
                </property>
               </item>
              </widget>
@@ -754,7 +754,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="14" column="0">
              <widget class="QLabel" name="labelPragmaTempStore">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;Temp Store&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;Temp Store&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -768,17 +768,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaTempStore">
               <item>
                <property name="text">
-                <string>Default</string>
+                <string notr="true">Default</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>File</string>
+                <string notr="true">File</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Memory</string>
+                <string notr="true">Memory</string>
                </property>
               </item>
              </widget>
@@ -786,7 +786,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="15" column="0">
              <widget class="QLabel" name="labelPragmaUserVersion">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;User Version&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;User Version&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -806,7 +806,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="16" column="0">
              <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;WAL Auto Checkpoint&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;WAL Auto Checkpoint&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
