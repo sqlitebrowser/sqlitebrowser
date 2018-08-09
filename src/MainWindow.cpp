@@ -1881,6 +1881,7 @@ void MainWindow::loadPragmas()
     pragmaValues.temp_store = db.getPragma("temp_store").toInt();
     pragmaValues.user_version = db.getPragma("user_version").toInt();
     pragmaValues.wal_autocheckpoint = db.getPragma("wal_autocheckpoint").toInt();
+    pragmaValues.case_sensitive_like = db.getPragma("case_sensitive_like").toInt();
 
     updatePragmaUi();
 }
@@ -1904,6 +1905,7 @@ void MainWindow::updatePragmaUi()
     ui->comboboxPragmaTempStore->setCurrentIndex(pragmaValues.temp_store);
     ui->spinPragmaUserVersion->setValue(pragmaValues.user_version);
     ui->spinPragmaWalAutoCheckpoint->setValue(pragmaValues.wal_autocheckpoint);
+    ui->checkboxPragmaCaseSensitiveLike->setChecked(pragmaValues.case_sensitive_like);
 }
 
 void MainWindow::savePragmas()
@@ -1933,6 +1935,7 @@ void MainWindow::savePragmas()
     db.setPragma("temp_store", ui->comboboxPragmaTempStore->currentIndex(), pragmaValues.temp_store);
     db.setPragma("user_version", ui->spinPragmaUserVersion->value(), pragmaValues.user_version);
     db.setPragma("wal_autocheckpoint", ui->spinPragmaWalAutoCheckpoint->value(), pragmaValues.wal_autocheckpoint);
+    db.setPragma("case_sensitive_like", ui->checkboxPragmaCaseSensitiveLike->isChecked(), pragmaValues.case_sensitive_like);
 
     updatePragmaUi();
 }

@@ -114,6 +114,7 @@ private:
         int temp_store;
         int user_version;
         int wal_autocheckpoint;
+        int case_sensitive_like;
     } pragmaValues;
 
     enum StatementType

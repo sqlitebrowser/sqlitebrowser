@@ -823,6 +823,29 @@ You can drag SQL statements from an object row and drop them into other applicat
               </property>
              </widget>
             </item>
+            <item row="17" column="0">
+             <widget class="QLabel" name="labelPragmaCaseSensitiveLike">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaCaseSensitiveLike</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="17" column="1">
+             <widget class="QCheckBox" name="checkboxPragmaCaseSensitiveLike">
+              <property name="toolTip">
+               <string>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>

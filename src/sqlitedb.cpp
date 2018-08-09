@@ -1646,7 +1646,12 @@ QString DBBrowserDB::getPragma(const QString& pragma)
     if(!isOpen())
         return QString();
 
-    QString sql = QString("PRAGMA %1").arg(pragma);
+    QString sql;
+    if (pragma=="case_sensitive_like")
+        sql = "SELECT 'x' NOT LIKE 'X'";
+    else
+        sql = QString("PRAGMA %1").arg(pragma);
+
     sqlite3_stmt* vm;
     const char* tail;
     QString retval;
