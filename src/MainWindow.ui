@@ -838,6 +838,9 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="17" column="1">
              <widget class="QCheckBox" name="checkboxPragmaCaseSensitiveLike">
+              <property name="toolTip">
+               <string>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</string>
+              </property>
               <property name="text">
                <string/>
               </property>
