@@ -1898,7 +1898,7 @@ void MainWindow::updatePragmaUi()
     ui->spinPragmaJournalSizeLimit->setValue(pragmaValues.journal_size_limit);
     ui->comboboxPragmaLockingMode->setCurrentIndex(ui->comboboxPragmaLockingMode->findText(pragmaValues.locking_mode, Qt::MatchFixedString));
     ui->spinPragmaMaxPageCount->setValue(pragmaValues.max_page_count);
-    ui->spinPragmaPageSize->setValue(pragmaValues.page_size);
+    ui->comboPragmaPageSize->setCurrentIndex(ui->comboPragmaPageSize->findText(QString::number(pragmaValues.page_size), Qt::MatchFixedString));
     ui->checkboxPragmaRecursiveTriggers->setChecked(pragmaValues.recursive_triggers);
     ui->checkboxPragmaSecureDelete->setChecked(pragmaValues.secure_delete);
     ui->comboboxPragmaSynchronous->setCurrentIndex(pragmaValues.synchronous);
@@ -1928,7 +1928,7 @@ void MainWindow::savePragmas()
     db.setPragma("journal_size_limit", ui->spinPragmaJournalSizeLimit->value(), pragmaValues.journal_size_limit);
     db.setPragma("locking_mode", ui->comboboxPragmaLockingMode->currentText().toUpper(), pragmaValues.locking_mode);
     db.setPragma("max_page_count", ui->spinPragmaMaxPageCount->value(), pragmaValues.max_page_count);
-    db.setPragma("page_size", ui->spinPragmaPageSize->value(), pragmaValues.page_size);
+    db.setPragma("page_size", ui->comboPragmaPageSize->currentText().toInt(), pragmaValues.page_size);
     db.setPragma("recursive_triggers", ui->checkboxPragmaRecursiveTriggers->isChecked(), pragmaValues.recursive_triggers);
     db.setPragma("secure_delete", ui->checkboxPragmaSecureDelete->isChecked(), pragmaValues.secure_delete);
     db.setPragma("synchronous", ui->comboboxPragmaSynchronous->currentIndex(), pragmaValues.synchronous);

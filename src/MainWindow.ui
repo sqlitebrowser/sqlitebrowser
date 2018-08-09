@@ -688,18 +688,52 @@ You can drag SQL statements from an object row and drop them into other applicat
                <bool>true</bool>
               </property>
               <property name="buddy">
-               <cstring>spinPragmaPageSize</cstring>
+               <cstring>comboPragmaPageSize</cstring>
               </property>
              </widget>
             </item>
             <item row="11" column="1">
-             <widget class="QSpinBox" name="spinPragmaPageSize">
-              <property name="minimum">
-               <number>512</number>
-              </property>
-              <property name="maximum">
-               <number>65536</number>
-              </property>
+             <widget class="QComboBox" name="comboPragmaPageSize">
+              <item>
+               <property name="text">
+                <string notr="true">512</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">1024</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">2048</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">4096</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">8192</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">16384</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">32768</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">65536</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item row="12" column="0">
@@ -2176,7 +2210,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <tabstop>spinPragmaJournalSizeLimit</tabstop>
   <tabstop>comboboxPragmaLockingMode</tabstop>
   <tabstop>spinPragmaMaxPageCount</tabstop>
-  <tabstop>spinPragmaPageSize</tabstop>
+  <tabstop>comboPragmaPageSize</tabstop>
   <tabstop>checkboxPragmaSecureDelete</tabstop>
   <tabstop>checkboxPragmaRecursiveTriggers</tabstop>
   <tabstop>comboboxPragmaSynchronous</tabstop>
