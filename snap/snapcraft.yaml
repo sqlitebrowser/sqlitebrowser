@@ -1,0 +1,134 @@
+          name:                   sqlitebrowser  # the name of the snap
+          # version:              3.10.1  # the version of the snap
+          version:                master
+          version-script:         printf "`cat currentrelease | head -n 1 `-`git rev-list master --count`-` git -C . rev-parse --short HEAD`"
+
+          summary:                DB browser for SQLite  # 79 char long summary
+          description: |
+            SQLite Database Browser is a visual tool used to create, design and edit database files compatible with SQLite. Its interface is based on QT, and is meant to be used for users and developers that want to create databases, edit and search data using a familiar spreadsheet-like interface, without the need to learn complicated SQL commands. Controls and wizards are available for users to:
+            * Create and compact database files
+            * Create, define, modify and delete tables
+            * Create, define and delete indexes
+            * Browse, edit, add and delete records
+            * Search records
+            * Import and export records as text
+            * Import and export tables from/to CSV files
+            * Import and export databases from/to SQL dump files
+            * Issue SQL queries and inspect the results
+            * Examine a log of all SQL commands issued by the application
+            SQLite Database Browser is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands.   # a longer description for the snap
+          confinement:            strict  # use "strict" to enforce system access only via declared interfaces
+
+          grade:                  devel
+          icon:                   images/sqlitebrowser.svg
+          type:                   app
+
+          apps:
+            sqlitebrowser:
+              command:            desktop-launch $SNAP/wrappers/sqlitebrowser
+              desktop:            share/applications/sqlitebrowser.desktop
+              environment:
+                TMPDIR:           $XDG_RUNTIME_DIR
+              plugs:
+                # - browser-support
+                # - desktop
+                - gsettings
+                - home
+                # - network
+                # - opengl
+                # - unity7
+                # - wayland
+                # - x11
+                - removable-media
+                # - ssh-keys
+
+          build-packages:
+              - build-essential
+              - g++
+              - qtbase5-dev
+              - qttools5-dev
+              - qttools5-dev-tools
+              - libsqlite3-dev
+              - cmake
+              - libantlr-dev
+              - libsqlcipher-dev
+              - libqcustomplot-dev
+              # - libx11-xcb1
+              # - libx11-xcb-dev
+              # - libxcb-xkb-dev
+              - libqt5scintilla2-dev
+              - git
+          parts:
+              wrappers:
+                  plugin:         dump
+                  source:         snap/
+              sqlitebrowser:
+                  # source-type:  git
+                  plugin:         cmake
+                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev"]
+                  source:         .
+              desktop-qt5:
+                build-packages:
+                - qtbase5-dev
+                - dpkg-dev
+                make-parameters:
+                - FLAVOR=qt5
+                plugin:           make
+                source:           https://github.com/ubuntu/snapcraft-desktop-helpers.git
+                source-subdir:    qt
+                stage-packages:
+                - libxkbcommon0
+                # - ttf-ubuntu-font-family
+                # - dmz-cursor-theme
+                # - light-themes
+                # - adwaita-icon-theme
+                # - gnome-themes-standard
+                - shared-mime-info
+                - libqt5gui5
+                - libgdk-pixbuf2.0-0
+                - libqt5svg5
+                - try:
+                  - appmenu-qt5
+                # - locales-all
+                # - xdg-user-dirs
+                prime:
+                  - -usr/lib/*-linux-gnu*/dri/*
+                  - -usr/lib/*-linux-gnu*/libLLVM*
+                  - -usr/lib/*-linux-gnu*/libcudata.so.*
+
+              dump:
+                  plugin:         dump
+                  after:
+                  - desktop-qt5
+                  - sqlitebrowser
+                  stage-packages:
+                  # - qtbase5-dev
+                  - libqt5gui5
+                  # - libqt4gui4
+                  # - libxkbcommon0
+                  # - libxkbfile1
+                  - gtk2-engines
+                  - libc6
+                  # - gtk2-engines-oxygen
+                  - gtk3-engines-breeze
+                  - libgcc1
+                  # - libqcustomplot1.3
+                  # - libqt5network5
+                  # - libqt5scintilla2-12v5
+                  - libsqlite3-0
+                  - libstdc++6
+                  - libsqlcipher-dev
+                  - libatk-adaptor
+                  - libgail-common
+                  filesets:
+                      wanted:
+                      - bin/*
+                      - share/*
+                      - usr/lib/*-linux-gnu*/libsqlcipher.so.0*
+                      - usr/lib/*-linux-gnu*/libdb*
+                      - usr/lib/*-linux-gnu*/libz.so*
+                      - usr/lib/*-linux-gnu*/libatk*
+                      - usr/lib/*-linux-gnu*/libgail*
+
+                  prime:
+                  - $wanted
