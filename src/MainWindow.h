@@ -193,6 +193,8 @@ private:
 
     StatementType getQueryType(const QString& query) const;
 
+    void applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
+
 protected:
     void closeEvent(QCloseEvent *);
     void dragEnterEvent(QDragEnterEvent *event);
@@ -277,7 +279,7 @@ private slots:
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
-    void showRowidColumn(bool show);
+    void showRowidColumn(bool show, bool skipFilters = false);
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
     void fileOpenReadOnly();
