@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 2.8.12.2)
 
 set(ANTLR_SRC
 		src/ANTLRUtil.cpp

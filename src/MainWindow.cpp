@@ -601,33 +601,7 @@ void MainWindow::populateTable()
             m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
 
         // There is information stored for this table, so extract it and apply it
-
-        // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
-        // because of the filter row generation.
-        showRowidColumn(storedData.showRowid);
-
-        // Enable editing in general and (un)lock view editing depending on the settings
-        unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
-
-        // Column hidden status
-        on_actionShowAllColumns_triggered();
-        for(auto hiddenIt=storedData.hiddenColumns.constBegin();hiddenIt!=storedData.hiddenColumns.constEnd();++hiddenIt)
-            hideColumns(hiddenIt.key(), hiddenIt.value());
-
-        // Column widths
-        for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
-            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
-
-        // Sorting
-        ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
-
-        // Filters
-        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
-        for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
-            filterHeader->setFilter(filterIt.key(), filterIt.value());
-
-        // Encoding
-        m_browseTableModel->setEncoding(storedData.encoding);
+        applyBrowseTableSettings(storedData);
 
         setRecordsetLabel();
 
@@ -651,6 +625,39 @@ void MainWindow::populateTable()
     updateInsertDeleteRecordButton();
 
     QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters)
+{
+    // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
+    // because of the filter row generation.
+    showRowidColumn(storedData.showRowid, skipFilters);
+
+    // Enable editing in general and (un)lock view editing depending on the settings
+    unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
+
+    // Column hidden status
+    on_actionShowAllColumns_triggered();
+    for(auto hiddenIt=storedData.hiddenColumns.constBegin();hiddenIt!=storedData.hiddenColumns.constEnd();++hiddenIt)
+        hideColumns(hiddenIt.key(), hiddenIt.value());
+
+    // Column widths
+    for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
+        ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+
+    // Sorting
+    ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
+
+    // Filters
+    if(!skipFilters)
+    {
+        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
+            filterHeader->setFilter(filterIt.key(), filterIt.value());
+    }
+
+    // Encoding
+    m_browseTableModel->setEncoding(storedData.encoding);
 }
 
 bool MainWindow::fileClose()
@@ -1824,9 +1831,8 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 
     attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
-    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
-    ui->dataTable->setColumnHidden(0, !showRowid);
+    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+    applyBrowseTableSettings(settings);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -2218,7 +2224,16 @@ void MainWindow::on_actionBug_report_triggered()
     const QString kernelType = QSysInfo::kernelType();
     const QString kernelVersion = QSysInfo::kernelVersion();
     const QString arch = QSysInfo::currentCpuArchitecture();
-    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]").arg(version, os, kernelType, kernelVersion, arch);
+
+    QString sqlite_version, sqlcipher_version;
+    DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
+    if(sqlcipher_version.isNull())
+        sqlite_version = QString("SQLite Version ") + sqlite_version;
+    else
+        sqlite_version = QString("SQLCipher Version ") + sqlcipher_version + QString(" (based on SQLite %1)").arg(sqlite_version);
+
+    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]\n> using %6\n> and Qt %7")
+            .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
@@ -2666,12 +2681,12 @@ void MainWindow::fileAttach()
 void MainWindow::updateFilter(int column, const QString& value)
 {
     m_browseTableModel->updateFilter(column, value);
-    browseTableSettings[currentlyBrowsedTableName()].filterValues[column] = value;
+    BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
+    settings.filterValues[column] = value;
     setRecordsetLabel();
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
-    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
-    ui->dataTable->setColumnHidden(0, !showRowid);
+    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+    applyBrowseTableSettings(settings, true);
 }
 
 void MainWindow::editEncryption()
@@ -2890,7 +2905,7 @@ void MainWindow::editDataColumnDisplayFormat()
     }
 }
 
-void MainWindow::showRowidColumn(bool show)
+void MainWindow::showRowidColumn(bool show, bool skipFilters)
 {
     // Block all signals from the horizontal header. Otherwise the QHeaderView::sectionResized signal causes us trouble
     ui->dataTable->horizontalHeader()->blockSignals(true);
@@ -2915,7 +2930,8 @@ void MainWindow::showRowidColumn(bool show)
     browseTableSettings[current_table].showRowid = show;
 
     // Update the filter row
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
+    if(!skipFilters)
+        qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
 
     // Re-enable signals
     ui->dataTable->horizontalHeader()->blockSignals(false);
@@ -3040,11 +3056,11 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     ui->actionUnlockViewEditing->blockSignals(false);
 
     // Save settings for this table
-    browseTableSettings[currentTable].unlockViewPk = pk;
+    BrowseDataTableSettings& settings = browseTableSettings[currentTable];
+    settings.unlockViewPk = pk;
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
-    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
-    ui->dataTable->setColumnHidden(0, !showRowid);
+    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+    applyBrowseTableSettings(settings);
 }
 
 sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
