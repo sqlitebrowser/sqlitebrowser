@@ -14,7 +14,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->label_version->setText(tr("Version ") + Application::versionString() + "\n\n" +
                                tr("Qt Version ") + QT_VERSION_STR + "\n\n" +
 #ifdef ENABLE_SQLCIPHER
-                               tr("SQLCipher Version ") + SQLITE_VERSION
+                               tr("SQLCipher based on SQLite Version ") + SQLITE_VERSION
 #else
                                tr("SQLite Version ") + SQLITE_VERSION
 #endif
