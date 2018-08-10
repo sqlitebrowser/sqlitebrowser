@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export PATH=$SNAP/bin:$SNAP/usr/bin:/snap/bin:$PATH
+export PATH="$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/lib/*-linux-gnu:$SNAP/usr/lib/*-linux-gnu:$SNAP/usr/lib/*-linux-gnu/mesa:$SNAP/usr/lib/*-linux-gnu/mesa-egl"
+export LD_LIBRARY_PATH="$SNAP/usr/lib/*-linux-gnu:$SNAP/usr/lib/*-linux-gnu/mesa:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH=$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH
+cd /snap/sqlitebrowser/current/bin
+./sqlitebrowser "$@"
