@@ -3,6 +3,8 @@
 export PATH=$SNAP/bin:$SNAP/usr/bin:/snap/bin:$PATH
 export PATH="$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
 
+echo 'Please create an issue on https://github.com/sqlitebrowser/sqlitebrowser, if you encounter any problems with SNAP package of sqlitebrowser. Thanks !! @deepsidhu1313.'
+
 needs_update=true
 
 . $SNAP_USER_DATA/.last_revision 2>/dev/null || true
@@ -11,7 +13,7 @@ if [ "$SNAP_DESKTOP_LAST_REVISION" = "$SNAP_REVISION" ]; then
 fi
 
 # If the user has modified their user-dirs settings, force an update
-if [[ -f $HOME/.config/user-dirs.dirs.md5sum && -f $HOME/.config/user-dirs.locale.md5sum ]]; then
+if [[ -f $REALHOME/.config/user-dirs.dirs.md5sum && -f $REALHOME/.config/user-dirs.locale.md5sum ]]; then
   if [[ "$(md5sum < $REALHOME/.config/user-dirs.dirs)" != "$(cat $HOME/.config/user-dirs.dirs.md5sum)" ||
         "$(md5sum < $REALHOME/.config/user-dirs.locale)" != "$(cat $HOME/.config/user-dirs.locale.md5sum)" ]]; then
     needs_update=true
@@ -307,5 +309,4 @@ export LD_LIBRARY_PATH=$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH
 
 
 cd /snap/sqlitebrowser/current/bin
-# echo $LD_LIBRARY_PATH
 ./sqlitebrowser "$@"
