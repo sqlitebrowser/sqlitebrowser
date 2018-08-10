@@ -3,7 +3,7 @@
           version:                master
           version-script:         printf "`cat currentrelease | head -n 1 `-`git rev-list master --count`-` git -C . rev-parse --short HEAD`"
 
-          summary:                DB browser for SQLite  # 79 char long summary
+          summary:                DB Browser for SQLite  # 79 char long summary
           description: |
             SQLite Database Browser is a visual tool used to create, design and edit database files compatible with SQLite. Its interface is based on QT, and is meant to be used for users and developers that want to create databases, edit and search data using a familiar spreadsheet-like interface, without the need to learn complicated SQL commands. Controls and wizards are available for users to:
             * Create and compact database files
