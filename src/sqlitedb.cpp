@@ -991,9 +991,9 @@ QVariant DBBrowserDB::querySingeValueFromDb(const QString& statement, bool log)
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        if(sqlite3_step(stmt) == SQLITE_ROW && sqlite3_column_count(stmt) > 0)
+        if(sqlite3_step(stmt) == SQLITE_ROW)
         {
-            if(sqlite3_column_type(stmt, 0) != SQLITE_NULL)
+            if(sqlite3_column_count(stmt) > 0 && sqlite3_column_type(stmt, 0) != SQLITE_NULL)
             {
                 int bytes = sqlite3_column_bytes(stmt, 0);
                 if(bytes)
@@ -1001,6 +1001,8 @@ QVariant DBBrowserDB::querySingeValueFromDb(const QString& statement, bool log)
                 else
                     return "";
             }
+
+            sqlite3_finalize(stmt);
         }
     }
 
