@@ -61,6 +61,9 @@ public:
     bool create ( const QString & db);
     bool close();
 
+    // This returns the SQLite version as well as the SQLCipher if DB4S is compiled with encryption support
+    static void getSqliteVersion(QString& sqlite, QString& sqlcipher);
+
     typedef std::unique_ptr<sqlite3, DatabaseReleaser> db_pointer_type;
 
     /**
