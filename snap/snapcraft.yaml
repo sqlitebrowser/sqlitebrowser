@@ -31,14 +31,14 @@
                 TMPDIR:           $XDG_RUNTIME_DIR
               plugs:
                 # - browser-support
-                # - desktop
+                - desktop
                 - gsettings
                 - home
                 # - network
                 # - opengl
-                # - unity7
-                # - wayland
-                # - x11
+                - unity7
+                - wayland
+                - x11
                 - removable-media
                 # - ssh-keys
 
@@ -91,10 +91,10 @@
                   - appmenu-qt5
                 # - locales-all
                 # - xdg-user-dirs
-                prime:
-                  - -usr/lib/*-linux-gnu*/dri/*
-                  - -usr/lib/*-linux-gnu*/libLLVM*
-                  - -usr/lib/*-linux-gnu*/libcudata.so.*
+                # prime:
+                #   - -usr/lib/*-linux-gnu*/dri/*
+                #   - -usr/lib/*-linux-gnu*/libLLVM*
+                #   - -usr/lib/*-linux-gnu*/libcudata.so.*
 
               dump:
                   plugin:         dump
