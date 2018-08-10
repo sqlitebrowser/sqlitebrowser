@@ -2224,7 +2224,16 @@ void MainWindow::on_actionBug_report_triggered()
     const QString kernelType = QSysInfo::kernelType();
     const QString kernelVersion = QSysInfo::kernelVersion();
     const QString arch = QSysInfo::currentCpuArchitecture();
-    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]").arg(version, os, kernelType, kernelVersion, arch);
+
+    QString sqlite_version, sqlcipher_version;
+    DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
+    if(sqlcipher_version.isNull())
+        sqlite_version = QString("SQLite Version ") + sqlite_version;
+    else
+        sqlite_version = QString("SQLCipher Version ") + sqlcipher_version + QString(" (based on SQLite %1)").arg(sqlite_version);
+
+    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]\n> using %6\n> and Qt %7")
+            .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
