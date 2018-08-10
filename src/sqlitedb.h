@@ -61,6 +61,9 @@ public:
     bool create ( const QString & db);
     bool close();
 
+    // This returns the SQLite version as well as the SQLCipher if DB4S is compiled with encryption support
+    static void getSqliteVersion(QString& sqlite, QString& sqlcipher);
+
     typedef std::unique_ptr<sqlite3, DatabaseReleaser> db_pointer_type;
 
     /**
@@ -88,9 +91,13 @@ public:
     bool revertToSavepoint(const QString& pointname = "RESTOREPOINT");
     bool releaseAllSavepoints();
     bool revertAll();
+
     bool dump(const QString& filename, const QStringList& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema);
+
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    QVariant querySingeValueFromDb(const QString& statement, bool log = true);
+
     const QString& lastError() const { return lastErrorMessage; }
 
     /**
