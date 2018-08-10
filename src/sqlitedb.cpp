@@ -639,11 +639,8 @@ bool DBBrowserDB::dump(const QString& filePath,
                 it.remove();
             } else {
                 // Otherwise get the number of records in this table
-                SqliteTableModel m(*this);
-                m.setQuery(QString("SELECT COUNT(*) FROM %1;")
-                           .arg(sqlb::ObjectIdentifier("main", it.value()->name()).toString()));
-                if(m.completeCache())
-                    numRecordsTotal += m.data(m.index(0, 0)).toUInt();
+                numRecordsTotal += querySingeValueFromDb(QString("SELECT COUNT(*) FROM %1;")
+                                                         .arg(sqlb::ObjectIdentifier("main", it.value()->name()).toString())).toUInt();
             }
         }
 
@@ -953,6 +950,35 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
     // Exit
     return true;
+}
+
+QVariant DBBrowserDB::querySingeValueFromDb(const QString& statement, bool log)
+{
+    waitForDbRelease();
+    if(!_db)
+        return QVariant();
+
+    if(log)
+        logSQL(statement, kLogMsg_App);
+
+    QByteArray utf8Query = statement.toUtf8();
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
+    {
+        if(sqlite3_step(stmt) == SQLITE_ROW && sqlite3_column_count(stmt) > 0)
+        {
+            if(sqlite3_column_type(stmt, 0) != SQLITE_NULL)
+            {
+                int bytes = sqlite3_column_bytes(stmt, 0);
+                if(bytes)
+                    return QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, 0)), bytes);
+                else
+                    return "";
+            }
+        }
+    }
+
+    return QVariant();
 }
 
 bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata)
