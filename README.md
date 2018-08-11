@@ -43,7 +43,7 @@ in order to achieve its goals.
 
 ## Wiki
 
-For documentation, for users as well as for developer, check out our Wiki at
+For documentation, for users as well as for developers, check out our Wiki at
 https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
 ## Nightly builds
@@ -174,12 +174,6 @@ or this:
 
 Instructions for compiling on (at least) Windows, OSX, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
-
-## Developer mailing list
-
-For development related discussion about DB4S and DBHub.io:
-
-* https://lists.sqlitebrowser.org/mailman/listinfo/db4s-dev
 
 ## Twitter
 

@@ -50,24 +50,14 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
                 numeric = true;
                 val = "''";
             } else {
-                bool ok;
-                value.mid(2).toFloat(&ok);
-                if(ok)
-                {
-                    op = value.left(2);
-                    val = value.mid(2);
-                    numeric = true;
-                }
+                value.mid(2).toFloat(&numeric);
+                op = value.left(2);
+                val = value.mid(2);
             }
         } else if(value.left(1) == ">" || value.left(1) == "<") {
-            bool ok;
-            value.mid(1).toFloat(&ok);
-            if(ok)
-            {
-                op = value.left(1);
-                val = value.mid(1);
-                numeric = true;
-            }
+            value.mid(1).toFloat(&numeric);
+            op = value.left(1);
+            val = value.mid(1);
         } else if(value.left(1) == "=") {
             val = value.mid(1);
 

@@ -955,8 +955,40 @@ void MainWindow::editObject()
 
     if(type == "table")
     {
+        // For a safe and possibly complex table modification we must follow the steps documented in
+        // https://www.sqlite.org/lang_altertable.html
+        // Paragraph (first procedure): Making Other Kinds Of Table Schema Changes
+
+        QString foreign_keys = db.getPragma("foreign_keys");
+        if (foreign_keys == "1") {
+            if(db.getDirty() && QMessageBox::question(this,
+                                     QApplication::applicationName(),
+                                     tr("Editing the table requires to save all pending changes now.\nAre you sure you want to save the database?"),
+                                     QMessageBox::Save | QMessageBox::Default,
+                                     QMessageBox::Cancel | QMessageBox::Escape) != QMessageBox::Save)
+                return;
+            // Commit all changes so the foreign_keys can be effective.
+            fileSave();
+            db.setPragma("foreign_keys", "0");
+        }
+
         EditTableDialog dialog(db, name, false, this);
-        if(dialog.exec()) {
+        bool ok = dialog.exec();
+
+        // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
+        if (foreign_keys == "1") {
+            if (!db.executeSQL(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema())))) {
+                QMessageBox::warning(this, QApplication::applicationName(),
+                                     tr("Error checking foreign keys after table modification. The changes will be reverted.\n"
+                                        "Message from database engine:\n%1").arg(db.lastError()));
+                db.revertAll();
+            } else {
+                // Commit all changes so the foreign_keys can be effective.
+                fileSave();
+            }
+            db.setPragma("foreign_keys", foreign_keys);
+        }
+        if(ok) {
             ui->dataTable->filterHeader()->clearFilters();
             populateTable();
         }
@@ -1332,7 +1364,7 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = QString("-- At line %1:\n%4\n-- Result: %3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        statusMessage = QString(tr("-- At line %1:\n%4\n-- Result: %3")).arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
         db.logSQL(statusMessage, kLogMsg_User);
 
         // Release the database
@@ -1856,6 +1888,7 @@ void MainWindow::loadPragmas()
     pragmaValues.temp_store = db.getPragma("temp_store").toInt();
     pragmaValues.user_version = db.getPragma("user_version").toInt();
     pragmaValues.wal_autocheckpoint = db.getPragma("wal_autocheckpoint").toInt();
+    pragmaValues.case_sensitive_like = db.getPragma("case_sensitive_like").toInt();
 
     updatePragmaUi();
 }
@@ -1872,13 +1905,14 @@ void MainWindow::updatePragmaUi()
     ui->spinPragmaJournalSizeLimit->setValue(pragmaValues.journal_size_limit);
     ui->comboboxPragmaLockingMode->setCurrentIndex(ui->comboboxPragmaLockingMode->findText(pragmaValues.locking_mode, Qt::MatchFixedString));
     ui->spinPragmaMaxPageCount->setValue(pragmaValues.max_page_count);
-    ui->spinPragmaPageSize->setValue(pragmaValues.page_size);
+    ui->comboPragmaPageSize->setCurrentIndex(ui->comboPragmaPageSize->findText(QString::number(pragmaValues.page_size), Qt::MatchFixedString));
     ui->checkboxPragmaRecursiveTriggers->setChecked(pragmaValues.recursive_triggers);
     ui->checkboxPragmaSecureDelete->setChecked(pragmaValues.secure_delete);
     ui->comboboxPragmaSynchronous->setCurrentIndex(pragmaValues.synchronous);
     ui->comboboxPragmaTempStore->setCurrentIndex(pragmaValues.temp_store);
     ui->spinPragmaUserVersion->setValue(pragmaValues.user_version);
     ui->spinPragmaWalAutoCheckpoint->setValue(pragmaValues.wal_autocheckpoint);
+    ui->checkboxPragmaCaseSensitiveLike->setChecked(pragmaValues.case_sensitive_like);
 }
 
 void MainWindow::savePragmas()
@@ -1901,13 +1935,14 @@ void MainWindow::savePragmas()
     db.setPragma("journal_size_limit", ui->spinPragmaJournalSizeLimit->value(), pragmaValues.journal_size_limit);
     db.setPragma("locking_mode", ui->comboboxPragmaLockingMode->currentText().toUpper(), pragmaValues.locking_mode);
     db.setPragma("max_page_count", ui->spinPragmaMaxPageCount->value(), pragmaValues.max_page_count);
-    db.setPragma("page_size", ui->spinPragmaPageSize->value(), pragmaValues.page_size);
+    db.setPragma("page_size", ui->comboPragmaPageSize->currentText().toInt(), pragmaValues.page_size);
     db.setPragma("recursive_triggers", ui->checkboxPragmaRecursiveTriggers->isChecked(), pragmaValues.recursive_triggers);
     db.setPragma("secure_delete", ui->checkboxPragmaSecureDelete->isChecked(), pragmaValues.secure_delete);
     db.setPragma("synchronous", ui->comboboxPragmaSynchronous->currentIndex(), pragmaValues.synchronous);
     db.setPragma("temp_store", ui->comboboxPragmaTempStore->currentIndex(), pragmaValues.temp_store);
     db.setPragma("user_version", ui->spinPragmaUserVersion->value(), pragmaValues.user_version);
     db.setPragma("wal_autocheckpoint", ui->spinPragmaWalAutoCheckpoint->value(), pragmaValues.wal_autocheckpoint);
+    db.setPragma("case_sensitive_like", ui->checkboxPragmaCaseSensitiveLike->isChecked(), pragmaValues.case_sensitive_like);
 
     updatePragmaUi();
 }
@@ -2349,6 +2384,9 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     // PRAGMAs
                     if(xml.attributes().hasAttribute("foreign_keys"))
                         db.setPragma("foreign_keys", xml.attributes().value("foreign_keys").toString());
+                    if(xml.attributes().hasAttribute("case_sensitive_like"))
+                        db.setPragma("case_sensitive_like", xml.attributes().value("case_sensitive_like").toString());
+                    loadPragmas();
                 } else if(xml.name() == "window") {
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
@@ -2580,6 +2618,7 @@ void MainWindow::saveProject()
         xml.writeStartElement("db");
         xml.writeAttribute("path", db.currentFile());
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
+        xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
         xml.writeEndElement();
 
         // Window settings

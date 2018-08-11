@@ -1641,6 +1641,11 @@ void DBBrowserDB::updateSchema()
 
 QString DBBrowserDB::selectSingleCell(const QString& sql, bool logsql)
 {
+    waitForDbRelease();
+
+    if(!isOpen())
+        return QString();
+
     sqlite3_stmt* vm;
     const char* tail;
     QString retval;
@@ -1666,12 +1671,11 @@ QString DBBrowserDB::selectSingleCell(const QString& sql, bool logsql)
 
 QString DBBrowserDB::getPragma(const QString& pragma)
 {
-    waitForDbRelease();
-
-    if(!isOpen())
-        return QString();
-
-    QString sql = QString("PRAGMA %1").arg(pragma);
+    QString sql;
+    if (pragma=="case_sensitive_like")
+        sql = "SELECT 'x' NOT LIKE 'X'";
+    else
+        sql = QString("PRAGMA %1").arg(pragma);
     return selectSingleCell(sql);
 }
 
