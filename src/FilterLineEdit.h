@@ -23,6 +23,8 @@ private slots:
 
 signals:
     void delayedTextChanged(QString text);
+    void addFilterAsCondFormat(QString text);
+    void clearAllCondFormats();
 
 protected:
     void keyReleaseEvent(QKeyEvent* event);

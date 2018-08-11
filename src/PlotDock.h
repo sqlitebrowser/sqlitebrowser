@@ -1,6 +1,8 @@
 #ifndef PLOTDOCK_H
 #define PLOTDOCK_H
 
+#include "Palette.h"
+
 #include <QDialog>
 #include <QVariant>
 #include <QMenu>
@@ -88,6 +90,7 @@ private:
     QMenu* m_contextMenu;
     bool m_showLegend;
     bool m_stackedBars;
+    Palette m_graphPalette;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype

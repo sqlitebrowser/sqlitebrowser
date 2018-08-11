@@ -6,10 +6,12 @@
 #include <QVector>
 #include <QThread>
 #include <QMutex>
+#include <QColor>
 #include <memory>
 
 #include "sqlitetypes.h"
 #include "RowCache.h"
+#include "CondFormat.h"
 
 struct sqlite3;
 class DBBrowserDB;
@@ -109,6 +111,9 @@ public:
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
 
+    void addCondFormat(int column, const CondFormat& condFormat);
+    void setCondFormats(int column, const QVector<CondFormat>& condFormats);
+
 public slots:
     void updateFilter(int column, const QString& value);
 
@@ -175,6 +180,7 @@ private:
     QMap<int, QString> m_mWhere;
     QVector<QString> m_vDisplayFormat;
     QVector<int> m_vDataTypes;
+    QMap<int, QVector<CondFormat>> m_mCondFormats;
 
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.

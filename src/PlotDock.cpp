@@ -479,56 +479,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
             // Generate a default colour if none isn't set yet
             QColor colour = changeitem->backgroundColor(column);
             if(!colour.isValid())
-            {
-                static int last_colour_index = 0;
-                switch(last_colour_index++)
-                {
-                case 0:
-                    colour = QColor(0, 69, 134);
-                    break;
-                case 1:
-                    colour = QColor(255, 66, 14);
-                    break;
-                case 2:
-                    colour = QColor(255, 211, 32);
-                    break;
-                case 3:
-                    colour = QColor(87, 157, 28);
-                    break;
-                case 4:
-                    colour = QColor(126, 0, 33);
-                    break;
-                case 5:
-                    colour = QColor(131, 202, 255);
-                    break;
-                case 6:
-                    colour = QColor(49, 64, 4);
-                    break;
-                case 7:
-                    colour = QColor(174, 207, 0);
-                    break;
-                case 8:
-                    colour = QColor(75, 31, 111);
-                    break;
-                case 9:
-                    colour = QColor(255, 149, 14);
-                    break;
-                case 10:
-                    colour = QColor(197, 00, 11);
-                    break;
-                case 11:
-                    colour = QColor(0, 132, 209);
-
-                    // Since this is the last colour in our table, reset the counter back
-                    // to the first colour
-                    last_colour_index = 0;
-                    break;
-                default:
-                    // NOTE: This shouldn't happen!
-                    colour = QColor(0, 0, 0);
-                    break;
-                }
-            }
+                colour = m_graphPalette.nextSerialColor(true);
 
             // Set colour
             changeitem->setBackgroundColor(column, colour);
