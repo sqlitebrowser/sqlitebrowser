@@ -1013,6 +1013,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionWiki"/>
     <addaction name="actionSqlCipherFaq"/>
     <addaction name="actionBug_report"/>
+    <addaction name="actionDonatePatreon"/>
     <addaction name="helpAboutAction"/>
    </widget>
    <widget class="QMenu" name="menuTools">
@@ -1760,6 +1761,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Web&amp;site</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionDonatePatreon">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Donate on Patreon...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>

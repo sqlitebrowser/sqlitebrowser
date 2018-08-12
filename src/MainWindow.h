@@ -268,6 +268,7 @@ private slots:
     void on_actionBug_report_triggered();
     void on_actionSqlCipherFaq_triggered();
     void on_actionWebsite_triggered();
+    void on_actionDonatePatreon_triggered();
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();

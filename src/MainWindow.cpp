@@ -2258,6 +2258,11 @@ void MainWindow::on_actionWebsite_triggered()
     QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
 }
 
+void MainWindow::on_actionDonatePatreon_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=11578749"));
+}
+
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
 {
     QSet<int> selectedCols(ui->dataTable->selectedCols());
