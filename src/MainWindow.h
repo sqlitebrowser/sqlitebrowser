@@ -193,7 +193,7 @@ private:
 
     StatementType getQueryType(const QString& query) const;
 
-    void applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
+    void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
 
 protected:
     void closeEvent(QCloseEvent *);

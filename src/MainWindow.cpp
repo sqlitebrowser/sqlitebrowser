@@ -627,8 +627,12 @@ void MainWindow::populateTable()
     QApplication::restoreOverrideCursor();
 }
 
-void MainWindow::applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters)
+void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters)
 {
+    // We don't want to pass storedData by reference because the functions below would change the referenced data in their original
+    // place, thus modifiying the data this function can use. To have a static description of what the view should look like we want
+    // a copy here.
+
     // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
     // because of the filter row generation.
     showRowidColumn(storedData.showRowid, skipFilters);
