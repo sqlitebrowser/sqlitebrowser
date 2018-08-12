@@ -412,9 +412,8 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     bool custom_display_format = false;
     if(m_vDisplayFormat.size())
     {
-        // NOTE: This assumes that custom display formats never start and end with a backtick
         if(index.column() > 0)
-            custom_display_format = !(m_vDisplayFormat.at(index.column()-1).startsWith("`") && m_vDisplayFormat.at(index.column()-1).endsWith("`"));
+            custom_display_format = m_vDisplayFormat.at(index.column()-1) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)
