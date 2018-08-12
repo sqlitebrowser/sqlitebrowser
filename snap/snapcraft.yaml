@@ -16,7 +16,7 @@
             * Import and export databases from/to SQL dump files
             * Issue SQL queries and inspect the results
             * Examine a log of all SQL commands issued by the application
-            SQLite Database Browser is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands.   # a longer description for the snap
+            SQLite Database Browser is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands.
           confinement:            strict  # use "strict" to enforce system access only via declared interfaces
 
           grade:                  devel
@@ -81,20 +81,13 @@
                 # - ttf-ubuntu-font-family
                 # - dmz-cursor-theme
                 # - light-themes
-                # - adwaita-icon-theme
-                # - gnome-themes-standard
                 - shared-mime-info
                 - libqt5gui5
                 - libgdk-pixbuf2.0-0
                 - libqt5svg5
-                - try:
-                  - appmenu-qt5
-                # - locales-all
-                # - xdg-user-dirs
-                # prime:
-                #   - -usr/lib/*-linux-gnu*/dri/*
-                #   - -usr/lib/*-linux-gnu*/libLLVM*
-                #   - -usr/lib/*-linux-gnu*/libcudata.so.*
+                - appmenu-qt5
+                - locales-all
+                - xdg-user-dirs
 
               dump:
                   plugin:         dump
@@ -103,14 +96,14 @@
                   - sqlitebrowser
                   stage-packages:
                   # - qtbase5-dev
-                  - libqt5gui5
+                  # - libqt5gui5
                   # - libqt4gui4
                   # - libxkbcommon0
                   # - libxkbfile1
-                  - gtk2-engines
+                  # - gtk2-engines
                   - libc6
                   # - gtk2-engines-oxygen
-                  - gtk3-engines-breeze
+                  # - gtk3-engines-breeze
                   - libgcc1
                   # - libqcustomplot1.3
                   # - libqt5network5
@@ -120,6 +113,9 @@
                   - libsqlcipher-dev
                   - libatk-adaptor
                   - libgail-common
+                  - libgail-3-0
+                  - libgail-3-dev
+                  - libgail-dev
                   filesets:
                       wanted:
                       - bin/*
@@ -129,6 +125,9 @@
                       - usr/lib/*-linux-gnu*/libz.so*
                       - usr/lib/*-linux-gnu*/libatk*
                       - usr/lib/*-linux-gnu*/libgail*
-
+                      - usr/lib/*-linux-gnu*/gtk-2.0/modules/*
+                      - etc/X11/Xsession.d/90atk-adaptor
+                      - usr/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
+                      - usr/lib/unity-settings-daemon-1.0/gtk-modules/at-spi2-atk.desktop
                   prime:
                   - $wanted

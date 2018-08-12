@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SNAP=`echo $SNAP | sed -e "s|/var/lib/snapd||g"`
+
 export PATH=$SNAP/bin:$SNAP/usr/bin:/snap/bin:$PATH
 export PATH="$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
 
@@ -73,6 +75,24 @@ export XLOCALEDIR=$RUNTIME/usr/share/X11/locale
 
 # Set XCursors path
 export XCURSOR_PATH=$RUNTIME/usr/share/icons
+
+# Mesa Libs for OpenGL support
+append_dir LD_LIBRARY_PATH $RUNTIME/usr/lib/$ARCH/mesa
+append_dir LD_LIBRARY_PATH $RUNTIME/usr/lib/$ARCH/mesa-egl
+
+# Tell libGL where to find the drivers
+export LIBGL_DRIVERS_PATH=$RUNTIME/usr/lib/$ARCH/dri
+append_dir LD_LIBRARY_PATH $LIBGL_DRIVERS_PATH
+
+# Workaround in snapd for proprietary nVidia drivers mounts the drivers in
+# /var/lib/snapd/lib/gl that needs to be in LD_LIBRARY_PATH
+# Without that OpenGL using apps do not work with the nVidia drivers.
+# Ref.: https://bugs.launchpad.net/snappy/+bug/1588192
+append_dir LD_LIBRARY_PATH /var/lib/snapd/lib/gl
+
+# Unity7 export (workaround for https://launchpad.net/bugs/1638405)
+append_dir LD_LIBRARY_PATH $RUNTIME/usr/lib/$ARCH/libunity
+
 
 # XDG Config
 prepend_dir XDG_CONFIG_DIRS $SNAP/etc/xdg
@@ -284,6 +304,13 @@ for f in ${gtk_configs[@]}; do
   fi
 done
 
+# create symbolic link to ibus socket path for ibus to look up its socket files
+# (see comments #3 and #6 on https://launchpad.net/bugs/1580463)
+IBUS_CONFIG_PATH=$XDG_CONFIG_HOME/ibus
+mkdir -p $IBUS_CONFIG_PATH
+[ -d $IBUS_CONFIG_PATH/bus ] && rm -rf $IBUS_CONFIG_PATH/bus
+ln -sfn $REALHOME/.config/ibus/bus $IBUS_CONFIG_PATH
+
 
 ##############################
 # GTK launcher specific part #
@@ -291,22 +318,19 @@ done
 
 export GTK_PATH=$RUNTIME/usr/lib/$ARCH/gtk-3.0:$RUNTIME/usr/lib/$ARCH/gtk-2.0
 
-# # ibus and fcitx integration
-# GTK_IM_MODULE_DIR=$XDG_CACHE_HOME/immodules
-# export GTK_IM_MODULE_FILE=$GTK_IM_MODULE_DIR/immodules.cache
-# if [ $needs_update = true ]; then
-#   rm -rf $GTK_IM_MODULE_DIR
-#   mkdir -p $GTK_IM_MODULE_DIR
-#   ln -s $RUNTIME/usr/lib/gtk-2.0/2.10.0/immodules/*.so $GTK_IM_MODULE_DIR
-#   $RUNTIME/usr/bin/gtk-query-immodules-2.0 > $GTK_IM_MODULE_FILE
-#   $RUNTIME/usr/bin/gtk-query-immodules-3.0 >> $GTK_IM_MODULE_FILE
-# fi
+# ibus and fcitx integration
+GTK_IM_MODULE_DIR=$XDG_CACHE_HOME/immodules
+export GTK_IM_MODULE_FILE=$GTK_IM_MODULE_DIR/immodules.cache
+if [ $needs_update = true ]; then
+  rm -rf $GTK_IM_MODULE_DIR
+  mkdir -p $GTK_IM_MODULE_DIR
+  ln -s $RUNTIME/usr/lib/$ARCH/gtk-2.0/2.10.0/immodules/*.so $GTK_IM_MODULE_DIR
+  $RUNTIME/usr/lib/$ARCH/libgtk2.0-0/gtk-query-immodules-2.0 > $GTK_IM_MODULE_FILE
+  # $RUNTIME/usr/lib/$ARCH/libgtk3.0-0/gtk-query-immodules-3.0 >> $GTK_IM_MODULE_FILE
+fi
 
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$ARCH:$SNAP/usr/lib/$ARCH:$SNAP/usr/lib/$ARCH/mesa:$SNAP/usr/lib/$ARCH/mesa-egl"
 export LD_LIBRARY_PATH="$SNAP/usr/lib/$ARCH:$SNAP/usr/lib/$ARCH/mesa:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH=$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH
 
-
-
-cd /snap/sqlitebrowser/current/bin
-./sqlitebrowser "$@"
+exec "desktop-launch" "$SNAP/bin/sqlitebrowser" "$@"
