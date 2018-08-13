@@ -330,7 +330,7 @@ void MainWindow::init()
     // Check for a new version if automatic update check aren't disabled in the settings dialog
     if(Settings::getValue("checkversion", "enabled").toBool())
     {
-        m_remoteDb->fetch("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease",
+        m_remoteDb->fetch("https://download.sqlitebrowser.org/currentrelease",
                           RemoteDatabase::RequestTypeNewVersionCheck);
     }
 #endif
