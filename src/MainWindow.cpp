@@ -300,7 +300,7 @@ void MainWindow::init()
 
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, [this](){
         auto & settings = browseTableSettings[currentlyBrowsedTableName()];
-        plotDock->updatePlot(m_browseTableModel, &settings, true, true);
+        plotDock->updatePlot(m_browseTableModel, &settings, true, false);
     });
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
