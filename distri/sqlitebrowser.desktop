@@ -2,6 +2,7 @@
 Name=DB Browser for SQLite
 Comment=DB Browser for SQLite is a light GUI editor for SQLite databases
 Comment[de]=DB Browser for SQLite ist ein GUI-Editor für SQLite-Datenbanken
+Comment[fr]=Un éditeur graphique léger pour les bases de données SQLite
 Exec=sqlitebrowser %f
 Icon=sqlitebrowser
 Terminal=false
