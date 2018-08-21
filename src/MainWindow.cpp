@@ -3021,6 +3021,12 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
         enableEditing(true);
         return;
     }
+
+    // If the settings didn't change, do nothing. This avoids an infinite loop
+    BrowseDataTableSettings& settings = browseTableSettings[currentTable];
+    if(unlock != settings.unlockViewPk.isEmpty() && settings.unlockViewPk == pk)
+        return;
+
     sqlb::ViewPtr obj = db.getObjectByName(currentTable).dynamicCast<sqlb::View>();
 
     // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
@@ -3065,7 +3071,6 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     ui->actionUnlockViewEditing->blockSignals(false);
 
     // Save settings for this table
-    BrowseDataTableSettings& settings = browseTableSettings[currentTable];
     settings.unlockViewPk = pk;
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
