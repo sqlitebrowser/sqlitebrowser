@@ -34,6 +34,7 @@ private:
 
     void updateSqlText();
     void populateFields();
+    void setDefaultsStyle(QTreeWidgetItem* item);
 
 private slots:
     virtual void accept();

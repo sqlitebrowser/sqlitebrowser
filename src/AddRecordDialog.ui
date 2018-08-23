@@ -84,7 +84,7 @@
               <string>Value</string>
              </property>
              <property name="toolTip">
-              <string>Default value</string>
+              <string>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</string>
              </property>
             </column>
            </widget>

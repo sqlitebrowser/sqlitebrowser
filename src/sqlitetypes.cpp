@@ -304,6 +304,48 @@ bool Field::isInteger() const
             || norm == "int8";
 }
 
+bool Field::isReal() const
+{
+    QString norm = m_type.trimmed().toLower();
+
+    return     norm == "real"
+            || norm == "double"
+            || norm == "double precision"
+            || norm == "float";
+}
+
+bool Field::isNumeric() const
+{
+    QString norm = m_type.trimmed().toLower();
+
+    return     norm.startsWith("decimal")
+            || norm == "numeric"
+            || norm == "boolean"
+            || norm == "date"
+            || norm == "datetime";
+}
+
+bool Field::isBlob() const
+{
+    QString norm = m_type.trimmed().toLower();
+
+    return     norm.isEmpty()
+            || norm == "blob";
+}
+
+QString Field::affinity() const
+{
+    if (isInteger()) return "INTEGER";
+
+    if (isText()) return "TEXT";
+
+    if (isBlob()) return "BLOB";
+
+    if (isReal()) return "REAL";
+
+    return "NUMERIC";
+}
+
 void Table::clear()
 {
     m_rowidColumn = "_rowid_";
