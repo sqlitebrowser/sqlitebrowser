@@ -181,6 +181,11 @@ void MainWindow::init()
     popupOpenDbMenu->addAction(ui->fileOpenReadOnlyAction);
     ui->fileOpenActionPopup->setMenu(popupOpenDbMenu);
 
+    popupNewRecordMenu = new QMenu(this);
+    popupNewRecordMenu->addAction(ui->newRecordAction);
+    popupNewRecordMenu->addAction(ui->insertValuesAction);
+    ui->buttonNewRecord->setMenu(popupNewRecordMenu);
+
     popupSaveSqlFileMenu = new QMenu(this);
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFile);
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFileAs);
@@ -699,10 +704,15 @@ void MainWindow::addRecord()
     } else {
         // Error inserting empty row.
         // User has to provide values acomplishing the constraints. Open Add Record Dialog.
-        AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
-        if (dialog.exec())
-            populateTable();
+        insertValues();
     }
+}
+
+void MainWindow::insertValues()
+{
+    AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
+    if (dialog.exec())
+        populateTable();
 }
 
 void MainWindow::deleteRecord()

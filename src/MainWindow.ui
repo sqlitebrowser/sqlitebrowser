@@ -197,12 +197,12 @@ You can drag SQL statements from an object row and drop them into other applicat
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonNewRecord">
+           <widget class="QToolButton" name="buttonNewRecord">
             <property name="toolTip">
              <string>Insert a new record in the current table</string>
             </property>
             <property name="whatsThis">
-             <string>This button creates a new, empty record in the database</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>New Record</string>
@@ -210,7 +210,7 @@ You can drag SQL statements from an object row and drop them into other applicat
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonDeleteRecord">
+           <widget class="QToolButton" name="buttonDeleteRecord">
             <property name="toolTip">
              <string>Delete the current record</string>
             </property>
@@ -2093,6 +2093,28 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <enum>QAction::TextHeuristicRole</enum>
    </property>
   </action>
+  <action name="insertValuesAction">
+   <property name="text">
+    <string>Insert Values...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a dialog for inserting values in a new record</string>
+   </property>
+   <property name="statusTip">
+    <string>Open a dialog for inserting values in a new record</string>
+   </property>
+  </action>
+  <action name="newRecordAction">
+   <property name="text">
+    <string>New Record</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert new record using default values in browsed table</string>
+   </property>
+   <property name="statusTip">
+    <string>Insert new record using default values in browsed table</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -3390,6 +3412,38 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileOpen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>newRecordAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>insertValuesAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>insertValues()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
