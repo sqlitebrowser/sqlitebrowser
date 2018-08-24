@@ -19,6 +19,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QTextDocument>
+#include <QCompleter>
 
 #include <limits>
 
@@ -105,10 +106,15 @@ ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* pa
 {
 }
 
-QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/) const
+QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
     // Just create a normal line editor but set the maximum length to the highest possible value instead of the default 32768.
     QLineEdit* editor = new QLineEdit(parent);
+    QCompleter *completer = new QCompleter(editor);
+    completer->setModel(const_cast<QAbstractItemModel*>(index.model()));
+    completer->setCompletionColumn(index.column());
+    completer->setCompletionMode(QCompleter::InlineCompletion);
+    editor->setCompleter(completer);
     editor->setMaxLength(std::numeric_limits<int>::max());
     return editor;
 }
