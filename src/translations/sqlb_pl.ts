@@ -3294,12 +3294,12 @@ Create a backup!</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3053"/>
-        <source>Delete records</source>
+        <source>Delete Records</source>
         <translation>Usuń rekordy</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3055"/>
-        <source>Delete record</source>
+        <source>Delete Record</source>
         <translation>Usuń rekord</translation>
     </message>
 </context>

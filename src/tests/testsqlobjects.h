@@ -33,6 +33,8 @@ private slots:
     void parseDefaultValues();
     void createTableWithIn();
     void createTableWithNotLikeConstraint();
+    void rowValues();
+    void complexExpressions();
 };
 
 #endif

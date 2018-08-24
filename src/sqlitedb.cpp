@@ -134,7 +134,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         sqlite3_create_collation(_db, "UTF16", SQLITE_UTF16, nullptr, sqlite_compare_utf16);
         // add UTF16CI (case insensitive) collation (comparison is performed by QString functions)
         sqlite3_create_collation(_db, "UTF16CI", SQLITE_UTF16, nullptr, sqlite_compare_utf16ci);
-       
+
         // register collation callback
         Callback<void(void*, sqlite3*, int, const char*)>::func = std::bind(&DBBrowserDB::collationNeeded, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
         void (*c_callback)(void*, sqlite3*, int, const char*) = static_cast<decltype(c_callback)>(Callback<void(void*, sqlite3*, int, const char*)>::callback);
@@ -375,6 +375,32 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
     }
 }
 
+void DBBrowserDB::getSqliteVersion(QString& sqlite, QString& sqlcipher)
+{
+    sqlite = QString(SQLITE_VERSION);
+
+    // The SQLCipher version must be queried via a pragma and for a pragma we need a database connection.
+    // Because we want to be able to query the SQLCipher version without opening a database file first, we
+    // open a separate connection to an in-memory database here.
+    sqlcipher = QString();
+#ifdef ENABLE_SQLCIPHER
+    sqlite3* dummy;
+    if(sqlite3_open(":memory:", &dummy) == SQLITE_OK)
+    {
+        sqlite3_stmt* stmt;
+        if(sqlite3_prepare_v2(dummy, "PRAGMA cipher_version", -1, &stmt, nullptr) == SQLITE_OK)
+        {
+            if(sqlite3_step(stmt) == SQLITE_ROW)
+                sqlcipher = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, 0)), sqlite3_column_bytes(stmt, 0));
+
+            sqlite3_finalize(stmt);
+        }
+
+        sqlite3_close(dummy);
+    }
+#endif
+}
+
 bool DBBrowserDB::setSavepoint(const QString& pointname)
 {
     if(!isOpen())
@@ -529,11 +555,22 @@ bool DBBrowserDB::close()
     {
         if (getDirty())
         {
-            QMessageBox::StandardButton reply = QMessageBox::question(nullptr,
-                                                                      QApplication::applicationName(),
-                                                                      tr("Do you want to save the changes "
-                                                                         "made to the database file %1?").arg(curDBFilename),
-                                                                      QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+            // In-memory databases can't be saved to disk. So the need another text than regular databases.
+            // Note that the QMessageBox::Yes option in the :memory: case and the QMessageBox::No option in the regular case are
+            // doing the same job: proceeding but not saving anything.
+            QMessageBox::StandardButton reply;
+            if(curDBFilename == ":memory:")
+            {
+                reply = QMessageBox::question(nullptr,
+                                              QApplication::applicationName(),
+                                              tr("Do you really want to close this temporary database? All data will be lost."),
+                                              QMessageBox::Yes | QMessageBox::Cancel);
+            } else {
+                reply = QMessageBox::question(nullptr,
+                                              QApplication::applicationName(),
+                                              tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
+                                              QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+            }
 
             // If the user clicked the cancel button stop here and return false
             if(reply == QMessageBox::Cancel)
@@ -628,9 +665,8 @@ bool DBBrowserDB::dump(const QString& filePath,
                 it.remove();
             } else {
                 // Otherwise get the number of records in this table
-                SqliteTableModel tableModel(*this);
-                tableModel.setTable(sqlb::ObjectIdentifier("main", it.value()->name()));
-                numRecordsTotal += tableModel.rowCount();
+                numRecordsTotal += querySingeValueFromDb(QString("SELECT COUNT(*) FROM %1;")
+                                                         .arg(sqlb::ObjectIdentifier("main", it.value()->name()).toString())).toUInt();
             }
         }
 
@@ -942,6 +978,37 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
+QVariant DBBrowserDB::querySingeValueFromDb(const QString& statement, bool log)
+{
+    waitForDbRelease();
+    if(!_db)
+        return QVariant();
+
+    if(log)
+        logSQL(statement, kLogMsg_App);
+
+    QByteArray utf8Query = statement.toUtf8();
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
+    {
+        if(sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            if(sqlite3_column_count(stmt) > 0 && sqlite3_column_type(stmt, 0) != SQLITE_NULL)
+            {
+                int bytes = sqlite3_column_bytes(stmt, 0);
+                if(bytes)
+                    return QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, 0)), bytes);
+                else
+                    return "";
+            }
+
+            sqlite3_finalize(stmt);
+        }
+    }
+
+    return QVariant();
+}
+
 bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata)
 {
     waitForDbRelease();
@@ -1142,7 +1209,7 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
     QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
             .arg(table.toString())
             .arg(sqlb::escapeIdentifier(column))
-            .arg(pk)
+            .arg(sqlb::escapeIdentifier(pk))
             .arg(QString(rowid).replace("'", "''"));
 
     logSQL(sql, kLogMsg_App);
@@ -1633,7 +1700,12 @@ QString DBBrowserDB::getPragma(const QString& pragma)
     if(!isOpen())
         return QString();
 
-    QString sql = QString("PRAGMA %1").arg(pragma);
+    QString sql;
+    if (pragma=="case_sensitive_like")
+        sql = "SELECT 'x' NOT LIKE 'X'";
+    else
+        sql = QString("PRAGMA %1").arg(pragma);
+
     sqlite3_stmt* vm;
     const char* tail;
     QString retval;
@@ -1659,7 +1731,7 @@ QString DBBrowserDB::getPragma(const QString& pragma)
 bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
 {
     // Set the pragma value
-    QString sql = QString("PRAGMA %1 = \"%2\";").arg(pragma).arg(value);
+    QString sql = QString("PRAGMA %1 = '%2';").arg(pragma).arg(value);
 
     // In general, we want to commit changes before running pragmas because most of them can't be rolled back and some of them
     // even fail when run in a transaction. However, the defer_foreign_keys pragma has neither problem and we need it to be settable

@@ -431,8 +431,7 @@ functionname
 
 expr
   :
-    ( LPAREN expr RPAREN ((AND | OR) expr)* )
-  | ( LPAREN subexpr (COMMA subexpr)+ RPAREN binaryoperator LPAREN subexpr (COMMA subexpr)+ RPAREN )
+    ( LPAREN (((subexpr (COMMA subexpr)+ RPAREN binaryoperator LPAREN subexpr (COMMA subexpr)+) | (expr)) RPAREN) ((AND | OR) expr)* )
   | ( subexpr ((binaryoperator | AND | OR) subexpr )* )
   ;
 
@@ -444,7 +443,7 @@ subexpr
   | ((databasename DOT)? tablename DOT)? columnname
   | functionname LPAREN (expr (COMMA expr)* )? RPAREN //TODO
   | castexpr
-  | (EXISTS)? LPAREN (expr | selectstmt) RPAREN
+  | EXISTS LPAREN (expr | selectstmt) RPAREN
   | caseexpr
   | raisefunction
   )

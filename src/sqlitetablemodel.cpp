@@ -412,9 +412,8 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     bool custom_display_format = false;
     if(m_vDisplayFormat.size())
     {
-        // NOTE: This assumes that custom display formats never start and end with a backtick
         if(index.column() > 0)
-            custom_display_format = !(m_vDisplayFormat.at(index.column()-1).startsWith("`") && m_vDisplayFormat.at(index.column()-1).endsWith("`"));
+            custom_display_format = m_vDisplayFormat.at(index.column()-1) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)
@@ -739,24 +738,14 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
                 numeric = true;
                 val = "''";
             } else {
-                bool ok;
-                value.mid(2).toFloat(&ok);
-                if(ok)
-                {
-                    op = value.left(2);
-                    val = value.mid(2);
-                    numeric = true;
-                }
+                value.mid(2).toFloat(&numeric);
+                op = value.left(2);
+                val = value.mid(2);
             }
         } else if(value.left(1) == ">" || value.left(1) == "<") {
-            bool ok;
-            value.mid(1).toFloat(&ok);
-            if(ok)
-            {
-                op = value.left(1);
-                val = value.mid(1);
-                numeric = true;
-            }
+            value.mid(1).toFloat(&numeric);
+            op = value.left(1);
+            val = value.mid(1);
         } else if(value.left(1) == "=") {
             val = value.mid(1);
 
@@ -913,7 +902,9 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 
 bool SqliteTableModel::isEditable() const
 {
-    return !m_sTable.isEmpty() && (m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table || !m_pseudoPk.isEmpty());
+    return !m_sTable.isEmpty() &&
+            m_db.isOpen() &&
+            ((m_db.getObjectByName(m_sTable) && m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table) || !m_pseudoPk.isEmpty());
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const

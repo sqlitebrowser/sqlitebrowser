@@ -114,6 +114,7 @@ private:
         int temp_store;
         int user_version;
         int wal_autocheckpoint;
+        int case_sensitive_like;
     } pragmaValues;
 
     enum StatementType
@@ -193,6 +194,8 @@ private:
 
     StatementType getQueryType(const QString& query) const;
 
+    void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
+
 protected:
     void closeEvent(QCloseEvent *);
     void dragEnterEvent(QDragEnterEvent *event);
@@ -213,6 +216,7 @@ private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
+    void fileNewInMemoryDatabase();
     void populateTable();
     void clearTableBrowser();
     bool fileClose();
@@ -266,6 +270,7 @@ private slots:
     void on_actionBug_report_triggered();
     void on_actionSqlCipherFaq_triggered();
     void on_actionWebsite_triggered();
+    void on_actionDonatePatreon_triggered();
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
@@ -277,7 +282,7 @@ private slots:
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
-    void showRowidColumn(bool show);
+    void showRowidColumn(bool show, bool skipFilters = false);
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
     void fileOpenReadOnly();

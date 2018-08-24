@@ -1,5 +1,5 @@
 project(sqlitebrowser)
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 2.8.12.2)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
@@ -22,6 +22,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+add_definitions(-std=c++11)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -34,7 +35,7 @@ if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
 		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
-		set(QT5_PATH "C:/dev/Qt/5.10.1/msvc2013_64")
+		set(QT5_PATH "C:/dev/Qt/5.8/msvc2013_64")
 		set(VSREDIST "vcredist_x64.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether

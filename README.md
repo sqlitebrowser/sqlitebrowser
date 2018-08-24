@@ -1,12 +1,13 @@
 # DB Browser for SQLite
 
+[![Wiki][wiki-img]][wiki]
 [![Build Status][travis-img]][travis]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
 [![Join the chat at https://join.slack.com/t/db4s/shared_invite/enQtMzc3MzY5OTU4NDgzLWRlYjk0ZmE5ZDEzYWVmNDQxYTYxNmJjNWVkMjI3ZmVjZTY2NDBjODY3YzNhNTNmZDVlNWI2ZGFjNTk5MjJkYmU][slack-img]][slack]
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
-<a href="https://www.patreon.com/bePatron?u=11578749"><img src="https://c5.patreon.com/external/logo/downloads_wordmark_white_on_coral.png" height="20"></a>
+[![Patreon][patreon-img]][patreon]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
@@ -39,6 +40,11 @@ This program is not a visual shell for the sqlite command line tool. It does
 not require familiarity with SQL commands. It is a tool to be used both by
 developers and by end users, and it must remain as simple to use as possible
 in order to achieve its goals.
+
+## Wiki
+
+For documentation, for users as well as for developers, check out our Wiki at
+https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
 ## Nightly builds
 
@@ -169,12 +175,6 @@ or this:
 Instructions for compiling on (at least) Windows, OSX, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
 
-## Developer mailing list
-
-For development related discussion about DB4S and DBHub.io:
-
-* https://lists.sqlitebrowser.org/mailman/listinfo/db4s-dev
-
 ## Twitter
 
 Follow us on Twitter: https://twitter.com/sqlitebrowser
@@ -277,3 +277,9 @@ You can modify or redistribute it under the conditions of these licenses.
 
   [coverity-img]: https://img.shields.io/coverity/scan/11712.svg
   [coverity]: https://scan.coverity.com/projects/sqlitebrowser-sqlitebrowser
+
+  [patreon-img]: https://img.shields.io/badge/donate-Patreon-coral.svg
+  [patreon]: https://www.patreon.com/bePatron?u=11578749
+
+  [wiki-img]: https://img.shields.io/badge/docs-Wiki-blue.svg
+  [wiki]: https://github.com/sqlitebrowser/sqlitebrowser/wiki

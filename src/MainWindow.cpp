@@ -306,7 +306,7 @@ void MainWindow::init()
 
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, [this](){
         auto & settings = browseTableSettings[currentlyBrowsedTableName()];
-        plotDock->updatePlot(m_browseTableModel, &settings, true, true);
+        plotDock->updatePlot(m_browseTableModel, &settings, true, false);
     });
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
@@ -336,7 +336,7 @@ void MainWindow::init()
     // Check for a new version if automatic update check aren't disabled in the settings dialog
     if(Settings::getValue("checkversion", "enabled").toBool())
     {
-        m_remoteDb->fetch("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease",
+        m_remoteDb->fetch("https://download.sqlitebrowser.org/currentrelease",
                           RemoteDatabase::RequestTypeNewVersionCheck);
     }
 #endif
@@ -439,6 +439,19 @@ void MainWindow::fileNew()
     }
 }
 
+void MainWindow::fileNewInMemoryDatabase()
+{
+    db.create(":memory:");
+    setCurrentFile(tr("In-Memory database"));
+    statusEncodingLabel->setText(db.getPragma("encoding"));
+    statusEncryptionLabel->setVisible(false);
+    statusReadOnlyLabel->setVisible(false);
+    loadExtensionsFromSettings();
+    populateTable();
+    openSqlTab(true);
+    createTable();
+}
+
 void MainWindow::populateStructure(const QString& old_table)
 {
     // Refresh the structure tab
@@ -531,8 +544,6 @@ void MainWindow::populateTable()
             updateInsertDeleteRecordButton();
         });
     }
-    updateInsertDeleteRecordButton();
-
     // Search stored table settings for this table
     bool storedDataFound = browseTableSettings.contains(tablename);
 
@@ -596,33 +607,7 @@ void MainWindow::populateTable()
             m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
 
         // There is information stored for this table, so extract it and apply it
-
-        // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
-        // because of the filter row generation.
-        showRowidColumn(storedData.showRowid);
-
-        // Enable editing in general and (un)lock view editing depending on the settings
-        unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
-
-        // Column hidden status
-        on_actionShowAllColumns_triggered();
-        for(auto hiddenIt=storedData.hiddenColumns.constBegin();hiddenIt!=storedData.hiddenColumns.constEnd();++hiddenIt)
-            hideColumns(hiddenIt.key(), hiddenIt.value());
-
-        // Column widths
-        for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
-            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
-
-        // Sorting
-        ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
-
-        // Filters
-        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
-        for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
-            filterHeader->setFilter(filterIt.key(), filterIt.value());
-
-        // Encoding
-        m_browseTableModel->setEncoding(storedData.encoding);
+        applyBrowseTableSettings(storedData);
 
         setRecordsetLabel();
 
@@ -643,7 +628,46 @@ void MainWindow::populateTable()
         ui->actionShowRowidColumn->setVisible(false);
     }
 
+    updateInsertDeleteRecordButton();
+
     QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters)
+{
+    // We don't want to pass storedData by reference because the functions below would change the referenced data in their original
+    // place, thus modifiying the data this function can use. To have a static description of what the view should look like we want
+    // a copy here.
+
+    // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
+    // because of the filter row generation.
+    showRowidColumn(storedData.showRowid, skipFilters);
+
+    // Enable editing in general and (un)lock view editing depending on the settings
+    unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
+
+    // Column hidden status
+    on_actionShowAllColumns_triggered();
+    for(auto hiddenIt=storedData.hiddenColumns.constBegin();hiddenIt!=storedData.hiddenColumns.constEnd();++hiddenIt)
+        hideColumns(hiddenIt.key(), hiddenIt.value());
+
+    // Column widths
+    for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
+        ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+
+    // Sorting
+    ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
+
+    // Filters
+    if(!skipFilters)
+    {
+        FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
+            filterHeader->setFilter(filterIt.key(), filterIt.value());
+    }
+
+    // Encoding
+    m_browseTableModel->setEncoding(storedData.encoding);
 }
 
 bool MainWindow::fileClose()
@@ -901,16 +925,36 @@ void MainWindow::deleteObject()
                                 ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString());
     QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
 
+    // Due to different grammar in languages (e.g. gender or declension), each message must be given separately to translation.
+    QString message;
+    if (type == "table")
+        message = tr("Are you sure you want to delete the table '%1'?\nAll data associated with the table will be lost.");
+    else if (type == "view")
+        message = tr("Are you sure you want to delete the view '%1'?");
+    else if (type == "trigger")
+        message = tr("Are you sure you want to delete the trigger '%1'?");
+    else if (type == "index")
+        message = tr("Are you sure you want to delete the index '%1'?");
+
     // Ask user if he really wants to delete that table
-    if(QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to delete the %1 '%2'?\nAll data associated with the %1 will be lost.").arg(type).arg(name.name()),
+    if(QMessageBox::warning(this, QApplication::applicationName(), message.arg(name.name()),
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         // Delete the table
         QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(name.toString());
         if(!db.executeSQL(statement))
         {
-            QString error = tr("Error: could not delete the %1. Message from database engine:\n%2").arg(type).arg(db.lastError());
-            QMessageBox::warning(this, QApplication::applicationName(), error);
+            if (type == "table")
+                message = tr("Error: could not delete the table.");
+            else if (type == "view")
+                message = tr("Error: could not delete the view.");
+            else if (type == "trigger")
+                message = tr("Error: could not delete the trigger.");
+            else if (type == "index")
+                message = tr("Error: could not delete the index.");
+
+            QString error = tr("Message from database engine:\n%1").arg(db.lastError());
+            QMessageBox::warning(this, QApplication::applicationName(), message + " " + error);
         } else {
             populateTable();
             changeTreeSelection();
@@ -930,8 +974,40 @@ void MainWindow::editObject()
 
     if(type == "table")
     {
+        // For a safe and possibly complex table modification we must follow the steps documented in
+        // https://www.sqlite.org/lang_altertable.html
+        // Paragraph (first procedure): Making Other Kinds Of Table Schema Changes
+
+        QString foreign_keys = db.getPragma("foreign_keys");
+        if (foreign_keys == "1") {
+            if(db.getDirty() && QMessageBox::question(this,
+                                     QApplication::applicationName(),
+                                     tr("Editing the table requires to save all pending changes now.\nAre you sure you want to save the database?"),
+                                     QMessageBox::Save | QMessageBox::Default,
+                                     QMessageBox::Cancel | QMessageBox::Escape) != QMessageBox::Save)
+                return;
+            // Commit all changes so the foreign_keys can be effective.
+            fileSave();
+            db.setPragma("foreign_keys", "0");
+        }
+
         EditTableDialog dialog(db, name, false, this);
-        if(dialog.exec()) {
+        bool ok = dialog.exec();
+
+        // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
+        if (foreign_keys == "1") {
+            if (!db.executeSQL(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema())))) {
+                QMessageBox::warning(this, QApplication::applicationName(),
+                                     tr("Error checking foreign keys after table modification. The changes will be reverted.\n"
+                                        "Message from database engine:\n%1").arg(db.lastError()));
+                db.revertAll();
+            } else {
+                // Commit all changes so the foreign_keys can be effective.
+                fileSave();
+            }
+            db.setPragma("foreign_keys", foreign_keys);
+        }
+        if(ok) {
             ui->dataTable->filterHeader()->clearFilters();
             populateTable();
         }
@@ -1307,7 +1383,7 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = QString("-- At line %1:\n%4\n-- Result: %3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        statusMessage = QString(tr("-- At line %1:\n%4\n-- Result: %3")).arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
         db.logSQL(statusMessage, kLogMsg_User);
 
         // Release the database
@@ -1709,6 +1785,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::activateFields(bool enable)
 {
     bool write = !db.readOnly();
+    bool tempDb = db.currentFile() == ":memory:";
 
     ui->fileCloseAction->setEnabled(enable);
     ui->fileAttachAction->setEnabled(enable);
@@ -1731,8 +1808,8 @@ void MainWindow::activateFields(bool enable)
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
-    ui->actionSaveProject->setEnabled(enable);
-    ui->actionEncryption->setEnabled(enable && write);
+    ui->actionSaveProject->setEnabled(enable && !tempDb);
+    ui->actionEncryption->setEnabled(enable && write && !tempDb);
     ui->buttonClearFilters->setEnabled(enable);
     ui->buttonSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
@@ -1773,9 +1850,8 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 
     attachPlot(ui->dataTable, m_browseTableModel, &browseTableSettings[currentlyBrowsedTableName()]);
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
-    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
-    ui->dataTable->setColumnHidden(0, !showRowid);
+    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+    applyBrowseTableSettings(settings);
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -1830,6 +1906,7 @@ void MainWindow::loadPragmas()
     pragmaValues.temp_store = db.getPragma("temp_store").toInt();
     pragmaValues.user_version = db.getPragma("user_version").toInt();
     pragmaValues.wal_autocheckpoint = db.getPragma("wal_autocheckpoint").toInt();
+    pragmaValues.case_sensitive_like = db.getPragma("case_sensitive_like").toInt();
 
     updatePragmaUi();
 }
@@ -1846,13 +1923,14 @@ void MainWindow::updatePragmaUi()
     ui->spinPragmaJournalSizeLimit->setValue(pragmaValues.journal_size_limit);
     ui->comboboxPragmaLockingMode->setCurrentIndex(ui->comboboxPragmaLockingMode->findText(pragmaValues.locking_mode, Qt::MatchFixedString));
     ui->spinPragmaMaxPageCount->setValue(pragmaValues.max_page_count);
-    ui->spinPragmaPageSize->setValue(pragmaValues.page_size);
+    ui->comboPragmaPageSize->setCurrentIndex(ui->comboPragmaPageSize->findText(QString::number(pragmaValues.page_size), Qt::MatchFixedString));
     ui->checkboxPragmaRecursiveTriggers->setChecked(pragmaValues.recursive_triggers);
     ui->checkboxPragmaSecureDelete->setChecked(pragmaValues.secure_delete);
     ui->comboboxPragmaSynchronous->setCurrentIndex(pragmaValues.synchronous);
     ui->comboboxPragmaTempStore->setCurrentIndex(pragmaValues.temp_store);
     ui->spinPragmaUserVersion->setValue(pragmaValues.user_version);
     ui->spinPragmaWalAutoCheckpoint->setValue(pragmaValues.wal_autocheckpoint);
+    ui->checkboxPragmaCaseSensitiveLike->setChecked(pragmaValues.case_sensitive_like);
 }
 
 void MainWindow::savePragmas()
@@ -1875,13 +1953,14 @@ void MainWindow::savePragmas()
     db.setPragma("journal_size_limit", ui->spinPragmaJournalSizeLimit->value(), pragmaValues.journal_size_limit);
     db.setPragma("locking_mode", ui->comboboxPragmaLockingMode->currentText().toUpper(), pragmaValues.locking_mode);
     db.setPragma("max_page_count", ui->spinPragmaMaxPageCount->value(), pragmaValues.max_page_count);
-    db.setPragma("page_size", ui->spinPragmaPageSize->value(), pragmaValues.page_size);
+    db.setPragma("page_size", ui->comboPragmaPageSize->currentText().toInt(), pragmaValues.page_size);
     db.setPragma("recursive_triggers", ui->checkboxPragmaRecursiveTriggers->isChecked(), pragmaValues.recursive_triggers);
     db.setPragma("secure_delete", ui->checkboxPragmaSecureDelete->isChecked(), pragmaValues.secure_delete);
     db.setPragma("synchronous", ui->comboboxPragmaSynchronous->currentIndex(), pragmaValues.synchronous);
     db.setPragma("temp_store", ui->comboboxPragmaTempStore->currentIndex(), pragmaValues.temp_store);
     db.setPragma("user_version", ui->spinPragmaUserVersion->value(), pragmaValues.user_version);
     db.setPragma("wal_autocheckpoint", ui->spinPragmaWalAutoCheckpoint->value(), pragmaValues.wal_autocheckpoint);
+    db.setPragma("case_sensitive_like", ui->checkboxPragmaCaseSensitiveLike->isChecked(), pragmaValues.case_sensitive_like);
 
     updatePragmaUi();
 }
@@ -2164,7 +2243,16 @@ void MainWindow::on_actionBug_report_triggered()
     const QString kernelType = QSysInfo::kernelType();
     const QString kernelVersion = QSysInfo::kernelVersion();
     const QString arch = QSysInfo::currentCpuArchitecture();
-    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]").arg(version, os, kernelType, kernelVersion, arch);
+
+    QString sqlite_version, sqlcipher_version;
+    DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
+    if(sqlcipher_version.isNull())
+        sqlite_version = QString("SQLite Version ") + sqlite_version;
+    else
+        sqlite_version = QString("SQLCipher Version ") + sqlcipher_version + QString(" (based on SQLite %1)").arg(sqlite_version);
+
+    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]\n> using %6\n> and Qt %7")
+            .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
@@ -2183,6 +2271,11 @@ void MainWindow::on_actionSqlCipherFaq_triggered()
 void MainWindow::on_actionWebsite_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
+}
+
+void MainWindow::on_actionDonatePatreon_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=11578749"));
 }
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
@@ -2308,6 +2401,9 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     // PRAGMAs
                     if(xml.attributes().hasAttribute("foreign_keys"))
                         db.setPragma("foreign_keys", xml.attributes().value("foreign_keys").toString());
+                    if(xml.attributes().hasAttribute("case_sensitive_like"))
+                        db.setPragma("case_sensitive_like", xml.attributes().value("case_sensitive_like").toString());
+                    loadPragmas();
                 } else if(xml.name() == "window") {
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
@@ -2526,6 +2622,7 @@ void MainWindow::saveProject()
         xml.writeStartElement("db");
         xml.writeAttribute("path", db.currentFile());
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
+        xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
         xml.writeEndElement();
 
         // Window settings
@@ -2608,12 +2705,12 @@ void MainWindow::fileAttach()
 void MainWindow::updateFilter(int column, const QString& value)
 {
     m_browseTableModel->updateFilter(column, value);
-    browseTableSettings[currentlyBrowsedTableName()].filterValues[column] = value;
+    BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
+    settings.filterValues[column] = value;
     setRecordsetLabel();
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
-    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
-    ui->dataTable->setColumnHidden(0, !showRowid);
+    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+    applyBrowseTableSettings(settings, true);
 }
 
 void MainWindow::editEncryption()
@@ -2832,7 +2929,7 @@ void MainWindow::editDataColumnDisplayFormat()
     }
 }
 
-void MainWindow::showRowidColumn(bool show)
+void MainWindow::showRowidColumn(bool show, bool skipFilters)
 {
     // Block all signals from the horizontal header. Otherwise the QHeaderView::sectionResized signal causes us trouble
     ui->dataTable->horizontalHeader()->blockSignals(true);
@@ -2857,7 +2954,8 @@ void MainWindow::showRowidColumn(bool show)
     browseTableSettings[current_table].showRowid = show;
 
     // Update the filter row
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
+    if(!skipFilters)
+        qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
 
     // Re-enable signals
     ui->dataTable->horizontalHeader()->blockSignals(false);
@@ -2939,18 +3037,35 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
         return;
     }
 
+    // If the settings didn't change, do nothing. This avoids an infinite loop
+    BrowseDataTableSettings& settings = browseTableSettings[currentTable];
+    if(unlock != settings.unlockViewPk.isEmpty() && settings.unlockViewPk == pk)
+        return;
+
+    sqlb::ViewPtr obj = db.getObjectByName(currentTable).dynamicCast<sqlb::View>();
+
     // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
     if(unlock && pk.isEmpty())
     {
         while(true)
         {
+            bool ok;
+
             // Ask for a PK
-            pk = QInputDialog::getText(this, qApp->applicationName(), tr("Please enter a pseudo-primary key in order to enable editing on this view. "
-                                                                         "This should be the name of a unique column in the view."));
+            pk = QInputDialog::getItem(this,
+                                       qApp->applicationName(),
+                                       tr("Please enter a pseudo-primary key in order to enable editing on this view. "
+                                          "This should be the name of a unique column in the view."),
+                                       obj->fieldNames(),
+                                       0,
+                                       false,
+                                       &ok);
 
             // Cancelled?
-            if(pk.isEmpty())
+            if(!ok || pk.isEmpty()) {
+                ui->actionUnlockViewEditing->setChecked(false);
                 return;
+            }
 
             // Do some basic testing of the input and if the input appears to be good, go on
             if(db.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1;").arg(sqlb::escapeIdentifier(pk)).arg(currentTable.toString()), false, true))
@@ -2971,11 +3086,10 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     ui->actionUnlockViewEditing->blockSignals(false);
 
     // Save settings for this table
-    browseTableSettings[currentTable].unlockViewPk = pk;
+    settings.unlockViewPk = pk;
 
-    // This seems to be necessary as a workaround for newer Qt versions. Otherwise the rowid column is always shown after changing the data view.
-    bool showRowid = browseTableSettings[currentlyBrowsedTableName()].showRowid;
-    ui->dataTable->setColumnHidden(0, !showRowid);
+    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+    applyBrowseTableSettings(settings);
 }
 
 sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
@@ -3155,7 +3269,7 @@ void MainWindow::updateInsertDeleteRecordButton()
     ui->buttonDeleteRecord->setEnabled(isEditable && rows != 0);
 
     if(rows > 1)
-        ui->buttonDeleteRecord->setText(tr("Delete records"));
+        ui->buttonDeleteRecord->setText(tr("Delete Records"));
     else
-        ui->buttonDeleteRecord->setText(tr("Delete record"));
+        ui->buttonDeleteRecord->setText(tr("Delete Record"));
 }

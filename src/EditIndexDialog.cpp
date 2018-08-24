@@ -16,6 +16,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 {
     // Create UI
     ui->setupUi(this);
+    ui->sqlTextEdit->setReadOnly(true);
 
     // Get list of tables, sort it alphabetically and fill the combobox
     QMap<QString, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
