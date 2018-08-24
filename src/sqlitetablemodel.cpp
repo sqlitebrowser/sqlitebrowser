@@ -507,21 +507,27 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         return false;
     }
 
-    beginRemoveRows(parent, row, row + count - 1);
-
     QStringList rowids;
     for(int i=count-1;i>=0;i--)
     {
         if(m_cache.count(row+i)) {
             rowids.append(m_cache.at(row + i).at(0));
         }
-        m_cache.erase(row + i);
-        m_currentRowCount--;
     }
 
     bool ok = m_db.deleteRecords(m_sTable, rowids, m_pseudoPk);
 
-    endRemoveRows();
+    if (ok) {
+        beginRemoveRows(parent, row, row + count - 1);
+
+        for(int i=count-1;i>=0;i--)
+        {
+            m_cache.erase(row + i);
+            m_currentRowCount--;
+        }
+
+        endRemoveRows();
+    }
     return ok;
 }
 
