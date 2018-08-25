@@ -100,6 +100,7 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_reg_bg, "reg_bg");
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
+    ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
@@ -209,6 +210,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
+    Settings::setValue("databrowser", "complete_threshold", ui->spinCompleteThreshold->value());
     Settings::setValue("databrowser", "null_text", ui->txtNull->text());
     Settings::setValue("databrowser", "blob_text", ui->txtBlob->text());
     Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
