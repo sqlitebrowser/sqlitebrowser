@@ -147,6 +147,7 @@ private:
     QMenu* popupTableMenu;
     QMenu* recentFilesMenu;
     QMenu* popupOpenDbMenu;
+    QMenu* popupNewRecordMenu;
     QMenu* popupSaveSqlFileMenu;
     QMenu* popupSaveSqlResultsMenu;
     QMenu* popupSaveFilterAsMenu;
@@ -220,6 +221,7 @@ private slots:
     void clearTableBrowser();
     bool fileClose();
     void addRecord();
+    void insertValues();
     void deleteRecord();
     void navigatePrevious();
     void navigateNext();

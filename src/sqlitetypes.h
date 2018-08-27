@@ -359,6 +359,12 @@ public:
 
     bool isText() const;
     bool isInteger() const;
+    bool isBlob() const;
+    bool isReal() const;
+    bool isNumeric() const;
+
+    // Type affinity of the column according to SQLite3 rules
+    QString affinity() const;
 
     const QString& name() const { return m_name; }
     const QString& type() const { return m_type; }
