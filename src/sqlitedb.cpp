@@ -948,14 +948,18 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
                 break;
             default:
                 // In case of *any* error abort the execution and roll back the transaction
-                sqlite3_finalize(vm);
-                if(dirty)
-                    revertToSavepoint(savepoint_name);
+
+                // Make sure to save the error message first before any other function can mess around with it
                 lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.")
                         .arg(line)
                         .arg(sqlite3_errmsg(_db))
                         .arg(dirty ? tr(" and rolling back") : "");
                 qWarning() << lastErrorMessage;
+
+                // Clean up
+                sqlite3_finalize(vm);
+                if(dirty)
+                    revertToSavepoint(savepoint_name);
                 return false;
             }
         } else {
