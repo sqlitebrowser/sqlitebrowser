@@ -1612,7 +1612,7 @@ void MainWindow::importDatabaseFromSQL()
     if(!db.executeMultiSQL(f.readAll(), newDbFile.size() == 0))
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
     else if(db.getPragma("foreign_keys") == "1" && !db.querySingeValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Import complated. Some foreign key constraints are violated. Please fix them before saving."));
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Import completed. Some foreign key constraints are violated. Please fix them before saving."));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
     f.close();
