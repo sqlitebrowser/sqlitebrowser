@@ -996,7 +996,7 @@ void MainWindow::editObject()
 
         // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
         if (foreign_keys == "1") {
-            if (!db.executeSQL(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema())))) {
+            if (!db.querySingeValueFromDb(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema()))).isNull()) {
                 QMessageBox::warning(this, QApplication::applicationName(),
                                      tr("Error checking foreign keys after table modification. The changes will be reverted.\n"
                                         "Message from database engine:\n%1").arg(db.lastError()));
