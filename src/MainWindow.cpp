@@ -1600,16 +1600,26 @@ void MainWindow::importDatabaseFromSQL()
         loadExtensionsFromSettings();
     }
 
+    // Defer foreign keys. Just deferring them instead of disabling them should work fine because in the import we only expect CREATE and INSERT
+    // statements which unlike in the Edit Table dialog shouldn't trigger any problems.
+    QString foreignKeysOldSettings = db.getPragma("defer_foreign_keys");
+    db.setPragma("defer_foreign_keys", "1");
+
     // Open, read, execute and close file
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
     if(!db.executeMultiSQL(f.readAll(), newDbFile.size() == 0))
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
+    else if(db.getPragma("foreign_keys") == "1" && !db.querySingeValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Import complated. Some foreign key constraints are violated. Please fix them before saving."));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
     f.close();
     QApplication::restoreOverrideCursor();
+
+    // Restore the former foreign key settings
+    db.setPragma("defer_foreign_keys", foreignKeysOldSettings);
 
     // Refresh window when importing into an existing DB or - when creating a new file - just open it correctly
     if(newDbFile.size())
