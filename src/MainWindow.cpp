@@ -2413,6 +2413,12 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         db.setPragma("foreign_keys", xml.attributes().value("foreign_keys").toString());
                     if(xml.attributes().hasAttribute("case_sensitive_like"))
                         db.setPragma("case_sensitive_like", xml.attributes().value("case_sensitive_like").toString());
+                    if(xml.attributes().hasAttribute("temp_store"))
+                        db.setPragma("temp_store", xml.attributes().value("temp_store").toString());
+                    if(xml.attributes().hasAttribute("wal_autocheckpoint"))
+                        db.setPragma("wal_autocheckpoint", xml.attributes().value("wal_autocheckpoint").toString());
+                    if(xml.attributes().hasAttribute("synchronous"))
+                        db.setPragma("synchronous", xml.attributes().value("synchronous").toString());
                     loadPragmas();
                 } else if(xml.name() == "window") {
                     // Window settings
@@ -2633,6 +2639,9 @@ void MainWindow::saveProject()
         xml.writeAttribute("path", db.currentFile());
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
         xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
+        xml.writeAttribute("temp_store", db.getPragma("temp_store"));
+        xml.writeAttribute("wal_autocheckpoint", db.getPragma("wal_autocheckpoint"));
+        xml.writeAttribute("synchronous", db.getPragma("synchronous"));
         xml.writeEndElement();
 
         // Window settings
