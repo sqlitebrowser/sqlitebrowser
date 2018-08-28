@@ -1748,9 +1748,9 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     if( !res )
         qWarning() << tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage);
 
-    // If this is the page_size pragma being set, we need to execute the vacuum command right after the pragma statement or the new
-    // page size won't be saved.
-    if(res && pragma == "page_size")
+    // If this is the page_size or the auto_vacuum pragma being set, we need to execute the vacuum command right after the pragma statement or the new
+    // settings won't be saved.
+    if(res && (pragma == "page_size" || pragma == "auto_vacuum"))
         res = executeSQL("VACUUM;", false, true);
 
     return res;
