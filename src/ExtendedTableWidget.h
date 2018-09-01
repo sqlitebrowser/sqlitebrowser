@@ -6,11 +6,24 @@
 #include <QDropEvent>
 #include <QDragMoveEvent>
 #include <QStyledItemDelegate>
+#include <QSortFilterProxyModel>
 
 class QMenu;
 class QMimeData;
 class FilterTableHeader;
 namespace sqlb { class ObjectIdentifier; }
+
+// Filter proxy model that only accepts distinct non-empty values.
+class UniqueFilterModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+public:
+    explicit UniqueFilterModel(QObject* parent = nullptr);
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+ private:
+    QSet<QString> m_uniqueValues;
+};
 
 // We use this class to provide editor widgets for the ExtendedTableWidget. It's used for every cell in the table view.
 class ExtendedTableWidgetEditorDelegate : public QStyledItemDelegate
