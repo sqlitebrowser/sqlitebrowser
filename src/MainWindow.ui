@@ -230,7 +230,13 @@ You can drag SQL statements from an object row and drop them into other applicat
            <bool>true</bool>
           </property>
           <property name="whatsThis">
-           <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
+           <string>This is the database table view. You can do the following actions:
+ - Start writing for editing inline the value.
+ - Double-click any record to edit its contents in the cell editor window.
+ - Alt+Del for deleting the cell content to NULL.
+ - Ctrl+&quot; for duplicating the current record.
+ - Ctrl+' for copying the value from the cell above.
+ - Standard selection and copy/paste operations.</string>
           </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>

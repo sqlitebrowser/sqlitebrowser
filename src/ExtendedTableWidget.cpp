@@ -625,6 +625,24 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
         m_tableHeader->setFilter(index.column(), filterOperator + value);
 }
 
+void ExtendedTableWidget::duplicateUpperCell()
+{
+    const QModelIndex& currentIndex = selectionModel()->currentIndex();
+    QModelIndex upperIndex = currentIndex.sibling(currentIndex.row() - 1, currentIndex.column());
+    if (upperIndex.isValid()) {
+        SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+        // When the data is binary, just copy it, since it cannot be edited inline.
+        if (m->isBinary(upperIndex))
+            m->setData(currentIndex, m->data(upperIndex, Qt::EditRole), Qt::EditRole);
+        else {
+            // Open the inline editor and set the value (this mimics the behaviour of LibreOffice Calc)
+            edit(currentIndex);
+            QLineEdit* editor = qobject_cast<QLineEdit*>(indexWidget(currentIndex));
+            editor->setText(upperIndex.data().toString());
+        }
+    }
+}
+
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
 {
     // Call a custom copy method when Ctrl-C is pressed
@@ -641,6 +659,9 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::AltModifier) && (event->key() == Qt::Key_C)) {
         // Call copy in SQL format when Ctrl-Alt-C is pressed
         copy(false, true);
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_Apostrophe)) {
+        // Call duplicateUpperCell when Ctrl-' is pressed (this is used by spreadsheets for "Copy Formula from Cell Above")
+        duplicateUpperCell();
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {

@@ -55,6 +55,7 @@ private:
     QString escapeCopiedData(const QByteArray& data) const;
 
     void useAsFilter(const QString& filterOperator, bool binary = false);
+    void duplicateUpperCell();
 
     typedef QList<QByteArray> QByteArrayList;
     static QList<QByteArrayList> m_buffer;
