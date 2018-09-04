@@ -25,10 +25,10 @@ void TestTable::sqlOutput()
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("id", "integer"));
     FieldPtr fkm = FieldPtr(new Field("km", "integer", false, "", "km > 1000"));
-    tt.addField(f);
-    tt.addField(FieldPtr(new Field("car", "text")));
-    tt.addField(fkm);
-    tt.addConstraint({f, fkm}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.fields.push_back(*f);
+    tt.fields.emplace_back("car", "text");
+    tt.fields.push_back(*fkm);
+    tt.addConstraint({f->name(), fkm->name()}, ConstraintPtr(new PrimaryKeyConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
                                "\t\"id\"\tinteger,\n"
@@ -43,10 +43,10 @@ void TestTable::sqlGraveAccentOutput()
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("id", "integer"));
     FieldPtr fkm = FieldPtr(new Field("km", "integer", false, "", "km > 1000"));
-    tt.addField(f);
-    tt.addField(FieldPtr(new Field("car", "text")));
-    tt.addField(fkm);
-    tt.addConstraint({f, fkm}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.fields.push_back(*f);
+    tt.fields.emplace_back("car", "text");
+    tt.fields.push_back(*fkm);
+    tt.addConstraint({f->name(), fkm->name()}, ConstraintPtr(new PrimaryKeyConstraint()));
     sqlb::setIdentifierQuoting(sqlb::GraveAccents);
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE `testtable` (\n"
@@ -65,10 +65,10 @@ void TestTable::sqlSquareBracketsOutput()
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("id", "integer"));
     FieldPtr fkm = FieldPtr(new Field("km", "integer", false, "", "km > 1000"));
-    tt.addField(f);
-    tt.addField(FieldPtr(new Field("car", "text")));
-    tt.addField(fkm);
-    tt.addConstraint({f, fkm}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.fields.push_back(*f);
+    tt.fields.emplace_back("car", "text");
+    tt.fields.push_back(*fkm);
+    tt.addConstraint({f->name(), fkm->name()}, ConstraintPtr(new PrimaryKeyConstraint()));
     sqlb::setIdentifierQuoting(sqlb::SquareBrackets);
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE [testtable] (\n"
@@ -87,10 +87,10 @@ void TestTable::autoincrement()
     FieldPtr f = FieldPtr(new Field("id", "integer"));
     f->setAutoIncrement(true);
     FieldPtr fkm = FieldPtr(new Field("km", "integer"));
-    tt.addField(f);
-    tt.addField(FieldPtr(new Field("car", "text")));
-    tt.addField(fkm);
-    tt.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.fields.push_back(*f);
+    tt.fields.emplace_back("car", "text");
+    tt.fields.push_back(*fkm);
+    tt.addConstraint({f->name()}, ConstraintPtr(new PrimaryKeyConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
                                "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
@@ -105,10 +105,10 @@ void TestTable::notnull()
     FieldPtr f = FieldPtr(new Field("id", "integer"));
     f->setAutoIncrement(true);
     FieldPtr fkm = FieldPtr(new Field("km", "integer"));
-    tt.addField(f);
-    tt.addField(FieldPtr(new Field("car", "text", true)));
-    tt.addField(fkm);
-    tt.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.fields.push_back(*f);
+    tt.fields.emplace_back("car", "text", true);
+    tt.fields.push_back(*fkm);
+    tt.addConstraint({f->name()}, ConstraintPtr(new PrimaryKeyConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
                                "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
@@ -122,10 +122,10 @@ void TestTable::withoutRowid()
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("a", "integer"));
     f->setAutoIncrement(true);
-    tt.addField(f);
-    tt.addField(FieldPtr(new Field("b", "integer")));
+    tt.fields.push_back(*f);
+    tt.fields.emplace_back("b", "integer");
     tt.setRowidColumn("a");
-    tt.addConstraint({f}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint({f->name()}, ConstraintPtr(new PrimaryKeyConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
                                "\t\"a\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
@@ -137,8 +137,8 @@ void TestTable::foreignKeys()
 {
     Table tt("testtable");
     FieldPtr f = FieldPtr(new Field("a", "integer"));
-    tt.addField(f);
-    tt.addConstraint({f}, sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", QStringList("c"))));
+    tt.fields.push_back(*f);
+    tt.addConstraint({f->name()}, sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", QStringList("c"))));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
                                "\t\"a\"\tinteger,\n"
@@ -153,10 +153,10 @@ void TestTable::uniqueConstraint()
     FieldPtr f2 = FieldPtr(new Field("b", "integer"));
     FieldPtr f3 = FieldPtr(new Field("c", "integer"));
     f1->setUnique(true);
-    tt.addField(f1);
-    tt.addField(f2);
-    tt.addField(f3);
-    tt.addConstraint({f2, f3}, sqlb::ConstraintPtr(new sqlb::UniqueConstraint()));
+    tt.fields.push_back(*f1);
+    tt.fields.push_back(*f2);
+    tt.fields.push_back(*f3);
+    tt.addConstraint({f2->name(), f3->name()}, sqlb::ConstraintPtr(new sqlb::UniqueConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
                                "\t\"a\"\tinteger UNIQUE,\n"
@@ -174,26 +174,26 @@ void TestTable::parseSQL()
             "\tinfo VARCHAR(255) CHECK (info == 'x')\n"
             ");";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "hero");
     QCOMPARE(tab.rowidColumn(), "_rowid_");
-    QCOMPARE(tab.fields().at(0)->name(), "id");
-    QCOMPARE(tab.fields().at(1)->name(), "name");
-    QCOMPARE(tab.fields().at(2)->name(), "info");
+    QCOMPARE(tab.fields.at(0).name(), "id");
+    QCOMPARE(tab.fields.at(1).name(), "name");
+    QCOMPARE(tab.fields.at(2).name(), "info");
 
-    QCOMPARE(tab.fields().at(0)->type(), "integer");
-    QCOMPARE(tab.fields().at(1)->type(), "text");
-    QCOMPARE(tab.fields().at(2)->type(), QString("VARCHAR(255)"));
+    QCOMPARE(tab.fields.at(0).type(), "integer");
+    QCOMPARE(tab.fields.at(1).type(), "text");
+    QCOMPARE(tab.fields.at(2).type(), QString("VARCHAR(255)"));
 
-    FieldVector pk = tab.primaryKey();
-    QVERIFY(tab.fields().at(0)->autoIncrement());
+    QStringList pk = tab.primaryKey();
+    QVERIFY(tab.fields.at(0).autoIncrement());
     QCOMPARE(pk.size(), 1);
-    QCOMPARE(pk.at(0), tab.fields().at(0));
-    QVERIFY(tab.fields().at(1)->notnull());
-    QCOMPARE(tab.fields().at(1)->defaultValue(), QString("'xxxx'"));
-    QCOMPARE(tab.fields().at(1)->check(), QString(""));
-    QCOMPARE(tab.fields().at(2)->check(), QString("info=='x'"));
+    QCOMPARE(pk.at(0), tab.fields.at(0).name());
+    QVERIFY(tab.fields.at(1).notnull());
+    QCOMPARE(tab.fields.at(1).defaultValue(), QString("'xxxx'"));
+    QCOMPARE(tab.fields.at(1).check(), QString(""));
+    QCOMPARE(tab.fields.at(2).check(), QString("info=='x'"));
 }
 
 void TestTable::parseSQLdefaultexpr()
@@ -204,29 +204,29 @@ void TestTable::parseSQLdefaultexpr()
             "date datetime default CURRENT_TIMESTAMP,"
             "zoi integer)";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), QString("chtest"));
-    QCOMPARE(tab.fields().at(0)->name(), QString("id"));
-    QCOMPARE(tab.fields().at(1)->name(), QString("dumpytext"));
-    QCOMPARE(tab.fields().at(2)->name(), QString("date"));
-    QCOMPARE(tab.fields().at(3)->name(), QString("zoi"));
+    QCOMPARE(tab.fields.at(0).name(), QString("id"));
+    QCOMPARE(tab.fields.at(1).name(), QString("dumpytext"));
+    QCOMPARE(tab.fields.at(2).name(), QString("date"));
+    QCOMPARE(tab.fields.at(3).name(), QString("zoi"));
 
-    QCOMPARE(tab.fields().at(0)->type(), QString("integer"));
-    QCOMPARE(tab.fields().at(1)->type(), QString("text"));
-    QCOMPARE(tab.fields().at(2)->type(), QString("datetime"));
-    QCOMPARE(tab.fields().at(3)->type(), QString("integer"));
+    QCOMPARE(tab.fields.at(0).type(), QString("integer"));
+    QCOMPARE(tab.fields.at(1).type(), QString("text"));
+    QCOMPARE(tab.fields.at(2).type(), QString("datetime"));
+    QCOMPARE(tab.fields.at(3).type(), QString("integer"));
 
-    QCOMPARE(tab.fields().at(1)->defaultValue(), QString("('axa')"));
-    QCOMPARE(tab.fields().at(1)->check(), QString("dumpytext==\"aa\""));
-    QCOMPARE(tab.fields().at(2)->defaultValue(), QString("CURRENT_TIMESTAMP"));
-    QCOMPARE(tab.fields().at(2)->check(), QString(""));
-    QCOMPARE(tab.fields().at(3)->defaultValue(), QString(""));
-    QCOMPARE(tab.fields().at(3)->check(), QString(""));
+    QCOMPARE(tab.fields.at(1).defaultValue(), QString("('axa')"));
+    QCOMPARE(tab.fields.at(1).check(), QString("dumpytext==\"aa\""));
+    QCOMPARE(tab.fields.at(2).defaultValue(), QString("CURRENT_TIMESTAMP"));
+    QCOMPARE(tab.fields.at(2).check(), QString(""));
+    QCOMPARE(tab.fields.at(3).defaultValue(), QString(""));
+    QCOMPARE(tab.fields.at(3).check(), QString(""));
 
-    sqlb::FieldVector pk = tab.primaryKey();
+    QStringList pk = tab.primaryKey();
     QCOMPARE(pk.size(), 1);
-    QCOMPARE(pk.at(0), tab.fields().at(0));
+    QCOMPARE(pk.at(0), tab.fields.at(0).name());
 }
 
 void TestTable::parseSQLMultiPk()
@@ -238,52 +238,52 @@ void TestTable::parseSQLMultiPk()
             "PRIMARY KEY(\"id1\",\"id2\")\n"
             ");";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "hero");
-    QCOMPARE(tab.fields().at(0)->name(), "id1");
-    QCOMPARE(tab.fields().at(1)->name(), "id2");
+    QCOMPARE(tab.fields.at(0).name(), "id1");
+    QCOMPARE(tab.fields.at(1).name(), "id2");
 
-    QCOMPARE(tab.fields().at(0)->type(), "integer");
-    QCOMPARE(tab.fields().at(1)->type(), "integer");
+    QCOMPARE(tab.fields.at(0).type(), "integer");
+    QCOMPARE(tab.fields.at(1).type(), "integer");
 
-    sqlb::FieldVector pk = tab.primaryKey();
+    QStringList pk = tab.primaryKey();
     QCOMPARE(pk.size(), 2);
-    QCOMPARE(pk.at(0), tab.fields().at(0));
-    QCOMPARE(pk.at(1), tab.fields().at(1));
+    QCOMPARE(pk.at(0), tab.fields.at(0).name());
+    QCOMPARE(pk.at(1), tab.fields.at(1).name());
 }
 
 void TestTable::parseSQLForeignKey()
 {
     QString sSQL = "CREATE TABLE grammar_test(id, test, FOREIGN KEY(test) REFERENCES other_table);";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "grammar_test");
-    QCOMPARE(tab.fields().at(0)->name(), "id");
-    QCOMPARE(tab.fields().at(1)->name(), "test");
+    QCOMPARE(tab.fields.at(0).name(), "id");
+    QCOMPARE(tab.fields.at(1).name(), "test");
 }
 
 void TestTable::parseSQLSingleQuotes()
 {
     QString sSQL = "CREATE TABLE 'test'('id','test');";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "test");
-    QCOMPARE(tab.fields().at(0)->name(), "id");
-    QCOMPARE(tab.fields().at(1)->name(), "test");
+    QCOMPARE(tab.fields.at(0).name(), "id");
+    QCOMPARE(tab.fields.at(1).name(), "test");
 }
 
 void TestTable::parseSQLSquareBrackets()
 {
     QString sSQL = "CREATE TABLE [test]([id],[test]);";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "test");
-    QCOMPARE(tab.fields().at(0)->name(), "id");
-    QCOMPARE(tab.fields().at(1)->name(), "test");
+    QCOMPARE(tab.fields.at(0).name(), "id");
+    QCOMPARE(tab.fields.at(1).name(), "test");
 }
 
 
@@ -291,11 +291,11 @@ void TestTable::parseSQLKeywordInIdentifier()
 {
     QString sSQL = "CREATE TABLE deffered(key integer primary key, if text);";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "deffered");
-    QCOMPARE(tab.fields().at(0)->name(), "key");
-    QCOMPARE(tab.fields().at(1)->name(), "if");
+    QCOMPARE(tab.fields.at(0).name(), "key");
+    QCOMPARE(tab.fields.at(1).name(), "if");
 }
 
 
@@ -305,20 +305,20 @@ void TestTable::parseSQLSomeKeywordsInIdentifier()
       "`Area of Work`	TEXT,"
       "`Average Number of Volunteers`	INTEGER);";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "Average Number of Volunteers by Area of Work");
-    QCOMPARE(tab.fields().at(0)->name(), "Area of Work");
-    QCOMPARE(tab.fields().at(1)->name(), "Average Number of Volunteers");
+    QCOMPARE(tab.fields.at(0).name(), "Area of Work");
+    QCOMPARE(tab.fields.at(1).name(), "Average Number of Volunteers");
 }
 
 void TestTable::parseSQLWithoutRowid()
 {
     QString sSQL = "CREATE TABLE test(a integer primary key, b integer) WITHOUT ROWID;";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
-    QCOMPARE(tab.fields().at(tab.findPk())->name(), "a");
+    QCOMPARE(tab.findPk()->name(), "a");
     QCOMPARE(tab.rowidColumn(), "a");
 }
 
@@ -329,10 +329,10 @@ void TestTable::parseNonASCIIChars()
             "PRIMARY KEY(`Fieldöäüß`)"
             ");";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "lösung");
-    QCOMPARE(tab.fields().at(0)->name(), "Fieldöäüß");
+    QCOMPARE(tab.fields.at(0).name(), "Fieldöäüß");
 }
 
 void TestTable::parseNonASCIICharsEs()
@@ -342,69 +342,69 @@ void TestTable::parseNonASCIICharsEs()
             "PRIMARY KEY(\"Field áéíóúÁÉÍÓÚñÑçÇ\")"
             ");";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "Cigüeñas de Alcalá");
-    QCOMPARE(tab.fields().at(0)->name(), "Field áéíóúÁÉÍÓÚñÑçÇ");
+    QCOMPARE(tab.fields.at(0).name(), "Field áéíóúÁÉÍÓÚñÑçÇ");
 }
 
 void TestTable::parseSQLEscapedQuotes()
 {
     QString sSql = "CREATE TABLE double_quotes(a text default 'a''a');";
 
-    Table tab = *(Table::parseSQL(sSql).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSql)));
 
     QCOMPARE(tab.name(), QString("double_quotes"));
-    QCOMPARE(tab.fields().at(0)->name(), QString("a"));
-    QCOMPARE(tab.fields().at(0)->defaultValue(), QString("'a''a'"));
+    QCOMPARE(tab.fields.at(0).name(), QString("a"));
+    QCOMPARE(tab.fields.at(0).defaultValue(), QString("'a''a'"));
 }
 
 void TestTable::parseSQLForeignKeys()
 {
     QString sql = "CREATE TABLE foreign_key_test(a int, b int, foreign key (a) references x, foreign key (b) references w(y,z) on delete set null);";
 
-    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
 
     QCOMPARE(tab.name(), QString("foreign_key_test"));
-    QCOMPARE(tab.fields().at(0)->name(), QString("a"));
-    QCOMPARE(tab.fields().at(0)->type(), QString("int"));
-    QCOMPARE(tab.constraint({tab.fields().at(0)}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->table(), QString("x"));
-    QCOMPARE(tab.fields().at(1)->name(), QString("b"));
-    QCOMPARE(tab.fields().at(1)->type(), QString("int"));
-    QCOMPARE(tab.constraint({tab.fields().at(1)}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>()->toString(), QString("\"w\"(\"y\",\"z\") on delete set null"));
+    QCOMPARE(tab.fields.at(0).name(), QString("a"));
+    QCOMPARE(tab.fields.at(0).type(), QString("int"));
+    QCOMPARE(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(tab.constraint({tab.fields.at(0).name()}, sqlb::Constraint::ForeignKeyConstraintType))->table(), QString("x"));
+    QCOMPARE(tab.fields.at(1).name(), QString("b"));
+    QCOMPARE(tab.fields.at(1).type(), QString("int"));
+    QCOMPARE(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(tab.constraint({tab.fields.at(1).name()}, sqlb::Constraint::ForeignKeyConstraintType))->toString(), QString("\"w\"(\"y\",\"z\") on delete set null"));
 }
 
 void TestTable::parseSQLCheckConstraint()
 {
     QString sql = "CREATE TABLE a (\"b\" text CHECK(\"b\"='A' or \"b\"='B'));";
 
-    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
 
     QCOMPARE(tab.name(), QString("a"));
-    QCOMPARE(tab.fields().at(0)->name(), QString("b"));
-    QCOMPARE(tab.fields().at(0)->type(), QString("text"));
-    QCOMPARE(tab.fields().at(0)->check(), QString("\"b\"='A' or \"b\"='B'"));
+    QCOMPARE(tab.fields.at(0).name(), QString("b"));
+    QCOMPARE(tab.fields.at(0).type(), QString("text"));
+    QCOMPARE(tab.fields.at(0).check(), QString("\"b\"='A' or \"b\"='B'"));
 }
 
 void TestTable::parseDefaultValues()
 {
     QString sql = "CREATE TABLE test(a int DEFAULT 0, b int DEFAULT -1, c text DEFAULT 'hello', d text DEFAULT '0');";
 
-    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
 
     QCOMPARE(tab.name(), QString("test"));
-    QCOMPARE(tab.fields().at(0)->name(), QString("a"));
-    QCOMPARE(tab.fields().at(0)->type(), QString("int"));
-    QCOMPARE(tab.fields().at(0)->defaultValue(), QString("0"));
-    QCOMPARE(tab.fields().at(1)->name(), QString("b"));
-    QCOMPARE(tab.fields().at(1)->type(), QString("int"));
-    QCOMPARE(tab.fields().at(1)->defaultValue(), QString("-1"));
-    QCOMPARE(tab.fields().at(2)->name(), QString("c"));
-    QCOMPARE(tab.fields().at(2)->type(), QString("text"));
-    QCOMPARE(tab.fields().at(2)->defaultValue(), QString("'hello'"));
-    QCOMPARE(tab.fields().at(3)->name(), QString("d"));
-    QCOMPARE(tab.fields().at(3)->type(), QString("text"));
-    QCOMPARE(tab.fields().at(3)->defaultValue(), QString("'0'"));
+    QCOMPARE(tab.fields.at(0).name(), QString("a"));
+    QCOMPARE(tab.fields.at(0).type(), QString("int"));
+    QCOMPARE(tab.fields.at(0).defaultValue(), QString("0"));
+    QCOMPARE(tab.fields.at(1).name(), QString("b"));
+    QCOMPARE(tab.fields.at(1).type(), QString("int"));
+    QCOMPARE(tab.fields.at(1).defaultValue(), QString("-1"));
+    QCOMPARE(tab.fields.at(2).name(), QString("c"));
+    QCOMPARE(tab.fields.at(2).type(), QString("text"));
+    QCOMPARE(tab.fields.at(2).defaultValue(), QString("'hello'"));
+    QCOMPARE(tab.fields.at(3).name(), QString("d"));
+    QCOMPARE(tab.fields.at(3).type(), QString("text"));
+    QCOMPARE(tab.fields.at(3).defaultValue(), QString("'0'"));
 }
 
 void TestTable::createTableWithIn()
@@ -414,10 +414,10 @@ void TestTable::createTableWithIn()
             "value NVARCHAR(5) CHECK (value IN ('a', 'b', 'c'))"
             ");";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
     QCOMPARE(tab.name(), "not_working");
 
-    QCOMPARE(tab.fields().at(1)->check(), "value IN ('a','b','c')");
+    QCOMPARE(tab.fields.at(1).check(), "value IN ('a','b','c')");
 }
 
 void TestTable::createTableWithNotLikeConstraint()
@@ -432,16 +432,16 @@ void TestTable::createTableWithNotLikeConstraint()
             "value7 INTEGER CONSTRAINT 'value' CHECK(NOT EXISTS (1))\n"
             ");";
 
-    Table tab = *(Table::parseSQL(sSQL).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
     QCOMPARE(tab.name(), "hopefully_working");
 
-    QCOMPARE(tab.fields().at(0)->check(), "value NOT LIKE 'prefix%'");
-    QCOMPARE(tab.fields().at(1)->check(), "value2 NOT MATCH 'prefix%'");
-    QCOMPARE(tab.fields().at(2)->check(), "value3 NOT REGEXP 'prefix%'");
-    QCOMPARE(tab.fields().at(3)->check(), "value4 NOT GLOB 'prefix%'");
-    QCOMPARE(tab.fields().at(4)->check(), "value5 BETWEEN 1+4 AND 100 OR 200");
-    QCOMPARE(tab.fields().at(5)->check(), "value6 NOT BETWEEN 1 AND 100");
-    QCOMPARE(tab.fields().at(6)->check(), "NOT EXISTS (1)");
+    QCOMPARE(tab.fields.at(0).check(), "value NOT LIKE 'prefix%'");
+    QCOMPARE(tab.fields.at(1).check(), "value2 NOT MATCH 'prefix%'");
+    QCOMPARE(tab.fields.at(2).check(), "value3 NOT REGEXP 'prefix%'");
+    QCOMPARE(tab.fields.at(3).check(), "value4 NOT GLOB 'prefix%'");
+    QCOMPARE(tab.fields.at(4).check(), "value5 BETWEEN 1+4 AND 100 OR 200");
+    QCOMPARE(tab.fields.at(5).check(), "value6 NOT BETWEEN 1 AND 100");
+    QCOMPARE(tab.fields.at(6).check(), "NOT EXISTS (1)");
 }
 
 void TestTable::rowValues()
@@ -452,10 +452,10 @@ void TestTable::rowValues()
             "CHECK((a, b) = (1, 2))\n"
             ");";
 
-    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
     QCOMPARE(tab.name(), "test");
 
-    QCOMPARE(tab.constraint({}, sqlb::Constraint::CheckConstraintType).dynamicCast<sqlb::CheckConstraint>()->expression(), QString("(a,b)=(1,2)"));
+    QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(tab.constraint({}, sqlb::Constraint::CheckConstraintType))->expression(), QString("(a,b)=(1,2)"));
 }
 
 void TestTable::complexExpressions()
@@ -467,11 +467,11 @@ void TestTable::complexExpressions()
             "d INTEGER CHECK((((d > 0))))\n"
             ");";
 
-    Table tab = *(Table::parseSQL(sql).dynamicCast<sqlb::Table>());
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
     QCOMPARE(tab.name(), "test");
 
-    QCOMPARE(tab.fields().at(0)->check(), "(a>0)");
-    QCOMPARE(tab.fields().at(1)->check(), "(b>0 and b>1)");
-    QCOMPARE(tab.fields().at(2)->check(), "(c=-1) or (c>0 and c>1) or (c=0)");
-    QCOMPARE(tab.fields().at(3)->check(), "(((d>0)))");
+    QCOMPARE(tab.fields.at(0).check(), "(a>0)");
+    QCOMPARE(tab.fields.at(1).check(), "(b>0 and b>1)");
+    QCOMPARE(tab.fields.at(2).check(), "(c=-1) or (c>0 and c>1) or (c=0)");
+    QCOMPARE(tab.fields.at(3).check(), "(((d>0)))");
 }

@@ -73,11 +73,11 @@ void PreferencesDialog::loadSettings()
     ui->spinPrefetchSize->setValue(Settings::getValue("db", "prefetchsize").toInt());
     ui->editDatabaseDefaultSqlText->setText(Settings::getValue("db", "defaultsqltext").toString());
 
-    ui->defaultFieldTypeComboBox->addItems(sqlb::Field::Datatypes);
+    ui->defaultFieldTypeComboBox->addItems(DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
-    if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
+    if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }

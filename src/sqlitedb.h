@@ -118,7 +118,7 @@ private:
      * @param field Field to get the max value
      * @return the max value of the field or 0 on error
      */
-    QString max(const sqlb::ObjectIdentifier& tableName, sqlb::FieldPtr field) const;
+    QString max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const;
 
 public:
     void updateSchema();
@@ -137,9 +137,9 @@ public:
     bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk = QString());
     bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
 
-    bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
+    bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldPtrVector& structure);
     bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
-    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::FieldPtr& field);
+    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field);
 
     /**
      * @brief alterTable Can be used to rename, modify or drop an existing column of a given table
@@ -155,7 +155,18 @@ public:
     bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
-    const sqlb::ObjectPtr getObjectByName(const sqlb::ObjectIdentifier& name) const;
+
+    template<typename T = sqlb::Object>
+    const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
+    {
+        for(auto& it : schemata[name.schema()])
+        {
+            if(it->name() == name.name())
+                return std::dynamic_pointer_cast<T>(it);
+        }
+        return std::shared_ptr<T>();
+    }
+
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
@@ -171,6 +182,8 @@ public:
     bool setPragma(const QString& pragma, int value, int& originalvalue);
 
     bool loadExtension(const QString& filename);
+
+    static QStringList Datatypes;
 
 private:
     QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);

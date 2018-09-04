@@ -227,7 +227,7 @@ void ImportCsvDialog::updatePreview()
     ui->tablePreview->setRowCount(0);
 
     // Analyse CSV file
-    sqlb::FieldVector fieldList = generateFieldList(selectedFile);
+    sqlb::FieldPtrVector fieldList = generateFieldList(selectedFile);
 
     // Reset preview widget
     ui->tablePreview->clear();
@@ -343,7 +343,7 @@ void ImportCsvDialog::matchSimilar()
         auto item = ui->filePicker->item(i);
         auto header = generateFieldList(item->data(Qt::DisplayRole).toString());
 
-        if (selectedHeader.count() == header.count())
+        if (selectedHeader.size() == header.size())
         {
             bool matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
                                              [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
@@ -382,9 +382,9 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     return csv.parse(rowFunction, tstream, count);
 }
 
-sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
+sqlb::FieldPtrVector ImportCsvDialog::generateFieldList(const QString& filename)
 {
-    sqlb::FieldVector fieldList;        // List of fields in the file
+    sqlb::FieldPtrVector fieldList;        // List of fields in the file
 
     // Parse the first couple of records of the CSV file and only analyse them
     parseCSV(filename, [this, &fieldList](size_t rowNum, const CSVRow& data) -> bool {
@@ -487,7 +487,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Analyse CSV file
-    sqlb::FieldVector fieldList = generateFieldList(fileName);
+    sqlb::FieldPtrVector fieldList = generateFieldList(fileName);
     if(fieldList.size() == 0)
         return true;
 
@@ -496,7 +496,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName));
     if(obj && obj->type() == sqlb::Object::Types::Table)
     {
-        if(obj.dynamicCast<sqlb::Table>()->fields().size() != fieldList.size())
+        if(std::dynamic_pointer_cast<sqlb::Table>(obj)->fields.size() != fieldList.size())
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
@@ -558,10 +558,10 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName)).dynamicCast<sqlb::Table>();
+        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName));
         if(tbl)
         {
-            for(const sqlb::FieldPtr& f : tbl->fields())
+            for(const sqlb::Field& f : tbl->fields)
             {
                 // For determining the value for empty fields we follow a set of rules
 
@@ -571,17 +571,17 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                 // If a field has a default value, that gets priority over everything else.
                 // Exception: if the user wants to ignore default values we never use them.
-                if(!ignoreDefaults && !f->defaultValue().isNull())
+                if(!ignoreDefaults && !f.defaultValue().isNull())
                 {
-                    nullValues << f->defaultValue().toUtf8();
+                    nullValues << f.defaultValue().toUtf8();
                 } else {
                     // If it has no default value, check if the field is NOT NULL
-                    if(f->notnull())
+                    if(f.notnull())
                     {
                         // The field is NOT NULL
 
                         // If this is an integer column insert 0. Otherwise insert an empty string.
-                        if(f->isInteger())
+                        if(f.isInteger())
                             nullValues << "0";
                         else
                             nullValues << "";
@@ -602,7 +602,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
     QString sQuery = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
-    for(int i=1;i<=fieldList.size();i++)
+    for(size_t i=1;i<=fieldList.size();i++)
         sQuery.append(QString("?%1,").arg(i));
     sQuery.chop(1); // Remove last comma
     sQuery.append(")");
