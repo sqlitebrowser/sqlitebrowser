@@ -184,7 +184,6 @@ private:
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
     void enableEditing(bool enable_edit);
-    void loadExtensionsFromSettings();
     void saveAsView(QString query);
     void duplicateRecord(int currentRow);
     void selectTableLine(int lineToSelect);

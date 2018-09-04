@@ -171,6 +171,7 @@ public:
     bool setPragma(const QString& pragma, int value, int& originalvalue);
 
     bool loadExtension(const QString& filename);
+    void loadExtensionsFromSettings();
 
 private:
     QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);

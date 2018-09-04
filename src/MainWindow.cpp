@@ -401,7 +401,6 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
-                loadExtensionsFromSettings();
                 if(ui->mainTab->currentIndex() == BrowseTab)
                     populateTable();
                 else if(ui->mainTab->currentIndex() == PragmaTab)
@@ -432,7 +431,6 @@ void MainWindow::fileNew()
         statusEncodingLabel->setText(db.getPragma("encoding"));
         statusEncryptionLabel->setVisible(false);
         statusReadOnlyLabel->setVisible(false);
-        loadExtensionsFromSettings();
         populateTable();
         openSqlTab(true);
         createTable();
@@ -446,7 +444,6 @@ void MainWindow::fileNewInMemoryDatabase()
     statusEncodingLabel->setText(db.getPragma("encoding"));
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
-    loadExtensionsFromSettings();
     populateTable();
     openSqlTab(true);
     createTable();
@@ -1597,7 +1594,6 @@ void MainWindow::importDatabaseFromSQL()
         }
 
         db.create(newDbFile);
-        loadExtensionsFromSettings();
     }
 
     // Defer foreign keys. Just deferring them instead of disabling them should work fine because in the import we only expect CREATE and INSERT
@@ -2125,19 +2121,6 @@ void MainWindow::loadExtension()
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
 }
 
-void MainWindow::loadExtensionsFromSettings()
-{
-    if(!db.isOpen())
-        return;
-
-    QStringList list = Settings::getValue("extensions", "list").toStringList();
-    for(const QString& ext : list)
-    {
-        if(db.loadExtension(ext) == false)
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
-    }
-}
-
 void MainWindow::reloadSettings()
 {
     // Set data browser font
@@ -2163,7 +2146,7 @@ void MainWindow::reloadSettings()
     editDock->reloadSettings();
 
     // Load extensions
-    loadExtensionsFromSettings();
+    db.loadExtensionsFromSettings();
 
     // Refresh view
     dbStructureModel->reloadData();

@@ -156,6 +156,9 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         QFileInfo fid(fi.absoluteDir().absolutePath());
         isReadOnly = readOnly || !fi.isWritable() || !fid.isWritable();
 
+        // Load extensions
+        loadExtensionsFromSettings();
+
         // Execute default SQL
         if(!isReadOnly)
         {
@@ -531,6 +534,9 @@ bool DBBrowserDB::create ( const QString & db)
             executeSQL("CREATE TABLE notempty (id integer primary key);", false, false);
             executeSQL("DROP TABLE notempty;", false, false);
         }
+
+        // Load extensions
+        loadExtensionsFromSettings();
 
         // Execute default SQL
         QString default_sql = Settings::getValue("db", "defaultsqltext").toString();
@@ -1805,6 +1811,20 @@ bool DBBrowserDB::loadExtension(const QString& filePath)
         lastErrorMessage = QString::fromUtf8(error);
         sqlite3_free(error);
         return false;
+    }
+}
+
+
+void DBBrowserDB::loadExtensionsFromSettings()
+{
+    if(!_db)
+        return;
+
+    QStringList list = Settings::getValue("extensions", "list").toStringList();
+    for(const QString& ext : list)
+    {
+        if(loadExtension(ext) == false)
+            QMessageBox::warning(nullptr, QApplication::applicationName(), tr("Error loading extension: %1").arg(lastError()));
     }
 }
 
