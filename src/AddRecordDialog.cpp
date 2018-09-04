@@ -112,7 +112,7 @@ AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
       ui(new Ui::AddRecordDialog),
       pdb(db),
       curTable(tableName),
-      m_table(*(pdb.getObjectByName(curTable).dynamicCast<sqlb::Table>()))
+      m_table(*(pdb.getObjectByName<sqlb::Table>(curTable)))
 {
     // Create UI
     ui->setupUi(this);
@@ -174,43 +174,42 @@ void AddRecordDialog::populateFields()
     ui->treeWidget->setItemDelegateForColumn(kType, new NoEditDelegate(this));
     ui->treeWidget->setItemDelegateForColumn(kValue, new EditDelegate(this));
 
-    const sqlb::FieldVector& fields = m_table.fields();
-    const sqlb::FieldVector& pk = m_table.primaryKey();
-    for(const sqlb::FieldPtr& f : fields)
+    const auto& fields = m_table.fields;
+    const QStringList& pk = m_table.primaryKey();
+    for(const sqlb::Field& f : fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
 
         tbitem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
-        tbitem->setText(kName, f->name());
-        tbitem->setText(kType, f->type());
-        tbitem->setData(kType, Qt::UserRole, f->affinity());
+        tbitem->setText(kName, f.name());
+        tbitem->setText(kType, f.type());
+        tbitem->setData(kType, Qt::UserRole, f.affinity());
 
         // NOT NULL fields are indicated in bold.
-        if (f->notnull()) {
+        if (f.notnull()) {
             QFont font;
             font.setBold(true);
             tbitem->setData(kName, Qt::FontRole, font);
         }
-        if (pk.contains(f))
+        if (contains(pk, f.name()))
             tbitem->setIcon(kName, QIcon(":/icons/field_key"));
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
 
-        QString defaultValue = f->defaultValue();
+        QString defaultValue = f.defaultValue();
         QString toolTip;
 
-        if (f->autoIncrement())
+        if (f.autoIncrement())
             toolTip.append(tr("Auto-increment\n"));
 
-        if (f->unique())
+        if (f.unique())
             toolTip.append(tr("Unique constraint\n"));
 
-        if (!f->check().isEmpty())
-            toolTip.append(tr("Check constraint:\t %1\n").arg (f->check()));
+        if (!f.check().isEmpty())
+            toolTip.append(tr("Check constraint:\t %1\n").arg (f.check()));
 
-        QSharedPointer<sqlb::ForeignKeyClause> fk =
-            m_table.constraint({f}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
+        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
         if(fk)
             toolTip.append(tr("Foreign key:\t %1\n").arg(fk->toString()));
 
@@ -219,7 +218,7 @@ void AddRecordDialog::populateFields()
         // Display Role is used for displaying the default values.
         // Only when they are changed, the User Role is updated and then used in the INSERT query.
         if (!defaultValue.isEmpty()) {
-            tbitem->setData(kValue, Qt::DisplayRole, f->defaultValue());
+            tbitem->setData(kValue, Qt::DisplayRole, f.defaultValue());
             toolTip.append(tr("Default value:\t %1\n").arg (defaultValue));
         } else
             tbitem->setData(kValue, Qt::DisplayRole, Settings::getValue("databrowser", "null_text"));

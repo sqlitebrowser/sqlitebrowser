@@ -88,7 +88,7 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
             if((*jt)->type() == sqlb::Object::Types::Table)
             {
                 QString tableName = (*jt)->name();
-                m_tablesIds.insert(tableName, (*jt).dynamicCast<sqlb::Table>()->fieldNames());
+                m_tablesIds.insert(tableName, std::dynamic_pointer_cast<sqlb::Table>(*jt)->fieldNames());
             }
         }
     }
@@ -123,9 +123,9 @@ void ForeignKeyEditorDelegate::setEditorData(QWidget* editor, const QModelIndex&
     ForeignKeyEditor* fkEditor = static_cast<ForeignKeyEditor*>(editor);
 
     int column = index.row(); // weird? I know right
-    sqlb::FieldPtr field = m_table.fields().at(column);
-    QSharedPointer<sqlb::ForeignKeyClause> fk = m_table.constraint({field}, sqlb::Constraint::ForeignKeyConstraintType).dynamicCast<sqlb::ForeignKeyClause>();
-    if (!fk.isNull()) {
+    const sqlb::Field& field = m_table.fields.at(column);
+    auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({field.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+    if (fk) {
         fkEditor->tablesComboBox->setCurrentText(fk->table());
         fkEditor->clauseEdit->setText(fk->constraint());
         if (!fk->columns().isEmpty())
@@ -141,10 +141,10 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
     QString sql = fkEditor->getSql();
 
     int column = index.row();
-    sqlb::FieldPtr field = m_table.fields().at(column);
+    const sqlb::Field& field = m_table.fields.at(column);
     if (sql.isEmpty()) {
         // Remove the foreign key
-        m_table.removeConstraints({field}, sqlb::Constraint::ConstraintTypes::ForeignKeyConstraintType);
+        m_table.removeConstraints({field.name()}, sqlb::Constraint::ConstraintTypes::ForeignKeyConstraintType);
     } else {
         // Set the foreign key
         sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
@@ -162,7 +162,7 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
             fk->setConstraint(clause);
         }
 
-        m_table.setConstraint({field}, sqlb::ConstraintPtr(fk));
+        m_table.setConstraint({field.name()}, sqlb::ConstraintPtr(fk));
     }
 
     model->setData(index, sql);

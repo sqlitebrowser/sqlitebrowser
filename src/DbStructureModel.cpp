@@ -326,12 +326,7 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
         {
             QStringList pk_columns;
             if(it->type() == sqlb::Object::Types::Table)
-            {
-                sqlb::FieldVector pk = it.dynamicCast<sqlb::Table>()->primaryKey();
-                for(const sqlb::FieldPtr& pk_col : pk)
-                    pk_columns.push_back(pk_col->name());
-
-            }
+                pk_columns = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
             for(const sqlb::FieldInfo& field : fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);

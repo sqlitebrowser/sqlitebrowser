@@ -51,10 +51,33 @@
 #include <QShortcut>
 #include <QTextCodec>
 #include <QUrlQuery>
+#include <QDataStream>      // This include seems to only be necessary for the Windows build
 
 #ifdef Q_OS_MACX //Needed only on macOS
     #include <QOpenGLWidget>
 #endif
+
+// These are needed for reading and writing object files
+QDataStream& operator<<(QDataStream& ds, const sqlb::ObjectIdentifier& objid)
+{
+    ds << objid.toVariant();
+    return ds;
+}
+QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
+{
+    // Read in the item
+    QVariant v;
+    ds >> v;
+
+    // If it is a string list, we can treat it as an object identifier. If it isn't, we assume it's just a
+    // single string and use interpret it as the table name in the main schema. This is done for backwards
+    // compatability with old project file formats.
+    if(v.toStringList().isEmpty())
+        objid = sqlb::ObjectIdentifier("main", v.toString());
+    else
+        objid = sqlb::ObjectIdentifier(v);
+    return ds;
+}
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -587,7 +610,7 @@ void MainWindow::populateTable()
         QVector<QString> v;
         bool only_defaults = true;
         const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
-        for(int i=0; i<tablefields.size(); ++i)
+        for(size_t i=0; i<tablefields.size(); ++i)
         {
             QString format = storedData.displayFormats[i+1];
             if(format.size())
@@ -616,7 +639,7 @@ void MainWindow::populateTable()
     if(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
     {
         // Table
-        sqlb::TablePtr table = db.getObjectByName(currentlyBrowsedTableName()).dynamicCast<sqlb::Table>();
+        sqlb::TablePtr table = db.getObjectByName<sqlb::Table>(currentlyBrowsedTableName());
         ui->actionUnlockViewEditing->setVisible(false);
         ui->actionShowRowidColumn->setVisible(!table->isWithoutRowidTable());
     } else {
@@ -2819,17 +2842,17 @@ void MainWindow::copyCurrentCreateStatement()
 void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value)
 {
     // First check if table exists
-    sqlb::TablePtr obj = db.getObjectByName(table).dynamicCast<sqlb::Table>();
+    sqlb::TablePtr obj = db.getObjectByName<sqlb::Table>(table);
     if(!obj)
         return;
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = obj->fields().at(obj->findPk())->name();
+        column = obj->findPk()->name();
 
     // If column doesn't exist don't do anything
-    int column_index = obj->findField(column);
-    if(column_index == -1)
+    auto column_index = sqlb::findField(obj, column);
+    if(column_index == obj->fields.end())
         return;
 
     // Jump to table
@@ -2837,7 +2860,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index+1, "=" + value);
+    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, "=" + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
@@ -2909,9 +2932,9 @@ void MainWindow::editDataColumnDisplayFormat()
     int field_number = sender()->property("clicked_column").toInt();
     QString field_name;
     if (db.getObjectByName(current_table)->type() == sqlb::Object::Table)
-      field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
+      field_name = db.getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name();
     else
-      field_name = db.getObjectByName(current_table).dynamicCast<sqlb::View>()->fieldNames().at(field_number-1);
+      field_name = db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1);
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
 
@@ -3044,7 +3067,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     if(unlock != settings.unlockViewPk.isEmpty() && settings.unlockViewPk == pk)
         return;
 
-    sqlb::ViewPtr obj = db.getObjectByName(currentTable).dynamicCast<sqlb::View>();
+    sqlb::ViewPtr obj = db.getObjectByName<sqlb::View>(currentTable);
 
     // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
     if(unlock && pk.isEmpty())

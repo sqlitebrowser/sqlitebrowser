@@ -2,10 +2,11 @@
 #define DBSTRUCTUREMODEL_H
 
 #include <QAbstractItemModel>
+#include <memory>
 
 class DBBrowserDB;
 class QTreeWidgetItem;
-namespace sqlb { class Object; typedef QSharedPointer<Object> ObjectPtr; }
+namespace sqlb { class Object; using ObjectPtr = std::shared_ptr<Object>; }
 
 class DbStructureModel : public QAbstractItemModel
 {
