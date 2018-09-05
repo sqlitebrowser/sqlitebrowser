@@ -158,7 +158,6 @@ using TriggerPtr = std::shared_ptr<Trigger>;
 using FieldPtr = std::shared_ptr<Field>;
 using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
-using FieldPtrVector = std::vector<FieldPtr>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
 using ConstraintMap = std::unordered_multimap<QStringList, ConstraintPtr, StringListHash>;
 using FieldInfoList = std::vector<FieldInfo>;

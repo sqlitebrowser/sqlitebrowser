@@ -227,7 +227,7 @@ void ImportCsvDialog::updatePreview()
     ui->tablePreview->setRowCount(0);
 
     // Analyse CSV file
-    sqlb::FieldPtrVector fieldList = generateFieldList(selectedFile);
+    sqlb::FieldVector fieldList = generateFieldList(selectedFile);
 
     // Reset preview widget
     ui->tablePreview->clear();
@@ -239,8 +239,8 @@ void ImportCsvDialog::updatePreview()
 
     // Set horizontal header data
     QStringList horizontalHeader;
-    for(const sqlb::FieldPtr& field : fieldList)
-        horizontalHeader.push_back(field->name());
+    for(const sqlb::Field& field : fieldList)
+        horizontalHeader.push_back(field.name());
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
@@ -346,8 +346,8 @@ void ImportCsvDialog::matchSimilar()
         if (selectedHeader.size() == header.size())
         {
             bool matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
-                                             [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
-                                                return (item1->name() == item2->name());
+                                             [](const sqlb::Field& item1, const sqlb::Field& item2) -> bool {
+                                                return (item1.name() == item2.name());
                                              });
             if (matchingHeader) {
                 item->setCheckState(Qt::Checked);
@@ -382,9 +382,9 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     return csv.parse(rowFunction, tstream, count);
 }
 
-sqlb::FieldPtrVector ImportCsvDialog::generateFieldList(const QString& filename)
+sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
 {
-    sqlb::FieldPtrVector fieldList;        // List of fields in the file
+    sqlb::FieldVector fieldList;        // List of fields in the file
 
     // Parse the first couple of records of the CSV file and only analyse them
     parseCSV(filename, [this, &fieldList](size_t rowNum, const CSVRow& data) -> bool {
@@ -412,7 +412,7 @@ sqlb::FieldPtrVector ImportCsvDialog::generateFieldList(const QString& filename)
 
             // Add field to the column list. For now we set the data type to nothing but this might be overwritten later in the automatic
             // type detection code.
-            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
+            fieldList.emplace_back(fieldname, "");
         }
 
         // Try to find out a data type for each column. Skip the header row if there is one.
@@ -422,7 +422,7 @@ sqlb::FieldPtrVector ImportCsvDialog::generateFieldList(const QString& filename)
             {
                 // If the data type has been set to TEXT, there's no going back because it means we had at least one row with text-only
                 // content and that means we don't want to set the data type to any number type.
-                QString old_type = fieldList.at(i)->type();
+                QString old_type = fieldList.at(i).type();
                 if(old_type != "TEXT")
                 {
                     QString content = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
@@ -445,7 +445,7 @@ sqlb::FieldPtrVector ImportCsvDialog::generateFieldList(const QString& filename)
                     else if(old_type == "INTEGER" && convert_to_int)                    // It was integer so far and still is
                         new_type = "INTEGER";
 
-                    fieldList.at(i)->setType(new_type);
+                    fieldList.at(i).setType(new_type);
                 }
             }
         }
@@ -487,7 +487,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Analyse CSV file
-    sqlb::FieldPtrVector fieldList = generateFieldList(fileName);
+    sqlb::FieldVector fieldList = generateFieldList(fileName);
     if(fieldList.size() == 0)
         return true;
 

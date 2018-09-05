@@ -1281,12 +1281,12 @@ QString DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, c
     return QString();
 }
 
-bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldPtrVector& structure)
+bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure)
 {
     // Build SQL statement
     sqlb::Table table(name.name());
     for(size_t i=0;i<structure.size();i++)
-        table.fields.push_back(*structure.at(i));
+        table.fields.push_back(structure.at(i));
 
     // Execute it and update the schema
     return executeSQL(table.sql(name.schema()));

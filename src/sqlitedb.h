@@ -137,7 +137,7 @@ public:
     bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk = QString());
     bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
 
-    bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldPtrVector& structure);
+    bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
     bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field);
 

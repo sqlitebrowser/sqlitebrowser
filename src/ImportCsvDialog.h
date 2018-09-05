@@ -42,7 +42,7 @@ private:
     QStringList dontAskForExistingTableAgain;
 
     CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count = 0);
-    sqlb::FieldPtrVector generateFieldList(const QString& filename);
+    sqlb::FieldVector generateFieldList(const QString& filename);
 
     bool importCsv(const QString& f, const QString& n = QString());
 
