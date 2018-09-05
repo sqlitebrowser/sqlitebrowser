@@ -475,9 +475,10 @@ void MainWindow::populateStructure(const QString& old_table)
         return;
 
     // Update table and column names for syntax highlighting
-    SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
+    SqlUiLexer::QualifiedTablesMap qualifiedTablesMap;
     for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
     {
+        SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
         objectMap tab = db.getBrowsableObjects(it.key());
         for(auto it : tab)
         {
@@ -487,8 +488,9 @@ void MainWindow::populateStructure(const QString& old_table)
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
+        qualifiedTablesMap[it.key()] = tablesToColumnsMap;
     }
-    SqlTextEdit::sqlLexer->setTableNames(tablesToColumnsMap);
+    SqlTextEdit::sqlLexer->setTableNames(qualifiedTablesMap);
     ui->editLogApplication->reloadKeywords();
     ui->editLogUser->reloadKeywords();
     for(int i=0;i<ui->tabSqlAreas->count();i++)
