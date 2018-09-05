@@ -8,7 +8,7 @@ FileExtensionManager::FileExtensionManager(QStringList init, QWidget *parent) :
     ui->setupUi(this);
 
     int i = 0;
-    foreach(QString itemString, init)
+    for(const QString& itemString : init)
     {
         QString description = itemString.left(itemString.indexOf('(')).trimmed();
         QString extension   = itemString;
@@ -49,7 +49,7 @@ void FileExtensionManager::addItem()
 void FileExtensionManager::removeItem()
 {
     QList<int> selectedRows;
-    foreach (QTableWidgetItem *item, ui->tableExtensions->selectedItems())
+    for (const QTableWidgetItem* item : ui->tableExtensions->selectedItems())
     {
         if (selectedRows.contains(item->row()) == false)
         {
