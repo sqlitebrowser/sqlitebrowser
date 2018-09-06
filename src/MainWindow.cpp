@@ -1628,14 +1628,16 @@ void MainWindow::importDatabaseFromSQL()
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
-    if(!db.executeMultiSQL(f.readAll(), newDbFile.size() == 0))
+    bool ok = db.executeMultiSQL(f.readAll(), newDbFile.size() == 0);
+    // Restore cursor before asking the user to accept the message
+    QApplication::restoreOverrideCursor();
+    if(!ok)
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
     else if(db.getPragma("foreign_keys") == "1" && !db.querySingeValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
         QMessageBox::warning(this, QApplication::applicationName(), tr("Import completed. Some foreign key constraints are violated. Please fix them before saving."));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
     f.close();
-    QApplication::restoreOverrideCursor();
 
     // Restore the former foreign key settings
     db.setPragma("defer_foreign_keys", foreignKeysOldSettings);
