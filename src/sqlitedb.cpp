@@ -655,7 +655,7 @@ bool DBBrowserDB::dump(const QString& filePath,
 
     // Open file
     QFile file(filePath);
-    if(file.open(QIODevice::WriteOnly))
+    if(file.open(QIODevice::WriteOnly|QIODevice::Text))
     {
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
