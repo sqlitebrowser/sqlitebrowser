@@ -1118,24 +1118,24 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         c = c->getNextSibling();
     }
 
-    FieldPtr f = FieldPtr(new Field(colname, type, notnull, defaultvalue, check, unique, collation));
-    f->setAutoIncrement(autoincrement);
-    table->fields.push_back(*f);
+    Field f(colname, type, notnull, defaultvalue, check, unique, collation);
+    f.setAutoIncrement(autoincrement);
+    table->fields.push_back(f);
 
     for(sqlb::ForeignKeyClause* fk : foreignKeys)
-        table->addConstraint({f->name()}, ConstraintPtr(fk));
+        table->addConstraint({f.name()}, ConstraintPtr(fk));
     if(primaryKey)
     {
         QStringList v;
         if(table->constraint(v, Constraint::PrimaryKeyConstraintType))
         {
-            table->primaryKeyRef().push_back(f->name());
+            table->primaryKeyRef().push_back(f.name());
 
             // Delete useless primary key constraint. There already is a primary key object for this table, we
             // don't need another one.
             delete primaryKey;
         } else {
-            table->addConstraint({f->name()}, ConstraintPtr(primaryKey));
+            table->addConstraint({f.name()}, ConstraintPtr(primaryKey));
         }
     }
 }

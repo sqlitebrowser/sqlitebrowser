@@ -218,7 +218,7 @@ void EditTableDialog::checkInput()
                 if (oldTableName == fk->table()) {
                     fk->setTable(normTableName);
                     if(!m_bForeignKeysEnabled)
-                        pdb.alterTable(curTable, m_table, f.name(), std::make_shared<sqlb::Field>(f), 0);
+                        pdb.alterTable(curTable, m_table, f.name(), &f, 0);
                 }
             }
         }
@@ -247,7 +247,7 @@ void EditTableDialog::updateTypes(QObject *object)
 
         m_table.fields.at(index).setType(type);
         if(!m_bNewTable)
-            pdb.alterTable(curTable, m_table, column, std::make_shared<sqlb::Field>(m_table.fields.at(index)));
+            pdb.alterTable(curTable, m_table, column, &m_table.fields[index]);
         checkInput();
     }
 }
@@ -536,7 +536,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 
         if(callRenameColumn)
         {
-            if(!pdb.alterTable(curTable, m_table, oldFieldName, std::make_shared<sqlb::Field>(field)))
+            if(!pdb.alterTable(curTable, m_table, oldFieldName, &field))
                 QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastError()));
         }
     }
@@ -619,7 +619,7 @@ void EditTableDialog::removeField()
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
         if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            if(!pdb.alterTable(curTable, m_table, ui->treeWidget->currentItem()->text(0), sqlb::FieldPtr()))
+            if(!pdb.alterTable(curTable, m_table, ui->treeWidget->currentItem()->text(0), nullptr))
             {
                 QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
             } else {
@@ -699,7 +699,7 @@ void EditTableDialog::moveCurrentField(bool down)
                     curTable,
                     m_table,
                     ui->treeWidget->currentItem()->text(0),
-                    std::make_shared<sqlb::Field>(m_table.fields.at(ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem()))),
+                    &m_table.fields[ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())],
                     (down ? 1 : -1)
                 ))
         {
@@ -752,7 +752,7 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(!pdb.alterTable(curTable, m_table, QString(), sqlb::FieldPtr(), 0))
+        if(!pdb.alterTable(curTable, m_table, QString(), nullptr, 0))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastError()));
@@ -768,7 +768,7 @@ void EditTableDialog::changeSchema(const QString& schema)
     // Update table if we're editing an existing table
     if(!m_bNewTable)
     {
-        if(pdb.alterTable(curTable, m_table, QString(), sqlb::FieldPtr(), 0, schema))
+        if(pdb.alterTable(curTable, m_table, QString(), nullptr, 0, schema))
         {
             // Save the new schema name to use it from now on
             curTable.setSchema(schema);

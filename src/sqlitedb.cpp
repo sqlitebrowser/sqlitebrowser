@@ -1300,7 +1300,7 @@ bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb:
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move, QString newSchemaName)
+bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, const sqlb::Field* to, int move, QString newSchemaName)
 {
     /*
      * USE CASES:

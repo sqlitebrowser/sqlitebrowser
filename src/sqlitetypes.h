@@ -155,7 +155,6 @@ using TablePtr = std::shared_ptr<Table>;
 using IndexPtr = std::shared_ptr<Index>;
 using ViewPtr = std::shared_ptr<View>;
 using TriggerPtr = std::shared_ptr<Trigger>;
-using FieldPtr = std::shared_ptr<Field>;
 using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;

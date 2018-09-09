@@ -152,7 +152,7 @@ public:
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, const sqlb::Field* to, int move = 0, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
 
