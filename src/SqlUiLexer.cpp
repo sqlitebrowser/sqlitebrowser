@@ -1,6 +1,9 @@
+#include <algorithm>
+
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
+#include "sqlitetypes.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -184,9 +187,15 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
 {
     // The only word separator for auto completion in SQL is "." as in "tablename.columnname".
     // Because this isn't implemented in the default QScintilla SQL lexer for some reason we add it here.
-
+    // We also need to consider quoted identifiers as in "tablename"."columnname" with whatever quote character
+    // is configured.
     QStringList wl;
-    wl << ".";
+
+    QString escapeSeparator = sqlb::escapeIdentifier(".");
+    // Case for non symetric quotes, e.g. "[.]" to "].["
+    std::reverse(escapeSeparator.begin(), escapeSeparator.end());
+
+    wl << "." << escapeSeparator;
     return wl;
 }
 
