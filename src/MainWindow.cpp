@@ -176,6 +176,10 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->actionEditCopyCreateStatement);
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
+    popupSchemaDockMenu = new QMenu(this);
+    popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
+    popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
+
     popupOpenDbMenu = new QMenu(this);
     popupOpenDbMenu->addAction(ui->fileOpenAction);
     popupOpenDbMenu->addAction(ui->fileOpenReadOnlyAction);
@@ -303,6 +307,10 @@ void MainWindow::init()
     connect(m_remoteDb, &RemoteDatabase::gotCurrentVersion, this, &MainWindow::checkNewVersion);
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, this, &MainWindow::setRecordsetLabel);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &MainWindow::deleteRecord);
+    connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
+    connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
+    ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
+    ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
 
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, [this](){
         auto & settings = browseTableSettings[currentlyBrowsedTableName()];
@@ -715,6 +723,9 @@ void MainWindow::closeEvent( QCloseEvent* event )
         Settings::setValue("MainWindow", "geometry", saveGeometry());
         Settings::setValue("MainWindow", "windowState", saveState());
         Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+        Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
+        Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
+
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -1650,6 +1661,12 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 
     if(type == "table" || type == "view" || type == "trigger" || type == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
+}
+
+//** DB Schema Dock Context Menu
+void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
+{
+    popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
 
 void MainWindow::changeTreeSelection()

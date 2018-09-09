@@ -1207,9 +1207,12 @@ You can drag SQL statements from an object row and drop them into other applicat
     <layout class="QVBoxLayout" name="verticalLayout_9">
      <item>
       <widget class="QTreeView" name="treeSchemaDock">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="whatsThis">
         <string>This is the structure of the opened database.
-You can drag multiple object names from the Name column and drop them into the SQL editor.
+You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </string>
        </property>
@@ -2203,6 +2206,34 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>New In-&amp;Memory Database</string>
    </property>
   </action>
+  <action name="actionDropQualifiedCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop Qualified Names</string>
+   </property>
+   <property name="statusTip">
+    <string>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+   <property name="whatsThis">
+    <string>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+  </action>
+  <action name="actionEnquoteNamesCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop Enquoted Names</string>
+   </property>
+   <property name="statusTip">
+    <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+   <property name="whatsThis">
+    <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2685,6 +2716,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>MainWindow</receiver>
    <slot>createTreeContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeSchemaDock</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createSchemaDockContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>111</x>
