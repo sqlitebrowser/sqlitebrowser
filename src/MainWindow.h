@@ -269,6 +269,7 @@ private slots:
     void checkNewVersion(const QString& versionstring, const QString& url);
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
+    void on_actionFeature_Request_triggered();
     void on_actionSqlCipherFaq_triggered();
     void on_actionWebsite_triggered();
     void on_actionDonatePatreon_triggered();

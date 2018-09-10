@@ -2272,7 +2272,7 @@ void MainWindow::on_actionWiki_triggered()
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
-// 'Help | Bug report...' link will add the system information and set the label 'bug' automatically to the issue
+// 'Help | Bug Report...' link will set an appropiate body, add the system information and set the label 'bug' automatically to the issue
 void MainWindow::on_actionBug_report_triggered()
 {
     const QString version = Application::versionString();
@@ -2288,11 +2288,44 @@ void MainWindow::on_actionBug_report_triggered()
     else
         sqlite_version = QString("SQLCipher Version ") + sqlcipher_version + QString(" (based on SQLite %1)").arg(sqlite_version);
 
-    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]\n> using %6\n> and Qt %7")
+    const QString body =
+      QString("Details for the issue\n"
+              "--------------------\n\n"
+              "#### What did you do?\n\n\n"
+              "#### What did you expect to see?\n\n\n"
+              "#### What did you see instead?\n\n\n"
+              "Useful extra information\n"
+              "-------------------------\n"
+              "> DB4S v%1 on %2 (%3/%4) [%5]\n"
+              "> using %6\n"
+              "> and Qt %7")
             .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
+    query.addQueryItem("body", body);
+
+    QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
+    url.setQuery(query);
+    QDesktopServices::openUrl(url);
+}
+
+// 'Help | Feature Request...' link will set an appropiate body and add the label 'enhancement' automatically to the issue
+void MainWindow::on_actionFeature_Request_triggered()
+{
+
+    const QString body =
+      QString("Describe the new feature\n"
+              "--------------------------\n\n\n"
+              "Additional info\n"
+              "---------------\n"
+              "Please answer these questions before submitting your feature request.\n\n"
+              "#### Is your feature request related to an issue? Please include the issue number.\n\n\n"
+              "#### Does this feature exist in another product or project? Please provide a link.\n\n\n"
+              "#### Do you have a screenshot? Please add screenshots to help explain your idea.\n");
+
+    QUrlQuery query;
+    query.addQueryItem("labels", "enhancement");
     query.addQueryItem("body", body);
 
     QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
