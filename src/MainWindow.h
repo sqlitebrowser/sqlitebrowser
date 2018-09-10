@@ -145,6 +145,7 @@ private:
     SqliteTableModel* m_currentTabTableModel;
 
     QMenu* popupTableMenu;
+    QMenu* popupSchemaDockMenu;
     QMenu* recentFilesMenu;
     QMenu* popupOpenDbMenu;
     QMenu* popupNewRecordMenu;
@@ -213,6 +214,7 @@ public slots:
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
+    void createSchemaDockContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
     void fileNewInMemoryDatabase();

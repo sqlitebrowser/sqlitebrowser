@@ -1,6 +1,9 @@
+#include <algorithm>
+
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
+#include "sqlitetypes.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -130,24 +133,31 @@ void SqlUiLexer::setupAutoCompletion()
     }
 }
 
-void SqlUiLexer::setTableNames(const TablesAndColumnsMap& tables)
+void SqlUiLexer::setTableNames(const QualifiedTablesMap& tables)
 {
     // Update list for auto completion
     autocompleteApi->clear();
     listTables.clear();
     setupAutoCompletion();
-    for(auto it=tables.constBegin();it!=tables.constEnd();++it)
+    for(auto itSchemas=tables.constBegin();itSchemas!=tables.constEnd();++itSchemas)
     {
-        for(const QString& field : it.value()) {
-            // Completion for table.field
-            autocompleteApi->add(it.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
-                                 field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
-            // Completion for isolated field
-            autocompleteApi->add(field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
+        for(auto itTables=itSchemas.value().constBegin();itTables!=itSchemas.value().constEnd();++itTables)
+        {
+            // Completion for schema.table
+            autocompleteApi->add(itSchemas.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdSchema) + "." +
+                                 itTables.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable));
 
+            for(const QString& field : itTables.value()) {
+                // Completion for table.field
+                autocompleteApi->add(itTables.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
+                                     field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
+
+                // Completion for isolated field
+                autocompleteApi->add(field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
+            }
+            // Store the table name list in order to highlight them in a different colour
+            listTables.append(itTables.key());
         }
-        // Store the table name list in order to highlight them in a different colour
-        listTables.append(it.key());
     }
     autocompleteApi->prepare();
 }
@@ -177,9 +187,15 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
 {
     // The only word separator for auto completion in SQL is "." as in "tablename.columnname".
     // Because this isn't implemented in the default QScintilla SQL lexer for some reason we add it here.
-
+    // We also need to consider quoted identifiers as in "tablename"."columnname" with whatever quote character
+    // is configured.
     QStringList wl;
-    wl << ".";
+
+    QString escapeSeparator = sqlb::escapeIdentifier(".");
+    // Case for non symetric quotes, e.g. "[.]" to "].["
+    std::reverse(escapeSeparator.begin(), escapeSeparator.end());
+
+    wl << "." << escapeSeparator;
     return wl;
 }
 

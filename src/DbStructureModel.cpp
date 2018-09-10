@@ -10,7 +10,9 @@
 
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
-      m_db(db)
+      m_db(db),
+      m_dropQualifiedNames(false),
+      m_dropEnquotedNames(false)
 {
     // Create root item and use its columns to store the header strings
     QStringList header;
@@ -41,7 +43,7 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
-        // For the display role and the browsabled branch of the tree we want to show the column name including the schema name if necessary (i.e.
+        // For the display role and the browsable branch of the tree we want to show the column name including the schema name if necessary (i.e.
         // for schemata != "main"). For the normal structure branch of the tree we don't want to add the schema name because it's already obvious from
         // the position of the item in the tree.
         if(index.column() == ColumnName && item->parent() == browsablesRootItem)
@@ -66,9 +68,10 @@ Qt::ItemFlags DbStructureModel::flags(const QModelIndex &index) const
     // All items are enabled and selectable
     Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDropEnabled;
 
-    // Only enable dragging for entire table objects and for fields (composition in SQL text editor)
+    // Only enable dragging for SQLite objects and for fields (composition in SQL text editor).
+    // Grouping nodes have no type.
     QString type = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
-    if(type == "table" || type == "field" || type == "view" || type == "index" || type == "trigger")
+    if(!type.isEmpty())
         flags |= Qt::ItemIsDragEnabled;
 
     return flags;
@@ -143,8 +146,8 @@ void DbStructureModel::reloadData()
     }
 
     // Create the nodes for browsables and for tables, indices, views and triggers. The idea here is to basically have two trees in one model:
-    // In the root node there are two nodes: 'browsables' and 'all'. The first node contains a list of a all browsable objects, i.e. views and tables.
-    // The seconds node contains four sub-nodes (tables, indices, views and triggers), each containing a list of objects of that type.
+    // In the root node there are two nodes: 'browsables' and 'all'. The first node contains a list of all browsable objects, i.e. views and tables.
+    // The second node contains four sub-nodes (tables, indices, views and triggers), each containing a list of objects of that type.
     // This way we only have to have and only have to update one model and can use it in all sorts of places, just by setting a different root node.
     browsablesRootItem = new QTreeWidgetItem(rootItem);
     browsablesRootItem->setIcon(ColumnName, QIcon(QString(":/icons/view")));
@@ -154,6 +157,7 @@ void DbStructureModel::reloadData()
     QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
     itemAll->setIcon(ColumnName, QIcon(QString(":/icons/database")));
     itemAll->setText(ColumnName, tr("All"));
+    itemAll->setText(ColumnObjectType, "database");
     buildTree(itemAll, "main");
 
     // Add the temporary database as a node if it isn't empty. Make sure it's always second if it exists.
@@ -162,6 +166,7 @@ void DbStructureModel::reloadData()
         QTreeWidgetItem* itemTemp = new QTreeWidgetItem(itemAll);
         itemTemp->setIcon(ColumnName, QIcon(QString(":/icons/database")));
         itemTemp->setText(ColumnName, tr("Temporary"));
+        itemTemp->setText(ColumnObjectType, "database");
         buildTree(itemTemp, "temp");
     }
 
@@ -174,6 +179,7 @@ void DbStructureModel::reloadData()
             QTreeWidgetItem* itemSchema = new QTreeWidgetItem(itemAll);
             itemSchema->setIcon(ColumnName, QIcon(QString(":/icons/database")));
             itemSchema->setText(ColumnName, it.key());
+            itemSchema->setText(ColumnObjectType, "database");
             buildTree(itemSchema, it.key());
         }
     }
@@ -198,14 +204,26 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
     // Loop through selected indices
     for(const QModelIndex& index : indices)
     {
+        // Get the item the index points at
+        QTreeWidgetItem* item = static_cast<QTreeWidgetItem*>(index.internalPointer());
+
         // Only export data for valid indices and only once per row (SQL column or Name column).
-        // For names, export an escaped identifier of the item for statement composition in SQL editor.
-        // Commas are included for a list of identifiers.
         if(index.isValid()) {
             QString objectType = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
 
+            // For names, export an escaped identifier of the item for statement composition in SQL editor.
+            // Commas are included for a list of fields. A dot is added after other items, in order to allow composing
+            // a fully qualified name by selecting together and dropping a parent item and a child (e.g. select with
+            // control an attached database and a table, and drag and drop them to get "schema1"."table1".)
+            // Note that this only makes sense when the "Drop Qualified Names" option is not set.
             if(index.column() == ColumnName)
-                namesData.append(sqlb::escapeIdentifier(data(index, Qt::DisplayRole).toString()) + ", ");
+                if(objectType == "field")
+                    namesData.append(getNameForDropping(item->parent()->text(ColumnName), item->text(ColumnName)) + ", ");
+                else if(objectType != "")
+                    if(item->text(ColumnSchema) == "main")
+                        namesData.append(getNameForDropping("", item->text(ColumnName)) + ".");
+                    else
+                        namesData.append(getNameForDropping(item->text(ColumnSchema), item->text(ColumnName)) + ".");
 
             if(objectType != "field" && index.column() == ColumnSQL)
             {
@@ -243,8 +261,12 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
     mime->setProperty("db_file", m_db.currentFile());      // Also save the file name to avoid dropping an object on the same database as it comes from
     // When we have both SQL and Names data (probable row selection mode) we give precedence to the SQL data
     if (sqlData.length() == 0 && namesData.length() > 0) {
-        // Remove last ", "
-        namesData.chop(2);
+        // Remove last ", " or "."
+        if (namesData.endsWith(", "))
+            namesData.chop(2);
+        else if (namesData.endsWith("."))
+            namesData.chop(1);
+
         mime->setData("text/plain", namesData);
     } else
         mime->setData("text/plain", sqlData);
@@ -356,4 +378,15 @@ QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::
     item->setText(ColumnSchema, schema);
 
     return item;
+}
+
+QString DbStructureModel::getNameForDropping(const QString& parentName, const QString& itemName) const
+{
+    QString name;
+    if (m_dropQualifiedNames && parentName != "")
+        name = m_dropEnquotedNames ? sqlb::escapeIdentifier(parentName) + "." : parentName + ".";
+
+    name += m_dropEnquotedNames ? sqlb::escapeIdentifier(itemName) : itemName;
+
+    return name;
 }

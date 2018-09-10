@@ -20,10 +20,13 @@ public:
         ApiCompleterIconIdFunction,
         ApiCompleterIconIdTable,
         ApiCompleterIconIdColumn,
+        ApiCompleterIconIdSchema,
     };
 
     typedef QMap<QString, QList<QString> > TablesAndColumnsMap;
-    void setTableNames(const TablesAndColumnsMap& tables);
+    typedef QMap<QString, TablesAndColumnsMap > QualifiedTablesMap;
+
+    void setTableNames(const QualifiedTablesMap& tables);
 
     virtual const char* keywords(int set) const;
 

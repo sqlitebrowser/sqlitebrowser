@@ -334,6 +334,17 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 4;
     }
 
+
+    // SchemaDock Drag & drop settings
+    if(group == "SchemaDock")
+    {
+        if(name == "dropQualifiedNames")
+            return false;
+
+        if(name == "dropEnquotedNames")
+            return true;
+    }
+
     // Remote settings?
     if(group == "remote")
     {
