@@ -143,13 +143,7 @@ QString ForeignKeyClause::toString() const
     QString result = escapeIdentifier(m_table);
 
     if(m_columns.size())
-    {
-        result += "(";
-        for(const QString& column : m_columns)
-            result += escapeIdentifier(column) + ',';
-        result.chop(1); // Remove last comma
-        result += ")";
-    }
+        result += "(" + escapeIdentifier(m_columns).join(",") + ")";
 
     if(m_constraint.size())
         result += " " + m_constraint;
