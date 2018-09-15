@@ -211,19 +211,11 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
         if(index.isValid()) {
             QString objectType = data(index.sibling(index.row(), ColumnObjectType), Qt::DisplayRole).toString();
 
-            // For names, export an escaped identifier of the item for statement composition in SQL editor.
-            // Commas are included for a list of fields. A dot is added after other items, in order to allow composing
-            // a fully qualified name by selecting together and dropping a parent item and a child (e.g. select with
-            // control an attached database and a table, and drag and drop them to get "schema1"."table1".)
-            // Note that this only makes sense when the "Drop Qualified Names" option is not set.
-            if(index.column() == ColumnName)
-                if(objectType == "field")
-                    namesData.append(getNameForDropping(item->parent()->text(ColumnName), item->text(ColumnName)) + ", ");
-                else if(objectType != "")
-                    if(item->text(ColumnSchema) == "main")
-                        namesData.append(getNameForDropping("", item->text(ColumnName)) + ".");
-                    else
-                        namesData.append(getNameForDropping(item->text(ColumnSchema), item->text(ColumnName)) + ".");
+            // For names, export a (qualified) (escaped) identifier of the item for statement composition in SQL editor.
+            if(objectType == "field")
+                namesData.append(getNameForDropping(item->text(ColumnSchema), item->parent()->text(ColumnName), item->text(ColumnName)));
+            else if(objectType != "")
+                namesData.append(getNameForDropping(item->text(ColumnSchema), item->text(ColumnName), ""));
 
             if(objectType != "field" && index.column() == ColumnSQL)
             {
@@ -380,13 +372,23 @@ QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::
     return item;
 }
 
-QString DbStructureModel::getNameForDropping(const QString& parentName, const QString& itemName) const
+QString DbStructureModel::getNameForDropping(const QString& domain, const QString& object, const QString& field) const
 {
+    // Take into account the drag&drop options for composing a name.  Commas are included for composing a
+    // list of fields. A dot is added after other items, in order to allow composing a fully qualified name
+    // by selecting together and dropping a parent item and a child (e.g. select with control an attached
+    // database and a table, and drag and drop them to get "schema1"."table1".)  Note that this only makes
+    // sense when the "Drop Qualified Names" option is not set.
     QString name;
-    if (m_dropQualifiedNames && parentName != "")
-        name = m_dropEnquotedNames ? sqlb::escapeIdentifier(parentName) + "." : parentName + ".";
+    if (m_dropQualifiedNames) {
+        if (domain != "main")
+            name = m_dropEnquotedNames ? sqlb::escapeIdentifier(domain) + "." : domain + ".";
 
-    name += m_dropEnquotedNames ? sqlb::escapeIdentifier(itemName) : itemName;
+        name += m_dropEnquotedNames ? sqlb::escapeIdentifier(object) + "." : object + ".";
+    }
+
+    if (!field.isEmpty())
+        name += m_dropEnquotedNames ? sqlb::escapeIdentifier(field) + ", " : field + ", ";
 
     return name;
 }

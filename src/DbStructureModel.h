@@ -54,7 +54,7 @@ private:
 
     void buildTree(QTreeWidgetItem* parent, const QString& schema);
     QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const QString& schema);
-    QString getNameForDropping(const QString& parentName, const QString& itemName) const;
+    QString getNameForDropping(const QString& domain, const QString& object, const QString& field) const;
 };
 
 #endif
