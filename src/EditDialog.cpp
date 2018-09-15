@@ -290,11 +290,54 @@ void EditDialog::importData()
     for(int i=0;i<image_formats_list.size();++i)
         image_formats.append(QString("*.%1 ").arg(QString::fromUtf8(image_formats_list.at(i))));
 
+    QStringList filters;
+
+    // Get the current editor mode (eg text, hex, image, json or xml mode)
+    int mode = ui->comboMode->currentIndex();
+
+    // Order the filters according to the mode. First the appropriate for the current mode,
+    // and then the others in similarity order.
+    switch (mode) {
+    case TextEditor:
+        filters << tr("Text files (*.txt)") <<
+            tr("JSON files (*.json)") <<
+            tr("XML files (*.xml)") <<
+            tr("Image files (%1)").arg(image_formats) <<
+            tr("Binary files (*.bin)") << tr("All files (*)");
+        break;
+    case HexEditor:
+        filters << tr("Binary files (*.bin)") <<
+            tr("Image files (%1)").arg(image_formats) <<
+            tr("Text files (*.txt)") <<
+            tr("JSON files (*.json)") <<
+            tr("XML files (*.xml)") <<
+            tr("All files (*)");
+        break;
+    case ImageViewer:
+        filters << tr("Image files (%1)").arg(image_formats) <<
+            tr("Binary files (*.bin)") <<
+            tr("Text files (*.txt)") <<
+            tr("JSON files (*.json)") <<
+            tr("XML files (*.xml)") <<
+            tr("All files (*)");
+        break;
+    case JsonEditor:
+        filters << tr("JSON files (*.json)") <<
+            tr("Text files (*.txt)") <<
+            tr("XML files (*.xml)") <<
+            tr("Image files (%1)").arg(image_formats) <<
+            tr("Binary files (*.bin)") <<
+            tr("All files (*)");
+        break;
+    case XmlEditor:
+        sciEdit->setFocus();
+        break;
+    }
     QString fileName = FileDialog::getOpenFileName(
                 this,
                 tr("Choose a file to import")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
-                , tr("Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;Binary files (*.bin);;All files (*)").arg(image_formats)
+                , filters.join(";;")
 #endif
                 );
     if(QFile::exists(fileName))
@@ -314,37 +357,43 @@ void EditDialog::importData()
 
 void EditDialog::exportData()
 {
-    // Images get special treatment
-    QString fileExt;
+    QStringList filters;
     switch (dataType) {
     case Image: {
-        // Determine the likely filename extension
+        // Images get special treatment.
+        // Determine the likely filename extension.
         QByteArray cellData = hexEdit->data();
         QBuffer imageBuffer(&cellData);
         QImageReader imageReader(&imageBuffer);
         QString imageFormat = imageReader.format();
-        fileExt = imageFormat.toUpper() % " " % tr("Image") % "(*." % imageFormat.toLower() % ");;All files(*)";
+        filters << tr("%1 Image").arg(imageFormat.toUpper()) % " (*." % imageFormat.toLower() % ")";
         break;
     }
     case Binary:
     case Null:
-        fileExt = tr("Binary files(*.bin);;All files(*)");
+        filters << tr("Binary files (*.bin)");
         break;
     case Text:
-        fileExt = tr("Text files(*.txt);;All files(*)");
+        // Base the XML case on the mode, not the data type since XML detection is currently not implemented.
+        if (ui->comboMode->currentIndex() == XmlEditor)
+            filters << tr("XML files (*.xml)") << tr("Text files (*.txt)");
+        else
+            filters << tr("Text files (*.txt)") << tr("XML files (*.xml)");
         break;
     case JSON:
-        fileExt = tr("JSON files(*.json);;All files(*)");
+        filters << tr("JSON files (*.json)");
         break;
     case SVG:
-        fileExt = tr("SVG files(*.svg);;All files(*)");
+        filters << tr("SVG files (*.svg)");
         break;
     }
+
+    filters << tr("All files (*)");
 
     QString fileName = FileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
-                fileExt);
+                filters.join(";;"));
     if(fileName.size() > 0)
     {
         QFile file(fileName);
