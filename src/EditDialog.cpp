@@ -371,7 +371,7 @@ void EditDialog::exportData()
     }
     case Binary:
     case Null:
-        filters << tr("Binary files (*.bin)");
+        filters << tr("Binary files (*.bin)") << tr("Text files (*.txt)");
         break;
     case Text:
         // Base the XML case on the mode, not the data type since XML detection is currently not implemented.
@@ -401,17 +401,21 @@ void EditDialog::exportData()
         {
           switch (dataSource) {
           case HexBuffer:
-                // Data source is the hex buffer
-                file.write(hexEdit->data());
-                break;
+              // Data source is the hex buffer
+              // If text option has been selected, the readable representation of the content is saved to file.
+              if (fileName.endsWith(".txt"))
+                  file.write(hexEdit->toReadableString().toUtf8());
+              else
+                  file.write(hexEdit->data());
+              break;
           case TextBuffer:
-                // Data source is the text buffer
-                file.write(ui->editorText->toPlainText().toUtf8());
-                break;
+              // Data source is the text buffer
+              file.write(ui->editorText->toPlainText().toUtf8());
+              break;
           case SciBuffer:
-                // Data source is the Scintilla buffer
-                file.write(sciEdit->text().toUtf8());
-                break;
+              // Data source is the Scintilla buffer
+              file.write(sciEdit->text().toUtf8());
+              break;
             }
             file.close();
         }
