@@ -289,48 +289,37 @@ void EditDialog::importData()
     QList<QByteArray> image_formats_list = QImageReader::supportedImageFormats();
     for(int i=0;i<image_formats_list.size();++i)
         image_formats.append(QString("*.%1 ").arg(QString::fromUtf8(image_formats_list.at(i))));
+    // Chop last space
+    image_formats.chop(1);
 
     QStringList filters;
+    filters << tr("Text files (*.txt)") <<
+        tr("JSON files (*.json)") <<
+        tr("XML files (*.xml)") <<
+        tr("Image files (%1)").arg(image_formats) <<
+        tr("Binary files (*.bin)") << tr("All files (*)");
+
+    QString selectedFilter;
 
     // Get the current editor mode (eg text, hex, image, json or xml mode)
     int mode = ui->comboMode->currentIndex();
 
-    // Order the filters according to the mode. First the appropriate for the current mode,
-    // and then the others in similarity order.
+    // Set as selected filter the appropriate for the current mode.
     switch (mode) {
     case TextEditor:
-        filters << tr("Text files (*.txt)") <<
-            tr("JSON files (*.json)") <<
-            tr("XML files (*.xml)") <<
-            tr("Image files (%1)").arg(image_formats) <<
-            tr("Binary files (*.bin)") << tr("All files (*)");
+        selectedFilter = tr("Text files (*.txt)");
         break;
     case HexEditor:
-        filters << tr("Binary files (*.bin)") <<
-            tr("Image files (%1)").arg(image_formats) <<
-            tr("Text files (*.txt)") <<
-            tr("JSON files (*.json)") <<
-            tr("XML files (*.xml)") <<
-            tr("All files (*)");
+        selectedFilter = tr("Binary files (*.bin)");
         break;
     case ImageViewer:
-        filters << tr("Image files (%1)").arg(image_formats) <<
-            tr("Binary files (*.bin)") <<
-            tr("Text files (*.txt)") <<
-            tr("JSON files (*.json)") <<
-            tr("XML files (*.xml)") <<
-            tr("All files (*)");
+        selectedFilter = tr("Image files (%1)").arg(image_formats);
         break;
     case JsonEditor:
-        filters << tr("JSON files (*.json)") <<
-            tr("Text files (*.txt)") <<
-            tr("XML files (*.xml)") <<
-            tr("Image files (%1)").arg(image_formats) <<
-            tr("Binary files (*.bin)") <<
-            tr("All files (*)");
+        selectedFilter = tr("JSON files (*.json)");
         break;
     case XmlEditor:
-        sciEdit->setFocus();
+        selectedFilter = tr("XML files (*.xml)");
         break;
     }
     QString fileName = FileDialog::getOpenFileName(
@@ -338,6 +327,7 @@ void EditDialog::importData()
                 tr("Choose a file to import")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
                 , filters.join(";;")
+                , &selectedFilter
 #endif
                 );
     if(QFile::exists(fileName))
@@ -403,7 +393,7 @@ void EditDialog::exportData()
           case HexBuffer:
               // Data source is the hex buffer
               // If text option has been selected, the readable representation of the content is saved to file.
-              if (fileName.endsWith(".txt"))
+              if (fileName.endsWith(".txt", Qt::CaseInsensitive))
                   file.write(hexEdit->toReadableString().toUtf8());
               else
                   file.write(hexEdit->data());
