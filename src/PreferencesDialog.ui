@@ -469,6 +469,40 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinCompleteThreshold">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
+              </property>
+              <property name="whatsThis">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>100000000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelCompleteThreshold">
+              <property name="text">
+               <string>Row count threshold for completion</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinCompleteThreshold</cstring>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>

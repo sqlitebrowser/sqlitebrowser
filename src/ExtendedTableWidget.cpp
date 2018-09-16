@@ -16,6 +16,7 @@
 #include <QMenu>
 #include <QDateTime>
 #include <QLineEdit>
+#include <QCompleter>
 #include <limits>
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
@@ -95,16 +96,48 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
 
 }
 
+UniqueFilterModel::UniqueFilterModel(QObject* parent)
+    : QSortFilterProxyModel(parent)
+{
+}
+
+bool UniqueFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex index = sourceModel()->index(sourceRow, filterKeyColumn(), sourceParent);
+    const QString& value = index.data().toString();
+
+    if (!value.isEmpty() && !m_uniqueValues.contains(value)) {
+        const_cast<UniqueFilterModel*>(this)->m_uniqueValues.insert(value);
+        return true;
+    }
+    else
+        return false;
+
+}
 
 ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
 
-QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/) const
+QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
-    // Just create a normal line editor but set the maximum length to the highest possible value instead of the default 32768.
     QLineEdit* editor = new QLineEdit(parent);
+    // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
+    if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
+        QCompleter* completer = new QCompleter(editor);
+        UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
+        // Provide a filter for the source model, so only unique and non-empty values are accepted.
+        completerFilter->setSourceModel(const_cast<QAbstractItemModel*>(index.model()));
+        completerFilter->setFilterKeyColumn(index.column());
+        completer->setModel(completerFilter);
+        // Complete on this column, using a popup and case-insensitively.
+        completer->setCompletionColumn(index.column());
+        completer->setCompletionMode(QCompleter::PopupCompletion);
+        completer->setCaseSensitivity(Qt::CaseInsensitive);
+        editor->setCompleter(completer);
+    }
+    // Set the maximum length to the highest possible value instead of the default 32768.
     editor->setMaxLength(std::numeric_limits<int>::max());
     return editor;
 }
