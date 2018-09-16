@@ -354,6 +354,20 @@ void MainWindow::init()
         populateTable();
     });
 
+    // Connect tool pragmas
+    connect(ui->actionIntegrityCheck, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA integrity_check;", ui->actionIntegrityCheck->text());
+    });
+    connect(ui->actionQuickCheck, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA quick_check;", ui->actionQuickCheck->text());
+    });
+    connect(ui->actionForeignKeyCheck, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA foreign_key_check;", ui->actionForeignKeyCheck->text());
+    });
+    connect(ui->actionOptimize, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text());
+    });
+
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
@@ -1168,7 +1182,7 @@ void MainWindow::executeQuery()
         Line
     };
     executionMode mode;
-    if(sender()->objectName() == "actionSqlExecuteLine")
+    if(sender() && sender()->objectName() == "actionSqlExecuteLine")
         mode = Line;
     else if(!sqlWidget->getSelectedSql().isEmpty())
         mode = Selection;
@@ -1858,6 +1872,10 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable && !tempDb);
     ui->actionEncryption->setEnabled(enable && write && !tempDb);
+    ui->actionIntegrityCheck->setEnabled(enable);
+    ui->actionQuickCheck->setEnabled(enable);
+    ui->actionForeignKeyCheck->setEnabled(enable);
+    ui->actionOptimize->setEnabled(enable);
     ui->buttonClearFilters->setEnabled(enable);
     ui->buttonSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
@@ -3358,4 +3376,33 @@ void MainWindow::updateInsertDeleteRecordButton()
         ui->buttonDeleteRecord->setText(tr("Delete Records"));
     else
         ui->buttonDeleteRecord->setText(tr("Delete Record"));
+}
+
+void MainWindow::runSqlNewTab(const QString& query, const QString& title)
+{
+    QString message = tr("This action will open a new SQL tab for running:") +
+                         QString("<br/><tt>%1</tt><p/>").arg(query) +
+                         tr("Press Help for opening the corresponding SQLite reference page.");
+    QString windowTitle = title;
+    windowTitle.remove('&');
+
+    switch (QMessageBox::information(this, windowTitle, message, QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Escape, QMessageBox::Help))
+    {
+    case QMessageBox::Ok: {
+        ui->mainTab->setCurrentIndex(ExecuteTab);
+        unsigned int index = openSqlTab();
+        ui->tabSqlAreas->setTabText(index, title);
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
+        executeQuery();
+        break;
+    }
+    case QMessageBox::Help: {
+        QString anchor = query.toLower();
+        anchor.replace(" ", "_").chop(1);
+        QDesktopServices::openUrl(QUrl(QString("https://www.sqlite.org/pragma.html#") + anchor));
+        break;
+    }
+    default:
+        return;
+    }
 }

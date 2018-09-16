@@ -299,6 +299,7 @@ private slots:
     void saveFilterAsView();
     void exportFilteredTable();
     void updateInsertDeleteRecordButton();
+    void runSqlNewTab(const QString& query, const QString& title);
 };
 
 #endif
