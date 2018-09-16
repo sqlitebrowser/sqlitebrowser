@@ -66,5 +66,6 @@
         <file alias="log_dock">application_side_list.png</file>
         <file alias="db_attach">database_link.png</file>
         <file alias="text_indent">text_indent.png</file>
+        <file alias="print">printer.png</file>
     </qresource>
 </RCC>

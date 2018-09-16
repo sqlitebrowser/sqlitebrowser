@@ -253,9 +253,7 @@ void MainWindow::init()
 
     // Add menu item for plot dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockPlot->toggleViewAction());
-    QList<QKeySequence> plotkeyseqlist;
-    plotkeyseqlist << QKeySequence(tr("Ctrl+P")) << QKeySequence(tr("Ctrl+D"));
-    ui->viewMenu->actions().at(1)->setShortcuts(plotkeyseqlist);
+    ui->viewMenu->actions().at(1)->setShortcut(QKeySequence(tr("Ctrl+D")));
     ui->viewMenu->actions().at(1)->setIcon(QIcon(":/icons/log_dock"));
 
     // Add menu item for schema dock
@@ -3274,6 +3272,15 @@ void MainWindow::openFindReplaceDialog()
 
     if (sqlWidget)
         sqlWidget->getEditor()->openFindReplaceDialog();
+}
+
+void MainWindow::openSqlPrintDialog()
+{
+    // The slot for the shortcut must discover which sqltexedit widget has the focus and then open its dialog.
+    SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+
+    if (sqlWidget)
+        sqlWidget->getEditor()->openPrintDialog();
 }
 
 void MainWindow::saveAsView(QString query)

@@ -295,6 +295,7 @@ private slots:
     void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
+    void openSqlPrintDialog();
     void saveFilterAsView();
     void exportFilteredTable();
     void updateInsertDeleteRecordButton();

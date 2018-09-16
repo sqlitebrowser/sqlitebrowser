@@ -1,7 +1,9 @@
 #include "ExtendedScintilla.h"
 #include "FindReplaceDialog.h"
 #include "Settings.h"
+
 #include "Qsci/qscilexer.h"
+#include "Qsci/qsciprinter.h"
 
 #include <QFile>
 #include <QDropEvent>
@@ -11,6 +13,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QPalette>
+#include <QPrintDialog>
 #include <cmath>
 
 
@@ -51,9 +54,12 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // Connect signals
     connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 
-    // The shortcut is constrained to the Widget context so it does not conflict with other SqlTextEdit widgets in the Main Window.
+    // The shortcuts are constrained to the Widget context so they do not conflict with other SqlTextEdit widgets in the Main Window.
     QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
+
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence(tr("Ctrl+P")), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &ExtendedScintilla::openPrintDialog);
 
     // Prepare for adding the find/replace option to the QScintilla context menu
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -223,14 +229,28 @@ void ExtendedScintilla::showContextMenu(const QPoint &pos)
 
     QAction* findReplaceAction = new QAction(QIcon(":/icons/text_replace"), tr("Find and Replace..."), this);
     findReplaceAction->setShortcut(QKeySequence(tr("Ctrl+H")));
-    connect(findReplaceAction, &QAction::triggered, [&]() {
-            openFindReplaceDialog();
-        });
+    connect(findReplaceAction, &QAction::triggered, this, &ExtendedScintilla::openFindReplaceDialog);
+
+    QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), this);
+    printAction->setShortcut(QKeySequence(tr("Ctrl+P")));
+    connect(printAction, &QAction::triggered, this, &ExtendedScintilla::openPrintDialog);
 
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
     editContextMenu->addSeparator();
     editContextMenu->addAction(findReplaceAction);
+    editContextMenu->addAction(printAction);
 
     editContextMenu->exec(mapToGlobal(pos));
+}
+
+void ExtendedScintilla::openPrintDialog()
+{
+    QsciPrinter* printer = new QsciPrinter;
+
+    QPrintDialog printDialog(printer, this);
+    if (printDialog.exec() == QDialog::Accepted)
+        printer->printRange(this);
+
+    delete printer;
 }

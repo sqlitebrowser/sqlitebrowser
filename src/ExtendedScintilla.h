@@ -30,6 +30,7 @@ public slots:
     // Set error indicator from position to end of line
     void setErrorIndicator(int position);
     void openFindReplaceDialog();
+    void openPrintDialog();
 
 protected:
     void dropEvent(QDropEvent* e);

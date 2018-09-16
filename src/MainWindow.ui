@@ -915,6 +915,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <addaction name="actionSqlOpenTab"/>
           <addaction name="actionSqlOpenFile"/>
           <addaction name="actionSqlSaveFilePopup"/>
+          <addaction name="actionSqlPrint"/>
           <addaction name="separator"/>
           <addaction name="actionExecuteSql"/>
           <addaction name="actionSqlExecuteLine"/>
@@ -2248,6 +2249,27 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="whatsThis">
     <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+  </action>
+  <action name="actionSqlPrint">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print text from current SQL editor tab [Ctrl+P]</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>Open a dialog for printing the text in the current SQL editor tab</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
  </widget>
@@ -3612,6 +3634,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="sourcelabel">
      <x>518</x>
      <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlPrint</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openSqlPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>518</x>
