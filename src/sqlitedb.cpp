@@ -558,6 +558,10 @@ bool DBBrowserDB::setSavepoint(const std::string& pointname)
 {
     if(!isOpen())
         return false;
+    if(isReadOnly) {
+        qWarning() << "setSavepoint: not done. DB is read-only";
+        return false;
+    }
     if(contains(savepointList, pointname))
         return true;
 
