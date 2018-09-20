@@ -411,6 +411,10 @@ bool DBBrowserDB::setSavepoint(const QString& pointname)
 {
     if(!isOpen())
         return false;
+    if(isReadOnly) {
+        qWarning() << "setSavepoint: not done. DB is read-only";
+        return false;
+    }
     if(savepointList.contains(pointname))
         return true;
 

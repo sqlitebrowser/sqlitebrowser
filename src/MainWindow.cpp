@@ -1317,7 +1317,7 @@ void MainWindow::executeQuery()
             // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
             // all changes to the database immediately. Don't set more than one savepoint.
 
-            if(!savepoint_created)
+            if(!savepoint_created && !db.readOnly())
             {
                 // We have to start a transaction before we create the prepared statement otherwise every executed
                 // statement will get committed after the prepared statement gets finalized
