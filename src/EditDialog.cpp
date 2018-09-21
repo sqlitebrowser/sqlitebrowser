@@ -434,6 +434,8 @@ void EditDialog::setNull()
     sciEdit->setEnabled(true);
 
     // Update the cell data info in the bottom left of the Edit Cell
+    // The mode is also (if required) updated to text since it gives
+    // the better visual clue of containing a NULL value (placeholder).
     updateCellInfoAndMode(hexEdit->data());
 
     ui->editorText->setFocus();
@@ -470,7 +472,8 @@ void EditDialog::accept()
     {
         QString oldData = currentIndex.data(Qt::EditRole).toString();
         QString newData = removedBom + ui->editorText->toPlainText();
-        if (oldData != newData)
+        // Check first for null case, otherwise empty strings cannot overwrite NULL values
+        if ((currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newData)
             // The data is different, so commit it back to the database
             emit recordTextUpdated(currentIndex, removedBom + newData.toUtf8(), false);
         break;
@@ -716,22 +719,30 @@ void EditDialog::editModeChanged(int newMode)
 void EditDialog::editTextChanged()
 {
     if (dataSource == TextBuffer || dataSource == SciBuffer) {
-        // Data has been changed in the text editor, so it can't be a NULL
-        // any more. It hasn't been validated yet, so it cannot be JSON nor XML.
-        if (dataType == Null) {
-            dataType = Text;
-            ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        }
+
         // Update the cell info in the bottom left manually.  This is because
         // updateCellInfoAndMode() only works with QByteArray's (for now)
         int dataLength;
+        bool isModified;
         switch (dataSource) {
         case TextBuffer:
             dataLength = ui->editorText->toPlainText().length();
+            isModified = ui->editorText->document()->isModified();
             break;
         case SciBuffer:
             dataLength = sciEdit->text().length();
+            isModified = sciEdit->isModified();
             break;
+        }
+        // Data has been changed in the text editor, so it can't be a NULL
+        // any more. It hasn't been validated yet, so it cannot be JSON nor XML.
+        if (dataType == Null && isModified)
+            dataType = Text;
+
+        if (dataType != Null) {
+            ui->editorText->setStyleSheet("");
+            ui->editorText->setPlaceholderText("");
+            ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         }
         ui->labelSize->setText(tr("%n char(s)", "", dataLength));
     }
@@ -914,6 +925,8 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
         // NULL data type
         ui->labelType->setText(tr("Type of data currently in cell: NULL"));
         ui->labelSize->setText(tr("%n byte(s)", "", 0));
+        ui->editorText->setStyleSheet("QTextEdit{ font-style: italic; }");
+        ui->editorText->setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
         break;
 
     case Text: {

@@ -22,9 +22,11 @@ public:
     void setNull(bool value) {
         if (value) {
             clear();
+            setStyleSheet("QLineEdit{ font-style: italic; }");
             setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
             setModified(false);
         } else
+            setStyleSheet("");
             setPlaceholderText("");
         m_isNull = value;
     }
@@ -51,6 +53,7 @@ protected:
             setNull(true);
         else {
             // Remove any possible NULL mark when user starts typing
+            setStyleSheet("");
             setPlaceholderText("");
             QLineEdit::keyPressEvent(evt);
         }
