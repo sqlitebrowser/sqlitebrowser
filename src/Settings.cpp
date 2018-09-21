@@ -178,6 +178,8 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 5000;
         if(name == "indent_compact")
             return false;
+        if(name == "auto_switch_mode")
+            return true;
         if(name == "null_text")
             return "NULL";
         if(name == "blob_text")

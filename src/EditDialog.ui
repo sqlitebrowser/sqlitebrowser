@@ -68,6 +68,33 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="buttonAutoSwitchMode">
+       <property name="toolTip">
+        <string>Automatically adjust the editor mode to the loaded data type</string>
+       </property>
+       <property name="statusTip">
+        <string>Automatically adjust the editor mode to the loaded data type</string>
+       </property>
+       <property name="whatsThis">
+        <string>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</string>
+       </property>
+       <property name="text">
+        <string>Auto-switch</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/keyword</normaloff>
+         <normalon>:/icons/cog_go.png</normalon>:/icons/keyword</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -388,6 +415,22 @@ Errors are indicated with a red squiggle underline.</string>
    <hints>
     <hint type="sourcelabel">
      <x>309</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonAutoSwitchMode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditDialog</receiver>
+   <slot>switchEditorMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
      <y>22</y>
     </hint>
     <hint type="destinationlabel">

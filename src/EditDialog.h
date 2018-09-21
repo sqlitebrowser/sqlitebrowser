@@ -40,7 +40,8 @@ private slots:
     void toggleOverwriteMode();
     void editModeChanged(int newMode);
     void editTextChanged();
-    void updateCellInfo(const QByteArray& data);
+    void switchEditorMode(bool autoSwitchForType);
+    void updateCellInfoAndMode(const QByteArray& data);
     void setMustIndentAndCompact(bool enable);
 
 signals:

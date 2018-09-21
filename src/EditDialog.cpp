@@ -51,12 +51,15 @@ EditDialog::EditDialog(QWidget* parent)
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->buttonIndent->setChecked(mustIndentAndCompact);
 
+    ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
+
     reloadSettings();
 }
 
 EditDialog::~EditDialog()
 {
     Settings::setValue("databrowser", "indent_compact",  mustIndentAndCompact);
+    Settings::setValue("databrowser", "auto_switch_mode", ui->buttonAutoSwitchMode->isChecked());
     delete ui;
 }
 
@@ -66,7 +69,7 @@ void EditDialog::setCurrentIndex(const QModelIndex& idx)
 
     QByteArray data = idx.data(Qt::EditRole).toByteArray();
     loadData(data);
-    updateCellInfo(data);
+    updateCellInfoAndMode(data);
 
     ui->buttonApply->setDisabled(true);
 }
@@ -340,7 +343,8 @@ void EditDialog::importData()
             file.close();
 
             // Update the cell data info in the bottom left of the Edit Cell
-            updateCellInfo(d);
+            // and update mode (if required) to the just imported data type.
+            updateCellInfoAndMode(d);
         }
     }
 }
@@ -430,7 +434,7 @@ void EditDialog::setNull()
     sciEdit->setEnabled(true);
 
     // Update the cell data info in the bottom left of the Edit Cell
-    updateCellInfo(hexEdit->data());
+    updateCellInfoAndMode(hexEdit->data());
 
     ui->editorText->setFocus();
 }
@@ -719,7 +723,7 @@ void EditDialog::editTextChanged()
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         }
         // Update the cell info in the bottom left manually.  This is because
-        // updateCellInfo() only works with QByteArray's (for now)
+        // updateCellInfoAndMode() only works with QByteArray's (for now)
         int dataLength;
         switch (dataSource) {
         case TextBuffer:
@@ -850,10 +854,38 @@ void EditDialog::setReadOnly(bool ro)
     }
 }
 
+void EditDialog::switchEditorMode(bool autoSwitchForType)
+{
+    if (autoSwitchForType) {
+        // Switch automatically the editing mode according to the detected data.
+        switch (dataType) {
+        case Image:
+            ui->comboMode->setCurrentIndex(ImageViewer);
+            break;
+        case Binary:
+            ui->comboMode->setCurrentIndex(HexEditor);
+            break;
+        case Null:
+        case Text:
+            ui->comboMode->setCurrentIndex(TextEditor);
+            break;
+        case JSON:
+            ui->comboMode->setCurrentIndex(JsonEditor);
+            break;
+        case SVG:
+            ui->comboMode->setCurrentIndex(XmlEditor);
+            break;
+        }
+    }
+}
+
 // Update the information labels in the bottom left corner of the dialog
-void EditDialog::updateCellInfo(const QByteArray& data)
+// and switches the editor mode, if required, according to the detected data type.
+void EditDialog::updateCellInfoAndMode(const QByteArray& data)
 {
     QByteArray cellData = data;
+
+    switchEditorMode(ui->buttonAutoSwitchMode->isChecked());
 
     // Image data needs special treatment
     if (dataType == Image || dataType == SVG) {
