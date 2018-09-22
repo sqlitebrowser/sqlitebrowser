@@ -1220,22 +1220,22 @@ void MainWindow::executeQuery()
 
             // Need to set the end position here before adjusting the start line
             execute_to_line = execute_from_line;
-            execute_to_index = editor->lineLength(execute_to_line) - 1;     // The -1 compensates for the line break at the end of the line
+            execute_to_index = editor->text(execute_to_line).length() - 1;     // The -1 compensates for the line break at the end of the line
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
 
-            QString firstPartEntireSQL = query.left(execute_from_position);
+            QByteArray firstPartEntireSQL = query.toUtf8().left(execute_from_position);
             if(firstPartEntireSQL.lastIndexOf(';') != -1)
             {
                 execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
                 editor->lineIndexFromPosition(execute_from_position, &execute_from_line, &execute_from_index);
             }
-
             db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
     case All:
         {
-            // Start position is the first character, end position the last
-            execute_to_position = editor->text().length();
+            // Start position is the first byte, end position the last.
+            // Note that we use byte positions that might differ from character positions.
+            execute_to_position = editor->length();
             editor->lineIndexFromPosition(execute_to_position, &execute_to_line, &execute_to_index);
             db.logSQL(tr("-- EXECUTING ALL IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
@@ -1256,7 +1256,7 @@ void MainWindow::executeQuery()
     // Convert query to C string which we will use from now on, starting from the determined start position and
     // until the end of the SQL code. By doing so we go further than the determined end position because in Line
     // mode the last statement might go beyond that point.
-    QByteArray utf8Query = query.mid(execute_from_position).toUtf8();
+    QByteArray utf8Query = query.toUtf8().mid(execute_from_position);
 
     // Remove any error indicators
     editor->clearErrorIndicators();
@@ -1409,7 +1409,8 @@ void MainWindow::executeQuery()
 
         // Special case: if the start position is at the end of a line, then move to the beggining of next line.
         // Otherwise for the typical case, the line reference is one less than expected.
-        if (editor->lineLength(execute_from_line) == execute_from_index+1) {
+        // Note that execute_from_index uses character positions and not byte positions, so text().length() must be used.
+        if (editor->text(execute_from_line).length() == execute_from_index+1) {
             execute_from_line++;
             execute_from_index = 0;
         }
