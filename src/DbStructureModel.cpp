@@ -214,7 +214,9 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
             // For names, export a (qualified) (escaped) identifier of the item for statement composition in SQL editor.
             if(objectType == "field")
                 namesData.append(getNameForDropping(item->text(ColumnSchema), item->parent()->text(ColumnName), item->text(ColumnName)));
-            else if(objectType != "")
+            else if(objectType == "database")
+                namesData.append(getNameForDropping(item->text(ColumnName), "", ""));
+            else if(!objectType.isEmpty())
                 namesData.append(getNameForDropping(item->text(ColumnSchema), item->text(ColumnName), ""));
 
             if(objectType != "field" && index.column() == ColumnSQL)
@@ -380,12 +382,11 @@ QString DbStructureModel::getNameForDropping(const QString& domain, const QStrin
     // database and a table, and drag and drop them to get "schema1"."table1".)  Note that this only makes
     // sense when the "Drop Qualified Names" option is not set.
     QString name;
-    if (m_dropQualifiedNames) {
-        if (domain != "main")
-            name = m_dropEnquotedNames ? sqlb::escapeIdentifier(domain) + "." : domain + ".";
+    if ((domain != "main" && m_dropQualifiedNames) || object.isEmpty())
+        name = m_dropEnquotedNames ? sqlb::escapeIdentifier(domain) + "." : domain + ".";
 
+    if (!object.isEmpty() && (m_dropQualifiedNames || field.isEmpty()))
         name += m_dropEnquotedNames ? sqlb::escapeIdentifier(object) + "." : object + ".";
-    }
 
     if (!field.isEmpty())
         name += m_dropEnquotedNames ? sqlb::escapeIdentifier(field) + ", " : field + ", ";
