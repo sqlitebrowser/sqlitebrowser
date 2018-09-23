@@ -16,6 +16,10 @@
 #include <QMenu>
 #include <QDateTime>
 #include <QLineEdit>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QTextDocument>
+
 #include <limits>
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
@@ -169,6 +173,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
     QAction* copyAsSQLAction = new QAction(QIcon(":/icons/sql_copy"), tr("Copy as SQL"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
+    QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), m_contextMenu);
 
     m_contextMenu->addAction(filterAction);
     QMenu* filterMenu = m_contextMenu->addMenu(tr("Use in Filter Expression"));
@@ -187,6 +192,8 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addAction(copyWithHeadersAction);
     m_contextMenu->addAction(copyAsSQLAction);
     m_contextMenu->addAction(pasteAction);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(printAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Create and set up delegate
@@ -200,6 +207,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+Shift+C")));
     copyAsSQLAction->setShortcut(QKeySequence(tr("Ctrl+Alt+C")));
     pasteAction->setShortcut(QKeySequence::Paste);
+    printAction->setShortcut(QKeySequence::Print);
 
     // Set up context menu actions
     connect(this, &QTableView::customContextMenuRequested,
@@ -212,6 +220,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         copyAction->setEnabled(enabled);
         copyWithHeadersAction->setEnabled(enabled);
         copyAsSQLAction->setEnabled(enabled);
+        printAction->setEnabled(enabled);
 
         // Hide filter actions when there isn't any filters
         bool hasFilters = m_tableHeader->hasFilters();
@@ -267,6 +276,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(pasteAction, &QAction::triggered, [&]() {
        paste();
     });
+    connect(printAction, &QAction::triggered, [&]() {
+       openPrintDialog();
+    });
 }
 
 void ExtendedTableWidget::reloadSettings()
@@ -280,9 +292,10 @@ void ExtendedTableWidget::reloadSettings()
     verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
 }
 
-void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
+void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
 {
-    QModelIndexList indices = selectionModel()->selectedIndexes();
+
+    QModelIndexList indices = fromIndices;
 
     // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
     // unintuitive; especially copying the rowid column when selecting all columns of a table is a problem because pasting the data
@@ -360,7 +373,8 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     m_generatorStamp = QString("<meta name=\"generator\" content=\"%1\"><meta name=\"date\" content=\"%2\">").arg(QApplication::applicationName().toHtmlEscaped(), now);
     htmlResult.append(m_generatorStamp);
     // TODO: is this really needed by Excel, since we use <pre> for multi-line cells?
-    htmlResult.append("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body><table>");
+    htmlResult.append("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body>"
+                      "<table border=1 cellspacing=0 cellpadding=2>");
 
     int currentRow = indices.first().row();
 
@@ -450,7 +464,6 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     }
     sqlResult.append(");");
 
-    QMimeData *mimeData = new QMimeData;
     if ( inSQL )
     {
         mimeData->setText(sqlResult);
@@ -458,6 +471,12 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
         mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
         mimeData->setText(result);
     }
+}
+
+void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
+{
+    QMimeData *mimeData = new QMimeData;
+    copyMimeData(selectionModel()->selectedIndexes(), mimeData, withHeaders, inSQL);
     qApp->clipboard()->setMimeData(mimeData);
 }
 
@@ -653,6 +672,8 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     } else if(event->matches(QKeySequence::Paste)) {
         // Call a custom paste method when Ctrl-V is pressed
         paste();
+    } else if(event->matches(QKeySequence::Print)) {
+        openPrintDialog();
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier) && (event->key() == Qt::Key_C)) {
         // Call copy with headers when Ctrl-Shift-C is pressed
         copy(true, false);
@@ -831,4 +852,36 @@ void ExtendedTableWidget::selectTableLines(int firstLine, int count)
     QModelIndex bottomRight = m->index(lastLine, m->columnCount()-1);
 
     selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+}
+
+void ExtendedTableWidget::openPrintDialog()
+{
+    QMimeData *mimeData = new QMimeData;
+    QModelIndexList indices;
+
+    // Print the selection, if active, or the entire table otherwise.
+    // Given that simply clicking over a cell, selects it, one-cell selections are ignored.
+    if (selectionModel()->hasSelection() && selectionModel()->selectedIndexes().count() > 1)
+        indices = selectionModel()->selectedIndexes();
+    else
+        for (int row=0; row < model()->rowCount(); row++)
+            for (int column=0; column < model()->columnCount(); column++)
+                indices << model()->index(row, column);
+
+    // Copy the specified indices content to mimeData for getting the HTML representation of
+    // the table with headers. We can then print it using an HTML text document.
+    copyMimeData(indices, mimeData, true, false);
+
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(mimeData->html());
+
+    QPrinter printer;
+
+    QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+    if (dialog->exec() == QDialog::Accepted) {
+        document->print(&printer);
+    }
+
+    delete document;
+    delete mimeData;
 }
