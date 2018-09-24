@@ -301,7 +301,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
         if(fk.isSet())
-            return tr("References %1(%2)\nHold Ctrl+Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","));
+          return tr("References %1(%2)\nHold %3Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","))
+            .arg(QKeySequence(Qt::CTRL).toString());
         else
             return QString();
     }
