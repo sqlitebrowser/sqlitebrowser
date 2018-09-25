@@ -40,6 +40,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 #endif
 
     loadSettings();
+
+    // Avoid different heights due to having check boxes or not
+    ui->treeSyntaxHighlighting->setUniformRowHeights(true);
 }
 
 /*
