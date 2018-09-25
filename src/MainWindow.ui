@@ -56,6 +56,7 @@
           <addaction name="editCreateIndexAction"/>
           <addaction name="editModifyObjectAction"/>
           <addaction name="editDeleteObjectAction"/>
+          <addaction name="actionDbPrint"/>
          </widget>
         </item>
         <item>
@@ -2315,6 +2316,33 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
+  <action name="actionDbPrint">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print the structure of the opened database [Ctrl+P]</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>Open a dialog for printing the structure of the opened database</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -3685,6 +3713,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>openSqlPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDbPrint</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>printDbStructure()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

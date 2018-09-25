@@ -52,6 +52,8 @@
 #include <QTextCodec>
 #include <QUrlQuery>
 #include <QDataStream>      // This include seems to only be necessary for the Windows build
+#include <QPrinter>
+#include <QPrintDialog>
 
 #ifdef Q_OS_MACX //Needed only on macOS
     #include <QOpenGLWidget>
@@ -179,6 +181,10 @@ void MainWindow::init()
     connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
     connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
+
+    // Add print shortcut for the DB Structure tab (dbTreeWidget) with context to the widget, so other print shortcuts aren't eclipsed.
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence(QKeySequence::Print), ui->dbTreeWidget, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &MainWindow::printDbStructure);
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -1859,6 +1865,7 @@ void MainWindow::activateFields(bool enable)
     ui->fileImportCSVAction->setEnabled(enable && write);
     ui->editCreateTableAction->setEnabled(enable && write);
     ui->editCreateIndexAction->setEnabled(enable && write);
+    ui->actionDbPrint->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->buttonBegin->setEnabled(enable);
@@ -3406,4 +3413,82 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
     default:
         return;
     }
+}
+
+void MainWindow::printDbStructure ()
+{
+    const QTreeView* treeView = ui->dbTreeWidget;
+    const QAbstractItemModel* model = treeView->model();
+
+    const int rowCount = model->rowCount(treeView->rootIndex());
+    const int columnCount = model->columnCount(treeView->rootIndex());
+
+    QString strStream;
+    QTextStream out(&strStream);
+
+    out << "<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+        << QString("<title>%1</title>").arg(treeView->windowTitle())
+        << "</head><body bgcolor=\"#FFFFFF\">";
+
+    for (int row = 0; row < rowCount; row++) {
+
+        QModelIndex headerIndex = model->index(row, 0, treeView->rootIndex());
+        QString data = model->data(headerIndex).toString().toHtmlEscaped();
+        out << QString("<h1>%1</h1>").arg(data);
+
+        // Open a new table for each group of objects
+        out << "<table border=1 cellspacing=0 cellpadding=2><thead><tr bgcolor=\"#F0F0F0\">";
+
+        for (int column = 0; column < columnCount; column++) {
+            // Headers
+            if (!treeView->isColumnHidden(column))
+                out << QString("<th>%1</th>").arg(model->headerData(column, Qt::Horizontal).toString().toHtmlEscaped());
+        }
+        out << "</tr></thead>";
+
+        for (int column = 0; column < columnCount; column++) {
+            QModelIndex groupIndex = model->index(row, column, treeView->rootIndex());
+
+            // A row for the object name
+            for (int rowChild = 0; rowChild < model->rowCount(groupIndex); rowChild++) {
+                QModelIndex objectIndex = model->index(rowChild, column, groupIndex);
+                out << "<tr>";
+                for (int column2 = 0; column2 < columnCount; column2++) {
+                    if (!treeView->isColumnHidden(column2)) {
+                        QModelIndex cellIndex = model->index(rowChild, column2, groupIndex);
+                        QString data = model->data(cellIndex).toString().toHtmlEscaped();
+                        out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                    }
+                }
+                out << "</tr>";
+
+                // One row for each object's fields
+                for (int rowChild2 = 0; rowChild2 < model->rowCount(objectIndex); rowChild2++) {
+                    out << "<tr>";
+                    for (int column2 = 0; column2 < columnCount; column2++) {
+                        if (!treeView->isColumnHidden(column2)) {
+                            QModelIndex fieldIndex = model->index(rowChild2, column2, objectIndex);
+                            QString data = model->data(fieldIndex).toString().toHtmlEscaped();
+                            out << QString("<td>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        }
+                    }
+                    out << "</tr>";
+                }
+            }
+        }
+        out << "</table>";
+    }
+    out << "</body></html>";
+
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(strStream);
+
+    QPrinter printer;
+
+    QPrintDialog *dialog = new QPrintDialog(&printer);
+    if (dialog->exec() == QDialog::Accepted)
+        document->print(&printer);
+
+    delete dialog;
+    delete document;
 }

@@ -300,6 +300,7 @@ private slots:
     void exportFilteredTable();
     void updateInsertDeleteRecordButton();
     void runSqlNewTab(const QString& query, const QString& title);
+    void printDbStructure();
 };
 
 #endif
