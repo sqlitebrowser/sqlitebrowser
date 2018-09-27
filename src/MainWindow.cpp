@@ -2507,6 +2507,15 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     if(xml.attributes().hasAttribute("synchronous"))
                         db.setPragma("synchronous", xml.attributes().value("synchronous").toString());
                     loadPragmas();
+                } else if(xml.name() == "attached") {
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "attached")
+                    {
+                        if(xml.name() == "db")
+                        {
+                            db.attach(xml.attributes().value("path").toString(), xml.attributes().value("schema").toString());
+                            xml.skipCurrentElement();
+                        }
+                    }
                 } else if(xml.name() == "window") {
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
@@ -2729,6 +2738,29 @@ void MainWindow::saveProject()
         xml.writeAttribute("temp_store", db.getPragma("temp_store"));
         xml.writeAttribute("wal_autocheckpoint", db.getPragma("wal_autocheckpoint"));
         xml.writeAttribute("synchronous", db.getPragma("synchronous"));
+        xml.writeEndElement();
+
+        // Attached databases
+        xml.writeStartElement("attached");
+        QString sql("PRAGMA database_list;");
+        db.logSQL(sql, kLogMsg_App);
+        sqlite3_stmt* db_vm;
+        if(sqlite3_prepare_v2(db.get("project").get(), sql.toUtf8(), sql.toUtf8().length(), &db_vm, nullptr) == SQLITE_OK)
+        {
+            while(sqlite3_step(db_vm) == SQLITE_ROW)
+            {
+                QString schema(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1)));
+                if(schema != "main" && schema != "temp")
+                {
+                    QString path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+                    xml.writeStartElement("db");
+                    xml.writeAttribute("schema", schema);
+                    xml.writeAttribute("path", path);
+                    xml.writeEndElement();
+                }
+            }
+            sqlite3_finalize(db_vm);
+        }
         xml.writeEndElement();
 
         // Window settings
