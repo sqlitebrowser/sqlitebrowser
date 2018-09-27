@@ -1289,6 +1289,13 @@ void MainWindow::executeQuery()
     {
         // What type of query is this?
         QString qtail = QString(tail).trimmed();
+        // Remove trailing comments so we don't get fooled by some trailing text at the end of the stream.
+        // Otherwise we'll pass them to SQLite and its execution will trigger a savepoint that wouldn't be
+        // reverted.
+        SqliteTableModel::removeCommentsFromQuery(qtail);
+        if (qtail.isEmpty())
+            break;
+
         StatementType query_type = getQueryType(qtail);
 
         // Check whether the DB structure is changed by this statement
