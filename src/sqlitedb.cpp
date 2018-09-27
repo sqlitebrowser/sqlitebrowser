@@ -205,6 +205,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
                 return false;
             }
         }
+        sqlite3_finalize(db_vm);
     }
 
     // Ask for name to be given to the attached database if none was provided
