@@ -25,9 +25,10 @@ public:
             setStyleSheet("QLineEdit{ font-style: italic; }");
             setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
             setModified(false);
-        } else
+        } else {
             setStyleSheet("");
             setPlaceholderText("");
+        }
         m_isNull = value;
     }
 protected:
