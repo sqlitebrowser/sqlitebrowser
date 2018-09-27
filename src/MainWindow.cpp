@@ -53,7 +53,7 @@
 #include <QUrlQuery>
 #include <QDataStream>      // This include seems to only be necessary for the Windows build
 #include <QPrinter>
-#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 
 #ifdef Q_OS_MACX //Needed only on macOS
     #include <QOpenGLWidget>
@@ -3484,10 +3484,14 @@ void MainWindow::printDbStructure ()
     document->setHtml(strStream);
 
     QPrinter printer;
+    printer.setDocName(treeView->windowTitle());
 
-    QPrintDialog *dialog = new QPrintDialog(&printer);
-    if (dialog->exec() == QDialog::Accepted)
-        document->print(&printer);
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        document->print(previewPrinter);
+    });
+
+    dialog->exec();
 
     delete dialog;
     delete document;
