@@ -637,16 +637,19 @@ void MainWindow::populateTable()
         // Load display formats and set them along with the table name
         QVector<QString> v;
         bool only_defaults = true;
-        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
-        for(size_t i=0; i<tablefields.size(); ++i)
+        if(db.getObjectByName(tablename))
         {
-            QString format = storedData.displayFormats[i+1];
-            if(format.size())
+            const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
+            for(size_t i=0; i<tablefields.size(); ++i)
             {
-                v.push_back(format);
-                only_defaults = false;
-            } else {
-                v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
+                QString format = storedData.displayFormats[i+1];
+                if(format.size())
+                {
+                    v.push_back(format);
+                    only_defaults = false;
+                } else {
+                    v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
+                }
             }
         }
         if(only_defaults)
@@ -664,7 +667,7 @@ void MainWindow::populateTable()
     }
 
     // Show/hide menu options depending on whether this is a table or a view
-    if(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
+    if(db.getObjectByName(currentlyBrowsedTableName()) && db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
     {
         // Table
         sqlb::TablePtr table = db.getObjectByName<sqlb::Table>(currentlyBrowsedTableName());
@@ -3133,7 +3136,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     sqlb::ObjectIdentifier currentTable = currentlyBrowsedTableName();
 
     // If this isn't a view just unlock editing and return
-    if(db.getObjectByName(currentTable)->type() != sqlb::Object::View)
+    if(db.getObjectByName(currentTable) && db.getObjectByName(currentTable)->type() != sqlb::Object::View)
     {
         m_browseTableModel->setPseudoPk(QString());
         enableEditing(true);

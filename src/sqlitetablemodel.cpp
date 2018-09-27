@@ -130,7 +130,7 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
 
     // Get the data types of all other columns as well as the column names
     bool allOk = false;
-    if(m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
+    if(m_db.getObjectByName(table) && m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
     {
         sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(table);
         if(t && t->fields.size()) // parsing was OK
