@@ -2340,20 +2340,12 @@ void MainWindow::on_actionBug_report_triggered()
 // 'Help | Feature Request...' link will set an appropiate body and add the label 'enhancement' automatically to the issue
 void MainWindow::on_actionFeature_Request_triggered()
 {
-
-    const QString body =
-      QString("Describe the new feature\n"
-              "--------------------------\n\n\n"
-              "Additional info\n"
-              "---------------\n"
-              "Please answer these questions before submitting your feature request.\n\n"
-              "#### Is your feature request related to an issue? Please include the issue number.\n\n\n"
-              "#### Does this feature exist in another product or project? Please provide a link.\n\n\n"
-              "#### Do you have a screenshot? Please add screenshots to help explain your idea.\n");
-
     QUrlQuery query;
+
+    // Add the label enhancement and use the Feature request template that
+    // we have in GitHub.
     query.addQueryItem("labels", "enhancement");
-    query.addQueryItem("body", body);
+    query.addQueryItem("template", "Feature_request.md");
 
     QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
     url.setQuery(query);
