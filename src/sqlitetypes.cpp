@@ -545,6 +545,10 @@ void Table::removeKeyFromAllConstraints(const QString& key)
 
 void Table::renameKeyInAllConstraints(const QString& key, const QString& to)
 {
+    // Do nothing if the key hasn't really changed
+    if(key == to)
+        return;
+
     // Find all occurrences of the key and change it to the new one
     for(auto it=m_constraints.begin();it!=m_constraints.end();)
     {
