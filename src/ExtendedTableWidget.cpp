@@ -875,7 +875,7 @@ void ExtendedTableWidget::openPrintDialog()
 
     QPrinter printer;
 
-    QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+    QPrintDialog *dialog = new QPrintDialog(&printer, nullptr);
     if (dialog->exec() == QDialog::Accepted) {
         document->print(&printer);
     }

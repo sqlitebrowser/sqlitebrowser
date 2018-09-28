@@ -80,7 +80,7 @@ int RowLoader::countRows()
         // So just execute the statement as it is and fetch all results counting the rows
         sqlite3_stmt* stmt;
         QByteArray utf8Query = query.toUtf8();
-        if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, NULL) == SQLITE_OK)
+        if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
         {
             retval = 0;
             while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -95,7 +95,7 @@ int RowLoader::countRows()
         QByteArray utf8Query = sCountQuery.toUtf8();
 
         sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, NULL);
+        int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
         if(status == SQLITE_OK)
         {
             status = sqlite3_step(stmt);
@@ -220,7 +220,7 @@ void RowLoader::process (Task & t)
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
 
-    int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, NULL);
+    int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
 
     auto row = t.row_begin;
 
