@@ -108,7 +108,7 @@ UniqueFilterModel::UniqueFilterModel(QObject* parent)
 bool UniqueFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, filterKeyColumn(), sourceParent);
-    const QString& value = index.data().toString();
+    const QString& value = index.data(Qt::EditRole).toString();
 
     if (!value.isEmpty() && !m_uniqueValues.contains(value)) {
         const_cast<UniqueFilterModel*>(this)->m_uniqueValues.insert(value);
