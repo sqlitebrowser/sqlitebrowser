@@ -428,8 +428,7 @@ void TestTable::createTableWithNotLikeConstraint()
             "value3 TEXT CONSTRAINT 'value' CHECK(value3 NOT REGEXP 'prefix%'),\n"
             "value4 TEXT CONSTRAINT 'value' CHECK(value4 NOT GLOB 'prefix%'),\n"
             "value5 INTEGER CONSTRAINT 'value' CHECK(value5 BETWEEN 1+4 AND 100 OR 200),\n"
-            "value6 INTEGER CONSTRAINT 'value' CHECK(value6 NOT BETWEEN 1 AND 100),\n"
-            "value7 INTEGER CONSTRAINT 'value' CHECK(NOT EXISTS (1))\n"
+            "value6 INTEGER CONSTRAINT 'value' CHECK(value6 NOT BETWEEN 1 AND 100)\n"
             ");";
 
     Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
@@ -441,7 +440,6 @@ void TestTable::createTableWithNotLikeConstraint()
     QCOMPARE(tab.fields.at(3).check(), "value4 NOT GLOB 'prefix%'");
     QCOMPARE(tab.fields.at(4).check(), "value5 BETWEEN 1+4 AND 100 OR 200");
     QCOMPARE(tab.fields.at(5).check(), "value6 NOT BETWEEN 1 AND 100");
-    QCOMPARE(tab.fields.at(6).check(), "NOT EXISTS (1)");
 }
 
 void TestTable::rowValues()
