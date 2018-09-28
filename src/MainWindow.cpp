@@ -60,11 +60,6 @@
 #endif
 
 // These are needed for reading and writing object files
-QDataStream& operator<<(QDataStream& ds, const sqlb::ObjectIdentifier& objid)
-{
-    ds << objid.toVariant();
-    return ds;
-}
 QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
 {
     // Read in the item
