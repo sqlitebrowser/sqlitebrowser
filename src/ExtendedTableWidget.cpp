@@ -327,7 +327,6 @@ void ExtendedTableWidget::reloadSettings()
 
 void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
 {
-
     QModelIndexList indices = fromIndices;
 
     // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
@@ -356,7 +355,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         if (img.loadFromData(data.toByteArray()))
         {
             // If it's an image, copy the image data to the clipboard
-            qApp->clipboard()->setImage(img);
+            mimeData->setImageData(img);
             return;
         } else {
             // It it's not an image, check if it's an empty field
@@ -370,7 +369,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
             }
 
             // The field isn't empty. Copy the text to the clipboard without quoting (for general plain text clipboard)
-            qApp->clipboard()->setText(data.toByteArray());
+            mimeData->setText(data.toByteArray());
             return;
         }
     }
