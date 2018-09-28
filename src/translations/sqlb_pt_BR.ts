@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser para SQLite é uma ferramenta visual gratuita utilizada para criar, desenhar e editar bancos de dados SQLite.&lt;/p&gt;&lt;p&gt;É bilicenciada sob a Mozilla Public License Version 2 e a GNU General Public License Version 3 ou posterior. Você pode modificar ou redistribuí-la sob as condições dessas licenças.&lt;/p&gt;&lt;p&gt;Veja &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; e &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; para mais detalhes.&lt;/p&gt;&lt;p&gt;Para mais informação sobre esse programa visite nosso website: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Esse software utiliza o GPL/LGPL Qt Toolkit de &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Veja &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para termos de licença e informação.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Também utiliza o Silk icon set de Mark James licenciado sob uma licença Creative Commons Attribution 2.5 e 3.0.&lt;br/&gt;Veja &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para mais detalhes.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser para SQLite é uma ferramenta visual gratuita utilizada para criar, desenhar e editar bancos de dados SQLite.&lt;/p&gt;&lt;p&gt;É bilicenciada sob a Mozilla Public License Version 2 e a GNU General Public License Version 3 ou posterior. Você pode modificar ou redistribuí-la sob as condições dessas licenças.&lt;/p&gt;&lt;p&gt;Veja &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; e &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; para mais detalhes.&lt;/p&gt;&lt;p&gt;Para mais informação sobre esse programa visite nosso website: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Esse software utiliza o GPL/LGPL Qt Toolkit de &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Veja &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para termos de licença e informação.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Também utiliza o Silk icon set de Mark James licenciado sob uma licença Creative Commons Attribution 2.5 e 3.0.&lt;br/&gt;Veja &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; para mais detalhes.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version </source>
@@ -30,6 +30,88 @@
     <message>
         <source>SQLite Version </source>
         <translation>Versão do SQLite </translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (based on SQLite %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AddRecordDialog</name>
+    <message>
+        <source>Add New Record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-increment
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unique constraint
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check constraint:	 %1
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreign key:	 %1
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default value:	 %1
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding record. Message from database engine:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to restore all the entered values to their defaults?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -88,7 +170,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This is DB Browser for SQLite version %1%2.</source>
+        <source>  -R, --read-only	Open database in read-only mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is DB Browser for SQLite version %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -218,6 +304,18 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     <message>
         <source>Apple NSDate to date</source>
         <translation>NSDate da Apple para date</translation>
+    </message>
+    <message>
+        <source>Java epoch (milliseconds) to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unix epoch to local time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date as dd/mm/yyyy</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -353,6 +451,42 @@ Aborting execution%3.</translation>
         <source>could not get column information</source>
         <translation>não pôde obter informação sobre a coluna</translation>
     </message>
+    <message>
+        <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to close this temporary database? All data will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database is currently busy: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to abort that other operation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No database file opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete this object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>could not get list of databases: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading extension: %1</source>
+        <translation type="unfinished">Erro carregado extensão: %1</translation>
+    </message>
 </context>
 <context>
     <name>DbStructureModel</name>
@@ -390,11 +524,23 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>Browsables (%1)</source>
-        <translation>Navegáveis (%1)</translation>
+        <translation type="vanished">Navegáveis (%1)</translation>
     </message>
     <message>
         <source>All</source>
         <translation>Todos</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browsables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -405,11 +551,11 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>Import text</source>
-        <translation>Importar texto</translation>
+        <translation type="vanished">Importar texto</translation>
     </message>
     <message>
         <source>Opens a file dialog used to import text to this database cell.</source>
-        <translation>Abre uma janela usada para importar texto para essa célula de banco de dados.</translation>
+        <translation type="vanished">Abre uma janela usada para importar texto para essa célula de banco de dados.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -417,11 +563,11 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>Export text</source>
-        <translation>Exportar texto</translation>
+        <translation type="vanished">Exportar texto</translation>
     </message>
     <message>
         <source>Opens a file dialog used to export the contents of this database cell to a text file.</source>
-        <translation>Abre um diálogo de arquivo usado para exportar os conteúdos dessa célula para um arquivo de texto.</translation>
+        <translation type="vanished">Abre um diálogo de arquivo usado para exportar os conteúdos dessa célula para um arquivo de texto.</translation>
     </message>
     <message>
         <source>&amp;Export</source>
@@ -465,11 +611,11 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>Choose a file</source>
-        <translation>Escolha um arquivo</translation>
+        <translation type="vanished">Escolha um arquivo</translation>
     </message>
     <message>
         <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
-        <translation>Arquivos de texto(*.txt);;Imagens(%1);;Todos os arquivos(*)</translation>
+        <translation type="vanished">Arquivos de texto(*.txt);;Imagens(%1);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Choose a filename to export data</source>
@@ -477,7 +623,7 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>Text files(*.txt);;All files(*)</source>
-        <translation>Arquivos de texto(*.txt);;Todos os arquivos(*)</translation>
+        <translation type="vanished">Arquivos de texto(*.txt);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Null</source>
@@ -547,11 +693,141 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>Image data can&apos;t be viewed with the text editor</source>
-        <translation>Dados de imagem não podem ser exibidos pelo editor de texto</translation>
+        <translation type="vanished">Dados de imagem não podem ser exibidos pelo editor de texto</translation>
     </message>
     <message>
         <source>Binary data can&apos;t be viewed with the text editor</source>
-        <translation>Dados binários não podem ser exibidos pelo editor de texto</translation>
+        <translation type="vanished">Dados binários não podem ser exibidos pelo editor de texto</translation>
+    </message>
+    <message>
+        <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically adjust the editor mode to the loaded data type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-switch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-format: pretty print on loading, compact on saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autoformat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens a file dialog used to import any kind of data to this database cell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens a file dialog used to export the contents of this database cell to a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
+
+Errors are indicated with a red squiggle underline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply data to cell [Ctrl+Return]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button saves the changes performed in the cell editor to the database cell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image data can&apos;t be viewed in this mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try switching to Image or Binary mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Binary data can&apos;t be viewed in this mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try switching to Binary mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text files (*.txt)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON files (*.json)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML files (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image files (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Binary files (*.bin)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a file to import</source>
+        <translation type="unfinished">Escolha um arquivo para importar</translation>
+    </message>
+    <message>
+        <source>%1 Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SVG files (*.svg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data for this mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type of data currently in cell: Valid JSON</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -812,20 +1088,33 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Set this to create a temporary table that is deleted when closing the database.</source>
-        <translation>Marque isso para criar uma tabela temporária que será deletada quando o banco de dados for fechado.</translation>
+        <translation type="vanished">Marque isso para criar uma tabela temporária que será deletada quando o banco de dados for fechado.</translation>
     </message>
     <message>
         <source>Temporary table</source>
-        <translation>Tabela temporária</translation>
+        <translation type="vanished">Tabela temporária</translation>
     </message>
     <message>
         <source>Setting the temporary flag for the table failed. Error message:
 %1</source>
-        <translation>Definindo a flag temporária para a tabela falhou. Mensagem de erro:
+        <translation type="vanished">Definindo a flag temporária para a tabela falhou. Mensagem de erro:
 %1</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database schema</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changing the table schema failed. Error message:
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -939,6 +1228,14 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
         <source>Export data as JSON</source>
         <translation>Exportar dados como JSON</translation>
     </message>
+    <message>
+        <source>exporting CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>exporting JSON</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportSqlDialog</name>
@@ -968,7 +1265,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Please select at least 1 table.</source>
-        <translation>Por favor, selecione pelo menos uma tabela.</translation>
+        <translation type="vanished">Por favor, selecione pelo menos uma tabela.</translation>
     </message>
     <message>
         <source>Choose a filename to export</source>
@@ -1018,6 +1315,29 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
         <source>Overwrite old schema (DROP TABLE, then CREATE TABLE)</source>
         <translation>Sobrescrever schema antigo (DROP TABLE, then CREATE TABLE)</translation>
     </message>
+    <message>
+        <source>Please select at least one table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ExtendedScintilla</name>
+    <message>
+        <source>Ctrl+H</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+P</source>
+        <translation type="unfinished">Ctrl+P</translation>
+    </message>
+    <message>
+        <source>Find and Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExtendedTableWidget</name>
@@ -1045,6 +1365,66 @@ Do you want to insert it anyway?</source>
         <translation>O conteúdo da área de transferência é maior do que o intervalo selecionado.
 Deseja inserir mesmo assim?</translation>
     </message>
+    <message>
+        <source>Use as Exact Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Containing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not equal to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Greater than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Greater or equal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less or equal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Between this and...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy with Headers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy as SQL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use in Filter Expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Shift+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Alt+C</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileDialog</name>
@@ -1054,10 +1434,210 @@ Deseja inserir mesmo assim?</translation>
     </message>
 </context>
 <context>
+    <name>FileExtensionManager</name>
+    <message>
+        <source>File Extension Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>*.extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FilterLineEdit</name>
     <message>
         <source>Filter</source>
         <translation>Filtro</translation>
+    </message>
+    <message>
+        <source>These input fields allow you to perform quick filters in the currently selected table.
+By default, the rows containing the input text are filtered out.
+The following operators are also supported:
+%	Wildcard
+&gt;	Greater than
+&lt;	Less than
+&gt;=	Equal to or greater
+&lt;=	Equal to or less
+=	Equal to: exact match
+&lt;&gt;	Unequal: exact inverse match
+x~y	Range: values between x and y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Filter Expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What&apos;s This?</source>
+        <translation type="unfinished">O que é isso?</translation>
+    </message>
+    <message>
+        <source>Is NULL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is not NULL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is not empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equal to...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not equal to...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Greater than...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less than...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Greater or equal...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less or equal...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In range...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FindReplaceDialog</name>
+    <message>
+        <source>Find and Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fi&amp;nd text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;place with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match &amp;exact case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match &amp;only whole words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, the search continues from the other end when it reaches one end of the page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Wrap around</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, the search goes backwards from cursor position, otherwise it goes forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search &amp;backwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular e&amp;xpressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find the next occurrence from the cursor position and in the direction set by &quot;Search backwards&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Find Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight all the occurrences of the text in the page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F&amp;ind All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace all the occurrences of the text in the page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace &amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The searched text was not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The searched text was not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The searched text was found one time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The searched text was found %1 times.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The searched text was replaced one time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The searched text was replaced %1 times.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1083,7 +1663,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>&amp;Table name</source>
-        <translation>&amp;Nome da tabela</translation>
+        <translation type="vanished">&amp;Nome da tabela</translation>
     </message>
     <message>
         <source>&amp;Column names in first line</source>
@@ -1147,19 +1727,19 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Inserting data...</source>
-        <translation>Inserindo dados...</translation>
+        <translation type="vanished">Inserindo dados...</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="vanished">Cancelar</translation>
     </message>
     <message>
         <source>There is already a table of that name and an import into an existing table is only possible if the number of columns match.</source>
-        <translation>Já existe uma tabela com esse nome e importar em uma tabela existente apenas é possível se o número de colunas for o mesmo.</translation>
+        <translation type="vanished">Já existe uma tabela com esse nome e importar em uma tabela existente apenas é possível se o número de colunas for o mesmo.</translation>
     </message>
     <message>
         <source>There is already a table of that name. Do you want to import the data into it?</source>
-        <translation>Já existe uma tabela com esse nome. Você quer importar os dados nela?</translation>
+        <translation type="vanished">Já existe uma tabela com esse nome. Você quer importar os dados nela?</translation>
     </message>
     <message>
         <source>Creating restore point failed: %1</source>
@@ -1171,7 +1751,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Missing field for record %1</source>
-        <translation>Campo ou registro faltando %1</translation>
+        <translation type="vanished">Campo ou registro faltando %1</translation>
     </message>
     <message>
         <source>Inserting row failed: %1</source>
@@ -1192,6 +1772,58 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <source>Select All</source>
         <translation>Selecionar tudo</translation>
+    </message>
+    <message>
+        <source>Table na&amp;me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished">Avançado</translation>
+    </message>
+    <message>
+        <source>When importing an empty value from the CSV file into an existing table with a default value for this column, that default value is inserted. Activate this option to insert an empty value instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore default &amp;values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fail on missing values </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable data type detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable the automatic data type detection when creating a new table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import completed</source>
+        <translation type="unfinished">Importação completa</translation>
+    </message>
+    <message>
+        <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is already a table named &apos;%1&apos;. Do you want to import the data into it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>importing CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1226,7 +1858,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Refresh the data in the selected table.</source>
-        <translation>Atualiza os dados na tabela selecionada.</translation>
+        <translation type="vanished">Atualiza os dados na tabela selecionada.</translation>
     </message>
     <message>
         <source>This button refreshes the data in the currently selected table.</source>
@@ -1246,7 +1878,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>This button creates a new, empty record in the database</source>
-        <translation>Este botão cria um novo registro em branco no banco de dados</translation>
+        <translation type="vanished">Este botão cria um novo registro em branco no banco de dados</translation>
     </message>
     <message>
         <source>New Record</source>
@@ -1258,7 +1890,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>This button deletes the record currently selected in the database</source>
-        <translation>Este botão deleta o registro atualmente selecionado no banco de dados</translation>
+        <translation type="vanished">Este botão deleta o registro atualmente selecionado no banco de dados</translation>
     </message>
     <message>
         <source>Delete Record</source>
@@ -1266,7 +1898,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation>Esta é a vista do banco de dados. Você pode clicar duas vezes em qualquer registro para editar seus conteúdos na janela de edição de célula.</translation>
+        <translation type="vanished">Esta é a vista do banco de dados. Você pode clicar duas vezes em qualquer registro para editar seus conteúdos na janela de edição de célula.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1349,124 +1981,112 @@ Deseja inserir mesmo assim?</translation>
         <translation type="obsolete">Editar &amp;Pragmas</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>None</source>
-        <translation>None</translation>
+        <translation type="vanished">None</translation>
     </message>
     <message>
         <source>Full</source>
-        <translation>Full</translation>
+        <translation type="vanished">Full</translation>
     </message>
     <message>
         <source>Incremental</source>
-        <translation>Incremental</translation>
+        <translation type="vanished">Incremental</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Truncate</source>
-        <translation>Truncate</translation>
+        <translation type="vanished">Truncate</translation>
     </message>
     <message>
         <source>Persist</source>
-        <translation>Persist</translation>
+        <translation type="vanished">Persist</translation>
     </message>
     <message>
         <source>Memory</source>
-        <translation>Memory</translation>
+        <translation type="vanished">Memory</translation>
     </message>
     <message>
         <source>WAL</source>
-        <translation>WAL</translation>
+        <translation type="vanished">WAL</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation type="vanished">Off</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation type="vanished">Normal</translation>
     </message>
     <message>
         <source>Exclusive</source>
-        <translation>Exclusive</translation>
+        <translation type="vanished">Exclusive</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation type="vanished">Default</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>File</translation>
+        <translation type="vanished">File</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>E&amp;xecute SQL</source>
@@ -1750,7 +2370,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>&amp;About...</source>
-        <translation>&amp;Sobre...</translation>
+        <translation type="vanished">&amp;Sobre...</translation>
     </message>
     <message>
         <source>&amp;Recently opened</source>
@@ -1806,15 +2426,15 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>&amp;Wiki...</source>
-        <translation>&amp;Wiki...</translation>
+        <translation type="vanished">&amp;Wiki...</translation>
     </message>
     <message>
         <source>Bug &amp;report...</source>
-        <translation>&amp;Reportar bug...</translation>
+        <translation type="vanished">&amp;Reportar bug...</translation>
     </message>
     <message>
         <source>Web&amp;site...</source>
-        <translation>Web&amp;site...</translation>
+        <translation type="vanished">Web&amp;site...</translation>
     </message>
     <message>
         <source>Save Project</source>
@@ -1835,7 +2455,7 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <source>&amp;Attach Database</source>
         <translatorcomment>Microsoft uses &quot;anexar&quot;, thought it was good enough a translation.</translatorcomment>
-        <translation>&amp;Anexar banco de dados</translation>
+        <translation type="vanished">&amp;Anexar banco de dados</translation>
     </message>
     <message>
         <source>Set Encryption</source>
@@ -1904,7 +2524,7 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <source>Error adding record:
 </source>
-        <translation>Erro adicionando registro:
+        <translation type="vanished">Erro adicionando registro:
 </translation>
     </message>
     <message>
@@ -1927,13 +2547,13 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <source>Are you sure you want to delete the %1 &apos;%2&apos;?
 All data associated with the %1 will be lost.</source>
-        <translation>Você tem certeza de que deseja deletar %1 &apos;%2&apos;?
+        <translation type="vanished">Você tem certeza de que deseja deletar %1 &apos;%2&apos;?
 Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>Error: could not delete the %1. Message from database engine:
 %2</source>
-        <translation>Erro: não pôde deletar %1. Mensagem do banco de dados:
+        <translation type="vanished">Erro: não pôde deletar %1. Mensagem do banco de dados:
 %2</translation>
     </message>
     <message>
@@ -1946,7 +2566,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>Error executing query: %1</source>
-        <translation>Erro executando requisição: %1</translation>
+        <translation type="vanished">Erro executando requisição: %1</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms)</source>
@@ -1962,7 +2582,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>Import completed</source>
-        <translation>Importação completa</translation>
+        <translation type="vanished">Importação completa</translation>
     </message>
     <message>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
@@ -2062,7 +2682,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Choose a file to open</source>
-        <translation>Escolha um arquivo para abrir</translation>
+        <translation type="vanished">Escolha um arquivo para abrir</translation>
     </message>
     <message>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
@@ -2182,7 +2802,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Compact &amp;Database</source>
-        <translation>&amp;Compactar banco de dados</translation>
+        <translation type="vanished">&amp;Compactar banco de dados</translation>
     </message>
     <message>
         <source>&amp;Database from SQL file...</source>
@@ -2222,19 +2842,19 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
-        <translation>&amp;Carregar extensão</translation>
+        <translation type="vanished">&amp;Carregar extensão</translation>
     </message>
     <message>
         <source>Sa&amp;ve Project</source>
-        <translation>&amp;Salvar projeto</translation>
+        <translation type="vanished">&amp;Salvar projeto</translation>
     </message>
     <message>
         <source>Open &amp;Project</source>
-        <translation>Abrir &amp;projeto</translation>
+        <translation type="vanished">Abrir &amp;projeto</translation>
     </message>
     <message>
         <source>&amp;Set Encryption</source>
-        <translation>&amp;Configurar encriptação</translation>
+        <translation type="vanished">&amp;Configurar encriptação</translation>
     </message>
     <message>
         <source>Edit display format</source>
@@ -2270,7 +2890,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation type="vanished">Duplicar registro</translation>
+        <translation>Duplicar registro</translation>
     </message>
     <message>
         <source>Encrypted</source>
@@ -2286,7 +2906,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>%1 rows returned in %2ms from: %3</source>
-        <translation>%1 linhas retornadas em %2ms de: %3</translation>
+        <translation type="vanished">%1 linhas retornadas em %2ms de: %3</translation>
     </message>
     <message>
         <source>, %1 rows affected</source>
@@ -2294,7 +2914,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
-        <translation>Consulta executada com sucesso: %1 (durou %2ms%3)</translation>
+        <translation type="vanished">Consulta executada com sucesso: %1 (durou %2ms%3)</translation>
     </message>
     <message>
         <source>Please choose a new encoding for this table.</source>
@@ -2348,7 +2968,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Executar SQL [F5, Ctrl+Return, Ctrl+R]</translation>
+        <translation type="vanished">Executar SQL [F5, Ctrl+Return, Ctrl+R]</translation>
     </message>
     <message>
         <source>Execute current line [Shift+F5]</source>
@@ -2360,7 +2980,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>SQLCipher &amp;FAQ...</source>
-        <translation>SQLCipher &amp;FAQ...</translation>
+        <translation type="vanished">SQLCipher &amp;FAQ...</translation>
     </message>
     <message>
         <source>Opens the SQLCipher FAQ in a browser window</source>
@@ -2368,7 +2988,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>Table(s) to JSON...</source>
-        <translation>Tabela(s) para JSON...</translation>
+        <translation type="vanished">Tabela(s) para JSON...</translation>
     </message>
     <message>
         <source>Export one or more table(s) to a JSON file</source>
@@ -2404,7 +3024,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>&amp;Open Database Read Only...</source>
-        <translation>&amp;Abrir banco de dados somente leitura...</translation>
+        <translation type="vanished">&amp;Abrir banco de dados somente leitura...</translation>
     </message>
     <message>
         <source>Open an existing database file in read only mode</source>
@@ -2481,6 +3101,554 @@ Motivo: %1</translation>
 Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This is the structure of the opened database.
+You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the table as currently displayed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button deletes the record or records currently selected in the table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the database table view. You can do the following actions:
+ - Start writing for editing inline the value.
+ - Double-click any record to edit its contents in the cell editor window.
+ - Alt+Del for deleting the cell content to NULL.
+ - Ctrl+&quot; for duplicating the current record.
+ - Ctrl+&apos; for copying the value from the cell above.
+ - Standard selection and copy/paste operations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button clears the contents of the SQL logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the structure of the opened database.
+You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
+You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra DB toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close the current database file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button closes the connection to the currently open database file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compact &amp;Database...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button opens a new tab for the SQL editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Load Extension...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button executes the SQL statement present in the current editor line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bug &amp;Report...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feature Re&amp;quest...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Web&amp;site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Donate on Patreon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve Project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open &amp;Project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button lets you open a DB4S project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Attach Database...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add another database file to the current database connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button lets you add another database file to the current database connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Set Encryption...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button saves the content of the current SQL editor tab to a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQLCipher &amp;FAQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Table(&amp;s) to JSON...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Data&amp;base Read Only...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the results view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button lets you save the results of the last executed query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find text in SQL editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find text in SQL editor [Ctrl+F]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button opens the search bar of the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find or replace text in SQL editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find or replace text in SQL editor [Ctrl+H]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button opens the find/replace dialog for the current editor tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to &amp;CSV</source>
+        <translation type="unfinished">Exportar para &amp;CSV</translation>
+    </message>
+    <message>
+        <source>Save as &amp;view</source>
+        <translation type="unfinished">Salvar como &amp;vista</translation>
+    </message>
+    <message>
+        <source>Save as view</source>
+        <translation type="unfinished">Salvar como vista</translation>
+    </message>
+    <message>
+        <source>Hide column(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide selected column(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show all columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show all columns that were hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shows or hides the Project toolbar.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra DB Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the filtered data to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the current filter, sort column and display formats as a view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Values...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a dialog for inserting values in a new record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert new record using default values in browsed table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New In-&amp;Memory Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag &amp;&amp; Drop Qualified Names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag &amp;&amp; Drop Enquoted Names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Integrity Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Foreign-Key Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Quick Integrity Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run a quick integrity check over the open DB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Optimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attempt to optimize the database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print text from current SQL editor tab [Ctrl+P]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a dialog for printing the text in the current SQL editor tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print the structure of the opened database [Ctrl+P]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a dialog for printing the structure of the opened database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In-Memory database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>determining row count...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 - %2 of &gt;= %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the table &apos;%1&apos;?
+All data associated with the table will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: could not delete the table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: could not delete the view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: could not delete the trigger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: could not delete the index.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message from database engine:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editing the table requires to save all pending changes now.
+Are you sure you want to save the database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error checking foreign keys after table modification. The changes will be reverted.
+Message from database engine:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- EXECUTING SELECTION IN &apos;%1&apos;
+--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- EXECUTING LINE IN &apos;%1&apos;
+--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- EXECUTING ALL IN &apos;%1&apos;
+--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>executing query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 rows returned in %2ms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>query executed successfully. Took %1ms%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- At line %1:
+%4
+-- Result: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a project file to open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collation needed! Proceed?</source>
+        <translation type="unfinished">Função de comparação necessária! Proceder?</translation>
+    </message>
+    <message>
+        <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
+If you choose to proceed, be aware bad things can happen to your database.
+Create a backup!</source>
+        <translation type="unfinished">Uma tabela nesse banco de dados requer uma função de comparação especial &apos;%1&apos; que esse aplicativo não pode prover.
+So você optar por proceder, esteja avisado de que coisas ruins podem acontecer para o seu banco de dados.
+Faça um backup!</translation>
+    </message>
+    <message>
+        <source>creating collation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please specify the view name</source>
+        <translation type="unfinished">Por favor, especifique o nome da vista</translation>
+    </message>
+    <message>
+        <source>There is already an object with that name. Please choose a different name.</source>
+        <translation type="unfinished">Já existe um objeto com esse nome. Por favor, escolha um nome diferente.</translation>
+    </message>
+    <message>
+        <source>View successfully created.</source>
+        <translation type="unfinished">Vista criada com sucesso.</translation>
+    </message>
+    <message>
+        <source>Error creating view: %1</source>
+        <translation type="unfinished">Erro criando vista: %1</translation>
+    </message>
+    <message>
+        <source>There is no filter set for this table. View will not be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action will open a new SQL tab for running:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press Help for opening the corresponding SQLite reference page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NullLineEdit</name>
+    <message>
+        <source>Set to NULL</source>
+        <translation type="unfinished">Definir como NULL</translation>
+    </message>
+    <message>
+        <source>Alt+Del</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlotDock</name>
@@ -2502,7 +3670,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>_</source>
-        <translation>_</translation>
+        <translation type="vanished">_</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -2602,7 +3770,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Carregar todos os dados. Isso somente tem efeito se nem todos os dados já foram obtidos da tabela devido ao mecanismo de carregamento parcial.</translation>
+        <translation type="vanished">Carregar todos os dados. Isso somente tem efeito se nem todos os dados já foram obtidos da tabela devido ao mecanismo de carregamento parcial.</translation>
     </message>
     <message>
         <source>Row #</source>
@@ -2610,7 +3778,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose a axis color</source>
-        <translation>Escolha uma cor para o eixo</translation>
+        <translation type="vanished">Escolha uma cor para o eixo</translation>
     </message>
     <message>
         <source>Choose a filename to save under</source>
@@ -2622,11 +3790,82 @@ Are you sure?</source>
     </message>
     <message>
         <source>Fetching all data...</source>
-        <translation>Obtendo todos os dados...</translation>
+        <translation type="vanished">Obtendo todos os dados...</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="vanished">Cancelar</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Axis Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Here is a plot drawn when you select the x and y values above.
+
+Click on points to select them in the plot and in the table. Ctrl+Click for selecting a range of points.
+
+Use mouse-wheel for zooming and mouse drag for changing the axis range.
+
+Select the axes or axes labels to drag and zoom only in that orientation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load all data and redraw plot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Copiar</translation>
+    </message>
+    <message>
+        <source>Show legend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stacked bars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date/Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Numeric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load all data and redraw plot.
+Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an axis color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2701,7 +3940,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>NULL fields</source>
-        <translation>Campos nulos</translation>
+        <translation type="vanished">Campos nulos</translation>
     </message>
     <message>
         <source>Text &amp;colour</source>
@@ -2709,7 +3948,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation>&amp;Texto</translation>
+        <translation type="vanished">&amp;Texto</translation>
     </message>
     <message>
         <source>Bac&amp;kground colour</source>
@@ -2749,7 +3988,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>function</source>
-        <translation>função</translation>
+        <translation type="vanished">função</translation>
     </message>
     <message>
         <source>Function</source>
@@ -2773,7 +4012,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>currentline</source>
-        <translation>currentline</translation>
+        <translation type="vanished">currentline</translation>
     </message>
     <message>
         <source>Current line</source>
@@ -2785,7 +4024,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>SQL &amp;log font size</source>
-        <translation>Tamanho da fonte do &amp;log de SQL</translation>
+        <translation type="vanished">Tamanho da fonte do &amp;log de SQL</translation>
     </message>
     <message>
         <source>Tab size:</source>
@@ -2865,11 +4104,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>Font si&amp;ze:</source>
-        <translation>&amp;Tamanho da fonte:</translation>
+        <translation type="vanished">&amp;Tamanho da fonte:</translation>
     </message>
     <message>
         <source>Field colors</source>
-        <translation>Cores do campo</translation>
+        <translation type="vanished">Cores do campo</translation>
     </message>
     <message>
         <source>NULL</source>
@@ -2881,7 +4120,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Text</source>
-        <translation>Texto</translation>
+        <translation type="vanished">Texto</translation>
     </message>
     <message>
         <source>Binary</source>
@@ -2917,7 +4156,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
-        <translation>Ativar indicadores de erro destaca as linhas de SQL que causaram erros durante a última execução</translation>
+        <translation type="vanished">Ativar indicadores de erro destaca as linhas de SQL que causaram erros durante a última execução</translation>
     </message>
     <message>
         <source>Hori&amp;zontal tiling</source>
@@ -3019,6 +4258,136 @@ Are you sure?</source>
         <source>Clone databases into</source>
         <translation>Clonar bancos de dados em</translation>
     </message>
+    <message>
+        <source>Toolbar style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only display the icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only display the text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The text appears beside the icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The text appears under the icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow the style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DB file extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font si&amp;ze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Row count threshold for completion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Displayed &amp;text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview only (N/A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQL &amp;results font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Wrap lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At word boundaries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At character boundaries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At whitespace boundaries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Quotes for identifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>`Grave accents` - Traditional MySQL quotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Square brackets] - Traditional MS SQL Server quotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keywords in &amp;UPPER CASE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to clear all the saved settings?
+All your preferences will be lost and default values will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -3038,7 +4407,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Decoding CSV file...</source>
-        <translation>Decodificando arquivo CSV...</translation>
+        <translation type="vanished">Decodificando arquivo CSV...</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3046,19 +4415,31 @@ Are you sure?</source>
     </message>
     <message>
         <source>Collation needed! Proceed?</source>
-        <translation>Função de comparação necessária! Proceder?</translation>
+        <translation type="vanished">Função de comparação necessária! Proceder?</translation>
     </message>
     <message>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation>Uma tabela nesse banco de dados requer uma função de comparação especial &apos;%1&apos; que esse aplicativo não pode prover.
+        <translation type="vanished">Uma tabela nesse banco de dados requer uma função de comparação especial &apos;%1&apos; que esse aplicativo não pode prover.
 So você optar por proceder, esteja avisado de que coisas ruins podem acontecer para o seu banco de dados.
 Faça um backup!</translation>
     </message>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation>Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
+        <translation type="vanished">Arquivos de banco de dados SQL (*.db *.sqlite *.sqlite3 *.db3);;Todos os arquivos (*)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Importing CSV file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3078,13 +4459,13 @@ Faça um backup!</translation>
     <message>
         <source>Uploading remote database to
 %1.</source>
-        <translation>Enviando banco de dados remoto para
+        <translation type="vanished">Enviando banco de dados remoto para
 %1.</translation>
     </message>
     <message>
         <source>Downloading remote database from
 %1.</source>
-        <translation>Baixando banco de dados remoto de
+        <translation type="vanished">Baixando banco de dados remoto de
 %1.</translation>
     </message>
     <message>
@@ -3119,6 +4500,22 @@ Faça um backup!</translation>
         <translation>Erro criando lista local de bancos de dados.
 %1</translation>
     </message>
+    <message>
+        <source>Uploading remote database to
+%1</source>
+        <translation type="unfinished">Enviando banco de dados remoto para
+%1. {1?}</translation>
+    </message>
+    <message>
+        <source>Downloading remote database from
+%1</source>
+        <translation type="unfinished">Baixando banco de dados remoto de
+%1. {1?}</translation>
+    </message>
+    <message>
+        <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoteDock</name>
@@ -3144,6 +4541,14 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>Push currently opened database to server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3216,6 +4621,18 @@ p, li { white-space: pre-wrap; }
         <source>Unspecified</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Branch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force push</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use with care. This can cause remote commits to be deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SqlExecutionArea</name>
@@ -3233,31 +4650,95 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Export to &amp;CSV</source>
-        <translation>Exportar para &amp;CSV</translation>
+        <translation type="vanished">Exportar para &amp;CSV</translation>
     </message>
     <message>
         <source>Save as &amp;view</source>
-        <translation>Salvar como &amp;vista</translation>
+        <translation type="vanished">Salvar como &amp;vista</translation>
     </message>
     <message>
         <source>Save as view</source>
-        <translation>Salvar como vista</translation>
+        <translation type="vanished">Salvar como vista</translation>
     </message>
     <message>
         <source>Please specify the view name</source>
-        <translation>Por favor, especifique o nome da vista</translation>
+        <translation type="vanished">Por favor, especifique o nome da vista</translation>
     </message>
     <message>
         <source>There is already an object with that name. Please choose a different name.</source>
-        <translation>Já existe um objeto com esse nome. Por favor, escolha um nome diferente.</translation>
+        <translation type="vanished">Já existe um objeto com esse nome. Por favor, escolha um nome diferente.</translation>
     </message>
     <message>
         <source>View successfully created.</source>
-        <translation>Vista criada com sucesso.</translation>
+        <translation type="vanished">Vista criada com sucesso.</translation>
     </message>
     <message>
         <source>Error creating view: %1</source>
-        <translation>Erro criando vista: %1</translation>
+        <translation type="vanished">Erro criando vista: %1</translation>
+    </message>
+    <message>
+        <source>Find previous match [Shift+F3]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find previous match with mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift+F3</source>
+        <translation type="unfinished">Shift+F3</translation>
+    </message>
+    <message>
+        <source>The found pattern must be a whole word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text pattern to find considering the checks in this frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find in editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The found pattern must match in letter case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find next match [Enter, F3]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find next match with wrapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F3</source>
+        <translation type="unfinished">F3</translation>
+    </message>
+    <message>
+        <source>Interpret search pattern as a regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Find Bar</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3454,6 +4935,62 @@ p, li { white-space: pre-wrap; }
         <source>(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.</source>
         <translation></translation>
     </message>
+    <message>
+        <source>() The number of the row within the current partition. Rows are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition, or in arbitrary order otherwise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>() The row_number() of the first peer in each group - the rank of the current row with gaps. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>() The number of the current row&apos;s peer group within its partition - the rank of the current row without gaps. Partitions are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>() Despite the name, this function always returns a value between 0.0 and 1.0 equal to (rank - 1)/(partition-rows - 1), where rank is the value returned by built-in window function rank() and partition-rows is the total number of rows in the partition. If the partition contains only one row, this function returns 0.0. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>() The cumulative distribution. Calculated as row-number/partition-rows, where row-number is the value returned by row_number() for the last peer in the group and partition-rows the number of rows in the partition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(N) Argument N is handled as an integer. This function divides the partition into N groups as evenly as possible and assigns an integer between 1 and N to each group, in the order defined by the ORDER BY clause, or in arbitrary order otherwise. If necessary, larger groups occur first. This function returns the integer value assigned to the group that the current row is a part of.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr) Returns the result of evaluating expression expr against the previous row in the partition. Or, if there is no previous row (because the current row is the first), NULL.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr,offset,default) If default is also provided, then it is returned instead of NULL if the row identified by offset does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr) Returns the result of evaluating expression expr against the next row in the partition. Or, if there is no next row (because the current row is the last), NULL.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the first row in the window frame for each row.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the last row in the window frame for each row.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SqliteTableModel</name>
@@ -3466,8 +5003,33 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
-        <translation>Referencia %1(%2)
+        <translation type="vanished">Referencia %1(%2)
 Pressione Ctrl+Shift e clique para ir até lá</translation>
+    </message>
+    <message>
+        <source>reading rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>References %1(%2)
+Hold %3Shift and click to jump there</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>retrieving list of columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fetching data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -3478,11 +5040,19 @@ Pressione Ctrl+Shift e clique para ir até lá</translation>
     </message>
     <message>
         <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation>Alerta: compactar o banco de dados confirmará todas as alterações feitas.</translation>
+        <translation type="vanished">Alerta: compactar o banco de dados confirmará todas as alterações feitas.</translation>
     </message>
     <message>
         <source>Please select the objects to compact:</source>
-        <translation>Por favor, selecione os objetos que deseja compactar:</translation>
+        <translation type="vanished">Por favor, selecione os objetos que deseja compactar:</translation>
+    </message>
+    <message>
+        <source>Warning: Compacting the database will commit all of your changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the databases to co&amp;mpact:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
