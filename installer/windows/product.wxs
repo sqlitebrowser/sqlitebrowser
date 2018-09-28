@@ -5,7 +5,7 @@
 
     <Product Id="*" UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Name="$(var.Name)" Manufacturer="$(var.Team)" Version="$(var.Version)" Language="1033">
 
-        <Package Id="*" Compressed="yes" InstallerVersion="301" InstallScope="perMachine" />
+        <Package Id="*" Compressed="yes" InstallerVersion="301" InstallPrivileges="elevated" InstallScope="perMachine" />
 
         <Media Id="1" Cabinet="Media.cab" EmbedCab="yes" CompressionLevel="high" />
 
