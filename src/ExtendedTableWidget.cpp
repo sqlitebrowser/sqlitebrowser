@@ -347,7 +347,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // Clear internal copy-paste buffer
     m_buffer.clear();
 
-    // If a single cell is selected, copy it to clipboard
+    // If a single cell is selected which contains an image, copy it to the clipboard
     if (!inSQL && !withHeaders && indices.size() == 1) {
         QImage img;
         QVariant data = m->data(indices.first(), Qt::EditRole);
@@ -357,24 +357,10 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
             // If it's an image, copy the image data to the clipboard
             mimeData->setImageData(img);
             return;
-        } else {
-            // It it's not an image, check if it's an empty field
-            if (data.toByteArray().isEmpty())
-            {
-                // The field is either NULL or empty. Those are are handled via the internal copy-paste buffer
-                qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
-                qApp->clipboard()->clear();
-                m_buffer.push_back(QByteArrayList{data.toByteArray()});
-                return;
-            }
-
-            // The field isn't empty. Copy the text to the clipboard without quoting (for general plain text clipboard)
-            mimeData->setText(data.toByteArray());
-            return;
         }
     }
 
-    // If we got here, there are multiple selected cells, or copy with headers was requested.
+    // If we got here, a non-image cell was or multiple cells were selected, or copy with headers was requested.
     // In this case, we copy selected data into internal copy-paste buffer and then
     // we write a table both in HTML and text formats to the system clipboard.
 
@@ -432,7 +418,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                 sqlInsertStatement.append(", ");
             }
 
-            result.append(escapeCopiedData(headerText));
+            result.append(headerText);
             htmlResult.append(headerText);
             sqlInsertStatement.append(sqlb::escapeIdentifier(headerText));
         }
@@ -486,7 +472,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                 else
                     htmlResult.append(QString(text).toHtmlEscaped());
 
-                result.append(escapeCopiedData(text));
+                result.append(text);
                 sqlResult.append("'" + text.replace("'", "''") + "'");
             } else
                 // Table cell data: binary. Save as BLOB literal in SQL
@@ -510,26 +496,6 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     QMimeData *mimeData = new QMimeData;
     copyMimeData(selectionModel()->selectedIndexes(), mimeData, withHeaders, inSQL);
     qApp->clipboard()->setMimeData(mimeData);
-}
-
-QString ExtendedTableWidget::escapeCopiedData(const QByteArray& data) const
-{
-    // Empty string is enquoted in plain text format, whilst NULL isn't
-    // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
-    // We also need to quote when there are tabs in the string (another option would be to replace the tabs by spaces, that's what
-    // LibreOffice seems to be doing here).
-
-    if(data.isNull())
-        return data;
-
-    QString text = data;
-    if(text.isEmpty() || text.contains('\n') || text.contains('\t') || text.contains('"'))
-    {
-        text.replace("\"", "\"\"");
-        return QString("\"%1\"").arg(text);
-    } else {
-        return text;
-    }
 }
 
 void ExtendedTableWidget::paste()

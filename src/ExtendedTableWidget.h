@@ -67,7 +67,6 @@ private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
-    QString escapeCopiedData(const QByteArray& data) const;
     void openPrintDialog();
 
     void useAsFilter(const QString& filterOperator, bool binary = false);
