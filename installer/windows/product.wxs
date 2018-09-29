@@ -64,6 +64,9 @@
                     <Directory Id="platforms" Name="platforms">
                         <Component><File Source="$(var.QtPath)\plugins\platforms\qwindows.dll" /></Component>
                     </Directory>
+                    <Directory Id="printsupport" Name="printsupport">
+                        <Component><File Source="$(var.QtPath)\plugins\printsupport\windowsprintersupport.dll" /></Component>
+                    </Directory>
                     <Directory Id="licenses" Name="licenses">
                         <Component><File Source="..\..\LICENSE" /></Component>
                         <Component><File Source="..\..\LICENSE-PLUGINS" /></Component>
@@ -128,6 +131,8 @@
             <ComponentRef Id="qwebp.dll" />
             <!-- Platforms -->
             <ComponentRef Id="qwindows.dll" />
+            <!-- Printer -->
+            <ComponentRef Id="windowsprintersupport.dll" />
             <!-- Licenses -->
             <ComponentRef Id="LICENSE" />
             <ComponentRef Id="LICENSE_PLUGINS" />
