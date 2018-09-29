@@ -364,8 +364,7 @@ void EditDialog::exportData()
         break;
     }
     case Binary:
-    case Null:
-        filters << tr("Binary files (*.bin)") << tr("Text files (*.txt)");
+        filters << tr("Binary files (*.bin)");
         break;
     case Text:
         // Base the XML case on the mode, not the data type since XML detection is currently not implemented.
@@ -380,14 +379,22 @@ void EditDialog::exportData()
     case SVG:
         filters << tr("SVG files (*.svg)");
         break;
+    case Null:
+        return;
     }
+
+    if (dataSource == HexBuffer)
+        filters << tr("Hex dump files (*.txt)");
 
     filters << tr("All files (*)");
 
+    QString selectedFilter = filters.first();
     QString fileName = FileDialog::getSaveFileName(
                 this,
                 tr("Choose a filename to export data"),
-                filters.join(";;"));
+                filters.join(";;"),
+                /* defaultFileName */ QString(),
+                &selectedFilter);
     if(fileName.size() > 0)
     {
         QFile file(fileName);
@@ -397,7 +404,7 @@ void EditDialog::exportData()
           case HexBuffer:
               // Data source is the hex buffer
               // If text option has been selected, the readable representation of the content is saved to file.
-              if (fileName.endsWith(".txt", Qt::CaseInsensitive))
+              if (selectedFilter == tr("Hex dump files (*.txt)"))
                   file.write(hexEdit->toReadableString().toUtf8());
               else
                   file.write(hexEdit->data());
