@@ -17,7 +17,7 @@
 #include <QDateTime>
 #include <QLineEdit>
 #include <QPrinter>
-#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <QTextDocument>
 #include <QCompleter>
 
@@ -874,12 +874,15 @@ void ExtendedTableWidget::openPrintDialog()
     document->setHtml(mimeData->html());
 
     QPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    QPrintDialog *dialog = new QPrintDialog(&printer, nullptr);
-    if (dialog->exec() == QDialog::Accepted) {
-        document->print(&printer);
-    }
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        document->print(previewPrinter);
+    });
 
+    dialog->exec();
+
+    delete dialog;
     delete document;
     delete mimeData;
 }

@@ -13,7 +13,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QPalette>
-#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <cmath>
 
 
@@ -246,11 +246,15 @@ void ExtendedScintilla::showContextMenu(const QPoint &pos)
 
 void ExtendedScintilla::openPrintDialog()
 {
-    QsciPrinter* printer = new QsciPrinter;
+    QsciPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    QPrintDialog printDialog(printer, this);
-    if (printDialog.exec() == QDialog::Accepted)
-        printer->printRange(this);
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        QsciPrinter* sciPrinter = static_cast<QsciPrinter*>(previewPrinter);
+        sciPrinter->printRange(this);
+    });
 
-    delete printer;
+    dialog->exec();
+
+    delete dialog;
 }
