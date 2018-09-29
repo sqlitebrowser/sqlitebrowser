@@ -7,6 +7,7 @@
 
 class SqliteTableModel;
 class QTreeWidgetItem;
+class QPrinter;
 struct BrowseDataTableSettings;
 
 namespace Ui {
@@ -110,6 +111,8 @@ private slots:
     void copy();
     void toggleLegendVisible(bool visible);
     void toggleStackedBars(bool stacked);
+    void openPrintDialog();
+    void renderPlot(QPrinter* printer);
 };
 
 #endif
