@@ -1045,10 +1045,16 @@ void MainWindow::editObject()
 
         // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
         if (foreign_keys == "1") {
-            if (!db.querySingeValueFromDb(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema()))).isNull()) {
-                QMessageBox::warning(this, QApplication::applicationName(),
-                                     tr("Error checking foreign keys after table modification. The changes will be reverted.\n"
-                                        "Message from database engine:\n%1").arg(db.lastError()));
+            if (!db.querySingleValueFromDb(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema()))).isNull()) {
+                // Raise warning for accepted modification. When rejected, warn user also since we know now that the table has problems,
+                // but it wasn't our fault.
+                if (ok)
+                    QMessageBox::warning(this, QApplication::applicationName(),
+                                         tr("Error checking foreign keys after table modification. The changes will be reverted."));
+                else
+                    QMessageBox::warning(this, QApplication::applicationName(),
+                                         tr("This table did not pass a foreign-key check.<br/>"
+                                            "You should run 'Tools | Foreign-Key Check' and fix the reported issues."));
                 db.revertAll();
             } else {
                 // Commit all changes so the foreign_keys can be effective.
@@ -1663,7 +1669,7 @@ void MainWindow::importDatabaseFromSQL()
     QApplication::restoreOverrideCursor();
     if(!ok)
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
-    else if(db.getPragma("foreign_keys") == "1" && !db.querySingeValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
+    else if(db.getPragma("foreign_keys") == "1" && !db.querySingleValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
         QMessageBox::warning(this, QApplication::applicationName(), tr("Import completed. Some foreign key constraints are violated. Please fix them before saving."));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));

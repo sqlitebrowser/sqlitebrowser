@@ -96,7 +96,7 @@ public:
 
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
-    QVariant querySingeValueFromDb(const QString& statement, bool log = true);
+    QVariant querySingleValueFromDb(const QString& statement, bool log = true);
 
     const QString& lastError() const { return lastErrorMessage; }
 

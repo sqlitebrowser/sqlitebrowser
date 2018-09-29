@@ -675,7 +675,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                 it.remove();
             } else {
                 // Otherwise get the number of records in this table
-                numRecordsTotal += querySingeValueFromDb(QString("SELECT COUNT(*) FROM %1;")
+                numRecordsTotal += querySingleValueFromDb(QString("SELECT COUNT(*) FROM %1;")
                                                          .arg(sqlb::ObjectIdentifier("main", it.value()->name()).toString())).toUInt();
             }
         }
@@ -992,7 +992,7 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-QVariant DBBrowserDB::querySingeValueFromDb(const QString& statement, bool log)
+QVariant DBBrowserDB::querySingleValueFromDb(const QString& statement, bool log)
 {
     waitForDbRelease();
     if(!_db)
