@@ -16,6 +16,8 @@
 #include <QJsonDocument>
 #include <QtXml/QDomDocument>
 #include <QMessageBox>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -47,6 +49,12 @@ EditDialog::EditDialog(QWidget* parent)
 
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
+
+    // Create shortcuts for the widgets that doesn't have its own printing mechanism.
+    QShortcut* shortcutPrintHex = new QShortcut(QKeySequence::Print, hexEdit, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrintHex, &QShortcut::activated, this, &EditDialog::openPrintDialog);
+    QShortcut* shortcutPrintText = new QShortcut(QKeySequence::Print, ui->editorText, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrintText, &QShortcut::activated, this, &EditDialog::openPrintDialog);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->buttonIndent->setChecked(mustIndentAndCompact);
@@ -1021,4 +1029,34 @@ void EditDialog::setStackCurrentIndex(int editMode)
         sciEdit->setLanguage(DockTextEdit::XML);
         break;
     }
+}
+
+void EditDialog::openPrintDialog()
+{
+    QPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+
+    QTextDocument *document = new QTextDocument();
+    switch (dataSource) {
+    case TextBuffer:
+        document->setPlainText(ui->editorText->toPlainText());
+        break;
+    case SciBuffer:
+        // This case isn't really expected because the Scintilla widget has it's own printing slot
+        document->setPlainText(sciEdit->text());
+        break;
+    case HexBuffer:
+        document->setPlainText(hexEdit->toReadableString());
+        document->setDefaultFont(hexEdit->font());
+        break;
+    }
+
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        document->print(previewPrinter);
+    });
+
+    dialog->exec();
+
+    delete dialog;
+    delete document;
 }
