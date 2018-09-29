@@ -3,6 +3,7 @@
 #include "FilterTableHeader.h"
 #include "sqlitetypes.h"
 #include "Settings.h"
+#include "sqlitedb.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -20,6 +21,7 @@
 #include <QPrintPreviewDialog>
 #include <QTextDocument>
 #include <QCompleter>
+#include <QComboBox>
 
 #include <limits>
 
@@ -126,44 +128,84 @@ ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* pa
 
 QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
-    QLineEdit* editor = new QLineEdit(parent);
-    // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
-    if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
-        QCompleter* completer = new QCompleter(editor);
-        UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
-        // Provide a filter for the source model, so only unique and non-empty values are accepted.
-        completerFilter->setSourceModel(const_cast<QAbstractItemModel*>(index.model()));
-        completerFilter->setFilterKeyColumn(index.column());
-        completer->setModel(completerFilter);
-        // Complete on this column, using a popup and case-insensitively.
-        completer->setCompletionColumn(index.column());
-        completer->setCompletionMode(QCompleter::PopupCompletion);
-        completer->setCaseSensitivity(Qt::CaseInsensitive);
-        editor->setCompleter(completer);
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
+    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+
+    if(fk.isSet()) {
+
+        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
+        sqlb::ObjectIdentifier tableId = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
+        fkModel->setTable(tableId);
+        QComboBox* combo = new QComboBox(parent);
+        QString column = fk.columns().at(0);
+        sqlb::TablePtr obj = m->db().getObjectByName(tableId).dynamicCast<sqlb::Table>();
+
+        combo->setModel(fkModel);
+
+        // If no column name is set, assume the primary key is meant
+        if(!fk.columns().size())
+            column = obj->fields().at(obj->findPk())->name();
+
+        // If column doesn't exist don't do anything
+        int columnIndex = obj->findField(column);
+        if(columnIndex != -1)
+            combo->setModelColumn(columnIndex);
+
+        return combo;
+    } else {
+
+        QLineEdit* editor = new QLineEdit(parent);
+        // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
+        if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
+            QCompleter* completer = new QCompleter(editor);
+            UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
+            // Provide a filter for the source model, so only unique and non-empty values are accepted.
+            completerFilter->setSourceModel(const_cast<QAbstractItemModel*>(index.model()));
+            completerFilter->setFilterKeyColumn(index.column());
+            completer->setModel(completerFilter);
+            // Complete on this column, using a popup and case-insensitively.
+            completer->setCompletionColumn(index.column());
+            completer->setCompletionMode(QCompleter::PopupCompletion);
+            completer->setCaseSensitivity(Qt::CaseInsensitive);
+            editor->setCompleter(completer);
+        }
+        // Set the maximum length to the highest possible value instead of the default 32768.
+        editor->setMaxLength(std::numeric_limits<int>::max());
+        return editor;
     }
-    // Set the maximum length to the highest possible value instead of the default 32768.
-    editor->setMaxLength(std::numeric_limits<int>::max());
-    return editor;
 }
 
 void ExtendedTableWidgetEditorDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
-
-    // Set the data for the line editor
+    QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
+    // Set the data for the editor
     QString data = index.data(Qt::EditRole).toString();
-    lineedit->setText(data);
 
-    // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
-    lineedit->setReadOnly(data.size() > lineedit->maxLength());
+    if(!lineedit) {
+        QComboBox* combo = static_cast<QComboBox*>(editor);
+        int comboIndex = combo->findText(data);
+        if (comboIndex >= 0)
+            // if it is valid, adjust the combobox
+            combo->setCurrentIndex(comboIndex);
+    } else {
+        lineedit->setText(data);
+
+        // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
+        lineedit->setReadOnly(data.size() > lineedit->maxLength());
+    }
 }
 
 void ExtendedTableWidgetEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
     // Only apply the data back to the model if the editor is not in read only mode to avoid accidental truncation of the data
-    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
-    if(!lineedit->isReadOnly())
-        model->setData(index, lineedit->text());
+    QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
+    if(!lineedit) {
+        QComboBox* combo = static_cast<QComboBox*>(editor);
+        model->setData(index, combo->currentText(), Qt::EditRole);
+    } else
+        if(!lineedit->isReadOnly())
+            model->setData(index, lineedit->text());
 }
 
 void ExtendedTableWidgetEditorDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
