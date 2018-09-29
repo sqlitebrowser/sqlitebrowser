@@ -233,13 +233,14 @@ void MainWindow::init()
 
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
-    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
-    popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
-    popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
-    popupBrowseDataHeaderMenu->addSeparator();
-    popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
     popupBrowseDataHeaderMenu->addAction(ui->actionHideColumns);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowAllColumns);
+    popupBrowseDataHeaderMenu->addSeparator();
+    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
+    popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
+    popupBrowseDataHeaderMenu->addSeparator();
+    popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
+    popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
     connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
@@ -1744,10 +1745,18 @@ void MainWindow::changeTreeSelection()
     } else if(type == "index") {
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
         ui->editModifyObjectAction->setText(tr("Modify Index"));
-    } else {
+    } else if(type == "table") {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
         ui->editModifyObjectAction->setText(tr("Modify Table"));
+    } else {
+        // Nothing to do for other types. Set the buttons not visible and return.
+        ui->editDeleteObjectAction->setVisible(false);
+        ui->editModifyObjectAction->setVisible(false);
+        return;
     }
+
+    ui->editDeleteObjectAction->setVisible(true);
+    ui->editModifyObjectAction->setVisible(true);
 
     // Activate actions
     if(type == "table" || type == "index")
