@@ -183,6 +183,11 @@
         <!-- Step 3: Trigger the custom action -->
         <UI><Publish Control="Finish" Dialog="ExitDialog" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish></UI>
 
+    <!-- ================================================= Logging ================================================= -->
+    <!-- Enable verbose logging during installation. The log file is named MSI*.LOG and located in %TEMP% folder.    -->
+
+        <Property Id="MsiLogging" Value="voicewarmupx" />
+
     </Product>
 
 </Wix>
