@@ -43,6 +43,8 @@ private slots:
     void switchEditorMode(bool autoSwitchForType);
     void updateCellInfoAndMode(const QByteArray& data);
     void setMustIndentAndCompact(bool enable);
+    void openPrintDialog();
+    void openPrintImageDialog();
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
@@ -89,7 +91,6 @@ private:
     bool promptInvalidData(const QString& dataType, const QString& errorString);
     void setDataInBuffer(const QByteArray& data, DataSources source);
     void setStackCurrentIndex(int editMode);
-    void openPrintDialog();
 };
 
 #endif
