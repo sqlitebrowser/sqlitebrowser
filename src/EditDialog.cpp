@@ -364,8 +364,6 @@ void EditDialog::importData()
 
 void EditDialog::exportData()
 {
-    openPrintImageDialog();
-    return;
     QStringList filters;
     switch (dataType) {
     case Image: {
