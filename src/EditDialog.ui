@@ -339,6 +339,21 @@ Errors are indicated with a red squiggle underline.</string>
     <string>Ctrl+P</string>
    </property>
   </action>
+  <action name="actionCopyHexAscii">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/special_copy</normaloff>:/icons/special_copy</iconset>
+   </property>
+   <property name="text">
+    <string>Copy Hex and ASCII</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy selected hexadecimal and ASCII columns to the clipboard</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+C</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>buttonExport</tabstop>
@@ -497,6 +512,22 @@ Errors are indicated with a red squiggle underline.</string>
    <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>openPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCopyHexAscii</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>copyHexAscii()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

@@ -19,6 +19,7 @@
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QPainter>
+#include <QClipboard>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -58,6 +59,7 @@ EditDialog::EditDialog(QWidget* parent)
     // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
     ui->editorImage->addAction(ui->actionPrintImage);
     ui->editorBinary->addAction(ui->actionPrint);
+    ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->buttonIndent->setChecked(mustIndentAndCompact);
@@ -1084,4 +1086,9 @@ void EditDialog::openPrintImageDialog()
     dialog->exec();
 
     delete dialog;
+}
+
+void EditDialog::copyHexAscii()
+{
+    QApplication::clipboard()->setText(hexEdit->selectionToReadableString());
 }

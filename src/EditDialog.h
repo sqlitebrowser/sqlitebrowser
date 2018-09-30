@@ -45,6 +45,7 @@ private slots:
     void setMustIndentAndCompact(bool enable);
     void openPrintDialog();
     void openPrintImageDialog();
+    void copyHexAscii();
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
