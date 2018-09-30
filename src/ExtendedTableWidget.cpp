@@ -139,18 +139,18 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
         fkModel->setTable(tableId);
         QComboBox* combo = new QComboBox(parent);
         QString column = fk.columns().at(0);
-        sqlb::TablePtr obj = m->db().getObjectByName(tableId).dynamicCast<sqlb::Table>();
+        sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(tableId);
 
         combo->setModel(fkModel);
 
         // If no column name is set, assume the primary key is meant
-        if(!fk.columns().size())
-            column = obj->fields().at(obj->findPk())->name();
+        if(!column.size())
+            column = obj->findPk()->name();
 
         // If column doesn't exist don't do anything
-        int columnIndex = obj->findField(column);
-        if(columnIndex != -1)
-            combo->setModelColumn(columnIndex);
+        auto column_index = sqlb::findField(obj, column);
+        if(column_index == obj->fields.end())
+            combo->setModelColumn(column_index-obj->fields.begin()+1);
 
         return combo;
     } else {
