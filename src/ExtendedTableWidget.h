@@ -56,6 +56,7 @@ public slots:
     void reloadSettings();
     void selectTableLine(int lineToSelect);
     void selectTableLines(int firstLine, int count);
+    void openPrintDialog();
 
 signals:
     void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);
@@ -67,7 +68,6 @@ private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
-    void openPrintDialog();
 
     void useAsFilter(const QString& filterOperator, bool binary = false);
     void duplicateUpperCell();

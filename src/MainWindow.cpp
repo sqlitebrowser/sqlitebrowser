@@ -1888,6 +1888,7 @@ void MainWindow::activateFields(bool enable)
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
+    ui->buttonPrintTable->setEnabled(enable);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
