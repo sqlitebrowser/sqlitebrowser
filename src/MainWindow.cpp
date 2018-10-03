@@ -3469,7 +3469,7 @@ void MainWindow::printDbStructure ()
 
     out << "<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
         << QString("<title>%1</title>").arg(treeView->windowTitle())
-        << "</head><body bgcolor=\"#FFFFFF\">";
+        << "<style type=\"text/css\">pre {white-space: pre-wrap;}</style></head><body bgcolor=\"#FFFFFF\">";
 
     for (int row = 0; row < rowCount; row++) {
 
@@ -3498,7 +3498,10 @@ void MainWindow::printDbStructure ()
                     if (!treeView->isColumnHidden(column2)) {
                         QModelIndex cellIndex = model->index(rowChild, column2, groupIndex);
                         QString data = model->data(cellIndex).toString().toHtmlEscaped();
-                        out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        if (column2 != DbStructureModel::ColumnSQL)
+                            out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        else
+                            out << QString("<td><pre>%1</pre></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
                     }
                 }
                 out << "</tr>";

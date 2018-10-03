@@ -4434,6 +4434,10 @@ Can be set to 0 for disabling completion.</source>
 All your preferences will be lost and default values will be used.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

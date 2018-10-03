@@ -4652,11 +4652,11 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="198"/>
         <location filename="../PreferencesDialog.ui" line="218"/>
         <location filename="../PreferencesDialog.ui" line="289"/>
-        <location filename="../PreferencesDialog.ui" line="306"/>
-        <location filename="../PreferencesDialog.ui" line="1125"/>
-        <location filename="../PreferencesDialog.ui" line="1145"/>
-        <location filename="../PreferencesDialog.ui" line="1165"/>
-        <location filename="../PreferencesDialog.ui" line="1185"/>
+        <location filename="../PreferencesDialog.ui" line="309"/>
+        <location filename="../PreferencesDialog.ui" line="1128"/>
+        <location filename="../PreferencesDialog.ui" line="1148"/>
+        <location filename="../PreferencesDialog.ui" line="1168"/>
+        <location filename="../PreferencesDialog.ui" line="1188"/>
         <source>enabled</source>
         <translation>启用</translation>
     </message>
@@ -4667,8 +4667,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1415"/>
-        <location filename="../PreferencesDialog.ui" line="1471"/>
+        <location filename="../PreferencesDialog.ui" line="1418"/>
+        <location filename="../PreferencesDialog.ui" line="1474"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4687,12 +4687,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">远程服务器</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="313"/>
+        <location filename="../PreferencesDialog.ui" line="316"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>预取块尺寸(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="333"/>
+        <location filename="../PreferencesDialog.ui" line="336"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
@@ -4701,27 +4701,27 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">打开数据库后执行的 SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="363"/>
+        <location filename="../PreferencesDialog.ui" line="366"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>打开数据库后执行的 SQL(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="389"/>
+        <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Default field type</source>
         <translation>默认字段类型</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="400"/>
+        <location filename="../PreferencesDialog.ui" line="403"/>
         <source>Data &amp;Browser</source>
         <translation>数据浏览器(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="408"/>
+        <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Font</source>
         <translation>字体</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="414"/>
+        <location filename="../PreferencesDialog.ui" line="417"/>
         <source>&amp;Font</source>
         <translation>字体(&amp;F)</translation>
     </message>
@@ -4730,12 +4730,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">字号(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="443"/>
+        <location filename="../PreferencesDialog.ui" line="446"/>
         <source>Content</source>
         <translation>内容</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="449"/>
+        <location filename="../PreferencesDialog.ui" line="452"/>
         <source>Symbol limit in cell</source>
         <translation>单元格符号数限制</translation>
     </message>
@@ -4752,12 +4752,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">字段颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="541"/>
+        <location filename="../PreferencesDialog.ui" line="544"/>
         <source>NULL</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="551"/>
+        <location filename="../PreferencesDialog.ui" line="554"/>
         <source>Regular</source>
         <translation>常规</translation>
     </message>
@@ -4766,72 +4766,72 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">文本</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="531"/>
+        <location filename="../PreferencesDialog.ui" line="534"/>
         <source>Binary</source>
         <translation>二进制</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="951"/>
+        <location filename="../PreferencesDialog.ui" line="954"/>
         <source>Background</source>
         <translation>背景</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="740"/>
+        <location filename="../PreferencesDialog.ui" line="743"/>
         <source>Filters</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="753"/>
+        <location filename="../PreferencesDialog.ui" line="756"/>
         <source>Escape character</source>
         <translation>转义字符</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="763"/>
+        <location filename="../PreferencesDialog.ui" line="766"/>
         <source>Delay time (&amp;ms)</source>
         <translation>延时 (&amp;ms)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="773"/>
+        <location filename="../PreferencesDialog.ui" line="776"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>设置应用新过滤值前的等待时间。设为0以禁用等待。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="789"/>
+        <location filename="../PreferencesDialog.ui" line="792"/>
         <source>&amp;SQL</source>
         <translation>&amp;SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="802"/>
+        <location filename="../PreferencesDialog.ui" line="805"/>
         <source>Settings name</source>
         <translation>设置名称</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="807"/>
+        <location filename="../PreferencesDialog.ui" line="810"/>
         <source>Context</source>
         <translation>上下文</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="812"/>
+        <location filename="../PreferencesDialog.ui" line="815"/>
         <source>Colour</source>
         <translation>颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="817"/>
+        <location filename="../PreferencesDialog.ui" line="820"/>
         <source>Bold</source>
         <translation>粗体</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="822"/>
+        <location filename="../PreferencesDialog.ui" line="825"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="827"/>
+        <location filename="../PreferencesDialog.ui" line="830"/>
         <source>Underline</source>
         <translation>下划线</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="835"/>
+        <location filename="../PreferencesDialog.ui" line="838"/>
         <source>Keyword</source>
         <translation>关键字</translation>
     </message>
@@ -4840,27 +4840,27 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">函数</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="855"/>
+        <location filename="../PreferencesDialog.ui" line="858"/>
         <source>Function</source>
         <translation>函数</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="863"/>
+        <location filename="../PreferencesDialog.ui" line="866"/>
         <source>Table</source>
         <translation>表</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="883"/>
+        <location filename="../PreferencesDialog.ui" line="886"/>
         <source>Comment</source>
         <translation>注释</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="903"/>
+        <location filename="../PreferencesDialog.ui" line="906"/>
         <source>Identifier</source>
         <translation>识别符</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="923"/>
+        <location filename="../PreferencesDialog.ui" line="926"/>
         <source>String</source>
         <translation>字符串</translation>
     </message>
@@ -4869,12 +4869,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">当前行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="943"/>
+        <location filename="../PreferencesDialog.ui" line="946"/>
         <source>Current line</source>
         <translation>当前行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="984"/>
+        <location filename="../PreferencesDialog.ui" line="987"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQL 编辑器字体大小(&amp;E)</translation>
     </message>
@@ -4883,17 +4883,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">SQL 日志字体大小(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1023"/>
+        <location filename="../PreferencesDialog.ui" line="1026"/>
         <source>Tab size</source>
         <translation>Tab 长度</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="969"/>
+        <location filename="../PreferencesDialog.ui" line="972"/>
         <source>SQL editor &amp;font</source>
         <translation>SQL 编辑器字体(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1152"/>
+        <location filename="../PreferencesDialog.ui" line="1155"/>
         <source>Error indicators</source>
         <translation>错误指示器</translation>
     </message>
@@ -4902,17 +4902,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">启用错误指示器将高亮 SQL 代码中导致最近一次执行出错的行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1172"/>
+        <location filename="../PreferencesDialog.ui" line="1175"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>水平平铺(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1182"/>
+        <location filename="../PreferencesDialog.ui" line="1185"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>如果启用，SQL 编辑器和结果表视图将并排显示，而不是上下显示。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1115"/>
+        <location filename="../PreferencesDialog.ui" line="1118"/>
         <source>Code co&amp;mpletion</source>
         <translation>代码完成(&amp;M)</translation>
     </message>
@@ -4957,228 +4957,233 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="427"/>
+        <location filename="../PreferencesDialog.ui" line="306"/>
+        <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="430"/>
         <source>Font si&amp;ze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="481"/>
-        <location filename="../PreferencesDialog.ui" line="485"/>
+        <location filename="../PreferencesDialog.ui" line="484"/>
+        <location filename="../PreferencesDialog.ui" line="488"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="499"/>
+        <location filename="../PreferencesDialog.ui" line="502"/>
         <source>Row count threshold for completion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="512"/>
+        <location filename="../PreferencesDialog.ui" line="515"/>
         <source>Field display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="518"/>
+        <location filename="../PreferencesDialog.ui" line="521"/>
         <source>Displayed &amp;text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="577"/>
+        <location filename="../PreferencesDialog.ui" line="580"/>
         <source>Text color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="603"/>
+        <location filename="../PreferencesDialog.ui" line="606"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="706"/>
+        <location filename="../PreferencesDialog.ui" line="709"/>
         <source>Preview only (N/A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="959"/>
+        <location filename="../PreferencesDialog.ui" line="962"/>
         <source>Foreground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1006"/>
+        <location filename="../PreferencesDialog.ui" line="1009"/>
         <source>SQL &amp;results font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1046"/>
+        <location filename="../PreferencesDialog.ui" line="1049"/>
         <source>&amp;Wrap lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1057"/>
+        <location filename="../PreferencesDialog.ui" line="1060"/>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1062"/>
+        <location filename="../PreferencesDialog.ui" line="1065"/>
         <source>At word boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1067"/>
+        <location filename="../PreferencesDialog.ui" line="1070"/>
         <source>At character boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1072"/>
+        <location filename="../PreferencesDialog.ui" line="1075"/>
         <source>At whitespace boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1080"/>
+        <location filename="../PreferencesDialog.ui" line="1083"/>
         <source>&amp;Quotes for identifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1090"/>
+        <location filename="../PreferencesDialog.ui" line="1093"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1097"/>
+        <location filename="../PreferencesDialog.ui" line="1100"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1102"/>
+        <location filename="../PreferencesDialog.ui" line="1105"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1107"/>
+        <location filename="../PreferencesDialog.ui" line="1110"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1132"/>
+        <location filename="../PreferencesDialog.ui" line="1135"/>
         <source>Keywords in &amp;UPPER CASE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1142"/>
+        <location filename="../PreferencesDialog.ui" line="1145"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1162"/>
+        <location filename="../PreferencesDialog.ui" line="1165"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1195"/>
+        <location filename="../PreferencesDialog.ui" line="1198"/>
         <source>&amp;Extensions</source>
         <translation>扩展(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1201"/>
+        <location filename="../PreferencesDialog.ui" line="1204"/>
         <source>Select extensions to load for every database:</source>
         <translation>选择每个数据库要加载的扩展:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1222"/>
+        <location filename="../PreferencesDialog.ui" line="1225"/>
         <source>Add extension</source>
         <translation>添加扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1233"/>
+        <location filename="../PreferencesDialog.ui" line="1236"/>
         <source>Remove extension</source>
         <translation>删除扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1261"/>
+        <location filename="../PreferencesDialog.ui" line="1264"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;虽然支持 REGEXP 运算符，但是 SQLite 并没有实现任何正则表达式算法，&lt;br/&gt;而是回调应用程序。DB Browser for SQLite 为您实现了算法，以便您可以&lt;br/&gt;打破常规使用 REGEXP。由于算法有多种可能的实现，您可能想用其他的，&lt;br/&gt;所以您可以禁用算法实现并通过扩展加载您的实现。需要重启应用程序。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1264"/>
+        <location filename="../PreferencesDialog.ui" line="1267"/>
         <source>Disable Regular Expression extension</source>
         <translation>禁用正则表达式扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1272"/>
+        <location filename="../PreferencesDialog.ui" line="1275"/>
         <source>Remote</source>
         <translation>远程</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1278"/>
+        <location filename="../PreferencesDialog.ui" line="1281"/>
         <source>CA certificates</source>
         <translation>CA 证书</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1304"/>
-        <location filename="../PreferencesDialog.ui" line="1371"/>
+        <location filename="../PreferencesDialog.ui" line="1307"/>
+        <location filename="../PreferencesDialog.ui" line="1374"/>
         <source>Subject CN</source>
         <translation>主题 CN (Subject CN)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1307"/>
+        <location filename="../PreferencesDialog.ui" line="1310"/>
         <source>Common Name</source>
         <translation>公用名称 (Common Name)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1312"/>
+        <location filename="../PreferencesDialog.ui" line="1315"/>
         <source>Subject O</source>
         <translation>主题 O （Subject O)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1315"/>
+        <location filename="../PreferencesDialog.ui" line="1318"/>
         <source>Organization</source>
         <translation>组织 (Organization)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1320"/>
-        <location filename="../PreferencesDialog.ui" line="1387"/>
+        <location filename="../PreferencesDialog.ui" line="1323"/>
+        <location filename="../PreferencesDialog.ui" line="1390"/>
         <source>Valid from</source>
         <translation>有效期从</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1325"/>
-        <location filename="../PreferencesDialog.ui" line="1392"/>
+        <location filename="../PreferencesDialog.ui" line="1328"/>
+        <location filename="../PreferencesDialog.ui" line="1395"/>
         <source>Valid to</source>
         <translation>有效期到</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1330"/>
-        <location filename="../PreferencesDialog.ui" line="1397"/>
+        <location filename="../PreferencesDialog.ui" line="1333"/>
+        <location filename="../PreferencesDialog.ui" line="1400"/>
         <source>Serial number</source>
         <translation>序列号</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1338"/>
+        <location filename="../PreferencesDialog.ui" line="1341"/>
         <source>Your certificates</source>
         <translation>您的证书</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1366"/>
+        <location filename="../PreferencesDialog.ui" line="1369"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1374"/>
+        <location filename="../PreferencesDialog.ui" line="1377"/>
         <source>Subject Common Name</source>
         <translation>主题公用名称 (Subject Common Name)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1379"/>
+        <location filename="../PreferencesDialog.ui" line="1382"/>
         <source>Issuer CN</source>
         <translation>签发人 CN (Issuer CN)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1382"/>
+        <location filename="../PreferencesDialog.ui" line="1385"/>
         <source>Issuer Common Name</source>
         <translation>签发人公用名称 (Issuer Common Name)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1443"/>
+        <location filename="../PreferencesDialog.ui" line="1446"/>
         <source>Clone databases into</source>
         <translation>克隆数据库信息</translation>
     </message>
