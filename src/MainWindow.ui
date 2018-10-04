@@ -120,6 +120,12 @@ You can drag SQL statements from an object row and drop them into other applicat
               <height>0</height>
              </size>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string>Select a table to browse data</string>
             </property>
