@@ -147,9 +147,6 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
 
-        // Enable extension loading
-        sqlite3_enable_load_extension(_db, 1);
-
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
@@ -522,9 +519,6 @@ bool DBBrowserDB::create ( const QString & db)
         // Set foreign key settings as requested in the preferences
         bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
-
-        // Enable extension loading
-        sqlite3_enable_load_extension(_db, 1);
 
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
@@ -1791,9 +1785,17 @@ bool DBBrowserDB::loadExtension(const QString& filePath)
         return false;
     }
 
+    // Enable extension loading
+    sqlite3_enable_load_extension(_db, 1);
+
     // Try to load extension
     char* error;
-    if(sqlite3_load_extension(_db, filePath.toUtf8(), nullptr, &error) == SQLITE_OK)
+    int result = sqlite3_load_extension(_db, filePath.toUtf8(), nullptr, &error);
+
+    // Disable extension loading (we don't want to leave the possibility of calling load_extension() from SQL)
+    sqlite3_enable_load_extension(_db, 0);
+
+    if (result == SQLITE_OK)
     {
         return true;
     } else {
