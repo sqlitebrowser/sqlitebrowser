@@ -16,7 +16,7 @@
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
-      m_dbFileExtensions(FileDialog::getSqlDatabaseFileFilter().split(";;"))
+      m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
