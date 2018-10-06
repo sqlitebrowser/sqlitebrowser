@@ -393,6 +393,12 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         {
             cached_row.replace(index.column(), newValue);
             lock.unlock();
+            // Special case for rowid columns
+            if(m_headers.at(index.column()) == m_sRowidColumn) {
+                cached_row.replace(0, newValue);
+                const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
+                emit dataChanged(rowidIndex, rowidIndex);
+            }
             emit dataChanged(index, index);
             return true;
         } else {
