@@ -775,13 +775,12 @@ void MainWindow::closeEvent( QCloseEvent* event )
 void MainWindow::addRecord()
 {
     int row = m_browseTableModel->rowCount();
-    bool isWithoutRowidTable = db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table && db.getObjectByName<sqlb::Table>(currentlyBrowsedTableName())->isWithoutRowidTable();
 
-    if(!isWithoutRowidTable && m_browseTableModel->insertRow(row))
+    if(m_browseTableModel->insertRow(row))
     {
         selectTableLine(row);
     } else {
-        // Table without rowid (let user enter value for PK) or error inserting empty row.
+        // Error inserting empty row.
         // User has to provide values acomplishing the constraints. Open Add Record Dialog.
         insertValues();
     }
