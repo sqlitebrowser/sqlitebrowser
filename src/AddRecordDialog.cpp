@@ -65,7 +65,7 @@ protected:
 class NoEditDelegate: public QStyledItemDelegate {
 public:
     NoEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
-    virtual QWidget* createEditor(QWidget* /* parent */, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const {
+    QWidget* createEditor(QWidget* /* parent */, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
         return nullptr;
     }
 };
@@ -75,11 +75,11 @@ class EditDelegate: public QStyledItemDelegate {
 
 public:
     EditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
-    virtual QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const {
+    QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
         return new NullLineEdit(parent);
     }
 
-    virtual void setEditorData(QWidget *editor, const QModelIndex &index) const {
+    void setEditorData(QWidget *editor, const QModelIndex &index) const override {
 
         NullLineEdit* lineEditor = dynamic_cast<NullLineEdit*>(editor);
         // Set the editor in the null state (unless the user has actually written NULL)
@@ -91,7 +91,7 @@ public:
             lineEditor->setNull(false);
         }
     }
-    virtual void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override {
 
         NullLineEdit* lineEditor = dynamic_cast<NullLineEdit*>(editor);
         // Restore NULL text (unless the user has already modified the value)

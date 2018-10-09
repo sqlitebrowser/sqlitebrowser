@@ -20,7 +20,7 @@ class PlotDock : public QDialog
 
 public:
     explicit PlotDock(QWidget* parent = nullptr);
-    ~PlotDock();
+    ~PlotDock() override;
 
     struct PlotSettings
     {
@@ -68,7 +68,7 @@ public slots:
     void updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool update = true, bool keepOrResetSelection = true);
     void fetchAllData();
     void resetPlot();
-    virtual void reject();
+    void reject() override;
 
 signals:
     void pointsSelected(int firstIndex, int count);

@@ -269,9 +269,9 @@ public:
     void setConstraint(const QString& constraint) { m_constraint = constraint; }
     const QString& constraint() const { return m_constraint; }
 
-    virtual QString toSql(const QStringList& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return ForeignKeyConstraintType; }
+    ConstraintTypes type() const override { return ForeignKeyConstraintType; }
 
 private:
     QString m_table;
@@ -286,9 +286,9 @@ class UniqueConstraint : public Constraint
 public:
     UniqueConstraint() {}
 
-    virtual QString toSql(const QStringList& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return UniqueConstraintType; }
+    ConstraintTypes type() const override { return UniqueConstraintType; }
 };
 
 class PrimaryKeyConstraint : public Constraint
@@ -299,9 +299,9 @@ public:
     void setConflictAction(const QString& conflict) { m_conflictAction = conflict; }
     const QString& conflictAction() const { return m_conflictAction; }
 
-    virtual QString toSql(const QStringList& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return PrimaryKeyConstraintType; }
+    ConstraintTypes type() const override { return PrimaryKeyConstraintType; }
 
 private:
     QString m_conflictAction;
@@ -318,9 +318,9 @@ public:
     void setExpression(const QString& expr) { m_expression = expr; }
     QString expression() const { return m_expression; }
 
-    virtual QString toSql(const QStringList& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return CheckConstraintType; }
+    ConstraintTypes type() const override { return CheckConstraintType; }
 
 private:
     QString m_expression;
@@ -401,10 +401,10 @@ class Table : public Object
 {
 public:
     explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
-    virtual ~Table();
+    ~Table() override;
     Table& operator=(const Table& rhs);
 
-    virtual Types type() const { return Object::Table; }
+    Types type() const override { return Object::Table; }
 
     FieldVector fields;
     using field_type = Field;
@@ -414,7 +414,7 @@ public:
      * @brief Returns the CREATE TABLE statement for this table object
      * @return A QString with the CREATE TABLE object.
      */
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const;
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override;
 
     QStringList fieldNames() const;
 
@@ -426,7 +426,7 @@ public:
     QString virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.isEmpty(); }
 
-    virtual FieldInfoList fieldInformation() const;
+    FieldInfoList fieldInformation() const override;
 
     void addConstraint(QStringList fields, ConstraintPtr constraint);
     void setConstraint(QStringList fields, ConstraintPtr constraint);
@@ -489,16 +489,16 @@ class Index : public Object
 {
 public:
     explicit Index(const QString& name): Object(name), m_unique(false) {}
-    virtual ~Index();
+    ~Index() override;
     Index& operator=(const Index& rhs);
 
-    virtual Types type() const { return Object::Index; }
+    Types type() const override { return Object::Index; }
 
     IndexedColumnVector fields;
     using field_type = IndexedColumn;
     using field_iterator = IndexedColumnVector::iterator;
 
-    virtual QString baseTable() const { return m_table; }
+    QString baseTable() const override { return m_table; }
 
     void setUnique(bool unique) { m_unique = unique; }
     bool unique() const { return m_unique; }
@@ -513,7 +513,7 @@ public:
      * @brief Returns the CREATE INDEX statement for this index object
      * @return A QString with the CREATE INDEX object.
      */
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const;
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override;
 
     /**
      * @brief parseSQL Parses the CREATE INDEX statement in sSQL.
@@ -522,7 +522,7 @@ public:
      */
     static IndexPtr parseSQL(const QString& sSQL);
 
-    virtual FieldInfoList fieldInformation() const;
+    FieldInfoList fieldInformation() const override;
 
 private:
     QStringList columnSqlList() const;
@@ -536,34 +536,36 @@ class View : public Object
 {
 public:
     explicit View(const QString& name): Object(name) {}
-    virtual ~View();
+    ~View() override;
 
-    virtual Types type() const { return Object::View; }
+    Types type() const override { return Object::View; }
 
     FieldVector fields;
 
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override
+    { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
 
     static ViewPtr parseSQL(const QString& sSQL);
 
     QStringList fieldNames() const;
 
-    virtual FieldInfoList fieldInformation() const;
+    FieldInfoList fieldInformation() const override;
 };
 
 class Trigger : public Object
 {
 public:
     explicit Trigger(const QString& name): Object(name) {}
-    virtual ~Trigger() {}
+    ~Trigger() override {}
 
-    virtual Types type() const { return Object::Trigger; }
+    Types type() const override { return Object::Trigger; }
 
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override
+    { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
 
     static TriggerPtr parseSQL(const QString& sSQL);
 
-    virtual QString baseTable() const { return m_table; }
+    QString baseTable() const override { return m_table; }
 
     void setTable(const QString& table) { m_table = table; }
     QString table() const { return m_table; }

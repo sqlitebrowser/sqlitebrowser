@@ -54,7 +54,7 @@ private:
 
 public:
     explicit DBBrowserDB () : _db(nullptr), db_used(false), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
-    virtual ~DBBrowserDB (){}
+    ~DBBrowserDB () override {}
 
     bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = "");

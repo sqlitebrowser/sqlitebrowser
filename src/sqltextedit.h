@@ -16,7 +16,7 @@ class SqlTextEdit : public ExtendedScintilla
 
 public:
     explicit SqlTextEdit(QWidget *parent = nullptr);
-    virtual ~SqlTextEdit();
+    ~SqlTextEdit() override;
 
     static SqlUiLexer* sqlLexer;
 

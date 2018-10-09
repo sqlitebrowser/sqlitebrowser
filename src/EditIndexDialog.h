@@ -18,11 +18,11 @@ class EditIndexDialog : public QDialog
 
 public:
     explicit EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& indexName, bool createIndex, QWidget* parent = nullptr);
-    ~EditIndexDialog();
+    ~EditIndexDialog() override;
 
 private slots:
-    void accept();
-    void reject();
+    void accept() override;
+    void reject() override;
 
     void tableChanged(const QString& new_table, bool initialLoad = false);
     void checkInput();

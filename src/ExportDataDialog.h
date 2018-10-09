@@ -24,10 +24,10 @@ public:
 
     explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = nullptr,
                               const QString& query = "", const sqlb::ObjectIdentifier& selection = sqlb::ObjectIdentifier());
-    ~ExportDataDialog();
+    ~ExportDataDialog() override;
 
 private slots:
-    virtual void accept();
+    void accept() override;
     void showCustomCharEdits();
 
 private:

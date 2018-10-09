@@ -17,25 +17,25 @@ class EditDialog : public QDialog
 
 public:
     explicit EditDialog(QWidget* parent = nullptr);
-    ~EditDialog();
+    ~EditDialog() override;
 
     void setCurrentIndex(const QModelIndex& idx);
 
 public slots:
-    virtual void setFocus();
-    virtual void reject();
+    void setFocus();
+    void reject() override;
     void setReadOnly(bool ro);
     void reloadSettings();
 
 protected:
-    virtual void showEvent(QShowEvent* ev);
+    void showEvent(QShowEvent* ev) override;
 
 private slots:
     void importData();
     void exportData();
     void setNull();
     void updateApplyButton();
-    virtual void accept();
+    void accept() override;
     void loadData(const QByteArray& data);
     void toggleOverwriteMode();
     void editModeChanged(int newMode);
