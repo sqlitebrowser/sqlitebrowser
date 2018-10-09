@@ -1296,7 +1296,7 @@ bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb:
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, const sqlb::Field* to, int move, QString newSchemaName)
+bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, QString name, const sqlb::Field* to, int move, QString newSchemaName)
 {
     /*
      * USE CASES:
@@ -1305,16 +1305,6 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
      * 3) Set table, name and to; unset move: Change table constraints and rename/edit column.
      * 4) Set table, name, to and move: Change table constraints, rename/edit column and move it.
      */
-
-    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
-    // If SQLite should fully support this command one day, this entire
-    // function can be changed to executing something like this:
-    //QString sql;
-    //if(to.isNull())
-    //    sql = QString("ALTER TABLE %1 DROP COLUMN %2;").arg(sqlb::escapeIdentifier(table)).arg(sqlb::escapeIdentifier(column));
-    //else
-    //    sql = QString("ALTER TABLE %1 MODIFY %2 %3").arg(sqlb::escapeIdentifier(tablename)).arg(sqlb::escapeIdentifier(to)).arg(type);    // This is wrong...
-    //return executeSQL(sql);
 
     // TODO: This function needs to be cleaned up. It might make sense to split it up in several parts than can be reused
     // more easily. Besides that, it might make sense to support some potential use cases in a more sophisticated way. These include:
@@ -1335,7 +1325,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Create table schema
-    const sqlb::TablePtr oldSchema = getObjectByName<sqlb::Table>(tablename);
+    sqlb::TablePtr oldSchema = getObjectByName<sqlb::Table>(tablename);
 
     // Check if field actually exists
     if(!name.isNull() && sqlb::findField(oldSchema, name) == oldSchema->fields.end())
@@ -1351,6 +1341,55 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
         return false;
     }
+
+    // No automatic schema updates from now on
+    NoStructureUpdateChecks nup(*this);
+
+    // Newer versions of SQLite add a better ALTER TABLE support which we can use
+#if SQLITE_VERSION_NUMBER >= 3025000
+    // If the name of the field should be changed do that by using SQLite's ALTER TABLE feature
+    if(!name.isNull() && to && name != to->name())
+    {
+        if(!executeSQL(QString("ALTER TABLE %1 RENAME COLUMN %2 TO %3;")
+                       .arg(tablename.toString())
+                       .arg(sqlb::escapeIdentifier(name))
+                       .arg(sqlb::escapeIdentifier(to->name()))))
+        {
+            QString error(tr("renameColumn: renaming the column failed. DB says:\n%1").arg(lastErrorMessage));
+            revertToSavepoint(savepointName);
+            lastErrorMessage = error;
+            return false;
+        }
+
+        // Update our schema representation to get all the changed triggers, views and indices
+        updateSchema();
+
+        // Check if that was all we were asked to do. That's the case if the field is not to be deleted (which we already checked for above), if the field
+        // is not to be moved, if the table is not to be moved and if nothing besides the name of the field changed in the field definition.
+        sqlb::Field oldFieldWithNewName = *sqlb::findField(oldSchema, name);
+        oldFieldWithNewName.setName(to->name());
+        if(move == 0 && tablename.schema() == newSchemaName && oldFieldWithNewName == *to)
+        {
+            // We're done.
+
+            // Release the savepoint - everything went fine
+            if(!releaseSavepoint(savepointName))
+            {
+                lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+                return false;
+            }
+
+            return true;
+        } else {
+            // There's more to do.
+
+            // We can have the rest of the function deal with the remaining changes by reloading the table schema as it is now and updating the name of the column
+            // to change.
+            oldSchema = getObjectByName<sqlb::Table>(tablename);
+            name = to->name();
+        }
+    }
+#endif
 
     // Create a new table with a name that hopefully doesn't exist yet.
     // Its layout is exactly the same as the one of the table to change - except for the column to change
@@ -1391,7 +1430,6 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Create the new table
-    NoStructureUpdateChecks nup(*this);
     if(!executeSQL(newSchema.sql(newSchemaName), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
