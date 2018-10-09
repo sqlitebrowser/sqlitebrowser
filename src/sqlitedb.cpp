@@ -1099,12 +1099,13 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
 
             if(!pk_value.isNull())
             {
-                vals << pk_value;
+                vals << (f.isText()? "'" + pk_value + "'" : pk_value);
             } else {
                 if(f.notnull())
                 {
                     QString maxval = this->max(sqlb::ObjectIdentifier(schemaName, t.name()), f);
-                    vals << QString::number(maxval.toLongLong() + 1);
+                    QString newval = QString::number(maxval.toLongLong() + 1);
+                    vals << (f.isText()? "'" + newval + "'" : newval);
                 } else {
                     vals << "NULL";
                 }
