@@ -1792,8 +1792,10 @@ bool DBBrowserDB::loadExtension(const QString& filePath)
     char* error;
     int result = sqlite3_load_extension(_db, filePath.toUtf8(), nullptr, &error);
 
-    // Disable extension loading (we don't want to leave the possibility of calling load_extension() from SQL)
-    sqlite3_enable_load_extension(_db, 0);
+    // Disable extension loading if so configured
+    // (we don't want to leave the possibility of calling load_extension() from SQL without user informed permission)
+    if (!Settings::getValue("extensions", "enable_load_extension").toBool())
+        sqlite3_enable_load_extension(_db, 0);
 
     if (result == SQLITE_OK)
     {
@@ -1810,6 +1812,8 @@ void DBBrowserDB::loadExtensionsFromSettings()
 {
     if(!_db)
         return;
+
+    sqlite3_enable_load_extension(_db, Settings::getValue("extensions", "enable_load_extension").toBool());
 
     QStringList list = Settings::getValue("extensions", "list").toStringList();
     for(const QString& ext : list)
