@@ -775,6 +775,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
 void MainWindow::addRecord()
 {
     int row = m_browseTableModel->rowCount();
+
     if(m_browseTableModel->insertRow(row))
     {
         selectTableLine(row);
