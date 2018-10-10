@@ -326,6 +326,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "extension" && name == "disableregex")
         return false;
 
+    // extensions/enable_load_extension?
+    if(group == "extension" && name == "enable_load_extension")
+        return false;
+
     // PlotDock/lineType or pointShape?
     if(group == "PlotDock")
     {
