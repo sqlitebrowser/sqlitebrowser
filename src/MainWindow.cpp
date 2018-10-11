@@ -311,6 +311,20 @@ void MainWindow::init()
 #endif
 
     // Set statusbar fields
+    statusBusyLabel = new QLabel(ui->statusbar);
+    statusBusyLabel->setEnabled(false);
+    statusBusyLabel->setVisible(false);
+    statusBusyLabel->setToolTip(tr("The database is currenctly busy."));
+    ui->statusbar->addPermanentWidget(statusBusyLabel);
+
+    statusStopButton = new QToolButton(ui->statusbar);
+    statusStopButton->setVisible(false);
+    statusStopButton->setIcon(QIcon(":icons/cancel"));
+    statusStopButton->setToolTip(tr("Click here to interrupt the currently running query."));
+    statusStopButton->setMaximumSize(ui->statusbar->geometry().height() - 6, ui->statusbar->geometry().height() - 6);
+    statusStopButton->setAutoRaise(true);
+    ui->statusbar->addPermanentWidget(statusStopButton);
+
     statusEncryptionLabel = new QLabel(ui->statusbar);
     statusEncryptionLabel->setEnabled(false);
     statusEncryptionLabel->setVisible(false);
@@ -341,6 +355,11 @@ void MainWindow::init()
         ui->editDeleteObjectAction->setToolTip(ui->editDeleteObjectAction->text());
     });
 
+    // When clicking the interrupt query button in the status bar, ask SQLite to interrupt the current query
+    connect(statusStopButton, &QToolButton::clicked, [this]() {
+       db.interruptQuery();
+    });
+
     // Connect some more signals and slots
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
@@ -357,6 +376,8 @@ void MainWindow::init()
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &MainWindow::deleteRecord);
     connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
     connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
+    connect(&db, &DBBrowserDB::databaseInUseChanged, this, &MainWindow::updateDatabaseBusyStatus);
+
     ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
     ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
 
@@ -3681,4 +3702,11 @@ void MainWindow::printDbStructure ()
 
     delete dialog;
     delete document;
+}
+
+void MainWindow::updateDatabaseBusyStatus(bool busy, const QString& user)
+{
+    statusBusyLabel->setText(tr("Busy (%1)").arg(user));
+    statusBusyLabel->setVisible(busy);
+    statusStopButton->setVisible(busy);
 }
