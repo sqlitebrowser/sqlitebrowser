@@ -7,18 +7,20 @@
 #include <QMainWindow>
 #include <QMap>
 
-class QDragEnterEvent;
 class EditDialog;
-class QIntValidator;
-class QLabel;
-class QModelIndex;
-class QPersistentModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
 class RemoteDock;
 class RemoteDatabase;
 class FindReplaceDialog;
 class ExtendedTableWidget;
+
+class QDragEnterEvent;
+class QIntValidator;
+class QModelIndex;
+class QLabel;
+class QPersistentModelIndex;
+class QToolButton;
 
 namespace Ui {
 class MainWindow;
@@ -157,6 +159,8 @@ private:
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
     QLabel* statusReadOnlyLabel;
+    QToolButton* statusStopButton;
+    QLabel* statusBusyLabel;
 
     DbStructureModel* dbStructureModel;
 
@@ -301,6 +305,7 @@ private slots:
     void updateInsertDeleteRecordButton();
     void runSqlNewTab(const QString& query, const QString& title);
     void printDbStructure();
+    void updateDatabaseBusyStatus(bool busy, const QString& user);
 };
 
 #endif

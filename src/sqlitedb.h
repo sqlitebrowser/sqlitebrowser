@@ -48,6 +48,7 @@ private:
             std::unique_lock<std::mutex> lk(pParent->m);
             pParent->db_used = false;
             lk.unlock();
+            emit pParent->databaseInUseChanged(false, QString());
             pParent->cv.notify_one();
         }
     };
@@ -110,6 +111,11 @@ public:
      * @return true if statement execution was ok, else false.
      */
     bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata);
+
+    /**
+     * @brief Interrupts the currenty running statement as soon as possible.
+     */
+    void interruptQuery();
 
 private:
     /**
@@ -202,6 +208,7 @@ signals:
     void dbChanged(bool dirty);
     void structureUpdated();
     void requestCollation(QString name, int eTextRep);
+    void databaseInUseChanged(bool busy, QString user);
 
 private:
     /// external code needs to go through get() to obtain access to the database

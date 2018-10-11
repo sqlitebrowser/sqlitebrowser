@@ -608,6 +608,7 @@ DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
 
     db_user = user;
     db_used = true;
+    emit databaseInUseChanged(true, user);
 
     return db_pointer_type(_db, DatabaseReleaser(this));
 }
@@ -1870,4 +1871,12 @@ QString DBBrowserDB::generateTemporaryTableName(const QString& schema) const
         if(!getObjectByName(sqlb::ObjectIdentifier(schema, table_name)))
             return table_name;
     }
+}
+
+void DBBrowserDB::interruptQuery()
+{
+    if(!_db)
+        return;
+
+    sqlite3_interrupt(_db);
 }
