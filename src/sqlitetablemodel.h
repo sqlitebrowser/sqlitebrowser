@@ -4,7 +4,6 @@
 #include <QAbstractTableModel>
 #include <QStringList>
 #include <QVector>
-#include <QThread>
 #include <QMutex>
 #include <QColor>
 #include <memory>

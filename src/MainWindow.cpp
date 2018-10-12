@@ -28,6 +28,7 @@
 #include "FindReplaceDialog.h"
 #include "Data.h"
 #include "CondFormat.h"
+#include "RunSql.h"
 
 #include <QFile>
 #include <QApplication>
@@ -1223,33 +1224,11 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 }
 
-MainWindow::StatementType MainWindow::getQueryType(const QString& query) const
-{
-    // Helper function for getting the type of a given query
-
-    if(query.startsWith("SELECT", Qt::CaseInsensitive)) return SelectStatement;
-    if(query.startsWith("ALTER", Qt::CaseInsensitive)) return AlterStatement;
-    if(query.startsWith("DROP", Qt::CaseInsensitive)) return DropStatement;
-    if(query.startsWith("ROLLBACK", Qt::CaseInsensitive)) return RollbackStatement;
-    if(query.startsWith("PRAGMA", Qt::CaseInsensitive)) return PragmaStatement;
-    if(query.startsWith("VACUUM", Qt::CaseInsensitive)) return VacuumStatement;
-    if(query.startsWith("INSERT", Qt::CaseInsensitive)) return InsertStatement;
-    if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UpdateStatement;
-    if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DeleteStatement;
-    if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CreateStatement;
-    if(query.startsWith("ATTACH", Qt::CaseInsensitive)) return AttachStatement;
-    if(query.startsWith("DETACH", Qt::CaseInsensitive)) return DetachStatement;
-
-    return OtherStatement;
-}
-
 /*
  * I'm still not happy how the results are represented to the user
  * right now you only see the result of the last executed statement.
  * A better experience would be tabs on the bottom with query results
  * for all the executed statements.
- * Or at least a some way the use could see results/status message
- * per executed statement.
  */
 void MainWindow::executeQuery()
 {
@@ -1263,14 +1242,16 @@ void MainWindow::executeQuery()
     SqlTextEdit* editor = sqlWidget->getEditor();
     const QString tabName = ui->tabSqlAreas->tabText(ui->tabSqlAreas->currentIndex()).remove('&');
 
+    // Remove any error indicators
+    editor->clearErrorIndicators();
+
     // Determine execution mode: execute all, execute selection or execute current line
     enum executionMode
     {
         All,
         Selection,
         Line
-    };
-    executionMode mode;
+    } mode;
     if(sender() && sender()->objectName() == "actionSqlExecuteLine")
         mode = Line;
     else if(!sqlWidget->getSelectedSql().isEmpty())
@@ -1279,22 +1260,19 @@ void MainWindow::executeQuery()
         mode = All;
 
     // Get SQL code to execute. This depends on the execution mode.
-    QString query = sqlWidget->getSql();
-    int execute_from_line = 0;           // These three variables hold the start position
-    int execute_from_index = 0;          // of the executed statements in the entire
-    int execute_from_position = 0;       // SQL code of the current SQL tab.
-    int execute_to_line = 0;             // These three variables hold the end position
-    int execute_to_index = 0;            // of the executed statements in the entire
-    int execute_to_position = 0;         // SQL code of the current SQL tab.
+    int execute_from_position = 0;      // Where we want to start the execution in the query string
+    int execute_to_position = 0;        // Where we roughly want to end the execution in the query string
 
     switch(mode)
     {
     case Selection:
         {
             // Start and end positions are start and end positions from the selection
+            int execute_from_line, execute_from_index, execute_to_line, execute_to_index;
             editor->getSelection(&execute_from_line, &execute_from_index, &execute_to_line, &execute_to_index);
             execute_from_position = editor->positionFromLineIndex(execute_from_line, execute_from_index);
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
+
             db.logSQL(tr("-- EXECUTING SELECTION IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
     case Line:
@@ -1303,21 +1281,19 @@ void MainWindow::executeQuery()
             // statement which started on one the previous line. In that case the start position is actually a bit earlier. For
             // the end position we set the last character of the current line. If the statement(s) continue(s) into the next line,
             // SQLite will execute it/them anyway and we'll stop afterwards.
-            int dummy;
+            int execute_from_line, dummy;
             editor->getCursorPosition(&execute_from_line, &dummy);
             execute_from_position = editor->positionFromLineIndex(execute_from_line, 0);
 
             // Need to set the end position here before adjusting the start line
-            execute_to_line = execute_from_line;
-            execute_to_index = editor->text(execute_to_line).length() - 1;     // The -1 compensates for the line break at the end of the line
+            int execute_to_line = execute_from_line;
+            int execute_to_index = editor->text(execute_to_line).length() - 1;     // The -1 compensates for the line break at the end of the line
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
 
-            QByteArray firstPartEntireSQL = query.toUtf8().left(execute_from_position);
+            QByteArray firstPartEntireSQL = sqlWidget->getSql().toUtf8().left(execute_from_position);
             if(firstPartEntireSQL.lastIndexOf(';') != -1)
-            {
                 execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
-                editor->lineIndexFromPosition(execute_from_position, &execute_from_line, &execute_from_index);
-            }
+
             db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
     case All:
@@ -1325,183 +1301,15 @@ void MainWindow::executeQuery()
             // Start position is the first byte, end position the last.
             // Note that we use byte positions that might differ from character positions.
             execute_to_position = editor->length();
-            editor->lineIndexFromPosition(execute_to_position, &execute_to_line, &execute_to_index);
+
             db.logSQL(tr("-- EXECUTING ALL IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
     }
 
-    // Cancel if there is nothing to execute
-    if(query.trimmed().isEmpty() || query.trimmed() == ";" || execute_from_position == execute_to_position ||
-            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed().isEmpty() ||
-            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed() == ";")
-        return;
-
-    // All replacements in the query should be made by the same amount of characters, so the positions in the file
-    // for error indicators and line and column logs are not displaced.
-    // Whitespace and comments are discarded by SQLite, so it is better to just let it ignore them.
-    query = query.replace(QRegExp("^(\\s*)BEGIN TRANSACTION;", Qt::CaseInsensitive), "\\1                  ");
-    query = query.replace(QRegExp("COMMIT;(\\s*)$", Qt::CaseInsensitive), "       \\1");
-
-    // Convert query to C string which we will use from now on, starting from the determined start position and
-    // until the end of the SQL code. By doing so we go further than the determined end position because in Line
-    // mode the last statement might go beyond that point.
-    QByteArray utf8Query = query.toUtf8().mid(execute_from_position);
-
-    // Remove any error indicators
-    editor->clearErrorIndicators();
-
-    // Set cursor and start execution timer
-    QApplication::setOverrideCursor(Qt::BusyCursor);
-    QElapsedTimer timer;
-    timer.start();
-
-    // Prepare execution
-    sqlite3_stmt* vm;
-    const char* tail = utf8Query.data();
-    int sql3status = SQLITE_OK;
-    int tail_length = utf8Query.length();
-    QString statusMessage;
-    bool ok = false;
-    bool modified = false;
-    const bool wasdirty = db.getDirty();
-    bool structure_updated = false;
-    bool savepoint_created = false;
-
-    // Accept multi-line queries, by looping until the tail is empty
-    while(tail && *tail != 0 && (sql3status == SQLITE_OK || sql3status == SQLITE_DONE))
-    {
-        // What type of query is this?
-        QString qtail = QString(tail).trimmed();
-        // Remove trailing comments so we don't get fooled by some trailing text at the end of the stream.
-        // Otherwise we'll pass them to SQLite and its execution will trigger a savepoint that wouldn't be
-        // reverted.
-        SqliteTableModel::removeCommentsFromQuery(qtail);
-        if (qtail.isEmpty())
-            break;
-
-        StatementType query_type = getQueryType(qtail);
-
-        // Check whether the DB structure is changed by this statement
-        if(!structure_updated && (query_type == AlterStatement ||
-                query_type == CreateStatement ||
-                query_type == DropStatement ||
-                query_type == RollbackStatement))
-            structure_updated = true;
-
-        // Check whether this is trying to set a pragma or to vacuum the database
-        if((query_type == PragmaStatement && qtail.contains('=') && !qtail.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
-        {
-            // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
-            // user about that
-            if(db.getDirty())
-            {
-                if(QMessageBox::question(this,
-                                         QApplication::applicationName(),
-                                         tr("Setting PRAGMA values or vacuuming will commit your current transaction.\nAre you sure?"),
-                                         QMessageBox::Yes | QMessageBox::Default,
-                                         QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
-                {
-                    // Commit all changes
-                    db.releaseAllSavepoints();
-                } else {
-                    // Abort
-                    statusMessage = tr("Execution aborted by user");
-                    break;
-                }
-            }
-        } else {
-            // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
-            // all changes to the database immediately. Don't set more than one savepoint.
-
-            if(!savepoint_created)
-            {
-                // We have to start a transaction before we create the prepared statement otherwise every executed
-                // statement will get committed after the prepared statement gets finalized
-                db.setSavepoint();
-                savepoint_created = true;
-            }
-        }
-
-        // Execute next statement
-        int tail_length_before = tail_length;
-        const char* qbegin = tail;
-        auto pDb = db.get(tr("executing query"));
-        sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
-        QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
-        tail_length -= (tail - qbegin);
-        int end_of_current_statement_position = execute_from_position + tail_length_before - tail_length;
-
-        if (sql3status == SQLITE_OK)
-        {
-            sql3status = sqlite3_step(vm);
-            sqlite3_finalize(vm);
-
-            // Get type
-            StatementType query_part_type = getQueryType(queryPart.trimmed());
-
-            // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
-            // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
-            // return rows just like SELECT statements, too.
-            if((query_part_type == SelectStatement || query_part_type == PragmaStatement) && sql3status == SQLITE_DONE)
-                sql3status = SQLITE_ROW;
-
-            switch(sql3status)
-            {
-            case SQLITE_ROW:
-            {
-                // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
-                // because statements that display data don't change data as well.
-                pDb = nullptr;
-
-                auto * model = sqlWidget->getModel();
-                model->setQuery(queryPart);
-
-                // Wait until the initial loading of data (= first chunk and row count) has been performed. I have the
-                // feeling that a lot of stuff would need rewriting if we wanted to become more asynchronous here:
-                // essentially the entire loop over the commands would need to be signal-driven.
-                model->waitUntilIdle();
-                qApp->processEvents(); // to make row count available
-
-                statusMessage = tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(timer.elapsed());
-                ok = true;
-                ui->actionSqlResultsSave->setEnabled(true);
-                ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
-
-                sql3status = SQLITE_OK;
-                break;
-            }
-            case SQLITE_DONE:
-            case SQLITE_OK:
-            {
-                // If we get here, the SQL statement doesn't return data and just executes. Don't run it again because it has already been executed.
-                // But do set the modified flag because statements that don't return data, often modify the database.
-
-                sqlWidget->getModel()->reset();
-
-                QString stmtHasChangedDatabase;
-                if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
-                    stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(pDb.get()));
-
-                // Attach/Detach statements don't modify the original database
-                if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
-                    modified = true;
-
-                statusMessage = tr("query executed successfully. Took %1ms%2").arg(timer.elapsed()).arg(stmtHasChangedDatabase);
-                ok = true;
-                break;
-            }
-            case SQLITE_MISUSE:
-                continue;
-            default:
-                ok = false;
-                break;
-            }
-            timer.restart();
-        } else {
-            ok = false;
-
-        }
-        editor->lineIndexFromPosition(execute_from_position, &execute_from_line, &execute_from_index);
+    // Prepare a lambda function for logging the results of a query
+    auto query_logger = [this, sqlWidget, editor](bool ok, const QString& status_message, int from_position, int to_position) {
+        int execute_from_line, execute_from_index;
+        editor->lineIndexFromPosition(from_position, &execute_from_line, &execute_from_index);
 
         // Special case: if the start position is at the end of a line, then move to the beggining of next line.
         // Otherwise for the typical case, the line reference is one less than expected.
@@ -1511,13 +1319,11 @@ void MainWindow::executeQuery()
             execute_from_index = 0;
         }
 
-        // If there was an error, save the error message for later and highlight the erroneous SQL statement
-        if (!ok)
+        // If there was an error highlight the erroneous SQL statement
+        if(!ok)
         {
-            statusMessage = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
-
             int end_of_current_statement_line, end_of_current_statement_index;
-            editor->lineIndexFromPosition(end_of_current_statement_position, &end_of_current_statement_line, &end_of_current_statement_index);
+            editor->lineIndexFromPosition(to_position, &end_of_current_statement_line, &end_of_current_statement_index);
             editor->setErrorIndicator(execute_from_line, execute_from_index, end_of_current_statement_line, end_of_current_statement_index);
 
             editor->setCursorPosition(execute_from_line, execute_from_index);
@@ -1525,44 +1331,52 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = tr("-- At line %1:\n%4\n-- Result: %3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
-        db.logSQL(statusMessage, kLogMsg_User);
+        QString query = editor->text(from_position, to_position);
+        QString log_message = tr("-- At line %1:\n%3\n-- Result: %2").arg(execute_from_line+1).arg(status_message).arg(query.trimmed());
+        db.logSQL(log_message, kLogMsg_User);
 
-        // Release the database
-        pDb = nullptr;
+        // Update the execution area
+        sqlWidget->finishExecution(log_message, ok);
+    };
 
-        // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
-        // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
-        // ATTACH 'xxx' AS 'db2'
-        // SELECT * FROM db2.xy;    -- Savepoint created here
-        // DETACH db2;              -- Savepoint makes this statement fail
-        if(!modified && !wasdirty && savepoint_created)
-        {
-            db.revertToSavepoint(); // better rollback, if the logic is not enough we can tune it.
-            savepoint_created = false;
-        }
+    // Run the query
+    RunSql r(db);
+    connect(&r, &RunSql::statementErrored, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
+        sqlWidget->getModel()->reset();
+        attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
-        // Update the start position for the next statement and check if we are at
-        // the end of the part we want to execute. If so, stop the execution now.
-        execute_from_position = end_of_current_statement_position;
-        if(execute_from_position >= execute_to_position)
-            break;
+        query_logger(false, status_message, from_position, to_position);
+    });
+    connect(&r, &RunSql::statementExecuted, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
+        sqlWidget->getModel()->reset();
+        attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
-        // Process events to keep the UI responsive
-        qApp->processEvents();
-    }
+        query_logger(true, status_message, from_position, to_position);
+    });
+    connect(&r, &RunSql::statementReturnsRows, [query_logger, this, sqlWidget](const QString& query, int from_position, int to_position, qint64 time_in_ms) {
+        QElapsedTimer timer;
+        timer.start();
 
-    sqlWidget->finishExecution(statusMessage, ok);
-    attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
+        ui->actionSqlResultsSave->setEnabled(true);
+        ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
 
-    connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
-    connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
+        auto * model = sqlWidget->getModel();
+        model->setQuery(query);
 
-    // If the DB structure was changed by some command in this SQL script, update our schema representations
-    if(structure_updated)
-        db.updateSchema();
+        // Wait until the initial loading of data (= first chunk and row count) has been performed. I have the
+        // feeling that a lot of stuff would need rewriting if we wanted to become more asynchronous here:
+        // essentially the entire loop over the commands would need to be signal-driven.
+        model->waitUntilIdle();
+        qApp->processEvents(); // to make row count available
 
-    QApplication::restoreOverrideCursor();
+        attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
+        connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
+        connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
+
+        query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms+timer.elapsed()), from_position, to_position);
+    });
+
+    r.runStatements(sqlWidget->getSql(), execute_from_position, execute_to_position);
 }
 
 void MainWindow::mainTabSelected(int tabindex)

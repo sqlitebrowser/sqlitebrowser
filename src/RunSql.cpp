@@ -1,0 +1,243 @@
+#include "RunSql.h"
+#include "sqlite.h"
+#include "sqlitedb.h"
+#include "sqlitetablemodel.h"
+
+#include <QApplication>
+#include <QElapsedTimer>
+#include <QMessageBox>
+
+RunSql::RunSql(DBBrowserDB& _db) :
+    db(_db)
+{
+}
+
+void RunSql::runStatements(QString query, int execute_from_position, int _execute_to_position)
+{
+    // Save data for this task
+    execute_current_position = execute_from_position;
+    execute_to_position = _execute_to_position;
+    structure_updated = false;
+    savepoint_created = false;
+    was_dirty = db.getDirty();
+
+    // Cancel if there is nothing to execute
+    if(query.trimmed().isEmpty() || query.trimmed() == ";" || execute_from_position == execute_to_position ||
+            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed().isEmpty() ||
+            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed() == ";")
+        return;
+
+    // All replacements in the query should be made by the same amount of characters, so the positions in the file
+    // for error indicators and line and column logs are not displaced.
+    // Whitespace and comments are discarded by SQLite, so it is better to just let it ignore them.
+    query = query.replace(QRegExp("^(\\s*)BEGIN TRANSACTION;", Qt::CaseInsensitive), "\\1                  ");
+    query = query.replace(QRegExp("COMMIT;(\\s*)$", Qt::CaseInsensitive), "       \\1");
+
+    // Convert query to byte array which we will use from now on, starting from the determined start position and
+    // until the end of the SQL code. By doing so we go further than the determined end position because in Line
+    // mode the last statement might go beyond that point.
+    queries_left_to_execute = query.toUtf8().mid(execute_from_position);
+
+    // Set cursor
+    QApplication::setOverrideCursor(Qt::BusyCursor);
+
+    // Execute each statement until there is nothing left to do
+    while(executeNextStatement())
+        ;
+
+    // If the DB structure was changed by some command in this SQL script, update our schema representations
+    if(structure_updated)
+        db.updateSchema();
+
+    QApplication::restoreOverrideCursor();
+}
+
+bool RunSql::executeNextStatement()
+{
+    // Is there anything left to do?
+    if(queries_left_to_execute.isEmpty())
+        return false;
+
+    // What type of query is this?
+    QString qtail = QString(queries_left_to_execute).trimmed();
+    // Remove trailing comments so we don't get fooled by some trailing text at the end of the stream.
+    // Otherwise we'll pass them to SQLite and its execution will trigger a savepoint that wouldn't be
+    // reverted.
+    SqliteTableModel::removeCommentsFromQuery(qtail);
+    if (qtail.isEmpty())
+        return false;
+
+    StatementType query_type = getQueryType(qtail);
+
+    // Check whether the DB structure is changed by this statement
+    if(!structure_updated && (query_type == AlterStatement ||
+                              query_type == CreateStatement ||
+                              query_type == DropStatement ||
+                              query_type == RollbackStatement))
+        structure_updated = true;
+
+    // Check whether this is trying to set a pragma or to vacuum the database
+    // TODO This is wrong. The '=' or the 'defer_foreign_keys' might be in a completely different statement of the queries string.
+    if((query_type == PragmaStatement && qtail.contains('=') && !qtail.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
+    {
+        // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
+        // user about that
+        if(db.getDirty())
+        {
+            if(QMessageBox::question(nullptr,
+                                     QApplication::applicationName(),
+                                     tr("Setting PRAGMA values or vacuuming will commit your current transaction.\nAre you sure?"),
+                                     QMessageBox::Yes | QMessageBox::Default,
+                                     QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+            {
+                // Commit all changes
+                db.releaseAllSavepoints();
+            } else {
+                // Abort
+                emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
+                return false;
+            }
+        }
+    } else {
+        // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
+        // all changes to the database immediately. Don't set more than one savepoint.
+
+        if(!savepoint_created)
+        {
+            // We have to start a transaction before we create the prepared statement otherwise every executed
+            // statement will get committed after the prepared statement gets finalized
+            db.setSavepoint();
+            savepoint_created = true;
+        }
+    }
+
+    // Start execution timer. We do that after opening any message boxes and after creating savepoints because both are not part of the actual
+    // query execution.
+    QElapsedTimer timer;
+    timer.start();
+
+    // Execute next statement
+    const char* tail = queries_left_to_execute.data();
+    int tail_length = queries_left_to_execute.length();
+    const char* qbegin = tail;
+    auto pDb = db.get(tr("executing query"));
+    sqlite3_stmt* vm;
+    int sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
+    QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
+    int tail_length_before = tail_length;
+    tail_length -= (tail - qbegin);
+    int end_of_current_statement_position = execute_current_position + tail_length_before - tail_length;
+    bool modified = false;
+
+    // Save remaining statements
+    queries_left_to_execute = QByteArray(tail);
+
+    if (sql3status == SQLITE_OK)
+    {
+        sql3status = sqlite3_step(vm);
+        sqlite3_finalize(vm);
+
+        // Get type
+        StatementType query_part_type = getQueryType(queryPart.trimmed());
+
+        // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
+        // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
+        // return rows just like SELECT statements, too.
+        if((query_part_type == SelectStatement || query_part_type == PragmaStatement) && sql3status == SQLITE_DONE)
+            sql3status = SQLITE_ROW;
+
+        switch(sql3status)
+        {
+        case SQLITE_ROW:
+        {
+            // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
+            // because statements that display data don't change data as well.
+            pDb = nullptr;
+
+            emit statementReturnsRows(queryPart, execute_current_position, end_of_current_statement_position, timer.elapsed());
+            break;
+        }
+        case SQLITE_DONE:
+        case SQLITE_OK:
+        {
+            // If we get here, the SQL statement doesn't return data and just executes. Don't run it again because it has already been executed.
+            // But do set the modified flag because statements that don't return data, often modify the database.
+
+            QString stmtHasChangedDatabase;
+            if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
+                stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(pDb.get()));
+
+            // Attach/Detach statements don't modify the original database
+            if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
+                modified = true;
+
+            emit statementExecuted(tr("query executed successfully. Took %1ms%2").arg(timer.elapsed()).arg(stmtHasChangedDatabase),
+                                   execute_current_position, end_of_current_statement_position);
+            break;
+        }
+        case SQLITE_MISUSE:
+            break;
+        default:
+            emit statementErrored(QString::fromUtf8(sqlite3_errmsg(pDb.get())), execute_current_position, end_of_current_statement_position);
+            stopExecution();
+            return false;
+        }
+    } else {
+        emit statementErrored(QString::fromUtf8(sqlite3_errmsg(pDb.get())), execute_current_position, end_of_current_statement_position);
+        stopExecution();
+        return false;
+    }
+
+    // Release the database
+    pDb = nullptr;
+
+    // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
+    // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
+    // ATTACH 'xxx' AS 'db2'
+    // SELECT * FROM db2.xy;    -- Savepoint created here
+    // DETACH db2;              -- Savepoint makes this statement fail
+    if(!modified && !was_dirty && savepoint_created)
+    {
+        db.revertToSavepoint();
+        savepoint_created = false;
+    }
+
+    // Update the start position for the next statement and check if we are at
+    // the end of the part we want to execute. If so, stop the execution now.
+    execute_current_position = end_of_current_statement_position;
+    if(execute_current_position >= execute_to_position)
+    {
+        stopExecution();
+        return false;
+    }
+
+    // Process events to keep the UI responsive
+    qApp->processEvents();
+
+    return true;
+}
+
+void RunSql::stopExecution()
+{
+    queries_left_to_execute.clear();
+}
+
+RunSql::StatementType RunSql::getQueryType(const QString& query)
+{
+    // Helper function for getting the type of a given query
+
+    if(query.startsWith("SELECT", Qt::CaseInsensitive)) return SelectStatement;
+    if(query.startsWith("ALTER", Qt::CaseInsensitive)) return AlterStatement;
+    if(query.startsWith("DROP", Qt::CaseInsensitive)) return DropStatement;
+    if(query.startsWith("ROLLBACK", Qt::CaseInsensitive)) return RollbackStatement;
+    if(query.startsWith("PRAGMA", Qt::CaseInsensitive)) return PragmaStatement;
+    if(query.startsWith("VACUUM", Qt::CaseInsensitive)) return VacuumStatement;
+    if(query.startsWith("INSERT", Qt::CaseInsensitive)) return InsertStatement;
+    if(query.startsWith("UPDATE", Qt::CaseInsensitive)) return UpdateStatement;
+    if(query.startsWith("DELETE", Qt::CaseInsensitive)) return DeleteStatement;
+    if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CreateStatement;
+    if(query.startsWith("ATTACH", Qt::CaseInsensitive)) return AttachStatement;
+    if(query.startsWith("DETACH", Qt::CaseInsensitive)) return DetachStatement;
+
+    return OtherStatement;
+}
