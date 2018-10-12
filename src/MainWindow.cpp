@@ -3182,11 +3182,6 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
         return;
     }
 
-    // If the settings didn't change, do nothing. This avoids an infinite loop
-    BrowseDataTableSettings& settings = browseTableSettings[currentTable];
-    if(unlock != settings.unlockViewPk.isEmpty() && settings.unlockViewPk == pk)
-        return;
-
     sqlb::ViewPtr obj = db.getObjectByName<sqlb::View>(currentTable);
 
     // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
@@ -3230,11 +3225,16 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     ui->actionUnlockViewEditing->setChecked(unlock);
     ui->actionUnlockViewEditing->blockSignals(false);
 
-    // Save settings for this table
-    settings.unlockViewPk = pk;
+    // If the settings didn't change, do not try to reapply them.
+    // This avoids an infinite mutual recursion.
+    BrowseDataTableSettings& settings = browseTableSettings[currentTable];
 
-    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
-    applyBrowseTableSettings(settings);
+    if(settings.unlockViewPk != pk) {
+        // Save settings for this table
+        settings.unlockViewPk = pk;
+        // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+        applyBrowseTableSettings(settings);
+    }
 }
 
 sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
