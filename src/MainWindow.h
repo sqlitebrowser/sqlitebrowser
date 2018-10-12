@@ -120,23 +120,6 @@ private:
         int case_sensitive_like;
     } pragmaValues;
 
-    enum StatementType
-    {
-        SelectStatement,
-        AlterStatement,
-        DropStatement,
-        RollbackStatement,
-        PragmaStatement,
-        VacuumStatement,
-        InsertStatement,
-        UpdateStatement,
-        DeleteStatement,
-        CreateStatement,
-        AttachStatement,
-        DetachStatement,
-        OtherStatement,
-    };
-
     Ui::MainWindow* ui;
 
     DBBrowserDB db;
@@ -198,8 +181,6 @@ private:
     void attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool keepOrResetSelection = true);
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
-
-    StatementType getQueryType(const QString& query) const;
 
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
 

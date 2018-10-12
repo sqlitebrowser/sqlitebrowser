@@ -71,7 +71,8 @@ HEADERS += \
     DotenvFormat.h \
     Palette.h \
     CondFormat.h \
-    sql/Query.h
+    sql/Query.h \
+    RunSql.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -119,7 +120,8 @@ SOURCES += \
     DotenvFormat.cpp \
     Palette.cpp \
     CondFormat.cpp \
-    sql/Query.cpp
+    sql/Query.cpp \
+    RunSql.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
