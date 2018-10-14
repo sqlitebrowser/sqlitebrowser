@@ -15,6 +15,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QDebug>
+#include <QThread>
 #include <functional>
 #include <atomic>
 #include <algorithm>
@@ -599,12 +600,12 @@ bool DBBrowserDB::close()
     return true;
 }
 
-DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
+DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user, bool force_wait)
 {
     if(!_db)
         return nullptr;
 
-    waitForDbRelease();
+    waitForDbRelease(force_wait ? Wait : Ask);
 
     db_user = user;
     db_used = true;
@@ -617,6 +618,11 @@ void DBBrowserDB::waitForDbRelease(ChoiceOnUse choice)
 {
     if(!_db)
         return;
+
+    // We can't show a message box from another thread than the main thread. So instead of crashing we
+    // just decide that we don't interrupt any running query in this case.
+    if(choice == Ask && QThread::currentThread() != QApplication::instance()->thread())
+        choice = Wait;
 
     std::unique_lock<std::mutex> lk(m);
     while(db_used) {

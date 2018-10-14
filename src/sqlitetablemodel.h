@@ -118,6 +118,7 @@ public slots:
 
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
+    void finishedRowCount();
 
 protected:
     Qt::DropActions supportedDropActions() const override;

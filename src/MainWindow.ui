@@ -941,6 +941,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <addaction name="separator"/>
           <addaction name="actionExecuteSql"/>
           <addaction name="actionSqlExecuteLine"/>
+          <addaction name="actionSqlStop"/>
           <addaction name="separator"/>
           <addaction name="actionSqlResultsSave"/>
           <addaction name="separator"/>
@@ -2382,6 +2383,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+/</string>
+   </property>
+  </action>
+  <action name="actionSqlStop">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/cancel</normaloff>:/icons/cancel</iconset>
+   </property>
+   <property name="text">
+    <string>Stop SQL execution</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop the currently running SQL script</string>
    </property>
   </action>
  </widget>

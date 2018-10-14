@@ -3,23 +3,23 @@
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
 
+#include <chrono>
 #include <QApplication>
-#include <QElapsedTimer>
 #include <QMessageBox>
 
-RunSql::RunSql(DBBrowserDB& _db) :
-    db(_db)
+RunSql::RunSql(DBBrowserDB& _db, QString query, int execute_from_position, int _execute_to_position, bool _interrupt_after_statements) :
+    db(_db),
+    may_continue_with_execution(true),
+    interrupt_after_statements(_interrupt_after_statements),
+    execute_current_position(execute_from_position),
+    execute_to_position(_execute_to_position),
+    structure_updated(false),
+    savepoint_created(false),
+    was_dirty(db.getDirty()),
+    modified(false)
 {
-}
-
-void RunSql::runStatements(QString query, int execute_from_position, int _execute_to_position)
-{
-    // Save data for this task
-    execute_current_position = execute_from_position;
-    execute_to_position = _execute_to_position;
-    structure_updated = false;
-    savepoint_created = false;
-    was_dirty = db.getDirty();
+    // Get lock to set up everything
+    std::unique_lock<std::mutex> lk(m);
 
     // Cancel if there is nothing to execute
     if(query.trimmed().isEmpty() || query.trimmed() == ";" || execute_from_position == execute_to_position ||
@@ -37,23 +37,46 @@ void RunSql::runStatements(QString query, int execute_from_position, int _execut
     // until the end of the SQL code. By doing so we go further than the determined end position because in Line
     // mode the last statement might go beyond that point.
     queries_left_to_execute = query.toUtf8().mid(execute_from_position);
+}
 
-    // Set cursor
-    QApplication::setOverrideCursor(Qt::BusyCursor);
+void RunSql::run()
+{
+    // Execute statement by statement
+    for(;;)
+    {
+        if(!executeNextStatement())
+            break;
+    }
 
-    // Execute each statement until there is nothing left to do
-    while(executeNextStatement())
-        ;
+    // Execution finished
 
     // If the DB structure was changed by some command in this SQL script, update our schema representations
     if(structure_updated)
         db.updateSchema();
+}
 
-    QApplication::restoreOverrideCursor();
+void RunSql::startNextStatement()
+{
+    std::unique_lock<std::mutex> lk(m);
+    may_continue_with_execution = true;
+    cv.notify_one();
+}
+
+void RunSql::stop()
+{
+    std::unique_lock<std::mutex> lk(m);
+
+    stopExecution();
+    if(pDb)
+        sqlite3_interrupt(pDb.get());
+    may_continue_with_execution = true;
+    cv.notify_all();
 }
 
 bool RunSql::executeNextStatement()
 {
+    std::unique_lock<std::mutex> lk(m);
+
     // Is there anything left to do?
     if(queries_left_to_execute.isEmpty())
         return false;
@@ -84,11 +107,11 @@ bool RunSql::executeNextStatement()
         // user about that
         if(db.getDirty())
         {
-            if(QMessageBox::question(nullptr,
-                                     QApplication::applicationName(),
-                                     tr("Setting PRAGMA values or vacuuming will commit your current transaction.\nAre you sure?"),
-                                     QMessageBox::Yes | QMessageBox::Default,
-                                     QMessageBox::No | QMessageBox::Escape) == QMessageBox::Yes)
+            lk.unlock();
+            // Ask user, then check if we should abort execution or continue with it. We depend on a BlockingQueueConnection here which makes sure to
+            // block this worker thread until the slot function in the main thread is completed and could tell us about its decision.
+            emit confirmSaveBeforePragmaOrVacuum();
+            if(!queries_left_to_execute.isEmpty())
             {
                 // Commit all changes
                 db.releaseAllSavepoints();
@@ -97,6 +120,7 @@ bool RunSql::executeNextStatement()
                 emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
                 return false;
             }
+            lk.lock();
         }
     } else {
         // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
@@ -113,24 +137,25 @@ bool RunSql::executeNextStatement()
 
     // Start execution timer. We do that after opening any message boxes and after creating savepoints because both are not part of the actual
     // query execution.
-    QElapsedTimer timer;
-    timer.start();
+    auto time_start = std::chrono::high_resolution_clock::now();
 
     // Execute next statement
     const char* tail = queries_left_to_execute.data();
     int tail_length = queries_left_to_execute.length();
+    lk.unlock();
     const char* qbegin = tail;
-    auto pDb = db.get(tr("executing query"));
+    acquireDbAccess();
     sqlite3_stmt* vm;
     int sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
     QString queryPart = QString::fromUtf8(qbegin, tail - qbegin);
     int tail_length_before = tail_length;
     tail_length -= (tail - qbegin);
     int end_of_current_statement_position = execute_current_position + tail_length_before - tail_length;
-    bool modified = false;
 
     // Save remaining statements
+    lk.lock();
     queries_left_to_execute = QByteArray(tail);
+    lk.unlock();
 
     if (sql3status == SQLITE_OK)
     {
@@ -152,9 +177,20 @@ bool RunSql::executeNextStatement()
         {
             // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
             // because statements that display data don't change data as well.
-            pDb = nullptr;
 
-            emit statementReturnsRows(queryPart, execute_current_position, end_of_current_statement_position, timer.elapsed());
+            releaseDbAccess();
+
+            lk.lock();
+            may_continue_with_execution = false;
+
+            auto time_end = std::chrono::high_resolution_clock::now();
+            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start);
+            emit statementReturnsRows(queryPart, execute_current_position, end_of_current_statement_position, time_in_ms.count());
+
+            // Make sure the next statement isn't executed until we're told to do so
+            if(interrupt_after_statements)
+                cv.wait(lk, [this](){ return may_continue_with_execution; });
+            lk.unlock();
             break;
         }
         case SQLITE_DONE:
@@ -167,29 +203,47 @@ bool RunSql::executeNextStatement()
             if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
                 stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(pDb.get()));
 
+            releaseDbAccess();
+
+            lk.lock();
+
             // Attach/Detach statements don't modify the original database
             if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
                 modified = true;
 
-            emit statementExecuted(tr("query executed successfully. Took %1ms%2").arg(timer.elapsed()).arg(stmtHasChangedDatabase),
+            may_continue_with_execution = false;
+
+            auto time_end = std::chrono::high_resolution_clock::now();
+            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start);
+            emit statementExecuted(tr("query executed successfully. Took %1ms%2").arg(time_in_ms.count()).arg(stmtHasChangedDatabase),
                                    execute_current_position, end_of_current_statement_position);
+
+            // Make sure the next statement isn't executed until we're told to do so
+            if(interrupt_after_statements)
+                cv.wait(lk, [this](){ return may_continue_with_execution; });
+            lk.unlock();
             break;
         }
         case SQLITE_MISUSE:
             break;
         default:
-            emit statementErrored(QString::fromUtf8(sqlite3_errmsg(pDb.get())), execute_current_position, end_of_current_statement_position);
+            QString error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
+            releaseDbAccess();
+            emit statementErrored(error, execute_current_position, end_of_current_statement_position);
             stopExecution();
             return false;
         }
     } else {
-        emit statementErrored(QString::fromUtf8(sqlite3_errmsg(pDb.get())), execute_current_position, end_of_current_statement_position);
+        QString error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
+        releaseDbAccess();
+        emit statementErrored(error, execute_current_position, end_of_current_statement_position);
         stopExecution();
         return false;
     }
 
     // Release the database
-    pDb = nullptr;
+    lk.lock();
+    releaseDbAccess();
 
     // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
     // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
@@ -210,9 +264,6 @@ bool RunSql::executeNextStatement()
         stopExecution();
         return false;
     }
-
-    // Process events to keep the UI responsive
-    qApp->processEvents();
 
     return true;
 }
@@ -240,4 +291,14 @@ RunSql::StatementType RunSql::getQueryType(const QString& query)
     if(query.startsWith("DETACH", Qt::CaseInsensitive)) return DetachStatement;
 
     return OtherStatement;
+}
+
+void RunSql::acquireDbAccess()
+{
+    pDb = db.get(tr("executing query"), true);
+}
+
+void RunSql::releaseDbAccess()
+{
+    pDb = nullptr;
 }

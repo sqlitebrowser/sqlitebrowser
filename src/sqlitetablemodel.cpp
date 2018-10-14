@@ -91,6 +91,8 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 
     m_rowCountAvailable = RowCount::Complete;
     handleFinishedFetch(life_id, num_rows, num_rows);
+
+    emit finishedRowCount();
 }
 
 void SqliteTableModel::reset()
