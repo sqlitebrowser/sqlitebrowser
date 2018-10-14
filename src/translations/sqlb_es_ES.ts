@@ -60,7 +60,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation>Añadir Nuevo Registro</translation>
+        <translation>Añadir nuevo registro</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
@@ -113,14 +113,14 @@
         <location filename="../AddRecordDialog.cpp" line="211"/>
         <source>Unique constraint
 </source>
-        <translation>Restricción de Único
+        <translation>Restricción UNIQUE
 </translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="214"/>
         <source>Check constraint:	 %1
 </source>
-        <translation>Comprobar restricción:	 %1
+        <translation>Restricción CHECK:	 %1
 </translation>
     </message>
     <message>
@@ -134,7 +134,7 @@
         <location filename="../AddRecordDialog.cpp" line="226"/>
         <source>Default value:	 %1
 </source>
-        <translation>Valor por Defecto:	 %1
+        <translation>Valor por defecto:	 %1
 </translation>
     </message>
     <message>
@@ -786,7 +786,7 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="348"/>
         <source>Copy Hex and ASCII</source>
-        <translation>Copia Hex y ASCII</translation>
+        <translation>Copiar hex. y ASCII</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="351"/>
@@ -977,14 +977,14 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation>Archivos de Imagen (%1)</translation>
+        <translation>Archivos de imagen (%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation>Archivos Binarios (*.bin)</translation>
+        <translation>Archivos binarios (*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
@@ -1011,7 +1011,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
         <location filename="../EditDialog.cpp" line="400"/>
         <location filename="../EditDialog.cpp" line="420"/>
         <source>Hex dump files (*.txt)</source>
-        <translation>Archivos de volcado Hex (*.txt)</translation>
+        <translation>Archivos de volcado hex. (*.txt)</translation>
     </message>
     <message>
         <source>Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;Binary files (*.bin);;All files (*)</source>
@@ -2368,7 +2368,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../MainWindow.ui" line="227"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Este bot&oacute;n crea un nuevo registro en la base de datos. Mantenga pulsado el bot&oacute;n del rat&oacute;n para abrir un men&uacute; emergente con varias opciones:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nuevo Registro&lt;/span&gt;: inserta en la base de datos un nuevo registro con valores por defecto.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Introduce Valores...&lt;/span&gt;: abre un di&aacute;logo para introducir valores antes de insertarlos en la base de datos. Esto permite introducir valores que cumplan con las restricciones. Este di&aacute;logo tambi&eacute;n se abre si la opción de &lt;span style=&quot; font-weight:600;&quot;&gt;Nuevo Registro&lt;/span&gt; falla debido a esas restricciones.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Este botón crea un nuevo registro en la base de datos. Mantenga pulsado el botón del ratón para abrir un menú emergente con varias opciones:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nuevo Registro&lt;/span&gt;: inserta en la base de datos un nuevo registro con valores por defecto.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Introduce Valores...&lt;/span&gt;: abre un diálogo para introducir valores antes de insertarlos en la base de datos. Esto permite introducir valores que cumplan con las restricciones. Este diálogo también se abre si la opción de &lt;span style=&quot; font-weight:600;&quot;&gt;Nuevo Registro&lt;/span&gt; falla debido a esas restricciones.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="240"/>
@@ -2539,7 +2539,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>&amp;Load Extension...</source>
-        <translation>&amp;Cargar Extensión...</translation>
+        <translation>&amp;Cargar extensión...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1757"/>
@@ -2554,17 +2554,17 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1792"/>
         <source>Bug &amp;Report...</source>
-        <translation>&amp;Informar de Fallos...</translation>
+        <translation>&amp;Informar de fallos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1804"/>
         <source>Feature Re&amp;quest...</source>
-        <translation>Solicitud de Me&amp;joras...</translation>
+        <translation>Solicitud de &amp;mejoras...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1816"/>
         <source>Web&amp;site</source>
-        <translation>&amp;Sitio Web</translation>
+        <translation>&amp;Sitio web</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1828"/>
@@ -2574,7 +2574,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Sa&amp;ve Project...</source>
-        <translation>&amp;Guardar Proyecto...</translation>
+        <translation>&amp;Guardar proyecto...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1849"/>
@@ -2584,7 +2584,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1861"/>
         <source>Open &amp;Project...</source>
-        <translation>Abrir &amp;Proyecto...</translation>
+        <translation>Abrir &amp;proyecto...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1870"/>
@@ -2594,7 +2594,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1885"/>
         <source>&amp;Attach Database...</source>
-        <translation>Ane&amp;xar Base de Datos...</translation>
+        <translation>Ane&amp;xar base de datos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1888"/>
@@ -2610,7 +2610,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1906"/>
         <source>&amp;Set Encryption...</source>
-        <translation>&amp;Establecer Cifrado...</translation>
+        <translation>&amp;Establecer cifrado...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1936"/>
@@ -2625,7 +2625,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2228"/>
         <source>Insert Values...</source>
-        <translation>Introducir Valores...</translation>
+        <translation>Introducir valores...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2231"/>
@@ -2642,18 +2642,18 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2250"/>
         <source>New In-&amp;Memory Database</source>
-        <translation>Nueva Base de Datos En-&amp;Memoria</translation>
+        <translation>Nueva Base de Datos en &amp;memoria</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2258"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
-        <translation>Arrastrar y Soltar Nombres Calificados</translation>
+        <translation>Arrastrar y soltar nombres calificados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2261"/>
         <location filename="../MainWindow.ui" line="2264"/>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
-        <translation>Usa nombres calificados (e.j. &quot;Table&quot;.&quot;Field&quot;) al arrastrar los objects y soltarlos en el editor </translation
+        <translation>Usa nombres calificados (p.ej. &quot;Tabla&quot;.&quot;Campo&quot;) al arrastrar los objetos y soltarlos en el editor </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2272"/>
@@ -2664,12 +2664,12 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
         <location filename="../MainWindow.ui" line="2275"/>
         <location filename="../MainWindow.ui" line="2278"/>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
-        <translation>Usa identificadores escapados (e.j. &quot;Table1&quot;) al arrastrar los objects y soltarlos en el editor </translation>
+        <translation>Usa identificadores escapados (p.ej. &quot;Tabla1&quot;) al arrastrar los objetos y soltarlos en el editor </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2283"/>
         <source>&amp;Integrity Check</source>
-        <translation>Comprobar &amp;Integridad</translation>
+        <translation>Comprobar &amp;integridad</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2286"/>
@@ -2679,7 +2679,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2291"/>
         <source>&amp;Foreign-Key Check</source>
-        <translation>Comprobar Clave &amp;Foránea</translation>
+        <translation>Comprobar clave &amp;foránea</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2294"/>
@@ -2689,7 +2689,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2299"/>
         <source>&amp;Quick Integrity Check</source>
-        <translation>Comprobar Integridad &amp;Rápido</translation>
+        <translation>Comprobar integridad &amp;rápido</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2302"/>
@@ -3273,7 +3273,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
 </source>
         <translation>Esta es la estructura  de la base de datos abierta.
 Puede arrastrar múltiples objetos de la columna Nombre, soltarlos en el editor SQL y ajustar sus propiedades usando el menú contextual. Esto le ayudará a componer sentencias SQL.
-Puede arrastrar sentencias SQL desde la columna Schema y soltarlas en el editor SQL o en otras aplicaciones.
+Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor SQL o en otras aplicaciones.
 </translation>
     </message>
     <message>
@@ -3794,7 +3794,7 @@ Puede arrastrar sentencias SQL desde la columna Schema y soltarlas en el editor 
     <message>
         <location filename="../MainWindow.ui" line="493"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Like sensible a may&uacute;sculas&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Like sensible a mayúsculas&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="506"/>
@@ -4294,7 +4294,7 @@ Razón: %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="488"/>
         <source>In-Memory database</source>
-        <translation>Base de datos En-Memoria</translation>
+        <translation>Base de datos en memoria</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="901"/>
@@ -5146,7 +5146,7 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="306"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
-        <translation>Cuando está activado, al imprimir se omiten los saltos de línea en la columna Schema de la pestaña de la estructura de la Base de Datos.</translation>
+        <translation>Cuando está activado, se omiten los saltos de línea en la columna Esquema, tanto en la pestaña Estructura en pantalla, como al imprimir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="430"/>
@@ -5158,13 +5158,13 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
         <location filename="../PreferencesDialog.ui" line="488"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
-        <translation>Este el el número máximo de filas en una tabla para activar el relleno basado en los valores actuales en la columna.
-Se puede poner a 0 para desactivar el relleno.</translation>
+        <translation>Este el el número máximo de filas en una tabla para activar el autocompletado basado en los valores actuales en la columna.
+Se puede poner a 0 para desactivar el autocompletado.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="502"/>
         <source>Row count threshold for completion</source>
-        <translation>Umbral del conteo de filas para rellenar</translation>
+        <translation>Umbral del conteo de filas para autocompletar</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="515"/>
@@ -6329,7 +6329,7 @@ Mantenga pulsado Ctrl+May y haga clic para ir ahí</translation>
         <location filename="../sqlitetablemodel.cpp" line="307"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
-        <translation>Referencias %1(%2)
+        <translation>Referencia %1(%2)
 Mantenga pulsado %3May y haga clic para ir ahí</translation>
     </message>
     <message>
