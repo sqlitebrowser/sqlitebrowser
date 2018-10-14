@@ -6,7 +6,9 @@
 #include "Palette.h"
 #include "CondFormat.h"
 #include "sql/Query.h"
+#include "RunSql.h"
 
+#include <memory>
 #include <QMainWindow>
 #include <QMap>
 
@@ -166,6 +168,8 @@ private:
     QString defaultBrowseTableEncoding;
 
     Palette m_condFormatPalette;
+
+    std::unique_ptr<RunSql> execute_sql_worker;
 
     void init();
     void clearCompleterModelsFields();

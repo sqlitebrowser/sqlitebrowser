@@ -14,7 +14,8 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
     db(_db),
     ui(new Ui::SqlExecutionArea),
-    m_columnsResized(false)
+    m_columnsResized(false),
+    error_state(false)
 {
     // Create UI
     ui->setupUi(this);
@@ -57,6 +58,7 @@ QString SqlExecutionArea::getSelectedSql() const
 
 void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
 {
+    error_state = !ok;
     m_columnsResized = false;
     ui->editErrors->setPlainText(result);
     // Set reddish background when not ok
@@ -95,6 +97,11 @@ SqlTextEdit *SqlExecutionArea::getEditor()
 ExtendedTableWidget *SqlExecutionArea::getTableResult()
 {
     return ui->tableResult;
+}
+
+QTextEdit* SqlExecutionArea::getStatusEdit()
+{
+    return ui->editErrors;
 }
 
 void SqlExecutionArea::saveAsCsv()

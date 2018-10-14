@@ -30,6 +30,7 @@
 #include "CondFormat.h"
 #include "RunSql.h"
 
+#include <chrono>
 #include <QFile>
 #include <QApplication>
 #include <QTextStream>
@@ -40,7 +41,6 @@
 #include <QDragEnterEvent>
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
-#include <QElapsedTimer>
 #include <QMimeData>
 #include <QColorDialog>
 #include <QDesktopServices>
@@ -113,7 +113,8 @@ MainWindow::MainWindow(QWidget* parent)
       plotDock(new PlotDock(this)),
       remoteDock(new RemoteDock(this)),
       findReplaceDialog(new FindReplaceDialog(this)),
-      gotoValidator(new QIntValidator(0, 0, this))
+      gotoValidator(new QIntValidator(0, 0, this)),
+      execute_sql_worker(nullptr)
 {
     ui->setupUi(this);
     init();
@@ -144,8 +145,8 @@ void MainWindow::init()
 #endif
 
     // Connect SQL logging and database state setting to main window
-    connect(&db, SIGNAL(dbChanged(bool)), this, SLOT(dbState(bool)));
-    connect(&db, SIGNAL(sqlExecuted(QString, int)), this, SLOT(logSql(QString,int)));
+    connect(&db, &DBBrowserDB::dbChanged, this, &MainWindow::dbState, Qt::QueuedConnection);
+    connect(&db, &DBBrowserDB::sqlExecuted, this, &MainWindow::logSql, Qt::QueuedConnection);
     connect(&db, &DBBrowserDB::requestCollation, this, &MainWindow::requestCollation);
 
     // Set the validator for the goto line edit
@@ -162,11 +163,11 @@ void MainWindow::init()
 
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
-    connect(&db, &DBBrowserDB::structureUpdated, [this]() {
+    connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
         QString old_table = ui->comboBrowseTable->currentText();
         dbStructureModel->reloadData();
         populateStructure(old_table);
-    });
+    }, Qt::QueuedConnection);
     ui->dbTreeWidget->setModel(dbStructureModel);
     ui->dbTreeWidget->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnObjectType, true);
@@ -387,6 +388,11 @@ void MainWindow::init()
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, [this](){
         auto & settings = browseTableSettings[currentlyBrowsedTableName()];
         plotDock->updatePlot(m_browseTableModel, &settings, true, false);
+    });
+
+    connect(ui->actionSqlStop, &QAction::triggered, [this]() {
+       if(execute_sql_worker && execute_sql_worker->isRunning())
+           execute_sql_worker->stop();
     });
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
@@ -797,6 +803,19 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
 
 bool MainWindow::fileClose()
 {
+    // Stop any running SQL statements before closing the database
+    if(execute_sql_worker && execute_sql_worker->isRunning())
+    {
+        if(QMessageBox::warning(this, qApp->applicationName(),
+                                tr("You are still executing SQL statements. When closing the database now the execution will be stopped. maybe "
+                                   "leaving the database in an incosistent state. Are you sure you want to close the database?"),
+                                QMessageBox::Yes, QMessageBox::Cancel | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Cancel)
+            return false;
+
+        execute_sql_worker->stop();
+        execute_sql_worker->wait();
+    }
+
     // Close the database but stop the closing process here if the user pressed the cancel button in there
     if(!db.close())
         return false;
@@ -1237,9 +1256,25 @@ void MainWindow::executeQuery()
     if(!db.isOpen())
         return;
 
+    // Check if other task is still running and stop it if necessary
+    if(execute_sql_worker && execute_sql_worker->isRunning())
+    {
+        // Ask the user and do nothing if he/she doesn't want to interrupt the running query
+        if(QMessageBox::warning(this, qApp->applicationName(),
+                                tr("You are already executing SQL statements. Do you want to stop them in order to execute the current "
+                                   "statements instead? Note that this might leave the database in an inconsistent state."),
+                                QMessageBox::Yes, QMessageBox::Cancel | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Cancel)
+            return;
+
+        // Stop the running query
+        execute_sql_worker->stop();
+        execute_sql_worker->wait();
+    }
+
     // Get current SQL tab and editor
     SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
     SqlTextEdit* editor = sqlWidget->getEditor();
+    auto* current_tab = ui->tabSqlAreas->currentWidget();
     const QString tabName = ui->tabSqlAreas->tabText(ui->tabSqlAreas->currentIndex()).remove('&');
 
     // Remove any error indicators
@@ -1339,23 +1374,30 @@ void MainWindow::executeQuery()
         sqlWidget->finishExecution(log_message, ok);
     };
 
-    // Run the query
-    RunSql r(db);
-    connect(&r, &RunSql::statementErrored, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
+    // Prepare the SQL worker to run the query. We set the context of each signal-slot connection to the current SQL execution area.
+    // This means that if the tab is closed all these signals are automatically disconnected so the lambdas won't be called for a not
+    // existing execution area.
+    execute_sql_worker.reset(new RunSql(db, sqlWidget->getSql(), execute_from_position, execute_to_position, true));
+
+    connect(execute_sql_worker.get(), &RunSql::statementErrored, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
         sqlWidget->getModel()->reset();
+        ui->actionSqlResultsSave->setEnabled(false);
+        ui->actionSqlResultsSaveAsView->setEnabled(false);
         attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
         query_logger(false, status_message, from_position, to_position);
-    });
-    connect(&r, &RunSql::statementExecuted, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
+    }, Qt::QueuedConnection);
+    connect(execute_sql_worker.get(), &RunSql::statementExecuted, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
         sqlWidget->getModel()->reset();
+        ui->actionSqlResultsSave->setEnabled(false);
+        ui->actionSqlResultsSaveAsView->setEnabled(false);
         attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
         query_logger(true, status_message, from_position, to_position);
-    });
-    connect(&r, &RunSql::statementReturnsRows, [query_logger, this, sqlWidget](const QString& query, int from_position, int to_position, qint64 time_in_ms) {
-        QElapsedTimer timer;
-        timer.start();
+        execute_sql_worker->startNextStatement();
+    }, Qt::QueuedConnection);
+    connect(execute_sql_worker.get(), &RunSql::statementReturnsRows, sqlWidget, [query_logger, this, sqlWidget](const QString& query, int from_position, int to_position, qint64 time_in_ms_so_far) {
+        auto time_start = std::chrono::high_resolution_clock::now();
 
         ui->actionSqlResultsSave->setEnabled(true);
         ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
@@ -1363,20 +1405,62 @@ void MainWindow::executeQuery()
         auto * model = sqlWidget->getModel();
         model->setQuery(query);
 
-        // Wait until the initial loading of data (= first chunk and row count) has been performed. I have the
-        // feeling that a lot of stuff would need rewriting if we wanted to become more asynchronous here:
-        // essentially the entire loop over the commands would need to be signal-driven.
-        model->waitUntilIdle();
-        qApp->processEvents(); // to make row count available
+        // Wait until the initial loading of data (= first chunk and row count) has been performed
+        auto conn = std::make_shared<QMetaObject::Connection>();
+        *conn = connect(model, &SqliteTableModel::finishedFetch, [=]() {
+            // Disconnect this connection right now. This avoids calling this slot multiple times
+            disconnect(*conn);
 
-        attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
-        connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
-        connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
+            attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
+            connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
+            connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
 
-        query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms+timer.elapsed()), from_position, to_position);
+            auto time_end = std::chrono::high_resolution_clock::now();
+            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end-time_start);
+            query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms.count()+time_in_ms_so_far), from_position, to_position);
+            execute_sql_worker->startNextStatement();
+        });
+    }, Qt::QueuedConnection);
+    connect(execute_sql_worker.get(), &RunSql::confirmSaveBeforePragmaOrVacuum, sqlWidget, [this]() {
+        if(QMessageBox::question(nullptr, QApplication::applicationName(),
+                                 tr("Setting PRAGMA values or vacuuming will commit your current transaction.\nAre you sure?"),
+                                 QMessageBox::Yes | QMessageBox::Default,
+                                 QMessageBox::No | QMessageBox::Escape) == QMessageBox::No)
+            execute_sql_worker->stop();
+
+    }, Qt::BlockingQueuedConnection);
+    connect(execute_sql_worker.get(), &RunSql::finished, sqlWidget, [this, current_tab, sqlWidget]() {
+        // We work with a pointer to the current tab here instead of its index because the user might reorder the tabs in the meantime
+        ui->tabSqlAreas->setTabIcon(ui->tabSqlAreas->indexOf(current_tab), QIcon());
+
+        // We don't need to check for the current SQL tab here because two concurrently running queries are not allowed
+        ui->actionSqlExecuteLine->setEnabled(true);
+        ui->actionExecuteSql->setEnabled(true);
+        ui->actionSqlStop->setEnabled(false);
+        sqlWidget->getEditor()->setReadOnly(false);
+
+        // Show Done message
+        if(sqlWidget->inErrorState())
+            sqlWidget->getStatusEdit()->setPlainText(tr("Execution finished with errors.") + "\n\n" + sqlWidget->getStatusEdit()->toPlainText());
+        else
+            sqlWidget->getStatusEdit()->setPlainText(tr("Execution finished without errors.") + "\n\n" + sqlWidget->getStatusEdit()->toPlainText());
     });
 
-    r.runStatements(sqlWidget->getSql(), execute_from_position, execute_to_position);
+    // Add an hourglass icon to the current tab to indicate that there's a running execution in there.
+    // NOTE It's a bit hack-ish but we don't use this icon just as a signal to the user but also check for it in various places to check whether a
+    // specific SQL tab is currently running a query or not.
+    ui->tabSqlAreas->setTabIcon(ui->tabSqlAreas->currentIndex(), QIcon(":icons/hourglass"));
+
+    // Deactivate the buttons to start a query and activate the button to stop the query
+    ui->actionSqlExecuteLine->setEnabled(false);
+    ui->actionExecuteSql->setEnabled(false);
+    ui->actionSqlStop->setEnabled(true);
+
+    // Make the SQL editor widget read-only. We do this because the error indicators would be misplaced if the user changed the SQL text during execution
+    sqlWidget->getEditor()->setReadOnly(true);
+
+    // Start the execution
+    execute_sql_worker->start();
 }
 
 void MainWindow::mainTabSelected(int tabindex)
@@ -1976,6 +2060,20 @@ void MainWindow::closeSqlTab(int index, bool force)
     if(ui->tabSqlAreas->count() == 1 && !force)
         return;
 
+    // Check if we're still executing statements from this tab and stop them before proceeding
+    if(!ui->tabSqlAreas->tabIcon(index).isNull())
+    {
+        if(QMessageBox::warning(this, qApp->applicationName(), tr("The statements in this tab are still executing. Closing the tab will stop the "
+                                                                  "execution. This might leave the database in an inconsistent state. Are you sure "
+                                                                  "you want to close the tab?"),
+                                QMessageBox::Yes,
+                                QMessageBox::Cancel | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Cancel)
+            return;
+
+        execute_sql_worker->stop();
+        execute_sql_worker->wait();
+    }
+
     // Remove the tab and delete the widget
     QWidget* w = ui->tabSqlAreas->widget(index);
     ui->tabSqlAreas->removeTab(index);
@@ -2000,11 +2098,27 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
     return index;
 }
 
-void MainWindow::changeSqlTab(int /*index*/)
+void MainWindow::changeSqlTab(int index)
 {
     // Instead of figuring out if there are some execution results in the new tab and which statement was used to generate them,
     // we just disable the export buttons in the toolbar.
     ui->actionSqlResultsSave->setEnabled(false);
+
+    // Check if the new tab is currently running a query or not
+    if(ui->tabSqlAreas->tabIcon(index).isNull())
+    {
+        // Not running a query
+
+        ui->actionSqlExecuteLine->setEnabled(true);
+        ui->actionExecuteSql->setEnabled(true);
+        ui->actionSqlStop->setEnabled(false);
+    } else {
+        // Running a query
+
+        ui->actionSqlExecuteLine->setEnabled(false);
+        ui->actionExecuteSql->setEnabled(false);
+        ui->actionSqlStop->setEnabled(true);
+    }
 }
 
 void MainWindow::openSqlFile()
