@@ -2642,7 +2642,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2250"/>
         <source>New In-&amp;Memory Database</source>
-        <translation>Nueva Base de Datos en &amp;memoria</translation>
+        <translation>Nueva base de datos en &amp;memoria</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2258"/>
