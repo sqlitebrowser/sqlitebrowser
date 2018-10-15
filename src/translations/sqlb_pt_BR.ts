@@ -44,7 +44,7 @@
     <name>AddRecordDialog</name>
     <message>
         <source>Add New Record</source>
-        <translation>Adicionar Novo Registro</translation>
+        <translation>Adicionar novo registro</translation>
     </message>
     <message>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
@@ -1052,7 +1052,7 @@ Erros são indicados com um ondulado vermelho.</translation>
     <message>
         <source>Error creating table. Message from database engine:
 %1</source>
-        <translation>Erro criando tabela. Mensagem do DB:
+        <translation>Erro criando tabela. Mensagem da engine do banco de dados:
 %1</translation>
     </message>
     <message>
@@ -1273,7 +1273,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>exporting CSV</source>
-        <translation>exporando CSV</translation>
+        <translation>exportando CSV</translation>
     </message>
     <message>
         <source>exporting JSON</source>
@@ -2171,7 +2171,7 @@ x~y	Intervalo: valores entre x e y</translation>
     </message>
     <message>
         <source>DB Toolbar</source>
-        <translation>DB Toolbar</translation>
+        <translation>Barra de ferramentas do banco de dados</translation>
     </message>
     <message>
         <source>SQL Log</source>
@@ -3017,7 +3017,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>DB Sche&amp;ma</source>
-        <translation>Esque&amp;ma do BD</translation>
+        <translation>Esque&amp;ma do banco de dados</translation>
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
@@ -4486,7 +4486,7 @@ Todas as suas preferências serão perdidas e os valores padrão serão utilizad
     </message>
     <message>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
-        <translation>Quando ativado, as quebras de linha na coluna Esquema da aba Estruturas do BD e nas saídas impressas são removidas.</translation>
+        <translation>Quando ativado, as quebras de linha na coluna Esquema da aba Estrutura do banco de dados e nas saídas impressas são removidas.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
