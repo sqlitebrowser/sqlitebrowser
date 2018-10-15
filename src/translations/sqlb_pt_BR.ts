@@ -2747,7 +2747,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>SQL &amp;Log</source>
-        <translation>SQL &amp;Log</translation>
+        <translation>&amp;Log do SQL</translation>
     </message>
     <message>
         <source>Show S&amp;QL submitted by</source>
