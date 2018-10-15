@@ -485,7 +485,7 @@ Aborting execution%3.</translation>
     </message>
     <message>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
-        <translation>Uma tabela com o nome &apos;%1&apos; já existe no schema &apos;%2&apos;.</translation>
+        <translation>Uma tabela com o nome &apos;%1&apos; já existe no esquema &apos;%2&apos;.</translation>
     </message>
     <message>
         <source>could not get list of databases: %1</source>
@@ -914,7 +914,7 @@ Erros são indicados com um ondulado vermelho.</translation>
     </message>
     <message>
         <source>Edit Index Schema</source>
-        <translation>Editar Schema do Índice</translation>
+        <translation>Editar esquema do índice</translation>
     </message>
     <message>
         <source>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</source>
@@ -1304,7 +1304,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Export schema only</source>
-        <translation>Exportar somente schema</translation>
+        <translation>Exportar somente esquema</translation>
     </message>
     <message>
         <source>Please select at least 1 table.</source>
@@ -1352,11 +1352,11 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Keep old schema (CREATE TABLE IF NOT EXISTS)</source>
-        <translation>Manter schema antigo (CREATE TABLE IF NOT EXISTS)</translation>
+        <translation>Manter esquema antigo (CREATE TABLE IF NOT EXISTS)</translation>
     </message>
     <message>
         <source>Overwrite old schema (DROP TABLE, then CREATE TABLE)</source>
-        <translation>Sobrescrever schema antigo (DROP TABLE, then CREATE TABLE)</translation>
+        <translation>Sobrescrever esquema antigo (DROP TABLE, then CREATE TABLE)</translation>
     </message>
     <message>
         <source>Please select at least one table.</source>
@@ -3017,7 +3017,7 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     </message>
     <message>
         <source>DB Sche&amp;ma</source>
-        <translation>Sche&amp;ma do BD</translation>
+        <translation>Esque&amp;ma do BD</translation>
     </message>
     <message>
         <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
@@ -3234,7 +3234,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
 </source>
         <translation>Essa é a estrutura do banco de dados aberto.
 Você pode arrastar múltiplos nomes de objetos da coluna Nome e largá-los no editor SQL e você pode ajustar as propriedades dos nomes largados usando o menu de contexto. Isso ajudaria você a compor comandos SQL.
-Você pode arrastar comandos SQL da coluna Schema e largá-los no editor SQL ou em outras aplicações.
+Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou em outras aplicações.
 </translation>
     </message>
     <message>
@@ -3315,7 +3315,7 @@ Você pode arrastar comandos SQL da coluna Schema e largá-los no editor SQL ou 
     </message>
     <message>
         <source>Open &amp;Project...</source>
-        <translation>Abrir &amp;Projeto...</translation>
+        <translation>Abrir &amp;projeto...</translation>
     </message>
     <message>
         <source>This button lets you open a DB4S project file</source>
@@ -4486,7 +4486,7 @@ Todas as suas preferências serão perdidas e os valores padrão serão utilizad
     </message>
     <message>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
-        <translation>Quando ativado, as quebras de linha na coluna Schema da aba Estruturas do BD e nas saídas impressas são removidas.</translation>
+        <translation>Quando ativado, as quebras de linha na coluna Esquema da aba Estruturas do BD e nas saídas impressas são removidas.</translation>
     </message>
 </context>
 <context>
