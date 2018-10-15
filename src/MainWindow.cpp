@@ -649,9 +649,9 @@ void MainWindow::populateTable()
             }
         }
         if(only_defaults)
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues);
         else
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues, v);
 
         // There is information stored for this table, so extract it and apply it
         applyBrowseTableSettings(storedData);
@@ -708,9 +708,12 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
     // Filters
     if(!skipFilters)
     {
+        // Set filters blocking signals, since the filter is already applied to the browse table model
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        bool oldState = filterHeader->blockSignals(true);
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
+        filterHeader->blockSignals(oldState);
     }
 
     // Encoding
@@ -772,6 +775,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
 void MainWindow::addRecord()
 {
     int row = m_browseTableModel->rowCount();
+
     if(m_browseTableModel->insertRow(row))
     {
         selectTableLine(row);
@@ -1888,6 +1892,7 @@ void MainWindow::activateFields(bool enable)
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
+    ui->buttonPrintTable->setEnabled(enable);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
@@ -3465,7 +3470,7 @@ void MainWindow::printDbStructure ()
 
     out << "<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
         << QString("<title>%1</title>").arg(treeView->windowTitle())
-        << "</head><body bgcolor=\"#FFFFFF\">";
+        << "<style type=\"text/css\">pre {white-space: pre-wrap;}</style></head><body bgcolor=\"#FFFFFF\">";
 
     for (int row = 0; row < rowCount; row++) {
 
@@ -3494,7 +3499,10 @@ void MainWindow::printDbStructure ()
                     if (!treeView->isColumnHidden(column2)) {
                         QModelIndex cellIndex = model->index(rowChild, column2, groupIndex);
                         QString data = model->data(cellIndex).toString().toHtmlEscaped();
-                        out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        if (column2 != DbStructureModel::ColumnSQL)
+                            out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        else
+                            out << QString("<td><pre>%1</pre></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
                     }
                 }
                 out << "</tr>";

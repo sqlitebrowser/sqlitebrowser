@@ -21,19 +21,19 @@ class PreferencesDialog : public QDialog
 
 public:
     explicit PreferencesDialog(QWidget* parent = nullptr);
-    ~PreferencesDialog();
+    ~PreferencesDialog() override;
 
 private slots:
-    virtual void loadSettings();
-    virtual void saveSettings();
+    void loadSettings();
+    void saveSettings();
 
-    virtual void chooseLocation();
-    virtual void showColourDialog(QTreeWidgetItem* item, int column);
-    virtual void addExtension();
-    virtual void removeExtension();
-    virtual void activateRemoteTab(bool active);
-    virtual void addClientCertificate();
-    virtual void removeClientCertificate();
+    void chooseLocation();
+    void showColourDialog(QTreeWidgetItem* item, int column);
+    void addExtension();
+    void removeExtension();
+    void activateRemoteTab(bool active);
+    void addClientCertificate();
+    void removeClientCertificate();
     void chooseRemoteCloneDirectory();
     void updatePreviewFont();
 
@@ -52,7 +52,7 @@ private:
     void addClientCertToTable(const QString& path, const QSslCertificate& cert);
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 #endif

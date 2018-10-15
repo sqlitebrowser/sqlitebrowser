@@ -129,6 +129,7 @@ void ExtendedScintilla::reloadKeywords()
 void ExtendedScintilla::reloadSettings()
 {
     reloadLexerSettings(lexer());
+    reloadKeywords();
 }
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {

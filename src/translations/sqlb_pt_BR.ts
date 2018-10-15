@@ -829,6 +829,38 @@ Errors are indicated with a red squiggle underline.</source>
         <source>Type of data currently in cell: Valid JSON</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open preview dialog for printing displayed image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+P</source>
+        <translation type="unfinished">Ctrl+P</translation>
+    </message>
+    <message>
+        <source>Open preview dialog for printing displayed text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Hex and ASCII</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy selected hexadecimal and ASCII columns to the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Shift+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hex dump files (*.txt)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditIndexDialog</name>
@@ -3528,12 +3560,6 @@ Are you sure you want to save the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error checking foreign keys after table modification. The changes will be reverted.
-Message from database engine:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
@@ -3636,6 +3662,22 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3865,6 +3907,10 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4386,6 +4432,10 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

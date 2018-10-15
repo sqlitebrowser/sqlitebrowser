@@ -15,7 +15,7 @@ class DockTextEdit : public ExtendedScintilla
 
 public:
     explicit DockTextEdit(QWidget *parent = nullptr);
-    virtual ~DockTextEdit();
+    ~DockTextEdit() override;
 
     // Enumeration of supported languages
     enum Language
@@ -25,7 +25,7 @@ public:
     };
 
     void setLanguage(Language lang);
-    Language language() { return m_language; };
+    Language language() { return m_language; }
     
 public slots:
     void reloadSettings();

@@ -120,6 +120,12 @@ You can drag SQL statements from an object row and drop them into other applicat
               <height>0</height>
              </size>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string>Select a table to browse data</string>
             </property>
@@ -182,6 +188,20 @@ You can drag SQL statements from an object row and drop them into other applicat
             <property name="icon">
              <iconset resource="icons/icons.qrc">
               <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonPrintTable">
+            <property name="toolTip">
+             <string>Print currrently browsed table data [Ctrl+P]</string>
+            </property>
+            <property name="whatsThis">
+             <string>Print currrently browsed table data. Print selection if more than one cell is selected.</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
             </property>
            </widget>
           </item>
@@ -3738,6 +3758,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>518</x>
      <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonPrintTable</sender>
+   <signal>clicked()</signal>
+   <receiver>dataTable</receiver>
+   <slot>openPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>315</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>347</y>
     </hint>
    </hints>
   </connection>

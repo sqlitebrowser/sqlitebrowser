@@ -21,10 +21,10 @@ class ImportCsvDialog : public QDialog
 
 public:
     explicit ImportCsvDialog(const QStringList& filenames, DBBrowserDB* db, QWidget* parent = nullptr);
-    ~ImportCsvDialog();
+    ~ImportCsvDialog() override;
 
 private slots:
-    virtual void accept();
+    void accept() override;
     void updatePreview();
     void checkInput();
     void selectFiles();

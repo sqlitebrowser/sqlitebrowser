@@ -13,7 +13,7 @@ class FileExtensionManager : public QDialog
 
 public:
     explicit FileExtensionManager(QStringList init, QWidget *parent = nullptr);
-    ~FileExtensionManager();
+    ~FileExtensionManager() override;
 
     QStringList getDBFileExtensions();
 

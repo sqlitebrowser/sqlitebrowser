@@ -739,6 +739,43 @@ Aborting execution%3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../EditDialog.ui" line="318"/>
+        <location filename="../EditDialog.ui" line="333"/>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.ui" line="321"/>
+        <source>Open preview dialog for printing displayed image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.ui" line="324"/>
+        <location filename="../EditDialog.ui" line="339"/>
+        <source>Ctrl+P</source>
+        <translation type="unfinished">Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.ui" line="336"/>
+        <source>Open preview dialog for printing displayed text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.ui" line="348"/>
+        <source>Copy Hex and ASCII</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.ui" line="351"/>
+        <source>Copy selected hexadecimal and ASCII columns to the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.ui" line="354"/>
+        <source>Ctrl+Shift+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Import text</source>
         <translation type="vanished">문자열 가져오기</translation>
     </message>
@@ -775,24 +812,24 @@ Aborting execution%3.</source>
         <translation>&amp;NULL로 만들기</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="246"/>
+        <location filename="../EditDialog.ui" line="253"/>
         <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="289"/>
+        <location filename="../EditDialog.ui" line="296"/>
         <source>Apply data to cell [Ctrl+Return]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="292"/>
+        <location filename="../EditDialog.ui" line="299"/>
         <source>This button saves the changes performed in the cell editor to the database cell.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="295"/>
+        <location filename="../EditDialog.ui" line="302"/>
         <source>Apply</source>
         <translation>적용</translation>
     </message>
@@ -829,12 +866,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>이 영역은 이 데이터베이스 데이터 값에 대한 정보를 보여줍니다</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="260"/>
+        <location filename="../EditDialog.ui" line="267"/>
         <source>Type of data currently in cell</source>
         <translation>데이터 값 크기</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="267"/>
+        <location filename="../EditDialog.ui" line="274"/>
         <source>Size of data currently in table</source>
         <translation>테이블에서 현재 데이터 크기</translation>
     </message>
@@ -847,7 +884,7 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="vanished">문자열 파일(*.txt);;이미지 파일(%1);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="389"/>
+        <location filename="../EditDialog.cpp" line="407"/>
         <source>Choose a filename to export data</source>
         <translation>내보내기 할 데이터의 파일이름을 선택하세요</translation>
     </message>
@@ -864,114 +901,119 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="vanished">텍스트 편집기에서는 바이너리 데이터를 볼 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="200"/>
-        <location filename="../EditDialog.cpp" line="209"/>
+        <location filename="../EditDialog.cpp" line="213"/>
+        <location filename="../EditDialog.cpp" line="222"/>
         <source>Image data can&apos;t be viewed in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="201"/>
-        <location filename="../EditDialog.cpp" line="210"/>
+        <location filename="../EditDialog.cpp" line="214"/>
+        <location filename="../EditDialog.cpp" line="223"/>
         <source>Try switching to Image or Binary mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="266"/>
-        <location filename="../EditDialog.cpp" line="275"/>
+        <location filename="../EditDialog.cpp" line="279"/>
+        <location filename="../EditDialog.cpp" line="288"/>
         <source>Binary data can&apos;t be viewed in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="267"/>
-        <location filename="../EditDialog.cpp" line="276"/>
+        <location filename="../EditDialog.cpp" line="280"/>
+        <location filename="../EditDialog.cpp" line="289"/>
         <source>Try switching to Binary mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="299"/>
-        <location filename="../EditDialog.cpp" line="313"/>
-        <location filename="../EditDialog.cpp" line="368"/>
-        <location filename="../EditDialog.cpp" line="373"/>
-        <location filename="../EditDialog.cpp" line="375"/>
+        <location filename="../EditDialog.cpp" line="312"/>
+        <location filename="../EditDialog.cpp" line="326"/>
+        <location filename="../EditDialog.cpp" line="385"/>
+        <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="300"/>
-        <location filename="../EditDialog.cpp" line="322"/>
-        <location filename="../EditDialog.cpp" line="378"/>
+        <location filename="../EditDialog.cpp" line="313"/>
+        <location filename="../EditDialog.cpp" line="335"/>
+        <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="301"/>
-        <location filename="../EditDialog.cpp" line="325"/>
-        <location filename="../EditDialog.cpp" line="373"/>
-        <location filename="../EditDialog.cpp" line="375"/>
+        <location filename="../EditDialog.cpp" line="314"/>
+        <location filename="../EditDialog.cpp" line="338"/>
+        <location filename="../EditDialog.cpp" line="385"/>
+        <location filename="../EditDialog.cpp" line="387"/>
         <source>XML files (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="302"/>
-        <location filename="../EditDialog.cpp" line="319"/>
+        <location filename="../EditDialog.cpp" line="315"/>
+        <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="303"/>
         <location filename="../EditDialog.cpp" line="316"/>
-        <location filename="../EditDialog.cpp" line="368"/>
+        <location filename="../EditDialog.cpp" line="329"/>
+        <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="303"/>
-        <location filename="../EditDialog.cpp" line="385"/>
+        <location filename="../EditDialog.cpp" line="316"/>
+        <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="330"/>
+        <location filename="../EditDialog.cpp" line="343"/>
         <source>Choose a file to import</source>
         <translation type="unfinished">가져올 파일을 고르세요</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="363"/>
+        <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="381"/>
+        <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="454"/>
+        <location filename="../EditDialog.cpp" line="400"/>
+        <location filename="../EditDialog.cpp" line="420"/>
+        <source>Hex dump files (*.txt)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="474"/>
         <source>Invalid data for this mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="455"/>
+        <location filename="../EditDialog.cpp" line="475"/>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="909"/>
+        <location filename="../EditDialog.cpp" line="929"/>
         <source>Type of data currently in cell: %1 Image</source>
         <translation>현재 데이터 타입: %1 이미지</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="915"/>
+        <location filename="../EditDialog.cpp" line="935"/>
         <source>%1x%2 pixel(s)</source>
         <translation>%1x%2 픽셀</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="926"/>
+        <location filename="../EditDialog.cpp" line="946"/>
         <source>Type of data currently in cell: NULL</source>
         <translation>현재 데이터 타입: 널</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="944"/>
+        <location filename="../EditDialog.cpp" line="964"/>
         <source>Type of data currently in cell: Valid JSON</source>
         <translation type="unfinished"></translation>
     </message>
@@ -980,15 +1022,15 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="obsolete">현재 데이터 타입: 널</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="745"/>
-        <location filename="../EditDialog.cpp" line="936"/>
+        <location filename="../EditDialog.cpp" line="765"/>
+        <location filename="../EditDialog.cpp" line="956"/>
         <source>Type of data currently in cell: Text / Numeric</source>
         <translation>현재 데이터 타입: 문자열 / 숫자</translation>
     </message>
     <message numerus="yes">
-        <location filename="../EditDialog.cpp" line="747"/>
-        <location filename="../EditDialog.cpp" line="937"/>
-        <location filename="../EditDialog.cpp" line="945"/>
+        <location filename="../EditDialog.cpp" line="767"/>
+        <location filename="../EditDialog.cpp" line="957"/>
+        <location filename="../EditDialog.cpp" line="965"/>
         <source>%n char(s)</source>
         <translation>
             <numerusform>%n 문자</numerusform>
@@ -1003,13 +1045,13 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="obsolete">%1x%2 픽셀</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="953"/>
+        <location filename="../EditDialog.cpp" line="973"/>
         <source>Type of data currently in cell: Binary</source>
         <translation>현재 데이터 타입: 바이너리</translation>
     </message>
     <message numerus="yes">
-        <location filename="../EditDialog.cpp" line="927"/>
-        <location filename="../EditDialog.cpp" line="954"/>
+        <location filename="../EditDialog.cpp" line="947"/>
+        <location filename="../EditDialog.cpp" line="974"/>
         <source>%n byte(s)</source>
         <translation>
             <numerusform>%n 바이트</numerusform>
@@ -1595,23 +1637,23 @@ All data currently stored in this field will be lost.</source>
     <name>ExtendedScintilla</name>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="58"/>
-        <location filename="../ExtendedScintilla.cpp" line="231"/>
+        <location filename="../ExtendedScintilla.cpp" line="232"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="61"/>
-        <location filename="../ExtendedScintilla.cpp" line="235"/>
+        <location filename="../ExtendedScintilla.cpp" line="236"/>
         <source>Ctrl+P</source>
         <translation type="unfinished">Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../ExtendedScintilla.cpp" line="230"/>
+        <location filename="../ExtendedScintilla.cpp" line="231"/>
         <source>Find and Replace...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ExtendedScintilla.cpp" line="234"/>
+        <location filename="../ExtendedScintilla.cpp" line="235"/>
         <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1756,7 +1798,7 @@ Do you want to insert it anyway?</source>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="94"/>
-        <location filename="../FileExtensionManager.cpp" line="43"/>
+        <location filename="../FileExtensionManager.cpp" line="41"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1766,7 +1808,7 @@ Do you want to insert it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FileExtensionManager.cpp" line="44"/>
+        <location filename="../FileExtensionManager.cpp" line="42"/>
         <source>*.extension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2219,7 +2261,7 @@ x~y	Range: values between x and y</source>
         <translation type="obsolete">데이터베이스 구조(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="914"/>
+        <location filename="../MainWindow.ui" line="935"/>
         <source>toolBar1</source>
         <translation>toolBar1</translation>
     </message>
@@ -2232,12 +2274,12 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">테이블:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="123"/>
+        <location filename="../MainWindow.ui" line="130"/>
         <source>Select a table to browse data</source>
         <translation>보려는 데이터가 있는 테이블을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="126"/>
+        <location filename="../MainWindow.ui" line="133"/>
         <source>Use this list to select a table to be displayed in the database view</source>
         <translation>리스트에서 테이블을 선택하면 데이터베이스 뷰에서 볼 수 있습니다</translation>
     </message>
@@ -2246,27 +2288,27 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">선택된 테이블의 데이터를 다시 불러옵니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="142"/>
+        <location filename="../MainWindow.ui" line="149"/>
         <source>This button refreshes the data in the currently selected table.</source>
         <translation>이 버튼은 현재 선택된 테이블의 데이터를 다시 불러옵니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="287"/>
+        <location filename="../MainWindow.ui" line="308"/>
         <source>Scroll one page upwards</source>
         <translation>한 페이지 위로 스크롤합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="290"/>
+        <location filename="../MainWindow.ui" line="311"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;위 테이블 뷰에서 레코드를 한 페이지 앞으로 가려면 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="314"/>
+        <location filename="../MainWindow.ui" line="335"/>
         <source>Scroll one page downwards</source>
         <translation>한 페이지 아래로 스크롤합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="317"/>
+        <location filename="../MainWindow.ui" line="338"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;위 테이블 뷰에서 레코드를 한 페이지 뒤로 가려면 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2275,7 +2317,7 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">SQLCipher &amp;FAQ...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1983"/>
+        <location filename="../MainWindow.ui" line="2004"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
         <translation>SQLCipher FAQ를 봅니다</translation>
     </message>
@@ -2284,7 +2326,7 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">테이블을 JSON으로 내보내기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1991"/>
+        <location filename="../MainWindow.ui" line="2012"/>
         <source>Export one or more table(s) to a JSON file</source>
         <translation>테이블을 JSON 파일로 내보냅니다</translation>
     </message>
@@ -2293,27 +2335,27 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">원격 저장하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1999"/>
+        <location filename="../MainWindow.ui" line="2020"/>
         <source>Refresh</source>
         <translation>새로고침</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2002"/>
+        <location filename="../MainWindow.ui" line="2023"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="156"/>
+        <location filename="../MainWindow.ui" line="163"/>
         <source>Clear all filters</source>
         <translation>모든 필터 지우기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="101"/>
+        <location filename="../MainWindow.ui" line="102"/>
         <source>&amp;Table:</source>
         <translation>테이블(&amp;T):</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="203"/>
+        <location filename="../MainWindow.ui" line="224"/>
         <source>Insert a new record in the current table</source>
         <translation>현재 테이블에 새 레코드를 추가합니다</translation>
     </message>
@@ -2322,13 +2364,13 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">이 버튼은 새로운 비어있는 레코드를 데이터베이스에 생성합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="209"/>
-        <location filename="../MainWindow.ui" line="2218"/>
+        <location filename="../MainWindow.ui" line="230"/>
+        <location filename="../MainWindow.ui" line="2239"/>
         <source>New Record</source>
         <translation>새 레코드</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="216"/>
+        <location filename="../MainWindow.ui" line="237"/>
         <source>Delete the current record</source>
         <translation>현재 레코드 삭제하기</translation>
     </message>
@@ -2337,8 +2379,8 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">이 버튼은 데이터베이스에서 현재 선택되어있는 레코드를 삭제합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="222"/>
-        <location filename="../MainWindow.cpp" line="3408"/>
+        <location filename="../MainWindow.ui" line="243"/>
+        <location filename="../MainWindow.cpp" line="3427"/>
         <source>Delete Record</source>
         <translation>레코드 삭제</translation>
     </message>
@@ -2347,17 +2389,17 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">여기는 데이터베이스 뷰입니다. 레코드를 더블클릭하면 편집기창에서 값을 수정할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="267"/>
+        <location filename="../MainWindow.ui" line="288"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;첫 페이지로 갑니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="270"/>
+        <location filename="../MainWindow.ui" line="291"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;테이블 뷰 맨 위로 가기 위해서는 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="273"/>
+        <location filename="../MainWindow.ui" line="294"/>
         <source>|&lt;</source>
         <translation>|&lt;</translation>
     </message>
@@ -2370,12 +2412,12 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;테이블 뷰에서 100 레코드 위로 스크롤하려면 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="293"/>
+        <location filename="../MainWindow.ui" line="314"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="304"/>
+        <location filename="../MainWindow.ui" line="325"/>
         <source>0 - 0 of 0</source>
         <translation>0 - 0 of 0</translation>
     </message>
@@ -2388,12 +2430,12 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;테이블뷰에서 100 레코드 아래로 스크롤하려면 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="320"/>
+        <location filename="../MainWindow.ui" line="341"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="334"/>
+        <location filename="../MainWindow.ui" line="355"/>
         <source>Scroll to the end</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;마지막 페이지로 갑니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -2402,37 +2444,37 @@ x~y	Range: values between x and y</source>
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;테이블 뷰 맨 아래로 가기 위해서는 이 버튼을 클릭하세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="340"/>
+        <location filename="../MainWindow.ui" line="361"/>
         <source>&gt;|</source>
         <translation>&gt;|</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="364"/>
+        <location filename="../MainWindow.ui" line="385"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;특정 레코드로 점프하려면 여기를 클릭하세요&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="367"/>
+        <location filename="../MainWindow.ui" line="388"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이 버튼은 특정 위치의 레코드 넘버로 가기 위해서 사용합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="370"/>
+        <location filename="../MainWindow.ui" line="391"/>
         <source>Go to:</source>
         <translation>특정 레코드 행으로 가기:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="377"/>
+        <location filename="../MainWindow.ui" line="398"/>
         <source>Enter record number to browse</source>
         <translation>레코드 행 번호를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="380"/>
+        <location filename="../MainWindow.ui" line="401"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
         <translation>레코드 행번호를 입력하고 &apos;특정 레코드 행으로 가기:&apos; 버튼을 클릭하면 데이터베이스 뷰에 레코드가 표시됩니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="383"/>
+        <location filename="../MainWindow.ui" line="404"/>
         <source>1</source>
         <translation>1</translation>
     </message>
@@ -2565,17 +2607,17 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">읽기 전용으로 데이터베이스 열기(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2014"/>
+        <location filename="../MainWindow.ui" line="2035"/>
         <source>Open an existing database file in read only mode</source>
         <translation>읽기 전용 모드로 존재하는 데이터베이스 파일을 엽니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2031"/>
+        <location filename="../MainWindow.ui" line="2052"/>
         <source>Unlock view editing</source>
         <translation>뷰 수정 락 해제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2034"/>
+        <location filename="../MainWindow.ui" line="2055"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
         <translation>수정을 위하여 현재 뷰의 락을 해제합니다. 하지만 수정을 위해서는 적절한 트리거가 필요할 것입니다.</translation>
     </message>
@@ -2584,17 +2626,17 @@ x~y	Range: values between x and y</source>
         <translation type="obsolete">SQL 실행하기(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="960"/>
+        <location filename="../MainWindow.ui" line="981"/>
         <source>&amp;File</source>
         <translation>파일(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="964"/>
+        <location filename="../MainWindow.ui" line="985"/>
         <source>&amp;Import</source>
         <translation>가져오기(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="971"/>
+        <location filename="../MainWindow.ui" line="992"/>
         <source>&amp;Export</source>
         <translation>내보내기(&amp;E)</translation>
     </message>
@@ -2603,52 +2645,52 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">원격</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="997"/>
+        <location filename="../MainWindow.ui" line="1018"/>
         <source>&amp;Edit</source>
         <translation>편집(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1009"/>
+        <location filename="../MainWindow.ui" line="1030"/>
         <source>&amp;View</source>
         <translation>뷰(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1017"/>
+        <location filename="../MainWindow.ui" line="1038"/>
         <source>&amp;Help</source>
         <translation>도움말(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1033"/>
+        <location filename="../MainWindow.ui" line="1054"/>
         <source>&amp;Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1054"/>
+        <location filename="../MainWindow.ui" line="1075"/>
         <source>DB Toolbar</source>
         <translation>DB 툴바</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1073"/>
+        <location filename="../MainWindow.ui" line="1094"/>
         <source>Edit Database &amp;Cell</source>
         <translation>데이터베이스 셀 수정하기(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1152"/>
+        <location filename="../MainWindow.ui" line="1173"/>
         <source>This button clears the contents of the SQL logs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1164"/>
+        <location filename="../MainWindow.ui" line="1185"/>
         <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1212"/>
+        <location filename="../MainWindow.ui" line="1233"/>
         <source>DB Sche&amp;ma</source>
         <translation>DB 스키마</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1225"/>
+        <location filename="../MainWindow.ui" line="1246"/>
         <source>This is the structure of the opened database.
 You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
@@ -2656,7 +2698,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1258"/>
+        <location filename="../MainWindow.ui" line="1279"/>
         <source>&amp;Remote</source>
         <translation>원격</translation>
     </message>
@@ -2669,17 +2711,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="vanished">확장기능 불러오기(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1733"/>
+        <location filename="../MainWindow.ui" line="1754"/>
         <source>Execute current line [Shift+F5]</source>
         <translation>현재 행 실행하기 [Shift+F5]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1736"/>
+        <location filename="../MainWindow.ui" line="1757"/>
         <source>This button executes the SQL statement present in the current editor line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1739"/>
+        <location filename="../MainWindow.ui" line="1760"/>
         <source>Shift+F5</source>
         <translation>Shift+F5</translation>
     </message>
@@ -2696,48 +2738,48 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="vanished">암호화하기(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1941"/>
+        <location filename="../MainWindow.ui" line="1962"/>
         <source>Edit display format</source>
         <translation>표시 형식 변경하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1944"/>
+        <location filename="../MainWindow.ui" line="1965"/>
         <source>Edit the display format of the data in this column</source>
         <translation>이 컬럼에 있는 데이터의 표시 형식을 수정합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1952"/>
+        <location filename="../MainWindow.ui" line="1973"/>
         <source>Show rowid column</source>
         <translation>컬럼의 rowid 표시하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1955"/>
+        <location filename="../MainWindow.ui" line="1976"/>
         <source>Toggle the visibility of the rowid column</source>
         <translation>rowid 컬럼을 표시하거나 감춥니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1960"/>
-        <location filename="../MainWindow.cpp" line="3108"/>
+        <location filename="../MainWindow.ui" line="1981"/>
+        <location filename="../MainWindow.cpp" line="3127"/>
         <source>Set encoding</source>
         <translation>인코딩 지정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1963"/>
+        <location filename="../MainWindow.ui" line="1984"/>
         <source>Change the encoding of the text in the table cells</source>
         <translation>테이블 셀 안의 텍스트 인코딩을 변경합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1968"/>
+        <location filename="../MainWindow.ui" line="1989"/>
         <source>Set encoding for all tables</source>
         <translation>모든 테이블의 인코딩 지정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1971"/>
+        <location filename="../MainWindow.ui" line="1992"/>
         <source>Change the default encoding assumed for all tables in the database</source>
         <translation>데이터베이스 안에 있는 모든 테이블의 기본 인코딩을 변경합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3002"/>
+        <location filename="../MainWindow.cpp" line="3021"/>
         <source>Duplicate record</source>
         <translation>레코드 복제하기</translation>
     </message>
@@ -2750,17 +2792,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">SQL 보기(&amp;S) by</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1120"/>
+        <location filename="../MainWindow.ui" line="1141"/>
         <source>User</source>
         <translation>사용자</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1125"/>
+        <location filename="../MainWindow.ui" line="1146"/>
         <source>Application</source>
         <translation>애플리케이션</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1155"/>
+        <location filename="../MainWindow.ui" line="1176"/>
         <source>&amp;Clear</source>
         <translation>지우기(&amp;C)</translation>
     </message>
@@ -2885,66 +2927,66 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="vanished">DB 스키마</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1309"/>
+        <location filename="../MainWindow.ui" line="1330"/>
         <source>&amp;New Database...</source>
         <translation>새 데이터베이스(&amp;N)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1312"/>
-        <location filename="../MainWindow.ui" line="1315"/>
+        <location filename="../MainWindow.ui" line="1333"/>
+        <location filename="../MainWindow.ui" line="1336"/>
         <source>Create a new database file</source>
         <translation>새 데이터베이스 파일을 생성합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1318"/>
+        <location filename="../MainWindow.ui" line="1339"/>
         <source>This option is used to create a new database file.</source>
         <translation>이 옵션은 새 데이터베이스 파일을 생성하려고 할 때 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1321"/>
+        <location filename="../MainWindow.ui" line="1342"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1333"/>
-        <location filename="../MainWindow.ui" line="2187"/>
+        <location filename="../MainWindow.ui" line="1354"/>
+        <location filename="../MainWindow.ui" line="2208"/>
         <source>&amp;Open Database...</source>
         <translation>데이터베이스 열기(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1336"/>
-        <location filename="../MainWindow.ui" line="1339"/>
-        <location filename="../MainWindow.ui" line="2017"/>
-        <location filename="../MainWindow.ui" line="2190"/>
-        <location filename="../MainWindow.ui" line="2193"/>
+        <location filename="../MainWindow.ui" line="1357"/>
+        <location filename="../MainWindow.ui" line="1360"/>
+        <location filename="../MainWindow.ui" line="2038"/>
+        <location filename="../MainWindow.ui" line="2211"/>
+        <location filename="../MainWindow.ui" line="2214"/>
         <source>Open an existing database file</source>
         <translation>기존 데이터베이스 파일을 엽니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1342"/>
-        <location filename="../MainWindow.ui" line="2020"/>
-        <location filename="../MainWindow.ui" line="2196"/>
+        <location filename="../MainWindow.ui" line="1363"/>
+        <location filename="../MainWindow.ui" line="2041"/>
+        <location filename="../MainWindow.ui" line="2217"/>
         <source>This option is used to open an existing database file.</source>
         <translation>이 옵션은 기존 데이터베이스 파일을 열 때 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1345"/>
-        <location filename="../MainWindow.ui" line="2199"/>
+        <location filename="../MainWindow.ui" line="1366"/>
+        <location filename="../MainWindow.ui" line="2220"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1360"/>
+        <location filename="../MainWindow.ui" line="1381"/>
         <source>&amp;Close Database</source>
         <translation>데이터베이스 닫기(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1369"/>
+        <location filename="../MainWindow.ui" line="1390"/>
         <source>This button closes the connection to the currently open database file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1372"/>
+        <location filename="../MainWindow.ui" line="1393"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -2953,13 +2995,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">변경사항 되돌리기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1390"/>
-        <location filename="../MainWindow.ui" line="1393"/>
+        <location filename="../MainWindow.ui" line="1411"/>
+        <location filename="../MainWindow.ui" line="1414"/>
         <source>Revert database to last saved state</source>
         <translation>마지막 저장된 상태로 데이터베이스를 되돌립니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1396"/>
+        <location filename="../MainWindow.ui" line="1417"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>이 옵션은 현재 데이터베이스를 마지막 저장된 상태로 되돌릴 때 사용합니다. 저장 이후에 이루어진 모든 변경 사항을 되돌립니다.</translation>
     </message>
@@ -2968,18 +3010,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">변경사항 반영하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1414"/>
-        <location filename="../MainWindow.ui" line="1417"/>
+        <location filename="../MainWindow.ui" line="1435"/>
+        <location filename="../MainWindow.ui" line="1438"/>
         <source>Write changes to the database file</source>
         <translation>변경 사항을 데이터베이스 파일에 반영합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1420"/>
+        <location filename="../MainWindow.ui" line="1441"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>이 옵션은 데이터베이스 파일에 변경 사항을 저장하기 위해 사용됩니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1423"/>
+        <location filename="../MainWindow.ui" line="1444"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -2988,23 +3030,23 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">데이터베이스 크기 줄이기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1437"/>
+        <location filename="../MainWindow.ui" line="1458"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>삭제된 레코드 등 낭비된 공간을 삭제하여 데이터베이스 파일 크기를 줄입니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1440"/>
-        <location filename="../MainWindow.ui" line="1443"/>
+        <location filename="../MainWindow.ui" line="1461"/>
+        <location filename="../MainWindow.ui" line="1464"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
         <translation>삭제된 레코드 등 낭비된 공간을 삭제하여 데이터베이스 파일 크기를 줄입니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1451"/>
+        <location filename="../MainWindow.ui" line="1472"/>
         <source>E&amp;xit</source>
         <translation>종료(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1454"/>
+        <location filename="../MainWindow.ui" line="1475"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -3013,12 +3055,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">SQL 파일에서 데이터베이스 가져오기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1465"/>
+        <location filename="../MainWindow.ui" line="1486"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>.sql 덤프 문자열 파일에서 데이터를 새 데이터베이스나 기존 데이터베이스로 가져옵니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1468"/>
+        <location filename="../MainWindow.ui" line="1489"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>이 옵션은 .sql 덤프 문자열 파일에서 데이터를 새 데이터베이스나 기존 데이터베이스로 가져옵니다. SQL 덤프 파일은 MySQL이나 PostgreSQL 등 대부분의 데이터베이스 엔진에서 생성할 수 있습니다.</translation>
     </message>
@@ -3027,12 +3069,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">테이블을 CSV 파일로 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1479"/>
+        <location filename="../MainWindow.ui" line="1500"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>마법사를 사용하여 CSV 파일(콤마로 필드가 나누어진 문자열 파일)에서 데이터베이스 테이블로 데이터를 가져올 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1482"/>
+        <location filename="../MainWindow.ui" line="1503"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>마법사를 사용하여 CSV 파일(콤마로 필드가 나누어진 문자열 파일)에서 데이터베이스 테이블로 데이터를 가져올 수 있습니다. CSV 파일은 대부분의 데이터베이스와 스프래드시트 애플리케이션(엑셀 등)에서 생성할 수 있습니다.</translation>
     </message>
@@ -3041,12 +3083,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">데이터베이스를 SQL 파일로 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1493"/>
+        <location filename="../MainWindow.ui" line="1514"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>데이터베이스를 .sql 덤프 문자열 파일로 내보내기.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1496"/>
+        <location filename="../MainWindow.ui" line="1517"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>이 옵션은 데이터베이스를 .sql 덤프 문자열 파일로 내부낼 수 있습니다. SQL 덤프 파일은 MySQL과 PostgreSQL 등 대부분의 데이터베이스 엔진에서 데이터베이스를 재생성하기 위한 모든 필요한 데이터를 포함하고 있습니다.</translation>
     </message>
@@ -3055,12 +3097,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">테이블을 CSV 파일로 저장하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1507"/>
+        <location filename="../MainWindow.ui" line="1528"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>데이터베이스 테이블을 CSV(콤마로 분리된 문자열 파일)로 내보내기.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1510"/>
+        <location filename="../MainWindow.ui" line="1531"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>데이터베이스 테이블을 CSV(콤마로 분리된 문자열 파일)로 내보내기. 다른 데이터베이스나 스프래드시트 애플리케이션(엑셀 등)에서 가져와서 사용할 수 있습니다.</translation>
     </message>
@@ -3069,7 +3111,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">테이블 생성...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1528"/>
+        <location filename="../MainWindow.ui" line="1549"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>테이블 생성 마법사를 사용하여 데이터베이스에서 새 테이블을 위한 이름과 필드를 정의할 수 있습니다</translation>
     </message>
@@ -3078,13 +3120,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">테이블을 삭제...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1546"/>
-        <location filename="../MainWindow.cpp" line="1742"/>
+        <location filename="../MainWindow.ui" line="1567"/>
+        <location filename="../MainWindow.cpp" line="1752"/>
         <source>Delete Table</source>
         <translation>테이블 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1549"/>
+        <location filename="../MainWindow.ui" line="1570"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>테이블 삭제 마법사를 사용하여 선택한 데이터베이스 테이블을 삭제할 수 있습니다.</translation>
     </message>
@@ -3093,7 +3135,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">테이블을 수정...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1567"/>
+        <location filename="../MainWindow.ui" line="1588"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>테이블 편집 마법사를 사용하여 기존 테이블의 이름을 변경하거나 테이블의 필드를 추가, 삭제, 필드명 변경 및 타입 변경을 할 수 있습니다.</translation>
     </message>
@@ -3102,28 +3144,28 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">인덱스 생성하기...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1585"/>
+        <location filename="../MainWindow.ui" line="1606"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>인덱스 생성 마법사를 사용하여 기존 데이터베이스 테이블에 새 인덱스를 정의할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1597"/>
+        <location filename="../MainWindow.ui" line="1618"/>
         <source>&amp;Preferences...</source>
         <translation>환경설정(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1600"/>
-        <location filename="../MainWindow.ui" line="1603"/>
+        <location filename="../MainWindow.ui" line="1621"/>
+        <location filename="../MainWindow.ui" line="1624"/>
         <source>Open the preferences window.</source>
         <translation>환경설정창을 엽니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1618"/>
+        <location filename="../MainWindow.ui" line="1639"/>
         <source>&amp;DB Toolbar</source>
         <translation>DB 툴바</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1621"/>
+        <location filename="../MainWindow.ui" line="1642"/>
         <source>Shows or hides the Database toolbar.</source>
         <translation>데이터베이스 툴바를 보이거나 숨깁니다.</translation>
     </message>
@@ -3132,7 +3174,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete">이 프로그램은?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1639"/>
+        <location filename="../MainWindow.ui" line="1660"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
@@ -3141,18 +3183,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="vanished">정보(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1655"/>
+        <location filename="../MainWindow.ui" line="1676"/>
         <source>&amp;Recently opened</source>
         <translation>최근 열었던 파일들(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1664"/>
+        <location filename="../MainWindow.ui" line="1685"/>
         <source>Open &amp;tab</source>
         <translation>탭 열기(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1624"/>
-        <location filename="../MainWindow.ui" line="1670"/>
+        <location filename="../MainWindow.ui" line="1645"/>
+        <location filename="../MainWindow.ui" line="1691"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
@@ -3162,54 +3204,64 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>데이터베이스 구조</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="68"/>
+        <location filename="../MainWindow.ui" line="69"/>
         <source>This is the structure of the opened database.
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="93"/>
+        <location filename="../MainWindow.ui" line="94"/>
         <source>Browse Data</source>
         <translation>데이터 보기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="139"/>
+        <location filename="../MainWindow.ui" line="146"/>
         <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="159"/>
+        <location filename="../MainWindow.ui" line="166"/>
         <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="173"/>
+        <location filename="../MainWindow.ui" line="180"/>
         <source>Save the table as currently displayed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="176"/>
+        <location filename="../MainWindow.ui" line="183"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="179"/>
+        <location filename="../MainWindow.ui" line="186"/>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="206"/>
+        <location filename="../MainWindow.ui" line="197"/>
+        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="200"/>
+        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="227"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="219"/>
+        <location filename="../MainWindow.ui" line="240"/>
         <source>This button deletes the record or records currently selected in the table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="234"/>
+        <location filename="../MainWindow.ui" line="255"/>
         <source>This is the database table view. You can do the following actions:
  - Start writing for editing inline the value.
  - Double-click any record to edit its contents in the cell editor window.
@@ -3220,367 +3272,367 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="337"/>
+        <location filename="../MainWindow.ui" line="358"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;테이블 뷰의 끝으로 갈려면 버튼을 클릭하세요.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="393"/>
+        <location filename="../MainWindow.ui" line="414"/>
         <source>Edit Pragmas</source>
         <translation>Pragma 수정</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="472"/>
+        <location filename="../MainWindow.ui" line="493"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="485"/>
+        <location filename="../MainWindow.ui" line="506"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="908"/>
+        <location filename="../MainWindow.ui" line="929"/>
         <source>Execute SQL</source>
         <translation>SQL 실행</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1434"/>
+        <location filename="../MainWindow.ui" line="1455"/>
         <source>Compact &amp;Database...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1682"/>
+        <location filename="../MainWindow.ui" line="1703"/>
         <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1685"/>
+        <location filename="../MainWindow.ui" line="1706"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1718"/>
+        <location filename="../MainWindow.ui" line="1739"/>
         <source>&amp;Load Extension...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1759"/>
+        <location filename="../MainWindow.ui" line="1780"/>
         <source>&amp;Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1771"/>
+        <location filename="../MainWindow.ui" line="1792"/>
         <source>Bug &amp;Report...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1783"/>
+        <location filename="../MainWindow.ui" line="1804"/>
         <source>Feature Re&amp;quest...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1795"/>
+        <location filename="../MainWindow.ui" line="1816"/>
         <source>Web&amp;site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1807"/>
+        <location filename="../MainWindow.ui" line="1828"/>
         <source>&amp;Donate on Patreon...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1819"/>
+        <location filename="../MainWindow.ui" line="1840"/>
         <source>Sa&amp;ve Project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1828"/>
+        <location filename="../MainWindow.ui" line="1849"/>
         <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1840"/>
+        <location filename="../MainWindow.ui" line="1861"/>
         <source>Open &amp;Project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1849"/>
+        <location filename="../MainWindow.ui" line="1870"/>
         <source>This button lets you open a DB4S project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1864"/>
+        <location filename="../MainWindow.ui" line="1885"/>
         <source>&amp;Attach Database...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1867"/>
-        <location filename="../MainWindow.ui" line="1870"/>
+        <location filename="../MainWindow.ui" line="1888"/>
+        <location filename="../MainWindow.ui" line="1891"/>
         <source>Add another database file to the current database connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1873"/>
+        <location filename="../MainWindow.ui" line="1894"/>
         <source>This button lets you add another database file to the current database connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1885"/>
+        <location filename="../MainWindow.ui" line="1906"/>
         <source>&amp;Set Encryption...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1980"/>
+        <location filename="../MainWindow.ui" line="2001"/>
         <source>SQLCipher &amp;FAQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1988"/>
+        <location filename="../MainWindow.ui" line="2009"/>
         <source>Table(&amp;s) to JSON...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2011"/>
+        <location filename="../MainWindow.ui" line="2032"/>
         <source>Open Data&amp;base Read Only...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2043"/>
+        <location filename="../MainWindow.ui" line="2064"/>
         <source>Save results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2046"/>
+        <location filename="../MainWindow.ui" line="2067"/>
         <source>Save the results view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2049"/>
+        <location filename="../MainWindow.ui" line="2070"/>
         <source>This button lets you save the results of the last executed query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2061"/>
+        <location filename="../MainWindow.ui" line="2082"/>
         <source>Find text in SQL editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2064"/>
+        <location filename="../MainWindow.ui" line="2085"/>
         <source>Find text in SQL editor [Ctrl+F]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2067"/>
+        <location filename="../MainWindow.ui" line="2088"/>
         <source>This button opens the search bar of the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2070"/>
+        <location filename="../MainWindow.ui" line="2091"/>
         <source>Ctrl+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2082"/>
+        <location filename="../MainWindow.ui" line="2103"/>
         <source>Find or replace text in SQL editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2085"/>
+        <location filename="../MainWindow.ui" line="2106"/>
         <source>Find or replace text in SQL editor [Ctrl+H]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2088"/>
+        <location filename="../MainWindow.ui" line="2109"/>
         <source>This button opens the find/replace dialog for the current editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2093"/>
-        <location filename="../MainWindow.ui" line="2155"/>
+        <location filename="../MainWindow.ui" line="2114"/>
+        <location filename="../MainWindow.ui" line="2176"/>
         <source>Export to &amp;CSV</source>
         <translation type="unfinished">CSV로 내보내기(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2098"/>
-        <location filename="../MainWindow.ui" line="2169"/>
+        <location filename="../MainWindow.ui" line="2119"/>
+        <location filename="../MainWindow.ui" line="2190"/>
         <source>Save as &amp;view</source>
         <translation type="unfinished">뷰로 저장하기(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2101"/>
+        <location filename="../MainWindow.ui" line="2122"/>
         <source>Save as view</source>
         <translation type="unfinished">뷰로 저장하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2106"/>
+        <location filename="../MainWindow.ui" line="2127"/>
         <source>Hide column(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2109"/>
+        <location filename="../MainWindow.ui" line="2130"/>
         <source>Hide selected column(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2114"/>
+        <location filename="../MainWindow.ui" line="2135"/>
         <source>Show all columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2117"/>
+        <location filename="../MainWindow.ui" line="2138"/>
         <source>Show all columns that were hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2135"/>
+        <location filename="../MainWindow.ui" line="2156"/>
         <source>Shows or hides the Project toolbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2150"/>
+        <location filename="../MainWindow.ui" line="2171"/>
         <source>Extra DB Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2158"/>
-        <location filename="../MainWindow.ui" line="2161"/>
+        <location filename="../MainWindow.ui" line="2179"/>
+        <location filename="../MainWindow.ui" line="2182"/>
         <source>Export the filtered data to CSV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2164"/>
+        <location filename="../MainWindow.ui" line="2185"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2172"/>
-        <location filename="../MainWindow.ui" line="2175"/>
+        <location filename="../MainWindow.ui" line="2193"/>
+        <location filename="../MainWindow.ui" line="2196"/>
         <source>Save the current filter, sort column and display formats as a view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2178"/>
+        <location filename="../MainWindow.ui" line="2199"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2207"/>
+        <location filename="../MainWindow.ui" line="2228"/>
         <source>Insert Values...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2210"/>
-        <location filename="../MainWindow.ui" line="2213"/>
+        <location filename="../MainWindow.ui" line="2231"/>
+        <location filename="../MainWindow.ui" line="2234"/>
         <source>Open a dialog for inserting values in a new record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2221"/>
-        <location filename="../MainWindow.ui" line="2224"/>
+        <location filename="../MainWindow.ui" line="2242"/>
+        <location filename="../MainWindow.ui" line="2245"/>
         <source>Insert new record using default values in browsed table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2229"/>
+        <location filename="../MainWindow.ui" line="2250"/>
         <source>New In-&amp;Memory Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2237"/>
+        <location filename="../MainWindow.ui" line="2258"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2240"/>
-        <location filename="../MainWindow.ui" line="2243"/>
+        <location filename="../MainWindow.ui" line="2261"/>
+        <location filename="../MainWindow.ui" line="2264"/>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2251"/>
+        <location filename="../MainWindow.ui" line="2272"/>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2254"/>
-        <location filename="../MainWindow.ui" line="2257"/>
+        <location filename="../MainWindow.ui" line="2275"/>
+        <location filename="../MainWindow.ui" line="2278"/>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2262"/>
+        <location filename="../MainWindow.ui" line="2283"/>
         <source>&amp;Integrity Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2265"/>
+        <location filename="../MainWindow.ui" line="2286"/>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2270"/>
+        <location filename="../MainWindow.ui" line="2291"/>
         <source>&amp;Foreign-Key Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2273"/>
+        <location filename="../MainWindow.ui" line="2294"/>
         <source>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2278"/>
+        <location filename="../MainWindow.ui" line="2299"/>
         <source>&amp;Quick Integrity Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2281"/>
+        <location filename="../MainWindow.ui" line="2302"/>
         <source>Run a quick integrity check over the open DB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2284"/>
+        <location filename="../MainWindow.ui" line="2305"/>
         <source>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2289"/>
+        <location filename="../MainWindow.ui" line="2310"/>
         <source>&amp;Optimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2292"/>
+        <location filename="../MainWindow.ui" line="2313"/>
         <source>Attempt to optimize the database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2295"/>
+        <location filename="../MainWindow.ui" line="2316"/>
         <source>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2304"/>
-        <location filename="../MainWindow.ui" line="2328"/>
+        <location filename="../MainWindow.ui" line="2325"/>
+        <location filename="../MainWindow.ui" line="2349"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2307"/>
+        <location filename="../MainWindow.ui" line="2328"/>
         <source>Print text from current SQL editor tab [Ctrl+P]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2313"/>
+        <location filename="../MainWindow.ui" line="2334"/>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2331"/>
+        <location filename="../MainWindow.ui" line="2352"/>
         <source>Print the structure of the opened database [Ctrl+P]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2337"/>
+        <location filename="../MainWindow.ui" line="2358"/>
         <source>Open a dialog for printing the structure of the opened database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3589,45 +3641,45 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="vanished">데이터베이스 셀 수정</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1085"/>
+        <location filename="../MainWindow.ui" line="1106"/>
         <source>SQL &amp;Log</source>
         <translation>SQL 로그</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1103"/>
+        <location filename="../MainWindow.ui" line="1124"/>
         <source>Show S&amp;QL submitted by</source>
         <translation>실행된 SQL 보기(&amp;) by</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1201"/>
+        <location filename="../MainWindow.ui" line="1222"/>
         <source>&amp;Plot</source>
         <translation>플롯</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1267"/>
-        <location filename="../MainWindow.ui" line="2132"/>
+        <location filename="../MainWindow.ui" line="1288"/>
+        <location filename="../MainWindow.ui" line="2153"/>
         <source>Project Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1286"/>
+        <location filename="../MainWindow.ui" line="1307"/>
         <source>Extra DB toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1289"/>
-        <location filename="../MainWindow.ui" line="1363"/>
-        <location filename="../MainWindow.ui" line="1366"/>
+        <location filename="../MainWindow.ui" line="1310"/>
+        <location filename="../MainWindow.ui" line="1384"/>
+        <location filename="../MainWindow.ui" line="1387"/>
         <source>Close the current database file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1387"/>
+        <location filename="../MainWindow.ui" line="1408"/>
         <source>&amp;Revert Changes</source>
         <translation>변경사항 취소하기(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1411"/>
+        <location filename="../MainWindow.ui" line="1432"/>
         <source>&amp;Write Changes</source>
         <translation>변경사항 저장하기(&amp;W)</translation>
     </message>
@@ -3636,62 +3688,62 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="vanished">데이터베이스 용량 줄이기(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1462"/>
+        <location filename="../MainWindow.ui" line="1483"/>
         <source>&amp;Database from SQL file...</source>
         <translation>SQL 파일로부터 데이터베이스 가져오기(&amp;D)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1476"/>
+        <location filename="../MainWindow.ui" line="1497"/>
         <source>&amp;Table from CSV file...</source>
         <translation>CSV 파일에서 테이블 가져오기(&amp;T)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1490"/>
+        <location filename="../MainWindow.ui" line="1511"/>
         <source>&amp;Database to SQL file...</source>
         <translation>데이터베이스를 SQL로 내보내기(&amp;D)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1504"/>
+        <location filename="../MainWindow.ui" line="1525"/>
         <source>&amp;Table(s) as CSV file...</source>
         <translation>테이블을 CSV 파일로 내보내기(&amp;T)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1525"/>
+        <location filename="../MainWindow.ui" line="1546"/>
         <source>&amp;Create Table...</source>
         <translation>테이블 생성하기(&amp;C)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1543"/>
+        <location filename="../MainWindow.ui" line="1564"/>
         <source>&amp;Delete Table...</source>
         <translation>테이블 삭제하기(&amp;D)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1564"/>
+        <location filename="../MainWindow.ui" line="1585"/>
         <source>&amp;Modify Table...</source>
         <translation>테이블 수정하기(&amp;M)...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1582"/>
+        <location filename="../MainWindow.ui" line="1603"/>
         <source>Create &amp;Index...</source>
         <translation>인덱스 생성하기(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1636"/>
+        <location filename="../MainWindow.ui" line="1657"/>
         <source>W&amp;hat&apos;s This?</source>
         <translation>이건 무엇인가요?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1647"/>
+        <location filename="../MainWindow.ui" line="1668"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1667"/>
+        <location filename="../MainWindow.ui" line="1688"/>
         <source>This button opens a new tab for the SQL editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1679"/>
+        <location filename="../MainWindow.ui" line="1700"/>
         <source>&amp;Execute SQL</source>
         <translation>SQL 실행하기(&amp;E)</translation>
     </message>
@@ -3700,19 +3752,19 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="vanished">SQL 실행하기 [F5, Ctrl+엔터]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1694"/>
+        <location filename="../MainWindow.ui" line="1715"/>
         <source>Open SQL file</source>
         <translation>SQL 파일 열기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1697"/>
+        <location filename="../MainWindow.ui" line="1718"/>
         <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1706"/>
-        <location filename="../MainWindow.ui" line="1909"/>
-        <location filename="../MainWindow.ui" line="1912"/>
+        <location filename="../MainWindow.ui" line="1727"/>
+        <location filename="../MainWindow.ui" line="1930"/>
+        <location filename="../MainWindow.ui" line="1933"/>
         <source>Save SQL file</source>
         <translation>SQL 파일 저장하기</translation>
     </message>
@@ -3721,7 +3773,7 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="obsolete">확장기능 불러오기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1730"/>
+        <location filename="../MainWindow.ui" line="1751"/>
         <source>Execute current line</source>
         <translation>현재 행 실행하기</translation>
     </message>
@@ -3730,17 +3782,17 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="vanished">현재 행 실행하기 [Ctrl+E]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="267"/>
+        <location filename="../MainWindow.cpp" line="268"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1747"/>
+        <location filename="../MainWindow.ui" line="1768"/>
         <source>Export as CSV file</source>
         <translation>CSV 파일로 내보내기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1750"/>
+        <location filename="../MainWindow.ui" line="1771"/>
         <source>Export table as comma separated values file</source>
         <translation>테이블을 CSV 파일로 내보내기</translation>
     </message>
@@ -3761,8 +3813,8 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="obsolete">프로젝트 저장하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1822"/>
-        <location filename="../MainWindow.ui" line="1825"/>
+        <location filename="../MainWindow.ui" line="1843"/>
+        <location filename="../MainWindow.ui" line="1846"/>
         <source>Save the current session to a file</source>
         <translation>현재 세션을 파일로 저장하기</translation>
     </message>
@@ -3771,8 +3823,8 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="obsolete">프로젝트 열기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1843"/>
-        <location filename="../MainWindow.ui" line="1846"/>
+        <location filename="../MainWindow.ui" line="1864"/>
+        <location filename="../MainWindow.ui" line="1867"/>
         <source>Load a working session from a file</source>
         <translation>파일에서 작업 세션 불러오기</translation>
     </message>
@@ -3785,28 +3837,28 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="obsolete">암호화</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1897"/>
-        <location filename="../MainWindow.ui" line="1900"/>
+        <location filename="../MainWindow.ui" line="1918"/>
+        <location filename="../MainWindow.ui" line="1921"/>
         <source>Save SQL file as</source>
         <translation>SQL 파일 다름이름으로 저장하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1915"/>
+        <location filename="../MainWindow.ui" line="1936"/>
         <source>This button saves the content of the current SQL editor tab to a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1924"/>
+        <location filename="../MainWindow.ui" line="1945"/>
         <source>&amp;Browse Table</source>
         <translation>테이블 보기(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1933"/>
+        <location filename="../MainWindow.ui" line="1954"/>
         <source>Copy Create statement</source>
         <translation>생성 구문 복사하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1936"/>
+        <location filename="../MainWindow.ui" line="1957"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
         <translation>항목의 생성 구문을 클립보드에 복사합니다</translation>
     </message>
@@ -3816,53 +3868,53 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation>Ctrl+리턴</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="252"/>
+        <location filename="../MainWindow.cpp" line="253"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2340"/>
+        <location filename="../MainWindow.ui" line="2361"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="257"/>
+        <location filename="../MainWindow.cpp" line="258"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="262"/>
+        <location filename="../MainWindow.cpp" line="263"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="291"/>
+        <location filename="../MainWindow.cpp" line="292"/>
         <source>Encrypted</source>
         <translation>암호화됨</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="298"/>
+        <location filename="../MainWindow.cpp" line="299"/>
         <source>Read only</source>
         <translation>읽기전용</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="299"/>
+        <location filename="../MainWindow.cpp" line="300"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>데이터베이스 파일이 읽기 전용입니다. 데이터베이스 수정기능을 사용할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="305"/>
+        <location filename="../MainWindow.cpp" line="306"/>
         <source>Database encoding</source>
         <translation>데이터베이스 인코딩</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="292"/>
+        <location filename="../MainWindow.cpp" line="293"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>데이터베이스는 SQLCipher를 사용해서 암호화됩니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="413"/>
-        <location filename="../MainWindow.cpp" line="2821"/>
+        <location filename="../MainWindow.cpp" line="414"/>
+        <location filename="../MainWindow.cpp" line="2840"/>
         <source>Choose a database file</source>
         <translation>데이터베이스 파일을 선택하세요</translation>
     </message>
@@ -3875,9 +3927,9 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="vanished">올바르지 않은 파일 포맷입니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="466"/>
-        <location filename="../MainWindow.cpp" line="1639"/>
-        <location filename="../MainWindow.cpp" line="2705"/>
+        <location filename="../MainWindow.cpp" line="467"/>
+        <location filename="../MainWindow.cpp" line="1649"/>
+        <location filename="../MainWindow.cpp" line="2724"/>
         <source>Choose a filename to save under</source>
         <translation>저장하려는 파일명을 고르세요</translation>
     </message>
@@ -3887,25 +3939,25 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="vanished">레코드 추가 에러:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="807"/>
+        <location filename="../MainWindow.cpp" line="811"/>
         <source>Error deleting record:
 %1</source>
         <translation>레코드 추가 에러:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="816"/>
+        <location filename="../MainWindow.cpp" line="820"/>
         <source>Please select a record first</source>
         <translation>레코드를 먼저 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="904"/>
+        <location filename="../MainWindow.cpp" line="908"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 of %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="941"/>
-        <location filename="../MainWindow.cpp" line="955"/>
+        <location filename="../MainWindow.cpp" line="945"/>
+        <location filename="../MainWindow.cpp" line="959"/>
         <source>There is no database opened. Please open or create a new database file.</source>
         <translation>데이터베이스가 열려있지 않습니다. 데이터베이스를 열던가 새 데이터베이스 파일을 생성하세요.</translation>
     </message>
@@ -3942,7 +3994,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">%3에서 %2ms의 시간이 걸려서 %1 행이 리턴되었습니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1391"/>
+        <location filename="../MainWindow.cpp" line="1401"/>
         <source>, %1 rows affected</source>
         <translation>, %1 행이 영향받았습니다</translation>
     </message>
@@ -3955,7 +4007,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">문자열 파일을 고르세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1515"/>
+        <location filename="../MainWindow.cpp" line="1525"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>문자열 파일(*.csv *.txt);;모든 파일(*)</translation>
     </message>
@@ -3964,7 +4016,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">가져오기가 완료되었습니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1589"/>
+        <location filename="../MainWindow.cpp" line="1599"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -3973,322 +4025,315 @@ All data associated with the %1 will be lost.</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1598"/>
+        <location filename="../MainWindow.cpp" line="1608"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>정말로 데이터베이스 파일 &apos;%1&apos;의 모든 변경 사항을 마지막 저장된 상태로 되돌립니까?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1622"/>
+        <location filename="../MainWindow.cpp" line="1632"/>
         <source>Choose a file to import</source>
         <translation>가져올 파일을 고르세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1623"/>
-        <location filename="../MainWindow.cpp" line="2094"/>
-        <location filename="../MainWindow.cpp" line="2154"/>
+        <location filename="../MainWindow.cpp" line="1633"/>
+        <location filename="../MainWindow.cpp" line="2113"/>
+        <location filename="../MainWindow.cpp" line="2173"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>문자열 파일(*.sql *.txt);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1633"/>
+        <location filename="../MainWindow.cpp" line="1643"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>데이터를 가져와서 새 데이터베이스 파일을 생성하고 싶은가요?
 아니라면 SQL 파일의 데이터를 현재 데이터베이스로 가져오기를 할 것입니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1643"/>
+        <location filename="../MainWindow.cpp" line="1653"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>파일 %1이 이미 존재합니다. 다른 파일명을 고르세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1665"/>
+        <location filename="../MainWindow.cpp" line="1675"/>
         <source>Error importing data: %1</source>
         <translation>데이터 가져오기 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1669"/>
+        <location filename="../MainWindow.cpp" line="1679"/>
         <source>Import completed.</source>
         <translation>가져오기가 완료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1733"/>
+        <location filename="../MainWindow.cpp" line="1743"/>
         <source>Delete View</source>
         <translation>뷰 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1734"/>
+        <location filename="../MainWindow.cpp" line="1744"/>
         <source>Modify View</source>
         <translation>뷰 수정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1736"/>
+        <location filename="../MainWindow.cpp" line="1746"/>
         <source>Delete Trigger</source>
         <translation>트리거 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1737"/>
+        <location filename="../MainWindow.cpp" line="1747"/>
         <source>Modify Trigger</source>
         <translation>트리거 수정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1739"/>
+        <location filename="../MainWindow.cpp" line="1749"/>
         <source>Delete Index</source>
         <translation>인덱스 삭제하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1740"/>
+        <location filename="../MainWindow.cpp" line="1750"/>
         <source>Modify Index</source>
         <translation>인덱스 수정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1743"/>
+        <location filename="../MainWindow.cpp" line="1753"/>
         <source>Modify Table</source>
         <translation>테이블 수정하기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1790"/>
+        <location filename="../MainWindow.cpp" line="1808"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2451"/>
+        <location filename="../MainWindow.cpp" line="2470"/>
         <source>Choose a project file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2560"/>
+        <location filename="../MainWindow.cpp" line="2579"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3002"/>
+        <location filename="../MainWindow.cpp" line="3021"/>
         <source>Duplicate records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3007"/>
+        <location filename="../MainWindow.cpp" line="3026"/>
         <source>Ctrl+&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3182"/>
+        <location filename="../MainWindow.cpp" line="3201"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>이 뷰에서 수정을 활성화하기 위하여 pseudo-primary key를 입력하시기 바랍니다. 이것은 뷰에서 유일한 이름이어야 합니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2012"/>
+        <location filename="../MainWindow.cpp" line="2031"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA 설정을 변경하려면 여러분의 현재 트랜잭션을 커밋해야합니다.
 동의하십니까?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="454"/>
+        <location filename="../MainWindow.cpp" line="455"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>데이터베이스 파일을 열 수 없습니다.
 원인: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="487"/>
+        <location filename="../MainWindow.cpp" line="488"/>
         <source>In-Memory database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="897"/>
+        <location filename="../MainWindow.cpp" line="901"/>
         <source>determining row count...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="900"/>
+        <location filename="../MainWindow.cpp" line="904"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="980"/>
+        <location filename="../MainWindow.cpp" line="984"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="982"/>
+        <location filename="../MainWindow.cpp" line="986"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="984"/>
+        <location filename="../MainWindow.cpp" line="988"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="986"/>
+        <location filename="../MainWindow.cpp" line="990"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="997"/>
+        <location filename="../MainWindow.cpp" line="1001"/>
         <source>Error: could not delete the table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="999"/>
+        <location filename="../MainWindow.cpp" line="1003"/>
         <source>Error: could not delete the view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1001"/>
+        <location filename="../MainWindow.cpp" line="1005"/>
         <source>Error: could not delete the trigger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1003"/>
+        <location filename="../MainWindow.cpp" line="1007"/>
         <source>Error: could not delete the index.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1005"/>
+        <location filename="../MainWindow.cpp" line="1009"/>
         <source>Message from database engine:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1034"/>
+        <location filename="../MainWindow.cpp" line="1038"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1050"/>
-        <source>Error checking foreign keys after table modification. The changes will be reverted.
-Message from database engine:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="1213"/>
+        <location filename="../MainWindow.cpp" line="1223"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1236"/>
+        <location filename="../MainWindow.cpp" line="1246"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1244"/>
+        <location filename="../MainWindow.cpp" line="1254"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1308"/>
+        <location filename="../MainWindow.cpp" line="1318"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA 값을 지정하지 않으면 현재 트랜잭션에 DB파일 축소작업(Vacuum)이 커밋됩니다. 진행할까요?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1316"/>
+        <location filename="../MainWindow.cpp" line="1326"/>
         <source>Execution aborted by user</source>
         <translation>사용자에 의해서 실행이 취소되었습니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1336"/>
+        <location filename="../MainWindow.cpp" line="1346"/>
         <source>executing query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1373"/>
+        <location filename="../MainWindow.cpp" line="1383"/>
         <source>%1 rows returned in %2ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1397"/>
+        <location filename="../MainWindow.cpp" line="1407"/>
         <source>query executed successfully. Took %1ms%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1436"/>
+        <location filename="../MainWindow.cpp" line="1446"/>
         <source>-- At line %1:
 %4
 -- Result: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1514"/>
+        <location filename="../MainWindow.cpp" line="1524"/>
         <source>Choose text files</source>
         <translation>텍스트 파일 선택</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1667"/>
+        <location filename="../MainWindow.cpp" line="1677"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2093"/>
+        <location filename="../MainWindow.cpp" line="2112"/>
         <source>Select SQL file to open</source>
         <translation>열 SQL 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2102"/>
+        <location filename="../MainWindow.cpp" line="2121"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>파일을 읽을 수 없습니다: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2140"/>
+        <location filename="../MainWindow.cpp" line="2159"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>파일을 저장할 수 없습니다: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2153"/>
+        <location filename="../MainWindow.cpp" line="2172"/>
         <source>Select file name</source>
         <translation>파일 이름을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2178"/>
+        <location filename="../MainWindow.cpp" line="2197"/>
         <source>Select extension file</source>
         <translation>파일 확장자를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2179"/>
+        <location filename="../MainWindow.cpp" line="2198"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>확장기능 파일들(*.so *.dll);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2185"/>
+        <location filename="../MainWindow.cpp" line="2204"/>
         <source>Extension successfully loaded.</source>
         <translation>확장기능을 성공적으로 불러왔습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2187"/>
+        <location filename="../MainWindow.cpp" line="2206"/>
         <source>Error loading extension: %1</source>
         <translation>확장기능을 불러오기 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2272"/>
-        <location filename="../MainWindow.cpp" line="2556"/>
+        <location filename="../MainWindow.cpp" line="2291"/>
+        <location filename="../MainWindow.cpp" line="2575"/>
         <source>Don&apos;t show again</source>
         <translation>다시 보지 않기</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2275"/>
+        <location filename="../MainWindow.cpp" line="2294"/>
         <source>New version available.</source>
         <translation>이용 가능한 새 버전이 있습니다.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2276"/>
+        <location filename="../MainWindow.cpp" line="2295"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>이용 가능한 새 버전이 있습니다 (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;&lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;에서 다운로드하세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3282"/>
+        <location filename="../MainWindow.cpp" line="3301"/>
         <source>Collation needed! Proceed?</source>
         <translation type="unfinished">콜레이션이 필요합니다! 진행할까요?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3283"/>
+        <location filename="../MainWindow.cpp" line="3302"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4297,52 +4342,52 @@ Create a backup!</source>
 백업을 생성하세요!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3288"/>
+        <location filename="../MainWindow.cpp" line="3307"/>
         <source>creating collation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3297"/>
+        <location filename="../MainWindow.cpp" line="3316"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3340"/>
+        <location filename="../MainWindow.cpp" line="3359"/>
         <source>Please specify the view name</source>
         <translation type="unfinished">뷰 이름을 지정해주세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3344"/>
+        <location filename="../MainWindow.cpp" line="3363"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation type="unfinished">이지 같은 이름의 객체가 존재합니다. 다른 이름을 고르세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3351"/>
+        <location filename="../MainWindow.cpp" line="3370"/>
         <source>View successfully created.</source>
         <translation type="unfinished">뷰 생성 성공.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3353"/>
+        <location filename="../MainWindow.cpp" line="3372"/>
         <source>Error creating view: %1</source>
         <translation type="unfinished">뷰 생성 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3368"/>
+        <location filename="../MainWindow.cpp" line="3387"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3406"/>
+        <location filename="../MainWindow.cpp" line="3425"/>
         <source>Delete Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3413"/>
+        <location filename="../MainWindow.cpp" line="3432"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3415"/>
+        <location filename="../MainWindow.cpp" line="3434"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4363,29 +4408,39 @@ Create a backup!</source>
         <translation type="vanished">불러올 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2452"/>
-        <location filename="../MainWindow.cpp" line="2706"/>
+        <location filename="../MainWindow.cpp" line="2471"/>
+        <location filename="../MainWindow.cpp" line="2725"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser for SQLite 프로젝트 파일 (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3106"/>
+        <location filename="../MainWindow.cpp" line="3125"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>이 테이블에 적용할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3104"/>
+        <location filename="../MainWindow.cpp" line="3123"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>모든 테이블에 설정 할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3109"/>
+        <location filename="../MainWindow.cpp" line="1057"/>
+        <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1060"/>
+        <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="3128"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>데이터베이스 인코딩을 사용하기위해 필드를 비워둡니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3121"/>
+        <location filename="../MainWindow.cpp" line="3140"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>이 인코딩은 올바르지 않거나 지원되지 않습니다.</translation>
     </message>
@@ -4577,7 +4632,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     </message>
     <message>
         <location filename="../PlotDock.ui" line="285"/>
-        <location filename="../PlotDock.cpp" line="435"/>
+        <location filename="../PlotDock.cpp" line="448"/>
         <source>Load all data and redraw plot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4586,9 +4641,9 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
         <translation type="vanished">모든 데이터를 불러옵니다. 이 기능은 부분만 가져오는 메카니즘으로 인하여 테이블에서 모든 데이터가 가져오지 않았을 때에만 작동합니다.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="191"/>
-        <location filename="../PlotDock.cpp" line="404"/>
+        <location filename="../PlotDock.cpp" line="204"/>
         <location filename="../PlotDock.cpp" line="417"/>
+        <location filename="../PlotDock.cpp" line="430"/>
         <source>Row #</source>
         <translation>행 #</translation>
     </message>
@@ -4597,74 +4652,79 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
         <translation type="vanished">축의 색깔을 고르세요</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="47"/>
+        <location filename="../PlotDock.cpp" line="54"/>
         <source>Copy</source>
         <translation type="unfinished">복사</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="55"/>
+        <location filename="../PlotDock.cpp" line="61"/>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PlotDock.cpp" line="68"/>
         <source>Show legend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="61"/>
+        <location filename="../PlotDock.cpp" line="74"/>
         <source>Stacked bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="140"/>
+        <location filename="../PlotDock.cpp" line="153"/>
         <source>Date/Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="143"/>
+        <location filename="../PlotDock.cpp" line="156"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="146"/>
+        <location filename="../PlotDock.cpp" line="159"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="149"/>
-        <location filename="../PlotDock.cpp" line="193"/>
+        <location filename="../PlotDock.cpp" line="162"/>
+        <location filename="../PlotDock.cpp" line="206"/>
         <source>Numeric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="152"/>
+        <location filename="../PlotDock.cpp" line="165"/>
         <source>Label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="156"/>
+        <location filename="../PlotDock.cpp" line="169"/>
         <source>Invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="430"/>
+        <location filename="../PlotDock.cpp" line="443"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="565"/>
+        <location filename="../PlotDock.cpp" line="578"/>
         <source>Choose an axis color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="597"/>
+        <location filename="../PlotDock.cpp" line="610"/>
         <source>Choose a filename to save under</source>
         <translation>저장하려는 파일명을 고르세요</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="598"/>
+        <location filename="../PlotDock.cpp" line="611"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="635"/>
+        <location filename="../PlotDock.cpp" line="648"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4706,8 +4766,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1415"/>
-        <location filename="../PreferencesDialog.ui" line="1471"/>
+        <location filename="../PreferencesDialog.ui" line="1418"/>
+        <location filename="../PreferencesDialog.ui" line="1474"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4730,11 +4790,11 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="198"/>
         <location filename="../PreferencesDialog.ui" line="218"/>
         <location filename="../PreferencesDialog.ui" line="289"/>
-        <location filename="../PreferencesDialog.ui" line="306"/>
-        <location filename="../PreferencesDialog.ui" line="1125"/>
-        <location filename="../PreferencesDialog.ui" line="1145"/>
-        <location filename="../PreferencesDialog.ui" line="1165"/>
-        <location filename="../PreferencesDialog.ui" line="1185"/>
+        <location filename="../PreferencesDialog.ui" line="309"/>
+        <location filename="../PreferencesDialog.ui" line="1128"/>
+        <location filename="../PreferencesDialog.ui" line="1148"/>
+        <location filename="../PreferencesDialog.ui" line="1168"/>
+        <location filename="../PreferencesDialog.ui" line="1188"/>
         <source>enabled</source>
         <translation>사용하기</translation>
     </message>
@@ -4772,7 +4832,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="obsolete">프리패치(&amp;Prefetch) 블록 사이즈</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="400"/>
+        <location filename="../PreferencesDialog.ui" line="403"/>
         <source>Data &amp;Browser</source>
         <translation>데이터 보기(&amp;B)</translation>
     </message>
@@ -4798,12 +4858,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>스키마 뷰에서 개행을 제거합니다(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="313"/>
+        <location filename="../PreferencesDialog.ui" line="316"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>프리패치 할 블럭 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="333"/>
+        <location filename="../PreferencesDialog.ui" line="336"/>
         <source>Advanced</source>
         <translation>고급</translation>
     </message>
@@ -4812,22 +4872,22 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">데이터베이스 파일을 연 후에 실행 할 SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="363"/>
+        <location filename="../PreferencesDialog.ui" line="366"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>데이터베이스를 연 후 SQL을 실행(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="389"/>
+        <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Default field type</source>
         <translation>기본 필드 타입</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="408"/>
+        <location filename="../PreferencesDialog.ui" line="411"/>
         <source>Font</source>
         <translation>폰트</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="414"/>
+        <location filename="../PreferencesDialog.ui" line="417"/>
         <source>&amp;Font</source>
         <translation>폰트(&amp;F)</translation>
     </message>
@@ -4836,12 +4896,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">폰트 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="443"/>
+        <location filename="../PreferencesDialog.ui" line="446"/>
         <source>Content</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="449"/>
+        <location filename="../PreferencesDialog.ui" line="452"/>
         <source>Symbol limit in cell</source>
         <translation>셀 안 심볼 한계</translation>
     </message>
@@ -4850,12 +4910,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">폰트 색깔</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="541"/>
+        <location filename="../PreferencesDialog.ui" line="544"/>
         <source>NULL</source>
         <translation>NULL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="551"/>
+        <location filename="../PreferencesDialog.ui" line="554"/>
         <source>Regular</source>
         <translation>보통</translation>
     </message>
@@ -4864,17 +4924,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">문자열</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="531"/>
+        <location filename="../PreferencesDialog.ui" line="534"/>
         <source>Binary</source>
         <translation>바이너리</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="951"/>
+        <location filename="../PreferencesDialog.ui" line="954"/>
         <source>Background</source>
         <translation>배경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="740"/>
+        <location filename="../PreferencesDialog.ui" line="743"/>
         <source>Filters</source>
         <translation>필터</translation>
     </message>
@@ -4919,99 +4979,104 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="427"/>
+        <location filename="../PreferencesDialog.ui" line="306"/>
+        <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="430"/>
         <source>Font si&amp;ze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="481"/>
-        <location filename="../PreferencesDialog.ui" line="485"/>
+        <location filename="../PreferencesDialog.ui" line="484"/>
+        <location filename="../PreferencesDialog.ui" line="488"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="499"/>
+        <location filename="../PreferencesDialog.ui" line="502"/>
         <source>Row count threshold for completion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="512"/>
+        <location filename="../PreferencesDialog.ui" line="515"/>
         <source>Field display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="518"/>
+        <location filename="../PreferencesDialog.ui" line="521"/>
         <source>Displayed &amp;text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="577"/>
+        <location filename="../PreferencesDialog.ui" line="580"/>
         <source>Text color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="603"/>
+        <location filename="../PreferencesDialog.ui" line="606"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="706"/>
+        <location filename="../PreferencesDialog.ui" line="709"/>
         <source>Preview only (N/A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="753"/>
+        <location filename="../PreferencesDialog.ui" line="756"/>
         <source>Escape character</source>
         <translation>이스케이프 문자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="763"/>
+        <location filename="../PreferencesDialog.ui" line="766"/>
         <source>Delay time (&amp;ms)</source>
         <translation>대기 시간</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="773"/>
+        <location filename="../PreferencesDialog.ui" line="776"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>새로운 필터 값을 적용하기 전에 대기할 시간을 설정하세요. 대기 시간을 0으로 하면 대기하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="789"/>
+        <location filename="../PreferencesDialog.ui" line="792"/>
         <source>&amp;SQL</source>
         <translation>&amp;SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="802"/>
+        <location filename="../PreferencesDialog.ui" line="805"/>
         <source>Settings name</source>
         <translation>설정 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="807"/>
+        <location filename="../PreferencesDialog.ui" line="810"/>
         <source>Context</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="812"/>
+        <location filename="../PreferencesDialog.ui" line="815"/>
         <source>Colour</source>
         <translation>색깔</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="817"/>
+        <location filename="../PreferencesDialog.ui" line="820"/>
         <source>Bold</source>
         <translation>볼드</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="822"/>
+        <location filename="../PreferencesDialog.ui" line="825"/>
         <source>Italic</source>
         <translation>이탤릭</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="827"/>
+        <location filename="../PreferencesDialog.ui" line="830"/>
         <source>Underline</source>
         <translation>밑줄</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="835"/>
+        <location filename="../PreferencesDialog.ui" line="838"/>
         <source>Keyword</source>
         <translation>키워드</translation>
     </message>
@@ -5020,27 +5085,27 @@ Can be set to 0 for disabling completion.</source>
         <translation type="vanished">기능</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="855"/>
+        <location filename="../PreferencesDialog.ui" line="858"/>
         <source>Function</source>
         <translation>함수</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="863"/>
+        <location filename="../PreferencesDialog.ui" line="866"/>
         <source>Table</source>
         <translation>테이블</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="883"/>
+        <location filename="../PreferencesDialog.ui" line="886"/>
         <source>Comment</source>
         <translation>주석</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="903"/>
+        <location filename="../PreferencesDialog.ui" line="906"/>
         <source>Identifier</source>
         <translation>식별자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="923"/>
+        <location filename="../PreferencesDialog.ui" line="926"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
@@ -5049,12 +5114,12 @@ Can be set to 0 for disabling completion.</source>
         <translation type="vanished">현재행</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="943"/>
+        <location filename="../PreferencesDialog.ui" line="946"/>
         <source>Current line</source>
         <translation>현재 행</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="984"/>
+        <location filename="../PreferencesDialog.ui" line="987"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQL 에디터 폰트 크기(&amp;E)</translation>
     </message>
@@ -5063,151 +5128,151 @@ Can be set to 0 for disabling completion.</source>
         <translation type="vanished">SQL 로그 폰트 크기(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1023"/>
+        <location filename="../PreferencesDialog.ui" line="1026"/>
         <source>Tab size</source>
         <translation>탭 크기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1046"/>
+        <location filename="../PreferencesDialog.ui" line="1049"/>
         <source>&amp;Wrap lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1057"/>
+        <location filename="../PreferencesDialog.ui" line="1060"/>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1062"/>
+        <location filename="../PreferencesDialog.ui" line="1065"/>
         <source>At word boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1067"/>
+        <location filename="../PreferencesDialog.ui" line="1070"/>
         <source>At character boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1072"/>
+        <location filename="../PreferencesDialog.ui" line="1075"/>
         <source>At whitespace boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1080"/>
+        <location filename="../PreferencesDialog.ui" line="1083"/>
         <source>&amp;Quotes for identifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1090"/>
+        <location filename="../PreferencesDialog.ui" line="1093"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1097"/>
+        <location filename="../PreferencesDialog.ui" line="1100"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1102"/>
+        <location filename="../PreferencesDialog.ui" line="1105"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1107"/>
+        <location filename="../PreferencesDialog.ui" line="1110"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1132"/>
+        <location filename="../PreferencesDialog.ui" line="1135"/>
         <source>Keywords in &amp;UPPER CASE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1142"/>
+        <location filename="../PreferencesDialog.ui" line="1145"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1162"/>
+        <location filename="../PreferencesDialog.ui" line="1165"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1272"/>
+        <location filename="../PreferencesDialog.ui" line="1275"/>
         <source>Remote</source>
         <translation>원격</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1278"/>
+        <location filename="../PreferencesDialog.ui" line="1281"/>
         <source>CA certificates</source>
         <translation>CA 증명서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1304"/>
-        <location filename="../PreferencesDialog.ui" line="1371"/>
+        <location filename="../PreferencesDialog.ui" line="1307"/>
+        <location filename="../PreferencesDialog.ui" line="1374"/>
         <source>Subject CN</source>
         <translation>제목 CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1307"/>
+        <location filename="../PreferencesDialog.ui" line="1310"/>
         <source>Common Name</source>
         <translation>일반 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1312"/>
+        <location filename="../PreferencesDialog.ui" line="1315"/>
         <source>Subject O</source>
         <translation>제목 O</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1315"/>
+        <location filename="../PreferencesDialog.ui" line="1318"/>
         <source>Organization</source>
         <translation>기관</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1320"/>
-        <location filename="../PreferencesDialog.ui" line="1387"/>
+        <location filename="../PreferencesDialog.ui" line="1323"/>
+        <location filename="../PreferencesDialog.ui" line="1390"/>
         <source>Valid from</source>
         <translation>유효날짜(시작)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1325"/>
-        <location filename="../PreferencesDialog.ui" line="1392"/>
+        <location filename="../PreferencesDialog.ui" line="1328"/>
+        <location filename="../PreferencesDialog.ui" line="1395"/>
         <source>Valid to</source>
         <translation>유효날짜(끝)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1330"/>
-        <location filename="../PreferencesDialog.ui" line="1397"/>
+        <location filename="../PreferencesDialog.ui" line="1333"/>
+        <location filename="../PreferencesDialog.ui" line="1400"/>
         <source>Serial number</source>
         <translation>시리얼 넘버</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1338"/>
+        <location filename="../PreferencesDialog.ui" line="1341"/>
         <source>Your certificates</source>
         <translation>당신의 증명서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1366"/>
+        <location filename="../PreferencesDialog.ui" line="1369"/>
         <source>File</source>
         <translation>파일</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1374"/>
+        <location filename="../PreferencesDialog.ui" line="1377"/>
         <source>Subject Common Name</source>
         <translation>주제 일반 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1379"/>
+        <location filename="../PreferencesDialog.ui" line="1382"/>
         <source>Issuer CN</source>
         <translation>이슈 등록자 CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1382"/>
+        <location filename="../PreferencesDialog.ui" line="1385"/>
         <source>Issuer Common Name</source>
         <translation>이슈 등록자 일반 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1443"/>
+        <location filename="../PreferencesDialog.ui" line="1446"/>
         <source>Clone databases into</source>
         <translation>데이터베이스 복제하기</translation>
     </message>
@@ -5216,12 +5281,12 @@ Can be set to 0 for disabling completion.</source>
         <translation type="obsolete">탭 크기:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="969"/>
+        <location filename="../PreferencesDialog.ui" line="972"/>
         <source>SQL editor &amp;font</source>
         <translation>SQL 편집기 폰트(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1152"/>
+        <location filename="../PreferencesDialog.ui" line="1155"/>
         <source>Error indicators</source>
         <translation>에러 표시</translation>
     </message>
@@ -5230,57 +5295,57 @@ Can be set to 0 for disabling completion.</source>
         <translation type="vanished">에러 표시를 사용하면 가장 최근에 실행하여 에러가 난 SQL 코드 행을 하이라이트 해줍니다</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1172"/>
+        <location filename="../PreferencesDialog.ui" line="1175"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>화면 수평 나누기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1182"/>
+        <location filename="../PreferencesDialog.ui" line="1185"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>SQL 코드 에디터와 결과 테이블 뷰가 나란히 표시됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1115"/>
+        <location filename="../PreferencesDialog.ui" line="1118"/>
         <source>Code co&amp;mpletion</source>
         <translation>코드 완성(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="959"/>
+        <location filename="../PreferencesDialog.ui" line="962"/>
         <source>Foreground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1006"/>
+        <location filename="../PreferencesDialog.ui" line="1009"/>
         <source>SQL &amp;results font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1195"/>
+        <location filename="../PreferencesDialog.ui" line="1198"/>
         <source>&amp;Extensions</source>
         <translation>확장기능(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1201"/>
+        <location filename="../PreferencesDialog.ui" line="1204"/>
         <source>Select extensions to load for every database:</source>
         <translation>불러올 확장기능을 선택하세요(확장기능은 모든 데이터베이스에 반영됩니다):</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1222"/>
+        <location filename="../PreferencesDialog.ui" line="1225"/>
         <source>Add extension</source>
         <translation>확장기능 추가</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1233"/>
+        <location filename="../PreferencesDialog.ui" line="1236"/>
         <source>Remove extension</source>
         <translation>확장기능 제거</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1261"/>
+        <location filename="../PreferencesDialog.ui" line="1264"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite에서는 기본적으로 정규표현식 기능을 제공하지 않습니다만 애플리케이션을 실행하여 호출하는 것은 가능합니다. DB Browser for SQLite에서는 이 알고리즘을 박스 밖에서도 정규표현식을 사용할 수 있도록 이 알고리즘을 구현해줍니다. 하지만 확장기능을 사용하여 외부에서 만든 알고리즘 구현을 사용하고자 한다면 DB Browser for SQLite에서 제공하는 구현 사용을 자유롭게 끌 수 있습니다. 이 기능은 애플리케이션을 재시작해야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1264"/>
+        <location filename="../PreferencesDialog.ui" line="1267"/>
         <source>Disable Regular Expression extension</source>
         <translation>정규식표현식 확장기능 끄기</translation>
     </message>
@@ -6071,35 +6136,35 @@ Ctrl+Shift를 누른 상태에서 점프하고자 하는 곳을 클릭하세요<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="262"/>
+        <location filename="../sqlitetablemodel.cpp" line="265"/>
         <source>loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="304"/>
+        <location filename="../sqlitetablemodel.cpp" line="307"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="397"/>
+        <location filename="../sqlitetablemodel.cpp" line="400"/>
         <source>Error changing data:
 %1</source>
         <translation>데이터 수정 에러:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="686"/>
+        <location filename="../sqlitetablemodel.cpp" line="689"/>
         <source>retrieving list of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="948"/>
+        <location filename="../sqlitetablemodel.cpp" line="952"/>
         <source>Fetching data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="949"/>
+        <location filename="../sqlitetablemodel.cpp" line="953"/>
         <source>Cancel</source>
         <translation type="unfinished">취소</translation>
     </message>
