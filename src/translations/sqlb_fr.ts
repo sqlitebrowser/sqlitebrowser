@@ -5372,7 +5372,17 @@ Can be set to 0 for disabling completion.</source>
         <translation>Désactiver l&apos;extention &quot;Expression Régulière&quot;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1275"/>
+        <location filename="../PreferencesDialog.ui" line="1274"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1277"/>
+        <source>Allow loading extensions from SQL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1285"/>
         <source>Remote</source>
         <translation>Serveur distant</translation>
     </message>
@@ -6094,14 +6104,24 @@ p, li { white-space: pre-wrap; }
         <translation>(X, Y, Z) La fonction like() est utilisée pour mettre en œuvre de l’expression « Y LIKE X ESCAPE Z ».</translation>
     </message>
     <message>
-        <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation>(X) La fonction load_extension(X) charge les extensions SQLite situées en dehors du fichier de bibliothèque partagée nommée X.</translation>
+        <translation type="vanished">(X) La fonction load_extension(X) charge les extensions SQLite situées en dehors du fichier de bibliothèque partagée nommée X.</translation>
+    </message>
+    <message>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
+        <translation type="vanished">(X, Y) La fonction load_extension(X) charge les extensions SQLite situées en dehors du fichier de bibliothèque partagée nommée X en utilisant le point d&apos;entrée Y.</translation>
+    </message>
+    <message>
+        <location filename="../SqlUiLexer.cpp" line="79"/>
+        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation>(X, Y) La fonction load_extension(X) charge les extensions SQLite situées en dehors du fichier de bibliothèque partagée nommée X en utilisant le point d&apos;entrée Y.</translation>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
