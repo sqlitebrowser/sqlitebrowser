@@ -1375,7 +1375,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     </message>
     <message>
         <source>Find and Replace...</source>
-        <translation>Encontrar e Substituir...</translation>
+        <translation>Encontrar e substituir...</translation>
     </message>
     <message>
         <source>Print...</source>
@@ -1410,7 +1410,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Use as Exact Filter</source>
-        <translation>Usar como Filtro Exato</translation>
+        <translation>Usar como filtro exato</translation>
     </message>
     <message>
         <source>Containing</source>
@@ -1442,7 +1442,7 @@ Deseja inserir mesmo assim?</translation>
     </message>
     <message>
         <source>Copy with Headers</source>
-        <translation>Copiar com Cabeçalhos</translation>
+        <translation>Copiar com cabeçalhos</translation>
     </message>
     <message>
         <source>Copy as SQL</source>
@@ -3463,7 +3463,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     </message>
     <message>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
-        <translation>Arrastar e Soltar Nomes Qualificados</translation>
+        <translation>Arrastar e soltar nomes qualificados</translation>
     </message>
     <message>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
@@ -3471,7 +3471,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     </message>
     <message>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
-        <translation>Arrastar e Soltar Nomes Entre Áspas</translation>
+        <translation>Arrastar e soltar nomes entre áspas</translation>
     </message>
     <message>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
@@ -3479,7 +3479,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     </message>
     <message>
         <source>&amp;Integrity Check</source>
-        <translation>Teste de &amp;Integridade</translation>
+        <translation>Teste de &amp;integridade</translation>
     </message>
     <message>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
@@ -4290,11 +4290,11 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     </message>
     <message>
         <source>Subject CN</source>
-        <translation>Nome Comum do sujeito</translation>
+        <translation>Nome comum do sujeito</translation>
     </message>
     <message>
         <source>Common Name</source>
-        <translation>Nome Comum</translation>
+        <translation>Nome comum</translation>
     </message>
     <message>
         <source>Subject O</source>
@@ -4326,7 +4326,7 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     </message>
     <message>
         <source>Subject Common Name</source>
-        <translation>Nome Comum do sujeito</translation>
+        <translation>Nome comum do sujeito</translation>
     </message>
     <message>
         <source>Issuer CN</source>
@@ -4806,7 +4806,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Whole Words</source>
-        <translation>Palavras Inteiras</translation>
+        <translation>Palavras inteiras</translation>
     </message>
     <message>
         <source>Text pattern to find considering the checks in this frame</source>
