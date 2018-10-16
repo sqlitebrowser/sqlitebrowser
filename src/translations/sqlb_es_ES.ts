@@ -6052,14 +6052,24 @@ p, li { white-space: pre-wrap; }
         <translation>(X,Y,Z) La función like() se usa para implementar la expresión &quot;Y LIKE X ESCAPE Z&quot;.</translation>
     </message>
     <message>
-        <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation>(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X.</translation>
+        <translation type="vanished">(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X.</translation>
+    </message>
+    <message>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
+        <translation type="vanished">(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X usando el punto de entrada Y.</translation>
+    </message>
+    <message>
+        <location filename="../SqlUiLexer.cpp" line="79"/>
+        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation>(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X usando el punto de entrada Y.</translation>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>

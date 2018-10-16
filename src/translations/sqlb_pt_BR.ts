@@ -4438,6 +4438,14 @@ All your preferences will be lost and default values will be used.</source>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow loading extensions from SQL code</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -4842,14 +4850,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>(X) The lower(X) function returns a copy of string X with all ASCII characters converted to lower case.</source>
         <translation></translation>
     </message>
@@ -5039,6 +5039,16 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
+Use of this function must be authorized from Preferences.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
