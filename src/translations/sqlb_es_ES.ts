@@ -5364,7 +5364,17 @@ Se puede poner a 0 para desactivar el autocompletado.</translation>
         <translation>Si se activa, las líneas de código SQL que causaron errores durante la última ejecución se destacan y el marco de resultados indica el error mediante el color del fondo</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1275"/>
+        <location filename="../PreferencesDialog.ui" line="1274"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite proporciona una función SQL para cargar extensiones desde un archivo de biblioteca compartida. Active esta opción si desea usar la función &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; desde código SQL.&lt;/p&gt;&lt;p&gt;Por razónes de seguridad, la carga de extensiones está desactivada por defecto y debe ser habilitada usando esta configuración. Siempre puede cargar extensiones a través de la interfaz de usuario, incluso aunque esta opción esté deshabilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1277"/>
+        <source>Allow loading extensions from SQL code</source>
+        <translation>Permitir cargar extensiones desde código SQL</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1285"/>
         <source>Remote</source>
         <translation>Remoto</translation>
     </message>
@@ -6063,13 +6073,15 @@ p, li { white-space: pre-wrap; }
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X usando el punto de entrada Y.
+El uso de esta función tiene que ser autorizado desde las Preferencias.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) La función load_extension(X,Y) carga extensiones SQLite del archivo de la biblioteca compartida llamado X usando el punto de entrada Y.
+El uso de esta función tiene que ser autorizado desde las Preferencias.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
