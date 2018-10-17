@@ -2631,7 +2631,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation>Arquivos de texto(*.txt);;Todos os arquivos(*)</translation>
+        <translation>Arquivos de texto(*.csv *.txt);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Import completed</source>
@@ -2647,7 +2647,7 @@ Todos os dados associados com %1 serão perdidos.</translation>
     </message>
     <message>
         <source>Text files(*.sql *.txt);;All files(*)</source>
-        <translation>Arquivos de texto(*.txt);;Todos os arquivos(*)</translation>
+        <translation>Arquivos de texto(*.sql *.txt);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Do you want to create a new database file to hold the imported data?
