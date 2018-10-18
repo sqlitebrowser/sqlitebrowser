@@ -5337,12 +5337,12 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1274"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite biete eine SQL-Funktion an, um Erweiterungen aus einer Shared-Library-Datei zu laden. Aktivieren Sie dies, falls Sie die &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt;-Funktion aus SQL-Code heraus benutzen möchten.&lt;/p&gt;&lt;p&gt;Aus Sicherheitsgründen ist das Laden von Erweiterungen standardmäßig deaktiviert und muss durch diese Einstellung aktiviert werden. Sie können alternativ immer die gewünschten Erweiterungen über die GUI laden, auch wenn diese Option deaktiviert ist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1277"/>
         <source>Allow loading extensions from SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlaube das Laden von Erweiterungen aus SQL-Code</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1285"/>
@@ -6065,23 +6065,25 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation type="vanished">(X) Die load_extension(X)-Funktion lädt SQLite-Erweiterungen aus der geteilten Bibliotheksdatei mit dem Namen X.</translation>
+        <translation>(X) Die load_extension(X)-Funktion lädt SQLite-Erweiterungen aus der geteilten Bibliotheksdatei mit dem Namen X.</translation>
     </message>
     <message>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation type="vanished">(X,Y) Die load_extension(X)-Funktion lädt SQLite-Erweiterungen aus der geteilten Bibliotheksdatei mit dem Namen X unter Verwendung des Eintrittspunktes Y.</translation>
+        <translation>(X,Y) Die load_extension(X)-Funktion lädt SQLite-Erweiterungen aus der geteilten Bibliotheksdatei mit dem Namen X unter Verwendung des Eintrittspunktes Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Die load_extension(X)-Funktion lädt SQLite-Erweiterungen aus der Shared-Library-Datei namens X.
+Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Die load_extension(X,Y)-Funktion lädt SQLite-Erweiterungen aus der Shared-Library-Datei namens X unter Verwendung des Eintrittspunktes Y.
+Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
