@@ -21,7 +21,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oparte o SQLite %1</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
