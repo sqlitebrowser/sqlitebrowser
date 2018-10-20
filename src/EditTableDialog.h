@@ -19,10 +19,10 @@ class EditTableDialog : public QDialog
 
 public:
     explicit EditTableDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent = nullptr);
-    ~EditTableDialog();
+    ~EditTableDialog() override;
 
 protected:
-    void keyPressEvent(QKeyEvent *evt);
+    void keyPressEvent(QKeyEvent *evt) override;
 
 private:
     enum Columns {
@@ -47,12 +47,12 @@ private slots:
     void addField();
     void removeField();
     void fieldSelectionChanged();
-    virtual void accept();
-    virtual void reject();
+    void accept() override;
+    void reject() override;
     void checkInput();
     void itemChanged(QTreeWidgetItem* item, int column);
     void updateTypes(QObject *object);
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject *object, QEvent *event) override;
     void updateTypes();
     void moveUp();
     void moveDown();

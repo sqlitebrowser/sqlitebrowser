@@ -2,12 +2,17 @@
 #ifndef SQLITETYPES_H
 #define SQLITETYPES_H
 
+#include <vector>
+#include <unordered_map>
+#include <memory>
 #include <QString>
-#include <QSharedPointer>
-#include <QVector>
-#include <QStringList>
-#include <QMultiHash>
 #include <QVariant>
+
+template<typename C, typename E>
+bool contains(const C& container, E element)
+{
+    return std::find(container.begin(), container.end(), element) != container.end();
+}
 
 namespace sqlb {
 
@@ -31,7 +36,7 @@ inline uint qHashRange(InputIterator first, InputIterator last, uint seed = 0)
 #endif
 
 template<typename T>
-uint qHash(const QVector<T>& key, uint seed = 0)
+uint qHash(const QList<T>& key, uint seed = 0)
     Q_DECL_NOEXCEPT_EXPR(noexcept(qHashRange(key.cbegin(), key.cend(), seed)))
 {
     return qHashRange(key.cbegin(), key.cend(), seed);
@@ -128,8 +133,13 @@ private:
     QString m_name;
 };
 
-QDataStream& operator<<(QDataStream& ds, const ObjectIdentifier& objid);
-QDataStream& operator>>(QDataStream& ds, ObjectIdentifier& objid);
+struct StringListHash
+{
+    size_t operator()(const QStringList& key) const
+    {
+        return qHash(key);
+    }
+};
 
 class Object;
 class Table;
@@ -140,23 +150,23 @@ class Field;
 class Constraint;
 class IndexedColumn;
 struct FieldInfo;
-typedef QSharedPointer<Object> ObjectPtr;
-typedef QSharedPointer<Table> TablePtr;
-typedef QSharedPointer<Index> IndexPtr;
-typedef QSharedPointer<View> ViewPtr;
-typedef QSharedPointer<Trigger> TriggerPtr;
-typedef QSharedPointer<Field> FieldPtr;
-typedef QSharedPointer<Constraint> ConstraintPtr;
-typedef QVector<FieldPtr> FieldVector;
-typedef QSharedPointer<IndexedColumn> IndexedColumnPtr;
-typedef QVector<IndexedColumnPtr> IndexedColumnVector;
-typedef QMultiHash<FieldVector, ConstraintPtr> ConstraintMap;
-typedef QList<FieldInfo> FieldInfoList;
-
-QStringList fieldVectorToFieldNames(const sqlb::FieldVector& vector);
+using ObjectPtr = std::shared_ptr<Object>;
+using TablePtr = std::shared_ptr<Table>;
+using IndexPtr = std::shared_ptr<Index>;
+using ViewPtr = std::shared_ptr<View>;
+using TriggerPtr = std::shared_ptr<Trigger>;
+using ConstraintPtr = std::shared_ptr<Constraint>;
+using FieldVector = std::vector<Field>;
+using IndexedColumnVector = std::vector<IndexedColumn>;
+using ConstraintMap = std::unordered_multimap<QStringList, ConstraintPtr, StringListHash>;
+using FieldInfoList = std::vector<FieldInfo>;
 
 struct FieldInfo
 {
+    FieldInfo(const QString& name_, const QString& type_, const QString& sql_)
+        : name(name_), type(type_), sql(sql_)
+    {}
+
     QString name;
     QString type;
     QString sql;
@@ -192,8 +202,6 @@ public:
 
     virtual FieldInfoList fieldInformation() const { return FieldInfoList(); }
 
-    virtual void clear() {}
-
     /**
      * @brief Returns the CREATE statement for this object
      * @param schema The schema name of the object
@@ -201,14 +209,6 @@ public:
      * @return A QString with the CREATE statement.
      */
     virtual QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const = 0;
-
-    /**
-     * @brief parseSQL Parses the CREATE statement in sSQL.
-     * @param type The type of the object.
-     * @param sSQL The create statement.
-     * @return The parsed database object. The object may be empty if parsing failed.
-     */
-    static ObjectPtr parseSQL(Object::Types type, const QString& sSQL);
 
 protected:
     QString m_name;
@@ -239,7 +239,7 @@ public:
     void setName(const QString& name) { m_name = name; }
     const QString& name() const { return m_name; }
 
-    virtual QString toSql(const FieldVector& applyOn) const = 0;
+    virtual QString toSql(const QStringList& applyOn) const = 0;
 
 protected:
     QString m_name;
@@ -269,9 +269,9 @@ public:
     void setConstraint(const QString& constraint) { m_constraint = constraint; }
     const QString& constraint() const { return m_constraint; }
 
-    virtual QString toSql(const FieldVector& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return ForeignKeyConstraintType; }
+    ConstraintTypes type() const override { return ForeignKeyConstraintType; }
 
 private:
     QString m_table;
@@ -286,9 +286,9 @@ class UniqueConstraint : public Constraint
 public:
     UniqueConstraint() {}
 
-    virtual QString toSql(const FieldVector& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return UniqueConstraintType; }
+    ConstraintTypes type() const override { return UniqueConstraintType; }
 };
 
 class PrimaryKeyConstraint : public Constraint
@@ -299,9 +299,9 @@ public:
     void setConflictAction(const QString& conflict) { m_conflictAction = conflict; }
     const QString& conflictAction() const { return m_conflictAction; }
 
-    virtual QString toSql(const FieldVector& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return PrimaryKeyConstraintType; }
+    ConstraintTypes type() const override { return PrimaryKeyConstraintType; }
 
 private:
     QString m_conflictAction;
@@ -318,9 +318,9 @@ public:
     void setExpression(const QString& expr) { m_expression = expr; }
     QString expression() const { return m_expression; }
 
-    virtual QString toSql(const FieldVector& applyOn) const;
+    QString toSql(const QStringList& applyOn) const override;
 
-    virtual ConstraintTypes type() const { return CheckConstraintType; }
+    ConstraintTypes type() const override { return CheckConstraintType; }
 
 private:
     QString m_expression;
@@ -329,6 +329,12 @@ private:
 class Field
 {
 public:
+    Field()
+        : m_notnull(false),
+          m_autoincrement(false),
+          m_unique(false)
+    {}
+
     Field(const QString& name,
           const QString& type,
           bool notnull = false,
@@ -346,6 +352,11 @@ public:
         , m_collation(collation)
     {}
 
+    bool operator==(const Field& rhs) const
+    {
+        return m_name == rhs.name();
+    }
+
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
 
     void setName(const QString& name) { m_name = name; }
@@ -359,6 +370,12 @@ public:
 
     bool isText() const;
     bool isInteger() const;
+    bool isBlob() const;
+    bool isReal() const;
+    bool isNumeric() const;
+
+    // Type affinity of the column according to SQLite3 rules
+    QString affinity() const;
 
     const QString& name() const { return m_name; }
     const QString& type() const { return m_type; }
@@ -369,7 +386,6 @@ public:
     bool unique() const { return m_unique; }
     const QString& collation() const { return m_collation; }
 
-    static QStringList Datatypes;
 private:
     QString m_name;
     QString m_type;
@@ -385,24 +401,21 @@ class Table : public Object
 {
 public:
     explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
-    virtual ~Table();
+    ~Table() override;
     Table& operator=(const Table& rhs);
 
-    virtual Types type() const { return Object::Table; }
+    Types type() const override { return Object::Table; }
 
-    const FieldVector& fields() const { return m_fields; }
+    FieldVector fields;
+    using field_type = Field;
+    using field_iterator = FieldVector::iterator;
 
     /**
      * @brief Returns the CREATE TABLE statement for this table object
      * @return A QString with the CREATE TABLE object.
      */
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const;
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override;
 
-    void addField(const FieldPtr& f);
-    bool removeField(const QString& sFieldName);
-    void setFields(const FieldVector& fields);
-    void setField(int index, FieldPtr f);
-    const FieldPtr& field(int index) const { return m_fields[index]; }
     QStringList fieldNames() const;
 
     void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
@@ -413,42 +426,33 @@ public:
     QString virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.isEmpty(); }
 
-    void clear();
+    FieldInfoList fieldInformation() const override;
 
-    virtual FieldInfoList fieldInformation() const;
-
-    void addConstraint(FieldVector fields, ConstraintPtr constraint);
-    void setConstraint(FieldVector fields, ConstraintPtr constraint);
-    void removeConstraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
-    ConstraintPtr constraint(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
-    QList<ConstraintPtr> constraints(FieldVector fields = FieldVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
+    void addConstraint(QStringList fields, ConstraintPtr constraint);
+    void setConstraint(QStringList fields, ConstraintPtr constraint);
+    void removeConstraints(QStringList fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
+    ConstraintPtr constraint(QStringList fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
+    std::vector<ConstraintPtr> constraints(QStringList fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     ConstraintMap allConstraints() const { return m_constraints; }
     void setConstraints(const ConstraintMap& constraints);
-    FieldVector& primaryKeyRef();
-    const FieldVector& primaryKey() const;
+    QStringList& primaryKeyRef();
+    const QStringList& primaryKey() const;
+    void removeKeyFromAllConstraints(const QString& key);
+    void renameKeyInAllConstraints(const QString& key, const QString& to);
 
-    /**
-     * @brief findField Finds a field and returns the index.
-     * @param sname
-     * @return The field index if the field was found.
-     *         -1 if field couldn't be found.
-     */
-    int findField(const QString& sname) const;
-
-    int findPk() const;
+    field_iterator findPk();
 
     /**
      * @brief parseSQL Parses the create Table statement in sSQL.
      * @param sSQL The create table statement.
      * @return The table object. The table object may be empty if parsing failed.
      */
-    static ObjectPtr parseSQL(const QString& sSQL);
+    static TablePtr parseSQL(const QString& sSQL);
 private:
     QStringList fieldList() const;
     bool hasAutoIncrement() const;
 
 private:
-    FieldVector m_fields;
     QString m_rowidColumn;
     ConstraintMap m_constraints;
     QString m_virtual;
@@ -485,12 +489,16 @@ class Index : public Object
 {
 public:
     explicit Index(const QString& name): Object(name), m_unique(false) {}
-    virtual ~Index();
+    ~Index() override;
     Index& operator=(const Index& rhs);
 
-    virtual Types type() const { return Object::Index; }
+    Types type() const override { return Object::Index; }
 
-    virtual QString baseTable() const { return m_table; }
+    IndexedColumnVector fields;
+    using field_type = IndexedColumn;
+    using field_iterator = IndexedColumnVector::iterator;
+
+    QString baseTable() const override { return m_table; }
 
     void setUnique(bool unique) { m_unique = unique; }
     bool unique() const { return m_unique; }
@@ -501,31 +509,20 @@ public:
     void setWhereExpr(const QString& expr) { m_whereExpr = expr; }
     const QString& whereExpr() const { return m_whereExpr; }
 
-    void setColumns(const IndexedColumnVector& columns);
-    const IndexedColumnVector& columns() const { return m_columns; }
-    void clearColumns() { m_columns.clear(); }
-    void addColumn(const IndexedColumnPtr& c) { m_columns.append(c); }
-    bool removeColumn(const QString& name);
-    void setColumn(int index, IndexedColumnPtr c) { m_columns[index] = c; }
-    IndexedColumnPtr& column(int index) { return m_columns[index]; }
-    int findColumn(const QString& name) const;
-
-    void clear();
-
     /**
      * @brief Returns the CREATE INDEX statement for this index object
      * @return A QString with the CREATE INDEX object.
      */
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const;
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override;
 
     /**
      * @brief parseSQL Parses the CREATE INDEX statement in sSQL.
      * @param sSQL The create index statement.
      * @return The index object. The index object may be empty if the parsing failed.
      */
-    static ObjectPtr parseSQL(const QString& sSQL);
+    static IndexPtr parseSQL(const QString& sSQL);
 
-    virtual FieldInfoList fieldInformation() const;
+    FieldInfoList fieldInformation() const override;
 
 private:
     QStringList columnSqlList() const;
@@ -533,47 +530,42 @@ private:
     bool m_unique;
     QString m_table;
     QString m_whereExpr;
-    IndexedColumnVector m_columns;
 };
 
 class View : public Object
 {
 public:
     explicit View(const QString& name): Object(name) {}
-    virtual ~View();
+    ~View() override;
 
-    virtual Types type() const { return Object::View; }
+    Types type() const override { return Object::View; }
 
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
+    FieldVector fields;
 
-    static ObjectPtr parseSQL(const QString& sSQL);
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override
+    { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
 
-    void clear();
+    static ViewPtr parseSQL(const QString& sSQL);
 
-    void addField(const FieldPtr& f);
-    void setFields(const FieldVector& fields);
-    const FieldPtr& field(int index) const { return m_fields[index]; }
     QStringList fieldNames() const;
 
-    virtual FieldInfoList fieldInformation() const;
-
-private:
-    FieldVector m_fields;
+    FieldInfoList fieldInformation() const override;
 };
 
 class Trigger : public Object
 {
 public:
     explicit Trigger(const QString& name): Object(name) {}
-    virtual ~Trigger() {}
+    ~Trigger() override {}
 
-    virtual Types type() const { return Object::Trigger; }
+    Types type() const override { return Object::Trigger; }
 
-    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
+    QString sql(const QString& schema = QString("main"), bool ifNotExists = false) const override
+    { /* TODO */ Q_UNUSED(schema); Q_UNUSED(ifNotExists); return m_originalSql; }
 
-    static ObjectPtr parseSQL(const QString& sSQL);
+    static TriggerPtr parseSQL(const QString& sSQL);
 
-    virtual QString baseTable() const { return m_table; }
+    QString baseTable() const override { return m_table; }
 
     void setTable(const QString& table) { m_table = table; }
     QString table() const { return m_table; }
@@ -581,6 +573,60 @@ public:
 private:
     QString m_table;
 };
+
+/**
+ * @brief findField Finds a field in the database object and returns an iterator to it.
+ * @param object
+ * @param name
+ * @return The iterator pointing to the field in the field container of the object if the field was found.
+ *         object.fields.end() if the field couldn't be found.
+ */
+template<typename T>
+typename T::field_iterator findField(T* object, const QString& name)
+{
+    return std::find_if(object->fields.begin(), object->fields.end(), [&name](const typename T::field_type& f) {return f.name().compare(name, Qt::CaseInsensitive) == 0;});
+}
+template<typename T>
+typename T::field_iterator findField(std::shared_ptr<T> object, const QString& name)
+{
+    return findField(object.get(), name);
+}
+template<typename T>
+typename T::field_iterator findField(T& object, const QString& name)
+{
+    return findField(&object, name);
+}
+
+template<typename T> struct is_shared_ptr : std::false_type {};
+template<typename T> struct is_shared_ptr<std::shared_ptr<T>> : std::true_type {};
+
+/**
+ * @brief removeField Finds and removes a field in the database object
+ * @param object
+ * @param name
+ * @return true if sucessful, otherwise false
+ */
+template<typename T>
+bool removeField(T* object, const QString& name)
+{
+    auto index = findField(object, name);
+    if(index != object->fields.end())
+    {
+        object->fields.erase(index);
+        return true;
+    }
+    return false;
+}
+template<typename T, typename = typename std::enable_if<is_shared_ptr<T>::value>::type>
+bool removeField(T object, const QString& name)
+{
+    return removeField(object.get(), name);
+}
+template<typename T, typename = typename std::enable_if<!is_shared_ptr<T>::value>::type>
+bool removeField(T& object, const QString& name)
+{
+    return removeField(&object, name);
+}
 
 } //namespace sqlb
 

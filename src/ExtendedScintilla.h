@@ -15,12 +15,12 @@ class ExtendedScintilla : public QsciScintilla
 
 public:
     explicit ExtendedScintilla(QWidget *parent = nullptr);
-    virtual ~ExtendedScintilla();
+    ~ExtendedScintilla() override;
 
     bool findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward);
     void clearSelection();
     // Override parent setLexer
-    void setLexer(QsciLexer *lexer);
+    void setLexer(QsciLexer *lexer) override;
 
 public slots:
     void reloadKeywords();
@@ -30,9 +30,10 @@ public slots:
     // Set error indicator from position to end of line
     void setErrorIndicator(int position);
     void openFindReplaceDialog();
+    void openPrintDialog();
 
 protected:
-    void dropEvent(QDropEvent* e);
+    void dropEvent(QDropEvent* e) override;
 
     void setupSyntaxHighlightingFormat(QsciLexer *lexer, const QString& settings_name, int style);
     void reloadLexerSettings(QsciLexer *lexer);

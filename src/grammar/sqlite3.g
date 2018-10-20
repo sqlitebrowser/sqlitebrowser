@@ -41,6 +41,8 @@ tokens {
   END="END";
   ESCAPE="ESCAPE";
   FAIL="FAIL";
+  FILTER="FILTER";
+  FOLLOWING="FOLLOWING";
   FOREIGN="FOREIGN";
   GLOB="GLOB";
   KEY="KEY";
@@ -60,18 +62,24 @@ tokens {
   MATCH="MATCH";
   EXISTS="EXISTS";
   ON="ON";
+  OVER="OVER";
+  PARTITION="PARTITION";
+  PRECEDING="PRECEDING";
   PRIMARY="PRIMARY";
   RAISE="RAISE";
+  RANGE="RANGE";
   REFERENCES="REFERENCES";
   REGEXP="REGEXP";
   REPLACE="REPLACE";
   RESTRICT="RESTRICT";
   ROLLBACK="ROLLBACK";
   ROWID="ROWID";
+  ROWS="ROWS";
   SET="SET";
   TEMPORARY="TEMPORARY";
   TEMP="TEMP";
   THEN="THEN";
+  UNBOUNDED="UNBOUNDED";
   UNIQUE="UNIQUE";
   UPDATE="UPDATE";
   USING="USING";
@@ -446,6 +454,7 @@ subexpr
   | EXISTS LPAREN (expr | selectstmt) RPAREN
   | caseexpr
   | raisefunction
+  | windowfunc
   )
   (suffixexpr)?
   ;
@@ -458,6 +467,54 @@ castexpr
 caseexpr
   :
   CASE_T (expr)? (WHEN expr THEN expr)+ (ELSE_T expr)? END
+  ;
+
+windowfunc
+  :
+  functionname LPAREN (STAR | (expr (COMMA expr)*))? RPAREN (FILTER LPAREN WHERE expr RPAREN)? OVER
+  (
+    (LPAREN windowdefn RPAREN)
+    | id
+  )
+  ;
+
+windowdefn
+  :
+  (PARTITION BY expr (COMMA expr)*)?
+  (ORDER BY orderingterm (COMMA orderingterm)*)?
+  (framespec)?
+  ;
+
+orderingterm
+  :
+  expr (COLLATE collationname)? (ASC | DESC)?
+  ;
+
+framespec
+  :
+  (RANGE | ROWS)
+  (BETWEEN
+    (
+    (UNBOUNDED PRECEDING)
+    | (expr PRECEDING)
+    | (CURRENT ROW)
+    | (expr FOLLOWING)
+    )
+    AND
+    (
+    (expr PRECEDING)
+    | (CURRENT ROW)
+    | (expr FOLLOWING)
+    | (UNBOUNDED FOLLOWING)
+    )
+  )
+  |
+  (
+    (UNBOUNDED PRECEDING)
+    | (expr PRECEDING)
+    | (CURRENT ROW)
+    | (expr FOLLOWING)
+  )
   ;
 
 like_operator

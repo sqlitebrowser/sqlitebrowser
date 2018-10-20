@@ -37,7 +37,7 @@
         <file alias="up">bullet_arrow_up.png</file>
         <file alias="appicon">sqlitebrowser.png</file>
         <file alias="browser_open">internet-web-browser.png</file>
-        <file alias="project_save">package.png</file>
+        <file>package.png</file>
         <file alias="project_open">package_go.png</file>
         <file alias="field_key">page_key.png</file>
         <file alias="encryption">key.png</file>
@@ -66,5 +66,7 @@
         <file alias="log_dock">application_side_list.png</file>
         <file alias="db_attach">database_link.png</file>
         <file alias="text_indent">text_indent.png</file>
+        <file alias="print">printer.png</file>
+        <file alias="project_save">package_save.png</file>
     </qresource>
 </RCC>
