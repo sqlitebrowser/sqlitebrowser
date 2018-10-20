@@ -4,7 +4,7 @@
           version-script:         printf "`cat currentrelease | head -n 1 `-`git rev-list master --count`-` git -C . rev-parse --short HEAD`"
 
           summary:                DB Browser for SQLite  # 79 char long summary
-          description: |
+          description:            |
             SQLite Database Browser is a visual tool used to create, design and edit database files compatible with SQLite. Its interface is based on Qt, and is meant to be used for users and developers that want to create databases, edit and search data using a familiar spreadsheet-like interface, without the need to learn complicated SQL commands. Controls and wizards are available for users to:
             * Create and compact database files
             * Create, define, modify and delete tables
@@ -71,6 +71,7 @@
                 build-packages:
                 - qtbase5-dev
                 - dpkg-dev
+                - libgtk-3-dev
                 make-parameters:
                 - FLAVOR=qt5
                 plugin:           make
@@ -78,17 +79,25 @@
                 source-subdir:    qt
                 stage-packages:
                 - libxkbcommon0
-                # - ttf-ubuntu-font-family
-                # - dmz-cursor-theme
-                # - light-themes
+                - ttf-ubuntu-font-family
+                - dmz-cursor-theme
+                - light-themes
+                - adwaita-icon-theme
+                - gnome-themes-standard
                 - shared-mime-info
+                - libgtk-3-0
                 - libqt5gui5
                 - libgdk-pixbuf2.0-0
                 - libqt5svg5
                 - appmenu-qt5
+                - libglib2.0-bin
+                - libgtk-3-bin
+                - unity-gtk3-module
+                - libappindicator3-1
                 - locales-all
                 - xdg-user-dirs
-
+                - ibus-gtk3
+                - libibus-1.0-5
               dump:
                   plugin:         dump
                   after:
