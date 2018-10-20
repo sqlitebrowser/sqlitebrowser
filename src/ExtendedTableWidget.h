@@ -6,10 +6,24 @@
 #include <QDropEvent>
 #include <QDragMoveEvent>
 #include <QStyledItemDelegate>
+#include <QSortFilterProxyModel>
 
 class QMenu;
+class QMimeData;
 class FilterTableHeader;
 namespace sqlb { class ObjectIdentifier; }
+
+// Filter proxy model that only accepts distinct non-empty values.
+class UniqueFilterModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+public:
+    explicit UniqueFilterModel(QObject* parent = nullptr);
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+ private:
+    QSet<QString> m_uniqueValues;
+};
 
 // We use this class to provide editor widgets for the ExtendedTableWidget. It's used for every cell in the table view.
 class ExtendedTableWidgetEditorDelegate : public QStyledItemDelegate
@@ -42,6 +56,7 @@ public slots:
     void reloadSettings();
     void selectTableLine(int lineToSelect);
     void selectTableLines(int firstLine, int count);
+    void openPrintDialog();
 
 signals:
     void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);
@@ -50,11 +65,12 @@ signals:
     void selectedRowsToBeDeleted();
 
 private:
+    void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
-    QString escapeCopiedData(const QByteArray& data) const;
 
     void useAsFilter(const QString& filterOperator, bool binary = false);
+    void duplicateUpperCell();
 
     typedef QList<QByteArray> QByteArrayList;
     static QList<QByteArrayList> m_buffer;
@@ -65,11 +81,11 @@ private slots:
     void cellClicked(const QModelIndex& index);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void updateGeometries();
-    virtual void dragEnterEvent(QDragEnterEvent* event);
-    virtual void dragMoveEvent(QDragMoveEvent* event);
-    virtual void dropEvent(QDropEvent* event);
+    void keyPressEvent(QKeyEvent* event) override;
+    void updateGeometries() override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragMoveEvent(QDragMoveEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
     FilterTableHeader* m_tableHeader;
     QMenu* m_contextMenu;

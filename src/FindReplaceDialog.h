@@ -17,7 +17,7 @@ class FindReplaceDialog : public QDialog
 public:
 
     explicit FindReplaceDialog(QWidget* parent = nullptr);
-    ~FindReplaceDialog();
+    ~FindReplaceDialog() override;
     void setExtendedScintilla(ExtendedScintilla* scintilla);
     void show();
 
@@ -28,7 +28,7 @@ private slots:
     void replaceAll();
     void help();
     void close();
-    void reject();
+    void reject() override;
     void buttonBox_clicked(QAbstractButton* button);
 
 private:

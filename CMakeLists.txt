@@ -35,7 +35,7 @@ if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
 		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
-		set(QT5_PATH "C:/dev/Qt/5.8/msvc2013_64")
+		set(QT5_PATH "C:/dev/Qt/5.10.1/msvc2013_64")
 		set(VSREDIST "vcredist_x64.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether
@@ -110,6 +110,7 @@ set(SQLB_MOC_HDR
 	src/EditIndexDialog.h
 	src/EditDialog.h
 	src/EditTableDialog.h
+	src/AddRecordDialog.h
 	src/ExportDataDialog.h
 	src/ExtendedTableWidget.h
 	src/FilterTableHeader.h
@@ -150,6 +151,7 @@ set(SQLB_SRC
 	src/EditIndexDialog.cpp
 	src/EditDialog.cpp
 	src/EditTableDialog.cpp
+	src/AddRecordDialog.cpp
 	src/ExportDataDialog.cpp
 	src/ExtendedTableWidget.cpp
 	src/FilterTableHeader.cpp
@@ -196,6 +198,7 @@ set(SQLB_FORMS
 	src/EditIndexDialog.ui
 	src/EditDialog.ui
 	src/EditTableDialog.ui
+	src/AddRecordDialog.ui
 	src/ExportDataDialog.ui
 	src/ImportCsvDialog.ui
 	src/MainWindow.ui
@@ -508,7 +511,7 @@ set(CPACK_PACKAGE_VENDOR "DB Browser for SQLite Team")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
-set(CPACK_PACKAGE_VERSION_MINOR "10")
+set(CPACK_PACKAGE_VERSION_MINOR "11")
 set(CPACK_PACKAGE_VERSION_PATCH "99")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "DB Browser for SQLite")
 if(WIN32 AND NOT UNIX)

@@ -54,7 +54,7 @@ private:
 
 public:
     explicit DBBrowserDB () : _db(nullptr), db_used(false), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
-    virtual ~DBBrowserDB (){}
+    ~DBBrowserDB () override {}
 
     bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = "");
@@ -96,7 +96,7 @@ public:
 
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
-    QVariant querySingeValueFromDb(const QString& statement, bool log = true);
+    QVariant querySingleValueFromDb(const QString& statement, bool log = true);
 
     const QString& lastError() const { return lastErrorMessage; }
 
@@ -118,7 +118,7 @@ private:
      * @param field Field to get the max value
      * @return the max value of the field or 0 on error
      */
-    QString max(const sqlb::ObjectIdentifier& tableName, sqlb::FieldPtr field) const;
+    QString max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const;
 
 public:
     void updateSchema();
@@ -139,7 +139,7 @@ public:
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
-    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::FieldPtr& field);
+    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field);
 
     /**
      * @brief alterTable Can be used to rename, modify or drop an existing column of a given table
@@ -152,10 +152,21 @@ public:
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, const sqlb::Field* to, int move = 0, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
-    const sqlb::ObjectPtr getObjectByName(const sqlb::ObjectIdentifier& name) const;
+
+    template<typename T = sqlb::Object>
+    const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
+    {
+        for(auto& it : schemata[name.schema()])
+        {
+            if(it->name() == name.name())
+                return std::dynamic_pointer_cast<T>(it);
+        }
+        return std::shared_ptr<T>();
+    }
+
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
@@ -171,6 +182,9 @@ public:
     bool setPragma(const QString& pragma, int value, int& originalvalue);
 
     bool loadExtension(const QString& filename);
+    void loadExtensionsFromSettings();
+
+    static QStringList Datatypes;
 
 private:
     QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);

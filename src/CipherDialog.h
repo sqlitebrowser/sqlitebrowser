@@ -19,7 +19,7 @@ public:
     // Set the encrypt parameter to true when the dialog is used to encrypt a database;
     // set it to false if the dialog is used to ask the user for the key to decrypt a file.
     explicit CipherDialog(QWidget* parent, bool encrypt);
-    ~CipherDialog();
+    ~CipherDialog() override;
 
     CipherSettings getCipherSettings() const;
 

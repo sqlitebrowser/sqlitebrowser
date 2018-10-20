@@ -22,6 +22,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Java epoch (milliseconds) to date"), "javaEpoch");
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
+    ui->comboDisplayFormat->addItem(tr("Unix epoch to local time"), "epochLocalTime");
     ui->comboDisplayFormat->addItem(tr("Windows DATE to date"), "winDate");
     ui->comboDisplayFormat->addItem(tr("Date as dd/mm/yyyy"), "ddmmyyyyDate");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
@@ -40,6 +41,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
             "/1000, 'unixepoch') || (" + sqlb::escapeIdentifier(column_name) + "%1000)";
     formatFunctions["julian"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["epoch"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')";
+    formatFunctions["epochLocalTime"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch', 'localtime')";
     formatFunctions["winDate"] = "datetime('1899-12-30', " + sqlb::escapeIdentifier(column_name) + " || ' days')";
     formatFunctions["ddmmyyyyDate"] = "strftime('%d/%m/%Y', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["lower"] = "lower(" + sqlb::escapeIdentifier(column_name) + ")";
