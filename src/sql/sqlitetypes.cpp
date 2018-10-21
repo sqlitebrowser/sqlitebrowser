@@ -120,6 +120,18 @@ private:
     antlr::RefAST m_root;
 };
 
+bool Object::operator==(const Object& rhs) const
+{
+    if(m_name != rhs.m_name)
+        return false;
+    if(m_fullyParsed != rhs.m_fullyParsed)  // We check for the fully parsed flag to make sure not to lose anything in some corner cases
+        return false;
+
+    // We don't care about the original SQL text
+
+    return true;
+}
+
 QString Object::typeToString(Types type)
 {
     switch(type)
@@ -202,6 +214,28 @@ QString CheckConstraint::toSql(const QStringList&) const
     result += QString("CHECK(%1)").arg(m_expression);
 
     return result;
+}
+
+bool Field::operator==(const Field& rhs) const
+{
+    if(m_name != rhs.m_name)
+        return false;
+    if(m_type != rhs.m_type)
+        return false;
+    if(m_notnull != rhs.m_notnull)
+        return false;
+    if(m_check != rhs.m_check)
+        return false;
+    if(m_defaultvalue != rhs.m_defaultvalue)
+        return false;
+    if(m_autoincrement != rhs.m_autoincrement)
+        return false;
+    if(m_unique != rhs.m_unique)
+        return false;
+    if(m_collation != rhs.m_collation)
+        return false;
+
+    return true;
 }
 
 QString Field::toString(const QString& indent, const QString& sep) const
@@ -317,6 +351,23 @@ Table& Table::operator=(const Table& rhs)
     m_constraints = rhs.m_constraints;
 
     return *this;
+}
+
+bool Table::operator==(const Table& rhs) const
+{
+    if(!Object::operator==(rhs))
+        return false;
+
+    if(m_rowidColumn != rhs.m_rowidColumn)
+        return false;
+    if(m_constraints != rhs.m_constraints)
+        return false;
+    if(m_virtual != rhs.m_virtual)
+        return false;
+    if(fields != rhs.fields)
+        return false;
+
+    return true;
 }
 
 Table::field_iterator Table::findPk()

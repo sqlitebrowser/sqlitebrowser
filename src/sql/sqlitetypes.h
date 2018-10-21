@@ -54,6 +54,7 @@ void setIdentifierQuoting(escapeQuoting toQuoting);
 
 QString escapeIdentifier(QString id);
 std::string escapeIdentifier(std::string id);
+QStringList escapeIdentifier(const QStringList& ids);
 
 class ObjectIdentifier
 {
@@ -186,6 +187,8 @@ public:
 
     explicit Object(const QString& name): m_name(name), m_fullyParsed(false) {}
     virtual ~Object() {}
+
+    virtual bool operator==(const Object& rhs) const;
 
     virtual Types type() const = 0;
     static QString typeToString(Types type);
@@ -353,10 +356,7 @@ public:
         , m_collation(collation)
     {}
 
-    bool operator==(const Field& rhs) const
-    {
-        return m_name == rhs.name();
-    }
+    bool operator==(const Field& rhs) const;
 
     QString toString(const QString& indent = "\t", const QString& sep = "\t") const;
 
@@ -404,6 +404,8 @@ public:
     explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
     ~Table() override;
     Table& operator=(const Table& rhs);
+
+    bool operator==(const Table& rhs) const;
 
     Types type() const override { return Object::Table; }
 
@@ -585,15 +587,22 @@ private:
 template<typename T>
 typename T::field_iterator findField(T* object, const QString& name)
 {
-    return std::find_if(object->fields.begin(), object->fields.end(), [&name](const typename T::field_type& f) {return f.name().compare(name, Qt::CaseInsensitive) == 0;});
+    return std::find_if(object->fields.begin(), object->fields.end(), [&name](const typename T::field_type& f) {
+        return f.name().compare(name, Qt::CaseInsensitive) == 0;
+    });
 }
 template<typename T>
-typename T::field_iterator findField(std::shared_ptr<T> object, const QString& name)
+typename T::field_iterator findField(const T* object, const QString& name)
+{
+    return findField(const_cast<T*>(object), name);
+}
+template<typename T>
+typename std::remove_reference<T>::type::field_iterator findField(std::shared_ptr<T> object, const QString& name)
 {
     return findField(object.get(), name);
 }
 template<typename T>
-typename T::field_iterator findField(T& object, const QString& name)
+typename std::remove_reference<T>::type::field_iterator findField(T& object, const QString& name)
 {
     return findField(&object, name);
 }
