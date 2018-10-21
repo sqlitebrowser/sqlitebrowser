@@ -142,72 +142,72 @@
         <location filename="../Application.cpp" line="86"/>
         <source>Usage: %1 [options] [db]
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizzo: %1 [opzioni] [db]</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="87"/>
         <source>Possible command line arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Possibili argomenti da linea di comando:</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="88"/>
         <source>  -h, --help		Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>  -h, --help		Mostra opzioni della linea di comando</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="89"/>
         <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>  -q, --quit		Esci dall&apos;applicazione dopo aver eseguito gli script</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="90"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -s, --sql [file]	Esegui questo file SQL dopo aver aperto il DB</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -t, --table [table]	Esplora questa tabella dopo aver aperto il DB</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="92"/>
         <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>  -R, --read-only	Apri il database in modalità sola lettura</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
         <source>  -v, --version		Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version		Mostra la versione corrente</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="94"/>
         <source>  [file]		Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>  [file]		Apri questo database SQLite</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="97"/>
         <source>This is DB Browser for SQLite version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo è il DB Browser per SQLite versione %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="102"/>
         <source>The -s/--sql option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;opzione -s/--sql richiede un argomento</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="104"/>
         <source>The file %1 does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Il file %1 non esiste</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="109"/>
         <source>The -t/--table option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;opzione -t/--table richiede un argomento</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="121"/>
         <source>Invalid option/non-existant file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzione non valida/file inesistente: %1</translation>
     </message>
 </context>
 <context>
