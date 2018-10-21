@@ -49,89 +49,91 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi un nuovo record</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci i valori per il nuovo record considerando i vincoli. I campi in grassetto sono obbligatori.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nella colonna Valore puoi specificare il valore per il campo identificato dalla colonna Nome. La colonna Tipo indica il tipo di campo. I valori di default sono mostrati nello stesso stile come valori NULL.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="79"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="84"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valore</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valori da inserire. Sono preinseriti dei valori di default automaticamente a meno che essi non vengano cambiati.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando modifichi i valori nel riquadro superiore, la query SQL per inserire questo nuovo record è mostrata qui. Puoi modificare manualmente la query prima di salvare.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Salva&lt;/span&gt;invia la richiesta SQL mostrata al database per inserire un nuovo record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ripristina Defaults&lt;/span&gt;ripristinerà i valori iniziali della colonna &lt;span style=&quot; font-weight:600;&quot;&gt;Valore&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Annulla&lt;/span&gt;chiuderà questa finestra di dialogo senza eseguire la query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="208"/>
         <source>Auto-increment
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-increment</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="211"/>
         <source>Unique constraint
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Constraint unico</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="214"/>
         <source>Check constraint:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Controlla constraint:	 %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="218"/>
         <source>Foreign key:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Foreign key:	 %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="226"/>
         <source>Default value:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Valore di default:	 %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="252"/>
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nell&apos;aggiungere il record. Messaggio dal database engine:
+
+%1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="333"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro di voler ripristinare tutti i valori inseriti ai loro valori di default?</translation>
     </message>
 </context>
 <context>
@@ -213,32 +215,32 @@
     <message>
         <location filename="../CipherDialog.ui" line="14"/>
         <source>SQLCipher encryption</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher encryption</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="27"/>
         <source>&amp;Password</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Password</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="44"/>
         <source>&amp;Reenter password</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Reinserisci password</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="61"/>
         <source>Page si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>Di&amp;mensioni pagina</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="79"/>
         <source>Passphrase</source>
-        <translation type="unfinished"></translation>
+        <translation>Passphrase</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="84"/>
         <source>Raw key</source>
-        <translation type="unfinished"></translation>
+        <translation>Raw key</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="34"/>
@@ -246,13 +248,17 @@
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
 The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfavore inserisci una chiave per criptare il database.
+Nota che se cambi una qualsiasi delle altre impostazioni opzionali, dovrai reinserirle ogni volta che apri il file del database.
+Lascia i campi password vuoti per disabilitare la crittografia.
+Il processo di crittazione può richiedere del tempo e dovresti avere una copia di backup del database! Modifiche non salvate sono applicate prima di modificare la crittografia.</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="39"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfavore inserire una chiave da utilizzare per criptare il database.
+Se una qualsiasi delle altre impostazioni sono state modificate per questo file database devi fornire anche questa informazione.</translation>
     </message>
 </context>
 <context>
