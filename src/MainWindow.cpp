@@ -463,9 +463,10 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
 
 void MainWindow::fileNew()
 {
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                   tr("Choose a filename to save under"),
-                                                   FileDialog::getSqlDatabaseFileFilter());
+    QString fileName = FileDialog::getSaveFileName(
+                           this,
+                           tr("Choose a filename to save under"),
+                           FileDialog::getSqlDatabaseFileFilter());
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -1521,9 +1522,9 @@ void MainWindow::mainTabSelected(int tabindex)
 void MainWindow::importTableFromCSV()
 {
     QStringList wFiles = FileDialog::getOpenFileNames(
-                            this,
-                            tr("Choose text files"),
-                            tr("Text files(*.csv *.txt);;All files(*)"));
+                             this,
+                             tr("Choose text files"),
+                             tr("Text files(*.csv *.txt);;All files(*)"));
 
     QStringList validFiles;
     for(const auto& file : wFiles) {
@@ -2467,9 +2468,10 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
     // Show the open file dialog when no filename was passed as parameter
     if(filename.isEmpty())
     {
-        filename = FileDialog::getOpenFileName(this,
-                                                tr("Choose a project file to open"),
-                                                tr("DB Browser for SQLite project file (*.sqbpro)"));
+        filename = FileDialog::getOpenFileName(
+                       this,
+                       tr("Choose a project file to open"),
+                       tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
     if(!filename.isEmpty())
@@ -2721,10 +2723,11 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
 
 void MainWindow::saveProject()
 {
-    QString filename = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("DB Browser for SQLite project file (*.sqbpro)"),
-                                                    db.currentFile());
+    QString filename = FileDialog::getSaveFileName(
+                           this,
+                           tr("Choose a filename to save under"),
+                           tr("DB Browser for SQLite project file (*.sqbpro)"),
+                           db.currentFile());
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
