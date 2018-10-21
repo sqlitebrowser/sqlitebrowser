@@ -37,6 +37,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         m_table = *(pdb.getObjectByName<sqlb::Table>(curTable));
         ui->labelEditWarning->setVisible(!m_table.fullyParsed());
 
+        // Initialise the list of tracked columns for table layout changes
+        for(const auto& field : m_table.fields)
+            trackColumns[field.name()] = field.name();
+
         // Set without rowid checkbox and schema dropdown. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
         // for error checking etc.
         ui->checkWithoutRowid->blockSignals(true);
@@ -56,9 +60,6 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 
     // And create a savepoint
     pdb.setSavepoint(m_sRestorePointName);
-
-    // Check now if foreign keys are enabled so we don't have to query this later again and again
-    m_bForeignKeysEnabled = (pdb.getPragma("foreign_keys") == "1");
 
     // Update UI
     ui->editTableName->setText(curTable.name());
@@ -170,14 +171,11 @@ void EditTableDialog::accept()
     } else {
         // Editing of old table
 
-        // Rename table if necessary
-        if(ui->editTableName->text() != curTable.name())
+        // Apply all changes to the actual table in the database
+        if(!pdb.alterTable(curTable, m_table, trackColumns, ui->comboSchema->currentText()))
         {
-            if(!pdb.renameTable(ui->comboSchema->currentText(), curTable.name(), ui->editTableName->text()))
-            {
-                QMessageBox::warning(this, QApplication::applicationName(), pdb.lastError());
-                return;
-            }
+            QMessageBox::warning(this, QApplication::applicationName(), pdb.lastError());
+            return;
         }
     }
 
@@ -214,13 +212,8 @@ void EditTableDialog::checkInput()
         const auto& fields = m_table.fields;
         for(const sqlb::Field& f : fields) {
             auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
-            if(fk) {
-                if (oldTableName == fk->table()) {
-                    fk->setTable(normTableName);
-                    if(!m_bForeignKeysEnabled)
-                        pdb.alterTable(curTable, m_table, f.name(), &f, 0);
-                }
-            }
+            if(fk && oldTableName == fk->table())
+                fk->setTable(normTableName);
         }
 
         populateFields();
@@ -238,16 +231,15 @@ void EditTableDialog::updateTypes(QObject *object)
         QString type = typeBox->currentText();
         QString column = typeBox->property("column").toString();
 
-        size_t index;
-        for(index=0; index < m_table.fields.size(); ++index)
+        for(size_t index=0; index < m_table.fields.size(); ++index)
         {
             if(m_table.fields.at(index).name() == column)
+            {
+                m_table.fields.at(index).setType(type);
                 break;
+            }
         }
 
-        m_table.fields.at(index).setType(type);
-        if(!m_bNewTable)
-            pdb.alterTable(curTable, m_table, column, &m_table.fields[index]);
         checkInput();
     }
 }
@@ -272,7 +264,6 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
     if(index < static_cast<int>(m_table.fields.size()))
     {
         sqlb::Field& field = m_table.fields.at(index);
-        bool callRenameColumn = false;
         QString oldFieldName = field.name();
 
         switch(column)
@@ -328,8 +319,16 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             field.setName(item->text(column));
             m_table.renameKeyInAllConstraints(oldFieldName, item->text(column));
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
+
+            // Update the field name in the map of old column names to new column names
             if(!m_bNewTable)
-                callRenameColumn = true;
+            {
+                for(const auto& key : trackColumns)
+                {
+                    if(trackColumns[key] == oldFieldName)
+                        trackColumns[key] = field.name();
+                }
+            }
             } break;
         case kType:
             // see updateTypes() SLOT
@@ -362,8 +361,6 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             } else {
                 item->setCheckState(kAutoIncrement, Qt::Unchecked);
             }
-            if(!m_bNewTable)
-                callRenameColumn = true;
         }
         break;
         case kNotNull:
@@ -395,8 +392,6 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 }
             }
             field.setNotNull(item->checkState(column) == Qt::Checked);
-            if(!m_bNewTable)
-                callRenameColumn = true;
         }
         break;
         case kAutoIncrement:
@@ -446,9 +441,6 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 }
             }
             field.setAutoIncrement(ischecked);
-
-            if(!m_bNewTable)
-                callRenameColumn = true;
         }
         break;
         case kUnique:
@@ -484,9 +476,6 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 }
             }
             field.setUnique(item->checkState(column) == Qt::Checked);
-
-            if(!m_bNewTable)
-                callRenameColumn = true;
         }
         break;
         case kDefault:
@@ -517,27 +506,14 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 }
             }
             field.setDefaultValue(new_value);
-            if(!m_bNewTable)
-                callRenameColumn = true;
         }
         break;
         case kCheck:
             field.setCheck(item->text(column));
-            if(!m_bNewTable)
-                callRenameColumn = true;
             break;
         case kForeignKey:
             // handled in delegate
-
-            if(!m_bNewTable)
-                callRenameColumn = true;
             break;
-        }
-
-        if(callRenameColumn)
-        {
-            if(!pdb.alterTable(curTable, m_table, oldFieldName, &field))
-                QMessageBox::warning(this, qApp->applicationName(), tr("Modifying this column failed. Error returned from database:\n%1").arg(pdb.lastError()));
         }
     }
 
@@ -590,9 +566,9 @@ void EditTableDialog::addField()
     // add field to table object
     m_table.fields.emplace_back(tbitem->text(kName), typeBox->currentText());
 
-    // Actually add the new column to the table if we're editing an existing table
+    // Add the new column to the list of tracked columns to indicate it has been added
     if(!m_bNewTable)
-        pdb.addColumn(curTable, m_table.fields.back());
+        trackColumns.insert(QString(), tbitem->text(kName));
 
     checkInput();
 }
@@ -603,32 +579,26 @@ void EditTableDialog::removeField()
     if(!ui->treeWidget->currentItem())
         return;
 
-    // Are we creating a new table or editing an old one?
-    if(m_bNewTable)
+    // If we are editing an existing table, ask the user for confirmation
+    if(!m_bNewTable)
     {
-        // Creating a new one
-
-        // Just delete that item. At this point there is no DB table to edit or data to be lost anyway
-        m_table.fields.erase(m_table.fields.begin() + ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem()));
-        m_table.removeKeyFromAllConstraints(ui->treeWidget->currentItem()->text(kName));
-        delete ui->treeWidget->currentItem();
-    } else {
-        // Editing an old one
-
-        // Ask user whether he really wants to delete that column
         QString msg = tr("Are you sure you want to delete the field '%1'?\nAll data currently stored in this field will be lost.").arg(ui->treeWidget->currentItem()->text(0));
-        if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+        if(QMessageBox::warning(this, QApplication::applicationName(), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
+            return;
+
+        // Update the map of tracked columns to indicate the column is deleted
+        QString name = ui->treeWidget->currentItem()->text(0);
+        for(const auto& key : trackColumns)
         {
-            if(!pdb.alterTable(curTable, m_table, ui->treeWidget->currentItem()->text(0), nullptr))
-            {
-                QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
-            } else {
-                //relayout
-                m_table = *(pdb.getObjectByName<sqlb::Table>(curTable));
-                populateFields();
-            }
+            if(trackColumns[key] == name)
+                trackColumns[key] = QString();
         }
     }
+
+    // Just delete that item. At this point there is no DB table to edit or data to be lost anyway
+    m_table.fields.erase(m_table.fields.begin() + ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem()));
+    m_table.removeKeyFromAllConstraints(ui->treeWidget->currentItem()->text(kName));
+    delete ui->treeWidget->currentItem();
 
     checkInput();
 }
@@ -665,54 +635,27 @@ void EditTableDialog::moveCurrentField(bool down)
     int currentRow = ui->treeWidget->currentIndex().row();
     int newRow = currentRow + (down ? 1 : -1);
 
-    // Are we creating a new table or editing an old one?
-    if(m_bNewTable)
-    {
-        // Creating a new one
+    // Save the combobox first by making a copy
+    QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
+    QComboBox* newCombo = new QComboBox(ui->treeWidget);
+    newCombo->setProperty("column", oldCombo->property("column"));
+    newCombo->installEventFilter(this);
+    connect(newCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+    newCombo->setEditable(true);
+    for(int i=0; i < oldCombo->count(); ++i)
+        newCombo->addItem(oldCombo->itemText(i));
+    newCombo->setCurrentIndex(oldCombo->currentIndex());
 
-        // Save the combobox first by making a copy
-        QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
-        QComboBox* newCombo = new QComboBox(ui->treeWidget);
-        newCombo->setProperty("column", oldCombo->property("column"));
-        newCombo->installEventFilter(this);
-        connect(newCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-        newCombo->setEditable(true);
-        for(int i=0; i < oldCombo->count(); ++i)
-            newCombo->addItem(oldCombo->itemText(i));
-        newCombo->setCurrentIndex(oldCombo->currentIndex());
+    // Now, just remove the item and insert it at it's new position, then restore the combobox
+    QTreeWidgetItem* item = ui->treeWidget->takeTopLevelItem(currentRow);
+    ui->treeWidget->insertTopLevelItem(newRow, item);
+    ui->treeWidget->setItemWidget(item, kType, newCombo);
 
-        // Now, just remove the item and insert it at it's new position, then restore the combobox
-        QTreeWidgetItem* item = ui->treeWidget->takeTopLevelItem(currentRow);
-        ui->treeWidget->insertTopLevelItem(newRow, item);
-        ui->treeWidget->setItemWidget(item, kType, newCombo);
+    // Select the old item at its new position
+    ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
 
-        // Select the old item at its new position
-        ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
-
-        // Finally update the table SQL
-        std::swap(m_table.fields[newRow], m_table.fields[currentRow]);
-    } else {
-        // Editing an old one
-
-        // Move the actual column
-        if(!pdb.alterTable(
-                    curTable,
-                    m_table,
-                    ui->treeWidget->currentItem()->text(0),
-                    &m_table.fields[ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem())],
-                    (down ? 1 : -1)
-                ))
-        {
-            QMessageBox::warning(nullptr, QApplication::applicationName(), pdb.lastError());
-        } else {
-            // Reload table SQL
-            m_table = *(pdb.getObjectByName<sqlb::Table>(curTable));
-            populateFields();
-
-            // Select old item at new position
-            ui->treeWidget->setCurrentIndex(ui->treeWidget->indexAt(QPoint(1, 1)).sibling(newRow, 0));
-        }
-    }
+    // Finally update the table SQL
+    std::swap(m_table.fields[newRow], m_table.fields[currentRow]);
 
     // Update the SQL preview
     updateSqlText();
@@ -748,33 +691,10 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
 
     // Update the SQL preview
     updateSqlText();
-
-    // Update table if we're editing an existing table
-    if(!m_bNewTable)
-    {
-        if(!pdb.alterTable(curTable, m_table, QString(), nullptr, 0))
-        {
-            QMessageBox::warning(this, QApplication::applicationName(),
-                                 tr("Setting the rowid column for the table failed. Error message:\n%1").arg(pdb.lastError()));
-        }
-    }
 }
 
-void EditTableDialog::changeSchema(const QString& schema)
+void EditTableDialog::changeSchema(const QString& /*schema*/)
 {
     // Update the SQL preview
     updateSqlText();
-
-    // Update table if we're editing an existing table
-    if(!m_bNewTable)
-    {
-        if(pdb.alterTable(curTable, m_table, QString(), nullptr, 0, schema))
-        {
-            // Save the new schema name to use it from now on
-            curTable.setSchema(schema);
-        } else {
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Changing the table schema failed. Error message:\n%1").arg(pdb.lastError()));
-            ui->comboSchema->setCurrentText(curTable.schema()); // Set it back to the original schema
-        }
-    }
 }
