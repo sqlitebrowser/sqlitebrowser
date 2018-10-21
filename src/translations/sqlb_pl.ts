@@ -21,7 +21,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation>Oparte o SQLite %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -49,42 +49,42 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy rekord</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj wartości dla nowego rekordu zwracając uwagę na ograniczenia.Pola wytłusczone są obowiązkowe.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kolumnie Wartość możesz podać wartość dla pola identyfikowanego w kolumnie Nazwa. Kolumna Rodzaj wskazuje rodzaj pola. Wartości domyślne są wyświetlane w tym samym stylu, co wartości NULL.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="79"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodzaj</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="84"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartości do wstawienia. Pola wypełnione są automatycznie domyślnymi wartościami wtedy tylko gdy te wartości nie są ręcznie zmienione.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutaj pokazana jest kwerenda SQL dla dodania nowego rekordu zawirającego wartości wprowadzone w górnej ramce. Możesz ją ręcznie zmienić przed zapisem rekordu.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
