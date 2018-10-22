@@ -115,7 +115,7 @@ Application::Application(int& argc, char** argv) :
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
             readOnly = true;
         } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option") {
-            const QString optionWarning = tr("The -o/--option option requires an argument in the form group/setting=value")
+            const QString optionWarning = tr("The -o/--option option requires an argument in the form group/setting=value");
             if(++i >= arguments().size())
                 qWarning() << qPrintable(optionWarning);
             else {
