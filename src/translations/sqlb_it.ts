@@ -281,57 +281,57 @@ Se una qualsiasi delle altre impostazioni sono state modificate per questo file 
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Default</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="14"/>
         <source>Decimal number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero decimale</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="15"/>
         <source>Exponent notation</source>
-        <translation type="unfinished"></translation>
+        <translation>Notazione esponenziale</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="16"/>
         <source>Hex blob</source>
-        <translation type="unfinished"></translation>
+        <translation>Hex blob</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Hex number</source>
-        <translation type="unfinished"></translation>
+        <translation>Hex number</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
         <source>Octal number</source>
-        <translation type="unfinished"></translation>
+        <translation>Octal number</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
         <source>Round number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero arrotondato</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
         <source>Apple NSDate to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Apple NSDate ad oggi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Java epoch (milliseconds) to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Java epoch (millisecondi) ad oggi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Julian day to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Giorno giuliano ad oggi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Unix epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix epoch ad oggi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
