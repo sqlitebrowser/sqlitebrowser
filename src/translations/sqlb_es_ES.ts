@@ -85,7 +85,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="84"/>
         <source>Value</source>
-        <translation >Valor</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
@@ -182,12 +182,12 @@
     <message>
         <location filename="../Application.cpp" line="90"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql  [archivo]	Ejecutar este archivo de SQL tras abrir la base de datos</translation>
+        <translation>  -s, --sql [archivo]	Ejecutar este archivo de SQL tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation>  -t, --table [table]	Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
+        <translation>  -t, --table [tabla]	Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="89"/>
@@ -197,7 +197,7 @@
     <message>
         <location filename="../Application.cpp" line="92"/>
         <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation>  -R, --read-only\tAbrir base de datos en modo de solo-lectura</translation>
+        <translation>  -R, --read-only	Abrir base de datos en modo de solo-lectura</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -4493,7 +4493,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3316"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation>Establezca el nuevo nombre para la pestaña SQL. Use el carácter «&amp;» para permitir usar el carácter siguiente como un atajo de teclado.</translation>
+        <translation>Establezca el nuevo nombre para la pestaña SQL. Use el carácter «&amp;&amp;» para permitir usar el carácter siguiente como un atajo de teclado.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3359"/>
