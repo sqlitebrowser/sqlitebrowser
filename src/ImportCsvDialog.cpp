@@ -100,10 +100,15 @@ namespace {
 void rollback(
         ImportCsvDialog* dialog,
         DBBrowserDB* pdb,
+        DBBrowserDB::db_pointer_type* db_ptr,
         const QString& savepointName,
         size_t nRecord,
         const QString& message)
 {
+    // Release DB handle. This needs to be done before calling revertToSavepoint as that function needs to be able to acquire its own handle.
+    if(db_ptr)
+        *db_ptr = nullptr;
+
     QApplication::restoreOverrideCursor();  // restore original cursor
     if(!message.isEmpty())
     {
@@ -533,7 +538,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     QString restorepointName = pdb->generateSavepointName("csvimport");
     if(!pdb->setSavepoint(restorepointName))
     {
-        rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
+        rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
         return false;
     }
 
@@ -546,7 +551,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
         {
-            rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+            rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
             return false;
         }
 
@@ -672,13 +677,15 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Some error occurred or the user cancelled the action
 
         // Rollback the entire import. If the action was cancelled, don't show an error message. If it errored, show an error message.
-        sqlite3_finalize(stmt);
         if(result == CSVParser::ParserResult::ParserResultCancelled)
         {
-            rollback(this, pdb, restorepointName, 0, QString());
+            sqlite3_finalize(stmt);
+            rollback(this, pdb, &pDb, restorepointName, 0, QString());
             return false;
         } else {
-            rollback(this, pdb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(pdb->lastError()));
+            QString error(sqlite3_errmsg(pDb.get()));
+            sqlite3_finalize(stmt);
+            rollback(this, pdb, &pDb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(error));
             return false;
         }
     }
