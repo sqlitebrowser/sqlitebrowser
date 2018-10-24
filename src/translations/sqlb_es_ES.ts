@@ -2850,12 +2850,12 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data [Ctrl+P]</source>
         <translation>Imprime los datos de la tabla mostrada actualmente [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
-        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
         <translation>Imprime los datos de la tabla mostrada actualmente. Imprime la selección si se ha seleccionado más de una celda.</translation>
     </message>
     <message>

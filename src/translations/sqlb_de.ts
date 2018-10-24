@@ -2479,12 +2479,12 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data [Ctrl+P]</source>
         <translation>Aktuell angezeigte Tabellendaten drucken [Strg+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
-        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
         <translation>Die aktuell angezeigten Tabellendaten drucken. Druckauswahl, falls mehr als eine Zelle ausgewählt ist.</translation>
     </message>
     <message>

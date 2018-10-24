@@ -2566,12 +2566,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data [Ctrl+P]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
-        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
