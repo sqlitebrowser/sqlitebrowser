@@ -606,7 +606,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
-    QString sQuery = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
+    QString sQuery = QString("INSERT %1 INTO %2 VALUES(").arg(currentOnConflictStrategy()).arg(sqlb::escapeIdentifier(tableName));
     for(size_t i=1;i<=fieldList.size();i++)
         sQuery.append(QString("?%1,").arg(i));
     sQuery.chop(1); // Remove last comma
@@ -780,6 +780,19 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->comboEncoding->currentText();
 }
 
+QString ImportCsvDialog::currentOnConflictStrategy() const
+{
+    switch(ui->comboOnConflictStrategy->currentIndex())
+    {
+    case 1:
+        return "OR IGNORE";
+    case 2:
+        return "OR REPLACE";
+    default:
+        return QString();
+    }
+}
+
 void ImportCsvDialog::toggleAdvancedSection(bool show)
 {
     ui->labelNoTypeDetection->setVisible(show);
@@ -788,4 +801,6 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkFailOnMissing->setVisible(show);
     ui->labelIgnoreDefaults->setVisible(show);
     ui->checkIgnoreDefaults->setVisible(show);
+    ui->labelOnConflictStrategy->setVisible(show);
+    ui->comboOnConflictStrategy->setVisible(show);
 }

@@ -54,6 +54,8 @@ private:
 
     void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
+
+    QString currentOnConflictStrategy() const;
 };
 
 #endif
