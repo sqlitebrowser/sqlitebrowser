@@ -2274,12 +2274,12 @@ x~y	Диапазон: значения между x и y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data [Ctrl+P]</source>
         <translation>Печатать отображаемую таблицу [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
-        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
         <translation>Распечатывайте текущие данные таблицы. Выбор печати, если выбрано несколько ячеек.</translation>
     </message>
     <message>
