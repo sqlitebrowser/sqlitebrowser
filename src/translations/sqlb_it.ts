@@ -266,17 +266,17 @@ Se una qualsiasi delle altre impostazioni sono state modificate per questo file 
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="14"/>
         <source>Choose display format</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona il formato di visualizzazione</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="20"/>
         <source>Display format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato di visualizzazione</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="26"/>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona un formato di visualizzazione per la colonna &apos;%1&apos; che è applicato a ciascun valore prima di mostrarlo.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
@@ -336,32 +336,32 @@ Se una qualsiasi delle altre impostazioni sono state modificate per questo file 
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
         <source>Unix epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix epoch in tempo locale</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="26"/>
         <source>Windows DATE to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows DATE ad oggi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
         <source>Date as dd/mm/yyyy</source>
-        <translation type="unfinished"></translation>
+        <translation>Data come dd/mm/yyyy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
         <source>Lower case</source>
-        <translation type="unfinished"></translation>
+        <translation>Lower case</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>Upper case</source>
-        <translation type="unfinished"></translation>
+        <translation>Upper case</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="66"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom</translation>
     </message>
 </context>
 <context>
