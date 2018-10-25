@@ -89,49 +89,55 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zapisz&lt;/span&gt; przekarze wyświetlone zapytanie SQL do bazy danych w celu zapisania nowego rekordu&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Przywróć domyślne&lt;/span&gt; przywróci wstępne wartości domyślne w kolumnie&lt;span style=&quot; font-weight:600;&quot;&gt;Wartość&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Anuluj&lt;/span&gt; zamyka to okno bez robienia zmian.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="208"/>
         <source>Auto-increment
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="211"/>
         <source>Unique constraint
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Unikat
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="214"/>
         <source>Check constraint:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Weryfikator:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="218"/>
         <source>Foreign key:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Klucz obcy:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="226"/>
         <source>Default value:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość domyślna:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="252"/>
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wystąpił błąd podczas dodawania rekordu. Baza danych podała następujący komunikat:
+
+%1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="333"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
-        <translation type="unfinished"></translation>
+        <translation>Jesteś pewien że chcesz przywrócić domyślne wartości dla wszystich wpisów?</translation>
     </message>
 </context>
 <context>
@@ -247,13 +253,17 @@
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
 The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podaj klucz do zaszyfrowania bazy danych.
+Zwróć uwagę na to że wszelkie zmiany wprowadzone tutaj do opcjonalnych ustawień bedą wymagane przy każdym otwarciu pliku.
+W celu deaktywacji szyfrowania pozostaw pola klucza puste.
+Proces szyfrowania może zabrać dużo czasu w zależności od wielkości bazy danych. Zaleca się aby przed rozpoczęciem tego procesu zrobić kopię zapasową pliku. Wszelkie nie zapisane zmiany będą wprowadzone do bazy danych zanim szyfrowanie się rozpocznie.</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="39"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podać hasło do zaszyfrowania bazy danych.
+Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy danych będziesz musiał również podać tą informację.</translation>
     </message>
 </context>
 <context>
@@ -271,7 +281,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="26"/>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation>Wybierz domyślny format wyświetlania dla kolumny &apos;%1&apos;, który jest stosowany na każdej wartości zanim zostanie pokazana.</translation>
+        <translation>Wybierz domyślny format wyświetlania dla kolumny &apos;%1&apos;, który jest zastosowany dla każdej wartości zanim ona zostanie pokazana.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
@@ -286,57 +296,57 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="15"/>
         <source>Exponent notation</source>
-        <translation type="unfinished"></translation>
+        <translation>Postać wykładnika</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="16"/>
         <source>Hex blob</source>
-        <translation type="unfinished"></translation>
+        <translation>Blob szestnastkowy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Hex number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numer szestnastkowy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
         <source>Octal number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numer ósemkowy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
         <source>Round number</source>
-        <translation>Zaokrąglona liczba</translation>
+        <translation>Liczba zaokrąglona</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
         <source>Apple NSDate to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Apple NSDate do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Java epoch (milliseconds) to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Java epoch (milisekundy) do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Julian day to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data Juliańska do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Unix epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix epoch do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
         <source>Unix epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix epoch do czasu lokalnego</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="26"/>
         <source>Windows DATE to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows DATE do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
@@ -346,12 +356,12 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
         <source>Lower case</source>
-        <translation type="unfinished"></translation>
+        <translation>Małe litery</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>Upper case</source>
-        <translation type="unfinished"></translation>
+        <translation>Duże litery</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="66"/>
