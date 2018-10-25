@@ -369,12 +369,12 @@ Se una qualsiasi delle altre impostazioni sono state modificate per questo file 
     <message>
         <location filename="../sqlitedb.cpp" line="201"/>
         <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo database è già stato aggiunto. Il nome del suo schema è &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="212"/>
         <source>Please specify the database name under which you want to access the attached database</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfavore specifica il nome del database sotto il quale vuoi accedere al databse aggiunto</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="261"/>
