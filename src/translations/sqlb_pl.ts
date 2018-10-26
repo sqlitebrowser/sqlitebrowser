@@ -379,7 +379,7 @@ Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy d
     <message>
         <location filename="../sqlitedb.cpp" line="215"/>
         <source>Please specify the database name under which you want to access the attached database</source>
-        <translation>Określ numer bazy danych pod którym chcesz uzyskać dostęp do załączonej bazy danych</translation>
+        <translation>Proszę podaj nazwę bazy danych za pomocą której chcesz uzyskać dostęp do załączonej bazy</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="264"/>
@@ -389,7 +389,7 @@ Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy d
     <message>
         <location filename="../sqlitedb.cpp" line="576"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy na pewno chcesz zamknąć tę tymczasową bazę danych? Wszelkie zmiany bedą zapomniane.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="581"/>
@@ -404,7 +404,7 @@ Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy d
     <message>
         <location filename="../sqlitedb.cpp" line="634"/>
         <source>Do you want to abort that other operation?</source>
-        <translation>Czy na pewno chcesz przerwać inne działanie?</translation>
+        <translation>Czy na pewno chcesz przerwać tą inną operację?</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="683"/>
@@ -421,7 +421,7 @@ Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy d
         <location filename="../sqlitedb.cpp" line="850"/>
         <location filename="../sqlitedb.cpp" line="883"/>
         <source>No database file opened</source>
-        <translation>Brak otwartej bazy danych</translation>
+        <translation>Plik z bazą danych nie jest obecnie otwarty</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="912"/>
@@ -445,7 +445,7 @@ Przerywam wykonywanie%3.</translation>
         <location filename="../sqlitedb.cpp" line="966"/>
         <location filename="../sqlitedb.cpp" line="979"/>
         <source> and rolling back</source>
-        <translation> i wracam</translation>
+        <translation> i przywracam</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1188"/>
@@ -465,28 +465,29 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1348"/>
         <source>renameColumn: cannot find column %1.</source>
-        <translation>renameColumn: nie można odnaleźć kolumny %1.</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): nie można odnaleźć kolumny %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1356"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>renameColumn(zmiana nazwy kolumny): błąd przy zapisie. Baza Danych zwraca: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1402"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation>renameColumn: tworzenie nowej tabeli nie powiodło się. Baza danych: %1</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): tworzenie nowej tabeli nie powiodło się. Baza danych zwróciła: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1415"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
-        <translation>renameColumn: kopiowanie danych do nowej tabeli nie powiodło się. Baza danych: %1</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): kopiowanie danych do nowej tabeli nie powiodło się. Baza danych zwróciła:
+%1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1472"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation>renameColumn: usuwanie starej tabeli nie powiodło się. Baza danych: %1</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): usuwanie starej tabeli nie powiodło się. Baza danych zwróciła: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1497"/>
@@ -498,7 +499,7 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1506"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>renameColumn(zmiana nazwy kolumny): Wystąpił błąd podczas odłączenia punktu zapisu. Baza danych podała następujący komunikat: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1545"/>
@@ -510,32 +511,32 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1580"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="unfinished"></translation>
+        <translation>... &lt;string nie można zalogować zawiera dane w postaci binarnej&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1683"/>
         <source>could not get list of db objects: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>nie mogę pobrać listy obiektów bazy danych: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1689"/>
         <source>could not get list of databases: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>nie mogę odczytać listy baz danych: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1719"/>
         <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="unfinished"></translation>
+        <translation>nie otrzymałem żadnego wyniku od pragmy %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1723"/>
         <source>could not execute pragma command: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>nie mogłem wykonać polecenia pragmy: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1744"/>
         <source>Error setting pragma %1 to %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd przy ustawianiu pragmy %1 do %2: %3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1790"/>
@@ -545,7 +546,7 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1816"/>
         <source>Error loading extension: %1</source>
-        <translation type="unfinished">Błąd ładowania rozszerzenia: %1</translation>
+        <translation>Wystąpił błąd przy ładownaniu rozszerzenia: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1841"/>
