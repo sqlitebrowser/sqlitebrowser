@@ -76,6 +76,28 @@ QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
     return ds;
 }
 
+// These are temporary helper functions to turn a vector of sorted columns into a single column to sort and vice verse. This is done by just taking the
+// first sort column there is and ignoring all the others or creating a single item vector respectively. These functions can be removed once all parts
+// of the application have been converted to deal with vectors of sorted columns.
+void fromSortOrderVector(const QVector<BrowseDataTableSettings::SortedColumn>& vector, int& index, Qt::SortOrder& mode)
+{
+    if(vector.size())
+    {
+        index = vector.at(0).index;
+        mode = vector.at(0).mode;
+    } else {
+        index = 0;
+        mode = Qt::AscendingOrder;
+    }
+}
+QVector<BrowseDataTableSettings::SortedColumn> toSortOrderVector(int index, Qt::SortOrder mode)
+{
+    QVector<BrowseDataTableSettings::SortedColumn> vector;
+    vector.push_back(BrowseDataTableSettings::SortedColumn(index, mode));
+    return vector;
+}
+
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
@@ -648,10 +670,14 @@ void MainWindow::populateTable()
                 }
             }
         }
+
+        int sortOrderIndex;
+        Qt::SortOrder sortOrderMode;
+        fromSortOrderVector(storedData.sortOrder, sortOrderIndex, sortOrderMode);
         if(only_defaults)
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues);
+            m_browseTableModel->setTable(tablename, sortOrderIndex, sortOrderMode, storedData.filterValues);
         else
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues, v);
+            m_browseTableModel->setTable(tablename, sortOrderIndex, sortOrderMode, storedData.filterValues, v);
 
         // There is information stored for this table, so extract it and apply it
         applyBrowseTableSettings(storedData);
@@ -703,7 +729,10 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
         ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
 
     // Sorting
-    ui->dataTable->filterHeader()->setSortIndicator(storedData.sortOrderIndex, storedData.sortOrderMode);
+    int sortOrderIndex;
+    Qt::SortOrder sortOrderMode;
+    fromSortOrderVector(storedData.sortOrder, sortOrderIndex, sortOrderMode);
+    ui->dataTable->filterHeader()->setSortIndicator(sortOrderIndex, sortOrderMode);
 
     // Filters
     if(!skipFilters)
@@ -1932,9 +1961,12 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 
     // instead of the column name we just use the column index, +2 because 'rowid, *' is the projection
     BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
-    settings.sortOrderIndex = logicalindex;
-    settings.sortOrderMode = settings.sortOrderMode == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-    ui->dataTable->sortByColumn(settings.sortOrderIndex, settings.sortOrderMode);
+    int dummy;
+    Qt::SortOrder order;
+    fromSortOrderVector(settings.sortOrder, dummy, order);
+    order = order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+    settings.sortOrder = toSortOrderVector(logicalindex, order);
+    ui->dataTable->sortByColumn(logicalindex, order);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
@@ -2405,15 +2437,33 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
 
 static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlStreamReader& xml)
 {
-    settings.sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
-    settings.sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
+    // TODO Remove this in the near future. This file format was only created temporarily by the nightlies from the late 3.11 development period.
+    if(xml.attributes().hasAttribute("sort_order_index"))
+    {
+        int sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
+        Qt::SortOrder sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
+        settings.sortOrder = toSortOrderVector(sortOrderIndex, sortOrderMode);
+    }
+
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
     settings.encoding = xml.attributes().value("encoding").toString();
     settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
     settings.unlockViewPk = xml.attributes().value("unlock_view_pk").toString();
 
     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "table") {
-        if(xml.name() == "column_widths") {
+        if(xml.name() == "sort")
+        {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "sort")
+            {
+                if(xml.name() == "column")
+                {
+                    int index = xml.attributes().value("index").toInt();
+                    int mode = xml.attributes().value("mode").toInt();
+                    settings.sortOrder.push_back(BrowseDataTableSettings::SortedColumn(index, mode));
+                    xml.skipCurrentElement();
+                }
+            }
+        } else if(xml.name() == "column_widths") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column_widths") {
                 if (xml.name() == "column") {
                     int index = xml.attributes().value("index").toInt();
@@ -2610,8 +2660,11 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         {
                             populateTable();     // Refresh view
                             sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
-                            ui->dataTable->sortByColumn(browseTableSettings[current_table].sortOrderIndex,
-                                                        browseTableSettings[current_table].sortOrderMode);
+
+                            int sortIndex;
+                            Qt::SortOrder sortMode;
+                            fromSortOrderVector(browseTableSettings[current_table].sortOrder, sortIndex, sortMode);
+                            ui->dataTable->sortByColumn(sortIndex, sortMode);
                             showRowidColumn(browseTableSettings[current_table].showRowid);
                             unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
                         }
@@ -2667,12 +2720,21 @@ static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModel
 
 static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, QXmlStreamWriter& xml)
 {
-    xml.writeAttribute("sort_order_index", QString::number(object.sortOrderIndex));
-    xml.writeAttribute("sort_order_mode", QString::number(object.sortOrderMode));
     xml.writeAttribute("show_row_id", QString::number(object.showRowid));
     xml.writeAttribute("encoding", object.encoding);
     xml.writeAttribute("plot_x_axis", object.plotXAxis);
     xml.writeAttribute("unlock_view_pk", object.unlockViewPk);
+
+    xml.writeStartElement("sort");
+    for(const auto& column : object.sortOrder)
+    {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(column.index));
+        xml.writeAttribute("mode", QString::number(column.mode));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+
     xml.writeStartElement("column_widths");
     for(auto iter=object.columnWidths.constBegin(); iter!=object.columnWidths.constEnd(); ++iter) {
         xml.writeStartElement("column");
