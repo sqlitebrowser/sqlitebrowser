@@ -606,10 +606,11 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
 void PlotDock::on_butSavePlot_clicked()
 {
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
-                                                    );
+    QString fileName = FileDialog::getSaveFileName(
+                           CreateDataFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)"));
     if(!fileName.isEmpty())
     {
         if(fileName.endsWith(".png", Qt::CaseInsensitive))
