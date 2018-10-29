@@ -556,62 +556,62 @@ Abortendo l&apos;esecuzione%3.</translation>
     <message>
         <location filename="../DbStructureModel.cpp" line="19"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="19"/>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Oggetto</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="19"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="19"/>
         <source>Schema</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="19"/>
         <source>Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Database</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="154"/>
         <source>Browsables</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigabili</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="159"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutti</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="168"/>
         <source>Temporary</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporaneo</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="306"/>
         <source>Tables (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabelle (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="311"/>
         <source>Indices (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Indici (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="316"/>
         <source>Views (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Viste (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="321"/>
         <source>Triggers (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Triggers (%1)</translation>
     </message>
 </context>
 <context>
