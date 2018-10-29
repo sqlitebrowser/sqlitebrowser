@@ -379,171 +379,176 @@ Se una qualsiasi delle altre impostazioni sono state modificate per questo file 
     <message>
         <location filename="../sqlitedb.cpp" line="261"/>
         <source>Invalid file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato file non valido</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="570"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi davvero chiudere questo database temporaneo? Tutti i dati andranno persi.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="575"/>
         <source>Do you want to save the changes made to the database file %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi salvare i cambiamenti fatti a questo file database %1?</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="627"/>
         <source>The database is currently busy: </source>
-        <translation type="unfinished"></translation>
+        <translation>Questo database è al momento occupato: </translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="628"/>
         <source>Do you want to abort that other operation?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi abortire quell&apos;altra operazione?</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="677"/>
         <source>Exporting database to SQL file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportando il database in file SQL...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="678"/>
         <location filename="../sqlitedb.cpp" line="907"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="844"/>
         <location filename="../sqlitedb.cpp" line="877"/>
         <source>No database file opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun file database aperto</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="906"/>
         <source>Executing SQL...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eseguendo SQL...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="928"/>
         <source>Action cancelled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Azione annullata.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="957"/>
         <location filename="../sqlitedb.cpp" line="970"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nello statement #%1: %2.
+Abortendo l&apos;esecuzione%3.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="960"/>
         <location filename="../sqlitedb.cpp" line="973"/>
         <source> and rolling back</source>
-        <translation type="unfinished"></translation>
+        <translation> e tornado indietro</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1183"/>
         <source>Cannot delete this object</source>
-        <translation type="unfinished"></translation>
+        <translation>Non posso cancellare questo oggetto</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1214"/>
         <source>Cannot set data on this object</source>
-        <translation type="unfinished"></translation>
+        <translation>Non posso impostare i dati in questo oggetto</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1332"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una tabella con il nome &apos;%1&apos; esiste già nello schema &apos;%2&apos;.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1343"/>
         <source>renameColumn: cannot find column %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinomina Colonna: non posso trovare la colonna %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1351"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinomina Colonna: creazione di un punto di salvataggio fallito. DB dice: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1397"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinomina Colonna: creazione di una nuova tabella fallita. DB dice: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1410"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinomina Colonna: copia dei dati in una nuova tabella fallita. DB dice:
+%1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1467"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinomina Colonna: cancellazione della vecchia tabella fallita. DB dice: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1492"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ripristino di alcuni oggetti associati a questa tabella fallito. Questo è probabilmente dovuto al fatto che i nomi di alcune colonne sono cambiati . Qui c&apos;è il SQL statement che potresti voler sistemare ed eseguire manualmente:
+
+</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1501"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinomina Colonna: rilascio del savepoint fallito. DB dice: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1540"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nel rinominare la tabella &apos;%1&apos; in &apos;%2&apos;.Messaggio dal database engine:
+%3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1575"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="unfinished"></translation>
+        <translation>... &lt;string non può essere loggato, continene dati binari&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1678"/>
         <source>could not get list of db objects: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>non è possibile ricavare la lista degli oggetti db: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1684"/>
         <source>could not get list of databases: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>non è possibile ricavare la lista dei database: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1714"/>
         <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="unfinished"></translation>
+        <translation>non ho ricevuto nessun output da pragma %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1718"/>
         <source>could not execute pragma command: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>non è possibile eseguire il comando pragma: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1739"/>
         <source>Error setting pragma %1 to %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nell&apos;impostare pragma %1 in %2: %3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1785"/>
         <source>File not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>File non trovato.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1823"/>
         <source>Error loading extension: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nel caricare l&apos;estenzione: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1848"/>
         <source>could not get column information</source>
-        <translation type="unfinished"></translation>
+        <translation>non è possibile ricavare informazioni sulla colonna</translation>
     </message>
 </context>
 <context>
