@@ -494,7 +494,9 @@ Przerywam wykonywanie%3.</translation>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Wystąpił błąd przy odtworzeniu niektórych obiektów powiązanych z tą bazą danych. Błędy tego rodzaju występują za zwyczaj w przypadku zmiany nazw niektórych kolumn. Sprawdź dokładnie następującą kwerendę SQL. Po dokonaniu zmian możesz ją ręcznie uruchomić:
+
+</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1506"/>
@@ -584,7 +586,7 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../DbStructureModel.cpp" line="154"/>
         <source>Browsables</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekty do przeglądania</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="159"/>
@@ -609,12 +611,12 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../DbStructureModel.cpp" line="316"/>
         <source>Views (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyświetlenia (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="321"/>
         <source>Triggers (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchomienia (%1)</translation>
     </message>
 </context>
 <context>
@@ -622,17 +624,17 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="14"/>
         <source>Edit database cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytuj komórkę bazy danych</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="28"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryb:</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="41"/>
         <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>To jest lista dostępnych trybów dla edytora komórek. Wybierz tryb do wyświetlania lub edycji danych dla tej komórki.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="45"/>
@@ -663,7 +665,7 @@ Przerywam wykonywanie%3.</translation>
         <location filename="../EditDialog.ui" line="73"/>
         <location filename="../EditDialog.ui" line="76"/>
         <source>Automatically adjust the editor mode to the loaded data type</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie dostosuj tryb edytora w zależności od załadowanych danych</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="79"/>
@@ -673,13 +675,13 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
         <source>Auto-switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatyczny przełącznik</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="116"/>
         <location filename="../EditDialog.ui" line="119"/>
         <source>Auto-format: pretty print on loading, compact on saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-formatowanie: upiększa tekst przy ładowaniu i kompaktuje przy zapisywaniu.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="122"/>
@@ -777,18 +779,18 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="318"/>
         <location filename="../EditDialog.ui" line="333"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="321"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz podgląd wydruku dla aktualnie wyświetlonego obrazu</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="324"/>
         <location filename="../EditDialog.ui" line="339"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="336"/>
@@ -798,7 +800,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="348"/>
         <source>Copy Hex and ASCII</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj Hex i ASCII</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="351"/>
@@ -808,7 +810,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished">Ctrl+Shift+C</translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="213"/>
@@ -840,14 +842,14 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki Tekstowe (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="313"/>
         <location filename="../EditDialog.cpp" line="335"/>
         <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki JSON (*.json)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="314"/>
@@ -855,26 +857,26 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>XML files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki XML (*.xml)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Piki graficzne (%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki Binarne (*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
-        <translation type="unfinished">Wszystkie pliki (*)</translation>
+        <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="343"/>
@@ -884,18 +886,18 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Grafika</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki SVG (*.svg)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="400"/>
         <location filename="../EditDialog.cpp" line="420"/>
         <source>Hex dump files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik szesnastkowy (*.txt)</translation>
     </message>
     <message>
         <source>Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;Binary files (*.bin);;All files (*)</source>
@@ -990,7 +992,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytuj Schemat Indeksu</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
@@ -1005,7 +1007,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
         <source>&amp;Unique</source>
-        <translation>&amp;Unikatowy</translation>
+        <translation>&amp;Unikalny</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
@@ -1040,12 +1042,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolumna indeksu</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Porządek</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="268"/>
@@ -1132,7 +1134,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="246"/>
         <source>NN</source>
-        <translation type="unfinished"></translation>
+        <translation>NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="249"/>
@@ -1142,7 +1144,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="254"/>
         <source>PK</source>
-        <translation type="unfinished"></translation>
+        <translation>PK</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="257"/>
@@ -1152,7 +1154,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="262"/>
         <source>AI</source>
-        <translation type="unfinished"></translation>
+        <translation>AI</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="265"/>
@@ -1162,7 +1164,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="270"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="273"/>
@@ -1353,7 +1355,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation type="unfinished"></translation>
+        <translation>Upiększ wydruk</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="29"/>
@@ -1438,12 +1440,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="85"/>
         <source>Keep column names in INSERT INTO</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozostaw nazwy kolumn w INSERT INTO</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiele rzędów (Wartości) dla polecenia INSERT</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
@@ -1508,7 +1510,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="61"/>
         <location filename="../ExtendedScintilla.cpp" line="236"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="231"/>
@@ -1518,7 +1520,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="235"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj...</translation>
     </message>
 </context>
 <context>
@@ -1633,7 +1635,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FileExtensionManager.ui" line="14"/>
         <source>File Extension Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Menadżer Rozszerzeń Plików</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="22"/>
