@@ -27,6 +27,7 @@
 #include "RemoteDatabase.h"
 #include "FindReplaceDialog.h"
 #include "Data.h"
+#include "CondFormat.h"
 
 #include <QFile>
 #include <QApplication>
@@ -127,6 +128,8 @@ void MainWindow::init()
 
     // Set up filters
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
+    connect(ui->dataTable->filterHeader(), SIGNAL(addCondFormat(int,QString)), this, SLOT(addCondFormat(int,QString)));
+    connect(ui->dataTable->filterHeader(), SIGNAL(clearAllCondFormats(int)), this, SLOT(clearAllCondFormats(int)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Select in table the rows correspoding to the selected points in plot
@@ -716,7 +719,12 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
         bool oldState = filterHeader->blockSignals(true);
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
-        filterHeader->blockSignals(oldState);
+
+        // Conditional formats
+        for(auto formatIt=storedData.condFormats.constBegin(); formatIt!=storedData.condFormats.constEnd(); ++formatIt)
+            m_browseTableModel->setCondFormats(formatIt.key(), formatIt.value());
+
+      filterHeader->blockSignals(oldState);
     }
 
     // Encoding
@@ -2438,6 +2446,21 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     xml.skipCurrentElement();
                 }
             }
+        } else if(xml.name() == "conditional_formats") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "conditional_formats") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
+                        if(xml.name() == "format") {
+                            CondFormat newCondFormat(xml.attributes().value("condition").toString(),
+                                                     QColor(xml.attributes().value("color").toString()),
+                                                     settings.encoding);
+                            settings.condFormats[index].append(newCondFormat);
+                            xml.skipCurrentElement();
+                        }
+                    }
+                }
+            }
         } else if(xml.name() == "display_formats") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "display_formats") {
                 if (xml.name() == "column") {
@@ -2700,6 +2723,19 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeEndElement();
     }
     xml.writeEndElement();
+    xml.writeStartElement("conditional_formats");
+    for(auto iter=object.condFormats.constBegin(); iter!=object.condFormats.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        for(auto format : iter.value()) {
+            xml.writeStartElement("format");
+            xml.writeAttribute("condition", format.filter());
+            xml.writeAttribute("color", format.color().name());
+            xml.writeEndElement();
+        }
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
     xml.writeStartElement("display_formats");
     for(auto iter=object.displayFormats.constBegin(); iter!=object.displayFormats.constEnd(); ++iter) {
         xml.writeStartElement("column");
@@ -2870,6 +2906,20 @@ void MainWindow::updateFilter(int column, const QString& value)
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
     applyBrowseTableSettings(settings, true);
+}
+
+void MainWindow::addCondFormat(int column, const QString& value)
+{
+    CondFormat newCondFormat(value, m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()), m_browseTableModel->encoding());
+    m_browseTableModel->addCondFormat(column, newCondFormat);
+    browseTableSettings[currentlyBrowsedTableName()].condFormats[column].append(newCondFormat);
+}
+
+void MainWindow::clearAllCondFormats(int column)
+{
+    QVector<CondFormat> emptyCondFormatVector = QVector<CondFormat>();
+    m_browseTableModel->setCondFormats(column, emptyCondFormatVector);
+    browseTableSettings[currentlyBrowsedTableName()].condFormats[column].clear();
 }
 
 void MainWindow::editEncryption()

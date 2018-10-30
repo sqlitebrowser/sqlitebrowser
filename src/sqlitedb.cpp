@@ -1725,18 +1725,12 @@ void DBBrowserDB::updateSchema()
     emit structureUpdated();
 }
 
-QString DBBrowserDB::getPragma(const QString& pragma)
+QString DBBrowserDB::selectSingleCell(const QString& sql, bool logsql)
 {
     waitForDbRelease();
 
     if(!isOpen())
         return QString();
-
-    QString sql;
-    if (pragma=="case_sensitive_like")
-        sql = "SELECT 'x' NOT LIKE 'X'";
-    else
-        sql = QString("PRAGMA %1").arg(pragma);
 
     sqlite3_stmt* vm;
     const char* tail;
@@ -1745,19 +1739,30 @@ QString DBBrowserDB::getPragma(const QString& pragma)
     // Get value from DB
     int err = sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &vm, &tail);
     if(err == SQLITE_OK){
-        logSQL(sql, kLogMsg_App);
+        if (logsql)
+            logSQL(sql, kLogMsg_App);
         if(sqlite3_step(vm) == SQLITE_ROW)
             retval = QString::fromUtf8((const char *) sqlite3_column_text(vm, 0));
         else
-            qWarning() << tr("didn't receive any output from pragma %1").arg(pragma);
+            qWarning() << tr("didn't receive any output from %1").arg(sql);
 
         sqlite3_finalize(vm);
     } else {
-        qWarning() << tr("could not execute pragma command: %1, %2").arg(err).arg(sqlite3_errmsg(_db));
+        qWarning() << tr("could not execute command: %1, %2").arg(err).arg(sqlite3_errmsg(_db));
     }
 
     // Return it
     return retval;
+}
+
+QString DBBrowserDB::getPragma(const QString& pragma)
+{
+    QString sql;
+    if (pragma=="case_sensitive_like")
+        sql = "SELECT 'x' NOT LIKE 'X'";
+    else
+        sql = QString("PRAGMA %1").arg(pragma);
+    return selectSingleCell(sql);
 }
 
 bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)

@@ -3,6 +3,8 @@
 
 #include "sqlitedb.h"
 #include "PlotDock.h"
+#include "Palette.h"
+#include "CondFormat.h"
 
 #include <QMainWindow>
 #include <QMap>
@@ -30,6 +32,7 @@ struct BrowseDataTableSettings
     Qt::SortOrder sortOrderMode;
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
+    QMap<int, QVector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -177,6 +180,8 @@ private:
 
     QString defaultBrowseTableEncoding;
 
+    Palette m_condFormatPalette;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -278,6 +283,8 @@ private slots:
     void saveProject();
     void fileAttach();
     void updateFilter(int column, const QString& value);
+    void addCondFormat(int column, const QString& value);
+    void clearAllCondFormats(int column);
     void editEncryption();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();

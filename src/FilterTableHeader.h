@@ -25,12 +25,16 @@ public slots:
 
 signals:
     void filterChanged(int column, QString value);
+    void addCondFormat(int column, QString filter);
+    void clearAllCondFormats(int column);
 
 protected:
     void updateGeometries() override;
 
 private slots:
     void inputChanged(const QString& new_value);
+    void addFilterAsCondFormat(const QString& filter);
+    void clearAllCondFormats();
 
 private:
     QList<FilterLineEdit*> filterWidgets;

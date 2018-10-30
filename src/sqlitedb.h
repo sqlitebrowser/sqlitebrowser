@@ -176,6 +176,7 @@ public:
     /// log an SQL statement [thread-safe]
     void logSQL(QString statement, int msgtype);
 
+    QString selectSingleCell(const QString& sql, bool logsql = true);
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);
     bool setPragma(const QString& pragma, const QString& value, QString& originalvalue);
