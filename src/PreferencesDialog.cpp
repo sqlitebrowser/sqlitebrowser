@@ -16,7 +16,7 @@
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
-      m_dbFileExtensions(FileDialog::getSqlDatabaseFileFilter().split(";;"))
+      m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -40,6 +40,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 #endif
 
     loadSettings();
+
+    // Avoid different heights due to having check boxes or not
+    ui->treeSyntaxHighlighting->setUniformRowHeights(true);
 }
 
 /*
@@ -53,6 +56,7 @@ PreferencesDialog::~PreferencesDialog()
 void PreferencesDialog::chooseLocation()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -73,11 +77,11 @@ void PreferencesDialog::loadSettings()
     ui->spinPrefetchSize->setValue(Settings::getValue("db", "prefetchsize").toInt());
     ui->editDatabaseDefaultSqlText->setText(Settings::getValue("db", "defaultsqltext").toString());
 
-    ui->defaultFieldTypeComboBox->addItems(sqlb::Field::Datatypes);
+    ui->defaultFieldTypeComboBox->addItems(DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
-    if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
+    if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }
@@ -97,6 +101,7 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_reg_bg, "reg_bg");
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
+    ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
@@ -177,6 +182,7 @@ void PreferencesDialog::loadSettings()
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
+    ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
     ui->toolbarStyleComboBox->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
 }
@@ -206,6 +212,7 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
+    Settings::setValue("databrowser", "complete_threshold", ui->spinCompleteThreshold->value());
     Settings::setValue("databrowser", "null_text", ui->txtNull->text());
     Settings::setValue("databrowser", "blob_text", ui->txtBlob->text());
     Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
@@ -235,6 +242,7 @@ void PreferencesDialog::saveSettings()
         extList.append(item->text());
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
+    Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
 
     // Save remote settings
     Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
@@ -361,6 +369,7 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 void PreferencesDialog::addExtension()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenExtensionFile,
                 this,
                 tr("Select extension file"),
                 tr("Extensions(*.so *.dll);;All files(*)"));
@@ -496,7 +505,7 @@ void PreferencesDialog::addClientCertificate()
 {
     // Get certificate file to import and abort here if no file gets selected
     // NOTE: We assume here that this file contains both, certificate and private key!
-    QString path = FileDialog::getOpenFileName(this, tr("Import certificate file"), "*.pem");
+    QString path = FileDialog::getOpenFileName(OpenCertificateFile, this, tr("Import certificate file"), "*.pem");
     if(path.isEmpty())
         return;
 
@@ -568,6 +577,7 @@ void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCert
 void PreferencesDialog::chooseRemoteCloneDirectory()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);

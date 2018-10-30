@@ -14,8 +14,8 @@ class FilterTableHeader : public QHeaderView
 
 public:
     explicit FilterTableHeader(QTableView* parent = nullptr);
-    virtual QSize sizeHint() const;
-    bool hasFilters() const {return (filterWidgets.count() > 0);};
+    QSize sizeHint() const override;
+    bool hasFilters() const {return (filterWidgets.count() > 0);}
     
 public slots:
     void generateFilters(int number, bool showFirst = false);
@@ -29,7 +29,7 @@ signals:
     void clearAllCondFormats(int column);
 
 protected:
-    virtual void updateGeometries();
+    void updateGeometries() override;
 
 private slots:
     void inputChanged(const QString& new_value);

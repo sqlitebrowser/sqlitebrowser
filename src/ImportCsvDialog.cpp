@@ -100,10 +100,15 @@ namespace {
 void rollback(
         ImportCsvDialog* dialog,
         DBBrowserDB* pdb,
+        DBBrowserDB::db_pointer_type* db_ptr,
         const QString& savepointName,
         size_t nRecord,
         const QString& message)
 {
+    // Release DB handle. This needs to be done before calling revertToSavepoint as that function needs to be able to acquire its own handle.
+    if(db_ptr)
+        *db_ptr = nullptr;
+
     QApplication::restoreOverrideCursor();  // restore original cursor
     if(!message.isEmpty())
     {
@@ -239,8 +244,8 @@ void ImportCsvDialog::updatePreview()
 
     // Set horizontal header data
     QStringList horizontalHeader;
-    for(const sqlb::FieldPtr& field : fieldList)
-        horizontalHeader.push_back(field->name());
+    for(const sqlb::Field& field : fieldList)
+        horizontalHeader.push_back(field.name());
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
@@ -343,11 +348,11 @@ void ImportCsvDialog::matchSimilar()
         auto item = ui->filePicker->item(i);
         auto header = generateFieldList(item->data(Qt::DisplayRole).toString());
 
-        if (selectedHeader.count() == header.count())
+        if (selectedHeader.size() == header.size())
         {
             bool matchingHeader = std::equal(selectedHeader.begin(), selectedHeader.end(), header.begin(),
-                                             [](const sqlb::FieldPtr& item1, const sqlb::FieldPtr& item2) -> bool {
-                                                return (item1->name() == item2->name());
+                                             [](const sqlb::Field& item1, const sqlb::Field& item2) -> bool {
+                                                return (item1.name() == item2.name());
                                              });
             if (matchingHeader) {
                 item->setCheckState(Qt::Checked);
@@ -412,7 +417,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
 
             // Add field to the column list. For now we set the data type to nothing but this might be overwritten later in the automatic
             // type detection code.
-            fieldList.push_back(sqlb::FieldPtr(new sqlb::Field(fieldname, "")));
+            fieldList.emplace_back(fieldname, "");
         }
 
         // Try to find out a data type for each column. Skip the header row if there is one.
@@ -422,7 +427,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             {
                 // If the data type has been set to TEXT, there's no going back because it means we had at least one row with text-only
                 // content and that means we don't want to set the data type to any number type.
-                QString old_type = fieldList.at(i)->type();
+                QString old_type = fieldList.at(i).type();
                 if(old_type != "TEXT")
                 {
                     QString content = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
@@ -445,7 +450,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
                     else if(old_type == "INTEGER" && convert_to_int)                    // It was integer so far and still is
                         new_type = "INTEGER";
 
-                    fieldList.at(i)->setType(new_type);
+                    fieldList.at(i).setType(new_type);
                 }
             }
         }
@@ -496,7 +501,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName));
     if(obj && obj->type() == sqlb::Object::Types::Table)
     {
-        if(obj.dynamicCast<sqlb::Table>()->fields().size() != fieldList.size())
+        if(std::dynamic_pointer_cast<sqlb::Table>(obj)->fields.size() != fieldList.size())
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
@@ -533,7 +538,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     QString restorepointName = pdb->generateSavepointName("csvimport");
     if(!pdb->setSavepoint(restorepointName))
     {
-        rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
+        rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
         return false;
     }
 
@@ -546,7 +551,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
         {
-            rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+            rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
             return false;
         }
 
@@ -558,10 +563,10 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName)).dynamicCast<sqlb::Table>();
+        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName));
         if(tbl)
         {
-            for(const sqlb::FieldPtr& f : tbl->fields())
+            for(const sqlb::Field& f : tbl->fields)
             {
                 // For determining the value for empty fields we follow a set of rules
 
@@ -571,17 +576,17 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                 // If a field has a default value, that gets priority over everything else.
                 // Exception: if the user wants to ignore default values we never use them.
-                if(!ignoreDefaults && !f->defaultValue().isNull())
+                if(!ignoreDefaults && !f.defaultValue().isNull())
                 {
-                    nullValues << f->defaultValue().toUtf8();
+                    nullValues << f.defaultValue().toUtf8();
                 } else {
                     // If it has no default value, check if the field is NOT NULL
-                    if(f->notnull())
+                    if(f.notnull())
                     {
                         // The field is NOT NULL
 
                         // If this is an integer column insert 0. Otherwise insert an empty string.
-                        if(f->isInteger())
+                        if(f.isInteger())
                             nullValues << "0";
                         else
                             nullValues << "";
@@ -601,8 +606,8 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
-    QString sQuery = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
-    for(int i=1;i<=fieldList.size();i++)
+    QString sQuery = QString("INSERT %1 INTO %2 VALUES(").arg(currentOnConflictStrategy()).arg(sqlb::escapeIdentifier(tableName));
+    for(size_t i=1;i<=fieldList.size();i++)
         sQuery.append(QString("?%1,").arg(i));
     sQuery.chop(1); // Remove last comma
     sQuery.append(")");
@@ -672,13 +677,15 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Some error occurred or the user cancelled the action
 
         // Rollback the entire import. If the action was cancelled, don't show an error message. If it errored, show an error message.
-        sqlite3_finalize(stmt);
         if(result == CSVParser::ParserResult::ParserResultCancelled)
         {
-            rollback(this, pdb, restorepointName, 0, QString());
+            sqlite3_finalize(stmt);
+            rollback(this, pdb, &pDb, restorepointName, 0, QString());
             return false;
         } else {
-            rollback(this, pdb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(pdb->lastError()));
+            QString error(sqlite3_errmsg(pDb.get()));
+            sqlite3_finalize(stmt);
+            rollback(this, pdb, &pDb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(error));
             return false;
         }
     }
@@ -773,6 +780,19 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->comboEncoding->currentText();
 }
 
+QString ImportCsvDialog::currentOnConflictStrategy() const
+{
+    switch(ui->comboOnConflictStrategy->currentIndex())
+    {
+    case 1:
+        return "OR IGNORE";
+    case 2:
+        return "OR REPLACE";
+    default:
+        return QString();
+    }
+}
+
 void ImportCsvDialog::toggleAdvancedSection(bool show)
 {
     ui->labelNoTypeDetection->setVisible(show);
@@ -781,4 +801,6 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkFailOnMissing->setVisible(show);
     ui->labelIgnoreDefaults->setVisible(show);
     ui->checkIgnoreDefaults->setVisible(show);
+    ui->labelOnConflictStrategy->setVisible(show);
+    ui->comboOnConflictStrategy->setVisible(show);
 }

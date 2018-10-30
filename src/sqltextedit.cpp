@@ -20,6 +20,7 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     registerImage(SqlUiLexer::ApiCompleterIconIdFunction, QImage(":/icons/function"));
     registerImage(SqlUiLexer::ApiCompleterIconIdTable, QImage(":/icons/table"));
     registerImage(SqlUiLexer::ApiCompleterIconIdColumn, QImage(":/icons/field"));
+    registerImage(SqlUiLexer::ApiCompleterIconIdSchema, QImage(":/icons/database"));
 
     // Do rest of initialisation
     reloadSettings();

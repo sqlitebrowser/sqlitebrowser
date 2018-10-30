@@ -5,6 +5,9 @@
 #include "FileDialog.h"
 #include "MainWindow.h"     // Just for BrowseDataTableSettings, not for the actual main window class
 
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+
 PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PlotDock),
@@ -40,16 +43,26 @@ PlotDock::PlotDock(QWidget* parent)
     QShortcut* shortcutCopy = new QShortcut(QKeySequence::Copy, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutCopy, SIGNAL(activated()), this, SLOT(copy()));
 
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &PlotDock::openPrintDialog);
+
     ui->plotWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Set up context menu
     m_contextMenu = new QMenu(this);
+
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     copyAction->setShortcut(shortcutCopy->key());
     m_contextMenu->addAction(copyAction);
-
     connect(copyAction, &QAction::triggered, [&]() {
        copy();
+    });
+
+    QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), m_contextMenu);
+    printAction->setShortcut(shortcutPrint->key());
+    m_contextMenu->addAction(printAction);
+    connect(printAction, &QAction::triggered, [&]() {
+       openPrintDialog();
     });
 
     QAction* showLegendAction = new QAction(tr("Show legend"), m_contextMenu);
@@ -544,10 +557,11 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
 void PlotDock::on_butSavePlot_clicked()
 {
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
-                                                    );
+    QString fileName = FileDialog::getSaveFileName(
+                           CreateDataFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)"));
     if(!fileName.isEmpty())
     {
         if(fileName.endsWith(".png", Qt::CaseInsensitive))
@@ -801,4 +815,28 @@ void PlotDock::reject()
     // We override this, to ensure the Escape key doesn't make this dialog
     // dock go away
     return;
+}
+
+void PlotDock::openPrintDialog()
+{
+    QPrinter printer;
+    QPrintPreviewDialog previewDialog(&printer, this);
+    connect(&previewDialog, &QPrintPreviewDialog::paintRequested, this, &PlotDock::renderPlot);
+    previewDialog.exec();
+}
+
+void PlotDock::renderPlot(QPrinter* printer)
+{
+    QCPPainter painter(printer);
+    QRectF pageRect = printer->pageRect(QPrinter::DevicePixel);
+
+    int plotWidth = ui->plotWidget->viewport().width();
+    int plotHeight = ui->plotWidget->viewport().height();
+    double scale = pageRect.width()/(double)plotWidth;
+
+    painter.setMode(QCPPainter::pmVectorized);
+    painter.setMode(QCPPainter::pmNoCaching);
+
+    painter.scale(scale, scale);
+    ui->plotWidget->toPainter(&painter, plotWidth, plotHeight);
 }

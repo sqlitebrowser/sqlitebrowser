@@ -117,7 +117,7 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortColumn, Qt::SortOrder sortOrder, const QVector<QString>& display_format)
+void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortColumn, Qt::SortOrder sortOrder, const QMap<int, QString> filterValues, const QVector<QString>& display_format)
 {
     // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
@@ -126,15 +126,18 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
     m_sTable = table;
     m_vDisplayFormat = display_format;
 
+    for(auto filterIt=filterValues.constBegin(); filterIt!=filterValues.constEnd(); ++filterIt)
+        updateFilter(filterIt.key(), filterIt.value(), false);
+
     // The first column is the rowid column and therefore is always of type integer
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
     bool allOk = false;
-    if(m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
+    if(m_db.getObjectByName(table) && m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
     {
-        sqlb::TablePtr t = m_db.getObjectByName(table).dynamicCast<sqlb::Table>();
-        if(t && t->fields().size()) // parsing was OK
+        sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(table);
+        if(t && t->fields.size()) // parsing was OK
         {
             m_sRowidColumn = t->rowidColumn();
             m_headers.push_back(m_sRowidColumn);
@@ -146,9 +149,9 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
                     << "REAL"
                     << "TEXT"
                     << "BLOB";
-            for(const sqlb::FieldPtr& fld :  t->fields())
+            for(const sqlb::Field& fld :  t->fields)
             {
-                QString name(fld->type().toUpper());
+                QString name(fld.type().toUpper());
                 int colType = dataTypes.indexOf(name);
                 colType = (colType == -1) ? SQLITE_TEXT : colType + 1;
                 m_vDataTypes.push_back(colType);
@@ -320,7 +323,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
         if(fk.isSet())
-            return tr("References %1(%2)\nHold Ctrl+Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","));
+          return tr("References %1(%2)\nHold %3Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","))
+            .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
         else
             return QString();
     }
@@ -345,15 +349,15 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
         return empty_foreign_key_clause;
 
     // Convert object to a table and check if the column number is in the valid range
-    sqlb::TablePtr tbl = obj.dynamicCast<sqlb::Table>();
-    if(tbl && tbl->name().size() && (column >= 0 && column < tbl->fields().count()))
+    sqlb::TablePtr tbl = std::dynamic_pointer_cast<sqlb::Table>(obj);
+    if(tbl && tbl->name().size() && (column >= 0 && column < static_cast<int>(tbl->fields.size())))
     {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields().at(column)}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
-            return *(ptr.dynamicCast<sqlb::ForeignKeyClause>());
+            return *(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(ptr));
     }
 
     return empty_foreign_key_clause;
@@ -390,11 +394,11 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         // used in a primary key. Otherwise SQLite will always output an 'datatype mismatch' error.
         if(newValue == "" && !newValue.isNull())
         {
-            sqlb::TablePtr table = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
+            sqlb::TablePtr table = m_db.getObjectByName<sqlb::Table>(m_sTable);
             if(table)
             {
-                sqlb::FieldPtr field = table->field(table->findField(m_headers.at(index.column())));
-                if(table->primaryKey().contains(field) && field->isInteger())
+                auto field = sqlb::findField(table, m_headers.at(index.column()));
+                if(contains(table->primaryKey(), field->name()) && field->isInteger())
                     newValue = "0";
             }
         }
@@ -407,7 +411,14 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_pseudoPk))
         {
             cached_row.replace(index.column(), newValue);
-            lock.unlock();
+            if(m_headers.at(index.column()) == m_sRowidColumn) {
+                cached_row.replace(0, newValue);
+                const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
+                lock.unlock();
+                emit dataChanged(rowidIndex, rowidIndex);
+            } else {
+                lock.unlock();
+            }
             emit dataChanged(index, index);
             return true;
         } else {
@@ -431,9 +442,8 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     bool custom_display_format = false;
     if(m_vDisplayFormat.size())
     {
-        // NOTE: This assumes that custom display formats never start and end with a backtick
         if(index.column() > 0)
-            custom_display_format = !(m_vDisplayFormat.at(index.column()-1).startsWith("`") && m_vDisplayFormat.at(index.column()-1).endsWith("`"));
+            custom_display_format = m_vDisplayFormat.at(index.column()-1) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)
@@ -527,21 +537,27 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         return false;
     }
 
-    beginRemoveRows(parent, row, row + count - 1);
-
     QStringList rowids;
     for(int i=count-1;i>=0;i--)
     {
         if(m_cache.count(row+i)) {
             rowids.append(m_cache.at(row + i).at(0));
         }
-        m_cache.erase(row + i);
-        m_currentRowCount--;
     }
 
     bool ok = m_db.deleteRecords(m_sTable, rowids, m_pseudoPk);
 
-    endRemoveRows();
+    if (ok) {
+        beginRemoveRows(parent, row, row + count - 1);
+
+        for(int i=count-1;i>=0;i--)
+        {
+            m_cache.erase(row + i);
+            m_currentRowCount--;
+        }
+
+        endRemoveRows();
+    }
     return ok;
 }
 
@@ -556,11 +572,11 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    sqlb::TablePtr t = m_db.getObjectByName(m_sTable).dynamicCast<sqlb::Table>();
+    sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_sTable);
 
-    sqlb::FieldVector pk = t->primaryKey();
-    for (int col = 0; col < t->fields().size(); ++col) {
-        if(!pk.contains(t->fields().at(col))) {
+    QStringList pk = t->primaryKey();
+    for (size_t col = 0; col < t->fields.size(); ++col) {
+        if(!contains(pk, t->fields.at(col).name())) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 
@@ -729,7 +745,7 @@ void SqliteTableModel::setCondFormats(int column, const QVector<CondFormat>& con
     emit layoutChanged();
 }
 
-void SqliteTableModel::updateFilter(int column, const QString& value)
+void SqliteTableModel::updateFilter(int column, const QString& value, bool applyQuery)
 {
     QString whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
 
@@ -741,7 +757,8 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     }
 
     // Build the new query
-    buildQuery();
+    if (applyQuery)
+        buildQuery();
 }
 
 void SqliteTableModel::clearCache()

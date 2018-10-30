@@ -27,6 +27,7 @@ HEADERS += \
     EditIndexDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
+    AddRecordDialog.h \
     Settings.h \
     PreferencesDialog.h \
     EditDialog.h \
@@ -76,6 +77,7 @@ SOURCES += \
     MainWindow.cpp \
     EditIndexDialog.cpp \
     EditTableDialog.cpp \
+    AddRecordDialog.cpp \
     Settings.cpp \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
@@ -127,6 +129,7 @@ FORMS += \
     EditIndexDialog.ui \
     AboutDialog.ui \
     EditTableDialog.ui \
+    AddRecordDialog.ui \
     PreferencesDialog.ui \
     EditDialog.ui \
     ExportDataDialog.ui \

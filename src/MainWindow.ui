@@ -56,6 +56,8 @@
           <addaction name="editCreateIndexAction"/>
           <addaction name="editModifyObjectAction"/>
           <addaction name="editDeleteObjectAction"/>
+          <addaction name="separator"/>
+          <addaction name="actionDbPrint"/>
          </widget>
         </item>
         <item>
@@ -116,6 +118,12 @@ You can drag SQL statements from an object row and drop them into other applicat
              <size>
               <width>150</width>
               <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="toolTip">
@@ -184,6 +192,20 @@ You can drag SQL statements from an object row and drop them into other applicat
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="buttonPrintTable">
+            <property name="toolTip">
+             <string>Print currently browsed table data [Ctrl+P]</string>
+            </property>
+            <property name="whatsThis">
+             <string>Print currently browsed table data. Print selection if more than one cell is selected.</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -197,12 +219,12 @@ You can drag SQL statements from an object row and drop them into other applicat
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonNewRecord">
+           <widget class="QToolButton" name="buttonNewRecord">
             <property name="toolTip">
              <string>Insert a new record in the current table</string>
             </property>
             <property name="whatsThis">
-             <string>This button creates a new, empty record in the database</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>New Record</string>
@@ -210,7 +232,7 @@ You can drag SQL statements from an object row and drop them into other applicat
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonDeleteRecord">
+           <widget class="QToolButton" name="buttonDeleteRecord">
             <property name="toolTip">
              <string>Delete the current record</string>
             </property>
@@ -230,7 +252,13 @@ You can drag SQL statements from an object row and drop them into other applicat
            <bool>true</bool>
           </property>
           <property name="whatsThis">
-           <string>This is the database view. You can double-click any record to edit its contents in the cell editor window.</string>
+           <string>This is the database table view. You can do the following actions:
+ - Start writing for editing inline the value.
+ - Double-click any record to edit its contents in the cell editor window.
+ - Alt+Del for deleting the cell content to NULL.
+ - Ctrl+&quot; for duplicating the current record.
+ - Ctrl+' for copying the value from the cell above.
+ - Standard selection and copy/paste operations.</string>
           </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
@@ -909,6 +937,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <addaction name="actionSqlOpenTab"/>
           <addaction name="actionSqlOpenFile"/>
           <addaction name="actionSqlSaveFilePopup"/>
+          <addaction name="actionSqlPrint"/>
           <addaction name="separator"/>
           <addaction name="actionExecuteSql"/>
           <addaction name="actionSqlExecuteLine"/>
@@ -1009,20 +1038,30 @@ You can drag SQL statements from an object row and drop them into other applicat
      <string>&amp;Help</string>
     </property>
     <addaction name="helpWhatsThisAction"/>
+    <addaction name="separator"/>
     <addaction name="actionWebsite"/>
     <addaction name="actionWiki"/>
     <addaction name="actionSqlCipherFaq"/>
+    <addaction name="separator"/>
     <addaction name="actionBug_report"/>
+    <addaction name="actionFeature_Request"/>
+    <addaction name="actionDonatePatreon"/>
+    <addaction name="separator"/>
     <addaction name="helpAboutAction"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="fileCompactAction"/>
     <addaction name="actionEncryption"/>
     <addaction name="separator"/>
     <addaction name="actionLoadExtension"/>
+    <addaction name="separator"/>
+    <addaction name="actionIntegrityCheck"/>
+    <addaction name="actionQuickCheck"/>
+    <addaction name="actionForeignKeyCheck"/>
+    <addaction name="actionOptimize"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
@@ -1200,9 +1239,12 @@ You can drag SQL statements from an object row and drop them into other applicat
     <layout class="QVBoxLayout" name="verticalLayout_9">
      <item>
       <widget class="QTreeView" name="treeSchemaDock">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="whatsThis">
         <string>This is the structure of the opened database.
-You can drag multiple object names from the Name column and drop them into the SQL editor.
+You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </string>
        </property>
@@ -1753,6 +1795,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <enum>QAction::NoRole</enum>
    </property>
   </action>
+  <action name="actionFeature_Request">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>Feature Re&amp;quest...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
   <action name="actionWebsite">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -1760,6 +1814,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Web&amp;site</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionDonatePatreon">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Donate on Patreon...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2157,9 +2223,145 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <enum>QAction::TextHeuristicRole</enum>
    </property>
   </action>
+  <action name="insertValuesAction">
+   <property name="text">
+    <string>Insert Values...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a dialog for inserting values in a new record</string>
+   </property>
+   <property name="statusTip">
+    <string>Open a dialog for inserting values in a new record</string>
+   </property>
+  </action>
+  <action name="newRecordAction">
+   <property name="text">
+    <string>New Record</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert new record using default values in browsed table</string>
+   </property>
+   <property name="statusTip">
+    <string>Insert new record using default values in browsed table</string>
+   </property>
+  </action>
   <action name="fileNewInMemoryDatabaseAction">
    <property name="text">
     <string>New In-&amp;Memory Database</string>
+   </property>
+  </action>
+  <action name="actionDropQualifiedCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop Qualified Names</string>
+   </property>
+   <property name="statusTip">
+    <string>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+   <property name="whatsThis">
+    <string>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+  </action>
+  <action name="actionEnquoteNamesCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop Enquoted Names</string>
+   </property>
+   <property name="statusTip">
+    <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+   <property name="whatsThis">
+    <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+  </action>
+  <action name="actionIntegrityCheck">
+   <property name="text">
+    <string>&amp;Integrity Check</string>
+   </property>
+   <property name="whatsThis">
+    <string>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</string>
+   </property>
+  </action>
+  <action name="actionForeignKeyCheck">
+   <property name="text">
+    <string>&amp;Foreign-Key Check</string>
+   </property>
+   <property name="whatsThis">
+    <string>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</string>
+   </property>
+  </action>
+  <action name="actionQuickCheck">
+   <property name="text">
+    <string>&amp;Quick Integrity Check</string>
+   </property>
+   <property name="toolTip">
+    <string>Run a quick integrity check over the open DB</string>
+   </property>
+   <property name="whatsThis">
+    <string>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</string>
+   </property>
+  </action>
+  <action name="actionOptimize">
+   <property name="text">
+    <string>&amp;Optimize</string>
+   </property>
+   <property name="toolTip">
+    <string>Attempt to optimize the database</string>
+   </property>
+   <property name="whatsThis">
+    <string>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</string>
+   </property>
+  </action>
+  <action name="actionSqlPrint">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print text from current SQL editor tab [Ctrl+P]</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>Open a dialog for printing the text in the current SQL editor tab</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionDbPrint">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print the structure of the opened database [Ctrl+P]</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>Open a dialog for printing the structure of the opened database</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
  </widget>
@@ -2644,6 +2846,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>MainWindow</receiver>
    <slot>createTreeContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeSchemaDock</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createSchemaDockContextMenu(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>111</x>
@@ -3472,6 +3690,34 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
+   <sender>newRecordAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>insertValuesAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>insertValues()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>fileNewInMemoryDatabaseAction</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -3481,9 +3727,53 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <x>518</x>
      <y>314</y>
     </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlPrint</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openSqlPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
     <hint type="destinationlabel">
      <x>518</x>
      <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDbPrint</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>printDbStructure()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonPrintTable</sender>
+   <signal>clicked()</signal>
+   <receiver>dataTable</receiver>
+   <slot>openPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>315</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>347</y>
     </hint>
    </hints>
   </connection>

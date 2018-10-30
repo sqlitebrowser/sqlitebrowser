@@ -5,6 +5,7 @@
 #include "EditIndexDialog.h"
 #include "AboutDialog.h"
 #include "EditTableDialog.h"
+#include "AddRecordDialog.h"
 #include "ImportCsvDialog.h"
 #include "ExportDataDialog.h"
 #include "Settings.h"
@@ -51,10 +52,30 @@
 #include <QShortcut>
 #include <QTextCodec>
 #include <QUrlQuery>
+#include <QDataStream>      // This include seems to only be necessary for the Windows build
+#include <QPrinter>
+#include <QPrintPreviewDialog>
 
 #ifdef Q_OS_MACX //Needed only on macOS
     #include <QOpenGLWidget>
 #endif
+
+// These are needed for reading and writing object files
+QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
+{
+    // Read in the item
+    QVariant v;
+    ds >> v;
+
+    // If it is a string list, we can treat it as an object identifier. If it isn't, we assume it's just a
+    // single string and use interpret it as the table name in the main schema. This is done for backwards
+    // compatability with old project file formats.
+    if(v.toStringList().isEmpty())
+        objid = sqlb::ObjectIdentifier("main", v.toString());
+    else
+        objid = sqlb::ObjectIdentifier(v);
+    return ds;
+}
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -159,6 +180,10 @@ void MainWindow::init()
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
     connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
 
+    // Add print shortcut for the DB Structure tab (dbTreeWidget) with context to the widget, so other print shortcuts aren't eclipsed.
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence(QKeySequence::Print), ui->dbTreeWidget, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &MainWindow::printDbStructure);
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
@@ -178,10 +203,19 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->actionEditCopyCreateStatement);
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
+    popupSchemaDockMenu = new QMenu(this);
+    popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
+    popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
+
     popupOpenDbMenu = new QMenu(this);
     popupOpenDbMenu->addAction(ui->fileOpenAction);
     popupOpenDbMenu->addAction(ui->fileOpenReadOnlyAction);
     ui->fileOpenActionPopup->setMenu(popupOpenDbMenu);
+
+    popupNewRecordMenu = new QMenu(this);
+    popupNewRecordMenu->addAction(ui->newRecordAction);
+    popupNewRecordMenu->addAction(ui->insertValuesAction);
+    ui->buttonNewRecord->setMenu(popupNewRecordMenu);
 
     popupSaveSqlFileMenu = new QMenu(this);
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFile);
@@ -202,13 +236,14 @@ void MainWindow::init()
 
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
-    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
-    popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
-    popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
-    popupBrowseDataHeaderMenu->addSeparator();
-    popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
     popupBrowseDataHeaderMenu->addAction(ui->actionHideColumns);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowAllColumns);
+    popupBrowseDataHeaderMenu->addSeparator();
+    popupBrowseDataHeaderMenu->addAction(ui->actionUnlockViewEditing);
+    popupBrowseDataHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
+    popupBrowseDataHeaderMenu->addSeparator();
+    popupBrowseDataHeaderMenu->addAction(ui->actionSetTableEncoding);
+    popupBrowseDataHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
     connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
@@ -223,9 +258,7 @@ void MainWindow::init()
 
     // Add menu item for plot dock
     ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockPlot->toggleViewAction());
-    QList<QKeySequence> plotkeyseqlist;
-    plotkeyseqlist << QKeySequence(tr("Ctrl+P")) << QKeySequence(tr("Ctrl+D"));
-    ui->viewMenu->actions().at(1)->setShortcuts(plotkeyseqlist);
+    ui->viewMenu->actions().at(1)->setShortcut(QKeySequence(tr("Ctrl+D")));
     ui->viewMenu->actions().at(1)->setIcon(QIcon(":/icons/log_dock"));
 
     // Add menu item for schema dock
@@ -300,10 +333,14 @@ void MainWindow::init()
     connect(m_remoteDb, &RemoteDatabase::gotCurrentVersion, this, &MainWindow::checkNewVersion);
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, this, &MainWindow::setRecordsetLabel);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &MainWindow::deleteRecord);
+    connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
+    connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
+    ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
+    ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
 
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, [this](){
         auto & settings = browseTableSettings[currentlyBrowsedTableName()];
-        plotDock->updatePlot(m_browseTableModel, &settings, true, true);
+        plotDock->updatePlot(m_browseTableModel, &settings, true, false);
     });
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
@@ -322,6 +359,20 @@ void MainWindow::init()
         populateTable();
     });
 
+    // Connect tool pragmas
+    connect(ui->actionIntegrityCheck, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA integrity_check;", ui->actionIntegrityCheck->text());
+    });
+    connect(ui->actionQuickCheck, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA quick_check;", ui->actionQuickCheck->text());
+    });
+    connect(ui->actionForeignKeyCheck, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA foreign_key_check;", ui->actionForeignKeyCheck->text());
+    });
+    connect(ui->actionOptimize, &QAction::triggered, [this]() {
+            runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text());
+    });
+
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
@@ -333,7 +384,7 @@ void MainWindow::init()
     // Check for a new version if automatic update check aren't disabled in the settings dialog
     if(Settings::getValue("checkversion", "enabled").toBool())
     {
-        m_remoteDb->fetch("https://raw.githubusercontent.com/sqlitebrowser/sqlitebrowser/master/currentrelease",
+        m_remoteDb->fetch("https://download.sqlitebrowser.org/currentrelease",
                           RemoteDatabase::RequestTypeNewVersionCheck);
     }
 #endif
@@ -362,6 +413,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
     if (!QFile::exists(wFile))
     {
         wFile = FileDialog::getOpenFileName(
+                    OpenDatabaseFile,
                     this,
                     tr("Choose a database file")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
@@ -398,7 +450,6 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
-                loadExtensionsFromSettings();
                 if(ui->mainTab->currentIndex() == BrowseTab)
                     populateTable();
                 else if(ui->mainTab->currentIndex() == PragmaTab)
@@ -416,9 +467,11 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
 
 void MainWindow::fileNew()
 {
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                   tr("Choose a filename to save under"),
-                                                   FileDialog::getSqlDatabaseFileFilter());
+    QString fileName = FileDialog::getSaveFileName(
+                           CreateDatabaseFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           FileDialog::getSqlDatabaseFileFilter());
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -429,7 +482,6 @@ void MainWindow::fileNew()
         statusEncodingLabel->setText(db.getPragma("encoding"));
         statusEncryptionLabel->setVisible(false);
         statusReadOnlyLabel->setVisible(false);
-        loadExtensionsFromSettings();
         populateTable();
         openSqlTab(true);
         createTable();
@@ -443,7 +495,6 @@ void MainWindow::fileNewInMemoryDatabase()
     statusEncodingLabel->setText(db.getPragma("encoding"));
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
-    loadExtensionsFromSettings();
     populateTable();
     openSqlTab(true);
     createTable();
@@ -472,9 +523,10 @@ void MainWindow::populateStructure(const QString& old_table)
         return;
 
     // Update table and column names for syntax highlighting
-    SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
+    SqlUiLexer::QualifiedTablesMap qualifiedTablesMap;
     for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
     {
+        SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
         objectMap tab = db.getBrowsableObjects(it.key());
         for(auto it : tab)
         {
@@ -484,8 +536,9 @@ void MainWindow::populateStructure(const QString& old_table)
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
+        qualifiedTablesMap[it.key()] = tablesToColumnsMap;
     }
-    SqlTextEdit::sqlLexer->setTableNames(tablesToColumnsMap);
+    SqlTextEdit::sqlLexer->setTableNames(qualifiedTablesMap);
     ui->editLogApplication->reloadKeywords();
     ui->editLogUser->reloadKeywords();
     for(int i=0;i<ui->tabSqlAreas->count();i++)
@@ -586,22 +639,25 @@ void MainWindow::populateTable()
         // Load display formats and set them along with the table name
         QVector<QString> v;
         bool only_defaults = true;
-        const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
-        for(int i=0; i<tablefields.size(); ++i)
+        if(db.getObjectByName(tablename))
         {
-            QString format = storedData.displayFormats[i+1];
-            if(format.size())
+            const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
+            for(size_t i=0; i<tablefields.size(); ++i)
             {
-                v.push_back(format);
-                only_defaults = false;
-            } else {
-                v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
+                QString format = storedData.displayFormats[i+1];
+                if(format.size())
+                {
+                    v.push_back(format);
+                    only_defaults = false;
+                } else {
+                    v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
+                }
             }
         }
         if(only_defaults)
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues);
         else
-            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, v);
+            m_browseTableModel->setTable(tablename, storedData.sortOrderIndex, storedData.sortOrderMode, storedData.filterValues, v);
 
         // There is information stored for this table, so extract it and apply it
         applyBrowseTableSettings(storedData);
@@ -613,10 +669,10 @@ void MainWindow::populateTable()
     }
 
     // Show/hide menu options depending on whether this is a table or a view
-    if(db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
+    if(db.getObjectByName(currentlyBrowsedTableName()) && db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
     {
         // Table
-        sqlb::TablePtr table = db.getObjectByName(currentlyBrowsedTableName()).dynamicCast<sqlb::Table>();
+        sqlb::TablePtr table = db.getObjectByName<sqlb::Table>(currentlyBrowsedTableName());
         ui->actionUnlockViewEditing->setVisible(false);
         ui->actionShowRowidColumn->setVisible(!table->isWithoutRowidTable());
     } else {
@@ -630,8 +686,12 @@ void MainWindow::populateTable()
     QApplication::restoreOverrideCursor();
 }
 
-void MainWindow::applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters)
+void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters)
 {
+    // We don't want to pass storedData by reference because the functions below would change the referenced data in their original
+    // place, thus modifiying the data this function can use. To have a static description of what the view should look like we want
+    // a copy here.
+
     // Show rowid column. Needs to be done before the column widths setting because of the workaround in there and before the filter setting
     // because of the filter row generation.
     showRowidColumn(storedData.showRowid, skipFilters);
@@ -654,13 +714,17 @@ void MainWindow::applyBrowseTableSettings(const BrowseDataTableSettings& storedD
     // Filters
     if(!skipFilters)
     {
+        // Set filters blocking signals, since the filter is already applied to the browse table model
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        bool oldState = filterHeader->blockSignals(true);
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
 
         // Conditional formats
         for(auto formatIt=storedData.condFormats.constBegin(); formatIt!=storedData.condFormats.constEnd(); ++formatIt)
             m_browseTableModel->setCondFormats(formatIt.key(), formatIt.value());
+
+      filterHeader->blockSignals(oldState);
     }
 
     // Encoding
@@ -710,6 +774,9 @@ void MainWindow::closeEvent( QCloseEvent* event )
         Settings::setValue("MainWindow", "geometry", saveGeometry());
         Settings::setValue("MainWindow", "windowState", saveState());
         Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
+        Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
+        Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
+
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
@@ -719,12 +786,22 @@ void MainWindow::closeEvent( QCloseEvent* event )
 void MainWindow::addRecord()
 {
     int row = m_browseTableModel->rowCount();
+
     if(m_browseTableModel->insertRow(row))
     {
         selectTableLine(row);
     } else {
-        QMessageBox::warning(this, QApplication::applicationName(), tr("Error adding record:\n") + db.lastError());
+        // Error inserting empty row.
+        // User has to provide values acomplishing the constraints. Open Add Record Dialog.
+        insertValues();
     }
+}
+
+void MainWindow::insertValues()
+{
+    AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
+    if (dialog.exec())
+        populateTable();
 }
 
 void MainWindow::deleteRecord()
@@ -984,10 +1061,16 @@ void MainWindow::editObject()
 
         // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
         if (foreign_keys == "1") {
-            if (!db.executeSQL(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema())))) {
-                QMessageBox::warning(this, QApplication::applicationName(),
-                                     tr("Error checking foreign keys after table modification. The changes will be reverted.\n"
-                                        "Message from database engine:\n%1").arg(db.lastError()));
+            if (!db.querySingleValueFromDb(QString("PRAGMA %1.foreign_key_check").arg(sqlb::escapeIdentifier(name.schema()))).isNull()) {
+                // Raise warning for accepted modification. When rejected, warn user also since we know now that the table has problems,
+                // but it wasn't our fault.
+                if (ok)
+                    QMessageBox::warning(this, QApplication::applicationName(),
+                                         tr("Error checking foreign keys after table modification. The changes will be reverted."));
+                else
+                    QMessageBox::warning(this, QApplication::applicationName(),
+                                         tr("This table did not pass a foreign-key check.<br/>"
+                                            "You should run 'Tools | Foreign-Key Check' and fix the reported issues."));
                 db.revertAll();
             } else {
                 // Commit all changes so the foreign_keys can be effective.
@@ -1125,7 +1208,7 @@ void MainWindow::executeQuery()
         Line
     };
     executionMode mode;
-    if(sender()->objectName() == "actionSqlExecuteLine")
+    if(sender() && sender()->objectName() == "actionSqlExecuteLine")
         mode = Line;
     else if(!sqlWidget->getSelectedSql().isEmpty())
         mode = Selection;
@@ -1163,22 +1246,22 @@ void MainWindow::executeQuery()
 
             // Need to set the end position here before adjusting the start line
             execute_to_line = execute_from_line;
-            execute_to_index = editor->lineLength(execute_to_line) - 1;     // The -1 compensates for the line break at the end of the line
+            execute_to_index = editor->text(execute_to_line).length() - 1;     // The -1 compensates for the line break at the end of the line
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
 
-            QString firstPartEntireSQL = query.left(execute_from_position);
+            QByteArray firstPartEntireSQL = query.toUtf8().left(execute_from_position);
             if(firstPartEntireSQL.lastIndexOf(';') != -1)
             {
                 execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
                 editor->lineIndexFromPosition(execute_from_position, &execute_from_line, &execute_from_index);
             }
-
             db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
     case All:
         {
-            // Start position is the first character, end position the last
-            execute_to_position = editor->text().length();
+            // Start position is the first byte, end position the last.
+            // Note that we use byte positions that might differ from character positions.
+            execute_to_position = editor->length();
             editor->lineIndexFromPosition(execute_to_position, &execute_to_line, &execute_to_index);
             db.logSQL(tr("-- EXECUTING ALL IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
@@ -1199,7 +1282,7 @@ void MainWindow::executeQuery()
     // Convert query to C string which we will use from now on, starting from the determined start position and
     // until the end of the SQL code. By doing so we go further than the determined end position because in Line
     // mode the last statement might go beyond that point.
-    QByteArray utf8Query = query.mid(execute_from_position).toUtf8();
+    QByteArray utf8Query = query.toUtf8().mid(execute_from_position);
 
     // Remove any error indicators
     editor->clearErrorIndicators();
@@ -1352,7 +1435,8 @@ void MainWindow::executeQuery()
 
         // Special case: if the start position is at the end of a line, then move to the beggining of next line.
         // Otherwise for the typical case, the line reference is one less than expected.
-        if (editor->lineLength(execute_from_line) == execute_from_index+1) {
+        // Note that execute_from_index uses character positions and not byte positions, so text().length() must be used.
+        if (editor->text(execute_from_line).length() == execute_from_index+1) {
             execute_from_line++;
             execute_from_index = 0;
         }
@@ -1448,9 +1532,10 @@ void MainWindow::mainTabSelected(int tabindex)
 void MainWindow::importTableFromCSV()
 {
     QStringList wFiles = FileDialog::getOpenFileNames(
-                            this,
-                            tr("Choose text files"),
-                            tr("Text files(*.csv *.txt);;All files(*)"));
+                             OpenCSVFile,
+                             this,
+                             tr("Choose text files"),
+                             tr("Text files(*.csv *.txt);;All files(*)"));
 
     QStringList validFiles;
     for(const auto& file : wFiles) {
@@ -1556,6 +1641,7 @@ void MainWindow::importDatabaseFromSQL()
 {
     // Get file name to import
     QString fileName = FileDialog::getOpenFileName(
+                OpenSQLFile,
                 this,
                 tr("Choose a file to import"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
@@ -1573,6 +1659,7 @@ void MainWindow::importDatabaseFromSQL()
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
         newDbFile = FileDialog::getSaveFileName(
+                    CreateDatabaseFile,
                     this,
                     tr("Choose a filename to save under"),
                     FileDialog::getSqlDatabaseFileFilter());
@@ -1585,19 +1672,30 @@ void MainWindow::importDatabaseFromSQL()
         }
 
         db.create(newDbFile);
-        loadExtensionsFromSettings();
     }
+
+    // Defer foreign keys. Just deferring them instead of disabling them should work fine because in the import we only expect CREATE and INSERT
+    // statements which unlike in the Edit Table dialog shouldn't trigger any problems.
+    QString foreignKeysOldSettings = db.getPragma("defer_foreign_keys");
+    db.setPragma("defer_foreign_keys", "1");
 
     // Open, read, execute and close file
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
-    if(!db.executeMultiSQL(f.readAll(), newDbFile.size() == 0))
+    bool ok = db.executeMultiSQL(f.readAll(), newDbFile.size() == 0);
+    // Restore cursor before asking the user to accept the message
+    QApplication::restoreOverrideCursor();
+    if(!ok)
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
+    else if(db.getPragma("foreign_keys") == "1" && !db.querySingleValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Import completed. Some foreign key constraints are violated. Please fix them before saving."));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
     f.close();
-    QApplication::restoreOverrideCursor();
+
+    // Restore the former foreign key settings
+    db.setPragma("defer_foreign_keys", foreignKeysOldSettings);
 
     // Refresh window when importing into an existing DB or - when creating a new file - just open it correctly
     if(newDbFile.size())
@@ -1626,6 +1724,12 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 
     if(type == "table" || type == "view" || type == "trigger" || type == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
+}
+
+//** DB Schema Dock Context Menu
+void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
+{
+    popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
 
 void MainWindow::changeTreeSelection()
@@ -1659,10 +1763,18 @@ void MainWindow::changeTreeSelection()
     } else if(type == "index") {
         ui->editDeleteObjectAction->setText(tr("Delete Index"));
         ui->editModifyObjectAction->setText(tr("Modify Index"));
-    } else {
+    } else if(type == "table") {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
         ui->editModifyObjectAction->setText(tr("Modify Table"));
+    } else {
+        // Nothing to do for other types. Set the buttons not visible and return.
+        ui->editDeleteObjectAction->setVisible(false);
+        ui->editModifyObjectAction->setVisible(false);
+        return;
     }
+
+    ui->editDeleteObjectAction->setVisible(true);
+    ui->editModifyObjectAction->setVisible(true);
 
     // Activate actions
     if(type == "table" || type == "index")
@@ -1784,6 +1896,7 @@ void MainWindow::activateFields(bool enable)
     ui->fileImportCSVAction->setEnabled(enable && write);
     ui->editCreateTableAction->setEnabled(enable && write);
     ui->editCreateIndexAction->setEnabled(enable && write);
+    ui->actionDbPrint->setEnabled(enable);
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->buttonBegin->setEnabled(enable);
@@ -1793,11 +1906,16 @@ void MainWindow::activateFields(bool enable)
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
     ui->buttonRefresh->setEnabled(enable);
+    ui->buttonPrintTable->setEnabled(enable);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable && !tempDb);
     ui->actionEncryption->setEnabled(enable && write && !tempDb);
+    ui->actionIntegrityCheck->setEnabled(enable);
+    ui->actionQuickCheck->setEnabled(enable);
+    ui->actionForeignKeyCheck->setEnabled(enable);
+    ui->actionOptimize->setEnabled(enable);
     ui->buttonClearFilters->setEnabled(enable);
     ui->buttonSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
@@ -2005,6 +2123,7 @@ void MainWindow::changeSqlTab(int /*index*/)
 void MainWindow::openSqlFile()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenSQLFile,
                 this,
                 tr("Select SQL file to open"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
@@ -2065,6 +2184,7 @@ void MainWindow::saveSqlFileAs()
         return;
 
     QString file = FileDialog::getSaveFileName(
+                CreateSQLFile,
                 this,
                 tr("Select file name"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
@@ -2090,6 +2210,7 @@ void MainWindow::saveSqlResultsAsView()
 void MainWindow::loadExtension()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenExtensionFile,
                 this,
                 tr("Select extension file"),
                 tr("Extensions(*.so *.dll);;All files(*)"));
@@ -2101,19 +2222,6 @@ void MainWindow::loadExtension()
         QMessageBox::information(this, QApplication::applicationName(), tr("Extension successfully loaded."));
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
-}
-
-void MainWindow::loadExtensionsFromSettings()
-{
-    if(!db.isOpen())
-        return;
-
-    QStringList list = Settings::getValue("extensions", "list").toStringList();
-    for(const QString& ext : list)
-    {
-        if(db.loadExtension(ext) == false)
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Error loading extension: %1").arg(db.lastError()));
-    }
 }
 
 void MainWindow::reloadSettings()
@@ -2141,7 +2249,7 @@ void MainWindow::reloadSettings()
     editDock->reloadSettings();
 
     // Load extensions
-    loadExtensionsFromSettings();
+    db.loadExtensionsFromSettings();
 
     // Refresh view
     dbStructureModel->reloadData();
@@ -2223,7 +2331,7 @@ void MainWindow::on_actionWiki_triggered()
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
-// 'Help | Bug report...' link will add the system information and set the label 'bug' automatically to the issue
+// 'Help | Bug Report...' link will set an appropiate body, add the system information and set the label 'bug' automatically to the issue
 void MainWindow::on_actionBug_report_triggered()
 {
     const QString version = Application::versionString();
@@ -2239,12 +2347,37 @@ void MainWindow::on_actionBug_report_triggered()
     else
         sqlite_version = QString("SQLCipher Version ") + sqlcipher_version + QString(" (based on SQLite %1)").arg(sqlite_version);
 
-    const QString body = QString("\n\n\n\n\n\n\n\n> DB4S v%1 on %2 (%3/%4) [%5]\n> using %6\n> and Qt %7")
+    const QString body =
+      QString("Details for the issue\n"
+              "--------------------\n\n"
+              "#### What did you do?\n\n\n"
+              "#### What did you expect to see?\n\n\n"
+              "#### What did you see instead?\n\n\n"
+              "Useful extra information\n"
+              "-------------------------\n"
+              "> DB4S v%1 on %2 (%3/%4) [%5]\n"
+              "> using %6\n"
+              "> and Qt %7")
             .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
     query.addQueryItem("body", body);
+
+    QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
+    url.setQuery(query);
+    QDesktopServices::openUrl(url);
+}
+
+// 'Help | Feature Request...' link will set an appropiate body and add the label 'enhancement' automatically to the issue
+void MainWindow::on_actionFeature_Request_triggered()
+{
+    QUrlQuery query;
+
+    // Add the label enhancement and use the Feature request template that
+    // we have in GitHub.
+    query.addQueryItem("labels", "enhancement");
+    query.addQueryItem("template", "Feature_request.md");
 
     QUrl url("https://github.com/sqlitebrowser/sqlitebrowser/issues/new");
     url.setQuery(query);
@@ -2259,6 +2392,11 @@ void MainWindow::on_actionSqlCipherFaq_triggered()
 void MainWindow::on_actionWebsite_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
+}
+
+void MainWindow::on_actionDonatePatreon_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=11578749"));
 }
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
@@ -2361,9 +2499,11 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
     // Show the open file dialog when no filename was passed as parameter
     if(filename.isEmpty())
     {
-        filename = FileDialog::getOpenFileName(this,
-                                                tr("Choose a project file to open"),
-                                                tr("DB Browser for SQLite project file (*.sqbpro)"));
+        filename = FileDialog::getOpenFileName(
+                       OpenProjectFile,
+                       this,
+                       tr("Choose a project file to open"),
+                       tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
     if(!filename.isEmpty())
@@ -2401,7 +2541,22 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         db.setPragma("foreign_keys", xml.attributes().value("foreign_keys").toString());
                     if(xml.attributes().hasAttribute("case_sensitive_like"))
                         db.setPragma("case_sensitive_like", xml.attributes().value("case_sensitive_like").toString());
+                    if(xml.attributes().hasAttribute("temp_store"))
+                        db.setPragma("temp_store", xml.attributes().value("temp_store").toString());
+                    if(xml.attributes().hasAttribute("wal_autocheckpoint"))
+                        db.setPragma("wal_autocheckpoint", xml.attributes().value("wal_autocheckpoint").toString());
+                    if(xml.attributes().hasAttribute("synchronous"))
+                        db.setPragma("synchronous", xml.attributes().value("synchronous").toString());
                     loadPragmas();
+                } else if(xml.name() == "attached") {
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "attached")
+                    {
+                        if(xml.name() == "db")
+                        {
+                            db.attach(xml.attributes().value("path").toString(), xml.attributes().value("schema").toString());
+                            xml.skipCurrentElement();
+                        }
+                    }
                 } else if(xml.name() == "window") {
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
@@ -2613,10 +2768,12 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
 
 void MainWindow::saveProject()
 {
-    QString filename = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("DB Browser for SQLite project file (*.sqbpro)"),
-                                                    db.currentFile());
+    QString filename = FileDialog::getSaveFileName(
+                           CreateProjectFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           tr("DB Browser for SQLite project file (*.sqbpro)"),
+                           db.currentFile());
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
@@ -2634,6 +2791,32 @@ void MainWindow::saveProject()
         xml.writeAttribute("path", db.currentFile());
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
         xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
+        xml.writeAttribute("temp_store", db.getPragma("temp_store"));
+        xml.writeAttribute("wal_autocheckpoint", db.getPragma("wal_autocheckpoint"));
+        xml.writeAttribute("synchronous", db.getPragma("synchronous"));
+        xml.writeEndElement();
+
+        // Attached databases
+        xml.writeStartElement("attached");
+        QString sql("PRAGMA database_list;");
+        db.logSQL(sql, kLogMsg_App);
+        sqlite3_stmt* db_vm;
+        if(sqlite3_prepare_v2(db.get("project").get(), sql.toUtf8(), sql.toUtf8().length(), &db_vm, nullptr) == SQLITE_OK)
+        {
+            while(sqlite3_step(db_vm) == SQLITE_ROW)
+            {
+                QString schema(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1)));
+                if(schema != "main" && schema != "temp")
+                {
+                    QString path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+                    xml.writeStartElement("db");
+                    xml.writeAttribute("schema", schema);
+                    xml.writeAttribute("path", path);
+                    xml.writeEndElement();
+                }
+            }
+            sqlite3_finalize(db_vm);
+        }
         xml.writeEndElement();
 
         // Window settings
@@ -2703,6 +2886,7 @@ void MainWindow::fileAttach()
 {
     // Get file name of database to attach
     QString file = FileDialog::getOpenFileName(
+                OpenDatabaseFile,
                 this,
                 tr("Choose a database file"),
                 FileDialog::getSqlDatabaseFileFilter());
@@ -2842,17 +3026,17 @@ void MainWindow::copyCurrentCreateStatement()
 void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value)
 {
     // First check if table exists
-    sqlb::TablePtr obj = db.getObjectByName(table).dynamicCast<sqlb::Table>();
+    sqlb::TablePtr obj = db.getObjectByName<sqlb::Table>(table);
     if(!obj)
         return;
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = obj->fields().at(obj->findPk())->name();
+        column = obj->findPk()->name();
 
     // If column doesn't exist don't do anything
-    int column_index = obj->findField(column);
-    if(column_index == -1)
+    auto column_index = sqlb::findField(obj, column);
+    if(column_index == obj->fields.end())
         return;
 
     // Jump to table
@@ -2860,7 +3044,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index+1, "=" + value);
+    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, "=" + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
@@ -2932,9 +3116,9 @@ void MainWindow::editDataColumnDisplayFormat()
     int field_number = sender()->property("clicked_column").toInt();
     QString field_name;
     if (db.getObjectByName(current_table)->type() == sqlb::Object::Table)
-      field_name = db.getObjectByName(current_table).dynamicCast<sqlb::Table>()->fields().at(field_number-1)->name();
+      field_name = db.getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name();
     else
-      field_name = db.getObjectByName(current_table).dynamicCast<sqlb::View>()->fieldNames().at(field_number-1);
+      field_name = db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1);
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
 
@@ -3055,13 +3239,14 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     sqlb::ObjectIdentifier currentTable = currentlyBrowsedTableName();
 
     // If this isn't a view just unlock editing and return
-    if(db.getObjectByName(currentTable)->type() != sqlb::Object::View)
+    if(db.getObjectByName(currentTable) && db.getObjectByName(currentTable)->type() != sqlb::Object::View)
     {
         m_browseTableModel->setPseudoPk(QString());
         enableEditing(true);
         return;
     }
-    sqlb::ViewPtr obj = db.getObjectByName(currentTable).dynamicCast<sqlb::View>();
+
+    sqlb::ViewPtr obj = db.getObjectByName<sqlb::View>(currentTable);
 
     // If the view gets unlocked for editing and we don't have a 'primary key' for this view yet, then ask for one
     if(unlock && pk.isEmpty())
@@ -3104,12 +3289,16 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     ui->actionUnlockViewEditing->setChecked(unlock);
     ui->actionUnlockViewEditing->blockSignals(false);
 
-    // Save settings for this table
+    // If the settings didn't change, do not try to reapply them.
+    // This avoids an infinite mutual recursion.
     BrowseDataTableSettings& settings = browseTableSettings[currentTable];
-    settings.unlockViewPk = pk;
 
-    // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
-    applyBrowseTableSettings(settings);
+    if(settings.unlockViewPk != pk) {
+        // Save settings for this table
+        settings.unlockViewPk = pk;
+        // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
+        applyBrowseTableSettings(settings);
+    }
 }
 
 sqlb::ObjectIdentifier MainWindow::currentlyBrowsedTableName() const
@@ -3217,6 +3406,15 @@ void MainWindow::openFindReplaceDialog()
         sqlWidget->getEditor()->openFindReplaceDialog();
 }
 
+void MainWindow::openSqlPrintDialog()
+{
+    // The slot for the shortcut must discover which sqltexedit widget has the focus and then open its dialog.
+    SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+
+    if (sqlWidget)
+        sqlWidget->getEditor()->openPrintDialog();
+}
+
 void MainWindow::saveAsView(QString query)
 {
     // Let the user select a name for the new view and make sure it doesn't already exist
@@ -3292,4 +3490,118 @@ void MainWindow::updateInsertDeleteRecordButton()
         ui->buttonDeleteRecord->setText(tr("Delete Records"));
     else
         ui->buttonDeleteRecord->setText(tr("Delete Record"));
+}
+
+void MainWindow::runSqlNewTab(const QString& query, const QString& title)
+{
+    QString message = tr("This action will open a new SQL tab for running:") +
+                         QString("<br/><tt>%1</tt><p/>").arg(query) +
+                         tr("Press Help for opening the corresponding SQLite reference page.");
+    QString windowTitle = title;
+    windowTitle.remove('&');
+
+    switch (QMessageBox::information(this, windowTitle, message, QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Escape, QMessageBox::Help))
+    {
+    case QMessageBox::Ok: {
+        ui->mainTab->setCurrentIndex(ExecuteTab);
+        unsigned int index = openSqlTab();
+        ui->tabSqlAreas->setTabText(index, title);
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
+        executeQuery();
+        break;
+    }
+    case QMessageBox::Help: {
+        QString anchor = query.toLower();
+        anchor.replace(" ", "_").chop(1);
+        QDesktopServices::openUrl(QUrl(QString("https://www.sqlite.org/pragma.html#") + anchor));
+        break;
+    }
+    default:
+        return;
+    }
+}
+
+void MainWindow::printDbStructure ()
+{
+    const QTreeView* treeView = ui->dbTreeWidget;
+    const QAbstractItemModel* model = treeView->model();
+
+    const int rowCount = model->rowCount(treeView->rootIndex());
+    const int columnCount = model->columnCount(treeView->rootIndex());
+
+    QString strStream;
+    QTextStream out(&strStream);
+
+    out << "<html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+        << QString("<title>%1</title>").arg(treeView->windowTitle())
+        << "<style type=\"text/css\">pre {white-space: pre-wrap;}</style></head><body bgcolor=\"#FFFFFF\">";
+
+    for (int row = 0; row < rowCount; row++) {
+
+        QModelIndex headerIndex = model->index(row, 0, treeView->rootIndex());
+        QString data = model->data(headerIndex).toString().toHtmlEscaped();
+        out << QString("<h1>%1</h1>").arg(data);
+
+        // Open a new table for each group of objects
+        out << "<table border=1 cellspacing=0 cellpadding=2><thead><tr bgcolor=\"#F0F0F0\">";
+
+        for (int column = 0; column < columnCount; column++) {
+            // Headers
+            if (!treeView->isColumnHidden(column))
+                out << QString("<th>%1</th>").arg(model->headerData(column, Qt::Horizontal).toString().toHtmlEscaped());
+        }
+        out << "</tr></thead>";
+
+        for (int column = 0; column < columnCount; column++) {
+            QModelIndex groupIndex = model->index(row, column, treeView->rootIndex());
+
+            // A row for the object name
+            for (int rowChild = 0; rowChild < model->rowCount(groupIndex); rowChild++) {
+                QModelIndex objectIndex = model->index(rowChild, column, groupIndex);
+                out << "<tr>";
+                for (int column2 = 0; column2 < columnCount; column2++) {
+                    if (!treeView->isColumnHidden(column2)) {
+                        QModelIndex cellIndex = model->index(rowChild, column2, groupIndex);
+                        QString data = model->data(cellIndex).toString().toHtmlEscaped();
+                        if (column2 != DbStructureModel::ColumnSQL)
+                            out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        else
+                            out << QString("<td><pre>%1</pre></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                    }
+                }
+                out << "</tr>";
+
+                // One row for each object's fields
+                for (int rowChild2 = 0; rowChild2 < model->rowCount(objectIndex); rowChild2++) {
+                    out << "<tr>";
+                    for (int column2 = 0; column2 < columnCount; column2++) {
+                        if (!treeView->isColumnHidden(column2)) {
+                            QModelIndex fieldIndex = model->index(rowChild2, column2, objectIndex);
+                            QString data = model->data(fieldIndex).toString().toHtmlEscaped();
+                            out << QString("<td>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        }
+                    }
+                    out << "</tr>";
+                }
+            }
+        }
+        out << "</table>";
+    }
+    out << "</body></html>";
+
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(strStream);
+
+    QPrinter printer;
+    printer.setDocName(treeView->windowTitle());
+
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        document->print(previewPrinter);
+    });
+
+    dialog->exec();
+
+    delete dialog;
+    delete document;
 }

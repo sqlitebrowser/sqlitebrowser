@@ -84,7 +84,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
@@ -148,8 +148,10 @@ private:
     SqliteTableModel* m_currentTabTableModel;
 
     QMenu* popupTableMenu;
+    QMenu* popupSchemaDockMenu;
     QMenu* recentFilesMenu;
     QMenu* popupOpenDbMenu;
+    QMenu* popupNewRecordMenu;
     QMenu* popupSaveSqlFileMenu;
     QMenu* popupSaveSqlResultsMenu;
     QMenu* popupSaveFilterAsMenu;
@@ -188,7 +190,6 @@ private:
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
     void enableEditing(bool enable_edit);
-    void loadExtensionsFromSettings();
     void saveAsView(QString query);
     void duplicateRecord(int currentRow);
     void selectTableLine(int lineToSelect);
@@ -198,14 +199,14 @@ private:
 
     StatementType getQueryType(const QString& query) const;
 
-    void applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
+    void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
 
 protected:
-    void closeEvent(QCloseEvent *);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void resizeEvent(QResizeEvent *event);
-    void keyPressEvent(QKeyEvent* event);
+    void closeEvent(QCloseEvent *) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
@@ -218,6 +219,7 @@ public slots:
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
+    void createSchemaDockContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
     void fileNewInMemoryDatabase();
@@ -225,6 +227,7 @@ private slots:
     void clearTableBrowser();
     bool fileClose();
     void addRecord();
+    void insertValues();
     void deleteRecord();
     void navigatePrevious();
     void navigateNext();
@@ -271,8 +274,10 @@ private slots:
     void checkNewVersion(const QString& versionstring, const QString& url);
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
+    void on_actionFeature_Request_triggered();
     void on_actionSqlCipherFaq_triggered();
     void on_actionWebsite_triggered();
+    void on_actionDonatePatreon_triggered();
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
@@ -297,9 +302,12 @@ private slots:
     void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
+    void openSqlPrintDialog();
     void saveFilterAsView();
     void exportFilteredTable();
     void updateInsertDeleteRecordButton();
+    void runSqlNewTab(const QString& query, const QString& title);
+    void printDbStructure();
 };
 
 #endif

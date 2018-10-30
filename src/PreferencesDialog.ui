@@ -302,6 +302,9 @@
        </item>
        <item row="2" column="1">
         <widget class="QCheckBox" name="checkHideSchemaLinebreaks">
+         <property name="toolTip">
+          <string>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</string>
+         </property>
          <property name="text">
           <string>enabled</string>
          </property>
@@ -466,6 +469,40 @@
               </property>
               <property name="maximum">
                <number>20000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinCompleteThreshold">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
+              </property>
+              <property name="whatsThis">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>100000000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelCompleteThreshold">
+              <property name="text">
+               <string>Row count threshold for completion</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinCompleteThreshold</cstring>
               </property>
              </widget>
             </item>
@@ -1228,6 +1265,16 @@
          </property>
          <property name="text">
           <string>Disable Regular Expression extension</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkAllowLoadExtension">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Allow loading extensions from SQL code</string>
          </property>
         </widget>
        </item>
