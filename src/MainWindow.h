@@ -28,8 +28,25 @@ class MainWindow;
 
 struct BrowseDataTableSettings
 {
-    int sortOrderIndex;
-    Qt::SortOrder sortOrderMode;
+    struct SortedColumn
+    {
+        SortedColumn() :
+            index(0),
+            mode(Qt::AscendingOrder)
+        {}
+        SortedColumn(int index_, Qt::SortOrder mode_) :
+            index(index_),
+            mode(mode_)
+        {}
+        SortedColumn(int index_, int mode_) :
+            index(index_),
+            mode(static_cast<Qt::SortOrder>(mode_))
+        {}
+
+        int index;
+        Qt::SortOrder mode;
+    };
+    QVector<SortedColumn> sortOrder;
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
     QMap<int, QVector<CondFormat>> condFormats;
@@ -42,18 +59,16 @@ struct BrowseDataTableSettings
     QMap<int, bool> hiddenColumns;
 
     BrowseDataTableSettings() :
-        sortOrderIndex(0),
-        sortOrderMode(Qt::AscendingOrder),
         showRowid(false)
     {
     }
 
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
     {
-        stream >> object.sortOrderIndex;
-        int sortordermode;
-        stream >> sortordermode;
-        object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+        int sortOrderIndex, sortOrderMode;
+        stream >> sortOrderIndex;
+        stream >> sortOrderMode;
+        object.sortOrder.push_back(SortedColumn(sortOrderIndex, sortOrderMode));
         stream >> object.columnWidths;
         stream >> object.filterValues;
         stream >> object.displayFormats;
