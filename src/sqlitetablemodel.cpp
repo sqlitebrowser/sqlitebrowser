@@ -314,7 +314,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                 else
                     sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
 
-                if (m_db.selectSingleCell(sql, false) == "1")
+                if (m_db.querySingleValueFromDb(sql, false) == "1")
                     return eachCondFormat.color();
             }
         }

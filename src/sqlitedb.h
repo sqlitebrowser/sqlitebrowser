@@ -96,7 +96,7 @@ public:
 
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
-    QVariant querySingleValueFromDb(const QString& statement, bool log = true);
+    QByteArray querySingleValueFromDb(const QString& sql, bool log = true);
 
     const QString& lastError() const { return lastErrorMessage; }
 
@@ -176,7 +176,6 @@ public:
     /// log an SQL statement [thread-safe]
     void logSQL(QString statement, int msgtype);
 
-    QString selectSingleCell(const QString& sql, bool logsql = true);
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);
     bool setPragma(const QString& pragma, const QString& value, QString& originalvalue);
