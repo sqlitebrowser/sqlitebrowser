@@ -9,7 +9,7 @@
 #include <QColor>
 #include <memory>
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 #include "RowCache.h"
 #include "CondFormat.h"
 

@@ -1,7 +1,7 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <memory>
 #include <mutex>

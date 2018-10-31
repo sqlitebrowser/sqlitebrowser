@@ -1,7 +1,7 @@
 #ifndef EDITINDEXDIALOG_H
 #define EDITINDEXDIALOG_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <QDialog>
 #include <QModelIndex>

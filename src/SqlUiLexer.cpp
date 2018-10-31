@@ -3,7 +3,7 @@
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)

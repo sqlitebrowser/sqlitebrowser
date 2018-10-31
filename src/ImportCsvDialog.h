@@ -2,7 +2,7 @@
 #define IMPORTCSVDIALOG_H
 
 #include "csvparser.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <QDialog>
 #include <functional>

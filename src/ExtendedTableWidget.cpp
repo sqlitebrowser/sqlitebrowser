@@ -1,7 +1,7 @@
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 #include "Settings.h"
 
 #include <QApplication>
