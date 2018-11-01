@@ -34,6 +34,11 @@ QString escapeIdentifier(QString id)
     }
 }
 
+std::string escapeIdentifier(std::string id)
+{
+    return escapeIdentifier(QString::fromStdString(id)).toStdString();
+}
+
 QStringList escapeIdentifier(const QStringList& ids)
 {
     QStringList ret;

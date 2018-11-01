@@ -98,14 +98,9 @@ void SqliteTableModel::reset()
     beginResetModel();
     clearCache();
 
-    m_sTable.clear();
-    m_sRowidColumn.clear();
-    m_iSortColumn = 0;
-    m_sSortOrder = "ASC";
+    m_query.clear();
     m_headers.clear();
-    m_mWhere.clear();
     m_vDataTypes.clear();
-    m_vDisplayFormat.clear();
     m_pseudoPk.clear();
     m_mCondFormats.clear();
 
@@ -122,12 +117,8 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
     // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
 
-    // Save the other parameters
-    m_sTable = table;
-    m_vDisplayFormat = display_format;
-
-    for(auto filterIt=filterValues.constBegin(); filterIt!=filterValues.constEnd(); ++filterIt)
-        updateFilter(filterIt.key(), filterIt.value(), false);
+    // Save the table name
+    m_query.setTable(table);
 
     // The first column is the rowid column and therefore is always of type integer
     m_vDataTypes.push_back(SQLITE_INTEGER);
@@ -139,8 +130,9 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
         sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(table);
         if(t && t->fields.size()) // parsing was OK
         {
-            m_sRowidColumn = t->rowidColumn();
-            m_headers.push_back(m_sRowidColumn);
+            QString rowid = t->rowidColumn();
+            m_query.setRowIdColumn(rowid.toStdString());
+            m_headers.push_back(rowid);
             m_headers.append(t->fieldNames());
 
             // parse columns types
@@ -166,15 +158,32 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
     if(!allOk)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(table.toString());
-        m_sRowidColumn = "rowid";
+        m_query.setRowIdColumn("rowid");
         m_headers.push_back("rowid");
         m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
     }
 
-    // Set sort parameters. We're setting the sort column to an invalid value before calling sort() because this way, in sort() the
+    // Store filters and display formats
+    for(auto filterIt=filterValues.constBegin(); filterIt!=filterValues.constEnd(); ++filterIt)
+        updateFilter(filterIt.key(), filterIt.value(), false);
+    if(display_format.size())
+    {
+        for(int i=1;i<m_headers.size();i++)
+        {
+            QString format;
+            if(i <= display_format.size())
+                 format = display_format[i-1];
+            else
+                 format = m_headers[i];
+
+            m_query.selectedColumns().emplace_back(m_headers[i].toStdString(), format.toStdString());
+        }
+    }
+
+    // Set sort parameters. We're setting the sort columns to no sorting before calling sort() because this way, in sort() the
     // current sort order is always changed and thus buildQuery() is always going to be called.
     // This is also why we don't need to call buildQuery() here again.
-    m_iSortColumn = -1;
+    m_query.orderBy().clear();
     sort(sortColumn, sortOrder);
 }
 
@@ -216,7 +225,7 @@ int SqliteTableModel::columnCount(const QModelIndex&) const
 
 int SqliteTableModel::filterCount() const
 {
-    return m_mWhere.size();
+    return m_query.where().size();
 }
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -340,13 +349,13 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 
     // No foreign keys when not browsing a table. This usually happens when executing custom SQL statements
     // and browsing the result set instead of browsing an entire table.
-    if(m_sTable.isEmpty())
+    if(m_query.table().isEmpty())
         return empty_foreign_key_clause;
 
     // Retrieve database object and check if it is a table. If it isn't stop here and don't return a foreign
     // key. This happens for views which don't have foreign keys (though we might want to think about how we
     // can check for foreign keys in the underlying tables for some purposes like tool tips).
-    sqlb::ObjectPtr obj = m_db.getObjectByName(m_sTable);
+    sqlb::ObjectPtr obj = m_db.getObjectByName(m_query.table());
     if(obj->type() != sqlb::Object::Table)
         return empty_foreign_key_clause;
 
@@ -396,7 +405,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         // used in a primary key. Otherwise SQLite will always output an 'datatype mismatch' error.
         if(newValue == "" && !newValue.isNull())
         {
-            sqlb::TablePtr table = m_db.getObjectByName<sqlb::Table>(m_sTable);
+            sqlb::TablePtr table = m_db.getObjectByName<sqlb::Table>(m_query.table());
             if(table)
             {
                 auto field = sqlb::findField(table, m_headers.at(index.column()));
@@ -410,10 +419,10 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_sTable, m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_pseudoPk))
+        if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_pseudoPk))
         {
             cached_row.replace(index.column(), newValue);
-            if(m_headers.at(index.column()) == m_sRowidColumn) {
+            if(m_headers.at(index.column()).toStdString() == m_query.rowIdColumn()) {
                 cached_row.replace(0, newValue);
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
@@ -442,10 +451,10 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 
     // Custom display format set?
     bool custom_display_format = false;
-    if(m_vDisplayFormat.size())
+    if(m_query.selectedColumns().size())
     {
         if(index.column() > 0)
-            custom_display_format = m_vDisplayFormat.at(index.column()-1) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
+            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(index.column()-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)
@@ -456,16 +465,18 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
     // Don't do anything when the sort order hasn't changed
-    if(m_iSortColumn == column && m_sSortOrder == (order == Qt::AscendingOrder ? "ASC" : "DESC"))
+    if(m_query.orderBy().size() && QString::fromStdString(m_query.orderBy().at(0).column) == m_headers.at(column) && m_query.orderBy().at(0).direction == (order == Qt::AscendingOrder ? "ASC" : "DESC"))
         return;
+
+    // Reset sort order
+    m_query.orderBy().clear();
 
     // Save sort order
 	if (column >= 0 && column < m_headers.size())
-		m_iSortColumn = column;
-    m_sSortOrder = (order == Qt::AscendingOrder ? "ASC" : "DESC");
+        m_query.orderBy().emplace_back(m_headers.at(column).toStdString(), (order == Qt::AscendingOrder ? "ASC" : "DESC"));
 
     // Set the new query (but only if a table has already been set
-    if(!m_sTable.isEmpty())
+    if(!m_query.table().isEmpty())
         buildQuery();
 }
 
@@ -499,7 +510,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     std::vector<Row> tempList;
     for(int i=row; i < row + count; ++i)
     {
-        QString rowid = m_db.addRecord(m_sTable);
+        QString rowid = m_db.addRecord(m_query.table());
         if(rowid.isNull())
         {
             return false;
@@ -509,7 +520,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
 
         // update column with default values
         Row rowdata;
-        if(m_db.getRow(m_sTable, rowid, rowdata))
+        if(m_db.getRow(m_query.table(), rowid, rowdata))
         {
             for(int j=1; j < m_headers.size(); ++j)
             {
@@ -547,7 +558,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         }
     }
 
-    bool ok = m_db.deleteRecords(m_sTable, rowids, m_pseudoPk);
+    bool ok = m_db.deleteRecords(m_query.table(), rowids, m_pseudoPk);
 
     if (ok) {
         beginRemoveRows(parent, row, row + count - 1);
@@ -574,7 +585,7 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     int firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_sTable);
+    sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_query.table());
 
     QStringList pk = t->primaryKey();
     for (size_t col = 0; col < t->fields.size(); ++col) {
@@ -590,61 +601,9 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     return index(new_row, firstEditedColumn);
 }
 
-QString SqliteTableModel::customQuery(bool withRowid)
-{
-    QString where;
-
-    if(m_mWhere.size())
-    {
-        where = "WHERE ";
-
-        for(QMap<int, QString>::const_iterator i=m_mWhere.constBegin();i!=m_mWhere.constEnd();++i)
-        {
-            QString columnId = sqlb::escapeIdentifier(m_headers.at(i.key()));
-            if(m_vDisplayFormat.size() && m_vDisplayFormat.at(i.key()-1) != columnId)
-                columnId = m_vDisplayFormat.at(i.key()-1);
-            where.append(QString("%1 %2 AND ").arg(columnId).arg(i.value()));
-        }
-
-        // Remove last 'AND '
-        where.chop(4);
-    }
-
-    QString selector;
-    if (withRowid)
-        selector = sqlb::escapeIdentifier(m_headers.at(0)) + ",";
-
-    if(m_vDisplayFormat.empty())
-    {
-        selector += "*";
-    } else {
-        QString columnId;
-        for(int i=0;i<m_vDisplayFormat.size();i++) {
-            columnId = sqlb::escapeIdentifier(m_headers.at(i+1));
-            if (columnId != m_vDisplayFormat.at(i))
-                selector += m_vDisplayFormat.at(i) + " AS " + columnId + ",";
-            else
-                selector += columnId + ",";
-        }
-        selector.chop(1);
-    }
-
-    // Note: Building the SQL string is intentionally split into several parts here instead of arg()'ing it all together as one.
-    // The reason is that we're adding '%' characters automatically around search terms (and even if we didn't the user could add
-    // them manually) which means that e.g. searching for '1' results in another '%1' in the string which then totally confuses
-    // the QString::arg() function, resulting in an invalid SQL.
-    return QString("SELECT %1 FROM %2 ")
-            .arg(selector)
-            .arg(m_sTable.toString())
-            + where
-            + QString("ORDER BY %1 %2")
-            .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
-            .arg(m_sSortOrder);
-}
-
 void SqliteTableModel::buildQuery()
 {
-    setQuery(customQuery(true), true);
+    setQuery(QString::fromStdString(m_query.buildQuery(true)), true);
 }
 
 void SqliteTableModel::removeCommentsFromQuery(QString& query)
@@ -753,9 +712,9 @@ void SqliteTableModel::updateFilter(int column, const QString& value, bool apply
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
     if(whereClause.isEmpty())
-        m_mWhere.remove(column);
+        m_query.where().erase(m_headers.at(column).toStdString());
     else {
-        m_mWhere.insert(column, whereClause);
+        m_query.where()[m_headers.at(column).toStdString()] = whereClause.toStdString();
     }
 
     // Build the new query
@@ -845,7 +804,7 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
     {
         m_pseudoPk.clear();
         if(m_headers.size())
-            m_headers[0] = m_sRowidColumn;
+            m_headers[0] = QString::fromStdString(m_query.rowIdColumn());
     } else {
         m_pseudoPk = pseudoPk;
         if(m_headers.size())
@@ -857,9 +816,9 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 
 bool SqliteTableModel::isEditable() const
 {
-    return !m_sTable.isEmpty() &&
+    return !m_query.table().isEmpty() &&
             m_db.isOpen() &&
-            ((m_db.getObjectByName(m_sTable) && m_db.getObjectByName(m_sTable)->type() == sqlb::Object::Types::Table) || !m_pseudoPk.isEmpty());
+            ((m_db.getObjectByName(m_query.table()) && m_db.getObjectByName(m_query.table())->type() == sqlb::Object::Types::Table) || !m_pseudoPk.isEmpty());
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const

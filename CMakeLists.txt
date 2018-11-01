@@ -96,6 +96,7 @@ endif()
 set(SQLB_HDR
 	src/version.h
 	src/sql/sqlitetypes.h
+	src/sql/Query.h
 	src/csvparser.h
 	src/sqlite.h
 	src/grammar/sqlite3TokenTypes.hpp
@@ -167,6 +168,7 @@ set(SQLB_SRC
 	src/sqlitetablemodel.cpp
 	src/RowLoader.cpp
 	src/sql/sqlitetypes.cpp
+	src/sql/Query.cpp
 	src/sqltextedit.cpp
 	src/docktextedit.cpp
 	src/csvparser.cpp

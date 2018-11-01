@@ -70,7 +70,8 @@ HEADERS += \
     CipherSettings.h \
     DotenvFormat.h \
     Palette.h \
-    CondFormat.h
+    CondFormat.h \
+    sql/Query.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -117,7 +118,8 @@ SOURCES += \
     CipherSettings.cpp \
     DotenvFormat.cpp \
     Palette.cpp \
-    CondFormat.cpp
+    CondFormat.cpp \
+    sql/Query.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

@@ -53,6 +53,7 @@ enum escapeQuoting {
 void setIdentifierQuoting(escapeQuoting toQuoting);
 
 QString escapeIdentifier(QString id);
+std::string escapeIdentifier(std::string id);
 
 class ObjectIdentifier
 {
