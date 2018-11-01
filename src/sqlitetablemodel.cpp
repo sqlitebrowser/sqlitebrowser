@@ -112,22 +112,22 @@ void SqliteTableModel::setChunkSize(size_t chunksize)
     m_chunkSize = chunksize;
 }
 
-void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortColumn, Qt::SortOrder sortOrder, const QMap<int, QString> filterValues, const QVector<QString>& display_format)
+void SqliteTableModel::setQuery(const sqlb::Query& query)
 {
     // Unset all previous settings. When setting a table all information on the previously browsed data set is removed first.
     reset();
 
-    // Save the table name
-    m_query.setTable(table);
+    // Save the query
+    m_query = query;
 
     // The first column is the rowid column and therefore is always of type integer
     m_vDataTypes.push_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
     bool allOk = false;
-    if(m_db.getObjectByName(table) && m_db.getObjectByName(table)->type() == sqlb::Object::Types::Table)
+    if(m_db.getObjectByName(query.table()) && m_db.getObjectByName(query.table())->type() == sqlb::Object::Types::Table)
     {
-        sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(table);
+        sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
         if(t && t->fields.size()) // parsing was OK
         {
             QString rowid = t->rowidColumn();
@@ -157,34 +157,21 @@ void SqliteTableModel::setTable(const sqlb::ObjectIdentifier& table, int sortCol
     // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
     if(!allOk)
     {
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(table.toString());
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
         m_query.setRowIdColumn("rowid");
         m_headers.push_back("rowid");
         m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
     }
 
-    // Store filters and display formats
-    for(auto filterIt=filterValues.constBegin(); filterIt!=filterValues.constEnd(); ++filterIt)
-        updateFilter(filterIt.key(), filterIt.value(), false);
-    if(display_format.size())
-    {
-        for(int i=1;i<m_headers.size();i++)
-        {
-            QString format;
-            if(i <= display_format.size())
-                 format = display_format[i-1];
-            else
-                 format = m_headers[i];
+    // Tell the query object about the column names
+    std::vector<std::string> column_names;
+    for(const auto& h : m_headers)
+        column_names.push_back(h.toStdString());
+    //column_names.erase(column_names.begin(), column_names.begin()+1);
+    m_query.setColumNames(column_names);
 
-            m_query.selectedColumns().emplace_back(m_headers[i].toStdString(), format.toStdString());
-        }
-    }
-
-    // Set sort parameters. We're setting the sort columns to no sorting before calling sort() because this way, in sort() the
-    // current sort order is always changed and thus buildQuery() is always going to be called.
-    // This is also why we don't need to call buildQuery() here again.
-    m_query.orderBy().clear();
-    sort(sortColumn, sortOrder);
+    // Apply new query and update view
+    buildQuery();
 }
 
 void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
@@ -465,7 +452,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
     // Don't do anything when the sort order hasn't changed
-    if(m_query.orderBy().size() && QString::fromStdString(m_query.orderBy().at(0).column) == m_headers.at(column) && m_query.orderBy().at(0).direction == (order == Qt::AscendingOrder ? "ASC" : "DESC"))
+    if(m_query.orderBy().size() && m_query.orderBy().at(0).column == column && m_query.orderBy().at(0).direction == (order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending))
         return;
 
     // Reset sort order
@@ -473,7 +460,7 @@ void SqliteTableModel::sort(int column, Qt::SortOrder order)
 
     // Save sort order
 	if (column >= 0 && column < m_headers.size())
-        m_query.orderBy().emplace_back(m_headers.at(column).toStdString(), (order == Qt::AscendingOrder ? "ASC" : "DESC"));
+        m_query.orderBy().emplace_back(column, (order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending));
 
     // Set the new query (but only if a table has already been set
     if(!m_query.table().isEmpty())
@@ -706,20 +693,18 @@ void SqliteTableModel::setCondFormats(int column, const QVector<CondFormat>& con
     emit layoutChanged();
 }
 
-void SqliteTableModel::updateFilter(int column, const QString& value, bool applyQuery)
+void SqliteTableModel::updateFilter(int column, const QString& value)
 {
     QString whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
     if(whereClause.isEmpty())
-        m_query.where().erase(m_headers.at(column).toStdString());
-    else {
-        m_query.where()[m_headers.at(column).toStdString()] = whereClause.toStdString();
-    }
+        m_query.where().erase(column);
+    else
+        m_query.where()[column] = whereClause.toStdString();
 
     // Build the new query
-    if (applyQuery)
-        buildQuery();
+    buildQuery();
 }
 
 void SqliteTableModel::clearCache()

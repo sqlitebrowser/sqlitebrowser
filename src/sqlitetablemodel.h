@@ -84,7 +84,7 @@ public:
     QString customQuery(bool withRowid) const { return QString::fromStdString(m_query.buildQuery(withRowid)); }
 
     /// configure for browsing specified table
-    void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QMap<int, QString> filterValues = QMap<int, QString>(), const QVector<QString> &display_format = QVector<QString>());
+    void setQuery(const sqlb::Query& query);
 
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
@@ -115,7 +115,7 @@ public:
     void setCondFormats(int column, const QVector<CondFormat>& condFormats);
 
 public slots:
-    void updateFilter(int column, const QString& value, bool applyQuery = true);
+    void updateFilter(int column, const QString& value);
 
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);

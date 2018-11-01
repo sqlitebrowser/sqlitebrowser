@@ -230,7 +230,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                     SqliteTableModel tableModel(m_db);
                     sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
                                                  data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
-                    tableModel.setTable(objid);
+                    tableModel.setQuery(sqlb::Query(objid));
                     if(tableModel.completeCache())
                     {
                         // Only continue if all data was fetched

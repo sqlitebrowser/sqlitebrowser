@@ -5,6 +5,7 @@
 #include "PlotDock.h"
 #include "Palette.h"
 #include "CondFormat.h"
+#include "sql/Query.h"
 
 #include <QMainWindow>
 #include <QMap>
@@ -28,25 +29,7 @@ class MainWindow;
 
 struct BrowseDataTableSettings
 {
-    struct SortedColumn
-    {
-        SortedColumn() :
-            index(0),
-            mode(Qt::AscendingOrder)
-        {}
-        SortedColumn(int index_, Qt::SortOrder mode_) :
-            index(index_),
-            mode(mode_)
-        {}
-        SortedColumn(int index_, int mode_) :
-            index(index_),
-            mode(static_cast<Qt::SortOrder>(mode_))
-        {}
-
-        int index;
-        Qt::SortOrder mode;
-    };
-    QVector<SortedColumn> sortOrder;
+    sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
     QMap<int, QVector<CondFormat>> condFormats;
@@ -68,7 +51,7 @@ struct BrowseDataTableSettings
         int sortOrderIndex, sortOrderMode;
         stream >> sortOrderIndex;
         stream >> sortOrderMode;
-        object.sortOrder.push_back(SortedColumn(sortOrderIndex, sortOrderMode));
+        object.query.orderBy().emplace_back(sortOrderIndex, sortOrderMode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
         stream >> object.columnWidths;
         stream >> object.filterValues;
         stream >> object.displayFormats;

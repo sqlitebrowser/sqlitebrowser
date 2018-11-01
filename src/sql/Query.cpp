@@ -47,15 +47,15 @@ std::string Query::buildQuery(bool withRowid) const
 
         for(auto i=m_where.cbegin();i!=m_where.cend();++i)
         {
-            const auto it = findSelectedColumnByName(i->first);
-            std::string column = sqlb::escapeIdentifier(i->first);
+            const auto it = findSelectedColumnByName(m_column_names.at(i->first));
+            std::string column = sqlb::escapeIdentifier(m_column_names.at(i->first));
             if(it != m_selected_columns.cend() && it->selector != column)
                 column = it->selector;
             where += column + " " + i->second + " AND ";
         }
 
-        // Remove last 'AND '
-        where.erase(where.size() - 4);
+        // Remove last ' AND '
+        where.erase(where.size() - 5);
     }
 
     // Sorting
@@ -64,7 +64,8 @@ std::string Query::buildQuery(bool withRowid) const
     {
         order_by = "ORDER BY ";
         for(const auto& sorted_column : m_sort)
-            order_by += sqlb::escapeIdentifier(sorted_column.column) + " " + sorted_column.direction + ",";
+            order_by += sqlb::escapeIdentifier(m_column_names.at(sorted_column.column)) + " "
+                    + (sorted_column.direction == sqlb::Ascending ? "ASC" : "DESC") + ",";
         order_by.pop_back();
     }
 
