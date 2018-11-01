@@ -619,217 +619,219 @@ Abortendo l&apos;esecuzione%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="14"/>
         <source>Edit database cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica la cella del database</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="28"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modalità:</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="41"/>
         <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa è la lista delle modalità supportate dall&apos;editor della cella. Scegli una modalità per vedere o  modificare i dati della cella corrente.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="45"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Testo</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="50"/>
         <source>Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>Binario</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="55"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Immagine</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="60"/>
         <source>JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="65"/>
         <source>XML</source>
-        <translation type="unfinished"></translation>
+        <translation>XML</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="73"/>
         <location filename="../EditDialog.ui" line="76"/>
         <source>Automatically adjust the editor mode to the loaded data type</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiusta automaticamente la modalità dell&apos;editor in base al tipo di dato caricato</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="79"/>
         <source>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo bottone spuntabile permette di abilitare o disabilitare lo switching automatico della modalità dell&apos;editor. Quando una nuova cella è selezionata o sono importati nuovi dati e la modalità di switching automaitca è abilitata, la modalità si aggiusta al tipo di dato rilevato. Puoi cambiare in seguito la modalità dell&apos;editor in modo manuale. Se vuoi mantenere questa modalità cambiata manualmente mentre ti muovi tre le celle, togli la spunta a questo bottone.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
         <source>Auto-switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-switch</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="116"/>
         <location filename="../EditDialog.ui" line="119"/>
         <source>Auto-format: pretty print on loading, compact on saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-formato: migliore stampa al caricamento, compatta in salvataggio.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="122"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando abilitato, la feature dell&apos;auto-formato formatta i dati al caricamento, rompe il testo in righe e lo indenta per una maggiore leggibilità. Al salvataggio dei dati, la feature dell&apos;auto-formato compatta i dati rimuovendo i fine riga, e spazi bianchi non necessari.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="125"/>
         <source>Autoformat</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoformato</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="145"/>
         <source>Import from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa da file</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="148"/>
         <source>Opens a file dialog used to import any kind of data to this database cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri una finestra di dialogo per importare qualsiasi tipo di dato in questa cella del database.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="151"/>
         <source>&amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importa</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="164"/>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta in un file</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="167"/>
         <source>Opens a file dialog used to export the contents of this database cell to a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri una finestra di dialogo utilizzata per esportare i contenuti di questa cella del database in un file.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="170"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Esporta</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="183"/>
         <source>Set this cell to NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta questa cella a NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="186"/>
         <source>Erases the contents of the cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancella i contenuti di questa cella</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="189"/>
         <source>Set as &amp;NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta come &amp;NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="210"/>
         <source>This area displays information about the data present in this database cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Quest&apos;area mostra informazioni riguardo i dati presenti in questa cella del database</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="253"/>
         <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa modalità editor ti permette di modificare dati JSON o XML con evidenziazione della sintassi, formattazione e validazione autmoatica prima del salvataggio.
+
+Gli errori sono indiacati con una riga rossa ondulata.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="267"/>
         <source>Type of data currently in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di dato attualmente nella cella</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="274"/>
         <source>Size of data currently in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione dei dati attualmente in tabella</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
         <source>Apply data to cell [Ctrl+Return]</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica i dati alla cella [Ctrl+Return]</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
         <source>This button saves the changes performed in the cell editor to the database cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo bottone salva le modifiche fatte alla cella dell&apos;editor alla cella del database.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="318"/>
         <location filename="../EditDialog.ui" line="333"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stampa...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="321"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri la finestra di anteprima per stampare l&apos;immagine mostrata</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="324"/>
         <location filename="../EditDialog.ui" line="339"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="336"/>
         <source>Open preview dialog for printing displayed text</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri la finestra di anteprima per stampare il testo mostrato</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="348"/>
         <source>Copy Hex and ASCII</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia HEX  e ASCII</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="351"/>
         <source>Copy selected hexadecimal and ASCII columns to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia le colonne esadecimali e ASCII selezionate negli appunti</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="213"/>
         <location filename="../EditDialog.cpp" line="222"/>
         <source>Image data can&apos;t be viewed in this mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dati immagine non possono essere visualizzati in questa modalità.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="214"/>
         <location filename="../EditDialog.cpp" line="223"/>
         <source>Try switching to Image or Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prova a cambiare in modalità binaria o immagine.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="279"/>
         <location filename="../EditDialog.cpp" line="288"/>
         <source>Binary data can&apos;t be viewed in this mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dati binari non possono essere visualizzati in questa modalità.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="280"/>
         <location filename="../EditDialog.cpp" line="289"/>
         <source>Try switching to Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prova a cambiare nella modalità binaria.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="312"/>
@@ -837,14 +839,14 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>File di testo (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="313"/>
         <location filename="../EditDialog.cpp" line="335"/>
         <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation>File JSON (*.json)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="314"/>
@@ -852,110 +854,112 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>XML files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>File XML (*.xml)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>file immagine(%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>File binari(*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutti i file (*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="343"/>
         <source>Choose a file to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli un file da importare</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Immagine</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>File SVG (*.svg)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="400"/>
         <location filename="../EditDialog.cpp" line="420"/>
         <source>Hex dump files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>File Hex di dump (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="407"/>
         <source>Choose a filename to export data</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli un nome del file per esportare i dati</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="474"/>
         <source>Invalid data for this mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Dati non validi per questa modalità</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="475"/>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
-        <translation type="unfinished"></translation>
+        <translation>La cella continete dati %1 non validi. Ragione: %2. Sei davvero sicuro di applicare quello alla cella?</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="765"/>
         <location filename="../EditDialog.cpp" line="956"/>
         <source>Type of data currently in cell: Text / Numeric</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di dato attualmente nella cella: Testo / Numerico</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="767"/>
         <location filename="../EditDialog.cpp" line="957"/>
         <location filename="../EditDialog.cpp" line="965"/>
         <source>%n char(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n carattere</numerusform>
+            <numerusform>%n caratteri</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="929"/>
         <source>Type of data currently in cell: %1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di dato attualmente nella cella: %1 Immagine</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="935"/>
         <source>%1x%2 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2 pixel(s)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="946"/>
         <source>Type of data currently in cell: NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Typo di dato attualmente nella cella: NULL</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="947"/>
         <location filename="../EditDialog.cpp" line="974"/>
         <source>%n byte(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n byte</numerusform>
+            <numerusform>%n byte(s)</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="964"/>
         <source>Type of data currently in cell: Valid JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di dato attualmente nella cella: Valid JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="973"/>
         <source>Type of data currently in cell: Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>TIpo di dato attualmente nella cella: Binario</translation>
     </message>
 </context>
 <context>
