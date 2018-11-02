@@ -32,7 +32,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation type="unfinished"></translation>
+        <translation> (basado en SQLite %1)</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -60,89 +60,96 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir nuevo registro</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduzca valores para el nuevo registro teniendo en cuenta las restricciones. Los campos en negrita son obligatorios.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation type="unfinished"></translation>
+        <translation>En la columna Valor puede especificar el valor del campo identificado en la columna Nombre. La columna Tipo indica el tipo de campo. Los valores por defecto se muestran en la misma tipografía que los valores NULL.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="79"/>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="84"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores a insertar. Los valores mostrados por defecto son insertados automáticamente a menos que se cambien.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuando se editan los valores en el cuadro superior, aquí se muestra la consulta SQL para insertar este nuevo registro. Puede editarla antes de guardar.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Guardar&lt;/span&gt; enviará a la base de datos la sentencia SQL mostrada para insertar el nuevo registro.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restituir valores por Defecto&lt;/span&gt; restituirá los valores iniciales en la columna &lt;span style=&quot; font-weight:600;&quot;&gt;Valor&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancelar&lt;/span&gt; cierra este diálogo sin ejecutar la consulta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="208"/>
         <source>Auto-increment
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-incremento
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="211"/>
         <source>Unique constraint
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Restricción UNIQUE
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="214"/>
         <source>Check constraint:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Restricción CHECK:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="218"/>
         <source>Foreign key:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Clave foránea:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="226"/>
         <source>Default value:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Valor por defecto:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="252"/>
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error añadiendo registro. Mensaje de la base de datos:
+
+%1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="333"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de que quiere restaurar todos los valores introducidos a sus valores por defecto?</translation>
     </message>
 </context>
 <context>
@@ -175,12 +182,12 @@
     <message>
         <location filename="../Application.cpp" line="90"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql  [archivo]	Ejecutar este archivo de SQL tras abrir la base de datos</translation>
+        <translation>  -s, --sql [archivo]	Ejecutar este archivo de SQL tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation>  -t, --table [table]	Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
+        <translation>  -t, --table [tabla]	Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="89"/>
@@ -190,7 +197,7 @@
     <message>
         <location filename="../Application.cpp" line="92"/>
         <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation>  -R, --read-only\tAbrir base de datos en modo de solo-lectura</translation>
+        <translation>  -R, --read-only	Abrir base de datos en modo de solo-lectura</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -341,7 +348,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Java epoch (milliseconds) to date</source>
-        <translation>Fecha Java (milisegundos) a fecha</translation>
+        <translation>Tiempo Java (milisegundos) a fecha</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
@@ -351,7 +358,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
         <source>Unix epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo Unix a hora local</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
@@ -376,7 +383,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Unix epoch to date</source>
-        <translation>Fecha Unix a fecha</translation>
+        <translation>Tiempo Unix a fecha</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
@@ -439,7 +446,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="obsolete">Error en la consulta #%1: %2.
+        <translation type="obsolete">Error en la sentencia #%1: %2.
 Abortando ejecución.</translation>
     </message>
     <message>
@@ -454,7 +461,7 @@ Abortando ejecución.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="576"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de que quiere cerrar esta base de datos temporal? Todos los datos se perderán.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="633"/>
@@ -477,7 +484,7 @@ Abortando ejecución.</translation>
         <location filename="../sqlitedb.cpp" line="976"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
-        <translation>Error en la consulta #%1: %2.
+        <translation>Error en la sentencia #%1: %2.
 Abortando ejecución%3.</translation>
     </message>
     <message>
@@ -533,7 +540,7 @@ Abortando ejecución%3.</translation>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation>La restitución de algunos de los objetos asociados con esta tabla falló. Lo más probable es que esto suceda porque han cambiado los nombres de algunas columnas. Esta es la consulta SQL que puede que quiera corregir y ejecutar manualmente:
+        <translation>La restitución de algunos de los objetos asociados con esta tabla ha fallado. Lo más probable es que esto suceda porque los nombres de algunas columnas han cambiado. Esta es la sentencia SQL que puede que quiera corregir y ejecutar manualmente:
 
 </translation>
     </message>
@@ -562,7 +569,7 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1816"/>
         <source>Error loading extension: %1</source>
-        <translation type="unfinished">Error cargando la extensión: %1</translation>
+        <translation>Error cargando la extensión: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1841"/>
@@ -695,28 +702,28 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="60"/>
         <source>JSON</source>
-        <translation></translation>
+        <translation>JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="65"/>
         <source>XML</source>
-        <translation></translation>
+        <translation>XML</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="73"/>
         <location filename="../EditDialog.ui" line="76"/>
         <source>Automatically adjust the editor mode to the loaded data type</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustar automáticamente el modo de edición al tipo de datos cargados</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="79"/>
         <source>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta casilla activa o desactiva el cambio automático del modo de edición. Cuando se selecciona una nueva celda o se importan nuevos datos y la selección automática está activada, el modo de edición se ajusta al tipo de datos detectados. El modo de edición para la celda se puede cambiar manualmente. Si prefiere mantener el modo de edición seleccionado manualmente mientras se mueve por las celdas, desmarque la casilla.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
         <source>Auto-switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-selección</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="116"/>
@@ -758,38 +765,38 @@ Abortando ejecución%3.</translation>
         <location filename="../EditDialog.ui" line="318"/>
         <location filename="../EditDialog.ui" line="333"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="321"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre un diálogo de previsualización para imprimir la imagen mostrada</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="324"/>
         <location filename="../EditDialog.ui" line="339"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="336"/>
         <source>Open preview dialog for printing displayed text</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre un diálogo de previsualización para imprimir el texto mostrado</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="348"/>
         <source>Copy Hex and ASCII</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar hex. y ASCII</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="351"/>
         <source>Copy selected hexadecimal and ASCII columns to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia las columnas seleccionadas en hexadecimal y ASCII al portapapeles</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished">Ctrl+May+C</translation>
+        <translation>Ctrl+May+C</translation>
     </message>
     <message>
         <source>Import text</source>
@@ -949,14 +956,14 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de texto (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="313"/>
         <location filename="../EditDialog.cpp" line="335"/>
         <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos JSON (*.json)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="314"/>
@@ -964,26 +971,26 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>XML files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos XML (*.xml)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de imagen (%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos binarios (*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
-        <translation type="unfinished">Todos los archivos (*)</translation>
+        <translation>Todos los archivos (*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="343"/>
@@ -993,18 +1000,18 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Imagen</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos SVG (*.svg)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="400"/>
         <location filename="../EditDialog.cpp" line="420"/>
         <source>Hex dump files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de volcado hex. (*.txt)</translation>
     </message>
     <message>
         <source>Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;Binary files (*.bin);;All files (*)</source>
@@ -1267,7 +1274,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="246"/>
         <source>NN</source>
-        <translation></translation>
+        <translation>NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="249"/>
@@ -1618,7 +1625,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation>Múltiples líneas (VALUES) en cada comando INSERT</translation>
+        <translation>Múltiples líneas (VALUES) en cada sentencia INSERT</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
@@ -1685,13 +1692,13 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
         <location filename="../ExtendedScintilla.cpp" line="58"/>
         <location filename="../ExtendedScintilla.cpp" line="232"/>
         <source>Ctrl+H</source>
-        <translation></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="61"/>
         <location filename="../ExtendedScintilla.cpp" line="236"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="231"/>
@@ -1701,7 +1708,7 @@ Todos los datos actualmente almacenados en este campo se perderán.</translation
     <message>
         <location filename="../ExtendedScintilla.cpp" line="235"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir...</translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1787,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="209"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="212"/>
@@ -1790,7 +1797,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="238"/>
         <source>Alt+Del</source>
-        <translation></translation>
+        <translation>Alt+Supr</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="240"/>
@@ -1800,7 +1807,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="241"/>
         <source>Ctrl+Alt+C</source>
-        <translation></translation>
+        <translation>Ctrl+Alt+C</translation>
     </message>
     <message>
         <source>Use as Filter</source>
@@ -2101,7 +2108,7 @@ x~y	Rango: valores entre x e y</translation>
     </message>
     <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation type="obsolete">claúsulas para foreign key (ON UPDATE, ON DELETE etc.)</translation>
+        <translation type="obsolete">claúsulas de clave foránea (ON UPDATE, ON DELETE etc.)</translation>
     </message>
 </context>
 <context>
@@ -2361,7 +2368,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../MainWindow.ui" line="227"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Este botón crea un nuevo registro en la base de datos. Mantenga pulsado el botón del ratón para abrir un menú emergente con varias opciones:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nuevo Registro&lt;/span&gt;: inserta en la base de datos un nuevo registro con valores por defecto.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Introduce Valores...&lt;/span&gt;: abre un diálogo para introducir valores antes de insertarlos en la base de datos. Esto permite introducir valores que cumplan con las restricciones. Este diálogo también se abre si la opción de &lt;span style=&quot; font-weight:600;&quot;&gt;Nuevo Registro&lt;/span&gt; falla debido a esas restricciones.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="240"/>
@@ -2377,7 +2384,13 @@ x~y	Rango: valores entre x e y</translation>
  - Ctrl+&quot; for duplicating the current record.
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este es el visor de la tabla de la base de datos. Puede realizar lo siguiente:
+ - Escribir y editar valores.
+ - Doble-clic en cualquier registro para editar su contenido en la ventana del editor de celdas.
+ - Alt+Supr para borrar el contenido de la celda a NULL.
+ - Ctrl+&quot; para duplicar el registro actual.
+ - Ctrl+&apos; para copiar el valor de la celda de arriba.
+ - Las operaciones de copiar y pegar usuales.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="308"/>
@@ -2496,12 +2509,12 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1455"/>
         <source>Compact &amp;Database...</source>
-        <translation type="unfinished"></translation>
+        <translation>Compactar Base de &amp;Datos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1668"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Acerca de</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1688"/>
@@ -2526,7 +2539,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>&amp;Load Extension...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Cargar extensión...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1757"/>
@@ -2536,32 +2549,32 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1780"/>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1792"/>
         <source>Bug &amp;Report...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Informar de fallos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1804"/>
         <source>Feature Re&amp;quest...</source>
-        <translation type="unfinished"></translation>
+        <translation>Solicitud de &amp;mejoras...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1816"/>
         <source>Web&amp;site</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sitio web</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1828"/>
         <source>&amp;Donate on Patreon...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Donar en Patreon...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Sa&amp;ve Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Guardar proyecto...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1849"/>
@@ -2571,7 +2584,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1861"/>
         <source>Open &amp;Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir &amp;proyecto...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1870"/>
@@ -2581,7 +2594,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1885"/>
         <source>&amp;Attach Database...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ane&amp;xar base de datos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1888"/>
@@ -2597,7 +2610,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1906"/>
         <source>&amp;Set Encryption...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Establecer cifrado...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1936"/>
@@ -2607,127 +2620,127 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2001"/>
         <source>SQLCipher &amp;FAQ</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher &amp;FAQ</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2228"/>
         <source>Insert Values...</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir valores...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2231"/>
         <location filename="../MainWindow.ui" line="2234"/>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre un diálogo para introducir valores en un nuevo registro</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2242"/>
         <location filename="../MainWindow.ui" line="2245"/>
         <source>Insert new record using default values in browsed table</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserta un nuevo registro usando valores por defecto en la tabla visualizada</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2250"/>
         <source>New In-&amp;Memory Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva base de datos en &amp;memoria</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2258"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrastrar y soltar nombres calificados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2261"/>
         <location filename="../MainWindow.ui" line="2264"/>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
-        <translation type="unfinished"></translation>
+        <translation>Usa nombres calificados (p.ej. &quot;Tabla&quot;.&quot;Campo&quot;) al arrastrar los objetos y soltarlos en el editor </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2272"/>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrastrar y Soltar Nombres Entrecomillados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2275"/>
         <location filename="../MainWindow.ui" line="2278"/>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
-        <translation type="unfinished"></translation>
+        <translation>Usa identificadores escapados (p.ej. &quot;Tabla1&quot;) al arrastrar los objetos y soltarlos en el editor </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2283"/>
         <source>&amp;Integrity Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Comprobar &amp;integridad</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2286"/>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta el pragma integrity_check en la base de datos abierta y devuelve los resultados en la pestaña Ejecutar SQL. Este pragma realiza una comprobación de integridad de toda la base de datos.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2291"/>
         <source>&amp;Foreign-Key Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Comprobar clave &amp;foránea</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2294"/>
         <source>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta el pragma foreign_key_check con la base de datos abierta y devuelve los resultados en la pestaña Ejecutar SQL.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2299"/>
         <source>&amp;Quick Integrity Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Comprobar integridad &amp;rápido</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2302"/>
         <source>Run a quick integrity check over the open DB</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta una comprobación de integridad rápida en la base de datos abierta</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2305"/>
         <source>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta el pragma quick_check en la base de datos abierta y devuelve los resultados en la pestaña Executar SQL. Este comando hace la mayoría de comprobaciones de PRAGMA integrity_check pero se ejecuta mucho más rápido.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2310"/>
         <source>&amp;Optimize</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Optimizar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2313"/>
         <source>Attempt to optimize the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenta optimizar la base de datos</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2316"/>
         <source>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecuta el pragma optimize en la base de datos abierta. Este pragma realiza optimizaciones que pueden mejorar el rendimiento de consultas futuras.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2325"/>
         <location filename="../MainWindow.ui" line="2349"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
         <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprime el texto de la pestaña actual del editor SQL [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2334"/>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre un diálogo para imprimir el texto de la pestaña actual del editor SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
         <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprime la estructura de la base de datos abierta [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
         <source>Open a dialog for printing the structure of the opened database</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre un diálogo para imprimir la estructura de la base de datos abierta</translation>
     </message>
     <message>
         <source>SQLCipher &amp;FAQ...</source>
@@ -2837,13 +2850,13 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
-        <translation type="unfinished"></translation>
+        <source>Print currently browsed table data [Ctrl+P]</source>
+        <translation>Imprime los datos de la tabla mostrada actualmente [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
-        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation type="unfinished"></translation>
+        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
+        <translation>Imprime los datos de la tabla mostrada actualmente. Imprime la selección si se ha seleccionado más de una celda.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="224"/>
@@ -3121,7 +3134,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="2091"/>
         <source>Ctrl+F</source>
-        <translation></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2103"/>
@@ -3235,7 +3248,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     <message>
         <location filename="../MainWindow.ui" line="1054"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Herramientas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1075"/>
@@ -3258,7 +3271,10 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
 You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Esta es la estructura  de la base de datos abierta.
+Puede arrastrar múltiples objetos de la columna Nombre, soltarlos en el editor SQL y ajustar sus propiedades usando el menú contextual. Esto le ayudará a componer sentencias SQL.
+Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor SQL o en otras aplicaciones.
+</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1279"/>
@@ -3778,12 +3794,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="493"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Like sensible a mayúsculas&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="506"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso: este pragma no es legible y este valor se ha supuesto. Escribir el pragma puede sobreescribir un LIKE redefinido que proporcione una extensión de SQLite.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="929"/>
@@ -4239,7 +4255,7 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     <message>
         <location filename="../MainWindow.cpp" line="3026"/>
         <source>Ctrl+&quot;</source>
-        <translation></translation>
+        <translation>Ctrl+&quot;</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3201"/>
@@ -4278,7 +4294,7 @@ Razón: %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="488"/>
         <source>In-Memory database</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de datos en memoria</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="901"/>
@@ -4343,7 +4359,8 @@ Se perderán todos los datos asociados con la tabla.</translation>
         <location filename="../MainWindow.cpp" line="1038"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Para editar la tabla es necesario guardar antes todos los cambios pendientes.
+¿Está seguro de que quiere guardar la base de datos?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1223"/>
@@ -4398,7 +4415,9 @@ Are you sure?</source>
         <source>-- At line %1:
 %4
 -- Result: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>-- En la línea %1:
+%4
+-- Resultado: %3</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1524"/>
@@ -4408,7 +4427,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1677"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Importación completada. Algunas restricciones de las claves foráneas se han infringido. Por favor arréglelas antes de guardar.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2112"/>
@@ -4474,7 +4493,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3316"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation>Establezca el nuevo nombre para la pestaña SQL. Use el carácter «&amp;» para permitir usar el carácter siguiente como un atajo de teclado.</translation>
+        <translation>Establezca el nuevo nombre para la pestaña SQL. Use el carácter «&amp;&amp;» para permitir usar el carácter siguiente como un atajo de teclado.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3359"/>
@@ -4509,12 +4528,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3432"/>
         <source>This action will open a new SQL tab for running:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta acción abrirá una nueva pestaña SQL para ejecutar:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3434"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulse Ayuda para abrir la página correspondiente de la referencia de SQLite.</translation>
     </message>
     <message>
         <source>Row #</source>
@@ -4559,12 +4578,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1057"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error comprobando las claves foráneas tras la modificación de la tabla. Los cambios se desharán.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1060"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta tabla no ha pasado la comprobación de claves foráneas.&lt;br/&gt;Debería ejecutar &apos;Herramientas | Comprobar Claves foráneas&apos; y arreglar los problemas mostrados.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3128"/>
@@ -4592,12 +4611,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../AddRecordDialog.cpp" line="39"/>
         <source>Set to NULL</source>
-        <translation type="unfinished">Poner a NULL</translation>
+        <translation>Poner a NULL</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="43"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Supr</translation>
     </message>
 </context>
 <context>
@@ -4804,7 +4823,7 @@ Seleccione los ejes o sus etiquetas para arrastrar y aumentar/disminuir solo en 
     <message>
         <location filename="../PlotDock.cpp" line="61"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="68"/>
@@ -5127,7 +5146,7 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="306"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuando está activado, se omiten los saltos de línea en la columna Esquema, tanto en la pestaña Estructura en pantalla, como al imprimir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="430"/>
@@ -5139,12 +5158,13 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
         <location filename="../PreferencesDialog.ui" line="488"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este el el número máximo de filas en una tabla para activar el autocompletado basado en los valores actuales en la columna.
+Se puede poner a 0 para desactivar el autocompletado.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="502"/>
         <source>Row count threshold for completion</source>
-        <translation type="unfinished"></translation>
+        <translation>Umbral del conteo de filas para autocompletar</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="515"/>
@@ -5344,7 +5364,17 @@ Can be set to 0 for disabling completion.</source>
         <translation>Si se activa, las líneas de código SQL que causaron errores durante la última ejecución se destacan y el marco de resultados indica el error mediante el color del fondo</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1275"/>
+        <location filename="../PreferencesDialog.ui" line="1274"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite proporciona una función SQL para cargar extensiones desde un archivo de biblioteca compartida. Active esta opción si desea usar la función &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; desde código SQL.&lt;/p&gt;&lt;p&gt;Por razónes de seguridad, la carga de extensiones está desactivada por defecto y debe ser habilitada usando esta configuración. Siempre puede cargar extensiones a través de la interfaz de usuario, incluso aunque esta opción esté deshabilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1277"/>
+        <source>Allow loading extensions from SQL code</source>
+        <translation>Permitir cargar extensiones desde código SQL</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1285"/>
         <source>Remote</source>
         <translation>Remoto</translation>
     </message>
@@ -5933,12 +5963,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../SqlExecutionArea.ui" line="217"/>
         <location filename="../SqlExecutionArea.ui" line="238"/>
         <source>Results of the last executed statements</source>
-        <translation>Resultados de los últimos comandos ejecutados</translation>
+        <translation>Resultados de las últimas sentencias ejecutadas</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="220"/>
         <source>This field shows the results and status codes of the last executed statements.</source>
-        <translation>Este campo muestra los resultados y códigos de estado de los últimos comandos ejecutados.</translation>
+        <translation>Este campo muestra los resultados y códigos de estado de las últimas sentencias ejecutadas.</translation>
     </message>
     <message>
         <source>Export to &amp;CSV</source>
@@ -6032,14 +6062,26 @@ p, li { white-space: pre-wrap; }
         <translation>(X,Y,Z) La función like() se usa para implementar la expresión &quot;Y LIKE X ESCAPE Z&quot;.</translation>
     </message>
     <message>
-        <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation>(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X.</translation>
+        <translation type="vanished">(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X.</translation>
+    </message>
+    <message>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
+        <translation type="vanished">(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X usando el punto de entrada Y.</translation>
+    </message>
+    <message>
+        <location filename="../SqlUiLexer.cpp" line="79"/>
+        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
+Use of this function must be authorized from Preferences.</source>
+        <translation>(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X usando el punto de entrada Y.
+El uso de esta función tiene que ser autorizado desde las Preferencias.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation>(X) La función load_extension(X) carga extensiones SQLite del archivo de la biblioteca compartida llamada X usando el punto de entrada Y.</translation>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
+Use of this function must be authorized from Preferences.</source>
+        <translation>(X,Y) La función load_extension(X,Y) carga extensiones SQLite del archivo de la biblioteca compartida llamado X usando el punto de entrada Y.
+El uso de esta función tiene que ser autorizado desde las Preferencias.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
@@ -6079,7 +6121,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) La función quote(X) devuelve el texto de un literal SQL, que es el valor de su argumento, apropiado para la inclusión en una consulta SQL.</translation>
+        <translation>(X) La función quote(X) devuelve el texto de un literal SQL, que es el valor de su argumento, apropiado para la inclusión en una sentencia SQL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="89"/>
@@ -6134,7 +6176,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="99"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() La función total_changes() devuelve el número de cambios en las líneas causadas por consultas INSERT, UPDATE o DELETE desde que la conexión con la base de datos actual se abrió.</translation>
+        <translation>() La función total_changes() devuelve el número de cambios en las líneas causadas por sentencias INSERT, UPDATE o DELETE desde que la conexión con la base de datos actual se abrió.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="100"/>
@@ -6202,89 +6244,89 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="117"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation>(X) La función max() devuelve el máximo valor de entre todos los valores en el grupo.</translation>
+        <translation>(X) La función agregada max() devuelve el máximo valor de entre todos los valores en el grupo.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="118"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation>(X) La función min() devuelve el mínimo valor no NULO de entre todos los valores en el grupo.</translation>
+        <translation>(X) La función agregada min() devuelve el mínimo valor no NULO de entre todos los valores en el grupo.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="119"/>
         <location filename="../SqlUiLexer.cpp" line="120"/>
         <source>(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.</source>
-        <translation>(X) Las funciones sum() y total() devuelven la suma de todos los valores no NULOS en el grupo.</translation>
+        <translation>(X) Las funciones agregadas sum() y total() devuelven la suma de todos los valores no NULOS en el grupo.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="122"/>
         <source>() The number of the row within the current partition. Rows are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition, or in arbitrary order otherwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>() El número de fila dentro de la partición actual. Las filas se numeran empezando por 1 en el orden definido por la cláusula ORDER BY en la ventana de definición, o sino en un orden arbitrario.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="123"/>
         <source>() The row_number() of the first peer in each group - the rank of the current row with gaps. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1.</source>
-        <translation type="unfinished"></translation>
+        <translation>() El row_number() del primer par (igual) en cada grupo - el rango de la fila actual con huecos. Si no hay una cláusula ORDER BY, entonces todas las filas son consideradas pares y esta función siempre devuelve 1.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="124"/>
         <source>() The number of the current row&apos;s peer group within its partition - the rank of the current row without gaps. Partitions are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1. </source>
-        <translation type="unfinished"></translation>
+        <translation>() El número del grupo de pares de la fila actual dentro de su partición - el rango de la fila actual sin huecos. Las particiones se numeran empezando por 1 en el orden definido por la cláusula ORDER BY en la ventana de definición. Si no hay una cláusula ORDER BY, entonces todas las filas son consideradas pares y esta función siempre devuelve 1.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="125"/>
         <source>() Despite the name, this function always returns a value between 0.0 and 1.0 equal to (rank - 1)/(partition-rows - 1), where rank is the value returned by built-in window function rank() and partition-rows is the total number of rows in the partition. If the partition contains only one row, this function returns 0.0. </source>
-        <translation type="unfinished"></translation>
+        <translation>() A pesar del nombre, esta función siempre devuelve un valor entre 0.0 y 1.0 igual a (rank - 1)/(partition-rows - 1), donde rank es el valor devuelto por la función de ventana incorporada rank() y partition-rows es el número total de filas en la partición. Si la partición contiene sólo una fila, esta función devuelve 0.0.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="126"/>
         <source>() The cumulative distribution. Calculated as row-number/partition-rows, where row-number is the value returned by row_number() for the last peer in the group and partition-rows the number of rows in the partition.</source>
-        <translation type="unfinished"></translation>
+        <translation>() La distribución acumulada. Calculada como row-number/partition-rows, donde row-number es el valor devuelto por row_number() para el último par (igual) en el grupo y partition-rows el número de filas en la partición.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="127"/>
         <source>(N) Argument N is handled as an integer. This function divides the partition into N groups as evenly as possible and assigns an integer between 1 and N to each group, in the order defined by the ORDER BY clause, or in arbitrary order otherwise. If necessary, larger groups occur first. This function returns the integer value assigned to the group that the current row is a part of.</source>
-        <translation type="unfinished"></translation>
+        <translation>(N) El argumento N es tratado como un entero. Esta función divide la partición en N grupos tan equitativamente como sea posible y asigna un entero entre 1 y N a cada grupo, en el orden definido por la cláusula ORDER BY, o sino en un orden arbitrario. Si es necesario, los grupos mayores aparecen primero. Esta función devuelve un valor entero asignado al grupo del que la fila actual es parte.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="128"/>
         <source>(expr) Returns the result of evaluating expression expr against the previous row in the partition. Or, if there is no previous row (because the current row is the first), NULL.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Devuelve el resultado de evaluar la expresión expr con la fila anterior en la partición. Si no hay fila anterior (porque la fila actual es la primera) devuelve NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="129"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,offset) Si se proporciona un offset, éste debe ser un entero no negativo. En este caso el valor devuelto es el resultado de evaluar expr con la fila offset veces anterior a la fila actual dentro de la partición. Si offset es 0, entonces expr se evalua con la fila actual. Si no hay fila offset veces anterior devuelve NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="130"/>
         <location filename="../SqlUiLexer.cpp" line="133"/>
         <source>(expr,offset,default) If default is also provided, then it is returned instead of NULL if the row identified by offset does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,offset,default) Si también se proporciona un default, entonces éste es devuelto en lugar de NULL si no existe la fila identificada por offet.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(expr) Returns the result of evaluating expression expr against the next row in the partition. Or, if there is no next row (because the current row is the last), NULL.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Devuelve el resultado de evaluar la expresión expr con la siguiente fila en la partición. Si no hay fila siguiente (porque la fila actual es la última) devuelve NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="132"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,offset) Si se proporciona un offset, éste debe ser un entero no negativo. En este caso el valor devuelto es el resultado de evaluar expr con la fila offset veces posterior a la fila actual dentro de la partición. Si offset es 0, entonces expr se evalua con la fila actual. Si no hay fila offset veces siguiente devuelve NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="134"/>
         <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the first row in the window frame for each row.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Esta función de ventana incorporada calcula el marco de la ventana para cada fila de la misma forma que una función agregada de ventana. Devuelve el valor de expr evaluada con la primera fila en el marco de la ventana para cada fila.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="135"/>
         <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the last row in the window frame for each row.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Esta función de ventana incorporada calcula el marco de la ventana para cada fila de la misma forma que una función agregada de ventana. Devuelve el valor de expr evaluada con la última fila en el marco de la ventana para cada fila.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="136"/>
         <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,N) Esta función de ventana incorporada calcula el marco de la ventana para cada fila de la misma forma que una función agregada de ventana. Devuelve el valor de expr evaluada con la fila N del marco de la ventana. Las columnas se numeran dentro del marco de la ventana empezando por 1 en el orden definico por la cláusula ORDER BY, o sino en orden arbitrario. Si no hay fila N-ava en la partición, entonces devuelve NULL.</translation>
     </message>
 </context>
 <context>
@@ -6309,7 +6351,8 @@ Mantenga pulsado Ctrl+May y haga clic para ir ahí</translation>
         <location filename="../sqlitetablemodel.cpp" line="307"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
-        <translation type="unfinished"></translation>
+        <translation>Referencia %1(%2)
+Mantenga pulsado %3May y haga clic para ir ahí</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="400"/>

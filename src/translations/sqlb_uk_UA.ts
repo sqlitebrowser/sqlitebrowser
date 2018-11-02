@@ -3625,12 +3625,12 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data [Ctrl+P]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
-        <source>Print currrently browsed table data. Print selection if more than one cell is selected.</source>
+        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5308,7 +5308,17 @@ Can be set to 0 for disabling completion.</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач для SQLite дає змогу використовувати оператор REGEXP &apos;з коробки&apos;. Але попри&lt;br/&gt;це, можливі кілька різних варіантів реалізацій цього оператора й Ви вільні&lt;br/&gt;у виборі, який саме використовувати. Можна відімкнути нашу реалізацію та використовувати іншу -&lt;br/&gt;шляхом завантаження відповідного розширення. В цьому випадку потрібно перезавантажити програму.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1446"/>
+        <location filename="../PreferencesDialog.ui" line="1274"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1277"/>
+        <source>Allow loading extensions from SQL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1456"/>
         <source>Clone databases into</source>
         <translation>Клонувати бази даних до</translation>
     </message>
@@ -5923,9 +5933,8 @@ p, li { white-space: pre-wrap; }
         <translation>(X,Y,Z) Функція like() еквівалент вираження &quot;Y LIKE X ESCAPE Z&quot;.</translation>
     </message>
     <message>
-        <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation>(X) Функція load_extension(X) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X.</translation>
+        <translation type="vanished">(X) Функція load_extension(X) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X.</translation>
     </message>
     <message>
         <source>(X,Y) The load_extension(X,Y) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
@@ -5956,9 +5965,20 @@ p, li { white-space: pre-wrap; }
         <translation>(X,Y) функція glob(X,Y) еквівалент вираження &quot;Y GLOB X&quot;.</translation>
     </message>
     <message>
-        <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation>(X,Y) функція load_extension(X) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X використовуючи точку входу Y.</translation>
+        <translation type="vanished">(X,Y) функція load_extension(X) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X використовуючи точку входу Y.</translation>
+    </message>
+    <message>
+        <location filename="../SqlUiLexer.cpp" line="79"/>
+        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SqlUiLexer.cpp" line="80"/>
+        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
+Use of this function must be authorized from Preferences.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="83"/>
