@@ -1257,136 +1257,136 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
     <message>
         <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta i dati in un CSV</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
         <source>Tab&amp;le(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabe&amp;lla/e</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="57"/>
         <source>Colu&amp;mn names in first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomi delle &amp;Colonne sulla prima riga</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="77"/>
         <source>Fie&amp;ld separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Separatore di ca&amp;mpo</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="102"/>
         <source>,</source>
-        <translation type="unfinished"></translation>
+        <translation>,</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="107"/>
         <source>;</source>
-        <translation type="unfinished"></translation>
+        <translation>;</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="112"/>
         <source>Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="117"/>
         <source>|</source>
-        <translation type="unfinished"></translation>
+        <translation>|</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="122"/>
         <location filename="../ExportDataDialog.ui" line="192"/>
         <location filename="../ExportDataDialog.ui" line="254"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Altro</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="152"/>
         <source>&amp;Quote character</source>
-        <translation type="unfinished"></translation>
+        <translation>Carattere &amp;virgolette</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="177"/>
         <source>&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="182"/>
         <source>&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="222"/>
         <source>New line characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Carattere di nuova riga</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="244"/>
         <source>Windows: CR+LF (\r\n)</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows: CR+LF (\r\n)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="249"/>
         <source>Unix: LF (\n)</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix: LF (\n)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation type="unfinished"></translation>
+        <translation>Stampa carina</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="29"/>
         <source>Export data as JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta i dati come JSON</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="120"/>
         <source>exporting CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>esportando in CSV</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="188"/>
         <location filename="../ExportDataDialog.cpp" line="283"/>
         <source>Could not open output file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>impossibile aprire il file di output: %1</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="204"/>
         <source>exporting JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>esportando in JSON</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="297"/>
         <source>Text files(*.csv *.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>File di testo(*.csv *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="301"/>
         <source>Text files(*.json *.js *.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>File di testo(*.json *.js *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="311"/>
         <location filename="../ExportDataDialog.cpp" line="337"/>
         <source>Choose a filename to export data</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegliere un nome del file per esportare i dati</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="327"/>
         <source>Please select at least 1 table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfavore seleziona almeno una tabella.</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="351"/>
         <source>Choose a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegliere una cartella</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="382"/>
         <source>Export completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportazione completata.</translation>
     </message>
 </context>
 <context>
