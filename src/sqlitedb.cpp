@@ -147,9 +147,6 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
 
-        // Enable extension loading
-        sqlite3_enable_load_extension(_db, 1);
-
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
@@ -522,9 +519,6 @@ bool DBBrowserDB::create ( const QString & db)
         // Set foreign key settings as requested in the preferences
         bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
-
-        // Enable extension loading
-        sqlite3_enable_load_extension(_db, 1);
 
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
@@ -992,16 +986,18 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-QVariant DBBrowserDB::querySingleValueFromDb(const QString& statement, bool log)
+QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log)
 {
     waitForDbRelease();
     if(!_db)
-        return QVariant();
+        return QByteArray();
 
     if(log)
-        logSQL(statement, kLogMsg_App);
+        logSQL(sql, kLogMsg_App);
 
-    QByteArray utf8Query = statement.toUtf8();
+    QByteArray retval;
+
+    QByteArray utf8Query = sql.toUtf8();
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
@@ -1011,16 +1007,22 @@ QVariant DBBrowserDB::querySingleValueFromDb(const QString& statement, bool log)
             {
                 int bytes = sqlite3_column_bytes(stmt, 0);
                 if(bytes)
-                    return QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, 0)), bytes);
+                    retval = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, 0)), bytes);
                 else
-                    return "";
+                    retval = "";
             }
 
             sqlite3_finalize(stmt);
+        } else {
+            lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
+            qWarning() << lastErrorMessage;
         }
+    } else {
+        lastErrorMessage = tr("could not execute command: %1").arg(sqlite3_errmsg(_db));
+        qWarning() << lastErrorMessage;
     }
 
-    return QVariant();
+    return retval;
 }
 
 bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata)
@@ -1302,7 +1304,7 @@ bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb:
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, const sqlb::Field* to, int move, QString newSchemaName)
+bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, QString name, const sqlb::Field* to, int move, QString newSchemaName)
 {
     /*
      * USE CASES:
@@ -1311,16 +1313,6 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
      * 3) Set table, name and to; unset move: Change table constraints and rename/edit column.
      * 4) Set table, name, to and move: Change table constraints, rename/edit column and move it.
      */
-
-    // NOTE: This function is working around the incomplete ALTER TABLE command in SQLite.
-    // If SQLite should fully support this command one day, this entire
-    // function can be changed to executing something like this:
-    //QString sql;
-    //if(to.isNull())
-    //    sql = QString("ALTER TABLE %1 DROP COLUMN %2;").arg(sqlb::escapeIdentifier(table)).arg(sqlb::escapeIdentifier(column));
-    //else
-    //    sql = QString("ALTER TABLE %1 MODIFY %2 %3").arg(sqlb::escapeIdentifier(tablename)).arg(sqlb::escapeIdentifier(to)).arg(type);    // This is wrong...
-    //return executeSQL(sql);
 
     // TODO: This function needs to be cleaned up. It might make sense to split it up in several parts than can be reused
     // more easily. Besides that, it might make sense to support some potential use cases in a more sophisticated way. These include:
@@ -1341,7 +1333,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Create table schema
-    const sqlb::TablePtr oldSchema = getObjectByName<sqlb::Table>(tablename);
+    sqlb::TablePtr oldSchema = getObjectByName<sqlb::Table>(tablename);
 
     // Check if field actually exists
     if(!name.isNull() && sqlb::findField(oldSchema, name) == oldSchema->fields.end())
@@ -1357,6 +1349,55 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
         return false;
     }
+
+    // No automatic schema updates from now on
+    NoStructureUpdateChecks nup(*this);
+
+    // Newer versions of SQLite add a better ALTER TABLE support which we can use
+#if SQLITE_VERSION_NUMBER >= 3025000
+    // If the name of the field should be changed do that by using SQLite's ALTER TABLE feature
+    if(!name.isNull() && to && name != to->name())
+    {
+        if(!executeSQL(QString("ALTER TABLE %1 RENAME COLUMN %2 TO %3;")
+                       .arg(tablename.toString())
+                       .arg(sqlb::escapeIdentifier(name))
+                       .arg(sqlb::escapeIdentifier(to->name()))))
+        {
+            QString error(tr("renameColumn: renaming the column failed. DB says:\n%1").arg(lastErrorMessage));
+            revertToSavepoint(savepointName);
+            lastErrorMessage = error;
+            return false;
+        }
+
+        // Update our schema representation to get all the changed triggers, views and indices
+        updateSchema();
+
+        // Check if that was all we were asked to do. That's the case if the field is not to be deleted (which we already checked for above), if the field
+        // is not to be moved, if the table is not to be moved and if nothing besides the name of the field changed in the field definition.
+        sqlb::Field oldFieldWithNewName = *sqlb::findField(oldSchema, name);
+        oldFieldWithNewName.setName(to->name());
+        if(move == 0 && tablename.schema() == newSchemaName && oldFieldWithNewName == *to)
+        {
+            // We're done.
+
+            // Release the savepoint - everything went fine
+            if(!releaseSavepoint(savepointName))
+            {
+                lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+                return false;
+            }
+
+            return true;
+        } else {
+            // There's more to do.
+
+            // We can have the rest of the function deal with the remaining changes by reloading the table schema as it is now and updating the name of the column
+            // to change.
+            oldSchema = getObjectByName<sqlb::Table>(tablename);
+            name = to->name();
+        }
+    }
+#endif
 
     // Create a new table with a name that hopefully doesn't exist yet.
     // Its layout is exactly the same as the one of the table to change - except for the column to change
@@ -1397,7 +1438,6 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Create the new table
-    NoStructureUpdateChecks nup(*this);
     if(!executeSQL(newSchema.sql(newSchemaName), true, true))
     {
         QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
@@ -1695,37 +1735,12 @@ void DBBrowserDB::updateSchema()
 
 QString DBBrowserDB::getPragma(const QString& pragma)
 {
-    waitForDbRelease();
-
-    if(!isOpen())
-        return QString();
-
     QString sql;
     if (pragma=="case_sensitive_like")
         sql = "SELECT 'x' NOT LIKE 'X'";
     else
         sql = QString("PRAGMA %1").arg(pragma);
-
-    sqlite3_stmt* vm;
-    const char* tail;
-    QString retval;
-
-    // Get value from DB
-    int err = sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &vm, &tail);
-    if(err == SQLITE_OK){
-        logSQL(sql, kLogMsg_App);
-        if(sqlite3_step(vm) == SQLITE_ROW)
-            retval = QString::fromUtf8((const char *) sqlite3_column_text(vm, 0));
-        else
-            qWarning() << tr("didn't receive any output from pragma %1").arg(pragma);
-
-        sqlite3_finalize(vm);
-    } else {
-        qWarning() << tr("could not execute pragma command: %1, %2").arg(err).arg(sqlite3_errmsg(_db));
-    }
-
-    // Return it
-    return retval;
+    return querySingleValueFromDb(sql);
 }
 
 bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
@@ -1792,9 +1807,19 @@ bool DBBrowserDB::loadExtension(const QString& filePath)
         return false;
     }
 
+    // Enable extension loading
+    sqlite3_enable_load_extension(_db, 1);
+
     // Try to load extension
     char* error;
-    if(sqlite3_load_extension(_db, filePath.toUtf8(), nullptr, &error) == SQLITE_OK)
+    int result = sqlite3_load_extension(_db, filePath.toUtf8(), nullptr, &error);
+
+    // Disable extension loading if so configured
+    // (we don't want to leave the possibility of calling load_extension() from SQL without user informed permission)
+    if (!Settings::getValue("extensions", "enable_load_extension").toBool())
+        sqlite3_enable_load_extension(_db, 0);
+
+    if (result == SQLITE_OK)
     {
         return true;
     } else {
@@ -1809,6 +1834,8 @@ void DBBrowserDB::loadExtensionsFromSettings()
 {
     if(!_db)
         return;
+
+    sqlite3_enable_load_extension(_db, Settings::getValue("extensions", "enable_load_extension").toBool());
 
     QStringList list = Settings::getValue("extensions", "list").toStringList();
     for(const QString& ext : list)

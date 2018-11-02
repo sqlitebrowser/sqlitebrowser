@@ -107,6 +107,15 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
     editContextMenu->addSeparator();
+    QString conditionalFormatLabel = text().isEmpty() ? tr("Clear All Conditional Formats") : tr("Use for Conditional Format");
+    QAction* conditionalFormatAction = new QAction(conditionalFormatLabel, editContextMenu);
+    connect(conditionalFormatAction, &QAction::triggered, [&]() {
+        if (text().isEmpty())
+            emit clearAllCondFormats();
+        else
+            emit addFilterAsCondFormat(text());
+    });
+    editContextMenu->addSeparator();
 
     QMenu* filterMenu = editContextMenu->addMenu(tr("Set Filter Expression"));
 
@@ -163,6 +172,8 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     connect(inRangeAction, &QAction::triggered, [&]() {
             setFilterHelper(QString ("?~"));
         });
+
+    editContextMenu->addAction(conditionalFormatAction);
 
     filterMenu->addAction(whatsThisAction);
     filterMenu->addSeparator();

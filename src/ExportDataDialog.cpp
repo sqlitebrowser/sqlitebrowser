@@ -307,6 +307,7 @@ void ExportDataDialog::accept()
     {
         // called from sqlexecute query tab
         QString sFilename = FileDialog::getSaveFileName(
+                CreateDataFile,
                 this,
                 tr("Choose a filename to export data"),
                 file_dialog_filter);
@@ -333,6 +334,7 @@ void ExportDataDialog::accept()
         if(selectedItems.size() == 1)
         {
             QString fileName = FileDialog::getSaveFileName(
+                    CreateDataFile,
                     this,
                     tr("Choose a filename to export data"),
                     file_dialog_filter,
@@ -347,6 +349,7 @@ void ExportDataDialog::accept()
         } else {
             // ask for folder
             QString exportfolder = FileDialog::getExistingDirectory(
+                        CreateDataFile,
                         this,
                         tr("Choose a directory"),
                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);

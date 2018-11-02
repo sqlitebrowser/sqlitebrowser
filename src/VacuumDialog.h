@@ -15,14 +15,14 @@ class VacuumDialog : public QDialog
 
 public:
     explicit VacuumDialog(DBBrowserDB* _db, QWidget* parent = nullptr);
-    ~VacuumDialog();
+    ~VacuumDialog() override;
 
 private:
     Ui::VacuumDialog* ui;
     DBBrowserDB* db;
 
 protected slots:
-    virtual void accept();
+    void accept() override;
 };
 
 #endif

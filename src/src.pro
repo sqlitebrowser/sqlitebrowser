@@ -68,7 +68,9 @@ HEADERS += \
     FileExtensionManager.h \
     Data.h \
     CipherSettings.h \
-    DotenvFormat.h
+    DotenvFormat.h \
+    Palette.h \
+    CondFormat.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -113,7 +115,9 @@ SOURCES += \
     FileExtensionManager.cpp \
     Data.cpp \
     CipherSettings.cpp \
-    DotenvFormat.cpp
+    DotenvFormat.cpp \
+    Palette.cpp \
+    CondFormat.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

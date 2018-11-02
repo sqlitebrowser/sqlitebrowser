@@ -83,6 +83,7 @@ void ExportSqlDialog::accept()
         defaultFileName = pdb->currentFile() + ".sql";;
 
     QString fileName = FileDialog::getSaveFileName(
+                CreateSQLFile,
                 this,
                 tr("Choose a filename to export"),
                 tr("Text files(*.sql *.txt)"),

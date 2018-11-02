@@ -15,7 +15,7 @@ class ColumnDisplayFormatDialog : public QDialog
 
 public:
     explicit ColumnDisplayFormatDialog(const QString& colname, QString current_format, QWidget* parent = nullptr);
-    ~ColumnDisplayFormatDialog();
+    ~ColumnDisplayFormatDialog() override;
 
     QString selectedDisplayFormat() const;
 

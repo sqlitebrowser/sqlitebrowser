@@ -194,10 +194,10 @@ You can drag SQL statements from an object row and drop them into other applicat
           <item>
            <widget class="QToolButton" name="buttonPrintTable">
             <property name="toolTip">
-             <string>Print currrently browsed table data [Ctrl+P]</string>
+             <string>Print currently browsed table data [Ctrl+P]</string>
             </property>
             <property name="whatsThis">
-             <string>Print currrently browsed table data. Print selection if more than one cell is selected.</string>
+             <string>Print currently browsed table data. Print selection if more than one cell is selected.</string>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">

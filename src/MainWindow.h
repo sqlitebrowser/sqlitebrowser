@@ -3,6 +3,8 @@
 
 #include "sqlitedb.h"
 #include "PlotDock.h"
+#include "Palette.h"
+#include "CondFormat.h"
 
 #include <QMainWindow>
 #include <QMap>
@@ -26,10 +28,28 @@ class MainWindow;
 
 struct BrowseDataTableSettings
 {
-    int sortOrderIndex;
-    Qt::SortOrder sortOrderMode;
+    struct SortedColumn
+    {
+        SortedColumn() :
+            index(0),
+            mode(Qt::AscendingOrder)
+        {}
+        SortedColumn(int index_, Qt::SortOrder mode_) :
+            index(index_),
+            mode(mode_)
+        {}
+        SortedColumn(int index_, int mode_) :
+            index(index_),
+            mode(static_cast<Qt::SortOrder>(mode_))
+        {}
+
+        int index;
+        Qt::SortOrder mode;
+    };
+    QVector<SortedColumn> sortOrder;
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
+    QMap<int, QVector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -39,18 +59,16 @@ struct BrowseDataTableSettings
     QMap<int, bool> hiddenColumns;
 
     BrowseDataTableSettings() :
-        sortOrderIndex(0),
-        sortOrderMode(Qt::AscendingOrder),
         showRowid(false)
     {
     }
 
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
     {
-        stream >> object.sortOrderIndex;
-        int sortordermode;
-        stream >> sortordermode;
-        object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+        int sortOrderIndex, sortOrderMode;
+        stream >> sortOrderIndex;
+        stream >> sortOrderMode;
+        object.sortOrder.push_back(SortedColumn(sortOrderIndex, sortOrderMode));
         stream >> object.columnWidths;
         stream >> object.filterValues;
         stream >> object.displayFormats;
@@ -81,7 +99,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
@@ -177,6 +195,8 @@ private:
 
     QString defaultBrowseTableEncoding;
 
+    Palette m_condFormatPalette;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -197,11 +217,11 @@ private:
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
 
 protected:
-    void closeEvent(QCloseEvent *);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void resizeEvent(QResizeEvent *event);
-    void keyPressEvent(QKeyEvent* event);
+    void closeEvent(QCloseEvent *) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
@@ -278,6 +298,8 @@ private slots:
     void saveProject();
     void fileAttach();
     void updateFilter(int column, const QString& value);
+    void addCondFormat(int column, const QString& value);
+    void clearAllCondFormats(int column);
     void editEncryption();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();

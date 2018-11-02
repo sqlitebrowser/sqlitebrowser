@@ -1,6 +1,8 @@
 #ifndef PLOTDOCK_H
 #define PLOTDOCK_H
 
+#include "Palette.h"
+
 #include <QDialog>
 #include <QVariant>
 #include <QMenu>
@@ -20,7 +22,7 @@ class PlotDock : public QDialog
 
 public:
     explicit PlotDock(QWidget* parent = nullptr);
-    ~PlotDock();
+    ~PlotDock() override;
 
     struct PlotSettings
     {
@@ -68,7 +70,7 @@ public slots:
     void updatePlot(SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool update = true, bool keepOrResetSelection = true);
     void fetchAllData();
     void resetPlot();
-    virtual void reject();
+    void reject() override;
 
 signals:
     void pointsSelected(int firstIndex, int count);
@@ -89,6 +91,7 @@ private:
     QMenu* m_contextMenu;
     bool m_showLegend;
     bool m_stackedBars;
+    Palette m_graphPalette;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype
