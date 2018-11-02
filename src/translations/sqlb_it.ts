@@ -1044,205 +1044,212 @@ Gli errori sono indiacati con una riga rossa ondulata.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="14"/>
         <source>Edit table definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica la definizione della tabella</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="27"/>
         <source>Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabella</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="43"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanzate</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database schema</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema database</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="75"/>
         <source>Without Rowid</source>
-        <translation type="unfinished"></translation>
+        <translation>Senza id riga</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fai una tabella &apos;WITHOUT rowid&apos;. Impostare questa spunta richiede un campo di tipo INTEGER con la chiave primaria impostata e l&apos;auto incremento non impostato.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="98"/>
         <source>Fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Campi</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="106"/>
         <source>Add field</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi campo</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="126"/>
         <source>Remove field</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi campo</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="146"/>
         <source>Move field up</source>
-        <translation type="unfinished"></translation>
+        <translation>Muovi campo in sù</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="166"/>
         <source>Move field down</source>
-        <translation type="unfinished"></translation>
+        <translation>Muovi campo in giù</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="236"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="241"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="246"/>
         <source>NN</source>
-        <translation type="unfinished"></translation>
+        <translation>NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="249"/>
         <source>Not null</source>
-        <translation type="unfinished"></translation>
+        <translation>Non null</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="254"/>
         <source>PK</source>
-        <translation type="unfinished"></translation>
+        <translation>PK</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="257"/>
         <source>Primary key</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiave primaria</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="262"/>
         <source>AI</source>
-        <translation type="unfinished"></translation>
+        <translation>AI</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="265"/>
         <source>Autoincrement</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoincremento</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="270"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="273"/>
         <source>Unique</source>
-        <translation type="unfinished"></translation>
+        <translation>Unico</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="278"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Default</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="281"/>
         <source>Default value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valore di default</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="286"/>
         <source>Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlla</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="289"/>
         <source>Check constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlla i constraint</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="294"/>
         <source>Foreign Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiave straniera</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="314"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;C&apos;è qualcosa con la definizione di questa tabella che il nostro parser non campisce totalmente. Modificare e salvare la tabella potrebbe creare dei problemi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="167"/>
         <source>Error creating table. Message from database engine:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error nella creazione della tabella. Messaggio dal database engine:
+%1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="291"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esiste già un campo con quel nome. Perfavore rinominalo o scegli un nome differente per questo campo.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="314"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa colonna è referenziata in una chiave straniera nella tabella %1 e quindi il suo nome non può essere cambiato.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="391"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation type="unfinished"></translation>
+        <translation>C&apos;è almeno una riga con questo campo impostato a NULL. Questo rende impossibile impostare questa opzione. Perfavore cambia la tabella dei dati prima.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="424"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
-        <translation type="unfinished"></translation>
+        <translation>C&apos;è almeno una riga con un valore non intero in questo campo. Questo rende impossibile impostare l&apos;AI. Perfavore cambia la tabella dei dati prima.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="480"/>
         <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>La colonna &apos;%1&apos; non ha dati unici.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="481"/>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo rende impossibile impostare questa opzione. Perfavore cambia la tabella dei dati prima.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="540"/>
         <source>Modifying this column failed. Error returned from database:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>La modifica di questa colonna è fallita. Errore restituito dal database:
+%1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="619"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro che vuoi modificare questo cmapo &apos;%1&apos;?
+Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="730"/>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto increment disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfavore agginugi un campo che rispetti i seguenti criteri prima di impostare l&apos;opzione senza id di riga:
+ - Opzione Primary key impostata
+ - Auto incremento disabilitato</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="758"/>
         <source>Setting the rowid column for the table failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazione della colonna rowid per la tabella fallita. Messaggo di errore:
+%1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="776"/>
         <source>Changing the table schema failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio dello schema della tabella fallito. Messaggio di errore:
+%1</translation>
     </message>
 </context>
 <context>
