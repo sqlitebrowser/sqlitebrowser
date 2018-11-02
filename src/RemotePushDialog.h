@@ -15,8 +15,8 @@ class RemotePushDialog : public QDialog
     Q_OBJECT
 
 public:
-    RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert, const QString& name = QString());
-    ~RemotePushDialog();
+    explicit RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert, const QString& name = QString());
+    ~RemotePushDialog() override;
 
     QString name() const;
     QString commitMessage() const;
@@ -41,7 +41,7 @@ private:
 
 protected slots:
     void checkInput();
-    virtual void accept();
+    void accept() override;
 
     void reloadBranchList();
 

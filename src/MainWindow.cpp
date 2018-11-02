@@ -27,6 +27,7 @@
 #include "RemoteDatabase.h"
 #include "FindReplaceDialog.h"
 #include "Data.h"
+#include "CondFormat.h"
 
 #include <QFile>
 #include <QApplication>
@@ -149,6 +150,8 @@ void MainWindow::init()
 
     // Set up filters
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
+    connect(ui->dataTable->filterHeader(), SIGNAL(addCondFormat(int,QString)), this, SLOT(addCondFormat(int,QString)));
+    connect(ui->dataTable->filterHeader(), SIGNAL(clearAllCondFormats(int)), this, SLOT(clearAllCondFormats(int)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Select in table the rows correspoding to the selected points in plot
@@ -432,6 +435,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
     if (!QFile::exists(wFile))
     {
         wFile = FileDialog::getOpenFileName(
+                    OpenDatabaseFile,
                     this,
                     tr("Choose a database file")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
@@ -485,9 +489,11 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
 
 void MainWindow::fileNew()
 {
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                   tr("Choose a filename to save under"),
-                                                   FileDialog::getSqlDatabaseFileFilter());
+    QString fileName = FileDialog::getSaveFileName(
+                           CreateDatabaseFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           FileDialog::getSqlDatabaseFileFilter());
     if(!fileName.isEmpty())
     {
         if(QFile::exists(fileName))
@@ -742,7 +748,12 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
         bool oldState = filterHeader->blockSignals(true);
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
             filterHeader->setFilter(filterIt.key(), filterIt.value());
-        filterHeader->blockSignals(oldState);
+
+        // Conditional formats
+        for(auto formatIt=storedData.condFormats.constBegin(); formatIt!=storedData.condFormats.constEnd(); ++formatIt)
+            m_browseTableModel->setCondFormats(formatIt.key(), formatIt.value());
+
+      filterHeader->blockSignals(oldState);
     }
 
     // Encoding
@@ -1327,6 +1338,13 @@ void MainWindow::executeQuery()
     {
         // What type of query is this?
         QString qtail = QString(tail).trimmed();
+        // Remove trailing comments so we don't get fooled by some trailing text at the end of the stream.
+        // Otherwise we'll pass them to SQLite and its execution will trigger a savepoint that wouldn't be
+        // reverted.
+        SqliteTableModel::removeCommentsFromQuery(qtail);
+        if (qtail.isEmpty())
+            break;
+
         StatementType query_type = getQueryType(qtail);
 
         // Check whether the DB structure is changed by this statement
@@ -1550,9 +1568,10 @@ void MainWindow::mainTabSelected(int tabindex)
 void MainWindow::importTableFromCSV()
 {
     QStringList wFiles = FileDialog::getOpenFileNames(
-                            this,
-                            tr("Choose text files"),
-                            tr("Text files(*.csv *.txt);;All files(*)"));
+                             OpenCSVFile,
+                             this,
+                             tr("Choose text files"),
+                             tr("Text files(*.csv *.txt);;All files(*)"));
 
     QStringList validFiles;
     for(const auto& file : wFiles) {
@@ -1658,6 +1677,7 @@ void MainWindow::importDatabaseFromSQL()
 {
     // Get file name to import
     QString fileName = FileDialog::getOpenFileName(
+                OpenSQLFile,
                 this,
                 tr("Choose a file to import"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
@@ -1675,6 +1695,7 @@ void MainWindow::importDatabaseFromSQL()
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
         newDbFile = FileDialog::getSaveFileName(
+                    CreateDatabaseFile,
                     this,
                     tr("Choose a filename to save under"),
                     FileDialog::getSqlDatabaseFileFilter());
@@ -2141,6 +2162,7 @@ void MainWindow::changeSqlTab(int /*index*/)
 void MainWindow::openSqlFile()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenSQLFile,
                 this,
                 tr("Select SQL file to open"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
@@ -2201,6 +2223,7 @@ void MainWindow::saveSqlFileAs()
         return;
 
     QString file = FileDialog::getSaveFileName(
+                CreateSQLFile,
                 this,
                 tr("Select file name"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
@@ -2226,6 +2249,7 @@ void MainWindow::saveSqlResultsAsView()
 void MainWindow::loadExtension()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenExtensionFile,
                 this,
                 tr("Select extension file"),
                 tr("Extensions(*.so *.dll);;All files(*)"));
@@ -2479,6 +2503,21 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     xml.skipCurrentElement();
                 }
             }
+        } else if(xml.name() == "conditional_formats") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "conditional_formats") {
+                if (xml.name() == "column") {
+                    int index = xml.attributes().value("index").toInt();
+                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
+                        if(xml.name() == "format") {
+                            CondFormat newCondFormat(xml.attributes().value("condition").toString(),
+                                                     QColor(xml.attributes().value("color").toString()),
+                                                     settings.encoding);
+                            settings.condFormats[index].append(newCondFormat);
+                            xml.skipCurrentElement();
+                        }
+                    }
+                }
+            }
         } else if(xml.name() == "display_formats") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "display_formats") {
                 if (xml.name() == "column") {
@@ -2517,9 +2556,11 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
     // Show the open file dialog when no filename was passed as parameter
     if(filename.isEmpty())
     {
-        filename = FileDialog::getOpenFileName(this,
-                                                tr("Choose a project file to open"),
-                                                tr("DB Browser for SQLite project file (*.sqbpro)"));
+        filename = FileDialog::getOpenFileName(
+                       OpenProjectFile,
+                       this,
+                       tr("Choose a project file to open"),
+                       tr("DB Browser for SQLite project file (*.sqbpro)"));
     }
 
     if(!filename.isEmpty())
@@ -2751,6 +2792,19 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeEndElement();
     }
     xml.writeEndElement();
+    xml.writeStartElement("conditional_formats");
+    for(auto iter=object.condFormats.constBegin(); iter!=object.condFormats.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        for(auto format : iter.value()) {
+            xml.writeStartElement("format");
+            xml.writeAttribute("condition", format.filter());
+            xml.writeAttribute("color", format.color().name());
+            xml.writeEndElement();
+        }
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
     xml.writeStartElement("display_formats");
     for(auto iter=object.displayFormats.constBegin(); iter!=object.displayFormats.constEnd(); ++iter) {
         xml.writeStartElement("column");
@@ -2783,10 +2837,12 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
 
 void MainWindow::saveProject()
 {
-    QString filename = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("DB Browser for SQLite project file (*.sqbpro)"),
-                                                    db.currentFile());
+    QString filename = FileDialog::getSaveFileName(
+                           CreateProjectFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           tr("DB Browser for SQLite project file (*.sqbpro)"),
+                           db.currentFile());
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
@@ -2899,6 +2955,7 @@ void MainWindow::fileAttach()
 {
     // Get file name of database to attach
     QString file = FileDialog::getOpenFileName(
+                OpenDatabaseFile,
                 this,
                 tr("Choose a database file"),
                 FileDialog::getSqlDatabaseFileFilter());
@@ -2918,6 +2975,20 @@ void MainWindow::updateFilter(int column, const QString& value)
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
     applyBrowseTableSettings(settings, true);
+}
+
+void MainWindow::addCondFormat(int column, const QString& value)
+{
+    CondFormat newCondFormat(value, m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()), m_browseTableModel->encoding());
+    m_browseTableModel->addCondFormat(column, newCondFormat);
+    browseTableSettings[currentlyBrowsedTableName()].condFormats[column].append(newCondFormat);
+}
+
+void MainWindow::clearAllCondFormats(int column)
+{
+    QVector<CondFormat> emptyCondFormatVector = QVector<CondFormat>();
+    m_browseTableModel->setCondFormats(column, emptyCondFormatVector);
+    browseTableSettings[currentlyBrowsedTableName()].condFormats[column].clear();
 }
 
 void MainWindow::editEncryption()

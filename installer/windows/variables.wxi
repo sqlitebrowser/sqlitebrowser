@@ -3,7 +3,11 @@
 
     <?define Name="DB Browser for SQLite" ?>
     <?define Team="$(var.Name) Team" ?>
+<<<<<<< HEAD
     <?define Version="3.10.100" ?>
+=======
+    <?define Version="3.11.99" ?>
+>>>>>>> 2f1943929ee3f7fb02596cc649ba2d30b0302c6b
 
     <!--
     =============================================== Add/Remove Programs ================================================
@@ -50,7 +54,7 @@
     -->
 
     <?if $(sys.BUILDARCH)="x64"?>
-        <?define QtPath="C:\dev\Qt\5.8\msvc2013_64" ?>
+        <?define QtPath="C:\dev\Qt\5.10.1\msvc2013_64" ?>
         <?define SQLitePath="C:\dev\SQLite-Win64" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win64" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win64" ?>

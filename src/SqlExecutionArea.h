@@ -18,7 +18,7 @@ class SqlExecutionArea : public QWidget
 
 public:
     explicit SqlExecutionArea(DBBrowserDB& _db, QWidget* parent = nullptr);
-    ~SqlExecutionArea();
+    ~SqlExecutionArea() override;
 
     QString getSql() const;
     QString getSelectedSql() const;
@@ -31,9 +31,9 @@ public:
     ExtendedTableWidget *getTableResult();
 
 public slots:
-    virtual void finishExecution(const QString& result, const bool ok);
-    virtual void saveAsCsv();
-    virtual void reloadSettings();
+    void finishExecution(const QString& result, const bool ok);
+    void saveAsCsv();
+    void reloadSettings();
     void fetchedData();
     void setFindFrameVisibility(bool show);
 

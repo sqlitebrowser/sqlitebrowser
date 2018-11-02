@@ -35,7 +35,7 @@ if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
 		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
-		set(QT5_PATH "C:/dev/Qt/5.8/msvc2013_64")
+		set(QT5_PATH "C:/dev/Qt/5.10.1/msvc2013_64")
 		set(VSREDIST "vcredist_x64.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether
@@ -144,6 +144,8 @@ set(SQLB_MOC_HDR
 	src/FileExtensionManager.h
 	src/CipherSettings.h
 	src/DotenvFormat.h
+	src/Palette.h
+	src/CondFormat.h
 )
 
 set(SQLB_SRC
@@ -191,6 +193,8 @@ set(SQLB_SRC
 	src/Data.cpp
 	src/CipherSettings.cpp
 	src/DotenvFormat.cpp
+	src/Palette.cpp
+	src/CondFormat.cpp
 )
 
 set(SQLB_FORMS
@@ -511,8 +515,8 @@ set(CPACK_PACKAGE_VENDOR "DB Browser for SQLite Team")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
-set(CPACK_PACKAGE_VERSION_MINOR "10")
-set(CPACK_PACKAGE_VERSION_PATCH "100")
+set(CPACK_PACKAGE_VERSION_MINOR "11")
+set(CPACK_PACKAGE_VERSION_PATCH "99")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "DB Browser for SQLite")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSIS that does not handle full unix paths properly. Make

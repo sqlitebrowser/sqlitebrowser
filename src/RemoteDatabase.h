@@ -20,7 +20,7 @@ class RemoteDatabase : public QObject
 
 public:
     RemoteDatabase();
-    virtual ~RemoteDatabase();
+    ~RemoteDatabase() override;
 
     void reloadSettings();
 

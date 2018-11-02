@@ -6,10 +6,12 @@
 #include <QVector>
 #include <QThread>
 #include <QMutex>
+#include <QColor>
 #include <memory>
 
 #include "sqlitetypes.h"
 #include "RowCache.h"
+#include "CondFormat.h"
 
 struct sqlite3;
 class DBBrowserDB;
@@ -24,7 +26,7 @@ class SqliteTableModel : public QAbstractTableModel
 
 public:
     explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, size_t chunkSize = 50000, const QString& encoding = QString());
-    ~SqliteTableModel();
+    ~SqliteTableModel() override;
 
     /// reset to state after construction
     void reset();
@@ -109,6 +111,9 @@ public:
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
 
+    void addCondFormat(int column, const CondFormat& condFormat);
+    void setCondFormats(int column, const QVector<CondFormat>& condFormats);
+
 public slots:
     void updateFilter(int column, const QString& value, bool applyQuery = true);
 
@@ -116,8 +121,8 @@ signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
 
 protected:
-    virtual Qt::DropActions supportedDropActions() const override;
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+    Qt::DropActions supportedDropActions() const override;
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
 private:
     friend class RowLoader;
@@ -175,6 +180,7 @@ private:
     QMap<int, QString> m_mWhere;
     QVector<QString> m_vDisplayFormat;
     QVector<int> m_vDataTypes;
+    QMap<int, QVector<CondFormat>> m_mCondFormats;
 
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.

@@ -81,11 +81,11 @@ private slots:
     void cellClicked(const QModelIndex& index);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void updateGeometries();
-    virtual void dragEnterEvent(QDragEnterEvent* event);
-    virtual void dragMoveEvent(QDragMoveEvent* event);
-    virtual void dropEvent(QDropEvent* event);
+    void keyPressEvent(QKeyEvent* event) override;
+    void updateGeometries() override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragMoveEvent(QDragMoveEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
     FilterTableHeader* m_tableHeader;
     QMenu* m_contextMenu;

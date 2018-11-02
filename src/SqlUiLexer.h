@@ -28,11 +28,11 @@ public:
 
     void setTableNames(const QualifiedTablesMap& tables);
 
-    virtual const char* keywords(int set) const;
+    const char* keywords(int set) const override;
 
-    virtual QStringList autoCompletionWordSeparators() const;
+    QStringList autoCompletionWordSeparators() const override;
 
-    bool caseSensitive() const;
+    bool caseSensitive() const override;
 
 private:
     QsciAPIs* autocompleteApi;

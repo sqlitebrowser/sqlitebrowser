@@ -20,10 +20,10 @@ class AddRecordDialog : public QDialog
 
 public:
     explicit AddRecordDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, QWidget* parent = nullptr);
-    ~AddRecordDialog();
+    ~AddRecordDialog() override;
 
 protected:
-    void keyPressEvent(QKeyEvent *evt);
+    void keyPressEvent(QKeyEvent *evt) override;
 
 private:
     enum Columns {
@@ -37,7 +37,7 @@ private:
     void setDefaultsStyle(QTreeWidgetItem* item);
 
 private slots:
-    virtual void accept();
+    void accept() override;
     void itemChanged(QTreeWidgetItem* item, int column);
     void help();
     void on_buttonBox_clicked(QAbstractButton* button);
