@@ -967,74 +967,76 @@ Gli errori sono indiacati con una riga rossa ondulata.</translation>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica l&apos;indice dello schema</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
         <source>&amp;Name</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nome</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="39"/>
         <source>&amp;Table</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tabella</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
         <source>&amp;Unique</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Unico</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
         <source>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</source>
-        <translation type="unfinished"></translation>
+        <translation>Per restringere l&apos;indice a solo una pare della tabella puoi specificare una clausola WHERE qui che seleziona la parte della tabella che deve essere indicizzata</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="72"/>
         <source>Partial inde&amp;x clause</source>
-        <translation type="unfinished"></translation>
+        <translation>Clausola di &amp;indice parziale</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="85"/>
         <source>Colu&amp;mns</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Colonne</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="130"/>
         <source>Table column</source>
-        <translation type="unfinished"></translation>
+        <translation>Colonna della tabella</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="135"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="172"/>
         <source>Add a new expression column to the index. Expression columns contain SQL expression rather than column names.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi una nuova espressione colonna all&apos;indice. Le espressioni colonna contengono espressioni SQL piuttosto che i nomi delle colonne.</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation type="unfinished"></translation>
+        <translation>Indice di colonna</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordine</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="268"/>
         <source>Deleting the old index failed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancellazione del vecchio indice fallita:
+%1</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="277"/>
         <source>Creating the index failed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Creazione del vecchio indice fallita:
+%1</translation>
     </message>
 </context>
 <context>
