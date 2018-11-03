@@ -4825,7 +4825,7 @@ Sélectionnez les axes ou les étiquettes d&apos;axes à faire glisser et à zoo
     <message>
         <location filename="../PlotDock.cpp" line="74"/>
         <source>Stacked bars</source>
-        <translation>Diagrame à barres</translation>
+        <translation>Diagramme à barres empilées</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="153"/>
