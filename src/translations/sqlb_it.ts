@@ -1394,87 +1394,87 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
     <message>
         <location filename="../ExportSqlDialog.ui" line="14"/>
         <source>Export SQL...</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta SQL...</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="35"/>
         <source>Tab&amp;le(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabe&amp;lla/e</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="63"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona tutto</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="70"/>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseleziona tutto</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="79"/>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opzioni</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="85"/>
         <source>Keep column names in INSERT INTO</source>
-        <translation type="unfinished"></translation>
+        <translation>Tieni i nomid delle colonne in INSERT INTO</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation type="unfinished"></translation>
+        <translation>Righe multiple (VALUES) per lo statement INSERT</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
         <source>Export everything</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta tutto</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="121"/>
         <source>Export schema only</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta solo lo schema</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="126"/>
         <source>Export data only</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta solo i dati</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="135"/>
         <source>Keep old schema (CREATE TABLE IF NOT EXISTS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantieni lo schema vecchio (CREA UNA TABELLA SE NON ESISTE)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="140"/>
         <source>Overwrite old schema (DROP TABLE, then CREATE TABLE)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sovrascrivi il vecchio schema (DROP TABLE, poi CREATE TABLE)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="74"/>
         <source>Please select at least one table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfavore seleziona almeno una tabella.</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="87"/>
         <source>Choose a filename to export</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli un nome del file per esportare</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="88"/>
         <source>Text files(*.sql *.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>File di testo(*.sql *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="116"/>
         <source>Export completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportazione completata.</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="118"/>
         <source>Export cancelled or failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportazione annullata o fallita.</translation>
     </message>
 </context>
 <context>
@@ -1483,23 +1483,23 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
         <location filename="../ExtendedScintilla.cpp" line="58"/>
         <location filename="../ExtendedScintilla.cpp" line="232"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="61"/>
         <location filename="../ExtendedScintilla.cpp" line="236"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="231"/>
         <source>Find and Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Trova e Sostituisci...</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="235"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stampa...</translation>
     </message>
 </context>
 <context>
