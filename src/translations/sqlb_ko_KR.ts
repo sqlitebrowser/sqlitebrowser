@@ -978,7 +978,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished">%1 이미지</translation>
+        <translation>%1 이미지</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
@@ -1708,7 +1708,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="202"/>
         <source>Between this and...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">이 값과 사이에(between)...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="204"/>
