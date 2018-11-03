@@ -59,12 +59,12 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation type="unfinished"></translation>
+        <translation>제약 조건을 고려하여 새 레코드를 위한 값을 입력하세요. 볼드 처리된 필드는 반드시 입력해야 합니다.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation type="unfinished"></translation>
+        <translation>값 필드에는 이름 필드에 대응하는 값을 입력 할 수 있습니다. 타입 필드는 필드의 타입을 의미합니다. 기본 값은 NULL값과 같은 스타일로 표시됩니다.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
@@ -84,12 +84,12 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>추가할 값들입니다. 기본 값들이 미리 입력되어있어 수정하지 않는다면 자동적으로 들어갑니다.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>위 프레임의 값을 수정하면, 수정사항이 반영된 레코드 추가 SQL쿼리가 여기에 나타납니다. 저장하기 전이라면 직접 쿼리를 수정할 수도 있습니다.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
@@ -131,7 +131,7 @@
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation type="unfinished">레코드 추가에 에러가 발생했습니다. 데이터베이스 엔진 메시지:
+        <translation>레코드 추가에 에러가 발생했습니다. 데이터베이스 엔진 메시지:
 
 %1</translation>
     </message>
@@ -671,7 +671,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="41"/>
         <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>셀 에디터에서 지원되는 모델들 목록입니다. 현재 셀의 데이터를 보거나 수정기 위한 모드를 선택하세요.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="55"/>
@@ -681,7 +681,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="60"/>
         <source>JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="65"/>
@@ -692,90 +692,90 @@ Aborting execution%3.</source>
         <location filename="../EditDialog.ui" line="73"/>
         <location filename="../EditDialog.ui" line="76"/>
         <source>Automatically adjust the editor mode to the loaded data type</source>
-        <translation type="unfinished"></translation>
+        <translation>불러온 데이터 타입을 에디터 모드에 자동 적용</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="79"/>
         <source>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 체크 버튼은 에디터 모드를 자동으로 변경한하는 기능 키거나 끕니다. 새 셀이 선택되거나 새로운 데이터가 가져와지면 자동 변경 기능이 켜져서 데이터 타입을 인식하여 적절한 모드를 적용합니다. 그 후에 여러분은 모드를 수동으로 변경할 수 있습니다. 만약 셀들을 이동할 때 모드를 직접 변경하고자 한다면, 이 버튼을 off로 변경하세요.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
         <source>Auto-switch</source>
-        <translation type="unfinished"></translation>
+        <translation>자동변경</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="116"/>
         <location filename="../EditDialog.ui" line="119"/>
         <source>Auto-format: pretty print on loading, compact on saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>자동포맷: 불러올 때 예쁘게 프린트되고, 저장할 때 용량을 줄입니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="122"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation type="unfinished"></translation>
+        <translation>활성화되면, 자동포맷 기능이 데이터를 불러올 때 포맷을 지정하여 긴 문장을 여러 행으로 만들고 들여쓰기를 해서 가독성을 올려줍니다. 데이터를 저장할 때는 자동포맷 기능은 개행 문자를 제거하여 데이터를 줄이고 필요없는 공백을 삭제합니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="125"/>
         <source>Autoformat</source>
-        <translation type="unfinished"></translation>
+        <translation>자동포맷</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="145"/>
         <source>Import from file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일로 불러오기</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="148"/>
         <source>Opens a file dialog used to import any kind of data to this database cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 데이터베이스 셀로 데이터를 가져오기 위하여 파일창을 엽니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="164"/>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일로 내보내기</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="167"/>
         <source>Opens a file dialog used to export the contents of this database cell to a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>파일로 이 데이터베이스 셀의 내용을 내보내기 위한 파일창을 엽니다. </translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="318"/>
         <location filename="../EditDialog.ui" line="333"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="321"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지를 프린트하기 위한 인쇄 미리보기창을 엽니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="324"/>
         <location filename="../EditDialog.ui" line="339"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="336"/>
         <source>Open preview dialog for printing displayed text</source>
-        <translation type="unfinished"></translation>
+        <translation>텍스트를 프린트하기 위한 인쇄 미리보기창을 엽니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="348"/>
         <source>Copy Hex and ASCII</source>
-        <translation type="unfinished"></translation>
+        <translation>Hex와 ASCII를 복사합니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="351"/>
         <source>Copy selected hexadecimal and ASCII columns to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>선택된 16진수와 ASCII 필드를 클립보드로 복사합니다. </translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <source>Import text</source>
@@ -818,17 +818,19 @@ Aborting execution%3.</source>
         <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 데이터 모드는 저장하기 전에 여러분이 JSON 또는 XML 데이터를 문법강조, 자동포맷팅, 검증을 할 수 있습니다.
+
+에러는 빨간 밑줄로 표시됩니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
         <source>Apply data to cell [Ctrl+Return]</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터를 셀에 적용하기 [컨트롤+엔터]</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
         <source>This button saves the changes performed in the cell editor to the database cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 버튼은 데이터 셀에 셀 에디터의 변경 사항을 적용하여 저장하기 위한 버튼입니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -906,25 +908,25 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="213"/>
         <location filename="../EditDialog.cpp" line="222"/>
         <source>Image data can&apos;t be viewed in this mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지 데이터는 이 모드에서는 볼 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="214"/>
         <location filename="../EditDialog.cpp" line="223"/>
         <source>Try switching to Image or Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지나 바이너리 모드로 바꿔보세요.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="279"/>
         <location filename="../EditDialog.cpp" line="288"/>
         <source>Binary data can&apos;t be viewed in this mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>바이너리 데이터는 이 모드에서 볼 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="280"/>
         <location filename="../EditDialog.cpp" line="289"/>
         <source>Try switching to Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>바이너리 모드로 바꿔보세요.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="312"/>
@@ -932,14 +934,14 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>텍스트 파일(*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="313"/>
         <location filename="../EditDialog.cpp" line="335"/>
         <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON 파일(*.json)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="314"/>
@@ -953,51 +955,51 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지 파일 (%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>바이너리 파일 (*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 파일 (*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="343"/>
         <source>Choose a file to import</source>
-        <translation type="unfinished">가져올 파일을 고르세요</translation>
+        <translation>가져올 파일을 고르세요</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 이미지</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG 파일 (*.svg)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="400"/>
         <location filename="../EditDialog.cpp" line="420"/>
         <source>Hex dump files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hex 덤프 파일 (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="474"/>
         <source>Invalid data for this mode</source>
-        <translation type="unfinished"></translation>
+        <translation>이 모드에 맞지않은 데이터</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="475"/>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
-        <translation type="unfinished"></translation>
+        <translation>이 셀에는 올바르지 않은 %1 데이터를 포함하고 있습니다. 이유: %2. 이 셀을 정말로 적용할까요?</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="929"/>
@@ -1017,7 +1019,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="964"/>
         <source>Type of data currently in cell: Valid JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 데이터 타입: 유효한(valid) JSON</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Null</source>
@@ -1172,7 +1174,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database schema</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 스키마</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
@@ -1230,7 +1232,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="246"/>
         <source>NN</source>
-        <translation type="unfinished"></translation>
+        <translation>NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="249"/>
@@ -1344,7 +1346,8 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditTableDialog.cpp" line="776"/>
         <source>Changing the table schema failed. Error message:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>테이블 스키마 변경에 실패했습니다. 에러 메시지: 
+%1</translation>
     </message>
     <message>
         <source>Setting the temporary flag for the table failed. Error message:
@@ -1745,7 +1748,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="238"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt + Del</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="240"/>
