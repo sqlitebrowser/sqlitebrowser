@@ -194,12 +194,14 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
     QAction* filterAction = new QAction(tr("Use as Exact Filter"), m_contextMenu);
     QAction* containingAction = new QAction(tr("Containing"), m_contextMenu);
+    QAction* notContainingAction = new QAction(tr("Not containing"), m_contextMenu);
     QAction* notEqualToAction = new QAction(tr("Not equal to"), m_contextMenu);
     QAction* greaterThanAction = new QAction(tr("Greater than"), m_contextMenu);
     QAction* lessThanAction = new QAction(tr("Less than"), m_contextMenu);
     QAction* greaterEqualAction = new QAction(tr("Greater or equal"), m_contextMenu);
     QAction* lessEqualAction = new QAction(tr("Less or equal"), m_contextMenu);
     QAction* inRangeAction = new QAction(tr("Between this and..."), m_contextMenu);
+    QAction* regexpAction = new QAction(tr("Regular expression"), m_contextMenu);
 
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
@@ -211,12 +213,14 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addAction(filterAction);
     QMenu* filterMenu = m_contextMenu->addMenu(tr("Use in Filter Expression"));
     filterMenu->addAction(containingAction);
+    filterMenu->addAction(notContainingAction);
     filterMenu->addAction(notEqualToAction);
     filterMenu->addAction(greaterThanAction);
     filterMenu->addAction(lessThanAction);
     filterMenu->addAction(greaterEqualAction);
     filterMenu->addAction(lessEqualAction);
     filterMenu->addAction(inRangeAction);
+    filterMenu->addAction(regexpAction);
 
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
@@ -274,6 +278,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(containingAction, &QAction::triggered, [&]() {
             useAsFilter(QString (""));
         });
+    // Use a regular expression for the not containing filter. Simplify this if we ever support the NOT LIKE filter.
+    connect(notContainingAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("/^((?!"), /* binary */ false, QString (").)*$/"));
+        });
     connect(notEqualToAction, &QAction::triggered, [&]() {
             useAsFilter(QString ("<>"));
         });
@@ -291,6 +299,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         });
     connect(inRangeAction, &QAction::triggered, [&]() {
             useAsFilter(QString ("~"), /* binary */ true);
+        });
+    connect(regexpAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("/"), /* binary */ false, QString ("/"));
         });
 
     connect(nullAction, &QAction::triggered, [&]() {
@@ -611,7 +622,7 @@ void ExtendedTableWidget::paste()
     }
 }
 
-void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary)
+void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary, const QString& operatorSuffix)
 {
     QModelIndex index = selectionModel()->currentIndex();
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
@@ -632,14 +643,14 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
     // When Containing filter is requested (empty operator) and the value starts with
     // an operator character, the character is escaped.
     if (filterOperator.isEmpty())
-        value.replace(QRegExp("^(<|>|=)"), Settings::getValue("databrowser", "filter_escape").toString() + QString("\\1"));
+        value.replace(QRegExp("^(<|>|=|/)"), Settings::getValue("databrowser", "filter_escape").toString() + QString("\\1"));
 
     // If binary operator, the cell data is used as first value and
     // the second value must be added by the user.
     if (binary)
         m_tableHeader->setFilter(index.column(), value + filterOperator);
     else
-        m_tableHeader->setFilter(index.column(), filterOperator + value);
+        m_tableHeader->setFilter(index.column(), filterOperator + value + operatorSuffix);
 }
 
 void ExtendedTableWidget::duplicateUpperCell()

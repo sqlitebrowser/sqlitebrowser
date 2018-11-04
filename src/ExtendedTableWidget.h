@@ -69,7 +69,7 @@ private:
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
 
-    void useAsFilter(const QString& filterOperator, bool binary = false);
+    void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = "");
     void duplicateUpperCell();
 
     typedef QList<QByteArray> QByteArrayList;

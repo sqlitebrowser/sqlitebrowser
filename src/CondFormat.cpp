@@ -72,6 +72,10 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
                 op = "IS";
                 numeric = true;
             }
+        } else if(value.left(1) == "/" && value.right(1) == "/" && value.length() > 2) {
+            val = value.mid(1, value.length() - 2);
+            op = "REGEXP";
+            numeric = false;
         } else {
             // Keep the default LIKE operator
 
