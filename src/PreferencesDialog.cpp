@@ -56,6 +56,7 @@ PreferencesDialog::~PreferencesDialog()
 void PreferencesDialog::chooseLocation()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -368,6 +369,7 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 void PreferencesDialog::addExtension()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenExtensionFile,
                 this,
                 tr("Select extension file"),
                 tr("Extensions(*.so *.dll);;All files(*)"));
@@ -503,7 +505,7 @@ void PreferencesDialog::addClientCertificate()
 {
     // Get certificate file to import and abort here if no file gets selected
     // NOTE: We assume here that this file contains both, certificate and private key!
-    QString path = FileDialog::getOpenFileName(this, tr("Import certificate file"), "*.pem");
+    QString path = FileDialog::getOpenFileName(OpenCertificateFile, this, tr("Import certificate file"), "*.pem");
     if(path.isEmpty())
         return;
 
@@ -575,6 +577,7 @@ void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCert
 void PreferencesDialog::chooseRemoteCloneDirectory()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);

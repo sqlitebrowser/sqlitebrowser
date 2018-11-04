@@ -96,7 +96,7 @@ public:
 
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
-    QVariant querySingleValueFromDb(const QString& statement, bool log = true);
+    QByteArray querySingleValueFromDb(const QString& sql, bool log = true);
 
     const QString& lastError() const { return lastErrorMessage; }
 
@@ -152,7 +152,7 @@ public:
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, const sqlb::Field* to, int move = 0, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, QString name, const sqlb::Field* to, int move = 0, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
 

@@ -3,28 +3,52 @@
 
 #include <QFileDialog>
 
+enum FileDialogTypes {
+    NoSpecificType,
+
+    CreateProjectFile,
+    OpenProjectFile,
+
+    CreateDatabaseFile,
+    OpenDatabaseFile,
+
+    CreateSQLFile,
+    OpenSQLFile,
+
+    OpenCSVFile,
+
+    CreateDataFile,
+    OpenDataFile,
+
+    OpenExtensionFile,
+    OpenCertificateFile,
+
+//    ImportTable,
+//    ExportTable,
+};
+
 class FileDialog : public QFileDialog
 {
     Q_OBJECT
 
 public:
-    static QString getOpenFileName(QWidget* parent = nullptr, const QString& caption = QString(),
+    static QString getOpenFileName(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                    const QString& filter = QString(), QString* selectedFilter = nullptr,
                                    Options options = 0);
-    static QStringList getOpenFileNames(QWidget* parent = nullptr, const QString& caption = QString(),
+    static QStringList getOpenFileNames(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                         const QString& filter = QString(), QString* selectedFilter = nullptr,
                                         Options options = 0);
-    static QString getSaveFileName(QWidget* parent = nullptr, const QString& caption = QString(),
+    static QString getSaveFileName(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                    const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = nullptr,
                                    Options options = 0);
-    static QString getExistingDirectory(QWidget* parent = nullptr, const QString& caption = QString(),
+    static QString getExistingDirectory(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                         Options options = 0);
 
     static QString getSqlDatabaseFileFilter();
 
 private:
-    static QString getFileDialogPath();
-    static void setFileDialogPath(const QString& new_path);
+    static QString getFileDialogPath(const FileDialogTypes dialogType);
+    static void setFileDialogPath(const FileDialogTypes dialogType, const QString& new_path);
 };
 
 #endif

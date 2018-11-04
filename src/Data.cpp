@@ -21,8 +21,7 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
         data = data.left(512);
 
     // Convert to Unicode if necessary
-    if(!encoding.isEmpty())
-        data = QTextCodec::codecForName(encoding.toUtf8())->toUnicode(data).toUtf8();
+    data = decodeString(data, encoding);
 
     // Perform check
     return QString(data).toUtf8() == data;
@@ -64,4 +63,20 @@ QStringList toStringList(const QList<QByteArray> list) {
         strings.append(QString::fromUtf8(item));
     }
     return strings;
+}
+
+QByteArray encodeString(const QByteArray& str, const QString& encoding)
+{
+    if(encoding.isEmpty())
+        return str;
+    else
+        return QTextCodec::codecForName(encoding.toUtf8())->fromUnicode(str);
+}
+
+QByteArray decodeString(const QByteArray& str, const QString& encoding)
+{
+    if(encoding.isEmpty())
+        return str;
+    else
+        return QTextCodec::codecForName(encoding.toUtf8())->toUnicode(str).toUtf8();
 }

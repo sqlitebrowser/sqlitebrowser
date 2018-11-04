@@ -339,6 +339,7 @@ void EditDialog::importData()
         break;
     }
     QString fileName = FileDialog::getOpenFileName(
+                OpenDataFile,
                 this,
                 tr("Choose a file to import")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
@@ -403,6 +404,7 @@ void EditDialog::exportData()
 
     QString selectedFilter = filters.first();
     QString fileName = FileDialog::getSaveFileName(
+                CreateDataFile,
                 this,
                 tr("Choose a filename to export data"),
                 filters.join(";;"),

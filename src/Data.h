@@ -2,6 +2,7 @@
 #define DATA_H
 
 #include <QString>
+#include <QByteArray>
 
 // This returns false if the data in the data parameter contains binary data. If it is text only, the function returns
 // true. If the second parameter is specified, it will be used to convert the data from the given encoding to Unicode
@@ -18,5 +19,9 @@ bool startsWithBom(const QByteArray& data);
 QByteArray removeBom(QByteArray& data);
 
 QStringList toStringList(const QList<QByteArray> list);
+
+QByteArray encodeString(const QByteArray& str, const QString& encoding);
+
+QByteArray decodeString(const QByteArray& str, const QString& encoding);
 
 #endif
