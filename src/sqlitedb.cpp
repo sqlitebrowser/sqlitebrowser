@@ -988,9 +988,13 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
 
 QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log)
 {
-    waitForDbRelease();
     if(!_db)
         return QByteArray();
+
+    // If the threading mode is Single-thread or Multi-thread then wait for
+    // the DB release.
+    if (sqlite3_db_mutex(_db) == nullptr)
+        waitForDbRelease();
 
     if(log)
         logSQL(sql, kLogMsg_App);
