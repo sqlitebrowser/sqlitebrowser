@@ -2616,8 +2616,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                 if(xml.name() == "db")
                 {
                     // Read only?
-                    if(xml.attributes().hasAttribute("readonly"))
-                        readOnly = xml.attributes().value("readonly").toInt();
+                    if(xml.attributes().hasAttribute("readonly") && xml.attributes().value("readonly").toInt())
+                        readOnly = true;
 
                     // DB file
                     QString dbfilename = xml.attributes().value("path").toString();
