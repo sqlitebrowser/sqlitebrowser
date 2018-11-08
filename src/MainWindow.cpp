@@ -3142,7 +3142,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, "=" + value);
+    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, QString("=") + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)

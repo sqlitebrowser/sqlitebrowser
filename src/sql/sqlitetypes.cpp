@@ -1163,7 +1163,7 @@ QString CreateTableWalker::parseConflictClause(antlr::RefAST c)
 QString IndexedColumn::toString(const QString& indent, const QString& sep) const
 {
     QString name = m_isExpression ? m_name : escapeIdentifier(m_name);
-    QString order = (m_order.isEmpty() ? "" : (sep + m_order));
+    QString order = (m_order.isEmpty() ? QString("") : (sep + m_order));
     return indent + name + order;
 }
 
