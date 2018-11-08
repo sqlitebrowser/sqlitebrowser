@@ -2615,6 +2615,10 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
             {
                 if(xml.name() == "db")
                 {
+                    // Read only?
+                    if(xml.attributes().hasAttribute("readonly"))
+                        readOnly = xml.attributes().value("readonly").toInt();
+
                     // DB file
                     QString dbfilename = xml.attributes().value("path").toString();
                     if(!QFile::exists(dbfilename))
@@ -2887,6 +2891,7 @@ void MainWindow::saveProject()
         // Database file name
         xml.writeStartElement("db");
         xml.writeAttribute("path", db.currentFile());
+        xml.writeAttribute("readonly", QString::number(db.readOnly()));
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
         xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
         xml.writeAttribute("temp_store", db.getPragma("temp_store"));
