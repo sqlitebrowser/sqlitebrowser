@@ -173,7 +173,12 @@
         <translation>  -t, --table [جدول]‎	تصفّح الجدول المذكور بعد فتح قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="97"/>
+        <location filename="../Application.cpp" line="93"/>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="98"/>
         <source>This is DB Browser for SQLite version %1.</source>
         <translation>هذا «متصفّح قواعد بيانات» للإصدارة %L1 من SQLite.</translation>
     </message>
@@ -217,7 +222,12 @@
         <translation>يتطلّب الخيار ‎-t/--table معطًى</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="118"/>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="138"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>خيار غير صالح/ملف غير موجود: %L1</translation>
     </message>

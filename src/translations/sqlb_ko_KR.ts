@@ -184,6 +184,11 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="94"/>
         <source>  -v, --version		Display the current version</source>
         <translation>  -v, --version		현재 버전을 표시합니다</translation>
     </message>
@@ -217,7 +222,12 @@
         <translation>-t/--table 옵션의 대상이되는 테이블 명을 써주세요</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="118"/>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="138"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>잘못된 옵션을 사용하였거나/파일이 존재하지 않습니다: %1</translation>
     </message>

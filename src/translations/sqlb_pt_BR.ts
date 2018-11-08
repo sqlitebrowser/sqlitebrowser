@@ -185,6 +185,14 @@
         <source>This is DB Browser for SQLite version %1.</source>
         <translation>Este é o DB Browser para SQLite versão %1.</translation>
     </message>
+    <message>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CipherDialog</name>

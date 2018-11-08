@@ -175,7 +175,12 @@
         <translation>  -t, --table [表]	在打开数据库后浏览此表</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="97"/>
+        <location filename="../Application.cpp" line="93"/>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="98"/>
         <source>This is DB Browser for SQLite version %1.</source>
         <translation>这是 DB Browser for SQLite 版本 %1%2. {1.?}</translation>
     </message>
@@ -219,7 +224,12 @@
         <translation>-t/--table 选项需要一个参数</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="118"/>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="138"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>无效选项/不存在的文件: %1</translation>
     </message>

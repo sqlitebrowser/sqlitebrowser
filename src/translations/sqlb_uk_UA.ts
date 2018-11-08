@@ -180,7 +180,7 @@
         <translation>  -t, --table [table]	Переглянути цю таблицю після відкриття БД</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="97"/>
+        <location filename="../Application.cpp" line="98"/>
         <source>This is DB Browser for SQLite version %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -196,26 +196,36 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
-        <source>  -v, --version		Display the current version</source>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="94"/>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="95"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>  [file]		Відкрити SQLite БД</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="102"/>
+        <location filename="../Application.cpp" line="103"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>-s/--sql опція вимагає аргумент</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="109"/>
+        <location filename="../Application.cpp" line="110"/>
         <source>The -t/--table option requires an argument</source>
         <translation>-t/--table параметр таблиці вимагає аргумент</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="118"/>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="138"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Невірна опція/файл не існує: %1</translation>
     </message>
@@ -240,7 +250,7 @@
         <translation type="vanished">[file] Відкрити SQLite БД</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="104"/>
+        <location filename="../Application.cpp" line="105"/>
         <source>The file %1 does not exist</source>
         <translation>Файл %1 не існує</translation>
     </message>
@@ -410,132 +420,132 @@ If any of the other settings were altered for this database file you need to pro
 <context>
     <name>DBBrowserDB</name>
     <message>
-        <location filename="../sqlitedb.cpp" line="204"/>
+        <location filename="../sqlitedb.cpp" line="201"/>
         <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="215"/>
+        <location filename="../sqlitedb.cpp" line="212"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation>Будь ласка, вкажіть ім&apos;я бази даних, під яким Ви хочете отримати доступ до під&apos;єднаних баз даних</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="264"/>
+        <location filename="../sqlitedb.cpp" line="261"/>
         <source>Invalid file format</source>
         <translation>Неправильний формат файлу</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="576"/>
+        <location filename="../sqlitedb.cpp" line="570"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="581"/>
+        <location filename="../sqlitedb.cpp" line="575"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>Зберегти зроблені зміни у файлі бази даних %1?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="633"/>
+        <location filename="../sqlitedb.cpp" line="627"/>
         <source>The database is currently busy: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="634"/>
+        <location filename="../sqlitedb.cpp" line="628"/>
         <source>Do you want to abort that other operation?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="683"/>
+        <location filename="../sqlitedb.cpp" line="677"/>
         <source>Exporting database to SQL file...</source>
         <translation>Експорт бази даних у файл SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="684"/>
-        <location filename="../sqlitedb.cpp" line="913"/>
+        <location filename="../sqlitedb.cpp" line="678"/>
+        <location filename="../sqlitedb.cpp" line="907"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="850"/>
-        <location filename="../sqlitedb.cpp" line="883"/>
+        <location filename="../sqlitedb.cpp" line="844"/>
+        <location filename="../sqlitedb.cpp" line="877"/>
         <source>No database file opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="912"/>
+        <location filename="../sqlitedb.cpp" line="906"/>
         <source>Executing SQL...</source>
         <translation>Виконати код SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="934"/>
+        <location filename="../sqlitedb.cpp" line="928"/>
         <source>Action cancelled.</source>
         <translation>Дію скасовано.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="963"/>
-        <location filename="../sqlitedb.cpp" line="976"/>
+        <location filename="../sqlitedb.cpp" line="957"/>
+        <location filename="../sqlitedb.cpp" line="970"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Помилка в операторі #%1: %2. 
 Виконання скасовано%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="966"/>
-        <location filename="../sqlitedb.cpp" line="979"/>
+        <location filename="../sqlitedb.cpp" line="960"/>
+        <location filename="../sqlitedb.cpp" line="973"/>
         <source> and rolling back</source>
         <translation> і відкочено</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1188"/>
+        <location filename="../sqlitedb.cpp" line="1183"/>
         <source>Cannot delete this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1219"/>
+        <location filename="../sqlitedb.cpp" line="1214"/>
         <source>Cannot set data on this object</source>
         <translation>Не вдається встановити дані в цей об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1337"/>
+        <location filename="../sqlitedb.cpp" line="1332"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1348"/>
+        <location filename="../sqlitedb.cpp" line="1343"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>renameColumn: не вдається знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1497"/>
+        <location filename="../sqlitedb.cpp" line="1492"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
         <translation>Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найімовірніша причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1545"/>
+        <location filename="../sqlitedb.cpp" line="1540"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Помилка перейменування таблиці &apos;%1&apos; в &apos;%2&apos;. Повідомлення від ядра БД:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1580"/>
+        <location filename="../sqlitedb.cpp" line="1575"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;рядок не можна записати в лог-файл, який містить двійкові дані&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1689"/>
+        <location filename="../sqlitedb.cpp" line="1684"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1816"/>
+        <location filename="../sqlitedb.cpp" line="1823"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">Помилка завантаження розширення: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1841"/>
+        <location filename="../sqlitedb.cpp" line="1848"/>
         <source>could not get column information</source>
         <translation>неможливо отримати інформацію про стовпець</translation>
     </message>
@@ -553,24 +563,24 @@ Aborting execution.</source>
         <translation type="vanished">renameColumn: неможливо знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1356"/>
+        <location filename="../sqlitedb.cpp" line="1351"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: помилка створення точки збереження. БД говорить: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1402"/>
+        <location filename="../sqlitedb.cpp" line="1397"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: помилка створення нової таблиці. БД говорить: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1415"/>
+        <location filename="../sqlitedb.cpp" line="1410"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: помилка копіювання даних у нову таблицю. БД говорить:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1472"/>
+        <location filename="../sqlitedb.cpp" line="1467"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: помилка видалення старої таблиці. БД говорить: %1</translation>
     </message>
@@ -580,7 +590,7 @@ Aborting execution.</source>
         <translation type="vanished">Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найбільш імовірна причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1506"/>
+        <location filename="../sqlitedb.cpp" line="1501"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: помилка звільнення точки збереження. БД говорить: %1</translation>
     </message>
@@ -599,7 +609,7 @@ Aborting execution.</source>
         <translation type="vanished">невідомий тип об&apos;єкту %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1683"/>
+        <location filename="../sqlitedb.cpp" line="1678"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>неможливо отримати список об&apos;єктів БД: %1, %2</translation>
     </message>
@@ -608,22 +618,22 @@ Aborting execution.</source>
         <translation type="vanished">неможливо отримати типи</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1719"/>
+        <location filename="../sqlitedb.cpp" line="1714"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>не отримано жодного виходу з Прагма %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1723"/>
+        <location filename="../sqlitedb.cpp" line="1718"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>неможливо виконати комманду-прагму: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1744"/>
+        <location filename="../sqlitedb.cpp" line="1739"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Помилка встановлення Прагми %1 в %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1790"/>
+        <location filename="../sqlitedb.cpp" line="1785"/>
         <source>File not found.</source>
         <translation>Файл не знайдено.</translation>
     </message>
@@ -2121,7 +2131,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="78"/>
-        <location filename="../ImportCsvDialog.cpp" line="749"/>
+        <location filename="../ImportCsvDialog.cpp" line="756"/>
         <source>Tab</source>
         <translation>Табуляція</translation>
     </message>
@@ -2219,7 +2229,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="370"/>
-        <location filename="../ImportCsvDialog.cpp" line="332"/>
+        <location filename="../ImportCsvDialog.cpp" line="337"/>
         <source>Deselect All</source>
         <translation>Скасувати вибір</translation>
     </message>
@@ -2229,7 +2239,7 @@ x~y	Range: values between x and y</source>
         <translation>Співпадіння</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="332"/>
+        <location filename="../ImportCsvDialog.cpp" line="337"/>
         <source>Select All</source>
         <translation type="unfinished">Обрати все</translation>
     </message>
@@ -2250,37 +2260,37 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">Таблиця з таким ім&apos;ям уже існує. Імпортувати дані в неї?</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="212"/>
+        <location filename="../ImportCsvDialog.cpp" line="217"/>
         <source>Import completed</source>
         <translation type="unfinished">Імпорт завершено</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="502"/>
+        <location filename="../ImportCsvDialog.cpp" line="507"/>
         <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="509"/>
+        <location filename="../ImportCsvDialog.cpp" line="514"/>
         <source>There is already a table named &apos;%1&apos;. Do you want to import the data into it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="536"/>
+        <location filename="../ImportCsvDialog.cpp" line="541"/>
         <source>Creating restore point failed: %1</source>
         <translation>Помилка створення точки відновлення: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="549"/>
+        <location filename="../ImportCsvDialog.cpp" line="554"/>
         <source>Creating the table failed: %1</source>
         <translation>Помилка створення таблиці: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="610"/>
+        <location filename="../ImportCsvDialog.cpp" line="615"/>
         <source>importing CSV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="691"/>
+        <location filename="../ImportCsvDialog.cpp" line="698"/>
         <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2289,7 +2299,7 @@ x~y	Range: values between x and y</source>
         <translation type="vanished">Пропущено стовпець для запису %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="681"/>
+        <location filename="../ImportCsvDialog.cpp" line="688"/>
         <source>Inserting row failed: %1</source>
         <translation>Помилка вставки рядка: %1</translation>
     </message>
@@ -2472,7 +2482,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
-        <location filename="../MainWindow.cpp" line="3427"/>
+        <location filename="../MainWindow.cpp" line="3490"/>
         <source>Delete Record</source>
         <translation>Видалити запис</translation>
     </message>
@@ -2808,7 +2818,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1981"/>
-        <location filename="../MainWindow.cpp" line="3127"/>
+        <location filename="../MainWindow.cpp" line="3190"/>
         <source>Set encoding</source>
         <translation>Кодування</translation>
     </message>
@@ -2828,7 +2838,7 @@ x~y	Range: values between x and y</source>
         <translation>Змінити кодування за замовчуванням для всіх таблиць у базі даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3021"/>
+        <location filename="../MainWindow.cpp" line="3084"/>
         <source>Duplicate record</source>
         <translation> Дублікат запису</translation>
     </message>
@@ -3828,7 +3838,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="obsolete"> Виконати поточний рядок [Ctrl+E]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="268"/>
+        <location filename="../MainWindow.cpp" line="290"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -3891,12 +3901,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Копіювати CREATE вираз елемента в буффер обміну</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="172"/>
+        <location filename="../MainWindow.cpp" line="194"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Return</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="253"/>
+        <location filename="../MainWindow.cpp" line="275"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
@@ -3906,57 +3916,57 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="258"/>
+        <location filename="../MainWindow.cpp" line="280"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="263"/>
+        <location filename="../MainWindow.cpp" line="285"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="292"/>
+        <location filename="../MainWindow.cpp" line="314"/>
         <source>Encrypted</source>
         <translation>Зашифрований</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="299"/>
+        <location filename="../MainWindow.cpp" line="321"/>
         <source>Read only</source>
         <translation>Тільки для читання</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="300"/>
+        <location filename="../MainWindow.cpp" line="322"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>База даних тільки для читання. Редагування заборонене.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="306"/>
+        <location filename="../MainWindow.cpp" line="328"/>
         <source>Database encoding</source>
         <translation>Кодування бази даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="293"/>
+        <location filename="../MainWindow.cpp" line="315"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>База даних зашифрована з використанням SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="414"/>
-        <location filename="../MainWindow.cpp" line="2840"/>
+        <location filename="../MainWindow.cpp" line="436"/>
+        <location filename="../MainWindow.cpp" line="2903"/>
         <source>Choose a database file</source>
         <translation>Вибрати файл бази даних</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="455"/>
+        <location filename="../MainWindow.cpp" line="477"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>Неможливо відкрити файл бази даних.
 Причина: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="467"/>
-        <location filename="../MainWindow.cpp" line="1649"/>
-        <location filename="../MainWindow.cpp" line="2724"/>
+        <location filename="../MainWindow.cpp" line="489"/>
+        <location filename="../MainWindow.cpp" line="1679"/>
+        <location filename="../MainWindow.cpp" line="2787"/>
         <source>Choose a filename to save under</source>
         <translation>Вибрати ім&apos;я, під яким зберегти дані</translation>
     </message>
@@ -3967,35 +3977,35 @@ Reason: %1</source>
 </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="811"/>
+        <location filename="../MainWindow.cpp" line="841"/>
         <source>Error deleting record:
 %1</source>
         <translation>Помилка видалення запису:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="820"/>
+        <location filename="../MainWindow.cpp" line="850"/>
         <source>Please select a record first</source>
         <translation>Будь ласка, спочатку оберіть запис</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="901"/>
+        <location filename="../MainWindow.cpp" line="931"/>
         <source>determining row count...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="904"/>
+        <location filename="../MainWindow.cpp" line="934"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="908"/>
+        <location filename="../MainWindow.cpp" line="938"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 з %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="945"/>
-        <location filename="../MainWindow.cpp" line="959"/>
+        <location filename="../MainWindow.cpp" line="975"/>
+        <location filename="../MainWindow.cpp" line="989"/>
         <source>There is no database opened. Please open or create a new database file.</source>
         <translation>Немає відкритої бази даних. Відкрийте або створіть файл нової бази даних.</translation>
     </message>
@@ -4016,13 +4026,13 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">Немає відкритої бази даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2295"/>
+        <location filename="../MainWindow.cpp" line="2328"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Вийшла нова версія оглядача для SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Вона доступна для скачування за посиланням &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2471"/>
-        <location filename="../MainWindow.cpp" line="2725"/>
+        <location filename="../MainWindow.cpp" line="2522"/>
+        <location filename="../MainWindow.cpp" line="2788"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Файл проекту оглядача для SQLite (*.sqbpro)</translation>
     </message>
@@ -4060,12 +4070,12 @@ All data associated with the %1 will be lost.</source>
         <translation type="obsolete">Помилка під час збереження файлу бази даних. Це означає, що не всі зміни в базу даних було збережено. Спочатку Вам потрібно розв&apos;язати наступну помилку.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1608"/>
+        <location filename="../MainWindow.cpp" line="1638"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Скасувати всі зміни, зроблені у файлі бази даних &apos;%1&apos; після останнього збереження?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1632"/>
+        <location filename="../MainWindow.cpp" line="1662"/>
         <source>Choose a file to import</source>
         <translation>Оберіть файл для імпорту</translation>
     </message>
@@ -4074,39 +4084,39 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">Текстові файли (*.sql *.txt);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1643"/>
+        <location filename="../MainWindow.cpp" line="1673"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Створити новий файл бази даних для збереження імпортованих даних?
 Якщо відповідь Ні, то здійсниться спроба імпортувати дані файлу SQL в поточну базу даних.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1653"/>
+        <location filename="../MainWindow.cpp" line="1683"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Файл %1 вже існує. Оберіть інше ім&apos;я.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1675"/>
+        <location filename="../MainWindow.cpp" line="1705"/>
         <source>Error importing data: %1</source>
         <translation>Помилка імпортування даних: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1679"/>
+        <location filename="../MainWindow.cpp" line="1709"/>
         <source>Import completed.</source>
         <translation>Імпорт завершено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1743"/>
+        <location filename="../MainWindow.cpp" line="1773"/>
         <source>Delete View</source>
         <translation>Видалити перегляд</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1746"/>
+        <location filename="../MainWindow.cpp" line="1776"/>
         <source>Delete Trigger</source>
         <translation>Видалити тригер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1749"/>
+        <location filename="../MainWindow.cpp" line="1779"/>
         <source>Delete Index</source>
         <translation>Видалити індекс</translation>
     </message>
@@ -4119,167 +4129,167 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="vanished">Введіть URL файлу БД для його збереження.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3125"/>
+        <location filename="../MainWindow.cpp" line="3188"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Оберіть нову систему кодування для цієї таблиці.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3123"/>
+        <location filename="../MainWindow.cpp" line="3186"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Оберіть нову систему кодування для всіх таблиць.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="488"/>
+        <location filename="../MainWindow.cpp" line="510"/>
         <source>In-Memory database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="984"/>
+        <location filename="../MainWindow.cpp" line="1014"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="986"/>
+        <location filename="../MainWindow.cpp" line="1016"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="988"/>
+        <location filename="../MainWindow.cpp" line="1018"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="990"/>
+        <location filename="../MainWindow.cpp" line="1020"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1001"/>
+        <location filename="../MainWindow.cpp" line="1031"/>
         <source>Error: could not delete the table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1003"/>
+        <location filename="../MainWindow.cpp" line="1033"/>
         <source>Error: could not delete the view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1005"/>
+        <location filename="../MainWindow.cpp" line="1035"/>
         <source>Error: could not delete the trigger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1007"/>
+        <location filename="../MainWindow.cpp" line="1037"/>
         <source>Error: could not delete the index.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1009"/>
+        <location filename="../MainWindow.cpp" line="1039"/>
         <source>Message from database engine:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1038"/>
+        <location filename="../MainWindow.cpp" line="1068"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1057"/>
+        <location filename="../MainWindow.cpp" line="1087"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1060"/>
+        <location filename="../MainWindow.cpp" line="1090"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1223"/>
+        <location filename="../MainWindow.cpp" line="1253"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1246"/>
+        <location filename="../MainWindow.cpp" line="1276"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1254"/>
+        <location filename="../MainWindow.cpp" line="1284"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1346"/>
+        <location filename="../MainWindow.cpp" line="1376"/>
         <source>executing query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1383"/>
+        <location filename="../MainWindow.cpp" line="1413"/>
         <source>%1 rows returned in %2ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1407"/>
+        <location filename="../MainWindow.cpp" line="1437"/>
         <source>query executed successfully. Took %1ms%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1446"/>
+        <location filename="../MainWindow.cpp" line="1476"/>
         <source>-- At line %1:
 %4
 -- Result: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1677"/>
+        <location filename="../MainWindow.cpp" line="1707"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2470"/>
+        <location filename="../MainWindow.cpp" line="2521"/>
         <source>Choose a project file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2579"/>
+        <location filename="../MainWindow.cpp" line="2630"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3021"/>
+        <location filename="../MainWindow.cpp" line="3084"/>
         <source>Duplicate records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3026"/>
+        <location filename="../MainWindow.cpp" line="3089"/>
         <source>Ctrl+&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3128"/>
+        <location filename="../MainWindow.cpp" line="3191"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Залиште це поле порожнім якщо хочете, щоб використовувалося кодування за замовчуванням.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3140"/>
+        <location filename="../MainWindow.cpp" line="3203"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Кодування невірне або не підтримується.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3301"/>
+        <location filename="../MainWindow.cpp" line="3364"/>
         <source>Collation needed! Proceed?</source>
         <translation type="unfinished">Потрібно виконати зіставлення! Продовжити?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3302"/>
+        <location filename="../MainWindow.cpp" line="3365"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4288,52 +4298,52 @@ Create a backup!</source>
 Створіть резервну копію!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3307"/>
+        <location filename="../MainWindow.cpp" line="3370"/>
         <source>creating collation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3316"/>
+        <location filename="../MainWindow.cpp" line="3379"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3359"/>
+        <location filename="../MainWindow.cpp" line="3422"/>
         <source>Please specify the view name</source>
         <translation type="unfinished">Вкажіть ім&apos;я вигляду</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3363"/>
+        <location filename="../MainWindow.cpp" line="3426"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation type="unfinished">Об&apos;єкт із зазначеним ім&apos;ям уже існує. Виберіть інше ім&apos;я.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3370"/>
+        <location filename="../MainWindow.cpp" line="3433"/>
         <source>View successfully created.</source>
         <translation type="unfinished">Вигляд успішно створений.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3372"/>
+        <location filename="../MainWindow.cpp" line="3435"/>
         <source>Error creating view: %1</source>
         <translation type="unfinished">Помилка створення вигляду: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3387"/>
+        <location filename="../MainWindow.cpp" line="3450"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3425"/>
+        <location filename="../MainWindow.cpp" line="3488"/>
         <source>Delete Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3432"/>
+        <location filename="../MainWindow.cpp" line="3495"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3434"/>
+        <location filename="../MainWindow.cpp" line="3497"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4343,17 +4353,17 @@ Create a backup!</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1567"/>
-        <location filename="../MainWindow.cpp" line="1752"/>
+        <location filename="../MainWindow.cpp" line="1782"/>
         <source>Delete Table</source>
         <translation>Видалити таблицю</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1808"/>
+        <location filename="../MainWindow.cpp" line="1838"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2031"/>
+        <location filename="../MainWindow.cpp" line="2064"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>Встановлення значень PRAGMA завершить поточну транзакцію. Встановити значення?</translation>
@@ -4365,18 +4375,18 @@ Are you sure?</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1318"/>
+        <location filename="../MainWindow.cpp" line="1348"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1326"/>
+        <location filename="../MainWindow.cpp" line="1356"/>
         <source>Execution aborted by user</source>
         <translation>Виконання скасовано користувачем</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1401"/>
+        <location filename="../MainWindow.cpp" line="1431"/>
         <source>, %1 rows affected</source>
         <translation>, %1 рядків постраждало</translation>
     </message>
@@ -4385,17 +4395,17 @@ Are you sure?</source>
         <translation type="vanished">Запит виконано успішно: %1 (тривало %2мс%3)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1524"/>
+        <location filename="../MainWindow.cpp" line="1554"/>
         <source>Choose text files</source>
         <translation>Оберіть текстові файли</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1525"/>
+        <location filename="../MainWindow.cpp" line="1555"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>Текстові файли(*.csv *.txt);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1599"/>
+        <location filename="../MainWindow.cpp" line="1629"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -4404,85 +4414,85 @@ Are you sure?</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1633"/>
-        <location filename="../MainWindow.cpp" line="2113"/>
-        <location filename="../MainWindow.cpp" line="2173"/>
+        <location filename="../MainWindow.cpp" line="1663"/>
+        <location filename="../MainWindow.cpp" line="2146"/>
+        <location filename="../MainWindow.cpp" line="2206"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Текстові файли(*.sql *.txt);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1744"/>
+        <location filename="../MainWindow.cpp" line="1774"/>
         <source>Modify View</source>
         <translation>Змінити вид</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1747"/>
+        <location filename="../MainWindow.cpp" line="1777"/>
         <source>Modify Trigger</source>
         <translation>Змінити тригер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1750"/>
+        <location filename="../MainWindow.cpp" line="1780"/>
         <source>Modify Index</source>
         <translation>Змінити індекс</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1753"/>
+        <location filename="../MainWindow.cpp" line="1783"/>
         <source>Modify Table</source>
         <translation>Змінити таблицю</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2112"/>
+        <location filename="../MainWindow.cpp" line="2145"/>
         <source>Select SQL file to open</source>
         <translation>Обрати файл SQL для відкривання</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2121"/>
+        <location filename="../MainWindow.cpp" line="2154"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>Неможливо прочитати файл: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2159"/>
+        <location filename="../MainWindow.cpp" line="2192"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>Неможливо зберегти файл: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2172"/>
+        <location filename="../MainWindow.cpp" line="2205"/>
         <source>Select file name</source>
         <translation>Обрати ім&apos;я файлу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2197"/>
+        <location filename="../MainWindow.cpp" line="2230"/>
         <source>Select extension file</source>
         <translation>Обрати розширення файлу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2198"/>
+        <location filename="../MainWindow.cpp" line="2231"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Розширення(*.so *.dll);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2204"/>
+        <location filename="../MainWindow.cpp" line="2237"/>
         <source>Extension successfully loaded.</source>
         <translation>Розширення успішно завантажено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2206"/>
+        <location filename="../MainWindow.cpp" line="2239"/>
         <source>Error loading extension: %1</source>
         <translation>Помилка завантаження розширення: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2291"/>
-        <location filename="../MainWindow.cpp" line="2575"/>
+        <location filename="../MainWindow.cpp" line="2324"/>
+        <location filename="../MainWindow.cpp" line="2626"/>
         <source>Don&apos;t show again</source>
         <translation>Не показувати наступного разу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2294"/>
+        <location filename="../MainWindow.cpp" line="2327"/>
         <source>New version available.</source>
         <translation>Доступна нова версія.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3201"/>
+        <location filename="../MainWindow.cpp" line="3259"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Будь ласка, введіть псевдо-первинний ключ для можливості редагування у цьому виді. Це має бути і&apos;мя унікального стовпця у виді</translation>
     </message>
@@ -4837,8 +4847,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1418"/>
-        <location filename="../PreferencesDialog.ui" line="1474"/>
+        <location filename="../PreferencesDialog.ui" line="1428"/>
+        <location filename="../PreferencesDialog.ui" line="1484"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -5332,117 +5342,117 @@ Can be set to 0 for disabling completion.</source>
         <translation>Відімкнути розширення Регулярних Виразів</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1275"/>
+        <location filename="../PreferencesDialog.ui" line="1285"/>
         <source>Remote</source>
         <translation> Віддалений сервер</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1281"/>
+        <location filename="../PreferencesDialog.ui" line="1291"/>
         <source>CA certificates</source>
         <translation>СА-сертифікати</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1307"/>
-        <location filename="../PreferencesDialog.ui" line="1374"/>
+        <location filename="../PreferencesDialog.ui" line="1317"/>
+        <location filename="../PreferencesDialog.ui" line="1384"/>
         <source>Subject CN</source>
         <translation type="unfinished">Об&apos;єкт CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1310"/>
+        <location filename="../PreferencesDialog.ui" line="1320"/>
         <source>Common Name</source>
         <translation>Звичайне ім&apos;я</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1315"/>
+        <location filename="../PreferencesDialog.ui" line="1325"/>
         <source>Subject O</source>
         <translation>Об&apos;єкт O</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1318"/>
+        <location filename="../PreferencesDialog.ui" line="1328"/>
         <source>Organization</source>
         <translation>Організація</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1323"/>
-        <location filename="../PreferencesDialog.ui" line="1390"/>
+        <location filename="../PreferencesDialog.ui" line="1333"/>
+        <location filename="../PreferencesDialog.ui" line="1400"/>
         <source>Valid from</source>
         <translation>Дійсний з</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1328"/>
-        <location filename="../PreferencesDialog.ui" line="1395"/>
+        <location filename="../PreferencesDialog.ui" line="1338"/>
+        <location filename="../PreferencesDialog.ui" line="1405"/>
         <source>Valid to</source>
         <translation>Дійсний до</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1333"/>
-        <location filename="../PreferencesDialog.ui" line="1400"/>
+        <location filename="../PreferencesDialog.ui" line="1343"/>
+        <location filename="../PreferencesDialog.ui" line="1410"/>
         <source>Serial number</source>
         <translation>Серійний номер</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1341"/>
+        <location filename="../PreferencesDialog.ui" line="1351"/>
         <source>Your certificates</source>
         <translation>Ваш сертифікат</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1369"/>
+        <location filename="../PreferencesDialog.ui" line="1379"/>
         <source>File</source>
         <translation> Файл</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1377"/>
+        <location filename="../PreferencesDialog.ui" line="1387"/>
         <source>Subject Common Name</source>
         <translation>Звичайне ім&apos;я об&apos;єкта</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1382"/>
+        <location filename="../PreferencesDialog.ui" line="1392"/>
         <source>Issuer CN</source>
         <translation>Розповсюдник CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1385"/>
+        <location filename="../PreferencesDialog.ui" line="1395"/>
         <source>Issuer Common Name</source>
         <translation>Звичайне ім&apos;я розповсюдника</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="60"/>
-        <location filename="../PreferencesDialog.cpp" line="577"/>
+        <location filename="../PreferencesDialog.cpp" line="579"/>
         <source>Choose a directory</source>
         <translation>Оберіть каталог</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="303"/>
+        <location filename="../PreferencesDialog.cpp" line="305"/>
         <source>The language will change after you restart the application.</source>
         <translation>Мова зміниться після перезапуску програми.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="370"/>
+        <location filename="../PreferencesDialog.cpp" line="372"/>
         <source>Select extension file</source>
         <translation>Обираємо файл розширення</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="371"/>
+        <location filename="../PreferencesDialog.cpp" line="373"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>Розширення(*.so *.dll);;Всі файли(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="504"/>
+        <location filename="../PreferencesDialog.cpp" line="506"/>
         <source>Import certificate file</source>
         <translation>Імпортувати файл сертифіката</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="512"/>
+        <location filename="../PreferencesDialog.cpp" line="514"/>
         <source>No certificates found in this file.</source>
         <translation>Для цього файлу не знайдено сертифікатів.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="529"/>
+        <location filename="../PreferencesDialog.cpp" line="531"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>Ви впевнені, що хочете видалити цей сертифікат? Всі дані сертифіката видаляться з налаштувань програми!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="613"/>
+        <location filename="../PreferencesDialog.cpp" line="615"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation type="unfinished"></translation>
@@ -5459,29 +5469,29 @@ All your preferences will be lost and default values will be used.</source>
         <translation type="vanished">з запису номер %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="110"/>
+        <location filename="../ImportCsvDialog.cpp" line="115"/>
         <source>Error importing data</source>
         <translation>Помилка імпортування даних</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="112"/>
+        <location filename="../ImportCsvDialog.cpp" line="117"/>
         <source> from record number %1</source>
         <translation> з запису номер %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="113"/>
+        <location filename="../ImportCsvDialog.cpp" line="118"/>
         <source>.
 %1</source>
         <translation>.
 %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="127"/>
+        <location filename="../ImportCsvDialog.cpp" line="132"/>
         <source>Importing CSV file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="128"/>
+        <location filename="../ImportCsvDialog.cpp" line="133"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
@@ -6251,24 +6261,24 @@ Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="400"/>
+        <location filename="../sqlitetablemodel.cpp" line="407"/>
         <source>Error changing data:
 %1</source>
         <translation>Помилка зміни даних:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="689"/>
+        <location filename="../sqlitetablemodel.cpp" line="696"/>
         <source>retrieving list of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="952"/>
+        <location filename="../sqlitetablemodel.cpp" line="959"/>
         <source>Fetching data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="953"/>
+        <location filename="../sqlitetablemodel.cpp" line="960"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
