@@ -198,6 +198,11 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="94"/>
         <source>  -v, --version		Display the current version</source>
         <translation>  -v, --version		Die aktuelle Version anzeigen</translation>
     </message>
@@ -231,7 +236,12 @@
         <translation>Die -t/--table Option benötigt ein Argument</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="118"/>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="138"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Ungültige Option/nicht existente Datei: %1</translation>
     </message>

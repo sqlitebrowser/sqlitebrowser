@@ -182,11 +182,16 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
-        <source>  -v, --version		Display the current version</source>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="94"/>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="95"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>  [file]		SQLite veritabanını aç</translation>
     </message>
@@ -211,7 +216,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="118"/>
+        <source>The -o/--option option requires an argument in the form group/setting=value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="138"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Geçersiz seçenek veya mevcut olmayan dosya: %1</translation>
     </message>
