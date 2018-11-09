@@ -94,9 +94,16 @@ public:
 
     bool dump(const QString& filename, const QStringList& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema);
 
+    enum ChoiceOnUse
+    {
+        Ask,
+        Wait,
+        CancelOther
+    };
+
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
-    QByteArray querySingleValueFromDb(const QString& sql, bool log = true);
+    QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
 
     const QString& lastError() const { return lastErrorMessage; }
 
@@ -214,7 +221,7 @@ private:
     /// wait for release of the DB locked through a previous get(),
     /// giving users the option to discard running task through a
     /// message box.
-    void waitForDbRelease();
+    void waitForDbRelease(ChoiceOnUse choice = Ask);
 
     QString curDBFilename;
     QString lastErrorMessage;
