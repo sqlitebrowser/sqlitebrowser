@@ -613,7 +613,7 @@ DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
     return db_pointer_type(_db, DatabaseReleaser(this));
 }
 
-void DBBrowserDB::waitForDbRelease()
+void DBBrowserDB::waitForDbRelease(ChoiceOnUse choice)
 {
     if(!_db)
         return;
@@ -624,14 +624,18 @@ void DBBrowserDB::waitForDbRelease()
         auto str = db_user;
         lk.unlock();
 
-        QMessageBox msgBox;
-        msgBox.setText(tr("The database is currently busy: ") + str);
-        msgBox.setInformativeText(tr("Do you want to abort that other operation?"));
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::No);
-        int ret = msgBox.exec();
+        bool cancel = choice == CancelOther;
+        if(choice == Ask) {
+            QMessageBox msgBox;
+            msgBox.setText(tr("The database is currently busy: ") + str);
+            msgBox.setInformativeText(tr("Do you want to abort that other operation?"));
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::No);
+            int ret = msgBox.exec();
 
-        if(ret == QMessageBox::Yes)
+            cancel = ret == QMessageBox::Yes;
+        }
+        if(cancel)
             sqlite3_interrupt(_db);
 
         lk.lock();
@@ -987,15 +991,11 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log)
+QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, ChoiceOnUse choice)
 {
+    waitForDbRelease(choice);
     if(!_db)
         return QByteArray();
-
-    // If the threading mode is Single-thread or Multi-thread then wait for
-    // the DB release.
-    if (sqlite3_db_mutex(_db) == nullptr)
-        waitForDbRelease();
 
     if(log)
         logSQL(sql, kLogMsg_App);

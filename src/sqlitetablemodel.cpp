@@ -312,7 +312,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
                 // Unlock before querying from DB
                 lock.unlock();
-                if (m_db.querySingleValueFromDb(sql, false) == "1")
+                // Query the DB for the condition, waiting in case there is a loading in progress.
+                if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
                     return eachCondFormat.color();
             }
         }
