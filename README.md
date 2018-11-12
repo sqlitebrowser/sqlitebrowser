@@ -154,13 +154,13 @@ Install the package using:
 
 ### Other Linux
 
-On others, compile the browser using the instructions
+On others, compile DB4S using the instructions
 in [BUILDING.md](BUILDING.md).
 
 ## FreeBSD
 
 DB Browser for SQLite works well on FreeBSD, and there is a port for it (thanks
-to [lbartoletti](https://github.com/lbartoletti) :smile:).  The browser can be installed
+to [lbartoletti](https://github.com/lbartoletti) :smile:).  DB4S can be installed
 using either this command:
 
     # make -C /usr/ports/databases/sqlitebrowser install
