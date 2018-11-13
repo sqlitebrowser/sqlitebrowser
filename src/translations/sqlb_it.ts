@@ -1507,98 +1507,98 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="195"/>
         <source>Use as Exact Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa come filtro esatto</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="196"/>
         <source>Containing</source>
-        <translation type="unfinished"></translation>
+        <translation>Contiene</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="197"/>
         <source>Not equal to</source>
-        <translation type="unfinished"></translation>
+        <translation>Non uguale a</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="198"/>
         <source>Greater than</source>
-        <translation type="unfinished"></translation>
+        <translation>Maggiore di</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="199"/>
         <source>Less than</source>
-        <translation type="unfinished"></translation>
+        <translation>Minore di</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="200"/>
         <source>Greater or equal</source>
-        <translation type="unfinished"></translation>
+        <translation>Maggiore o uguale</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="201"/>
         <source>Less or equal</source>
-        <translation type="unfinished"></translation>
+        <translation>Minore o uguale</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="202"/>
         <source>Between this and...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tra questo e...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="204"/>
         <source>Set to NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta a NULL</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="205"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="206"/>
         <source>Copy with Headers</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia con gli Headers</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="207"/>
         <source>Copy as SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia come SQL</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="208"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Incolla</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="209"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stampa...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="212"/>
         <source>Use in Filter Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa nell&apos;espressione del filtro</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="238"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Del</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="240"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="241"/>
         <source>Ctrl+Alt+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="584"/>
         <source>The content of the clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Il contenuto degli appunti è più grande del range selezionato. Vuoi inserirlo comunque?</translation>
     </message>
 </context>
 <context>
