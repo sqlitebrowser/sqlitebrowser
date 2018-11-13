@@ -1606,43 +1606,43 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FileExtensionManager.ui" line="14"/>
         <source>File Extension Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Manager dell&apos;estensione dei file</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="22"/>
         <source>&amp;Up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sù</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="33"/>
         <source>&amp;Down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Giù</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="57"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aggiungi</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="68"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rimuovi</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="94"/>
         <location filename="../FileExtensionManager.cpp" line="41"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="99"/>
         <source>Extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Estensioni</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.cpp" line="42"/>
         <source>*.extension</source>
-        <translation type="unfinished"></translation>
+        <translation>*.estensione</translation>
     </message>
 </context>
 <context>
