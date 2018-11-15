@@ -672,7 +672,7 @@ QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QSt
         int columns = sqlite3_data_count(stmt);
         for(int i = 0; i < columns; ++i)
         {
-            listColumns.append(QString::fromUtf8((const char*)sqlite3_column_name(stmt, i)));
+            listColumns.append(QString::fromUtf8(sqlite3_column_name(stmt, i)));
             fieldsTypes.push_back(sqlite3_column_type(stmt, i));
         }
     }
