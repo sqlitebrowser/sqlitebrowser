@@ -241,7 +241,7 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
                 while(size >= 1024.0f && it.hasNext())
                 {
                     unit = it.next();
-                    size /= 1024.0;
+                    size /= 1024.0f;
                 }
                 return QString().setNum(size, 'f', 2).remove(".00") + QString(" ") + unit;
             }
