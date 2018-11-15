@@ -393,7 +393,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         plottable = graph;
                         graph->setData(xdata, ydata, /*alreadySorted*/ true);
                         // set some graph styles not supported by the abstract plottable
-                        graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
+                        graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
                         graph->setScatterStyle(scatterStyle);
                     } else {
                         QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
@@ -525,7 +525,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         // On double click open the colordialog
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
+        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(qrand() % 13 + 5) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {
@@ -594,7 +594,7 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
              index <= QCPGraph::lsImpulse);
 
     bool hasCurves = (ui->plotWidget->plottableCount() > ui->plotWidget->graphCount());
-    QCPGraph::LineStyle lineStyle = (QCPGraph::LineStyle) index;
+    QCPGraph::LineStyle lineStyle = static_cast<QCPGraph::LineStyle>(index);
     if (lineStyle > QCPGraph::lsLine && hasCurves) {
         QMessageBox::warning(this, qApp->applicationName(),
                              tr("There are curves in this plot and the selected line style can only be applied to graphs sorted by X. "
@@ -636,7 +636,7 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
              index <  QCPScatterStyle::ssPixmap);
 
     bool hasCurves = (ui->plotWidget->plottableCount() > ui->plotWidget->graphCount());
-    QCPScatterStyle::ScatterShape shape = (QCPScatterStyle::ScatterShape) index;
+    QCPScatterStyle::ScatterShape shape = static_cast<QCPScatterStyle::ScatterShape>(index);
     for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
     {
         QCPGraph * graph = ui->plotWidget->graph(i);
@@ -832,7 +832,7 @@ void PlotDock::renderPlot(QPrinter* printer)
 
     int plotWidth = ui->plotWidget->viewport().width();
     int plotHeight = ui->plotWidget->viewport().height();
-    double scale = pageRect.width()/(double)plotWidth;
+    double scale = pageRect.width()/static_cast<double>(plotWidth);
 
     painter.setMode(QCPPainter::pmVectorized);
     painter.setMode(QCPPainter::pmNoCaching);

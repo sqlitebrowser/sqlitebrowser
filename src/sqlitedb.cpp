@@ -75,8 +75,8 @@ void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
     // Get arguments and check their values
-    QRegExp arg1((const char*)sqlite3_value_text(argv[0]));
-    QString arg2((const char*)sqlite3_value_text(argv[1]));
+    QRegExp arg1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
+    QString arg2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
     if(!arg1.isValid())
         return sqlite3_result_error(ctx, "invalid operand", -1);
 
@@ -194,10 +194,10 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
         QFileInfo fi(filePath);
         while(sqlite3_step(db_vm) == SQLITE_ROW)
         {
-            QFileInfo path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+            QFileInfo path(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 2))));
             if(fi == path)
             {
-                QString schema = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
+                QString schema = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1)));
                 QMessageBox::information(nullptr, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
                 return false;
             }
@@ -748,7 +748,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                             int fieldsize = sqlite3_column_bytes(stmt, i);
                             int fieldtype = sqlite3_column_type(stmt, i);
                             QByteArray bcontent(
-                                        (const char*)sqlite3_column_blob(stmt, i),
+                                        reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
                                         fieldsize);
 
                             if(bcontent.left(2048).contains('\0')) // binary check
@@ -1655,7 +1655,7 @@ void DBBrowserDB::updateSchema()
         while(sqlite3_step(db_vm) == SQLITE_ROW)
         {
             // Get the schema name which is in column 1 (counting starts with 0). 0 contains an ID and 2 the file path.
-            QString schema_name = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
+            QString schema_name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1)));
 
             // Always add the schema to the map. This makes sure it's even then added when there are no objects in the database
             schemata[schema_name] = objectMap();
@@ -1676,10 +1676,10 @@ void DBBrowserDB::updateSchema()
             {
                 while(sqlite3_step(vm) == SQLITE_ROW)
                 {
-                    QString val_type = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
-                    QString val_name = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
-                    QString val_sql = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
-                    QString val_tblname = QString::fromUtf8((const char*)sqlite3_column_text(vm, 3));
+                    QString val_type = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 0)));
+                    QString val_name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 1)));
+                    QString val_sql = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
+                    QString val_tblname = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 3)));
                     val_sql.replace("\r", "");
 
                     if(!val_sql.isEmpty())
@@ -1864,8 +1864,8 @@ QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QStri
     {
         while(sqlite3_step(vm) == SQLITE_ROW)
         {
-            QString name = QString::fromUtf8((const char *)sqlite3_column_text(vm, 1));
-            QString type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
+            QString name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 1)));
+            QString type = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
 
             result.push_back(qMakePair(name, type));
         }

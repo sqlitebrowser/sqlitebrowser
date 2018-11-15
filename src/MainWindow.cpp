@@ -60,6 +60,8 @@
     #include <QOpenGLWidget>
 #endif
 
+const int MainWindow::MaxRecentFiles;
+
 // These are needed for reading and writing object files
 QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
 {
@@ -1520,7 +1522,7 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = QString(tr("-- At line %1:\n%4\n-- Result: %3")).arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        statusMessage = tr("-- At line %1:\n%4\n-- Result: %3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
         db.logSQL(statusMessage, kLogMsg_User);
 
         // Release the database
@@ -1882,7 +1884,7 @@ void MainWindow::updateRecentFileActions()
     // Store updated list
     Settings::setValue("General", "recentFileList", files);
 
-    int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
+    int numRecentFiles = qMin(files.size(), MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i) {
         QString text = tr("&%1 %2").arg(i + 1).arg(QDir::toNativeSeparators(files[i]));
@@ -2908,10 +2910,10 @@ void MainWindow::saveProject()
         {
             while(sqlite3_step(db_vm) == SQLITE_ROW)
             {
-                QString schema(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1)));
+                QString schema(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1))));
                 if(schema != "main" && schema != "temp")
                 {
-                    QString path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+                    QString path(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 2))));
                     xml.writeStartElement("db");
                     xml.writeAttribute("schema", schema);
                     xml.writeAttribute("path", path);

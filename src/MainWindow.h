@@ -165,7 +165,7 @@ private:
 
     DbStructureModel* dbStructureModel;
 
-    enum { MaxRecentFiles = 5 };
+    static const int MaxRecentFiles = 5;
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
