@@ -3004,7 +3004,10 @@ void MainWindow::updateFilter(int column, const QString& value)
 {
     m_browseTableModel->updateFilter(column, value);
     BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
-    settings.filterValues[column] = value;
+    if(value.isEmpty())
+        settings.filterValues.remove(column);
+    else
+        settings.filterValues[column] = value;
     setRecordsetLabel();
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
