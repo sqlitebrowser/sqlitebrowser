@@ -573,11 +573,11 @@ void MainWindow::populateStructure(const QString& old_table)
     {
         SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
         objectMap tab = db.getBrowsableObjects(it.key());
-        for(auto it : tab)
+        for(auto jt : tab)
         {
-            QString objectname = it->name();
+            QString objectname = jt->name();
 
-            sqlb::FieldInfoList fi = it->fieldInformation();
+            sqlb::FieldInfoList fi = jt->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
@@ -3670,11 +3670,11 @@ void MainWindow::printDbStructure ()
                 for (int column2 = 0; column2 < columnCount; column2++) {
                     if (!treeView->isColumnHidden(column2)) {
                         QModelIndex cellIndex = model->index(rowChild, column2, groupIndex);
-                        QString data = model->data(cellIndex).toString().toHtmlEscaped();
+                        QString header_data = model->data(cellIndex).toString().toHtmlEscaped();
                         if (column2 != DbStructureModel::ColumnSQL)
-                            out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            out << QString("<td><h2>%1</h2></td>").arg((!header_data.isEmpty()) ? header_data : QString("&nbsp;"));
                         else
-                            out << QString("<td><pre>%1</pre></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            out << QString("<td><pre>%1</pre></td>").arg((!header_data.isEmpty()) ? header_data : QString("&nbsp;"));
                     }
                 }
                 out << "</tr>";
@@ -3685,8 +3685,8 @@ void MainWindow::printDbStructure ()
                     for (int column2 = 0; column2 < columnCount; column2++) {
                         if (!treeView->isColumnHidden(column2)) {
                             QModelIndex fieldIndex = model->index(rowChild2, column2, objectIndex);
-                            QString data = model->data(fieldIndex).toString().toHtmlEscaped();
-                            out << QString("<td>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            QString field_data = model->data(fieldIndex).toString().toHtmlEscaped();
+                            out << QString("<td>%1</td>").arg((!field_data.isEmpty()) ? field_data : QString("&nbsp;"));
                         }
                     }
                     out << "</tr>";

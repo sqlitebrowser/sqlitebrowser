@@ -663,8 +663,7 @@ bool DBBrowserDB::dump(const QString& filePath,
         size_t numRecordsTotal = 0, numRecordsCurrent = 0;
         objectMap objMap = schemata["main"];            // We only always export the main database, not the attached databases
         QList<sqlb::ObjectPtr> tables = objMap.values("table");
-        QMutableListIterator<sqlb::ObjectPtr> it(tables);
-        while(it.hasNext())
+        for(QMutableListIterator<sqlb::ObjectPtr> it(tables);it.hasNext();)
         {
             it.next();
 

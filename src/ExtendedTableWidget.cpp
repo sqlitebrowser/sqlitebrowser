@@ -343,10 +343,10 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
     // unintuitive; especially copying the rowid column when selecting all columns of a table is a problem because pasting the data
     // won't work as expected.
-    QMutableListIterator<QModelIndex> i(indices);
-    while (i.hasNext()) {
-        if (isColumnHidden(i.next().column()))
-            i.remove();
+    QMutableListIterator<QModelIndex> it(indices);
+    while (it.hasNext()) {
+        if (isColumnHidden(it.next().column()))
+            it.remove();
     }
 
     // Abort if there's nothing to copy

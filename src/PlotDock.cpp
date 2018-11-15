@@ -308,50 +308,50 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 QVector<double> xdata(nrows), ydata(nrows), tdata(nrows);
                 QVector<QString> labels;
-                for(int i = 0; i < nrows; ++i)
+                for(int j = 0; j < nrows; ++j)
                 {
-                    tdata[i] = i;
+                    tdata[i] = j;
                     // convert x type axis if it's datetime
                     switch (xtype) {
                     case QVariant::DateTime:
                     case QVariant::Date: {
-                        QString s = model->data(model->index(i, x)).toString();
+                        QString s = model->data(model->index(j, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
                         xdata[i] = d.toMSecsSinceEpoch() / 1000.0;
                         break;
                     }
                     case QVariant::Time: {
-                        QString s = model->data(model->index(i, x)).toString();
+                        QString s = model->data(model->index(j, x)).toString();
                         QTime t = QTime::fromString(s);
                         xdata[i] = t.msecsSinceStartOfDay() / 1000.0;
                         break;
                     }
                     case QVariant::String: {
-                        xdata[i] = i+1;
-                        labels << model->data(model->index(i, x)).toString();
+                        xdata[i] = j+1;
+                        labels << model->data(model->index(j, x)).toString();
                         break;
                     }
                     default: {
                         // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                         // instead of retrieving some value from the model.
                         if(x == RowNumId)
-                            xdata[i] = i+1;
+                            xdata[i] = j+1;
 
                         else
-                            xdata[i] = model->data(model->index(i, x)).toDouble();
+                            xdata[i] = model->data(model->index(j, x)).toDouble();
                     }
                     }
 
-                    if (i != 0)
+                    if (j != 0)
                         isSorted &= (xdata[i-1] <= xdata[i]);
 
                     // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                     // instead of retrieving some value from the model.
                     QVariant pointdata;
                     if(column == RowNumId)
-                        pointdata = i+1;
+                        pointdata = j+1;
                     else
-                        pointdata = model->data(model->index(i, column), Qt::EditRole);
+                        pointdata = model->data(model->index(j, column), Qt::EditRole);
 
                     if(pointdata.isNull())
                         ydata[i] = qQNaN();
