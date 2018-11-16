@@ -734,7 +734,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                         {
                             stream << "INSERT INTO " << sqlb::escapeIdentifier(it->name());
                             if (insertColNames)
-                                stream << " (" << cols.join(",") << ")";
+                                stream << " (" << sqlb::escapeIdentifier(cols).join(",") << ")";
                             stream << " VALUES (";
                         }
                         else
@@ -1139,9 +1139,7 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
         stmt.append(" DEFAULT VALUES;");
     } else {
         stmt.append("(");
-        for(const QString& f : fields)
-            stmt.append(sqlb::escapeIdentifier(f) + ",");
-        stmt.chop(1);
+        stmt.append(sqlb::escapeIdentifier(fields).join(","));
         stmt.append(") VALUES (");
         stmt.append(vals.join(","));
         stmt.append(");");
