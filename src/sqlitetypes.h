@@ -53,6 +53,7 @@ enum escapeQuoting {
 void setIdentifierQuoting(escapeQuoting toQuoting);
 
 QString escapeIdentifier(QString id);
+QStringList escapeIdentifier(const QStringList& ids);
 
 class ObjectIdentifier
 {
