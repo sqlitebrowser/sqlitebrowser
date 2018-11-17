@@ -26,6 +26,7 @@ private slots:
     void replace();
     void findAll();
     void replaceAll();
+    void cancelFind();
     void help();
     void close();
     void reject();
