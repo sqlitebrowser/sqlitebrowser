@@ -53,6 +53,8 @@ The same process works for building the code in any platform supported by Qt
 
 ### Ubuntu Linux
 
+** Note ** - On Ubuntu 18.04 you need to add `qttools5-dev` to the `sudo apt install` line below
+
 ```bash
 $ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
     libsqlcipher-dev
