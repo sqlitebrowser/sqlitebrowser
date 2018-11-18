@@ -169,7 +169,7 @@ or this command:
 
     # pkg install sqlitebrowser
 
-### Snap packages
+## Snap packages
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/sqlitebrowser)
 
