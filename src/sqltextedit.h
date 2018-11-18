@@ -23,6 +23,9 @@ public:
 public slots:
     void reloadSettings();
 
+private slots:
+    void toggleBlockComment();
+
 };
 
 #endif
