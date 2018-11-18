@@ -57,7 +57,7 @@ Download Windows releases here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases
 
-**Note** - If for some reason the standard Windows release does not work 
+**Note** - If for some reason the standard Windows release does not work
 (e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
 reported after the last release. :D
 
@@ -169,7 +169,20 @@ or this command:
 
     # pkg install sqlitebrowser
 
-### Compiling
+## Snap packages
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/sqlitebrowser)
+
+#### Snap Nightlies
+
+     snap install sqlitebrowser --devmode
+
+#### Snap Stable
+
+     snap install sqlitebrowser
+
+
+## Compiling
 
 Instructions for compiling on Windows, OSX, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
