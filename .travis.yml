@@ -6,9 +6,9 @@ branches:
   only:
   - master
 
-env:
-  - ARCH=x86_64 DOCKER_IMAGE=amd64/ubuntu:trusty
-  - ARCH=i686 DOCKER_IMAGE=i386/ubuntu:trusty
+# env:
+#   - ARCH=x86_64 DOCKER_IMAGE=amd64/ubuntu:trusty
+#   - ARCH=i686 DOCKER_IMAGE=i386/ubuntu:trusty
 
 matrix:
   fast_finish: true
