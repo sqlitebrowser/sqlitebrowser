@@ -39,6 +39,7 @@ set(QSCINTILLA_SRC
 	ListBoxQt.cpp
 	PlatQt.cpp
 	ScintillaQt.cpp
+	SciAccessibility.cpp
 	../lexers/LexSQL.cpp
 	../lexers/LexJSON.cpp
 	../lexers/LexHTML.cpp
@@ -161,6 +162,7 @@ set(QSCINTILLA_MOC_HDR
 	./Qsci/qscimacro.h
 	SciClasses.h
 	ScintillaQt.h
+	SciAccessibility.h
 )
 
 include_directories(. ../include ../lexlib ../src)

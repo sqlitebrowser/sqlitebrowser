@@ -1,6 +1,6 @@
 // This module implements the QsciLexerXML class.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -210,7 +210,7 @@ void QsciLexerXML::refreshProperties()
 // Read properties from the settings.
 bool QsciLexerXML::readProperties(QSettings &qs, const QString &prefix)
 {
-    int rc = QsciLexerHTML::readProperties(qs, prefix), num;
+    int rc = QsciLexerHTML::readProperties(qs, prefix);
 
     scripts = qs.value(prefix + "scriptsstyled", true).toBool();
 

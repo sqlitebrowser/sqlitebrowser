@@ -1,6 +1,6 @@
 // This module defines interface to the QsciStyle class.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -55,21 +55,36 @@ public:
     };
 
     //! Constructs a QsciStyle instance for style number \a style.  If \a style
-    //! is negative then a new style number is automatically allocated.
+    //! is negative then a new style number is automatically allocated if
+    //! possible.  If it is not possible then style() will return a negative
+    //! value.
+    //!
+    //! \sa style()
     QsciStyle(int style = -1);
 
     //! Constructs a QsciStyle instance for style number \a style.  If \a style
-    //! is negative then a new style number is automatically allocated.  The
-    //! styles description, color, paper color, font and end-of-line fill are
-    //! set to \a description, \a color, \a paper, \a font and \a eolFill
-    //! respectively.
+    //! is negative then a new style number is automatically allocated if
+    //! possible.  If it is not possible then style() will return a negative
+    //! value.  The styles description, color, paper color, font and
+    //! end-of-line fill are set to \a description, \a color, \a paper, \a font
+    //! and \a eolFill respectively.
+    //!
+    //! \sa style()
     QsciStyle(int style, const QString &description, const QColor &color,
             const QColor &paper, const QFont &font, bool eolFill = false);
 
     //! \internal Apply the style to a particular editor.
     void apply(QsciScintillaBase *sci) const;
 
-    //! Returns the number of the style.
+    //! The style's number is set to \a style.
+    //!
+    //! \sa style()
+    void setStyle(int style) {style_nr = style;}
+
+    //! Returns the number of the style.  This will be negative if the style is
+    //! invalid.
+    //!
+    //! \sa setStyle()
     int style() const {return style_nr;}
 
     //! The style's description is set to \a description.
