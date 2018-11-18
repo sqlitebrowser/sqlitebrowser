@@ -182,7 +182,7 @@ or this command:
      snap install sqlitebrowser
 
 
-### Compiling
+## Compiling
 
 Instructions for compiling on Windows, OSX, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
