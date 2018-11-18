@@ -25,7 +25,7 @@
 
           apps:
             sqlitebrowser:
-              command:            desktop-launch $SNAP/wrappers/sqlitebrowser
+              command:            desktop-launch $SNAP/bin/sqlitebrowser
               desktop:            share/applications/sqlitebrowser.desktop
               environment:
                 TMPDIR:           $XDG_RUNTIME_DIR
@@ -59,9 +59,9 @@
               - libqt5scintilla2-dev
               - git
           parts:
-              wrappers:
-                  plugin:         dump
-                  source:         snap/
+              # wrappers:
+              #     plugin:         dump
+              #     source:         snap/
               sqlitebrowser:
                   # source-type:  git
                   plugin:         cmake
@@ -79,6 +79,7 @@
                 source-subdir:    qt
                 stage-packages:
                 - libxkbcommon0
+                # - qt5-gtk-platformtheme
                 - ttf-ubuntu-font-family
                 - dmz-cursor-theme
                 - light-themes
@@ -125,10 +126,12 @@
                   - libgail-3-0
                   - libgail-3-dev
                   - libgail-dev
+                  # - qt5-gtk-platformtheme
                   filesets:
                       wanted:
                       - bin/*
                       - share/*
+                      - usr/lib/*.*
                       - usr/lib/*-linux-gnu*/libsqlcipher.so.0*
                       - usr/lib/*-linux-gnu*/libdb*
                       - usr/lib/*-linux-gnu*/libz.so*
