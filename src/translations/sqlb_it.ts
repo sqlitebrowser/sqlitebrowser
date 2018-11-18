@@ -1650,7 +1650,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FilterLineEdit.cpp" line="11"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtra</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="25"/>
@@ -1665,72 +1665,82 @@ The following operators are also supported:
 =	Equal to: exact match
 &lt;&gt;	Unequal: exact inverse match
 x~y	Range: values between x and y</source>
-        <translation type="unfinished"></translation>
+        <translation>Questi campi di input permettono di effettuae filtri rapidi nella tabella correntemente selezionata.
+Di default, le righe che contengono il testo di input sono escluse.
+Sono inoltre supportati i seguenti operatori:
+%	Wildcard
+&gt;	Maggiore di
+&lt;	Minore di
+&gt;=	Uguale o maggiore
+&lt;=	Uguale o minore
+=	Uguale a: match esatto
+&lt;&gt;	Non uguale: match inverso esatto
+x~y	Intervallo: valori tra x e y</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="111"/>
         <source>Set Filter Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta l&apos;espressione del filtro</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="113"/>
         <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cos&apos;è questo?</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="118"/>
         <source>Is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>È NULL</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="123"/>
         <source>Is not NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è NULL</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="128"/>
         <source>Is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>È vuoto</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="133"/>
         <source>Is not empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è vuoto</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="138"/>
         <source>Equal to...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uguale a...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="142"/>
         <source>Not equal to...</source>
-        <translation type="unfinished"></translation>
+        <translation>non uguale a...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="146"/>
         <source>Greater than...</source>
-        <translation type="unfinished"></translation>
+        <translation>Maggiore di...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="150"/>
         <source>Less than...</source>
-        <translation type="unfinished"></translation>
+        <translation>Minore di...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="154"/>
         <source>Greater or equal...</source>
-        <translation type="unfinished"></translation>
+        <translation>Maggiore o uguale...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="158"/>
         <source>Less or equal...</source>
-        <translation type="unfinished"></translation>
+        <translation>Minore o uguale...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="162"/>
         <source>In range...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nel range...</translation>
     </message>
 </context>
 <context>
@@ -1738,32 +1748,32 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FindReplaceDialog.ui" line="14"/>
         <source>Find and Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Trova e sostituisci</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="43"/>
         <source>Fi&amp;nd text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tr&amp;ova testo:</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="56"/>
         <source>Re&amp;place with:</source>
-        <translation type="unfinished"></translation>
+        <translation>So&amp;stituisci con:</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="69"/>
         <source>Match &amp;exact case</source>
-        <translation type="unfinished"></translation>
+        <translation>Matching &amp;esatto</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="79"/>
         <source>Match &amp;only whole words</source>
-        <translation type="unfinished"></translation>
+        <translation>Matching delle &amp;sole parole complete</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="86"/>
         <source>When enabled, the search continues from the other end when it reaches one end of the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando abilitato, la ricerca contninua dall&apos;altro capo del documento quando si raggiunge una fine del documento</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="89"/>
@@ -1773,88 +1783,88 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FindReplaceDialog.ui" line="96"/>
         <source>When set, the search goes backwards from cursor position, otherwise it goes forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando abilitato, la ricerca va all&apos;indietro dalla corrente posizione del cursore, altrimenti va in avanti</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="99"/>
         <source>Search &amp;backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca &amp;indietro</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quando spuntato, il pattern da trovare è interpretato come una espressione regolare UNIX. Vedi &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="109"/>
         <source>Use regular e&amp;xpressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa &amp;espressioni regolari</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="129"/>
         <source>Find the next occurrence from the cursor position and in the direction set by &quot;Search backwards&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Trova la prossima occorrenza dalla corrente posizione del cursore nella direzione impostata da &quot;Cerca indietro&quot;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="132"/>
         <source>&amp;Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Trova successivo</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="139"/>
         <source>&amp;Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sostituisci</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="146"/>
         <source>Highlight all the occurrences of the text in the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Evidenzia tutte le occorrenze del testo nella pagina</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="149"/>
         <source>F&amp;ind All</source>
-        <translation type="unfinished"></translation>
+        <translation>T&amp;rova tutti</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="156"/>
         <source>Replace all the occurrences of the text in the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Sostituisce tutte le occorrenze del testo nella pagina</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="159"/>
         <source>Replace &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Sostituisci &amp;Tutti</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="49"/>
         <source>The searched text was not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Il testo cercato non è stato trovato</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="95"/>
         <location filename="../FindReplaceDialog.cpp" line="129"/>
         <source>The searched text was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il testo cercato non è stato trovato.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="98"/>
         <source>The searched text was found one time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il testo cercato è stato trovato una volta.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="101"/>
         <source>The searched text was found %1 times.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il testo cercato è stato trovato %1 volte.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="132"/>
         <source>The searched text was replaced one time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il testo cercato è stato sostituito una volta.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="135"/>
         <source>The searched text was replaced %1 times.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il testo cercato è stato sostituito %1 volte.</translation>
     </message>
 </context>
 <context>
