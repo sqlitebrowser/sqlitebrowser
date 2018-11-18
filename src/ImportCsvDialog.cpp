@@ -340,8 +340,7 @@ void ImportCsvDialog::updateSelection(bool selected)
 
 void ImportCsvDialog::matchSimilar()
 {
-    auto item = ui->filePicker->currentItem();
-    auto selectedHeader = generateFieldList(item->data(Qt::DisplayRole).toString());
+    auto selectedHeader = generateFieldList(ui->filePicker->currentItem()->data(Qt::DisplayRole).toString());
 
     for (int i = 0; i < ui->filePicker->count(); i++)
     {

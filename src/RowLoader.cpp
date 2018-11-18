@@ -101,7 +101,7 @@ int RowLoader::countRows()
             status = sqlite3_step(stmt);
             if(status == SQLITE_ROW)
             {
-                QString sCount = QString::fromUtf8((const char*)sqlite3_column_text(stmt, 0));
+                QString sCount = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
                 retval = sCount.toInt();
             }
             sqlite3_finalize(stmt);

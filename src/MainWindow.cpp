@@ -60,6 +60,8 @@
     #include <QOpenGLWidget>
 #endif
 
+const int MainWindow::MaxRecentFiles;
+
 // These are needed for reading and writing object files
 QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
 {
@@ -80,21 +82,21 @@ QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
 // These are temporary helper functions to turn a vector of sorted columns into a single column to sort and vice verse. This is done by just taking the
 // first sort column there is and ignoring all the others or creating a single item vector respectively. These functions can be removed once all parts
 // of the application have been converted to deal with vectors of sorted columns.
-void fromSortOrderVector(const QVector<BrowseDataTableSettings::SortedColumn>& vector, int& index, Qt::SortOrder& mode)
+static void fromSortOrderVector(const std::vector<sqlb::SortedColumn>& vector, int& index, Qt::SortOrder& mode)
 {
     if(vector.size())
     {
-        index = vector.at(0).index;
-        mode = vector.at(0).mode;
+        index = vector.at(0).column;
+        mode = vector.at(0).direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder;
     } else {
         index = 0;
         mode = Qt::AscendingOrder;
     }
 }
-QVector<BrowseDataTableSettings::SortedColumn> toSortOrderVector(int index, Qt::SortOrder mode)
+static std::vector<sqlb::SortedColumn> toSortOrderVector(int index, Qt::SortOrder mode)
 {
-    QVector<BrowseDataTableSettings::SortedColumn> vector;
-    vector.push_back(BrowseDataTableSettings::SortedColumn(index, mode));
+    std::vector<sqlb::SortedColumn> vector;
+    vector.emplace_back(index, mode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
     return vector;
 }
 
@@ -311,6 +313,20 @@ void MainWindow::init()
 #endif
 
     // Set statusbar fields
+    statusBusyLabel = new QLabel(ui->statusbar);
+    statusBusyLabel->setEnabled(false);
+    statusBusyLabel->setVisible(false);
+    statusBusyLabel->setToolTip(tr("The database is currenctly busy."));
+    ui->statusbar->addPermanentWidget(statusBusyLabel);
+
+    statusStopButton = new QToolButton(ui->statusbar);
+    statusStopButton->setVisible(false);
+    statusStopButton->setIcon(QIcon(":icons/cancel"));
+    statusStopButton->setToolTip(tr("Click here to interrupt the currently running query."));
+    statusStopButton->setMaximumSize(ui->statusbar->geometry().height() - 6, ui->statusbar->geometry().height() - 6);
+    statusStopButton->setAutoRaise(true);
+    ui->statusbar->addPermanentWidget(statusStopButton);
+
     statusEncryptionLabel = new QLabel(ui->statusbar);
     statusEncryptionLabel->setEnabled(false);
     statusEncryptionLabel->setVisible(false);
@@ -341,6 +357,11 @@ void MainWindow::init()
         ui->editDeleteObjectAction->setToolTip(ui->editDeleteObjectAction->text());
     });
 
+    // When clicking the interrupt query button in the status bar, ask SQLite to interrupt the current query
+    connect(statusStopButton, &QToolButton::clicked, [this]() {
+       db.interruptQuery();
+    });
+
     // Connect some more signals and slots
     connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
     connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
@@ -357,6 +378,8 @@ void MainWindow::init()
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &MainWindow::deleteRecord);
     connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
     connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
+    connect(&db, &DBBrowserDB::databaseInUseChanged, this, &MainWindow::updateDatabaseBusyStatus);
+
     ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
     ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
 
@@ -550,11 +573,11 @@ void MainWindow::populateStructure(const QString& old_table)
     {
         SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
         objectMap tab = db.getBrowsableObjects(it.key());
-        for(auto it : tab)
+        for(auto jt : tab)
         {
-            QString objectname = it->name();
+            QString objectname = jt->name();
 
-            sqlb::FieldInfoList fi = it->fieldInformation();
+            sqlb::FieldInfoList fi = jt->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].append(f.name);
         }
@@ -625,7 +648,7 @@ void MainWindow::populateTable()
         // No stored settings found.
 
         // Set table name and apply default display format settings
-        m_browseTableModel->setTable(tablename, 0, Qt::AscendingOrder);
+        m_browseTableModel->setQuery(sqlb::Query(tablename));
 
         // There aren't any information stored for this table yet, so use some default values
 
@@ -655,10 +678,21 @@ void MainWindow::populateTable()
 
         // The filters can be left empty as they are
     } else {
-        // Stored settings found. Retrieve them.
+        // Stored settings found. Retrieve them and assemble a query from them.
         BrowseDataTableSettings storedData = browseTableSettings[tablename];
+        sqlb::Query query(tablename);
 
-        // Load display formats and set them along with the table name
+        // Sorting
+        int sortOrderIndex;
+        Qt::SortOrder sortOrderMode;
+        fromSortOrderVector(storedData.query.orderBy(), sortOrderIndex, sortOrderMode);
+        query.orderBy().emplace_back(sortOrderIndex, sortOrderMode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+
+        // Filters
+        for(auto it=storedData.filterValues.constBegin();it!=storedData.filterValues.constEnd();++it)
+            query.where().insert({it.key(), CondFormat::filterToSqlCondition(it.value(), m_browseTableModel->encoding()).toStdString()});
+
+        // Display formats
         QVector<QString> v;
         bool only_defaults = true;
         if(db.getObjectByName(tablename))
@@ -669,21 +703,18 @@ void MainWindow::populateTable()
                 QString format = storedData.displayFormats[i+1];
                 if(format.size())
                 {
-                    v.push_back(format);
+                    query.selectedColumns().emplace_back(tablefields.at(i).name.toStdString(), format.toStdString());
                     only_defaults = false;
                 } else {
-                    v.push_back(sqlb::escapeIdentifier(tablefields.at(i).name));
+                    query.selectedColumns().emplace_back(tablefields.at(i).name.toStdString(), tablefields.at(i).name.toStdString());
                 }
             }
         }
-
-        int sortOrderIndex;
-        Qt::SortOrder sortOrderMode;
-        fromSortOrderVector(storedData.sortOrder, sortOrderIndex, sortOrderMode);
         if(only_defaults)
-            m_browseTableModel->setTable(tablename, sortOrderIndex, sortOrderMode, storedData.filterValues);
-        else
-            m_browseTableModel->setTable(tablename, sortOrderIndex, sortOrderMode, storedData.filterValues, v);
+            query.selectedColumns().clear();
+
+        // Apply query
+        m_browseTableModel->setQuery(query);
 
         // There is information stored for this table, so extract it and apply it
         applyBrowseTableSettings(storedData);
@@ -737,7 +768,7 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
     // Sorting
     int sortOrderIndex;
     Qt::SortOrder sortOrderMode;
-    fromSortOrderVector(storedData.sortOrder, sortOrderIndex, sortOrderMode);
+    fromSortOrderVector(storedData.query.orderBy(), sortOrderIndex, sortOrderMode);
     ui->dataTable->filterHeader()->setSortIndicator(sortOrderIndex, sortOrderMode);
 
     // Filters
@@ -1491,7 +1522,7 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = QString(tr("-- At line %1:\n%4\n-- Result: %3")).arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        statusMessage = tr("-- At line %1:\n%4\n-- Result: %3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
         db.logSQL(statusMessage, kLogMsg_User);
 
         // Release the database
@@ -1853,7 +1884,7 @@ void MainWindow::updateRecentFileActions()
     // Store updated list
     Settings::setValue("General", "recentFileList", files);
 
-    int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
+    int numRecentFiles = qMin(files.size(), MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i) {
         QString text = tr("&%1 %2").arg(i + 1).arg(QDir::toNativeSeparators(files[i]));
@@ -1984,9 +2015,9 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
     int dummy;
     Qt::SortOrder order;
-    fromSortOrderVector(settings.sortOrder, dummy, order);
+    fromSortOrderVector(settings.query.orderBy(), dummy, order);
     order = order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-    settings.sortOrder = toSortOrderVector(logicalindex, order);
+    settings.query.orderBy() = toSortOrderVector(logicalindex, order);
     ui->dataTable->sortByColumn(logicalindex, order);
 
     // select the first item in the column so the header is bold
@@ -2466,7 +2497,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
     {
         int sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
         Qt::SortOrder sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
-        settings.sortOrder = toSortOrderVector(sortOrderIndex, sortOrderMode);
+        settings.query.orderBy() = toSortOrderVector(sortOrderIndex, sortOrderMode);
     }
 
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
@@ -2483,7 +2514,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                 {
                     int index = xml.attributes().value("index").toInt();
                     int mode = xml.attributes().value("mode").toInt();
-                    settings.sortOrder.push_back(BrowseDataTableSettings::SortedColumn(index, mode));
+                    settings.query.orderBy().emplace_back(index, mode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
                     xml.skipCurrentElement();
                 }
             }
@@ -2586,6 +2617,10 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
             {
                 if(xml.name() == "db")
                 {
+                    // Read only?
+                    if(xml.attributes().hasAttribute("readonly") && xml.attributes().value("readonly").toInt())
+                        readOnly = true;
+
                     // DB file
                     QString dbfilename = xml.attributes().value("path").toString();
                     if(!QFile::exists(dbfilename))
@@ -2704,7 +2739,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
 
                             int sortIndex;
                             Qt::SortOrder sortMode;
-                            fromSortOrderVector(browseTableSettings[current_table].sortOrder, sortIndex, sortMode);
+                            fromSortOrderVector(browseTableSettings[current_table].query.orderBy(), sortIndex, sortMode);
                             ui->dataTable->sortByColumn(sortIndex, sortMode);
                             showRowidColumn(browseTableSettings[current_table].showRowid);
                             unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
@@ -2767,11 +2802,11 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeAttribute("unlock_view_pk", object.unlockViewPk);
 
     xml.writeStartElement("sort");
-    for(const auto& column : object.sortOrder)
+    for(const auto& column : object.query.orderBy())
     {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(column.index));
-        xml.writeAttribute("mode", QString::number(column.mode));
+        xml.writeAttribute("index", QString::number(column.column));
+        xml.writeAttribute("mode", QString::number(column.direction));
         xml.writeEndElement();
     }
     xml.writeEndElement();
@@ -2858,6 +2893,7 @@ void MainWindow::saveProject()
         // Database file name
         xml.writeStartElement("db");
         xml.writeAttribute("path", db.currentFile());
+        xml.writeAttribute("readonly", QString::number(db.readOnly()));
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
         xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
         xml.writeAttribute("temp_store", db.getPragma("temp_store"));
@@ -2874,10 +2910,10 @@ void MainWindow::saveProject()
         {
             while(sqlite3_step(db_vm) == SQLITE_ROW)
             {
-                QString schema(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1)));
+                QString schema(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1))));
                 if(schema != "main" && schema != "temp")
                 {
-                    QString path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+                    QString path(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 2))));
                     xml.writeStartElement("db");
                     xml.writeAttribute("schema", schema);
                     xml.writeAttribute("path", path);
@@ -2970,7 +3006,10 @@ void MainWindow::updateFilter(int column, const QString& value)
 {
     m_browseTableModel->updateFilter(column, value);
     BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
-    settings.filterValues[column] = value;
+    if(value.isEmpty())
+        settings.filterValues.remove(column);
+    else
+        settings.filterValues[column] = value;
     setRecordsetLabel();
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
@@ -3113,7 +3152,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, "=" + value);
+    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, QString("=") + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
@@ -3631,11 +3670,11 @@ void MainWindow::printDbStructure ()
                 for (int column2 = 0; column2 < columnCount; column2++) {
                     if (!treeView->isColumnHidden(column2)) {
                         QModelIndex cellIndex = model->index(rowChild, column2, groupIndex);
-                        QString data = model->data(cellIndex).toString().toHtmlEscaped();
+                        QString header_data = model->data(cellIndex).toString().toHtmlEscaped();
                         if (column2 != DbStructureModel::ColumnSQL)
-                            out << QString("<td><h2>%1</h2></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            out << QString("<td><h2>%1</h2></td>").arg((!header_data.isEmpty()) ? header_data : QString("&nbsp;"));
                         else
-                            out << QString("<td><pre>%1</pre></td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            out << QString("<td><pre>%1</pre></td>").arg((!header_data.isEmpty()) ? header_data : QString("&nbsp;"));
                     }
                 }
                 out << "</tr>";
@@ -3646,8 +3685,8 @@ void MainWindow::printDbStructure ()
                     for (int column2 = 0; column2 < columnCount; column2++) {
                         if (!treeView->isColumnHidden(column2)) {
                             QModelIndex fieldIndex = model->index(rowChild2, column2, objectIndex);
-                            QString data = model->data(fieldIndex).toString().toHtmlEscaped();
-                            out << QString("<td>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            QString field_data = model->data(fieldIndex).toString().toHtmlEscaped();
+                            out << QString("<td>%1</td>").arg((!field_data.isEmpty()) ? field_data : QString("&nbsp;"));
                         }
                     }
                     out << "</tr>";
@@ -3673,4 +3712,11 @@ void MainWindow::printDbStructure ()
 
     delete dialog;
     delete document;
+}
+
+void MainWindow::updateDatabaseBusyStatus(bool busy, const QString& user)
+{
+    statusBusyLabel->setText(tr("Busy (%1)").arg(user));
+    statusBusyLabel->setVisible(busy);
+    statusStopButton->setVisible(busy);
 }

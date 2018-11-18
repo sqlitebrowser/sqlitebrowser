@@ -68,5 +68,6 @@
         <file alias="text_indent">text_indent.png</file>
         <file alias="print">printer.png</file>
         <file alias="project_save">package_save.png</file>
+        <file alias="cancel">cancel.png</file>
     </qresource>
 </RCC>

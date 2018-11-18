@@ -1,7 +1,13 @@
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 #include "sqltextedit.h"
 #include "Settings.h"
 #include "SqlUiLexer.h"
+
+#include <Qsci/qscicommandset.h>
+#include <Qsci/qscicommand.h>
+
+#include <QShortcut>
+#include <QRegExp>
 
 SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
 
@@ -21,6 +27,15 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     registerImage(SqlUiLexer::ApiCompleterIconIdTable, QImage(":/icons/table"));
     registerImage(SqlUiLexer::ApiCompleterIconIdColumn, QImage(":/icons/field"));
     registerImage(SqlUiLexer::ApiCompleterIconIdSchema, QImage(":/icons/database"));
+
+    // Remove command bindings that would interfere with our shortcutToggleComment
+    QsciCommand * command = standardCommands()->boundTo(Qt::ControlModifier+Qt::Key_Slash);
+    command->setKey(0);
+    command = standardCommands()->boundTo(Qt::ControlModifier+Qt::ShiftModifier+Qt::Key_Slash);
+    command->setKey(0);
+
+    QShortcut* shortcutToggleComment = new QShortcut(QKeySequence(tr("Ctrl+/")), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutToggleComment, &QShortcut::activated, this, &SqlTextEdit::toggleBlockComment);
 
     // Do rest of initialisation
     reloadSettings();
@@ -68,4 +83,33 @@ void SqlTextEdit::reloadSettings()
     }
     setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::Identifier);
     setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::QuotedIdentifier);
+}
+
+
+void SqlTextEdit::toggleBlockComment()
+{
+    int lineFrom, indexFrom, lineTo, indexTo;
+    // If there is no selection, select the current line
+    if (!hasSelectedText()) {
+        getCursorPosition(&lineFrom, &indexFrom);
+        setSelection(lineFrom, 0, lineFrom, lineLength(lineFrom));
+    }
+
+    getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+
+    bool uncomment = text(lineFrom).contains(QRegExp("^[ \t]*--"));
+
+    // Iterate over the selected lines, get line text, make
+    // replacement depending on whether the first line was commented
+    // or uncommented, and replace the line text.
+    for (int line=lineFrom; line<lineTo; line++) {
+        QString lineText = text(line);
+        if (uncomment)
+            lineText.replace(QRegExp("^([ \t]*)-- ?"), "\\1");
+        else
+            lineText.replace(QRegExp("^"), "-- ");
+
+        setSelection(line, 0, line, lineLength(line));
+        replaceSelectedText(lineText);
+    }
 }

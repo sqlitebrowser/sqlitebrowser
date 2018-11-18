@@ -75,8 +75,8 @@ void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
     // Get arguments and check their values
-    QRegExp arg1((const char*)sqlite3_value_text(argv[0]));
-    QString arg2((const char*)sqlite3_value_text(argv[1]));
+    QRegExp arg1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
+    QString arg2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
     if(!arg1.isValid())
         return sqlite3_result_error(ctx, "invalid operand", -1);
 
@@ -116,7 +116,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
     {
-        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
+        lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
         return false;
     }
 
@@ -194,10 +194,10 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
         QFileInfo fi(filePath);
         while(sqlite3_step(db_vm) == SQLITE_ROW)
         {
-            QFileInfo path(QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 2)));
+            QFileInfo path(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 2))));
             if(fi == path)
             {
-                QString schema = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
+                QString schema = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1)));
                 QMessageBox::information(nullptr, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
                 return false;
             }
@@ -282,7 +282,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         int err = sqlite3_prepare_v2(dbHandle, utf8Statement, utf8Statement.length(), &vm, &tail);
         if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN)
         {
-            lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(dbHandle));
+            lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
             sqlite3_close(dbHandle);
             return false;
         }
@@ -367,7 +367,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
             *encrypted = true;
 #else
-            lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(dbHandle));
+            lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
             sqlite3_close(dbHandle);
             return false;
 #endif
@@ -508,7 +508,7 @@ bool DBBrowserDB::create ( const QString & db)
         openresult = sqlite3_open16(db.utf16(), &_db);
 
     if( openresult != SQLITE_OK ){
-        lastErrorMessage = QString::fromUtf8((const char*)sqlite3_errmsg(_db));
+        lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
         sqlite3_close(_db);
         _db = nullptr;
         return false;
@@ -608,11 +608,12 @@ DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user)
 
     db_user = user;
     db_used = true;
+    emit databaseInUseChanged(true, user);
 
     return db_pointer_type(_db, DatabaseReleaser(this));
 }
 
-void DBBrowserDB::waitForDbRelease()
+void DBBrowserDB::waitForDbRelease(ChoiceOnUse choice)
 {
     if(!_db)
         return;
@@ -623,14 +624,18 @@ void DBBrowserDB::waitForDbRelease()
         auto str = db_user;
         lk.unlock();
 
-        QMessageBox msgBox;
-        msgBox.setText(tr("The database is currently busy: ") + str);
-        msgBox.setInformativeText(tr("Do you want to abort that other operation?"));
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::No);
-        int ret = msgBox.exec();
+        bool cancel = choice == CancelOther;
+        if(choice == Ask) {
+            QMessageBox msgBox;
+            msgBox.setText(tr("The database is currently busy: ") + str);
+            msgBox.setInformativeText(tr("Do you want to abort that other operation?"));
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::No);
+            int ret = msgBox.exec();
 
-        if(ret == QMessageBox::Yes)
+            cancel = ret == QMessageBox::Yes;
+        }
+        if(cancel)
             sqlite3_interrupt(_db);
 
         lk.lock();
@@ -658,8 +663,7 @@ bool DBBrowserDB::dump(const QString& filePath,
         size_t numRecordsTotal = 0, numRecordsCurrent = 0;
         objectMap objMap = schemata["main"];            // We only always export the main database, not the attached databases
         QList<sqlb::ObjectPtr> tables = objMap.values("table");
-        QMutableListIterator<sqlb::ObjectPtr> it(tables);
-        while(it.hasNext())
+        for(QMutableListIterator<sqlb::ObjectPtr> it(tables);it.hasNext();)
         {
             it.next();
 
@@ -730,7 +734,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                         {
                             stream << "INSERT INTO " << sqlb::escapeIdentifier(it->name());
                             if (insertColNames)
-                                stream << " (" << cols.join(",") << ")";
+                                stream << " (" << sqlb::escapeIdentifier(cols).join(",") << ")";
                             stream << " VALUES (";
                         }
                         else
@@ -743,7 +747,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                             int fieldsize = sqlite3_column_bytes(stmt, i);
                             int fieldtype = sqlite3_column_type(stmt, i);
                             QByteArray bcontent(
-                                        (const char*)sqlite3_column_blob(stmt, i),
+                                        reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
                                         fieldsize);
 
                             if(bcontent.left(2048).contains('\0')) // binary check
@@ -986,9 +990,9 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     return true;
 }
 
-QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log)
+QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, ChoiceOnUse choice)
 {
-    waitForDbRelease();
+    waitForDbRelease(choice);
     if(!_db)
         return QByteArray();
 
@@ -1135,9 +1139,7 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
         stmt.append(" DEFAULT VALUES;");
     } else {
         stmt.append("(");
-        for(const QString& f : fields)
-            stmt.append(sqlb::escapeIdentifier(f) + ",");
-        stmt.chop(1);
+        stmt.append(sqlb::escapeIdentifier(fields).join(","));
         stmt.append(") VALUES (");
         stmt.append(vals.join(","));
         stmt.append(");");
@@ -1304,156 +1306,216 @@ bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb:
     return executeSQL(sql);
 }
 
-bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, QString name, const sqlb::Field* to, int move, QString newSchemaName)
+bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, QString newSchemaName)
 {
-    /*
-     * USE CASES:
-     * 1) Set table; unset name, to and move: Change table constraints only.
-     * 2) Set table and name; unset to and move: Change table constraints and remove column.
-     * 3) Set table, name and to; unset move: Change table constraints and rename/edit column.
-     * 4) Set table, name, to and move: Change table constraints, rename/edit column and move it.
-     */
+    // This function is split into three different parts:
+    // Part 1 checks the arguments and prepares them for processing. It also prepares the transaction etc.
+    // Part 2 uses the built-in abilities of SQLite to change as much of the table schema as possible.
+    // Part 3 does the rest of the changes to the table schema. It also finishes the transaction etc.
 
-    // TODO: This function needs to be cleaned up. It might make sense to split it up in several parts than can be reused
-    // more easily. Besides that, it might make sense to support some potential use cases in a more sophisticated way. These include:
-    // 1) Allow modifying multiple columns at once in order to only have to call this function (including all its overhead) once instead of once per change.
-    // 2) Include the addColumn() use case in here, so the calling side doesn't need to know anything about how this class handles table modifications.
+    //
+    // P A R T   1
+    //
 
     // If no new schema name has been set, we just use the old schema name
     if(newSchemaName.isNull())
     {
         newSchemaName = tablename.schema();
+
+        // When renaming the table in the current schema, check if it doesn't exist already in there
+        if(tablename.name() != new_table.name() && getObjectByName(sqlb::ObjectIdentifier(newSchemaName, new_table.name())) != nullptr)
+        {
+            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(new_table.name()).arg(newSchemaName);
+            return false;
+        }
     } else {
         // We're moving the table to a different schema. So check first if it doesn't already exist in the new schema.
-        if(getObjectByName(sqlb::ObjectIdentifier(newSchemaName, tablename.name())) != nullptr && newSchemaName != tablename.schema())
+        if(newSchemaName != tablename.schema() && getObjectByName(sqlb::ObjectIdentifier(newSchemaName, new_table.name())) != nullptr)
         {
-            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(tablename.name()).arg(newSchemaName);
+            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(new_table.name()).arg(newSchemaName);
             return false;
         }
     }
 
-    // Create table schema
-    sqlb::TablePtr oldSchema = getObjectByName<sqlb::Table>(tablename);
-
-    // Check if field actually exists
-    if(!name.isNull() && sqlb::findField(oldSchema, name) == oldSchema->fields.end())
+    // Get old table schema
+    sqlb::TablePtr old_table_ptr = getObjectByName<sqlb::Table>(tablename);
+    if(old_table_ptr == nullptr)
     {
-        lastErrorMessage = tr("renameColumn: cannot find column %1.").arg(name);
+        lastErrorMessage = tr("No table with name '%1' exists in schema '%2'.").arg(tablename.name()).arg(tablename.schema());
         return false;
+    }
+    sqlb::Table old_table = *old_table_ptr;
+
+    // Check if tracked fields actually exist in the old table
+    for(const auto& old_name : track_columns.keys())
+    {
+        if(!old_name.isNull() && sqlb::findField(old_table, old_name) == old_table.fields.end())
+        {
+            lastErrorMessage = tr("Cannot find column %1.").arg(old_name);
+            return false;
+        }
+    }
+
+    // Check if there are any columns in the old table which are not mentioned in the tracked columns list.
+    // We do this before checking if all tracked fields are in the new table to make sure the following check includes them.
+    for(const auto& field : old_table.fields)
+    {
+        if(!track_columns.keys().contains(field.name()))
+        {
+            // If a field isn't tracked, add it to the list and indicate explicitly that it has the same name in the new table
+            track_columns[field.name()] = field.name();
+        }
+    }
+
+    // Check if tracked fields actually exist in the new table
+    for(const auto& new_name : track_columns.values())
+    {
+        if(!new_name.isNull() && sqlb::findField(new_table, new_name) == new_table.fields.end())
+        {
+            lastErrorMessage = tr("Cannot find column %1.").arg(new_name);
+            return false;
+        }
     }
 
     // Create savepoint to be able to go back to it in case of any error
     QString savepointName = generateSavepointName("renamecolumn");
     if(!setSavepoint(savepointName))
     {
-        lastErrorMessage = tr("renameColumn: creating savepoint failed. DB says: %1").arg(lastErrorMessage);
+        lastErrorMessage = tr("Creating savepoint failed. DB says: %1").arg(lastErrorMessage);
         return false;
     }
 
     // No automatic schema updates from now on
     NoStructureUpdateChecks nup(*this);
 
-    // Newer versions of SQLite add a better ALTER TABLE support which we can use
-#if SQLITE_VERSION_NUMBER >= 3025000
-    // If the name of the field should be changed do that by using SQLite's ALTER TABLE feature
-    if(!name.isNull() && to && name != to->name())
+    //
+    // P A R T   2
+    //
+
+    // This variable is used to track whether something was changed by this part of the function
+    bool changed_something = false;
+
+    // Rename table if necessary
+    if(newSchemaName == tablename.schema() && tablename.name() != new_table.name())
     {
-        if(!executeSQL(QString("ALTER TABLE %1 RENAME COLUMN %2 TO %3;")
-                       .arg(tablename.toString())
-                       .arg(sqlb::escapeIdentifier(name))
-                       .arg(sqlb::escapeIdentifier(to->name()))))
+        if(!renameTable(tablename.schema(), old_table.name(), new_table.name()))
         {
-            QString error(tr("renameColumn: renaming the column failed. DB says:\n%1").arg(lastErrorMessage));
             revertToSavepoint(savepointName);
-            lastErrorMessage = error;
             return false;
         }
 
-        // Update our schema representation to get all the changed triggers, views and indices
-        updateSchema();
+        changed_something = true;
+    }
 
-        // Check if that was all we were asked to do. That's the case if the field is not to be deleted (which we already checked for above), if the field
-        // is not to be moved, if the table is not to be moved and if nothing besides the name of the field changed in the field definition.
-        sqlb::Field oldFieldWithNewName = *sqlb::findField(oldSchema, name);
-        oldFieldWithNewName.setName(to->name());
-        if(move == 0 && tablename.schema() == newSchemaName && oldFieldWithNewName == *to)
+    // Add columns if necessary
+    const auto new_fields = track_columns.values(QString());
+    for(const auto& field : new_table.fields)
+    {
+        // We loop through all the fields of the new table schema and check for each of them if they are new.
+        // If so, we add that field. The reason for looping through the new table schema instead of the track_columns
+        // map is that this way we make sure to preserve their order which increases our chances that we are done after
+        // this step.
+        if(new_fields.contains(field.name()))
         {
-            // We're done.
-
-            // Release the savepoint - everything went fine
-            if(!releaseSavepoint(savepointName))
+            if(!addColumn(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()), field))
             {
-                lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+                revertToSavepoint(savepointName);
+                return false;
+            }
+        }
+
+        changed_something = true;
+    }
+
+    // Newer versions of SQLite add a better ALTER TABLE support which we can use
+#if SQLITE_VERSION_NUMBER >= 3025000
+    // If the name of a field should be changed do that by using SQLite's ALTER TABLE feature
+    for(const auto& old_name : track_columns.keys())
+    {
+        QString new_name = track_columns[old_name];
+        if(!old_name.isNull() && !new_name.isNull() && new_name != old_name)
+        {
+            if(!executeSQL(QString("ALTER TABLE %1 RENAME COLUMN %2 TO %3;")
+                           .arg(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()).toString())
+                           .arg(sqlb::escapeIdentifier(old_name))
+                           .arg(sqlb::escapeIdentifier(new_name))))
+            {
+                QString error(tr("Renaming the column failed. DB says:\n%1").arg(lastErrorMessage));
+                revertToSavepoint(savepointName);
+                lastErrorMessage = error;
                 return false;
             }
 
-            return true;
-        } else {
-            // There's more to do.
-
-            // We can have the rest of the function deal with the remaining changes by reloading the table schema as it is now and updating the name of the column
-            // to change.
-            oldSchema = getObjectByName<sqlb::Table>(tablename);
-            name = to->name();
+            changed_something = true;
         }
     }
 #endif
 
-    // Create a new table with a name that hopefully doesn't exist yet.
-    // Its layout is exactly the same as the one of the table to change - except for the column to change
-    // of course, and the table constraints which are copied from the table parameter.
-    sqlb::Table newSchema = *oldSchema;
-    QString temp_table_name = generateTemporaryTableName(newSchemaName);
-    newSchema.setName(temp_table_name);
-    newSchema.setConstraints(table.allConstraints());
-    newSchema.setRowidColumn(table.rowidColumn());
-    QString select_cols;
-    if(!to)
+    // Update our schema representation to get the new table and all the changed triggers, views and indices
+    if(changed_something)
     {
-        // We want drop the column - so just remove the field. If the name is set to null, skip this step. This effectively leaves all fields as they are,
-        // thus only changing the table constraints.
-        if(!name.isNull())
-            sqlb::removeField(newSchema, name);
-
-        for(size_t i=0;i<newSchema.fields.size();++i)
-            select_cols.append(sqlb::escapeIdentifier(newSchema.fields.at(i).name()) + ',');
-        select_cols.chop(1);    // remove last comma
-    } else {
-        // We want to modify it
-
-        auto index = sqlb::findField(newSchema, name);
-
-        // Move field
-        if(move)
-            std::iter_swap(index, index + move);
-
-        // Get names of fields to select from old table now - after the field has been moved and before it might be renamed
-        for(size_t i=0;i<newSchema.fields.size();++i)
-            select_cols.append(sqlb::escapeIdentifier(newSchema.fields.at(i).name()) + ',');
-        select_cols.chop(1);    // remove last comma
-
-        // Modify field
-        newSchema.renameKeyInAllConstraints((index + move)->name(), to->name());
-        *(index + move) = *to;
+        updateSchema();
+        old_table = *getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()));
     }
 
-    // Create the new table
-    if(!executeSQL(newSchema.sql(newSchemaName), true, true))
+    // Check if there's still more work to be done or if we are finished now
+    if(tablename.schema() == newSchemaName && old_table == new_table)
     {
-        QString error(tr("renameColumn: creating new table failed. DB says: %1").arg(lastErrorMessage));
+        // Release the savepoint - everything went fine
+        if(!releaseSavepoint(savepointName))
+        {
+            lastErrorMessage = tr("Releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+            return false;
+        }
+
+        // Success, update the DB schema before returning
+        updateSchema();
+        return true;
+    }
+
+    //
+    // P A R T   3
+    //
+
+    // Create a new table with the desired schema and a name that doesn't exist yet
+    QString new_table_name = new_table.name();
+    sqlb::Table new_table_with_random_name = new_table;
+    new_table_with_random_name.setName(generateTemporaryTableName(newSchemaName));
+    if(!executeSQL(new_table_with_random_name.sql(newSchemaName), true, true))
+    {
+        QString error(tr("Creating new table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
         lastErrorMessage = error;
         return false;
     }
 
+    // Assemble list of column names to copy from in the old table and list of column names to into into in the new table
+    QStringList copy_values_from;
+    QStringList copy_values_to;
+    for(const auto& from : track_columns.keys())
+    {
+        // Ignore new fields
+        if(from.isNull())
+            continue;
+
+        // Ignore deleted fields
+        QString to = track_columns[from];
+        if(to.isNull())
+            continue;
+
+        copy_values_from.push_back(from);
+        copy_values_to.push_back(to);
+    }
+
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO %1.%2 SELECT %3 FROM %4;")
+    if(!executeSQL(QString("INSERT INTO %1.%2 (%3) SELECT %4 FROM %5;")
                    .arg(sqlb::escapeIdentifier(newSchemaName))
-                   .arg(sqlb::escapeIdentifier(temp_table_name))
-                   .arg(select_cols)
+                   .arg(sqlb::escapeIdentifier(new_table_with_random_name.name()))
+                   .arg(sqlb::escapeIdentifier(copy_values_to).join(","))
+                   .arg(sqlb::escapeIdentifier(copy_values_from).join(","))
                    .arg(tablename.toString())))
     {
-        QString error(tr("renameColumn: copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
+        QString error(tr("Copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
         lastErrorMessage = error;
         return false;
@@ -1472,19 +1534,26 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
             {
                 sqlb::IndexPtr idx = std::dynamic_pointer_cast<sqlb::Index>(it);
 
-                // Are we updating a field name or are we removing a field entirely?
-                if(to)
+                // Loop through all changes to the table schema. For indices only the column names are relevant, so it suffices to look at the
+                // list of tracked columns
+                for(const auto& from : track_columns)
                 {
-                    // We're updating a field name. So search for it in the index and replace it whereever it is found
-                    for(size_t i=0;i<idx->fields.size();i++)
+                    QString to = track_columns[from];
+
+                    // Are we updating the field name or are we removing the field entirely?
+                    if(!to.isNull())
                     {
-                        if(idx->fields[i].name() == name)
-                            idx->fields[i].setName(to->name());
+                        // We're updating the field name. So search for it in the index and replace it whereever it is found
+                        for(size_t i=0;i<idx->fields.size();i++)
+                        {
+                            if(idx->fields[i].name() == from)
+                                idx->fields[i].setName(to);
+                        }
+                    } else {
+                        // We're removing a field. So remove it from any indices, too.
+                        while(sqlb::removeField(idx, from))
+                            ;
                     }
-                } else {
-                    // We're removing a field. So remove it from any indices, too.
-                    while(sqlb::removeField(idx, name))
-                        ;
                 }
 
                 // Only try to add the index later if it has any columns remaining. Also use the new schema name here, too, to basically move
@@ -1510,14 +1579,14 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // Delete the old table
     if(!executeSQL(QString("DROP TABLE %1;").arg(tablename.toString()), true, true))
     {
-        QString error(tr("renameColumn: deleting old table failed. DB says: %1").arg(lastErrorMessage));
+        QString error(tr("Deleting old table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
         lastErrorMessage = error;
         return false;
     }
 
     // Rename the temporary table
-    if(!renameTable(newSchemaName, temp_table_name, tablename.name()))
+    if(!renameTable(newSchemaName, new_table_with_random_name.name(), tablename.name()))
     {
         revertToSavepoint(savepointName);
         return false;
@@ -1544,7 +1613,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // Release the savepoint - everything went fine
     if(!releaseSavepoint(savepointName))
     {
-        lastErrorMessage = tr("renameColumn: releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
+        lastErrorMessage = tr("Releasing savepoint failed. DB says: %1").arg(lastErrorMessage);
         return false;
     }
 
@@ -1650,7 +1719,7 @@ void DBBrowserDB::updateSchema()
         while(sqlite3_step(db_vm) == SQLITE_ROW)
         {
             // Get the schema name which is in column 1 (counting starts with 0). 0 contains an ID and 2 the file path.
-            QString schema_name = QString::fromUtf8((const char*)sqlite3_column_text(db_vm, 1));
+            QString schema_name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1)));
 
             // Always add the schema to the map. This makes sure it's even then added when there are no objects in the database
             schemata[schema_name] = objectMap();
@@ -1671,10 +1740,10 @@ void DBBrowserDB::updateSchema()
             {
                 while(sqlite3_step(vm) == SQLITE_ROW)
                 {
-                    QString val_type = QString::fromUtf8((const char*)sqlite3_column_text(vm, 0));
-                    QString val_name = QString::fromUtf8((const char*)sqlite3_column_text(vm, 1));
-                    QString val_sql = QString::fromUtf8((const char*)sqlite3_column_text(vm, 2));
-                    QString val_tblname = QString::fromUtf8((const char*)sqlite3_column_text(vm, 3));
+                    QString val_type = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 0)));
+                    QString val_name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 1)));
+                    QString val_sql = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
+                    QString val_tblname = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 3)));
                     val_sql.replace("\r", "");
 
                     if(!val_sql.isEmpty())
@@ -1859,8 +1928,8 @@ QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QStri
     {
         while(sqlite3_step(vm) == SQLITE_ROW)
         {
-            QString name = QString::fromUtf8((const char *)sqlite3_column_text(vm, 1));
-            QString type = QString::fromUtf8((const char *)sqlite3_column_text(vm, 2));
+            QString name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 1)));
+            QString type = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
 
             result.push_back(qMakePair(name, type));
         }
@@ -1891,4 +1960,12 @@ QString DBBrowserDB::generateTemporaryTableName(const QString& schema) const
         if(!getObjectByName(sqlb::ObjectIdentifier(schema, table_name)))
             return table_name;
     }
+}
+
+void DBBrowserDB::interruptQuery()
+{
+    if(!_db)
+        return;
+
+    sqlite3_interrupt(_db);
 }

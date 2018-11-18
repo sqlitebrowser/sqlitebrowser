@@ -746,15 +746,15 @@ void EditDialog::editTextChanged()
         // updateCellInfoAndMode() only works with QByteArray's (for now)
         int dataLength;
         bool isModified;
-        switch (dataSource) {
-        case TextBuffer:
+
+        if(dataSource == TextBuffer) {
+            // TextBuffer
             dataLength = ui->editorText->toPlainText().length();
             isModified = ui->editorText->document()->isModified();
-            break;
-        case SciBuffer:
+        } else {
+            // SciBuffer
             dataLength = sciEdit->text().length();
             isModified = sciEdit->isModified();
-            break;
         }
         // Data has been changed in the text editor, so it can't be a NULL
         // any more. It hasn't been validated yet, so it cannot be JSON nor XML.

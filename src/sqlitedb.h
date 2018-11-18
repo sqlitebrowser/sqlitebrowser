@@ -1,15 +1,15 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
+#include <condition_variable>
 #include <memory>
 #include <mutex>
-#include <condition_variable>
 
-#include <QStringList>
-#include <QMultiMap>
 #include <QByteArray>
+#include <QMultiMap>
+#include <QStringList>
 
 struct sqlite3;
 class CipherSettings;
@@ -48,6 +48,7 @@ private:
             std::unique_lock<std::mutex> lk(pParent->m);
             pParent->db_used = false;
             lk.unlock();
+            emit pParent->databaseInUseChanged(false, QString());
             pParent->cv.notify_one();
         }
     };
@@ -94,9 +95,16 @@ public:
 
     bool dump(const QString& filename, const QStringList& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema);
 
+    enum ChoiceOnUse
+    {
+        Ask,
+        Wait,
+        CancelOther
+    };
+
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
-    QByteArray querySingleValueFromDb(const QString& sql, bool log = true);
+    QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
 
     const QString& lastError() const { return lastErrorMessage; }
 
@@ -110,6 +118,11 @@ public:
      * @return true if statement execution was ok, else false.
      */
     bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata);
+
+    /**
+     * @brief Interrupts the currenty running statement as soon as possible.
+     */
+    void interruptQuery();
 
 private:
     /**
@@ -142,17 +155,25 @@ public:
     bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field);
 
     /**
-     * @brief alterTable Can be used to rename, modify or drop an existing column of a given table
-     * @param schema Specifies the name of the schema, i.e. the database name, of the table
-     * @param tablename Specifies the name of the table to edit
-     * @param table Specifies the table to edit. The table constraints are used from this but not the columns
-     * @param name Name of the column to edit
-     * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
-     * @param move Set this to a value != 0 to move the new column to a different position
+     * @brief This type maps from old column names to new column names. Given the old and the new table definition, this suffices to
+     * track fields between the two.
+     * USE CASES:
+     * 1) Don't specify a column at all or specify equal column names: Keep its name as-is.
+     * 2) Specify different column names: Rename the field.
+     * 3) Map from an existing column name to a Null string: Delete the column.
+     * 4) Map from a Null column name to a new column name: Add the column.
+     */
+    using AlterTableTrackColumns = QMap<QString, QString>;
+
+    /**
+     * @brief alterTable Can be used to rename, modify or drop existing columns of a given table
+     * @param tablename Specifies the schema and name of the table to edit
+     * @param new_table Specifies the new table schema. This is exactly how the new table is going to look like.
+     * @param track_columns Maps old column names to new column names. This is used to copy the data from the old table to the new one.
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, QString name, const sqlb::Field* to, int move = 0, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
 
@@ -202,6 +223,7 @@ signals:
     void dbChanged(bool dirty);
     void structureUpdated();
     void requestCollation(QString name, int eTextRep);
+    void databaseInUseChanged(bool busy, QString user);
 
 private:
     /// external code needs to go through get() to obtain access to the database
@@ -214,7 +236,7 @@ private:
     /// wait for release of the DB locked through a previous get(),
     /// giving users the option to discard running task through a
     /// message box.
-    void waitForDbRelease();
+    void waitForDbRelease(ChoiceOnUse choice = Ask);
 
     QString curDBFilename;
     QString lastErrorMessage;

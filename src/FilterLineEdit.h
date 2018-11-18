@@ -28,7 +28,7 @@ signals:
 
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;
-    void setFilterHelper(const QString& filterOperator);
+    void setFilterHelper(const QString& filterOperator, const QString& operatorSuffix = "");
 
 private:
     QList<FilterLineEdit*>* filterList;

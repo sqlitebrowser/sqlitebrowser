@@ -769,17 +769,17 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
 
             // Remove the old entry from the local clones database to enforce a redownload. The file column should be unique for the entire table because the
             // files are all in the same directory and their names need to be unique because of this.
-            QString sql = QString("DELETE FROM local WHERE file=?");
-            sqlite3_stmt* stmt;
-            if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
+            QString delete_sql = QString("DELETE FROM local WHERE file=?");
+            sqlite3_stmt* delete_stmt;
+            if(sqlite3_prepare_v2(m_dbLocal, delete_sql.toUtf8(), -1, &delete_stmt, nullptr) != SQLITE_OK)
                 return QString();
-            if(sqlite3_bind_text(stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
+            if(sqlite3_bind_text(delete_stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
             {
-                sqlite3_finalize(stmt);
+                sqlite3_finalize(delete_stmt);
                 return QString();
             }
-            sqlite3_step(stmt);
-            sqlite3_finalize(stmt);
+            sqlite3_step(delete_stmt);
+            sqlite3_finalize(delete_stmt);
 
             // Return an empty string to indicate a redownload request
             return QString();

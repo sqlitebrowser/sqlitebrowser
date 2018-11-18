@@ -9,9 +9,9 @@
 #include <QColor>
 #include <memory>
 
-#include "sqlitetypes.h"
 #include "RowCache.h"
 #include "CondFormat.h"
+#include "sql/Query.h"
 
 struct sqlite3;
 class DBBrowserDB;
@@ -81,14 +81,14 @@ public:
     void setQuery(const QString& sQuery, bool dontClearHeaders = false);
 
     QString query() const { return m_sQuery; }
-    QString customQuery(bool withRowid);
+    QString customQuery(bool withRowid) const { return QString::fromStdString(m_query.buildQuery(withRowid)); }
 
     /// configure for browsing specified table
-    void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QMap<int, QString> filterValues = QMap<int, QString>(), const QVector<QString> &display_format = QVector<QString>());
+    void setQuery(const sqlb::Query& query);
 
     void setChunkSize(size_t chunksize);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-    const sqlb::ObjectIdentifier& currentTableName() const { return m_sTable; }
+    sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
@@ -115,7 +115,7 @@ public:
     void setCondFormats(int column, const QVector<CondFormat>& condFormats);
 
 public slots:
-    void updateFilter(int column, const QString& value, bool applyQuery = true);
+    void updateFilter(int column, const QString& value);
 
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
@@ -172,15 +172,10 @@ private:
     bool nosync_isBinary(const QModelIndex& index) const;
 
     QString m_sQuery;
-    sqlb::ObjectIdentifier m_sTable;
-    QString m_sRowidColumn;
     QString m_pseudoPk;
-    int m_iSortColumn;
-    QString m_sSortOrder;
-    QMap<int, QString> m_mWhere;
-    QVector<QString> m_vDisplayFormat;
     QVector<int> m_vDataTypes;
     QMap<int, QVector<CondFormat>> m_mCondFormats;
+    sqlb::Query m_query;
 
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.

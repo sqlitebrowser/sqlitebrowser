@@ -1,7 +1,7 @@
 #ifndef EDITTABLEDIALOG_H
 #define EDITTABLEDIALOG_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <QDialog>
 
@@ -64,12 +64,10 @@ private:
     DBBrowserDB& pdb;
     ForeignKeyEditorDelegate* m_fkEditorDelegate;
     sqlb::ObjectIdentifier curTable;
+    QMap<QString, QString> trackColumns;
     sqlb::Table m_table;
-    QStringList types;
-    QStringList fields;
     bool m_bNewTable;
     QString m_sRestorePointName;
-    bool m_bForeignKeysEnabled;
 };
 
 #endif

@@ -1,5 +1,5 @@
 #include "testsqlobjects.h"
-#include "../sqlitetypes.h"
+#include "../sql/sqlitetypes.h"
 
 #include <QtTest/QtTest>
 

@@ -3,7 +3,7 @@
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -208,7 +208,7 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
     // is configured.
     QStringList wl;
 
-    QString escapeSeparator = sqlb::escapeIdentifier(".");
+    QString escapeSeparator = sqlb::escapeIdentifier(QString("."));
     // Case for non symetric quotes, e.g. "[.]" to "].["
     std::reverse(escapeSeparator.begin(), escapeSeparator.end());
 

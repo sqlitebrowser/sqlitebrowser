@@ -32,6 +32,7 @@ void FindReplaceDialog::setExtendedScintilla(ExtendedScintilla* scintilla)
     ui->replaceAllButton->setEnabled(isWriteable);
 
     connect(m_scintilla, SIGNAL(destroyed()), this, SLOT(hide()));
+    connect(ui->findText, SIGNAL(editingFinished()), this, SLOT(cancelFind()));
 }
 
 bool FindReplaceDialog::findNext()
@@ -61,7 +62,8 @@ void FindReplaceDialog::show()
 
 void FindReplaceDialog::replace()
 {
-    m_scintilla->replace(ui->replaceWithText->text());
+    if (m_scintilla->hasSelectedText())
+        m_scintilla->replace(ui->replaceWithText->text());
     findNext();
 }
 
@@ -140,6 +142,11 @@ void FindReplaceDialog::replaceAll()
 
 }
 
+void FindReplaceDialog::cancelFind()
+{
+    m_scintilla->findFirst(QString(), false, false, false, false);
+    clearIndicators();
+}
 void FindReplaceDialog::help()
 {
     QWhatsThis::enterWhatsThisMode();
@@ -154,7 +161,9 @@ void FindReplaceDialog::clearIndicators()
 void FindReplaceDialog::close()
 {
     m_scintilla->clearSelection();
-    clearIndicators();
+    // Reset any previous find so it does not interfere with the next time
+    // the dialog is open.
+    cancelFind();
     QDialog::close();
 }
 

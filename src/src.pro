@@ -34,7 +34,7 @@ HEADERS += \
     ExportDataDialog.h \
     ImportCsvDialog.h \
     sqltextedit.h \
-    sqlitetypes.h \
+    sql/sqlitetypes.h \
     csvparser.h \
     ExtendedTableWidget.h \
     grammar/Sqlite3Lexer.hpp \
@@ -70,7 +70,8 @@ HEADERS += \
     CipherSettings.h \
     DotenvFormat.h \
     Palette.h \
-    CondFormat.h
+    CondFormat.h \
+    sql/Query.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -85,7 +86,7 @@ SOURCES += \
     ExportDataDialog.cpp \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
-    sqlitetypes.cpp \
+    sql/sqlitetypes.cpp \
     csvparser.cpp \
     ExtendedTableWidget.cpp \
     grammar/Sqlite3Lexer.cpp \
@@ -117,7 +118,8 @@ SOURCES += \
     CipherSettings.cpp \
     DotenvFormat.cpp \
     Palette.cpp \
-    CondFormat.cpp
+    CondFormat.cpp \
+    sql/Query.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -222,6 +224,11 @@ mac {
     LIBS += -L/usr/local/lib -framework Carbon
     QMAKE_INFO_PLIST = app.plist
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
+}
+
+CONFIG(all_warnings) {
+    QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion
+    QMAKE_CXXFLAGS += -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast
 }
 
 UI_DIR = .ui
