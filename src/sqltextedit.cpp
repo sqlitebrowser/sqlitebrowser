@@ -104,12 +104,15 @@ void SqlTextEdit::toggleBlockComment()
     // or uncommented, and replace the line text.
     for (int line=lineFrom; line<lineTo; line++) {
         QString lineText = text(line);
+
         if (uncomment)
             lineText.replace(QRegExp("^([ \t]*)-- ?"), "\\1");
         else
             lineText.replace(QRegExp("^"), "-- ");
 
-        setSelection(line, 0, line, lineLength(line));
+        indexTo = lineText.endsWith("\r\n") ? lineLength(line)-1 : lineLength(line);
+
+        setSelection(line, 0, line, indexTo);
         replaceSelectedText(lineText);
     }
 }
