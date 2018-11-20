@@ -1,5 +1,6 @@
 #include "FindReplaceDialog.h"
 #include "ui_FindReplaceDialog.h"
+#include "ExtendedScintilla.h"
 
 #include <QWhatsThis>
 

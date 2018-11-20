@@ -7,7 +7,6 @@
 
 class QTreeWidgetItem;
 class QFrame;
-class QTableWidget;
 class QSslCertificate;
 class QAbstractButton;
 

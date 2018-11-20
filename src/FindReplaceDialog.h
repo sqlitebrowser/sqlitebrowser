@@ -1,10 +1,10 @@
 #ifndef FindReplaceDialog_H
 #define FindReplaceDialog_H
 
-#include <ExtendedScintilla.h>
-
 #include <QDialog>
 #include <QAbstractButton>
+
+class ExtendedScintilla;
 
 namespace Ui {
 class FindReplaceDialog;
