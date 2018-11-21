@@ -89,20 +89,33 @@ void SqlTextEdit::reloadSettings()
 void SqlTextEdit::toggleBlockComment()
 {
     int lineFrom, indexFrom, lineTo, indexTo;
+
     // If there is no selection, select the current line
     if (!hasSelectedText()) {
         getCursorPosition(&lineFrom, &indexFrom);
-        setSelection(lineFrom, 0, lineFrom, lineLength(lineFrom));
+
+        // Windows lines requires an adjustment, otherwise the selection would
+        // end in the next line.
+        indexTo = text(lineFrom).endsWith("\r\n") ? lineLength(lineFrom)-1 : lineLength(lineFrom);
+
+        setSelection(lineFrom, 0, lineFrom, indexTo);
     }
 
     getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
 
     bool uncomment = text(lineFrom).contains(QRegExp("^[ \t]*--"));
 
+    // If the selection ends before the first character of a line, don't
+    // take this line into account for un/commenting.
+    if (indexTo==0)
+        lineTo--;
+
+    beginUndoAction();
+
     // Iterate over the selected lines, get line text, make
     // replacement depending on whether the first line was commented
-    // or uncommented, and replace the line text.
-    for (int line=lineFrom; line<lineTo; line++) {
+    // or uncommented, and replace the line text. All in a single undo action.
+    for (int line=lineFrom; line<=lineTo; line++) {
         QString lineText = text(line);
 
         if (uncomment)
@@ -115,4 +128,5 @@ void SqlTextEdit::toggleBlockComment()
         setSelection(line, 0, line, indexTo);
         replaceSelectedText(lineText);
     }
+    endUndoAction();
 }
