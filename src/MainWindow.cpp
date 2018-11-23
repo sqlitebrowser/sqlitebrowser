@@ -3514,6 +3514,15 @@ void MainWindow::openFindReplaceDialog()
         sqlWidget->getEditor()->openFindReplaceDialog();
 }
 
+void MainWindow::toggleSqlBlockComment()
+{
+    // The slot for the shortcut must discover which sqltexedit widget has the focus
+    SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+
+    if (sqlWidget)
+        sqlWidget->getEditor()->toggleBlockComment();
+}
+
 void MainWindow::openSqlPrintDialog()
 {
     // The slot for the shortcut must discover which sqltexedit widget has the focus and then open its dialog.

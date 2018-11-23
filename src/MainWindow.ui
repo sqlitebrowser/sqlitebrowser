@@ -946,6 +946,8 @@ You can drag SQL statements from an object row and drop them into other applicat
           <addaction name="separator"/>
           <addaction name="actionSqlFind"/>
           <addaction name="actionSqlFindReplace"/>
+          <addaction name="separator"/>
+          <addaction name="actionSqlToggleComment"/>
          </widget>
         </item>
         <item>
@@ -2364,6 +2366,24 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
+  <action name="actionSqlToggleComment">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/comment_block</normaloff>:/icons/comment_block</iconset>
+   </property>
+   <property name="text">
+    <string>Un/comment block of SQL code</string>
+   </property>
+   <property name="toolTip">
+    <string>Comment or uncomment current line or selected block of code</string>
+   </property>
+   <property name="whatsThis">
+    <string>Comment or uncomment the selected lines or the current line, when there is no selection. All the block is toggled according to the first line.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+/</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -3774,6 +3794,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>326</x>
      <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlToggleComment</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>toggleSqlBlockComment()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>
