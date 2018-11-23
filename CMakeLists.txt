@@ -522,7 +522,7 @@ set(CPACK_PACKAGE_VERSION_PATCH "99")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "DB Browser for SQLite")
 if(WIN32 AND NOT UNIX)
 	# There is a bug in NSIS that does not handle full unix paths properly. Make
-	# sure there is at least one set of four (4) backlasshes.
+	# sure there is at least one set of four (4) backslashes.
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
 	set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\iconwin.ico")
 	set(CPACK_NSIS_EXECUTABLES_DIRECTORY "/")
