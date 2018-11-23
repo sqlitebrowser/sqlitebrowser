@@ -33,11 +33,14 @@ private slots:
     void buttonBox_clicked(QAbstractButton* button);
 
 private:
+    bool findFirst(bool wrap, bool forward);
+    void searchAll(bool replace);
     void indicateSelection();
     void clearIndicators();
     Ui::FindReplaceDialog* ui;
     ExtendedScintilla* m_scintilla;
     int foundIndicatorNumber;
+    bool findInProgress;
 };
 
 #endif
