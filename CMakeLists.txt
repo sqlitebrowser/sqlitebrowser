@@ -36,7 +36,6 @@ if(WIN32 AND MSVC)
 		# Paths for 64-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
 		set(QT5_PATH "C:/dev/Qt/5.11.2/msvc2017_64")
-		set(VSREDIST "vcredist_x64.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
@@ -49,7 +48,6 @@ if(WIN32 AND MSVC)
 		# Paths for 32-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32")
 		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013")
-		set(VSREDIST "vcredist_x86.exe")
 
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
@@ -60,7 +58,6 @@ if(WIN32 AND MSVC)
                 endif()
 	endif()
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
-	set(VSREDIST_DIR "C:/dev/dependencies")
 endif()
 
 if(NOT FORCE_INTERNAL_ANTLR)
@@ -472,7 +469,6 @@ if(WIN32 AND MSVC)
 	install(FILES
 		${QT5_PATH}/plugins/platforms/qwindows.dll
 		DESTINATION platforms)
-	install(PROGRAMS "${VSREDIST_DIR}/${VSREDIST}" DESTINATION redist)
 
 	# The XML dll
 	install(FILES
