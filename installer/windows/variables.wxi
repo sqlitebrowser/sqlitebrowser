@@ -40,8 +40,13 @@
         Visual Studio 2013. The build "ARCH" will be set automatically.
     -->
 
-    <?define VCRedistPath="C:\Program Files (x86)\Common Files\Merge Modules" ?>
-    <?define VCRedistFile="Microsoft_VC120_CRT_$(sys.BUILDARCH).msm" ?>
+    <?if $(sys.BUILDARCH)="x64"?>
+        <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules" ?>
+        <?define VCRedistFile="Microsoft_VC141_CRT_$(sys.BUILDARCH).msm" ?>
+    <?elseif $(sys.BUILDARCH)="x86"?>
+        <?define VCRedistPath="C:\Program Files (x86)\Common Files\Merge Modules" ?>
+        <?define VCRedistFile="Microsoft_VC120_CRT_$(sys.BUILDARCH).msm" ?>
+    <?endif?>
 
     <!--
     =================================================== Build System ===================================================
