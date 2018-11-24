@@ -62,6 +62,9 @@
                         <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
                     </Directory>
                     <?endif?>
+                    <Directory Id="bearer" Name="bearer">
+                        <Component><File Source="$(var.QtPath)\plugins\bearer\qgenericbearer.dll" /></Component>
+                    </Directory>
                     <Directory Id="imageformats" Name="imageformats">
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qicns.dll" /></Component>
@@ -131,6 +134,8 @@
                 </Feature>
             </Feature>
 
+            <!-- Bearer -->
+            <ComponentRef Id="qgenericbearer.dll" />
             <!-- Plugins -->
             <ComponentRef Id="qgif.dll" />
             <ComponentRef Id="qicns.dll" />
