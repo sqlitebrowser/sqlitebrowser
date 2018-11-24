@@ -50,6 +50,21 @@
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
+                    <!--
+                    This DLL is required when using Qt 5.10 and higher to show Windows Vista style GUI. The check for
+                    64-bit is required here since we are using Qt 5.7 for the 32-bit build. This file does not exist
+                    on earlier version of Qt. If Qt 5.10 is used for both 32-bit and 64-bit then this check can be removed.
+
+                    See https://bugreports.qt.io/browse/QTBUG-65177
+                    -->
+                    <?if $(sys.BUILDARCH)="x64"?>
+                    <Directory Id="styles" Name="styles">
+                        <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
+                    </Directory>
+                    <?endif?>
+                    <Directory Id="bearer" Name="bearer">
+                        <Component><File Source="$(var.QtPath)\plugins\bearer\qgenericbearer.dll" /></Component>
+                    </Directory>
                     <Directory Id="imageformats" Name="imageformats">
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qicns.dll" /></Component>
@@ -119,6 +134,8 @@
                 </Feature>
             </Feature>
 
+            <!-- Bearer -->
+            <ComponentRef Id="qgenericbearer.dll" />
             <!-- Plugins -->
             <ComponentRef Id="qgif.dll" />
             <ComponentRef Id="qicns.dll" />
