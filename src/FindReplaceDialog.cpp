@@ -52,7 +52,9 @@ bool FindReplaceDialog::findFirst(bool wrap, bool forward)
              ui->regexpCheckBox->isChecked(),
              ui->caseCheckBox->isChecked(),
              ui->wholeWordsCheckBox->isChecked(),
-             forward);
+             forward,
+             /* show */ true,
+             /* posix */ true);
     else
         return m_scintilla->findFirst
             (ui->findText->text(),
@@ -60,7 +62,11 @@ bool FindReplaceDialog::findFirst(bool wrap, bool forward)
              ui->caseCheckBox->isChecked(),
              ui->wholeWordsCheckBox->isChecked(),
              wrap,
-             forward);
+             forward,
+             /* line */ -1,
+             /* index */ -1,
+             /* show */ true,
+             /* posix */ true);
 }
 
 bool FindReplaceDialog::findNext()
