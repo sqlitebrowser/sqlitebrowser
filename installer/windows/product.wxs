@@ -137,6 +137,9 @@
                 </Feature>
             </Feature>
 
+            <!-- Translations -->
+            <ComponentGroupRef Id="TranslationsGroup" />
+
             <!-- Bearer -->
             <?if $(sys.BUILDARCH)="x64"?>
             <ComponentRef Id="qgenericbearer.dll" />
