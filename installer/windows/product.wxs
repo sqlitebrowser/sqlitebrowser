@@ -156,6 +156,10 @@
             <ComponentRef Id="qwebp.dll" />
             <!-- Platforms -->
             <ComponentRef Id="qwindows.dll" />
+            <!-- Windows Vista Style -->
+            <?if $(sys.BUILDARCH)="x64"?>
+                <ComponentRef Id="qwindowsvistastyle.dll" />
+            <?endif?>
             <!-- Printer -->
             <ComponentRef Id="windowsprintersupport.dll" />
             <!-- Licenses -->
