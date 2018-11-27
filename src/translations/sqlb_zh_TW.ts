@@ -489,49 +489,49 @@ Aborting execution%3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1183"/>
+        <location filename="../sqlitedb.cpp" line="1181"/>
         <source>Cannot delete this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1214"/>
+        <location filename="../sqlitedb.cpp" line="1212"/>
         <source>Cannot set data on this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1332"/>
+        <location filename="../sqlitedb.cpp" line="1330"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1343"/>
+        <location filename="../sqlitedb.cpp" line="1341"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation type="unfinished">renameColumn: 無法查詢列 %1。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1351"/>
+        <location filename="../sqlitedb.cpp" line="1349"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation type="unfinished">renameColumn: 建立保存點時失敗。DB 說: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1397"/>
+        <location filename="../sqlitedb.cpp" line="1395"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation type="unfinished">renameColumn: 建立新資料表時失敗。DB 說: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1410"/>
+        <location filename="../sqlitedb.cpp" line="1408"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation type="unfinished">renameColumn: 複製資料到新資料表時失敗。DB 說:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1467"/>
+        <location filename="../sqlitedb.cpp" line="1465"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation type="unfinished">renameColumn: 刪除舊資料表失敗。DB 說: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1492"/>
+        <location filename="../sqlitedb.cpp" line="1490"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -540,34 +540,34 @@ Aborting execution%3.</source>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1501"/>
+        <location filename="../sqlitedb.cpp" line="1499"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation type="unfinished">renameColumn: 釋放保存點時失敗。DB 說: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1540"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation type="unfinished">重命名資料表 &apos;%1&apos; 為 &apos;%2&apos;時失敗。消息來自資料庫引擎:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1575"/>
+        <location filename="../sqlitedb.cpp" line="1573"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation type="unfinished">... &lt;字串無法記錄，包含二進位資料&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1684"/>
+        <location filename="../sqlitedb.cpp" line="1682"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1823"/>
+        <location filename="../sqlitedb.cpp" line="1821"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">載入擴充套件時出現錯誤: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1848"/>
+        <location filename="../sqlitedb.cpp" line="1846"/>
         <source>could not get column information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -576,7 +576,7 @@ Aborting execution%3.</source>
         <translation type="obsolete">未知對象類型 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1678"/>
+        <location filename="../sqlitedb.cpp" line="1676"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation type="unfinished">無法取得資料庫物件的列表: %1, %2</translation>
     </message>
@@ -585,22 +585,22 @@ Aborting execution%3.</source>
         <translation type="obsolete">無法取得類型</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1714"/>
+        <location filename="../sqlitedb.cpp" line="1712"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation type="unfinished">無法接受來自雜注 %1 的任何輸出</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1718"/>
+        <location filename="../sqlitedb.cpp" line="1716"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation type="unfinished">無法執行雜注命令: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1739"/>
+        <location filename="../sqlitedb.cpp" line="1737"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation type="unfinished">設定雜注 %1 為 %2 時出現錯誤: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1785"/>
+        <location filename="../sqlitedb.cpp" line="1783"/>
         <source>File not found.</source>
         <translation type="unfinished">找不到檔案。</translation>
     </message>

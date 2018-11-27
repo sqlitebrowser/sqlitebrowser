@@ -193,12 +193,12 @@
         <translation>  -R, --read-only	افتح قاعدة البيانات بوضع القراءة فقط</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="93"/>
+        <location filename="../Application.cpp" line="94"/>
         <source>  -v, --version		Display the current version</source>
         <translation>  -v, --version		اعرض الإصدارة الحالية</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="94"/>
+        <location filename="../Application.cpp" line="95"/>
         <source>  [file]		Open this SQLite database</source>
         <translation>‎  [ملف]‎		‫افتح قاعدة بيانات SQLite المذكورة</translation>
     </message>
@@ -207,17 +207,17 @@
         <translation type="vanished">هذا «متصفّح قواعد بيانات» للإصدارة %L1%L2 من SQLite.</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="102"/>
+        <location filename="../Application.cpp" line="103"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>يتطلّب الخيار ‎-s/--sql معطًى</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="104"/>
+        <location filename="../Application.cpp" line="105"/>
         <source>The file %1 does not exist</source>
         <translation>الملف %L1 غير موجود</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="109"/>
+        <location filename="../Application.cpp" line="110"/>
         <source>The -t/--table option requires an argument</source>
         <translation>يتطلّب الخيار ‎-t/--table معطًى</translation>
     </message>
@@ -479,49 +479,49 @@ Aborting execution%3.</source>
         <translation>وأُرجع ما كان موجودًا.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1183"/>
+        <location filename="../sqlitedb.cpp" line="1181"/>
         <source>Cannot delete this object</source>
         <translation>تعذّر حذف هذا الكائن</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1214"/>
+        <location filename="../sqlitedb.cpp" line="1212"/>
         <source>Cannot set data on this object</source>
         <translation>تعذّر ضبط البيانات على هذا الكائن</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1332"/>
+        <location filename="../sqlitedb.cpp" line="1330"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>هناك جدول بنفس الاسم ”%L1“ بالفعل في المخطّط ”%L2“.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1343"/>
+        <location filename="../sqlitedb.cpp" line="1341"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>‏renameColumn: تعذّر العثور على العمود %L1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1351"/>
+        <location filename="../sqlitedb.cpp" line="1349"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>‏renameColumn: فشل إنشاء نقطة الحفظ. تقول قاعدة البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1397"/>
+        <location filename="../sqlitedb.cpp" line="1395"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>‏renameColumn: فشل إنشاء جدول جديد. تقول قاعدة البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1410"/>
+        <location filename="../sqlitedb.cpp" line="1408"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>‏renameColumn: فشل نسخ البيانات إلى جدول جديد. تقول قاعدة البيانات:
 %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1467"/>
+        <location filename="../sqlitedb.cpp" line="1465"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>‏renameColumn: فشل حذف الجدول القديم. تقول قاعدة البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1492"/>
+        <location filename="../sqlitedb.cpp" line="1490"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -530,34 +530,34 @@ Aborting execution%3.</source>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1501"/>
+        <location filename="../sqlitedb.cpp" line="1499"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>‏renameColumn: فشل إطلاق نقطة الحفظ. تقول قاعدة البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1540"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>خطأ أثناء تغيير اسم الجدول ”%L1“ إلى ”%L2“. الرسالة من محرّك قواعد البيانات:
 %L3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1575"/>
+        <location filename="../sqlitedb.cpp" line="1573"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;لا يمكن تسجيل السلسلة النصّية، فهي تحتوي على بيانات ثنائيّة&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1684"/>
+        <location filename="../sqlitedb.cpp" line="1682"/>
         <source>could not get list of databases: %1</source>
         <translation>تعذّر جلب قائمة قواعد البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1823"/>
+        <location filename="../sqlitedb.cpp" line="1821"/>
         <source>Error loading extension: %1</source>
         <translation>خطأ أثناء تحميل الامتداد: %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1848"/>
+        <location filename="../sqlitedb.cpp" line="1846"/>
         <source>could not get column information</source>
         <translation>تعذّر جلب معلومات العمود</translation>
     </message>
@@ -566,7 +566,7 @@ Aborting execution%3.</source>
         <translation type="vanished">نوع الكائن %1 مجهول</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1678"/>
+        <location filename="../sqlitedb.cpp" line="1676"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>تعذّر جلب قائمة بكائنات قاعدة البيانات: %L1، ‏%L2</translation>
     </message>
@@ -575,23 +575,23 @@ Aborting execution%3.</source>
         <translation type="vanished">تعذّر جلب الأنواع</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1714"/>
+        <location filename="../sqlitedb.cpp" line="1712"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translatorcomment>حافظ المكان بالإنجليزية ولا يُترجم</translatorcomment>
         <translation>لم أستقبل أيّ خرج من pragma %L1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1718"/>
+        <location filename="../sqlitedb.cpp" line="1716"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>تعذّر تنفيذ أمر pragma:‏ %L1، ‏%L2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1739"/>
+        <location filename="../sqlitedb.cpp" line="1737"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>تعذّر ضبط pragma %L1 إلى %L2:‏ %L3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1785"/>
+        <location filename="../sqlitedb.cpp" line="1783"/>
         <source>File not found.</source>
         <translation>تعذّر العثور على الملف.</translation>
     </message>
@@ -2457,7 +2457,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
-        <location filename="../MainWindow.cpp" line="3428"/>
+        <location filename="../MainWindow.cpp" line="3490"/>
         <source>Delete Record</source>
         <translation>احذف السجلّ</translation>
     </message>
@@ -3157,7 +3157,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1567"/>
-        <location filename="../MainWindow.cpp" line="1753"/>
+        <location filename="../MainWindow.cpp" line="1782"/>
         <source>Delete Table</source>
         <translation>احذف الجدول</translation>
     </message>
@@ -3645,7 +3645,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="vanished">نفّذ السّطر الحاليّ [Ctrl+E]</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="268"/>
+        <location filename="../MainWindow.cpp" line="290"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -3747,7 +3747,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1981"/>
-        <location filename="../MainWindow.cpp" line="3128"/>
+        <location filename="../MainWindow.cpp" line="3190"/>
         <source>Set encoding</source>
         <translation>اضبط الترميز</translation>
     </message>
@@ -3767,17 +3767,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>غيّر الترميز المبدئي المفترض في كلّ جداول قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3022"/>
+        <location filename="../MainWindow.cpp" line="3084"/>
         <source>Duplicate record</source>
         <translation>كرّر السّجلّ</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="172"/>
+        <location filename="../MainWindow.cpp" line="194"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Enter</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="253"/>
+        <location filename="../MainWindow.cpp" line="275"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
@@ -3787,43 +3787,43 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="258"/>
+        <location filename="../MainWindow.cpp" line="280"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="263"/>
+        <location filename="../MainWindow.cpp" line="285"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="292"/>
+        <location filename="../MainWindow.cpp" line="314"/>
         <source>Encrypted</source>
         <translation>معمّاة</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="293"/>
+        <location filename="../MainWindow.cpp" line="315"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>قاعدة البيانات معمّاة باستخدام SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="299"/>
+        <location filename="../MainWindow.cpp" line="321"/>
         <source>Read only</source>
         <translation>للقراءة فقط</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="300"/>
+        <location filename="../MainWindow.cpp" line="322"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>ملف قاعدة البيانات للقراءة فقط. تحرير قاعدة البيانات معطّل.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="306"/>
+        <location filename="../MainWindow.cpp" line="328"/>
         <source>Database encoding</source>
         <translation>ترميز قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="414"/>
-        <location filename="../MainWindow.cpp" line="2841"/>
+        <location filename="../MainWindow.cpp" line="436"/>
+        <location filename="../MainWindow.cpp" line="2903"/>
         <source>Choose a database file</source>
         <translation>اختر ملف قاعدة بيانات</translation>
     </message>
@@ -3832,9 +3832,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="vanished">نسق الملفّ غير صالح.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="467"/>
-        <location filename="../MainWindow.cpp" line="1650"/>
-        <location filename="../MainWindow.cpp" line="2725"/>
+        <location filename="../MainWindow.cpp" line="489"/>
+        <location filename="../MainWindow.cpp" line="1679"/>
+        <location filename="../MainWindow.cpp" line="2787"/>
         <source>Choose a filename to save under</source>
         <translation>اختر اسمًا للملف لحفظه به</translation>
     </message>
@@ -3845,25 +3845,25 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
 </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="812"/>
+        <location filename="../MainWindow.cpp" line="841"/>
         <source>Error deleting record:
 %1</source>
         <translation>خطأ أثناء حذف السجلّ:
 %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="821"/>
+        <location filename="../MainWindow.cpp" line="850"/>
         <source>Please select a record first</source>
         <translation>من فضلك اختر سجلًا أوّلًا</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="909"/>
+        <location filename="../MainWindow.cpp" line="938"/>
         <source>%1 - %2 of %3</source>
         <translation>‏%L1 - ‏%L2 من أصل %L3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="946"/>
-        <location filename="../MainWindow.cpp" line="960"/>
+        <location filename="../MainWindow.cpp" line="975"/>
+        <location filename="../MainWindow.cpp" line="989"/>
         <source>There is no database opened. Please open or create a new database file.</source>
         <translation>لا قواعد بيانات مفتوحة. من فضلك افتح ملف قاعدة بيانات أو أنشِئ واحدًا جديدًا.</translation>
     </message>
@@ -3892,7 +3892,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">خطأ أثناء تنفيذ الاستعلام: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1402"/>
+        <location filename="../MainWindow.cpp" line="1431"/>
         <source>, %1 rows affected</source>
         <translation>، عدد الصفوف المتأثّرة هو %L1</translation>
     </message>
@@ -3905,7 +3905,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">اختر ملفًّا نصّيًّا</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1526"/>
+        <location filename="../MainWindow.cpp" line="1555"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>الملفات النصّية(*.csv *.txt);;كلّ الملفات(*)</translation>
     </message>
@@ -3914,7 +3914,7 @@ All data associated with the %1 will be lost.</source>
         <translation type="vanished">اكتمل الاستيراد</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1600"/>
+        <location filename="../MainWindow.cpp" line="1629"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -3923,254 +3923,254 @@ All data associated with the %1 will be lost.</source>
 %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1609"/>
+        <location filename="../MainWindow.cpp" line="1638"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>أمتأكّد من التراجع عن كلّ التعديلات المُجراة على ملف قاعدة البيانات ”%L1“ منذ آخر حفظ؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1633"/>
+        <location filename="../MainWindow.cpp" line="1662"/>
         <source>Choose a file to import</source>
         <translation>اختر ملفًا لاستيراده</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1634"/>
-        <location filename="../MainWindow.cpp" line="2114"/>
-        <location filename="../MainWindow.cpp" line="2174"/>
+        <location filename="../MainWindow.cpp" line="1663"/>
+        <location filename="../MainWindow.cpp" line="2146"/>
+        <location filename="../MainWindow.cpp" line="2206"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>الملفات النصّية(*.sql *.txt);;كلّ الملفات(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1644"/>
+        <location filename="../MainWindow.cpp" line="1673"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>أتريد إنشاء ملف قاعدة بيانات جديد ليحتفظ بالبيانات المستوردة؟
 إن كانت إجابتك ”لا“ فسنحاول استيراد البيانات من ملف SQL إلى قاعدة البيانات الحالية.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1654"/>
+        <location filename="../MainWindow.cpp" line="1683"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>الملف %L1 موجود بالفعل. من فضلك اختر اسمًا آخر.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1676"/>
+        <location filename="../MainWindow.cpp" line="1705"/>
         <source>Error importing data: %1</source>
         <translation>خطأ أثناء استيراد البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1680"/>
+        <location filename="../MainWindow.cpp" line="1709"/>
         <source>Import completed.</source>
         <translation>اكتمل الاستيراد.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1744"/>
+        <location filename="../MainWindow.cpp" line="1773"/>
         <source>Delete View</source>
         <translation>احذف المنظور</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1745"/>
+        <location filename="../MainWindow.cpp" line="1774"/>
         <source>Modify View</source>
         <translation>عدّل المنظور</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1747"/>
+        <location filename="../MainWindow.cpp" line="1776"/>
         <source>Delete Trigger</source>
         <translation>احذف المحفّز</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1748"/>
+        <location filename="../MainWindow.cpp" line="1777"/>
         <source>Modify Trigger</source>
         <translation>عدّل المحفّز</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1750"/>
+        <location filename="../MainWindow.cpp" line="1779"/>
         <source>Delete Index</source>
         <translation>احذف الفهرس</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1751"/>
+        <location filename="../MainWindow.cpp" line="1780"/>
         <source>Modify Index</source>
         <translation>عدّل الفهرس</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1754"/>
+        <location filename="../MainWindow.cpp" line="1783"/>
         <source>Modify Table</source>
         <translation>عدّل الجدول</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1809"/>
+        <location filename="../MainWindow.cpp" line="1838"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%L1 %L2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2471"/>
+        <location filename="../MainWindow.cpp" line="2521"/>
         <source>Choose a project file to open</source>
         <translation>اختر ملف مشروع لفتحه</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2580"/>
+        <location filename="../MainWindow.cpp" line="2630"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>يستخدم ملف المشروع هذا نسق ملفات قديم لأنه أُنشأ باستخدام «متصفّح قواعد بيانات SQLite» بإصدارة ٣٫١٠ أو أقل. تحميل نسق الملفات هذا مدعوم بشكل كلي حتى الآن، إلا أننا ننصحك بتحويل كل ملفات المشاريع لديك لتستخدم النسق الجديد لأن دعم النسق القديمة قد ينتهي في المستقبل. يمكنك تحويل ملفاتك بفتحها وإعادة حفظها فحسب.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3022"/>
+        <location filename="../MainWindow.cpp" line="3084"/>
         <source>Duplicate records</source>
         <translation>كرّر السجلّات</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3027"/>
+        <location filename="../MainWindow.cpp" line="3089"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3197"/>
+        <location filename="../MainWindow.cpp" line="3259"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>من فضلك أدخِل مفتاحًا أساسيًا زائفًا (pseudo) لتفعيل التحرير في هذا المنظور. يجب أن يكون المفتاح اسمًا لأحد الأعمدة الفريدة في المنظور.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2032"/>
+        <location filename="../MainWindow.cpp" line="2064"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>سيؤّدي ضبط قيم PRAGMA إلى إيداع المعاملة الحالية.
 أمتأكّد؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="455"/>
+        <location filename="../MainWindow.cpp" line="477"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>تعذّر فتح ملف قاعدة البيانات.
 السبب: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="488"/>
+        <location filename="../MainWindow.cpp" line="510"/>
         <source>In-Memory database</source>
         <translation>قاعدة بيانات في الذاكرة</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="902"/>
+        <location filename="../MainWindow.cpp" line="931"/>
         <source>determining row count...</source>
         <translation>يحدّد عدد الصفوف...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="905"/>
+        <location filename="../MainWindow.cpp" line="934"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>‏%L1 - ‏%L2 من أصل &gt;= ‏%L3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="985"/>
+        <location filename="../MainWindow.cpp" line="1014"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>أمتأكّد من حذف الجدول ”%L1“؟
 ستفقد كلّ البيانات المرتبطة بالجدول.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="987"/>
+        <location filename="../MainWindow.cpp" line="1016"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>أمتأكّد من حذف المنظور ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="989"/>
+        <location filename="../MainWindow.cpp" line="1018"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>أمتأكّد من حذف المحفّز ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="991"/>
+        <location filename="../MainWindow.cpp" line="1020"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>أمتأكّد من حذف الفهرس ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1002"/>
+        <location filename="../MainWindow.cpp" line="1031"/>
         <source>Error: could not delete the table.</source>
         <translation>خطأ: تعذّر حذف الجدول.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1004"/>
+        <location filename="../MainWindow.cpp" line="1033"/>
         <source>Error: could not delete the view.</source>
         <translation>خطأ: تعذّر حذف المنظور.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1006"/>
+        <location filename="../MainWindow.cpp" line="1035"/>
         <source>Error: could not delete the trigger.</source>
         <translation>خطأ: تعذّر حذف المحفّز.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1008"/>
+        <location filename="../MainWindow.cpp" line="1037"/>
         <source>Error: could not delete the index.</source>
         <translation>خطأ: تعذّر حذف الفهرس.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1010"/>
+        <location filename="../MainWindow.cpp" line="1039"/>
         <source>Message from database engine:
 %1</source>
         <translation>الرسالة من محرّك قواعد البيانات:
 %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1039"/>
+        <location filename="../MainWindow.cpp" line="1068"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>تحرير الجدول يطلب حفظ كلّ التغييرات المرجأة الآن.
 أمتأكّد من حفظ قاعدة البيانات؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1058"/>
+        <location filename="../MainWindow.cpp" line="1087"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>خطأ أثناء فحص المفاتيح الأجنبية بعد تعديل الجدول. ستُعكس التغييرات.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1061"/>
+        <location filename="../MainWindow.cpp" line="1090"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>لم يمرّ الجدول من فحص المفتاح الأجنبي.&lt;br/&gt;عليك تشغيل ”أدوات -&gt; فحص المفتاح الأجنبي“ وإصلاح المشاكل المبلّغ عنها.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1224"/>
+        <location filename="../MainWindow.cpp" line="1253"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- ينفّذ التحديد في ”%1“
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1247"/>
+        <location filename="../MainWindow.cpp" line="1276"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- ينفّذ السطر في ”%1“
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1255"/>
+        <location filename="../MainWindow.cpp" line="1284"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- ينفّذ الكلّ في ”%1“
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1319"/>
+        <location filename="../MainWindow.cpp" line="1348"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>سيؤّدي ضبط قيم PRAGMA أو التنظيف إلى إيداع المعاملة الحالية.
 أمتأكّد؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1327"/>
+        <location filename="../MainWindow.cpp" line="1356"/>
         <source>Execution aborted by user</source>
         <translation>أجهض المستخدم التنفيذ</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1347"/>
+        <location filename="../MainWindow.cpp" line="1376"/>
         <source>executing query</source>
         <translation>ينفّذ الاستعلام</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1384"/>
+        <location filename="../MainWindow.cpp" line="1413"/>
         <source>%1 rows returned in %2ms</source>
         <translation>أُرجع من الصّفوف %L1 خلال %L2م‌ث</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1408"/>
+        <location filename="../MainWindow.cpp" line="1437"/>
         <source>query executed successfully. Took %1ms%2</source>
         <translation>نُفّذ الاستعلام بنجاح: أخذ %L1م‌ث%L2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1447"/>
+        <location filename="../MainWindow.cpp" line="1476"/>
         <source>-- At line %1:
 %4
 -- Result: %3</source>
@@ -4179,78 +4179,78 @@ Are you sure?</source>
 -- النتيجة: %L3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1525"/>
+        <location filename="../MainWindow.cpp" line="1554"/>
         <source>Choose text files</source>
         <translation>اختر ملفات نصّية</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1707"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>اكتمل الاستيراد. انتُهكت بعض قيود المفتاح الأجنبي. من فضلك أصلِحها قبل الحفظ.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2113"/>
+        <location filename="../MainWindow.cpp" line="2145"/>
         <source>Select SQL file to open</source>
         <translation>اختر ملف SQL لفتحه</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2122"/>
+        <location filename="../MainWindow.cpp" line="2154"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>تعذّرت قراءة الملف: %L1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2160"/>
+        <location filename="../MainWindow.cpp" line="2192"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>تعذّر حفظ الملف: %L1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2173"/>
+        <location filename="../MainWindow.cpp" line="2205"/>
         <source>Select file name</source>
         <translation>اختر اسم الملف</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2198"/>
+        <location filename="../MainWindow.cpp" line="2230"/>
         <source>Select extension file</source>
         <translation>اختر ملف الامتداد</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2199"/>
+        <location filename="../MainWindow.cpp" line="2231"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
         <translation>الامتدادات(*.so *.dll);;كلّ الملفات(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2205"/>
+        <location filename="../MainWindow.cpp" line="2237"/>
         <source>Extension successfully loaded.</source>
         <translation>نجح تحميل الامتداد.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2207"/>
+        <location filename="../MainWindow.cpp" line="2239"/>
         <source>Error loading extension: %1</source>
         <translation>خطأ أثناء تحميل الامتداد: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2292"/>
-        <location filename="../MainWindow.cpp" line="2576"/>
+        <location filename="../MainWindow.cpp" line="2324"/>
+        <location filename="../MainWindow.cpp" line="2626"/>
         <source>Don&apos;t show again</source>
         <translation>لا تعرض ثانيةً</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2295"/>
+        <location filename="../MainWindow.cpp" line="2327"/>
         <source>New version available.</source>
         <translation>تتوفّر إصدارة جديدة.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2296"/>
+        <location filename="../MainWindow.cpp" line="2328"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>تتوفّر إصدارة جديدة من «متصفّح قواعد بيانات SQLite» ‏(%L1٫‏%L2٫‏%L3).&lt;br/&gt;&lt;br/&gt;من فضلك نزّلها من &lt;a href=&apos;%4&apos;&gt;%L4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3302"/>
+        <location filename="../MainWindow.cpp" line="3364"/>
         <source>Collation needed! Proceed?</source>
         <translation>التجميع مطلوب! أنتابع؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3303"/>
+        <location filename="../MainWindow.cpp" line="3365"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4259,52 +4259,52 @@ Create a backup!</source>
 خُذ نسخة احتياطيّة!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3308"/>
+        <location filename="../MainWindow.cpp" line="3370"/>
         <source>creating collation</source>
         <translation>يُنشئ تجميعة</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3317"/>
+        <location filename="../MainWindow.cpp" line="3379"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>ضع اسمًا جديدًا للسان SQL. استخدم محرف ”&amp;&amp;“ ليُتاح استخدام المحرف الذي يليه كاختصار لوحة مفاتيح.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3360"/>
+        <location filename="../MainWindow.cpp" line="3422"/>
         <source>Please specify the view name</source>
         <translation>من فضلك حدّد اسم المنظور</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3364"/>
+        <location filename="../MainWindow.cpp" line="3426"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>هناك كائن بنفس الاسم. من فضلك اختر اسمًا آخر.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3371"/>
+        <location filename="../MainWindow.cpp" line="3433"/>
         <source>View successfully created.</source>
         <translation>نجح إنشاء المنظور.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3373"/>
+        <location filename="../MainWindow.cpp" line="3435"/>
         <source>Error creating view: %1</source>
         <translation>خطأ أثناء إنشاء المنظور: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3388"/>
+        <location filename="../MainWindow.cpp" line="3450"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>لا مرشّح مضبوط لهذا الجدول. لن يُنشأ المنظور.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3426"/>
+        <location filename="../MainWindow.cpp" line="3488"/>
         <source>Delete Records</source>
         <translation>احذف السجلّات</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3433"/>
+        <location filename="../MainWindow.cpp" line="3495"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>سيفتح هذا الإجراء لسان SQL جديد لتشغيل:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3435"/>
+        <location filename="../MainWindow.cpp" line="3497"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>انقر ”مساعدة“ لفتح صفحة SQLite المرجعية المناسبة.</translation>
     </message>
@@ -4321,30 +4321,30 @@ Create a backup!</source>
         <translation type="vanished">اختر ملفًا لفتحه</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2472"/>
-        <location filename="../MainWindow.cpp" line="2726"/>
+        <location filename="../MainWindow.cpp" line="2522"/>
+        <location filename="../MainWindow.cpp" line="2788"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>ملف مشروع «متصفّح قواعد بيانات SQLite» ‏(*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3126"/>
+        <location filename="../MainWindow.cpp" line="3188"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>من فضلك اختر ترميزًا جديدًا لهذا الجدول.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3124"/>
+        <location filename="../MainWindow.cpp" line="3186"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>من فضلك اختر ترميزًا جديدًا لكلّ الجداول.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3129"/>
+        <location filename="../MainWindow.cpp" line="3191"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%L1
 اترك الحقل فارغًا لاستخدام ترميز قاعدة البيانات.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3141"/>
+        <location filename="../MainWindow.cpp" line="3203"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>إمّا أنّ هذا الترميز غير صالح أو أنّه غير مدعوم.</translation>
     </message>

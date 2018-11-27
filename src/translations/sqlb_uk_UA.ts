@@ -496,56 +496,56 @@ Aborting execution%3.</source>
         <translation> і відкочено</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1183"/>
+        <location filename="../sqlitedb.cpp" line="1181"/>
         <source>Cannot delete this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1214"/>
+        <location filename="../sqlitedb.cpp" line="1212"/>
         <source>Cannot set data on this object</source>
         <translation>Не вдається встановити дані в цей об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1332"/>
+        <location filename="../sqlitedb.cpp" line="1330"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1343"/>
+        <location filename="../sqlitedb.cpp" line="1341"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>renameColumn: не вдається знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1492"/>
+        <location filename="../sqlitedb.cpp" line="1490"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
         <translation>Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найімовірніша причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1540"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Помилка перейменування таблиці &apos;%1&apos; в &apos;%2&apos;. Повідомлення від ядра БД:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1575"/>
+        <location filename="../sqlitedb.cpp" line="1573"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;рядок не можна записати в лог-файл, який містить двійкові дані&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1684"/>
+        <location filename="../sqlitedb.cpp" line="1682"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1823"/>
+        <location filename="../sqlitedb.cpp" line="1821"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">Помилка завантаження розширення: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1848"/>
+        <location filename="../sqlitedb.cpp" line="1846"/>
         <source>could not get column information</source>
         <translation>неможливо отримати інформацію про стовпець</translation>
     </message>
@@ -563,24 +563,24 @@ Aborting execution.</source>
         <translation type="vanished">renameColumn: неможливо знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1351"/>
+        <location filename="../sqlitedb.cpp" line="1349"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: помилка створення точки збереження. БД говорить: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1397"/>
+        <location filename="../sqlitedb.cpp" line="1395"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: помилка створення нової таблиці. БД говорить: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1410"/>
+        <location filename="../sqlitedb.cpp" line="1408"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: помилка копіювання даних у нову таблицю. БД говорить:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1467"/>
+        <location filename="../sqlitedb.cpp" line="1465"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: помилка видалення старої таблиці. БД говорить: %1</translation>
     </message>
@@ -590,7 +590,7 @@ Aborting execution.</source>
         <translation type="vanished">Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найбільш імовірна причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1501"/>
+        <location filename="../sqlitedb.cpp" line="1499"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: помилка звільнення точки збереження. БД говорить: %1</translation>
     </message>
@@ -609,7 +609,7 @@ Aborting execution.</source>
         <translation type="vanished">невідомий тип об&apos;єкту %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1678"/>
+        <location filename="../sqlitedb.cpp" line="1676"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>неможливо отримати список об&apos;єктів БД: %1, %2</translation>
     </message>
@@ -618,22 +618,22 @@ Aborting execution.</source>
         <translation type="vanished">неможливо отримати типи</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1714"/>
+        <location filename="../sqlitedb.cpp" line="1712"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>не отримано жодного виходу з Прагма %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1718"/>
+        <location filename="../sqlitedb.cpp" line="1716"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>неможливо виконати комманду-прагму: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1739"/>
+        <location filename="../sqlitedb.cpp" line="1737"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Помилка встановлення Прагми %1 в %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1785"/>
+        <location filename="../sqlitedb.cpp" line="1783"/>
         <source>File not found.</source>
         <translation>Файл не знайдено.</translation>
     </message>
