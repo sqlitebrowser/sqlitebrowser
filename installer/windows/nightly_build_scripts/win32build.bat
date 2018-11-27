@@ -2,6 +2,7 @@
 SET DEST_PATH=C:\\builds
 MKDIR "%DEST_PATH%"
 
+SET ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 SET SQLITE_DIR=C:\\dev\\SQLite-Win32
 SET SQLCIPHER_DIR=C:\\git_repos\\SQLCipher-Win32
 SET SQLCIPHER_TAG=v3.4.2
@@ -20,7 +21,7 @@ if exist "C:\\builds\\release-sqlcipher-win32" rd /q /s "C:\\builds\\release-sql
 
 :: Unpack SQLite
 CD C:\dev
-"C:\Program Files\7-Zip\7z.exe" e  sqlite*zip "-o%SQLITE_DIR%"
+%ZIP_EXE% e sqlite*zip "-o%SQLITE_DIR%"
 
 :: Update repositories
 ::git clone -b v3.4.2 https://github.com/sqlcipher/sqlcipher.git SQLCipher-Win32
@@ -67,6 +68,13 @@ CALL build.cmd win32
 :: Move package to DEST_PATH
 MOVE /Y *msi "%DEST_PATH%\\DB Browser for SQLite-%RUN_DATE%-win32.msi"
 
+:: Create .zip file
+CD %DEST_PATH%
+msiexec /a "DB Browser for SQLite-%RUN_DATE%-win32.msi" /q TARGETDIR=%CD%\zip
+MOVE %CD%\zip\System\* "%CD%\zip\DB Browser for SQLite"
+%ZIP_EXE% a "DB Browser for SQLite-%RUN_DATE%-win32.zip" "%CD%\zip\DB Browser for SQLite"
+RMDIR /S /Q %CD%\zip
+
 :: Clean up
 DEL /F "C:\git_repos\sqlitebrowser\Release\DB Browser for SQLite.exe"
 
@@ -94,14 +102,23 @@ CALL build.cmd win32 sqlcipher
 :: Move package to DEST_PATH
 MOVE /Y *msi "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.msi"
 
+:: Create .zip file
+CD %DEST_PATH%
+msiexec /a "DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.msi" /q TARGETDIR=%CD%\zip
+MOVE %CD%\zip\System\* "%CD%\zip\DB Browser for SQLite"
+%ZIP_EXE% a "DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.zip" "%CD%\zip\DB Browser for SQLite"
+RMDIR /S /Q %CD%\zip
+
 :: Clean up
 DEL /F "C:\git_repos\sqlitebrowser\Release\DB Browser for SQLite.exe"
 
 
 :: Upload the packages to the nightlies server
-pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.msi" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
+pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.*" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
 
 :: Copy the new binaries to /latest directory on the nightlies server
-plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cd /nightlies/latest; rm -f *-win32.msi"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cd /nightlies/latest; rm -f *-win32.*"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*SQLite-%RUN_DATE%-win32.msi /nightlies/latest/DB.Browser.for.SQLite-win32.msi"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*SQLite-%RUN_DATE%-win32.zip /nightlies/latest/DB.Browser.for.SQLite-win32.zip"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*sqlcipher-%RUN_DATE%-win32.msi /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win32.msi"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*sqlcipher-%RUN_DATE%-win32.zip /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win32.zip"
