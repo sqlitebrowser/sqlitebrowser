@@ -323,7 +323,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // Update the field name in the map of old column names to new column names
             if(!m_bNewTable)
             {
-                for(const auto& key : trackColumns)
+                for(const auto& key : trackColumns.keys())
                 {
                     if(trackColumns[key] == oldFieldName)
                         trackColumns[key] = field.name();
@@ -588,7 +588,7 @@ void EditTableDialog::removeField()
 
         // Update the map of tracked columns to indicate the column is deleted
         QString name = ui->treeWidget->currentItem()->text(0);
-        for(const auto& key : trackColumns)
+        for(const auto& key : trackColumns.keys())
         {
             if(trackColumns[key] == name)
                 trackColumns[key] = QString();
