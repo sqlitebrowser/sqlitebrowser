@@ -106,21 +106,21 @@
             </Directory>
             <Directory Id="DesktopFolder">
                 <Component Id="SQLiteDesktopShortcut">
-                    <Shortcut Id="SLDSC" Name="DB Brwoser (SQLite)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
+                    <Shortcut Id="SLDSC" Name="DB Browser (SQLite)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
                     <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteDesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
                 <Component Id="SQLCipherDesktopShortcut">
-                    <Shortcut Id="SCDSC" Name="DB Brwoser (SQLCipher)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLCipher.exe" WorkingDirectory="INSTALLDIR" />
+                    <Shortcut Id="SCDSC" Name="DB Browser (SQLCipher)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLCipher.exe" WorkingDirectory="INSTALLDIR" />
                     <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherDesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
             </Directory>
             <Directory Id="ProgramMenuFolder">
                 <Component Id="SQLiteProgramMenuShortcut">
-                    <Shortcut Id="SLPMSC" Name="DB Brwoser (SQLite)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
+                    <Shortcut Id="SLPMSC" Name="DB Browser (SQLite)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
                     <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
                 <Component Id="SQLCipherProgramMenuShortcut">
-                    <Shortcut Id="SCPMSC" Name="DB Brwoser (SQLCipher)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLCipher.exe" WorkingDirectory="INSTALLDIR" />
+                    <Shortcut Id="SCPMSC" Name="DB Browser (SQLCipher)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLCipher.exe" WorkingDirectory="INSTALLDIR" />
                     <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
             </Directory>
