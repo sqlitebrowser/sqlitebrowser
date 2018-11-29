@@ -56,6 +56,11 @@ CALL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary
 CD %SQLITE_DIR%
 cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_JSON1 -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll
 
+:: Build Math extension x64
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.c
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.def
+cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.dll
+
 :: Run CMake for SQLite x64
 CD C:\\builds
 MKDIR "release-sqlite-win64"

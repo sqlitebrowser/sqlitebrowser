@@ -68,6 +68,9 @@
                         <Component><File Source="$(var.QtPath)\plugins\bearer\qgenericbearer.dll" /></Component>
                     </Directory>
                     <?endif?>
+                    <Directory Id="extensions" Name="extensions">
+                        <Component><File Source="$(var.SQLitePath)\math.dll" /></Component>
+                    </Directory>
                     <Directory Id="imageformats" Name="imageformats">
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qicns.dll" /></Component>
@@ -193,6 +196,8 @@
             <!-- Application -->
             <ComponentRef Id="DB_Browser_for_SQLite.exe" />
             <ComponentRef Id="DB_Browser_for_SQLCipher.exe" />
+            <!-- Math extension -->
+            <ComponentRef Id="math.dll" />
         </Feature>
 
     <!-- ============================================= Installation UI ============================================= -->
