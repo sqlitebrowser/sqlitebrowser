@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12.2)
 
-set(CMAKE_AUTOMOC ON)
+# Disable AUTOMOC because it cannot be made to work with QScintilla
+set(CMAKE_AUTOMOC OFF)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5 REQUIRED COMPONENTS PrintSupport Widgets)
@@ -165,9 +166,11 @@ set(QSCINTILLA_MOC_HDR
 	SciAccessibility.h
 )
 
+QT5_WRAP_CPP(QSCINTILLA_WRAP_MOC_HDR ${QSCINTILLA_MOC_HDR})
+
 include_directories(. ../include ../lexlib ../src)
 
-add_library(qscintilla2 ${QSCINTILLA_SRC} ${QSCINTILLA_HDR} ${QSCINTILLA_MOC_HDR} ${QSCINTILLA_MOC})
+add_library(qscintilla2 ${QSCINTILLA_SRC} ${QSCINTILLA_HDR} ${QSCINTILLA_MOC_HDR} ${QSCINTILLA_MOC} ${QSCINTILLA_WRAP_MOC_HDR})
 
 target_link_libraries(qscintilla2 Qt5::Widgets Qt5::PrintSupport)
 
