@@ -34,27 +34,27 @@ endif ()
 if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
 		# Paths for 64-bit windows builds
-		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64")
-		set(QT5_PATH "C:/dev/Qt/5.11.2/msvc2017_64")
+		set(OPENSSL_PATH "C:/dev/OpenSSL-Win64" CACHE PATH "OpenSSL Path")
+		set(QT5_PATH "C:/dev/Qt/5.11.2/msvc2017_64" CACHE PATH "Qt5 Path")
 
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
                 if(sqlcipher)
-                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win64")
+                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win64" CACHE PATH "SQLCipher Path")
                 else()
-                        set(SQLITE3_PATH "C:/dev/SQLite-Win64")
+                        set(SQLITE3_PATH "C:/dev/SQLite-Win64" CACHE PATH "SQLite Path")
                 endif()
 	else()
 		# Paths for 32-bit windows builds
-		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32")
-		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013")
+		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32" CACHE PATH "OpenSSL Path")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013" CACHE PATH "Qt5 Path")
 
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
                 if(sqlcipher)
-                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win32")
+                        set(SQLITE3_PATH "C:/git_repos/SQLCipher-Win32" CACHE PATH "SQLCipher Path")
                 else()
-                        set(SQLITE3_PATH "C:/dev/SQLite-Win32")
+                        set(SQLITE3_PATH "C:/dev/SQLite-Win32" CACHE PATH "SQLite Path")
                 endif()
 	endif()
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
