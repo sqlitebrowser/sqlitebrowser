@@ -2,6 +2,7 @@
 SET DEST_PATH=C:\\builds
 MKDIR "%DEST_PATH%"
 
+SET ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 SET SQLITE_DIR=C:\\dev\\SQLite-Win32
 SET SQLCIPHER_DIR=C:\\git_repos\\SQLCipher-Win32
 SET SQLCIPHER_TAG=v3.4.2
@@ -11,7 +12,7 @@ SET SQLCIPHER_TAG=v3.4.2
 set RUN_DATE=%DATE%
 
 :: If no branch given on the command line, use master
-IF "%1"=="" (SET BRANCH="master") ELSE (SET BRANCH="%1")
+IF "%1"=="" (SET BRANCH="v3.11.x") ELSE (SET BRANCH="%1")
 
 CD /d "C:\"
 if exist "%SQLITE_DIR%" rd /q /s "%SQLITE_DIR%"
@@ -20,23 +21,29 @@ if exist "C:\\builds\\release-sqlcipher-win32" rd /q /s "C:\\builds\\release-sql
 
 :: Unpack SQLite
 CD C:\dev
-"C:\Program Files\7-Zip\7z.exe" e  sqlite*zip "-o%SQLITE_DIR%"
+%ZIP_EXE% e sqlite*zip "-o%SQLITE_DIR%"
 
 :: Update repositories
 ::git clone -b v3.4.2 https://github.com/sqlcipher/sqlcipher.git SQLCipher-Win32
 CD C:\\git_repos\\SQLCipher-Win32
 git clean -dffx
+git checkout -f HEAD
 git checkout master
 git pull
 git checkout "%SQLCIPHER_TAG%"
+git clean -dffx
+git pull
 git clean -dffx
 
 ::git clone -b %BRANCH% https://github.com/sqlitebrowser/sqlitebrowser.git "%DB4S_DIR%Win32"
 CD C:\\git_repos\\sqlitebrowser
 git clean -dffx
+git checkout -f HEAD
 git checkout master
 git pull
 git checkout %BRANCH%
+git clean -dffx
+git pull
 git clean -dffx
 
 
@@ -47,7 +54,12 @@ CALL "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\bin\\vcvars32.b
 
 :: Build SQLite x86
 CD %SQLITE_DIR%
-cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_JSON1 -DSQLITE_API=_declspec(dllexport) -link -dll -out:sqlite3.dll
+cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_JSON1 -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll
+
+:: Build Math extension x86
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.c
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.def
+cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.dll
 
 :: Run CMake for SQLite x86
 CD C:\\builds
@@ -57,18 +69,6 @@ cmake -G "Visual Studio 12 2013" -Wno-dev C:\\git_repos\\sqlitebrowser
 
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
-
-:: Build MSI
-MKDIR C:\\git_repos\\sqlitebrowser\\Release
-MOVE C:\\builds\\release-sqlite-win32\\Release\\*.exe C:\\git_repos\\sqlitebrowser\\Release
-CD C:\\git_repos\\sqlitebrowser\\installer\\windows
-CALL build.cmd win32
-
-:: Move package to DEST_PATH
-MOVE /Y *msi "%DEST_PATH%\\DB Browser for SQLite-%RUN_DATE%-win32.msi"
-
-:: Clean up
-DEL /F "C:\git_repos\sqlitebrowser\Release\DB Browser for SQLite.exe"
 
 
 :: WIN32 SQLCIPHER BUILD PROCEDURE
@@ -86,22 +86,29 @@ cmake -G "Visual Studio 12 2013" -Wno-dev -Dsqlcipher=1 C:\\git_repos\\sqlitebro
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
 
+:: Rename SQLCipher
+CD "Release"
+MOVE "DB Browser for SQLite.exe" "DB Browser for SQLCipher.exe"
+
 :: Build MSI
-MOVE C:\\builds\\release-sqlcipher-win32\\Release\\*.exe C:\\git_repos\\sqlitebrowser\\Release
 CD C:\\git_repos\\sqlitebrowser\\installer\\windows
-CALL build.cmd win32 sqlcipher
+CALL build.cmd win32
 
 :: Move package to DEST_PATH
-MOVE /Y *msi "%DEST_PATH%\DB Browser for SQLite-sqlcipher-%RUN_DATE%-win32.msi"
+MOVE /Y *.msi "%DEST_PATH%\DB.Browser.for.SQLite-%RUN_DATE%-win32.msi"
 
-:: Clean up
-DEL /F "C:\git_repos\sqlitebrowser\Release\DB Browser for SQLite.exe"
+:: Create ZIP
+CD %DEST_PATH%
+msiexec /a "DB.Browser.for.SQLite-%RUN_DATE%-win32.msi" /q TARGETDIR=%CD%\zip
+MOVE %CD%\zip\System\* "%CD%\zip\DB Browser for SQLite"
+%ZIP_EXE% a "DB.Browser.for.SQLite-%RUN_DATE%-win32.zip" "%CD%\zip\DB Browser for SQLite"
+RMDIR /S /Q %CD%\zip
 
 
 :: Upload the packages to the nightlies server
-pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.msi" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
+pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.*" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
 
 :: Copy the new binaries to /latest directory on the nightlies server
-plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cd /nightlies/latest; rm -f *-win32.msi"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cd /nightlies/latest; rm -f *-win32.*"
 plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*SQLite-%RUN_DATE%-win32.msi /nightlies/latest/DB.Browser.for.SQLite-win32.msi"
-plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*sqlcipher-%RUN_DATE%-win32.msi /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-win32.msi"
+plink -i C:\dev\puttygen_private.ppk nightlies@nightlies.sqlitebrowser.org "cp /nightlies/win32/DB*SQLite-%RUN_DATE%-win32.zip /nightlies/latest/DB.Browser.for.SQLite-win32.zip"
