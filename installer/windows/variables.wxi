@@ -59,11 +59,15 @@
         <?define SQLitePath="C:\dev\SQLite-Win64" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win64" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win64" ?>
+        <?define SQLiteExePath="C:\builds\release-sqlite-win64\Release" ?>
+        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win64\Release" ?>
     <?elseif $(sys.BUILDARCH)="x86"?>
         <?define QtPath="C:\dev\Qt\5.7\msvc2013" ?>
         <?define SQLitePath="C:\dev\SQLite-Win32" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win32" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win32" ?>
+        <?define SQLiteExePath="C:\builds\release-sqlite-win32\Release" ?>
+        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win32\Release" ?>
     <?endif?>
 
 </Include>
