@@ -257,6 +257,39 @@
 
         <Property Id="MsiLogging" Value="voicewarmupx" />
 
+    <!-- ======================================== Remove old NSIS installer ======================================== -->
+    <!--
+        When the application is installed using the NSIS installer, the installer writes a key in the registry. We will
+        use this fact to check if an older version (up to v3.10.1) of the application is installed. If found, we will
+        remove it before installing the application with the new MSI installer.
+
+        NSIS installer writes the following key "HKLM\Software\<Company>\<Product>" in the registry after installation.
+        So the right key to search for is "HKLM\Software\DB Browser for SQLite Team\DB Browser for SQLite".
+
+        But the installer itself is a 32-bit application, and it can't write to the 64-bit registry. This works without
+        a problem on 32-bit Windows. On 64-bit Winodws however, the key is written in the 32-bit registry, under the
+        "Wow6432Node" key.
+
+        Therefore, the `Win64="no"` attribute is needed to disable searching in the 64-bit registry. On 32-bit Windows
+        the right key is searched, and on 64-bit Windows the same key is searched but under the "Wow6432Node" key.
+    -->
+
+        <!-- Search the registry to find the location of NSIS installation folder, and set "NSIS_INSTALLDIR" to its path. -->
+        <Property Id="NSIS_INSTALLDIR">
+            <RegistrySearch Id="RS_NSIS" Root="HKLM" Key="Software\DB Browser for SQLite Team\DB Browser for SQLite" Win64="no" Type="raw" />
+        </Property>
+
+        <!-- If registry search was successful, "NSIS_UNINSTALLER" property will hold the full path to "Uninstall.exe" -->
+        <SetProperty Id="NSIS_UNINSTALLER" Value="[NSIS_INSTALLDIR]\Uninstall.exe" After="AppSearch">NSIS_INSTALLDIR</SetProperty>
+
+        <!-- Run "Uninstall.exe /S" to silently remove the older version of the application. -->
+        <CustomAction Id="CA_NSIS_UNINSTALL" Property="NSIS_UNINSTALLER" ExeCommand="/S" Execute="deferred" Impersonate="no" />
+
+        <!-- Schedule the custom action above to run after "RemoveExistingProducts". -->
+        <InstallExecuteSequence>
+            <Custom Action='CA_NSIS_UNINSTALL' After='RemoveExistingProducts'>NSIS_INSTALLDIR</Custom>
+        </InstallExecuteSequence>
+
     </Product>
 
 </Wix>
