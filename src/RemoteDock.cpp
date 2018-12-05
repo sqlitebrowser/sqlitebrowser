@@ -1,4 +1,6 @@
+#include <QDesktopServices>
 #include <QFileInfo>
+#include <QUrl>
 
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"
@@ -26,6 +28,15 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
     connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
 
+    // When the Preferences link is clicked in the no-certificates-label, open the preferences dialog. For other links than the ones we know,
+    // just open them in a web browser
+    connect(ui->labelNoCert, &QLabel::linkActivated, [this](const QString& link) {
+        if(link == "#preferences")
+            mainWindow->openPreferences();
+        else
+            QDesktopServices::openUrl(QUrl(link));
+    });
+
     // Initial setup
     reloadSettings();
 }
@@ -46,6 +57,9 @@ void RemoteDock::reloadSettings()
         for(const QSslCertificate& cert : certs)
             ui->comboUser->addItem(cert.subjectInfo(QSslCertificate::CommonName).at(0), file);
     }
+
+    // If there are no client certs, just show a simple message instead of all the unusable widgets
+    ui->stack->setCurrentIndex(!ui->comboUser->count());
 }
 
 void RemoteDock::setNewIdentity()

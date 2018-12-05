@@ -203,6 +203,7 @@ public slots:
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure(const QString& old_table = QString());
+    void openPreferences();
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -241,7 +242,6 @@ private slots:
     void fileRevert();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
-    void openPreferences();
     void openRecentFile();
     void loadPragmas();
     void updatePragmaUi();
