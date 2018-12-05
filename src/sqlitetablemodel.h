@@ -99,7 +99,7 @@ public:
 
     // The pseudo-primary key is exclusively for editing views
     void setPseudoPk(const QString& pseudoPk);
-    QString pseudoPk() const { return m_pseudoPk; }
+    QString pseudoPk() const { return QString::fromStdString(m_query.rowIdColumn()); }
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 
@@ -172,7 +172,6 @@ private:
     bool nosync_isBinary(const QModelIndex& index) const;
 
     QString m_sQuery;
-    QString m_pseudoPk;
     QVector<int> m_vDataTypes;
     QMap<int, QVector<CondFormat>> m_mCondFormats;
     sqlb::Query m_query;

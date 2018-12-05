@@ -713,6 +713,9 @@ void MainWindow::populateTable()
         if(only_defaults)
             query.selectedColumns().clear();
 
+        // Unlock view editing
+        query.setRowIdColumn(storedData.unlockViewPk.toStdString());
+
         // Apply query
         m_browseTableModel->setQuery(query);
 
