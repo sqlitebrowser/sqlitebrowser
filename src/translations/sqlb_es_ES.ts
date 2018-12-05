@@ -2519,7 +2519,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="1455"/>
         <source>Compact &amp;Database...</source>
-        <translation>Compactar Base de &amp;Datos...</translation>
+        <translation>Compactar base de &amp;datos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1668"/>
@@ -2668,7 +2668,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2272"/>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
-        <translation>Arrastrar y Soltar Nombres Entrecomillados</translation>
+        <translation>Arrastrar y soltar nombres entrecomillados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2275"/>
@@ -5561,7 +5561,7 @@ usando una extensión. Necesitará reiniciar la aplicación.&lt;/p&gt;
     <message>
         <location filename="../PreferencesDialog.cpp" line="373"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>Extensiones(*.so *.dll);;Todos los archivos</translation>
+        <translation>Extensiones(*.so *.dll);;Todos los archivos(*)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="506"/>
