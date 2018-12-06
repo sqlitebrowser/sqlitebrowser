@@ -143,7 +143,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <item>
            <widget class="QToolButton" name="buttonRefresh">
             <property name="toolTip">
-             <string>Refresh the data in the selected table [F5, Ctrl+R]</string>
+             <string>Refresh the data in the selected table</string>
             </property>
             <property name="whatsThis">
              <string>This button refreshes the data in the currently selected table.</string>
@@ -194,7 +194,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <item>
            <widget class="QToolButton" name="buttonPrintTable">
             <property name="toolTip">
-             <string>Print currently browsed table data [Ctrl+P]</string>
+             <string>Print currently browsed table data</string>
             </property>
             <property name="whatsThis">
              <string>Print currently browsed table data. Print selection if more than one cell is selected.</string>
@@ -1703,10 +1703,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>&amp;Execute SQL</string>
    </property>
    <property name="toolTip">
-    <string>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</string>
+    <string>Execute all/selected SQL</string>
    </property>
    <property name="whatsThis">
     <string>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
    </property>
   </action>
   <action name="actionSqlOpenFile">
@@ -1754,7 +1757,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Execute current line</string>
    </property>
    <property name="toolTip">
-    <string>Execute current line [Shift+F5]</string>
+    <string>Execute current line</string>
    </property>
    <property name="whatsThis">
     <string>This button executes the SQL statement present in the current editor line</string>
@@ -2085,7 +2088,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Find text in SQL editor</string>
    </property>
    <property name="toolTip">
-    <string>Find text in SQL editor [Ctrl+F]</string>
+    <string>Find text in SQL editor</string>
    </property>
    <property name="whatsThis">
     <string>This button opens the search bar of the editor</string>
@@ -2106,10 +2109,16 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Find or replace text in SQL editor</string>
    </property>
    <property name="toolTip">
-    <string>Find or replace text in SQL editor [Ctrl+H]</string>
+    <string>Find or replace text in SQL editor</string>
    </property>
    <property name="whatsThis">
     <string>This button opens the find/replace dialog for the current editor tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionSqlResultsExportCsv">
@@ -2328,13 +2337,16 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Print</string>
    </property>
    <property name="toolTip">
-    <string>Print text from current SQL editor tab [Ctrl+P]</string>
+    <string>Print text from current SQL editor tab</string>
    </property>
    <property name="statusTip">
     <string/>
    </property>
    <property name="whatsThis">
     <string>Open a dialog for printing the text in the current SQL editor tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::WidgetShortcut</enum>
@@ -2352,7 +2364,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Print</string>
    </property>
    <property name="toolTip">
-    <string>Print the structure of the opened database [Ctrl+P]</string>
+    <string>Print the structure of the opened database</string>
    </property>
    <property name="statusTip">
     <string/>
@@ -2382,7 +2394,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Comment or uncomment the selected lines or the current line, when there is no selection. All the block is toggled according to the first line.</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+/</string>
+    <string>Ctrl+/</string>
    </property>
   </action>
   <action name="actionSqlStop">

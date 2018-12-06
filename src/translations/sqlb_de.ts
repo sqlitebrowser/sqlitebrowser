@@ -844,8 +844,8 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>Daten auf Zelle anwenden [Strg+Return]</translation>
+        <source>Apply data to cell</source>
+        <translation>Daten auf Zelle anwenden</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2459,8 +2459,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>Die Daten in der ausgewählten Tabelle aktualisieren [F5, Strg+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>Die Daten in der ausgewählten Tabelle aktualisieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="163"/>
@@ -2489,8 +2489,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation>Aktuell angezeigte Tabellendaten drucken [Strg+P]</translation>
+        <source>Print currently browsed table data</source>
+        <translation>Aktuell angezeigte Tabellendaten drucken</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -2546,8 +2546,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Komplettes/ausgewähltes SQL ausführen [F5, Strg+Enter, Strg+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>Komplettes/ausgewähltes SQL ausführen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -2667,8 +2667,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>Text im SQL-Editor finden [Strg+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>Text im SQL-Editor finden</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -2687,8 +2687,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>Text im SQL-Editor suchen oder ersetzen [Strg+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>Text im SQL-Editor suchen oder ersetzen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>
@@ -2866,8 +2866,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation>Den Text aus dem aktuellen SQL-Editortab drucken [Strg+P]</translation>
+        <source>Print text from current SQL editor tab</source>
+        <translation>Den Text aus dem aktuellen SQL-Editortab drucken</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2334"/>
@@ -2876,8 +2876,8 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>Die Struktur der geöffneten Datenbank drucken [Strg+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>Die Struktur der geöffneten Datenbank drucken</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
@@ -3158,13 +3158,13 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
         <translation>Entfe&amp;rnt</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>SQL ausführen [F5, Ctrl+Return, Ctrl+R]</translation>
+        <source>Execute SQL</source>
+        <translation>SQL ausführen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>Aktuelle Zeile ausführen [Shift+F5]</translation>
+        <source>Execute current line</source>
+        <translation>Aktuelle Zeile ausführen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1757"/>
@@ -3825,8 +3825,8 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
         <translation>SQL &amp;ausführen</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation>SQL ausführen [F5, Strg+Return]</translation>
+        <source>Execute SQL</source>
+        <translation>SQL ausführen</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
@@ -3890,8 +3890,8 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
         <translation>Aktuelle Zeile ausführen</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation>Aktuelle Zeile ausführen [Strg+E]</translation>
+        <source>Execute current line</source>
+        <translation>Aktuelle Zeile ausführen</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="268"/>

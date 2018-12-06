@@ -776,8 +776,8 @@ Errors are indicated with a red squiggle underline.</source>
 Erros são indicados com um ondulado vermelho.</translation>
     </message>
     <message>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>Aplicar dados à célula [Ctrl+Enter]</translation>
+        <source>Apply data to cell</source>
+        <translation>Aplicar dados à célula</translation>
     </message>
     <message>
         <source>This button saves the changes performed in the cell editor to the database cell.</source>
@@ -2450,8 +2450,8 @@ x~y	Intervalo: valores entre x e y</translation>
         <translation>&amp;Executar SQL</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">Executar SQL [F5, Ctrl+Return]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">Executar SQL</translation>
     </message>
     <message>
         <source>Open SQL file</source>
@@ -2470,8 +2470,8 @@ x~y	Intervalo: valores entre x e y</translation>
         <translation>Executar linha atual</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">Executar linha atual [Ctrl+E]</translation>
+        <source>Execute current line</source>
+        <translation type="vanished">Executar linha atual</translation>
     </message>
     <message>
         <source>Ctrl+E</source>
@@ -3028,12 +3028,12 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
         <translation>Esque&amp;ma do banco de dados</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="vanished">Executar SQL [F5, Ctrl+Return, Ctrl+R]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">Executar SQL</translation>
     </message>
     <message>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>Executar linha atual [Shift+F5]</translation>
+        <source>Execute current line</source>
+        <translation>Executar linha atual</translation>
     </message>
     <message>
         <source>Shift+F5</source>
@@ -3172,8 +3172,8 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
 </translation>
     </message>
     <message>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>Atualizar os dados na tabela selecionada [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>Atualizar os dados na tabela selecionada</translation>
     </message>
     <message>
         <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
@@ -3274,8 +3274,8 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <translation>Esse botão abre uma nova aba para o editor SQL</translation>
     </message>
     <message>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Executar todo/selecionado SQL [F5, Ctrl+Enter, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>Executar todo/selecionado SQL</translation>
     </message>
     <message>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
@@ -3378,8 +3378,8 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <translation>Encontrar texto no editor SQL</translation>
     </message>
     <message>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>Encontrar texto no editor SQL [Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>Encontrar texto no editor SQL</translation>
     </message>
     <message>
         <source>This button opens the search bar of the editor</source>
@@ -3394,8 +3394,8 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <translation>Encontrar ou substituir texto no editor SQL</translation>
     </message>
     <message>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>Encontrar ou substituir texto no editor SQL [Ctrl+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>Encontrar ou substituir texto no editor SQL</translation>
     </message>
     <message>
         <source>This button opens the find/replace dialog for the current editor tab</source>
@@ -3530,16 +3530,16 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <translation>Imprimir</translation>
     </message>
     <message>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation>Imprimir texto do editor SQL [Ctrl+P]</translation>
+        <source>Print text from current SQL editor tab</source>
+        <translation>Imprimir texto do editor SQL</translation>
     </message>
     <message>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
         <translation>Abre um diálogo para imprimir o texto na aba atual do editor SQL</translation>
     </message>
     <message>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>Imprime a estrutura do banco de dados aberto [Ctrl+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>Imprime a estrutura do banco de dados aberto</translation>
     </message>
     <message>
         <source>Open a dialog for printing the structure of the opened database</source>
@@ -3714,8 +3714,8 @@ Faça um backup!</translation>
         <translation>Pressione Help para abrir a página de referência SQL correspondente.</translation>
     </message>
     <message>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation>Imprimir dados da tabela atual [Ctrl+P]</translation>
+        <source>Print currently browsed table data</source>
+        <translation>Imprimir dados da tabela atual</translation>
     </message>
     <message>
         <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>

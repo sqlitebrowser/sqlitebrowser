@@ -713,8 +713,8 @@ Aborting execution%3.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>Применить данные к ячейке [Ctrl+Enter]</translation>
+        <source>Apply data to cell</source>
+        <translation>Применить данные к ячейке</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2284,8 +2284,8 @@ x~y	Диапазон: значения между x и y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation>Печатать отображаемую таблицу [Ctrl+P]</translation>
+        <source>Print currently browsed table data</source>
+        <translation>Печатать отображаемую таблицу</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -2405,8 +2405,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Выполнить все/выбранный SQL [F5, Ctrl+Enter, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>Выполнить все/выбранный SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -2546,8 +2546,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>Найти текст в редакторе SQL [Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>Найти текст в редакторе SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -2566,8 +2566,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>Найти или заменить текст в редакторе SQL Ctrl+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>Найти или заменить текст в редакторе SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>
@@ -2745,8 +2745,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation>Печать текста изтекущей вкладки редактора SQL [Ctrl+P]</translation>
+        <source>Print text from current SQL editor tab</source>
+        <translation>Печать текста изтекущей вкладки редактора SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2334"/>
@@ -2755,8 +2755,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>Печать структуры открытой БД [Ctrl+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>Печать структуры открытой БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
@@ -3074,8 +3074,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>Выполнить текущую строку [Shift+F5]</translation>
+        <source>Execute current line</source>
+        <translation>Выполнить текущую строку</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1760"/>
@@ -3568,8 +3568,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>Обновить данные в выбранной таблице [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>Обновить данные в выбранной таблице</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
@@ -3665,8 +3665,8 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation>В&amp;ыполнить код SQL</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">Выполнить код SQL [F5, Ctrl+Return]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">Выполнить код SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -3686,8 +3686,8 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation>Выполнить текущую строку</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation type="obsolete">Выполнить текущую строку [Ctrl+E]</translation>
+        <source>Execute current line</source>
+        <translation type="obsolete">Выполнить текущую строку</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="268"/>

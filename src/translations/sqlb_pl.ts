@@ -759,8 +759,8 @@ Errors are indicated with a red squiggle underline.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>Zapisz dane w komórce [Ctrl+Return]</translation>
+        <source>Apply data to cell</source>
+        <translation>Zapisz dane w komórce</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2155,8 +2155,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>Odśwież dane w zaznaczonej tabeli [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>Odśwież dane w zaznaczonej tabeli</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="149"/>
@@ -2576,7 +2576,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2920,7 +2920,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
+        <source>Print text from current SQL editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2930,7 +2930,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
+        <source>Print the structure of the opened database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2964,8 +2964,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Wykonaj wszystkie/zaznaczone SQL [F5, Ctrl+Return, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>Wykonaj wszystkie/zaznaczone SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -3000,8 +3000,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>Wykonaj obecny wiersz [Shift+F5]</translation>
+        <source>Execute current line</source>
+        <translation>Wykonaj obecny wiersz</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1757"/>
@@ -3217,8 +3217,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>Znajdź tekst w edytorze SQL [Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>Znajdź tekst w edytorze SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -3237,8 +3237,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>Znajdź lub zastąp tekst w edytorze SQL [Ctrl+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>Znajdź lub zastąp tekst w edytorze SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>

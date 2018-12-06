@@ -858,8 +858,8 @@ Les erreurs sont signalées par un tilde rouge souligné.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>Appliquer les données à la cellule [Ctrl+Retour]</translation>
+        <source>Apply data to cell</source>
+        <translation>Appliquer les données à la cellule</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2867,8 +2867,8 @@ x~y	Plage : valeurs comprises entre x et y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Exécuter soit Tout soit le SQL sélectionné  [F5, Ctrl+Entrée, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>Exécuter soit Tout soit le SQL sélectionné </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -2983,8 +2983,8 @@ x~y	Plage : valeurs comprises entre x et y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>Rechercher du texte dans l&apos;éditeur SQL [Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>Rechercher du texte dans l&apos;éditeur SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -3003,8 +3003,8 @@ x~y	Plage : valeurs comprises entre x et y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>Rechercher ou remplacer du texte dans l&apos;éditeur SQL [Ctrl+F]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>Rechercher ou remplacer du texte dans l&apos;éditeur SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>
@@ -3182,7 +3182,7 @@ x~y	Plage : valeurs comprises entre x et y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
+        <source>Print text from current SQL editor tab</source>
         <translation>Imprime le contenu de l&apos;onglet en cours de l&apos;éditeur SQL [Ctrp+P]</translation>
     </message>
     <message>
@@ -3192,8 +3192,8 @@ x~y	Plage : valeurs comprises entre x et y</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>Imprime la structure de la base de données ouverte [Ctrl+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>Imprime la structure de la base de données ouverte</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
@@ -3420,8 +3420,8 @@ Vous pouvez faire glisser les instructions SQL de la colonne Schéma et les dép
         <translation>&amp;Exécuter le SQL</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">Exécuter le SQL [F5 ou Ctrl+Entrée]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">Exécuter le SQL</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
@@ -3489,8 +3489,8 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>Rafraîchir les données de la table sélectionnée [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>Rafraîchir les données de la table sélectionnée</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="166"/>
@@ -3514,8 +3514,8 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currrently browsed table data [Ctrl+P]</source>
-        <translation>Imprimer le données de la table actuellement parcourues [Ctrl+P]</translation>
+        <source>Print currrently browsed table data</source>
+        <translation>Imprimer le données de la table actuellement parcourues</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -3821,8 +3821,8 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
         <translation>&amp;Qu&apos;est-ce que c&apos;est ?</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="vanished">Exécuter le SQL [F5 ou Ctrl+Entrée; Ctrl+R]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">Exécuter le SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1727"/>
@@ -3838,7 +3838,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
+        <source>Execute current line</source>
         <translation>Exécuter la ligne courante (Maj+F5)</translation>
     </message>
     <message>
@@ -3968,7 +3968,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
         <translation>Exécuter la ligne courante</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
+        <source>Execute current line</source>
         <translation type="vanished">Exécuter la ligne courante (Ctrl+E)</translation>
     </message>
     <message>

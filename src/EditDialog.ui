@@ -293,7 +293,7 @@ Errors are indicated with a red squiggle underline.</string>
      <item>
       <widget class="QPushButton" name="buttonApply">
        <property name="toolTip">
-        <string>Apply data to cell [Ctrl+Return]</string>
+        <string>Apply data to cell</string>
        </property>
        <property name="whatsThis">
         <string>This button saves the changes performed in the cell editor to the database cell.</string>

@@ -819,7 +819,7 @@ Errors are indicated with a red squiggle underline.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
+        <source>Apply data to cell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2606,7 +2606,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
+        <source>Execute current line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3085,7 +3085,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
+        <source>Refresh the data in the selected table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3110,7 +3110,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
+        <source>Print currently browsed table data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3257,7 +3257,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
+        <source>Execute all/selected SQL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3373,7 +3373,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
+        <source>Find text in SQL editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3393,7 +3393,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
+        <source>Find or replace text in SQL editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3572,7 +3572,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
+        <source>Print text from current SQL editor tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3582,7 +3582,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
+        <source>Print the structure of the opened database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3651,8 +3651,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>&amp;SQL kodunu yürüt</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">SQL kodunu yürüt [F5, Ctrl+Enter]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">SQL kodunu yürüt</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -3681,8 +3681,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Geçerli satırı yürüt</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">Geçerli satırı yürüt [Ctrl+E]</translation>
+        <source>Execute current line</source>
+        <translation type="vanished">Geçerli satırı yürüt</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="268"/>

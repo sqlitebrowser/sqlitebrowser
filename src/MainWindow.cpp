@@ -130,6 +130,35 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Functions for documenting the shortcuts in the user interface using native names
+static QString shortcutsTip(const QList<QKeySequence>& keys)
+{
+    QString tip("");
+
+    if (!keys.isEmpty()) {
+        tip = " [";
+
+        for (auto shortcut : keys)
+            tip.append(shortcut.toString(QKeySequence::NativeText) + ", ");
+        tip.chop(2);
+
+        tip.append("]");
+    }
+    return tip;
+}
+
+static void addShortcutsTooltip(QWidget* widget, const QList<QKeySequence>& keys)
+{
+    if (!keys.isEmpty())
+        widget->setToolTip(widget->toolTip() + shortcutsTip(keys));
+}
+
+static void addShortcutsTooltip(QAction* action, const QList<QKeySequence>& extraKeys = QList<QKeySequence>())
+{
+    if (!action->shortcuts().isEmpty() || !extraKeys.isEmpty())
+        action->setToolTip(action->toolTip() + shortcutsTip(action->shortcuts() + extraKeys));
+}
+
 void MainWindow::init()
 {
     // Load window settings
@@ -197,9 +226,6 @@ void MainWindow::init()
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
 
     // Add keyboard shortcuts
-    QList<QKeySequence> shortcuts = ui->actionExecuteSql->shortcuts();
-    shortcuts.push_back(QKeySequence(tr("Ctrl+Return")));
-    ui->actionExecuteSql->setShortcuts(shortcuts);
 
     QShortcut* shortcutBrowseRefreshF5 = new QShortcut(QKeySequence("F5"), this);
     connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
@@ -428,6 +454,20 @@ void MainWindow::init()
     // Set other window settings
     setAcceptDrops(true);
     setWindowTitle(QApplication::applicationName());
+
+    // Add the documentation of shortcuts, which aren't otherwise visible in the user interface, to some buttons.
+
+    addShortcutsTooltip(ui->actionDbPrint);
+
+    addShortcutsTooltip(ui->buttonRefresh, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
+    addShortcutsTooltip(ui->buttonPrintTable, {shortcutPrint->key()});
+
+    addShortcutsTooltip(ui->actionSqlPrint);
+    addShortcutsTooltip(ui->actionExecuteSql, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
+    addShortcutsTooltip(ui->actionSqlExecuteLine);
+    addShortcutsTooltip(ui->actionSqlFind);
+    addShortcutsTooltip(ui->actionSqlFindReplace);
+    addShortcutsTooltip(ui->actionSqlToggleComment);
 
     // Load all settings
     reloadSettings();

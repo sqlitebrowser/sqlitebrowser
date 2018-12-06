@@ -856,8 +856,8 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>Aplicar los datos a la celda [Ctrl+Return]</translation>
+        <source>Apply data to cell</source>
+        <translation>Aplicar los datos a la celda</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2533,8 +2533,8 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>Ejecuta todo el SQL (o la selección) [F5, Ctrl+Intro, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>Ejecuta todo el SQL (o la selección)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -2734,8 +2734,8 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation>Imprime el texto de la pestaña actual del editor SQL [Ctrl+P]</translation>
+        <source>Print text from current SQL editor tab</source>
+        <translation>Imprime el texto de la pestaña actual del editor SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2334"/>
@@ -2744,8 +2744,8 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>Imprime la estructura de la base de datos abierta [Ctrl+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>Imprime la estructura de la base de datos abierta</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
@@ -2835,8 +2835,8 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>Refresca los datos en la tabla seleccionada [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>Refresca los datos en la tabla seleccionada</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="166"/>
@@ -2860,8 +2860,8 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation>Imprime los datos de la tabla mostrada actualmente [Ctrl+P]</translation>
+        <source>Print currently browsed table data</source>
+        <translation>Imprime los datos de la tabla mostrada actualmente</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -3133,8 +3133,8 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>Buscar texto en el editor SQL [Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>Buscar texto en el editor SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -3153,8 +3153,8 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>Buscar o reemplazar texto en el editor SQL [Ctrl+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>Buscar o reemplazar texto en el editor SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>
@@ -3292,8 +3292,8 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation>&amp;Remoto</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="obsolete">Ejecuta SQL [F5, Ctrl+Intro, Ctrl+R]</translation>
+        <source>Execute SQL</source>
+        <translation type="obsolete">Ejecuta SQL</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
@@ -3301,8 +3301,8 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>Ejecuta la línea actual [May+F5]</translation>
+        <source>Execute current line</source>
+        <translation>Ejecuta la línea actual</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1760"/>
@@ -3900,8 +3900,8 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation>&amp;Ejecutar SQL</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="obsolete">Ejecuta SQL [F5, Ctrl+Return]</translation>
+        <source>Execute SQL</source>
+        <translation type="obsolete">Ejecuta SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -3925,8 +3925,8 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation>Ejecutar la línea actual</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation type="obsolete">Ejecuta la línea actual [Ctrl+E]</translation>
+        <source>Execute current line</source>
+        <translation type="obsolete">Ejecuta la línea actual</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="290"/>
