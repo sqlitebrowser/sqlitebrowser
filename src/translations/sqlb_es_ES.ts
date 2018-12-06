@@ -806,7 +806,7 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+May+C</translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <source>Import text</source>
@@ -1812,7 +1812,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="240"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+May+C</translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="241"/>
@@ -3307,7 +3307,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     <message>
         <location filename="../MainWindow.ui" line="1760"/>
         <source>Shift+F5</source>
-        <translation>May+F5</translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <source>Sa&amp;ve Project</source>
@@ -3764,7 +3764,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     <message>
         <location filename="../MainWindow.ui" line="1660"/>
         <source>Shift+F1</source>
-        <translation>May+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <source>&amp;About...</source>
@@ -5901,7 +5901,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="76"/>
         <source>Shift+F3</source>
-        <translation>May+F3</translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="90"/>
