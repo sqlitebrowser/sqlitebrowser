@@ -98,6 +98,7 @@ public:
 
     // The pseudo-primary key is exclusively for editing views
     void setPseudoPk(const QString& pseudoPk);
+    bool hasPseudoPk() const;
     QString pseudoPk() const { return QString::fromStdString(m_query.rowIdColumn()); }
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;

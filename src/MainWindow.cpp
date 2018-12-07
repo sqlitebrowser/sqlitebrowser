@@ -3571,7 +3571,7 @@ void MainWindow::updateInsertDeleteRecordButton()
     // at least one row to be selected. For the insert button there is an extra rule to disable it when we are browsing a view because inserting
     // into a view isn't supported yet.
     bool isEditable = m_browseTableModel->isEditable() && !db.readOnly();
-    ui->buttonNewRecord->setEnabled(isEditable && m_browseTableModel->pseudoPk().isEmpty());
+    ui->buttonNewRecord->setEnabled(isEditable && !m_browseTableModel->hasPseudoPk());
     ui->buttonDeleteRecord->setEnabled(isEditable && rows != 0);
 
     if(rows > 1)

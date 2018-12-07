@@ -159,10 +159,8 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     if(!allOk)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
-        if(pseudoPk().isEmpty())
+        if(m_query.rowIdColumn().empty())
             m_query.setRowIdColumn("rowid");
-        else
-            m_query.setRowIdColumn(pseudoPk().toStdString());
         m_headers.push_back("rowid");
         m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
     }
@@ -801,6 +799,11 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
     }
 
     buildQuery();
+}
+
+bool SqliteTableModel::hasPseudoPk() const
+{
+    return !(m_query.rowIdColumn() == "rowid" || m_query.rowIdColumn() == "_rowid_");
 }
 
 bool SqliteTableModel::isEditable() const
