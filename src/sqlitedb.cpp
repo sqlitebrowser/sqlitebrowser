@@ -1435,7 +1435,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
 
     // Newer versions of SQLite add a better ALTER TABLE support which we can use
 #if SQLITE_VERSION_NUMBER >= 3025000
-    // If the name of a field should be changed do that by using SQLite's ALTER TABLE feature
+    // If the name of a field should be changed do that by using SQLite's ALTER TABLE feature. We build a new
+    // map for tracking column names here which uses the update column names as the old names too. This is to
+    // make sure we are using the new table layout for later updates.
+    AlterTableTrackColumns new_track_columns;
     for(const auto& old_name : track_columns.keys())
     {
         QString new_name = track_columns[old_name];
@@ -1453,8 +1456,12 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
             }
 
             changed_something = true;
+            new_track_columns.insert(new_name, new_name);
+        } else {
+            new_track_columns.insert(old_name, new_name);
         }
     }
+    track_columns.swap(new_track_columns);
 #endif
 
     // Update our schema representation to get the new table and all the changed triggers, views and indices
