@@ -1,6 +1,6 @@
 // This module implements the QsciLexer class.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -36,11 +36,11 @@ QsciLexer::QsciLexer(QObject *parent)
       autoIndStyle(-1), apiSet(0), attached_editor(0)
 {
 #if defined(Q_OS_WIN)
-    defFont = QFont("Verdana",10);
+    defFont = QFont("Verdana", 10);
 #elif defined(Q_OS_MAC)
-    defFont = QFont("Verdana", 12);
+    defFont = QFont("Menlo", 12);
 #else
-    defFont = QFont("Bitstream Vera Sans",9);
+    defFont = QFont("Bitstream Vera Sans", 9);
 #endif
 
     // Set the default fore and background colours.
@@ -103,7 +103,7 @@ void QsciLexer::setStyleDefaults() const
 {
     if (!style_map->style_data_set)
     {
-        for (int i = 0; i < 128; ++i)
+        for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
             if (!description(i).isEmpty())
                 styleData(i);
 
@@ -370,7 +370,7 @@ bool QsciLexer::readSettings(QSettings &qs,const char *prefix)
     setStyleDefaults();
 
     // Read the styles.
-    for (int i = 0; i < 128; ++i)
+    for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
     {
         // Ignore invalid styles.
         if (description(i).isEmpty())
@@ -570,7 +570,7 @@ bool QsciLexer::writeSettings(QSettings &qs,const char *prefix) const
     setStyleDefaults();
 
     // Write the styles.
-    for (int i = 0; i < 128; ++i)
+    for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
     {
         // Ignore invalid styles.
         if (description(i).isEmpty())
@@ -685,7 +685,7 @@ void QsciLexer::setColor(const QColor &c, int style)
         emit colorChanged(c, style);
     }
     else
-        for (int i = 0; i < 128; ++i)
+        for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
             if (!description(i).isEmpty())
                 setColor(c, i);
 }
@@ -700,7 +700,7 @@ void QsciLexer::setEolFill(bool eolfill, int style)
         emit eolFillChanged(eolfill, style);
     }
     else
-        for (int i = 0; i < 128; ++i)
+        for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
             if (!description(i).isEmpty())
                 setEolFill(eolfill, i);
 }
@@ -715,7 +715,7 @@ void QsciLexer::setFont(const QFont &f, int style)
         emit fontChanged(f, style);
     }
     else
-        for (int i = 0; i < 128; ++i)
+        for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
             if (!description(i).isEmpty())
                 setFont(f, i);
 }
@@ -731,7 +731,7 @@ void QsciLexer::setPaper(const QColor &c, int style)
     }
     else
     {
-        for (int i = 0; i < 128; ++i)
+        for (int i = 0; i <= QsciScintillaBase::STYLE_MAX; ++i)
             if (!description(i).isEmpty())
                 setPaper(c, i);
 

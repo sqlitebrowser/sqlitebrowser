@@ -1,5 +1,6 @@
 #include "Settings.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QSettings>
 #include <QColor>

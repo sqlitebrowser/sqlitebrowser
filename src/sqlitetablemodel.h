@@ -4,7 +4,6 @@
 #include <QAbstractTableModel>
 #include <QStringList>
 #include <QVector>
-#include <QThread>
 #include <QMutex>
 #include <QColor>
 #include <memory>
@@ -99,7 +98,8 @@ public:
 
     // The pseudo-primary key is exclusively for editing views
     void setPseudoPk(const QString& pseudoPk);
-    QString pseudoPk() const { return m_pseudoPk; }
+    bool hasPseudoPk() const;
+    QString pseudoPk() const { return QString::fromStdString(m_query.rowIdColumn()); }
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 
@@ -119,6 +119,7 @@ public slots:
 
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
+    void finishedRowCount();
 
 protected:
     Qt::DropActions supportedDropActions() const override;
@@ -172,7 +173,6 @@ private:
     bool nosync_isBinary(const QModelIndex& index) const;
 
     QString m_sQuery;
-    QString m_pseudoPk;
     QVector<int> m_vDataTypes;
     QMap<int, QVector<CondFormat>> m_mCondFormats;
     sqlb::Query m_query;

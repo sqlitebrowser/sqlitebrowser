@@ -1,6 +1,6 @@
 # The project file for the QScintilla library.
 #
-# Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+# Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 # 
 # This file is part of QScintilla.
 # 
@@ -20,7 +20,7 @@
 
 # This must be kept in sync with Python/configure.py, Python/configure-old.py,
 # example-Qt4Qt5/application.pro and designer-Qt4Qt5/designer.pro.
-!win32:VERSION = 13.0.0
+!win32:VERSION = 13.2.1
 
 TEMPLATE = lib
 TARGET = qscintilla2
@@ -43,6 +43,8 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
     # Work around QTBUG-39300.
     CONFIG -= android_install
+} else {
+    DEFINES += QT_NO_ACCESSIBILITY
 }
 
 # Comment this in if you want the internal Scintilla classes to be placed in a
@@ -78,36 +80,20 @@ INSTALLS += features
 
 HEADERS = \
 	./Qsci/qsciglobal.h \
-	./Qsci/qsciscintilla.h \
-	./Qsci/qsciscintillabase.h \
-	./Qsci/qsciabstractapis.h \
-	./Qsci/qsciapis.h \
 	./Qsci/qscicommand.h \
 	./Qsci/qscicommandset.h \
 	./Qsci/qscidocument.h \
-	./Qsci/qscilexer.h \
-	./Qsci/qscilexercustom.h \
-	./Qsci/qscilexersql.h \
-	./Qsci/qscilexerjson.h \
-	./Qsci/qscilexerhtml.h \
-	./Qsci/qscilexerxml.h \
-	./Qsci/qscilexerjavascript.h \
-	./Qsci/qscilexercpp.h \
-	./Qsci/qscilexerpython.h \
-	./Qsci/qscimacro.h \
 	./Qsci/qsciprinter.h \
 	./Qsci/qscistyle.h \
 	./Qsci/qscistyledtext.h \
 	ListBoxQt.h \
-	SciClasses.h \
 	SciNamespace.h \
-	ScintillaQt.h \
 	../include/ILexer.h \
 	../include/Platform.h \
-	../include/Sci_Position.h \
 	../include/SciLexer.h \
 	../include/Scintilla.h \
 	../include/ScintillaWidget.h \
+	../include/Sci_Position.h \
 	../lexlib/Accessor.h \
 	../lexlib/CharacterCategory.h \
 	../lexlib/CharacterSet.h \
@@ -118,7 +104,6 @@ HEADERS = \
 	../lexlib/LexerSimple.h \
 	../lexlib/OptionSet.h \
 	../lexlib/PropSetSimple.h \
-	../lexlib/StringCopy.h \
 	../lexlib/StyleContext.h \
 	../lexlib/SubStyles.h \
 	../lexlib/WordList.h \
@@ -132,15 +117,12 @@ HEADERS = \
 	../src/ContractionState.h \
 	../src/Decoration.h \
 	../src/Document.h \
-	../src/EditModel.h \
 	../src/Editor.h \
-	../src/EditView.h \
 	../src/ExternalLexer.h \
 	../src/FontQuality.h \
 	../src/Indicator.h \
 	../src/KeyMap.h \
 	../src/LineMarker.h \
-	../src/MarginView.h \
 	../src/Partitioning.h \
 	../src/PerLine.h \
 	../src/PositionCache.h \
@@ -153,7 +135,26 @@ HEADERS = \
 	../src/UnicodeFromUTF8.h \
 	../src/UniConversion.h \
 	../src/ViewStyle.h \
-	../src/XPM.h
+	../src/XPM.h \
+	../src/Position.h \
+	../src/SparseVector.h \
+	./Qsci/qsciscintilla.h \
+	./Qsci/qsciscintillabase.h \
+	./Qsci/qsciabstractapis.h \
+	./Qsci/qsciapis.h \
+	./Qsci/qscilexer.h \
+	./Qsci/qscilexercustom.h \
+	./Qsci/qscilexersql.h \
+	./Qsci/qscilexerjson.h \
+	./Qsci/qscilexerhtml.h \
+	./Qsci/qscilexerxml.h \
+	./Qsci/qscilexerjavascript.h \
+	./Qsci/qscilexercpp.h \
+	./Qsci/qscilexerpython.h \
+	./Qsci/qscimacro.h \
+	SciClasses.h \
+	ScintillaQt.h \
+	SciAccessibility.h
 
 SOURCES = \
 	qsciscintilla.cpp \
@@ -182,6 +183,7 @@ SOURCES = \
 	ListBoxQt.cpp \
 	PlatQt.cpp \
 	ScintillaQt.cpp \
+	SciAccessibility.cpp \
 	../lexers/LexSQL.cpp \
 	../lexers/LexJSON.cpp \
 	../lexers/LexHTML.cpp \
@@ -205,8 +207,8 @@ SOURCES = \
 	../src/ContractionState.cpp \
 	../src/Decoration.cpp \
 	../src/Document.cpp \
-	../src/EditModel.cpp \
 	../src/Editor.cpp \
+	../src/EditModel.cpp \
 	../src/EditView.cpp \
 	../src/ExternalLexer.cpp \
 	../src/Indicator.cpp \

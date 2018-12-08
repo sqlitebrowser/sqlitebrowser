@@ -69,5 +69,7 @@
         <file alias="print">printer.png</file>
         <file alias="project_save">package_save.png</file>
         <file alias="cancel">cancel.png</file>
+        <file alias="comment_block">comment_block.png</file>
+        <file alias="hourglass">hourglass.png</file>
     </qresource>
 </RCC>

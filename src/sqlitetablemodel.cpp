@@ -91,6 +91,8 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 
     m_rowCountAvailable = RowCount::Complete;
     handleFinishedFetch(life_id, num_rows, num_rows);
+
+    emit finishedRowCount();
 }
 
 void SqliteTableModel::reset()
@@ -101,7 +103,6 @@ void SqliteTableModel::reset()
     m_query.clear();
     m_headers.clear();
     m_vDataTypes.clear();
-    m_pseudoPk.clear();
     m_mCondFormats.clear();
 
     endResetModel();
@@ -158,7 +159,8 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     if(!allOk)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
-        m_query.setRowIdColumn("rowid");
+        if(m_query.rowIdColumn().empty())
+            m_query.setRowIdColumn("rowid");
         m_headers.push_back("rowid");
         m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
     }
@@ -167,7 +169,6 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     std::vector<std::string> column_names;
     for(const auto& h : m_headers)
         column_names.push_back(h.toStdString());
-    //column_names.erase(column_names.begin(), column_names.begin()+1);
     m_query.setColumNames(column_names);
 
     // Apply new query and update view
@@ -407,7 +408,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_pseudoPk))
+        if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, QString::fromStdString(m_query.rowIdColumn())))
         {
             cached_row.replace(index.column(), newValue);
             if(m_headers.at(index.column()).toStdString() == m_query.rowIdColumn()) {
@@ -546,7 +547,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         }
     }
 
-    bool ok = m_db.deleteRecords(m_query.table(), rowids, m_pseudoPk);
+    bool ok = m_db.deleteRecords(m_query.table(), rowids, QString::fromStdString(m_query.rowIdColumn()));
 
     if (ok) {
         beginRemoveRows(parent, row, row + count - 1);
@@ -783,16 +784,16 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
 void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
 {
     // Do nothing if the value didn't change
-    if(m_pseudoPk == pseudoPk)
+    if(m_query.rowIdColumn() == pseudoPk.toStdString())
         return;
 
     if(pseudoPk.isEmpty())
     {
-        m_pseudoPk.clear();
+        m_query.rowIdColumn().clear();
         if(m_headers.size())
-            m_headers[0] = QString::fromStdString(m_query.rowIdColumn());
+            m_headers[0] = QString("rowid");
     } else {
-        m_pseudoPk = pseudoPk;
+        m_query.setRowIdColumn(pseudoPk.toStdString());
         if(m_headers.size())
             m_headers[0] = pseudoPk;
     }
@@ -800,11 +801,16 @@ void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
     buildQuery();
 }
 
+bool SqliteTableModel::hasPseudoPk() const
+{
+    return !(m_query.rowIdColumn() == "rowid" || m_query.rowIdColumn() == "_rowid_");
+}
+
 bool SqliteTableModel::isEditable() const
 {
     return !m_query.table().isEmpty() &&
             m_db.isOpen() &&
-            ((m_db.getObjectByName(m_query.table()) && m_db.getObjectByName(m_query.table())->type() == sqlb::Object::Types::Table) || !m_pseudoPk.isEmpty());
+            ((m_db.getObjectByName(m_query.table()) && m_db.getObjectByName(m_query.table())->type() == sqlb::Object::Types::Table) || !m_query.rowIdColumn().empty());
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const

@@ -188,7 +188,7 @@ public:
     explicit Object(const QString& name): m_name(name), m_fullyParsed(false) {}
     virtual ~Object() {}
 
-    virtual bool operator==(const Object& rhs) const;
+    bool operator==(const Object& rhs) const;
 
     virtual Types type() const = 0;
     static QString typeToString(Types type);

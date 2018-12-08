@@ -71,7 +71,8 @@ HEADERS += \
     DotenvFormat.h \
     Palette.h \
     CondFormat.h \
-    sql/Query.h
+    sql/Query.h \
+    RunSql.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -119,7 +120,8 @@ SOURCES += \
     DotenvFormat.cpp \
     Palette.cpp \
     CondFormat.cpp \
-    sql/Query.cpp
+    sql/Query.cpp \
+    RunSql.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -161,7 +163,8 @@ TRANSLATIONS += \
     translations/sqlb_en_GB.ts \
     translations/sqlb_ko_KR.ts \
     translations/sqlb_tr.ts \
-    translations/sqlb_uk_UA.ts
+    translations/sqlb_uk_UA.ts \
+    translations/sqlb_it.ts
 
 # SQLite / SQLCipher switch pieces
 CONFIG(sqlcipher) {

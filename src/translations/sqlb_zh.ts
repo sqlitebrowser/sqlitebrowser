@@ -719,8 +719,8 @@ Aborting execution%3.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>将数据应用到单元格 [Ctrl+Return]</translation>
+        <source>Apply data to cell</source>
+        <translation>将数据应用到单元格</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2666,8 +2666,8 @@ x~y	范围: 值在 x 和 y 之间</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>执行所有/选中的 SQL [F5, Ctrl+Return, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>执行所有/选中的 SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -3188,8 +3188,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>刷新选中表中的数据 [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>刷新选中表中的数据</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="166"/>
@@ -3213,8 +3213,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation>打印当前浏览表中的数据 [Ctrl+P]</translation>
+        <source>Print currently browsed table data</source>
+        <translation>打印当前浏览表中的数据</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -3398,8 +3398,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>在 SQL 编辑器中查找文本 [Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>在 SQL 编辑器中查找文本</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -3418,8 +3418,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>在 SQL 编辑器中查找或替换文本 [Ctrl+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>在 SQL 编辑器中查找或替换文本</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>
@@ -3597,8 +3597,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation>从当前的 SQL 编辑器标签页打印文本 [Ctrl+P]</translation>
+        <source>Print text from current SQL editor tab</source>
+        <translation>从当前的 SQL 编辑器标签页打印文本</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2334"/>
@@ -3607,8 +3607,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>打印当前打开的数据库的结构 [Ctrl+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>打印当前打开的数据库的结构</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
@@ -3688,8 +3688,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>执行 SQL(&amp;E)</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="vanished">执行 SQL [F5, Ctrl+回车, Ctrl+R]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">执行 SQL</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
@@ -3742,8 +3742,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>执行当前行 [Shift+F5]</translation>
+        <source>Execute current line</source>
+        <translation>执行当前行</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="268"/>

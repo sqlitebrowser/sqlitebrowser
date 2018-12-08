@@ -865,8 +865,8 @@ Errors are indicated with a red squiggle underline.</source>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation>طبّق البيانات على الخليّة [Ctrl+Enter]</translation>
+        <source>Apply data to cell</source>
+        <translation>طبّق البيانات على الخليّة</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="299"/>
@@ -2275,8 +2275,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation>أنعشِ البيانات في الجدول المحدّد [F5, Ctrl+R]</translation>
+        <source>Refresh the data in the selected table</source>
+        <translation>أنعشِ البيانات في الجدول المحدّد</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="166"/>
@@ -2300,8 +2300,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation>اطبع بيانات الجدول المتصفّح حاليًا [Ctrl+P]</translation>
+        <source>Print currently browsed table data</source>
+        <translation>اطبع بيانات الجدول المتصفّح حاليًا</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -2703,13 +2703,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>الب&amp;عيد</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="vanished">نفّذ SQL ‏[F5, Ctrl+Enter, Ctrl+R]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">نفّذ SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation>نفّذ السطر الحالي [Shift+F5]</translation>
+        <source>Execute current line</source>
+        <translation>نفّذ السطر الحالي</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1757"/>
@@ -3225,8 +3225,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation>نفّذ كلّ إفادات SQL أو المحدّد [F5, Ctrl+Return, Ctrl+R]</translation>
+        <source>Execute all/selected SQL</source>
+        <translation>نفّذ كلّ إفادات SQL أو المحدّد</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -3341,8 +3341,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation>ابحث عن النصوص في محرّر SQL ‏[Ctrl+F]</translation>
+        <source>Find text in SQL editor</source>
+        <translation>ابحث عن النصوص في محرّر SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2088"/>
@@ -3361,8 +3361,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation>ابحث أو استبدل النصوص في محرّر SQL ‏[Ctrl+H]</translation>
+        <source>Find or replace text in SQL editor</source>
+        <translation>ابحث أو استبدل النصوص في محرّر SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2109"/>
@@ -3540,8 +3540,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2328"/>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation>اطبع النصّ من لسان محرّر SQL الحالي [Ctrl+P]</translation>
+        <source>Print text from current SQL editor tab</source>
+        <translation>اطبع النصّ من لسان محرّر SQL الحالي</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2334"/>
@@ -3550,8 +3550,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2352"/>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation>اطبع بنية قاعدة البيانات المفتوحة [Ctrl+P]</translation>
+        <source>Print the structure of the opened database</source>
+        <translation>اطبع بنية قاعدة البيانات المفتوحة</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2358"/>
@@ -3611,8 +3611,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>ن&amp;فّذ SQL</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">نفّذ SQL ‏[F5, Ctrl+Return]</translation>
+        <source>Execute SQL</source>
+        <translation type="vanished">نفّذ SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -3641,8 +3641,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>نفّذ السطر الحالي</translation>
     </message>
     <message>
-        <source>Execute current line [Ctrl+E]</source>
-        <translation type="vanished">نفّذ السّطر الحاليّ [Ctrl+E]</translation>
+        <source>Execute current line</source>
+        <translation type="vanished">نفّذ السّطر الحاليّ</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="268"/>

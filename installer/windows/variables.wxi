@@ -40,8 +40,13 @@
         Visual Studio 2013. The build "ARCH" will be set automatically.
     -->
 
-    <?define VCRedistPath="C:\Program Files (x86)\Common Files\Merge Modules" ?>
-    <?define VCRedistFile="Microsoft_VC120_CRT_$(sys.BUILDARCH).msm" ?>
+    <?if $(sys.BUILDARCH)="x64"?>
+        <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules" ?>
+        <?define VCRedistFile="Microsoft_VC141_CRT_$(sys.BUILDARCH).msm" ?>
+    <?elseif $(sys.BUILDARCH)="x86"?>
+        <?define VCRedistPath="C:\Program Files (x86)\Common Files\Merge Modules" ?>
+        <?define VCRedistFile="Microsoft_VC120_CRT_$(sys.BUILDARCH).msm" ?>
+    <?endif?>
 
     <!--
     =================================================== Build System ===================================================
@@ -50,15 +55,19 @@
     -->
 
     <?if $(sys.BUILDARCH)="x64"?>
-        <?define QtPath="C:\dev\Qt\5.10.1\msvc2013_64" ?>
+        <?define QtPath="C:\dev\Qt\5.11.2\msvc2017_64" ?>
         <?define SQLitePath="C:\dev\SQLite-Win64" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win64" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win64" ?>
+        <?define SQLiteExePath="C:\builds\release-sqlite-win64\Release" ?>
+        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win64\Release" ?>
     <?elseif $(sys.BUILDARCH)="x86"?>
         <?define QtPath="C:\dev\Qt\5.7\msvc2013" ?>
         <?define SQLitePath="C:\dev\SQLite-Win32" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win32" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win32" ?>
+        <?define SQLiteExePath="C:\builds\release-sqlite-win32\Release" ?>
+        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win32\Release" ?>
     <?endif?>
 
 </Include>

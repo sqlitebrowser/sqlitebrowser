@@ -6,7 +6,9 @@
 #include "Palette.h"
 #include "CondFormat.h"
 #include "sql/Query.h"
+#include "RunSql.h"
 
+#include <memory>
 #include <QMainWindow>
 #include <QMap>
 
@@ -120,23 +122,6 @@ private:
         int case_sensitive_like;
     } pragmaValues;
 
-    enum StatementType
-    {
-        SelectStatement,
-        AlterStatement,
-        DropStatement,
-        RollbackStatement,
-        PragmaStatement,
-        VacuumStatement,
-        InsertStatement,
-        UpdateStatement,
-        DeleteStatement,
-        CreateStatement,
-        AttachStatement,
-        DetachStatement,
-        OtherStatement,
-    };
-
     Ui::MainWindow* ui;
 
     DBBrowserDB db;
@@ -184,6 +169,8 @@ private:
 
     Palette m_condFormatPalette;
 
+    std::unique_ptr<RunSql> execute_sql_worker;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -198,8 +185,6 @@ private:
     void attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool keepOrResetSelection = true);
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
-
-    StatementType getQueryType(const QString& query) const;
 
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
 
@@ -218,6 +203,7 @@ public slots:
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure(const QString& old_table = QString());
+    void openPreferences();
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -256,7 +242,6 @@ private slots:
     void fileRevert();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
-    void openPreferences();
     void openRecentFile();
     void loadPragmas();
     void updatePragmaUi();
@@ -304,6 +289,7 @@ private slots:
     void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
+    void toggleSqlBlockComment();
     void openSqlPrintDialog();
     void saveFilterAsView();
     void exportFilteredTable();

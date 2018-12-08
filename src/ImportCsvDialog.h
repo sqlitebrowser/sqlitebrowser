@@ -9,7 +9,6 @@
 
 class DBBrowserDB;
 class QCompleter;
-class QListWidgetItem;
 
 namespace Ui {
 class ImportCsvDialog;
