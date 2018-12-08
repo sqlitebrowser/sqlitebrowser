@@ -16,12 +16,12 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Preglądarka Bazy Danych dla SQLite jest darmowym otwartym oprogramowaniem przeznaczonym do wizualnej edycji i kreacji  plików bazy danych SQLite.&lt;/p&gt;&lt;p&gt;Program podlega podwójnej licencji użytkowania: Publiczna licencja Mozilli Wersja 2 jak również Powszechna Licencja Publiczna GNU wersja 3 i poźniejsza. Możesz modyfikować i rozpowszechniać program pod warunkami zawartymi w tych licencjach.&lt;/p&gt;&lt;p&gt;Zobacz &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; i &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; dla szczegołów.&lt;/p&gt;&lt;p&gt;Odwiedź naszą stronę internetową aby zapoznać się z informacją na temat diałania tego programu: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;To oprogramowanie używa GPL/LGPL Qt Toolkit z: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; na temat licancji i użytkowania.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Używany również jest zestaw ikon Silk stworzony przez Mark James pod licencjią Creative Commons Attribution 2.5 i 3.0.&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; dla dalszej informacji.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -49,89 +49,95 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy rekord</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj wartości dla nowego rekordu zwracając uwagę na ograniczenia.Pola wytłusczone są obowiązkowe.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kolumnie Wartość możesz podać wartość dla pola identyfikowanego w kolumnie Nazwa. Kolumna Rodzaj wskazuje rodzaj pola. Wartości domyślne są wyświetlane w tym samym stylu, co wartości NULL.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="79"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodzaj</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="84"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartości do wstawienia. Pola wypełnione są automatycznie domyślnymi wartościami wtedy tylko gdy te wartości nie są ręcznie zmienione.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutaj pokazana jest kwerenda SQL dla dodania nowego rekordu zawierającego wartości wprowadzone w górnej ramce. Możesz ją ręcznie zmienić przed zapisem rekordu.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zapisz&lt;/span&gt; przekarze wyświetlone zapytanie SQL do bazy danych w celu zapisania nowego rekordu&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Przywróć domyślne&lt;/span&gt; przywróci wstępne wartości domyślne w kolumnie&lt;span style=&quot; font-weight:600;&quot;&gt;Wartość&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Anuluj&lt;/span&gt; zamyka to okno bez robienia zmian.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="208"/>
         <source>Auto-increment
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="211"/>
         <source>Unique constraint
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Unikat
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="214"/>
         <source>Check constraint:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Weryfikator:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="218"/>
         <source>Foreign key:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Klucz obcy:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="226"/>
         <source>Default value:	 %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość domyślna:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="252"/>
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wystąpił błąd podczas dodawania rekordu. Baza danych podała następujący komunikat:
+
+%1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="333"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
-        <translation type="unfinished"></translation>
+        <translation>Jesteś pewien że chcesz przywrócić domyślne wartości dla wszystich wpisów?</translation>
     </message>
 </context>
 <context>
@@ -257,13 +263,17 @@
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
 The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podaj klucz do zaszyfrowania bazy danych.
+Zwróć uwagę na to że wszelkie zmiany wprowadzone tutaj do opcjonalnych ustawień bedą wymagane przy każdym otwarciu pliku.
+W celu deaktywacji szyfrowania pozostaw pola klucza puste.
+Proces szyfrowania może zabrać dużo czasu w zależności od wielkości bazy danych. Zaleca się aby przed rozpoczęciem tego procesu zrobić kopię zapasową pliku. Wszelkie nie zapisane zmiany będą wprowadzone do bazy danych zanim szyfrowanie się rozpocznie.</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="39"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podać hasło do zaszyfrowania bazy danych.
+Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy danych będziesz musiał również podać tą informację.</translation>
     </message>
 </context>
 <context>
@@ -281,7 +291,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.ui" line="26"/>
         <source>Choose a display format for the column &apos;%1&apos; which is applied to each value prior to showing it.</source>
-        <translation>Wybierz domyślny format wyświetlania dla kolumny &apos;%1&apos;, który jest stosowany na każdej wartości zanim zostanie pokazana.</translation>
+        <translation>Wybierz domyślny format wyświetlania dla kolumny &apos;%1&apos;, który jest zastosowany dla każdej wartości zanim ona zostanie pokazana.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="12"/>
@@ -296,57 +306,57 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="15"/>
         <source>Exponent notation</source>
-        <translation type="unfinished"></translation>
+        <translation>Postać wykładnika</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="16"/>
         <source>Hex blob</source>
-        <translation type="unfinished"></translation>
+        <translation>Blob szestnastkowy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Hex number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numer szestnastkowy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="18"/>
         <source>Octal number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numer ósemkowy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
         <source>Round number</source>
-        <translation>Zaokrąglona liczba</translation>
+        <translation>Liczba zaokrąglona</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
         <source>Apple NSDate to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Apple NSDate do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Java epoch (milliseconds) to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Java epoch (milisekundy) do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Julian day to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data Juliańska do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Unix epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix epoch do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
         <source>Unix epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>Unix epoch do czasu lokalnego</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="26"/>
         <source>Windows DATE to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows DATE do daty</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
@@ -356,12 +366,12 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
         <source>Lower case</source>
-        <translation type="unfinished"></translation>
+        <translation>Małe litery</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>Upper case</source>
-        <translation type="unfinished"></translation>
+        <translation>Duże litery</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="66"/>
@@ -379,7 +389,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="212"/>
         <source>Please specify the database name under which you want to access the attached database</source>
-        <translation>Określ numer bazy danych pod którym chcesz uzyskać dostęp do załączonej bazy danych</translation>
+        <translation>Proszę podaj nazwę bazy danych za pomocą której chcesz uzyskać dostęp do załączonej bazy</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="261"/>
@@ -389,7 +399,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="570"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy na pewno chcesz zamknąć tę tymczasową bazę danych? Wszelkie zmiany bedą zapomniane.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="575"/>
@@ -404,7 +414,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="628"/>
         <source>Do you want to abort that other operation?</source>
-        <translation>Czy na pewno chcesz przerwać inne działanie?</translation>
+        <translation>Czy na pewno chcesz przerwać tą inną operację?</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="677"/>
@@ -421,7 +431,7 @@ If any of the other settings were altered for this database file you need to pro
         <location filename="../sqlitedb.cpp" line="844"/>
         <location filename="../sqlitedb.cpp" line="877"/>
         <source>No database file opened</source>
-        <translation>Brak otwartej bazy danych</translation>
+        <translation>Plik z bazą danych nie jest obecnie otwarty</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="906"/>
@@ -445,7 +455,7 @@ Przerywam wykonywanie%3.</translation>
         <location filename="../sqlitedb.cpp" line="960"/>
         <location filename="../sqlitedb.cpp" line="973"/>
         <source> and rolling back</source>
-        <translation> i wracam</translation>
+        <translation> i przywracam</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1181"/>
@@ -465,40 +475,43 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1341"/>
         <source>renameColumn: cannot find column %1.</source>
-        <translation>renameColumn: nie można odnaleźć kolumny %1.</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): nie można odnaleźć kolumny %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1349"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>renameColumn(zmiana nazwy kolumny): błąd przy zapisie. Baza Danych zwraca: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1395"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation>renameColumn: tworzenie nowej tabeli nie powiodło się. Baza danych: %1</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): tworzenie nowej tabeli nie powiodło się. Baza danych zwróciła: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1408"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
-        <translation>renameColumn: kopiowanie danych do nowej tabeli nie powiodło się. Baza danych: %1</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): kopiowanie danych do nowej tabeli nie powiodło się. Baza danych zwróciła:
+%1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1465"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation>renameColumn: usuwanie starej tabeli nie powiodło się. Baza danych: %1</translation>
+        <translation>renameColumn(zmiana nazwy kolumny): usuwanie starej tabeli nie powiodło się. Baza danych zwróciła: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1490"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Wystąpił błąd przy odtworzeniu niektórych obiektów powiązanych z tą bazą danych. Błędy tego rodzaju występują za zwyczaj w przypadku zmiany nazw niektórych kolumn. Sprawdź dokładnie następującą kwerendę SQL. Po dokonaniu zmian możesz ją ręcznie uruchomić:
+
+</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1499"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>renameColumn(zmiana nazwy kolumny): Wystąpił błąd podczas odłączenia punktu zapisu. Baza danych podała następujący komunikat: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1538"/>
@@ -510,32 +523,32 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1573"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="unfinished"></translation>
+        <translation>... &lt;string nie można zalogować zawiera dane w postaci binarnej&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1676"/>
         <source>could not get list of db objects: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>nie mogę pobrać listy obiektów bazy danych: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1682"/>
         <source>could not get list of databases: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>nie mogę odczytać listy baz danych: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1712"/>
         <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="unfinished"></translation>
+        <translation>nie otrzymałem żadnego wyniku od pragmy %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1716"/>
         <source>could not execute pragma command: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>nie mogłem wykonać polecenia pragmy: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1737"/>
         <source>Error setting pragma %1 to %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd przy ustawianiu pragmy %1 do %2: %3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1783"/>
@@ -545,7 +558,7 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1821"/>
         <source>Error loading extension: %1</source>
-        <translation type="unfinished">Błąd ładowania rozszerzenia: %1</translation>
+        <translation>Wystąpił błąd przy ładownaniu rozszerzenia: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1846"/>
@@ -583,7 +596,7 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../DbStructureModel.cpp" line="154"/>
         <source>Browsables</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekty do przeglądania</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="159"/>
@@ -608,12 +621,12 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../DbStructureModel.cpp" line="316"/>
         <source>Views (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyświetlenia (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="321"/>
         <source>Triggers (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchomienia (%1)</translation>
     </message>
 </context>
 <context>
@@ -621,17 +634,17 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="14"/>
         <source>Edit database cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytuj komórkę bazy danych</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="28"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryb:</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="41"/>
         <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>To jest lista dostępnych trybów dla edytora komórek. Wybierz tryb do wyświetlania lub edycji danych dla tej komórki.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="45"/>
@@ -662,7 +675,7 @@ Przerywam wykonywanie%3.</translation>
         <location filename="../EditDialog.ui" line="73"/>
         <location filename="../EditDialog.ui" line="76"/>
         <source>Automatically adjust the editor mode to the loaded data type</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie dostosuj tryb edytora w zależności od załadowanych danych</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="79"/>
@@ -672,13 +685,13 @@ Przerywam wykonywanie%3.</translation>
     <message>
         <location filename="../EditDialog.ui" line="82"/>
         <source>Auto-switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatyczny przełącznik</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="116"/>
         <location filename="../EditDialog.ui" line="119"/>
         <source>Auto-format: pretty print on loading, compact on saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-formatowanie: upiększa tekst przy ładowaniu i kompaktuje przy zapisywaniu.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="122"/>
@@ -776,18 +789,18 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="318"/>
         <location filename="../EditDialog.ui" line="333"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="321"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz podgląd wydruku dla aktualnie wyświetlonego obrazu</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="324"/>
         <location filename="../EditDialog.ui" line="339"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="336"/>
@@ -797,7 +810,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="348"/>
         <source>Copy Hex and ASCII</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj Hex i ASCII</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="351"/>
@@ -807,7 +820,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished">Ctrl+Shift+C</translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="213"/>
@@ -839,14 +852,14 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki Tekstowe (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="313"/>
         <location filename="../EditDialog.cpp" line="335"/>
         <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki JSON (*.json)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="314"/>
@@ -854,26 +867,26 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>XML files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki XML (*.xml)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Piki graficzne (%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki Binarne (*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
-        <translation type="unfinished">Wszystkie pliki (*)</translation>
+        <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="343"/>
@@ -883,18 +896,18 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Grafika</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki SVG (*.svg)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="400"/>
         <location filename="../EditDialog.cpp" line="420"/>
         <source>Hex dump files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik szesnastkowy (*.txt)</translation>
     </message>
     <message>
         <source>Text files (*.txt);;Image files (%1);;JSON files (*.json);;XML files (*.xml);;Binary files (*.bin);;All files (*)</source>
@@ -989,7 +1002,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytuj Schemat Indeksu</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
@@ -1004,7 +1017,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
         <source>&amp;Unique</source>
-        <translation>&amp;Unikatowy</translation>
+        <translation>&amp;Unikalny</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
@@ -1039,12 +1052,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolumna indeksu</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Porządek</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="268"/>
@@ -1131,7 +1144,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="246"/>
         <source>NN</source>
-        <translation type="unfinished"></translation>
+        <translation>NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="249"/>
@@ -1141,7 +1154,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="254"/>
         <source>PK</source>
-        <translation type="unfinished"></translation>
+        <translation>PK</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="257"/>
@@ -1151,7 +1164,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="262"/>
         <source>AI</source>
-        <translation type="unfinished"></translation>
+        <translation>AI</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="265"/>
@@ -1161,7 +1174,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="270"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="273"/>
@@ -1352,7 +1365,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation type="unfinished"></translation>
+        <translation>Upiększ wydruk</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="29"/>
@@ -1437,12 +1450,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="85"/>
         <source>Keep column names in INSERT INTO</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozostaw nazwy kolumn w INSERT INTO</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiele rzędów (Wartości) dla polecenia INSERT</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
@@ -1507,7 +1520,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="61"/>
         <location filename="../ExtendedScintilla.cpp" line="236"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="231"/>
@@ -1517,7 +1530,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="235"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj...</translation>
     </message>
 </context>
 <context>
@@ -1632,7 +1645,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FileExtensionManager.ui" line="14"/>
         <source>File Extension Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Menadżer Rozszerzeń Plików</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="22"/>
