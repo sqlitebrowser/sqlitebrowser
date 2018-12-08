@@ -1,7 +1,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QApplication>
 #include <QHash>
 #include <QVariant>
 

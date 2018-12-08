@@ -34,7 +34,7 @@ HEADERS += \
     ExportDataDialog.h \
     ImportCsvDialog.h \
     sqltextedit.h \
-    sqlitetypes.h \
+    sql/sqlitetypes.h \
     csvparser.h \
     ExtendedTableWidget.h \
     grammar/Sqlite3Lexer.hpp \
@@ -68,7 +68,11 @@ HEADERS += \
     FileExtensionManager.h \
     Data.h \
     CipherSettings.h \
-    DotenvFormat.h
+    DotenvFormat.h \
+    Palette.h \
+    CondFormat.h \
+    sql/Query.h \
+    RunSql.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -83,7 +87,7 @@ SOURCES += \
     ExportDataDialog.cpp \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
-    sqlitetypes.cpp \
+    sql/sqlitetypes.cpp \
     csvparser.cpp \
     ExtendedTableWidget.cpp \
     grammar/Sqlite3Lexer.cpp \
@@ -113,7 +117,11 @@ SOURCES += \
     FileExtensionManager.cpp \
     Data.cpp \
     CipherSettings.cpp \
-    DotenvFormat.cpp
+    DotenvFormat.cpp \
+    Palette.cpp \
+    CondFormat.cpp \
+    sql/Query.cpp \
+    RunSql.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -155,7 +163,8 @@ TRANSLATIONS += \
     translations/sqlb_en_GB.ts \
     translations/sqlb_ko_KR.ts \
     translations/sqlb_tr.ts \
-    translations/sqlb_uk_UA.ts
+    translations/sqlb_uk_UA.ts \
+    translations/sqlb_it.ts
 
 # SQLite / SQLCipher switch pieces
 CONFIG(sqlcipher) {
@@ -218,6 +227,11 @@ mac {
     LIBS += -L/usr/local/lib -framework Carbon
     QMAKE_INFO_PLIST = app.plist
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
+}
+
+CONFIG(all_warnings) {
+    QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion
+    QMAKE_CXXFLAGS += -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast
 }
 
 UI_DIR = .ui

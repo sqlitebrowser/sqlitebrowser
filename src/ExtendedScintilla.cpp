@@ -129,6 +129,7 @@ void ExtendedScintilla::reloadKeywords()
 void ExtendedScintilla::reloadSettings()
 {
     reloadLexerSettings(lexer());
+    reloadKeywords();
 }
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {
@@ -210,7 +211,8 @@ bool ExtendedScintilla::findText(QString text, bool regexp, bool caseSensitive, 
         setCursorPosition(lineFrom, indexFrom);
     }
 
-    return findFirst(text, regexp, caseSensitive, words, wrap, forward);
+    return findFirst(text, regexp, caseSensitive, words, wrap, forward,
+                     /* line */ -1, /* index */ -1, /* show */ true, /* posix */ true);
 }
 
 void ExtendedScintilla::clearSelection()

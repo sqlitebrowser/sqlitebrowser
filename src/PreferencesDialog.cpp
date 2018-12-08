@@ -16,7 +16,7 @@
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
-      m_dbFileExtensions(FileDialog::getSqlDatabaseFileFilter().split(";;"))
+      m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -56,6 +56,7 @@ PreferencesDialog::~PreferencesDialog()
 void PreferencesDialog::chooseLocation()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -181,6 +182,7 @@ void PreferencesDialog::loadSettings()
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
+    ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
     ui->toolbarStyleComboBox->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
 }
@@ -240,6 +242,7 @@ void PreferencesDialog::saveSettings()
         extList.append(item->text());
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
+    Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
 
     // Save remote settings
     Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
@@ -366,6 +369,7 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 void PreferencesDialog::addExtension()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenExtensionFile,
                 this,
                 tr("Select extension file"),
                 tr("Extensions(*.so *.dll);;All files(*)"));
@@ -501,7 +505,7 @@ void PreferencesDialog::addClientCertificate()
 {
     // Get certificate file to import and abort here if no file gets selected
     // NOTE: We assume here that this file contains both, certificate and private key!
-    QString path = FileDialog::getOpenFileName(this, tr("Import certificate file"), "*.pem");
+    QString path = FileDialog::getOpenFileName(OpenCertificateFile, this, tr("Import certificate file"), "*.pem");
     if(path.isEmpty())
         return;
 
@@ -573,6 +577,7 @@ void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCert
 void PreferencesDialog::chooseRemoteCloneDirectory()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);

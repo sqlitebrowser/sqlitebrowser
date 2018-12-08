@@ -1,6 +1,6 @@
 // This module implements the portability layer for the Qt port of Scintilla.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -105,7 +105,7 @@ void Font::Create(const FontParameters &fp)
         strategy = QFont::PreferDefault;
     }
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) && QT_VERSION < 0x050000
 #if QT_VERSION >= 0x040700
     strategy = static_cast<QFont::StyleStrategy>(strategy | QFont::ForceIntegerMetrics);
 #else
@@ -171,7 +171,7 @@ public:
     void Init(WindowID wid);
     void Init(SurfaceID sid, WindowID);
     void Init(QPainter *p);
-    void InitPixMap(int width, int height, Surface *, WindowID wid);
+    void InitPixMap(int width, int height, Surface *sid, WindowID wid);
 
     void Release();
     bool Initialised() {return painter;}
@@ -207,7 +207,7 @@ public:
     XYPOSITION WidthChar(Font &font_, char ch);
     XYPOSITION Ascent(Font &font_);
     XYPOSITION Descent(Font &font_);
-    XYPOSITION InternalLeading(Font &font_) {return 0;}
+    XYPOSITION InternalLeading(Font &font_) {Q_UNUSED(font_); return 0;}
     XYPOSITION ExternalLeading(Font &font_);
     XYPOSITION Height(Font &font_);
     XYPOSITION AverageCharWidth(Font &font_);
@@ -216,7 +216,7 @@ public:
     void FlushCachedState();
 
     void SetUnicodeMode(bool unicodeMode_) {unicodeMode = unicodeMode_;}
-    void SetDBCSMode(int codePage) {}
+    void SetDBCSMode(int codePage) {Q_UNUSED(codePage);}
 
     void DrawXPM(PRectangle rc, const XPM *xpm);
 
@@ -281,7 +281,7 @@ void SurfaceImpl::Init(QPainter *p)
     painter = p;
 }
 
-void SurfaceImpl::InitPixMap(int width, int height, Surface *, WindowID wid)
+void SurfaceImpl::InitPixMap(int width, int height, Surface *sid, WindowID wid)
 {
     Release();
 
@@ -298,6 +298,8 @@ void SurfaceImpl::InitPixMap(int width, int height, Surface *, WindowID wid)
 
     painter = new QPainter(pd);
     my_resources = true;
+
+    SetUnicodeMode(static_cast<SurfaceImpl *>(sid)->unicodeMode);
 }
 
 void SurfaceImpl::Release()
@@ -539,6 +541,8 @@ void SurfaceImpl::DrawXPM(PRectangle rc, const XPM *xpm)
 void SurfaceImpl::DrawRGBAImage(PRectangle rc, int width, int height,
         const unsigned char *pixelsImage)
 {
+    Q_UNUSED(width);
+    Q_UNUSED(height);
     Q_ASSERT(painter);
 
     const QImage *qim = reinterpret_cast<const QImage *>(pixelsImage);
@@ -1004,15 +1008,14 @@ bool Platform::IsKeyDown(int)
     return false;
 }
 
-long Platform::SendScintilla(WindowID w, unsigned int msg,
-        unsigned long wParam, long lParam)
+long Platform::SendScintilla(WindowID, unsigned int, unsigned long, long)
 {
     // This is never called.
     return 0;
 }
 
-long Platform::SendScintillaPointer(WindowID w, unsigned int msg,
-        unsigned long wParam, void *lParam)
+long Platform::SendScintillaPointer(WindowID, unsigned int, unsigned long,
+        void *)
 {
     // This is never called.
     return 0;

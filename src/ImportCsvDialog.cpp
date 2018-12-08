@@ -100,10 +100,15 @@ namespace {
 void rollback(
         ImportCsvDialog* dialog,
         DBBrowserDB* pdb,
+        DBBrowserDB::db_pointer_type* db_ptr,
         const QString& savepointName,
         size_t nRecord,
         const QString& message)
 {
+    // Release DB handle. This needs to be done before calling revertToSavepoint as that function needs to be able to acquire its own handle.
+    if(db_ptr)
+        *db_ptr = nullptr;
+
     QApplication::restoreOverrideCursor();  // restore original cursor
     if(!message.isEmpty())
     {
@@ -335,8 +340,7 @@ void ImportCsvDialog::updateSelection(bool selected)
 
 void ImportCsvDialog::matchSimilar()
 {
-    auto item = ui->filePicker->currentItem();
-    auto selectedHeader = generateFieldList(item->data(Qt::DisplayRole).toString());
+    auto selectedHeader = generateFieldList(ui->filePicker->currentItem()->data(Qt::DisplayRole).toString());
 
     for (int i = 0; i < ui->filePicker->count(); i++)
     {
@@ -533,7 +537,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     QString restorepointName = pdb->generateSavepointName("csvimport");
     if(!pdb->setSavepoint(restorepointName))
     {
-        rollback(this, pdb, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
+        rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
         return false;
     }
 
@@ -546,7 +550,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
         {
-            rollback(this, pdb, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
+            rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
             return false;
         }
 
@@ -601,7 +605,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
-    QString sQuery = QString("INSERT INTO %1 VALUES(").arg(sqlb::escapeIdentifier(tableName));
+    QString sQuery = QString("INSERT %1 INTO %2 VALUES(").arg(currentOnConflictStrategy()).arg(sqlb::escapeIdentifier(tableName));
     for(size_t i=1;i<=fieldList.size();i++)
         sQuery.append(QString("?%1,").arg(i));
     sQuery.chop(1); // Remove last comma
@@ -672,13 +676,15 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Some error occurred or the user cancelled the action
 
         // Rollback the entire import. If the action was cancelled, don't show an error message. If it errored, show an error message.
-        sqlite3_finalize(stmt);
         if(result == CSVParser::ParserResult::ParserResultCancelled)
         {
-            rollback(this, pdb, restorepointName, 0, QString());
+            sqlite3_finalize(stmt);
+            rollback(this, pdb, &pDb, restorepointName, 0, QString());
             return false;
         } else {
-            rollback(this, pdb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(pdb->lastError()));
+            QString error(sqlite3_errmsg(pDb.get()));
+            sqlite3_finalize(stmt);
+            rollback(this, pdb, &pDb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(error));
             return false;
         }
     }
@@ -773,6 +779,19 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->comboEncoding->currentText();
 }
 
+QString ImportCsvDialog::currentOnConflictStrategy() const
+{
+    switch(ui->comboOnConflictStrategy->currentIndex())
+    {
+    case 1:
+        return "OR IGNORE";
+    case 2:
+        return "OR REPLACE";
+    default:
+        return QString();
+    }
+}
+
 void ImportCsvDialog::toggleAdvancedSection(bool show)
 {
     ui->labelNoTypeDetection->setVisible(show);
@@ -781,4 +800,6 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkFailOnMissing->setVisible(show);
     ui->labelIgnoreDefaults->setVisible(show);
     ui->checkIgnoreDefaults->setVisible(show);
+    ui->labelOnConflictStrategy->setVisible(show);
+    ui->comboOnConflictStrategy->setVisible(show);
 }

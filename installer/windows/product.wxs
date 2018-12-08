@@ -5,7 +5,7 @@
 
     <Product Id="*" UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Name="$(var.Name)" Manufacturer="$(var.Team)" Version="$(var.Version)" Language="1033">
 
-        <Package Id="*" Compressed="yes" InstallerVersion="301" InstallPrivileges="elevated" InstallScope="perMachine" />
+        <Package Id="*" Compressed="yes" InstallerVersion="405" InstallPrivileges="elevated" InstallScope="perMachine" />
 
         <Media Id="1" Cabinet="Media.cab" EmbedCab="yes" CompressionLevel="high" />
 
@@ -50,6 +50,27 @@
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
+                    <!--
+                    This DLL is required when using Qt 5.10 and higher to show Windows Vista style GUI. The check for
+                    64-bit is required here since we are using Qt 5.7 for the 32-bit build. This file does not exist
+                    on earlier version of Qt. If Qt 5.10 is used for both 32-bit and 64-bit then this check can be removed.
+
+                    See https://bugreports.qt.io/browse/QTBUG-65177
+                    -->
+                    <?if $(sys.BUILDARCH)="x64"?>
+                    <Directory Id="styles" Name="styles">
+                        <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
+                    </Directory>
+                    <?endif?>
+                    <!-- This plugin is not needed for the 32-bit version which is built with Qt 5.7. -->
+                    <?if $(sys.BUILDARCH)="x64"?>
+                    <Directory Id="bearer" Name="bearer">
+                        <Component><File Source="$(var.QtPath)\plugins\bearer\qgenericbearer.dll" /></Component>
+                    </Directory>
+                    <?endif?>
+                    <Directory Id="extensions" Name="extensions">
+                        <Component><File Source="$(var.SQLitePath)\math.dll" /></Component>
+                    </Directory>
                     <Directory Id="imageformats" Name="imageformats">
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qicns.dll" /></Component>
@@ -64,6 +85,9 @@
                     <Directory Id="platforms" Name="platforms">
                         <Component><File Source="$(var.QtPath)\plugins\platforms\qwindows.dll" /></Component>
                     </Directory>
+                    <Directory Id="printsupport" Name="printsupport">
+                        <Component><File Source="$(var.QtPath)\plugins\printsupport\windowsprintersupport.dll" /></Component>
+                    </Directory>
                     <Directory Id="licenses" Name="licenses">
                         <Component><File Source="..\..\LICENSE" /></Component>
                         <Component><File Source="..\..\LICENSE-PLUGINS" /></Component>
@@ -77,24 +101,34 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
                     <Component><File Source="$(var.OpenSSLPath)\libeay32.dll" /></Component>
                     <Component><File Source="$(var.OpenSSLPath)\ssleay32.dll" /></Component>
-                    <?ifdef SQLCipher ?>
-                        <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
-                    <?else?>
-                        <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
-                    <?endif?>
-                    <Component><File Source="..\..\Release\DB Browser for SQLite.exe" Checksum="yes" /></Component>
+                    <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
+                    <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
+                    <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
+                    <Component><File Source="$(var.SQLCipherExePath)\DB Browser for SQLCipher.exe" Checksum="yes" /></Component>
                 </Directory>
             </Directory>
             <Directory Id="DesktopFolder">
-                <Component Id="DesktopShortcut">
-                    <Shortcut Id="DSC" Name="$(var.Name)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
-                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                <Component Id="SQLiteDesktopShortcut" Transitive="yes">
+                    <Condition>SHORTCUT_SQLITE_DESKTOP</Condition>
+                    <Shortcut Id="SLDSC" Name="DB Browser (SQLite)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
+                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteDesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                </Component>
+                <Component Id="SQLCipherDesktopShortcut" Transitive="yes">
+                    <Condition>SHORTCUT_SQLCIPHER_DESKTOP</Condition>
+                    <Shortcut Id="SCDSC" Name="DB Browser (SQLCipher)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLCipher.exe" WorkingDirectory="INSTALLDIR" />
+                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherDesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
             </Directory>
             <Directory Id="ProgramMenuFolder">
-                <Component Id="ProgramMenuShortcut">
-                    <Shortcut Id="PMSC" Name="$(var.Name)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
-                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="ProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                <Component Id="SQLiteProgramMenuShortcut" Transitive="yes">
+                    <Condition>SHORTCUT_SQLITE_PROGRAMMENU</Condition>
+                    <Shortcut Id="SLPMSC" Name="DB Browser (SQLite)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLite.exe" WorkingDirectory="INSTALLDIR" />
+                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                </Component>
+                <Component Id="SQLCipherProgramMenuShortcut" Transitive="yes">
+                    <Condition>SHORTCUT_SQLCIPHER_PROGRAMMENU</Condition>
+                    <Shortcut Id="SCPMSC" Name="DB Browser (SQLCipher)" Description="$(var.AppComments)" Target="[INSTALLDIR]DB Browser for SQLCipher.exe" WorkingDirectory="INSTALLDIR" />
+                    <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
             </Directory>
         </Directory>
@@ -107,15 +141,25 @@
                 <MergeRef Id="VCRedist"/>
             </Feature>
 
-            <Feature Id="Shortcuts" Title="Shortcuts" Description="Show shortcuts for the application in different locations" AllowAdvertise="no" Display="expand">
-                <Feature Id="FeatureDesktopShortcut" Title="Desktop" AllowAdvertise="no">
-                    <ComponentRef Id="DesktopShortcut" />
-                </Feature>
-                <Feature Id="FeatureProgramMenuShortcut" Title="Program Menu" AllowAdvertise="no">
-                    <ComponentRef Id="ProgramMenuShortcut" />
+            <Feature Id="Extensions" Title="SQLite Extensions" Description="SQLite runtime loadable extensions" AllowAdvertise="no" Display="expand">
+                <Feature Id="MathExtension" Title="Math" Description="Provide mathematical and string extension functions for SQL queries." AllowAdvertise="no">
+                    <ComponentRef Id="math.dll" />
                 </Feature>
             </Feature>
 
+            <!-- Shortcuts -->
+            <ComponentRef Id="SQLiteDesktopShortcut" />
+            <ComponentRef Id="SQLiteProgramMenuShortcut" />
+            <ComponentRef Id="SQLCipherDesktopShortcut" />
+            <ComponentRef Id="SQLCipherProgramMenuShortcut" />
+
+            <!-- Translations -->
+            <ComponentGroupRef Id="TranslationsGroup" />
+
+            <!-- Bearer -->
+            <?if $(sys.BUILDARCH)="x64"?>
+            <ComponentRef Id="qgenericbearer.dll" />
+            <?endif?>
             <!-- Plugins -->
             <ComponentRef Id="qgif.dll" />
             <ComponentRef Id="qicns.dll" />
@@ -128,6 +172,12 @@
             <ComponentRef Id="qwebp.dll" />
             <!-- Platforms -->
             <ComponentRef Id="qwindows.dll" />
+            <!-- Windows Vista Style -->
+            <?if $(sys.BUILDARCH)="x64"?>
+                <ComponentRef Id="qwindowsvistastyle.dll" />
+            <?endif?>
+            <!-- Printer -->
+            <ComponentRef Id="windowsprintersupport.dll" />
             <!-- Licenses -->
             <ComponentRef Id="LICENSE" />
             <ComponentRef Id="LICENSE_PLUGINS" />
@@ -142,32 +192,51 @@
             <!-- OpenSSL -->
             <ComponentRef Id="libeay32.dll" />
             <ComponentRef Id="ssleay32.dll" />
-            <!-- SQLCipher or SQLite -->
-            <?ifdef SQLCipher ?>
-                <ComponentRef Id="sqlcipher.dll" />
-            <?else?>
-                <ComponentRef Id="sqlite3.dll" />
-            <?endif?>
+            <!-- SQLite & SQLCipher -->
+            <ComponentRef Id="sqlcipher.dll" />
+            <ComponentRef Id="sqlite3.dll" />
             <!-- Application -->
             <ComponentRef Id="DB_Browser_for_SQLite.exe" />
+            <ComponentRef Id="DB_Browser_for_SQLCipher.exe" />
         </Feature>
 
     <!-- ============================================= Installation UI ============================================= -->
 
-        <!-- Dialog Set -->
-        <UIRef Id="WixUI_FeatureTree" />
-
         <!-- License file -->
         <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
-
         <!-- Banner image -->
         <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
-
         <!-- Background image -->
         <WixVariable Id="WixUIDialogBmp" Value="background.bmp" />
 
-        <!-- Optional text, shown at the end of installation -->
-        <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Thank you for installing $(var.Name)." />
+        <UI>
+            <!-- Standard Dialog Set -->
+            <UIRef Id="WixUI_FeatureTree" />
+
+            <!-- Shortcuts Dialog -->
+            <DialogRef Id="ShortcutsDialog" />
+
+            <!-- Show the Shortcuts dialog after "LicenseAgreementDlg" and before "CustomizeDlg" dialog -->
+            <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="ShortcutsDialog">LicenseAccepted = "1"</Publish>
+            <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="ShortcutsDialog" Order="2">NOT Installed</Publish>
+
+            <!-- Restore the previous settings for the shortcuts -->
+            <Property Id="SHORTCUT_SQLITE_DESKTOP" Secure="yes">
+                <RegistrySearch Id="RS_SC_SL_DT" Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteDesktopShortcut" Type="raw" />
+            </Property>
+            <Property Id="SHORTCUT_SQLITE_PROGRAMMENU" Secure="yes">
+                <RegistrySearch Id="RS_SC_SL_PM" Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteProgramMenuShortcut" Type="raw" />
+            </Property>
+            <Property Id="SHORTCUT_SQLCIPHER_DESKTOP" Secure="yes">
+                <RegistrySearch Id="RS_SC_SC_DT" Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherDesktopShortcut" Type="raw" />
+            </Property>
+            <Property Id="SHORTCUT_SQLCIPHER_PROGRAMMENU" Secure="yes">
+                <RegistrySearch Id="RS_SC_SC_PM" Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherProgramMenuShortcut" Type="raw" />
+            </Property>
+
+            <!-- Optional text, shown at the end of installation -->
+            <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Thank you for installing $(var.Name)." />
+        </UI>
 
     <!-- ===================================== Run the application after setup ===================================== -->
     <!--   http://wixtoolset.org/documentation/manual/v3/howtos/ui_and_localization/run_program_after_install.html   -->
@@ -187,6 +256,39 @@
     <!-- Enable verbose logging during installation. The log file is named MSI*.LOG and located in %TEMP% folder.    -->
 
         <Property Id="MsiLogging" Value="voicewarmupx" />
+
+    <!-- ======================================== Remove old NSIS installer ======================================== -->
+    <!--
+        When the application is installed using the NSIS installer, the installer writes a key in the registry. We will
+        use this fact to check if an older version (up to v3.10.1) of the application is installed. If found, we will
+        remove it before installing the application with the new MSI installer.
+
+        NSIS installer writes the following key "HKLM\Software\<Company>\<Product>" in the registry after installation.
+        So the right key to search for is "HKLM\Software\DB Browser for SQLite Team\DB Browser for SQLite".
+
+        But the installer itself is a 32-bit application, and it can't write to the 64-bit registry. This works without
+        a problem on 32-bit Windows. On 64-bit Winodws however, the key is written in the 32-bit registry, under the
+        "Wow6432Node" key.
+
+        Therefore, the `Win64="no"` attribute is needed to disable searching in the 64-bit registry. On 32-bit Windows
+        the right key is searched, and on 64-bit Windows the same key is searched but under the "Wow6432Node" key.
+    -->
+
+        <!-- Search the registry to find the location of NSIS installation folder, and set "NSIS_INSTALLDIR" to its path. -->
+        <Property Id="NSIS_INSTALLDIR">
+            <RegistrySearch Id="RS_NSIS" Root="HKLM" Key="Software\DB Browser for SQLite Team\DB Browser for SQLite" Win64="no" Type="raw" />
+        </Property>
+
+        <!-- If registry search was successful, "NSIS_UNINSTALLER" property will hold the full path to "Uninstall.exe" -->
+        <SetProperty Id="NSIS_UNINSTALLER" Value="[NSIS_INSTALLDIR]\Uninstall.exe" After="AppSearch">NSIS_INSTALLDIR</SetProperty>
+
+        <!-- Run "Uninstall.exe /S" to silently remove the older version of the application. -->
+        <CustomAction Id="CA_NSIS_UNINSTALL" Property="NSIS_UNINSTALLER" ExeCommand="/S" Execute="deferred" Impersonate="no" />
+
+        <!-- Schedule the custom action above to run after "RemoveExistingProducts". -->
+        <InstallExecuteSequence>
+            <Custom Action='CA_NSIS_UNINSTALL' After='RemoveExistingProducts'>NSIS_INSTALLDIR</Custom>
+        </InstallExecuteSequence>
 
     </Product>
 

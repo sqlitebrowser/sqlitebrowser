@@ -1,6 +1,6 @@
 #include "ColumnDisplayFormatDialog.h"
 #include "ui_ColumnDisplayFormatDialog.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QString current_format, QWidget* parent)
     : QDialog(parent),

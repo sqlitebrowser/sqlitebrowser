@@ -23,10 +23,12 @@ private slots:
 
 signals:
     void delayedTextChanged(QString text);
+    void addFilterAsCondFormat(QString text);
+    void clearAllCondFormats();
 
 protected:
-    void keyReleaseEvent(QKeyEvent* event);
-    void setFilterHelper(const QString& filterOperator);
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void setFilterHelper(const QString& filterOperator, const QString& operatorSuffix = "");
 
 private:
     QList<FilterLineEdit*>* filterList;

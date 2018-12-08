@@ -3,16 +3,16 @@
 
 #include "sqlitedb.h"
 #include "PlotDock.h"
+#include "Palette.h"
+#include "CondFormat.h"
+#include "sql/Query.h"
+#include "RunSql.h"
 
+#include <memory>
 #include <QMainWindow>
 #include <QMap>
 
-class QDragEnterEvent;
 class EditDialog;
-class QIntValidator;
-class QLabel;
-class QModelIndex;
-class QPersistentModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
 class RemoteDock;
@@ -20,16 +20,23 @@ class RemoteDatabase;
 class FindReplaceDialog;
 class ExtendedTableWidget;
 
+class QDragEnterEvent;
+class QIntValidator;
+class QModelIndex;
+class QLabel;
+class QPersistentModelIndex;
+class QToolButton;
+
 namespace Ui {
 class MainWindow;
 }
 
 struct BrowseDataTableSettings
 {
-    int sortOrderIndex;
-    Qt::SortOrder sortOrderMode;
+    sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
+    QMap<int, QVector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -39,18 +46,16 @@ struct BrowseDataTableSettings
     QMap<int, bool> hiddenColumns;
 
     BrowseDataTableSettings() :
-        sortOrderIndex(0),
-        sortOrderMode(Qt::AscendingOrder),
         showRowid(false)
     {
     }
 
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
     {
-        stream >> object.sortOrderIndex;
-        int sortordermode;
-        stream >> sortordermode;
-        object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+        int sortOrderIndex, sortOrderMode;
+        stream >> sortOrderIndex;
+        stream >> sortOrderMode;
+        object.query.orderBy().emplace_back(sortOrderIndex, sortOrderMode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
         stream >> object.columnWidths;
         stream >> object.filterValues;
         stream >> object.displayFormats;
@@ -81,7 +86,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
@@ -117,23 +122,6 @@ private:
         int case_sensitive_like;
     } pragmaValues;
 
-    enum StatementType
-    {
-        SelectStatement,
-        AlterStatement,
-        DropStatement,
-        RollbackStatement,
-        PragmaStatement,
-        VacuumStatement,
-        InsertStatement,
-        UpdateStatement,
-        DeleteStatement,
-        CreateStatement,
-        AttachStatement,
-        DetachStatement,
-        OtherStatement,
-    };
-
     Ui::MainWindow* ui;
 
     DBBrowserDB db;
@@ -157,10 +145,12 @@ private:
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
     QLabel* statusReadOnlyLabel;
+    QToolButton* statusStopButton;
+    QLabel* statusBusyLabel;
 
     DbStructureModel* dbStructureModel;
 
-    enum { MaxRecentFiles = 5 };
+    static const int MaxRecentFiles = 5;
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
@@ -177,6 +167,10 @@ private:
 
     QString defaultBrowseTableEncoding;
 
+    Palette m_condFormatPalette;
+
+    std::unique_ptr<RunSql> execute_sql_worker;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -192,16 +186,14 @@ private:
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
-    StatementType getQueryType(const QString& query) const;
-
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
 
 protected:
-    void closeEvent(QCloseEvent *);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void resizeEvent(QResizeEvent *event);
-    void keyPressEvent(QKeyEvent* event);
+    void closeEvent(QCloseEvent *) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
@@ -211,6 +203,7 @@ public slots:
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure(const QString& old_table = QString());
+    void openPreferences();
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -249,7 +242,6 @@ private slots:
     void fileRevert();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
-    void openPreferences();
     void openRecentFile();
     void loadPragmas();
     void updatePragmaUi();
@@ -278,6 +270,8 @@ private slots:
     void saveProject();
     void fileAttach();
     void updateFilter(int column, const QString& value);
+    void addCondFormat(int column, const QString& value);
+    void clearAllCondFormats(int column);
     void editEncryption();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();
@@ -295,12 +289,14 @@ private slots:
     void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
+    void toggleSqlBlockComment();
     void openSqlPrintDialog();
     void saveFilterAsView();
     void exportFilteredTable();
     void updateInsertDeleteRecordButton();
     void runSqlNewTab(const QString& query, const QString& title);
     void printDbStructure();
+    void updateDatabaseBusyStatus(bool busy, const QString& user);
 };
 
 #endif

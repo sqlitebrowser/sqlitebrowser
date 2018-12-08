@@ -3,7 +3,7 @@
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -76,8 +76,8 @@ void SqlUiLexer::setupAutoCompletion()
             << "length" + tr("(X) For a string value X, the length(X) function returns the number of characters (not bytes) in X prior to the first NUL character.")
             << "like" + tr("(X,Y) The like() function is used to implement the \"Y LIKE X\" expression.")
             << "like" + tr("(X,Y,Z) The like() function is used to implement the \"Y LIKE X ESCAPE Z\" expression.")
-            << "load_extension" + tr("(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.")
-            << "load_extension" + tr("(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.")
+            << "load_extension" + tr("(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.\nUse of this function must be authorized from Preferences.")
+            << "load_extension" + tr("(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.\nUse of this function must be authorized from Preferences.")
             << "lower" + tr("(X) The lower(X) function returns a copy of string X with all ASCII characters converted to lower case.")
             << "ltrim" + tr("(X) ltrim(X) removes spaces from the left side of X.")
             << "ltrim" + tr("(X,Y) The ltrim(X,Y) function returns a string formed by removing any and all characters that appear in Y from the left side of X.")
@@ -208,7 +208,7 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
     // is configured.
     QStringList wl;
 
-    QString escapeSeparator = sqlb::escapeIdentifier(".");
+    QString escapeSeparator = sqlb::escapeIdentifier(QString("."));
     // Case for non symetric quotes, e.g. "[.]" to "].["
     std::reverse(escapeSeparator.begin(), escapeSeparator.end());
 

@@ -16,6 +16,10 @@
 #include <QJsonDocument>
 #include <QtXml/QDomDocument>
 #include <QMessageBox>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+#include <QPainter>
+#include <QClipboard>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -29,6 +33,7 @@ EditDialog::EditDialog(QWidget* parent)
 
     // Add Ctrl-Enter (Cmd-Enter on OSX) as a shortcut for the Apply button
     ui->buttonApply->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+    ui->buttonApply->setToolTip(ui->buttonApply->toolTip() + " [" + ui->buttonApply->shortcut().toString(QKeySequence::NativeText) + "]");
 
     QHBoxLayout* hexLayout = new QHBoxLayout(ui->editorBinary);
     hexEdit = new QHexEdit(this);
@@ -47,6 +52,15 @@ EditDialog::EditDialog(QWidget* parent)
 
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
+
+    // Create shortcuts for the widgets that doesn't have its own print action or printing mechanism.
+    QShortcut* shortcutPrintText = new QShortcut(QKeySequence::Print, ui->editorText, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrintText, &QShortcut::activated, this, &EditDialog::openPrintDialog);
+
+    // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
+    ui->editorImage->addAction(ui->actionPrintImage);
+    ui->editorBinary->addAction(ui->actionPrint);
+    ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->buttonIndent->setChecked(mustIndentAndCompact);
@@ -326,6 +340,7 @@ void EditDialog::importData()
         break;
     }
     QString fileName = FileDialog::getOpenFileName(
+                OpenDataFile,
                 this,
                 tr("Choose a file to import")
 #ifndef Q_OS_MAC // Filters on OS X are buggy
@@ -390,6 +405,7 @@ void EditDialog::exportData()
 
     QString selectedFilter = filters.first();
     QString fileName = FileDialog::getSaveFileName(
+                CreateDataFile,
                 this,
                 tr("Choose a filename to export data"),
                 filters.join(";;"),
@@ -731,15 +747,15 @@ void EditDialog::editTextChanged()
         // updateCellInfoAndMode() only works with QByteArray's (for now)
         int dataLength;
         bool isModified;
-        switch (dataSource) {
-        case TextBuffer:
+
+        if(dataSource == TextBuffer) {
+            // TextBuffer
             dataLength = ui->editorText->toPlainText().length();
             isModified = ui->editorText->document()->isModified();
-            break;
-        case SciBuffer:
+        } else {
+            // SciBuffer
             dataLength = sciEdit->text().length();
             isModified = sciEdit->isModified();
-            break;
         }
         // Data has been changed in the text editor, so it can't be a NULL
         // any more. It hasn't been validated yet, so it cannot be JSON nor XML.
@@ -1021,4 +1037,59 @@ void EditDialog::setStackCurrentIndex(int editMode)
         sciEdit->setLanguage(DockTextEdit::XML);
         break;
     }
+}
+
+void EditDialog::openPrintDialog()
+{
+    QPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+
+    QTextDocument *document = new QTextDocument();
+    switch (dataSource) {
+    case TextBuffer:
+        document->setPlainText(ui->editorText->toPlainText());
+        break;
+    case SciBuffer:
+        // This case isn't really expected because the Scintilla widget has it's own printing slot
+        document->setPlainText(sciEdit->text());
+        break;
+    case HexBuffer:
+        document->setPlainText(hexEdit->toReadableString());
+        document->setDefaultFont(hexEdit->font());
+        break;
+    }
+
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        document->print(previewPrinter);
+    });
+
+    dialog->exec();
+
+    delete dialog;
+    delete document;
+}
+
+void EditDialog::openPrintImageDialog()
+{
+    QPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+            QPainter painter(previewPrinter);
+            QRect rect = painter.viewport();
+            QSize size = ui->editorImage->pixmap()->size();
+            size.scale(rect.size(), Qt::KeepAspectRatio);
+            painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+            painter.setWindow(ui->editorImage->pixmap()->rect());
+            painter.drawPixmap(0, 0, *ui->editorImage->pixmap());
+        });
+
+    dialog->exec();
+
+    delete dialog;
+}
+
+void EditDialog::copyHexAscii()
+{
+    QApplication::clipboard()->setText(hexEdit->selectionToReadableString());
 }

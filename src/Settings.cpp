@@ -1,5 +1,6 @@
 #include "Settings.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QSettings>
 #include <QColor>
@@ -324,6 +325,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
     // extensions/disableregex?
     if(group == "extension" && name == "disableregex")
+        return false;
+
+    // extensions/enable_load_extension?
+    if(group == "extension" && name == "enable_load_extension")
         return false;
 
     // PlotDock/lineType or pointShape?

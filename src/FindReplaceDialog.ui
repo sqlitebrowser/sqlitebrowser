@@ -101,6 +101,16 @@
          </widget>
         </item>
         <item row="8" column="1">
+         <widget class="QCheckBox" name="selectionCheckBox">
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is searched only in the current selection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>&amp;Selection only</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
          <widget class="QCheckBox" name="regexpCheckBox">
           <property name="whatsThis">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -210,6 +220,7 @@
   <tabstop>wholeWordsCheckBox</tabstop>
   <tabstop>wrapCheckBox</tabstop>
   <tabstop>backwardsCheckBox</tabstop>
+  <tabstop>selectionCheckBox</tabstop>
   <tabstop>regexpCheckBox</tabstop>
   <tabstop>findNextButton</tabstop>
   <tabstop>replaceButton</tabstop>

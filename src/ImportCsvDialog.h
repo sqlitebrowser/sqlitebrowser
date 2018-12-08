@@ -2,14 +2,13 @@
 #define IMPORTCSVDIALOG_H
 
 #include "csvparser.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <QDialog>
 #include <functional>
 
 class DBBrowserDB;
 class QCompleter;
-class QListWidgetItem;
 
 namespace Ui {
 class ImportCsvDialog;
@@ -21,10 +20,10 @@ class ImportCsvDialog : public QDialog
 
 public:
     explicit ImportCsvDialog(const QStringList& filenames, DBBrowserDB* db, QWidget* parent = nullptr);
-    ~ImportCsvDialog();
+    ~ImportCsvDialog() override;
 
 private slots:
-    virtual void accept();
+    void accept() override;
     void updatePreview();
     void checkInput();
     void selectFiles();
@@ -54,6 +53,8 @@ private:
 
     void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
+
+    QString currentOnConflictStrategy() const;
 };
 
 #endif

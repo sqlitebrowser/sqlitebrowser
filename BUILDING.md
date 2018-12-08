@@ -55,7 +55,7 @@ The same process works for building the code in any platform supported by Qt
 
 ```bash
 $ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
-    libsqlcipher-dev
+    libsqlcipher-dev qtbase5-dev libantlr-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build
@@ -87,6 +87,22 @@ $ sudo make install
 ```
 
 This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
+
+### OpenSUSE
+
+```bash
+
+
+$ zypper in -y build git-core, libQt5Core5,  libQt5Core5-32bit,  libqt5-qtbase,  libqt5-qtbase-devel,  libqt5-qttools,  libqt5-qttools-devel,  build,  gcc-c++,  gcc,  sqlite3-devel,  libsqlite3-0,  cmake,  antlr-devel,  sqlcipher-devel
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser
+$ cd sqlitebrowser
+$ mkdir build
+$ cd build
+$ cmake -Dsqlcipher=1 -Wno-dev   -DFORCE_INTERNAL_QSCINTILLA=ON ..
+$ make
+$ sudo make install
+```
+
 
 ### MacOS X
 

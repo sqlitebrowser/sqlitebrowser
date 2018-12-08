@@ -216,7 +216,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="editorBinary"/>
+     <widget class="QWidget" name="editorBinary">
+      <property name="contextMenuPolicy">
+       <enum>Qt::ActionsContextMenu</enum>
+      </property>
+     </widget>
      <widget class="QScrollArea" name="editorImageScrollArea">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -233,6 +237,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="editorImage">
+          <property name="contextMenuPolicy">
+           <enum>Qt::ActionsContextMenu</enum>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -286,7 +293,7 @@ Errors are indicated with a red squiggle underline.</string>
      <item>
       <widget class="QPushButton" name="buttonApply">
        <property name="toolTip">
-        <string>Apply data to cell [Ctrl+Return]</string>
+        <string>Apply data to cell</string>
        </property>
        <property name="whatsThis">
         <string>This button saves the changes performed in the cell editor to the database cell.</string>
@@ -302,6 +309,51 @@ Errors are indicated with a red squiggle underline.</string>
     </layout>
    </item>
   </layout>
+  <action name="actionPrintImage">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open preview dialog for printing displayed image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open preview dialog for printing displayed text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionCopyHexAscii">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/special_copy</normaloff>:/icons/special_copy</iconset>
+   </property>
+   <property name="text">
+    <string>Copy Hex and ASCII</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy selected hexadecimal and ASCII columns to the clipboard</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+C</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>buttonExport</tabstop>
@@ -432,6 +484,54 @@ Errors are indicated with a red squiggle underline.</string>
     <hint type="sourcelabel">
      <x>135</x>
      <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPrintImage</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>openPrintImageDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPrint</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>openPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCopyHexAscii</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>copyHexAscii()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>

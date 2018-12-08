@@ -1,6 +1,6 @@
 // This module implements the QsciStyle class.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -87,6 +87,10 @@ void QsciStyle::init(int style)
 // Apply the style to a particular editor.
 void QsciStyle::apply(QsciScintillaBase *sci) const
 {
+    // Don't do anything if the style is invalid.
+    if (style_nr < 0)
+        return;
+
     sci->SendScintilla(QsciScintillaBase::SCI_STYLESETFORE, style_nr,
             style_color);
     sci->SendScintilla(QsciScintillaBase::SCI_STYLESETBACK, style_nr,

@@ -1,3 +1,39 @@
+v2.10.8 1st October 2018
+  - Bug fixes.
+
+v2.10.7 2nd July 2018
+  - Bug fixes.
+
+v2.10.6 24th June 2018
+  - A pseudo-release to create a version number for updated Python wheels.
+
+v2.10.5 23rd June 2018
+  - Added the QsciLexerEDIFACT class.
+  - Added setStyle() to QsciStyle.
+  - Control-wheel scroll will now zoom in and out of the document.
+  - Buffered drawing is now disabled by default.
+  - The Python bindings create a PEP 376 .dist-info directory on installation
+    that provides version information for dependent packages and allows pip to
+    uninstall.
+  - Added the --no-dist-info option to the Python bindings' configure.py.
+  - Bug fixes.
+
+v2.10.4 10th April 2018
+  - Bug fixes.
+
+v2.10.3 26th February 2018
+  - Added accessibility support.
+  - Added the API file for Python v3.7.
+
+v2.10.2 23rd November 2017
+  - Added setScrollWidth() , scrollWidth, setScrollWidthTracking() and
+    scrollWidthTracking() to QsciScintilla.
+  - Bug fixes.
+
+v2.10.1 3rd July 2017
+  - Changed the default font on macOS to Menlo 12pt.
+  - Added previously internal lexer methods to the Python bindings.
+
 v2.10 20th February 2017
   - Based on Scintilla v3.7.2.
   - Added the QsciLexerJSON class.
