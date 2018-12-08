@@ -99,7 +99,7 @@ cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ 
 
 # Copy the translation files to the .dmg
 mkdir -p src/DB\ Browser\ for\ SQLite.app/Contents/translations >>$LOG 2>&1
-for i in ar zh_CN zh_TW cs en fr de ko pl pt ru es uk; do
+for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
@@ -171,7 +171,7 @@ cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ 
 
 # Copy the translation files to the .dmg
 mkdir -p src/DB\ Browser\ for\ SQLite.app/Contents/translations >>$LOG 2>&1
-for i in ar zh_CN zh_TW cs en fr de ko pl pt ru es uk; do
+for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
