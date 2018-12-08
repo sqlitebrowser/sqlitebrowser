@@ -136,21 +136,21 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 
         SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
         sqlb::ObjectIdentifier tableId = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
-        fkModel->setTable(tableId);
-        QComboBox* combo = new QComboBox(parent);
+
         QString column = fk.columns().at(0);
         sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(tableId);
-
-        combo->setModel(fkModel);
 
         // If no column name is set, assume the primary key is meant
         if(!column.size())
             column = obj->findPk()->name();
 
-        // If column doesn't exist don't do anything
-        auto column_index = sqlb::findField(obj, column);
-        if(column_index == obj->fields.end())
-            combo->setModelColumn(column_index-obj->fields.begin()+1);
+        fkModel->setQuery(QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(tableId.toString()));
+
+        QComboBox* combo = new QComboBox(parent);
+
+        // Complete cache so it is ready when setEditorData is invoked.
+        fkModel->completeCache();
+        combo->setModel(fkModel);
 
         return combo;
     } else {
