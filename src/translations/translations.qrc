@@ -14,5 +14,6 @@
         <file alias="sqlb_ko_KR">sqlb_ko_KR.qm</file>
         <file alias="sqlb_tr">sqlb_tr.qm</file>
         <file alias="sqlb_uk_UA">sqlb_uk_UA.qm</file>
+	<file alias="sqlb_it">sqlb_it.qm</file>
     </qresource>
 </RCC>
