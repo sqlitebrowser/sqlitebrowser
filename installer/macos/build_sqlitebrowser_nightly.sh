@@ -4,7 +4,7 @@
 # after updating the Homebrew dependencies
 
 QTVER="5.11.2"
-BRANCH="master"
+BRANCH="v3.11.x"
 BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
 DATE=`date "+%Y%m%d"`
