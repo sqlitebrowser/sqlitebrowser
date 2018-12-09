@@ -134,17 +134,26 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 
     if(fk.isSet()) {
 
-        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
-        sqlb::ObjectIdentifier tableId = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
+        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
 
-        QString column = fk.columns().at(0);
-        sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(tableId);
-
+        QString column;
         // If no column name is set, assume the primary key is meant
-        if(!column.size())
+        if(fk.columns().isEmpty()) {
+            sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
             column = obj->findPk()->name();
+        } else
+            column = fk.columns().at(0);
 
-        fkModel->setQuery(QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(tableId.toString()));
+        sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+        QString query = QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(foreignTable.toString());
+
+        // if the current column of the current table does NOT have not-null constraint,
+        // the NULL is united to the query to get the possible values in the combo-box.
+        if (!currentTable->fields.at(index.column()-1).notnull())
+            query.append (" UNION SELECT NULL");
+
+        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
+        fkModel->setQuery(query);
 
         QComboBox* combo = new QComboBox(parent);
 
@@ -202,7 +211,7 @@ void ExtendedTableWidgetEditorDelegate::setModelData(QWidget* editor, QAbstractI
     QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
     if(!lineedit) {
         QComboBox* combo = static_cast<QComboBox*>(editor);
-        model->setData(index, combo->currentText(), Qt::EditRole);
+        model->setData(index, combo->currentData(Qt::EditRole), Qt::EditRole);
     } else
         if(!lineedit->isReadOnly())
             model->setData(index, lineedit->text());
