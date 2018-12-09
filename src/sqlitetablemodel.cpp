@@ -100,6 +100,7 @@ void SqliteTableModel::reset()
     beginResetModel();
     clearCache();
 
+    m_sQuery.clear();
     m_query.clear();
     m_headers.clear();
     m_vDataTypes.clear();
