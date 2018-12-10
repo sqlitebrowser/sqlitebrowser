@@ -86,6 +86,7 @@ public:
     void setQuery(const sqlb::Query& query);
 
     void setChunkSize(size_t chunksize);
+    size_t chunkSize() { return m_chunkSize; };
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
     sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
@@ -113,6 +114,8 @@ public:
 
     void addCondFormat(int column, const CondFormat& condFormat);
     void setCondFormats(int column, const QVector<CondFormat>& condFormats);
+
+    DBBrowserDB& db() { return m_db; };
 
 public slots:
     void updateFilter(int column, const QString& value);
