@@ -127,10 +127,6 @@ mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 $BREW unlink sqlite3 >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
-# Upload standard sqlitebrowser nightly
-echo Upload standard sqlitebrowser nightly >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite_${DATE}.dmg nightlies@nightlies.sqlitebrowser.org:/nightlies/osx/ >>$LOG 2>&1
-
 ### Build SQLCipher version
 # Remove any existing Homebrew installed packages
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
@@ -208,21 +204,13 @@ if [ "${BRANCH}" != "master" ]; then
   git branch -D "${BRANCH}" >>$LOG 2>&1
 fi
 
-# Upload sqlitebrowser nightly with SQLCipher support
-echo Upload sqlitebrowser nightly with SQLCipher support >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg nightlies@nightlies.sqlitebrowser.org:/nightlies/osx/ >>$LOG 2>&1
-
-# Upload the nightlies build log
-echo Upload the build log >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/nightly.log-${DATE} nightlies@nightlies.sqlitebrowser.org:/nightlies/osx/ >>$LOG 2>&1
+# Upload nightly builds and the build log thus far
+echo Upload nightly builds >>$LOG 2>&1
+rsync -a $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg $HOME/db4s_nightlies/nightly.log-${DATE} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
 
 # Add the new builds to the "latest" directory
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite.dmg" >>$LOG 2>&1
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher.dmg" >>$LOG 2>&1
-
-# Remove the nightlies from the local filesystem as we no longer need them
-#echo Remove the nightlies from the local filesystem as we no longer need them >>$LOG 2>&1
-#rm -f $HOME/db4s_nightlies/sqlitebrowser_${DATE}.dmg $HOME/db4s_nightlies/sqlitebrowser-sqlcipher_${DATE}.dmg >>$LOG 2>&1
 
 echo Done! >>$LOG 2>&1
