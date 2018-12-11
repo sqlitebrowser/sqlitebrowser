@@ -147,7 +147,6 @@ git clean -dffx >>$LOG 2>&1
 git checkout $BRANCH >>$LOG 2>&1
 git reset --hard HEAD >>$LOG 2>&1
 git clean -dffx >>$LOG 2>&1
-git pull >>$LOG 2>&1
 
 # Update the translation files
 echo Updating the translations >>$LOG 2>&1
