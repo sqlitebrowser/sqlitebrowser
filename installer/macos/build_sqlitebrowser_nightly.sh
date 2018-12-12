@@ -50,7 +50,11 @@ fi
 
 # Ensure Homebrew is owned by my user
 echo Ensure Homebrew is owned by my user >>$LOG 2>&1
-sudo chown -Rh jc:staff /usr/local >$LOG 2>&1
+sudo chown -Rh jc:staff /usr/local >>$LOG 2>&1
+
+# Ensure the temporary SQLCipher v3.4.2 tap is in place
+echo Ensure the temporary SQLCipher v3.4.2 tap is in place >>$LOG 2>&1
+brew tap justinclift/sqlcipher3 >>$LOG 2>&1
 
 # Update Homebrew
 echo Update Homebrew >>$LOG 2>&1
@@ -137,7 +141,7 @@ $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install sqlcipher
 echo Install sqlcipher >>$LOG 2>&1
-$BREW install sqlcipher --with-fts >>$LOG 2>&1
+$BREW install sqlcipher3 --with-fts >>$LOG 2>&1
 
 # Clean the sqlitebrowser source
 echo Clean the sqlitebrowser source >>$LOG 2>&1
@@ -211,7 +215,7 @@ fi
 
 # Upload nightly builds and the build log thus far
 echo Upload nightly builds >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg $HOME/db4s_nightlies/nightly.log-${DATE} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
+rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg $HOME/db4s_nightlies/nightly.log-${DATE} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
 
 # Add the new builds to the "latest" directory
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
