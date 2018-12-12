@@ -242,15 +242,21 @@
     <!--   http://wixtoolset.org/documentation/manual/v3/howtos/ui_and_localization/run_program_after_install.html   -->
 
         <!-- Step 1: Add the checkbox, and select it, at the end of installation -->
+        <!--
         <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Run $(var.Name)" />
         <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+        -->
 
         <!-- Step 2: Include the custom Action -->
+        <!--
         <Property Id="WixShellExecTarget" Value="[#DB_Browser_for_SQLite.exe]" />
         <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+        -->
 
         <!-- Step 3: Trigger the custom action -->
+        <!--
         <UI><Publish Control="Finish" Dialog="ExitDialog" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish></UI>
+        -->
 
     <!-- ================================================= Logging ================================================= -->
     <!-- Enable verbose logging during installation. The log file is named MSI*.LOG and located in %TEMP% folder.    -->
