@@ -126,8 +126,10 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     if(isEncrypted && cipherSettings)
     {
         executeSQL(QString("PRAGMA key = %1").arg(cipherSettings->getPassword()), false, false);
-        if(cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
-            executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()), false, false);
+        executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()), false, false);
+        executeSQL(QString("PRAGMA kdf_iter = %1;").arg(cipherSettings->getKdfIterations()), false, false);
+        executeSQL(QString("PRAGMA cipher_hmac_algorithm = HMAC_%1;").arg(cipherSettings->getHmacAlgorithm()), false, false);
+        executeSQL(QString("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_%1;").arg(cipherSettings->getKdfAlgorithm()), false, false);
     }
 #endif
     delete cipherSettings;
@@ -233,13 +235,25 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
     }
-    if(cipherSettings && cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
+    if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getPageSize()), false))
     {
-        if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getPageSize()), false))
-        {
-            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-            return false;
-        }
+        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+    if(!executeSQL(QString("PRAGMA %1.kdf_iter = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfIterations()), false))
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+    if(!executeSQL(QString("PRAGMA %1.cipher_hmac_algorithm = HMAC_%2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getHmacAlgorithm()), false))
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+    if(!executeSQL(QString("PRAGMA %1.cipher_kdf_algorithm = PBKDF2_HMAC_%2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfAlgorithm()), false))
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+        return false;
     }
     delete cipherSettings;
 #else
@@ -270,6 +284,24 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
 #ifdef ENABLE_SQLCIPHER
     bool isDotenvChecked = false;
+
+    // Determine default encryption settings depending on the SQLCipher version we use
+    QString sqlite_version, sqlcipher_version;
+    getSqliteVersion(sqlite_version, sqlcipher_version);
+    int enc_default_page_size, enc_default_kdf_iter;
+    QString enc_default_hmac_algorithm, enc_default_kdf_algorithm;
+    if(sqlcipher_version.startsWith('4'))
+    {
+        enc_default_page_size = 4096;
+        enc_default_kdf_iter = 256000;
+        enc_default_hmac_algorithm = "SHA512";
+        enc_default_kdf_algorithm = "SHA512";
+    } else {
+        enc_default_page_size = 1024;
+        enc_default_kdf_iter = 64000;
+        enc_default_hmac_algorithm = "SHA1";
+        enc_default_kdf_algorithm = "SHA1";
+    }
 #endif
 
     *encrypted = false;
@@ -319,8 +351,10 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     QVariant keyFormatValue = dotenv.value(databaseFileName + "_keyFormat", QVariant(CipherSettings::KeyFormats::Passphrase));
                     CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(keyFormatValue.toInt());
 
-                    QVariant pageSizeValue = dotenv.value(databaseFileName + "_pageSize", QVariant(CipherSettings::defaultPageSize));
-                    int pageSize = pageSizeValue.toInt();
+                    int pageSize = dotenv.value(databaseFileName + "_pageSize", enc_default_page_size).toInt();
+                    int kdfIterations = dotenv.value(databaseFileName + "_kdfIter", enc_default_kdf_iter).toInt();
+                    QString hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", enc_default_hmac_algorithm).toString();
+                    QString kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", enc_default_kdf_algorithm).toString();
 
                     delete cipherSettings;
                     cipherSettings = new CipherSettings();
@@ -328,7 +362,9 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings->setKeyFormat(keyFormat);
                     cipherSettings->setPassword(password);
                     cipherSettings->setPageSize(pageSize);
-
+                    cipherSettings->setKdfIterations(kdfIterations);
+                    cipherSettings->setHmacAlgorithm(hmacAlgorithm);
+                    cipherSettings->setKdfAlgorithm(kdfAlgorithm);
                 }
             }
 
@@ -363,8 +399,14 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->getPassword()).toUtf8(), nullptr, nullptr, nullptr);
 
             // Set the page size if it differs from the default value
-            if(cipherSettings->getPageSize() != CipherSettings::defaultPageSize)
+            if(cipherSettings->getPageSize() != enc_default_page_size)
                 sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()).toUtf8(), nullptr, nullptr, nullptr);
+            if(cipherSettings->getKdfIterations() != enc_default_kdf_iter)
+                sqlite3_exec(dbHandle, QString("PRAGMA kdf_iter = %1;").arg(cipherSettings->getKdfIterations()).toUtf8(), nullptr, nullptr, nullptr);
+            if(cipherSettings->getHmacAlgorithm() != enc_default_hmac_algorithm)
+                sqlite3_exec(dbHandle, QString("PRAGMA cipher_hmac_algorithm = HMAC_%1;").arg(cipherSettings->getHmacAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
+            if(cipherSettings->getKdfAlgorithm() != enc_default_kdf_algorithm)
+                sqlite3_exec(dbHandle, QString("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_%1;").arg(cipherSettings->getKdfAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
 
             *encrypted = true;
 #else

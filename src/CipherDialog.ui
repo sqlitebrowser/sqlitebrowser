@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>712</width>
-    <height>183</height>
+    <height>299</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <widget class="QLabel" name="labelDialogDescription"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0">
@@ -54,19 +54,6 @@
           <enum>QLineEdit::Password</enum>
          </property>
         </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Page si&amp;ze</string>
-         </property>
-         <property name="buddy">
-          <cstring>comboPageSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="comboPageSize"/>
        </item>
       </layout>
      </item>
@@ -104,6 +91,136 @@
     </layout>
    </item>
    <item>
+    <layout class="QFormLayout" name="formLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Encr&amp;yption settings</string>
+       </property>
+       <property name="buddy">
+        <cstring>radioEncryptionSqlCipher3</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QRadioButton" name="radioEncryptionSqlCipher3">
+         <property name="text">
+          <string>SQLCipher &amp;3 defaults</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioEncryptionSqlCipher4">
+         <property name="text">
+          <string>SQLCipher &amp;4 defaults</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioEncryptionCustom">
+         <property name="text">
+          <string>Custo&amp;m</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Page si&amp;ze</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboPageSize</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="comboPageSize"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&amp;KDF iterations</string>
+       </property>
+       <property name="buddy">
+        <cstring>spinKdfIterations</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="spinKdfIterations">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>1000000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>HMAC algorithm</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboHmacAlgorithm</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="comboHmacAlgorithm">
+       <item>
+        <property name="text">
+         <string notr="true">SHA512</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">SHA256</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">SHA1</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>KDF algorithm</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboKdfAlgorithm</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="comboKdfAlgorithm">
+       <item>
+        <property name="text">
+         <string notr="true">SHA512</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">SHA256</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">SHA1</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -117,9 +234,15 @@
  </widget>
  <tabstops>
   <tabstop>editPassword</tabstop>
-  <tabstop>comboKeyFormat</tabstop>
   <tabstop>editPassword2</tabstop>
+  <tabstop>comboKeyFormat</tabstop>
+  <tabstop>radioEncryptionSqlCipher3</tabstop>
+  <tabstop>radioEncryptionSqlCipher4</tabstop>
+  <tabstop>radioEncryptionCustom</tabstop>
   <tabstop>comboPageSize</tabstop>
+  <tabstop>spinKdfIterations</tabstop>
+  <tabstop>comboHmacAlgorithm</tabstop>
+  <tabstop>comboKdfAlgorithm</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -130,8 +253,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>233</x>
-     <y>174</y>
+     <x>175</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -146,8 +269,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>174</y>
+     <x>175</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -178,8 +301,8 @@
    <slot>checkInputFields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>319</x>
-     <y>96</y>
+     <x>446</x>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -203,8 +326,57 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>radioEncryptionSqlCipher3</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CipherDialog</receiver>
+   <slot>toggleEncryptionSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>231</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioEncryptionSqlCipher4</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CipherDialog</receiver>
+   <slot>toggleEncryptionSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioEncryptionCustom</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CipherDialog</receiver>
+   <slot>toggleEncryptionSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>552</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>590</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkInputFields()</slot>
+  <slot>toggleEncryptionSettings()</slot>
  </slots>
 </ui>
