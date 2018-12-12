@@ -1,5 +1,6 @@
 #include "CipherDialog.h"
 #include "ui_CipherDialog.h"
+#include "sqlitedb.h"
 
 #include <QPushButton>
 #include <QRegExpValidator>
@@ -41,6 +42,14 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
         ui->editPassword2->setVisible(false);
         ui->labelPassword2->setVisible(false);
     }
+
+    // Set the default encryption settings depending on the SQLCipher version we use
+    QString sqlite_version, sqlcipher_version;
+    DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
+    if(sqlcipher_version.startsWith('4'))
+        ui->radioEncryptionSqlCipher4->setChecked(true);
+    else
+        ui->radioEncryptionSqlCipher3->setChecked(true);
 }
 
 CipherDialog::~CipherDialog()
@@ -60,6 +69,9 @@ CipherSettings CipherDialog::getCipherSettings() const
     cipherSettings.setKeyFormat(keyFormat);
     cipherSettings.setPassword(password);
     cipherSettings.setPageSize(pageSize);
+    cipherSettings.setKdfIterations(ui->spinKdfIterations->value());
+    cipherSettings.setHmacAlgorithm(ui->comboHmacAlgorithm->currentText());
+    cipherSettings.setKdfAlgorithm(ui->comboKdfAlgorithm->currentText());
 
     return cipherSettings;
 }
@@ -90,4 +102,39 @@ void CipherDialog::checkInputFields()
         valid = ui->editPassword->text() == ui->editPassword2->text();
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
+}
+
+void CipherDialog::toggleEncryptionSettings()
+{
+    if(ui->radioEncryptionSqlCipher3->isChecked())
+    {
+        // SQLCipher3
+        ui->comboPageSize->setCurrentText(QLocale().toString(1024));
+        ui->spinKdfIterations->setValue(64000);
+        ui->comboHmacAlgorithm->setCurrentText("SHA1");
+        ui->comboKdfAlgorithm->setCurrentText("SHA1");
+
+        ui->comboPageSize->setEnabled(false);
+        ui->spinKdfIterations->setEnabled(false);
+        ui->comboHmacAlgorithm->setEnabled(false);
+        ui->comboKdfAlgorithm->setEnabled(false);
+    } else if(ui->radioEncryptionSqlCipher4->isChecked()) {
+        // SQLCipher4
+        ui->comboPageSize->setCurrentText(QLocale().toString(4096));
+        ui->spinKdfIterations->setValue(256000);
+        ui->comboHmacAlgorithm->setCurrentText("SHA512");
+        ui->comboKdfAlgorithm->setCurrentText("SHA512");
+
+        ui->comboPageSize->setEnabled(false);
+        ui->spinKdfIterations->setEnabled(false);
+        ui->comboHmacAlgorithm->setEnabled(false);
+        ui->comboKdfAlgorithm->setEnabled(false);
+    } else if(ui->radioEncryptionCustom->isChecked()) {
+        // Custom
+
+        ui->comboPageSize->setEnabled(true);
+        ui->spinKdfIterations->setEnabled(true);
+        ui->comboHmacAlgorithm->setEnabled(true);
+        ui->comboKdfAlgorithm->setEnabled(true);
+    }
 }

@@ -2956,6 +2956,12 @@ void MainWindow::editEncryption()
         qApp->processEvents();
         if(ok)
             ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = %1").arg(cipherSettings.getPageSize()), false, false);
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.kdf_iter = %1").arg(cipherSettings.getKdfIterations()), false, false);
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_hmac_algorithm = %1").arg(cipherSettings.getHmacAlgorithm()), false, false);
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_kdf_algorithm = %1").arg(cipherSettings.getKdfAlgorithm()), false, false);
 
         // Export the current database to the new one
         qApp->processEvents();
