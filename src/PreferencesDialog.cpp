@@ -13,7 +13,7 @@
 #include <QKeyEvent>
 #include <QStandardPaths>
 
-PreferencesDialog::PreferencesDialog(QWidget* parent)
+PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
       m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
@@ -43,6 +43,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
 
     // Avoid different heights due to having check boxes or not
     ui->treeSyntaxHighlighting->setUniformRowHeights(true);
+
+    // Set current tab
+    ui->tabWidget->setCurrentIndex(tab);
 }
 
 /*

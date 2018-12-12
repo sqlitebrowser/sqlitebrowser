@@ -203,7 +203,8 @@ public slots:
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure(const QString& old_table = QString());
-    void openPreferences();
+    void reloadSettings();
+
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -257,7 +258,6 @@ private slots:
     void saveSqlResultsAsCsv();
     void saveSqlResultsAsView();
     void loadExtension();
-    void reloadSettings();
     void checkNewVersion(const QString& versionstring, const QString& url);
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
@@ -297,6 +297,7 @@ private slots:
     void runSqlNewTab(const QString& query, const QString& title);
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
+    void openPreferences();
 };
 
 #endif

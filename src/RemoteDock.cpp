@@ -9,6 +9,7 @@
 #include "RemoteModel.h"
 #include "MainWindow.h"
 #include "RemotePushDialog.h"
+#include "PreferencesDialog.h"
 
 RemoteDock::RemoteDock(MainWindow* parent)
     : QDialog(parent),
@@ -32,9 +33,13 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // just open them in a web browser
     connect(ui->labelNoCert, &QLabel::linkActivated, [this](const QString& link) {
         if(link == "#preferences")
-            mainWindow->openPreferences();
-        else
+        {
+            PreferencesDialog dialog(mainWindow, PreferencesDialog::TabRemote);
+            if(dialog.exec())
+                mainWindow->reloadSettings();
+        } else {
             QDesktopServices::openUrl(QUrl(link));
+        }
     });
 
     // Initial setup
