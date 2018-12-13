@@ -2228,7 +2228,7 @@ void MainWindow::loadExtension()
     QString file = FileDialog::getOpenFileName(
                 this,
                 tr("Select extension file"),
-                tr("Extensions(*.so *.dll);;All files(*)"));
+                tr("Extensions(*.so *.dylib *.dll);;All files(*)"));
 
     if(file.isEmpty())
         return;

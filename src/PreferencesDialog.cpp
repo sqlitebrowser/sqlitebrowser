@@ -370,7 +370,7 @@ void PreferencesDialog::addExtension()
     QString file = FileDialog::getOpenFileName(
                 this,
                 tr("Select extension file"),
-                tr("Extensions(*.so *.dll);;All files(*)"));
+                tr("Extensions(*.so *.dylib *.dll);;All files(*)"));
 
     if(QFile::exists(file))
         ui->listExtensions->addItem(file);
