@@ -52,10 +52,6 @@ fi
 echo Ensure Homebrew is owned by my user >>$LOG 2>&1
 sudo chown -Rh jc:staff /usr/local >>$LOG 2>&1
 
-# Ensure the temporary SQLCipher v3.4.2 tap is in place
-echo Ensure the temporary SQLCipher v3.4.2 tap is in place >>$LOG 2>&1
-brew tap justinclift/sqlcipher3 >>$LOG 2>&1
-
 # Update Homebrew
 echo Update Homebrew >>$LOG 2>&1
 $BREW update >>$LOG 2>&1
@@ -139,9 +135,9 @@ rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list` --force >>$LOG 2>&1
 
-# Install sqlcipher
-echo Install sqlcipher >>$LOG 2>&1
-$BREW install sqlcipher3 --with-fts >>$LOG 2>&1
+# Install SQLCipher
+echo Install SQLCipher >>$LOG 2>&1
+$BREW install sqlcipher --with-fts >>$LOG 2>&1
 
 # Clean the sqlitebrowser source
 echo Clean the sqlitebrowser source >>$LOG 2>&1
