@@ -21,10 +21,7 @@ enum FileDialogTypes {
     OpenDataFile,
 
     OpenExtensionFile,
-    OpenCertificateFile,
-
-//    ImportTable,
-//    ExportTable,
+    OpenCertificateFile
 };
 
 class FileDialog : public QFileDialog
