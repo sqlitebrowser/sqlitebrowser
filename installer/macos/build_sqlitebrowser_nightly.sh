@@ -96,6 +96,11 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 
+# Add the math extensions to the .dmg
+echo Add the math extensions to the .dmg >>$LOG 2>&1
+mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlite/include -L/usr/local/opt/sqlite/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
 cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
@@ -165,6 +170,11 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
+
+# Add the math extensions to the .dmg
+echo Add the math extensions to the .dmg >>$LOG 2>&1
+mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlite/include -L/usr/local/opt/sqlite/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
