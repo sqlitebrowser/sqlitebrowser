@@ -477,8 +477,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 if(rowcount != uniquecount)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
-                    QMessageBox::information(this, qApp->applicationName(), tr("Column '%1' has no unique data.\n").arg(field.name())
-                                             + tr("This makes it impossible to set this flag. Please change the table data first."));
+                    QMessageBox::information(this, qApp->applicationName(), tr("Column '%1' has duplicate data.\n").arg(field.name())
+                                             + tr("This makes it impossible to enable the 'Unique' flag. Please remove the duplicate data, which will allow the 'Unique' flag to then be enabled."));
                     item->setCheckState(column, Qt::Unchecked);
                     return;
                 }
