@@ -914,6 +914,31 @@ void ExtendedTableWidget::selectTableLines(int firstLine, int count)
     selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 }
 
+void ExtendedTableWidget::selectAll()
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // Fetch all the data if needed and user accepts, then call parent's selectAll()
+
+    QMessageBox::StandardButton answer = QMessageBox::Yes;
+
+    // If we can fetch more data, ask user if they are sure about it.
+    if (!m->isCacheComplete()) {
+
+      answer = QMessageBox::question(this, QApplication::applicationName(),
+                              tr("<p>Not all data has been loaded. <b>Do you want to load all data before selecting all the rows?</b><p>"
+                                 "<p>Answering <b>No</b> means that no more data will be loaded and the selection will not be performed.<br/>"
+                                 "Answering <b>Yes</b> might take some time while the data is loaded but the selection will be complete.</p>"
+                                 "Warning: Loading all the data might require a great amount of memory for big tables."),
+                                     QMessageBox::Yes | QMessageBox::No);
+
+      if (answer == QMessageBox::Yes)
+          m->completeCache();
+    }
+    if (answer == QMessageBox::Yes)
+        QTableView::selectAll();
+}
+
 void ExtendedTableWidget::openPrintDialog()
 {
     QMimeData *mimeData = new QMimeData;
