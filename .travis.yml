@@ -47,6 +47,8 @@ install:
 script:
 - mkdir build
 - mkdir build_cipher
+- mkdir appbuild
+- mkdir appdir
 - cd build
 - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON ..
 - make
@@ -55,12 +57,15 @@ script:
 - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 ..
 - make
 - ctest -V
+- cd ../appbuild
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir -Wno-dev -Dsqlcipher=1 ..
 - make install
+- cd ..
 - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
 - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
 - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
-- ./linuxdeployqt-continuous-x86_64.AppImage /usr/share/applications/*.desktop -appimage
+- ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
 
 after_success:
