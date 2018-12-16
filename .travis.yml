@@ -58,7 +58,7 @@ script:
 - make
 - ctest -V
 - cd ../appbuild
-- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir -Wno-dev -Dsqlcipher=1 ..
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 ..
 - make install
 - cd ..
 - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
