@@ -198,11 +198,11 @@
        </property>
       </widget>
       <widget class="QTextEdit" name="editErrors">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>120</height>
-        </size>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>120</verstretch>
+        </sizepolicy>
        </property>
        <property name="font">
         <font>
