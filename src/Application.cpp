@@ -90,6 +90,7 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -s, --sql [file]\tExecute this SQL file after opening the DB"));
             qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
             qWarning() << qPrintable(tr("  -R, --read-only\tOpen database in read-only mode"));
+            qWarning() << qPrintable(tr("  -o, --option [group/setting=value]\tRun application with this setting temporarily set to value"));
             qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
@@ -113,6 +114,22 @@ Application::Application(int& argc, char** argv) :
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
             readOnly = true;
+        } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option") {
+            const QString optionWarning = tr("The -o/--option option requires an argument in the form group/setting=value");
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(optionWarning);
+            else {
+                QStringList option = arguments().at(i).split("=");
+                if (option.size() != 2)
+                    qWarning() << qPrintable(optionWarning);
+                else {
+                    QStringList setting = option.at(0).split("/");
+                    if (setting.size() != 2)
+                        qWarning() << qPrintable(optionWarning);
+                    else
+                        Settings::setValue(setting.at(0), setting.at(1), option.at(1), /* dont_save_to_disk */ true);
+                }
+            }
         } else {
             // Other: Check if it's a valid file name
             if(QFile::exists(arguments().at(i)))

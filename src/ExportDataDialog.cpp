@@ -149,7 +149,7 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
                 for (int i = 0; i < columns; ++i)
                 {
                     QString content = QString::fromUtf8(
-                                (const char*)sqlite3_column_blob(stmt, i),
+                                reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
                                 sqlite3_column_bytes(stmt, i));
 
                     // If no quote char is set but the content contains a line break, we enforce some quote characters. This probably isn't entirely correct
@@ -243,13 +243,13 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
                     }
                     case SQLITE_TEXT: {
                         QString content = QString::fromUtf8(
-                            (const char*)sqlite3_column_text(stmt, i),
+                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)),
                             sqlite3_column_bytes(stmt, i));
                         json_row.insert(column_names[i], content);
                         break;
                     }
                     case SQLITE_BLOB: {
-                        QByteArray content((const char*)sqlite3_column_blob(stmt, i),
+                        QByteArray content(reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
                                            sqlite3_column_bytes(stmt, i));
                         QTextCodec *codec = QTextCodec::codecForName("UTF-8");
                         QString string = codec->toUnicode(content.toBase64(QByteArray::Base64Encoding));
@@ -307,6 +307,7 @@ void ExportDataDialog::accept()
     {
         // called from sqlexecute query tab
         QString sFilename = FileDialog::getSaveFileName(
+                CreateDataFile,
                 this,
                 tr("Choose a filename to export data"),
                 file_dialog_filter);
@@ -333,6 +334,7 @@ void ExportDataDialog::accept()
         if(selectedItems.size() == 1)
         {
             QString fileName = FileDialog::getSaveFileName(
+                    CreateDataFile,
                     this,
                     tr("Choose a filename to export data"),
                     file_dialog_filter,
@@ -347,6 +349,7 @@ void ExportDataDialog::accept()
         } else {
             // ask for folder
             QString exportfolder = FileDialog::getExistingDirectory(
+                        CreateDataFile,
                         this,
                         tr("Choose a directory"),
                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);

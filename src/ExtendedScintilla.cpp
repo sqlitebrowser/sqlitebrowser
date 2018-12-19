@@ -1,7 +1,9 @@
 #include "ExtendedScintilla.h"
 #include "FindReplaceDialog.h"
 #include "Settings.h"
+
 #include "Qsci/qscilexer.h"
+#include "Qsci/qsciprinter.h"
 
 #include <QFile>
 #include <QDropEvent>
@@ -11,6 +13,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QPalette>
+#include <QPrintPreviewDialog>
 #include <cmath>
 
 
@@ -51,9 +54,12 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // Connect signals
     connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 
-    // The shortcut is constrained to the Widget context so it does not conflict with other SqlTextEdit widgets in the Main Window.
+    // The shortcuts are constrained to the Widget context so they do not conflict with other SqlTextEdit widgets in the Main Window.
     QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
+
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence(tr("Ctrl+P")), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &ExtendedScintilla::openPrintDialog);
 
     // Prepare for adding the find/replace option to the QScintilla context menu
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -123,6 +129,7 @@ void ExtendedScintilla::reloadKeywords()
 void ExtendedScintilla::reloadSettings()
 {
     reloadLexerSettings(lexer());
+    reloadKeywords();
 }
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {
@@ -204,7 +211,8 @@ bool ExtendedScintilla::findText(QString text, bool regexp, bool caseSensitive, 
         setCursorPosition(lineFrom, indexFrom);
     }
 
-    return findFirst(text, regexp, caseSensitive, words, wrap, forward);
+    return findFirst(text, regexp, caseSensitive, words, wrap, forward,
+                     /* line */ -1, /* index */ -1, /* show */ true, /* posix */ true);
 }
 
 void ExtendedScintilla::clearSelection()
@@ -223,14 +231,32 @@ void ExtendedScintilla::showContextMenu(const QPoint &pos)
 
     QAction* findReplaceAction = new QAction(QIcon(":/icons/text_replace"), tr("Find and Replace..."), this);
     findReplaceAction->setShortcut(QKeySequence(tr("Ctrl+H")));
-    connect(findReplaceAction, &QAction::triggered, [&]() {
-            openFindReplaceDialog();
-        });
+    connect(findReplaceAction, &QAction::triggered, this, &ExtendedScintilla::openFindReplaceDialog);
+
+    QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), this);
+    printAction->setShortcut(QKeySequence(tr("Ctrl+P")));
+    connect(printAction, &QAction::triggered, this, &ExtendedScintilla::openPrintDialog);
 
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
     editContextMenu->addSeparator();
     editContextMenu->addAction(findReplaceAction);
+    editContextMenu->addAction(printAction);
 
     editContextMenu->exec(mapToGlobal(pos));
+}
+
+void ExtendedScintilla::openPrintDialog()
+{
+    QsciPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        QsciPrinter* sciPrinter = static_cast<QsciPrinter*>(previewPrinter);
+        sciPrinter->printRange(this);
+    });
+
+    dialog->exec();
+
+    delete dialog;
 }

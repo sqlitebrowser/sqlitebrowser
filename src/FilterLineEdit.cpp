@@ -32,7 +32,8 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters,
                     "<=\tEqual to or less\n"
                     "=\tEqual to: exact match\n"
                     "<>\tUnequal: exact inverse match\n"
-                    "x~y\tRange: values between x and y"));
+                    "x~y\tRange: values between x and y\n"
+                    "/regexp/\tValues matching the regular expression"));
 
     // Immediately emit the delayed filter value changed signal if the user presses the enter or the return key or
     // the line edit widget loses focus
@@ -94,11 +95,11 @@ void FilterLineEdit::setText(const QString& text)
     delayedSignalTimerTriggered();
 }
 
-void FilterLineEdit::setFilterHelper(const QString& filterOperator)
+void FilterLineEdit::setFilterHelper(const QString& filterOperator, const QString& operatorSuffix)
 {
-    setText(filterOperator + "?");
+    setText(filterOperator + "?" + operatorSuffix);
     // Select the value for easy editing of the expression
-    setSelection(filterOperator.length(), filterOperator.length());
+    setSelection(filterOperator.length(), 1);
 }
 
 void FilterLineEdit::showContextMenu(const QPoint &pos)
@@ -106,6 +107,15 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
 
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
+    editContextMenu->addSeparator();
+    QString conditionalFormatLabel = text().isEmpty() ? tr("Clear All Conditional Formats") : tr("Use for Conditional Format");
+    QAction* conditionalFormatAction = new QAction(conditionalFormatLabel, editContextMenu);
+    connect(conditionalFormatAction, &QAction::triggered, [&]() {
+        if (text().isEmpty())
+            emit clearAllCondFormats();
+        else
+            emit addFilterAsCondFormat(text());
+    });
     editContextMenu->addSeparator();
 
     QMenu* filterMenu = editContextMenu->addMenu(tr("Set Filter Expression"));
@@ -134,7 +144,11 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     connect(isNotEmptyAction, &QAction::triggered, [&]() {
             setText("<>''");
         });
-
+    // Simplify this if we ever support a NOT LIKE filter
+    QAction* notContainingAction = new QAction(tr("Not containing..."), editContextMenu);
+    connect(notContainingAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("/^((?!"), QString(").)*$/"));
+        });
     QAction* equalToAction = new QAction(tr("Equal to..."), editContextMenu);
     connect(equalToAction, &QAction::triggered, [&]() {
             setFilterHelper(QString ("="));
@@ -164,6 +178,13 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
             setFilterHelper(QString ("?~"));
         });
 
+    QAction* regexpAction = new QAction(tr("Regular expression..."), editContextMenu);
+    connect(regexpAction, &QAction::triggered, [&]() {
+            setFilterHelper(QString ("/"), QString ("/"));
+        });
+
+    editContextMenu->addAction(conditionalFormatAction);
+
     filterMenu->addAction(whatsThisAction);
     filterMenu->addSeparator();
     filterMenu->addAction(isNullAction);
@@ -171,6 +192,7 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     filterMenu->addAction(isEmptyAction);
     filterMenu->addAction(isNotEmptyAction);
     filterMenu->addSeparator();
+    filterMenu->addAction(notContainingAction);
     filterMenu->addAction(equalToAction);
     filterMenu->addAction(notEqualToAction);
     filterMenu->addAction(greaterThanAction);
@@ -178,6 +200,6 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     filterMenu->addAction(greaterEqualAction);
     filterMenu->addAction(lessEqualAction);
     filterMenu->addAction(inRangeAction);
-
+    filterMenu->addAction(regexpAction);
     editContextMenu->exec(mapToGlobal(pos));
 }

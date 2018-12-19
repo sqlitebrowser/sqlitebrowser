@@ -1,9 +1,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QApplication>
-#include <QVariant>
 #include <QHash>
+#include <QVariant>
 
 class Settings
 {

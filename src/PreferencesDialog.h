@@ -7,7 +7,6 @@
 
 class QTreeWidgetItem;
 class QFrame;
-class QTableWidget;
 class QSslCertificate;
 class QAbstractButton;
 
@@ -20,20 +19,30 @@ class PreferencesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PreferencesDialog(QWidget* parent = nullptr);
-    ~PreferencesDialog();
+    enum Tabs
+    {
+        TabGeneral,
+        TabDatabase,
+        TabDataBrowser,
+        TabSql,
+        TabExtensions,
+        TabRemote
+    };
+
+    explicit PreferencesDialog(QWidget* parent = nullptr, Tabs tab = TabGeneral);
+    ~PreferencesDialog() override;
 
 private slots:
-    virtual void loadSettings();
-    virtual void saveSettings();
+    void loadSettings();
+    void saveSettings();
 
-    virtual void chooseLocation();
-    virtual void showColourDialog(QTreeWidgetItem* item, int column);
-    virtual void addExtension();
-    virtual void removeExtension();
-    virtual void activateRemoteTab(bool active);
-    virtual void addClientCertificate();
-    virtual void removeClientCertificate();
+    void chooseLocation();
+    void showColourDialog(QTreeWidgetItem* item, int column);
+    void addExtension();
+    void removeExtension();
+    void activateRemoteTab(bool active);
+    void addClientCertificate();
+    void removeClientCertificate();
     void chooseRemoteCloneDirectory();
     void updatePreviewFont();
 
@@ -52,7 +61,7 @@ private:
     void addClientCertToTable(const QString& path, const QSslCertificate& cert);
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 #endif

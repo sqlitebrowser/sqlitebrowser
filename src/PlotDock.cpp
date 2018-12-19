@@ -5,6 +5,9 @@
 #include "FileDialog.h"
 #include "MainWindow.h"     // Just for BrowseDataTableSettings, not for the actual main window class
 
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+
 PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::PlotDock),
@@ -40,16 +43,26 @@ PlotDock::PlotDock(QWidget* parent)
     QShortcut* shortcutCopy = new QShortcut(QKeySequence::Copy, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutCopy, SIGNAL(activated()), this, SLOT(copy()));
 
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &PlotDock::openPrintDialog);
+
     ui->plotWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Set up context menu
     m_contextMenu = new QMenu(this);
+
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     copyAction->setShortcut(shortcutCopy->key());
     m_contextMenu->addAction(copyAction);
-
     connect(copyAction, &QAction::triggered, [&]() {
        copy();
+    });
+
+    QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), m_contextMenu);
+    printAction->setShortcut(shortcutPrint->key());
+    m_contextMenu->addAction(printAction);
+    connect(printAction, &QAction::triggered, [&]() {
+       openPrintDialog();
     });
 
     QAction* showLegendAction = new QAction(tr("Show legend"), m_contextMenu);
@@ -295,50 +308,50 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 QVector<double> xdata(nrows), ydata(nrows), tdata(nrows);
                 QVector<QString> labels;
-                for(int i = 0; i < nrows; ++i)
+                for(int j = 0; j < nrows; ++j)
                 {
-                    tdata[i] = i;
+                    tdata[i] = j;
                     // convert x type axis if it's datetime
                     switch (xtype) {
                     case QVariant::DateTime:
                     case QVariant::Date: {
-                        QString s = model->data(model->index(i, x)).toString();
+                        QString s = model->data(model->index(j, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
                         xdata[i] = d.toMSecsSinceEpoch() / 1000.0;
                         break;
                     }
                     case QVariant::Time: {
-                        QString s = model->data(model->index(i, x)).toString();
+                        QString s = model->data(model->index(j, x)).toString();
                         QTime t = QTime::fromString(s);
                         xdata[i] = t.msecsSinceStartOfDay() / 1000.0;
                         break;
                     }
                     case QVariant::String: {
-                        xdata[i] = i+1;
-                        labels << model->data(model->index(i, x)).toString();
+                        xdata[i] = j+1;
+                        labels << model->data(model->index(j, x)).toString();
                         break;
                     }
                     default: {
                         // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                         // instead of retrieving some value from the model.
                         if(x == RowNumId)
-                            xdata[i] = i+1;
+                            xdata[i] = j+1;
 
                         else
-                            xdata[i] = model->data(model->index(i, x)).toDouble();
+                            xdata[i] = model->data(model->index(j, x)).toDouble();
                     }
                     }
 
-                    if (i != 0)
+                    if (j != 0)
                         isSorted &= (xdata[i-1] <= xdata[i]);
 
                     // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                     // instead of retrieving some value from the model.
                     QVariant pointdata;
                     if(column == RowNumId)
-                        pointdata = i+1;
+                        pointdata = j+1;
                     else
-                        pointdata = model->data(model->index(i, column), Qt::EditRole);
+                        pointdata = model->data(model->index(j, column), Qt::EditRole);
 
                     if(pointdata.isNull())
                         ydata[i] = qQNaN();
@@ -380,7 +393,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         plottable = graph;
                         graph->setData(xdata, ydata, /*alreadySorted*/ true);
                         // set some graph styles not supported by the abstract plottable
-                        graph->setLineStyle((QCPGraph::LineStyle) ui->comboLineType->currentIndex());
+                        graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
                         graph->setScatterStyle(scatterStyle);
                     } else {
                         QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
@@ -479,56 +492,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
             // Generate a default colour if none isn't set yet
             QColor colour = changeitem->backgroundColor(column);
             if(!colour.isValid())
-            {
-                static int last_colour_index = 0;
-                switch(last_colour_index++)
-                {
-                case 0:
-                    colour = QColor(0, 69, 134);
-                    break;
-                case 1:
-                    colour = QColor(255, 66, 14);
-                    break;
-                case 2:
-                    colour = QColor(255, 211, 32);
-                    break;
-                case 3:
-                    colour = QColor(87, 157, 28);
-                    break;
-                case 4:
-                    colour = QColor(126, 0, 33);
-                    break;
-                case 5:
-                    colour = QColor(131, 202, 255);
-                    break;
-                case 6:
-                    colour = QColor(49, 64, 4);
-                    break;
-                case 7:
-                    colour = QColor(174, 207, 0);
-                    break;
-                case 8:
-                    colour = QColor(75, 31, 111);
-                    break;
-                case 9:
-                    colour = QColor(255, 149, 14);
-                    break;
-                case 10:
-                    colour = QColor(197, 00, 11);
-                    break;
-                case 11:
-                    colour = QColor(0, 132, 209);
-
-                    // Since this is the last colour in our table, reset the counter back
-                    // to the first colour
-                    last_colour_index = 0;
-                    break;
-                default:
-                    // NOTE: This shouldn't happen!
-                    colour = QColor(0, 0, 0);
-                    break;
-                }
-            }
+                colour = m_graphPalette.nextSerialColor(true);
 
             // Set colour
             changeitem->setBackgroundColor(column, colour);
@@ -561,7 +525,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         // On double click open the colordialog
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? (Qt::GlobalColor)(qrand() % 13 + 5) : curbkcolor;
+        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(qrand() % 13 + 5) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {
@@ -593,10 +557,11 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
 void PlotDock::on_butSavePlot_clicked()
 {
-    QString fileName = FileDialog::getSaveFileName(this,
-                                                    tr("Choose a filename to save under"),
-                                                    tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)")
-                                                    );
+    QString fileName = FileDialog::getSaveFileName(
+                           CreateDataFile,
+                           this,
+                           tr("Choose a filename to save under"),
+                           tr("PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)"));
     if(!fileName.isEmpty())
     {
         if(fileName.endsWith(".png", Qt::CaseInsensitive))
@@ -629,7 +594,7 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
              index <= QCPGraph::lsImpulse);
 
     bool hasCurves = (ui->plotWidget->plottableCount() > ui->plotWidget->graphCount());
-    QCPGraph::LineStyle lineStyle = (QCPGraph::LineStyle) index;
+    QCPGraph::LineStyle lineStyle = static_cast<QCPGraph::LineStyle>(index);
     if (lineStyle > QCPGraph::lsLine && hasCurves) {
         QMessageBox::warning(this, qApp->applicationName(),
                              tr("There are curves in this plot and the selected line style can only be applied to graphs sorted by X. "
@@ -671,7 +636,7 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
              index <  QCPScatterStyle::ssPixmap);
 
     bool hasCurves = (ui->plotWidget->plottableCount() > ui->plotWidget->graphCount());
-    QCPScatterStyle::ScatterShape shape = (QCPScatterStyle::ScatterShape) index;
+    QCPScatterStyle::ScatterShape shape = static_cast<QCPScatterStyle::ScatterShape>(index);
     for (int i = 0, ie = ui->plotWidget->graphCount(); i < ie; ++i)
     {
         QCPGraph * graph = ui->plotWidget->graph(i);
@@ -850,4 +815,28 @@ void PlotDock::reject()
     // We override this, to ensure the Escape key doesn't make this dialog
     // dock go away
     return;
+}
+
+void PlotDock::openPrintDialog()
+{
+    QPrinter printer;
+    QPrintPreviewDialog previewDialog(&printer, this);
+    connect(&previewDialog, &QPrintPreviewDialog::paintRequested, this, &PlotDock::renderPlot);
+    previewDialog.exec();
+}
+
+void PlotDock::renderPlot(QPrinter* printer)
+{
+    QCPPainter painter(printer);
+    QRectF pageRect = printer->pageRect(QPrinter::DevicePixel);
+
+    int plotWidth = ui->plotWidget->viewport().width();
+    int plotHeight = ui->plotWidget->viewport().height();
+    double scale = pageRect.width()/static_cast<double>(plotWidth);
+
+    painter.setMode(QCPPainter::pmVectorized);
+    painter.setMode(QCPPainter::pmNoCaching);
+
+    painter.scale(scale, scale);
+    ui->plotWidget->toPainter(&painter, plotWidth, plotHeight);
 }

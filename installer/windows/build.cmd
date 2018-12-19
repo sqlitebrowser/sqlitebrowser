@@ -1,7 +1,7 @@
 @echo off
 
 :: Output file name
-set MSI=DB.Browser.for.SQLite
+set MSI=DB.Browser.for.SQLite-%1
 
 :: Set the ARCH based on the first parameter
 if "%1"=="" (
@@ -16,18 +16,6 @@ if "%1"=="" (
     goto :eof
 )
 
-:: Choose between building the application with SQLite (default) or SQLCipher library
-if "%2"=="" (
-    set SQLCIPHER=
-    set MSI=%MSI%-%1
-) else if "%2"=="sqlcipher" (
-    set MSI=%MSI%-sqlcipher-%1
-    set SQLCIPHER=-dSQLCipher=1
-) else (
-    echo ERROR: Second parameter can only be "sqlcipher" or nothing
-    goto :eof
-)
-
 :: Suppress some ICE checks
 :: - 61 (major upgrade)
 :: - 03 & 82 (merge module)
@@ -39,9 +27,11 @@ set ICE=-sice:ICE03 -sice:ICE82 -sice:ICE61 -sice:ICE38 -sice:ICE43 -sice:ICE57
 set LIGHT=-sw1104
 
 :: Compile & Link
-"%WIX%\bin\candle.exe" -nologo -pedantic -arch %ARCH% %SQLCIPHER% product.wxs
-"%WIX%\bin\light.exe" -sval -nologo -pedantic %LIGHT% %ICE% -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -loc strings.wxl product.wixobj -out %MSI%.msi
+"%WIX%\bin\candle.exe" -nologo -pedantic -arch %ARCH% product.wxs translations.wxs ui.wxs
+"%WIX%\bin\light.exe" -sval -nologo -pedantic %LIGHT% %ICE% -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -loc strings.wxl product.wixobj translations.wixobj ui.wixobj -out %MSI%.msi
 
 :: Cleanup
 del product.wixobj
+del translations.wixobj
+del ui.wixobj
 del %MSI%.wixpdb

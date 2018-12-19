@@ -4,12 +4,13 @@
 #include <QAbstractTableModel>
 #include <QStringList>
 #include <QVector>
-#include <QThread>
 #include <QMutex>
+#include <QColor>
 #include <memory>
 
-#include "sqlitetypes.h"
 #include "RowCache.h"
+#include "CondFormat.h"
+#include "sql/Query.h"
 
 struct sqlite3;
 class DBBrowserDB;
@@ -24,7 +25,7 @@ class SqliteTableModel : public QAbstractTableModel
 
 public:
     explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, size_t chunkSize = 50000, const QString& encoding = QString());
-    ~SqliteTableModel();
+    ~SqliteTableModel() override;
 
     /// reset to state after construction
     void reset();
@@ -79,14 +80,15 @@ public:
     void setQuery(const QString& sQuery, bool dontClearHeaders = false);
 
     QString query() const { return m_sQuery; }
-    QString customQuery(bool withRowid);
+    QString customQuery(bool withRowid) const { return QString::fromStdString(m_query.buildQuery(withRowid)); }
 
     /// configure for browsing specified table
-    void setTable(const sqlb::ObjectIdentifier& table, int sortColumn = 0, Qt::SortOrder sortOrder = Qt::AscendingOrder, const QVector<QString> &display_format = QVector<QString>());
+    void setQuery(const sqlb::Query& query);
 
     void setChunkSize(size_t chunksize);
+    size_t chunkSize() { return m_chunkSize; };
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-    const sqlb::ObjectIdentifier& currentTableName() const { return m_sTable; }
+    sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
@@ -97,7 +99,8 @@ public:
 
     // The pseudo-primary key is exclusively for editing views
     void setPseudoPk(const QString& pseudoPk);
-    QString pseudoPk() const { return m_pseudoPk; }
+    bool hasPseudoPk() const;
+    QString pseudoPk() const { return QString::fromStdString(m_query.rowIdColumn()); }
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 
@@ -109,15 +112,21 @@ public:
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
 
+    void addCondFormat(int column, const CondFormat& condFormat);
+    void setCondFormats(int column, const QVector<CondFormat>& condFormats);
+
+    DBBrowserDB& db() { return m_db; };
+
 public slots:
     void updateFilter(int column, const QString& value);
 
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
+    void finishedRowCount();
 
 protected:
-    virtual Qt::DropActions supportedDropActions() const override;
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+    Qt::DropActions supportedDropActions() const override;
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
 private:
     friend class RowLoader;
@@ -167,14 +176,9 @@ private:
     bool nosync_isBinary(const QModelIndex& index) const;
 
     QString m_sQuery;
-    sqlb::ObjectIdentifier m_sTable;
-    QString m_sRowidColumn;
-    QString m_pseudoPk;
-    int m_iSortColumn;
-    QString m_sSortOrder;
-    QMap<int, QString> m_mWhere;
-    QVector<QString> m_vDisplayFormat;
     QVector<int> m_vDataTypes;
+    QMap<int, QVector<CondFormat>> m_mCondFormats;
+    sqlb::Query m_query;
 
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.

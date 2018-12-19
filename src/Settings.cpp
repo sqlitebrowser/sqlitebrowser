@@ -1,5 +1,6 @@
 #include "Settings.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QSettings>
 #include <QColor>
@@ -176,8 +177,12 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 10;
         if(name == "symbol_limit")
             return 5000;
+        if(name == "complete_threshold")
+            return 1000;
         if(name == "indent_compact")
             return false;
+        if(name == "auto_switch_mode")
+            return true;
         if(name == "null_text")
             return "NULL";
         if(name == "blob_text")
@@ -322,6 +327,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "extension" && name == "disableregex")
         return false;
 
+    // extensions/enable_load_extension?
+    if(group == "extension" && name == "enable_load_extension")
+        return false;
+
     // PlotDock/lineType or pointShape?
     if(group == "PlotDock")
     {
@@ -332,6 +341,17 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         // QCPScatterStyle::ssDisk
         if(name == "pointShape")
             return 4;
+    }
+
+
+    // SchemaDock Drag & drop settings
+    if(group == "SchemaDock")
+    {
+        if(name == "dropQualifiedNames")
+            return false;
+
+        if(name == "dropEnquotedNames")
+            return true;
     }
 
     // Remote settings?

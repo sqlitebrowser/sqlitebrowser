@@ -1,8 +1,9 @@
 #include "ExtendedTableWidget.h"
 #include "sqlitetablemodel.h"
 #include "FilterTableHeader.h"
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 #include "Settings.h"
+#include "sqlitedb.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -16,6 +17,12 @@
 #include <QMenu>
 #include <QDateTime>
 #include <QLineEdit>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+#include <QTextDocument>
+#include <QCompleter>
+#include <QComboBox>
+
 #include <limits>
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
@@ -95,38 +102,119 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
 
 }
 
+UniqueFilterModel::UniqueFilterModel(QObject* parent)
+    : QSortFilterProxyModel(parent)
+{
+}
+
+bool UniqueFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex index = sourceModel()->index(sourceRow, filterKeyColumn(), sourceParent);
+    const QString& value = index.data(Qt::EditRole).toString();
+
+    if (!value.isEmpty() && !m_uniqueValues.contains(value)) {
+        const_cast<UniqueFilterModel*>(this)->m_uniqueValues.insert(value);
+        return true;
+    }
+    else
+        return false;
+
+}
 
 ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
 
-QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/) const
+QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
-    // Just create a normal line editor but set the maximum length to the highest possible value instead of the default 32768.
-    QLineEdit* editor = new QLineEdit(parent);
-    editor->setMaxLength(std::numeric_limits<int>::max());
-    return editor;
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
+    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+
+    if(fk.isSet()) {
+
+        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
+
+        QString column;
+        // If no column name is set, assume the primary key is meant
+        if(fk.columns().isEmpty()) {
+            sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
+            column = obj->findPk()->name();
+        } else
+            column = fk.columns().at(0);
+
+        sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+        QString query = QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(foreignTable.toString());
+
+        // if the current column of the current table does NOT have not-null constraint,
+        // the NULL is united to the query to get the possible values in the combo-box.
+        if (!currentTable->fields.at(index.column()-1).notnull())
+            query.append (" UNION SELECT NULL");
+
+        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
+        fkModel->setQuery(query);
+
+        QComboBox* combo = new QComboBox(parent);
+
+        // Complete cache so it is ready when setEditorData is invoked.
+        fkModel->completeCache();
+        combo->setModel(fkModel);
+
+        return combo;
+    } else {
+
+        QLineEdit* editor = new QLineEdit(parent);
+        // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
+        if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
+            QCompleter* completer = new QCompleter(editor);
+            UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
+            // Provide a filter for the source model, so only unique and non-empty values are accepted.
+            completerFilter->setSourceModel(const_cast<QAbstractItemModel*>(index.model()));
+            completerFilter->setFilterKeyColumn(index.column());
+            completer->setModel(completerFilter);
+            // Complete on this column, using a popup and case-insensitively.
+            completer->setCompletionColumn(index.column());
+            completer->setCompletionMode(QCompleter::PopupCompletion);
+            completer->setCaseSensitivity(Qt::CaseInsensitive);
+            editor->setCompleter(completer);
+        }
+        // Set the maximum length to the highest possible value instead of the default 32768.
+        editor->setMaxLength(std::numeric_limits<int>::max());
+        return editor;
+    }
 }
 
 void ExtendedTableWidgetEditorDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
-
-    // Set the data for the line editor
+    QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
+    // Set the data for the editor
     QString data = index.data(Qt::EditRole).toString();
-    lineedit->setText(data);
 
-    // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
-    lineedit->setReadOnly(data.size() > lineedit->maxLength());
+    if(!lineedit) {
+        QComboBox* combo = static_cast<QComboBox*>(editor);
+        int comboIndex = combo->findText(data);
+        if (comboIndex >= 0)
+            // if it is valid, adjust the combobox
+            combo->setCurrentIndex(comboIndex);
+    } else {
+        lineedit->setText(data);
+
+        // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
+        lineedit->setReadOnly(data.size() > lineedit->maxLength());
+    }
 }
 
 void ExtendedTableWidgetEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
     // Only apply the data back to the model if the editor is not in read only mode to avoid accidental truncation of the data
-    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
-    if(!lineedit->isReadOnly())
-        model->setData(index, lineedit->text());
+    QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
+    if(!lineedit) {
+        QComboBox* combo = static_cast<QComboBox*>(editor);
+        model->setData(index, combo->currentData(Qt::EditRole), Qt::EditRole);
+    } else
+        if(!lineedit->isReadOnly())
+            model->setData(index, lineedit->text());
 }
 
 void ExtendedTableWidgetEditorDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
@@ -157,28 +245,33 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
 
     QAction* filterAction = new QAction(tr("Use as Exact Filter"), m_contextMenu);
     QAction* containingAction = new QAction(tr("Containing"), m_contextMenu);
+    QAction* notContainingAction = new QAction(tr("Not containing"), m_contextMenu);
     QAction* notEqualToAction = new QAction(tr("Not equal to"), m_contextMenu);
     QAction* greaterThanAction = new QAction(tr("Greater than"), m_contextMenu);
     QAction* lessThanAction = new QAction(tr("Less than"), m_contextMenu);
     QAction* greaterEqualAction = new QAction(tr("Greater or equal"), m_contextMenu);
     QAction* lessEqualAction = new QAction(tr("Less or equal"), m_contextMenu);
     QAction* inRangeAction = new QAction(tr("Between this and..."), m_contextMenu);
+    QAction* regexpAction = new QAction(tr("Regular expression"), m_contextMenu);
 
     QAction* nullAction = new QAction(tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
     QAction* copyAsSQLAction = new QAction(QIcon(":/icons/sql_copy"), tr("Copy as SQL"), m_contextMenu);
     QAction* pasteAction = new QAction(QIcon(":/icons/paste"), tr("Paste"), m_contextMenu);
+    QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), m_contextMenu);
 
     m_contextMenu->addAction(filterAction);
     QMenu* filterMenu = m_contextMenu->addMenu(tr("Use in Filter Expression"));
     filterMenu->addAction(containingAction);
+    filterMenu->addAction(notContainingAction);
     filterMenu->addAction(notEqualToAction);
     filterMenu->addAction(greaterThanAction);
     filterMenu->addAction(lessThanAction);
     filterMenu->addAction(greaterEqualAction);
     filterMenu->addAction(lessEqualAction);
     filterMenu->addAction(inRangeAction);
+    filterMenu->addAction(regexpAction);
 
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
@@ -187,6 +280,8 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addAction(copyWithHeadersAction);
     m_contextMenu->addAction(copyAsSQLAction);
     m_contextMenu->addAction(pasteAction);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(printAction);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Create and set up delegate
@@ -200,6 +295,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+Shift+C")));
     copyAsSQLAction->setShortcut(QKeySequence(tr("Ctrl+Alt+C")));
     pasteAction->setShortcut(QKeySequence::Paste);
+    printAction->setShortcut(QKeySequence::Print);
 
     // Set up context menu actions
     connect(this, &QTableView::customContextMenuRequested,
@@ -212,6 +308,12 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         copyAction->setEnabled(enabled);
         copyWithHeadersAction->setEnabled(enabled);
         copyAsSQLAction->setEnabled(enabled);
+        printAction->setEnabled(enabled);
+
+        // Hide filter actions when there isn't any filters
+        bool hasFilters = m_tableHeader->hasFilters();
+        filterAction->setVisible(hasFilters);
+        filterMenu->menuAction()->setVisible(hasFilters);
 
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
@@ -226,6 +328,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     });
     connect(containingAction, &QAction::triggered, [&]() {
             useAsFilter(QString (""));
+        });
+    // Use a regular expression for the not containing filter. Simplify this if we ever support the NOT LIKE filter.
+    connect(notContainingAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("/^((?!"), /* binary */ false, QString (").)*$/"));
         });
     connect(notEqualToAction, &QAction::triggered, [&]() {
             useAsFilter(QString ("<>"));
@@ -245,6 +351,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(inRangeAction, &QAction::triggered, [&]() {
             useAsFilter(QString ("~"), /* binary */ true);
         });
+    connect(regexpAction, &QAction::triggered, [&]() {
+            useAsFilter(QString ("/"), /* binary */ false, QString ("/"));
+        });
 
     connect(nullAction, &QAction::triggered, [&]() {
         for(const QModelIndex& index : selectedIndexes())
@@ -262,6 +371,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(pasteAction, &QAction::triggered, [&]() {
        paste();
     });
+    connect(printAction, &QAction::triggered, [&]() {
+       openPrintDialog();
+    });
 }
 
 void ExtendedTableWidget::reloadSettings()
@@ -275,17 +387,17 @@ void ExtendedTableWidget::reloadSettings()
     verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
 }
 
-void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
+void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
 {
-    QModelIndexList indices = selectionModel()->selectedIndexes();
+    QModelIndexList indices = fromIndices;
 
     // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
     // unintuitive; especially copying the rowid column when selecting all columns of a table is a problem because pasting the data
     // won't work as expected.
-    QMutableListIterator<QModelIndex> i(indices);
-    while (i.hasNext()) {
-        if (isColumnHidden(i.next().column()))
-            i.remove();
+    QMutableListIterator<QModelIndex> it(indices);
+    while (it.hasNext()) {
+        if (isColumnHidden(it.next().column()))
+            it.remove();
     }
 
     // Abort if there's nothing to copy
@@ -297,7 +409,7 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     // Clear internal copy-paste buffer
     m_buffer.clear();
 
-    // If a single cell is selected, copy it to clipboard
+    // If a single cell is selected which contains an image, copy it to the clipboard
     if (!inSQL && !withHeaders && indices.size() == 1) {
         QImage img;
         QVariant data = m->data(indices.first(), Qt::EditRole);
@@ -305,26 +417,12 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
         if (img.loadFromData(data.toByteArray()))
         {
             // If it's an image, copy the image data to the clipboard
-            qApp->clipboard()->setImage(img);
-            return;
-        } else {
-            // It it's not an image, check if it's an empty field
-            if (data.toByteArray().isEmpty())
-            {
-                // The field is either NULL or empty. Those are are handled via the internal copy-paste buffer
-                qApp->clipboard()->setText(QString());      // Calling clear() alone doesn't seem to work on all systems
-                qApp->clipboard()->clear();
-                m_buffer.push_back(QByteArrayList{data.toByteArray()});
-                return;
-            }
-
-            // The field isn't empty. Copy the text to the clipboard without quoting (for general plain text clipboard)
-            qApp->clipboard()->setText(data.toByteArray());
+            mimeData->setImageData(img);
             return;
         }
     }
 
-    // If we got here, there are multiple selected cells, or copy with headers was requested.
+    // If we got here, a non-image cell was or multiple cells were selected, or copy with headers was requested.
     // In this case, we copy selected data into internal copy-paste buffer and then
     // we write a table both in HTML and text formats to the system clipboard.
 
@@ -355,7 +453,8 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     m_generatorStamp = QString("<meta name=\"generator\" content=\"%1\"><meta name=\"date\" content=\"%2\">").arg(QApplication::applicationName().toHtmlEscaped(), now);
     htmlResult.append(m_generatorStamp);
     // TODO: is this really needed by Excel, since we use <pre> for multi-line cells?
-    htmlResult.append("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body><table>");
+    htmlResult.append("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body>"
+                      "<table border=1 cellspacing=0 cellpadding=2>");
 
     int currentRow = indices.first().row();
 
@@ -381,7 +480,7 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
                 sqlInsertStatement.append(", ");
             }
 
-            result.append(escapeCopiedData(headerText));
+            result.append(headerText);
             htmlResult.append(headerText);
             sqlInsertStatement.append(sqlb::escapeIdentifier(headerText));
         }
@@ -435,7 +534,7 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
                 else
                     htmlResult.append(QString(text).toHtmlEscaped());
 
-                result.append(escapeCopiedData(text));
+                result.append(text);
                 sqlResult.append("'" + text.replace("'", "''") + "'");
             } else
                 // Table cell data: binary. Save as BLOB literal in SQL
@@ -445,7 +544,6 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
     }
     sqlResult.append(");");
 
-    QMimeData *mimeData = new QMimeData;
     if ( inSQL )
     {
         mimeData->setText(sqlResult);
@@ -453,27 +551,13 @@ void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
         mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
         mimeData->setText(result);
     }
-    qApp->clipboard()->setMimeData(mimeData);
 }
 
-QString ExtendedTableWidget::escapeCopiedData(const QByteArray& data) const
+void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
 {
-    // Empty string is enquoted in plain text format, whilst NULL isn't
-    // We also quote the data when there are line breaks in the text, again for spreadsheet compatability.
-    // We also need to quote when there are tabs in the string (another option would be to replace the tabs by spaces, that's what
-    // LibreOffice seems to be doing here).
-
-    if(data.isNull())
-        return data;
-
-    QString text = data;
-    if(text.isEmpty() || text.contains('\n') || text.contains('\t') || text.contains('"'))
-    {
-        text.replace("\"", "\"\"");
-        return QString("\"%1\"").arg(text);
-    } else {
-        return text;
-    }
+    QMimeData *mimeData = new QMimeData;
+    copyMimeData(selectionModel()->selectedIndexes(), mimeData, withHeaders, inSQL);
+    qApp->clipboard()->setMimeData(mimeData);
 }
 
 void ExtendedTableWidget::paste()
@@ -589,7 +673,7 @@ void ExtendedTableWidget::paste()
     }
 }
 
-void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary)
+void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary, const QString& operatorSuffix)
 {
     QModelIndex index = selectionModel()->currentIndex();
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
@@ -607,12 +691,35 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
     else
         value = data.toString();
 
+    // When Containing filter is requested (empty operator) and the value starts with
+    // an operator character, the character is escaped.
+    if (filterOperator.isEmpty())
+        value.replace(QRegExp("^(<|>|=|/)"), Settings::getValue("databrowser", "filter_escape").toString() + QString("\\1"));
+
     // If binary operator, the cell data is used as first value and
     // the second value must be added by the user.
     if (binary)
         m_tableHeader->setFilter(index.column(), value + filterOperator);
     else
-        m_tableHeader->setFilter(index.column(), filterOperator + value);
+        m_tableHeader->setFilter(index.column(), filterOperator + value + operatorSuffix);
+}
+
+void ExtendedTableWidget::duplicateUpperCell()
+{
+    const QModelIndex& currentIndex = selectionModel()->currentIndex();
+    QModelIndex upperIndex = currentIndex.sibling(currentIndex.row() - 1, currentIndex.column());
+    if (upperIndex.isValid()) {
+        SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+        // When the data is binary, just copy it, since it cannot be edited inline.
+        if (m->isBinary(upperIndex))
+            m->setData(currentIndex, m->data(upperIndex, Qt::EditRole), Qt::EditRole);
+        else {
+            // Open the inline editor and set the value (this mimics the behaviour of LibreOffice Calc)
+            edit(currentIndex);
+            QLineEdit* editor = qobject_cast<QLineEdit*>(indexWidget(currentIndex));
+            editor->setText(upperIndex.data().toString());
+        }
+    }
 }
 
 void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
@@ -625,12 +732,17 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     } else if(event->matches(QKeySequence::Paste)) {
         // Call a custom paste method when Ctrl-V is pressed
         paste();
+    } else if(event->matches(QKeySequence::Print)) {
+        openPrintDialog();
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier) && (event->key() == Qt::Key_C)) {
         // Call copy with headers when Ctrl-Shift-C is pressed
         copy(true, false);
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::AltModifier) && (event->key() == Qt::Key_C)) {
         // Call copy in SQL format when Ctrl-Alt-C is pressed
         copy(false, true);
+    } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_Apostrophe)) {
+        // Call duplicateUpperCell when Ctrl-' is pressed (this is used by spreadsheets for "Copy Formula from Cell Above")
+        duplicateUpperCell();
     } else if(event->key() == Qt::Key_Tab && hasFocus() &&
               selectedIndexes().count() == 1 &&
               selectedIndexes().at(0).row() == model()->rowCount()-1 && selectedIndexes().at(0).column() == model()->columnCount()-1) {
@@ -800,4 +912,64 @@ void ExtendedTableWidget::selectTableLines(int firstLine, int count)
     QModelIndex bottomRight = m->index(lastLine, m->columnCount()-1);
 
     selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+}
+
+void ExtendedTableWidget::selectAll()
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // Fetch all the data if needed and user accepts, then call parent's selectAll()
+
+    QMessageBox::StandardButton answer = QMessageBox::Yes;
+
+    // If we can fetch more data, ask user if they are sure about it.
+    if (!m->isCacheComplete()) {
+
+      answer = QMessageBox::question(this, QApplication::applicationName(),
+                              tr("<p>Not all data has been loaded. <b>Do you want to load all data before selecting all the rows?</b><p>"
+                                 "<p>Answering <b>No</b> means that no more data will be loaded and the selection will not be performed.<br/>"
+                                 "Answering <b>Yes</b> might take some time while the data is loaded but the selection will be complete.</p>"
+                                 "Warning: Loading all the data might require a great amount of memory for big tables."),
+                                     QMessageBox::Yes | QMessageBox::No);
+
+      if (answer == QMessageBox::Yes)
+          m->completeCache();
+    }
+    if (answer == QMessageBox::Yes)
+        QTableView::selectAll();
+}
+
+void ExtendedTableWidget::openPrintDialog()
+{
+    QMimeData *mimeData = new QMimeData;
+    QModelIndexList indices;
+
+    // Print the selection, if active, or the entire table otherwise.
+    // Given that simply clicking over a cell, selects it, one-cell selections are ignored.
+    if (selectionModel()->hasSelection() && selectionModel()->selectedIndexes().count() > 1)
+        indices = selectionModel()->selectedIndexes();
+    else
+        for (int row=0; row < model()->rowCount(); row++)
+            for (int column=0; column < model()->columnCount(); column++)
+                indices << model()->index(row, column);
+
+    // Copy the specified indices content to mimeData for getting the HTML representation of
+    // the table with headers. We can then print it using an HTML text document.
+    copyMimeData(indices, mimeData, true, false);
+
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(mimeData->html());
+
+    QPrinter printer;
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
+
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+        document->print(previewPrinter);
+    });
+
+    dialog->exec();
+
+    delete dialog;
+    delete document;
+    delete mimeData;
 }

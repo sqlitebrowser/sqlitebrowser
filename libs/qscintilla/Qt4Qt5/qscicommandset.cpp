@@ -1,6 +1,6 @@
 // This module implements the QsciCommandSet class.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -937,7 +937,7 @@ bool QsciCommandSet::writeSettings(QSettings &qs, const char *prefix)
         qs.setValue(skey + "key", cmd->key());
 
         // Write the alternate key.
-        qs.setValue(skey + "alt", cmd->key());
+        qs.setValue(skey + "alt", cmd->alternateKey());
     }
 
     return rc;

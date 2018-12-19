@@ -292,14 +292,14 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <widget class="QCheckBox" name="checkFailOnMissing">
        <property name="toolTip">
         <string>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="labelFailOnMissing">
        <property name="text">
         <string>Fail on missing values </string>
@@ -314,12 +314,47 @@
        <property name="text">
         <string>Disable data type detection</string>
        </property>
+       <property name="buddy">
+        <cstring>checkNoTypeDetection</cstring>
+       </property>
       </widget>
      </item>
      <item row="8" column="1">
       <widget class="QCheckBox" name="checkNoTypeDetection">
        <property name="toolTip">
         <string>Disable the automatic data type detection when creating a new table.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QComboBox" name="comboOnConflictStrategy">
+       <property name="toolTip">
+        <string>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Abort import</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ignore row</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Replace existing row</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="labelOnConflictStrategy">
+       <property name="text">
+        <string>Conflict strategy</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboOnConflictStrategy</cstring>
        </property>
       </widget>
      </item>
@@ -432,7 +467,9 @@
   <tabstop>checkBoxSeparateTables</tabstop>
   <tabstop>buttonAdvanced</tabstop>
   <tabstop>checkIgnoreDefaults</tabstop>
+  <tabstop>checkNoTypeDetection</tabstop>
   <tabstop>checkFailOnMissing</tabstop>
+  <tabstop>comboOnConflictStrategy</tabstop>
   <tabstop>filePicker</tabstop>
   <tabstop>toggleSelected</tabstop>
   <tabstop>matchSimilar</tabstop>
@@ -449,8 +486,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>99</y>
+     <x>245</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>445</x>
@@ -481,8 +518,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
-     <y>99</y>
+     <x>511</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>577</x>
@@ -497,8 +534,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
-     <y>132</y>
+     <x>511</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>530</x>
@@ -513,8 +550,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>165</y>
+     <x>524</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>540</x>
@@ -529,8 +566,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>184</x>
-     <y>191</y>
+     <x>192</x>
+     <y>182</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -545,8 +582,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>263</x>
-     <y>183</y>
+     <x>271</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>572</x>
@@ -561,8 +598,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>184</x>
-     <y>60</y>
+     <x>192</x>
+     <y>56</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>
@@ -577,8 +614,8 @@
    <slot>updateSelection(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>780</x>
-     <y>337</y>
+     <x>777</x>
+     <y>385</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -593,8 +630,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>132</y>
+     <x>245</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>350</x>
@@ -609,8 +646,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>272</x>
-     <y>677</y>
+     <x>281</x>
+     <y>707</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -625,8 +662,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>340</x>
-     <y>677</y>
+     <x>349</x>
+     <y>707</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -641,8 +678,8 @@
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>194</x>
-     <y>236</y>
+     <x>192</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -657,8 +694,8 @@
    <slot>matchSimilar()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>780</x>
-     <y>378</y>
+     <x>777</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -673,8 +710,8 @@
    <slot>toggleAdvancedSection(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>214</x>
-     <y>259</y>
+     <x>265</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
      <x>393</x>

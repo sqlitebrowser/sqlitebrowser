@@ -2,7 +2,7 @@
 // Scintilla.  It is modelled on QTextEdit - a method of the same name should
 // behave in the same way.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -264,17 +264,21 @@ void QsciScintilla::handleCharAdded(int ch)
 
     // Handle auto-indentation.
     if (autoInd)
+    {
         if (lex.isNull() || (lex->autoIndentStyle() & AiMaintain))
             maintainIndentation(ch, pos);
         else
             autoIndentation(ch, pos);
+    }
 
     // See if we might want to start auto-completion.
     if (!isCallTipActive() && acSource != AcsNone)
+    {
         if (isStartChar(ch))
             startAutoCompletion(acSource, false, use_single == AcusAlways);
         else if (acThresh >= 1 && isWordCharacter(ch))
             startAutoCompletion(acSource, true, use_single == AcusAlways);
+    }
 }
 
 
@@ -386,13 +390,8 @@ void QsciScintilla::callTip()
         ct = ct_entries.join("\n");
     }
 
-    QByteArray ct_ba;
-    if (isUtf8())
-        ct_ba = ct.toUtf8();
-    else
-        ct_ba = ct.toLatin1();
-
-    const char *cts = ct_ba.data();
+    ScintillaBytes ct_bytes = textAsBytes(ct);
+    const char *cts = ScintillaBytesConstData(ct_bytes);
 
     SendScintilla(SCI_CALLTIPSHOW, adjustedCallTipPosition(shift), cts);
 
@@ -856,12 +855,16 @@ void QsciScintilla::autoIndentLine(long pos, int line, int indent)
     long new_pos = -1;
 
     if (pos_after > pos_before)
+    {
         new_pos = pos + (pos_after - pos_before);
+    }
     else if (pos_after < pos_before && pos >= pos_after)
+    {
         if (pos >= pos_before)
             new_pos = pos + (pos_after - pos_before);
         else
             new_pos = pos_after;
+    }
 
     if (new_pos >= 0)
         SendScintilla(SCI_SETSEL, new_pos, new_pos);
@@ -1276,6 +1279,9 @@ void QsciScintilla::setWrapVisualFlags(WrapVisualFlag endFlag,
 
     switch (endFlag)
     {
+    case WrapFlagNone:
+        break;
+
     case WrapFlagByText:
         flags |= SC_WRAPVISUALFLAG_END;
         loc |= SC_WRAPVISUALFLAGLOC_END_BY_TEXT;
@@ -1292,6 +1298,9 @@ void QsciScintilla::setWrapVisualFlags(WrapVisualFlag endFlag,
 
     switch (startFlag)
     {
+    case WrapFlagNone:
+        break;
+
     case WrapFlagByText:
         flags |= SC_WRAPVISUALFLAG_START;
         loc |= SC_WRAPVISUALFLAGLOC_START_BY_TEXT;
@@ -1336,6 +1345,9 @@ void QsciScintilla::setFolding(FoldStyle folding, int margin)
     // Set the marker symbols to use.
     switch (folding)
     {
+    case NoFoldStyle:
+        break;
+
     case PlainFoldStyle:
         setFoldMarker(SC_MARKNUM_FOLDEROPEN, SC_MARK_MINUS);
         setFoldMarker(SC_MARKNUM_FOLDER, SC_MARK_PLUS);
@@ -1636,6 +1648,12 @@ void QsciScintilla::handleModified(int pos, int mtype, const char *text,
         int len, int added, int line, int foldNow, int foldPrev, int token,
         int annotationLinesAdded)
 {
+    Q_UNUSED(pos);
+    Q_UNUSED(text);
+    Q_UNUSED(len);
+    Q_UNUSED(token);
+    Q_UNUSED(annotationLinesAdded);
+
     if (mtype & SC_MOD_CHANGEFOLD)
     {
         if (fold)
@@ -2086,7 +2104,7 @@ void QsciScintilla::setCaretLineVisible(bool enable)
 // Set the background colour of a hotspot area.
 void QsciScintilla::setHotspotBackgroundColor(const QColor &col)
 {
-    SendScintilla(SCI_SETSELBACK, 1, col);
+    SendScintilla(SCI_SETHOTSPOTACTIVEBACK, 1, col);
 }
 
 
@@ -2100,7 +2118,7 @@ void QsciScintilla::setHotspotForegroundColor(const QColor &col)
 // Reset the background colour of a hotspot area to the default.
 void QsciScintilla::resetHotspotBackgroundColor()
 {
-    SendScintilla(SCI_SETSELBACK, 0UL);
+    SendScintilla(SCI_SETHOTSPOTACTIVEBACK, 0UL);
 }
 
 
@@ -4334,6 +4352,29 @@ bool QsciScintilla::event(QEvent *e)
 }
 
 
+// Re-implemented to zoom when the Control modifier is pressed.
+void QsciScintilla::wheelEvent(QWheelEvent *e)
+{
+#if defined(Q_OS_MAC)
+    const Qt::KeyboardModifier zoom_modifier = Qt::MetaModifier;
+#else
+    const Qt::KeyboardModifier zoom_modifier = Qt::ControlModifier;
+#endif
+
+   if ((e->modifiers() & zoom_modifier) != 0)
+   {
+       if (e->delta() > 0)
+           zoomIn();
+       else
+           zoomOut();
+   }
+   else 
+   {
+       QsciScintillaBase::wheelEvent(e);
+   }
+}
+
+
 // Re-implemented to handle chenges to the enabled state.
 void QsciScintilla::changeEvent(QEvent *e)
 {
@@ -4396,12 +4437,15 @@ void QsciScintilla::setEnabledColors(int style, QColor &fore, QColor &back)
 // Re-implemented to implement a more Qt-like context menu.
 void QsciScintilla::contextMenuEvent(QContextMenuEvent *e)
 {
-    QMenu *menu = createStandardContextMenu();
-
-    if (menu)
+    if (contextMenuNeeded(e->x(), e->y()))
     {
-        menu->setAttribute(Qt::WA_DeleteOnClose);
-        menu->popup(e->globalPos());
+        QMenu *menu = createStandardContextMenu();
+
+        if (menu)
+        {
+            menu->setAttribute(Qt::WA_DeleteOnClose);
+            menu->popup(e->globalPos());
+        }
     }
 }
 
@@ -4482,22 +4526,29 @@ static QColor asQColor(long sci_colour)
             ((int)(sci_colour >> 16)) & 0x00ff);
 }
 
+
+// Set the scroll width.
 void QsciScintilla::setScrollWidth(int pixelWidth)
 {
     SendScintilla(SCI_SETSCROLLWIDTH, pixelWidth);
 }
 
-int QsciScintilla::getScrollWidth() const
+// Get the scroll width.
+int QsciScintilla::scrollWidth() const
 {
     return SendScintilla(SCI_GETSCROLLWIDTH);
 }
 
+
+// Set scroll width tracking.
 void QsciScintilla::setScrollWidthTracking(bool enabled)
 {
     SendScintilla(SCI_SETSCROLLWIDTHTRACKING, enabled);
 }
 
-bool QsciScintilla::getScrollWidthTracking() const
+
+// Get scroll width tracking.
+bool QsciScintilla::scrollWidthTracking() const
 {
     return SendScintilla(SCI_GETSCROLLWIDTHTRACKING);
 }

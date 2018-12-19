@@ -8,6 +8,8 @@ class SqliteTableModel;
 class DBBrowserDB;
 class ExtendedTableWidget;
 
+class QTextEdit;
+
 namespace Ui {
 class SqlExecutionArea;
 }
@@ -18,7 +20,7 @@ class SqlExecutionArea : public QWidget
 
 public:
     explicit SqlExecutionArea(DBBrowserDB& _db, QWidget* parent = nullptr);
-    ~SqlExecutionArea();
+    ~SqlExecutionArea() override;
 
     QString getSql() const;
     QString getSelectedSql() const;
@@ -29,11 +31,14 @@ public:
     SqliteTableModel* getModel() { return model; }
     SqlTextEdit* getEditor();
     ExtendedTableWidget *getTableResult();
+    QTextEdit* getStatusEdit();
+
+    bool inErrorState() const { return error_state; }
 
 public slots:
-    virtual void finishExecution(const QString& result, const bool ok);
-    virtual void saveAsCsv();
-    virtual void reloadSettings();
+    void finishExecution(const QString& result, const bool ok);
+    void saveAsCsv();
+    void reloadSettings();
     void fetchedData();
     void setFindFrameVisibility(bool show);
 
@@ -54,6 +59,7 @@ private:
     Ui::SqlExecutionArea* ui;
     bool m_columnsResized;              // This is set to true if the columns of the table view were already adjusted to fit their contents
     bool showErrorIndicators;
+    bool error_state;
 };
 
 #endif

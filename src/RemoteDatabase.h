@@ -2,7 +2,7 @@
 #define REMOTEDATABASE_H
 
 #include <QObject>
-#include <QSslConfiguration>
+#include <QtNetwork/QSslConfiguration>
 
 class QNetworkAccessManager;
 class QString;
@@ -20,7 +20,7 @@ class RemoteDatabase : public QObject
 
 public:
     RemoteDatabase();
-    virtual ~RemoteDatabase();
+    ~RemoteDatabase() override;
 
     void reloadSettings();
 

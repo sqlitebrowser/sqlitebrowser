@@ -10,20 +10,25 @@ set(TESTSQLOBJECTS_SRC
     ../sqlitedb.cpp
     ../sqlitetablemodel.cpp
     ../RowLoader.cpp
-    ../sqlitetypes.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
     ../csvparser.cpp
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
     testsqlobjects.cpp
     ../Data.cpp
+    ../CipherSettings.cpp
+    ../DotenvFormat.cpp
+    ../CondFormat.cpp
 )
 
 set(TESTSQLOBJECTS_HDR
     ../grammar/sqlite3TokenTypes.hpp
     ../grammar/Sqlite3Lexer.hpp
     ../grammar/Sqlite3Parser.hpp
-    ../sqlitetypes.h
+    ../sql/sqlitetypes.h
+    ../sql/Query.h
     ../Data.h
 )
 
@@ -32,6 +37,9 @@ set(TESTSQLOBJECTS_MOC_HDR
     ../sqlitetablemodel.h
     ../Settings.h
     testsqlobjects.h
+    ../CipherSettings.h
+    ../DotenvFormat.h
+    ../CondFormat.h
 )
 
 if(sqlcipher)
@@ -44,7 +52,9 @@ QT5_WRAP_UI(TESTSQLOBJECTS_FORM_HDR ${TESTSQLOBJECTS_FORMS})
 
 add_executable(test-sqlobjects ${TESTSQLOBJECTS_MOC} ${TESTSQLOBJECTS_HDR} ${TESTSQLOBJECTS_SRC} ${TESTSQLOBJECTS_FORM_HDR})
 
-qt5_use_modules(test-sqlobjects Test Widgets Gui)
+find_package(Qt5 REQUIRED COMPONENTS Test Widgets Gui)
+target_link_libraries(test-sqlobjects Qt5::Test Qt5::Widgets Qt5::Gui)
+
 set(QT_LIBRARIES "")
 
 if(NOT ANTLR2_FOUND)
@@ -56,9 +66,7 @@ if(ANTLR2_FOUND)
 else()
     target_link_libraries(test-sqlobjects antlr)
 endif()
-link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
-add_dependencies(test-sqlobjects qscintilla2)
-target_link_libraries(test-sqlobjects qscintilla2 ${LPTHREAD})
+target_link_libraries(test-sqlobjects ${LPTHREAD})
 add_test(test-sqlobjects test-sqlobjects)
 
 # test-import
@@ -74,7 +82,9 @@ set(TESTIMPORT_MOC_HDR
 
 add_executable(test-import ${TESTIMPORT_MOC} ${TESTIMPORT_SRC})
 
-qt5_use_modules(test-import Test Core)
+find_package(Qt5 REQUIRED COMPONENTS Core)
+target_link_libraries(test-import Qt5::Test Qt5::Core)
+
 set(QT_LIBRARIES "")
 
 target_link_libraries(test-import ${QT_LIBRARIES})
@@ -86,19 +96,24 @@ set(TESTREGEX_SRC
     ../sqlitedb.cpp
     ../sqlitetablemodel.cpp
     ../RowLoader.cpp
-    ../sqlitetypes.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
     TestRegex.cpp
     ../Data.cpp
+    ../CipherSettings.cpp
+    ../DotenvFormat.cpp
+    ../CondFormat.cpp
 )
 
 set(TESTREGEX_HDR
     ../grammar/sqlite3TokenTypes.hpp
     ../grammar/Sqlite3Lexer.hpp
     ../grammar/Sqlite3Parser.hpp
-    ../sqlitetypes.h
+    ../sql/sqlitetypes.h
+    ../sql/Query.h
     ../Data.h
 )
 
@@ -107,6 +122,9 @@ set(TESTREGEX_MOC_HDR
     ../sqlitetablemodel.h
     ../Settings.h
     TestRegex.h
+    ../CipherSettings.h
+    ../DotenvFormat.h
+    ../CondFormat.h
 )
 
 if(sqlcipher)
@@ -116,7 +134,8 @@ endif()
 
 add_executable(test-regex ${TESTREGEX_MOC} ${TESTREGEX_HDR} ${TESTREGEX_SRC})
 
-qt5_use_modules(test-regex Test Core Gui Widgets)
+target_link_libraries(test-regex Qt5::Test Qt5::Core Qt5::Gui Qt5::Widgets)
+
 set(QT_LIBRARIES "")
 
 if(NOT ANTLR2_FOUND)
@@ -128,9 +147,7 @@ if(ANTLR2_FOUND)
 else()
     target_link_libraries(test-regex antlr)
 endif()
-link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
-add_dependencies(test-regex qscintilla2)
-target_link_libraries(test-regex qscintilla2 ${LPTHREAD})
+target_link_libraries(test-regex ${LPTHREAD})
 add_test(test-regex test-regex)
 
 # test cache
@@ -145,7 +162,8 @@ set(TESTCACHE_MOC_HDR
 
 add_executable(test-cache ${TESTCACHE_MOC} ${TESTCACHE_SRC})
 
-qt5_use_modules(test-cache Test Core)
+target_link_libraries(test-cache Qt5::Test Qt5::Core)
+
 set(QT_LIBRARIES "")
 
 target_link_libraries(test-cache ${QT_LIBRARIES})

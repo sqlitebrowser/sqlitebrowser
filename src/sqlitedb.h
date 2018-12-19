@@ -1,18 +1,18 @@
 #ifndef SQLITEDB_H
 #define SQLITEDB_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
+#include <condition_variable>
 #include <memory>
 #include <mutex>
-#include <condition_variable>
 
-#include <QStringList>
-#include <QMultiMap>
 #include <QByteArray>
+#include <QMultiMap>
+#include <QStringList>
 
 struct sqlite3;
-class CipherDialog;
+class CipherSettings;
 
 enum
 {
@@ -48,18 +48,22 @@ private:
             std::unique_lock<std::mutex> lk(pParent->m);
             pParent->db_used = false;
             lk.unlock();
+            emit pParent->databaseInUseChanged(false, QString());
             pParent->cv.notify_one();
         }
     };
 
 public:
     explicit DBBrowserDB () : _db(nullptr), db_used(false), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
-    virtual ~DBBrowserDB (){}
+    ~DBBrowserDB () override {}
 
     bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = "");
     bool create ( const QString & db);
     bool close();
+
+    // This returns the SQLite version as well as the SQLCipher if DB4S is compiled with encryption support
+    static void getSqliteVersion(QString& sqlite, QString& sqlcipher);
 
     typedef std::unique_ptr<sqlite3, DatabaseReleaser> db_pointer_type;
 
@@ -78,19 +82,33 @@ public:
        \param user a string that identifies the new user, and which
        can be displayed in the dialog box.
 
+       \param force_wait if set to true we won't ask the user to cancel
+       the running query but just wait until it is done.
+
        \returns a unique_ptr containing the SQLite database handle, or
        nullptr in case no database is open.
     **/
-    db_pointer_type get (QString user);
+    db_pointer_type get (QString user, bool force_wait = false);
 
     bool setSavepoint(const QString& pointname = "RESTOREPOINT");
     bool releaseSavepoint(const QString& pointname = "RESTOREPOINT");
     bool revertToSavepoint(const QString& pointname = "RESTOREPOINT");
     bool releaseAllSavepoints();
     bool revertAll();
+
     bool dump(const QString& filename, const QStringList& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema);
+
+    enum ChoiceOnUse
+    {
+        Ask,
+        Wait,
+        CancelOther
+    };
+
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
     bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
+
     const QString& lastError() const { return lastErrorMessage; }
 
     /**
@@ -104,6 +122,11 @@ public:
      */
     bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata);
 
+    /**
+     * @brief Interrupts the currenty running statement as soon as possible.
+     */
+    void interruptQuery();
+
 private:
     /**
      * @brief max Queries the table t for the max value of field.
@@ -111,7 +134,7 @@ private:
      * @param field Field to get the max value
      * @return the max value of the field or 0 on error
      */
-    QString max(const sqlb::ObjectIdentifier& tableName, sqlb::FieldPtr field) const;
+    QString max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const;
 
 public:
     void updateSchema();
@@ -132,23 +155,42 @@ public:
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
-    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::FieldPtr& field);
+    bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field);
 
     /**
-     * @brief alterTable Can be used to rename, modify or drop an existing column of a given table
-     * @param schema Specifies the name of the schema, i.e. the database name, of the table
-     * @param tablename Specifies the name of the table to edit
-     * @param table Specifies the table to edit. The table constraints are used from this but not the columns
-     * @param name Name of the column to edit
-     * @param to The new field definition with changed name, type or the like. If Null-Pointer is given the column is dropped.
-     * @param move Set this to a value != 0 to move the new column to a different position
+     * @brief This type maps from old column names to new column names. Given the old and the new table definition, this suffices to
+     * track fields between the two.
+     * USE CASES:
+     * 1) Don't specify a column at all or specify equal column names: Keep its name as-is.
+     * 2) Specify different column names: Rename the field.
+     * 3) Map from an existing column name to a Null string: Delete the column.
+     * 4) Map from a Null column name to a new column name: Add the column.
+     */
+    using AlterTableTrackColumns = QMap<QString, QString>;
+
+    /**
+     * @brief alterTable Can be used to rename, modify or drop existing columns of a given table
+     * @param tablename Specifies the schema and name of the table to edit
+     * @param new_table Specifies the new table schema. This is exactly how the new table is going to look like.
+     * @param track_columns Maps old column names to new column names. This is used to copy the data from the old table to the new one.
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& table, const QString& name, sqlb::FieldPtr to, int move = 0, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, QString newSchemaName = QString());
 
     objectMap getBrowsableObjects(const QString& schema) const;
-    const sqlb::ObjectPtr getObjectByName(const sqlb::ObjectIdentifier& name) const;
+
+    template<typename T = sqlb::Object>
+    const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
+    {
+        for(auto& it : schemata[name.schema()])
+        {
+            if(it->name() == name.name())
+                return std::dynamic_pointer_cast<T>(it);
+        }
+        return std::shared_ptr<T>();
+    }
+
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
@@ -164,6 +206,9 @@ public:
     bool setPragma(const QString& pragma, int value, int& originalvalue);
 
     bool loadExtension(const QString& filename);
+    void loadExtensionsFromSettings();
+
+    static QStringList Datatypes;
 
 private:
     QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);
@@ -181,6 +226,7 @@ signals:
     void dbChanged(bool dirty);
     void structureUpdated();
     void requestCollation(QString name, int eTextRep);
+    void databaseInUseChanged(bool busy, QString user);
 
 private:
     /// external code needs to go through get() to obtain access to the database
@@ -193,7 +239,7 @@ private:
     /// wait for release of the DB locked through a previous get(),
     /// giving users the option to discard running task through a
     /// message box.
-    void waitForDbRelease();
+    void waitForDbRelease(ChoiceOnUse choice = Ask);
 
     QString curDBFilename;
     QString lastErrorMessage;
@@ -205,7 +251,7 @@ private:
 
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
 
-    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherDialog*& cipherSettings);
+    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings);
 
     bool dontCheckForStructureUpdates;
 
