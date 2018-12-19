@@ -77,7 +77,7 @@ public:
     QModelIndex dittoRecord(int old_row);
 
     /// configure for browsing results of specified query
-    void setQuery(const QString& sQuery, bool dontClearHeaders = false);
+    void setQuery(const QString& sQuery, const QString& sCountQuery = QString(), bool dontClearHeaders = false);
 
     QString query() const { return m_sQuery; }
     QString customQuery(bool withRowid) const { return QString::fromStdString(m_query.buildQuery(withRowid)); }

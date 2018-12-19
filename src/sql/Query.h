@@ -48,6 +48,7 @@ public:
 
     void clear();
     std::string buildQuery(bool withRowid) const;
+    std::string buildCountQuery() const;
 
     void setColumNames(const std::vector<std::string>& column_names) { m_column_names = column_names; }
     std::vector<std::string> columnNames() const { return m_column_names; }
@@ -77,6 +78,7 @@ private:
 
     std::vector<SelectedColumn>::iterator findSelectedColumnByName(const std::string& name);
     std::vector<SelectedColumn>::const_iterator findSelectedColumnByName(const std::string& name) const;
+    std::string buildWherePart() const;
 };
 
 }
