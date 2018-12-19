@@ -26,6 +26,7 @@ RowLoader::RowLoader (
     : db_getter(db_getter_), statement_logger(statement_logger_), headers(headers_)
     , cache_mutex(cache_mutex_), cache_data(cache_data_)
     , query()
+    , countQuery()
     , num_tasks(0)
     , pDb(nullptr)
     , stop_requested(false)
@@ -34,10 +35,15 @@ RowLoader::RowLoader (
 {
 }
 
-void RowLoader::setQuery (QString new_query)
+void RowLoader::setQuery (QString new_query, QString newCountQuery)
 {
     std::lock_guard<std::mutex> lk(m);
     query = new_query;
+    if (newCountQuery.isEmpty())
+        // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
+        countQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(query, ';'));
+    else
+        countQuery = newCountQuery;
 }
 
 void RowLoader::triggerRowCountDetermination(int token)
@@ -89,10 +95,8 @@ int RowLoader::countRows()
             return retval;
         }
     } else {
-        // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
-        QString sCountQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(query, ';'));
-        statement_logger(sCountQuery);
-        QByteArray utf8Query = sCountQuery.toUtf8();
+        statement_logger(countQuery);
+        QByteArray utf8Query = countQuery.toUtf8();
 
         sqlite3_stmt* stmt;
         int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
@@ -106,7 +110,7 @@ int RowLoader::countRows()
             }
             sqlite3_finalize(stmt);
         } else {
-            qWarning() << "Count query failed: " << sCountQuery;
+            qWarning() << "Count query failed: " << countQuery;
         }
     }
 

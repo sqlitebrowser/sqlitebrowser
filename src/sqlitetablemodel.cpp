@@ -176,7 +176,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     buildQuery();
 }
 
-void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
+void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuery, bool dontClearHeaders)
 {
     // clear
     if(!dontClearHeaders)
@@ -190,7 +190,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, bool dontClearHeaders)
     m_sQuery = sQuery.trimmed();
     removeCommentsFromQuery(m_sQuery);
 
-    worker->setQuery(m_sQuery);
+    worker->setQuery(m_sQuery, sCountQuery);
     worker->triggerRowCountDetermination(m_lifeCounter);
 
     if(!dontClearHeaders)
@@ -593,7 +593,7 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
 
 void SqliteTableModel::buildQuery()
 {
-    setQuery(QString::fromStdString(m_query.buildQuery(true)), true);
+    setQuery(QString::fromStdString(m_query.buildQuery(true)), QString::fromStdString(m_query.buildCountQuery()), true);
 }
 
 void SqliteTableModel::removeCommentsFromQuery(QString& query)
