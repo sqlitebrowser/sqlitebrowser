@@ -250,17 +250,52 @@
         <translation>암호 재입력(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.ui" line="61"/>
+        <location filename="../CipherDialog.ui" line="98"/>
+        <source>Encr&amp;yption settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="110"/>
+        <source>SQLCipher &amp;3 defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="117"/>
+        <source>SQLCipher &amp;4 defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="124"/>
+        <source>Custo&amp;m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="133"/>
         <source>Page si&amp;ze</source>
         <translation>페이지 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.ui" line="79"/>
+        <location filename="../CipherDialog.ui" line="146"/>
+        <source>&amp;KDF iterations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="166"/>
+        <source>HMAC algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="195"/>
+        <source>KDF algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CipherDialog.ui" line="66"/>
         <source>Passphrase</source>
         <translation>암호</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.ui" line="84"/>
+        <location filename="../CipherDialog.ui" line="71"/>
         <source>Raw key</source>
         <translation>Raw key</translation>
     </message>
@@ -269,7 +304,7 @@
         <translation type="vanished">페이지 크기(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.cpp" line="34"/>
+        <location filename="../CipherDialog.cpp" line="35"/>
         <source>Please set a key to encrypt the database.
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
@@ -280,7 +315,7 @@ The encryption process might take some time and you should have a backup copy of
 암호화 작업은 시간이 좀 걸릴 수 있습니다. 그리고 꼭 여러분의 데이터베이스 백업본을 반드시 만들어두세요! 암호화 작업 이전에 한 저장되지 않은 변경 사항도 반영되니 주의하세요.</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.cpp" line="39"/>
+        <location filename="../CipherDialog.cpp" line="40"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
         <translation>데이터베이스를 암호화기 위해 사용할 키를 다시 입력해주세요.
@@ -397,38 +432,38 @@ If any of the other settings were altered for this database file you need to pro
         <translation type="obsolete">에러 없음</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="212"/>
+        <location filename="../sqlitedb.cpp" line="214"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation>데이터베이스 연결(attach)을 위해 불러올 데이터베이스의 별명을 지정해주세요</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="261"/>
+        <location filename="../sqlitedb.cpp" line="275"/>
         <source>Invalid file format</source>
         <translation>잘못된 파일 포맷입니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="575"/>
+        <location filename="../sqlitedb.cpp" line="617"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>%1 데이터베이스 파일을 생성하기 위해 변경사항을 저장하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="677"/>
+        <location filename="../sqlitedb.cpp" line="719"/>
         <source>Exporting database to SQL file...</source>
         <translation>데이터베이스를 SQL 파일로 내보내기 중...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="678"/>
-        <location filename="../sqlitedb.cpp" line="907"/>
+        <location filename="../sqlitedb.cpp" line="720"/>
+        <location filename="../sqlitedb.cpp" line="949"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="906"/>
+        <location filename="../sqlitedb.cpp" line="948"/>
         <source>Executing SQL...</source>
         <translation>SQL 실행중...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="928"/>
+        <location filename="../sqlitedb.cpp" line="970"/>
         <source>Action cancelled.</source>
         <translation>실행 취소되었습니다.</translation>
     </message>
@@ -443,87 +478,87 @@ Aborting execution.</source>
         <translation type="vanished">필드이름 변경: %1 테이블을 발견할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="201"/>
+        <location filename="../sqlitedb.cpp" line="203"/>
         <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="570"/>
+        <location filename="../sqlitedb.cpp" line="612"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="627"/>
+        <location filename="../sqlitedb.cpp" line="669"/>
         <source>The database is currently busy: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="628"/>
+        <location filename="../sqlitedb.cpp" line="670"/>
         <source>Do you want to abort that other operation?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="844"/>
-        <location filename="../sqlitedb.cpp" line="877"/>
+        <location filename="../sqlitedb.cpp" line="886"/>
+        <location filename="../sqlitedb.cpp" line="919"/>
         <source>No database file opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="957"/>
-        <location filename="../sqlitedb.cpp" line="970"/>
+        <location filename="../sqlitedb.cpp" line="999"/>
+        <location filename="../sqlitedb.cpp" line="1012"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>#%1: %2 구문에 에러가 있어 실행을 중단했습니다%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="960"/>
-        <location filename="../sqlitedb.cpp" line="973"/>
+        <location filename="../sqlitedb.cpp" line="1002"/>
+        <location filename="../sqlitedb.cpp" line="1015"/>
         <source> and rolling back</source>
         <translation>그리고 롤백 합니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1181"/>
+        <location filename="../sqlitedb.cpp" line="1223"/>
         <source>Cannot delete this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1212"/>
+        <location filename="../sqlitedb.cpp" line="1254"/>
         <source>Cannot set data on this object</source>
         <translation>이 객체에는 데이터를 저장할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1330"/>
+        <location filename="../sqlitedb.cpp" line="1372"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1341"/>
+        <location filename="../sqlitedb.cpp" line="1383"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>필드이름 변경: %1 필드를 발견할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1349"/>
+        <location filename="../sqlitedb.cpp" line="1391"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>필드이름 변경: 세이브포인트를 생성하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1395"/>
+        <location filename="../sqlitedb.cpp" line="1437"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>필드이름 변경: 새 테이블을 생성하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1408"/>
+        <location filename="../sqlitedb.cpp" line="1450"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>필드이름 변경: 새 테이블로 데이터를 복사하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1465"/>
+        <location filename="../sqlitedb.cpp" line="1507"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>필드이름 변경: 이전 테이블을 삭제하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1490"/>
+        <location filename="../sqlitedb.cpp" line="1532"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -532,34 +567,34 @@ Aborting execution%3.</source>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1499"/>
+        <location filename="../sqlitedb.cpp" line="1541"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>필드이름 변경: 세이브포인트를 해제하는데 실패했습니다. 데이터베이스 메시지: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1538"/>
+        <location filename="../sqlitedb.cpp" line="1580"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>테이블명을 &apos;%1&apos;에서 &apos;%2&apos;로 변경하는데 에러가 발생했습니다. 데이베이스 메시지:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1573"/>
+        <location filename="../sqlitedb.cpp" line="1615"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;문자열이 바이너리 데이터를 포함하여 로깅될 수 없습니다.&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1682"/>
+        <location filename="../sqlitedb.cpp" line="1724"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1821"/>
+        <location filename="../sqlitedb.cpp" line="1863"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">확장기능을 불러오기 에러: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1846"/>
+        <location filename="../sqlitedb.cpp" line="1888"/>
         <source>could not get column information</source>
         <translation>컬럼(열) 정보를 가져올 수 없습니다</translation>
     </message>
@@ -568,7 +603,7 @@ Aborting execution%3.</source>
         <translation type="vanished">%1 은(는) 알 수 없는 객체 타입입니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1676"/>
+        <location filename="../sqlitedb.cpp" line="1718"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>데이터베이스 객체 목록을 가져올 수 없습니다: %1, %2</translation>
     </message>
@@ -577,22 +612,22 @@ Aborting execution%3.</source>
         <translation type="vanished">타입을 얻어올 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1712"/>
+        <location filename="../sqlitedb.cpp" line="1754"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>pragma %1 에서 출력결과를 받아올 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1716"/>
+        <location filename="../sqlitedb.cpp" line="1758"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>pragma 명령을 실행할 수 없습니다: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1737"/>
+        <location filename="../sqlitedb.cpp" line="1779"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>pragma 세팅을 %1에서 %2로 변경하는데 에러: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1783"/>
+        <location filename="../sqlitedb.cpp" line="1825"/>
         <source>File not found.</source>
         <translation>파일이 없습니다.</translation>
     </message>
@@ -1338,9 +1373,19 @@ Errors are indicated with a red squiggle underline.</source>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="480"/>
+        <source>Column &apos;%1&apos; has duplicate data.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditTableDialog.cpp" line="481"/>
+        <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation>컬럼 &apos;%1&apos;은(는) 유니크 데이터가 없습니다.</translation>
+        <translation type="vanished">컬럼 &apos;%1&apos;은(는) 유니크 데이터가 없습니다.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="758"/>
@@ -1366,9 +1411,8 @@ Errors are indicated with a red squiggle underline.</source>
 </translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="481"/>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation>이러한 상태에서는 변경이 불가능하니 테이블의 데이터 값을 먼저 변경해주세요.</translation>
+        <translation type="vanished">이러한 상태에서는 변경이 불가능하니 테이블의 데이터 값을 먼저 변경해주세요.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="540"/>
@@ -2004,33 +2048,33 @@ x~y	Range: values between x and y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="49"/>
+        <location filename="../FindReplaceDialog.cpp" line="50"/>
         <source>The searched text was not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="95"/>
-        <location filename="../FindReplaceDialog.cpp" line="129"/>
+        <location filename="../FindReplaceDialog.cpp" line="97"/>
+        <location filename="../FindReplaceDialog.cpp" line="131"/>
         <source>The searched text was not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="98"/>
+        <location filename="../FindReplaceDialog.cpp" line="100"/>
         <source>The searched text was found one time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="101"/>
+        <location filename="../FindReplaceDialog.cpp" line="103"/>
         <source>The searched text was found %1 times.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="132"/>
+        <location filename="../FindReplaceDialog.cpp" line="134"/>
         <source>The searched text was replaced one time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="135"/>
+        <location filename="../FindReplaceDialog.cpp" line="137"/>
         <source>The searched text was replaced %1 times.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2390,7 +2434,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
-        <location filename="../MainWindow.cpp" line="3490"/>
+        <location filename="../MainWindow.cpp" line="3496"/>
         <source>Delete Record</source>
         <translation>레코드 삭제</translation>
     </message>
@@ -2769,7 +2813,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1981"/>
-        <location filename="../MainWindow.cpp" line="3190"/>
+        <location filename="../MainWindow.cpp" line="3196"/>
         <source>Set encoding</source>
         <translation>인코딩 지정하기</translation>
     </message>
@@ -2789,7 +2833,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>데이터베이스 안에 있는 모든 테이블의 기본 인코딩을 변경합니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3084"/>
+        <location filename="../MainWindow.cpp" line="3090"/>
         <source>Duplicate record</source>
         <translation>레코드 복제하기</translation>
     </message>
@@ -4114,6 +4158,11 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
+        <location filename="../MainWindow.cpp" line="2231"/>
+        <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.cpp" line="2521"/>
         <source>Choose a project file to open</source>
         <translation type="unfinished"></translation>
@@ -4124,17 +4173,17 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3084"/>
+        <location filename="../MainWindow.cpp" line="3090"/>
         <source>Duplicate records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3089"/>
+        <location filename="../MainWindow.cpp" line="3095"/>
         <source>Ctrl+&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3259"/>
+        <location filename="../MainWindow.cpp" line="3265"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>이 뷰에서 수정을 활성화하기 위하여 pseudo-primary key를 입력하시기 바랍니다. 이것은 뷰에서 유일한 이름이어야 합니다.</translation>
     </message>
@@ -4307,9 +4356,8 @@ Are you sure?</source>
         <translation>파일 확장자를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2231"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>확장기능 파일들(*.so *.dll);;모든 파일(*)</translation>
+        <translation type="vanished">확장기능 파일들(*.so *.dll);;모든 파일(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2237"/>
@@ -4338,12 +4386,12 @@ Are you sure?</source>
         <translation>이용 가능한 새 버전이 있습니다 (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;&lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;에서 다운로드하세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3364"/>
+        <location filename="../MainWindow.cpp" line="3370"/>
         <source>Collation needed! Proceed?</source>
         <translation type="unfinished">콜레이션이 필요합니다! 진행할까요?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3365"/>
+        <location filename="../MainWindow.cpp" line="3371"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4352,52 +4400,52 @@ Create a backup!</source>
 백업을 생성하세요!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3370"/>
+        <location filename="../MainWindow.cpp" line="3376"/>
         <source>creating collation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3379"/>
+        <location filename="../MainWindow.cpp" line="3385"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3422"/>
+        <location filename="../MainWindow.cpp" line="3428"/>
         <source>Please specify the view name</source>
         <translation type="unfinished">뷰 이름을 지정해주세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3426"/>
+        <location filename="../MainWindow.cpp" line="3432"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation type="unfinished">이지 같은 이름의 객체가 존재합니다. 다른 이름을 고르세요.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3433"/>
+        <location filename="../MainWindow.cpp" line="3439"/>
         <source>View successfully created.</source>
         <translation type="unfinished">뷰 생성 성공.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3435"/>
+        <location filename="../MainWindow.cpp" line="3441"/>
         <source>Error creating view: %1</source>
         <translation type="unfinished">뷰 생성 에러: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3450"/>
+        <location filename="../MainWindow.cpp" line="3456"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3488"/>
+        <location filename="../MainWindow.cpp" line="3494"/>
         <source>Delete Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3495"/>
+        <location filename="../MainWindow.cpp" line="3501"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3497"/>
+        <location filename="../MainWindow.cpp" line="3503"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4424,12 +4472,12 @@ Create a backup!</source>
         <translation>DB Browser for SQLite 프로젝트 파일 (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3188"/>
+        <location filename="../MainWindow.cpp" line="3194"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>이 테이블에 적용할 새 인코딩을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3186"/>
+        <location filename="../MainWindow.cpp" line="3192"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>모든 테이블에 설정 할 새 인코딩을 선택하세요</translation>
     </message>
@@ -4444,13 +4492,13 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3191"/>
+        <location filename="../MainWindow.cpp" line="3197"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>데이터베이스 인코딩을 사용하기위해 필드를 비워둡니다</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3203"/>
+        <location filename="../MainWindow.cpp" line="3209"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>이 인코딩은 올바르지 않거나 지원되지 않습니다.</translation>
     </message>
@@ -5386,9 +5434,13 @@ Can be set to 0 for disabling completion.</source>
         <translation>확장기능 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="373"/>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>확장기능파일(*.so *.dll);;모든 파일(*)</translation>
+        <translation type="vanished">확장기능파일(*.so *.dll);;모든 파일(*)</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="373"/>
+        <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="506"/>

@@ -250,6 +250,34 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
         <source>Raw key</source>
         <translation>Chave desencriptada</translation>
     </message>
+    <message>
+        <source>Encr&amp;yption settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQLCipher &amp;3 defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQLCipher &amp;4 defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custo&amp;m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;KDF iterations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HMAC algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KDF algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ColumnDisplayFormatDialog</name>
@@ -1078,7 +1106,7 @@ Erros são indicados com um ondulado vermelho.</translation>
     </message>
     <message>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation>Logo, é impossível definir essa flag. Por favor, mude os dados da tabela primeiro.</translation>
+        <translation type="vanished">Logo, é impossível definir essa flag. Por favor, mude os dados da tabela primeiro.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
@@ -1105,7 +1133,7 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     <message>
         <source>Column &apos;%1&apos; has no unique data.
 </source>
-        <translation>Coluna &apos;%1&apos; não possui dados únicos.
+        <translation type="vanished">Coluna &apos;%1&apos; não possui dados únicos.
 </translation>
     </message>
     <message>
@@ -1167,6 +1195,15 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
 %1</source>
         <translation>Modificar o esquema falhou. Erro:
 %1</translation>
+    </message>
+    <message>
+        <source>Column &apos;%1&apos; has duplicate data.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2711,7 +2748,7 @@ Você tem certeza?</translation>
     </message>
     <message>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>Extensões(*.so *.dll);;Todos os arquivos(*)</translation>
+        <translation type="vanished">Extensões(*.so *.dll);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Extension successfully loaded.</source>
@@ -3729,6 +3766,10 @@ Faça um backup!</translation>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>Essa tabela não passou um teste de chave estrangeira.&lt;br/&gt;Você deveria rodar &apos;Ferramentas | Teste de Chave Estrangeira| e corrigir os problemas reportados.</translation>
     </message>
+    <message>
+        <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NullLineEdit</name>
@@ -4174,7 +4215,7 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     </message>
     <message>
         <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation>Extensões(*.so *.dll);;Todos os arquivos(*)</translation>
+        <translation type="vanished">Extensões(*.so *.dll);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Remove line breaks in schema &amp;view</source>
@@ -4502,6 +4543,10 @@ Todas as suas preferências serão perdidas e os valores padrão serão utilizad
     </message>
     <message>
         <source>Allow loading extensions from SQL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
