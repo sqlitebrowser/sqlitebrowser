@@ -150,11 +150,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
        <property name="toolTip">
         <string>Import from file</string>
        </property>
@@ -174,11 +169,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
        <property name="toolTip">
         <string>Export to file</string>
        </property>
@@ -187,30 +177,6 @@
        </property>
        <property name="text">
         <string>&amp;Export</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonNull">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>Set this cell to NULL</string>
-       </property>
-       <property name="whatsThis">
-        <string>Erases the contents of the cell</string>
-       </property>
-       <property name="text">
-        <string>Set as &amp;NULL</string>
        </property>
       </widget>
      </item>
@@ -282,49 +248,19 @@ Errors are indicated with a red squiggle underline.</string>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="labelType">
-         <property name="font">
-          <font>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>Type of data currently in cell</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="labelSize">
-         <property name="font">
-          <font>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Size of data currently in table</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
+     <item row="0" column="2">
       <widget class="QPushButton" name="buttonApply">
        <property name="minimumSize">
         <size>
@@ -343,6 +279,45 @@ Errors are indicated with a red squiggle underline.</string>
        </property>
        <property name="default">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="buttonNull">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Set this cell to NULL</string>
+       </property>
+       <property name="whatsThis">
+        <string>Erases the contents of the cell</string>
+       </property>
+       <property name="text">
+        <string>Set as &amp;NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelSize">
+       <property name="text">
+        <string>Size of data currently in table</string>
        </property>
       </widget>
      </item>
@@ -397,7 +372,6 @@ Errors are indicated with a red squiggle underline.</string>
  </widget>
  <tabstops>
   <tabstop>buttonExport</tabstop>
-  <tabstop>buttonNull</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
