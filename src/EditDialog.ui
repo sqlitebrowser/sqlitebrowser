@@ -260,7 +260,7 @@ Errors are indicated with a red squiggle underline.</string>
        </item>
       </layout>
      </item>
-     <item row="0" column="2">
+     <item row="1" column="2">
       <widget class="QPushButton" name="buttonApply">
        <property name="minimumSize">
         <size>
@@ -295,7 +295,7 @@ Errors are indicated with a red squiggle underline.</string>
        </property>
       </spacer>
      </item>
-     <item row="1" column="2">
+     <item row="0" column="2">
       <widget class="QPushButton" name="buttonNull">
        <property name="minimumSize">
         <size>
