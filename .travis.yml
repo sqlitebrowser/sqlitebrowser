@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: trusty
+dist: xenial
 
 branches:
  # only:
@@ -32,11 +32,8 @@ matrix:
     env: COMPILER=clang++-3.8
 
 before_install:
-- sudo add-apt-repository ppa:likemartinma/devel -y
-- sudo add-apt-repository --yes ppa:beineri/opt-qt593-trusty
 - sudo apt-get update -qq
-- sudo apt-get --force-yes install qt59base qt59translations qt59tools
-- sudo apt-get --force-yes install libsqlite3-dev libsqlcipher-dev libantlr-dev
+- sudo apt-get --force-yes install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev qtbase5-dev libantlr-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
 - QT_ENV_SCRIPT=$(find /opt -name 'qt*-env.sh')
 - source $QT_ENV_SCRIPT
 
