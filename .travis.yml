@@ -3,8 +3,8 @@ sudo: required
 dist: xenial
 
 branches:
- # only:
-#  - master
+  only:
+  - master
 
 # env:
 #   - ARCH=x86_64 DOCKER_IMAGE=amd64/ubuntu:trusty
