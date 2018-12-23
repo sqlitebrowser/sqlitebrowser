@@ -120,12 +120,6 @@ You can drag SQL statements from an object row and drop them into other applicat
               <height>0</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <property name="toolTip">
              <string>Select a table to browse data</string>
             </property>
@@ -220,12 +214,6 @@ You can drag SQL statements from an object row and drop them into other applicat
           </item>
           <item>
            <widget class="QToolButton" name="buttonNewRecord">
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
             <property name="toolTip">
              <string>Insert a new record in the current table</string>
             </property>
@@ -234,6 +222,10 @@ You can drag SQL statements from an object row and drop them into other applicat
             </property>
             <property name="text">
              <string>New Record</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/add_record</normaloff>:/icons/add_record</iconset>
             </property>
            </widget>
           </item>
@@ -245,12 +237,6 @@ You can drag SQL statements from an object row and drop them into other applicat
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
             <property name="toolTip">
              <string>Delete the current record</string>
             </property>
@@ -259,6 +245,10 @@ You can drag SQL statements from an object row and drop them into other applicat
             </property>
             <property name="text">
              <string>Delete Record</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/delete_record</normaloff>:/icons/delete_record</iconset>
             </property>
            </widget>
           </item>
@@ -442,8 +432,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>601</width>
-             <height>484</height>
+             <width>572</width>
+             <height>510</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -994,7 +984,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -2265,6 +2255,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
   </action>
   <action name="newRecordAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/add_record</normaloff>:/icons/add_record</iconset>
+   </property>
    <property name="text">
     <string>New Record</string>
    </property>
@@ -3778,6 +3772,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <x>-1</x>
      <y>-1</y>
     </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
    </hints>
   </connection>
   <connection>
@@ -3787,8 +3785,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <slot>fileNewInMemoryDatabase()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>518</x>
-     <y>314</y>
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>

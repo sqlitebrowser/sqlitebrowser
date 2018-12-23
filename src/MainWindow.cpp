@@ -3189,7 +3189,7 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
             }
     });
 
-    QAction* deleteRecordAction = new QAction(ui->buttonDeleteRecord->text(), &popupRecordMenu);
+    QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->buttonDeleteRecord->text(), &popupRecordMenu);
     popupRecordMenu.addAction(deleteRecordAction);
 
     connect(deleteRecordAction, &QAction::triggered, [&]() {

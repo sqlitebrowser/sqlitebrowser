@@ -71,5 +71,9 @@
         <file alias="cancel">cancel.png</file>
         <file alias="comment_block">comment_block.png</file>
         <file alias="hourglass">hourglass.png</file>
+        <file alias="delete_record">table_row_delete.png</file>
+        <file alias="add_record">table_row_insert.png</file>
+        <file alias="set_to_null">textfield_delete.png</file>
+        <file alias="filter">filter.png</file>
     </qresource>
 </RCC>

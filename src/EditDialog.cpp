@@ -54,8 +54,8 @@ EditDialog::EditDialog(QWidget* parent)
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
 
     // Create shortcuts for the widgets that doesn't have its own print action or printing mechanism.
-    QShortcut* shortcutPrintText = new QShortcut(QKeySequence::Print, ui->editorText, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutPrintText, &QShortcut::activated, this, &EditDialog::openPrintDialog);
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &EditDialog::openPrintDialog);
 
     // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
     ui->editorImage->addAction(ui->actionPrintImage);
@@ -1041,6 +1041,12 @@ void EditDialog::setStackCurrentIndex(int editMode)
 
 void EditDialog::openPrintDialog()
 {
+    int editMode = ui->editorStack->currentIndex();
+    if (editMode == ImageViewer) {
+        openPrintImageDialog();
+        return;
+    }
+
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
