@@ -542,9 +542,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
-                if(ui->mainTab->currentIndex() == BrowseTab)
+                if(ui->mainTab->currentWidget() == ui->browser)
                     populateTable();
-                else if(ui->mainTab->currentIndex() == PragmaTab)
+                else if(ui->mainTab->currentWidget() == ui->pragmas)
                     loadPragmas();
                 retval = true;
             } else {
@@ -659,7 +659,7 @@ void MainWindow::clearTableBrowser()
 void MainWindow::populateTable()
 {
     // Early exit if the Browse Data tab isn't visible as there is no need to update it in this case
-    if(ui->mainTab->currentIndex() != BrowseTab)
+    if(ui->mainTab->currentWidget() != ui->browser)
         return;
 
     // Remove the model-view link if the table name is empty in order to remove any data from the view
@@ -1059,25 +1059,20 @@ void MainWindow::refresh()
 {
     // What the Refresh function does depends on the currently active tab. This way the keyboard shortcuts (F5 and Ctrl+R)
     // always perform some meaningful task; they just happen to be context dependent in the function they trigger.
-    switch(ui->mainTab->currentIndex())
-    {
-    case StructureTab:
+    QWidget* currentTab = ui->mainTab->currentWidget();
+    if (currentTab == ui->structure) {
         // Refresh the schema
         db.updateSchema();
-        break;
-    case BrowseTab:
+    } else if (currentTab == ui->browser) {
         // Refresh the schema and reload the current table
         db.updateSchema();
         populateTable();
-        break;
-    case PragmaTab:
+    } else if (currentTab == ui->pragmas) {
         // Reload pragma values
         loadPragmas();
-        break;
-    case ExecuteTab:
+    } else if (currentTab == ui->query) {
         // (Re-)Run the current SQL query
         executeQuery();
-        break;
     }
 }
 
@@ -1570,7 +1565,7 @@ void MainWindow::exportTableToCSV()
 {
     // Get the current table name if we are in the Browse Data tab
     sqlb::ObjectIdentifier current_table;
-    if(ui->mainTab->currentIndex() == StructureTab)
+    if(ui->mainTab->currentWidget() == ui->structure)
     {
         QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
         if(type == "table" || type == "view")
@@ -1579,7 +1574,7 @@ void MainWindow::exportTableToCSV()
             QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
             current_table = sqlb::ObjectIdentifier(schema, name);
         }
-    } else if(ui->mainTab->currentIndex() == BrowseTab) {
+    } else if(ui->mainTab->currentWidget() == ui->browser) {
         current_table = currentlyBrowsedTableName();
     }
 
@@ -1592,7 +1587,7 @@ void MainWindow::exportTableToJson()
 {
     // Get the current table name if we are in the Browse Data tab
     sqlb::ObjectIdentifier current_table;
-    if(ui->mainTab->currentIndex() == StructureTab)
+    if(ui->mainTab->currentWidget() == ui->structure)
     {
         QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
         if(type == "table" || type == "view")
@@ -1601,7 +1596,7 @@ void MainWindow::exportTableToJson()
             QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
             current_table = sqlb::ObjectIdentifier(schema, name);
         }
-    } else if(ui->mainTab->currentIndex() == BrowseTab) {
+    } else if(ui->mainTab->currentWidget() == ui->browser) {
         current_table = currentlyBrowsedTableName();
     }
 
@@ -1645,7 +1640,7 @@ void MainWindow::fileRevert()
 void MainWindow::exportDatabaseToSQL()
 {
     QString current_table;
-    if(ui->mainTab->currentIndex() == BrowseTab)
+    if(ui->mainTab->currentWidget() == ui->browser)
         current_table = ui->comboBrowseTable->currentText();
 
     ExportSqlDialog dialog(&db, this, current_table);
@@ -2710,7 +2705,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             }
                         }
 
-                        if(ui->mainTab->currentIndex() == BrowseTab)
+                        if(ui->mainTab->currentWidget() == ui->browser)
                         {
                             populateTable();     // Refresh view
                             sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
@@ -3094,7 +3089,7 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
     }
 
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
-    ui->mainTab->setCurrentIndex(BrowseTab);
+    ui->mainTab->setCurrentWidget(ui->browser);
 }
 
 void MainWindow::on_buttonClearFilters_clicked()
@@ -3604,7 +3599,7 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
     switch (QMessageBox::information(this, windowTitle, message, QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Escape, QMessageBox::Help))
     {
     case QMessageBox::Ok: {
-        ui->mainTab->setCurrentIndex(ExecuteTab);
+        ui->mainTab->setCurrentWidget(ui->query);
         unsigned int index = openSqlTab();
         ui->tabSqlAreas->setTabText(index, title);
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
