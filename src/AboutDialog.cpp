@@ -19,6 +19,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
         sqlite_version = tr("SQLCipher Version ") + sqlcipher_version + tr(" (based on SQLite %1)").arg(sqlite_version);
 
     ui->label_version->setText(tr("Version ") + Application::versionString() + "\n\n" +
+                               tr("Built for ") + QSysInfo::buildAbi() + ", running on " + QSysInfo::currentCpuArchitecture() + "\n\n" +
                                tr("Qt Version ") + QT_VERSION_STR + "\n\n" +
                                sqlite_version
                                );
