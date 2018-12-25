@@ -1425,6 +1425,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         }
     }
 
+    // Check if any changes were made to the table schema
+    if(old_table == new_table)
+        return true;
+
     // Create savepoint to be able to go back to it in case of any error
     QString savepointName = generateSavepointName("renamecolumn");
     if(!setSavepoint(savepointName))
