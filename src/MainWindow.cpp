@@ -1505,26 +1505,17 @@ void MainWindow::executeQuery()
     execute_sql_worker->start();
 }
 
-void MainWindow::mainTabSelected(int tabindex)
+void MainWindow::mainTabSelected(int /*tabindex*/)
 {
     editDock->setReadOnly(true);
 
-    switch (tabindex)
+    if(ui->mainTab->currentWidget() == ui->browser)
     {
-    case StructureTab:
-        break;
-
-    case BrowseTab:
         m_currentTabTableModel = m_browseTableModel;
         populateTable();
-        break;
-
-    case PragmaTab:
+    } else if(ui->mainTab->currentWidget() == ui->pragmas) {
         loadPragmas();
-        break;
-
-    case ExecuteTab:
-    {
+    } else if(ui->mainTab->currentWidget() == ui->query) {
         SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
         if (sqlWidget) {
@@ -1532,10 +1523,6 @@ void MainWindow::mainTabSelected(int tabindex)
 
             dataTableSelectionChanged(sqlWidget->getTableResult()->currentIndex());
         }
-        break;
-    }
-
-    default: break;
     }
 }
 
@@ -1980,28 +1967,26 @@ void MainWindow::resizeEvent(QResizeEvent*)
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    int tab = -1;
+    QWidget* tab = nullptr;
 
     switch (event->key())
     {
     case Qt::Key_1:
-        tab = Tabs::StructureTab;
+        tab = ui->structure;
         break;
     case Qt::Key_2:
-        tab = Tabs::BrowseTab;
+        tab = ui->browser;
         break;
     case Qt::Key_3:
-        tab = Tabs::PragmaTab;
+        tab = ui->pragmas;
         break;
     case Qt::Key_4:
-        tab = Tabs::ExecuteTab;
-        break;
-    default:
+        tab = ui->query;
         break;
     }
 
-    if (event->modifiers() & Qt::AltModifier && tab != -1)
-        ui->mainTab->setCurrentIndex(tab);
+    if (event->modifiers() & Qt::AltModifier && tab != nullptr)
+        ui->mainTab->setCurrentWidget(tab);
 
     QMainWindow::keyPressEvent(event);
 }
