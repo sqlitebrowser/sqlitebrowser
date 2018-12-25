@@ -24,10 +24,19 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
       <property name="movable">
        <bool>true</bool>
       </property>
+      <property name="tabBarAutoHide">
+       <bool>true</bool>
+      </property>
       <widget class="QWidget" name="structure">
+       <property name="statusTip">
+        <string extracomment="This has to be equal to the tab title in all the main tabs">Database Structure</string>
+       </property>
        <attribute name="title">
         <string>Database Structure</string>
        </attribute>
@@ -93,6 +102,9 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="browser">
+       <property name="statusTip">
+        <string extracomment="This has to be equal to the tab title in all the main tabs">Browse Data</string>
+       </property>
        <attribute name="title">
         <string>Browse Data</string>
        </attribute>
@@ -431,6 +443,9 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="pragmas">
+       <property name="statusTip">
+        <string extracomment="This has to be equal to the tab title in all the main tabs">Edit Pragmas</string>
+       </property>
        <attribute name="title">
         <string>Edit Pragmas</string>
        </attribute>
@@ -445,8 +460,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>601</width>
-             <height>484</height>
+             <width>572</width>
+             <height>510</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -946,6 +961,9 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="query">
+       <property name="statusTip">
+        <string extracomment="This has to be equal to the tab title in all the main tabs">Execute SQL</string>
+       </property>
        <attribute name="title">
         <string>Execute SQL</string>
        </attribute>
@@ -1056,6 +1074,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="viewDBToolbarAction"/>
     <addaction name="viewExtraDBToolbarAction"/>
     <addaction name="viewProjectToolbarAction"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">

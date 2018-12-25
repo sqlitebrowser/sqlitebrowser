@@ -187,6 +187,7 @@ private:
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
+    void toggleTabVisible(QWidget* tabWidget, bool show);
 
 protected:
     void closeEvent(QCloseEvent *) override;
@@ -298,6 +299,7 @@ private slots:
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
     void openPreferences();
+    void closeTab(int index);
 };
 
 #endif

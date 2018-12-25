@@ -222,6 +222,19 @@ void MainWindow::init()
     restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
     restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
 
+    // Restore open tab order if the openTabs setting is saved.
+    // Clear the tabs and then add them in the order specified by the setting.
+    // Use the statusTip attribute for restoring the tab label.
+    if (!Settings::getValue("MainWindow", "openTabs").toString().isEmpty()) {
+        ui->mainTab->clear();
+        for (QString objectName : Settings::getValue("MainWindow", "openTabs").toString().split(' ')) {
+            for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
+                if (widget->objectName() == objectName) {
+                    ui->mainTab->addTab(widget, widget->statusTip());
+                    break;
+                }
+        }
+    }
     // Restore dock state settings
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
 
@@ -334,6 +347,25 @@ void MainWindow::init()
 
     // Add separator between docks and toolbars
     ui->viewMenu->insertSeparator(ui->viewDBToolbarAction);
+
+    // Connect the tabCloseRequested to the actual closeTab function.
+    // This must be done before the connections for checking the actions in the View menu so
+    // they are updated accordingly.
+    connect(ui->mainTab, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
+
+    // Add entries for toggling the visibility of main tabs
+    for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query}) {
+        QAction* action = ui->viewMenu->addAction(QIcon(":/icons/tab"), widget->statusTip());
+        action->setCheckable(true);
+        action->setChecked(ui->mainTab->indexOf(widget) != -1);
+        connect(action, &QAction::toggled, [=](bool show) { toggleTabVisible(widget, show); });
+        // Connect tabCloseRequested for setting checked the appropiate menu entry.
+        // Note these are called after the actual tab is closed only because they are connected
+        // after connecting closeTab.
+        connect(ui->mainTab, &QTabWidget::tabCloseRequested, [=](int index) {
+                action->setChecked(ui->mainTab->indexOf(widget) != -1);
+            });
+    }
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
@@ -896,6 +928,12 @@ void MainWindow::closeEvent( QCloseEvent* event )
     {
         Settings::setValue("MainWindow", "geometry", saveGeometry());
         Settings::setValue("MainWindow", "windowState", saveState());
+
+        QString openTabs;
+        for (int i=0; i < ui->mainTab->count(); i++)
+            openTabs.append(ui->mainTab->widget(i)->objectName() + ' ');
+        Settings::setValue("MainWindow", "openTabs", openTabs);
+
         Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
         Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
@@ -3693,4 +3731,18 @@ void MainWindow::updateDatabaseBusyStatus(bool busy, const QString& user)
     statusBusyLabel->setText(tr("Busy (%1)").arg(user));
     statusBusyLabel->setVisible(busy);
     statusStopButton->setVisible(busy);
+}
+
+
+void MainWindow::closeTab(int index)
+{
+    ui->mainTab->removeTab(index);
+}
+
+void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
+{
+    if (show)
+        ui->mainTab->addTab(tabWidget, tabWidget->statusTip());
+    else
+        ui->mainTab->removeTab(ui->mainTab->indexOf(tabWidget));
 }
