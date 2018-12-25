@@ -2354,6 +2354,7 @@ void MainWindow::on_actionBug_report_triggered()
     const QString kernelType = QSysInfo::kernelType();
     const QString kernelVersion = QSysInfo::kernelVersion();
     const QString arch = QSysInfo::currentCpuArchitecture();
+    const QString built_for = QSysInfo::buildAbi();
 
     QString sqlite_version, sqlcipher_version;
     DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
@@ -2370,10 +2371,10 @@ void MainWindow::on_actionBug_report_triggered()
               "#### What did you see instead?\n\n\n"
               "Useful extra information\n"
               "-------------------------\n"
-              "> DB4S v%1 on %2 (%3/%4) [%5]\n"
-              "> using %6\n"
-              "> and Qt %7")
-            .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
+              "> DB4S v%1 [built for %2] on %3 (%4/%5) [%6]\n"
+              "> using %7\n"
+              "> and Qt %8")
+            .arg(version, built_for, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
