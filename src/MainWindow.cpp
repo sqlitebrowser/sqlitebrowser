@@ -193,6 +193,10 @@ void MainWindow::init()
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
     connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        // TODO This needs to be a queued connection because the schema can be updated from different threads than the main thread.
+        // However, this makes calling this lambda asynchronous which can lead to unexpected results. One example is that opening a database,
+        // changing to the Browse Data tab, and then opening another database makes the table browser try to load the old table because the table
+        // list wasn't updated yet.
         QString old_table = ui->comboBrowseTable->currentText();
         dbStructureModel->reloadData();
         populateStructure(old_table);
