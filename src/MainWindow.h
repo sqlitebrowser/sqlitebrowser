@@ -91,14 +91,6 @@ public:
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
 
-    enum Tabs
-    {
-        StructureTab,
-        BrowseTab,
-        PragmaTab,
-        ExecuteTab
-    };
-
 private:
     struct PragmaValues
     {

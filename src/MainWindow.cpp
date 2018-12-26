@@ -362,7 +362,7 @@ void MainWindow::init()
         // Connect tabCloseRequested for setting checked the appropiate menu entry.
         // Note these are called after the actual tab is closed only because they are connected
         // after connecting closeTab.
-        connect(ui->mainTab, &QTabWidget::tabCloseRequested, [=](int index) {
+        connect(ui->mainTab, &QTabWidget::tabCloseRequested, [=](int /*index*/) {
                 action->setChecked(ui->mainTab->indexOf(widget) != -1);
             });
     }
