@@ -58,6 +58,7 @@ public:
 
     void setRowIdColumn(const std::string& rowid) { m_rowid_column = rowid; }
     std::string rowIdColumn() const { return m_rowid_column; }
+    bool hasCustomRowIdColumn() const { return m_rowid_column != "rowid" && m_rowid_column != "_rowid_"; }
 
     const std::vector<SelectedColumn>& selectedColumns() const { return m_selected_columns; }
     std::vector<SelectedColumn>& selectedColumns() { return m_selected_columns; }
