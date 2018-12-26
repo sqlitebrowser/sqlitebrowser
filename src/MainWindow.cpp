@@ -227,18 +227,8 @@ void MainWindow::init()
     restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
 
     // Restore open tab order if the openTabs setting is saved.
-    // Clear the tabs and then add them in the order specified by the setting.
-    // Use the statusTip attribute for restoring the tab label.
-    if (!Settings::getValue("MainWindow", "openTabs").toString().isEmpty()) {
-        ui->mainTab->clear();
-        for (QString objectName : Settings::getValue("MainWindow", "openTabs").toString().split(' ')) {
-            for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
-                if (widget->objectName() == objectName) {
-                    ui->mainTab->addTab(widget, widget->statusTip());
-                    break;
-                }
-        }
-    }
+    restoreOpenTabs(Settings::getValue("MainWindow", "openTabs").toString().split(' '));
+
     // Restore dock state settings
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
 
@@ -932,11 +922,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
     {
         Settings::setValue("MainWindow", "geometry", saveGeometry());
         Settings::setValue("MainWindow", "windowState", saveState());
-
-        QString openTabs;
-        for (int i=0; i < ui->mainTab->count(); i++)
-            openTabs.append(ui->mainTab->widget(i)->objectName() + ' ');
-        Settings::setValue("MainWindow", "openTabs", openTabs);
+        Settings::setValue("MainWindow", "openTabs", saveOpenTabs());
 
         Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
@@ -2654,9 +2640,19 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
                     {
-                        // Currently selected tab
-                        if(xml.name() == "current_tab")
+                        if(xml.name() == "main_tabs") {
+                            // Currently open tabs
+                            restoreOpenTabs(xml.attributes().value("open").toString().split(' '));
+                            // Currently selected open tab
+                            ui->mainTab->setCurrentIndex(xml.attributes().value("current").toString().toInt());
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "current_tab") {
+                            // Currently selected tab (3.11 or older format, first restore default open tabs)
+                            restoreOpenTabs({ui->structure->objectName(), ui->browser->objectName(),
+                                             ui->pragmas->objectName(), ui->query->objectName()});
                             ui->mainTab->setCurrentIndex(xml.attributes().value("id").toString().toInt());
+                            xml.skipCurrentElement();
+                        }
                     }
                 } else if(xml.name() == "tab_structure") {
                     // Database Structure tab settings
@@ -2927,8 +2923,9 @@ void MainWindow::saveProject()
 
         // Window settings
         xml.writeStartElement("window");
-        xml.writeStartElement("current_tab");   // Currently selected tab
-        xml.writeAttribute("id", QString::number(ui->mainTab->currentIndex()));
+        xml.writeStartElement("main_tabs");   // Currently open tabs
+        xml.writeAttribute("open", saveOpenTabs());
+        xml.writeAttribute("current", QString::number(ui->mainTab->currentIndex()));
         xml.writeEndElement();
         xml.writeEndElement();
 
@@ -3749,4 +3746,32 @@ void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
         ui->mainTab->addTab(tabWidget, tabWidget->statusTip());
     else
         ui->mainTab->removeTab(ui->mainTab->indexOf(tabWidget));
+}
+
+void MainWindow::restoreOpenTabs(QStringList tabList)
+{
+    // Clear the tabs and then add them in the order specified by the setting.
+    // Use the statusTip attribute for restoring the tab label.
+    if (!tabList.isEmpty()) {
+        ui->mainTab->clear();
+        for (QString objectName : tabList) {
+            for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
+                if (widget->objectName() == objectName) {
+                    ui->mainTab->addTab(widget, widget->statusTip());
+                    break;
+                }
+        }
+        // Force the update of the View menu toggable entries
+        // (it doesn't seem to be a better way)
+        ui->mainTab->tabCloseRequested(-1);
+    }
+}
+
+QString MainWindow::saveOpenTabs()
+{
+    QString openTabs;
+    for (int i=0; i < ui->mainTab->count(); i++)
+        openTabs.append(ui->mainTab->widget(i)->objectName() + ' ');
+    openTabs.chop(1);
+    return openTabs;
 }
