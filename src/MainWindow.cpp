@@ -224,9 +224,13 @@ void MainWindow::init()
 
     // Restore window geometry
     restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
+
+    // Save default and restore window state
+    defaultWindowState = saveState();
     restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
 
-    // Restore open tab order if the openTabs setting is saved.
+    // Save default and restore open tab order if the openTabs setting is saved.
+    defaultOpenTabs = saveOpenTabs();
     restoreOpenTabs(Settings::getValue("MainWindow", "openTabs").toString().split(' '));
 
     // Restore dock state settings
@@ -349,7 +353,7 @@ void MainWindow::init()
 
     // Add entries for toggling the visibility of main tabs
     for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query}) {
-        QAction* action = ui->viewMenu->addAction(QIcon(":/icons/tab"), widget->statusTip());
+        QAction* action = ui->viewMenu->addAction(QIcon(":/icons/tab"), widget->accessibleName());
         action->setCheckable(true);
         action->setChecked(ui->mainTab->indexOf(widget) != -1);
         connect(action, &QAction::toggled, [=](bool show) { toggleTabVisible(widget, show); });
@@ -360,6 +364,14 @@ void MainWindow::init()
                 action->setChecked(ui->mainTab->indexOf(widget) != -1);
             });
     }
+
+    ui->viewMenu->addSeparator();
+    QAction* resetLayoutAction = ui->viewMenu->addAction(tr("Reset Window Layout"));
+    resetLayoutAction->setShortcut(QKeySequence(tr("Alt+0")));
+    connect(resetLayoutAction, &QAction::triggered, [=]() {
+            restoreState(defaultWindowState);
+            restoreOpenTabs(defaultOpenTabs.split(' '));
+        });
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
@@ -1995,26 +2007,21 @@ void MainWindow::resizeEvent(QResizeEvent*)
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    QWidget* tab = nullptr;
+    int tab = -1;
 
+    // Alt+[1-4] selects the current main tab in that position (when open).
     switch (event->key())
     {
     case Qt::Key_1:
-        tab = ui->structure;
-        break;
     case Qt::Key_2:
-        tab = ui->browser;
-        break;
     case Qt::Key_3:
-        tab = ui->pragmas;
-        break;
     case Qt::Key_4:
-        tab = ui->query;
+        tab = QKeySequence(event->key()).toString().toInt() - 1;
         break;
     }
 
-    if (event->modifiers() & Qt::AltModifier && tab != nullptr)
-        ui->mainTab->setCurrentWidget(tab);
+    if (event->modifiers() & Qt::AltModifier && tab >= 0 && tab < ui->mainTab->count())
+        ui->mainTab->setCurrentIndex(tab);
 
     QMainWindow::keyPressEvent(event);
 }
@@ -2648,8 +2655,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             xml.skipCurrentElement();
                         } else if(xml.name() == "current_tab") {
                             // Currently selected tab (3.11 or older format, first restore default open tabs)
-                            restoreOpenTabs({ui->structure->objectName(), ui->browser->objectName(),
-                                             ui->pragmas->objectName(), ui->query->objectName()});
+                            restoreOpenTabs(defaultOpenTabs.split(' '));
                             ui->mainTab->setCurrentIndex(xml.attributes().value("id").toString().toInt());
                             xml.skipCurrentElement();
                         }
@@ -3114,6 +3120,8 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
     }
 
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
+    if (ui->mainTab->indexOf(ui->browser) == -1)
+        ui->mainTab->addTab(ui->browser, ui->browser->accessibleName());
     ui->mainTab->setCurrentWidget(ui->browser);
 }
 
@@ -3624,6 +3632,8 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
     switch (QMessageBox::information(this, windowTitle, message, QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Escape, QMessageBox::Help))
     {
     case QMessageBox::Ok: {
+        if (ui->mainTab->indexOf(ui->query) == -1)
+            ui->mainTab->addTab(ui->query, ui->query->accessibleName());
         ui->mainTab->setCurrentWidget(ui->query);
         unsigned int index = openSqlTab();
         ui->tabSqlAreas->setTabText(index, title);
@@ -3743,7 +3753,7 @@ void MainWindow::closeTab(int index)
 void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
 {
     if (show)
-        ui->mainTab->addTab(tabWidget, tabWidget->statusTip());
+        ui->mainTab->addTab(tabWidget, tabWidget->accessibleName());
     else
         ui->mainTab->removeTab(ui->mainTab->indexOf(tabWidget));
 }
@@ -3751,16 +3761,19 @@ void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
 void MainWindow::restoreOpenTabs(QStringList tabList)
 {
     // Clear the tabs and then add them in the order specified by the setting.
-    // Use the statusTip attribute for restoring the tab label.
+    // Use the accessibleName attribute for restoring the tab label.
     if (!tabList.isEmpty()) {
+        // Avoid flickering while clearing and adding tabs.
+        ui->mainTab->setUpdatesEnabled(false);
         ui->mainTab->clear();
         for (QString objectName : tabList) {
             for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
                 if (widget->objectName() == objectName) {
-                    ui->mainTab->addTab(widget, widget->statusTip());
+                    ui->mainTab->addTab(widget, widget->accessibleName());
                     break;
                 }
         }
+        ui->mainTab->setUpdatesEnabled(true);
         // Force the update of the View menu toggable entries
         // (it doesn't seem to be a better way)
         ui->mainTab->tabCloseRequested(-1);

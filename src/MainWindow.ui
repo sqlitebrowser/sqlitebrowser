@@ -34,7 +34,7 @@
        <bool>true</bool>
       </property>
       <widget class="QWidget" name="structure">
-       <property name="statusTip">
+       <property name="accessibleName">
         <string extracomment="This has to be equal to the tab title in all the main tabs">Database Structure</string>
        </property>
        <attribute name="title">
@@ -102,7 +102,7 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="browser">
-       <property name="statusTip">
+       <property name="accessibleName">
         <string extracomment="This has to be equal to the tab title in all the main tabs">Browse Data</string>
        </property>
        <attribute name="title">
@@ -443,7 +443,7 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="pragmas">
-       <property name="statusTip">
+       <property name="accessibleName">
         <string extracomment="This has to be equal to the tab title in all the main tabs">Edit Pragmas</string>
        </property>
        <attribute name="title">
@@ -961,7 +961,7 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="query">
-       <property name="statusTip">
+       <property name="accessibleName">
         <string extracomment="This has to be equal to the tab title in all the main tabs">Execute SQL</string>
        </property>
        <attribute name="title">

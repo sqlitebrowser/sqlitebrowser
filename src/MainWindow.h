@@ -163,6 +163,9 @@ private:
 
     std::unique_ptr<RunSql> execute_sql_worker;
 
+    QString defaultOpenTabs;
+    QByteArray defaultWindowState;
+
     void init();
     void clearCompleterModelsFields();
 
