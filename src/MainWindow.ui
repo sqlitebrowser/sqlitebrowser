@@ -2216,9 +2216,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="whatsThis">
     <string>This option is used to open an existing database file.</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
    </property>
