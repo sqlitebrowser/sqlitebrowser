@@ -247,8 +247,9 @@ void RowLoader::process (Task & t)
             QMutexLocker lk(&cache_mutex);
             cache_data.set(row++, std::move(rowdata));
         }
+
+        sqlite3_finalize(stmt);
     }
-    sqlite3_finalize(stmt);
 
     if(row != t.row_begin)
         emit fetched(t.token, t.row_begin, row);

@@ -1051,9 +1051,15 @@ QVariant DBBrowserDB::querySingleValueFromDb(const QString& statement, bool log)
                 else
                     return "";
             }
-
-            sqlite3_finalize(stmt);
+        } else {
+            lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
+            qWarning() << lastErrorMessage;
         }
+
+        sqlite3_finalize(stmt);
+    } else {
+        lastErrorMessage = tr("could not execute command: %1").arg(sqlite3_errmsg(_db));
+        qWarning() << lastErrorMessage;
     }
 
     return QVariant();
