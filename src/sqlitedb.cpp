@@ -629,7 +629,8 @@ bool DBBrowserDB::close()
             else
                 revertAll(); //not really necessary, I think... but will not hurt.
         }
-        sqlite3_close(_db);
+        if(sqlite3_close(_db) != SQLITE_OK)
+            qWarning() << tr("Database didn't close correctly, probably still busy");
         _db = nullptr;
     }
 
