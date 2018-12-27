@@ -373,6 +373,18 @@ void MainWindow::init()
             restoreOpenTabs(defaultOpenTabs.split(' '));
         });
 
+    // Set Alt+[1-4] shortcuts for opening the corresponding tab in that position.
+    // Note that it is safe to call setCurrentIndex with a tab that is currently closed,
+    // since setCurrentIndex does nothing in that case.
+    QShortcut* setTab1Shortcut = new QShortcut(QKeySequence("Alt+1"), this);
+    connect(setTab1Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(0); });
+    QShortcut* setTab2Shortcut = new QShortcut(QKeySequence("Alt+2"), this);
+    connect(setTab2Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(1); });
+    QShortcut* setTab3Shortcut = new QShortcut(QKeySequence("Alt+3"), this);
+    connect(setTab3Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(2); });
+    QShortcut* setTab4Shortcut = new QShortcut(QKeySequence("Alt+4"), this);
+    connect(setTab4Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(3); });
+
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
     ui->actionSqlCipherFaq->setVisible(false);
@@ -2003,27 +2015,6 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 void MainWindow::resizeEvent(QResizeEvent*)
 {
     setRecordsetLabel();
-}
-
-void MainWindow::keyPressEvent(QKeyEvent* event)
-{
-    int tab = -1;
-
-    // Alt+[1-4] selects the current main tab in that position (when open).
-    switch (event->key())
-    {
-    case Qt::Key_1:
-    case Qt::Key_2:
-    case Qt::Key_3:
-    case Qt::Key_4:
-        tab = QKeySequence(event->key()).toString().toInt() - 1;
-        break;
-    }
-
-    if (event->modifiers() & Qt::AltModifier && tab >= 0 && tab < ui->mainTab->count())
-        ui->mainTab->setCurrentIndex(tab);
-
-    QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::loadPragmas()
