@@ -1064,12 +1064,12 @@ QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, Cho
                 else
                     retval = "";
             }
-
-            sqlite3_finalize(stmt);
         } else {
             lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
             qWarning() << lastErrorMessage;
         }
+
+        sqlite3_finalize(stmt);
     } else {
         lastErrorMessage = tr("could not execute command: %1").arg(sqlite3_errmsg(_db));
         qWarning() << lastErrorMessage;
