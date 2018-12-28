@@ -231,7 +231,7 @@ void MainWindow::init()
 
     // Save default and restore open tab order if the openTabs setting is saved.
     defaultOpenTabs = saveOpenTabs();
-    restoreOpenTabs(Settings::getValue("MainWindow", "openTabs").toString().split(' '));
+    restoreOpenTabs(Settings::getValue("MainWindow", "openTabs").toString());
 
     // Restore dock state settings
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
@@ -370,7 +370,7 @@ void MainWindow::init()
     resetLayoutAction->setShortcut(QKeySequence(tr("Alt+0")));
     connect(resetLayoutAction, &QAction::triggered, [=]() {
             restoreState(defaultWindowState);
-            restoreOpenTabs(defaultOpenTabs.split(' '));
+            restoreOpenTabs(defaultOpenTabs);
         });
 
     // Set Alt+[1-4] shortcuts for opening the corresponding tab in that position.
@@ -2641,13 +2641,13 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     {
                         if(xml.name() == "main_tabs") {
                             // Currently open tabs
-                            restoreOpenTabs(xml.attributes().value("open").toString().split(' '));
+                            restoreOpenTabs(xml.attributes().value("open").toString());
                             // Currently selected open tab
                             ui->mainTab->setCurrentIndex(xml.attributes().value("current").toString().toInt());
                             xml.skipCurrentElement();
                         } else if(xml.name() == "current_tab") {
                             // Currently selected tab (3.11 or older format, first restore default open tabs)
-                            restoreOpenTabs(defaultOpenTabs.split(' '));
+                            restoreOpenTabs(defaultOpenTabs);
                             ui->mainTab->setCurrentIndex(xml.attributes().value("id").toString().toInt());
                             xml.skipCurrentElement();
                         }
@@ -3750,8 +3750,12 @@ void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
         ui->mainTab->removeTab(ui->mainTab->indexOf(tabWidget));
 }
 
-void MainWindow::restoreOpenTabs(QStringList tabList)
+void MainWindow::restoreOpenTabs(QString tabs)
 {
+    // Split the tab list, skiping the empty parts so the empty string turns to an empty list
+    // and not a list of one empty string.
+    QStringList tabList = tabs.split(' ', QString::SkipEmptyParts);
+
     // Clear the tabs and then add them in the order specified by the setting.
     // Use the accessibleName attribute for restoring the tab label.
     if (!tabList.isEmpty()) {

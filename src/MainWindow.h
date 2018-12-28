@@ -183,7 +183,7 @@ private:
 
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
     void toggleTabVisible(QWidget* tabWidget, bool show);
-    void restoreOpenTabs(QStringList tabList);
+    void restoreOpenTabs(QString tabs);
     QString saveOpenTabs();
 
 protected:
