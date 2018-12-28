@@ -1507,7 +1507,7 @@ void MainWindow::executeQuery()
             disconnect(*conn);
 
             attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
-            connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
+            connect(sqlWidget->getTableResult()->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
             connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
 
             auto time_end = std::chrono::high_resolution_clock::now();
