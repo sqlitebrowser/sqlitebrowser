@@ -1684,9 +1684,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="whatsThis">
     <string>Shows or hides the Database toolbar.</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+T</string>
-   </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>

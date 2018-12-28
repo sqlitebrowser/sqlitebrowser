@@ -34,6 +34,10 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     command = standardCommands()->boundTo(Qt::ControlModifier+Qt::ShiftModifier+Qt::Key_Slash);
     command->setKey(0);
 
+    // Change command binding for Ctrl+T so it doesn't interfere with "Open tab"
+    command = standardCommands()->boundTo(Qt::ControlModifier+Qt::Key_T);
+    command->setKey(Qt::ControlModifier+Qt::ShiftModifier+Qt::Key_Up);
+
     QShortcut* shortcutToggleComment = new QShortcut(QKeySequence(tr("Ctrl+/")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutToggleComment, &QShortcut::activated, this, &SqlTextEdit::toggleBlockComment);
 

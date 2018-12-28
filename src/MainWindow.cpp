@@ -512,6 +512,7 @@ void MainWindow::init()
     addShortcutsTooltip(ui->buttonRefresh, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
     addShortcutsTooltip(ui->buttonPrintTable, {shortcutPrint->key()});
 
+    addShortcutsTooltip(ui->actionSqlOpenTab);
     addShortcutsTooltip(ui->actionSqlPrint);
     addShortcutsTooltip(ui->actionExecuteSql, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
     addShortcutsTooltip(ui->actionSqlExecuteLine);
