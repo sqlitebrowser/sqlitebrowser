@@ -3784,3 +3784,8 @@ QString MainWindow::saveOpenTabs()
     openTabs.chop(1);
     return openTabs;
 }
+
+void MainWindow::showStatusMessage5s(QString message)
+{
+    ui->statusbar->showMessage(message, 5000);
+}

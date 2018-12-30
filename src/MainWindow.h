@@ -296,6 +296,7 @@ private slots:
     void updateDatabaseBusyStatus(bool busy, const QString& user);
     void openPreferences();
     void closeTab(int index);
+    void showStatusMessage5s(QString message);
 };
 
 #endif
