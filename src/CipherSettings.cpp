@@ -32,9 +32,6 @@ void CipherSettings::setPassword(const QString &value)
 
 int CipherSettings::getPageSize() const
 {
-    if (pageSize == 0)
-        return defaultPageSize;
-
     return pageSize;
 }
 

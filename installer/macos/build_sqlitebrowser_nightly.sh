@@ -3,7 +3,7 @@
 # Builds and uploads DB Browser for SQLite nightlies,
 # after updating the Homebrew dependencies
 
-QTVER="5.11.2"
+QTVER="5.11.3"
 BRANCH="master"
 BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
@@ -50,7 +50,7 @@ fi
 
 # Ensure Homebrew is owned by my user
 echo Ensure Homebrew is owned by my user >>$LOG 2>&1
-sudo chown -Rh jc:staff /usr/local >$LOG 2>&1
+sudo chown -Rh jc:staff /usr/local >>$LOG 2>&1
 
 # Update Homebrew
 echo Update Homebrew >>$LOG 2>&1
@@ -64,7 +64,7 @@ $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install SQLite3 
 echo Install SQLite3 >>$LOG 2>&1
-$BREW install sqlite --with-functions --with-json1 --without-readline --with-fts --with-fts5 >>$LOG 2>&1
+$BREW install sqlite --with-functions --with-json1 --with-fts --with-fts5 >>$LOG 2>&1
 $BREW link sqlite3 --force >>$LOG 2>&1
 
 # Update the sqlitebrowser source
@@ -74,6 +74,9 @@ git reset --hard HEAD >>$LOG 2>&1
 git clean -dffx >>$LOG 2>&1
 git pull >>$LOG 2>&1
 git checkout $BRANCH >>$LOG 2>&1
+git reset --hard HEAD >>$LOG 2>&1
+git clean -dffx >>$LOG 2>&1
+git pull >>$LOG 2>&1
 
 # Update the translation files
 echo Updating the translations >>$LOG 2>&1
@@ -92,6 +95,11 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
+
+# Add the math extensions to the .dmg
+echo Add the math extensions to the .dmg >>$LOG 2>&1
+mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlite/include -L/usr/local/opt/sqlite/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
@@ -127,17 +135,13 @@ mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 $BREW unlink sqlite3 >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
-# Upload standard sqlitebrowser nightly
-echo Upload standard sqlitebrowser nightly >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite_${DATE}.dmg nightlies@nightlies.sqlitebrowser.org:/nightlies/osx/ >>$LOG 2>&1
-
 ### Build SQLCipher version
 # Remove any existing Homebrew installed packages
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list` --force >>$LOG 2>&1
 
-# Install sqlcipher
-echo Install sqlcipher >>$LOG 2>&1
+# Install SQLCipher
+echo Install SQLCipher >>$LOG 2>&1
 $BREW install sqlcipher --with-fts >>$LOG 2>&1
 
 # Clean the sqlitebrowser source
@@ -146,6 +150,8 @@ cd $HOME/git_repos/sqlitebrowser >>$LOG 2>&1
 git reset --hard HEAD >>$LOG 2>&1
 git clean -dffx >>$LOG 2>&1
 git checkout $BRANCH >>$LOG 2>&1
+git reset --hard HEAD >>$LOG 2>&1
+git clean -dffx >>$LOG 2>&1
 
 # Update the translation files
 echo Updating the translations >>$LOG 2>&1
@@ -164,6 +170,11 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
+
+# Add the math extensions to the .dmg
+echo Add the math extensions to the .dmg >>$LOG 2>&1
+mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlite/include -L/usr/local/opt/sqlite/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
@@ -208,21 +219,13 @@ if [ "${BRANCH}" != "master" ]; then
   git branch -D "${BRANCH}" >>$LOG 2>&1
 fi
 
-# Upload sqlitebrowser nightly with SQLCipher support
-echo Upload sqlitebrowser nightly with SQLCipher support >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg nightlies@nightlies.sqlitebrowser.org:/nightlies/osx/ >>$LOG 2>&1
-
-# Upload the nightlies build log
-echo Upload the build log >>$LOG 2>&1
-rsync -a $HOME/db4s_nightlies/nightly.log-${DATE} nightlies@nightlies.sqlitebrowser.org:/nightlies/osx/ >>$LOG 2>&1
+# Upload nightly builds and the build log thus far
+echo Upload nightly builds >>$LOG 2>&1
+rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg $HOME/db4s_nightlies/nightly.log-${DATE} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
 
 # Add the new builds to the "latest" directory
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite.dmg" >>$LOG 2>&1
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher.dmg" >>$LOG 2>&1
-
-# Remove the nightlies from the local filesystem as we no longer need them
-#echo Remove the nightlies from the local filesystem as we no longer need them >>$LOG 2>&1
-#rm -f $HOME/db4s_nightlies/sqlitebrowser_${DATE}.dmg $HOME/db4s_nightlies/sqlitebrowser-sqlcipher_${DATE}.dmg >>$LOG 2>&1
 
 echo Done! >>$LOG 2>&1

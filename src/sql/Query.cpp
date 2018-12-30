@@ -12,10 +12,32 @@ Query::Query()
 void Query::clear()
 {
     m_table.clear();
-    m_rowid_column = "rowid";
+    m_rowid_column = "_rowid_";
     m_selected_columns.clear();
     m_where.clear();
     m_sort.clear();
+}
+
+std::string Query::buildWherePart() const
+{
+    std::string where;
+    if(m_where.size())
+    {
+        where = "WHERE ";
+
+        for(auto i=m_where.cbegin();i!=m_where.cend();++i)
+        {
+            const auto it = findSelectedColumnByName(m_column_names.at(i->first));
+            std::string column = sqlb::escapeIdentifier(m_column_names.at(i->first));
+            if(it != m_selected_columns.cend() && it->selector != column)
+                column = it->selector;
+            where += column + " " + i->second + " AND ";
+        }
+
+        // Remove last ' AND '
+        where.erase(where.size() - 5);
+    }
+    return where;
 }
 
 std::string Query::buildQuery(bool withRowid) const
@@ -40,23 +62,7 @@ std::string Query::buildQuery(bool withRowid) const
     }
 
     // Filter
-    std::string where;
-    if(m_where.size())
-    {
-        where = "WHERE ";
-
-        for(auto i=m_where.cbegin();i!=m_where.cend();++i)
-        {
-            const auto it = findSelectedColumnByName(m_column_names.at(i->first));
-            std::string column = sqlb::escapeIdentifier(m_column_names.at(i->first));
-            if(it != m_selected_columns.cend() && it->selector != column)
-                column = it->selector;
-            where += column + " " + i->second + " AND ";
-        }
-
-        // Remove last ' AND '
-        where.erase(where.size() - 5);
-    }
+    std::string where = buildWherePart();
 
     // Sorting
     std::string order_by;
@@ -70,6 +76,12 @@ std::string Query::buildQuery(bool withRowid) const
     }
 
     return "SELECT " + selector + " FROM " + m_table.toString().toStdString() + " " + where + " " + order_by;
+}
+
+std::string Query::buildCountQuery() const
+{
+    // Build simplest count query for this (filtered) table
+    return "SELECT COUNT(*) FROM " + m_table.toString().toStdString() + " " + buildWherePart();
 }
 
 std::vector<SelectedColumn>::iterator Query::findSelectedColumnByName(const std::string& name)

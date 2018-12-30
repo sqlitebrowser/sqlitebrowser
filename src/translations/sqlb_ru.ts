@@ -686,7 +686,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="151"/>
         <source>&amp;Import</source>
-        <translation>&amp;Импортировать</translation>
+        <translation>&amp;Импорт</translation>
     </message>
     <message>
         <source>Export text</source>
@@ -699,7 +699,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="170"/>
         <source>&amp;Export</source>
-        <translation>&amp;Экспортировать</translation>
+        <translation>&amp;Экспорт</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="183"/>

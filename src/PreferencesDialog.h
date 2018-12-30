@@ -19,7 +19,17 @@ class PreferencesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PreferencesDialog(QWidget* parent = nullptr);
+    enum Tabs
+    {
+        TabGeneral,
+        TabDatabase,
+        TabDataBrowser,
+        TabSql,
+        TabExtensions,
+        TabRemote
+    };
+
+    explicit PreferencesDialog(QWidget* parent = nullptr, Tabs tab = TabGeneral);
     ~PreferencesDialog() override;
 
 private slots:

@@ -34,7 +34,7 @@ public:
         Cache & cache_data
         );
 
-    void setQuery (QString);
+    void setQuery (QString new_query, QString newCountQuery = QString());
 
     void triggerRowCountDetermination (int token);
 
@@ -77,6 +77,7 @@ private:
     mutable std::condition_variable cv;
 
     QString query;
+    QString countQuery;
 
     mutable std::future<void> row_counter;
 

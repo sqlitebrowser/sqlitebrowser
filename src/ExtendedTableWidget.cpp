@@ -3,6 +3,7 @@
 #include "FilterTableHeader.h"
 #include "sql/sqlitetypes.h"
 #include "Settings.h"
+#include "sqlitedb.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -20,6 +21,7 @@
 #include <QPrintPreviewDialog>
 #include <QTextDocument>
 #include <QCompleter>
+#include <QComboBox>
 
 #include <limits>
 
@@ -126,44 +128,93 @@ ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* pa
 
 QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
-    QLineEdit* editor = new QLineEdit(parent);
-    // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
-    if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
-        QCompleter* completer = new QCompleter(editor);
-        UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
-        // Provide a filter for the source model, so only unique and non-empty values are accepted.
-        completerFilter->setSourceModel(const_cast<QAbstractItemModel*>(index.model()));
-        completerFilter->setFilterKeyColumn(index.column());
-        completer->setModel(completerFilter);
-        // Complete on this column, using a popup and case-insensitively.
-        completer->setCompletionColumn(index.column());
-        completer->setCompletionMode(QCompleter::PopupCompletion);
-        completer->setCaseSensitivity(Qt::CaseInsensitive);
-        editor->setCompleter(completer);
+
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
+    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+
+    if(fk.isSet()) {
+
+        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
+
+        QString column;
+        // If no column name is set, assume the primary key is meant
+        if(fk.columns().isEmpty()) {
+            sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
+            column = obj->findPk()->name();
+        } else
+            column = fk.columns().at(0);
+
+        sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+        QString query = QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(foreignTable.toString());
+
+        // if the current column of the current table does NOT have not-null constraint,
+        // the NULL is united to the query to get the possible values in the combo-box.
+        if (!currentTable->fields.at(index.column()-1).notnull())
+            query.append (" UNION SELECT NULL");
+
+        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
+        fkModel->setQuery(query);
+
+        QComboBox* combo = new QComboBox(parent);
+
+        // Complete cache so it is ready when setEditorData is invoked.
+        fkModel->completeCache();
+        combo->setModel(fkModel);
+
+        return combo;
+    } else {
+
+        QLineEdit* editor = new QLineEdit(parent);
+        // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
+        if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
+            QCompleter* completer = new QCompleter(editor);
+            UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
+            // Provide a filter for the source model, so only unique and non-empty values are accepted.
+            completerFilter->setSourceModel(const_cast<QAbstractItemModel*>(index.model()));
+            completerFilter->setFilterKeyColumn(index.column());
+            completer->setModel(completerFilter);
+            // Complete on this column, using a popup and case-insensitively.
+            completer->setCompletionColumn(index.column());
+            completer->setCompletionMode(QCompleter::PopupCompletion);
+            completer->setCaseSensitivity(Qt::CaseInsensitive);
+            editor->setCompleter(completer);
+        }
+        // Set the maximum length to the highest possible value instead of the default 32768.
+        editor->setMaxLength(std::numeric_limits<int>::max());
+        return editor;
     }
-    // Set the maximum length to the highest possible value instead of the default 32768.
-    editor->setMaxLength(std::numeric_limits<int>::max());
-    return editor;
 }
 
 void ExtendedTableWidgetEditorDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
-
-    // Set the data for the line editor
+    QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
+    // Set the data for the editor
     QString data = index.data(Qt::EditRole).toString();
-    lineedit->setText(data);
 
-    // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
-    lineedit->setReadOnly(data.size() > lineedit->maxLength());
+    if(!lineedit) {
+        QComboBox* combo = static_cast<QComboBox*>(editor);
+        int comboIndex = combo->findText(data);
+        if (comboIndex >= 0)
+            // if it is valid, adjust the combobox
+            combo->setCurrentIndex(comboIndex);
+    } else {
+        lineedit->setText(data);
+
+        // Put the editor in read only mode if the actual data is larger than the maximum length to avoid accidental truncation of the data
+        lineedit->setReadOnly(data.size() > lineedit->maxLength());
+    }
 }
 
 void ExtendedTableWidgetEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
     // Only apply the data back to the model if the editor is not in read only mode to avoid accidental truncation of the data
-    QLineEdit* lineedit = static_cast<QLineEdit*>(editor);
-    if(!lineedit->isReadOnly())
-        model->setData(index, lineedit->text());
+    QLineEdit* lineedit = dynamic_cast<QLineEdit*>(editor);
+    if(!lineedit) {
+        QComboBox* combo = static_cast<QComboBox*>(editor);
+        model->setData(index, combo->currentData(Qt::EditRole), Qt::EditRole);
+    } else
+        if(!lineedit->isReadOnly())
+            model->setData(index, lineedit->text());
 }
 
 void ExtendedTableWidgetEditorDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
@@ -861,6 +912,31 @@ void ExtendedTableWidget::selectTableLines(int firstLine, int count)
     QModelIndex bottomRight = m->index(lastLine, m->columnCount()-1);
 
     selectionModel()->select(QItemSelection(topLeft, bottomRight), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+}
+
+void ExtendedTableWidget::selectAll()
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+
+    // Fetch all the data if needed and user accepts, then call parent's selectAll()
+
+    QMessageBox::StandardButton answer = QMessageBox::Yes;
+
+    // If we can fetch more data, ask user if they are sure about it.
+    if (!m->isCacheComplete()) {
+
+      answer = QMessageBox::question(this, QApplication::applicationName(),
+                              tr("<p>Not all data has been loaded. <b>Do you want to load all data before selecting all the rows?</b><p>"
+                                 "<p>Answering <b>No</b> means that no more data will be loaded and the selection will not be performed.<br/>"
+                                 "Answering <b>Yes</b> might take some time while the data is loaded but the selection will be complete.</p>"
+                                 "Warning: Loading all the data might require a great amount of memory for big tables."),
+                                     QMessageBox::Yes | QMessageBox::No);
+
+      if (answer == QMessageBox::Yes)
+          m->completeCache();
+    }
+    if (answer == QMessageBox::Yes)
+        QTableView::selectAll();
 }
 
 void ExtendedTableWidget::openPrintDialog()

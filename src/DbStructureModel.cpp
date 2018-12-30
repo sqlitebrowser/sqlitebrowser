@@ -51,8 +51,16 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
         else
             return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
     case Qt::EditRole:
-    case Qt::ToolTipRole:   // Don't modify the text when it's supposed to be shown in a tooltip
         return item->text(index.column());
+    case Qt::ToolTipRole: {
+        // Show the original text but limited, when it's supposed to be shown in a tooltip
+        QString text = item->text(index.column());
+        if (text.length() > 512) {
+            text.truncate(509);
+            text.append("...");
+        }
+        return text;
+    }
     case Qt::DecorationRole:
         return item->icon(index.column());
     default:

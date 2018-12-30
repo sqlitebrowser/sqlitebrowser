@@ -193,6 +193,10 @@ void MainWindow::init()
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
     connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        // TODO This needs to be a queued connection because the schema can be updated from different threads than the main thread.
+        // However, this makes calling this lambda asynchronous which can lead to unexpected results. One example is that opening a database,
+        // changing to the Browse Data tab, and then opening another database makes the table browser try to load the old table because the table
+        // list wasn't updated yet.
         QString old_table = ui->comboBrowseTable->currentText();
         dbStructureModel->reloadData();
         populateStructure(old_table);
@@ -220,7 +224,14 @@ void MainWindow::init()
 
     // Restore window geometry
     restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
+
+    // Save default and restore window state
+    defaultWindowState = saveState();
     restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
+
+    // Save default and restore open tab order if the openTabs setting is saved.
+    defaultOpenTabs = saveOpenTabs();
+    restoreOpenTabs(Settings::getValue("MainWindow", "openTabs").toString());
 
     // Restore dock state settings
     ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
@@ -334,6 +345,45 @@ void MainWindow::init()
 
     // Add separator between docks and toolbars
     ui->viewMenu->insertSeparator(ui->viewDBToolbarAction);
+
+    // Connect the tabCloseRequested to the actual closeTab function.
+    // This must be done before the connections for checking the actions in the View menu so
+    // they are updated accordingly.
+    connect(ui->mainTab, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
+
+    // Add entries for toggling the visibility of main tabs
+    for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query}) {
+        QAction* action = ui->viewMenu->addAction(QIcon(":/icons/tab"), widget->accessibleName());
+        action->setCheckable(true);
+        action->setChecked(ui->mainTab->indexOf(widget) != -1);
+        connect(action, &QAction::toggled, [=](bool show) { toggleTabVisible(widget, show); });
+        // Connect tabCloseRequested for setting checked the appropiate menu entry.
+        // Note these are called after the actual tab is closed only because they are connected
+        // after connecting closeTab.
+        connect(ui->mainTab, &QTabWidget::tabCloseRequested, [=](int /*index*/) {
+                action->setChecked(ui->mainTab->indexOf(widget) != -1);
+            });
+    }
+
+    ui->viewMenu->addSeparator();
+    QAction* resetLayoutAction = ui->viewMenu->addAction(tr("Reset Window Layout"));
+    resetLayoutAction->setShortcut(QKeySequence(tr("Alt+0")));
+    connect(resetLayoutAction, &QAction::triggered, [=]() {
+            restoreState(defaultWindowState);
+            restoreOpenTabs(defaultOpenTabs);
+        });
+
+    // Set Alt+[1-4] shortcuts for opening the corresponding tab in that position.
+    // Note that it is safe to call setCurrentIndex with a tab that is currently closed,
+    // since setCurrentIndex does nothing in that case.
+    QShortcut* setTab1Shortcut = new QShortcut(QKeySequence("Alt+1"), this);
+    connect(setTab1Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(0); });
+    QShortcut* setTab2Shortcut = new QShortcut(QKeySequence("Alt+2"), this);
+    connect(setTab2Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(1); });
+    QShortcut* setTab3Shortcut = new QShortcut(QKeySequence("Alt+3"), this);
+    connect(setTab3Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(2); });
+    QShortcut* setTab4Shortcut = new QShortcut(QKeySequence("Alt+4"), this);
+    connect(setTab4Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(3); });
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
@@ -462,6 +512,7 @@ void MainWindow::init()
     addShortcutsTooltip(ui->buttonRefresh, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
     addShortcutsTooltip(ui->buttonPrintTable, {shortcutPrint->key()});
 
+    addShortcutsTooltip(ui->actionSqlOpenTab);
     addShortcutsTooltip(ui->actionSqlPrint);
     addShortcutsTooltip(ui->actionExecuteSql, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
     addShortcutsTooltip(ui->actionSqlExecuteLine);
@@ -542,9 +593,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
-                if(ui->mainTab->currentIndex() == BrowseTab)
+                if(ui->mainTab->currentWidget() == ui->browser)
                     populateTable();
-                else if(ui->mainTab->currentIndex() == PragmaTab)
+                else if(ui->mainTab->currentWidget() == ui->pragmas)
                     loadPragmas();
                 retval = true;
             } else {
@@ -659,7 +710,7 @@ void MainWindow::clearTableBrowser()
 void MainWindow::populateTable()
 {
     // Early exit if the Browse Data tab isn't visible as there is no need to update it in this case
-    if(ui->mainTab->currentIndex() != BrowseTab)
+    if(ui->mainTab->currentWidget() != ui->browser)
         return;
 
     // Remove the model-view link if the table name is empty in order to remove any data from the view
@@ -896,6 +947,8 @@ void MainWindow::closeEvent( QCloseEvent* event )
     {
         Settings::setValue("MainWindow", "geometry", saveGeometry());
         Settings::setValue("MainWindow", "windowState", saveState());
+        Settings::setValue("MainWindow", "openTabs", saveOpenTabs());
+
         Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
         Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
@@ -1028,9 +1081,16 @@ void MainWindow::setRecordsetLabel()
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
 
+    // When there is no query for this table (i.e. no table is selected), there is no row count query either which in turn means
+    // that the row count query will never finish. And because of this the row count will be forever unknown. To avoid always showing
+    // a misleading "determining row count" text in the UI we set the row count status to complete here for empty queries.
+    auto row_count_available = m_browseTableModel->rowCountAvailable();
+    if(m_browseTableModel->query().isEmpty())
+        row_count_available = SqliteTableModel::RowCount::Complete;
+
     // Update the label showing the current position
     QString txt;
-    switch(m_browseTableModel->rowCountAvailable())
+    switch(row_count_available)
     {
     case SqliteTableModel::RowCount::Unknown:
         txt = tr("determining row count...");
@@ -1052,25 +1112,20 @@ void MainWindow::refresh()
 {
     // What the Refresh function does depends on the currently active tab. This way the keyboard shortcuts (F5 and Ctrl+R)
     // always perform some meaningful task; they just happen to be context dependent in the function they trigger.
-    switch(ui->mainTab->currentIndex())
-    {
-    case StructureTab:
+    QWidget* currentTab = ui->mainTab->currentWidget();
+    if (currentTab == ui->structure) {
         // Refresh the schema
         db.updateSchema();
-        break;
-    case BrowseTab:
+    } else if (currentTab == ui->browser) {
         // Refresh the schema and reload the current table
         db.updateSchema();
         populateTable();
-        break;
-    case PragmaTab:
+    } else if (currentTab == ui->pragmas) {
         // Reload pragma values
         loadPragmas();
-        break;
-    case ExecuteTab:
+    } else if (currentTab == ui->query) {
         // (Re-)Run the current SQL query
         executeQuery();
-        break;
     }
 }
 
@@ -1452,7 +1507,7 @@ void MainWindow::executeQuery()
             disconnect(*conn);
 
             attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
-            connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
+            connect(sqlWidget->getTableResult()->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
             connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
 
             auto time_end = std::chrono::high_resolution_clock::now();
@@ -1503,26 +1558,17 @@ void MainWindow::executeQuery()
     execute_sql_worker->start();
 }
 
-void MainWindow::mainTabSelected(int tabindex)
+void MainWindow::mainTabSelected(int /*tabindex*/)
 {
     editDock->setReadOnly(true);
 
-    switch (tabindex)
+    if(ui->mainTab->currentWidget() == ui->browser)
     {
-    case StructureTab:
-        break;
-
-    case BrowseTab:
         m_currentTabTableModel = m_browseTableModel;
         populateTable();
-        break;
-
-    case PragmaTab:
+    } else if(ui->mainTab->currentWidget() == ui->pragmas) {
         loadPragmas();
-        break;
-
-    case ExecuteTab:
-    {
+    } else if(ui->mainTab->currentWidget() == ui->query) {
         SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
 
         if (sqlWidget) {
@@ -1530,10 +1576,6 @@ void MainWindow::mainTabSelected(int tabindex)
 
             dataTableSelectionChanged(sqlWidget->getTableResult()->currentIndex());
         }
-        break;
-    }
-
-    default: break;
     }
 }
 
@@ -1563,7 +1605,7 @@ void MainWindow::exportTableToCSV()
 {
     // Get the current table name if we are in the Browse Data tab
     sqlb::ObjectIdentifier current_table;
-    if(ui->mainTab->currentIndex() == StructureTab)
+    if(ui->mainTab->currentWidget() == ui->structure)
     {
         QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
         if(type == "table" || type == "view")
@@ -1572,7 +1614,7 @@ void MainWindow::exportTableToCSV()
             QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
             current_table = sqlb::ObjectIdentifier(schema, name);
         }
-    } else if(ui->mainTab->currentIndex() == BrowseTab) {
+    } else if(ui->mainTab->currentWidget() == ui->browser) {
         current_table = currentlyBrowsedTableName();
     }
 
@@ -1585,7 +1627,7 @@ void MainWindow::exportTableToJson()
 {
     // Get the current table name if we are in the Browse Data tab
     sqlb::ObjectIdentifier current_table;
-    if(ui->mainTab->currentIndex() == StructureTab)
+    if(ui->mainTab->currentWidget() == ui->structure)
     {
         QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
         if(type == "table" || type == "view")
@@ -1594,7 +1636,7 @@ void MainWindow::exportTableToJson()
             QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
             current_table = sqlb::ObjectIdentifier(schema, name);
         }
-    } else if(ui->mainTab->currentIndex() == BrowseTab) {
+    } else if(ui->mainTab->currentWidget() == ui->browser) {
         current_table = currentlyBrowsedTableName();
     }
 
@@ -1638,7 +1680,7 @@ void MainWindow::fileRevert()
 void MainWindow::exportDatabaseToSQL()
 {
     QString current_table;
-    if(ui->mainTab->currentIndex() == BrowseTab)
+    if(ui->mainTab->currentWidget() == ui->browser)
         current_table = ui->comboBrowseTable->currentText();
 
     ExportSqlDialog dialog(&db, this, current_table);
@@ -1976,34 +2018,6 @@ void MainWindow::resizeEvent(QResizeEvent*)
     setRecordsetLabel();
 }
 
-void MainWindow::keyPressEvent(QKeyEvent* event)
-{
-    int tab = -1;
-
-    switch (event->key())
-    {
-    case Qt::Key_1:
-        tab = Tabs::StructureTab;
-        break;
-    case Qt::Key_2:
-        tab = Tabs::BrowseTab;
-        break;
-    case Qt::Key_3:
-        tab = Tabs::PragmaTab;
-        break;
-    case Qt::Key_4:
-        tab = Tabs::ExecuteTab;
-        break;
-    default:
-        break;
-    }
-
-    if (event->modifiers() & Qt::AltModifier && tab != -1)
-        ui->mainTab->setCurrentIndex(tab);
-
-    QMainWindow::keyPressEvent(event);
-}
-
 void MainWindow::loadPragmas()
 {
     pragmaValues.autovacuum = db.getPragma("auto_vacuum").toInt();
@@ -2254,7 +2268,7 @@ void MainWindow::loadExtension()
                 OpenExtensionFile,
                 this,
                 tr("Select extension file"),
-                tr("Extensions(*.so *.dll);;All files(*)"));
+                tr("Extensions(*.so *.dylib *.dll);;All files(*)"));
 
     if(file.isEmpty())
         return;
@@ -2380,6 +2394,7 @@ void MainWindow::on_actionBug_report_triggered()
     const QString kernelType = QSysInfo::kernelType();
     const QString kernelVersion = QSysInfo::kernelVersion();
     const QString arch = QSysInfo::currentCpuArchitecture();
+    const QString built_for = QSysInfo::buildAbi();
 
     QString sqlite_version, sqlcipher_version;
     DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
@@ -2396,10 +2411,10 @@ void MainWindow::on_actionBug_report_triggered()
               "#### What did you see instead?\n\n\n"
               "Useful extra information\n"
               "-------------------------\n"
-              "> DB4S v%1 on %2 (%3/%4) [%5]\n"
-              "> using %6\n"
-              "> and Qt %7")
-            .arg(version, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
+              "> DB4S v%1 [built for %2] on %3 (%4/%5) [%6]\n"
+              "> using %7\n"
+              "> and Qt %8")
+            .arg(version, built_for, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
@@ -2624,9 +2639,18 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                     // Window settings
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "window")
                     {
-                        // Currently selected tab
-                        if(xml.name() == "current_tab")
+                        if(xml.name() == "main_tabs") {
+                            // Currently open tabs
+                            restoreOpenTabs(xml.attributes().value("open").toString());
+                            // Currently selected open tab
+                            ui->mainTab->setCurrentIndex(xml.attributes().value("current").toString().toInt());
+                            xml.skipCurrentElement();
+                        } else if(xml.name() == "current_tab") {
+                            // Currently selected tab (3.11 or older format, first restore default open tabs)
+                            restoreOpenTabs(defaultOpenTabs);
                             ui->mainTab->setCurrentIndex(xml.attributes().value("id").toString().toInt());
+                            xml.skipCurrentElement();
+                        }
                     }
                 } else if(xml.name() == "tab_structure") {
                     // Database Structure tab settings
@@ -2703,7 +2727,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             }
                         }
 
-                        if(ui->mainTab->currentIndex() == BrowseTab)
+                        if(ui->mainTab->currentWidget() == ui->browser)
                         {
                             populateTable();     // Refresh view
                             sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
@@ -2897,8 +2921,9 @@ void MainWindow::saveProject()
 
         // Window settings
         xml.writeStartElement("window");
-        xml.writeStartElement("current_tab");   // Currently selected tab
-        xml.writeAttribute("id", QString::number(ui->mainTab->currentIndex()));
+        xml.writeStartElement("main_tabs");   // Currently open tabs
+        xml.writeAttribute("open", saveOpenTabs());
+        xml.writeAttribute("current", QString::number(ui->mainTab->currentIndex()));
         xml.writeEndElement();
         xml.writeEndElement();
 
@@ -3037,6 +3062,12 @@ void MainWindow::editEncryption()
         qApp->processEvents();
         if(ok)
             ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = %1").arg(cipherSettings.getPageSize()), false, false);
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.kdf_iter = %1").arg(cipherSettings.getKdfIterations()), false, false);
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_hmac_algorithm = %1").arg(cipherSettings.getHmacAlgorithm()), false, false);
+        if(ok)
+            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_kdf_algorithm = %1").arg(cipherSettings.getKdfAlgorithm()), false, false);
 
         // Export the current database to the new one
         qApp->processEvents();
@@ -3081,7 +3112,9 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
     }
 
     ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(tableToBrowse));
-    ui->mainTab->setCurrentIndex(BrowseTab);
+    if (ui->mainTab->indexOf(ui->browser) == -1)
+        ui->mainTab->addTab(ui->browser, ui->browser->accessibleName());
+    ui->mainTab->setCurrentWidget(ui->browser);
 }
 
 void MainWindow::on_buttonClearFilters_clicked()
@@ -3591,7 +3624,9 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
     switch (QMessageBox::information(this, windowTitle, message, QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Escape, QMessageBox::Help))
     {
     case QMessageBox::Ok: {
-        ui->mainTab->setCurrentIndex(ExecuteTab);
+        if (ui->mainTab->indexOf(ui->query) == -1)
+            ui->mainTab->addTab(ui->query, ui->query->accessibleName());
+        ui->mainTab->setCurrentWidget(ui->query);
         unsigned int index = openSqlTab();
         ui->tabSqlAreas->setTabText(index, title);
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
@@ -3699,4 +3734,53 @@ void MainWindow::updateDatabaseBusyStatus(bool busy, const QString& user)
     statusBusyLabel->setText(tr("Busy (%1)").arg(user));
     statusBusyLabel->setVisible(busy);
     statusStopButton->setVisible(busy);
+}
+
+
+void MainWindow::closeTab(int index)
+{
+    ui->mainTab->removeTab(index);
+}
+
+void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
+{
+    if (show)
+        ui->mainTab->addTab(tabWidget, tabWidget->accessibleName());
+    else
+        ui->mainTab->removeTab(ui->mainTab->indexOf(tabWidget));
+}
+
+void MainWindow::restoreOpenTabs(QString tabs)
+{
+    // Split the tab list, skiping the empty parts so the empty string turns to an empty list
+    // and not a list of one empty string.
+    QStringList tabList = tabs.split(' ', QString::SkipEmptyParts);
+
+    // Clear the tabs and then add them in the order specified by the setting.
+    // Use the accessibleName attribute for restoring the tab label.
+    if (!tabList.isEmpty()) {
+        // Avoid flickering while clearing and adding tabs.
+        ui->mainTab->setUpdatesEnabled(false);
+        ui->mainTab->clear();
+        for (QString objectName : tabList) {
+            for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
+                if (widget->objectName() == objectName) {
+                    ui->mainTab->addTab(widget, widget->accessibleName());
+                    break;
+                }
+        }
+        ui->mainTab->setUpdatesEnabled(true);
+        // Force the update of the View menu toggable entries
+        // (it doesn't seem to be a better way)
+        ui->mainTab->tabCloseRequested(-1);
+    }
+}
+
+QString MainWindow::saveOpenTabs()
+{
+    QString openTabs;
+    for (int i=0; i < ui->mainTab->count(); i++)
+        openTabs.append(ui->mainTab->widget(i)->objectName() + ' ');
+    openTabs.chop(1);
+    return openTabs;
 }

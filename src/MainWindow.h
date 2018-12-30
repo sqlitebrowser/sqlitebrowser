@@ -91,14 +91,6 @@ public:
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
 
-    enum Tabs
-    {
-        StructureTab,
-        BrowseTab,
-        PragmaTab,
-        ExecuteTab
-    };
-
 private:
     struct PragmaValues
     {
@@ -171,6 +163,9 @@ private:
 
     std::unique_ptr<RunSql> execute_sql_worker;
 
+    QString defaultOpenTabs;
+    QByteArray defaultWindowState;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -187,13 +182,15 @@ private:
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
+    void toggleTabVisible(QWidget* tabWidget, bool show);
+    void restoreOpenTabs(QString tabs);
+    QString saveOpenTabs();
 
 protected:
     void closeEvent(QCloseEvent *) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
-    void keyPressEvent(QKeyEvent* event) override;
 
 public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
@@ -203,7 +200,8 @@ public slots:
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
     void populateStructure(const QString& old_table = QString());
-    void openPreferences();
+    void reloadSettings();
+
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -257,7 +255,6 @@ private slots:
     void saveSqlResultsAsCsv();
     void saveSqlResultsAsView();
     void loadExtension();
-    void reloadSettings();
     void checkNewVersion(const QString& versionstring, const QString& url);
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
@@ -297,6 +294,8 @@ private slots:
     void runSqlNewTab(const QString& query, const QString& title);
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
+    void openPreferences();
+    void closeTab(int index);
 };
 
 #endif
