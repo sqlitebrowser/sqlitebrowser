@@ -70,7 +70,7 @@ after_success:
   - bash upload.sh DB_Browser_for_SQLite*.AppImage*
 
 notifications:
- email:
+  email:
    recipients:
    - mkleusberg@gmail.com
    - innermous@gmail.com
