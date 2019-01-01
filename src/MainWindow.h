@@ -273,7 +273,7 @@ private slots:
     void addCondFormat(int column, const QString& value);
     void clearAllCondFormats(int column);
     void editEncryption();
-    void on_buttonClearFilters_clicked();
+    void on_actionClearFilters_triggered();
     void copyCurrentCreateStatement();
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);

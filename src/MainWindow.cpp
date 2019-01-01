@@ -267,7 +267,7 @@ void MainWindow::init()
     popupNewRecordMenu = new QMenu(this);
     popupNewRecordMenu->addAction(ui->newRecordAction);
     popupNewRecordMenu->addAction(ui->insertValuesAction);
-    ui->buttonNewRecord->setMenu(popupNewRecordMenu);
+    ui->actionNewRecord->setMenu(popupNewRecordMenu);
 
     popupSaveSqlFileMenu = new QMenu(this);
     popupSaveSqlFileMenu->addAction(ui->actionSqlSaveFile);
@@ -283,8 +283,8 @@ void MainWindow::init()
     popupSaveFilterAsMenu = new QMenu(this);
     popupSaveFilterAsMenu->addAction(ui->actionFilteredTableExportCsv);
     popupSaveFilterAsMenu->addAction(ui->actionFilterSaveAsView);
-    ui->buttonSaveFilterAsPopup->setMenu(popupSaveFilterAsMenu);
-    ui->buttonSaveFilterAsPopup->setPopupMode(QToolButton::InstantPopup);
+    ui->actionSaveFilterAsPopup->setMenu(popupSaveFilterAsMenu);
+    qobject_cast<QToolButton*>(ui->browseToolbar->widgetForAction(ui->actionSaveFilterAsPopup))->setPopupMode(QToolButton::InstantPopup);
 
     popupBrowseDataHeaderMenu = new QMenu(this);
     popupBrowseDataHeaderMenu->addAction(ui->actionShowRowidColumn);
@@ -459,8 +459,8 @@ void MainWindow::init()
 
     addShortcutsTooltip(ui->actionDbPrint);
 
-    addShortcutsTooltip(ui->buttonRefresh, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
-    addShortcutsTooltip(ui->buttonPrintTable, {shortcutPrint->key()});
+    addShortcutsTooltip(ui->actionRefresh, {shortcutBrowseRefreshCtrlR->key()});
+    addShortcutsTooltip(ui->actionPrintTable);
 
     addShortcutsTooltip(ui->actionSqlPrint);
     addShortcutsTooltip(ui->actionExecuteSql, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
@@ -1920,8 +1920,8 @@ void MainWindow::activateFields(bool enable)
     ui->buttonBoxPragmas->setEnabled(enable && write);
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
-    ui->buttonRefresh->setEnabled(enable);
-    ui->buttonPrintTable->setEnabled(enable);
+    ui->actionRefresh->setEnabled(enable);
+    ui->actionPrintTable->setEnabled(enable);
     ui->actionExecuteSql->setEnabled(enable);
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
@@ -1931,8 +1931,8 @@ void MainWindow::activateFields(bool enable)
     ui->actionQuickCheck->setEnabled(enable);
     ui->actionForeignKeyCheck->setEnabled(enable);
     ui->actionOptimize->setEnabled(enable);
-    ui->buttonClearFilters->setEnabled(enable);
-    ui->buttonSaveFilterAsPopup->setEnabled(enable);
+    ui->actionClearFilters->setEnabled(enable);
+    ui->actionSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
     ui->dockPlot->setEnabled(enable);
 
@@ -3097,7 +3097,7 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
     ui->mainTab->setCurrentIndex(BrowseTab);
 }
 
-void MainWindow::on_buttonClearFilters_clicked()
+void MainWindow::on_actionClearFilters_triggered()
 {
     ui->dataTable->filterHeader()->clearFilters();
 }
@@ -3189,7 +3189,7 @@ void MainWindow::showRecordPopupMenu(const QPoint& pos)
             }
     });
 
-    QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->buttonDeleteRecord->text(), &popupRecordMenu);
+    QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->actionDeleteRecord->text(), &popupRecordMenu);
     popupRecordMenu.addAction(deleteRecordAction);
 
     connect(deleteRecordAction, &QAction::triggered, [&]() {
@@ -3584,13 +3584,13 @@ void MainWindow::updateInsertDeleteRecordButton()
     // at least one row to be selected. For the insert button there is an extra rule to disable it when we are browsing a view because inserting
     // into a view isn't supported yet.
     bool isEditable = m_browseTableModel->isEditable() && !db.readOnly();
-    ui->buttonNewRecord->setEnabled(isEditable && !m_browseTableModel->hasPseudoPk());
-    ui->buttonDeleteRecord->setEnabled(isEditable && rows != 0);
+    ui->actionNewRecord->setEnabled(isEditable && !m_browseTableModel->hasPseudoPk());
+    ui->actionDeleteRecord->setEnabled(isEditable && rows != 0);
 
     if(rows > 1)
-        ui->buttonDeleteRecord->setText(tr("Delete Records"));
+        ui->actionDeleteRecord->setText(tr("Delete Records"));
     else
-        ui->buttonDeleteRecord->setText(tr("Delete Record"));
+        ui->actionDeleteRecord->setText(tr("Delete Record"));
 }
 
 void MainWindow::runSqlNewTab(const QString& query, const QString& title)

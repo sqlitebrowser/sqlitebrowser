@@ -63,7 +63,7 @@ EditDialog::EditDialog(QWidget* parent)
     ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
-    ui->buttonIndent->setChecked(mustIndentAndCompact);
+    ui->actionIndent->setChecked(mustIndentAndCompact);
 
     ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
 
@@ -661,7 +661,7 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
 // Called when the user manually changes the "Mode" drop down combobox
 void EditDialog::editModeChanged(int newMode)
 {
-    ui->buttonIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
+    ui->actionIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
     setStackCurrentIndex(newMode);
 
     // * If the dataSource is the text buffer, the data is always text *
@@ -861,8 +861,8 @@ void EditDialog::setReadOnly(bool ro)
     QPalette textEditPalette = ui->editorText->palette();
 
     ui->buttonApply->setEnabled(!ro);
-    ui->buttonNull->setEnabled(!ro);
-    ui->buttonImport->setEnabled(!ro);
+    ui->actionNull->setEnabled(!ro);
+    ui->actionImport->setEnabled(!ro);
 
     ui->editorText->setReadOnly(ro);
     sciEdit->setReadOnly(ro);

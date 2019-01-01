@@ -102,118 +102,21 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
       </spacer>
      </item>
      <item>
-      <widget class="QToolButton" name="buttonIndent">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Auto-format: pretty print on loading, compact on saving.</string>
-       </property>
-       <property name="statusTip">
-        <string>Auto-format: pretty print on loading, compact on saving.</string>
-       </property>
-       <property name="whatsThis">
-        <string>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</string>
-       </property>
-       <property name="text">
-        <string>Autoformat</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/text_indent</normaloff>:/icons/text_indent</iconset>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="buttonImport">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Import from file</string>
-       </property>
-       <property name="whatsThis">
-        <string>Opens a file dialog used to import any kind of data to this database cell.</string>
-       </property>
-       <property name="text">
-        <string>&amp;Import</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="buttonExport">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Export to file</string>
-       </property>
-       <property name="whatsThis">
-        <string>Opens a file dialog used to export the contents of this database cell to a file.</string>
-       </property>
-       <property name="text">
-        <string>&amp;Export</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/save_sql</normaloff>:/icons/save_sql</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="printButton">
-       <property name="toolTip">
-        <string>Print cell content</string>
-       </property>
-       <property name="whatsThis">
-        <string>Open preview dialog for printing the data currently stored in the cell</string>
-       </property>
-       <property name="text">
-        <string>Print</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="buttonNull">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Set this cell to NULL</string>
-       </property>
-       <property name="whatsThis">
-        <string>Erases the contents of the cell</string>
-       </property>
-       <property name="text">
-        <string>Set as &amp;NULL</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/set_to_null</normaloff>:/icons/set_to_null</iconset>
-       </property>
+      <widget class="QToolBar" name="editCellToolbar">
+       <addaction name="actionIndent"/>
+       <addaction name="actionPrint"/>
+       <addaction name="actionImport"/>
+       <addaction name="actionExport"/>
+       <addaction name="actionNull"/>
       </widget>
      </item>
     </layout>
@@ -387,8 +290,14 @@ Errors are indicated with a red squiggle underline.</string>
    <property name="toolTip">
     <string>Open preview dialog for printing displayed text</string>
    </property>
+   <property name="whatsThis">
+    <string>Open preview dialog for printing the data currently stored in the cell</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionCopyHexAscii">
@@ -406,15 +315,67 @@ Errors are indicated with a red squiggle underline.</string>
     <string>Ctrl+Shift+C</string>
    </property>
   </action>
+  <action name="actionIndent">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_indent</normaloff>:/icons/text_indent</iconset>
+   </property>
+   <property name="text">
+    <string>Autoformat</string>
+   </property>
+   <property name="toolTip">
+    <string>Auto-format: pretty print on loading, compact on saving.</string>
+   </property>
+   <property name="whatsThis">
+    <string>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_sql</normaloff>:/icons/save_sql</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Export...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export to file</string>
+   </property>
+   <property name="whatsThis">
+    <string>Opens a file dialog used to export the contents of this database cell to a file.</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Import...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import from file</string>
+   </property>
+   <property name="whatsThis">
+    <string>Opens a file dialog used to import any kind of data to this database cell.</string>
+   </property>
+  </action>
+  <action name="actionNull">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/set_to_null</normaloff>:/icons/set_to_null</iconset>
+   </property>
+   <property name="text">
+    <string>Set as &amp;NULL</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboMode</tabstop>
   <tabstop>buttonAutoSwitchMode</tabstop>
-  <tabstop>buttonIndent</tabstop>
-  <tabstop>buttonImport</tabstop>
-  <tabstop>buttonExport</tabstop>
-  <tabstop>printButton</tabstop>
-  <tabstop>buttonNull</tabstop>
   <tabstop>editorText</tabstop>
   <tabstop>buttonApply</tabstop>
  </tabstops>
@@ -471,14 +432,14 @@ Errors are indicated with a red squiggle underline.</string>
    </hints>
   </connection>
   <connection>
-   <sender>buttonIndent</sender>
+   <sender>actionIndent</sender>
    <signal>toggled(bool)</signal>
    <receiver>EditDialog</receiver>
    <slot>setMustIndentAndCompact(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
-     <y>33</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -551,14 +512,14 @@ Errors are indicated with a red squiggle underline.</string>
    </hints>
   </connection>
   <connection>
-   <sender>buttonNull</sender>
-   <signal>clicked()</signal>
+   <sender>actionNull</sender>
+   <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>setNull()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>595</x>
-     <y>22</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -567,14 +528,14 @@ Errors are indicated with a red squiggle underline.</string>
    </hints>
   </connection>
   <connection>
-   <sender>buttonImport</sender>
-   <signal>clicked()</signal>
+   <sender>actionImport</sender>
+   <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>importData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>505</x>
-     <y>22</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -583,30 +544,14 @@ Errors are indicated with a red squiggle underline.</string>
    </hints>
   </connection>
   <connection>
-   <sender>buttonExport</sender>
-   <signal>clicked()</signal>
+   <sender>actionExport</sender>
+   <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>exportData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>535</x>
-     <y>22</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>308</x>
-     <y>190</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>printButton</sender>
-   <signal>clicked()</signal>
-   <receiver>actionPrint</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>565</x>
-     <y>22</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
