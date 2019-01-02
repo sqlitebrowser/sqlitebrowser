@@ -36,7 +36,7 @@ protected:
         {
             QMenu* editContextMenu = createStandardContextMenu();
 
-            QAction* nullAction = new QAction(tr("Set to NULL"), editContextMenu);
+            QAction* nullAction = new QAction(QIcon(":/icons/set_to_null"), tr("Set to NULL"), editContextMenu);
             connect(nullAction, &QAction::triggered, [&]() {
                     setNull(true);
                 });

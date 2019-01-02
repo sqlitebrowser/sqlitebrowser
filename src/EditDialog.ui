@@ -113,10 +113,10 @@
      <item>
       <widget class="QToolBar" name="editCellToolbar">
        <addaction name="actionIndent"/>
-       <addaction name="actionPrint"/>
        <addaction name="actionImport"/>
        <addaction name="actionExport"/>
        <addaction name="actionNull"/>
+       <addaction name="actionPrint"/>
       </widget>
      </item>
     </layout>
@@ -370,6 +370,9 @@ Errors are indicated with a red squiggle underline.</string>
    </property>
    <property name="text">
     <string>Set as &amp;NULL</string>
+   </property>
+   <property name="whatsThis">
+    <string>Erases the contents of the cell</string>
    </property>
   </action>
  </widget>

@@ -986,7 +986,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <string>DB Toolbar</string>
    </property>
    <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonIconOnly</enum>
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -1199,7 +1199,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Project Toolbar</string>
    </property>
    <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonIconOnly</enum>
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -1221,7 +1221,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Close the current database file</string>
    </property>
    <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonIconOnly</enum>
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -1664,6 +1664,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="text">
     <string>Execute current line</string>
    </property>
+   <property name="iconText">
+    <string>Execute line</string>
+   </property>
    <property name="toolTip">
     <string>Execute current line</string>
    </property>
@@ -2008,6 +2011,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="text">
     <string>Find text in SQL editor</string>
    </property>
+   <property name="iconText">
+    <string>Find</string>
+   </property>
    <property name="toolTip">
     <string>Find text in SQL editor</string>
    </property>
@@ -2028,6 +2034,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Find or replace text in SQL editor</string>
+   </property>
+   <property name="iconText">
+    <string>Find or replace</string>
    </property>
    <property name="toolTip">
     <string>Find or replace text in SQL editor</string>
@@ -2312,6 +2321,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="text">
     <string>Un/comment block of SQL code</string>
    </property>
+   <property name="iconText">
+    <string>Un/comment block</string>
+   </property>
    <property name="toolTip">
     <string>Comment or uncomment current line or selected block of code</string>
    </property>
@@ -2329,6 +2341,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Stop SQL execution</string>
+   </property>
+   <property name="iconText">
+    <string>Stop execution</string>
    </property>
    <property name="toolTip">
     <string>Stop the currently running SQL script</string>

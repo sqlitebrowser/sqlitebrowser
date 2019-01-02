@@ -1014,6 +1014,9 @@ void EditDialog::reloadSettings()
     hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     hexEdit->setFont(hexFont);
 
+    ui->editCellToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
+                                            (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
+
     sciEdit->reloadSettings();
 }
 
