@@ -310,24 +310,24 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 QVector<QString> labels;
                 for(int j = 0; j < nrows; ++j)
                 {
-                    tdata[i] = j;
+                    tdata[j] = j;
                     // convert x type axis if it's datetime
                     switch (xtype) {
                     case QVariant::DateTime:
                     case QVariant::Date: {
                         QString s = model->data(model->index(j, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[i] = d.toMSecsSinceEpoch() / 1000.0;
+                        xdata[j] = d.toMSecsSinceEpoch() / 1000.0;
                         break;
                     }
                     case QVariant::Time: {
                         QString s = model->data(model->index(j, x)).toString();
                         QTime t = QTime::fromString(s);
-                        xdata[i] = t.msecsSinceStartOfDay() / 1000.0;
+                        xdata[j] = t.msecsSinceStartOfDay() / 1000.0;
                         break;
                     }
                     case QVariant::String: {
-                        xdata[i] = j+1;
+                        xdata[j] = j+1;
                         labels << model->data(model->index(j, x)).toString();
                         break;
                     }
@@ -335,15 +335,14 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                         // instead of retrieving some value from the model.
                         if(x == RowNumId)
-                            xdata[i] = j+1;
-
+                            xdata[j] = j+1;
                         else
-                            xdata[i] = model->data(model->index(j, x)).toDouble();
+                            xdata[j] = model->data(model->index(j, x)).toDouble();
                     }
                     }
 
                     if (j != 0)
-                        isSorted &= (xdata[i-1] <= xdata[i]);
+                        isSorted &= (xdata[j-1] <= xdata[j]);
 
                     // Get the y value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
                     // instead of retrieving some value from the model.
@@ -354,9 +353,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         pointdata = model->data(model->index(j, column), Qt::EditRole);
 
                     if(pointdata.isNull())
-                        ydata[i] = qQNaN();
+                        ydata[j] = qQNaN();
                     else
-                        ydata[i] = pointdata.toDouble();
+                        ydata[j] = pointdata.toDouble();
                 }
 
                 // Line type and point shape are not supported by the String X type (Bars)

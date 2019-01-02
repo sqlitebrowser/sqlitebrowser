@@ -138,6 +138,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "MainWindow" && name == "windowState")
         return "";
 
+    // MainWindow/openTabs?
+    if(group == "MainWindow" && name == "openTabs")
+        return "";
+
     // SQLLogDock/Log?
     if(group == "SQLLogDock" && name == "Log")
         return "Application";

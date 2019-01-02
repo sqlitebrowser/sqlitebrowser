@@ -161,8 +161,8 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
         if(m_query.rowIdColumn().empty())
-            m_query.setRowIdColumn("rowid");
-        m_headers.push_back("rowid");
+            m_query.setRowIdColumn("_rowid_");
+        m_headers.push_back("_rowid_");
         m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
     }
 
@@ -782,36 +782,32 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
     return false;
 }
 
-void SqliteTableModel::setPseudoPk(const QString& pseudoPk)
+void SqliteTableModel::setPseudoPk(QString pseudoPk)
 {
+    if(pseudoPk.isNull())
+        pseudoPk = QString("_rowid_");
+
     // Do nothing if the value didn't change
     if(m_query.rowIdColumn() == pseudoPk.toStdString())
         return;
 
-    if(pseudoPk.isEmpty())
-    {
-        m_query.rowIdColumn().clear();
-        if(m_headers.size())
-            m_headers[0] = QString("rowid");
-    } else {
-        m_query.setRowIdColumn(pseudoPk.toStdString());
-        if(m_headers.size())
-            m_headers[0] = pseudoPk;
-    }
+    m_query.setRowIdColumn(pseudoPk.toStdString());
+    if(m_headers.size())
+        m_headers[0] = pseudoPk;
 
     buildQuery();
 }
 
 bool SqliteTableModel::hasPseudoPk() const
 {
-    return !(m_query.rowIdColumn() == "rowid" || m_query.rowIdColumn() == "_rowid_");
+    return m_query.hasCustomRowIdColumn();
 }
 
 bool SqliteTableModel::isEditable() const
 {
     return !m_query.table().isEmpty() &&
             m_db.isOpen() &&
-            ((m_db.getObjectByName(m_query.table()) && m_db.getObjectByName(m_query.table())->type() == sqlb::Object::Types::Table) || !m_query.rowIdColumn().empty());
+            ((m_db.getObjectByName(m_query.table()) && m_db.getObjectByName(m_query.table())->type() == sqlb::Object::Types::Table) || m_query.hasCustomRowIdColumn());
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const

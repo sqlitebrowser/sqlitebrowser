@@ -12,7 +12,7 @@ Query::Query()
 void Query::clear()
 {
     m_table.clear();
-    m_rowid_column = "rowid";
+    m_rowid_column = "_rowid_";
     m_selected_columns.clear();
     m_where.clear();
     m_sort.clear();

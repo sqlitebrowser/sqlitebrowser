@@ -75,5 +75,6 @@
         <file alias="add_record">table_row_insert.png</file>
         <file alias="set_to_null">textfield_delete.png</file>
         <file alias="filter">filter.png</file>
+        <file alias="tab">tab.png</file>
     </qresource>
 </RCC>

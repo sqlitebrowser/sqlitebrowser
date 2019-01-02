@@ -629,7 +629,8 @@ bool DBBrowserDB::close()
             else
                 revertAll(); //not really necessary, I think... but will not hurt.
         }
-        sqlite3_close(_db);
+        if(sqlite3_close(_db) != SQLITE_OK)
+            qWarning() << tr("Database didn't close correctly, probably still busy");
         _db = nullptr;
     }
 
@@ -1063,12 +1064,12 @@ QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, Cho
                 else
                     retval = "";
             }
-
-            sqlite3_finalize(stmt);
         } else {
             lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
             qWarning() << lastErrorMessage;
         }
+
+        sqlite3_finalize(stmt);
     } else {
         lastErrorMessage = tr("could not execute command: %1").arg(sqlite3_errmsg(_db));
         qWarning() << lastErrorMessage;
@@ -1424,6 +1425,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
             return false;
         }
     }
+
+    // Check if any changes were made to the table schema
+    if(old_table == new_table)
+        return true;
 
     // Create savepoint to be able to go back to it in case of any error
     QString savepointName = generateSavepointName("renamecolumn");
