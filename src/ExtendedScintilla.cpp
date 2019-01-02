@@ -65,7 +65,10 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // Alt+Backspace on Mac is expected to delete one word to the left,
     // instead of undoing (default Scintilla binding).
     QsciCommand * command = standardCommands()->find(QsciCommand::DeleteWordLeft);
-    command->setAlternateKey(Qt::AltModifier+Qt::Key_Backspace);
+    command->setKey(Qt::AltModifier+Qt::Key_Backspace);
+    // And Cmd+Backspace should delete from cursor to the beginning of line
+    command = standardCommands()->find(QsciCommand::DeleteLineLeft);
+    command->setKey(Qt::ControlModifier+Qt::Key_Backspace);
 #endif
 
     QShortcut* shortcutPrint = new QShortcut(QKeySequence(tr("Ctrl+P")), this, nullptr, nullptr, Qt::WidgetShortcut);
