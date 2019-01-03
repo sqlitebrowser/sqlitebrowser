@@ -269,22 +269,22 @@
     <message>
         <location filename="../CipherDialog.ui" line="98"/>
         <source>Encr&amp;yption settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de &amp;cifrado</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="110"/>
         <source>SQLCipher &amp;3 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Predeterminados de SQLCipher &amp;3</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="117"/>
         <source>SQLCipher &amp;4 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Predeterminados de SQLCipher &amp;4</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="124"/>
         <source>Custo&amp;m</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Personalizado</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="133"/>
@@ -294,17 +294,17 @@
     <message>
         <location filename="../CipherDialog.ui" line="146"/>
         <source>&amp;KDF iterations</source>
-        <translation type="unfinished"></translation>
+        <translation>Iteraciones &amp;KDF</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="166"/>
         <source>HMAC algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo HMAC</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="195"/>
         <source>KDF algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo KDF</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="66"/>
@@ -1425,12 +1425,14 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
         <location filename="../EditTableDialog.cpp" line="480"/>
         <source>Column &apos;%1&apos; has duplicate data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>La columna «%1» tiene datos duplicados.
+</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="481"/>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Como en otros textos, pasamos los términos estándar de SQL a mayúsculas para evitar traducirlos, lo que podría ser más confuso para el usuario experto y no tener beneficio para el inexperto.</translatorcomment>
+        <translation>Esto imposibilita la habilitación de la restricción UNIQUE. Por favor, elimine primero los datos duplicados, lo cual permitirá habilitar la restricción UNIQUE.</translation>
     </message>
     <message>
         <source>Column &apos;%1&apos; has no unique data.
@@ -1851,7 +1853,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="238"/>
         <source>Alt+Del</source>
-        <translation>Alt+Supr</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="240"/>
@@ -4294,7 +4296,7 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     <message>
         <location filename="../MainWindow.cpp" line="2231"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensiones (*.so *.dylib *.dll);;Todos los archivos (*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2521"/>
@@ -4674,7 +4676,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../AddRecordDialog.cpp" line="43"/>
         <source>Alt+Del</source>
-        <translation>Alt+Supr</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5613,7 +5615,7 @@ usando una extensión. Necesitará reiniciar la aplicación.&lt;/p&gt;
     <message>
         <location filename="../PreferencesDialog.cpp" line="373"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensiones (*.so *.dll);;Todos los archivos (*)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="506"/>
