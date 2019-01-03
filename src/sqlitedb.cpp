@@ -1052,7 +1052,7 @@ QVariant DBBrowserDB::querySingleValueFromDb(const QString& statement, bool log)
                     return "";
             }
         } else {
-            lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
+            lastErrorMessage = tr("didn't receive any output from %1").arg(statement);
             qWarning() << lastErrorMessage;
         }
 
