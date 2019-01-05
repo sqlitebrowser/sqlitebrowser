@@ -266,22 +266,22 @@
     <message>
         <location filename="../CipherDialog.ui" line="98"/>
         <source>Encr&amp;yption settings</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verschlüsselung</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="110"/>
         <source>SQLCipher &amp;3 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher &amp;3 Standard</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="117"/>
         <source>SQLCipher &amp;4 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCiper &amp;4 Standard</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="124"/>
         <source>Custo&amp;m</source>
-        <translation type="unfinished"></translation>
+        <translation>Eige&amp;ne</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="133"/>
@@ -291,17 +291,17 @@
     <message>
         <location filename="../CipherDialog.ui" line="146"/>
         <source>&amp;KDF iterations</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KDF-Iterationen</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="166"/>
         <source>HMAC algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>HMAC-Algorithmus</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="195"/>
         <source>KDF algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>KDF-Algorithmus</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="66"/>
@@ -1401,12 +1401,13 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
         <location filename="../EditTableDialog.cpp" line="480"/>
         <source>Column &apos;%1&apos; has duplicate data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Spalte &apos;%1&apos; enthält Daten-Duplikate.
+</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="481"/>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das macht es unmöglich, das &apos;Unique&apos;-Flag zu setzen. Bitte entfernen Sie die Duplikate, um die Aktivierung des &apos;Unique&apos;-Flag zu ermöglichen.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="540"/>
@@ -4126,7 +4127,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2231"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterungen(*.so *.dylib *.dll);;Alle Dateien(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3197"/>
@@ -5504,7 +5505,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.cpp" line="373"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterungen(*.so *.dylib *.dll);;Alle Dateien(*)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="506"/>
