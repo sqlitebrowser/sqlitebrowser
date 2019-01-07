@@ -31,9 +31,15 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboMode">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>50</width>
          <height>0</height>
         </size>
        </property>
@@ -99,9 +105,12 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::MinimumExpanding</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>0</width>
          <height>20</height>
         </size>
        </property>
@@ -137,7 +146,7 @@
       <widget class="QPushButton" name="buttonImport">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>50</width>
          <height>0</height>
         </size>
        </property>
@@ -156,7 +165,7 @@
       <widget class="QPushButton" name="buttonExport">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>50</width>
          <height>0</height>
         </size>
        </property>
@@ -168,25 +177,6 @@
        </property>
        <property name="text">
         <string>&amp;Export</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonNull">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Set this cell to NULL</string>
-       </property>
-       <property name="whatsThis">
-        <string>Erases the contents of the cell</string>
-       </property>
-       <property name="text">
-        <string>Set as &amp;NULL</string>
        </property>
       </widget>
      </item>
@@ -258,8 +248,8 @@ Errors are indicated with a red squiggle underline.</string>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="labelType">
@@ -268,16 +258,31 @@ Errors are indicated with a red squiggle underline.</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="labelSize">
-         <property name="text">
-          <string>Size of data currently in table</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
-     <item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="buttonApply">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Apply data to cell</string>
+       </property>
+       <property name="whatsThis">
+        <string>This button saves the changes performed in the cell editor to the database cell.</string>
+       </property>
+       <property name="text">
+        <string>Apply</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -290,19 +295,29 @@ Errors are indicated with a red squiggle underline.</string>
        </property>
       </spacer>
      </item>
-     <item>
-      <widget class="QPushButton" name="buttonApply">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="buttonNull">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="toolTip">
-        <string>Apply data to cell</string>
+        <string>Set this cell to NULL</string>
        </property>
        <property name="whatsThis">
-        <string>This button saves the changes performed in the cell editor to the database cell.</string>
+        <string>Erases the contents of the cell</string>
        </property>
        <property name="text">
-        <string>Apply</string>
+        <string>Set as &amp;NULL</string>
        </property>
-       <property name="default">
-        <bool>true</bool>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelSize">
+       <property name="text">
+        <string>Size of data currently in table</string>
        </property>
       </widget>
      </item>
@@ -357,7 +372,6 @@ Errors are indicated with a red squiggle underline.</string>
  </widget>
  <tabstops>
   <tabstop>buttonExport</tabstop>
-  <tabstop>buttonNull</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>

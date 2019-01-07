@@ -91,14 +91,6 @@ public:
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
 
-    enum Tabs
-    {
-        StructureTab,
-        BrowseTab,
-        PragmaTab,
-        ExecuteTab
-    };
-
 private:
     struct PragmaValues
     {
@@ -171,6 +163,9 @@ private:
 
     std::unique_ptr<RunSql> execute_sql_worker;
 
+    QString defaultOpenTabs;
+    QByteArray defaultWindowState;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -187,13 +182,15 @@ private:
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
     void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
+    void toggleTabVisible(QWidget* tabWidget, bool show);
+    void restoreOpenTabs(QString tabs);
+    QString saveOpenTabs();
 
 protected:
     void closeEvent(QCloseEvent *) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
-    void keyPressEvent(QKeyEvent* event) override;
 
 public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
@@ -298,6 +295,8 @@ private slots:
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
     void openPreferences();
+    void closeTab(int index);
+    void showStatusMessage5s(QString message);
 };
 
 #endif

@@ -71,5 +71,6 @@
         <file alias="cancel">cancel.png</file>
         <file alias="comment_block">comment_block.png</file>
         <file alias="hourglass">hourglass.png</file>
+        <file alias="tab">tab.png</file>
     </qresource>
 </RCC>
