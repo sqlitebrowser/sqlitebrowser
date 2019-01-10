@@ -187,11 +187,11 @@
     </message>
     <message>
         <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>  -o, --option [grupo/configuração=valor]  Roda a aplicação com essa configuração temporariamente usando esse valor</translation>
     </message>
     <message>
         <source>The -o/--option option requires an argument in the form group/setting=value</source>
-        <translation type="unfinished"></translation>
+        <translation>A opção -o/--option requer um argumento na forma grupo/configuração=valor</translation>
     </message>
 </context>
 <context>
@@ -252,31 +252,31 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     </message>
     <message>
         <source>Encr&amp;yption settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Conf&amp;igurações de encriptação</translation>
     </message>
     <message>
         <source>SQLCipher &amp;3 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrões do SQLCipher &amp;3</translation>
     </message>
     <message>
         <source>SQLCipher &amp;4 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrões do SQLCipher &amp;4</translation>
     </message>
     <message>
         <source>Custo&amp;m</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Personalizado</translation>
     </message>
     <message>
         <source>&amp;KDF iterations</source>
-        <translation type="unfinished"></translation>
+        <translation>Iterações de &amp;KDF</translation>
     </message>
     <message>
         <source>HMAC algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo HMAC</translation>
     </message>
     <message>
         <source>KDF algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo KDF</translation>
     </message>
 </context>
 <context>
@@ -1199,11 +1199,12 @@ Todos os dados atualmente armazenados nesse campo serão perdidos.</translation>
     <message>
         <source>Column &apos;%1&apos; has duplicate data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Coluna &apos;%1&apos; tem dados duplicados.
+</translation>
     </message>
     <message>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Isso torna impossível a habilitação da opção &apos;Unique&apos;. Por favor, remova os dados duplicados, o que irá permitir a opção &apos;Unique&apos; a ser habilitada.</translation>
     </message>
 </context>
 <context>
@@ -3768,7 +3769,7 @@ Faça um backup!</translation>
     </message>
     <message>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensões(*.so *.dylib *.dll);;Todo os arquivos(*)</translation>
     </message>
 </context>
 <context>
@@ -4539,15 +4540,15 @@ Todas as suas preferências serão perdidas e os valores padrão serão utilizad
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provê uma função SQL para carregar extensões de uma biblioteca compartilhada. Ative isso se você quer usar a função &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; do código SQL.&lt;/p&gt;&lt;p&gt;Por motivos de segurança, o carregamento de extensões é desligado por padrão e precisa ser habilitado por essa opção. Você sempre pode carregar extensões através da GUI, mesmo se essa opção estiver desabilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Allow loading extensions from SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Permitir o carregamento de extensões a partir do código SQL</translation>
     </message>
     <message>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensões(*.so *.dylib *.dll);;Todos os arquivos(*)</translation>
     </message>
 </context>
 <context>
@@ -5151,12 +5152,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) A função load_extension(X) carrega extensões do SQLite da biblioteca compartilhada chamada X.
+Uso dessa função precisa ser habilitado em Preferências.</translation>
     </message>
     <message>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) A função load_extension(X) carrega extensões do SQLite da biblioteca compartilhada chamada X usando o ponto de entrada Y.
+Uso dessa função precisa ser habilitado em Preferências.</translation>
     </message>
 </context>
 <context>
