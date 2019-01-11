@@ -590,6 +590,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 statusEncryptionLabel->setVisible(db.encrypted());
                 statusReadOnlyLabel->setVisible(db.readOnly());
                 setCurrentFile(wFile);
+                currentProjectFilename.clear();
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
@@ -1961,6 +1962,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable && !tempDb);
+    ui->actionSaveProjectAs->setEnabled(enable && !tempDb);
     ui->actionEncryption->setEnabled(enable && write && !tempDb);
     ui->actionIntegrityCheck->setEnabled(enable);
     ui->actionQuickCheck->setEnabled(enable);
@@ -2766,6 +2768,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         }
 
         file.close();
+        currentProjectFilename = filename;
+
         return !xml.hasError();
     } else {
         // No project was opened
@@ -2865,14 +2869,22 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeEndElement();
 }
 
-void MainWindow::saveProject()
+QString MainWindow::saveProject(const QString& currentFilename)
 {
-    QString filename = FileDialog::getSaveFileName(
+    QString filename;
+    if(currentFilename.isEmpty()) {
+        QString basePathName = db.currentFile();
+        // Remove database suffix
+        basePathName.chop(QFileInfo(basePathName).suffix().size()+1);
+        filename = FileDialog::getSaveFileName(
                            CreateProjectFile,
                            this,
                            tr("Choose a filename to save under"),
                            tr("DB Browser for SQLite project file (*.sqbpro)"),
-                           db.currentFile());
+                           basePathName);
+    } else
+        filename = currentFilename;
+
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
@@ -2880,7 +2892,14 @@ void MainWindow::saveProject()
             filename.append(".sqbpro");
 
         QFile file(filename);
-        file.open(QFile::WriteOnly | QFile::Text);
+        bool opened = file.open(QFile::WriteOnly | QFile::Text);
+        if(!opened) {
+            QMessageBox::warning(this, qApp->applicationName(),
+                               tr("Could not open project file for writing.\nReason: %1").arg(file.errorString()));
+            return QString();
+        }
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
         QXmlStreamWriter xml(&file);
         xml.writeStartDocument();
         xml.writeStartElement("sqlb_project");
@@ -2979,8 +2998,21 @@ void MainWindow::saveProject()
         xml.writeEndElement();
         xml.writeEndDocument();
         file.close();
+
         addToRecentFilesMenu(filename);
+        QApplication::restoreOverrideCursor();
     }
+    return filename;
+}
+
+void MainWindow::saveProject()
+{
+    currentProjectFilename = saveProject(currentProjectFilename);
+}
+
+void MainWindow::saveProjectAs()
+{
+    currentProjectFilename = saveProject(QString());
 }
 
 void MainWindow::fileAttach()

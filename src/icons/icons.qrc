@@ -72,5 +72,6 @@
         <file alias="comment_block">comment_block.png</file>
         <file alias="hourglass">hourglass.png</file>
         <file alias="tab">tab.png</file>
+        <file alias="project_save_as">package_rename.png</file>
     </qresource>
 </RCC>
